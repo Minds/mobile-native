@@ -1,0 +1,1 @@
+export const MINDS_URI = 'https://www.minds.com/';
