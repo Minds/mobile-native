@@ -1,96 +1,35 @@
-import React, { 
-    Component 
-} from 'react';
-import {
-    Text,
-    TextInput,
-    StyleSheet,
-    KeyboardAvoidingView,
-    ScrollView,
-    ActivityIndicator,
-    TouchableOpacity,
-    Image,
-    View,
-    FlatList,
-    ListView
-} from 'react-native';
-
+import React, { Component } from 'react';
+import { StyleSheet, FlatList } from 'react-native';
+import { observer, inject } from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/Ionicons';
-
-import {
-  MINDS_URI
-} from '../config/Config';
-
-import {
-  getFeed,
-} from './NotificationsService';
 
 import Notification from './notification/Notification';
 
-export default class NotificationsScreen extends Component<{}> {
-
-  state = {
-    entities: [],
-    offset: '',
-    loading: false,
-    moreData: true,
-    refreshing: false
-  }
+@inject('notificationsStore')
+@observer
+export default class NotificationsScreen extends Component {
 
   render() {
     return (
       <FlatList
-        data={this.state.entities}
+        data={this.props.notificationsStore.entities}
         renderItem={this.renderRow}
         keyExtractor={item => item.guid}
-        onRefresh={() => this.refresh()}
-        refreshing={this.state.refreshing}
-        onEndReached={() => this.loadMore()}
+        onRefresh={() => this.props.notificationsStore.refresh()}
+        refreshing={this.props.notificationsStore.refreshing}
+        onEndReached={() => this.props.notificationsStore.loadFeed()}
         onEndThreshold={0.3}
         style={styles.listView}
       />
     );
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps == this.props && nextState == this.state)
-      return false;
-    return true;
-  }
-
-  loadFeed() {
-    if (!this.state.moreData || this.state.loading) {
-      return;
-    }
-    this.setState({ loading: true });
-    getFeed(this.state.offset)
-      .then((feed) => {
-        this.setState({
-          entities: [... this.state.entities, ...feed.entities],
-          offset: feed.offset,
-          moreData:  feed.entities.length,
-          loading: false,
-          refreshing: false
-        });
-      })
-      .catch(err => {
-        console.log('error');
-      })
-  }
-
-  refresh() {
-    this.setState({ refreshing: true })
-
-    setTimeout(() => {
-      this.setState({ refreshing: false });
-    }, 1000)
-  }
-
-  loadMore() {
-    if (this.loading)
-      return;
-    this.loadFeed();
-  }
+  // Should be unessesary with MobX because the component is a observer and only is rerendered again on state change
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (nextProps == this.props && nextState == this.state)
+  //     return false;
+  //   return true;
+  // }
 
   renderRow(row) {
     const entity = row.item;

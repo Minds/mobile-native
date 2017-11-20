@@ -22,10 +22,10 @@ import {
 import OwnerBlock from './OwnerBlock';
 
 
-export default class Activity extends Component<{}> {
+export default class Activity extends Component {
 
   state = {
-    
+
   };
 
   render() {
@@ -35,7 +35,7 @@ export default class Activity extends Component<{}> {
     switch (this.props.entity.custom_type) {
       case "batch":
         let source = {
-          uri: this.props.entity.custom_data[0].src 
+          uri: this.props.entity.custom_data[0].src
         }
         media = (
           <View style={styles.imageContainer}>
@@ -44,10 +44,10 @@ export default class Activity extends Component<{}> {
         )
         break;
     }
-    
+
     if (this.props.entity.perma_url) {
       let source = {
-        uri: this.props.entity.thumbnail_src 
+        uri: this.props.entity.thumbnail_src
       }
       media = (
         <View style={styles.imageContainer}>
@@ -60,7 +60,7 @@ export default class Activity extends Component<{}> {
       )
     }
 
-    return (  
+    return (
         <View style={styles.container}>
           <OwnerBlock entity={this.props.entity.ownerObj}>
             <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
