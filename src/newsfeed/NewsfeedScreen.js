@@ -19,7 +19,6 @@ export default class NewsfeedScreen extends Component {
   }
 
   render() {
-    console.log('nf rendered');
     return (
       <FlatList
         data={this.props.newsfeedStore.entities}

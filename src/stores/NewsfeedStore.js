@@ -29,9 +29,11 @@ class NewsfeedStore {
 
   @action
   refresh() {
+    console.log('refreshing newsfeed');
     this.refreshing = true;
 
     setTimeout(() => {
+      console.log('refreshing newsfeed false');
       this.refreshing = false;
     }, 1000);
   }
