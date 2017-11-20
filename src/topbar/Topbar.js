@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MINDS_URI } from '../config/Config';
 
 
-@inject('notificationsStore')
+@inject('notifications')
 @observer
 export default class Topbar extends Component {
 
@@ -18,7 +18,7 @@ export default class Topbar extends Component {
 
           <View style={styles.topbarLeft}>
             <Icon name="bell" size={18} color='#444' onPress={() => this.props.navigation.navigate('Notifications')} style={ styles.button } />
-            <Text>{this.props.notificationsStore.unread}</Text>
+            <Text>{this.props.notifications.unread}</Text>
           </View>
 
           <View style={styles.topbarCenter}>

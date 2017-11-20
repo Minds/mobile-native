@@ -15,7 +15,7 @@ class NotificationsStore {
   constructor() {
     // load count on start
     this.loadCount();
-    // start pooling for count every 10 seconds
+    // start polling for count every 10 seconds
     this.startPoolCount();
 
     // fix to clear the interval when are developing with hot reload (timers not was cleared automaticaly)

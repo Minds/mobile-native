@@ -5,19 +5,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Notification from './notification/Notification';
 
-@inject('notificationsStore')
+@inject('notifications')
 @observer
 export default class NotificationsScreen extends Component {
 
   render() {
     return (
       <FlatList
-        data={this.props.notificationsStore.entities}
+        data={this.props.notifications.entities}
         renderItem={this.renderRow}
         keyExtractor={item => item.guid}
-        onRefresh={() => this.props.notificationsStore.refresh()}
-        refreshing={this.props.notificationsStore.refreshing}
-        onEndReached={() => this.props.notificationsStore.loadFeed()}
+        onRefresh={() => this.props.notifications.refresh()}
+        refreshing={this.props.notifications.refreshing}
+        onEndReached={() => this.props.notifications.loadFeed()}
         onEndThreshold={0.3}
         style={styles.listView}
       />

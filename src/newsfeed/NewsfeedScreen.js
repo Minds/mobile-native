@@ -8,7 +8,7 @@ import { getFeed } from './NewsfeedService';
 import Activity from './activity/Activity';
 
 
-@inject('newsfeedStore')
+@inject('newsfeed')
 @observer
 export default class NewsfeedScreen extends Component {
 
@@ -21,12 +21,12 @@ export default class NewsfeedScreen extends Component {
   render() {
     return (
       <FlatList
-        data={this.props.newsfeedStore.entities}
+        data={this.props.newsfeed.entities}
         renderItem={this.renderActivity}
         keyExtractor={item => item.guid}
-        onRefresh={() => this.props.newsfeedStore.refresh()}
-        refreshing={this.props.newsfeedStore.refreshing}
-        onEndReached={() => this.props.newsfeedStore.loadFeed()}
+        onRefresh={() => this.props.newsfeed.refresh()}
+        refreshing={this.props.newsfeed.refreshing}
+        onEndReached={() => this.props.newsfeed.loadFeed()}
         onEndThreshold={0.3}
         style={styles.listView}
       />
