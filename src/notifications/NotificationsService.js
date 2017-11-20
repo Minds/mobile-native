@@ -1,7 +1,7 @@
-import apiService from './../common/services/api.service';
+import api from './../common/services/api.service';
 
 export function getFeed(offset) {
-  return apiService.get('api/v1/notifications/', { offset: offset, limit: 15 })
+  return api.get('api/v1/notifications/', { offset: offset, limit: 15 })
     .then((data) => {
       return {
         entities: data.notifications,
@@ -9,7 +9,11 @@ export function getFeed(offset) {
       }
     })
     .catch(err => {
-      console.log('error');
+      console.log('error', err);
       throw "Ooops";
     })
+}
+
+export function getCount() {
+  return api.get('api/v1/notifications/count');
 }

@@ -1,16 +1,33 @@
 import { observable, action } from 'mobx'
 
-import { getFeed } from './../notifications/NotificationsService';
+import { getFeed, getCount } from './NotificationsService';
 
 class NotificationsStore {
   @observable entities   = []
   @observable offset     = ''
-  @observable moreData   = true;
   @observable loading    = false;
-  @observable refreshing = false
+  @observable refreshing = false;
+  @observable unread = 0;
+
+  moreData     = true;
+  poolInterval = null;
+
+  constructor() {
+    // load count on start
+    this.loadCount();
+    // start pooling for count every 10 seconds
+    this.startPoolCount();
+
+    // fix to clear the interval when are developing with hot reload (timers not was cleared automaticaly)
+    if (module.hot) {
+      module.hot.accept(() => {
+        if (this.poolInterval)
+          clearInterval(this.poolInterval);
+      });
+    }
+  }
 
   loadFeed() {
-    console.log('loading notifications from '+this.offset);
     if (!this.moreData || this.loading) {
       return;
     }
@@ -24,6 +41,23 @@ class NotificationsStore {
       .catch(err => {
         console.log('error');
       })
+  }
+
+  loadCount() {
+    getCount().then(data => {
+      this.setUnread(data.count);
+    });
+  }
+
+  startPoolCount() {
+    this.poolInterval = setInterval(() => {
+       this.loadCount();
+    }, 10000);
+  }
+
+  @action
+  setUnread(count) {
+    this.unread = count;
   }
 
   @action

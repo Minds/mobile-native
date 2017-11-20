@@ -1,36 +1,24 @@
-import React, { 
-    Component 
-} from 'react';
-import {
-    Text,
-    TextInput,
-    StyleSheet,
-    KeyboardAvoidingView,
-    ScrollView,
-    ActivityIndicator,
-    TouchableOpacity,
-    Image,
-    View,
-    FlatList,
-    ListView
-} from 'react-native';
+import React, { Component } from 'react';
+import { Text, StyleSheet, Image, View } from 'react-native';
 
+import { observer, inject } from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {
-  MINDS_URI
-} from '../config/Config';
+import { MINDS_URI } from '../config/Config';
 
 
-export default class Topbar extends Component<{}> {
+@inject('notificationsStore')
+@observer
+export default class Topbar extends Component {
 
-  render() { 
+  render() {
     return (
       <View style={styles.container}>
         <View style={styles.topbar}>
-          
+
           <View style={styles.topbarLeft}>
             <Icon name="bell" size={18} color='#444' onPress={() => this.props.navigation.navigate('Notifications')} style={ styles.button } />
+            <Text>{this.props.notificationsStore.unread}</Text>
           </View>
 
           <View style={styles.topbarCenter}>
@@ -45,13 +33,6 @@ export default class Topbar extends Component<{}> {
       </View>
     );
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps == this.props && nextState == this.state)
-      return false;
-    return true;
-  }
-
 }
 
 const styles = StyleSheet.create({
@@ -71,6 +52,8 @@ const styles = StyleSheet.create({
   },
   topbarLeft: {
     //paddingLeft: 8,
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   topbarCenter: {
     flex: 1,

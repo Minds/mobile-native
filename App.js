@@ -9,7 +9,7 @@ import TabsScreen from './src/tabs/TabsScreen';
 import NotificationsScreen from './src/notifications/NotificationsScreen';
 
 import newsfeedStore from './src/stores/NewsfeedStore';
-import notificationsStore from './src/stores/NotificationsStore';
+import notificationsStore from './src/notifications/NotificationsStore';
 
 const Stack = StackNavigator({
   Loading: {

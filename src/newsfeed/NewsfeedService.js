@@ -1,7 +1,7 @@
-import apiService from './../common/services/api.service';
+import api from './../common/services/api.service';
 
 export function getFeed(offset) {
-  return apiService.get('api/v1/newsfeed/network/', { offset: offset, limit: 12 })
+  return api.get('api/v1/newsfeed/network/', { offset: offset, limit: 12 })
     .then((data) => {
       return {
         entities: data.activity,
