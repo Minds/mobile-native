@@ -2,26 +2,18 @@ import React, {
   Component
 } from 'react';
 
-import {
-  NavigationActions
-} from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 
 import {
-  Button,
   Text,
-  TextInput,
   StyleSheet,
   KeyboardAvoidingView,
   ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
-  Image,
 } from 'react-native';
 
-import { isLoggedIn } from './LoginService';
 import LoginForm from './LoginForm';
 
-export default class LoginScreen extends Component<{}> {
+export default class LoginScreen extends Component {
 
   render() {
     return (
@@ -29,11 +21,11 @@ export default class LoginScreen extends Component<{}> {
         <Text style={styles.title}>
           Login to Minds
         </Text>
-        <KeyboardAvoidingView 
+        <KeyboardAvoidingView
           behavior='padding'
           style={styles.container}
         >
-          <LoginForm 
+          <LoginForm
             onLogin={() => this.login()}
           />
         </KeyboardAvoidingView>
@@ -54,5 +46,5 @@ export default class LoginScreen extends Component<{}> {
 }
 
 const styles = StyleSheet.create({
-  
+
 });

@@ -1,8 +1,6 @@
 import { MINDS_URI } from '../config/Config';
 
-import {
-  AsyncStorage
-} from 'react-native';
+import session  from './../common/services/session.service';
 
 async function _login(username, password) {
   var headers = new Headers();
@@ -41,19 +39,10 @@ async function _login(username, password) {
 export function login(username, password) {
   return _login(username, password)
     .then((data) => {
-      AsyncStorage.setItem('@Minds:access_token', data.access_token);
+      session.setAccessToken(data.access_token);
       return true;
     })
     .catch(err => {
       throw "Ooops";
     })
-}
-
-export async function isLoggedIn() {
-  const loggedin = await AsyncStorage.getItem('@Minds:access_token');
-  if (loggedin !== null){
-    return true;
-  }
-
-  throw "Not logged in";
 }
