@@ -10,19 +10,19 @@ class NotificationsStore {
   @observable unread = 0;
 
   moreData     = true;
-  poolInterval = null;
+  pollInterval = null;
 
   constructor() {
     // load count on start
     this.loadCount();
     // start polling for count every 10 seconds
-    this.startPoolCount();
+    this.startPollCount();
 
-    // fix to clear the interval when are developing with hot reload (timers not was cleared automaticaly)
+    // fix to clear the interval when are developing with hot reload (timers was not cleared automatically)
     if (module.hot) {
       module.hot.accept(() => {
-        if (this.poolInterval)
-          clearInterval(this.poolInterval);
+        if (this.pollInterval)
+          clearInterval(this.pollInterval);
       });
     }
   }
@@ -49,8 +49,8 @@ class NotificationsStore {
     });
   }
 
-  startPoolCount() {
-    this.poolInterval = setInterval(() => {
+  startPollCount() {
+    this.pollInterval = setInterval(() => {
        this.loadCount();
     }, 10000);
   }
