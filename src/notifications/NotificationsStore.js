@@ -21,8 +21,7 @@ class NotificationsStore {
     // fix to clear the interval when are developing with hot reload (timers was not cleared automatically)
     if (module.hot) {
       module.hot.accept(() => {
-        if (this.pollInterval)
-          clearInterval(this.pollInterval);
+        this.stopPollCount();
       });
     }
   }
@@ -37,15 +36,16 @@ class NotificationsStore {
       .then( feed => {
         this.setFeed(feed);
       })
-
       .catch(err => {
-        console.log('error');
+        console.log('error', err);
       })
   }
 
   loadCount() {
     getCount().then(data => {
       this.setUnread(data.count);
+    }).catch(err => {
+      console.log('error', err);
     });
   }
 
@@ -53,6 +53,12 @@ class NotificationsStore {
     this.pollInterval = setInterval(() => {
        this.loadCount();
     }, 10000);
+  }
+
+  stopPollCount() {
+    if (this.pollInterval) {
+      clearInterval(this.pollInterval);
+    }
   }
 
   @action

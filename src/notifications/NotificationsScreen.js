@@ -24,18 +24,10 @@ export default class NotificationsScreen extends Component {
     );
   }
 
-  // Should be unessesary with MobX because the component is a observer and only is rerendered again on state change
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (nextProps == this.props && nextState == this.state)
-  //     return false;
-  //   return true;
-  // }
-
   renderRow(row) {
     const entity = row.item;
     return (
-      <Notification entity={entity}>
-      </Notification>
+      <Notification entity={entity} />
     );
   }
 

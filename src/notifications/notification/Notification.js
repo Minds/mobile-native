@@ -3,18 +3,8 @@ import React, {
 } from 'react';
 
 import {
-  NavigationActions
-} from 'react-navigation';
-
-import {
-  Button,
   Text,
-  TextInput,
   StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
   Image,
   View
 } from 'react-native';
@@ -24,8 +14,11 @@ import {
 } from '../../config/Config';
 
 import CommentView from './view/CommentView';
+import FriendsView from './view/FriendsView';
+import GroupActivityView from './view/GroupActivityView';
+import CustomMessageView from './view/CustomMessageView';
 
-export default class Notification extends Component<{}> {
+export default class Notification extends Component {
 
   state = {
     avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.owner_guid }
@@ -39,19 +32,17 @@ export default class Notification extends Component<{}> {
     switch (entity.notification_view) {
 
       case "friends":
+        body = <GroupActivityView entity={entity} />
         break;
       case "group_invite":
         break;
       case "group_kick":
         break;
       case "group_activity":
-        body = (
-          <View style={styles.bodyContents}>
-            <Text style={styles.link}>{entity.fromObj.name}</Text>
-            <Text> posted in </Text>
-            <Text style={styles.link}>{entity.params.group.name}</Text>
-          </View>
-        )
+        body = <GroupActivityView entity={entity} />
+        break;
+      case "custom_message":
+        body = <CustomMessageView entity={entity} />
         break;
       case "comment":
         body = <CommentView entity={entity} />
@@ -59,23 +50,19 @@ export default class Notification extends Component<{}> {
       default:
         body = (
           <View style={styles.bodyContents}>
-            <Text>Could not load notification</Text>
+            <Text>Could not load notification {entity.notification_view}</Text>
           </View>
         )
     }
 
-    return (  
+    return (
         <View style={styles.container}>
           <Image source={this.state.avatarSrc} style={styles.avatar}/>
           <View style={styles.body}>
-
             { body }
-
             <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
           </View>
-
         </View>
-
     );
   }
 
