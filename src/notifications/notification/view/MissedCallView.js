@@ -6,9 +6,10 @@ import {
 } from 'react-native';
 
 /**
- * Custom Message Notification Component
+ * Missed Call Notification Component
  */
-export default class CustomMessageView extends Component {
+export default class MissedCallView extends Component {
+
 
   render() {
     const entity = this.props.entity;
@@ -16,7 +17,7 @@ export default class CustomMessageView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text>{entity.params.message}</Text>
+        <Text><Text style={styles.link}>{ entity.fromObj.name }</Text> tried to call you.</Text>
       </View>
     )
   }

@@ -6,17 +6,20 @@ import {
 } from 'react-native';
 
 /**
- * Custom Message Notification Component
+ * Tag Notification Component
  */
-export default class CustomMessageView extends Component {
+export default class TagView extends Component {
+
 
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
 
+    const isComment = entity.entityObj.type != 'comment';
+
     return (
       <View style={styles.bodyContents}>
-        <Text>{entity.params.message}</Text>
+        <Text>{entity.fromObj.name} {isComment ? 'tagged you in a comment' : 'tagged you in a post' } </Text>
       </View>
     )
   }

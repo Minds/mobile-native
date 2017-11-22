@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 
 import {
   Text,
-  StyleSheet,
   View
 } from 'react-native';
 
+/**
+ * Friends Notification Component
+ */
 export default class FriendsView extends Component {
 
   render() {
     const entity = this.props.entity;
+    const styles = this.props.styles;
 
     return (
       <View style={styles.bodyContents}>
@@ -19,13 +22,3 @@ export default class FriendsView extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  bodyContents: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  link: {
-    fontWeight: 'bold',
-  },
-});

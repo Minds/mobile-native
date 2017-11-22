@@ -2,15 +2,19 @@ import React, { Component } from 'react';
 
 import {
   Text,
-  StyleSheet,
   View
 } from 'react-native';
 
+/**
+ * Group Activity Notification Component
+ */
 export default class GroupActivityView extends Component {
 
   render() {
     const entity = this.props.entity;
+    const styles = this.props.styles;
 
+    //TODO: Navigate to activity entity.entityObj.guid on click
     return (
       <View style={styles.bodyContents}>
         <Text style={styles.link}>{entity.fromObj.name}</Text>
@@ -20,13 +24,3 @@ export default class GroupActivityView extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  bodyContents: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  link: {
-    fontWeight: 'bold',
-  },
-});

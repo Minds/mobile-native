@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   Text,
@@ -9,15 +7,26 @@ import {
   View
 } from 'react-native';
 
-import {
-  MINDS_URI,
-} from '../../config/Config';
+import { MINDS_URI } from '../../config/Config';
 
+import BoostGiftView from './view/BoostGiftView';
+import BoostSubmittedView from './view/BoostSubmittedView';
 import CommentView from './view/CommentView';
+import CustomMessageView from './view/CustomMessageView';
+import DownvoteView from './view/DownvoteView';
+import FeatureView from './view/FeatureView';
 import FriendsView from './view/FriendsView';
 import GroupActivityView from './view/GroupActivityView';
-import CustomMessageView from './view/CustomMessageView';
+import GroupInviteView from './view/GroupInviteView';
+import GroupKickView from './view/GroupKickView';
+import LikeView from './view/LikeView';
+import MissedCallView from './view/MissedCallView';
+import RemindView from './view/RemindView';
+import TagView from './view/TagView';
 
+/**
+ * Main Notification row Component
+ */
 export default class Notification extends Component {
 
   state = {
@@ -26,44 +35,77 @@ export default class Notification extends Component {
 
   render() {
 
-    let body;
     const entity = this.props.entity;
 
+    const body = this.getBody(entity);
+
+    return (
+      <View style={styles.container}>
+        <Image source={this.state.avatarSrc} style={styles.avatar}/>
+        <View style={styles.body}>
+          { body }
+          <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
+        </View>
+      </View>
+    );
+  }
+
+  /**
+   * Get child component based in entity.notification_view
+   * @param {object} entity
+   */
+  getBody(entity) {
     switch (entity.notification_view) {
 
-      case "friends":
-        body = <GroupActivityView entity={entity} />
-        break;
-      case "group_invite":
-        break;
-      case "group_kick":
-        break;
-      case "group_activity":
-        body = <GroupActivityView entity={entity} />
-        break;
-      case "custom_message":
-        body = <CustomMessageView entity={entity} />
-        break;
+      case "boost_gift":
+        return <BoostGiftView entity={entity} styles={styles} />
+
+      case "boost_submitted":
+        return <BoostSubmittedView entity={entity} styles={styles} />
+
       case "comment":
-        body = <CommentView entity={entity} />
-        break;
+        return <CommentView entity={entity} styles={styles} />
+
+      case "custom_message":
+        return <CustomMessageView entity={entity} styles={styles} />
+
+      case "downvote":
+        return <DownvoteView entity={entity} styles={styles} />
+
+      case "feature":
+        return <FeatureView entity={entity} styles={styles} />
+
+      case "friends":
+        return <FriendsView entity={entity} styles={styles} />
+
+      case "group_activity":
+        return <GroupActivityView entity={entity} styles={styles} />
+
+      case "group_invite":
+        return <GroupInviteView entity={entity} styles={styles} />
+
+      case "group_kick":
+        return <GroupKickView entity={entity} styles={styles} />
+
+      case "like":
+        return <LikeView entity={entity} styles={styles} />
+
+      case "missed_call":
+        return <MissedCallView entity={entity} styles={styles} />
+
+      case "remind":
+        return <RemindView entity={entity} styles={styles} />
+
+      case "tag":
+        return <Tag entity={entity} styles={styles} />
+
       default:
-        body = (
+        return (
           <View style={styles.bodyContents}>
             <Text>Could not load notification {entity.notification_view}</Text>
           </View>
         )
     }
-
-    return (
-        <View style={styles.container}>
-          <Image source={this.state.avatarSrc} style={styles.avatar}/>
-          <View style={styles.body}>
-            { body }
-            <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
-          </View>
-        </View>
-    );
   }
 
   formatDate(timestamp) {
