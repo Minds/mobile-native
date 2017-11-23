@@ -12,7 +12,6 @@ import {
  */
 export default class TagView extends Component {
 
-
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;

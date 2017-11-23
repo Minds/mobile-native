@@ -17,7 +17,6 @@ import {
 export default class CommentView extends Component {
 
   render() {
-
     const entity = this.props.entity;
     const styles = this.props.styles;
     const user_guid = '';

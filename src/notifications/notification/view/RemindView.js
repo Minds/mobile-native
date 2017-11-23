@@ -30,7 +30,6 @@ export default class RemindView extends Component {
    * @param {object} entity
    */
   getBody(entity) {
-
     const styles = this.props.styles;
     const title = entity.entityObj.title;
 
