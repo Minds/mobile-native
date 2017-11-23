@@ -41,8 +41,12 @@ export default class Notification extends Component {
     avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.owner_guid }
   };
 
-  render() {
+  // Notifications are stateless, therefore they don't need to be rendered more than once
+  shouldComponentUpdate(nextProps, nextState) {
+    return false;
+  }
 
+  render() {
     const entity = this.props.entity;
 
     const body = this.getBody(entity);
