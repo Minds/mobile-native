@@ -31,6 +31,11 @@ import LikeView from './view/LikeView';
 import MissedCallView from './view/MissedCallView';
 import RemindView from './view/RemindView';
 import TagView from './view/TagView';
+import WelcomeBoostView from './view/WelcomeBoostView';
+import WelcomeChatView from './view/WelcomeChatView';
+import WelcomeDiscoverView from './view/WelcomeDiscoverView';
+import WelcomePostView from './view/WelcomePostView';
+import WelcomePointsView from './view/WelcomePointsView';
 
 /**
  * Main Notification row Component
@@ -131,6 +136,22 @@ export default class Notification extends Component {
 
       case "tag":
         return <Tag entity={entity} styles={styles} />
+
+      case "welcome_boost":
+        return <WelcomeBoostView entity={entity} styles={styles} />
+
+      case "welcome_chat":
+        return <WelcomeChatView entity={entity} styles={styles} />
+
+      case "welcome_discover":
+        return <WelcomeDiscoverView entity={entity} styles={styles} />
+
+      case "welcome_points":
+        return <WelcomePointsView entity={entity} styles={styles} />
+
+      case "welcome_post":
+        return <WelcomePostView entity={entity} styles={styles} />
+
 
       default:
         return (
