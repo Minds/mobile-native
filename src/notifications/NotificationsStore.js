@@ -1,6 +1,12 @@
-import { observable, action } from 'mobx'
+import {
+  observable,
+  action
+} from 'mobx'
 
-import { getFeed, getCount } from './NotificationsService';
+import {
+  getFeed,
+  getCount
+} from './NotificationsService';
 
 class NotificationsStore {
   @observable entities   = []
@@ -34,6 +40,7 @@ class NotificationsStore {
 
     getFeed(this.offset)
       .then( feed => {
+        this.loading = false,
         this.setFeed(feed);
       })
       .catch(err => {
@@ -68,11 +75,17 @@ class NotificationsStore {
 
   @action
   setFeed(feed) {
-    this.entities = [... this.entities, ...feed.entities],
-    this.offset = feed.offset,
-    this.moreData = feed.entities.length,
-    this.loading = false,
-    this.refreshing = false
+
+    if (feed.entities) {
+      this.entities = [... this.entities, ...feed.entities],
+      this.offset = feed.offset;
+    } else {
+      this.moreData = false;
+      return false;
+    }
+    this.moreData = !!this.offset;
+
+    return true;
   }
 
   @action
