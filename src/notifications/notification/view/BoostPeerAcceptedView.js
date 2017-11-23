@@ -10,21 +10,22 @@ import {
 import BoostGiftView from './BoostGiftView';
 
 /**
- * Boost Submitted Notification Component
+ * Boost Peer Accepted Notification Component
  */
-export default class BoostSubmittedView extends BoostGiftView {
+export default class BoostPeerAcceptedView extends BoostGiftView {
 
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
 
-    const isComment = entity.entityObj.type != 'comment';
-
     const description = this.getDescription(entity);
+    const type = (entity.params.type == 'pro') ? 'USD' : 'points';
 
     return (
       <View style={styles.bodyContents}>
-        <Text>{entity.params.impressions} views {description} is awaiting approval</Text>
+        <Text>
+          <Text style={style.bold}>@{entity.from.username}</Text> accepted your bid of <Text style={style.bold}>{entity.params.bid} {type}</Text> {description}
+        </Text>
       </View>
     )
   }

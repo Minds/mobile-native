@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 
 import {
   Text,
@@ -9,7 +11,13 @@ import {
 
 import { MINDS_URI } from '../../config/Config';
 
+import BoostAcceptedView from './view/BoostAcceptedView';
+import BoostCompletedView from './view/BoostCompletedView';
 import BoostGiftView from './view/BoostGiftView';
+import BoostPeerAcceptedView from './view/BoostPeerAcceptedView';
+import BoostPeerRequestView from './view/BoostPeerRequestView';
+import BoostRejectedView from './view/BoostRejectedView';
+import BoostSubmittedP2pView from './view/BoostSubmittedP2pView';
 import BoostSubmittedView from './view/BoostSubmittedView';
 import CommentView from './view/CommentView';
 import CustomMessageView from './view/CustomMessageView';
@@ -57,8 +65,29 @@ export default class Notification extends Component {
   getBody(entity) {
     switch (entity.notification_view) {
 
+      case "boost_accepted":
+        return <BoostAcceptedView entity={entity} styles={styles} />
+
+      case "boost_completed":
+        return <BoostCompletedView entity={entity} styles={styles} />
+
       case "boost_gift":
         return <BoostGiftView entity={entity} styles={styles} />
+
+      case "boost_peer_accepted":
+        return <BoostPeerAcceptedView entity={entity} styles={styles} />
+
+      case "boost_peer_rejected":
+        return <BoostPeerRejectedView entity={entity} styles={styles} />
+
+      case "boost_peer_request":
+        return <BoostPeerRequestView entity={entity} styles={styles} />
+
+      case "boost_rejected":
+        return <BoostRejectedView entity={entity} styles={styles} />
+
+      case "boost_submitted_p2p":
+        return <BoostSubmittedP2pView entity={entity} styles={styles} />
 
       case "boost_submitted":
         return <BoostSubmittedView entity={entity} styles={styles} />
@@ -141,6 +170,9 @@ const styles = StyleSheet.create({
   bodyContents: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  bold: {
+    fontWeight: 'bold',
   },
   link: {
     fontWeight: 'bold',

@@ -10,21 +10,19 @@ import {
 import BoostGiftView from './BoostGiftView';
 
 /**
- * Boost Submitted Notification Component
+ * Boost Accepted Notification Component
  */
-export default class BoostSubmittedView extends BoostGiftView {
+export default class BoostAcceptedView extends BoostGiftView {
 
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
 
-    const isComment = entity.entityObj.type != 'comment';
-
     const description = this.getDescription(entity);
 
     return (
       <View style={styles.bodyContents}>
-        <Text>{entity.params.impressions} views {description} is awaiting approval</Text>
+        <Text>{entity.params.impressions || entity.params.points} points {description} were accepted.</Text>
       </View>
     )
   }
