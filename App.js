@@ -7,9 +7,11 @@ import LoadingScreen from './src/LoadingScreen';
 import LoginScreen from './src/auth/LoginScreen';
 import TabsScreen from './src/tabs/TabsScreen';
 import NotificationsScreen from './src/notifications/NotificationsScreen';
+import NotificationsSettingsScreen from './src/notifications/NotificationsSettingsScreen';
 
 import newsfeed from './src/stores/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
+import notificationsSettings from './src/notifications/NotificationsSettingsStore';
 
 const Stack = StackNavigator({
   Loading: {
@@ -24,12 +26,16 @@ const Stack = StackNavigator({
   Notifications: {
     screen: NotificationsScreen,
   },
+  NotificationsSettings: {
+    screen: NotificationsSettingsScreen
+  }
 });
 
 // Stores
 const stores = {
   newsfeed,
-  notifications
+  notifications,
+  notificationsSettings
 }
 
 export default class App extends Component {

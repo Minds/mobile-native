@@ -37,9 +37,10 @@ const styles = StyleSheet.create({
 @inject('notifications')
 @observer
 export default class NotificationsScreen extends Component {
-  static navigationOptions = {
-    headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.button} />
-  }
+
+  static navigationOptions = ({ navigation }) => ({
+    headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.button} onPress={() => navigation.navigate('NotificationsSettings')} />
+  });
 
   render() {
     return (
