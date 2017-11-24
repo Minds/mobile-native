@@ -1,7 +1,7 @@
 import api from './../common/services/api.service';
 
-export function getFeed(offset) {
-  return api.get('api/v1/notifications/', { offset: offset, limit: 15 })
+export function getFeed(offset, filter) {
+  return api.get('api/v1/notifications/' + filter, { offset: offset, limit: 15 })
     .then((data) => {
       return {
         entities: data.notifications,

@@ -8,12 +8,16 @@ import {
   getCount
 } from './NotificationsService';
 
+/**
+ * Notifications Store
+ */
 class NotificationsStore {
   @observable entities   = []
   @observable offset     = ''
   @observable loading    = false;
   @observable refreshing = false;
   @observable unread = 0;
+  @observable filter = 'all';
 
   moreData     = true;
   pollInterval = null;
@@ -38,14 +42,22 @@ class NotificationsStore {
     }
     this.loading = true;
 
-    getFeed(this.offset)
+    getFeed(this.offset, this.filter)
       .then( feed => {
+        console.log(feed);
         this.loading = false,
         this.setFeed(feed);
       })
       .catch(err => {
         console.log('error', err);
       })
+  }
+
+  reloadFeed() {
+    this.moreData = true;
+    this.loading = false;
+    this.entities = [];
+    this.loadFeed();
   }
 
   loadCount() {
@@ -69,13 +81,18 @@ class NotificationsStore {
   }
 
   @action
+  setFilter(filter) {
+    this.filter = filter;
+    this.reloadFeed();
+  }
+
+  @action
   setUnread(count) {
     this.unread = count;
   }
 
   @action
   setFeed(feed) {
-
     if (feed.entities) {
       this.entities = [... this.entities, ...feed.entities],
       this.offset = feed.offset;
@@ -84,7 +101,6 @@ class NotificationsStore {
       return false;
     }
     this.moreData = !!this.offset;
-
     return true;
   }
 
