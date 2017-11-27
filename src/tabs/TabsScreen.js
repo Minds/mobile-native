@@ -1,5 +1,5 @@
-import React, { 
-    Component 
+import React, {
+    Component
 } from 'react';
 import {
   TabNavigator
@@ -31,6 +31,7 @@ const Tabs = TabNavigator({
 }, {
   tabBarPosition: 'bottom',
   animationEnabled: false,
+  lazy: true,
   tabBarOptions: {
     showLabel: false,
     showIcon: true,
