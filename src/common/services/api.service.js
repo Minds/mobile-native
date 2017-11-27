@@ -4,8 +4,9 @@ import { MINDS_URI } from '../../config/Config';
 class ApiService {
 
   getParamsString(params) {
-    urlParams = new URLSearchParams(Object.entries(params));
-    return urlParams.toString();
+    return Object.keys(params).map((k) => {
+      return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
+    }).join('&');
   }
 
   async get(url, params={}) {
@@ -24,8 +25,13 @@ class ApiService {
         })
         // parse json
         .then(response => response.json())
-        // resolve promise
-        .then(jsonResp => {return resolve(jsonResp)})
+        // verify api call success
+        .then(jsonResp => {
+          if (jsonResp.status != 'success') {
+            return reject(jsonResp);
+          }
+          return resolve(jsonResp)
+        })
         // catch all errors
         .catch(err => {
           if (err.status && err.status == 401) {
