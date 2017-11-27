@@ -13,12 +13,12 @@ import {
  */
 class NotificationsStore {
   @observable entities   = []
-  @observable offset     = ''
   @observable loading    = false;
   @observable refreshing = false;
-  @observable unread = 0;
-  @observable filter = 'all';
+  @observable unread     = 0;
+  @observable filter     = 'all';
 
+  offset       = ''
   moreData     = true;
   pollInterval = null;
 
@@ -44,7 +44,6 @@ class NotificationsStore {
 
     getFeed(this.offset, this.filter)
       .then( feed => {
-        console.log(feed);
         this.loading = false,
         this.setFeed(feed);
       })
