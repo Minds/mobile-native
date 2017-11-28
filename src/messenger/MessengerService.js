@@ -33,8 +33,21 @@ class MessengerService {
    * @param {number} limit
    * @param {string} offset
    */
-  getCoonversations(limit, offset = "") {
+  getConversations(limit, offset = "") {
     return api.get('api/v2/conversations', {
+      limit: limit,
+      offset: offset
+    });
+  }
+
+  /**
+   * Search for conversations
+   * @param {number} limit
+   * @param {string} offset
+   */
+  searchConversations(q, limit, offset) {
+    return api.get('api/v2/conversations/search', {
+      q: q,
       limit: limit,
       offset: offset
     });

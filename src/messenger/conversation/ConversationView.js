@@ -20,12 +20,15 @@ export default class ConversationView extends PureComponent {
     const item = this.props.item;
     const avatarImg = { uri: MINDS_URI + 'icon/' + item.participants[0].guid + '/medium' };
     const styles = this.props.styles;
+    let unread = item.unread ? <Icon style={styles.icons} name='md-notifications' color='#4caf50' size={19} /> :null;
+    let online = item.online ? <Icon style={styles.icons} name='md-radio-button-on' color='#2196f3' size={19} /> : null;
+
     return (
       <View style={styles.row}>
         <Image source={avatarImg} style={styles.avatar} />
         <Text style={styles.body}>{item.username.toUpperCase()}</Text>
-        {item.unread && <Icon style={styles.icons} name='md-notifications' color='#4caf50' size={19} />}
-        {item.online && <Icon style={styles.icons} name='md-radio-button-on' color='#2196f3' size={19} />}
+        {unread}
+        {online}
       </View>
     );
   }

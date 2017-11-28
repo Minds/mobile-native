@@ -18,7 +18,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import ConversationView from './conversation/ConversationView';
 
-
+import SearchView from './search/SearchView';
+import debounce from './../common/helpers/debounce';
 /**
  * Messenger Conversarion List Screen
  */
@@ -32,25 +33,28 @@ export default class MessengerScreen extends Component {
     )
   }
 
+  searchDebouncer = debounce((search) => {
+    this.props.messengerList.setSearch(search);
+  }, 1300);
+
   /**
    * Render component
    */
   render() {
+    console.log('render');
     return (
       <View style={styles.container}>
+        <SearchView
+          placeholder='search...'
+          onChangeText={this.searchChange}
+        />
         <FlatList
           data={this.props.messengerList.conversations}
           renderItem={this.renderMessage}
           keyExtractor={item => item.guid}
-          onRefresh={() => this.props.messengerList.loadList(true)}
-          onEndReached={(distanceFromEnd ) => {
-            // fix to prevent load data twice on initial state
-            if (!this.onEndReachedCalledDuringMomentum) {
-              this.props.messengerList.loadList()
-              this.onEndReachedCalledDuringMomentum = true;
-            }
-          }}
-          onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}
+          onRefresh={this.refresh}
+          onEndReached={this.loadMore}
+          onMomentumScrollBegin={this.onMomentumScrollBegin}
           onEndThreshold={0.01}
           refreshing={this.props.messengerList.refreshing}
           style={styles.listView}
@@ -58,6 +62,37 @@ export default class MessengerScreen extends Component {
       </View>
     );
   }
+
+  /**
+   * Search change
+   * We debounce to prevent a fetch to the server on every key pressed
+   */
+  searchChange = (search) => {
+    this.searchDebouncer(search);
+  }
+
+  /**
+   * Clear and reload
+   */
+  refresh = () => {
+    this.props.messengerList.loadList(true);
+  }
+
+  /**
+   * Load more rows
+   */
+  loadMore = () => {
+    // fix to prevent load data twice on initial state
+    if (!this.onEndReachedCalledDuringMomentum) {
+      this.props.messengerList.loadList()
+      this.onEndReachedCalledDuringMomentum = true;
+    }
+  }
+
+  onMomentumScrollBegin = () => {
+    this.onEndReachedCalledDuringMomentum = false;
+  }
+
   /**
    * render row
    * @param {object} row
@@ -73,10 +108,12 @@ export default class MessengerScreen extends Component {
 const styles = StyleSheet.create({
 	listView: {
     paddingTop: 20,
-    backgroundColor: '#FFF',
   },
   container: {
     flex: 1,
+    paddingLeft: 5,
+    paddingRight: 5,
+    backgroundColor: '#FFF',
   },
   body: {
     marginLeft: 8,
