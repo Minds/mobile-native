@@ -36,27 +36,42 @@ class NotificationsStore {
     }
   }
 
-  loadFeed() {
+  /**
+   * Load conversations list
+   * @param {boolean} refresh
+   */
+  loadList(refresh = false) {
+    // refresh?
+    if (refresh) this.refresh();
+
     if (!this.moreData || this.loading) {
       return;
     }
+    // is loading
     this.loading = true;
+    this.setRefreshing(true);
 
     getFeed(this.offset, this.filter)
       .then( feed => {
-        this.loading = false,
         this.setFeed(feed);
+      })
+      .finally(()=>{
+        this.loading = false;
+        if (this.refreshing === true) {
+          setTimeout(() => {
+            this.setRefreshing(false);
+          }, 500);
+        }
       })
       .catch(err => {
         console.log('error', err);
       })
   }
 
-  reloadFeed() {
+  refresh() {
     this.moreData = true;
     this.loading = false;
     this.entities = [];
-    this.loadFeed();
   }
 
   loadCount() {
@@ -82,7 +97,7 @@ class NotificationsStore {
   @action
   setFilter(filter) {
     this.filter = filter;
-    this.reloadFeed();
+    this.loadList(true);
   }
 
   @action
@@ -104,12 +119,8 @@ class NotificationsStore {
   }
 
   @action
-  refresh() {
-    this.refreshing = true;
-
-    setTimeout(() => {
-      this.refreshing = false;
-    }, 1000);
+  setRefreshing(val) {
+    this.refreshing = val;
   }
 }
 

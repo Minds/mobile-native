@@ -50,16 +50,42 @@ export default class NotificationsScreen extends Component {
           data={this.props.notifications.entities}
           renderItem={this.renderRow}
           keyExtractor={item => item.guid}
-          onRefresh={() => this.props.notifications.refresh()}
-          refreshing={this.props.notifications.refreshing}
-          onEndReached={() => this.props.notifications.loadFeed()}
+          onRefresh={this.refresh}
+          onEndReached={this.loadMore}
           onEndThreshold={0.3}
+          refreshing={this.props.notifications.refreshing}
           style={styles.listView}
         />
       </View>
     );
   }
 
+  /**
+  * Clear and reload
+  */
+  refresh = () => {
+    this.props.notifications.loadList(true);
+  }
+
+  /**
+   * Load more rows
+   */
+  loadMore = () => {
+    // fix to prevent load data twice on initial state
+    if (!this.onEndReachedCalledDuringMomentum) {
+      this.props.notifications.loadList()
+      this.onEndReachedCalledDuringMomentum = true;
+    }
+  }
+
+  onMomentumScrollBegin = () => {
+    this.onEndReachedCalledDuringMomentum = false;
+  }
+
+  /**
+   * render row
+   * @param {object} row
+   */
   renderRow(row) {
     const entity = row.item;
     return (
