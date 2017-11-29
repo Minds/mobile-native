@@ -45,14 +45,14 @@ const Tabs = TabNavigator({
 export default class TabsScreen extends Component {
 
   static navigationOptions = {
-    //title: '',
     header: props => <Topbar {...props} />,
   }
 
   render() {
     return (
-      <Tabs />
+      <Tabs navigation={this.props.navigation} />
     );
   }
-
 }
+// link router between tab and main stack navigator
+TabsScreen.router = Tabs.router;
