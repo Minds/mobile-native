@@ -4,7 +4,7 @@ import api from './../common/services/api.service';
 /**
  * Channel Service
  */
-class MessengerService {
+class ChannelService {
 
   /**
    * Load Channel
@@ -15,4 +15,4 @@ class MessengerService {
   }
 }
 
-export default new MessengerService();
+export default new ChannelService();
