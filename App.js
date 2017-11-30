@@ -8,11 +8,13 @@ import LoginScreen from './src/auth/LoginScreen';
 import TabsScreen from './src/tabs/TabsScreen';
 import NotificationsScreen from './src/notifications/NotificationsScreen';
 import NotificationsSettingsScreen from './src/notifications/NotificationsSettingsScreen';
+import ChannelScreen from './src/channel/ChannelScreen';
 
 import newsfeed from './src/stores/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
 import notificationsSettings from './src/notifications/NotificationsSettingsStore';
 import messengerList from './src/messenger/MessengerListStore';
+import channel from './src/channel/ChannelStore';
 
 const Stack = StackNavigator({
   Loading: {
@@ -29,6 +31,9 @@ const Stack = StackNavigator({
   },
   NotificationsSettings: {
     screen: NotificationsSettingsScreen
+  },
+  Channel: {
+    screen: ChannelScreen
   }
 });
 
@@ -37,7 +42,8 @@ const stores = {
   newsfeed,
   notifications,
   notificationsSettings,
-  messengerList
+  messengerList,
+  channel
 }
 
 export default class App extends Component {

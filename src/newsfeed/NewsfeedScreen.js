@@ -40,11 +40,11 @@ export default class NewsfeedScreen extends Component {
   //   return true;
   // }
 
-  renderActivity(row) {
+  renderActivity=(row) => {
     const entity = row.item;
     return (
       <View>
-        <Activity entity={entity} />
+        <Activity entity={entity} navigation={this.props.navigation}/>
       </View>
     );
   }
