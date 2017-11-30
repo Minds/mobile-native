@@ -1,7 +1,5 @@
 import api from './../common/services/api.service';
 
-import { RSA } from 'react-native-rsa-native';
-
 /**
  * Messenger Service
  */
