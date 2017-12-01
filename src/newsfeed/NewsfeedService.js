@@ -13,3 +13,17 @@ export function getFeed(offset) {
       throw "Ooops";
     })
 }
+
+export function getFeedChannel(guid, offset) {
+  return api.get('api/v1/newsfeed/personal/' + guid, { offset: offset, limit: 12 })
+    .then((data) => {
+      return {
+        entities: data.activity,
+        offset: data['load-next'],
+      }
+    })
+    .catch(err => {
+      console.log('error');
+      throw "Ooops";
+    })
+}

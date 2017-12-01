@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 
-import { getFeed } from './../newsfeed/NewsfeedService';
+import { getFeed } from './NewsfeedService';
 
 class NewsfeedStore {
   @observable entities   = []
@@ -31,6 +31,9 @@ class NewsfeedStore {
   refresh() {
     console.log('refreshing newsfeed');
     this.refreshing = true;
+    this.entities = [];
+    this.offset = ''
+    this.loadFeed()
 
     setTimeout(() => {
       console.log('refreshing newsfeed false');
