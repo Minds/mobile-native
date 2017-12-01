@@ -9,6 +9,7 @@ import TabsScreen from './src/tabs/TabsScreen';
 import NotificationsScreen from './src/notifications/NotificationsScreen';
 import NotificationsSettingsScreen from './src/notifications/NotificationsSettingsScreen';
 import ChannelScreen from './src/channel/ChannelScreen';
+import RegisterScreen from './src/register/RegisterScreen';
 
 import newsfeed from './src/stores/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
@@ -22,6 +23,9 @@ const Stack = StackNavigator({
   },
   Login: {
     screen: LoginScreen,
+  },
+  Register: {
+    screen: RegisterScreen,
   },
   Tabs: {
     screen: TabsScreen,
