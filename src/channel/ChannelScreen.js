@@ -21,15 +21,16 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MINDS_URI } from '../config/Config';
 
-import abbrev from '../common/helpers/abbrev';
 import RewardsCarousel from './carousel/RewardsCarousel';
-
 import ChannelHeader from './header/ChannelHeader';
+import Toolbar from './toolbar/Toolbar';
+import NewsfeedList from '../newsfeed/NewsfeedList';
 
 /**
  * Channel Screen
  */
 @inject('channel')
+@inject('channelfeed')
 @observer
 export default class ChannelScreen extends Component {
 
@@ -44,9 +45,14 @@ export default class ChannelScreen extends Component {
    * Load data on mount
    */
   componentWillMount() {
-    const guid = this.props.navigation.state.params.guid;
+    const guid = this.getGuid();
+    this.props.channelfeed.clearFeed();
     this.props.channel.load(guid);
     this.props.channel.loadrewards(guid);
+  }
+
+  getGuid(){
+    return this.props.navigation.state.params.guid;
   }
 
   /**
@@ -55,6 +61,8 @@ export default class ChannelScreen extends Component {
   render() {
     const channel = this.props.channel.channel;
     const rewards = this.props.channel.rewards;
+    const channelfeed = this.props.channelfeed;
+    const guid = this.getGuid();
 
     if (!channel.guid) {
       return (
@@ -64,9 +72,13 @@ export default class ChannelScreen extends Component {
 
     return (
       <ScrollView style={styles.container}>
-        <ChannelHeader styles={styles} channel={channel} />
-        <RewardsCarousel rewards={rewards} styles={styles}/>
+        <ChannelHeader styles={styles} channel={channel}/>
+        <View style={styles.carouselcontainer}>
+          <RewardsCarousel rewards={rewards} styles={styles}/>
+        </View>
+        <Toolbar/>
         <View style={styles.body}>
+          <NewsfeedList newsfeed={channelfeed} style={{flex:1}} guid={guid} />
         </View>
       </ScrollView>
     );
@@ -83,13 +95,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
   },
+  carouselcontainer: {
+    flex:1,
+    paddingBottom: 20
+  },
   body: {
     flexDirection: 'column',
     flex: 1,
+    height: 800,
     alignItems: 'stretch',
-    backgroundColor: '#aaa',
-    paddingLeft: 15,
-    paddingRight: 15,
   },
   rewardicon: {
     color: '#0071ff',

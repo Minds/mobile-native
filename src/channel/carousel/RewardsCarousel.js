@@ -28,7 +28,6 @@ export default class RewardsCarousel extends Component {
     const rewards = this.props.rewards;
     const styles  = this.props.styles;
 
-    // get screen width
     const width = Dimensions.get('window').width;
 
     const rewardsArray = [];

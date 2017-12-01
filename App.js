@@ -11,11 +11,12 @@ import NotificationsSettingsScreen from './src/notifications/NotificationsSettin
 import ChannelScreen from './src/channel/ChannelScreen';
 import RegisterScreen from './src/register/RegisterScreen';
 
-import newsfeed from './src/stores/NewsfeedStore';
+import newsfeed from './src/newsfeed/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
 import notificationsSettings from './src/notifications/NotificationsSettingsStore';
 import messengerList from './src/messenger/MessengerListStore';
 import channel from './src/channel/ChannelStore';
+import channelfeed from './src/channel/ChannelFeedStore';
 
 const Stack = StackNavigator({
   Loading: {
@@ -47,7 +48,8 @@ const stores = {
   notifications,
   notificationsSettings,
   messengerList,
-  channel
+  channel,
+  channelfeed
 }
 
 export default class App extends Component {

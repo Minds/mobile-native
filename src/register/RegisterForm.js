@@ -1,11 +1,11 @@
 import React, {
     Component
   } from 'react';
-  
+
   import {
     NavigationActions
   } from 'react-navigation';
-  
+
   import {
     Button,
     Text,
@@ -19,14 +19,12 @@ import React, {
     View,
     CheckBox,
   } from 'react-native';
-  
-  import { Form, FormItem } from 'react-native-form-validation';
-  
+
   import { login } from '../auth/LoginService';
   import { register } from './RegisterService';
 
   export default class RegisterForm extends Component<{}> {
-  
+
     state = {
       error: {},
       password: '',
@@ -35,7 +33,7 @@ import React, {
       email: '',
       termsAccepted: false,
     };
-  
+
     props: {
       onLogin: () => void,
     }
@@ -59,9 +57,9 @@ import React, {
       }
       this.setState({ termsAccepted: !!value, error });
   }
-  
+
     render() {
-      return ( 
+      return (
           <KeyboardAvoidingView behavior='padding'
             style={styles.container}>
             <Button
@@ -133,7 +131,7 @@ import React, {
           </KeyboardAvoidingView>
       );
     }
-  
+
     onPressRegister() {
       if (!this.state.error.termsAcceptedError && !this.state.error.confirmPasswordError) {
         register(this.state.username ,this.state.email ,this.state.password)
@@ -145,7 +143,7 @@ import React, {
               .catch(err => {
                 alert(err);
               });
-            
+
           })
           .catch(err => {
             alert(err);
@@ -155,7 +153,7 @@ import React, {
       }
     }
   }
-  
+
   const styles = StyleSheet.create({
     input: {
       color: '#FFF',
@@ -175,6 +173,6 @@ import React, {
       opacity: 0.8
     },
     terms: {
-      
+
     }
   });
