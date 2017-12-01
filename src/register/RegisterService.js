@@ -1,8 +1,9 @@
+
 import { MINDS_URI } from '../config/Config';
 
 import session  from './../common/services/session.service';
 
-async function _login(username, password) {
+async function _register(username, email, password) {
   var headers = new Headers();
 
   headers.append('Content-Type', 'application/json'); // This one sends body
@@ -11,20 +12,22 @@ async function _login(username, password) {
     credentials: "include",
     headers: headers,
     body: JSON.stringify({
-      grant_type: 'password',
-      client_id: '',
-      cliemt_secret: '',
+      'email': email,
       'username': username,
       'password': password
     }),
   };
 
   return new Promise((resolve, reject) => {
-    fetch(MINDS_URI + 'oauth2/token', params)
+    fetch(MINDS_URI + 'api/v1/register', params)
       .then((resp) => {
         if (resp.status == 200) {
           resp.json().then(data => {
-            resolve(data);
+            if (data.status == "error") {
+              reject(data.message);
+            } else {
+              resolve(data);
+            }
           });
         } else {
           reject(resp.status);
@@ -36,13 +39,12 @@ async function _login(username, password) {
   });
 }
 
-export function login(username, password) {
-  return _login(username, password)
+export function register(username, email, password) {
+  return _register(username, email, password)
     .then((data) => {
-      session.setAccessToken(data.access_token);
       return true;
     })
     .catch(err => {
-      throw "Login error";
+      throw err;
     })
 }
