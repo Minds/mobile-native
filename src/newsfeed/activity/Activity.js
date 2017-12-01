@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 
 import OwnerBlock from './OwnerBlock';
+import Actions from './Actions';
 
 
 export default class Activity extends Component {
@@ -70,7 +71,7 @@ export default class Activity extends Component {
           </View>
 
           { media }
-
+          <Actions entity={this.props.entity}></Actions>
         </View>
 
     );
