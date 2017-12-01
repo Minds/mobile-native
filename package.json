@@ -7,11 +7,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "mobx": "^3.3.1",
-    "mobx-react": "^4.3.4",
+    "mobx": "^3.3.2",
+    "mobx-react": "^4.3.5",
     "react": "16.0.0",
     "react-native": "0.50.3",
     "react-native-camera": "^0.12.0",
+    "react-native-elements": "^0.18.4",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.19"
   },
