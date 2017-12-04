@@ -20,6 +20,7 @@ import ConversationView from './conversation/ConversationView';
 
 import SearchView from './search/SearchView';
 import debounce from './../common/helpers/debounce';
+
 /**
  * Messenger Conversarion List Screen
  */
@@ -41,7 +42,7 @@ export default class MessengerScreen extends Component {
    * Render component
    */
   render() {
-    console.log('render');
+    const messengerList = this.props.messengerList;
     return (
       <View style={styles.container}>
         <SearchView
@@ -49,14 +50,13 @@ export default class MessengerScreen extends Component {
           onChangeText={this.searchChange}
         />
         <FlatList
-          data={this.props.messengerList.conversations}
+          data={messengerList.conversations}
           renderItem={this.renderMessage}
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
-          onMomentumScrollBegin={this.onMomentumScrollBegin}
           onEndThreshold={0.01}
-          refreshing={this.props.messengerList.refreshing}
+          refreshing={messengerList.refreshing}
           style={styles.listView}
         />
       </View>
@@ -75,22 +75,14 @@ export default class MessengerScreen extends Component {
    * Clear and reload
    */
   refresh = () => {
-    this.props.messengerList.loadList(true);
+    this.props.messengerList.refresh();
   }
 
   /**
    * Load more rows
    */
   loadMore = () => {
-    // fix to prevent load data twice on initial state
-    if (!this.onEndReachedCalledDuringMomentum) {
-      this.props.messengerList.loadList()
-      this.onEndReachedCalledDuringMomentum = true;
-    }
-  }
-
-  onMomentumScrollBegin = () => {
-    this.onEndReachedCalledDuringMomentum = false;
+    this.props.messengerList.loadList()
   }
 
   /**
@@ -108,6 +100,7 @@ export default class MessengerScreen extends Component {
 const styles = StyleSheet.create({
 	listView: {
     paddingTop: 20,
+    flex: 1
   },
   container: {
     flex: 1,
