@@ -46,9 +46,13 @@ export default class ChannelScreen extends Component {
    */
   componentWillMount() {
     const guid = this.getGuid();
-    this.props.channelfeed.clearFeed();
     this.props.channel.load(guid);
     this.props.channel.loadrewards(guid);
+  }
+
+  componentWillUnmount() {
+    this.props.channelfeed.clearFeed();
+    this.props.channel.clear();
   }
 
   getGuid(){
@@ -59,10 +63,10 @@ export default class ChannelScreen extends Component {
    * Render
    */
   render() {
-    const channel = this.props.channel.channel;
-    const rewards = this.props.channel.rewards;
+    const channel     = this.props.channel.channel;
+    const rewards     = this.props.channel.rewards;
     const channelfeed = this.props.channelfeed;
-    const guid = this.getGuid();
+    const guid        = this.getGuid();
 
     if (!channel.guid) {
       return (
@@ -70,17 +74,28 @@ export default class ChannelScreen extends Component {
       );
     }
 
-    return (
-      <ScrollView style={styles.container}>
-        <ChannelHeader styles={styles} channel={channel}/>
+    let carousel = null;
+
+    // carousel only visible if we have data
+    if (rewards.money) {
+      carousel = (
         <View style={styles.carouselcontainer}>
-          <RewardsCarousel rewards={rewards} styles={styles}/>
+          <RewardsCarousel rewards={rewards} styles={styles} />
         </View>
+      );
+    }
+
+    // channel header
+    const header = (
+      <View>
+        <ChannelHeader styles={styles} channel={channel} />
+        {carousel}
         <Toolbar/>
-        <View style={styles.body}>
-          <NewsfeedList newsfeed={channelfeed} style={{flex:1}} guid={guid} />
-        </View>
-      </ScrollView>
+      </View>
+    );
+
+    return (
+      <NewsfeedList newsfeed={channelfeed} style={{ flex: 1 }} guid={guid} header={header} />
     );
   }
 }
@@ -95,15 +110,21 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     width: '100%',
   },
-  carouselcontainer: {
-    flex:1,
-    paddingBottom: 20
+  namecol: {
+    flex:1
   },
-  body: {
-    flexDirection: 'column',
+  namecontainer: {
+    flexDirection: 'row'
+  },
+  buttonscol: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: 100
+  },
+  carouselcontainer: {
     flex: 1,
-    height: 800,
-    alignItems: 'stretch',
+    paddingBottom: 20
   },
   rewardicon: {
     color: '#0071ff',

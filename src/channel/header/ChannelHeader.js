@@ -15,8 +15,8 @@ import {
 } from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import { MINDS_URI } from '../../config/Config';
 
+import { MINDS_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 
 /**
@@ -51,9 +51,9 @@ export default class ChannelHeader extends Component {
   render() {
 
     const channel = this.props.channel;
-    const styles = this.props.styles;
-    const avatar = { uri: this.getAvatar() };
-    const iurl = { uri: this.getBannerFromChannel() };
+    const styles  = this.props.styles;
+    const avatar  = { uri: this.getAvatar() };
+    const iurl    = { uri: this.getBannerFromChannel() };
 
     return (
       <View>
@@ -69,14 +69,13 @@ export default class ChannelHeader extends Component {
               <Text style={styles.countervalue}>{abbrev(channel.impressions, 0)}</Text>
             </View>
           </View>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ flexDirection: 'column', flex: 1 }}>
+          <View style={styles.namecontainer}>
+            <View style={styles.namecol}>
               <Text style={styles.name}>{channel.name.toUpperCase()}</Text>
               <Text style={styles.username}>@{channel.username}</Text>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: 100 }}>
+            <View style={styles.buttonscol}>
               <Button
-                style={{ width: 80, padding: 5 }}
                 onPress={() => { console.log('press') }}
                 title="Message"
                 color="#4791d6"

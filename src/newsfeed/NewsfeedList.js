@@ -19,6 +19,7 @@ export default class NewsfeedList extends Component {
 
     return (
       <FlatList
+        ListHeaderComponent={this.props.header}
         data={this.props.newsfeed.entities}
         renderItem={this.renderActivity}
         keyExtractor={item => item.guid}
