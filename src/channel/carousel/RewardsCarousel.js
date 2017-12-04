@@ -21,14 +21,34 @@ import Carousel from '../../common/components/Carousel';
 @observer
 export default class RewardsCarousel extends Component {
 
+  state = {
+    width: Dimensions.get('window').width
+  }
+
+  /**
+   * Handle dimensions changes
+   */
+  dimensionChange = () => {
+    this.setState({
+      width: Dimensions.get('window').width
+    });
+  }
+
+  componentWillMount() {
+    Dimensions.addEventListener("change", this.dimensionChange);
+  }
+
+  componentWillUnmount() {
+    // allways remove listeners on unmount
+    Dimensions.removeEventListener("change", this.dimensionChange);
+  }
+
   /**
    * Render component
    */
   render() {
     const rewards = this.props.rewards;
     const styles  = this.props.styles;
-
-    const width = Dimensions.get('window').width;
 
     const rewardsArray = [];
 
@@ -47,7 +67,7 @@ export default class RewardsCarousel extends Component {
     }
 
     return (
-      <Carousel style={styles.carousel} width={width} height={70} color={'#0071ff'}>
+      <Carousel style={styles.carousel} width={this.state.width} height={70} color={'#0071ff'}>
         {rewardsArray}
       </Carousel>
     )
