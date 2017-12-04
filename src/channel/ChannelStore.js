@@ -14,25 +14,25 @@ class ChannelStore {
   @observable rewards = {};
 
   @action
-  setChannel(ch) {
-    this.channel = ch;
+  clear() {
+    this.channel = {};
+    this.rewards = {};
   }
 
   @action
-  clearChannel() {
-    this.channel = {};
+  setChannel(channel) {
+    this.channel = channel;
   }
 
   @action
   load(guid) {
     this.channel = {};
     channelService.load(guid)
-      .then(action(response => {
-        console.log(response);
-        this.channel = response.channel;
-      }))
+      .then(response => {
+        this.setChannel(response.channel);
+      })
       .catch(err => {
-        console.log('error', err);
+        console.log('error');
       });
   }
 
@@ -40,8 +40,7 @@ class ChannelStore {
   loadrewards(guid) {
     wireService.rewards(guid)
       .then(action(rewards => {
-        console.log(rewards);
-        this.rewards = rewards;
+        this.rewards = rewards || {};
       }))
       .catch(err => {
         console.log('error', err);

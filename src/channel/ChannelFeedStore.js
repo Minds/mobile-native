@@ -4,48 +4,44 @@ import { getFeedChannel } from '../newsfeed/NewsfeedService';
 
 // TODO: refactor to use Newsfeed store logic (DRY)
 class ChannelFeedStore {
-  @observable entities = []
-  @observable offset = ''
+  @observable entities   = []
+  @observable offset     = ''
   @observable refreshing = false
-  @observable filter = 'feed';
+  @observable filter     = 'feed';
 
   loadFeed(guid) {
     getFeedChannel(guid, this.offset)
-      .then(
-      feed => {
+      .then(feed => {
         this.setFeed(feed);
-      }
-      )
+      })
       .catch(err => {
-        console.log('error');
+        console.error('error');
       });
   }
 
   @action
   setFeed(feed) {
-    this.entities = [... this.entities, ...feed.entities];
-    this.offset = feed.offset,
-      this.loaded = true,
-      this.refreshing = false
+    if (feed.entities) {
+      this.entities = [... this.entities, ...feed.entities];
+    }
+    this.offset = feed.offset;
   }
 
   @action
   clearFeed() {
     this.entities = [];
+    this.offset   = '';
   }
 
   @action
-  refresh(guid) {
-    console.log('refreshing newsfeed');
+  refresh() {
     this.refreshing = true;
     this.entities = [];
     this.offset = ''
-    this.loadFeed(guid)
-
-    setTimeout(() => {
-      console.log('refreshing newsfeed false');
-      this.refreshing = false;
-    }, 1000);
+    this.loadFeed()
+      .finally(action(() => {
+        this.refreshing = false;
+      }));
   }
 
   @action

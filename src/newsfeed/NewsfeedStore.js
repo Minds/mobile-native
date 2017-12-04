@@ -2,43 +2,52 @@ import { observable, action } from 'mobx'
 
 import { getFeed } from './NewsfeedService';
 
+/**
+ * News feed store
+ */
 class NewsfeedStore {
-  @observable entities   = []
-  @observable offset     = ''
-  @observable refreshing = false
+  @observable entities   = [];
+  @observable offset     = '';
+  @observable refreshing = false;
 
+  /**
+   * Load feed
+   */
   loadFeed() {
-    getFeed(this.offset)
+    return getFeed(this.offset)
       .then(
         feed => {
           this.setFeed(feed);
         }
       )
       .catch(err => {
-        console.log('error');
+        console.log('error', err);
       });
   }
 
   @action
   setFeed(feed) {
-    this.entities = [... this.entities, ...feed.entities];
-    this.offset = feed.offset,
-    this.loaded = true,
-    this.refreshing = false
+    if (feed.entities) {
+      this.entities = [... this.entities, ...feed.entities];
+    }
+    this.offset = feed.offset;
+  }
+
+  @action
+  clearFeed() {
+    this.entities = [];
+    this.offset   = '';
   }
 
   @action
   refresh() {
-    console.log('refreshing newsfeed');
     this.refreshing = true;
-    this.entities = [];
-    this.offset = ''
+    this.entities   = [];
+    this.offset     = ''
     this.loadFeed()
-
-    setTimeout(() => {
-      console.log('refreshing newsfeed false');
-      this.refreshing = false;
-    }, 1000);
+      .finally(action(() => {
+        this.refreshing = false;
+      }));
   }
 }
 
