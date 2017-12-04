@@ -29,7 +29,6 @@ export default class LoadingScreen extends Component {
   }
 
   componentWillMount() {
-    session.clear();
     session.isLoggedIn().then(isLoggedIn => {
       if (isLoggedIn) {
         this.goToTabs();
