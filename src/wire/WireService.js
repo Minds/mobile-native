@@ -12,7 +12,7 @@ class WireService {
   rewards(guid) {
     return api.get('api/v1/wire/rewards/' + guid )
       .then(rewards => {
-        return rewards.wire_rewards.rewards;
+        return (rewards.wire_rewards) ? rewards.wire_rewards.rewards: null;
       });
   }
 }
