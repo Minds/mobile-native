@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Comment from './Comment';
 
+import { getComments, postComment } from './CommentsService';
+
 export default class Comments extends Component {
 
   static navigationOptions = {
@@ -15,16 +17,20 @@ export default class Comments extends Component {
 
   state = {
     text: '',
+    comments: [],
     avatarSrc: { uri: 'https://d3ae0shxev0cb7.cloudfront.net/icon/747562985026756623/medium/1511964398' }
   };
 
   render() {
     return (
       <View style={styles.commentList}>
-        {
-          this.props.comments.map((l, i) => (
+        { this.props.comments.map((l, i) => (
             <Comment key={i} comment={l}/>
-          ))
+          )) 
+        }
+        { this.state.comments.map((l, i) => (
+            <Comment key={i} comment={l}/>
+          )) 
         }
         { this.renderPoster() }
       </View>
@@ -48,7 +54,7 @@ export default class Comments extends Component {
               onChangeText={(text) => this.setState({text})}
               value={this.state.text}
             />
-            <Icon style={{flex: 1}} name="ios-send" size={36}></Icon>
+            <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="ios-send" size={36}></Icon>
           </View>
         </View>
       );
@@ -60,6 +66,22 @@ export default class Comments extends Component {
       return (
         <View></View>
       );
+    }
+    
+  }
+
+  saveComment = () => {
+    let comments = this.state.comments;
+    if(this.state.text.length > 1){
+      postComment(this.props.guid, this.state.text).then((data) => {
+        //comments.push(data.comments);
+        //this.setState({
+        //  comments: comments
+        //})
+      })
+      .catch(err => {
+        console.log('error');
+      })
     }
     
   }
