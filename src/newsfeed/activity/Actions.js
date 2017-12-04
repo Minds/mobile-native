@@ -70,7 +70,10 @@ export default class Actions extends Component {
       loading: true,
       loadedComments: true
     })
-    getComments(this.props.entity.entity_guid).then((data) => {
+    let guid = this.props.entity.guid;
+    if (this.props.entity.entity_guid)
+      guid = this.props.entity.entity_guid;
+    getComments(guid).then((data) => {
       this.setState({
         comments: data.comments,
         offset: data.offset,

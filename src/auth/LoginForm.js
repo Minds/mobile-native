@@ -72,7 +72,7 @@ export default class LoginForm extends Component<{}> {
         this.props.onLogin();
       })
       .catch(err => {
-        alert(err);
+        alert(JSON.stringify(err));
       });
   }
 }

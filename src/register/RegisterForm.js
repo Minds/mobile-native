@@ -62,11 +62,6 @@ import React, {
       return (
           <KeyboardAvoidingView behavior='padding'
             style={styles.container}>
-            <Button
-              onPress={() => this.onPressRegister()}
-              title="Create channel"
-              color="rgba(0,0,0, 0.5)"
-            />
             <View>
               <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
                 {this.state.error.termsAcceptedError}
