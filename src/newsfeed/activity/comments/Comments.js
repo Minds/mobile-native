@@ -20,7 +20,7 @@ export default class Comments extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.commentList}>
         {
           this.props.comments.map((l, i) => (
             <Comment key={i} comment={l}/>
@@ -42,18 +42,24 @@ export default class Comments extends Component {
           </View>
           <View style={styles.commentPoster}>
             <TextInput
+              style={{flex: 5}}
               editable = {true}
               maxLength = {40}
               onChangeText={(text) => this.setState({text})}
               value={this.state.text}
             />
+            <Icon style={{flex: 1}} name="ios-send" size={36}></Icon>
           </View>
         </View>
       );
     } else if(this.props.loading) {
-      return( <ActivityIndicator size="small" color="#00ff00" /> );
+      return ( 
+        <ActivityIndicator size="small" color="#00ff00" /> 
+      );
     } else {
-      return (<View></View>);
+      return (
+        <View></View>
+      );
     }
     
   }
@@ -87,6 +93,10 @@ const styles = StyleSheet.create({
   },
   commentPoster: {
     flex: 5,
+    flexDirection: 'row',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   avatar: {
     height: 46,
@@ -95,4 +105,7 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
   },
+  commentList: {
+    paddingLeft: 10
+  }
 });
