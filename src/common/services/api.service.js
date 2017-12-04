@@ -60,7 +60,6 @@ class ApiService {
         })
         .then(response => response.json())
         .then(jsonResp => {
-          alert(JSON.stringify(jsonResp));
           if (jsonResp.status === 'error') {
             return reject(jsonResp);
           }

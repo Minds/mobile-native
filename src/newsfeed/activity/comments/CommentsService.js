@@ -13,3 +13,16 @@ export function getComments(id, offset) {
       throw "Ooops";
     })
 }
+
+export function postComment(id, text) {
+  return api.post('api/v1/comments/' + id + '/', { comment: text })
+    .then((data) => {
+      return {
+        comments: data.comments,
+      }
+    })
+    .catch(err => {
+      console.log('error');
+      throw "Ooops";
+    })
+}

@@ -60,19 +60,20 @@ export default class Actions extends Component {
           </View>
           {this.props.children}
         </View>
-        <Comments loading={this.state.loading} loadedComments={this.state.loadedComments} comments={this.state.comments}></Comments> 
+        <Comments guid={this.state.guid} loading={this.state.loading} loadedComments={this.state.loadedComments} comments={this.state.comments}></Comments> 
       </View>
     );
   }
 
   loadComments = () => {
-    this.setState({
-      loading: true,
-      loadedComments: true
-    })
     let guid = this.props.entity.guid;
     if (this.props.entity.entity_guid)
       guid = this.props.entity.entity_guid;
+    this.setState({
+        loading: true,
+        loadedComments: true,
+        guid: guid,
+      })
     getComments(guid).then((data) => {
       this.setState({
         comments: data.comments,
