@@ -20,12 +20,13 @@ import {
 } from 'react-native';
 
 import OwnerBlock from './OwnerBlock';
+import Actions from './Actions';
 
 
-export default class Activity extends Component<{}> {
+export default class Activity extends Component {
 
   state = {
-    
+
   };
 
   render() {
@@ -35,7 +36,7 @@ export default class Activity extends Component<{}> {
     switch (this.props.entity.custom_type) {
       case "batch":
         let source = {
-          uri: this.props.entity.custom_data[0].src 
+          uri: this.props.entity.custom_data[0].src
         }
         media = (
           <View style={styles.imageContainer}>
@@ -44,10 +45,10 @@ export default class Activity extends Component<{}> {
         )
         break;
     }
-    
+
     if (this.props.entity.perma_url) {
       let source = {
-        uri: this.props.entity.thumbnail_src 
+        uri: this.props.entity.thumbnail_src
       }
       media = (
         <View style={styles.imageContainer}>
@@ -60,9 +61,9 @@ export default class Activity extends Component<{}> {
       )
     }
 
-    return (  
+    return (
         <View style={styles.container}>
-          <OwnerBlock entity={this.props.entity.ownerObj}>
+          <OwnerBlock entity={this.props.entity.ownerObj} navigation={this.props.navigation}>
             <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
           </OwnerBlock>
           <View style={styles.message}>
@@ -70,7 +71,7 @@ export default class Activity extends Component<{}> {
           </View>
 
           { media }
-
+          <Actions entity={this.props.entity}></Actions>
         </View>
 
     );

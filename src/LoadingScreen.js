@@ -14,9 +14,9 @@ import {
   View,
 } from 'react-native';
 
-import { isLoggedIn } from './auth/LoginService';
+import session from './common/services/session.service';
 
-export default class LoadingScreen extends Component<{}> {
+export default class LoadingScreen extends Component {
 
   static navigationOptions = {
     header: props => <View style={ { backgroundColor: '#FFF' }} />,
@@ -29,13 +29,13 @@ export default class LoadingScreen extends Component<{}> {
   }
 
   componentWillMount() {
-    isLoggedIn()
-      .then(() => {
+    session.isLoggedIn().then(isLoggedIn => {
+      if (isLoggedIn) {
         this.goToTabs();
-      })
-      .catch(() => {
+      } else {
         this.goToLogin();
-      });
+      }
+    });
   }
 
   goToTabs() {
@@ -62,5 +62,5 @@ export default class LoadingScreen extends Component<{}> {
 }
 
 const styles = StyleSheet.create({
-  
+
 });

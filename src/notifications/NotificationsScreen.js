@@ -1,112 +1,95 @@
-import React, { 
-    Component 
+import React, {
+  Component
 } from 'react';
+
 import {
-    Text,
-    TextInput,
-    StyleSheet,
-    KeyboardAvoidingView,
-    ScrollView,
-    ActivityIndicator,
-    TouchableOpacity,
-    Image,
-    View,
-    FlatList,
-    ListView
+  StyleSheet,
+  FlatList,
+  View
 } from 'react-native';
+
+import {
+  observer,
+  inject
+} from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {
-  MINDS_URI
-} from '../config/Config';
-
-import {
-  getFeed,
-} from './NotificationsService';
-
 import Notification from './notification/Notification';
+import NotificationsTopbar from './NotificationsTopbar';
 
-export default class NotificationsScreen extends Component<{}> {
-
-  state = {
-    entities: [],
-    offset: '',
-    loading: false,
-    moreData: true,
-    refreshing: false
-  }
-
-  render() {
-    return (
-      <FlatList
-        data={this.state.entities}
-        renderItem={this.renderRow}
-        keyExtractor={item => item.guid}
-        onRefresh={() => this.refresh()}
-        refreshing={this.state.refreshing}
-        onEndReached={() => this.loadMore()}
-        onEndThreshold={0.3}
-        style={styles.listView}
-      />
-    );
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps == this.props && nextState == this.state)
-      return false;
-    return true;
-  }
-
-  loadFeed() {
-    if (!this.state.moreData || this.state.loading) {
-      return;
-    }
-    this.setState({ loading: true });
-    getFeed(this.state.offset)
-      .then((feed) => {
-        this.setState({
-          entities: [... this.state.entities, ...feed.entities],
-          offset: feed.offset,
-          moreData:  feed.entities.length,
-          loading: false,
-          refreshing: false
-        });
-      })
-      .catch(err => {
-        console.log('error');
-      })
-  }
-
-  refresh() {
-    this.setState({ refreshing: true })
-
-    setTimeout(() => {
-      this.setState({ refreshing: false });
-    }, 1000)
-  }
-
-  loadMore() {
-    if (this.loading)
-      return;
-    this.loadFeed();
-  }
-
-  renderRow(row) {
-    const entity = row.item;
-    return (
-      <Notification entity={entity}>
-      </Notification>
-    );
-  }
-
-}
-
+// style
 const styles = StyleSheet.create({
-	listView: {
+  listView: {
     backgroundColor: '#FFF',
+  },
+  button: {
+    padding: 8,
+  },
+  container: {
+    flex: 1,
   },
   row: {
     padding: 16,
   },
 });
+
+@inject('notifications')
+@observer
+export default class NotificationsScreen extends Component {
+
+  static navigationOptions = ({ navigation }) => ({
+    headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.button} onPress={() => navigation.navigate('NotificationsSettings')} />
+  });
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <NotificationsTopbar  />
+        <FlatList
+          data={this.props.notifications.entities}
+          renderItem={this.renderRow}
+          keyExtractor={item => item.guid}
+          onRefresh={this.refresh}
+          onEndReached={this.loadMore}
+          onEndThreshold={0.3}
+          refreshing={this.props.notifications.refreshing}
+          style={styles.listView}
+        />
+      </View>
+    );
+  }
+
+  /**
+  * Clear and reload
+  */
+  refresh = () => {
+    this.props.notifications.loadList(true);
+  }
+
+  /**
+   * Load more rows
+   */
+  loadMore = () => {
+    // fix to prevent load data twice on initial state
+    if (!this.onEndReachedCalledDuringMomentum) {
+      this.props.notifications.loadList()
+      this.onEndReachedCalledDuringMomentum = true;
+    }
+  }
+
+  onMomentumScrollBegin = () => {
+    this.onEndReachedCalledDuringMomentum = false;
+  }
+
+  /**
+   * render row
+   * @param {object} row
+   */
+  renderRow(row) {
+    const entity = row.item;
+    return (
+      <Notification entity={entity} />
+    );
+  }
+}

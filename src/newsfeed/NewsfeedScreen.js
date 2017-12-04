@@ -1,35 +1,23 @@
-import React, { 
-    Component 
-} from 'react';
+import React, { Component } from 'react';
 import {
-    Text,
-    TextInput,
-    StyleSheet,
-    KeyboardAvoidingView,
-    ScrollView,
-    ActivityIndicator,
-    TouchableOpacity,
-    Image,
-    View,
-    FlatList,
-    ListView
+  FlatList,
+  View
 } from 'react-native';
+import {
+  observer,
+  inject
+} from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { 
-  getFeed
-} from './NewsfeedService';
+import NewsfeedList from './NewsfeedList';
 
-import Activity from './activity/Activity';
-
-export default class NewsfeedScreen extends Component<{}> {
-
-  state = {
-    entities: [],
-    offset: '',
-    refreshing: false
-  }
+/**
+ * News Feed Screen
+ */
+@inject('newsfeed')
+@observer
+export default class NewsfeedScreen extends Component {
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
@@ -38,64 +26,10 @@ export default class NewsfeedScreen extends Component<{}> {
   }
 
   render() {
+    const newsfeed = this.props.newsfeed;
+
     return (
-      <FlatList
-        data={this.state.entities}
-        renderItem={this.renderActivity}
-        keyExtractor={item => item.guid}
-        onRefresh={() => this.refresh()}
-        refreshing={this.state.refreshing}
-        onEndReached={() => this.loadFeed()}
-        onEndThreshold={0.3}
-        style={styles.listView}
-      />
+      <NewsfeedList newsfeed={newsfeed} navigation={this.props.navigation}/>
     );
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps == this.props && nextState == this.state)
-      return false;
-    return true;
-  }
-
-  loadFeed() {
-    getFeed(this.state.offset)
-      .then((feed) => {
-        this.setState({
-          entities: [... this.state.entities, ...feed.entities],
-          offset: feed.offset,
-          loaded: true,
-          refreshing: false
-        });
-      })
-      .catch(err => {
-        console.log('error');
-      })
-  }
-
-  refresh() {
-    this.setState({ refreshing: true })
-
-    setTimeout(() => {
-      this.setState({ refreshing: false });
-    }, 1000)
-  }
-
-  renderActivity(row) {
-    const entity = row.item;
-    return (
-      <View>
-        <Activity entity={entity} />
-      </View>
-    );
-  }
-
 }
-
-const styles = StyleSheet.create({
-	listView: {
-    //paddingTop: 20,
-    backgroundColor: '#FFF',
-    flex: 1,
-  }
-});

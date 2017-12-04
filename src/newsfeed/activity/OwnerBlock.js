@@ -24,18 +24,27 @@ import {
 } from '../../config/Config';
 
 
-export default class OwnerBlock extends Component<{}> {
+export default class OwnerBlock extends Component {
 
   state = {
     avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.guid }
   };
 
+  /**
+   * Navigate To channel
+   */
+  _navToChannel = () => {
+    this.props.navigation.navigate('Channel', { guid:this.props.entity.guid});
+  }
+
   render() {
-    return (  
+    return (
         <View style={styles.container}>
-          <Image source={this.state.avatarSrc} style={styles.avatar}/>
+          <TouchableOpacity onPress={this._navToChannel}>
+            <Image source={this.state.avatarSrc} style={styles.avatar}/>
+          </TouchableOpacity>
           <View style={styles.body}>
-            <Text style={styles.username}> 
+            <Text style={styles.username}>
               { this.props.entity.username }
             </Text>
             {this.props.children}
@@ -62,7 +71,7 @@ const styles = StyleSheet.create({
     borderColor: '#EEE',
   },
   body: {
-    marginLeft: 8,    
+    marginLeft: 8,
   },
   username: {
     fontWeight: 'bold',
