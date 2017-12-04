@@ -10,78 +10,49 @@ import messengerService from './MessengerService';
  */
 class MessengerListStore {
   @observable conversations = [];
-  @observable refreshing    = false;
-  @observable search = ''
+  @observable refreshing = false;
+  @observable search = '';
 
-  offset = '';
-  loading = false;
+  offset    = '';
+  newsearch = true;
+  loaded    = false;
 
   /**
    * Load conversations list
-   * @param {boolean} refresh
    */
-  loadList(refresh = false) {
+  loadList() {
+    const rows = 24;
+    let fetching;
 
-    if (this.loading) return;
-    // is loading
-    this.loading = true;
-    this.setRefreshing(true);
-    // is a refresh?
-    if (refresh) {
-      this.offset = '';
-      this.conversations = [];
+    // is a search?
+    if (this.search && this.newsearch) {
+      this.newsearch = false;
+      fetching = messengerService.searchConversations(this.search, rows);
+    } else {
+      if (this.loaded && !this.offset) {
+        return;
+      }
+      fetching = messengerService.getConversations(rows, this.offset, this.newsearch);
     }
-    messengerService.getConversations(12, this.offset)
-      .then(response => {
-        this.offset = response['load-next'];
-        this.pushConversations(response.conversations);
-      }).finally(() => {
-        this.loading = false;
-        if (this.refreshing === true) {
-          setTimeout(() => {
-            this.setRefreshing(false);
-          }, 500);
-        }
-      }).catch(err =>{
-        console.log('error', err);
+
+    return fetching.then(response => {
+        this.loaded = true;
+        this.offset = response.offset;
+        this.pushConversations(response.entities);
+      }).catch(err => {
+        console.log('error');
       });
-  }
-
-  /**
-   * Search conversations list
-   * @param {string} q
-   */
-  searchList(q) {
-    if (!q) {
-      return this.loadList(true);
-    }
-
-    this.loading = true;
-    this.setRefreshing(true);
-
-    messengerService.searchConversations(q, 12, '')
-      .then((response) => {
-        this.conversations = [];
-        this.pushConversations(response.conversations);
-        this.offset = response['load-next'];
-      })
-      .finally(() => {
-        this.loading = false;
-        if (this.refreshing === true) {
-          setTimeout(() => {
-            this.setRefreshing(false);
-          }, 500);
-        }
-      })
-      .catch(err => {
-        console.log('error', err);
-      })
   }
 
   @action
   setSearch(search) {
-    this.search = search;
-    this.searchList(search);
+    this.search        = search;
+    this.newsearch     = true;
+    this.loaded        = false;
+    this.conversations = [];
+    this.offset        = '';
+
+    this.loadList();
   }
 
   @action
@@ -92,6 +63,21 @@ class MessengerListStore {
   @action
   pushConversations(conversations) {
     this.conversations = [... this.conversations, ...conversations];
+  }
+
+  @action
+  refresh() {
+    this.refreshing    = true;
+    this.loaded        = false;
+    this.conversations = [];
+    this.offset        = '';
+
+    if (this.search) this.newsearch = true;
+
+    this.loadList()
+      .finally(action(() => {
+        this.refreshing = false;
+      }));
   }
 }
 

@@ -31,11 +31,20 @@ class MessengerService {
    * @param {number} limit
    * @param {string} offset
    */
-  getConversations(limit, offset = "") {
-    return api.get('api/v2/conversations', {
-      limit: limit,
-      offset: offset
-    });
+  getConversations(limit, offset = "", refresh=false) {
+
+    const params = { limit: limit, offset: offset };
+    if ( refresh ) {
+      params.refresh = true
+    }
+
+    return api.get('api/v2/conversations', params)
+      .then((data) => {
+        return {
+          entities: data.conversations || [],
+          offset:   data['load-next']  || '',
+        };
+      });
   }
 
   /**
@@ -44,11 +53,13 @@ class MessengerService {
    * @param {string} offset
    */
   searchConversations(q, limit, offset) {
-    return api.get('api/v2/conversations/search', {
-      q: q,
-      limit: limit,
-      offset: offset
-    });
+    return api.get('api/v2/conversations/search', {q: q, limit: limit, offset: offset})
+      .then((data) => {
+        return {
+          entities: data.conversations || [],
+          offset:   data['load-next']  || '',
+        };
+      });
   }
 
   /**
