@@ -6,6 +6,8 @@ import {
   NavigationActions
 } from 'react-navigation';
 
+import { observer, inject } from 'mobx-react/native';
+
 import {
   Button,
   Text,
@@ -16,6 +18,8 @@ import {
 
 import session from './common/services/session.service';
 
+@inject('user')
+@observer
 export default class LoadingScreen extends Component {
 
   static navigationOptions = {
@@ -31,7 +35,12 @@ export default class LoadingScreen extends Component {
   componentWillMount() {
     session.isLoggedIn().then(isLoggedIn => {
       if (isLoggedIn) {
-        this.goToTabs();
+        this.props.user.load().then( (result) => {
+          this.goToTabs();
+        }).catch( (err) => {
+          alert('Error logging in');
+          this.goToLogin();
+        });
       } else {
         this.goToLogin();
       }
