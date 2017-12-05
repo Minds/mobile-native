@@ -42,6 +42,13 @@ export default class NotificationsScreen extends Component {
     headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.button} onPress={() => navigation.navigate('NotificationsSettings')} />
   });
 
+  /**
+   * reset counter on mount
+   */
+  componentWillMount() {
+    this.props.notifications.setUnread(0);
+  }
+
   render() {
     return (
       <View style={styles.container}>
