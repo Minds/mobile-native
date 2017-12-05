@@ -18,8 +18,12 @@ import {
   Image,
 } from 'react-native';
 
+import { observer, inject } from 'mobx-react/native';
+
 import { login } from './LoginService';
 
+@inject('user')
+@observer
 export default class LoginForm extends Component<{}> {
 
   state = {
@@ -70,6 +74,7 @@ export default class LoginForm extends Component<{}> {
     login(this.state.username, this.state.password)
       .then(data => {
         this.props.onLogin();
+        this.props.user.load('me');
       })
       .catch(err => {
         alert(JSON.stringify(err));

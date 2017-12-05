@@ -17,9 +17,7 @@ export function getComments(id, offset) {
 export function postComment(id, text) {
   return api.post('api/v1/comments/' + id + '/', { comment: text })
     .then((data) => {
-      return {
-        comments: data.comments,
-      }
+      return data;
     })
     .catch(err => {
       console.log('error');

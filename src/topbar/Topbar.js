@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { MINDS_URI } from '../config/Config';
 
-
+@inject('user')
 @inject('notifications')
 @observer
 export default class Topbar extends Component {
@@ -22,7 +22,7 @@ export default class Topbar extends Component {
           </View>
 
           <View style={styles.topbarCenter}>
-            <Image source={ { uri: MINDS_URI + 'icon/me' }} style={styles.avatar} />
+            <Image source={ { uri: MINDS_URI + 'icon/' + this.props.user.guid }} style={styles.avatar} />
           </View>
 
           <View style={styles.topbarRight}>

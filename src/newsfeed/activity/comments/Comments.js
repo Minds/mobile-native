@@ -6,7 +6,10 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Comment from './Comment';
 
 import { getComments, postComment } from './CommentsService';
+import session from '../../../common/services/session.service';
 
+@inject('user')
+@observer
 export default class Comments extends Component {
 
   static navigationOptions = {
@@ -16,9 +19,10 @@ export default class Comments extends Component {
   }
 
   state = {
+    isLoading: false,
     text: '',
     comments: [],
-    avatarSrc: { uri: 'https://d3ae0shxev0cb7.cloudfront.net/icon/747562985026756623/medium/1511964398' }
+    avatarSrc: { uri: 'https://d3ae0shxev0cb7.cloudfront.net/icon/' + this.props.user.guid + '/medium/1511964398' }
   };
 
   render() {
@@ -38,6 +42,12 @@ export default class Comments extends Component {
   }
 
   renderPoster() {
+    if(!session.isLoggedIn()){
+      return (
+        <View></View>
+      );
+    }
+
     if (this.props.loadedComments && !this.props.loading) {
       return (
         <View style={styles.container}>
@@ -46,16 +56,20 @@ export default class Comments extends Component {
               <Image source={this.state.avatarSrc} style={styles.avatar}/>
             </TouchableOpacity>
           </View>
-          <View style={styles.commentPoster}>
-            <TextInput
-              style={{flex: 5}}
-              editable = {true}
-              maxLength = {40}
-              onChangeText={(text) => this.setState({text})}
-              value={this.state.text}
-            />
-            <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="ios-send" size={36}></Icon>
-          </View>
+          { this.state.isLoading ? 
+            <ActivityIndicator size="small" color="#00ff00" /> 
+              :
+            <View style={styles.commentPoster}>
+              <TextInput
+                style={{flex: 5}}
+                editable = {true}
+                maxLength = {40}
+                onChangeText={(text) => this.setState({text})}
+                value={this.state.text}
+              />
+              <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="ios-send" size={36}></Icon>
+            </View>
+          }  
         </View>
       );
     } else if(this.props.loading) {
@@ -73,11 +87,17 @@ export default class Comments extends Component {
   saveComment = () => {
     let comments = this.state.comments;
     if(this.state.text.length > 1){
+      this.setState({
+        isLoading: true,
+      });
       postComment(this.props.guid, this.state.text).then((data) => {
-        //comments.push(data.comments);
-        //this.setState({
-        //  comments: comments
-        //})
+        alert(data.comment)
+        comments.push(data.comment);
+        this.setState({
+          comments: comments,
+          text: '',
+          isLoading: false,
+        });
       })
       .catch(err => {
         console.log('error');
