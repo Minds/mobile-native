@@ -15,8 +15,13 @@ import {
     ListView
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  NavigationActions
+} from 'react-navigation';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Button } from 'react-native-elements';
+import session from './../common/services/session.service';
 
 export default class MoreScreen extends Component<{}> {
 
@@ -33,8 +38,26 @@ export default class MoreScreen extends Component<{}> {
 
   render() {
     return (
-      <View />
+      <View>
+        <Button
+          onPress={() => this.onPressLogout()}
+          title="Logout"
+          color="rgba(0,0,0, 0.5)"
+        />
+      </View>
     );
+  }
+
+  onPressLogout() {
+    session.clear();
+    const loginAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Login' })
+      ]
+    })
+
+    this.props.navigation.dispatch(loginAction);
   }
 
   componentDidMount() {
