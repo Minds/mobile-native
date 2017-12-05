@@ -9,25 +9,24 @@ import channelService from './../channel/ChannelService';
  * Login Store
  */
 class UserStore {
-  @observable user = {};
+  @observable me = {};
 
   @action
   setUser(user) {
-    this.user = user;
+    this.me = user;
   }
 
   @action
   clearUser() {
-    this.user = {};
+    this.me = {};
   }
 
   @action
-  load(guid) {
-    this.user = {};
-    channelService.load('me')
+  load() {
+    this.me = {};
+     return channelService.load('me')
       .then(action(response => {
-        console.log(response);
-        this.user = response.channel;
+        this.me = response.channel;
       }))
       .catch(err => {
         console.log('error', err);

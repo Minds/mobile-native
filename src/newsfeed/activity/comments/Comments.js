@@ -91,7 +91,6 @@ export default class Comments extends Component {
         isLoading: true,
       });
       postComment(this.props.guid, this.state.text).then((data) => {
-        alert(data.comment)
         comments.push(data.comment);
         this.setState({
           comments: comments,
