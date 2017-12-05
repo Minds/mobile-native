@@ -11,6 +11,7 @@ import {
 import {
   Button,
   Text,
+  FlatList,
   TextInput,
   StyleSheet,
   KeyboardAvoidingView,
@@ -18,10 +19,12 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Image,
+  Modal,
   View
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import {
   MINDS_URI
@@ -30,6 +33,7 @@ import {
 import { thumbActivity } from './ActionsService';
 import { getComments } from './comments/CommentsService';
 import Comments from './comments/Comments';
+import Comment from './comments/Comment';
 
 @inject('newsfeed')
 @inject('user')
@@ -43,6 +47,7 @@ export default class Actions extends Component {
     avatarSrc: { uri: MINDS_URI + 'icon/' },
     votedDown: false,
     votedUp: false,
+    commentsModalVisible: false,
   };
 
   
@@ -81,7 +86,7 @@ export default class Actions extends Component {
             <Text style={styles.actionIconText}>{this.state.votedDownCount}</Text>
           </View>
           <View style={styles.actionIconWrapper}>
-            <Icon color='rgb(96, 125, 139)' name='flash-on' />
+            <IonIcon color='rgb(96, 125, 139)' name='ion-ios-bolt' />
           </View>
           <View style={styles.actionIconWrapper} onPress={this.loadComments}>
             <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' onPress={this.loadComments} />
@@ -92,7 +97,18 @@ export default class Actions extends Component {
           </View>
           {this.props.children}
         </View>
-        <Comments guid={this.state.guid} loading={this.state.loading} loadedComments={this.state.loadedComments} comments={this.state.comments}></Comments> 
+        <View style = {styles.modalContainer}>
+          <Modal animationType = {"slide"} transparent = {false}
+            visible = {this.state.commentsModalVisible}
+            onRequestClose = {() => { console.log("Modal has been closed.") } }>
+            <View style = {styles.modal}>
+              <View style = {styles.modalHeader}>
+                <IonIcon onPress={this.toggleThumb.bind(this, 'thumbs:up')} color='white'  name='md-arrow-round-back' />
+              </View>
+              <Comments comments={this.state.comments} loading={this.state.loading} ></Comments>
+            </View>
+          </Modal>
+        </View>
       </View>
     );
   }
@@ -134,6 +150,7 @@ export default class Actions extends Component {
   }
 
   loadComments = () => {
+    this.setState({ commentsModalVisible: true });
     let guid = this.props.entity.guid;
     if (this.props.entity.entity_guid)
       guid = this.props.entity.entity_guid;
@@ -170,9 +187,6 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
   },
-  actionIcon: {
-    
-  },
   actionIconWrapper: {
     flex: 1,
     alignSelf: 'flex-start'
@@ -185,4 +199,13 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center'
   },
+  modal: {
+    flex:1,
+    padding: 10
+  },
+  modalContainer: {
+    alignItems: 'center',
+    backgroundColor: '#ede3f2',
+    padding: 1
+  }
 });
