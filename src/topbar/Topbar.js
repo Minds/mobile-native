@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, Image, View } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  Image,
+  View,
+  TouchableOpacity
+} from 'react-native';
 
 import { observer, inject } from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,10 +22,12 @@ export default class Topbar extends Component {
       <View style={styles.container}>
         <View style={styles.topbar}>
 
-          <View style={styles.topbarLeft}>
-            <Icon name="bell" size={18} color='#444' onPress={() => this.props.navigation.navigate('Notifications')} style={ styles.button } />
-            <Text>{this.props.notifications.unread}</Text>
-          </View>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Notifications')} >
+            <View style={styles.topbarLeft}>
+              <Icon name="bell" size={18} color='#444' style={ styles.button } />
+              <Text>{this.props.notifications.unread}</Text>
+            </View>
+          </TouchableOpacity>
 
           <View style={styles.topbarCenter}>
             <Image source={ { uri: MINDS_URI + 'icon/' + this.props.user.guid }} style={styles.avatar} />
