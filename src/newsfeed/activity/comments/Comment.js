@@ -47,7 +47,7 @@ export default class Comment extends Component {
               <Text style={styles.timestamp}> {this.formatDate(this.props.comment.time_created)}</Text>
             </View>
           </View>
-          <View>
+          <View style={styles.content}>
             <Text style={styles.message}>{this.props.comment.description}</Text>
           </View>
         </View>
@@ -68,8 +68,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8
   },
+  content: {
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 8
+  },
   container: {
-    flex: 1,
     borderBottomColor: '#EEE',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
