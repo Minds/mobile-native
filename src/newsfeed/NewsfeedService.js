@@ -27,3 +27,16 @@ export function getFeedChannel(guid, offset) {
       throw "Ooops";
     })
 }
+
+export function post(post) {
+  return api.post('api/v1/newsfeed', { message : post.text })
+    .then((data) => {
+      return {
+        entity: data.activity,
+      }
+    })
+    .catch(err => {
+      console.log('error');
+      throw "Ooops";
+    })
+}
