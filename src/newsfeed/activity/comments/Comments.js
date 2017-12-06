@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListView, StyleSheet, View, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -27,17 +27,26 @@ export default class Comments extends Component {
 
   render() {
     return (
-      <View style={styles.commentList}>
-        { this.props.comments.map((l, i) => (
-            <Comment key={i} comment={l}/>
-          )) 
-        }
-        { this.state.comments.map((l, i) => (
-            <Comment key={i} comment={l}/>
-          )) 
-        }
+      <ScrollView>
+        <FlatList
+          ListHeaderComponent={this.props.header}
+          data={this.props.comments}
+          renderItem={this.renderComment}
+          keyExtractor={item => item.guid}
+          onEndThreshold={0.3}
+          style={styles.listView}
+        />
         { this.renderPoster() }
-      </View>
+      </ScrollView>
+    );
+  }
+
+
+  
+  renderComment = (row) => {
+    const entity = row.item;
+    return (
+      <Comment comment={entity}/>
     );
   }
 
@@ -48,7 +57,7 @@ export default class Comments extends Component {
       );
     }
 
-    if (this.props.loadedComments && !this.props.loading) {
+    if (!this.props.loading) {
       return (
         <View style={styles.container}>
           <View style={styles.author}>
@@ -67,7 +76,7 @@ export default class Comments extends Component {
                 onChangeText={(text) => this.setState({text})}
                 value={this.state.text}
               />
-              <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="ios-send" size={36}></Icon>
+              <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="md-send" size={36}></Icon>
             </View>
           }  
         </View>
@@ -91,7 +100,6 @@ export default class Comments extends Component {
         isLoading: true,
       });
       postComment(this.props.guid, this.state.text).then((data) => {
-        alert(data.comment)
         comments.push(data.comment);
         this.setState({
           comments: comments,
@@ -139,6 +147,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    alignSelf: 'baseline',
   },
   avatar: {
     height: 46,
@@ -147,7 +156,8 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
   },
-  commentList: {
-    paddingLeft: 10
+  listView: {
+    backgroundColor: '#FFF',
+    flex: 1,
   }
 });

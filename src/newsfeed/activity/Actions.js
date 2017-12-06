@@ -11,6 +11,7 @@ import {
 import {
   Button,
   Text,
+  FlatList,
   TextInput,
   StyleSheet,
   KeyboardAvoidingView,
@@ -18,38 +19,74 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Image,
+  Modal,
   View
 } from 'react-native';
+
+import { observer, inject } from 'mobx-react/native';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import {
   MINDS_URI
 } from '../../config/Config';
 
+import { thumbActivity } from './ActionsService';
 import { getComments } from './comments/CommentsService';
 import Comments from './comments/Comments';
+import Comment from './comments/Comment';
 
+@inject('newsfeed')
+@inject('user')
+@observer
 export default class Actions extends Component {
 
   state = {
     comments: [],
-    offset: '',
     loading: false,
     loadedComments: false,
     avatarSrc: { uri: MINDS_URI + 'icon/' },
+    votedDown: false,
+    votedUp: false,
+    commentsModalVisible: false,
   };
 
+  
+  componentWillMount() {
+    let votedUp = false;
+    let votedDown = false;
+    let votedUpCount = 0;
+    let votedDownCount = 0;
+    
+    if(this.props.entity['thumbs:up:user_guids'] && this.props.entity['thumbs:up:user_guids'].indexOf(this.props.user.me.guid) >= 0){
+      votedUp = true;
+      votedUpCount = parseInt(this.props.entity['thumbs:up:count']);
+    }
+    if(this.props.entity['thumbs:down:user_guids'] && this.props.entity['thumbs:down:user_guids'].indexOf(this.props.user.me.guid) >= 0){
+      votedDown = true;
+      votedDownCount = parseInt(this.props.entity['thumbs:down:count']);
+    }
+
+    this.setState({
+      votedDown,
+      votedUp,
+      votedDownCount,
+      votedUpCount
+    })
+  }
   render() {
     return (
       <View>
         <View style={styles.container}>
           <View style={styles.actionIconWrapper}>
-            <Icon color='rgb(96, 125, 139)' name='thumb-up' />
+            <Icon onPress={this.toggleThumb.bind(this, 'thumbs:up')} color={this.state.votedUp ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-up' />
+            <Text style={styles.actionIconText}>{this.state.votedUpCount}</Text>
           </View>
           <View style={styles.actionIconWrapper}>
-            <Icon color='rgb(96, 125, 139)' name='thumb-down' />
+            <Icon onPress={this.toggleThumb.bind(this, 'thumbs:down')} color={this.state.votedDown ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-down' />
+            <Text style={styles.actionIconText}>{this.state.votedDownCount}</Text>
           </View>
           <View style={styles.actionIconWrapper}>
-            <Icon color='rgb(96, 125, 139)' name='flash-on' />
+            <IonIcon color='rgb(96, 125, 139)' name='ion-ios-bolt' />
           </View>
           <View style={styles.actionIconWrapper} onPress={this.loadComments}>
             <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' onPress={this.loadComments} />
@@ -60,12 +97,60 @@ export default class Actions extends Component {
           </View>
           {this.props.children}
         </View>
-        <Comments guid={this.state.guid} loading={this.state.loading} loadedComments={this.state.loadedComments} comments={this.state.comments}></Comments> 
+        <View style = {styles.modalContainer}>
+          <Modal animationType = {"slide"} transparent = {false}
+            visible = {this.state.commentsModalVisible}
+            onRequestClose = {() => { console.log("Modal has been closed.") } }>
+            <View style = {styles.modal}>
+              <View style = {styles.modalHeader}>
+                <IonIcon onPress={this.toggleThumb.bind(this, 'thumbs:up')} color='white'  name='md-arrow-round-back' />
+              </View>
+              <Comments comments={this.state.comments} loading={this.state.loading} ></Comments>
+            </View>
+          </Modal>
+        </View>
       </View>
     );
   }
 
+  toggleThumb = (direction) => {
+    if(direction == 'thumbs:up') {
+      this.setState({ 
+        votedUp : !this.state.votedUp,
+        votedUpCount: this.state.votedUp? this.state.votedUpCount-1: this.state.votedUpCount+1})
+    } else {
+      this.setState({ 
+        votedDown : !this.state.votedDown,
+        votedDownCount: this.state.votedDown? this.state.votedDownCount-1: this.state.votedDownCount+1})
+    }
+
+    let arr = direction.split(':');
+
+    thumbActivity(this.props.entity.guid, arr[1]).then((data) => {}).catch(err => {
+        alert(err);
+        if(direction == 'thumbs:up') {
+          this.setState({ 
+            votedUp : !this.state.votedUp,
+            votedUpCount: this.state.votedUp? this.state.votedUpCount-1: this.state.votedUpCount+1})
+        } else {
+          this.setState({ 
+            votedDown : !this.state.votedDown,
+            votedDownCount: this.state.votedDown? this.state.votedDownCount-1: this.state.votedDownCount+1})
+        }
+      })
+  }
+
+  hasThumbedActivity = (direction) => {
+    let guids = direction == 'up' ? this.props.entity['thumbs:up:user_guids'] : this.props.entity['thumbs:down:user_guids'];
+    if (guids && guids.length > 0 && guids.indexOf(this.props.user.me.guid) >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   loadComments = () => {
+    this.setState({ commentsModalVisible: true });
     let guid = this.props.entity.guid;
     if (this.props.entity.entity_guid)
       guid = this.props.entity.entity_guid;
@@ -102,9 +187,6 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
   },
-  actionIcon: {
-    
-  },
   actionIconWrapper: {
     flex: 1,
     alignSelf: 'flex-start'
@@ -117,4 +199,13 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center'
   },
+  modal: {
+    flex:1,
+    padding: 10
+  },
+  modalContainer: {
+    alignItems: 'center',
+    backgroundColor: '#ede3f2',
+    padding: 1
+  }
 });

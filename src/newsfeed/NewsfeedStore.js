@@ -40,6 +40,24 @@ class NewsfeedStore {
   }
 
   @action
+  updateThumbCounter(guid, attr, increase) {
+    let user_guids = attr + ':user_guids';
+    let counter = attr + ':count';
+    alert(guid + attr + increase.toString())
+    for (var i=0; i < this.entities.length; i++) {
+      if (this.entities[i].guid === guid) {
+        if(increase){
+          this.entities[i][counter]++;
+          this.entities[i][user_guids] = [guid];
+        }else{
+          this.entities[i][counter]--;
+          delete this.entities[i][user_guids][guid];
+        }
+      }
+    }
+  }
+
+  @action
   refresh() {
     this.refreshing = true;
     this.entities   = [];
