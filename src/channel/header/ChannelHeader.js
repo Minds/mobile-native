@@ -34,7 +34,7 @@ export default class ChannelHeader extends Component {
       return channel.carousels[0].src;
     }
 
-    return `${MINDS_URI}fs/v1/banners/${channel.guid}/0/${channel.banner}`;
+    return `${MINDS_URI}fs/v1/banners/${channel.guid}/0/${channel.banner}/medium`;
   }
 
   /**
@@ -57,7 +57,7 @@ export default class ChannelHeader extends Component {
 
     return (
       <View>
-        <Image source={iurl} style={styles.banner} />
+        <Image source={iurl} style={styles.banner} resizeMode="cover" />
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
             <View style={styles.counter}>

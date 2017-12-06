@@ -47,6 +47,7 @@ export default class ChannelScreen extends Component {
   componentWillMount() {
     const guid = this.getGuid();
     this.props.channel.load(guid);
+    this.props.channelfeed.loadFeed(guid);
     this.props.channel.loadrewards(guid);
   }
 
@@ -68,7 +69,7 @@ export default class ChannelScreen extends Component {
     const channelfeed = this.props.channelfeed;
     const guid        = this.getGuid();
 
-    if (!channel.guid) {
+    if (!channel.guid || !channelfeed.loaded) {
       return (
         <ActivityIndicator size={'large'} />
       );
@@ -77,7 +78,7 @@ export default class ChannelScreen extends Component {
     let carousel = null;
 
     // carousel only visible if we have data
-    if (rewards.money) {
+    if (rewards.money && rewards.money.length) {
       carousel = (
         <View style={styles.carouselcontainer}>
           <RewardsCarousel rewards={rewards} styles={styles} />
@@ -95,7 +96,7 @@ export default class ChannelScreen extends Component {
     );
 
     return (
-      <NewsfeedList newsfeed={channelfeed} style={{ flex: 1 }} guid={guid} header={header} />
+      <NewsfeedList newsfeed={channelfeed} guid={guid} header={header} />
     );
   }
 }
@@ -148,6 +149,7 @@ const styles = StyleSheet.create({
   banner: {
     flexDirection: 'row',
     alignItems: 'stretch',
+    width: '100%',
     height: 190,
   },
   briefdescription: {

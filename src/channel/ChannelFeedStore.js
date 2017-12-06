@@ -4,13 +4,17 @@ import { getFeedChannel } from '../newsfeed/NewsfeedService';
 
 // TODO: refactor to use Newsfeed store logic (DRY)
 class ChannelFeedStore {
-  @observable entities   = []
-  @observable offset     = ''
+  @observable entities   = [];
   @observable refreshing = false
   @observable filter     = 'feed';
+  @observable loaded     = false;
 
+  offset = '';
+
+  @action
   loadFeed(guid) {
-    getFeedChannel(guid, this.offset)
+    this.loaded = true;
+    return getFeedChannel(guid, this.offset)
       .then(feed => {
         this.setFeed(feed);
       })
@@ -24,21 +28,22 @@ class ChannelFeedStore {
     if (feed.entities) {
       this.entities = [... this.entities, ...feed.entities];
     }
-    this.offset = feed.offset;
+    this.offset = feed.offset || '';
   }
 
   @action
   clearFeed() {
     this.entities = [];
     this.offset   = '';
+    this.loaded   = false;
   }
 
   @action
-  refresh() {
+  refresh(guid) {
     this.refreshing = true;
     this.entities = [];
     this.offset = ''
-    this.loadFeed()
+    this.loadFeed(guid)
       .finally(action(() => {
         this.refreshing = false;
       }));
