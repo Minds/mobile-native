@@ -35,6 +35,9 @@ export default class MoreScreen extends Component {
         name: 'Blogs',
       },{
         name: 'Groups',
+        onPress: () => {
+          this.props.navigation.navigate('GroupsList');
+        }
       },{
         name: 'Help & Support',
       },{
@@ -45,9 +48,12 @@ export default class MoreScreen extends Component {
         switchButton: true,
       },{
         name: 'Invite',
+
       },{
         name: 'Settings',
-        onPress: this.onPressSettings
+        onPress: () => {
+          this.props.navigation.navigate('Settings');
+        }
       },{
         name: 'Logout',
         onPress: this.onPressLogout

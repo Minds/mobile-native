@@ -52,7 +52,7 @@ export default class SettingsScreen extends Component {
         </View>
         <Text style={styles.header}>Recurring Payments</Text>
         <Text style={[styles.header, {marginTop:20}]}>Categories</Text>
-        <List containerStyle={{ flex: 1}}>
+        <List containerStyle={{ flex: 1, borderTopWidth: 0, borderBottomWidth: 0}}>
           {
             this.state.categories.map((l, i) => (
               <ListItem
