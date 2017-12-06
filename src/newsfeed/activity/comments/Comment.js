@@ -40,12 +40,15 @@ export default class Comment extends Component {
                 <Image source={this.state.avatarSrc} style={styles.avatar}/>
               </TouchableOpacity>
             </View>
-            <View style={{flex:4}}>
-              <Text style={styles.timestamp}> @{this.props.comment.ownerObj.username}</Text>
+            <View style={{flex:6}}>
+              <View style={{flex:4}}>
+                <Text style={styles.timestamp}> @{this.props.comment.ownerObj.username}</Text>
+              </View>
+              <View style={{flex:3}}>
+                <Text style={styles.timestamp}> {this.formatDate(this.props.comment.time_created)}</Text>
+              </View>
             </View>
-            <View style={{flex:3}}>
-              <Text style={styles.timestamp}> {this.formatDate(this.props.comment.time_created)}</Text>
-            </View>
+            
           </View>
           <View style={styles.content}>
             <Text style={styles.message}>{this.props.comment.description}</Text>
