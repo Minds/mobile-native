@@ -14,22 +14,33 @@ export default class NewsfeedList extends Component {
    * Render component
    */
   render() {
-
-    const params = this.props.guid;
-
     return (
       <FlatList
         ListHeaderComponent={this.props.header}
-        data={this.props.newsfeed.entities}
+        data={this.props.newsfeed.entities.slice()}
         renderItem={this.renderActivity}
         keyExtractor={item => item.guid}
-        onRefresh={() => this.props.newsfeed.refresh(params)}
+        onRefresh={this.refresh}
         refreshing={this.props.newsfeed.refreshing}
-        onEndReached={() => this.props.newsfeed.loadFeed(params)}
-        onEndThreshold={0.3}
+        onEndReached={this.loadFeed}
+        onEndThreshold={0}
         style={styles.listView}
       />
     );
+  }
+
+  /**
+   * Load feed data
+   */
+  loadFeed = () => {
+    this.props.newsfeed.loadFeed(this.props.guid);
+  }
+
+  /**
+   * Refresh feed data
+   */
+  refresh = () => {
+    this.props.newsfeed.refresh(this.props.guid)
   }
 
   /**

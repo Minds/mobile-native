@@ -1,53 +1,48 @@
-import React, { 
-    Component 
+import React, {
+  Component
 } from 'react';
-import {
-    Text,
-    TextInput,
-    StyleSheet,
-    KeyboardAvoidingView,
-    ScrollView,
-    ActivityIndicator,
-    TouchableOpacity,
-    Image,
-    View,
-    FlatList,
-    ListView
-} from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  StyleSheet,
+  Image,
+  TouchableOpacity
+} from 'react-native';
 
 import {
   MINDS_URI
 } from '../config/Config';
 
+import {
+  observer
+} from 'mobx-react/native'
 
+export default class DiscoveryTile extends Component {
 
-export default class DiscoveryTile extends Component<{}> {
+  /**
+   * Navigate to view
+   */
+  _navToView = () => {
+    if (this.props.navigation) {
+      this.props.navigation.navigate('DiscoveryView', { entity: this.props.entity.item });
+    }
+  }
 
   render() {
+    const url = { uri: MINDS_URI + 'api/v1/archive/thumbnails/' + this.props.entity.item.guid + '/medium' };
     return (
-      <View style={styles.tile}>
-        <Image source={ { uri: MINDS_URI + 'api/v1/archive/thumbnails/' + this.props.entity.guid + '/medium' }} style={styles.tileImage}/>
-      </View>
+      <TouchableOpacity onPress={this._navToView} style={styles.tileImage}>
+        <Image
+          source={ url }
+          style={styles.tileImage}
+        />
+      </TouchableOpacity>
     );
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps == this.props && nextState == this.state)
-      return false;
-    return true;
-  }
-
-
 }
 
 const styles = StyleSheet.create({
-  tile: {
-    flex: 1,
-    minHeight: 100,
-  },
   tileImage: {
+    minHeight: 120,
     flex: 1,
   },
 });

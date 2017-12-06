@@ -10,6 +10,7 @@ import NotificationsScreen from './src/notifications/NotificationsScreen';
 import NotificationsSettingsScreen from './src/notifications/NotificationsSettingsScreen';
 import ChannelScreen from './src/channel/ChannelScreen';
 import RegisterScreen from './src/register/RegisterScreen';
+import DiscoveryViewScreen from './src/discovery/DiscoveryViewScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
@@ -18,6 +19,7 @@ import messengerList from './src/messenger/MessengerListStore';
 import channel from './src/channel/ChannelStore';
 import user from './src/auth/UserStore';
 import channelfeed from './src/channel/ChannelFeedStore';
+import discovery from './src/discovery/DiscoveryStore';
 
 const Stack = StackNavigator({
   Loading: {
@@ -40,6 +42,9 @@ const Stack = StackNavigator({
   },
   Channel: {
     screen: ChannelScreen
+  },
+  DiscoveryView: {
+    screen: DiscoveryViewScreen
   }
 });
 
@@ -52,6 +57,7 @@ const stores = {
   channel,
   channelfeed,
   user,
+  discovery
 }
 
 export default class App extends Component {
