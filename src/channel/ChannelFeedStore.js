@@ -11,11 +11,9 @@ class ChannelFeedStore {
 
   offset = '';
 
-  @action
   loadFeed(guid) {
-    this.loaded = true;
     return getFeedChannel(guid, this.offset)
-      .then(feed => {
+    .then(feed => {
         this.setFeed(feed);
       })
       .catch(err => {
@@ -25,6 +23,7 @@ class ChannelFeedStore {
 
   @action
   setFeed(feed) {
+    this.loaded = true;
     if (feed.entities) {
       this.entities = [... this.entities, ...feed.entities];
     }
@@ -40,6 +39,7 @@ class ChannelFeedStore {
 
   @action
   refresh(guid) {
+    this.loaded   = false;
     this.refreshing = true;
     this.entities = [];
     this.offset = ''
