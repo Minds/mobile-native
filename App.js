@@ -12,6 +12,9 @@ import ChannelScreen from './src/channel/ChannelScreen';
 import RegisterScreen from './src/register/RegisterScreen';
 import DiscoveryViewScreen from './src/discovery/DiscoveryViewScreen';
 import ConversationScreen from './src/messenger/ConversationScreen';
+import SettingsScreen from './src/settings/SettingsScreen';
+import GroupsListScreen from './src/groups/GroupsListScreen';
+import GroupJoinScreen from './src/groups/GroupJoinScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
@@ -49,6 +52,15 @@ const Stack = StackNavigator({
   },
   Conversation: {
     screen: ConversationScreen
+  },
+  Settings: {
+    screen: SettingsScreen
+  },
+  GroupsList: {
+    screen: GroupsListScreen
+  },
+  GroupsJoin: {
+    screen: GroupJoinScreen
   }
 });
 
