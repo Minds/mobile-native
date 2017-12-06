@@ -3,6 +3,7 @@ import {
   FlatList,
   View
 } from 'react-native';
+
 import {
   observer,
   inject
@@ -16,7 +17,6 @@ import NewsfeedList from './NewsfeedList';
  * News Feed Screen
  */
 @inject('newsfeed')
-@observer
 export default class NewsfeedScreen extends Component {
 
   static navigationOptions = {

@@ -27,14 +27,17 @@ import {
 export default class OwnerBlock extends Component {
 
   state = {
-    avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.guid }
+    avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.guid + '/medium' }
   };
 
   /**
    * Navigate To channel
    */
   _navToChannel = () => {
-    this.props.navigation.navigate('Channel', { guid:this.props.entity.guid});
+    // only active if NewsfeedList receive the navigation property
+    if (this.props.navigation) {
+      this.props.navigation.navigate('Channel', { guid:this.props.entity.guid});
+    }
   }
 
   render() {
