@@ -27,21 +27,23 @@ export default class Comments extends Component {
 
   render() {
     return (
-      <ScrollView>
-        <FlatList
-          ListHeaderComponent={this.props.header}
-          data={this.props.comments}
-          renderItem={this.renderComment}
-          keyExtractor={item => item.guid}
-          onEndThreshold={0.3}
-          style={styles.listView}
-        />
+      <View style={{flex:1}}>
+        <View style={{flex:10}}>
+          <ScrollView style={styles.scrollView}>
+            <FlatList
+              ListHeaderComponent={this.props.header}
+              data={this.props.comments}
+              renderItem={this.renderComment}
+              keyExtractor={item => item.guid}
+              onEndThreshold={0.3}
+              style={styles.listView}
+            />
+          </ScrollView>
+        </View>
         { this.renderPoster() }
-      </ScrollView>
+      </View>
     );
   }
-
-
   
   renderComment = (row) => {
     const entity = row.item;
@@ -53,32 +55,34 @@ export default class Comments extends Component {
   renderPoster() {
     if(!session.isLoggedIn()){
       return (
-        <View></View>
+        <View style={styles.posterWrapper}></View>
       );
     }
 
     if (!this.props.loading) {
       return (
-        <View style={styles.container}>
-          <View style={styles.author}>
-            <TouchableOpacity>
-              <Image source={this.state.avatarSrc} style={styles.avatar}/>
-            </TouchableOpacity>
-          </View>
-          { this.state.isLoading ? 
-            <ActivityIndicator size="small" color="#00ff00" /> 
-              :
-            <View style={styles.commentPoster}>
-              <TextInput
-                style={{flex: 5}}
-                editable = {true}
-                maxLength = {40}
-                onChangeText={(text) => this.setState({text})}
-                value={this.state.text}
-              />
-              <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="md-send" size={36}></Icon>
+        <View style={styles.posterWrapper}>
+          <View style={styles.container}>
+            <View style={styles.author}>
+              <TouchableOpacity>
+                <Image source={this.state.avatarSrc} style={styles.avatar}/>
+              </TouchableOpacity>
             </View>
-          }  
+            { this.state.isLoading ? 
+              <ActivityIndicator size="small" color="#00ff00" /> 
+                :
+              <View style={styles.commentPoster}>
+                <TextInput
+                  style={{flex: 5}}
+                  editable = {true}
+                  underlineColorAndroid = 'transparent'
+                  onChangeText={(text) => this.setState({text})}
+                  value={this.state.text}
+                />
+                <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="md-send" size={24}></Icon>
+              </View>
+            }  
+          </View>
         </View>
       );
     } else if(this.props.loading) {
@@ -87,7 +91,7 @@ export default class Comments extends Component {
       );
     } else {
       return (
-        <View></View>
+        <View style={styles.posterWrapper}></View>
       );
     }
     
@@ -141,6 +145,12 @@ const styles = StyleSheet.create({
     borderBottomColor: '#EEE',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
+  scrollView: {
+    flex:10
+  },
+  posterWrapper: {
+    flex:1
+  },
   commentPoster: {
     flex: 5,
     flexDirection: 'row',
@@ -150,8 +160,8 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
   },
   avatar: {
-    height: 46,
-    width: 46,
+    height: 24,
+    width: 24,
     borderRadius: 23,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',

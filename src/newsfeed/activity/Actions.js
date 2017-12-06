@@ -24,6 +24,7 @@ import {
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native';
+
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import {
@@ -78,32 +79,31 @@ export default class Actions extends Component {
       <View>
         <View style={styles.container}>
           <View style={styles.actionIconWrapper}>
-            <Icon onPress={this.toggleThumb.bind(this, 'thumbs:up')} color={this.state.votedUp ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-up' />
+            <Icon onPress={this.toggleThumb.bind(this, 'thumbs:up')} color={this.state.votedUp ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-up' size={20} />
             <Text style={styles.actionIconText}>{this.state.votedUpCount}</Text>
           </View>
           <View style={styles.actionIconWrapper}>
-            <Icon onPress={this.toggleThumb.bind(this, 'thumbs:down')} color={this.state.votedDown ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-down' />
+            <Icon onPress={this.toggleThumb.bind(this, 'thumbs:down')} color={this.state.votedDown ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-down' size={20} />
             <Text style={styles.actionIconText}>{this.state.votedDownCount}</Text>
           </View>
-          <View style={styles.actionIconWrapper}>
-            <IonIcon color='rgb(96, 125, 139)' name='ion-ios-bolt' />
+          <View style={styles.actionWireIconWrapper}>
+            <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={28}/>
           </View>
           <View style={styles.actionIconWrapper} onPress={this.loadComments}>
-            <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' onPress={this.loadComments} />
+            <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={20} onPress={this.loadComments} />
             <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['comments:count']}</Text>
           </View>
           <View style={styles.actionIconWrapper}>
-            <Icon color='rgb(96, 125, 139)' name='repeat' />
+            <Icon color='rgb(96, 125, 139)' name='repeat' size={20}/>
           </View>
           {this.props.children}
         </View>
         <View style = {styles.modalContainer}>
           <Modal animationType = {"slide"} transparent = {false}
-            visible = {this.state.commentsModalVisible}
-            onRequestClose = {() => { console.log("Modal has been closed.") } }>
+            visible = {this.state.commentsModalVisible}>
             <View style = {styles.modal}>
               <View style = {styles.modalHeader}>
-                <IonIcon onPress={this.toggleThumb.bind(this, 'thumbs:up')} color='white'  name='md-arrow-round-back' />
+                <IonIcon onPress={this.closeComments} color='gray' size={30} name='md-arrow-round-back' />
               </View>
               <Comments comments={this.state.comments} loading={this.state.loading} ></Comments>
             </View>
@@ -149,6 +149,10 @@ export default class Actions extends Component {
     }
   }
 
+  closeComments = () => {
+    this.setState({ commentsModalVisible: false });
+  }
+
   loadComments = () => {
     this.setState({ commentsModalVisible: true });
     let guid = this.props.entity.guid;
@@ -189,7 +193,12 @@ const styles = StyleSheet.create({
   },
   actionIconWrapper: {
     flex: 1,
-    alignSelf: 'flex-start'
+  },
+  actionWireIconWrapper: {
+    flex: 1,
+    alignItems: 'center', 
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   actionIconText: {
     position: 'absolute',
@@ -201,11 +210,13 @@ const styles = StyleSheet.create({
   },
   modal: {
     flex:1,
-    padding: 10
+    paddingTop: 10,
   },
   modalContainer: {
     alignItems: 'center',
     backgroundColor: '#ede3f2',
-    padding: 1
+  },
+  modalHeader: {
+    padding: 5
   }
 });
