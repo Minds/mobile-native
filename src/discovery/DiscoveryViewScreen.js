@@ -39,6 +39,9 @@ export default class DiscoveryViewScreen extends Component {
         <OwnerBlock entity={entity.ownerObj} navigation={this.props.navigation}>
           <Text style={styles.timestamp}>{this.formatDate(entity.time_created)}</Text>
         </OwnerBlock>
+        <View style={styles.textcontainer}>
+          <Text>{entity.title}</Text>
+        </View>
         {view}
         <Actions entity={entity}></Actions>
       </ScrollView>
@@ -66,6 +69,9 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#FFF',
+  },
+  textcontainer: {
+    paddingLeft: 10,
   },
   image: {
     width: null,
