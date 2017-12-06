@@ -47,6 +47,7 @@ export default class MoreScreen extends Component {
         name: 'Invite',
       },{
         name: 'Settings',
+        onPress: this.onPressSettings
       },{
         name: 'Logout',
         onPress: this.onPressLogout
@@ -81,6 +82,10 @@ export default class MoreScreen extends Component {
     );
   }
 
+  onPressSettings = () => {
+    this.props.navigation.navigate('Settings');
+  }
+
   onPressLogout = () => {
     session.clear();
     const loginAction = NavigationActions.reset({
@@ -92,11 +97,6 @@ export default class MoreScreen extends Component {
 
     this.props.navigation.dispatch(loginAction);
   }
-
-  componentDidMount() {
-  }
-
-
 }
 
 const styles = StyleSheet.create({
