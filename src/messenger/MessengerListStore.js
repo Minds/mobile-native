@@ -9,7 +9,7 @@ import messengerService from './MessengerService';
  * Messenger Conversation List Store
  */
 class MessengerListStore {
-  @observable conversations = [];
+  @observable.shallow conversations = [];
   @observable refreshing = false;
   @observable search = '';
 
