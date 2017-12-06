@@ -11,6 +11,7 @@ import NotificationsSettingsScreen from './src/notifications/NotificationsSettin
 import ChannelScreen from './src/channel/ChannelScreen';
 import RegisterScreen from './src/register/RegisterScreen';
 import DiscoveryViewScreen from './src/discovery/DiscoveryViewScreen';
+import ConversationScreen from './src/messenger/ConversationScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
@@ -45,6 +46,9 @@ const Stack = StackNavigator({
   },
   DiscoveryView: {
     screen: DiscoveryViewScreen
+  },
+  Conversation: {
+    screen: ConversationScreen
   }
 });
 

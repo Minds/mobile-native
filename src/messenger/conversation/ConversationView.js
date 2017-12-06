@@ -5,16 +5,27 @@ import React, {
 import {
   Text,
   Image,
-  View
+  TouchableOpacity
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { MINDS_URI } from '../../config/Config';
+
 /**
  * Conversation Component
  */
 export default class ConversationView extends PureComponent {
+
+  /**
+   * Navigate To conversation
+   */
+  _navToConversation = () => {
+    if (this.props.navigation) {
+      this.props.navigation.navigate('Conversation', { conversation: this.props.item });
+    }
+  }
+
 
   render() {
     const item = this.props.item;
@@ -24,12 +35,12 @@ export default class ConversationView extends PureComponent {
     let online = item.online ? <Icon style={styles.icons} name='md-radio-button-on' color='#2196f3' size={19} /> : null;
 
     return (
-      <View style={styles.row}>
+      <TouchableOpacity style={styles.row} onPress={this._navToConversation}>
         <Image source={avatarImg} style={styles.avatar} />
         <Text style={styles.body}>{item.username.toUpperCase()}</Text>
         {unread}
         {online}
-      </View>
+      </TouchableOpacity>
     );
   }
 }
