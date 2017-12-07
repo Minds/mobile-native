@@ -12,6 +12,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { MINDS_URI } from '../config/Config';
 
+import { Avatar } from 'react-native-elements';
+
 @inject('user')
 @inject('notifications')
 @observer
@@ -30,7 +32,13 @@ export default class Topbar extends Component {
           </TouchableOpacity>
 
           <View style={styles.topbarCenter}>
-            <Image source={ { uri: MINDS_URI + 'icon/' + this.props.user.guid }} style={styles.avatar} />
+            <Avatar
+              rounded
+              source={{ uri: MINDS_URI + 'icon/' + this.props.user.me.guid }}
+              width={38}
+              height={38}
+              onPress={() => this.props.navigation.navigate('Channel', { guid: this.props.user.me.guid })}
+            />
           </View>
 
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Wallet')} >
@@ -74,10 +82,5 @@ const styles = StyleSheet.create({
   },
   button: {
     padding: 8,
-  },
-  avatar: {
-    borderRadius: 16,
-    width: 32,
-    height: 32,
-  },
+  }
 });
