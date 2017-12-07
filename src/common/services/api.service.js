@@ -106,26 +106,41 @@ class ApiService {
     });
   }
 
-  async upload(url, opts={}, onProgress) {
-
+  async upload(url, file, data) {
+    var formData = new FormData();
+    formData.append('file', file);
+    for (var key in data) {
+      formData.append(key, data[key]);
+    }
     const access_token = await session.getAccessToken();
     return new Promise((resolve, reject)=>{
-      var formData = new FormData();
-      formData.append("file", opts.body);
-    
-      var xhr = new XMLHttpRequest();
-      xhr.setRequestHeader('Authorization', 'Bearer ' + access_token.toString())
-      xhr.open('POST', MINDS_URI + url);
-    
-      xhr.onprogress = function () {
-          console.log('LOADING', xhr.status);
-      };
-    
-      xhr.onload = function () {
-        return resolve({})
-      };
-      
-      xhr.send(formData);
+      fetch(MINDS_URI + url, {
+        method: 'POST',
+        headers: {
+          'Authorization':  'Bearer ' + access_token.toString() ,
+          'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data;'
+        },
+          body: formData
+        }).then(resp => {
+          if (!resp.ok) {
+            throw resp;
+          }
+          return resp;
+        })
+        .then(response => response.json())
+        .then(jsonResp => {
+          if (jsonResp.status === 'error') {
+            return reject(jsonResp);
+          }
+          return resolve(jsonResp)
+        })
+        .catch(err => {
+          if (err.status && err.status == 401) {
+            session.clear();
+          }
+          return reject(err);
+        })
     });
   }
 }

@@ -29,7 +29,7 @@ export function getFeedChannel(guid, offset) {
 }
 
 export function post(post) {
-  return api.post('api/v1/newsfeed', { message : post.text })
+  return api.post('api/v1/newsfeed', post)
     .then((data) => {
       return {
         entity: data.activity,
@@ -39,4 +39,14 @@ export function post(post) {
       console.log('error');
       throw "Ooops";
     })
+}
+
+export function uploadAttachment(url, file) {
+  return api.upload(url, file).then((data) => {
+    return data;
+  })
+  .catch(err => {
+    console.log('error');
+    throw "Ooops";
+  });
 }

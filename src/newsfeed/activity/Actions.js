@@ -26,6 +26,7 @@ import {
 import { observer, inject } from 'mobx-react/native';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import {
   MINDS_URI
@@ -104,9 +105,9 @@ export default class Actions extends Component {
             onRequestClose={this.closeComments}>
             <View style = {styles.modal}>
               <View style = {styles.modalHeader}>
-                <IonIcon onPress={this.closeComments} color='gray' size={30} name='md-arrow-round-back' />
+                <IonIcon onPress={this.closeComments} color='gray' size={30} name='md-close' />
               </View>
-              <Comments comments={this.state.comments} loading={this.state.loading} ></Comments>
+              <Comments guid={this.state.guid} comments={this.state.comments} loading={this.state.loading} ></Comments>
             </View>
           </Modal>
         </View>
