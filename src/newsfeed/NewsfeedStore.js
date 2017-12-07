@@ -9,6 +9,8 @@ class NewsfeedStore {
   @observable entities   = [];
   @observable offset     = '';
   @observable refreshing = false;
+  @observable loaded = false;
+
 
   /**
    * Load feed
@@ -27,6 +29,7 @@ class NewsfeedStore {
 
   @action
   setFeed(feed) {
+    this.loaded = true;
     if (feed.entities) {
       this.entities = [... this.entities, ...feed.entities];
     }
@@ -37,6 +40,7 @@ class NewsfeedStore {
   clearFeed() {
     this.entities = [];
     this.offset   = '';
+    this.loaded   = false;
   }
 
   @action
@@ -61,7 +65,8 @@ class NewsfeedStore {
   refresh() {
     this.refreshing = true;
     this.entities   = [];
-    this.offset     = ''
+    this.offset     = '';
+    this.loaded     = false;
     this.loadFeed()
       .finally(action(() => {
         this.refreshing = false;
