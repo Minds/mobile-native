@@ -105,6 +105,29 @@ class ApiService {
         })
     });
   }
+
+  async upload(url, opts={}, onProgress) {
+
+    const access_token = await session.getAccessToken();
+    return new Promise((resolve, reject)=>{
+      var formData = new FormData();
+      formData.append("file", opts.body);
+    
+      var xhr = new XMLHttpRequest();
+      xhr.setRequestHeader('Authorization', 'Bearer ' + access_token.toString())
+      xhr.open('POST', MINDS_URI + url);
+    
+      xhr.onprogress = function () {
+          console.log('LOADING', xhr.status);
+      };
+    
+      xhr.onload = function () {
+        return resolve({})
+      };
+      
+      xhr.send(formData);
+    });
+  }
 }
 
 export default new ApiService();

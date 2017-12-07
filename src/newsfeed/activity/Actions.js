@@ -100,7 +100,8 @@ export default class Actions extends Component {
         </View>
         <View style = {styles.modalContainer}>
           <Modal animationType = {"slide"} transparent = {false}
-            visible = {this.state.commentsModalVisible}>
+            visible = {this.state.commentsModalVisible}
+            onRequestClose={this.closeComments}>
             <View style = {styles.modal}>
               <View style = {styles.modalHeader}>
                 <IonIcon onPress={this.closeComments} color='gray' size={30} name='md-arrow-round-back' />
