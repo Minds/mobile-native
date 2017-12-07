@@ -16,6 +16,7 @@ import SettingsScreen from './src/settings/SettingsScreen';
 import GroupsListScreen from './src/groups/GroupsListScreen';
 import GroupJoinScreen from './src/groups/GroupJoinScreen';
 import WalletScreen from './src/wallet/WalletScreen';
+import BlogsListScreen from './src/blogs/BlogsListScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
@@ -65,6 +66,9 @@ const Stack = StackNavigator({
   },
   Wallet: {
     screen: WalletScreen
+  },
+  BlogList: {
+    screen: BlogsListScreen
   }
 });
 

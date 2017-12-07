@@ -10,7 +10,6 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import { MINDS_URI } from '../config/Config';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 

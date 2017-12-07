@@ -33,6 +33,9 @@ export default class MoreScreen extends Component {
     const list = [
       {
         name: 'Blogs',
+        onPress: () => {
+          this.props.navigation.navigate('BlogList');
+        }
       },{
         name: 'Groups',
         onPress: () => {
