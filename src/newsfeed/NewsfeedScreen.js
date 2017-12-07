@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   FlatList,
-  View
+  View,
+  ActivityIndicator
 } from 'react-native';
 
 import {
@@ -17,6 +18,7 @@ import Poster from './Poster';
  * News Feed Screen
  */
 @inject('newsfeed')
+@observer
 export default class NewsfeedScreen extends Component {
 
   static navigationOptions = {
@@ -25,14 +27,39 @@ export default class NewsfeedScreen extends Component {
     )
   }
 
+  /**
+   * Load data on mount
+   */
+  componentWillMount() {
+    this.props.newsfeed.loadFeed();
+  }
+
+
   render() {
     const newsfeed = this.props.newsfeed;
+
+    if (!newsfeed.loaded) {
+      return (
+        <View style={styles.activitycontainer}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      );
+    }
+
     const poster = (
       <Poster/>
     );
-    
+
     return (
       <NewsfeedList newsfeed={newsfeed} header={poster} navigation={this.props.navigation}/>
     );
+  }
+}
+
+const styles = {
+  activitycontainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex:1
   }
 }
