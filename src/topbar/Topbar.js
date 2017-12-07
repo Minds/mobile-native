@@ -33,9 +33,11 @@ export default class Topbar extends Component {
             <Image source={ { uri: MINDS_URI + 'icon/' + this.props.user.guid }} style={styles.avatar} />
           </View>
 
-          <View style={styles.topbarRight}>
-            <Icon name="bank" size={18} color='#444' style={ styles.button }/>
-          </View>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Wallet')} >
+            <View style={styles.topbarRight}>
+              <Icon name="bank" size={18} color='#444' style={ styles.button }/>
+            </View>
+          </TouchableOpacity>
 
         </View>
       </View>

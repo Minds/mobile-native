@@ -15,6 +15,7 @@ import ConversationScreen from './src/messenger/ConversationScreen';
 import SettingsScreen from './src/settings/SettingsScreen';
 import GroupsListScreen from './src/groups/GroupsListScreen';
 import GroupJoinScreen from './src/groups/GroupJoinScreen';
+import WalletScreen from './src/wallet/WalletScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
@@ -61,6 +62,9 @@ const Stack = StackNavigator({
   },
   GroupsJoin: {
     screen: GroupJoinScreen
+  },
+  Wallet: {
+    screen: WalletScreen
   }
 });
 
