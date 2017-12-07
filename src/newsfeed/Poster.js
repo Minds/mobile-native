@@ -6,7 +6,7 @@ import ImagePicker from 'react-native-image-picker';
 import NewsfeedList from './NewsfeedList';
 import api from './../common/services/api.service';
 
-import { post } from './NewsfeedService';
+import { post, uploadAttachment } from './NewsfeedService';
 
 @inject('user')
 @observer
@@ -21,9 +21,9 @@ export default class Poster extends Component {
   state = {
     isPosting: false,
     text: '',
-    postImageUri: '',
     hasAttachment:false,
-    progress:0
+    attachmentGuid: '',
+    attachmentDone: false,
   };
 
   render() {
@@ -55,6 +55,7 @@ export default class Poster extends Component {
             <Button
               onPress={() => this.submitPost()} 
               title="Post"
+              disabled={this.state.hasAttachment && !(this.state.hasAttachment && this.state.attachmentGuid.length > 0)}
               color="rgb(70, 144, 214)"
             />
           </View>
@@ -81,9 +82,7 @@ export default class Poster extends Component {
     };
 
     ImagePicker.showImagePicker(options, (response) => {
-      let stateSet = this.setState;
       if (response.didCancel) {
-        alert('User cancelled image picker');
       }
       else if (response.error) {
         alert('ImagePicker Error: '+ response.error);
@@ -92,22 +91,20 @@ export default class Poster extends Component {
         //do nothng but leave it for future
       }
       else {
-        let source = { uri: response.uri };
-        api.upload('api/v1/archive/image', {
-          method: 'post',
-          body: {
+        uploadAttachment('api/v1/archive/image', {
             uri: response.uri,
             type: response.type,
             name: response.fileName
-          }
         }).then((res) => {
-          alert(JSON.stringify(res))
-          stateSet({attachment_guid : res.guid});
-        }, (err) => alert(JSON.stringify(err)));
+          this.setState({ 
+            attachmentGuid: res.guid,
+            attachmentDone: true
+          });
+        });
         
         this.setState({
           hasAttachment:true,
-          postImageUri: 'data:image/jpeg;base64,' + response.data
+          postImageUri: response.uri
         });
 
       }
@@ -116,18 +113,24 @@ export default class Poster extends Component {
   }
 
   submitPost = () => {
-    let newPost = {text: this.state.text}
+    let newPost = {message: this.state.text}
+    if(this.state.attachmentGuid)
+      newPost.attachment_guid = this.state.attachmentGuid
     this.setState({
       isPosting: true,
     });
+    
     post(newPost).then((data) => {
       this.setState({
-        isPosting: false
+        isPosting: false,
+        text: '',
+        attachmentGuid: '',
+        hasAttachment:false
       });
     })
     .catch(err => {
       console.log('error');
-    })
+    });
   }
 }
 
