@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-
 import Comment from './Comment';
 
 import { getComments, postComment } from './CommentsService';
@@ -28,11 +27,11 @@ export default class Comments extends Component {
   render() {
     return (
       <View style={{flex:1}}>
-        <View style={{flex:10}}>
+        <View style={{flex:14}}>
           <ScrollView style={styles.scrollView}>
             <FlatList
               ListHeaderComponent={this.props.header}
-              data={this.props.comments}
+              data={[...this.props.comments, ...this.state.comments]}
               renderItem={this.renderComment}
               keyExtractor={item => item.guid}
               onEndThreshold={0.3}
@@ -149,7 +148,7 @@ const styles = StyleSheet.create({
     flex:10
   },
   posterWrapper: {
-    flex:1
+    flex:2
   },
   commentPoster: {
     flex: 5,
