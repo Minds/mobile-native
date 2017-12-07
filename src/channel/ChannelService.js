@@ -13,6 +13,14 @@ class ChannelService {
   load(guid) {
     return api.get('api/v1/channel/' + guid);
   }
+
+  /**
+   * Subscribe to Channel
+   * @param {string} guid
+   */
+  subscribeToChannel(guid) {
+    return api.post('api/v1/subscribe/' + guid);
+  }
 }
 
 export default new ChannelService();

@@ -12,7 +12,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import NewsfeedList from './NewsfeedList';
-
+import Poster from './Poster';
 /**
  * News Feed Screen
  */
@@ -27,9 +27,12 @@ export default class NewsfeedScreen extends Component {
 
   render() {
     const newsfeed = this.props.newsfeed;
-
+    const poster = (
+      <Poster/>
+    );
+    
     return (
-      <NewsfeedList newsfeed={newsfeed} navigation={this.props.navigation}/>
+      <NewsfeedList newsfeed={newsfeed} header={poster} navigation={this.props.navigation}/>
     );
   }
 }

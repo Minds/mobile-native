@@ -37,6 +37,19 @@ class ChannelStore {
   }
 
   @action
+  subscribe() {
+    this.channel.subscribed = true;
+    channelService.subscribeToChannel(this.channel.guid)
+      .then(response => {
+        this.channel.subscribed = true;
+      })
+      .catch(err => {
+        this.channel.subscribed = false;
+        console.log('error');
+      });
+  }
+
+  @action
   loadrewards(guid) {
     wireService.rewards(guid)
       .then(action(rewards => {
