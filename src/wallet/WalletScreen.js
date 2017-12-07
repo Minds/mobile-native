@@ -12,11 +12,21 @@ import {
 
 import { MINDS_URI } from '../config/Config';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 /**
  * Wallet screen
  */
 export default class WalletScreen extends Component {
+
+  static navigationOptions = ({ navigation }) => ({
+    headerRight: (
+    <View style={{ flexDirection: 'row', paddingRight:10}}>
+      <IonIcon name="ios-card" size={18} color='#444' style={{paddingRight: 10}} onPress={() => navigation.navigate('NotificationsSettings')} />
+      <Text>PURCHASE</Text>
+    </View>
+    )
+  });
 
   render() {
     return (
