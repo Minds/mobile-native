@@ -26,7 +26,6 @@ import {
 import { observer, inject } from 'mobx-react/native';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import {
   MINDS_URI

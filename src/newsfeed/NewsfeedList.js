@@ -3,7 +3,6 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react/native'
 
 import Activity from './activity/Activity';
-import Poster from './Poster';
 
 /**
  * News feed list component
@@ -17,7 +16,7 @@ export default class NewsfeedList extends Component {
   render() {
     return (
       <FlatList
-        ListHeaderComponent={<Poster/>}
+        ListHeaderComponent={this.props.header}
         data={this.props.newsfeed.entities.slice()}
         renderItem={this.renderActivity}
         keyExtractor={item => item.guid}

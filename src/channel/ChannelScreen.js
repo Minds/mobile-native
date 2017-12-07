@@ -89,7 +89,7 @@ export default class ChannelScreen extends Component {
     // channel header
     const header = (
       <View>
-        <ChannelHeader styles={styles} channel={channel} />
+        <ChannelHeader styles={styles} channel={this.props.channel} />
         {carousel}
         <Toolbar/>
       </View>

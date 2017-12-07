@@ -12,16 +12,18 @@ import {
 
 import {
   observer,
+  inject
 } from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import channelService from '../ChannelService';
 import { MINDS_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 
 /**
  * Channel Header
  */
+
 @observer
 export default class ChannelHeader extends Component {
 
@@ -29,7 +31,7 @@ export default class ChannelHeader extends Component {
    * Get Channel Banner
    */
   getBannerFromChannel() {
-    const channel = this.props.channel;
+    const channel = this.props.channel.channel;
     if (channel && channel.carousels) {
       return channel.carousels[0].src;
     }
@@ -41,8 +43,38 @@ export default class ChannelHeader extends Component {
    * Get Channel Avatar
    */
   getAvatar() {
-    const channel = this.props.channel;
+    const channel = this.props.channel.channel;
     return `${MINDS_URI}icon/${channel.guid}/large/${channel.icontime}`;
+  }
+
+  /**
+   * Get Action Button, Message or Subscribe
+   */
+  getActionButton() {
+    if(!!this.props.channel.subscribed){
+      return (
+        <Button
+          onPress={() => { console.log('press') }}
+          title="Message"
+          color="#4791d6"
+          accessibilityLabel="Learn more about this purple button"
+        />
+      );
+    } else {
+      return (
+        <Button
+          onPress={() => { this.subscribe() }}
+          title="Subscribe"
+          color="#4791d6"
+          accessibilityLabel="Learn more about this purple button"
+        />
+      );
+    }
+  }
+
+  subscribe() {
+    let channel = this.props.channel.channel;
+    this.props.channel.subscribe(channel.guid);
   }
 
   /**
@@ -50,7 +82,7 @@ export default class ChannelHeader extends Component {
    */
   render() {
 
-    const channel = this.props.channel;
+    const channel = this.props.channel.channel;
     const styles  = this.props.styles;
     const avatar  = { uri: this.getAvatar() };
     const iurl    = { uri: this.getBannerFromChannel() };
@@ -75,12 +107,7 @@ export default class ChannelHeader extends Component {
               <Text style={styles.username}>@{channel.username}</Text>
             </View>
             <View style={styles.buttonscol}>
-              <Button
-                onPress={() => { console.log('press') }}
-                title="Message"
-                color="#4791d6"
-                accessibilityLabel="Learn more about this purple button"
-              />
+              {this.getActionButton()}
               <Icon name="md-settings" size={15} />
             </View>
           </View>
