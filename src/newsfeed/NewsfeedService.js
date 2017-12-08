@@ -41,6 +41,19 @@ export function post(post) {
     })
 }
 
+export function remind(guid, post) {
+  return api.post('api/v1/newsfeed/remind/' + guid , post)
+    .then((data) => {
+      return {
+        guid: data.guid,
+      }
+    })
+    .catch(err => {
+      console.log('error');
+      throw "Ooops";
+    })
+}
+
 export function uploadAttachment(url, file) {
   return api.upload(url, file).then((data) => {
     return data;

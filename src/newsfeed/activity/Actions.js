@@ -35,6 +35,7 @@ import { thumbActivity } from './ActionsService';
 import { getComments } from './comments/CommentsService';
 import Comments from './comments/Comments';
 import Comment from './comments/Comment';
+import Remind from './remind/Remind';
 
 @inject('newsfeed')
 @inject('user')
@@ -49,6 +50,7 @@ export default class Actions extends Component {
     votedDown: false,
     votedUp: false,
     commentsModalVisible: false,
+    remindModalVisible: false,
   };
 
   
@@ -76,27 +78,27 @@ export default class Actions extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={{flex:1}}>
         <View style={styles.container}>
           <View style={styles.actionIconWrapper}>
             <Icon onPress={this.toggleThumb.bind(this, 'thumbs:up')} color={this.state.votedUp ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-up' size={20} />
-            <Text style={styles.actionIconText}>{this.state.votedUpCount}</Text>
+            <Text style={styles.actionIconText}>{this.state.votedUpCount > 0 ? this.state.votedUpCount : ''}</Text>
           </View>
           <View style={styles.actionIconWrapper}>
             <Icon onPress={this.toggleThumb.bind(this, 'thumbs:down')} color={this.state.votedDown ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-down' size={20} />
-            <Text style={styles.actionIconText}>{this.state.votedDownCount}</Text>
+            <Text style={styles.actionIconText}>{this.state.votedUpCount > 0 ? this.state.votedUpCount : ''}</Text>
           </View>
           <View style={styles.actionWireIconWrapper}>
             <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={28}/>
           </View>
           <View style={styles.actionIconWrapper} onPress={this.loadComments}>
             <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={20} onPress={this.loadComments} />
-            <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['comments:count']}</Text>
+            <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['comments:count'] > 0 ? this.props.entity['comments:count']: ''}</Text>
           </View>
-          <View style={styles.actionIconWrapper}>
-            <Icon color='rgb(96, 125, 139)' name='repeat' size={20}/>
+          <View onPress={this.remind} style={styles.actionIconWrapper}>
+            <Icon onPress={this.remind} color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20}/>
+            <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['reminds'] > 0 ? this.props.entity['reminds']: ''}</Text>
           </View>
-          {this.props.children}
         </View>
         <View style = {styles.modalContainer}>
           <Modal animationType = {"slide"} transparent = {false}
@@ -107,6 +109,18 @@ export default class Actions extends Component {
                 <IonIcon onPress={this.closeComments} color='gray' size={30} name='md-close' />
               </View>
               <Comments guid={this.state.guid} comments={this.state.comments} loading={this.state.loading} ></Comments>
+            </View>
+          </Modal>
+        </View>
+        <View style = {styles.modalContainer}>
+          <Modal animationType = {"slide"} transparent = {false}
+            visible = {this.state.remindModalVisible}
+            onRequestClose={this.closeRemind}>
+            <View style = {styles.modal}>
+              <View style = {styles.modalHeader}>
+                <IonIcon onPress={this.closeRemind} color='gray' size={30} name='md-close' />
+              </View>
+              <Remind entity={this.props.entity}/>
             </View>
           </Modal>
         </View>
@@ -154,6 +168,14 @@ export default class Actions extends Component {
     this.setState({ commentsModalVisible: false });
   }
 
+  closeRemind = () => {
+    this.setState({ remindModalVisible: false });
+  }
+
+  remind = () => {
+    this.setState({ remindModalVisible: true });
+  }
+
   loadComments = () => {
     this.setState({ commentsModalVisible: true });
     let guid = this.props.entity.guid;
@@ -183,7 +205,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 8
+    padding: 4
   },
   avatar: {
     height: 46,
@@ -211,7 +233,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     flex:1,
-    paddingTop: 10,
+    paddingTop: 4,
   },
   modalContainer: {
     alignItems: 'center',

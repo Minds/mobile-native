@@ -69,13 +69,27 @@ export default class Activity extends Component {
           <View style={styles.message}>
             <Text>{this.props.entity.message}</Text>
           </View>
-
+          { this.showRemind() }
           { media }
-          <Actions entity={this.props.entity}></Actions>
+          { this.showActions() }
         </View>
 
     );
   }
+
+  showRemind() {
+    if (this.props.entity.remind_object) {
+      return (<View style={styles.remind}>
+                <Activity hideTabs={true} entity={this.props.entity.remind_object} navigation={this.props.navigation} />
+              </View>);
+    }
+  }
+
+  showActions() {
+    if(!this.props.hideTabs) {
+      return <Actions entity={this.props.entity}></Actions>
+    }
+  } 
 
   formatDate(timestamp) {
     const t = new Date(timestamp * 1000);
@@ -115,4 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#888',
   },
+  remind: {
+    paddingLeft: 16,
+  }
 });
