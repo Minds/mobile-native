@@ -5,7 +5,8 @@ import React, {
 import {
   View,
   StyleSheet,
-  Text
+  Text,
+  ScrollView
 } from 'react-native';
 
 import {
@@ -64,13 +65,15 @@ export default class MoreScreen extends Component {
     ];
 
     return (
-      <View style={styles.screen}>
-        <List containerStyle={{flex:1 }}>
+      <ScrollView>
+        <List containerStyle={{flex:1}}>
           {
             list.map((l, i) => (
               <ListItem
                 key={i}
                 title={l.name}
+                titleStyle={{padding:8}}
+                style={styles.listItem}
                 switchButton={l.switchButton}
                 hideChevron ={true}
                 onPress= {l.onPress}
@@ -87,7 +90,7 @@ export default class MoreScreen extends Component {
             <Text style={styles.link}>Privacy</Text>
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 
@@ -118,6 +121,10 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     width: '100%',
     height: 50,
+  },
+  listItem: {
+    borderBottomColor: '#eee', 
+    height:20
   },
   footercol: {
 

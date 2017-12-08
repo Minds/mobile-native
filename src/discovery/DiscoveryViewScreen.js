@@ -20,6 +20,10 @@ import Actions from '../newsfeed/activity/Actions';
  */
 export default class DiscoveryViewScreen extends Component {
 
+  state = {
+    height: 400
+  };
+
   getEntity() {
     return this.props.navigation.state.params.entity;
   }
@@ -35,7 +39,7 @@ export default class DiscoveryViewScreen extends Component {
     const view = this.getView(entity);
 
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView>
         <OwnerBlock entity={entity.ownerObj} navigation={this.props.navigation}>
           <Text style={styles.timestamp}>{this.formatDate(entity.time_created)}</Text>
         </OwnerBlock>
@@ -49,14 +53,20 @@ export default class DiscoveryViewScreen extends Component {
   }
 
   getView(entity) {
+    Image.getSize(entity.thumbnail_src, (width, height) => {
+      this.setState({height})
+    }, (error) => {
+      console.error(`Couldn't get the image size: ${error.message}`);
+    });
+
     switch (entity.subtype) {
       case 'image':
         const imguri = { uri: entity.thumbnail_src };
-        return <Image
-          source={imguri}
-          style={styles.image}
-          resizeMode="contain"
-        />
+        return  <Image
+                  source={imguri}
+                  style={{ height: this.state.height }} 
+                  resizeMode="contain"
+                />;
 
       default:
         return <Text>Not Implemented</Text>
@@ -65,17 +75,11 @@ export default class DiscoveryViewScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#FFF',
-  },
   textcontainer: {
     paddingLeft: 10,
   },
   image: {
-    width: null,
-    height: 400
+    flex:1
   },
   timestamp: {
     fontSize: 11,

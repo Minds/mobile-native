@@ -86,7 +86,7 @@ export default class Actions extends Component {
           </View>
           <View style={styles.actionIconWrapper}>
             <Icon onPress={this.toggleThumb.bind(this, 'thumbs:down')} color={this.state.votedDown ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-down' size={20} />
-            <Text style={styles.actionIconText}>{this.state.votedUpCount > 0 ? this.state.votedUpCount : ''}</Text>
+            <Text style={styles.actionIconText}>{this.state.votedDownCount > 0 ? this.state.votedDownCount : ''}</Text>
           </View>
           <View style={styles.actionWireIconWrapper}>
             <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={28}/>
