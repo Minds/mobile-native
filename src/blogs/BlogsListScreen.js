@@ -3,74 +3,66 @@ import React, {
 } from 'react';
 
 import {
-  Image,
-  Text,
-  FlatList,
   View,
+  FlatList,
+  ActivityIndicator,
   StyleSheet,
 } from 'react-native';
 
-import { MINDS_URI } from '../config/Config';
-import { Avatar, Tile } from 'react-native-elements';
-import blogsService from './BlogsService';
+import {
+  observer,
+  inject
+} from 'mobx-react/native';
 
+import ListItem from './list/ListItem';
 
 /**
  * Blogs List screen
  */
+@inject('blogs')
+@observer
 export default class BlogsListScreen extends Component {
 
-  state = {
-    blogs: []
-  }
-
+  /**
+   * Load data on mount
+   */
   componentWillMount() {
-    blogsService.loadList('featured', '')
-      .then(data => {
-        this.setState({
-          blogs: data.blogs
-        });
-      });
-  }
-
-  //TODO: move to common
-  formatDate(timestamp) {
-    const t = new Date(timestamp * 1000);
-    return t.toDateString();
+    this.props.blogs.loadList();
   }
 
   renderRow = (row) => {
     const blog = row.item;
     return (
-      <Tile
-        imageSrc={{ uri: blog.thumbnail_src }}
-        title={blog.title}
-        titleStyle={styles.title}
-        contentContainerStyle={{ height: 120 }}
-      >
-        <View style={styles.titleContainer}>
-          <View style={styles.avatarContainer}>
-            <Avatar
-              width={35}
-              height={35}
-              rounded
-              source={{ uri: MINDS_URI + 'icon/' + blog.ownerObj.guid + '/medium' }}
-            />
-            <Text style={styles.text}>{blog.ownerObj.name}</Text>
-          </View>
-          <Text style={styles.text}>{this.formatDate(blog.time_created)}</Text>
-        </View>
-      </Tile>
+      <ListItem blog={blog} styles={styles} />
     );
   }
 
+  loadMore = () => {
+    this.props.blogs.loadList();
+  }
+
   render() {
+    if (!this.props.blogs.loaded) {
+      return (
+        <View style={styles.activitycontainer}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      );
+    }
     return (
       <FlatList
-        data={this.state.blogs}
+        data={this.props.blogs.entities.slice()}
+        removeClippedSubviews
+        onRefresh={this.refresh}
+        refreshing={this.props.blogs.refreshing}
+        onEndReached={this.loadMore}
+        onEndThreshold={0.01}
         renderItem={this.renderRow}
         keyExtractor={item => item.guid}
         style={styles.list}
+        getItemLayout={(data, index) => (
+          { length: 420, offset: 420 * index, index }
+        )}
       />
     );
   }
@@ -101,5 +93,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize:15,
     color: 'black'
+  },
+  activitycontainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1
   }
 });
