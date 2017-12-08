@@ -67,24 +67,23 @@ export default class Comments extends Component {
                 <Image source={this.state.avatarSrc} style={styles.avatar}/>
               </TouchableOpacity>
             </View>
-            { this.state.isLoading ? 
-              <ActivityIndicator size="small" color="#00ff00" /> 
-                :
-              <View style={styles.commentPoster}>
-                <TextInput
-                  style={{flex: 5}}
-                  editable = {true}
-                  underlineColorAndroid = 'transparent'
-                  onChangeText={(text) => this.setState({text})}
-                  value={this.state.text}
-                />
+            <View style={styles.commentPoster}>
+              <TextInput
+                style={{flex: 5}}
+                editable = {true}
+                underlineColorAndroid = 'transparent'
+                onChangeText={(text) => this.setState({text})}
+                value={this.state.text}
+              />
+              { this.state.isLoading ? 
+                <ActivityIndicator size="small" color="#00ff00" /> :
                 <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="md-send" size={24}></Icon>
-              </View>
-            }  
+              }
+            </View>  
           </View>
         </View>
       );
-    } else if(this.props.loading) {
+    } else if (this.props.loading) {
       return ( 
         <ActivityIndicator size="small" color="#00ff00" /> 
       );
