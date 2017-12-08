@@ -78,7 +78,7 @@ export default class Actions extends Component {
   }
   render() {
     return (
-      <View>
+      <View style={{flex:1}}>
         <View style={styles.container}>
           <View style={styles.actionIconWrapper}>
             <Icon onPress={this.toggleThumb.bind(this, 'thumbs:up')} color={this.state.votedUp ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-up' size={20} />
@@ -99,7 +99,6 @@ export default class Actions extends Component {
             <Icon onPress={this.remind} color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20}/>
             <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['reminds']}</Text>
           </View>
-          {this.props.children}
         </View>
         <View style = {styles.modalContainer}>
           <Modal animationType = {"slide"} transparent = {false}
@@ -206,7 +205,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 8
+    padding: 4
   },
   avatar: {
     height: 46,
@@ -234,7 +233,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     flex:1,
-    paddingTop: 10,
+    paddingTop: 4,
   },
   modalContainer: {
     alignItems: 'center',

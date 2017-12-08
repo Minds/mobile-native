@@ -69,12 +69,20 @@ export default class Activity extends Component {
           <View style={styles.message}>
             <Text>{this.props.entity.message}</Text>
           </View>
-
+          { this.showRemind() }
           { media }
           { this.showActions() }
         </View>
 
     );
+  }
+
+  showRemind() {
+    if (this.props.entity.remind_object) {
+      return (<View style={styles.remind}>
+                <Activity hideTabs={true} entity={this.props.entity.remind_object} navigation={this.props.navigation} />
+              </View>);
+    }
   }
 
   showActions() {
@@ -121,4 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#888',
   },
+  remind: {
+    paddingLeft: 16,
+  }
 });

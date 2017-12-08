@@ -67,7 +67,7 @@ export default class Poster extends Component {
                     color="rgb(70, 144, 214)"
                   />
                 </View>
-              </View> 
+              </View>;
     }
   }
 
