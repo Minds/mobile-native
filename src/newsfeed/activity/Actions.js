@@ -35,6 +35,7 @@ import { thumbActivity } from './ActionsService';
 import { getComments } from './comments/CommentsService';
 import Comments from './comments/Comments';
 import Comment from './comments/Comment';
+import Remind from './remind/Remind';
 
 @inject('newsfeed')
 @inject('user')
@@ -49,6 +50,7 @@ export default class Actions extends Component {
     votedDown: false,
     votedUp: false,
     commentsModalVisible: false,
+    remindModalVisible: false,
   };
 
   
@@ -93,8 +95,9 @@ export default class Actions extends Component {
             <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={20} onPress={this.loadComments} />
             <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['comments:count']}</Text>
           </View>
-          <View style={styles.actionIconWrapper}>
-            <Icon color='rgb(96, 125, 139)' name='repeat' size={20}/>
+          <View onPress={this.remind} style={styles.actionIconWrapper}>
+            <Icon onPress={this.remind} color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20}/>
+            <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['reminds']}</Text>
           </View>
           {this.props.children}
         </View>
@@ -107,6 +110,18 @@ export default class Actions extends Component {
                 <IonIcon onPress={this.closeComments} color='gray' size={30} name='md-close' />
               </View>
               <Comments guid={this.state.guid} comments={this.state.comments} loading={this.state.loading} ></Comments>
+            </View>
+          </Modal>
+        </View>
+        <View style = {styles.modalContainer}>
+          <Modal animationType = {"slide"} transparent = {false}
+            visible = {this.state.remindModalVisible}
+            onRequestClose={this.closeRemind}>
+            <View style = {styles.modal}>
+              <View style = {styles.modalHeader}>
+                <IonIcon onPress={this.closeRemind} color='gray' size={30} name='md-close' />
+              </View>
+              <Remind entity={this.props.entity}/>
             </View>
           </Modal>
         </View>
@@ -152,6 +167,14 @@ export default class Actions extends Component {
 
   closeComments = () => {
     this.setState({ commentsModalVisible: false });
+  }
+
+  closeRemind = () => {
+    this.setState({ remindModalVisible: false });
+  }
+
+  remind = () => {
+    this.setState({ remindModalVisible: true });
   }
 
   loadComments = () => {

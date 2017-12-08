@@ -71,11 +71,17 @@ export default class Activity extends Component {
           </View>
 
           { media }
-          <Actions entity={this.props.entity}></Actions>
+          { this.showActions() }
         </View>
 
     );
   }
+
+  showActions() {
+    if(!this.props.hideTabs) {
+      return <Actions entity={this.props.entity}></Actions>
+    }
+  } 
 
   formatDate(timestamp) {
     const t = new Date(timestamp * 1000);

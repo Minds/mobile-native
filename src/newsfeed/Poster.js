@@ -6,7 +6,7 @@ import ImagePicker from 'react-native-image-picker';
 import NewsfeedList from './NewsfeedList';
 import api from './../common/services/api.service';
 
-import { post, uploadAttachment } from './NewsfeedService';
+import { post, remind, uploadAttachment } from './NewsfeedService';
 
 @inject('user')
 @observer
@@ -28,7 +28,7 @@ export default class Poster extends Component {
 
   render() {
     return (
-      <View style={{flex:1}}>
+      <View style={{height:80}}>
         <View style={styles.posterWrapper}>
           <View style={styles.poster}>
             <TextInput
@@ -41,25 +41,9 @@ export default class Poster extends Component {
               value={this.state.text}
             />
           </View>
-          <View style={styles.posterButton}>
-            { this.state.isPosting ?
-              <ActivityIndicator size="small" color="#00ff00" /> : 
-              <Icon onPress={() => this.showImagePicker()} name="md-camera" size={24}></Icon>
-            }
-          </View>
+          { this.showAttachmentIcon() }
         </View>
-        <View style={{flex:1, flexDirection: 'row'}}>
-          <View style={{flex: 5}}>
-          </View>
-          <View style={{flex: 1}}>
-            <Button
-              onPress={() => this.submitPost()} 
-              title="Post"
-              disabled={this.state.hasAttachment && !(this.state.hasAttachment && this.state.attachmentGuid.length > 0)}
-              color="rgb(70, 144, 214)"
-            />
-          </View>
-        </View>
+        { this.showPostButton() }
         
         <View style={{flex:1}}>
           { this.state.hasAttachment ?
@@ -70,6 +54,40 @@ export default class Poster extends Component {
     );
   }
 
+  showPostButton() {
+    if(!this.props.isRemind) {
+      return  <View style={{flex:1, flexDirection: 'row'}}>
+                <View style={{flex: 5}}>
+                </View>
+                <View style={{flex: 1}}>
+                  <Button
+                    onPress={() => this.submitPost()} 
+                    title="Post"
+                    disabled={this.state.hasAttachment && !(this.state.hasAttachment && this.state.attachmentGuid.length > 0)}
+                    color="rgb(70, 144, 214)"
+                  />
+                </View>
+              </View> 
+    }
+  }
+
+  showAttachmentIcon() {
+    if(!this.props.isRemind) {
+      return <View style={styles.posterButton}>
+                { this.state.isPosting ?
+                  <ActivityIndicator size="small" color="#00ff00" /> : 
+                  <Icon onPress={() => this.showImagePicker()} name="md-camera" size={24}></Icon>
+                }
+              </View>;
+    } else {
+      return  <View style={styles.posterButton}>
+                { this.state.isPosting ?
+                  <ActivityIndicator size="small" color="#00ff00" /> : 
+                  <Icon onPress={() => this.remindPost()} name="md-send" size={24}></Icon>
+                }
+              </View>;
+    }
+  }
   showImagePicker = () => {
     var options = {
       title: 'Select Image',
@@ -112,6 +130,26 @@ export default class Poster extends Component {
 
   }
 
+
+  remindPost = () => {
+    let newPost = {message: this.state.text}
+    this.setState({
+      isPosting: true,
+    });
+    
+    remind(this.props.guid ,newPost).then((data) => {
+      this.setState({
+        isPosting: false,
+        text: '',
+        attachmentGuid: '',
+        hasAttachment:false
+      });
+    })
+    .catch(err => {
+      console.log('error');
+    });
+  }
+
   submitPost = () => {
     let newPost = {message: this.state.text}
     if(this.state.attachmentGuid)
@@ -137,7 +175,6 @@ export default class Poster extends Component {
 const styles = StyleSheet.create({
   poster: {
     flex:7,
-    padding:4
   },
   posterWrapper: {
     flex:1,
