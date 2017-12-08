@@ -36,7 +36,7 @@ export default class MessengerScreen extends Component {
 
   searchDebouncer = debounce((search) => {
     this.props.messengerList.setSearch(search);
-  }, 1300);
+  }, 300);
 
   /**
    * Render component
