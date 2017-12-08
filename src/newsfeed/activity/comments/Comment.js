@@ -42,7 +42,7 @@ export default class Comment extends Component {
             </View>
             <View style={{flex:6}}>
               <View style={{flex:4}}>
-                <Text style={styles.timestamp}> @{this.props.comment.ownerObj.username}</Text>
+                <Text style={styles.username}> @{this.props.comment.ownerObj.username}</Text>
               </View>
               <View style={{flex:3}}>
                 <Text style={styles.timestamp}> {this.formatDate(this.props.comment.time_created)}</Text>
@@ -86,6 +86,9 @@ const styles = StyleSheet.create({
     borderRadius: 23,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
+  },
+  username: {
+    fontWeight: 'bold',
   },
   message: {
     padding: 8,
