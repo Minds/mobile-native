@@ -26,6 +26,7 @@ import channel from './src/channel/ChannelStore';
 import user from './src/auth/UserStore';
 import channelfeed from './src/channel/ChannelFeedStore';
 import discovery from './src/discovery/DiscoveryStore';
+import blogs from './src/blogs/BlogsStore';
 
 const Stack = StackNavigator({
   Loading: {
@@ -81,7 +82,8 @@ const stores = {
   channel,
   channelfeed,
   user,
-  discovery
+  discovery,
+  blogs
 }
 
 export default class App extends Component {
