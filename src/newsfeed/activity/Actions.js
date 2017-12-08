@@ -82,22 +82,22 @@ export default class Actions extends Component {
         <View style={styles.container}>
           <View style={styles.actionIconWrapper}>
             <Icon onPress={this.toggleThumb.bind(this, 'thumbs:up')} color={this.state.votedUp ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-up' size={20} />
-            <Text style={styles.actionIconText}>{this.state.votedUpCount}</Text>
+            <Text style={styles.actionIconText}>{this.state.votedUpCount > 0 ? this.state.votedUpCount : ''}</Text>
           </View>
           <View style={styles.actionIconWrapper}>
             <Icon onPress={this.toggleThumb.bind(this, 'thumbs:down')} color={this.state.votedDown ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-down' size={20} />
-            <Text style={styles.actionIconText}>{this.state.votedDownCount}</Text>
+            <Text style={styles.actionIconText}>{this.state.votedUpCount > 0 ? this.state.votedUpCount : ''}</Text>
           </View>
           <View style={styles.actionWireIconWrapper}>
             <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={28}/>
           </View>
           <View style={styles.actionIconWrapper} onPress={this.loadComments}>
             <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={20} onPress={this.loadComments} />
-            <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['comments:count']}</Text>
+            <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['comments:count'] > 0 ? this.props.entity['comments:count']: ''}</Text>
           </View>
           <View onPress={this.remind} style={styles.actionIconWrapper}>
             <Icon onPress={this.remind} color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20}/>
-            <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['reminds']}</Text>
+            <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['reminds'] > 0 ? this.props.entity['reminds']: ''}</Text>
           </View>
         </View>
         <View style = {styles.modalContainer}>

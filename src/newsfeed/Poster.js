@@ -28,7 +28,7 @@ export default class Poster extends Component {
 
   render() {
     return (
-      <View style={{height:80}}>
+      <View style={styles.posterAndPreviewWrapper}>
         <View style={styles.posterWrapper}>
           <View style={styles.poster}>
             <TextInput
@@ -188,5 +188,8 @@ const styles = StyleSheet.create({
   },
   avatar: {
     flex:1
+  },
+  posterAndPreviewWrapper: {
+    height:120
   }
 });
