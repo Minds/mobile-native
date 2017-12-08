@@ -42,17 +42,19 @@ export default class OwnerBlock extends Component {
 
   render() {
     return (
-        <View style={styles.container}>
+      <View style={styles.container}>
           <TouchableOpacity onPress={this._navToChannel}>
             <Image source={this.state.avatarSrc} style={styles.avatar}/>
           </TouchableOpacity>
           <View style={styles.body}>
-            <Text style={styles.username}>
-              { this.props.entity.username }
-            </Text>
+            <TouchableOpacity onPress={this._navToChannel}>
+              <Text style={styles.username}>
+                { this.props.entity.username }
+              </Text>
+            </TouchableOpacity>
             {this.props.children}
           </View>
-        </View>
+      </View>
     );
   }
 
@@ -62,9 +64,9 @@ export default class OwnerBlock extends Component {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    flexDirection: 'row',
+    padding: 8,
     alignItems: 'center',
-    padding: 8
+    flexDirection: 'row',
   },
   avatar: {
     height: 46,
