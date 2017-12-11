@@ -14,6 +14,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import NewsfeedList from './NewsfeedList';
 import Poster from './Poster';
+import CenteredLoading from '../common/components/CenteredLoading';
+
 /**
  * News Feed Screen
  */
@@ -40,9 +42,7 @@ export default class NewsfeedScreen extends Component {
 
     if (!newsfeed.loaded) {
       return (
-        <View style={styles.activitycontainer}>
-          <ActivityIndicator size={'large'} />
-        </View>
+        <CenteredLoading/>
       );
     }
 
@@ -53,13 +53,5 @@ export default class NewsfeedScreen extends Component {
     return (
       <NewsfeedList newsfeed={newsfeed} header={poster} navigation={this.props.navigation}/>
     );
-  }
-}
-
-const styles = {
-  activitycontainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex:1
   }
 }
