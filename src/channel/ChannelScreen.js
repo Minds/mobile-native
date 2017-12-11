@@ -81,7 +81,7 @@ export default class ChannelScreen extends Component {
     if (rewards.money && rewards.money.length) {
       carousel = (
         <View style={styles.carouselcontainer}>
-          <RewardsCarousel rewards={rewards} styles={styles} />
+          <RewardsCarousel rewards={rewards} />
         </View>
       );
     }
@@ -126,25 +126,6 @@ const styles = StyleSheet.create({
   carouselcontainer: {
     flex: 1,
     paddingBottom: 20
-  },
-  rewardicon: {
-    color: '#0071ff',
-    width: 30
-  },
-  rewardamount: {
-    fontSize: 16,
-    fontWeight: 'bold'
-  },
-  rewarddesc: {
-    color: '#999'
-  },
-  carousel: {
-    flex: 1,
-  },
-  carouselitems: {
-    paddingLeft: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
   },
   banner: {
     flexDirection: 'row',
