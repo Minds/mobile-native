@@ -9,15 +9,20 @@ import {
 
 import { observer, inject } from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Avatar } from 'react-native-elements';
 
 import { MINDS_URI } from '../config/Config';
-
-import { Avatar } from 'react-native-elements';
+import abbrev from '../common/helpers/abbrev';
 
 @inject('user')
 @inject('notifications')
+@inject('wallet')
 @observer
 export default class Topbar extends Component {
+
+  componentWillMount() {
+    this.props.wallet.loadCount();
+  }
 
   render() {
     return (
@@ -44,6 +49,7 @@ export default class Topbar extends Component {
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Wallet')} >
             <View style={styles.topbarRight}>
               <Icon name="bank" size={18} color='#444' style={ styles.button }/>
+              <Text>{abbrev(this.props.wallet.points)}</Text>
             </View>
           </TouchableOpacity>
 
@@ -78,7 +84,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topbarRight: {
-    //paddingRight: 8,
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingRight: 10
   },
   button: {
     padding: 8,
