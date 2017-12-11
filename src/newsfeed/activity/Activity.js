@@ -87,9 +87,9 @@ export default class Activity extends Component {
 
   showActions() {
     if(!this.props.hideTabs) {
-      return <Actions entity={this.props.entity}></Actions>
+      return <Actions entity={this.props.entity} navigation={this.props.navigation}></Actions>
     }
-  } 
+  }
 
   formatDate(timestamp) {
     const t = new Date(timestamp * 1000);

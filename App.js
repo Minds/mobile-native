@@ -17,6 +17,7 @@ import GroupsListScreen from './src/groups/GroupsListScreen';
 import GroupJoinScreen from './src/groups/GroupJoinScreen';
 import WalletScreen from './src/wallet/WalletScreen';
 import BlogsListScreen from './src/blogs/BlogsListScreen';
+import FabScreen from './src/wire/FabScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
@@ -28,6 +29,7 @@ import channelfeed from './src/channel/ChannelFeedStore';
 import discovery from './src/discovery/DiscoveryStore';
 import blogs from './src/blogs/BlogsStore';
 import wallet from './src/wallet/WalletStore';
+import wire from './src/wire/WireStore';
 
 const Stack = StackNavigator({
   Loading: {
@@ -71,6 +73,9 @@ const Stack = StackNavigator({
   },
   BlogList: {
     screen: BlogsListScreen
+  },
+  WireFab: {
+    screen: FabScreen
   }
 });
 
@@ -85,7 +90,8 @@ const stores = {
   user,
   discovery,
   blogs,
-  wallet
+  wallet,
+  wire
 }
 
 export default class App extends Component {

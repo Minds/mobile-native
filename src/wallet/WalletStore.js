@@ -1,4 +1,7 @@
-import { observable, action } from 'mobx'
+import {
+  observable,
+  action
+} from 'mobx'
 
 import walletService from './WalletService';
 
