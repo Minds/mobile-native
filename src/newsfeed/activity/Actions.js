@@ -1,7 +1,7 @@
 import React, {
   Component
 } from 'react';
-  
+
 import { Icon } from 'react-native-elements'
 
 import {
@@ -53,13 +53,13 @@ export default class Actions extends Component {
     remindModalVisible: false,
   };
 
-  
+
   componentWillMount() {
     let votedUp = false;
     let votedDown = false;
     let votedUpCount = 0;
     let votedDownCount = 0;
-    
+
     if(this.props.entity['thumbs:up:user_guids'] && this.props.entity['thumbs:up:user_guids'].indexOf(this.props.user.me.guid) >= 0){
       votedUp = true;
       votedUpCount = parseInt(this.props.entity['thumbs:up:count']);
@@ -89,7 +89,7 @@ export default class Actions extends Component {
             <Text style={styles.actionIconText}>{this.state.votedDownCount > 0 ? this.state.votedDownCount : ''}</Text>
           </View>
           <View style={styles.actionWireIconWrapper}>
-            <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={28}/>
+            <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={28} onPress={this.openWire}/>
           </View>
           <View style={styles.actionIconWrapper} onPress={this.loadComments}>
             <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={20} onPress={this.loadComments} />
@@ -128,13 +128,17 @@ export default class Actions extends Component {
     );
   }
 
+  openWire = () => {
+    this.props.navigation.navigate('WireFab', { owner: this.props.entity.ownerObj});
+  }
+
   toggleThumb = (direction) => {
     if(direction == 'thumbs:up') {
-      this.setState({ 
+      this.setState({
         votedUp : !this.state.votedUp,
         votedUpCount: this.state.votedUp? this.state.votedUpCount-1: this.state.votedUpCount+1})
     } else {
-      this.setState({ 
+      this.setState({
         votedDown : !this.state.votedDown,
         votedDownCount: this.state.votedDown? this.state.votedDownCount-1: this.state.votedDownCount+1})
     }
@@ -144,11 +148,11 @@ export default class Actions extends Component {
     thumbActivity(this.props.entity.guid, arr[1]).then((data) => {}).catch(err => {
         alert(err);
         if(direction == 'thumbs:up') {
-          this.setState({ 
+          this.setState({
             votedUp : !this.state.votedUp,
             votedUpCount: this.state.votedUp? this.state.votedUpCount-1: this.state.votedUpCount+1})
         } else {
-          this.setState({ 
+          this.setState({
             votedDown : !this.state.votedDown,
             votedDownCount: this.state.votedDown? this.state.votedDownCount-1: this.state.votedDownCount+1})
         }
@@ -219,7 +223,7 @@ const styles = StyleSheet.create({
   },
   actionWireIconWrapper: {
     flex: 1,
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
   },

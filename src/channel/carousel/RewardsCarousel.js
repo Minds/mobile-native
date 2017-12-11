@@ -48,28 +48,56 @@ export default class RewardsCarousel extends Component {
    */
   render() {
     const rewards = this.props.rewards;
-    const styles  = this.props.styles;
 
     const rewardsArray = [];
 
     if (rewards.money) {
+      // align text from props
+      let align = null;
+      if (this.props.textAlign) {
+        align = {textAlign:this.props.textAlign};
+      }
+
       rewards.money.map((rew) => {
         rewardsArray.push(
-          <View key={`rewards${rew.amount}`} style={styles.carouselitems}>
+          <View key={`rewards${rew.amount}`} style={cstyles.carouselitems}>
             <View>
-              <Text style={styles.rewardamount}>${rew.amount}+</Text>
-              <Text style={styles.rewarddesc}>{rew.description}</Text>
+              <Text style={[cstyles.rewardamount, align]}>${rew.amount}+</Text>
+              <Text style={[cstyles.rewarddesc, align]}>{rew.description}</Text>
             </View>
-            <Icon style={styles.rewardicon} name={'ios-flash'} size={36} />
+            <Icon style={cstyles.rewardicon} name={'ios-flash'} size={36} />
           </View>
         );
       });
     }
 
+    const {
+      backgroundColor = '#fff'
+    } = this.props;
+
     return (
-      <Carousel style={styles.carousel} width={this.state.width} height={70} color={'#0071ff'}>
+      <Carousel width={this.state.width} height={70} color={'#0071ff'} backgroundColor={backgroundColor}>
         {rewardsArray}
       </Carousel>
     )
   }
+}
+
+const cstyles = {
+  carouselitems: {
+    paddingLeft: 15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  rewardicon: {
+    color: '#0071ff',
+    width: 30
+  },
+  rewardamount: {
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  rewarddesc: {
+    color: '#999'
+  },
 }

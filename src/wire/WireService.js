@@ -9,6 +9,10 @@ class WireService {
     return api.get('api/v1/wire/sums/overview/' + guid + '?merchant=1');
   }
 
+  userRewards(guid) {
+    return api.get(`api/v1/wire/rewards/${guid}/entity`);
+  }
+
   rewards(guid) {
     return api.get('api/v1/wire/rewards/' + guid )
       .then(rewards => {
