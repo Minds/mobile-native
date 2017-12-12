@@ -8,7 +8,8 @@ import {
   View,
   ScrollView,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 
 import {
@@ -36,6 +37,7 @@ export default class FabScreen extends Component {
     this.props.wire.setAmount(1);
 
     const owner = this.getOwner();
+    this.props.wire.setGuid(owner.guid);
     this.props.wire.loadUser(owner.guid);
   }
 
@@ -62,9 +64,6 @@ export default class FabScreen extends Component {
     ),
     transitionConfig: {
       isModal: true
-    },
-    headerStyle: {
-      backgroundColor: 'red'
     }
   })
 
@@ -81,13 +80,23 @@ export default class FabScreen extends Component {
     const txtAmount = this.getTextAmount();
 
     let carousel = null;
-    if (this.props.wire.method == 'money') {
+
+    // show carousel?
+    if (this.props.wire.method == 'money' && this.props.wire.owner.wire_rewards) {
       carousel = <RewardsCarousel rewards={this.props.wire.owner.wire_rewards.rewards} textAlign={'center'} backgroundColor="#F8F8F8" />
+    }
+
+    // sending?
+    let icon;
+    if (this.props.wire.sending) {
+      icon = <ActivityIndicator size={'large'} color={selectedcolor}/>
+    } else {
+      icon = <Icon size={64} name="ios-flash" style={styles.icon} />
     }
 
     return (
       <ScrollView contentContainerStyle={styles.body}>
-        <Icon size={64} name="ios-flash" style={styles.icon}/>
+        {icon}
         <Text style={styles.subtext}>Support <Text style={styles.bold}>@{ owner.username }</Text> by sending them dollars, points or Bitcoin. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.</Text>
         <TextInput ref="input" onChangeText={this.changeInput} style={styles.input} underlineColorAndroid="transparent" value={this.props.wire.amount.toString()} keyboardType="numeric" />
         {this.renderOptions()}
@@ -96,9 +105,22 @@ export default class FabScreen extends Component {
 
         {carousel}
 
-        <Button title="Send" buttonStyle={styles.send}/>
+        <Button
+          title="Send"
+          buttonStyle={styles.send}
+          disabled={this.props.wire.sending}
+          onPress={this.send}
+          backgroundColor={selectedcolor}
+        />
       </ScrollView>
     );
+  }
+
+  /**
+   * Call send and go back on success
+   */
+  send = () => {
+    this.props.wire.send(() => this.props.navigation.goBack());
   }
 
   /**
@@ -108,10 +130,10 @@ export default class FabScreen extends Component {
     const wire = this.props.wire;
     switch (wire.method) {
       case 'points':
-        return wire.owner.sums.points.toLocaleString('en-US') + ' points';
+        return wire.formatAmount(wire.owner.sums.points);
       case 'money':
-        return '$' + wire.owner.sums.money.toLocaleString('en-US');
-      case 'bitcoin':
+        return wire.formatAmount(wire.owner.sums.money);
+      case 'mindscoin':
         return '';
     }
   }
@@ -132,9 +154,9 @@ export default class FabScreen extends Component {
             <Icon name="logo-usd" size={24} color={this.props.wire.method == 'money' ? selectedcolor : color} />
             <Text style={[styles.buttontext, { color: this.props.wire.method == 'money' ? selectedcolor : color}]}>Money</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => this.setMethod('bitcoin')} >
-            <Icon name="logo-bitcoin" size={24} color={this.props.wire.method == 'bitcoin' ? selectedcolor : color} />
-            <Text style={[styles.buttontext, (this.props.wire.method == 'bitcoin' ? styles.selected:null)]}>Bitcoins</Text>
+          <TouchableOpacity style={styles.button} onPress={() => this.setMethod('mindscoin')} >
+            <Icon name="logo-bitcoin" size={24} color={this.props.wire.method == 'mindscoin' ? selectedcolor : color} />
+            <Text style={[styles.buttontext, (this.props.wire.method == 'mindscoin' ? styles.selected:null)]}>MindsCoin</Text>
           </TouchableOpacity>
         </View>
       </View>
