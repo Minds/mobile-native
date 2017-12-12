@@ -71,12 +71,16 @@ export default class CaptureScreen extends Component<{}> {
 
   takePicture() {
     const options = {};
+    this.setState({
+      isPosting: true,
+    });
     this.camera.capture({metadata: options})
       .then((data) => {
         this.setState({
+          isPosting: false,
           imageUri : data.mediaUri,
           isImageTaken: true
-        })
+        });
       })
       .catch(err => console.error(err));
   }

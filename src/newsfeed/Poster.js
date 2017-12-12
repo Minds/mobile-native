@@ -8,6 +8,10 @@ import api from './../common/services/api.service';
 
 import { post, remind, uploadAttachment } from './NewsfeedService';
 
+import {
+  NavigationActions
+} from 'react-navigation';
+
 @inject('user')
 @observer
 export default class Poster extends Component {
@@ -46,17 +50,23 @@ export default class Poster extends Component {
         </View>
         { this.showPostButton() }
         
-        <View style={{flex:1}}>
+        <View style={{flex:5, flexDirection:'row'}}>
           { this.state.hasAttachment && this.state.postImageUri.length > 1 ?
             <Image style={{height: 100}} source={{uri: this.state.postImageUri}}/> : <View></View>
-          }
+          } 
+          { this.props.attachmentGuid && this.props.imageUri.length > 1 ?
+            <Image
+              source={{ uri : this.props.imageUri }}
+              style={{flex:1}}
+            /> : <View></View>
+          } 
         </View>
       </View>
     );
   }
 
   showPostButton() {
-    if(!this.props.isRemind) {
+    if(!this.props.isRemind && !this.props.attachmentGuid) {
       return  <View style={{flex:1, flexDirection: 'row'}}>
                 <View style={{flex: 5}}>
                 </View>
@@ -96,6 +106,7 @@ export default class Poster extends Component {
               </View>;
     }
   }
+
   showImagePicker = () => {
     var options = {
       title: 'Select Image',
@@ -161,15 +172,19 @@ export default class Poster extends Component {
   submitPost = () => {
     let newPost = {message: this.state.text}
     if(this.props.attachmentGuid) {
-      newPost.attachment_guid = this.state.attachmentGuid
+      newPost.attachment_guid = this.props.attachmentGuid;
     }
     if(this.state.attachmentGuid)
-      newPost.attachment_guid = this.state.attachmentGuid
+      newPost.attachment_guid = this.state.attachmentGuid;
     this.setState({
       isPosting: true,
     });
     
     post(newPost).then((data) => {
+      if (this.props.reset) {
+        this.props.reset();
+      }
+      NavigationActions.navigate({ routeName: 'Tabs' })
       this.setState({
         isPosting: false,
         text: '',
@@ -201,6 +216,6 @@ const styles = StyleSheet.create({
     flex:1
   },
   posterAndPreviewWrapper: {
-    height:120
+    flex:1
   }
 });

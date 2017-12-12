@@ -54,7 +54,7 @@ export default class CaptureTab extends Component {
               <TouchableHighlight underlayColor='gray' onPress={() => this.setState({screen:'captureImage'})} style={this.state.screen === 'captureImage'? styles.selectedButton: styles.buttons}>
                 <Text>Photo</Text>
               </TouchableHighlight>
-              <TouchableHighlight underlayColor='gray' onPress={() => this.setState({screen:'captureVideo'})}  style={this.state.screen === 'captureVideo'? styles.selectedButton: styles.buttons}>
+              <TouchableHighlight underlayColor='gray' onPress={() => this.setState({screen:'captureVideo'})} style={this.state.screen === 'captureVideo'? styles.selectedButton: styles.buttons}>
                 <Text>Video</Text>
               </TouchableHighlight>
             </View>
@@ -66,6 +66,9 @@ export default class CaptureTab extends Component {
   }
 
   submitToPoster = (imageUri) => {
+    this.setState({
+      isPosting : true,
+    });
     uploadAttachment('api/v1/archive/image', {
       uri: imageUri,
       type: 'image/jpeg',
@@ -75,7 +78,8 @@ export default class CaptureTab extends Component {
         imageUri,
         screen: 'poster',
         attachmentGuid: res.guid,
-        attachmentDone: true
+        attachmentDone: true,
+        isPosting : false,
       });
     });
     
@@ -98,7 +102,7 @@ export default class CaptureTab extends Component {
   loadScreen() {
     switch (this.state.screen) {
       case 'gallery':
-        return <GalleryScreen submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
+        return <GalleryScreen moveToCapture={() => this.moveToCaptureScreen()} submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
         break;
       case 'captureImage':
         return <CaptureScreen submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
@@ -107,11 +111,25 @@ export default class CaptureTab extends Component {
         return <CaptureScreen submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
         break;
       case 'poster':
-        return <Poster attachmentGuid={this.state.attachmentGuid} />;
+        return <Poster reset={() => this.resetState()} attachmentGuid={this.state.attachmentGuid} imageUri={this.state.imageUri}  />;
         break;
     }
     
   }
+
+  resetState() {
+    this.setState({
+      screen: 'gallery',
+      imageUri: '',
+      attachmentGuid: '',
+      attachmentDone: false,
+    });
+  }
+
+  moveToCaptureScreen() {
+    this.setState({screen:'captureImage'});
+  }
+
 }
 
 const styles = StyleSheet.create({
