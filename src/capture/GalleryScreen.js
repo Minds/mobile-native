@@ -18,6 +18,8 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import Camera from 'react-native-camera';
+
 import {
   MINDS_URI
 } from '../config/Config';
@@ -27,7 +29,8 @@ export default class GalleryScreen extends Component<{}> {
 
   state = {
     photos: [],
-    imageUri: ' '
+    imageUri: '',
+    isPosting: false,
   }
   static navigationOptions = {
     header: null,
@@ -39,17 +42,29 @@ export default class GalleryScreen extends Component<{}> {
   render() {
     return (
       <View style={styles.screenWrapper}>
-        <View style={styles.submitButton}>
-          { this.state.isPosting ?
-            <ActivityIndicator size="small" color="#00ff00" /> : 
-            <Icon onPress={() => this.upload()} color="white" name="md-send" size={28}></Icon>
+        { this.state.imageUri.length > 0 ?
+          <View style={styles.submitButton}>
+            { this.state.isPosting ?
+              <ActivityIndicator size="small" color="#00ff00" /> : 
+              <Icon onPress={() => this.upload()} color="white" name="md-send" size={28}></Icon>
+            }
+          </View> : <View></View>
+        }
+        <View style={styles.selectedImage} >
+          { this.state.imageUri.length == 0 ?
+            <Camera
+              ref={(cam) => {
+                this.camera = cam;
+              }}
+              style={styles.preview}
+              aspect={Camera.constants.Aspect.fill}>
+              <Text style={styles.capture} onPress={() => this.props.moveToCapture()} name="md-camera" size={24}> Take a new photo </Text>
+            </Camera> :
+            <Image
+              source={{ uri : this.state.imageUri }}
+              style={styles.tileImage}
+            />
           }
-        </View>
-        <View style={styles.selectedImage}>
-          <Image
-            source={{ uri : this.state.imageUri }}
-            style={styles.tileImage}
-          />
         </View>
         <View style={{flex:2}}>
           <FlatList
@@ -68,6 +83,9 @@ export default class GalleryScreen extends Component<{}> {
   }
 
   upload() {
+    this.setState({ 
+      isPosting:true,
+    });
     this.props.submitToPoster(this.state.imageUri);
   }
 
@@ -91,7 +109,6 @@ export default class GalleryScreen extends Component<{}> {
       this.setState({ 
         photos: r.edges,
         navigation: r.page_info,
-        imageUri: r.edges[0].node.image.uri
       });
     })
     .catch((err) => {
