@@ -19,12 +19,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Camera from 'react-native-camera';
 
+import Poster from '../newsfeed/Poster';
 
 export default class CaptureScreen extends Component<{}> {
 
   state = {
     activities: [],
-    refreshing: false
+    isImageTaken: false,
+    isPosting: false,
+    imageUri: ''
   }
 
   static navigationOptions = {
@@ -35,42 +38,62 @@ export default class CaptureScreen extends Component<{}> {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Camera
-          ref={(cam) => {
-            this.camera = cam;
-          }}
-          style={styles.preview}
-          aspect={Camera.constants.Aspect.fill}>
-          <Text style={styles.capture} onPress={this.takePicture.bind(this)}>[CAPTURE]</Text>
-        </Camera>
+      <View style={styles.screenWrapper}>
+        { this.state.isImageTaken ?
+          <View style={styles.selectedImage}>
+            <View style={styles.submitButton}>
+              { this.state.isPosting ?
+                <ActivityIndicator size="small" color="#00ff00" /> : 
+                <Icon onPress={() => this.upload()} color="white" name="md-send" size={28}></Icon>
+              }
+            </View>
+            <Image
+              source={{ uri : this.state.imageUri }}
+              style={styles.preview}
+            /> 
+          </View> : 
+          <Camera
+            ref={(cam) => {
+              this.camera = cam;
+            }}
+            style={styles.preview}
+            aspect={Camera.constants.Aspect.fill}>
+            <Icon style={styles.capture} onPress={() => this.takePicture()} name="md-camera" size={24}></Icon>
+          </Camera>
+        }
       </View>
     );
   }
 
+  upload() {
+    this.props.submitToPoster(this.state.imageUri);
+  }
+
   takePicture() {
     const options = {};
-    //options.location = ...
     this.camera.capture({metadata: options})
-      .then((data) => console.log(data))
+      .then((data) => {
+        this.setState({
+          imageUri : data.mediaUri,
+          isImageTaken: true
+        })
+      })
       .catch(err => console.error(err));
   }
-
-  componentDidMount() {
-  }
-
-
 }
 
 const styles = StyleSheet.create({
-	container: {
+	screenWrapper: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column'
   },
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center'
+  },
+  selectedImage: {
+    flex: 1
   },
   capture: {
     flex: 0,
@@ -79,5 +102,11 @@ const styles = StyleSheet.create({
     color: '#000',
     padding: 10,
     margin: 40
+  },
+  submitButton: {
+    position: 'absolute',
+    top:15,
+    right:30,
+    zIndex:100
   }
 });
