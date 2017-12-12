@@ -3,6 +3,8 @@ package com.minds;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.dylanvann.fastimage.FastImageViewPackage;
+import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -26,9 +28,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ImagePickerPackage(),
-            new RCTCameraPackage(),
-            new VectorIconsPackage()
+          new FastImageViewPackage(),
+          new ReactNativeExceptionHandlerPackage(),
+          new ImagePickerPackage(),
+          new RCTCameraPackage(),
+          new VectorIconsPackage()
       );
     }
 

@@ -1,12 +1,13 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
   StyleSheet,
-  Image,
   TouchableOpacity
 } from 'react-native';
+
+import FastImage from 'react-native-fast-image';
 
 import {
   MINDS_URI
@@ -16,7 +17,8 @@ import {
   observer
 } from 'mobx-react/native'
 
-export default class DiscoveryTile extends Component {
+
+export default class DiscoveryTile extends PureComponent {
 
   /**
    * Navigate to view
@@ -31,7 +33,7 @@ export default class DiscoveryTile extends Component {
     const url = { uri: MINDS_URI + 'api/v1/archive/thumbnails/' + this.props.entity.item.guid + '/medium' };
     return (
       <TouchableOpacity onPress={this._navToView} style={styles.tileImage}>
-        <Image
+        <FastImage
           source={ url }
           style={styles.tileImage}
         />

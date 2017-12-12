@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import channelService from '../ChannelService';
 import { MINDS_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
+import FastImage from 'react-native-fast-image';
 
 /**
  * Channel Header
@@ -89,7 +90,7 @@ export default class ChannelHeader extends Component {
 
     return (
       <View>
-        <Image source={iurl} style={styles.banner} resizeMode="cover" />
+        <FastImage source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
             <View style={styles.counter}>
