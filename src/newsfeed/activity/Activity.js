@@ -15,13 +15,12 @@ import {
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
-  Image,
   View
 } from 'react-native';
 
 import OwnerBlock from './OwnerBlock';
 import Actions from './Actions';
-
+import FastImage from 'react-native-fast-image';
 
 export default class Activity extends Component {
 
@@ -40,7 +39,7 @@ export default class Activity extends Component {
         }
         media = (
           <View style={styles.imageContainer}>
-            <Image source={ source } style={styles.image} resizeMode="cover"/>
+            <FastImage source={ source } style={styles.image} resizeMode={FastImage.resizeMode.cover}/>
           </View>
         )
         break;
@@ -52,7 +51,7 @@ export default class Activity extends Component {
       }
       media = (
         <View style={styles.imageContainer}>
-          <Image source={ source } style={styles.image} resizeMode="cover"/>
+          <FastImage source={source} style={styles.image} resizeMode={FastImage.resizeMode.cover}/>
           <View style={ { padding: 8 }}>
             <Text style={styles.title}>{this.props.entity.title}</Text>
             <Text style={styles.timestamp}>{this.props.entity.perma_url}</Text>
