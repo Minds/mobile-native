@@ -24,6 +24,7 @@ export default class Poster extends Component {
     hasAttachment:false,
     attachmentGuid: '',
     attachmentDone: false,
+    postImageUri: ''
   };
 
   render() {
@@ -46,7 +47,7 @@ export default class Poster extends Component {
         { this.showPostButton() }
         
         <View style={{flex:1}}>
-          { this.state.hasAttachment ?
+          { this.state.hasAttachment && this.state.postImageUri.length > 1 ?
             <Image style={{height: 100}} source={{uri: this.state.postImageUri}}/> : <View></View>
           }
         </View>
@@ -72,18 +73,25 @@ export default class Poster extends Component {
   }
 
   showAttachmentIcon() {
-    if(!this.props.isRemind) {
+    if(!this.props.isRemind && !this.props.attachmentGuid) {
       return <View style={styles.posterButton}>
                 { this.state.isPosting ?
                   <ActivityIndicator size="small" color="#00ff00" /> : 
                   <Icon onPress={() => this.showImagePicker()} name="md-camera" size={24}></Icon>
                 }
               </View>;
-    } else {
+    } else if (this.props.isRemind){
       return  <View style={styles.posterButton}>
                 { this.state.isPosting ?
                   <ActivityIndicator size="small" color="#00ff00" /> : 
                   <Icon onPress={() => this.remindPost()} name="md-send" size={24}></Icon>
+                }
+              </View>;
+    } else if (this.props.attachmentGuid){
+      return  <View style={styles.posterButton}>
+                { this.state.isPosting ?
+                  <ActivityIndicator size="small" color="#00ff00" /> : 
+                  <Icon onPress={() => this.submitPost()} name="md-send" size={24}></Icon>
                 }
               </View>;
     }
@@ -152,6 +160,9 @@ export default class Poster extends Component {
 
   submitPost = () => {
     let newPost = {message: this.state.text}
+    if(this.props.attachmentGuid) {
+      newPost.attachment_guid = this.state.attachmentGuid
+    }
     if(this.state.attachmentGuid)
       newPost.attachment_guid = this.state.attachmentGuid
     this.setState({
