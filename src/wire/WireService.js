@@ -19,6 +19,39 @@ class WireService {
         return (rewards.wire_rewards) ? rewards.wire_rewards.rewards: null;
       });
   }
+
+  /**
+   * Send wire
+   * @param {string} method
+   * @param {numneric} amount
+   * @param {string} guid
+   * @param {boolean} recurring
+   */
+  send(method, amount, guid, recurring=false) {
+    return this.getTransactionPayloads(method)
+      .then(payload => {
+        return api.post(`api/v1/wire/${guid}`, {
+          payload,
+          method,
+          amount,
+          recurring
+        });
+      });
+  }
+
+  getTransactionPayloads(method) {
+    switch (method) {
+      case "money":
+       return Promise.reject({ message: 'Not implemented' });
+      case "mindscoin":
+        return Promise.reject({ message: 'Not implemented' });
+
+      case "points":
+        return Promise.resolve({});
+    }
+
+    return Promise.reject({ message: 'Unknown method' });
+  }
 }
 
 export default new WireService();
