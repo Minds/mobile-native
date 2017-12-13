@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   buttonscol: {
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'flex-end',
     width: 100,
     alignSelf:'flex-end'
