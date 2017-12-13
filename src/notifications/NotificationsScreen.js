@@ -78,7 +78,7 @@ export default class NotificationsScreen extends Component {
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
-          onEndThreshold={0.1}
+          onEndThreshold={0.05}
           refreshing={this.props.notifications.list.refreshing}
           style={styles.listView}
         />
