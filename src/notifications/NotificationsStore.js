@@ -8,20 +8,36 @@ import {
   getCount
 } from './NotificationsService';
 
+import OffsetListStore from '../common/stores/OffsetListStore';
+
 /**
  * Notifications Store
  */
 class NotificationsStore {
-  @observable entities   = []
-  @observable loading    = false;
-  @observable refreshing = false;
-  @observable unread     = 0;
-  @observable filter     = 'all';
 
-  offset       = ''
-  moreData     = true;
+  /**
+   * Notification list store
+   */
+  list = new OffsetListStore();
+
+  /**
+   * unread notifications counter
+   */
+  @observable unread = 0;
+
+  /**
+   * Notifications list filter
+   */
+  @observable filter = 'all';
+
+  /**
+   * PollInterval
+   */
   pollInterval = null;
 
+  /**
+   * Class constructor
+   */
   constructor() {
     // load count on start
     this.loadCount();
@@ -37,43 +53,39 @@ class NotificationsStore {
   }
 
   /**
-   * Load conversations list
-   * @param {boolean} refresh
+   * Load notification list
    */
-  loadList(refresh = false) {
-    // refresh?
-    if (refresh) this.refresh();
-
-    if (!this.moreData || this.loading) {
+  loadList() {
+    // no more data? return
+    if (this.list.cantLoadMore()) {
       return;
     }
-    // is loading
-    this.loading = true;
-    this.setRefreshing(true);
-
-    getFeed(this.offset, this.filter)
+    // always return promise for refresh!
+    return getFeed(this.list.offset, this.filter)
       .then( feed => {
-        this.setFeed(feed);
-      })
-      .finally(()=>{
         this.loading = false;
-        if (this.refreshing === true) {
-          setTimeout(() => {
-            this.setRefreshing(false);
-          }, 500);
-        }
+        this.list.setList(feed);
       })
       .catch(err => {
+        this.loading = false;
         console.log('error', err);
       })
   }
 
+  /**
+   * Refresh list
+   */
   refresh() {
-    this.moreData = true;
-    this.loading = false;
-    this.entities = [];
+    this.list.refresh();
+    this.loadList()
+      .finally(() => {
+        this.list.refreshDone();
+      });
   }
 
+  /**
+   * Load unread count from endpoint
+   */
   loadCount() {
     getCount().then(data => {
       this.setUnread(data.count);
@@ -82,12 +94,18 @@ class NotificationsStore {
     });
   }
 
+  /**
+   * Start polling unread count
+   */
   startPollCount() {
     this.pollInterval = setInterval(() => {
        this.loadCount();
     }, 10000);
   }
 
+  /**
+   * Stop polling unread count
+   */
   stopPollCount() {
     if (this.pollInterval) {
       clearInterval(this.pollInterval);
@@ -97,30 +115,13 @@ class NotificationsStore {
   @action
   setFilter(filter) {
     this.filter = filter;
-    this.loadList(true);
+    this.list.clearList();
+    this.loadList();
   }
 
   @action
   setUnread(count) {
     this.unread = count;
-  }
-
-  @action
-  setFeed(feed) {
-    if (feed.entities) {
-      this.entities = [... this.entities, ...feed.entities],
-      this.offset = feed.offset;
-    } else {
-      this.moreData = false;
-      return false;
-    }
-    this.moreData = !!this.offset;
-    return true;
-  }
-
-  @action
-  setRefreshing(val) {
-    this.refreshing = val;
   }
 }
 

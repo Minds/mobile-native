@@ -5,7 +5,7 @@ export function getFeed(offset, filter) {
     .then((data) => {
       return {
         entities: data.notifications,
-        offset: encodeURIComponent(data['load-next']),
+        offset: data['load-next'],
       }
     })
     .catch(err => {
