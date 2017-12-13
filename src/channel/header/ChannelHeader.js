@@ -111,7 +111,7 @@ export default class ChannelHeader extends Component {
             </View>
             <View style={styles.buttonscol}>
               {this.getActionButton()}
-              <Icon name="md-settings" style={{alignSelf:'flex-end'}} size={15} />
+              <Icon name="md-settings" size={15} />
             </View>
           </View>
           <Text style={styles.briefdescription}>{channel.briefdescription}</Text>
