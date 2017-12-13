@@ -8,6 +8,7 @@ import LoginScreen from './src/auth/LoginScreen';
 import TabsScreen from './src/tabs/TabsScreen';
 import NotificationsScreen from './src/notifications/NotificationsScreen';
 import NotificationsSettingsScreen from './src/notifications/NotificationsSettingsScreen';
+import CommentsScreen from './src/comments/CommentsScreen';
 import ChannelScreen from './src/channel/ChannelScreen';
 import RegisterScreen from './src/register/RegisterScreen';
 import DiscoveryViewScreen from './src/discovery/DiscoveryViewScreen';
@@ -26,6 +27,7 @@ import messengerList from './src/messenger/MessengerListStore';
 import channel from './src/channel/ChannelStore';
 import user from './src/auth/UserStore';
 import channelfeed from './src/channel/ChannelFeedStore';
+import comments from './src/comments/CommentsStore';
 import discovery from './src/discovery/DiscoveryStore';
 import blogs from './src/blogs/BlogsStore';
 import wallet from './src/wallet/WalletStore';
@@ -52,6 +54,9 @@ const Stack = StackNavigator({
   },
   Channel: {
     screen: ChannelScreen
+  },
+  Comments: {
+    screen: CommentsScreen
   },
   DiscoveryView: {
     screen: DiscoveryViewScreen
@@ -87,6 +92,7 @@ const stores = {
   messengerList,
   channel,
   channelfeed,
+  comments,
   user,
   discovery,
   blogs,

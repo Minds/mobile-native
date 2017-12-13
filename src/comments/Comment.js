@@ -5,7 +5,7 @@ import React, {
 
 import {
   MINDS_URI
-} from '../../../config/Config';
+} from '../config/Config';
 
 import {
   NavigationActions

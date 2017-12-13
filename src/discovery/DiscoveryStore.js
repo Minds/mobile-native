@@ -7,7 +7,7 @@ class DiscoveryStore {
   @observable refreshing = false;
 
   offset = '';
-
+  
   /**
    * Load feed
    */

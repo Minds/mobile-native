@@ -58,18 +58,20 @@ export default class ChannelHeader extends Component {
           onPress={() => { console.log('press') }}
           title="Message"
           color="#4791d6"
-          accessibilityLabel="Learn more about this purple button"
+          accessibilityLabel="Send a message to this channel"
         />
       );
-    } else {
+    } else if (this.props.me.guid !== this.props.channel.channel.guid){
       return (
         <Button
           onPress={() => { this.subscribe() }}
           title="Subscribe"
           color="#4791d6"
-          accessibilityLabel="Learn more about this purple button"
+          accessibilityLabel="Subscribe to this channel"
         />
       );
+    } else {
+        <View style={{width:40}}></View>
     }
   }
 
@@ -109,7 +111,7 @@ export default class ChannelHeader extends Component {
             </View>
             <View style={styles.buttonscol}>
               {this.getActionButton()}
-              <Icon name="md-settings" size={15} />
+              <Icon name="md-settings" style={{alignSelf:'flex-end'}} size={15} />
             </View>
           </View>
           <Text style={styles.briefdescription}>{channel.briefdescription}</Text>
