@@ -18,6 +18,7 @@ import GroupsListScreen from './src/groups/GroupsListScreen';
 import GroupJoinScreen from './src/groups/GroupJoinScreen';
 import WalletScreen from './src/wallet/WalletScreen';
 import BlogsListScreen from './src/blogs/BlogsListScreen';
+import BlogsViewScreen from './src/blogs/BlogsViewScreen';
 import FabScreen from './src/wire/FabScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
@@ -78,6 +79,9 @@ const Stack = StackNavigator({
   },
   BlogList: {
     screen: BlogsListScreen
+  },
+  BlogView: {
+    screen: BlogsViewScreen
   },
   WireFab: {
     screen: FabScreen
