@@ -36,6 +36,11 @@ class NotificationsStore {
   pollInterval = null;
 
   /**
+   * List loading
+   */
+  loading = false;
+
+  /**
    * Class constructor
    */
   constructor() {
@@ -57,17 +62,19 @@ class NotificationsStore {
    */
   loadList() {
     // no more data? return
-    if (this.list.cantLoadMore()) {
+    if (this.list.cantLoadMore() || this.loading) {
       return;
     }
+    this.loading = true;
     // always return promise for refresh!
     return getFeed(this.list.offset, this.filter)
       .then( feed => {
-        this.loading = false;
         this.list.setList(feed);
       })
-      .catch(err => {
+      .finally(() => {
         this.loading = false;
+      })
+      .catch(err => {
         console.log('error', err);
       })
   }
