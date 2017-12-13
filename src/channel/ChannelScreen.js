@@ -18,7 +18,7 @@ import {
   inject
 } from 'mobx-react/native'
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Icon } from 'react-native-elements'
 import { MINDS_URI } from '../config/Config';
 
 import RewardsCarousel from './carousel/RewardsCarousel';
@@ -94,6 +94,7 @@ export default class ChannelScreen extends Component {
         <ChannelHeader styles={styles} me={this.props.user.me} channel={this.props.channel} />
         {carousel}
         <Toolbar/>
+        <Icon color="white" containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
       </View>
     );
 
@@ -105,6 +106,13 @@ export default class ChannelScreen extends Component {
 
 // style
 const styles = StyleSheet.create({
+  gobackicon: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    height: 40,
+    width: 40,
+  },
   headertextcontainer: {
     padding: 8,
     paddingLeft: 15,
