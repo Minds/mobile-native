@@ -3,6 +3,7 @@ import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, TouchableOp
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import CenteredLoading from '../common/components/CenteredLoading';
 import Comment from './Comment';
 
 import { getComments, postComment } from './CommentsService';
@@ -34,22 +35,31 @@ export default class CommentsScreen extends Component {
   
   componentWillMount() {
     this.props.comments.clearComments();
+    this.loadComments();
+  }
+
+  componentWillUnount() {
+    this.props.comments.clearComments();
   }
 
   render() {
     return (
       <View style={{flex:1}}>
         <View style={{flex:14}}>
-          <FlatList
-            ListHeaderComponent={this.props.header}
-            data={this.props.comments.comments}
-            renderItem={this.renderComment}
-            keyExtractor={item => item.guid}
-            onEndThreshold={0.3}
-            onEndReached={this.loadComments}
-            initialNumToRender={25}
-            style={styles.listView}
-          />
+          { this.props.comments.loaded ? 
+            <FlatList
+              ListHeaderComponent={this.props.header}
+              data={this.props.comments.comments.slice()}
+              renderItem={this.renderComment}
+              keyExtractor={item => item.guid}
+              onEndThreshold={0.3}
+              onEndReached={this.loadComments}
+              initialNumToRender={25}
+              refreshing={this.props.comments.refreshing}
+              style={styles.listView}
+            /> : 
+            <CenteredLoading/>
+          }
         </View>
         { this.renderPoster() }
       </View>
