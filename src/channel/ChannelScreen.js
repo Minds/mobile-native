@@ -29,6 +29,8 @@ import NewsfeedList from '../newsfeed/NewsfeedList';
 /**
  * Channel Screen
  */
+
+@inject('user')
 @inject('channel')
 @inject('channelfeed')
 @observer
@@ -89,7 +91,7 @@ export default class ChannelScreen extends Component {
     // channel header
     const header = (
       <View>
-        <ChannelHeader styles={styles} channel={this.props.channel} />
+        <ChannelHeader styles={styles} me={this.props.user.me} channel={this.props.channel} />
         {carousel}
         <Toolbar/>
       </View>
@@ -115,13 +117,15 @@ const styles = StyleSheet.create({
     flex:1
   },
   namecontainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    flex:1
   },
   buttonscol: {
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: 100
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    width: 100,
+    alignSelf:'flex-end'
   },
   carouselcontainer: {
     flex: 1,
