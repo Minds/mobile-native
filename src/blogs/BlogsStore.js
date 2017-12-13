@@ -18,7 +18,6 @@ class BlogsStore {
   loadList() {
     return blogService.loadList(this.filter, this.offset)
       .then(response => {
-        console.log(response)
         this.setEntities(response);
       })
       .catch(err => {

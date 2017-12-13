@@ -56,12 +56,12 @@ export default class BlogsListScreen extends Component {
         onRefresh={this.refresh}
         refreshing={this.props.blogs.refreshing}
         onEndReached={this.loadMore}
-        onEndThreshold={0.01}
+        onEndThreshold={0.09}
         renderItem={this.renderRow}
         keyExtractor={item => item.guid}
         style={styles.list}
         getItemLayout={(data, index) => (
-          { length: 420, offset: 420 * index, index }
+          { length: 300, offset: 300 * index, index }
         )}
       />
     );
@@ -80,19 +80,32 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     backgroundColor: '#FFF'
   },
+  listitem: {
+    minHeight:300,
+    paddingTop:10,
+    paddingBottom:10,
+  },
   titleContainer: {
+    paddingLeft: 15,
+    paddingRight: 15,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   avatarContainer: {
     flexDirection: 'row',
     alignItems: 'center'
   },
   title: {
+    paddingTop: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
     fontSize:15,
     color: 'black'
+  },
+  image: {
+    height: 200
   },
   activitycontainer: {
     justifyContent: 'center',
