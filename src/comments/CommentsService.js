@@ -1,12 +1,9 @@
-import api from './../../../common/services/api.service';
+import api from './../common/services/api.service';
 
-export function getComments(id, offset) {
-  offset = offset ? offset : '';
-  return api.get('api/v1/comments/' + id + '/', { limit: 25, offset: offset, reversed: true })
+export function getComments(guid, reversed, loadNext, loadPrevious) {
+  return api.get('api/v1/comments/' + guid + '/', { limit: 25, loadNext: loadNext, loadPrevious: loadPrevious, reversed: reversed })
     .then((data) => {
-      return {
-        comments: data.comments,
-      }
+      return data
     })
     .catch(err => {
       console.log('error');

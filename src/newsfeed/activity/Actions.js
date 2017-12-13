@@ -32,9 +32,6 @@ import {
 } from '../../config/Config';
 
 import { thumbActivity } from './ActionsService';
-import { getComments } from './comments/CommentsService';
-import Comments from './comments/Comments';
-import Comment from './comments/Comment';
 import Remind from './remind/Remind';
 
 @inject('newsfeed')
@@ -43,13 +40,10 @@ import Remind from './remind/Remind';
 export default class Actions extends Component {
 
   state = {
-    comments: [],
     loading: false,
-    loadedComments: false,
     avatarSrc: { uri: MINDS_URI + 'icon/' },
     votedDown: false,
     votedUp: false,
-    commentsModalVisible: false,
     remindModalVisible: false,
   };
 
@@ -89,28 +83,16 @@ export default class Actions extends Component {
             <Text style={styles.actionIconText}>{this.state.votedDownCount > 0 ? this.state.votedDownCount : ''}</Text>
           </View>
           <View style={styles.actionWireIconWrapper}>
-            <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={28} onPress={this.openWire}/>
+            <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={40} onPress={this.openWire}/>
           </View>
-          <View style={styles.actionIconWrapper} onPress={this.loadComments}>
-            <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={20} onPress={this.loadComments} />
-            <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['comments:count'] > 0 ? this.props.entity['comments:count']: ''}</Text>
+          <View style={styles.actionIconWrapper}>
+            <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={20} onPress={this.openComments} />
+            <Text style={styles.actionIconText}>{this.props.entity['comments:count'] > 0 ? this.props.entity['comments:count']: ''}</Text>
           </View>
           <View onPress={this.remind} style={styles.actionIconWrapper}>
             <Icon onPress={this.remind} color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20}/>
-            <Text onPress={this.loadComments} style={styles.actionIconText}>{this.props.entity['reminds'] > 0 ? this.props.entity['reminds']: ''}</Text>
+            <Text onPress={this.remind} style={styles.actionIconText}>{this.props.entity['reminds'] > 0 ? this.props.entity['reminds']: ''}</Text>
           </View>
-        </View>
-        <View style = {styles.modalContainer}>
-          <Modal animationType = {"slide"} transparent = {false}
-            visible = {this.state.commentsModalVisible}
-            onRequestClose={this.closeComments}>
-            <View style = {styles.modal}>
-              <View style = {styles.modalHeader}>
-                <IonIcon onPress={this.closeComments} color='gray' size={30} name='md-close' />
-              </View>
-              <Comments guid={this.state.guid} comments={this.state.comments} loading={this.state.loading} ></Comments>
-            </View>
-          </Modal>
         </View>
         <View style = {styles.modalContainer}>
           <Modal animationType = {"slide"} transparent = {false}
@@ -126,6 +108,10 @@ export default class Actions extends Component {
         </View>
       </View>
     );
+  }
+
+  openComments = () => {
+    this.props.navigation.navigate('Comments', { entity: this.props.entity});
   }
 
   openWire = () => {
@@ -168,38 +154,12 @@ export default class Actions extends Component {
     }
   }
 
-  closeComments = () => {
-    this.setState({ commentsModalVisible: false });
-  }
-
   closeRemind = () => {
     this.setState({ remindModalVisible: false });
   }
 
   remind = () => {
     this.setState({ remindModalVisible: true });
-  }
-
-  loadComments = () => {
-    this.setState({ commentsModalVisible: true });
-    let guid = this.props.entity.guid;
-    if (this.props.entity.entity_guid)
-      guid = this.props.entity.entity_guid;
-    this.setState({
-        loading: true,
-        loadedComments: true,
-        guid: guid,
-      })
-    getComments(guid).then((data) => {
-      this.setState({
-        comments: data.comments,
-        offset: data.offset,
-        loading: false
-      });
-    })
-    .catch(err => {
-      console.log('error');
-    })
   }
 
 }

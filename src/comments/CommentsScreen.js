@@ -2,52 +2,57 @@ import React, { Component } from 'react';
 import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import Comment from './Comment';
 
 import { getComments, postComment } from './CommentsService';
-import session from '../../../common/services/session.service';
+import session from '../common/services/session.service';
 
+@inject('comments')
 @inject('user')
 @observer
-export default class Comments extends Component {
+export default class CommentsScreen extends Component {
 
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <Icon name="md-home" size={24} color={tintColor} />
-    )
-  }
+  
+  static navigationOptions = ({ navigation }) => ({
+    header: (
+      <View style={styles.header}>
+        <Icon size={28} name="ios-close" onPress={() => navigation.goBack()} style={styles.iconclose}/>
+      </View>
+    ),
+    transitionConfig: {
+      isModal: true
+    }
+  })
 
   state = {
-    isLoading: false,
+    loading: false,
     text: '',
-    comments: [],
+    entity: this.getEntity(),
     avatarSrc: { uri: 'https://d3ae0shxev0cb7.cloudfront.net/icon/' + this.props.user.guid + '/medium/1511964398' }
   };
+  
+  componentWillMount() {
+    this.props.comments.clearComments();
+  }
 
   render() {
     return (
       <View style={{flex:1}}>
         <View style={{flex:14}}>
-          <ScrollView style={styles.scrollView}>
-            <FlatList
-              ListHeaderComponent={this.props.header}
-              data={[...this.props.comments, ...this.state.comments]}
-              renderItem={this.renderComment}
-              keyExtractor={item => item.guid}
-              onEndThreshold={0.3}
-              style={styles.listView}
-            />
-          </ScrollView>
+          <FlatList
+            ListHeaderComponent={this.props.header}
+            data={this.props.comments.comments}
+            renderItem={this.renderComment}
+            keyExtractor={item => item.guid}
+            onEndThreshold={0.3}
+            onEndReached={this.loadComments}
+            initialNumToRender={25}
+            style={styles.listView}
+          />
         </View>
         { this.renderPoster() }
       </View>
-    );
-  }
-  
-  renderComment = (row) => {
-    const entity = row.item;
-    return (
-      <Comment comment={entity}/>
     );
   }
 
@@ -75,15 +80,12 @@ export default class Comments extends Component {
                 onChangeText={(text) => this.setState({text})}
                 value={this.state.text}
               />
-              { this.state.isLoading ? 
-                <ActivityIndicator size="small" color="#00ff00" /> :
-                <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="md-send" size={24}></Icon>
-              }
+              <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="md-send" size={24}></Icon>
             </View>  
           </View>
         </View>
       );
-    } else if (this.props.loading) {
+    } else if (this.props.loading || this.props.loading) {
       return ( 
         <ActivityIndicator size="small" color="#00ff00" /> 
       );
@@ -96,27 +98,31 @@ export default class Comments extends Component {
   }
 
   saveComment = () => {
-    let comments = this.state.comments;
     if(this.state.text.length > 1){
       this.setState({
-        isLoading: true,
-      });
-      postComment(this.props.guid, this.state.text).then((data) => {
-        comments.push(data.comment);
+        loading: true,
+      })
+      this.props.comments.post(this.state.text).then( (data) => {
         this.setState({
-          comments: comments,
-          text: '',
-          isLoading: false,
-        });
-      })
-      .catch(err => {
-        console.log('error');
-      })
+          text:'',
+          loading: false,
+        })
+      });
     }
-    
   }
 
-  renderComments=(row) => {
+  getEntity() {
+    return this.props.navigation.state.params.entity;
+  }
+
+  loadComments = () => {
+    let guid = this.state.entity.guid;
+    if (this.state.entity.entity_guid)
+      guid = this.state.entity.entity_guid;
+    this.props.comments.loadComments(guid);
+  }
+
+  renderComment=(row) => {
     const comment = row.item;
     return (
       <View>
@@ -128,7 +134,6 @@ export default class Comments extends Component {
 
 const styles = StyleSheet.create({
 	listView: {
-    //paddingTop: 20,
     backgroundColor: '#FFF',
     flex: 1,
   },
@@ -147,7 +152,10 @@ const styles = StyleSheet.create({
     flex:10
   },
   posterWrapper: {
-    flex:2
+    height:50,
+  },
+  header: {
+    backgroundColor: '#F8F8F8',
   },
   commentPoster: {
     flex: 5,
@@ -156,6 +164,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'baseline',
+  },
+  iconclose: {
+    alignSelf: 'flex-end',
+    padding: 10
   },
   avatar: {
     height: 24,
