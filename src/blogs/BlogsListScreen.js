@@ -33,7 +33,7 @@ export default class BlogsListScreen extends Component {
   renderRow = (row) => {
     const blog = row.item;
     return (
-      <ListItem blog={blog} styles={styles} />
+      <ListItem blog={blog} styles={styles} navigation={this.props.navigation} />
     );
   }
 
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   },
   title: {
     paddingTop: 10,
+    paddingBottom: 5,
     paddingLeft: 15,
     paddingRight: 15,
     fontSize:15,

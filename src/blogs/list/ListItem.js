@@ -5,6 +5,7 @@ import React, {
 import {
   Text,
   View,
+  TouchableOpacity
 } from 'react-native';
 
 import {
@@ -21,12 +22,18 @@ import formatDate from '../../common/helpers/date'
  */
 
 export default class ListItem extends PureComponent {
+
+  navToBlog = () => {
+    this.props.navigation.navigate('BlogView', {blog: this.props.blog});
+  }
+
   render() {
     const blog = this.props.blog;
     const styles = this.props.styles;
     const image = { uri: blog.thumbnail_src };
+
     return (
-      <View  style={styles.listitem}>
+      <TouchableOpacity style={styles.listitem} onPress={this.navToBlog} >
         <FastImage source={image} resizeMode={FastImage.resizeMode.cover} style={styles.image} />
         <Text style={styles.title}>{blog.title}</Text>
         <View style={styles.titleContainer}>
@@ -41,7 +48,7 @@ export default class ListItem extends PureComponent {
           </View>
           <Text style={styles.text}>{formatDate(blog.time_created)}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
