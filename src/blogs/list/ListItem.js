@@ -9,8 +9,9 @@ import {
 
 import {
   Avatar,
-  Tile
 } from 'react-native-elements';
+
+import FastImage from 'react-native-fast-image';
 
 import { MINDS_URI } from '../../config/Config';
 import formatDate from '../../common/helpers/date'
@@ -23,14 +24,11 @@ export default class ListItem extends PureComponent {
   render() {
     const blog = this.props.blog;
     const styles = this.props.styles;
-
+    const image = { uri: blog.thumbnail_src };
     return (
-      <Tile
-        imageSrc={{ uri: blog.thumbnail_src }}
-        title={blog.title}
-        titleStyle={styles.title}
-        contentContainerStyle={{ height: 120 }}
-      >
+      <View  style={styles.listitem}>
+        <FastImage source={image} resizeMode={FastImage.resizeMode.cover} style={styles.image} />
+        <Text style={styles.title}>{blog.title}</Text>
         <View style={styles.titleContainer}>
           <View style={styles.avatarContainer}>
             <Avatar
@@ -43,7 +41,7 @@ export default class ListItem extends PureComponent {
           </View>
           <Text style={styles.text}>{formatDate(blog.time_created)}</Text>
         </View>
-      </Tile>
+      </View>
     );
   }
 }

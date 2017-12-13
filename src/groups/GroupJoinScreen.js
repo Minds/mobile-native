@@ -8,6 +8,7 @@ import {
   ScrollView,
   StyleSheet,
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import { MINDS_URI } from '../config/Config';
 
@@ -23,10 +24,10 @@ export default class GroupJoinScreen extends Component {
 
     return (
       <ScrollView contentContainerStyle={styles.screen}>
-          <Image source={iurl} style={styles.banner} resizeMode="cover" />
-          <Image source={avatar} style={styles.avatar} />
-          <Text style={styles.title}>{group.name}</Text>
-          <Text style={styles.join}>JOIN</Text>
+        <FastImage source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
+        <Image source={avatar} style={styles.avatar} />
+        <Text style={styles.title}>{group.name}</Text>
+        <Text style={styles.join}>JOIN</Text>
       </ScrollView>
     );
   }
