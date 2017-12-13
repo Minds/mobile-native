@@ -15,6 +15,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import CenteredLoading from '../common/components/CenteredLoading';
 import Notification from './notification/Notification';
 import NotificationsTopbar from './NotificationsTopbar';
 
@@ -34,6 +35,9 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * Notification Screen
+ */
 @inject('notifications')
 @observer
 export default class NotificationsScreen extends Component {
@@ -43,50 +47,66 @@ export default class NotificationsScreen extends Component {
   });
 
   /**
-   * reset counter on mount
+   * On component mount
    */
   componentWillMount() {
+    // reset counter
     this.props.notifications.setUnread(0);
+    // initial load
+    this.props.notifications.loadList();
   }
 
+  /**
+   * On component unmount
+   */
+  componentWillUnount() {
+    // clear data to free memory
+    this.props.notifications.list.clearList();
+  }
+
+  /**
+   * Render screen
+   */
   render() {
-    return (
-      <View style={styles.container}>
-        <NotificationsTopbar  />
+    let body;
+
+    if (this.props.notifications.list.loaded) {
+      body = (
         <FlatList
-          data={this.props.notifications.entities}
+          data={this.props.notifications.list.entities.slice()}
           renderItem={this.renderRow}
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
-          onEndThreshold={0.3}
-          refreshing={this.props.notifications.refreshing}
+          onEndThreshold={0.1}
+          refreshing={this.props.notifications.list.refreshing}
           style={styles.listView}
         />
+      )
+    } else {
+      body = <CenteredLoading/>
+    }
+
+    return (
+      <View style={styles.container}>
+        <NotificationsTopbar  />
+        {body}
       </View>
     );
   }
 
   /**
-  * Clear and reload
-  */
+   * Clear and reload
+   */
   refresh = () => {
-    this.props.notifications.loadList(true);
+    this.props.notifications.refresh();
   }
 
   /**
    * Load more rows
    */
   loadMore = () => {
-    // fix to prevent load data twice on initial state
-    if (!this.onEndReachedCalledDuringMomentum) {
-      this.props.notifications.loadList()
-      this.onEndReachedCalledDuringMomentum = true;
-    }
-  }
-
-  onMomentumScrollBegin = () => {
-    this.onEndReachedCalledDuringMomentum = false;
+    this.props.notifications.loadList()
   }
 
   /**
