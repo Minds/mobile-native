@@ -18,8 +18,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import ConversationView from './conversation/ConversationView';
 
-import SearchView from './search/SearchView';
-import debounce from './../common/helpers/debounce';
+import SearchView from '../common/components/SearchView';
+import debounce from '../common/helpers/debounce';
 
 /**
  * Messenger Conversarion List Screen

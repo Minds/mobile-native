@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#000',
     borderTopColor: '#000',
     backgroundColor: '#FFF',
+    height:55
   },
   icon: {
     backgroundColor: 'transparent',
