@@ -18,8 +18,24 @@ class ChannelService {
    * Subscribe to Channel
    * @param {string} guid
    */
-  subscribeToChannel(guid) {
-    return api.post('api/v1/subscribe/' + guid);
+  toggleSubscription(guid, value) {
+    if (value) {
+      return api.post('api/v1/subscribe/' + guid);
+    } else {
+      return api.delete('api/v1/subscribe/' + guid);
+    }
+  }
+
+  /**
+   * Block to Channel
+   * @param {string} guid
+   */
+  toggleBlock(guid, value) {
+    if (value) {
+      return api.put('api/v1/block/' + guid);
+    } else {
+      return api.delete('api/v1/block/' + guid);
+    }
   }
 }
 

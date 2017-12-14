@@ -38,13 +38,27 @@ class ChannelStore {
 
   @action
   subscribe() {
-    this.channel.subscribed = true;
-    channelService.subscribeToChannel(this.channel.guid)
+    let value = !this.channel.subscribed;
+    return channelService.toggleSubscription(this.channel.guid, value)
       .then(response => {
-        this.channel.subscribed = true;
+        this.channel.subscribed = value;
       })
       .catch(err => {
-        this.channel.subscribed = false;
+        this.channel.subscribed = !value;
+        console.log('error');
+      });
+  }
+
+
+  @action
+  toggleBlock() {
+    let value = !this.channel.blocked;
+    return channelService.toggleBlock(this.channel.guid, value)
+      .then(response => {
+        this.channel.blocked = value;
+      })
+      .catch(err => {
+        this.channel.blocked = !value;
         console.log('error');
       });
   }

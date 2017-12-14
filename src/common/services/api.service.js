@@ -106,6 +106,38 @@ class ApiService {
     });
   }
 
+  async delete(url, body={}) {
+    const access_token = await session.getAccessToken();
+
+    let headers = new Headers();
+    if(access_token){
+      headers.append("Authorization", 'Bearer ' + access_token.toString());
+    }
+    
+    return new Promise((resolve, reject) => {
+      fetch(MINDS_URI + url, {method: 'DELETE', body: JSON.stringify(body), headers: headers})
+        .then(resp => {
+          if (!resp.ok) {
+            throw resp;
+          }
+          return resp;
+        })
+        .then(response => response.json())
+        .then(jsonResp => {
+          if (jsonResp.status === 'error') {
+            return reject(jsonResp);
+          }
+          return resolve(jsonResp)
+        })
+        .catch(err => {
+          if (err.status && err.status == 401) {
+            session.clear();
+          }
+          return reject(err);
+        })
+    });
+  }
+
   async upload(url, file, data) {
     var formData = new FormData();
     formData.append('file', file);
