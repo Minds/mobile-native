@@ -34,6 +34,15 @@ import blogs from './src/blogs/BlogsStore';
 import wallet from './src/wallet/WalletStore';
 import wire from './src/wire/WireStore';
 
+/**
+ * Just for testing. We can call an endpoint here to report the exception
+ * js UI functionality is not available on native exceptions!
+ */
+import { setNativeExceptionHandler } from 'react-native-exception-handler';
+setNativeExceptionHandler((exceptionString) => {
+  console.log(exceptionString);
+});
+
 const Stack = StackNavigator({
   Loading: {
     screen: LoadingScreen,
