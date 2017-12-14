@@ -19,6 +19,8 @@ import {
   View
 } from 'react-native';
 
+import ActivityActions from './ActivityActions';
+
 import {
   MINDS_URI
 } from '../../config/Config';
@@ -27,7 +29,7 @@ import {
 export default class OwnerBlock extends Component {
 
   state = {
-    avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.guid + '/medium' }
+    avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.ownerObj.guid + '/medium' }
   };
 
   /**
@@ -36,11 +38,12 @@ export default class OwnerBlock extends Component {
   _navToChannel = () => {
     // only active if NewsfeedList receive the navigation property
     if (this.props.navigation) {
-      this.props.navigation.navigate('Channel', { guid:this.props.entity.guid});
+      this.props.navigation.navigate('Channel', { guid:this.props.entity.ownerObj.guid});
     }
   }
 
   render() {
+    const entity = this.props.entity.ownerObj;
     return (
       <View style={styles.container}>
           <TouchableOpacity onPress={this._navToChannel}>
@@ -49,11 +52,12 @@ export default class OwnerBlock extends Component {
           <View style={styles.body}>
             <TouchableOpacity onPress={this._navToChannel}>
               <Text style={styles.username}>
-                { this.props.entity.username }
+                { entity.username }
               </Text>
             </TouchableOpacity>
             {this.props.children}
           </View>
+          <ActivityActions newsfeed={this.props.newsfeed} entity={this.props.entity}/>
       </View>
     );
   }

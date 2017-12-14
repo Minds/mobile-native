@@ -63,3 +63,15 @@ export function uploadAttachment(url, file) {
     throw "Ooops";
   });
 }
+
+/**
+ * Toggle comments
+ * @param {string} guid
+ */
+export function toggleComments(guid, value) {
+  if (value) {
+    return api.put('api/v1/comments/disable/' + guid);
+  } else {
+    return api.delete('api/v1/comments/disable/' + guid);
+  }
+}

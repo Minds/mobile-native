@@ -62,7 +62,7 @@ export default class Activity extends Component {
 
     return (
         <View style={styles.container}>
-          <OwnerBlock entity={this.props.entity.ownerObj} navigation={this.props.navigation}>
+          <OwnerBlock entity={this.props.entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation}>
             <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
           </OwnerBlock>
           <View style={styles.message}>

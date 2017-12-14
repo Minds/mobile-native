@@ -50,7 +50,7 @@ export default class NewsfeedList extends Component {
     const entity = row.item;
     return (
       <View>
-        <Activity entity={entity} navigation={this.props.navigation} />
+        <Activity entity={entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation} />
       </View>
     );
   }
