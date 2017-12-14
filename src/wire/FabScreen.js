@@ -83,7 +83,7 @@ export default class FabScreen extends Component {
 
     // show carousel?
     if (this.props.wire.method == 'money' && this.props.wire.owner.wire_rewards) {
-      carousel = <RewardsCarousel rewards={this.props.wire.owner.wire_rewards.rewards} textAlign={'center'} backgroundColor="#F8F8F8" />
+      carousel = <RewardsCarousel rewards={this.props.wire.owner.wire_rewards.rewards.money} textAlign={'center'} backgroundColor="#F8F8F8" hideIcon={true} />
     }
 
     // sending?

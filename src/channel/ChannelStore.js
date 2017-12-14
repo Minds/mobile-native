@@ -54,13 +54,6 @@ class ChannelStore {
     wireService.rewards(guid)
       .then(action(rewards => {
         if (rewards) {
-          // map types
-          for (let type in rewards) {
-            rewards[type] = rewards[type].map((reward) => {
-              reward.type = type;
-              return reward;
-            });
-          }
           // merge rewards
           rewards.merged = rewards.money.concat(rewards.points);
           this.rewards = rewards;
