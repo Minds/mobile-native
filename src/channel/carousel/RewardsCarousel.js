@@ -51,18 +51,31 @@ export default class RewardsCarousel extends Component {
 
     const rewardsArray = [];
 
-    if (rewards.money) {
+    if (rewards) {
       // align text from props
       let align = null;
       if (this.props.textAlign) {
         align = {textAlign:this.props.textAlign};
       }
 
-      rewards.money.map((rew) => {
+      rewards.map((rew) => {
+        let formated = '';
+        switch (rew.type) {
+          case 'money':
+            formated = '$'+ rew.amount+'+';
+            break;
+          case 'points':
+            formated = rew.amount + '+ points';
+            break;
+          default:
+            formated = 'type not implemented'
+            break;
+        }
+
         rewardsArray.push(
           <View key={`rewards${rew.amount}`} style={cstyles.carouselitems}>
             <View>
-              <Text style={[cstyles.rewardamount, align]}>${rew.amount}+</Text>
+              <Text style={[cstyles.rewardamount, align]}>{formated}</Text>
               <Text style={[cstyles.rewarddesc, align]}>{rew.description}</Text>
             </View>
             <Icon style={cstyles.rewardicon} name={'ios-flash'} size={36} />
