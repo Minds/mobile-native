@@ -16,7 +16,17 @@ class WireService {
   rewards(guid) {
     return api.get('api/v1/wire/rewards/' + guid )
       .then(rewards => {
-        return (rewards.wire_rewards) ? rewards.wire_rewards.rewards: null;
+        rewards = (rewards.wire_rewards) ? rewards.wire_rewards.rewards : null
+        if (rewards) {
+          // map types
+          for (let type in rewards) {
+            rewards[type] = rewards[type].map((reward) => {
+              reward.type = type;
+              return reward;
+            });
+          }
+        }
+        return rewards;
       });
   }
 

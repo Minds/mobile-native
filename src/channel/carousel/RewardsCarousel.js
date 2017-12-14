@@ -48,6 +48,7 @@ export default class RewardsCarousel extends Component {
    */
   render() {
     const rewards = this.props.rewards;
+    const hideIcon = this.props.hideIcon;
 
     const rewardsArray = [];
 
@@ -72,13 +73,18 @@ export default class RewardsCarousel extends Component {
             break;
         }
 
+        let icon = null;
+        if (!hideIcon) {
+          icon = <Icon style={cstyles.rewardicon} name={'ios-flash'} size={36} />;
+        }
+
         rewardsArray.push(
           <View key={`rewards${rew.amount}`} style={cstyles.carouselitems}>
             <View>
               <Text style={[cstyles.rewardamount, align]}>{formated}</Text>
               <Text style={[cstyles.rewarddesc, align]}>{rew.description}</Text>
             </View>
-            <Icon style={cstyles.rewardicon} name={'ios-flash'} size={36} />
+            {icon}
           </View>
         );
       });
