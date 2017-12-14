@@ -16,10 +16,11 @@ import {
 } from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import channelService from '../ChannelService';
 import { MINDS_URI } from '../../config/Config';
+import channelService from '../ChannelService';
 import abbrev from '../../common/helpers/abbrev';
 import FastImage from 'react-native-fast-image';
+import ChannelActions from '../ChannelActions';
 
 /**
  * Channel Header
@@ -52,7 +53,7 @@ export default class ChannelHeader extends Component {
    * Get Action Button, Message or Subscribe
    */
   getActionButton() {
-    if(!!this.props.channel.subscribed){
+    if(!!this.props.channel.channel.subscribed){
       return (
         <Button
           onPress={() => { console.log('press') }}
@@ -111,7 +112,9 @@ export default class ChannelHeader extends Component {
             </View>
             <View style={styles.buttonscol}>
               {this.getActionButton()}
-              <Icon name="md-settings" size={15} />
+              { this.props.me.guid !== this.props.channel.channel.guid? 
+                <ChannelActions channel={this.props.channel} me={this.props.me}></ChannelActions> : <View></View>
+              }             
             </View>
           </View>
           <Text style={styles.briefdescription}>{channel.briefdescription}</Text>
