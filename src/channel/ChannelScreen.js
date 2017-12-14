@@ -49,8 +49,9 @@ export default class ChannelScreen extends Component {
   componentWillMount() {
     const guid = this.getGuid();
     this.props.channel.load(guid);
-    this.props.channelfeed.loadFeed(guid);
     this.props.channel.loadrewards(guid);
+    this.props.channelfeed.setGuid(guid);
+    this.props.channelfeed.loadFeed();
   }
 
   componentWillUnmount() {
@@ -80,10 +81,10 @@ export default class ChannelScreen extends Component {
     let carousel = null;
 
     // carousel only visible if we have data
-    if (rewards.money && rewards.money.length) {
+    if (rewards.merged && rewards.merged.length && channelfeed.showrewards) {
       carousel = (
         <View style={styles.carouselcontainer}>
-          <RewardsCarousel rewards={rewards} />
+          <RewardsCarousel rewards={rewards.merged} />
         </View>
       );
     }
@@ -92,14 +93,14 @@ export default class ChannelScreen extends Component {
     const header = (
       <View>
         <ChannelHeader styles={styles} me={this.props.user.me} channel={this.props.channel} />
+        <Toolbar hasRewards={rewards.merged && rewards.merged.length}/>
         {carousel}
-        <Toolbar/>
         <Icon color="white" containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
       </View>
     );
 
     return (
-      <NewsfeedList newsfeed={channelfeed} guid={guid} header={header} />
+      <NewsfeedList newsfeed={channelfeed} guid={guid} header={header} navigation={this.props.navigation} />
     );
   }
 }

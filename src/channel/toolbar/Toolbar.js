@@ -24,6 +24,17 @@ export default class Toolbar extends Component {
 
     const pstyles = this.props.styles;
 
+    let rewards = null;
+
+    if (this.props.hasRewards) {
+      rewards = (
+        <TouchableOpacity style={styles.button} onPress={() => this.props.channelfeed.setFilter('rewards')}>
+          <IonIcon name="ios-flash" size={18} color={filter == 'rewards' ? selectedcolor : color} />
+          <Text style={styles.buttontext}>REWARDS</Text>
+        </TouchableOpacity>
+      )
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.topbar}>
@@ -43,6 +54,7 @@ export default class Toolbar extends Component {
               <Icon name="subject" size={18} color={filter == 'blogs' ? selectedcolor : color} />
               <Text style={styles.buttontext}>BLOGS</Text>
           </TouchableOpacity>
+          {rewards}
         </View>
       </View>
     );
