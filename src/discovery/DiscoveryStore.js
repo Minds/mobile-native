@@ -1,51 +1,72 @@
-import { observable, action } from 'mobx';
+import {
+  observable,
+  action
+} from 'mobx';
+
 import discoveryService from './DiscoveryService';
 
-// TODO: all store are too similar make a common to be DRY
-class DiscoveryStore {
-  @observable.shallow entities = [];
-  @observable refreshing = false;
+import OffsetListStore from '../common/stores/OffsetListStore';
 
-  offset = '';
-  
+/**
+ * Discovery Store
+ */
+class DiscoveryStore {
+  /**
+   * Notification list store
+   */
+  list = new OffsetListStore();
+
+  @observable searchtext = '';
+  @observable filter     = 'featured';
+  @observable type       = 'object/image';
+  @observable category   = 'all';
+
+  loading = false;
+
   /**
    * Load feed
    */
-  loadFeed() {
-    return discoveryService.getFeed(this.offset)
+  loadList() {
+    // no more data or loading? return
+    if (this.list.cantLoadMore() || this.loading) {
+      return;
+    }
+    this.loading = true;
+    return discoveryService.getFeed(this.list.offset, this.type, this.filter, this.searchtext)
       .then(feed => {
-        this.setFeed(feed);
+        this.list.setList(feed);
+      })
+      .finally(() => {
+        this.loading = false;
       })
       .catch(err => {
         console.log('error', err);
       });
   }
 
-  @action
-  setFeed(feed) {
-    if (feed.entities) {
-      feed.entities.forEach(element => {
-        this.entities.push(element);
-      });
-    }
-    this.offset = feed.offset;
-  }
-
-  @action
-  clearFeed() {
-    this.entities = [];
-    this.offset   = '';
-  }
-
-  @action
+  /**
+   * Refresh list
+   */
   refresh() {
-    this.refreshing = true;
-    this.entities   = [];
-    this.offset     = ''
-    this.loadFeed()
-      .finally(action(() => {
-        this.refreshing = false;
-      }));
+    this.list.refresh();
+    this.loadList()
+      .finally(() => {
+        this.list.refreshDone();
+      });
+  }
+
+  @action
+  search(text) {
+    this.list.clearList();
+    this.searchtext = text;
+    if (text == '') {
+      this.type = 'object/image';
+    } else if (text.indexOf("#") > -1) {
+      this.type = "activity";
+    } else {
+      this.type = 'user';
+    }
+    this.loadList();
   }
 }
 
