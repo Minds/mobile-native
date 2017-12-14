@@ -43,7 +43,7 @@ export default class ChannelActions extends Component {
     this.state = {
       options: this.getOptions(),
     }
-    this.ActionSheet.show()
+    this.ActionSheet.show();
   }
 
   handleSelection(i) {
