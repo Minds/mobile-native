@@ -17,6 +17,7 @@ import SettingsScreen from './src/settings/SettingsScreen';
 import GroupsListScreen from './src/groups/GroupsListScreen';
 import GroupJoinScreen from './src/groups/GroupJoinScreen';
 import WalletScreen from './src/wallet/WalletScreen';
+import WalletHistoryScreen from './src/wallet/WalletHistoryScreen';
 import BoostConsoleScreen from './src/boost/BoostConsoleScreen';
 import BlogsListScreen from './src/blogs/BlogsListScreen';
 import BlogsViewScreen from './src/blogs/BlogsViewScreen';
@@ -34,6 +35,7 @@ import comments from './src/comments/CommentsStore';
 import discovery from './src/discovery/DiscoveryStore';
 import blogs from './src/blogs/BlogsStore';
 import wallet from './src/wallet/WalletStore';
+import walletHistory from './src/wallet/WalletHistoryStore';
 import wire from './src/wire/WireStore';
 
 /**
@@ -99,6 +101,9 @@ const Stack = StackNavigator({
   },
   WireFab: {
     screen: FabScreen
+  },
+  WalletHistory: {
+    screen: WalletHistoryScreen
   }
 });
 
@@ -116,7 +121,8 @@ const stores = {
   blogs,
   wallet,
   wire,
-  boost
+  boost,
+  walletHistory
 }
 
 export default class App extends Component {

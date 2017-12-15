@@ -12,6 +12,15 @@ class WalletService {
       })
   }
 
+  getHistory(offset) {
+    return api.get('api/v1/wallet/transactions', { offset: offset, limit: 12 })
+      .then((response) => {
+        return {
+          entities: response.transactions,
+          offset: response['load-next'],
+        };
+      })
+  }
 }
 
 export default new WalletService();
