@@ -22,6 +22,7 @@ import BoostConsoleScreen from './src/boost/BoostConsoleScreen';
 import BlogsListScreen from './src/blogs/BlogsListScreen';
 import BlogsViewScreen from './src/blogs/BlogsViewScreen';
 import FabScreen from './src/wire/FabScreen';
+import ActivityScreen from './src/newsfeed/ActivityScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import boost from './src/boost/BoostStore';
@@ -101,6 +102,9 @@ const Stack = StackNavigator({
   },
   WireFab: {
     screen: FabScreen
+  },
+  Activity: {
+    screen: ActivityScreen
   },
   WalletHistory: {
     screen: WalletHistoryScreen

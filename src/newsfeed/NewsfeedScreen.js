@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import {
-  FlatList,
-  View,
-  ActivityIndicator
-} from 'react-native';
 
 import {
   observer,
