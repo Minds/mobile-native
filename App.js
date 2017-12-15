@@ -20,6 +20,7 @@ import WalletScreen from './src/wallet/WalletScreen';
 import BlogsListScreen from './src/blogs/BlogsListScreen';
 import BlogsViewScreen from './src/blogs/BlogsViewScreen';
 import FabScreen from './src/wire/FabScreen';
+import ActivityScreen from './src/newsfeed/ActivityScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import notifications from './src/notifications/NotificationsStore';
@@ -94,6 +95,9 @@ const Stack = StackNavigator({
   },
   WireFab: {
     screen: FabScreen
+  },
+  Activity: {
+    screen: ActivityScreen
   }
 });
 

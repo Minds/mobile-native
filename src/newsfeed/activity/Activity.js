@@ -7,13 +7,8 @@ import {
 } from 'react-navigation';
 
 import {
-  Button,
   Text,
-  TextInput,
   StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-  ActivityIndicator,
   TouchableOpacity,
   View
 } from 'react-native';
@@ -24,9 +19,9 @@ import FastImage from 'react-native-fast-image';
 
 export default class Activity extends Component {
 
-  state = {
-
-  };
+  navToActivity = () => {
+    this.props.navigation.navigate('Activity', {entity: this.props.entity});
+  }
 
   render() {
 
@@ -63,7 +58,9 @@ export default class Activity extends Component {
     return (
         <View style={styles.container}>
           <OwnerBlock entity={this.props.entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation}>
-            <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
+            <TouchableOpacity onPress={this.navToActivity}>
+              <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
+            </TouchableOpacity>
           </OwnerBlock>
           <View style={styles.message}>
             <Text>{this.props.entity.message}</Text>
@@ -100,7 +97,6 @@ export default class Activity extends Component {
       return false;
     return true;
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -129,6 +125,7 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   remind: {
+    flex:1,
     paddingLeft: 16,
   }
 });
