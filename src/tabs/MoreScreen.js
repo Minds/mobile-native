@@ -44,6 +44,9 @@ export default class MoreScreen extends Component {
         }
       },{
         name: 'Help & Support',
+        onPress: () => {
+          this.props.navigation.navigate('GroupsJoin', { guid: '100000000000000681'});
+        }
       },{
         name: 'Autoplay videos',
         switchButton: true,
@@ -123,7 +126,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   listItem: {
-    borderBottomColor: '#eee', 
+    borderBottomColor: '#eee',
     height:20
   },
   footercol: {

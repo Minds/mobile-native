@@ -19,6 +19,14 @@ class GroupsService {
         };
       });
   }
+
+  loadEntity(guid) {
+    return api.get('api/v1/groups/group/'+ guid)
+      .then((response) => {
+        console.log(response, guid)
+        return response.group;
+      });
+  }
 }
 
 export default new GroupsService();

@@ -11,14 +11,38 @@ import {
 import FastImage from 'react-native-fast-image';
 
 import { MINDS_URI } from '../config/Config';
-
+import groupsService from './GroupsService';
+import CenteredLoading from '../common/components/CenteredLoading';
 /**
  * Groups join screen
  */
 export default class GroupJoinScreen extends Component {
 
+  //TODO: move state to store
+  state = {
+    group: null
+  }
+
+  componentWillMount() {
+    if (this.props.navigation.state.params.group) {
+      this.setState({
+        group: this.props.navigation.state.params.group
+      })
+    } else {
+      groupsService.loadEntity(this.props.navigation.state.params.guid)
+        .then(group => {
+          this.setState({group});
+        });
+    }
+  }
+
   render() {
-    const group = this.props.navigation.state.params.group;
+    const group = this.state.group;
+
+    if (!group) {
+      return <CenteredLoading />
+    }
+
     const avatar = { uri: MINDS_URI + 'fs/v1/avatars/' + group.guid + '/large' };
     const iurl = { uri: MINDS_URI + 'fs/v1/banners/' + group.guid + '/fat/' + group.icontime };
 
