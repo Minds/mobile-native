@@ -17,12 +17,15 @@ import SettingsScreen from './src/settings/SettingsScreen';
 import GroupsListScreen from './src/groups/GroupsListScreen';
 import GroupJoinScreen from './src/groups/GroupJoinScreen';
 import WalletScreen from './src/wallet/WalletScreen';
+import WalletHistoryScreen from './src/wallet/WalletHistoryScreen';
+import BoostConsoleScreen from './src/boost/BoostConsoleScreen';
 import BlogsListScreen from './src/blogs/BlogsListScreen';
 import BlogsViewScreen from './src/blogs/BlogsViewScreen';
 import FabScreen from './src/wire/FabScreen';
 import ActivityScreen from './src/newsfeed/ActivityScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
+import boost from './src/boost/BoostStore';
 import notifications from './src/notifications/NotificationsStore';
 import notificationsSettings from './src/notifications/NotificationsSettingsStore';
 import messengerList from './src/messenger/MessengerListStore';
@@ -33,6 +36,7 @@ import comments from './src/comments/CommentsStore';
 import discovery from './src/discovery/DiscoveryStore';
 import blogs from './src/blogs/BlogsStore';
 import wallet from './src/wallet/WalletStore';
+import walletHistory from './src/wallet/WalletHistoryStore';
 import wire from './src/wire/WireStore';
 
 /**
@@ -90,6 +94,9 @@ const Stack = StackNavigator({
   BlogList: {
     screen: BlogsListScreen
   },
+  BoostConsole: {
+    screen: BoostConsoleScreen
+  },
   BlogView: {
     screen: BlogsViewScreen
   },
@@ -98,6 +105,9 @@ const Stack = StackNavigator({
   },
   Activity: {
     screen: ActivityScreen
+  },
+  WalletHistory: {
+    screen: WalletHistoryScreen
   }
 });
 
@@ -114,7 +124,9 @@ const stores = {
   discovery,
   blogs,
   wallet,
-  wire
+  wire,
+  boost,
+  walletHistory
 }
 
 export default class App extends Component {

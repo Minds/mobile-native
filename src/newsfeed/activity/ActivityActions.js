@@ -105,13 +105,6 @@ export default class ActivityActions extends Component {
       options.push( 'Un-monetize' );
     }
 
-    /* Admin check */
-    if(!this.props.entity.monetized) {
-      options.push( 'Monetize' );
-    } else {
-      options.push( 'Un-monetize' );
-    }
-
     options.push( 'Share' );
     options.push( 'Translate' );
 

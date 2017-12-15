@@ -36,16 +36,16 @@ export default class WalletScreen extends Component {
           <Text style={styles.detail}>1 point = 1 view</Text>
         </View>
         <View style={styles.datailsContainer}>
-          <Text style={styles.title}>History</Text>
-          <Text style={styles.subtitle}>View your points</Text>
+          <Text style={styles.title} onPress={ () => this.props.navigation.navigate('WalletHistory')}>History</Text>
+          <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('WalletHistory')}>View your points</Text>
         </View>
         <View style={styles.datailsContainer}>
           <Text style={styles.title}>Purchase points</Text>
           <Text style={styles.subtitle}>Support Minds and buy points</Text>
         </View>
-        <View style={styles.datailsContainer}>
-          <Text style={styles.title}>Boost Console</Text>
-          <Text style={styles.subtitle}>Accept or reject boosts made to you</Text>
+        <View style={styles.datailsContainer} >
+          <Text style={styles.title} onPress={ () => this.props.navigation.navigate('BoostConsole')}>Boost Console</Text>
+          <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('BoostConsole')}>Accept or reject boosts made to you</Text>
         </View>
         <View style={styles.datailsContainer}>
           <Text style={styles.title}>Plan Subscriptions</Text>
