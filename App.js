@@ -17,11 +17,13 @@ import SettingsScreen from './src/settings/SettingsScreen';
 import GroupsListScreen from './src/groups/GroupsListScreen';
 import GroupJoinScreen from './src/groups/GroupJoinScreen';
 import WalletScreen from './src/wallet/WalletScreen';
+import BoostConsoleScreen from './src/boost/BoostConsoleScreen';
 import BlogsListScreen from './src/blogs/BlogsListScreen';
 import BlogsViewScreen from './src/blogs/BlogsViewScreen';
 import FabScreen from './src/wire/FabScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
+import boost from './src/boost/BoostStore';
 import notifications from './src/notifications/NotificationsStore';
 import notificationsSettings from './src/notifications/NotificationsSettingsStore';
 import messengerList from './src/messenger/MessengerListStore';
@@ -89,6 +91,9 @@ const Stack = StackNavigator({
   BlogList: {
     screen: BlogsListScreen
   },
+  BoostConsole: {
+    screen: BoostConsoleScreen
+  },
   BlogView: {
     screen: BlogsViewScreen
   },
@@ -110,7 +115,8 @@ const stores = {
   discovery,
   blogs,
   wallet,
-  wire
+  wire,
+  boost
 }
 
 export default class App extends Component {
