@@ -46,7 +46,7 @@ export default class Topbar extends Component {
             />
           </View>
 
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Wallet')} >
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Wallet', { navigation: this.props.navigation })} >
             <View style={styles.topbarRight}>
               <Icon name="bank" size={18} color='#444' style={ styles.button }/>
               <Text>{abbrev(this.props.wallet.points)}</Text>
