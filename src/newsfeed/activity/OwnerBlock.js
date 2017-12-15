@@ -57,7 +57,9 @@ export default class OwnerBlock extends Component {
             </TouchableOpacity>
             {this.props.children}
           </View>
-          <ActivityActions newsfeed={this.props.newsfeed} entity={this.props.entity}/>
+          <View style={styles.settings}>
+            <ActivityActions newsfeed={this.props.newsfeed} entity={this.props.entity}/>
+          </View>
       </View>
     );
   }
@@ -81,6 +83,12 @@ const styles = StyleSheet.create({
   },
   body: {
     marginLeft: 8,
+  },
+  settings: {
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    right: 10,
+    top: 20
   },
   username: {
     fontWeight: 'bold',
