@@ -26,9 +26,9 @@ class DiscoveryStore {
   /**
    * Load feed
    */
-  loadList() {
+  loadList(force=false) {
     // no more data or loading? return
-    if (this.list.cantLoadMore() || this.loading) {
+    if (!force && this.list.cantLoadMore() || this.loading) {
       return;
     }
     this.loading = true;
@@ -66,7 +66,7 @@ class DiscoveryStore {
     } else {
       this.type = 'user';
     }
-    this.loadList();
+    this.loadList(true);
   }
 }
 
