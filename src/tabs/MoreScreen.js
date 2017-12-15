@@ -10,6 +10,10 @@ import {
 } from 'react-native';
 
 import {
+  inject
+} from 'mobx-react/native'
+
+import {
   NavigationActions
 } from 'react-navigation';
 
@@ -17,6 +21,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import session from './../common/services/session.service';
 import { List, ListItem } from 'react-native-elements'
 
+import shareService from '../share/ShareService';
+
+@inject('user')
 export default class MoreScreen extends Component {
 
   state = {
@@ -55,7 +62,9 @@ export default class MoreScreen extends Component {
         switchButton: true,
       },{
         name: 'Invite',
-
+        onPress: () => {
+          shareService.invite(this.props.user.me.guid);
+        }
       },{
         name: 'Settings',
         onPress: () => {
