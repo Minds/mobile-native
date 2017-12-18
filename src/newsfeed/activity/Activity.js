@@ -18,6 +18,8 @@ import OwnerBlock from './OwnerBlock';
 import Actions from './Actions';
 import FastImage from 'react-native-fast-image';
 
+import Tags from '../../common/components/Tags';
+
 export default class Activity extends Component {
 
   navToActivity = () => {
@@ -68,7 +70,7 @@ export default class Activity extends Component {
             </TouchableOpacity>
           </OwnerBlock>
           <View style={styles.message}>
-            <Text>{this.props.entity.message}</Text>
+          <Tags navigation={this.props.navigation}>{this.props.entity.message}</Tags>
           </View>
           { this.showRemind() }
           { media }
