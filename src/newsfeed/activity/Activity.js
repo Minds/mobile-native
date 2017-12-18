@@ -14,6 +14,8 @@ import {
   Image
 } from 'react-native';
 
+import ExplicitImage from '../../common/components/explicit/ExplicitImage'
+import ExplicitText from '../../common/components/explicit/ExplicitText'
 import OwnerBlock from './OwnerBlock';
 import Actions from './Actions';
 import FastImage from 'react-native-fast-image';
@@ -41,7 +43,7 @@ export default class Activity extends Component {
         }
         media = (
           <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer}>
-            <FastImage source={ source } style={styles.image}/>
+            <ExplicitImage source={ source } entity={this.props.entity} style={styles.image}/>
           </TouchableOpacity>
         )
         break;
@@ -53,7 +55,7 @@ export default class Activity extends Component {
       }
       media = (
         <View style={styles.imageContainer}>
-          <FastImage source={source} style={styles.image} resizeMode={FastImage.resizeMode.cover}/>
+          <ExplicitImage source={ source } entity={this.props.entity} style={styles.image}/>
           <View style={ { padding: 8 }}>
             <Text style={styles.title}>{this.props.entity.title}</Text>
             <Text style={styles.timestamp}>{this.props.entity.perma_url}</Text>
@@ -70,7 +72,7 @@ export default class Activity extends Component {
             </TouchableOpacity>
           </OwnerBlock>
           <View style={styles.message}>
-          <Tags navigation={this.props.navigation}>{this.props.entity.message}</Tags>
+            <ExplicitText entity={this.props.entity}  navigation={this.props.navigation}/>
           </View>
           { this.showRemind() }
           { media }
@@ -83,7 +85,7 @@ export default class Activity extends Component {
   showRemind() {
     if (this.props.entity.remind_object) {
       return (<View style={styles.remind}>
-                <Activity hideTabs={true} entity={this.props.entity.remind_object} navigation={this.props.navigation} />
+                <Activity hideTabs={true}  newsfeed={this.props.newsfeed} entity={this.props.entity.remind_object} navigation={this.props.navigation} />
               </View>);
     }
   }

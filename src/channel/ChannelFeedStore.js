@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 
-import { getFeedChannel, toggleComments } from '../newsfeed/NewsfeedService';
+import { getFeedChannel, toggleComments , toggleExplicit } from '../newsfeed/NewsfeedService';
 
 // TODO: refactor to use Newsfeed store logic (DRY)
 class ChannelFeedStore {
@@ -103,6 +103,24 @@ class ChannelFeedStore {
         }));
     }
   }
+
+  @action
+  newsfeedToggleExplicit(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    let entity = this.entities[index];
+    let value = !entity.mature;
+    return toggleExplicit(guid, value)
+      .then(action(response => {
+        entity.mature = value;
+        this.entities[index] = entity;
+      }))
+      .catch(action(err => {
+        entity.mature = !value;
+        this.entities[index] = entity;
+        console.log('error');
+      }));
+  }
+
 }
 
 export default new ChannelFeedStore();
