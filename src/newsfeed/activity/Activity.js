@@ -10,7 +10,8 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
+  Image
 } from 'react-native';
 
 import OwnerBlock from './OwnerBlock';
@@ -23,6 +24,10 @@ export default class Activity extends Component {
     this.props.navigation.navigate('Activity', {entity: this.props.entity});
   }
 
+  navToImage = () => {
+    this.props.navigation.navigate('ViewImage', {source: {uri: this.props.entity.custom_data[0].src}});
+  }
+
   render() {
 
     let media;
@@ -33,9 +38,9 @@ export default class Activity extends Component {
           uri: this.props.entity.custom_data[0].src
         }
         media = (
-          <View style={styles.imageContainer}>
-            <FastImage source={ source } style={styles.image} resizeMode={FastImage.resizeMode.cover}/>
-          </View>
+          <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer}>
+            <FastImage source={ source } style={styles.image}/>
+          </TouchableOpacity>
         )
         break;
     }

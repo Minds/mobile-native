@@ -149,6 +149,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-photo-view')
     compile project(':react-native-fast-image')
     compile project(':react-native-exception-handler')
     compile project(':react-native-image-picker')
