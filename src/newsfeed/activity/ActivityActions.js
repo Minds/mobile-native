@@ -24,6 +24,7 @@ import ActionSheet from 'react-native-actionsheet';
 const title = 'Actions';
 
 @inject("user")
+@inject("newsfeed")
 @observer
 export default class ActivityActions extends Component {
 
@@ -125,46 +126,53 @@ export default class ActivityActions extends Component {
       case 'Edit':
         
         break;
-      case 'Delete':
-        this.props.channel.subscribe().then( (result) => {
+      case 'Set explicit':
+        this.props.newsfeed.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
-          })
+          });
+        });
+        break;
+      case 'Remove explicit':
+        this.props.newsfeed.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
         });
         break;
       case 'Share':
         this.props.channel.toggleBlock().then( (result) => {
           this.setState({
             options: this.getOptions(),
-          })
+          });
         });
         break;
       case 'Translate':
         this.props.channel.toggleBlock().then( (result) => {
           this.setState({
             options: this.getOptions(),
-          })
+          });
         });
         break;
       case 'Report':
         this.props.channel.toggleBlock().then( (result) => {
           this.setState({
             options: this.getOptions(),
-          })
+          });
         });
         break;
       case 'Enable Comments':
         this.props.newsfeed.toggleCommentsAction(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
-          })
+          });
         });
         break;
       case 'Disable Comments':
         this.props.newsfeed.toggleCommentsAction(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
-          })
+          });
         });
         break;
     }

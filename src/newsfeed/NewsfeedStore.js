@@ -74,6 +74,25 @@ class NewsfeedStore {
         }));
     }
   }
+
+  @action
+  newsfeedToggleExplicit(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.entities[index];
+      let value = !entity.mature;
+      return toggleExplicit(guid, value)
+        .then(action(response => {
+          entity.mature = !value;
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          entity.mature = !value;
+          this.entities[index] = entity;
+          console.log('error');
+        }));
+    }
+  }
 }
 
 export default new NewsfeedStore();
