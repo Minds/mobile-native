@@ -7,26 +7,36 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Image,
+  findNodeHandle, 
   View
 } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 
 import { BlurView, VibrancyView } from 'react-native-blur';
+import { Icon } from 'react-native-elements';
 
 export default class ExplicitImage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { viewRef: null };
+  }
+
+  imageLoaded() {
+    this.setState({ viewRef: findNodeHandle(this.backgroundImage) });
+  }
 
   render() {
-    const entity = this.props.entity.ownerObj;
     return (
-      <View style={styles.container}>
-        { !this.props.entity.mature ?
-          <FastImage source={ this.props.source } style={this.props.styles} resizeMode={FastImage.resizeMode.cover}/>:
+      <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+        <FastImage source={ this.props.source } onLoadEnd={this.imageLoaded.bind(this)} ref={(img) => { this.backgroundImage = img; }} style={styles.absolute}/> 
+        { (this.props.entity.mature && this.state.viewRef) ?
           <BlurView
-            source={ this.props.source }
-            style={this.props.styles}
+            style={styles.absolute}
+            viewRef={this.state.viewRef}
+            blurType="light"
             blurAmount={20}
-          />
+          /> : <View></View>
         }
       </View>
     );
@@ -34,5 +44,8 @@ export default class ExplicitImage extends Component {
 }
 
 const styles = StyleSheet.create({
-  
+  absolute: {
+    position: "absolute",
+    top: 0, left: 0, bottom: 0, right: 0,
+  },
 });
