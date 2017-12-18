@@ -75,3 +75,15 @@ export function toggleComments(guid, value) {
     return api.delete('api/v1/comments/disable/' + guid);
   }
 }
+
+
+export function toggleExplicit(guid, value) {
+  return api.post('api/v1/entities/explicit/' + guid, {value : value})
+    .then((data) => {
+      return { data }
+    })
+    .catch(err => {
+      console.log('error');
+      throw "Ooops";
+    })
+}
