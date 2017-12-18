@@ -188,7 +188,7 @@ export default class ActivityActions extends Component {
 
     return (
       <View style={styles.wrapper}>
-        <Icon name="md-settings" onPress={() => this.showActionSheet()} size={20} />
+        <Icon name="ios-arrow-down" onPress={() => this.showActionSheet()} size={20} />
         <ActionSheet
           ref={o => this.ActionSheet = o}
           title={title}
