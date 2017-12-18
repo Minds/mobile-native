@@ -12,14 +12,16 @@ import {
   View,
 } from 'react-native';
 
+import Tags from '../../../common/components/Tags';
+
 export default class ExplicitText extends Component {
 
   render() {
     return (
         <View style={{flex:1}}>
-          { this.props.entity.mature ? 
+          { this.props.entity.mature ?
             <Text style={styles.mature}>{this.props.entity.message}</Text>:
-            <Text>{this.props.entity.message}</Text>
+            <Tags navigation={this.props.navigation}>{this.props.entity.message}</Tags>
           }
         </View>
     );

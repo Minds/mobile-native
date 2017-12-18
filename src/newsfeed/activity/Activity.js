@@ -20,8 +20,6 @@ import OwnerBlock from './OwnerBlock';
 import Actions from './Actions';
 import FastImage from 'react-native-fast-image';
 
-import Tags from '../../common/components/Tags';
-
 export default class Activity extends Component {
 
   navToActivity = () => {
