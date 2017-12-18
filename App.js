@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { Provider } from 'mobx-react';
+import { Provider } from 'mobx-react/native'; // import from mobx-react/native instead of mobx-react fix test
 
 import LoadingScreen from './src/LoadingScreen';
 import LoginScreen from './src/auth/LoginScreen';
@@ -23,6 +22,7 @@ import BlogsListScreen from './src/blogs/BlogsListScreen';
 import BlogsViewScreen from './src/blogs/BlogsViewScreen';
 import FabScreen from './src/wire/FabScreen';
 import ActivityScreen from './src/newsfeed/ActivityScreen';
+import ViewImageScreen from './src/media/ViewImageScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import boost from './src/boost/BoostStore';
@@ -108,6 +108,9 @@ const Stack = StackNavigator({
   },
   WalletHistory: {
     screen: WalletHistoryScreen
+  },
+  ViewImage: {
+    screen: ViewImageScreen
   }
 });
 
