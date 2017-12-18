@@ -36,7 +36,14 @@ export default class DiscoveryScreen extends Component {
   }
 
   componentWillMount() {
-    this.loadFeed();
+    const params = this.props.navigation.state.params;
+    const q = (params) ? params.q : false;
+
+    if (q) {
+      this.props.discovery.search(q);
+    } else {
+      this.loadFeed();
+    }
   }
 
   render() {

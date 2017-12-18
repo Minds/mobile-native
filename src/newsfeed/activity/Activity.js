@@ -70,7 +70,7 @@ export default class Activity extends Component {
             </TouchableOpacity>
           </OwnerBlock>
           <View style={styles.message}>
-            <ExplicitText entity={this.props.entity}/>
+            <ExplicitText entity={this.props.entity}  navigation={this.props.navigation}/>
           </View>
           { this.showRemind() }
           { media }
