@@ -16,6 +16,7 @@ import {
   inject
 } from 'mobx-react/native'
 
+import { toggleUserBlock } from '../NewsfeedService';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ActionSheet from 'react-native-actionsheet';
 /**
@@ -32,6 +33,7 @@ export default class ActivityActions extends Component {
     super(props)
     this.state = {
       selected: '',
+      userBlocked: false,
       options: this.getOptions(),
     }
 
@@ -64,7 +66,7 @@ export default class ActivityActions extends Component {
       }
 
       /*Admin check */
-      if(!this.props.entity.mature) {
+      if (!this.props.entity.mature) {
         options.push( 'Set explicit' );
       } else {
         options.push( 'Remove explicit' );
@@ -77,30 +79,25 @@ export default class ActivityActions extends Component {
       }
 
     } else {
-      if(!this.props.entity.mature) {
-        options.push( 'Block' );
+      
+      if (this.state && this.state.userBlocked) {
+        options.push( 'Unblock user' );
       } else {
-        options.push( 'Unblock' );
+        options.push( 'Block user' );
       }
 
       options.push( 'Report' );
     }
     
-    if(!this.props.entity['is:muteds']) {
-      options.push( 'Mute' );
-    } else {
-      options.push( 'Un-Muted' );
-    }
-
     /* Admin check */
-    if(!this.props.entity.featured) {
+    if (!this.props.entity.featured) {
       options.push( 'Feature' );
     } else {
       options.push( 'Un-feature' );
     }
 
     /* Admin check */
-    if(!this.props.entity.monetized) {
+    if (!this.props.entity.monetized) {
       options.push( 'Monetize' );
     } else {
       options.push( 'Un-monetize' );
@@ -110,7 +107,7 @@ export default class ActivityActions extends Component {
     options.push( 'Translate' );
 
   
-    if(this.props.entity.comments_disabled) {
+    if (this.props.entity['is:muted']) {
       options.push( 'Mute notifications' );
     } else {
       options.push( 'Unmute notifications' );
@@ -140,26 +137,41 @@ export default class ActivityActions extends Component {
           });
         });
         break;
-      case 'Share':
-        this.props.channel.toggleBlock().then( (result) => {
+      case 'Block user':
+        toggleUserBlock(this.props.entity.ownerObj.guid, !this.state.userBlocked).then( (result) => {
+          this.setState({
+            userBlocked:true,
+            options: this.getOptions(),
+          });
+        });
+        break;
+      case 'Unblock user':
+        toggleUserBlock(this.props.entity.ownerObj.guid, !this.state.userBlocked).then( (result) => {
+          this.setState({
+            userBlocked:false,
+            options: this.getOptions(),
+          });
+        });
+        break;
+      case 'Mute notifications':
+        this.props.newsfeed.newsfeedToggleMute(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
         });
+        break;
+      case 'Unmute notifications':
+        this.props.newsfeed.newsfeedToggleMute(this.props.entity.guid).then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
+        break;
+      case 'Share':
         break;
       case 'Translate':
-        this.props.channel.toggleBlock().then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
         break;
       case 'Report':
-        this.props.channel.toggleBlock().then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
         break;
       case 'Enable Comments':
         this.props.newsfeed.toggleCommentsAction(this.props.entity.guid).then( (result) => {

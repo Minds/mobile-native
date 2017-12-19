@@ -67,6 +67,7 @@ export function uploadAttachment(url, file) {
 /**
  * Toggle comments
  * @param {string} guid
+ * @param {boolean} value
  */
 export function toggleComments(guid, value) {
   if (value) {
@@ -76,6 +77,37 @@ export function toggleComments(guid, value) {
   }
 }
 
+
+/**
+ * Toggle user block
+ * @param {string} guid
+ * @param {boolean} value
+ */
+export function toggleUserBlock(guid, value) {
+  if (value) {
+    return api.put('api/v1/block/' + guid);
+  } else {
+    return api.delete('api/v1/block/' + guid);
+  }
+}
+
+/**
+ * Toggle muted
+ * @param {string} guid
+ * @param {boolean} value
+ */
+
+export function toggleMuteNotifications(guid, value) {
+  let action = value ? 'mute' : 'unmute'
+  return api.post('api/v1/entities/notifications/' + guid + '/' + action)
+    .then((data) => {
+      return { data }
+    })
+    .catch(err => {
+      console.log('error');
+      throw "Ooops";
+    })
+}
 
 export function toggleExplicit(guid, value) {
   return api.post('api/v1/entities/explicit/' + guid, {value : value})

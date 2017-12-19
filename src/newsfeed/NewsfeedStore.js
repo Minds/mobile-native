@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 
-import { getFeed, toggleComments } from './NewsfeedService';
+import { getFeed, toggleComments, toggleMuteNotifications } from './NewsfeedService';
 
 /**
  * News feed store
@@ -93,6 +93,27 @@ class NewsfeedStore {
         }));
     }
   }
+
+  @action
+  newsfeedToggleMute(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    alert(index)
+    if(index >= 0) {
+      let entity = this.entities[index];
+      let value = !entity['is:muted'];
+      return toggleMuteNotifications(guid, value)
+        .then(action(response => {
+          entity['is:muted'] = value;
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          entity['is:muted'] = !value;
+          this.entities[index] = entity;
+          console.log('error');
+        }));
+    }
+  }
+
 }
 
 export default new NewsfeedStore();
