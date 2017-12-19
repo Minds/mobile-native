@@ -107,7 +107,7 @@ export default class ActivityActions extends Component {
     options.push( 'Translate' );
 
   
-    if (this.props.entity['is:muted']) {
+    if (!this.props.entity['is:muted']) {
       options.push( 'Mute notifications' );
     } else {
       options.push( 'Unmute notifications' );
