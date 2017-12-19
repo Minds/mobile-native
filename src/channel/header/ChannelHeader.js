@@ -7,13 +7,15 @@ import {
   Image,
   View,
   ActivityIndicator,
-  Button
+  TouchableHighlight,
 } from 'react-native';
 
 import {
   observer,
   inject
 } from 'mobx-react/native'
+
+import { Button } from 'react-native-elements';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MINDS_URI } from '../../config/Config';
@@ -55,21 +57,25 @@ export default class ChannelHeader extends Component {
   getActionButton() {
     if(!!this.props.channel.channel.subscribed){
       return (
-        <Button
+        <TouchableHighlight
           onPress={() => { console.log('press') }}
-          title="Message"
-          color="#4791d6"
+          underlayColor = 'transparent'
+          style = {{margin:4, padding:5, alignItems:'center', borderRadius: 5,backgroundColor:'white', borderWidth:1, borderColor: "#4791d6"}}
           accessibilityLabel="Send a message to this channel"
-        />
+        >
+          <Text style={{color: '#4791d6'}} > MESSAGE </Text>
+        </TouchableHighlight>
       );
     } else if (this.props.me.guid !== this.props.channel.channel.guid){
       return (
-        <Button
+        <TouchableHighlight
           onPress={() => { this.subscribe() }}
-          title="Subscribe"
-          color="#4791d6"
+          underlayColor = 'transparent'
+          style = {{margin:4, padding:5, alignItems:'center', borderRadius: 5,backgroundColor:'white', borderWidth:1, borderColor: "#4791d6"}}
           accessibilityLabel="Subscribe to this channel"
-        />
+        >
+          <Text style={{color: '#4791d6'}} > SUBSCRIBE </Text>
+        </TouchableHighlight>
       );
     } else {
         <View style={{width:40}}></View>
