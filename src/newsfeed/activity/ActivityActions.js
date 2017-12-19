@@ -73,7 +73,6 @@ export default class ActivityActions extends Component {
       }
 
       if(!this.props.entity.ownerObj.subscribed) {
-        options.push( 'Subscribe' );
       } else {
         options.push( 'Unsubscribe' );
       }
