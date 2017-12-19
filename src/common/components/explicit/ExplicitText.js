@@ -6,6 +6,8 @@ import {
   NavigationActions
 } from 'react-navigation';
 
+import {observer} from "mobx-react";
+
 import {
   Text,
   StyleSheet,
@@ -14,6 +16,7 @@ import {
 
 import Tags from '../../../common/components/Tags';
 
+@observer
 export default class ExplicitText extends Component {
 
   render() {

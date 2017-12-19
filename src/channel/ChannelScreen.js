@@ -72,7 +72,7 @@ export default class ChannelScreen extends Component {
     const channelfeed = this.props.channelfeed;
     const guid        = this.getGuid();
 
-    if (!channel.guid || !channelfeed.loaded) {
+    if (!channel.guid || !channelfeed.list.loaded) {
       return (
         <ActivityIndicator size={'large'} />
       );

@@ -124,14 +124,14 @@ export default class ActivityActions extends Component {
         
         break;
       case 'Set explicit':
-        this.props.newsfeed.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
+        this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
         });
         break;
       case 'Remove explicit':
-        this.props.newsfeed.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
+        this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
@@ -154,14 +154,14 @@ export default class ActivityActions extends Component {
         });
         break;
       case 'Mute notifications':
-        this.props.newsfeed.newsfeedToggleMute(this.props.entity.guid).then( (result) => {
+        this.props.newsfeed.list.newsfeedToggleMute(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
         });
         break;
       case 'Unmute notifications':
-        this.props.newsfeed.newsfeedToggleMute(this.props.entity.guid).then( (result) => {
+        this.props.newsfeed.list.newsfeedToggleMute(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
@@ -174,28 +174,28 @@ export default class ActivityActions extends Component {
       case 'Report':
         break;
       case 'Enable Comments':
-        this.props.newsfeed.toggleCommentsAction(this.props.entity.guid).then( (result) => {
+        this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
         });
         break;
       case 'Disable Comments':
-        this.props.newsfeed.toggleCommentsAction(this.props.entity.guid).then( (result) => {
+        this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
         });
         break;
       case 'Subscribe':
-        this.props.newsfeed.newsfeedToggleSubscription(this.props.entity.guid).then( (result) => {
+        this.props.newsfeed.list.newsfeedToggleSubscription(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
         });
         break;
       case 'Unsubscribe':
-        this.props.newsfeed.newsfeedToggleSubscription(this.props.entity.guid).then( (result) => {
+        this.props.newsfeed.list.newsfeedToggleSubscription(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
