@@ -8,65 +8,78 @@ import {
 
 import {
   Button,
-  Text,
+  View,
   TextInput,
   StyleSheet,
   KeyboardAvoidingView,
-  ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
-  Image,
 } from 'react-native';
 
 import { login } from './LoginService';
+import { CommonStyle } from '../styles/Common';
+import { ComponentsStyle } from '../styles/Components';
 
-export default class LoginForm extends Component<{}> {
+/**
+ * Login Form
+ */
+export default class LoginForm extends Component {
 
   state = {
     username: 'byte64',
     password: 'temp'
   };
 
-  props: {
-    onLogin: () => void
-  }
-
+  /**
+   * Render
+   */
   render() {
-    return (  
-        <KeyboardAvoidingView behavior='padding'
-          style={styles.container}>
-          <TextInput
-            style={styles.input}
-            placeholder='Login'
-            returnKeyType={'done'}
-            placeholderTextColor="white"
-            underlineColorAndroid='transparent'
-            onChangeText={(value) => this.setState({ username: value })}
-            value={this.state.username}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder='password'
-            secureTextEntry={true}
-            returnKeyType={'done'}
-            placeholderTextColor="white"
-            underlineColorAndroid='transparent'
-            onChangeText={(value) => this.setState({ password: value })}
-            value={this.state.password}
-          />
+    return (
+      <KeyboardAvoidingView behavior='padding'>
+        <TextInput
+          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+          placeholder='Login'
+          returnKeyType={'done'}
+          placeholderTextColor="white"
+          underlineColorAndroid='transparent'
+          onChangeText={(value) => this.setState({ username: value })}
+          value={this.state.username}
+        />
+        <TextInput
+          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+          placeholder='password'
+          secureTextEntry={true}
+          returnKeyType={'done'}
+          placeholderTextColor="white"
+          underlineColorAndroid='transparent'
+          onChangeText={(value) => this.setState({ password: value })}
+          value={this.state.password}
+        />
+        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
+          <View style={ComponentsStyle.loginButton}>
+            <Button
+              onPress={() => this.props.onRegister()}
+              title="Create a channel"
+              color="rgba(0,0,0, 0.5)"
+              accessibilityLabel="Create a channel"
 
-          <Button
-            onPress={() => this.onLoginPress()}
-            title="Login"
-            color="rgba(0,0,0, 0.5)"
-            style={styles.button}
-          />
-        </KeyboardAvoidingView>
+            />
+          </View>
+          <View style={ComponentsStyle.loginButton}>
+            <Button
+              onPress={() => this.onLoginPress()}
+              title="Login"
+              color="rgba(0,0,0, 0.5)"
+
+            />
+          </View>
+        </View>
+      </KeyboardAvoidingView>
     );
   }
 
+  /**
+   * On login press
+   */
   onLoginPress() {
-
     login(this.state.username, this.state.password)
       .then(data => {
         this.props.onLogin();
@@ -76,20 +89,3 @@ export default class LoginForm extends Component<{}> {
       });
   }
 }
-
-const styles = StyleSheet.create({
-  input: {
-    color: '#FFF',
-    fontSize: 16,
-    letterSpacing: 2,
-    backgroundColor:'rgba(255,255,255, 0.2)',
-    margin: 15,
-    height: 40,
-    borderRadius: 4,
-    opacity: 0.8
-  },
-  button: {
-    backgroundColor:'rgba(0,0,0, 0.3)',
-    margin: 15,
-  }
-});

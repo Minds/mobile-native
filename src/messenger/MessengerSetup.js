@@ -43,7 +43,7 @@ export default class MessengerSetup extends Component {
     const button = (unlocking) ? <CenteredLoading /> : <Button title="UNLOCK" onPress={this.unlock} />
 
     return (
-      <View style={[CommonStyle.flexcontainer, CommonStyle.backgroundLight]}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>
         <TextInput
           ref='password'
           style={ComponentsStyle.passwordinput}
