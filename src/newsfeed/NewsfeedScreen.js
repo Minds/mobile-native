@@ -35,7 +35,7 @@ export default class NewsfeedScreen extends Component {
   render() {
     const newsfeed = this.props.newsfeed;
 
-    if (!newsfeed.loaded) {
+    if (!newsfeed.list.loaded) {
       return (
         <CenteredLoading/>
       );

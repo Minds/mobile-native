@@ -6,6 +6,8 @@ import {
   NavigationActions
 } from 'react-navigation';
 
+import {observer} from "mobx-react";
+
 import {
   Text,
   StyleSheet,
@@ -20,6 +22,7 @@ import OwnerBlock from './OwnerBlock';
 import Actions from './Actions';
 import FastImage from 'react-native-fast-image';
 
+@observer
 export default class Activity extends Component {
 
   navToActivity = () => {

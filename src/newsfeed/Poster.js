@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, Text,Button, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, Text,Button, TouchableHighlight, Image, ActivityIndicator } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-picker';
@@ -7,6 +7,8 @@ import NewsfeedList from './NewsfeedList';
 import api from './../common/services/api.service';
 
 import { post, remind, uploadAttachment } from './NewsfeedService';
+
+import colors from '../styles/Colors';
 
 import {
   NavigationActions
@@ -71,12 +73,14 @@ export default class Poster extends Component {
                 <View style={{flex: 5}}>
                 </View>
                 <View style={{flex: 1}}>
-                  <Button
+                  <TouchableHighlight
                     onPress={() => this.submitPost()} 
-                    title="Post"
-                    disabled={this.state.hasAttachment && !(this.state.hasAttachment && this.state.attachmentGuid.length > 0)}
-                    color="rgb(70, 144, 214)"
-                  />
+                    underlayColor = 'transparent'
+                    style = {styles.button}
+                    accessibilityLabel="Subscribe to this channel"
+                  >
+                    <Text style={{color: colors.primary}} > POST </Text>
+                  </TouchableHighlight>
                 </View>
               </View>;
     }
@@ -170,6 +174,10 @@ export default class Poster extends Component {
   }
 
   submitPost = () => {
+    if(this.state.hasAttachment && !(this.state.hasAttachment && this.state.attachmentGuid.length > 0)) {
+      return false;
+    }
+
     let newPost = {message: this.state.text}
     if(this.props.attachmentGuid) {
       newPost.attachment_guid = this.props.attachmentGuid;
@@ -217,5 +225,15 @@ const styles = StyleSheet.create({
   },
   posterAndPreviewWrapper: {
     flex:1
+  },
+  button: {
+    margin:4, 
+    padding:5, 
+    alignItems:'center', 
+    borderRadius: 5,
+    backgroundColor:'white', 
+    borderWidth:1, 
+    borderColor: 
+    colors.primary
   }
 });

@@ -2,13 +2,19 @@ import { observable, action } from 'mobx'
 
 import { getFeedChannel, toggleComments , toggleExplicit } from '../newsfeed/NewsfeedService';
 
+import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 // TODO: refactor to use Newsfeed store logic (DRY)
 class ChannelFeedStore {
-  @observable entities    = [];
-  @observable refreshing  = false
+
   @observable filter      = 'feed';
-  @observable loaded      = false;
   @observable showrewards = false;
+
+  list = new OffsetFeedListStore();
+
+  /**
+   * List loading
+   */
+  loading = false;
 
   offset = '';
   guid   = null;
@@ -18,9 +24,19 @@ class ChannelFeedStore {
   }
 
   loadFeed() {
-    return getFeedChannel(this.guid, this.offset)
+
+    if (this.list.cantLoadMore() || this.loading) {
+      return;
+    }
+
+    return getFeedChannel(this.guid, this.list.offset)
     .then(feed => {
-        this.setFeed(feed);
+        if (this.filter != 'rewards') {
+          this.list.setList(feed);
+        }
+      })
+      .finally(() => {
+        this.loading = false;
       })
       .catch(err => {
         console.error('error');
@@ -28,24 +44,9 @@ class ChannelFeedStore {
   }
 
   @action
-  setFeed(feed) {
-    //ignore on rewards view
-    if (this.filter == 'rewards') {
-      return;
-    }
-    this.loaded = true;
-    if (feed.entities) {
-      this.entities = [... this.entities, ...feed.entities];
-    }
-    this.offset = feed.offset || '';
-  }
-
-  @action
   clearFeed() {
-    this.entities    = [];
-    this.offset      = '';
+    this.list.clearList();
     this.filter      = 'feed';
-    this.loaded      = false;
     this.showrewards = false;
   }
 
@@ -55,12 +56,11 @@ class ChannelFeedStore {
     if (this.filter == 'rewards') {
       return;
     }
-    this.refreshing = true;
-    this.entities   = [];
-    this.offset     = ''
+    this.list.refresh();
+    this.list.clearList();
     this.loadFeed()
       .finally(action(() => {
-        this.refreshing = false;
+        this.list.refreshDone();
       }));
   }
 
@@ -73,54 +73,15 @@ class ChannelFeedStore {
     switch (filter) {
       case 'rewards':
         this.showrewards = true;
-        this.entities    = [];
-        this.offset      = '';
+        this.list.clearList();
         break;
       default:
         this.showrewards = false;
-        this.entities    = [];
-        this.offset      = '';
+        this.list.clearList();
         this.loadFeed();
         break;
     }
   }
-
-  /*Activity Methods */
-  @action
-  toggleCommentsAction(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity =  this.entities[index];
-      let value = !entity.comments_disabled;
-      return toggleComments(guid, value)
-        .then(action(response => {
-          this.entities[index] = response.entity;
-        }))
-        .catch(action(err => {
-          entity.comments_disabled = !value;
-          this.entities[index] = entity;
-          console.log('error');
-        }));
-    }
-  }
-
-  @action
-  newsfeedToggleExplicit(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    let entity = this.entities[index];
-    let value = !entity.mature;
-    return toggleExplicit(guid, value)
-      .then(action(response => {
-        entity.mature = value;
-        this.entities[index] = entity;
-      }))
-      .catch(action(err => {
-        entity.mature = !value;
-        this.entities[index] = entity;
-        console.log('error');
-      }));
-  }
-
 }
 
 export default new ChannelFeedStore();

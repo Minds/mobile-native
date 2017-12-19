@@ -2,6 +2,8 @@ import React, {
   Component
 } from 'react';
 
+import {observer} from "mobx-react";
+
 import {
   StyleSheet,
   ActivityIndicator,
@@ -16,6 +18,7 @@ import FastImage from 'react-native-fast-image';
 import { BlurView, VibrancyView } from 'react-native-blur';
 import { Icon } from 'react-native-elements';
 
+@observer
 export default class ExplicitImage extends Component {
   constructor(props) {
     super(props);

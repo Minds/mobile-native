@@ -7,7 +7,7 @@ export default class OffsetListStore {
   /**
    * list entities
    */
-  @observable.shallow entities = [];
+  @observable entities = [];
 
   /**
    * list is refreshing

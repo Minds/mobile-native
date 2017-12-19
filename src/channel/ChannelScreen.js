@@ -72,7 +72,7 @@ export default class ChannelScreen extends Component {
     const channelfeed = this.props.channelfeed;
     const guid        = this.getGuid();
 
-    if (!channel.guid || !channelfeed.loaded) {
+    if (!channel.guid || !channelfeed.list.loaded) {
       return (
         <ActivityIndicator size={'large'} />
       );
@@ -195,5 +195,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#FFF'
+  },
+  button: {
+    margin:4, 
+    padding:5, 
+    alignItems:'center', 
+    borderRadius: 5,
+    backgroundColor:'white', 
+    borderWidth:1, 
+    borderColor: 
+    colors.primary
   }
 });

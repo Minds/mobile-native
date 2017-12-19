@@ -17,11 +17,11 @@ export default class NewsfeedList extends Component {
     return (
       <FlatList
         ListHeaderComponent={this.props.header}
-        data={this.props.newsfeed.entities.slice()}
+        data={this.props.newsfeed.list.entities.slice()}
         renderItem={this.renderActivity}
         keyExtractor={item => item.guid}
         onRefresh={this.refresh}
-        refreshing={this.props.newsfeed.refreshing}
+        refreshing={this.props.newsfeed.list.refreshing}
         onEndReached={this.loadFeed}
         onEndThreshold={0}
         style={styles.listView}
