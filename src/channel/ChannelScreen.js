@@ -195,5 +195,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#FFF'
+  },
+  button: {
+    margin:4, 
+    padding:5, 
+    alignItems:'center', 
+    borderRadius: 5,
+    backgroundColor:'white', 
+    borderWidth:1, 
+    borderColor: 
+    colors.primary
   }
 });

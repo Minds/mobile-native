@@ -24,6 +24,7 @@ import abbrev from '../../common/helpers/abbrev';
 import FastImage from 'react-native-fast-image';
 import ChannelActions from '../ChannelActions';
 
+import colors from '../../styles/Colors'
 /**
  * Channel Header
  */
@@ -55,15 +56,16 @@ export default class ChannelHeader extends Component {
    * Get Action Button, Message or Subscribe
    */
   getActionButton() {
+    const styles  = this.props.styles;
     if(!!this.props.channel.channel.subscribed){
       return (
         <TouchableHighlight
           onPress={() => { console.log('press') }}
           underlayColor = 'transparent'
-          style = {{margin:4, padding:5, alignItems:'center', borderRadius: 5,backgroundColor:'white', borderWidth:1, borderColor: "#4791d6"}}
+          style = {styles.button}
           accessibilityLabel="Send a message to this channel"
         >
-          <Text style={{color: '#4791d6'}} > MESSAGE </Text>
+          <Text style={{color: colors.primary}} > MESSAGE </Text>
         </TouchableHighlight>
       );
     } else if (this.props.me.guid !== this.props.channel.channel.guid){
@@ -71,10 +73,10 @@ export default class ChannelHeader extends Component {
         <TouchableHighlight
           onPress={() => { this.subscribe() }}
           underlayColor = 'transparent'
-          style = {{margin:4, padding:5, alignItems:'center', borderRadius: 5,backgroundColor:'white', borderWidth:1, borderColor: "#4791d6"}}
+          style = {styles.button}
           accessibilityLabel="Subscribe to this channel"
         >
-          <Text style={{color: '#4791d6'}} > SUBSCRIBE </Text>
+          <Text style={{color: colors.primary}} > SUBSCRIBE </Text>
         </TouchableHighlight>
       );
     } else {

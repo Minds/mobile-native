@@ -14,7 +14,7 @@ import {
   FlatList,
   TextInput,
   StyleSheet,
-  KeyboardAvoidingView,
+  TouchableHighlight,
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
@@ -92,34 +92,37 @@ export default class BoostActionBar extends Component {
     let buttons = []
     if(this.canRevoke()){
       buttons.push(
-        <Button
+        <TouchableHighlight
           onPress={() => { this.revoke() }}
-          title="Revoke"
-          color="red"
-          accessibilityLabel="Revoke this boost"
-        />
+          underlayColor = 'transparent'
+          style = {styles.redbutton}
+        >
+          <Text style={{color: colors.primary}} > REVOKE </Text>
+        </TouchableHighlight>
       );
     };
     
     if (this.canReject()){
       buttons.push(
-        <Button
-          onPress={() => { this.reject() }}
-          title="Reject"
-          color="red"
-          accessibilityLabel="Reject this boost"
-        />
+        <TouchableHighlight
+          onPress={() => { this.reject()}}
+          underlayColor = 'transparent'
+          style = {styles.bluebutton}
+        >
+          <Text style={{color: colors.primary}} > REJECT </Text>
+        </TouchableHighlight>
       );
     } 
     
     if (this.canAccept()) {
       buttons.push(
-        <Button
-          onPress={() => { this.accept() }}
-          title="Accept"
-          color="#4791d6"
-          accessibilityLabel="Accept this boost"
-        />
+        <TouchableHighlight
+          onPress={() => { this.reject()}}
+          underlayColor = 'transparent'
+          style = {styles.bluebutton}
+        >
+          <Text style={{color: colors.primary}} > ACCEPT </Text>
+        </TouchableHighlight>
       );
     }
 
@@ -170,4 +173,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
   },
+  redbutton: {
+    margin:4, 
+    padding:5, 
+    alignItems:'center', 
+    borderRadius: 5,
+    backgroundColor:'white', 
+    borderWidth:1, 
+    borderColor: 
+    colors.danger
+  },
+  bluebutton: {
+    margin:4, 
+    padding:5, 
+    alignItems:'center', 
+    borderRadius: 5,
+    backgroundColor:'white', 
+    borderWidth:1, 
+    borderColor: 
+    colors.primary
+  }
+  
 });
