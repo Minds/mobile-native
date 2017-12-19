@@ -7,9 +7,28 @@ import colors from './Colors';
  */
 export const CommonStyle = StyleSheet.create({
   // containers
-  flexcontainer: {
+  flexContainer: {
     flex:1,
-    padding: 10
+  },
+  flexContainerCenter: {
+    flex:1,
+    justifyContent: 'center',
+  },
+  rowJustifyEnd: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  },
+  rowJustifyCenter: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  rowJustifyStart: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  // align
+  alignCenter: {
+    alignItems: 'center'
   },
   // color
   colorLight: {
@@ -62,6 +81,16 @@ export const CommonStyle = StyleSheet.create({
   },
   marginBottom: {
     marginBottom: 5
+  },
+  // padding
+  padding3x: {
+    padding: 15
+  },
+  padding2x: {
+    padding: 10
+  },
+  padding: {
+    padding: 5
   },
   // padding top
   paddingTop3x: {
