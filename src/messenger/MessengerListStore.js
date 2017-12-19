@@ -3,7 +3,12 @@ import {
   action
 } from 'mobx';
 
+import {
+  Alert
+} from 'react-native';
+
 import messengerService from './MessengerService';
+import session from './../common/services/session.service';
 
 /**
  * Messenger Conversation List Store
@@ -11,11 +16,31 @@ import messengerService from './MessengerService';
 class MessengerListStore {
   @observable.shallow conversations = [];
   @observable refreshing = false;
+  /**
+   * Search string
+   */
   @observable search = '';
+
+  /**
+   * key configured?
+   */
+  @observable configured = false;
+  @observable unlocking  = false;
 
   offset    = '';
   newsearch = true;
   loaded    = false;
+  privateKey   = null;
+
+  constructor() {
+    session.getPrivateKey()
+      .then((privateKey) => {
+        if (privateKey) {
+          this.configured = true;
+          this.privateKey = privateKey;
+        }
+      })
+  }
 
   /**
    * Load conversations list
@@ -42,6 +67,45 @@ class MessengerListStore {
       }).catch(err => {
         console.log('error');
       });
+  }
+
+  /**
+   * Get crypto keys and unlock
+   * @param {string} password
+   */
+  getCrytoKeys(password) {
+    this.setUnlocking(true);
+    messengerService.getCrytoKeys(password)
+      .then(privateKey => {
+        if (privateKey) {
+          session.setPrivateKey(privateKey);
+          this.setPrivateKey(privateKey);
+        }
+      })
+      .finally(() => {
+        this.setUnlocking(false);
+      })
+      .catch(() => {
+        Alert.alert(
+          'Sorry!',
+          'Please check your credentials',
+          [
+            { text: 'Try again'},
+          ],
+          { cancelable: false }
+        )
+      });
+  }
+
+  @action
+  setUnlocking(val) {
+    this.unlocking = val;
+  }
+
+  @action
+  setPrivateKey(privateKey) {
+    this.privateKey = privateKey;
+    this.configured = true;
   }
 
   @action

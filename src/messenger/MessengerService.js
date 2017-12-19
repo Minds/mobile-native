@@ -12,17 +12,12 @@ class MessengerService {
    */
   getCrytoKeys(password) {
     return api.get('api/v1/keys', {
-      password: password,
-      new_password: 'abc123'
+      password: password
     }).then((response) => {
       if (response.key) {
-        this.privateKey = response.key;
-      } else {
-        console.log('no keys');
+        return response.key;
       }
-    })
-    .catch(() => {
-      console.log('error getting keys');
+      return null;
     });
   }
 

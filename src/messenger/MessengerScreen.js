@@ -20,6 +20,7 @@ import ConversationView from './conversation/ConversationView';
 
 import SearchView from '../common/components/SearchView';
 import debounce from '../common/helpers/debounce';
+import MessengerSetup from './MessengerSetup';
 
 /**
  * Messenger Conversarion List Screen
@@ -43,6 +44,12 @@ export default class MessengerScreen extends Component {
    */
   render() {
     const messengerList = this.props.messengerList;
+
+    // show setup !configured yet
+    if (!messengerList.configured) {
+      return <MessengerSetup/>
+    }
+
     return (
       <View style={styles.container}>
         <SearchView
