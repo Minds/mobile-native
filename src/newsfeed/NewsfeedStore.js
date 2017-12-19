@@ -2,6 +2,7 @@ import { observable, action } from 'mobx'
 
 import { getFeed, toggleComments, toggleMuteNotifications } from './NewsfeedService';
 
+import channelService from '../channel/ChannelService';
 /**
  * News feed store
  */
@@ -108,6 +109,26 @@ class NewsfeedStore {
         }))
         .catch(action(err => {
           entity['is:muted'] = !value;
+          this.entities[index] = entity;
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
+  newsfeedToggleSubscription(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    alert(index)
+    if(index >= 0) {
+      let entity = this.entities[index];
+      let value = !entity.ownerObj.subscribed;
+      return channelService.toggleSubscription(entity.ownerObj.guid, value)
+        .then(action(response => {
+          entity.ownerObj.subscribed = value;
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          entity.ownerObj.subscribed = !value;
           this.entities[index] = entity;
           console.log('error');
         }));

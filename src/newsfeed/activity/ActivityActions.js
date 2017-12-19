@@ -72,13 +72,14 @@ export default class ActivityActions extends Component {
         options.push( 'Remove explicit' );
       }
 
+    } else {
+      
       if(!this.props.entity.ownerObj.subscribed) {
+        options.push( 'Subscribe' );
       } else {
         options.push( 'Unsubscribe' );
       }
 
-    } else {
-      
       if (this.state && this.state.userBlocked) {
         options.push( 'Unblock user' );
       } else {
@@ -181,6 +182,20 @@ export default class ActivityActions extends Component {
         break;
       case 'Disable Comments':
         this.props.newsfeed.toggleCommentsAction(this.props.entity.guid).then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
+        break;
+      case 'Subscribe':
+        this.props.newsfeed.newsfeedToggleSubscription(this.props.entity.guid).then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
+        break;
+      case 'Unsubscribe':
+        this.props.newsfeed.newsfeedToggleSubscription(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
