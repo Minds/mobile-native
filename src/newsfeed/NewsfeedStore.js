@@ -8,7 +8,7 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
  */
 class NewsfeedStore {
 
-  list = new OffsetFeedListStore();
+  @observable list = new OffsetFeedListStore();
   
   loadFeed() {
 
