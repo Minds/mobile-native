@@ -44,6 +44,7 @@ import wire from './src/wire/WireStore';
  * js UI functionality is not available on native exceptions!
  */
 import { setNativeExceptionHandler } from 'react-native-exception-handler';
+import sessionService from './src/common/services/session.service';
 setNativeExceptionHandler((exceptionString) => {
   console.log(exceptionString);
 });
@@ -131,6 +132,12 @@ const stores = {
   boost,
   walletHistory
 }
+
+// clear states on logout
+sessionService.onLogout(() => {
+  newsfeed.list.clearList();
+  discovery.list.clearList();
+})
 
 export default class App extends Component {
   render() {
