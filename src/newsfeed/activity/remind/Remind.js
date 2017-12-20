@@ -29,14 +29,14 @@ export default class RemindModal extends Component {
 
   render() {
     return (
-      <View style={{flex:1, flexDirection:'column'}}>
+      <ScrollView style={{flex:1, flexDirection:'column'}}>
         <View style={{flex:1}}>
           <Poster isRemind={true} guid={this.props.entity.guid} />
         </View>
         <View style={{flex:4}}>
           <Activity hideTabs={true} entity={this.props.entity} />
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
