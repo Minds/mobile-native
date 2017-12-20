@@ -7,10 +7,8 @@ import {
 } from 'react-navigation';
 
 import {
-  Button,
   Text,
   TextInput,
-  StyleSheet,
   KeyboardAvoidingView,
   View,
 } from 'react-native';
@@ -20,7 +18,10 @@ import { register } from './RegisterService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
-import { CheckBox } from 'react-native-elements'
+import {
+  CheckBox,
+  Button
+} from 'react-native-elements'
 
 /**
  * Register Form
@@ -57,8 +58,7 @@ export default class RegisterForm extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior='padding'
-        style={styles.container}>
+      <KeyboardAvoidingView behavior='padding'>
         <View>
           <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
             {this.state.error.termsAcceptedError}
@@ -109,27 +109,29 @@ export default class RegisterForm extends Component {
         </View>
         <CheckBox
           iconRight
-          containerStyle={styles.checkbox}
+          containerStyle={ComponentsStyle.registerCheckbox}
           title='I accept the terms and conditions'
           checked={this.state.termsAccepted}
-          textStyle={{color:'white'}}
+          textStyle={ComponentsStyle.registerCheckboxText}
           onPress={() => { this.setState({ termsAccepted: !this.state.termsAccepted})}}
         />
         <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
-          <View style={ComponentsStyle.loginButton}>
             <Button
               onPress={() => this.onPressBack()}
-              title="Go Back"
-              color="rgba(0,0,0, 0.5)"
+              title="GO BACK"
+              backgroundColor="rgba(0,0,0, 0.5)"
+              borderRadius={4}
+              containerViewStyle={ComponentsStyle.loginButton}
+              textStyle={ComponentsStyle.loginButtonText}
             />
-          </View>
-          <View style={ComponentsStyle.loginButton}>
             <Button
               onPress={() => this.onPressRegister()}
-              title="Create channel"
-              color="rgba(0,0,0, 0.5)"
+            title="CREATE CHANNEL"
+              backgroundColor="rgba(0,0,0, 0.5)"
+              borderRadius={4}
+              containerViewStyle={ComponentsStyle.loginButton}
+              textStyle={ComponentsStyle.loginButtonText}
             />
-          </View>
         </View>
       </KeyboardAvoidingView>
     );
@@ -166,11 +168,3 @@ export default class RegisterForm extends Component {
     }
   }
 }
-
-const styles = StyleSheet.create({
-  checkbox: {
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    alignSelf:'flex-end'
-  }
-});

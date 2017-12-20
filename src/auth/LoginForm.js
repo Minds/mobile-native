@@ -7,7 +7,6 @@ import {
 } from 'react-navigation';
 
 import {
-  Button,
   View,
   TextInput,
   StyleSheet,
@@ -18,14 +17,16 @@ import { login } from './LoginService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
+import { Button } from 'react-native-elements'
+
 /**
  * Login Form
  */
 export default class LoginForm extends Component {
 
   state = {
-    username: 'byte64',
-    password: 'temp'
+    username: '',
+    password: ''
   };
 
   /**
@@ -36,7 +37,7 @@ export default class LoginForm extends Component {
       <KeyboardAvoidingView behavior='padding'>
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder='Login'
+          placeholder='Username'
           returnKeyType={'done'}
           placeholderTextColor="white"
           underlineColorAndroid='transparent'
@@ -45,7 +46,7 @@ export default class LoginForm extends Component {
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder='password'
+          placeholder='Password'
           secureTextEntry={true}
           returnKeyType={'done'}
           placeholderTextColor="white"
@@ -54,23 +55,22 @@ export default class LoginForm extends Component {
           value={this.state.password}
         />
         <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
-          <View style={ComponentsStyle.loginButton}>
             <Button
               onPress={() => this.props.onRegister()}
-              title="Create a channel"
-              color="rgba(0,0,0, 0.5)"
-              accessibilityLabel="Create a channel"
-
-            />
-          </View>
-          <View style={ComponentsStyle.loginButton}>
+              title="CREATE A CHANNEL"
+              backgroundColor="rgba(0,0,0, 0.5)"
+              borderRadius={4}
+              containerViewStyle ={ComponentsStyle.loginButton}
+              textStyle={ComponentsStyle.loginButtonText}
+              />
             <Button
               onPress={() => this.onLoginPress()}
-              title="Login"
-              color="rgba(0,0,0, 0.5)"
-
+              title="LOGIN"
+              backgroundColor="rgba(0,0,0, 0.5)"
+              borderRadius={4}
+              containerViewStyle ={ComponentsStyle.loginButton}
+              textStyle={ComponentsStyle.loginButtonText}
             />
-          </View>
         </View>
       </KeyboardAvoidingView>
     );
