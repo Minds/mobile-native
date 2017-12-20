@@ -5,11 +5,14 @@ import {
   inject
 } from 'mobx-react/native'
 
+import { View } from 'react-native';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import NewsfeedList from './NewsfeedList';
 import Poster from './Poster';
 import CenteredLoading from '../common/components/CenteredLoading';
+import BoostsCarousel from './boosts/BoostsCarousel';
 
 /**
  * News Feed Screen
@@ -29,6 +32,7 @@ export default class NewsfeedScreen extends Component {
    */
   componentWillMount() {
     this.props.newsfeed.loadFeed();
+    this.props.newsfeed.loadBoosts();
   }
 
 
@@ -36,13 +40,14 @@ export default class NewsfeedScreen extends Component {
     const newsfeed = this.props.newsfeed;
 
     if (!newsfeed.list.loaded) {
-      return (
-        <CenteredLoading/>
-      );
+      return <CenteredLoading/>
     }
 
     const poster = (
-      <Poster/>
+      <View>
+        <Poster />
+        <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation}/>
+      </View>
     );
 
     return (
