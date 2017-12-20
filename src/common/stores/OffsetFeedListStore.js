@@ -38,7 +38,7 @@ export default class OffsetFeedListStore extends OffsetListStore {
       let value = !entity.mature;
       return toggleExplicit(guid, value)
         .then(action(response => {
-          entity.mature = !value;
+          entity.mature = value;
           this.entities[index] = entity;
         }))
         .catch(action(err => {
