@@ -89,19 +89,21 @@ export default class ActivityActions extends Component {
       options.push( 'Report' );
     }
     
-    /* Admin check */
+    /* Admin check needed
     if (!this.props.entity.featured) {
       options.push( 'Feature' );
     } else {
       options.push( 'Un-feature' );
     }
 
-    /* Admin check */
+  
     if (!this.props.entity.monetized) {
       options.push( 'Monetize' );
     } else {
       options.push( 'Un-monetize' );
     }
+
+    */
 
     options.push( 'Share' );
     options.push( 'Translate' );

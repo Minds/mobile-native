@@ -10,9 +10,14 @@ class NewsfeedStore {
 
   @observable list = new OffsetFeedListStore();
   
+  /**
+   * List loading
+   */
+  loading = false;
+  
   loadFeed() {
 
-    if (this.list.cantLoadMore()) {
+    if (this.list.cantLoadMore() || this.loading) {
       return;
     }
 
@@ -23,6 +28,9 @@ class NewsfeedStore {
           this.loaded   = true;
         }
       )
+      .finally(() => {
+        this.loading = false;
+      })
       .catch(err => {
         console.log('error', err);
       });

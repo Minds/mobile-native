@@ -3,30 +3,24 @@ import React, {
 } from 'react';
 
 import {
-  NavigationActions
-} from 'react-navigation';
-
-import {
-  Button,
   Text,
-  TextInput,
   StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
   Image,
+  TouchableOpacity,
   View
 } from 'react-native';
 
-import ActivityActions from './ActivityActions';
+import { Icon } from 'react-native-elements';
+
+import {
+  NavigationActions
+} from 'react-navigation';
 
 import {
   MINDS_URI
 } from '../../config/Config';
 
-
-export default class OwnerBlock extends Component {
+export default class RemindOwnerBlock extends Component {
 
   state = {
     avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.ownerObj.guid + '/medium' }
@@ -46,6 +40,7 @@ export default class OwnerBlock extends Component {
     const entity = this.props.entity.ownerObj;
     return (
       <View style={styles.container}>
+        <Icon color='rgb(70, 144, 214)' name='repeat' size={20}/>
         <TouchableOpacity onPress={this._navToChannel}>
           <Image source={this.state.avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
@@ -55,10 +50,6 @@ export default class OwnerBlock extends Component {
               { entity.username }
             </Text>
           </TouchableOpacity>
-          {this.props.children}
-        </View>
-        <View style={styles.settings}>
-          <ActivityActions newsfeed={this.props.newsfeed} entity={this.props.entity}/>
         </View>
       </View>
     );
@@ -70,25 +61,18 @@ export default class OwnerBlock extends Component {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    padding: 8,
+    padding: 4,
     alignItems: 'center',
     flexDirection: 'row',
   },
   avatar: {
-    height: 46,
-    width: 46,
-    borderRadius: 23,
-    borderWidth: StyleSheet.hairlineWidth,
+    height: 30,
+    width: 30,
+    borderRadius: 15,
     borderColor: '#EEE',
   },
   body: {
     marginLeft: 8,
-  },
-  settings: {
-    alignSelf: 'flex-end',
-    position: 'absolute',
-    right: 10,
-    top: 20
   },
   username: {
     fontWeight: 'bold',

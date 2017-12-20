@@ -19,6 +19,7 @@ import {
 import ExplicitImage from '../../common/components/explicit/ExplicitImage'
 import ExplicitText from '../../common/components/explicit/ExplicitText'
 import OwnerBlock from './OwnerBlock';
+import RemindOwnerBlock from './RemindOwnerBlock';
 import Actions from './Actions';
 import FastImage from 'react-native-fast-image';
 
@@ -67,12 +68,8 @@ export default class Activity extends Component {
 
     return (
         <View style={styles.container}>
-          <OwnerBlock entity={this.props.entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation}>
-            <TouchableOpacity onPress={this.navToActivity}>
-              <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
-            </TouchableOpacity>
-          </OwnerBlock>
-          <View style={styles.message}>
+          { this.showOwner() }
+          <View style={this.props.entity.message ? styles.message : styles.emptyMessage}>
             <ExplicitText entity={this.props.entity}  navigation={this.props.navigation}/>
           </View>
           { this.showRemind() }
@@ -83,16 +80,28 @@ export default class Activity extends Component {
     );
   }
 
+  showOwner() {
+    if (!this.props.entity.remind_object) {
+      return (<OwnerBlock entity={this.props.entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation}>
+                <TouchableOpacity onPress={this.navToActivity}>
+                  <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
+                </TouchableOpacity>
+              </OwnerBlock>);
+    } else {
+      return (<RemindOwnerBlock entity={this.props.entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation} />);
+    }
+  }
+  
   showRemind() {
     if (this.props.entity.remind_object) {
       return (<View style={styles.remind}>
-                <Activity hideTabs={true}  newsfeed={this.props.newsfeed} entity={this.props.entity.remind_object} navigation={this.props.navigation} />
+                <Activity hideTabs={true} newsfeed={this.props.newsfeed} entity={this.props.entity.remind_object} navigation={this.props.navigation} />
               </View>);
     }
   }
 
   showActions() {
-    if(!this.props.hideTabs) {
+    if (!this.props.hideTabs) {
       return <Actions entity={this.props.entity} navigation={this.props.navigation}></Actions>
     }
   }
@@ -118,6 +127,9 @@ const styles = StyleSheet.create({
   message: {
     padding: 8
   },
+  emptyMessage: {
+    padding: 0
+  },
   imageContainer: {
     flex: 1,
     alignItems: 'stretch',
@@ -128,7 +140,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-
   },
   timestamp: {
     fontSize: 11,
@@ -136,6 +147,5 @@ const styles = StyleSheet.create({
   },
   remind: {
     flex:1,
-    paddingLeft: 16,
   }
 });
