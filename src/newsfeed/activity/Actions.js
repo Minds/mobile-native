@@ -44,9 +44,10 @@ export default class Actions extends Component {
     avatarSrc: { uri: MINDS_URI + 'icon/' },
     votedDown: false,
     votedUp: false,
+    votedDownCount: 0,
+    votedUpCount: 0,
     remindModalVisible: false,
   };
-
 
   componentWillMount() {
     let votedUp = false;
