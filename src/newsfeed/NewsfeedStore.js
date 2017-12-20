@@ -1,8 +1,6 @@
 import { observable, action } from 'mobx'
 
-import { getFeed, toggleComments, toggleMuteNotifications } from './NewsfeedService';
-
-import channelService from '../channel/ChannelService';
+import { getFeed } from './NewsfeedService';
 
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 /**
