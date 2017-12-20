@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 
-import { getFeed } from './NewsfeedService';
+import { getFeed, getBoosts } from './NewsfeedService';
 
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 /**
@@ -9,12 +9,17 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 class NewsfeedStore {
 
   @observable list = new OffsetFeedListStore();
-  
+
+  @observable.ref boosts = [];
+
   /**
    * List loading
    */
   loading = false;
-  
+
+  /**
+   * Load feed
+   */
   loadFeed() {
 
     if (this.list.cantLoadMore() || this.loading) {
@@ -34,6 +39,17 @@ class NewsfeedStore {
       .catch(err => {
         console.log('error', err);
       });
+  }
+
+  /**
+   * Load boosts
+   */
+  loadBoosts() {
+    // get 15 boosts
+    getBoosts(15)
+      .then(boosts => {
+        this.boosts = boosts;
+      })
   }
 
   @action

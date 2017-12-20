@@ -20,6 +20,7 @@
     "react-native-fast-image": "^2.0.1",
     "react-native-image-picker": "^0.26.7",
     "react-native-photo-view": "^1.5.2",
+    "react-native-snap-carousel": "^3.4.0",
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.19"
   },

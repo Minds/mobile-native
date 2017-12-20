@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 import api from './../common/services/api.service';
 
 export function getFeed(offset) {
@@ -16,15 +18,25 @@ export function getFeed(offset) {
 
 export function getFeedChannel(guid, offset) {
   return api.get('api/v1/newsfeed/personal/' + guid, { offset: offset, limit: 12 })
-    .then((data) => {
-      return {
-        entities: data.activity,
-        offset: data['load-next'],
+  .then((data) => {
+    return {
+      entities: data.activity,
+      offset: data['load-next'],
       }
     })
     .catch(err => {
       console.log('error');
       throw "Ooops";
+    })
+  }
+
+export function getBoosts(limit) {
+  return api.get('api/v1/boost/fetch/newsfeed', {
+    limit: limit,
+    platform: Platform.OS === 'ios' ? 'ios' : 'other'
+  })
+    .then(({ boosts = [] }) => {
+      return boosts;
     })
 }
 
