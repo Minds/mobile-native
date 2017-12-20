@@ -75,6 +75,7 @@ class CommentsStore {
     this.loadNext = '';
     this.loadPrevious = '';
     this.socketRoom = '';
+    this.loaded = false;
   }
 
   @action
