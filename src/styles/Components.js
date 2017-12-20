@@ -16,15 +16,29 @@ export const ComponentsStyle = StyleSheet.create({
     color: '#FFF',
     fontSize: 16,
     letterSpacing: 2,
+    padding: 15,
+    fontFamily: 'Roboto',
     backgroundColor: 'rgba(255,255,255, 0.2)',
-    //margin: 15,
-    height: 40,
+    height: 50,
     borderRadius: 4,
-    opacity: 0.8
   },
   loginButton: {
-    marginLeft: 15,
     borderRadius: 4,
+    marginRight: 0,
+    marginLeft: 10,
+  },
+  loginButtonText: {
+    fontFamily: 'Roboto',
+    fontWeight: 'bold'
+  },
+  registerCheckboxText: {
+    color: 'white'
+  },
+  registerCheckbox: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    marginRight: 0,
+    alignSelf: 'flex-end'
   },
 
   // background image

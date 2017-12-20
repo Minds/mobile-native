@@ -7,7 +7,6 @@ import FastImage from 'react-native-fast-image';
 
 import {
   Text,
-  StyleSheet,
   KeyboardAvoidingView,
   ScrollView,
   View,
@@ -74,27 +73,3 @@ export default class Register extends Component {
     this.props.navigation.dispatch(resetAction);
   }
 }
-
-const styles = StyleSheet.create({
-  stretch: {
-    width: 200,
-    height: 80,
-    marginLeft: 20,
-    marginTop: 0
-  },
-  background: {
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  viewWrapper: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    justifyContent: 'center',
-  },
-  keyboardAvoidingView: {backgroundColor: 'transparent'}
-});
