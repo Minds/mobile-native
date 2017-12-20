@@ -86,13 +86,13 @@ export default class Activity extends Component {
   showRemind() {
     if (this.props.entity.remind_object) {
       return (<View style={styles.remind}>
-                <Activity hideTabs={true}  newsfeed={this.props.newsfeed} entity={this.props.entity.remind_object} navigation={this.props.navigation} />
+                <Activity hideTabs={true} newsfeed={this.props.newsfeed} entity={this.props.entity.remind_object} navigation={this.props.navigation} />
               </View>);
     }
   }
 
   showActions() {
-    if(!this.props.hideTabs) {
+    if (!this.props.hideTabs) {
       return <Actions entity={this.props.entity} navigation={this.props.navigation}></Actions>
     }
   }

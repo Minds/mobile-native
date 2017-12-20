@@ -46,20 +46,20 @@ export default class OwnerBlock extends Component {
     const entity = this.props.entity.ownerObj;
     return (
       <View style={styles.container}>
+        <TouchableOpacity onPress={this._navToChannel}>
+          <Image source={this.state.avatarSrc} style={styles.avatar}/>
+        </TouchableOpacity>
+        <View style={styles.body}>
           <TouchableOpacity onPress={this._navToChannel}>
-            <Image source={this.state.avatarSrc} style={styles.avatar}/>
+            <Text style={styles.username}>
+              { entity.username }
+            </Text>
           </TouchableOpacity>
-          <View style={styles.body}>
-            <TouchableOpacity onPress={this._navToChannel}>
-              <Text style={styles.username}>
-                { entity.username }
-              </Text>
-            </TouchableOpacity>
-            {this.props.children}
-          </View>
-          <View style={styles.settings}>
-            <ActivityActions newsfeed={this.props.newsfeed} entity={this.props.entity}/>
-          </View>
+          {this.props.children}
+        </View>
+        <View style={styles.settings}>
+          <ActivityActions newsfeed={this.props.newsfeed} entity={this.props.entity}/>
+        </View>
       </View>
     );
   }

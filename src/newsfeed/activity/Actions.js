@@ -52,18 +52,17 @@ export default class Actions extends Component {
   componentWillMount() {
     let votedUp = false;
     let votedDown = false;
-    let votedUpCount = 0;
-    let votedDownCount = 0;
+    let votedUpCount;
+    let votedDownCount;
 
     if(this.props.entity['thumbs:up:user_guids'] && this.props.entity['thumbs:up:user_guids'].indexOf(this.props.user.me.guid) >= 0){
       votedUp = true;
-      votedUpCount = parseInt(this.props.entity['thumbs:up:count']);
     }
+    votedUpCount = parseInt(this.props.entity['thumbs:up:count']);
     if(this.props.entity['thumbs:down:user_guids'] && this.props.entity['thumbs:down:user_guids'].indexOf(this.props.user.me.guid) >= 0){
       votedDown = true;
-      votedDownCount = parseInt(this.props.entity['thumbs:down:count']);
     }
-
+    votedDownCount = parseInt(this.props.entity['thumbs:down:count']);
     this.setState({
       votedDown,
       votedUp,
