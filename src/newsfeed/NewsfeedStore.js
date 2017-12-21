@@ -23,7 +23,7 @@ class NewsfeedStore {
   loadFeed() {
 
     if (this.list.cantLoadMore() || this.loading) {
-      return;
+      return Promise.resolve();
     }
     this.loading = true;
 
@@ -60,11 +60,11 @@ class NewsfeedStore {
 
   @action
   refresh() {
-    this.list.clearList();
+    this.list.refresh();
     this.loadFeed()
-      .finally(action(() => {
+      .finally(() => {
         this.list.refreshDone();
-      }));
+      });
   }
 
 }
