@@ -3,12 +3,14 @@ import { observable, action } from 'mobx'
 import { getFeedChannel, toggleComments , toggleExplicit } from '../newsfeed/NewsfeedService';
 
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
-// TODO: refactor to use Newsfeed store logic (DRY)
+
+/**
+ * Channel Feed store
+ */
 class ChannelFeedStore {
 
   @observable filter      = 'feed';
   @observable showrewards = false;
-
   @observable list = new OffsetFeedListStore();
 
   /**
@@ -16,17 +18,25 @@ class ChannelFeedStore {
    */
   loading = false;
 
-  offset = '';
-  guid   = null;
+  /**
+   * Channel guid
+   */
+  guid    = null;
 
+  /**
+   * Set channel guid
+   * @param {string} guid
+   */
   setGuid(guid) {
     this.guid = guid;
   }
 
+  /**
+   * Load channel feed
+   */
   loadFeed() {
-
     if (this.list.cantLoadMore() || this.loading) {
-      return;
+      return Promise.resolve();
     }
 
     return getFeedChannel(this.guid, this.list.offset)
@@ -57,7 +67,6 @@ class ChannelFeedStore {
       return;
     }
     this.list.refresh();
-    this.list.clearList();
     this.loadFeed()
       .finally(action(() => {
         this.list.refreshDone();
@@ -73,12 +82,11 @@ class ChannelFeedStore {
     switch (filter) {
       case 'rewards':
         this.showrewards = true;
-        this.list.clearList();
+        this.list.clearList(false);
         break;
       default:
         this.showrewards = false;
-        this.list.clearList();
-        this.loadFeed();
+        this.refresh();
         break;
     }
   }

@@ -10,6 +10,19 @@ import Activity from './activity/Activity';
 @observer
 export default class NewsfeedList extends Component {
 
+  nextBoostedId = 1;
+
+  get boostedId() {
+    return this.nextBoostedId++;
+  }
+
+  /**
+   * On list mount
+   */
+  onComponentWillMount() {
+    this.nextBoostedId = 1;
+  }
+
   /**
    * Render component
    */
@@ -19,7 +32,7 @@ export default class NewsfeedList extends Component {
         ListHeaderComponent={this.props.header}
         data={this.props.newsfeed.list.entities.slice()}
         renderItem={this.renderActivity}
-        keyExtractor={item => item.guid}
+        keyExtractor={item => item.guid + (item.boosted ? this.boostedId:'')}
         onRefresh={this.refresh}
         refreshing={this.props.newsfeed.list.refreshing}
         onEndReached={this.loadFeed}
@@ -40,6 +53,7 @@ export default class NewsfeedList extends Component {
    * Refresh feed data
    */
   refresh = () => {
+    this.nextBoostedId = 1;
     this.props.newsfeed.refresh(this.props.guid)
   }
 
@@ -49,9 +63,7 @@ export default class NewsfeedList extends Component {
   renderActivity = (row) => {
     const entity = row.item;
     return (
-      <View>
-        <Activity entity={entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation} />
-      </View>
+      <Activity entity={entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation} />
     );
   }
 }
