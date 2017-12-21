@@ -25,6 +25,7 @@ class NewsfeedStore {
     if (this.list.cantLoadMore() || this.loading) {
       return;
     }
+    this.loading = true;
 
     return getFeed(this.list.offset)
       .then(

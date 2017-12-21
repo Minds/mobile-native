@@ -5,8 +5,10 @@ import {
 
 import {
   getComments,
-  postComment
+  postComment,
+  updateComment
 } from './CommentsService';
+
 import Comment from './Comment';
 
 /**
@@ -14,25 +16,26 @@ import Comment from './Comment';
  */
 class CommentsStore {
   @observable comments = [];
+  @observable actions = [];
   @observable refreshing = false;
   @observable loaded = false;
-  
+  @observable saving = false;
+
   guid = '';
   reversed = true;
   loadNext = '';
   loadPrevious = '';
   socketRoom = '';
-  
+
   /**
    * Load Comments
    */
-  @action
   loadComments(guid) {
     if (this.cantLoadMore(guid)) {
       return;
     }
     this.guid = guid;
-    
+
     return getComments(this.guid, this.reversed, this.loadNext, this.loadPrevious)
       .then(action(response => {
         this.loaded = true;
@@ -61,7 +64,6 @@ class CommentsStore {
     this.comments.push(comment);
   }
 
-  @action
   post(text) {
     return postComment(this.guid, text).then((data) => {
       this.setComment(data.comment);
@@ -89,11 +91,31 @@ class CommentsStore {
     this.refreshing = false;
   }
 
+  @action
+  updateComment(comment, description) {
+    this.saving = true;
+    return updateComment(comment.guid, description)
+      .finally(action(() => {
+        this.saving = false;
+      }))
+      .then(() => {
+        this.setCommentDescription(comment, description);
+      });
+  }
+
+  @action
+  setCommentDescription(comment, description) {
+    comment.description = description;
+  }
+
+  @action
+  setActions(actions) {
+    this.actions = actions;
+  }
+
   cantLoadMore(guid) {
     return this.loaded && !this.offset && !this.refreshing && this.guid === guid;
   }
-
-
 }
 
 export default new CommentsStore();

@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
-import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  Text
+} from 'react-native';
+
 import { observer, inject } from 'mobx-react/native';
+
+import { extendObservable } from 'mobx';
+
 import Icon from 'react-native-vector-icons/Ionicons';
+import ActionSheet from 'react-native-actionsheet';
 
 import CenteredLoading from '../common/components/CenteredLoading';
 import Comment from './Comment';
@@ -9,12 +24,12 @@ import Comment from './Comment';
 import { getComments, postComment } from './CommentsService';
 import session from '../common/services/session.service';
 
+
 @inject('comments')
 @inject('user')
 @observer
 export default class CommentsScreen extends Component {
 
-  
   static navigationOptions = ({ navigation }) => ({
     header: (
       <View style={styles.header}>
@@ -32,7 +47,7 @@ export default class CommentsScreen extends Component {
     entity: this.getEntity(),
     avatarSrc: { uri: 'https://d3ae0shxev0cb7.cloudfront.net/icon/' + this.props.user.guid + '/medium/1511964398' }
   };
-  
+
   componentWillMount() {
     this.props.comments.clearComments();
     this.loadComments();
@@ -42,11 +57,56 @@ export default class CommentsScreen extends Component {
     this.props.comments.clearComments();
   }
 
+  /**
+   * Show actions menu
+   */
+  showActions = (comment) => {
+    if (this.actioncomment) {
+      this.actioncomment.editing = false;
+    }
+    this.actioncomment = comment;
+
+    let actions = ['Cancel'];
+
+    if (this.props.user.me.guid == comment.owner_guid) {
+      actions.push('Edit');
+    }
+    this.props.comments.setActions(actions);
+
+    this.actionSheet.show();
+  }
+
+  /**
+   * Handle action on comment
+   */
+  handleSelection = (i) => {
+    const action = this.props.comments.actions[i];
+
+    switch (action) {
+      case 'Edit':
+        this.actioncomment.editing = true;
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  /**
+   * Render
+   */
   render() {
     return (
       <View style={{flex:1}}>
+        <ActionSheet
+          ref={o => this.actionSheet = o}
+          title="actions"
+          options={this.props.comments.actions.slice()}
+          onPress={this.handleSelection}
+          cancelButtonIndex={0}
+        />
         <View style={{flex:14}}>
-          { this.props.comments.loaded ? 
+          { this.props.comments.loaded ?
             <FlatList
               ListHeaderComponent={this.props.header}
               data={this.props.comments.comments.slice()}
@@ -57,7 +117,7 @@ export default class CommentsScreen extends Component {
               initialNumToRender={25}
               refreshing={this.props.comments.refreshing}
               style={styles.listView}
-            /> : 
+            /> :
             <CenteredLoading/>
           }
         </View>
@@ -91,20 +151,20 @@ export default class CommentsScreen extends Component {
                 value={this.state.text}
               />
               <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="md-send" size={24}></Icon>
-            </View>  
+            </View>
           </View>
         </View>
       );
     } else if (this.props.loading || this.props.loading) {
-      return ( 
-        <ActivityIndicator size="small" color="#00ff00" /> 
+      return (
+        <ActivityIndicator size="small" color="#00ff00" />
       );
     } else {
       return (
         <View style={styles.posterWrapper}></View>
       );
     }
-    
+
   }
 
   saveComment = () => {
@@ -132,11 +192,17 @@ export default class CommentsScreen extends Component {
     this.props.comments.loadComments(guid);
   }
 
-  renderComment=(row) => {
+  renderComment = (row) => {
     const comment = row.item;
+
+    // add the editing observable property
+    extendObservable(comment, {
+      editing: false
+    });
+
     return (
       <View>
-        <Comment comment={comment}/>
+        <Comment comment={comment} actionSheet={this.actionSheet} onShowActions={this.showActions}/>
       </View>
     );
   }
