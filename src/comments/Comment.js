@@ -12,22 +12,19 @@ import {
   NavigationActions
 } from 'react-navigation';
 
-import { thumbActivity } from '../newsfeed/activity/ActionsService';
-
 import { observer, inject } from 'mobx-react/native';
 
 import {
-  Button,
   Text,
-  TextInput,
   StyleSheet,
-  KeyboardAvoidingView,
   ScrollView,
-  ActivityIndicator,
   TouchableOpacity,
   Image,
   View
 } from 'react-native';
+
+import { thumbActivity } from '../newsfeed/activity/ActionsService';
+import CommentEditor from './CommentEditor';
 
 @inject('user')
 @observer
@@ -86,15 +83,26 @@ export default class Comment extends Component {
                 <Icon onPress={this.toggleThumb.bind(this, 'thumbs:down')} color={this.state.votedDown ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-down' size={16} />
                 <Text style={styles.actionIconText}>{this.state.votedDownCount > 0 ? '(' + this.state.votedDownCount + ')' : ''}</Text>
               </View>
+              <View style={styles.actionIconWrapper}>
+                <Icon onPress={this.showActions} color={'rgb(96, 125, 139)'} name='menu' size={16} />
+              </View>
             </View>
-            
+
           </View>
           <View style={styles.content}>
-            <Text style={styles.message}>{this.props.comment.description}</Text>
+            {
+              (this.props.comment.editing) ?
+                <CommentEditor comment={this.props.comment}/>:
+                <Text style={styles.message}>{this.props.comment.description}</Text>
+            }
           </View>
         </View>
 
     );
+  }
+
+  showActions = () => {
+    this.props.onShowActions(this.props.comment);
   }
 
   formatDate(timestamp) {
@@ -110,7 +118,7 @@ export default class Comment extends Component {
       return false;
     }
   }
-  
+
   toggleThumb = (direction) => {
     if(direction == 'thumbs:up') {
       this.setState({
@@ -121,9 +129,9 @@ export default class Comment extends Component {
         votedDown : !this.state.votedDown,
         votedDownCount: this.state.votedDown? this.state.votedDownCount-1: this.state.votedDownCount+1})
     }
-  
+
     let arr = direction.split(':');
-  
+
     thumbActivity(this.props.comment.guid, arr[1]).then((data) => {}).catch(err => {
         alert(err);
         if(direction == 'thumbs:up') {

@@ -21,3 +21,9 @@ export function postComment(id, text) {
       throw "Ooops";
     })
 }
+
+export function updateComment(guid, description) {
+  return api.post('api/v1/comments/update/' + guid, {
+    description: description
+  });
+}
