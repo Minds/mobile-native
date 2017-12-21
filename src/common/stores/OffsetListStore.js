@@ -37,10 +37,12 @@ export default class OffsetListStore {
   }
 
   @action
-  clearList() {
+  clearList(updateLoaded=true) {
     this.entities = [];
     this.offset   = '';
-    this.loaded   = false;
+    if (updateLoaded) {
+      this.loaded = false;
+    }
   }
 
   @action

@@ -31,7 +31,7 @@ class NewsfeedStore {
       .then(
         feed => {
           this.list.setList(feed);
-          this.loaded   = true;
+          this.loaded = true;
         }
       )
       .finally(() => {
