@@ -7,12 +7,19 @@ import {
   Linking
 } from 'react-native';
 
+import colors from '../../styles/Colors';
+
 /**
  * Tags component
  *
  * Generate text with links
  */
 export default class Tags extends Component {
+
+  styles = {
+    color: colors.primary
+  }
+
   render() {
     const tags = this.parseTags(this.props.children);
     return (
@@ -37,7 +44,7 @@ export default class Tags extends Component {
     const url = /(\b(?:https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={{ color: 'blue' }} onPress={() => { Linking.openURL(content);}}>{content}</Text>
+      return <Text key={i} style={this.styles} onPress={() => { Linking.openURL(content);}}>{content}</Text>
     });
   }
 
@@ -48,7 +55,7 @@ export default class Tags extends Component {
     const url = /(?:^|\s+)([-A-Z0-9+&@#\/%?=~_|!:,.;]+\.(com|org|net)\/[-A-Z0-9+&@#\/%=~_|]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={{ color: 'blue' }} onPress={() => { Linking.openURL(content);}}>{content}</Text>
+      return <Text key={i} style={this.styles} onPress={() => { Linking.openURL(content);}}>{content}</Text>
     });
   }
 
@@ -59,7 +66,7 @@ export default class Tags extends Component {
     const url = /(?:^|\s+)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={{ color: 'blue' }} onPress={() => { Linking.openURL(content);}}>{content}</Text>
+      return <Text key={i} style={this.styles} onPress={() => { Linking.openURL(content);}}>{content}</Text>
     });
   }
 
@@ -70,7 +77,7 @@ export default class Tags extends Component {
     const hash = /(?:^|\s)#(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
-      return <Text key={i} style={{ color: 'blue' }} onPress={() => { this.navToDiscovery('#'+content) }}> #{content}</Text>
+      return <Text key={i} style={this.styles} onPress={() => { this.navToDiscovery('#'+content) }}> #{content}</Text>
     });
   }
 
@@ -81,7 +88,7 @@ export default class Tags extends Component {
     const hash = /(?:^|\s)\@(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
-      return <Text key={i} style={{ color: 'blue' }} onPress={() => { this.navToDiscovery(content) }}> @{content}</Text>
+      return <Text key={i} style={this.styles} onPress={() => { this.navToDiscovery(content) }}> @{content}</Text>
     });
   }
 
