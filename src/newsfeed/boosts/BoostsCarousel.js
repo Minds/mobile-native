@@ -77,7 +77,7 @@ export default class BoostsCarousel extends PureComponent {
     }
 
     return (
-      <View>
+      <View style={ styles.flexContainer }>
         { this.pagination }
         <Carousel
           ref={(c) => { this._carousel = c; }}
@@ -85,6 +85,8 @@ export default class BoostsCarousel extends PureComponent {
           renderItem={this._renderItem}
           sliderWidth={sliderWidth}
           itemWidth={sliderWidth}
+          containerCustomStyle={styles.flexContainer}
+          slideStyle={styles.flexContainer}
           onSnapToItem={(index) => this.setState({ activeSlide: index })}
         />
       </View>
@@ -96,9 +98,10 @@ const sliderWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   slide: {
+    flex:1,
     width: sliderWidth, //full size slider
   },
-  slideInnerContainer: {
+  flexContainer: {
     flex: 1
   }
 });

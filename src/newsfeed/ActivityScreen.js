@@ -14,6 +14,7 @@ export default class ActivityScreen extends Component {
           entity={ entity }
           newsfeed={ this.props.newsfeed }
           navigation={ this.props.navigation }
+          autoHeight={true}
         />
       </ScrollView>
     )
