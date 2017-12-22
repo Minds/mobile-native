@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   Image,
-  findNodeHandle, 
+  findNodeHandle,
   View
 } from 'react-native';
 
@@ -32,14 +32,14 @@ export default class ExplicitImage extends Component {
   render() {
     return (
       <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-        <FastImage source={ this.props.source } onLoadEnd={this.imageLoaded.bind(this)} ref={(img) => { this.backgroundImage = img; }} style={styles.absolute}/> 
+        <FastImage source={ this.props.source } onLoadEnd={this.imageLoaded.bind(this)} ref={(img) => { this.backgroundImage = img; }} style={styles.absolute}/>
         { (this.props.entity.mature && this.state.viewRef) ?
           <BlurView
             style={styles.absolute}
             viewRef={this.state.viewRef}
             blurType="light"
             blurAmount={20}
-          /> : <View></View>
+          /> : null
         }
       </View>
     );
