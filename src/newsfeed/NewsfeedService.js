@@ -131,3 +131,11 @@ export function toggleExplicit(guid, value) {
       throw "Ooops";
     })
 }
+
+export function toggleFeatured(guid, value, category) {
+  if (!value) {
+    return api.put('api/v1/admin/feature/' + guid + '/' + category);
+  } else {
+    return api.delete('api/v1/admin/feature/' + guid);
+  }
+}

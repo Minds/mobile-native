@@ -168,6 +168,19 @@ export default class ActivityActions extends Component {
           });
         });
         break;
+      case 'Feature':
+        this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid, 'not-selected').then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
+      case 'Un-feature':
+        this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid).then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
+      break;
       case 'Share':
         break;
       case 'Translate':

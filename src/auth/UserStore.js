@@ -26,7 +26,6 @@ class UserStore {
     this.me = {};
      return channelService.load('me')
       .then(action(response => {
-        alert(JSON.stringify(response.channel))
         this.me = response.channel;
       }))
       .catch(err => {

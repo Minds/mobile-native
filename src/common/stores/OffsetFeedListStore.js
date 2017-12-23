@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit} from '../../newsfeed/NewsfeedService';
+import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit, toggleFeatured} from '../../newsfeed/NewsfeedService';
 
 import channelService from '../../channel/ChannelService';
 
@@ -25,6 +25,23 @@ export default class OffsetFeedListStore extends OffsetListStore {
         .catch(action(err => {
           entity.comments_disabled = !value;
           this.entities[index] = entity;
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
+  toggleFeaturedStore(guid, category) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity =  this.entities[index];
+      let value = !entity.featured;
+      return toggleFeatured(guid, value, category)
+        .then(action(response => {
+          entity.featured = value;
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
           console.log('error');
         }));
     }
