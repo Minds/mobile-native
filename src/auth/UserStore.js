@@ -34,7 +34,7 @@ class UserStore {
   }
 
   isAdmin() {
-    return this.user.admin;
+    return this.me.admin;
   }
 }
 

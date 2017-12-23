@@ -88,7 +88,7 @@ export default class ActivityActions extends Component {
       options.push( 'Report' );
     }
 
-    if(this.user.isAdmin()){
+    if(this.props.user && this.props.user.isAdmin()){
       if (!this.props.entity.featured) {
         options.push( 'Feature' );
       } else {
