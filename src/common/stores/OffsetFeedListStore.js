@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit, toggleFeatured} from '../../newsfeed/NewsfeedService';
+import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit, toggleFeatured, delete} from '../../newsfeed/NewsfeedService';
 
 import channelService from '../../channel/ChannelService';
 
@@ -99,6 +99,21 @@ export default class OffsetFeedListStore extends OffsetListStore {
         .catch(action(err => {
           entity.ownerObj.subscribed = !value;
           this.entities[index] = entity;
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
+  deleteEntity(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.entities[index];
+      return deleteItem(guid)
+        .then(action(response => {
+          this.entities.splice(index, 1);
+        }))
+        .catch(action(err => {
           console.log('error');
         }));
     }

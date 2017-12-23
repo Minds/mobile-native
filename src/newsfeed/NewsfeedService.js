@@ -139,3 +139,7 @@ export function toggleFeatured(guid, value, category) {
     return api.delete('api/v1/admin/feature/' + guid);
   }
 }
+
+export function deleteItem(guid) {
+  return api.delete('api/v1/newsfeed/' + guid);
+}

@@ -124,6 +124,13 @@ export default class ActivityActions extends Component {
       case 'Edit':
 
         break;
+      case 'Delete':
+        this.props.newsfeed.list.deleteEntity(this.props.entity.guid).then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
+        break;
       case 'Set explicit':
         this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
           this.setState({
