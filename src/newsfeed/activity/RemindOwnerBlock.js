@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -20,7 +20,7 @@ import {
   MINDS_URI
 } from '../../config/Config';
 
-export default class RemindOwnerBlock extends Component {
+export default class RemindOwnerBlock extends PureComponent {
 
   state = {
     avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.ownerObj.guid + '/medium' }

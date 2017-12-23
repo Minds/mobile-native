@@ -20,11 +20,13 @@ import Tags from '../../../common/components/Tags';
 export default class ExplicitText extends Component {
 
   render() {
+    const entity = this.props.entity;
+    const message = this.props.entity.message || this.props.entity.title;
     return (
         <View style={{flex:1}}>
-          { this.props.entity.mature ?
-            <Text style={styles.mature}>{this.props.entity.message}</Text>:
-            <Tags navigation={this.props.navigation}>{this.props.entity.message}</Tags>
+          { entity.mature ?
+            <Text style={styles.mature}>{message}</Text>:
+            <Tags navigation={this.props.navigation}>{message}</Tags>
           }
         </View>
     );

@@ -25,7 +25,7 @@ export default class DiscoveryTile extends PureComponent {
    */
   _navToView = () => {
     if (this.props.navigation) {
-      this.props.navigation.navigate('DiscoveryView', { entity: this.props.entity.item });
+      this.props.navigation.navigate('Activity', { entity: this.props.entity.item });
     }
   }
 
