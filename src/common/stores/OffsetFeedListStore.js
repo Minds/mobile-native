@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit, toggleFeatured, delete} from '../../newsfeed/NewsfeedService';
+import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit, toggleFeatured, deleteItem, monetize} from '../../newsfeed/NewsfeedService';
 
 import channelService from '../../channel/ChannelService';
 
@@ -79,6 +79,25 @@ export default class OffsetFeedListStore extends OffsetListStore {
         }))
         .catch(action(err => {
           entity['is:muted'] = !value;
+          this.entities[index] = entity;
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
+  toggleMonetization(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.entities[index];
+      let value = !entity.monetized;
+      return monetize(guid, value)
+        .then(action(response => {
+          entity.monetized = value;
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          entity.monetized = !value;
           this.entities[index] = entity;
           console.log('error');
         }));
