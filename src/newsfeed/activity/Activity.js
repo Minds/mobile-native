@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
-  Image
+  Linking
 } from 'react-native';
 
 import AutoHeightFastImage from '../../common/components/AutoHeightFastImage';
@@ -48,13 +48,20 @@ export default class Activity extends Component {
   }
 
   /**
+   * Open a link
+   */
+  openLink = () => {
+    Linking.openURL(this.props.entity.perma_url);
+  }
+
+  /**
    * Render
    */
   render() {
     return (
         <View style={styles.container}>
           { this.showOwner() }
-          <View style={this.props.entity.message ? styles.message : styles.emptyMessage}>
+          <View style={this.props.entity.message || this.props.entity.title ? styles.message : styles.emptyMessage}>
             <ExplicitText entity={this.props.entity}  navigation={this.props.navigation}/>
           </View>
           { this.showRemind() }
@@ -69,27 +76,40 @@ export default class Activity extends Component {
    */
   showMedia() {
     let media;
+    let source;
 
-    switch (this.props.entity.custom_type) {
-      case "batch":
-        let source = {
+    const type = this.props.entity.custom_type||this.props.entity.subtype;
+
+    switch (type) {
+      case 'image':
+        source = {
+          uri: this.props.entity.thumbnail_src
+        }
+        return this.getImage(source);
+      case 'batch':
+        source = {
           uri: this.props.entity.custom_data[0].src
+        }
+        return this.getImage(source);
+      case 'video':
+        source = {
+          uri: this.props.entity.thumbnail_src||this.props.entity.custom_data.thumbnail_src
         }
         return this.getImage(source);
     }
 
     if (this.props.entity.perma_url) {
-      let source = {
+      source = {
         uri: this.props.entity.thumbnail_src
       }
 
       return (
         <View>
           {this.getImage(source)}
-          <View style={styles.message}>
+          <TouchableOpacity style={styles.message} onPress={this.openLink}>
             <Text style={styles.title}>{this.props.entity.title}</Text>
             <Text style={styles.timestamp}>{this.props.entity.perma_url}</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       )
     }

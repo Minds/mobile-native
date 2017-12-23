@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -26,7 +26,7 @@ import {
 } from '../../config/Config';
 
 
-export default class OwnerBlock extends Component {
+export default class OwnerBlock extends PureComponent {
 
   state = {
     avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.ownerObj.guid + '/medium' }

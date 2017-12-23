@@ -18,7 +18,7 @@ class NotificationsStore {
   /**
    * Notification list store
    */
-  list = new OffsetListStore();
+  list = new OffsetListStore('shallow');
 
   /**
    * unread notifications counter
