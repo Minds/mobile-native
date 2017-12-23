@@ -9,6 +9,7 @@ import {
 import BoostActionBar from './BoostActionBar';
 import ChannelCard from '../channel/card/ChannelCard';
 import BlogCard from '../blogs/BlogCard';
+import ImageCard from '../media/ImageCard';
 
 import {
   Button,
@@ -52,6 +53,8 @@ export default class Boost extends Component {
       return <ChannelCard entity={this.props.boost.entity} navigation={this.props.navigation} />;
     } else if (this.props.boost.entity.type == 'object' && this.props.boost.entity.subtype == 'blog') {
       return <BlogCard entity={this.props.boost.entity} navigation={this.props.navigation} />;
+    } else if (this.props.boost.entity.type == 'object' && this.props.boost.entity.subtype == 'image') {
+      return <ImageCard entity={this.props.boost.entity} navigation={this.props.navigation} />;
     }
   }
 }

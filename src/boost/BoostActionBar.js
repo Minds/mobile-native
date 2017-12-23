@@ -180,8 +180,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor:'white', 
     borderWidth:1, 
-    borderColor: 
-    colors.danger
+    borderColor: colors.danger,
   },
   bluebutton: {
     margin:4, 
@@ -190,8 +189,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor:'white', 
     borderWidth:1, 
-    borderColor: 
-    colors.primary
+    borderColor: colors.primary
+  },
+  actionIconText: {
+    fontSize: 10
   }
   
 });
