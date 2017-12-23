@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, extendObservable } from 'mobx'
 
 /**
  * Common infinite scroll list
@@ -7,7 +7,7 @@ export default class OffsetListStore {
   /**
    * list entities
    */
-  @observable entities = [];
+  entities = [];
 
   /**
    * list is refreshing
@@ -24,6 +24,22 @@ export default class OffsetListStore {
    * if loaded == true and offset == '' there is no more data
    */
   offset = '';
+
+  /**
+   * Constructor
+   * @param {string} 'shallow'|'ref'|null
+   */
+  constructor(type = null) {
+    if (type) {
+      extendObservable(this, {
+        entities: observable[type]([]),
+      });
+    } else {
+      extendObservable(this, {
+       entities: observable([])
+      });
+    }
+  }
 
   @action
   setList(list) {

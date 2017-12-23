@@ -14,7 +14,7 @@ class DiscoveryStore {
   /**
    * Notification list store
    */
-  list = new OffsetListStore();
+  list = new OffsetListStore('shallow');
 
   @observable searchtext = '';
   @observable filter     = 'featured';
