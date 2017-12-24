@@ -3,9 +3,8 @@ import {
   action
 } from 'mobx'
 
-import OffsetFeedListStore from '../common/stores/OffsetListStore';
-import { getBoosts } from './BoostService';
-
+import OffsetListStore from '../common/stores/OffsetListStore';
+import { getBoosts, revokeBoost, rejectBoost, acceptBoost} from './BoostService';
 /**
  * Boosts Store
  */
@@ -14,7 +13,7 @@ class BoostStore {
   /**
    * Boost list store
    */
-  @observable list = new OffsetFeedListStore();
+  @observable list = new OffsetListStore();
 
   /**
    * Boosts list filter
@@ -62,6 +61,54 @@ class BoostStore {
     this.filter = filter;
     this.list.clearList();
     this.loadList();
+  }
+
+  @action
+  revoke(guid) {
+    let index = this.list.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.list.entities[index];
+      return revokeBoost(guid, this.filter)
+        .then(action(response => {
+          entity.state = 'revoked';
+          this.list.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
+  accept(guid) {
+    let index = this.list.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.list.entities[index];
+      return acceptBoost(guid, this.filter)
+        .then(action(response => {
+          entity.state = 'accepted';
+          this.list.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
+  reject(guid) {
+    let index = this.list.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.list.entities[index];
+      return rejectBoost(guid, this.filter)
+        .then(action(response => {
+          entity.state = 'rejected';
+          this.list.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          console.log('error');
+        }));
+    }
   }
 
 }

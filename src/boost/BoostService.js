@@ -17,3 +17,11 @@ export function getBoosts(offset, filter) {
 export function revokeBoost(guid, filter) {
   return api.delete('api/v1/boost/' + filter + '/' + guid + '/revoke');
 }
+
+export function rejectBoost(guid) {
+  return api.delete('api/v1/boost/peer/' + guid);
+}
+
+export function acceptBoost(guid) {
+  return api.put('api/v1/boost/peer/' + guid);
+}
