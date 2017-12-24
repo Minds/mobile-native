@@ -32,7 +32,7 @@ import {
   MINDS_URI
 } from '../config/Config';
 
-
+@inject('boost')
 @inject('user')
 @observer
 export default class BoostActionBar extends Component {
@@ -93,11 +93,11 @@ export default class BoostActionBar extends Component {
     if(this.canRevoke()){
       buttons.push(
         <TouchableHighlight
-          onPress={() => { this.revoke() }}
+          onPress={() => { this.props.boost.list.revoke(this.props.entity.guid, this.props.boost.filter)}} 
           underlayColor = 'transparent'
           style = {styles.redbutton}
         >
-          <Text style={{color: colors.primary}} > REVOKE </Text>
+          <Text style={{color: colors.danger}} > REVOKE </Text>
         </TouchableHighlight>
       );
     };
@@ -105,7 +105,7 @@ export default class BoostActionBar extends Component {
     if (this.canReject()){
       buttons.push(
         <TouchableHighlight
-          onPress={() => { this.reject()}}
+          onPress={() => { this.props.boost.list.reject(this.props.entity.guid, this.props.boost.filter)}}
           underlayColor = 'transparent'
           style = {styles.bluebutton}
         >
@@ -117,7 +117,7 @@ export default class BoostActionBar extends Component {
     if (this.canAccept()) {
       buttons.push(
         <TouchableHighlight
-          onPress={() => { this.reject()}}
+          onPress={() => { this.props.boost.list.accept(this.props.entity.guid, this.props.boost.filter)}}
           underlayColor = 'transparent'
           style = {styles.bluebutton}
         >

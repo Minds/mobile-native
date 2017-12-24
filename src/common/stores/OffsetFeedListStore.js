@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 
 import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit, toggleFeatured, deleteItem, monetize} from '../../newsfeed/NewsfeedService';
-
+import { revokeBoost } from '../../boost/BoostService';
 import channelService from '../../channel/ChannelService';
 
 import OffsetListStore from './OffsetListStore';
@@ -11,6 +11,22 @@ import OffsetListStore from './OffsetListStore';
 export default class OffsetFeedListStore extends OffsetListStore {
 
   /*Activity Methods */
+
+  @action
+  revoke(guid, filter) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.entities[index];
+      return revokeBoost(guid, value)
+        .then(action(response => {
+          entity.state = 'revoked';
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          console.log('error');
+        }));
+    }
+  }
 
   @action
   toggleCommentsAction(guid) {

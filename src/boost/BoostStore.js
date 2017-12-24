@@ -3,7 +3,7 @@ import {
   action
 } from 'mobx'
 
-import OffsetListStore from '../common/stores/OffsetListStore';
+import OffsetFeedListStore from '../common/stores/OffsetListStore';
 import { getBoosts } from './BoostService';
 
 /**
@@ -14,7 +14,7 @@ class BoostStore {
   /**
    * Boost list store
    */
-  list = new OffsetListStore();
+  @observable list = new OffsetFeedListStore();
 
   /**
    * Boosts list filter
@@ -55,14 +55,6 @@ class BoostStore {
       .finally(() => {
         this.list.refreshDone();
       });
-  }
-  /**
-   * Stop polling unread count
-   */
-  stopPollCount() {
-    if (this.pollInterval) {
-      clearInterval(this.pollInterval);
-    }
   }
 
   @action

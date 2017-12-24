@@ -13,3 +13,7 @@ export function getBoosts(offset, filter) {
       throw "Ooops";
     })
 }
+
+export function revokeBoost(guid, filter) {
+  return api.delete('api/v1/boost/' + filter + '/' + guid + '/revoke');
+}
