@@ -88,21 +88,21 @@ export default class ActivityActions extends Component {
       options.push( 'Report' );
     }
 
-    /* Admin check needed
-    if (!this.props.entity.featured) {
-      options.push( 'Feature' );
-    } else {
-      options.push( 'Un-feature' );
+    if(this.props.user && this.props.user.isAdmin()){
+      if (!this.props.entity.featured) {
+        options.push( 'Feature' );
+      } else {
+        options.push( 'Un-feature' );
+      }
+  
+
+      if (!this.props.entity.monetized) {
+        options.push( 'Monetize' );
+      } else {
+        options.push( 'Un-monetize' );
+      }
+  
     }
-
-
-    if (!this.props.entity.monetized) {
-      options.push( 'Monetize' );
-    } else {
-      options.push( 'Un-monetize' );
-    }
-
-    */
 
     options.push( 'Share' );
     options.push( 'Translate' );
@@ -123,6 +123,13 @@ export default class ActivityActions extends Component {
     switch (option) {
       case 'Edit':
 
+        break;
+      case 'Delete':
+        this.props.newsfeed.list.deleteEntity(this.props.entity.guid).then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
         break;
       case 'Set explicit':
         this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
@@ -163,6 +170,34 @@ export default class ActivityActions extends Component {
         break;
       case 'Unmute notifications':
         this.props.newsfeed.list.newsfeedToggleMute(this.props.entity.guid).then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
+        break;
+      case 'Feature':
+        this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid, 'not-selected').then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
+        break;
+      case 'Un-feature':
+        this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid).then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
+        break;
+        case 'Monetize':
+        this.props.newsfeed.list.toggleMonetization(this.props.entity.guid).then( (result) => {
+          this.setState({
+            options: this.getOptions(),
+          });
+        });
+        break;
+      case 'Un-monetize':
+        this.props.newsfeed.list.toggleMonetization(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });

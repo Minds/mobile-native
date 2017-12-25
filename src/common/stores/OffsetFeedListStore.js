@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit} from '../../newsfeed/NewsfeedService';
+import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit, toggleFeatured, deleteItem, monetize} from '../../newsfeed/NewsfeedService';
 
 import channelService from '../../channel/ChannelService';
 
@@ -25,6 +25,23 @@ export default class OffsetFeedListStore extends OffsetListStore {
         .catch(action(err => {
           entity.comments_disabled = !value;
           this.entities[index] = entity;
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
+  toggleFeaturedStore(guid, category) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity =  this.entities[index];
+      let value = !entity.featured;
+      return toggleFeatured(guid, value, category)
+        .then(action(response => {
+          entity.featured = value;
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
           console.log('error');
         }));
     }
@@ -69,6 +86,25 @@ export default class OffsetFeedListStore extends OffsetListStore {
   }
 
   @action
+  toggleMonetization(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.entities[index];
+      let value = !entity.monetized;
+      return monetize(guid, value)
+        .then(action(response => {
+          entity.monetized = value;
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          entity.monetized = !value;
+          this.entities[index] = entity;
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
   newsfeedToggleSubscription(guid) {
     let index = this.entities.findIndex(x => x.guid == guid);
     if(index >= 0) {
@@ -82,6 +118,21 @@ export default class OffsetFeedListStore extends OffsetListStore {
         .catch(action(err => {
           entity.ownerObj.subscribed = !value;
           this.entities[index] = entity;
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
+  deleteEntity(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.entities[index];
+      return deleteItem(guid)
+        .then(action(response => {
+          this.entities.splice(index, 1);
+        }))
+        .catch(action(err => {
           console.log('error');
         }));
     }

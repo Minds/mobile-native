@@ -32,7 +32,7 @@ import {
   MINDS_URI
 } from '../config/Config';
 
-
+@inject('boost')
 @inject('user')
 @observer
 export default class BoostActionBar extends Component {
@@ -93,11 +93,11 @@ export default class BoostActionBar extends Component {
     if(this.canRevoke()){
       buttons.push(
         <TouchableHighlight
-          onPress={() => { this.revoke() }}
+          onPress={() => { this.props.boost.revoke(this.props.entity.guid)}} 
           underlayColor = 'transparent'
           style = {styles.redbutton}
         >
-          <Text style={{color: colors.primary}} > REVOKE </Text>
+          <Text style={{color: colors.danger}} > REVOKE </Text>
         </TouchableHighlight>
       );
     };
@@ -105,7 +105,7 @@ export default class BoostActionBar extends Component {
     if (this.canReject()){
       buttons.push(
         <TouchableHighlight
-          onPress={() => { this.reject()}}
+          onPress={() => { this.props.boost.reject(this.props.entity.guid)}}
           underlayColor = 'transparent'
           style = {styles.bluebutton}
         >
@@ -117,7 +117,7 @@ export default class BoostActionBar extends Component {
     if (this.canAccept()) {
       buttons.push(
         <TouchableHighlight
-          onPress={() => { this.reject()}}
+          onPress={() => { this.props.boost.accept(this.props.entity.guid)}}
           underlayColor = 'transparent'
           style = {styles.bluebutton}
         >
@@ -180,8 +180,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor:'white', 
     borderWidth:1, 
-    borderColor: 
-    colors.danger
+    borderColor: colors.danger,
   },
   bluebutton: {
     margin:4, 
@@ -190,8 +189,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor:'white', 
     borderWidth:1, 
-    borderColor: 
-    colors.primary
+    borderColor: colors.primary
+  },
+  actionIconText: {
+    fontSize: 10
   }
   
 });

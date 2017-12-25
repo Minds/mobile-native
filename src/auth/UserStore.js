@@ -32,6 +32,10 @@ class UserStore {
         console.log('error', err);
       });
   }
+
+  isAdmin() {
+    return this.me.admin;
+  }
 }
 
 export default new UserStore();
