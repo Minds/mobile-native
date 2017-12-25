@@ -16,7 +16,7 @@ class DiscoveryService {
         endpoint = 'api/v1/search/suggest';
         break;
       default:
-        return api.get('api/v1/entities/' + filter + '/' + type, { limit: 15, offset: offset })
+        return api.get('api/v1/entities/' + filter + '/' + type, { limit: 12, offset: offset })
           .then((data) => {
             return {
               entities: data.entities,

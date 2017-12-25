@@ -4,7 +4,6 @@ import React, {
 
 import {
     StyleSheet,
-    FlatList,
     Text,
     View
 } from 'react-native';
@@ -22,12 +21,20 @@ import SearchView from '../common/components/SearchView';
 import CenteredLoading from '../common/components/CenteredLoading';
 import debounce from '../common/helpers/debounce';
 
+import { OptimizedFlatList } from 'react-native-optimized-flatlist';
+
 /**
  * Discovery screen
  */
 @inject('discovery')
 @observer
 export default class DiscoveryScreen extends Component {
+
+  col = 3;
+
+  state = {
+    itemHeight: 0,
+  }
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
@@ -46,29 +53,45 @@ export default class DiscoveryScreen extends Component {
     }
   }
 
+  onLayout = e => {
+    const width = e.nativeEvent.layout.width
+    this.setState({
+      itemHeight: width / this.cols,
+    })
+  }
+
+  getItemLayout = (data, index) => {
+    const { itemHeight } = this.state
+    return { length: itemHeight, offset: itemHeight * index, index }
+  }
+
   render() {
     let body;
+
     if (!this.props.discovery.list.loaded) {
       body = <CenteredLoading />
     } else {
-      let renderRow;
-      let cols = 3;
+      let renderRow, columnWrapperStyle = null, getItemLayout=null;
+      this.cols = 3;
       switch (this.props.discovery.type) {
         case 'user':
           renderRow = this.renderUser;
-          cols = 1;
+          this.cols = 1;
           break;
         case 'activity':
           renderRow = this.renderActivity;
-          cols = 1;
+          this.cols = 1;
           break;
         default:
           renderRow = this.renderTile;
+          columnWrapperStyle = { height: this.state.itemHeight };
+          getItemLayout = this.getItemLayout;
           break;
       }
       body = (
-        <FlatList
-          key={'discofl' + cols} // we need to force component redering if we change cols
+        <OptimizedFlatList
+          onLayout={this.onLayout}
+          key={'discofl' + this.cols} // we need to force component redering if we change cols
           data={this.props.discovery.list.entities.slice()}
           renderItem={renderRow}
           keyExtractor={item => item.guid}
@@ -76,10 +99,12 @@ export default class DiscoveryScreen extends Component {
           refreshing={this.props.discovery.list.refreshing}
           onEndReached={this.loadFeed}
           onEndThreshold={0}
-          initialNumToRender={15}
+          initialNumToRender={12}
           style={styles.listView}
-          numColumns={cols}
+          numColumns={this.cols}
           horizontal={false}
+          getItemLayout={getItemLayout}
+          columnWrapperStyle={columnWrapperStyle}
         />
       )
     }
@@ -103,7 +128,6 @@ export default class DiscoveryScreen extends Component {
    * Load feed data
    */
   loadFeed = () => {
-    console.log('load');
     this.props.discovery.loadList();
   }
 
@@ -118,7 +142,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderTile = (row) => {
     return (
-      <DiscoveryTile entity={row} navigation={this.props.navigation}/>
+      <DiscoveryTile entity={row} size={this.state.itemHeight} navigation={this.props.navigation}/>
     );
   }
   /**
