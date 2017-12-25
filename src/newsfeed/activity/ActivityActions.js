@@ -26,7 +26,6 @@ const title = 'Actions';
 
 @inject("user")
 @inject("newsfeed")
-@observer
 export default class ActivityActions extends Component {
 
   constructor(props) {
@@ -73,7 +72,7 @@ export default class ActivityActions extends Component {
       }
 
     } else {
-      
+
       if(!this.props.entity.ownerObj.subscribed) {
         options.push( 'Subscribe' );
       } else {
@@ -88,7 +87,7 @@ export default class ActivityActions extends Component {
 
       options.push( 'Report' );
     }
-    
+
     /* Admin check needed
     if (!this.props.entity.featured) {
       options.push( 'Feature' );
@@ -96,7 +95,7 @@ export default class ActivityActions extends Component {
       options.push( 'Un-feature' );
     }
 
-  
+
     if (!this.props.entity.monetized) {
       options.push( 'Monetize' );
     } else {
@@ -108,7 +107,7 @@ export default class ActivityActions extends Component {
     options.push( 'Share' );
     options.push( 'Translate' );
 
-  
+
     if (!this.props.entity['is:muted']) {
       options.push( 'Mute notifications' );
     } else {
@@ -123,7 +122,7 @@ export default class ActivityActions extends Component {
   makeAction(option) {
     switch (option) {
       case 'Edit':
-        
+
         break;
       case 'Set explicit':
         this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
@@ -205,9 +204,9 @@ export default class ActivityActions extends Component {
         break;
     }
 
-    
+
   }
-  
+
   /**
    * Render Header
    */
