@@ -137,6 +137,7 @@ const stores = {
 sessionService.onLogout(() => {
   newsfeed.list.clearList();
   discovery.list.clearList();
+  user.clearUser();
 })
 
 export default class App extends Component {

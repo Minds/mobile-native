@@ -67,7 +67,7 @@ export default class LoginScreen extends Component {
    * On login successful
    */
   login() {
-    this._navigate('Tabs');
+    this._navigate('Loading');
   }
 
   /**
