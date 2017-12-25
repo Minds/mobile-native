@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 
 import {
-  StyleSheet,
   TouchableOpacity
 } from 'react-native';
 
@@ -31,20 +30,16 @@ export default class DiscoveryTile extends PureComponent {
 
   render() {
     const url = { uri: MINDS_URI + 'api/v1/archive/thumbnails/' + this.props.entity.item.guid + '/medium' };
+
+    const style = { width: this.props.size, height: this.props.size};
+
     return (
-      <TouchableOpacity onPress={this._navToView} style={styles.tileImage}>
+      <TouchableOpacity onPress={this._navToView} style={style}>
         <FastImage
           source={ url }
-          style={styles.tileImage}
+          style={style}
         />
       </TouchableOpacity>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  tileImage: {
-    minHeight: 120,
-    flex: 1,
-  },
-});

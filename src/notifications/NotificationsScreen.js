@@ -4,7 +4,6 @@ import React, {
 
 import {
   StyleSheet,
-  FlatList,
   View
 } from 'react-native';
 
@@ -14,6 +13,7 @@ import {
 } from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import { OptimizedFlatList } from 'react-native-optimized-flatlist';
 
 import CenteredLoading from '../common/components/CenteredLoading';
 import Notification from './notification/Notification';
@@ -72,7 +72,7 @@ export default class NotificationsScreen extends Component {
 
     if (this.props.notifications.list.loaded) {
       body = (
-        <FlatList
+        <OptimizedFlatList
           data={this.props.notifications.list.entities.slice()}
           renderItem={this.renderRow}
           keyExtractor={item => item.guid}
