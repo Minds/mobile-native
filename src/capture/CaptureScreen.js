@@ -42,7 +42,7 @@ export default class CaptureScreen extends Component<{}> {
         { this.state.isImageTaken ?
           <View style={styles.selectedImage}>
             <View style={styles.submitButton}>
-              { this.state.isPosting ?
+              { this.props.isPosting || this.state.isPosting ?
                 <ActivityIndicator size="small" color="#00ff00" /> : 
                 <Icon onPress={() => this.upload()} color="white" name="md-send" size={28}></Icon>
               }
@@ -66,6 +66,9 @@ export default class CaptureScreen extends Component<{}> {
   }
 
   upload() {
+    this.setState({
+      isPosting: true,
+    });
     this.props.submitToPoster(this.state.imageUri);
   }
 
