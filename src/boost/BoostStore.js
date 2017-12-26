@@ -19,6 +19,7 @@ class BoostStore {
    * Boosts list filter
    */
   @observable filter = 'newsfeed';
+  @observable peer_filter = 'inbox';
 
   /**
    * List loading
@@ -33,7 +34,7 @@ class BoostStore {
       return;
     }
     this.loading = true;
-    return getBoosts(this.list.offset, this.filter)
+    return getBoosts(this.list.offset, this.filter, this.filter === 'peer'? this.peer_filter: null)
       .then( feed => {
         this.list.setList(feed);
       })
@@ -59,6 +60,13 @@ class BoostStore {
   @action
   setFilter(filter) {
     this.filter = filter;
+    this.list.clearList();
+    this.loadList();
+  }
+
+  @action
+  setPeerFilter(filter) {
+    this.peer_filter = filter;
     this.list.clearList();
     this.loadList();
   }

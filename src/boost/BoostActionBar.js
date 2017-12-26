@@ -80,7 +80,7 @@ export default class BoostActionBar extends Component {
     return  this.props.entity.scheduledTs ?
               <View style={styles.actionIconWrapper}>
                 <Icon  type='material-community' color='rgb(96, 125, 139)'  name='alarm' size={20} />
-                <Text style={styles.actionIconText}>{this.props.entity.scheduledTs}</Text>
+                <Text style={styles.actionIconText}>{formatDate(this.props.entity.scheduledTs)}</Text>
               </View> : 
               <View style={styles.actionIconWrapper}>
                 <Icon  type='material-community' color='rgb(96, 125, 139)'  name='clock' size={20} />
@@ -107,9 +107,9 @@ export default class BoostActionBar extends Component {
         <TouchableHighlight
           onPress={() => { this.props.boost.reject(this.props.entity.guid)}}
           underlayColor = 'transparent'
-          style = {styles.bluebutton}
+          style = {styles.redbutton}
         >
-          <Text style={{color: colors.primary}} > REJECT </Text>
+          <Text style={{color: colors.danger}} > REJECT </Text>
         </TouchableHighlight>
       );
     } 
