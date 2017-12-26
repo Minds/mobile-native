@@ -22,8 +22,8 @@ export default class BoostConsoleScreen extends Component {
    */
   render() {
     return (
-      <View style={{flex:1}}>
-        <View style={{flex:1}}>
+      <View style={CommonStyle.flexContainer}>
+        <View style={CommonStyle.flexContainer}>
           <FlatList
             ListHeaderComponent={this.props.header}
             data={this.props.boost.list.entities.slice()}
