@@ -21,7 +21,8 @@ import colors from '../../styles/Colors';
 export default class BoostsCarousel extends PureComponent {
 
   state = {
-    activeSlide:0
+    activeSlide:0,
+    width: Dimensions.get('window').width
   }
 
   /**
@@ -29,13 +30,26 @@ export default class BoostsCarousel extends PureComponent {
    */
   _renderItem = ({ item, index }) => {
     return (
-      <View style={styles.slide}>
+      <View style={this.styles.slide}>
         <Activity
           entity={item}
           navigation={this.props.navigation}
-        />
+          />
       </View>
     );
+  }
+
+  /**
+   * On layout
+   */
+  _onLayout = (e) => {
+    this.setState({
+      width: Dimensions.get('window').width,
+    });
+  }
+
+  _onSnapToItem = (index) => {
+    this.setState({ activeSlide: index });
   }
 
   /**
@@ -59,14 +73,13 @@ export default class BoostsCarousel extends PureComponent {
           borderRadius: 5,
           backgroundColor: colors.primary,
         }}
-        inactiveDotStyle={{
-          // Define styles for inactive dots here
-        }}
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.8}
       />
     );
   }
+
+
 
   /**
    * Render carousel
@@ -76,32 +89,36 @@ export default class BoostsCarousel extends PureComponent {
       return null;
     }
 
+    this.styles = {
+      slide: {
+        flex: 1,
+        width: this.state.width, //full size slider
+      },
+      flexContainer: {
+        flex: 1
+      }
+    };
+
+    const carousel = (
+      <Carousel
+        ref={(c) => { this._carousel = c; }}
+        data={this.props.boosts}
+        renderItem={this._renderItem}
+        sliderWidth={this.state.width}
+        itemWidth={this.state.width}
+        containerCustomStyle={this.styles.flexContainer}
+        slideStyle={this.styles.flexContainer}
+        onSnapToItem={this._onSnapToItem}
+        removeClippedSubviews={true}
+      />
+    )
+
     return (
-      <View style={ styles.flexContainer }>
+      <View style={ this.styles.flexContainer } onLayout={this._onLayout}>
         { this.pagination }
-        <Carousel
-          ref={(c) => { this._carousel = c; }}
-          data={this.props.boosts}
-          renderItem={this._renderItem}
-          sliderWidth={sliderWidth}
-          itemWidth={sliderWidth}
-          containerCustomStyle={styles.flexContainer}
-          slideStyle={styles.flexContainer}
-          onSnapToItem={(index) => this.setState({ activeSlide: index })}
-        />
+        { carousel }
       </View>
     );
   }
 }
 
-const sliderWidth = Dimensions.get('window').width;
-
-const styles = StyleSheet.create({
-  slide: {
-    flex:1,
-    width: sliderWidth, //full size slider
-  },
-  flexContainer: {
-    flex: 1
-  }
-});

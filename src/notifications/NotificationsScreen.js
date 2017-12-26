@@ -59,7 +59,7 @@ export default class NotificationsScreen extends Component {
   /**
    * On component unmount
    */
-  componentWillUnount() {
+  componentWillUnmount() {
     // clear data to free memory
     this.props.notifications.list.clearList();
   }
