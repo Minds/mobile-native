@@ -26,6 +26,7 @@ import RemindOwnerBlock from './RemindOwnerBlock';
 import Actions from './Actions';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../../common/helpers/date';
+import domain from '../../common/helpers/domain';
 
 /**
  * Activity
@@ -108,7 +109,7 @@ export default class Activity extends Component {
           {this.getImage(source)}
           <TouchableOpacity style={styles.message} onPress={this.openLink}>
             <Text style={styles.title}>{this.props.entity.title}</Text>
-            <Text style={styles.timestamp}>{this.props.entity.perma_url}</Text>
+            <Text style={styles.timestamp}>{domain(this.props.entity.perma_url)}</Text>
           </TouchableOpacity>
         </View>
       )
