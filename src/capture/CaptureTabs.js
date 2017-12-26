@@ -105,10 +105,10 @@ export default class CaptureTab extends Component {
         return <GalleryScreen moveToCapture={() => this.moveToCaptureScreen()} submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
         break;
       case 'captureImage':
-        return <CaptureScreen submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
+        return <CaptureScreen isPosting={this.state.isPosting} submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
         break;
       case 'captureVideo':
-        return <CaptureScreen submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
+        return <CaptureScreen isPosting={this.state.isPosting} submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
         break;
       case 'poster':
         return <Poster reset={() => this.resetState()} attachmentGuid={this.state.attachmentGuid} imageUri={this.state.imageUri}  />;
