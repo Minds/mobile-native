@@ -11,6 +11,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   View,
+  Linking 
 } from 'react-native';
 
 import { login } from '../auth/LoginService';
@@ -110,7 +111,7 @@ export default class RegisterForm extends Component {
         <CheckBox
           iconRight
           containerStyle={ComponentsStyle.registerCheckbox}
-          title='I accept the terms and conditions'
+          title={<Text style={ComponentsStyle.terms}>I accept the <Text style={ComponentsStyle.link} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>terms and conditions</Text></Text>}
           checked={this.state.termsAccepted}
           textStyle={ComponentsStyle.registerCheckboxText}
           onPress={() => { this.setState({ termsAccepted: !this.state.termsAccepted})}}
