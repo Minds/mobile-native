@@ -4,6 +4,9 @@ import { observer, inject } from 'mobx-react/native'
 
 import Boost from './Boost';
 
+import { CommonStyle } from '../styles/Common';
+import { ComponentsStyle } from '../styles/Components';
+
 /**
  * News feed list component
  */
@@ -35,26 +38,26 @@ export default class BoostConsoleScreen extends Component {
         </View>
         {
           this.props.boost.filter === 'peer' ? 
-            <View style={{height:35}}>
-              <View style={{flex:1, flexDirection:'row'}}>
-                <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setPeerFilter('inbox')} style={this.props.boost.peer_filter === 'inbox'? styles.selectedButton: styles.buttons}>
+            <View style={styles.buttonBar}>
+              <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
+                <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setPeerFilter('inbox')} style={this.props.boost.peer_filter === 'inbox'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
                   <Text>Inbox</Text>
                 </TouchableHighlight>
-                <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setPeerFilter('outbox')} style={this.props.boost.peer_filter === 'outbox'? styles.selectedButton: styles.buttons}>
+                <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setPeerFilter('outbox')} style={this.props.boost.peer_filter === 'outbox'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
                   <Text>Outbox</Text>
                 </TouchableHighlight>
               </View>
             </View> : null
         }
-        <View style={{height:35}}>
-          <View style={{flex:1, flexDirection:'row'}}>
-            <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setFilter('newsfeed')} style={this.props.boost.filter === 'newsfeed'? styles.selectedButton: styles.buttons}>
+        <View style={styles.buttonBar}>
+          <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
+            <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setFilter('newsfeed')} style={this.props.boost.filter === 'newsfeed'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
               <Text>Newsfeed</Text>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setFilter('content')} style={this.props.boost.filter === 'content'? styles.selectedButton: styles.buttons}>
+            <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setFilter('content')} style={this.props.boost.filter === 'content'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
               <Text>Sidebars</Text>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setFilter('peer')} style={this.props.boost.filter === 'peer'? styles.selectedButton: styles.buttons}>
+            <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setFilter('peer')} style={this.props.boost.filter === 'peer'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
               <Text>Channels</Text>
             </TouchableHighlight>
           </View>
@@ -96,15 +99,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttons: {
-    flex:1, 
-    justifyContent: 'center', 
     alignItems: 'center',
   },
   selectedButton: {
-    flex:1, 
-    justifyContent: 'center', 
     alignItems: 'center',
     borderBottomWidth:3,
     borderColor: 'yellow'
+  },
+  buttonBar: {
+    height:35 
   }
 });

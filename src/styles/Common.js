@@ -14,6 +14,13 @@ export const CommonStyle = StyleSheet.create({
     flex:1,
     justifyContent: 'center',
   },
+  flexColumnCentered: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+  }, 
   rowJustifyEnd: {
     flexDirection: 'row',
     justifyContent: 'flex-end'
