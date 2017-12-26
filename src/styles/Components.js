@@ -41,6 +41,25 @@ export const ComponentsStyle = StyleSheet.create({
     alignSelf: 'flex-end'
   },
 
+  //button
+  bluebutton: {
+    margin:4, 
+    padding:5, 
+    alignItems:'center', 
+    borderRadius: 5,
+    backgroundColor:'white', 
+    borderWidth:1, 
+    borderColor: colors.primary
+  },
+  redbutton: {
+    margin:4, 
+    padding:5, 
+    alignItems:'center', 
+    borderRadius: 5,
+    backgroundColor:'white', 
+    borderWidth:1, 
+    borderColor: colors.danger,
+  },
   // background image
   backgroundImage: {
     flex: 1,

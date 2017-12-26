@@ -24,6 +24,9 @@ import abbrev from '../../common/helpers/abbrev';
 import FastImage from 'react-native-fast-image';
 import ChannelActions from '../ChannelActions';
 
+import { CommonStyle } from '../../styles/Common';
+import { ComponentsStyle } from '../../styles/Components';
+
 import colors from '../../styles/Colors'
 /**
  * Channel Header
@@ -62,7 +65,7 @@ export default class ChannelHeader extends Component {
         <TouchableHighlight
           onPress={() => { console.log('press') }}
           underlayColor = 'transparent'
-          style = {styles.button}
+          style = {ComponentsStyle.bluebutton}
           accessibilityLabel="Send a message to this channel"
         >
           <Text style={{color: colors.primary}} > MESSAGE </Text>
@@ -73,7 +76,7 @@ export default class ChannelHeader extends Component {
         <TouchableHighlight
           onPress={() => { this.subscribe() }}
           underlayColor = 'transparent'
-          style = {styles.button}
+          style = {ComponentsStyle.bluebutton}
           accessibilityLabel="Subscribe to this channel"
         >
           <Text style={{color: colors.primary}} > SUBSCRIBE </Text>

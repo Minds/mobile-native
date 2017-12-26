@@ -196,14 +196,4 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: '#FFF'
   },
-  button: {
-    margin:4, 
-    padding:5, 
-    alignItems:'center', 
-    borderRadius: 5,
-    backgroundColor:'white', 
-    borderWidth:1, 
-    borderColor: 
-    colors.primary
-  }
 });
