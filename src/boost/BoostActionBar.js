@@ -46,6 +46,7 @@ export default class BoostActionBar extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.renderTarget()}
         {this.renderViews()}
         {this.renderBid()}
         {this.renderStatus()}
@@ -55,11 +56,19 @@ export default class BoostActionBar extends Component {
     );
   }
 
+  renderTarget() {
+    return  this.props.entity.destination ?
+              <View style={CommonStyle.flexColumnCentered}>
+                <IonIcon color='rgb(96, 125, 139)'  name='md-person' size={20} />
+                <Text style={CommonStyle.fontXS}>{ '@' + this.props.entity.destination.username}</Text>
+              </View> : <View></View>;
+  }
+
   renderViews() {
     return  this.props.entity.impressions ?
               <View style={CommonStyle.flexColumnCentered}>
                 <IonIcon color='rgb(96, 125, 139)'  name='md-eye' size={20} />
-                <Text style={CommonStyle.fontXS}>{this.props.entity.impressions}</Text>
+                <Text style={CommonStyle.fontXS}>{this.props.entity.impressions + ' views'}</Text>
               </View> : <View></View>;
   }
 
@@ -75,7 +84,7 @@ export default class BoostActionBar extends Component {
     return  this.props.entity.bid ?
               <View style={CommonStyle.flexColumnCentered}>
                 <Icon  type='material-community' color='rgb(96, 125, 139)'  name='bank' size={20} />
-                <Text style={CommonStyle.fontXS}>{this.props.entity.bid}</Text>
+                <Text style={CommonStyle.fontXS}>{this.props.entity.bid + ' views'}</Text>
               </View> : <View></View>;
   }
 
