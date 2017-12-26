@@ -55,5 +55,12 @@ export const ComponentsStyle = StyleSheet.create({
     height: 80,
     marginBottom: 30,
     alignSelf: 'center'
-  }
+  },
+  link: {
+    fontWeight: 'bold',
+  },
+  terms: {
+    fontFamily: 'Roboto',
+    color: 'white'
+  },
 });
