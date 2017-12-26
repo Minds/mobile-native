@@ -1,7 +1,7 @@
 import api from './../common/services/api.service';
 
-export function getBoosts(offset, filter) {
-  return api.get('api/v1/boost/' + filter, { offset: offset, limit: 15 })
+export function getBoosts(offset, filter, peer_filter) {
+  return api.get('api/v1/boost/' + filter + '/' + peer_filter, { offset: offset, limit: 15 })
     .then((data) => {
       return {
         entities: data.boosts,

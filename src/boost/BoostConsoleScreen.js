@@ -33,6 +33,19 @@ export default class BoostConsoleScreen extends Component {
             style={styles.listView}
           />
         </View>
+        {
+          this.props.boost.filter === 'peer' ? 
+            <View style={{height:35}}>
+              <View style={{flex:1, flexDirection:'row'}}>
+                <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setPeerFilter('inbox')} style={this.props.boost.peer_filter === 'inbox'? styles.selectedButton: styles.buttons}>
+                  <Text>Inbox</Text>
+                </TouchableHighlight>
+                <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setPeerFilter('outbox')} style={this.props.boost.peer_filter === 'outbox'? styles.selectedButton: styles.buttons}>
+                  <Text>Outbox</Text>
+                </TouchableHighlight>
+              </View>
+            </View> : null
+        }
         <View style={{height:35}}>
           <View style={{flex:1, flexDirection:'row'}}>
             <TouchableHighlight underlayColor='gray' onPress={() => this.props.boost.setFilter('newsfeed')} style={this.props.boost.filter === 'newsfeed'? styles.selectedButton: styles.buttons}>
