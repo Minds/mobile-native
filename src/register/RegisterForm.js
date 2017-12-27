@@ -11,7 +11,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   View,
-  Linking 
+  Linking
 } from 'react-native';
 
 import { login } from '../auth/LoginService';
@@ -23,6 +23,8 @@ import {
   CheckBox,
   Button
 } from 'react-native-elements'
+
+import i18n from '../common/services/i18n.service';
 
 /**
  * Register Form
@@ -67,7 +69,7 @@ export default class RegisterForm extends Component {
         </View>
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder='Username'
+          placeholder={i18n.t('auth.username')}
           placeholderTextColor="white"
           returnKeyType={'done'}
           underlineColorAndroid='transparent'
@@ -76,7 +78,7 @@ export default class RegisterForm extends Component {
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder='Email'
+          placeholder={i18n.t('auth.email')}
           returnKeyType={'done'}
           placeholderTextColor="white"
           underlineColorAndroid='transparent'
@@ -85,7 +87,7 @@ export default class RegisterForm extends Component {
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder='Password'
+          placeholder={i18n.t('auth.password')}
           secureTextEntry={true}
           returnKeyType={'done'}
           placeholderTextColor="white"
@@ -95,7 +97,7 @@ export default class RegisterForm extends Component {
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder='Confirm Password'
+          placeholder={i18n.t('auth.confirmpassword')}
           secureTextEntry={true}
           returnKeyType={'done'}
           placeholderTextColor="white"
@@ -119,7 +121,7 @@ export default class RegisterForm extends Component {
         <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
             <Button
               onPress={() => this.onPressBack()}
-              title="GO BACK"
+              title={i18n.t('goback')}
               backgroundColor="rgba(0,0,0, 0.5)"
               borderRadius={4}
               containerViewStyle={ComponentsStyle.loginButton}
@@ -127,7 +129,7 @@ export default class RegisterForm extends Component {
             />
             <Button
               onPress={() => this.onPressRegister()}
-            title="CREATE CHANNEL"
+              title={i18n.t('auth.create')}
               backgroundColor="rgba(0,0,0, 0.5)"
               borderRadius={4}
               containerViewStyle={ComponentsStyle.loginButton}
