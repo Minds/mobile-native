@@ -135,7 +135,8 @@ const stores = {
 
 // clear states on logout
 sessionService.onLogout(() => {
-  newsfeed.list.clearList();
+  newsfeed.clearFeed();
+  newsfeed.clearBoosts();
   discovery.list.clearList();
   user.clearUser();
 })
