@@ -21,6 +21,11 @@ export const CommonStyle = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
   },
+  centered: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
   rowJustifyEnd: {
     flexDirection: 'row',
     justifyContent: 'flex-end'
