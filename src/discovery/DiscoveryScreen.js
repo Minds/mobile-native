@@ -14,14 +14,19 @@ import {
 } from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import { OptimizedFlatList } from 'react-native-optimized-flatlist';
+import Modal from 'react-native-modal'
+
 import DiscoveryTile from './DiscoveryTile';
 import DiscoveryUser from './DiscoveryUser';
 import Activity from '../newsfeed/activity/Activity';
 import SearchView from '../common/components/SearchView';
 import CenteredLoading from '../common/components/CenteredLoading';
 import debounce from '../common/helpers/debounce';
+import { CommonStyle } from '../styles/Common';
 
-import { OptimizedFlatList } from 'react-native-optimized-flatlist';
+import Toolbar from '../common/components/toolbar/Toolbar';
+
 
 /**
  * Discovery screen
@@ -34,6 +39,7 @@ export default class DiscoveryScreen extends Component {
 
   state = {
     itemHeight: 0,
+    isModalVisible: false,
   }
 
   static navigationOptions = {
@@ -53,6 +59,9 @@ export default class DiscoveryScreen extends Component {
     }
   }
 
+  /**
+   * Adjust tiles to 1/cols size
+   */
   onLayout = e => {
     const width = e.nativeEvent.layout.width
     this.setState({
@@ -60,6 +69,13 @@ export default class DiscoveryScreen extends Component {
     })
   }
 
+  closeOptionsModal = () => {
+    console.log('close');
+  }
+
+  /**
+   * Calculate item layout for better performance on tiles
+   */
   getItemLayout = (data, index) => {
     const { itemHeight } = this.state
     return { length: itemHeight, offset: itemHeight * index, index }
@@ -68,12 +84,15 @@ export default class DiscoveryScreen extends Component {
   render() {
     let body;
 
-    if (!this.props.discovery.list.loaded) {
+    const discovery = this.props.discovery;
+
+
+    if (!discovery.list.loaded) {
       body = <CenteredLoading />
     } else {
       let renderRow, columnWrapperStyle = null, getItemLayout=null;
       this.cols = 3;
-      switch (this.props.discovery.type) {
+      switch (discovery.type) {
         case 'user':
           renderRow = this.renderUser;
           this.cols = 1;
@@ -92,11 +111,11 @@ export default class DiscoveryScreen extends Component {
         <OptimizedFlatList
           onLayout={this.onLayout}
           key={'discofl' + this.cols} // we need to force component redering if we change cols
-          data={this.props.discovery.list.entities.slice()}
+          data={discovery.list.entities.slice()}
           renderItem={renderRow}
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
-          refreshing={this.props.discovery.list.refreshing}
+          refreshing={discovery.list.refreshing}
           onEndReached={this.loadFeed}
           onEndThreshold={0}
           initialNumToRender={12}
@@ -109,15 +128,58 @@ export default class DiscoveryScreen extends Component {
       )
     }
 
+    const typeOptions = [
+      { text: 'Image', icon: 'image', value: 'object/image' },
+      { text: 'Video', icon: 'md-videocam', iconType: 'ion', value: 'object/video' },
+      { text: 'Channel', icon: 'ios-people', iconType: 'ion', value: 'user' }
+    ]
+
+    const filterOptions = [
+      { text: 'Trending', icon: 'trending-up', value: 'trending' },
+      { text: 'Featured', icon: 'star', value: 'featured' },
+    ]
+
     return (
-      <View style={{flex:1}}>
+      <View style={CommonStyle.flexContainer}>
+        <Modal
+          isVisible={this.state.isModalVisible}
+          useNativeDriver={true}
+          onBackdropPress={this.hideModal}
+          onModalHide={this.onModalHide}
+        >
+          <View style={[CommonStyle.alignJustifyCenter,{backgroundColor: 'white'}]}>
+            <Toolbar options={filterOptions} initial={discovery.filter} onChange={this.onFilterChange}/>
+            <Toolbar options={typeOptions} initial={discovery.type} onChange={this.onTypeChange}/>
+          </View>
+        </Modal>
         <SearchView
           placeholder='search...'
           onChangeText={this.searchDebouncer}
+          iconRight={'md-options'}
+          iconRightOnPress={this.onPressOptions}
         />
         {body}
       </View>
     );
+  }
+
+  onFilterChange = (val) => {
+    this.props.discovery.setFilter(val);
+  }
+
+  onTypeChange = (val) => {
+    this.props.discovery.setType(val);
+  }
+
+  onPressOptions = () => {
+    this.setState({ isModalVisible: true });
+  }
+
+  hideModal = () => {
+    this.setState({ isModalVisible: false });
+  }
+
+  onModalHide = () => {
   }
 
   searchDebouncer = debounce((text) => {

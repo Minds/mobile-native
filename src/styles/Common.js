@@ -20,7 +20,7 @@ export const CommonStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
-  }, 
+  },
   rowJustifyEnd: {
     flexDirection: 'row',
     justifyContent: 'flex-end'
@@ -36,6 +36,10 @@ export const CommonStyle = StyleSheet.create({
   // align
   alignCenter: {
     alignItems: 'center'
+  },
+  alignJustifyCenter: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   // color
   colorLight: {
@@ -54,6 +58,9 @@ export const CommonStyle = StyleSheet.create({
     color: colors.dark
   },
   // backgrounds
+  backgroundWhite: {
+    backgroundColor: 'white'
+  },
   backgroundLight: {
     backgroundColor: colors.light
   },

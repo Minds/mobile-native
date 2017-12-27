@@ -55,6 +55,32 @@ class DiscoveryStore {
       });
   }
 
+  /**
+   * Set type and refresh list
+   * @param {string} type
+   */
+  @action
+  setType(type) {
+    this.type = type;
+    this.list.clearList();
+    this.loadList(true);
+  }
+
+  /**
+   * Set filter and refresh list
+   * @param {string} filter
+   */
+  @action
+  setFilter(filter) {
+    this.filter = filter;
+    this.list.clearList();
+    this.loadList(true);
+  }
+
+  /**
+   * search
+   * @param {string} text
+   */
   @action
   search(text) {
     this.list.clearList();

@@ -20,6 +20,7 @@
     "react-native-exception-handler": "^2.6.0",
     "react-native-fast-image": "^2.0.1",
     "react-native-image-picker": "^0.26.7",
+    "react-native-modal": "^4.1.1",
     "react-native-optimized-flatlist": "^1.0.4",
     "react-native-photo-view": "^1.5.2",
     "react-native-snap-carousel": "^3.4.0",
