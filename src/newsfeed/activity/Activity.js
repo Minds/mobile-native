@@ -93,10 +93,7 @@ export default class Activity extends Component {
         }
         return this.getImage(source);
       case 'video':
-        source = {
-          uri: this.props.entity.thumbnail_src||this.props.entity.custom_data.thumbnail_src
-        }
-        return this.getImage(source);
+        return this.getVideo();
     }
 
     if (this.props.entity.perma_url) {
@@ -117,6 +114,15 @@ export default class Activity extends Component {
     return null;
   }
 
+  getVideo() {
+    return this.source = source;
+    const autoHeight = this.props.autoHeight;
+    return autoHeight ? <AutoHeightFastImage source={source} width={Dimensions.get('window').width} /> : (
+      <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer}>
+        <MindsVideo entity={this.props.entity}/>
+      </TouchableOpacity>
+    );
+  }
   /**
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
