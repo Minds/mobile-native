@@ -48,7 +48,8 @@ export default class SettingsScreen extends Component {
         <Text style={styles.header}>{i18nService.t('language')}</Text>
         <Picker
           selectedValue={this.state.language}
-          onValueChange={this.changeLanguage}>
+          onValueChange={this.changeLanguage}
+          style={styles.language}>
           {
             languages.map(lang => {
               return <Picker.Item label={lang.name} value={lang.value} key={lang.value}/>
@@ -98,6 +99,9 @@ const styles = StyleSheet.create({
   screen: {
     backgroundColor: '#FFF',
     flex: 1,
+  },
+  language: {
+    marginLeft: 10,
   },
   header: {
     paddingLeft: 20,
