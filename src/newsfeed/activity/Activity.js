@@ -9,6 +9,10 @@ import {
 import {observer} from "mobx-react";
 
 import {
+  MINDS_URI
+} from '../../config/Config';
+
+import {
   Text,
   StyleSheet,
   TouchableOpacity,
@@ -19,6 +23,7 @@ import {
 
 import AutoHeightFastImage from '../../common/components/AutoHeightFastImage';
 
+import MindsVideo from '../../media/MindsVideo';
 import ExplicitImage from '../../common/components/explicit/ExplicitImage'
 import ExplicitText from '../../common/components/explicit/ExplicitText'
 import OwnerBlock from './OwnerBlock';
@@ -115,11 +120,9 @@ export default class Activity extends Component {
   }
 
   getVideo() {
-    return this.source = source;
-    const autoHeight = this.props.autoHeight;
-    return autoHeight ? <AutoHeightFastImage source={source} width={Dimensions.get('window').width} /> : (
+    return (
       <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer}>
-        <MindsVideo entity={this.props.entity}/>
+        <MindsVideo video={{'uri': MINDS_URI + 'api/v1/media/' + this.props.entity.custom_data.guid + '/play'}} volume={1} entity={this.props.entity}/>
       </TouchableOpacity>
     );
   }

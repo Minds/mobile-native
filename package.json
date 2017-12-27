@@ -14,7 +14,6 @@
     "react-native": "0.50.4",
     "react-native-actionsheet": "^2.3.0",
     "react-native-blur": "^3.2.2",
-    "react-native-blur-image": "^1.0.6",
     "react-native-camera": "^0.12.0",
     "react-native-elements": "^0.18.4",
     "react-native-exception-handler": "^2.6.0",
@@ -26,6 +25,8 @@
     "react-native-photo-view": "^1.5.2",
     "react-native-snap-carousel": "^3.4.0",
     "react-native-vector-icons": "^4.4.2",
+    "react-native-video": "^2.0.0",
+    "lodash": "^4.13.1",
     "react-navigation": "^1.0.0-beta.19"
   },
   "devDependencies": {
