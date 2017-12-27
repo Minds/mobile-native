@@ -6,7 +6,8 @@ import {
   View,
   ScrollView,
   StyleSheet,
-  Text
+  Text,
+  Picker
 } from 'react-native';
 
 import {
@@ -17,41 +18,61 @@ import { List, ListItem } from 'react-native-elements';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from './SettingsService';
 
+import i18nService from '../common/services/i18n.service';
+
 export default class SettingsScreen extends Component {
   state = {
-    categories: []
+    categories: [],
   }
 
   componentWillMount() {
     settingsService.loadCategories()
       .then(categories => {
         this.setState({
-          categories: categories
+          categories: categories,
+          language: i18nService.getCurrentLocale()
         });
       })
   }
 
+  changeLanguage = (val) => {
+    i18nService.setLocale(val);
+    this.setState({ language: val })
+  }
+
   render() {
+    const languages = i18nService.getSupportedLocales()
+
     return (
       <ScrollView style={styles.screen}>
-        <Text style={styles.header}>Password</Text>
-        <FormLabel>Current Password</FormLabel>
+        <Text style={styles.header}>{i18nService.t('language')}</Text>
+        <Picker
+          selectedValue={this.state.language}
+          onValueChange={this.changeLanguage}>
+          {
+            languages.map(lang => {
+              return <Picker.Item label={lang.name} value={lang.value} key={lang.value}/>
+            })
+          }
+        </Picker>
+        <Text style={styles.header}>{i18nService.t('auth.password')}</Text>
+        <FormLabel>{i18nService.t('settings.currentPassword')}</FormLabel>
         <FormInput/>
-        <FormLabel>New Password</FormLabel>
+        <FormLabel>{i18nService.t('settings.newPassword')}</FormLabel>
         <FormInput />
-        <FormLabel>Confirm New Password</FormLabel>
+        <FormLabel>{i18nService.t('settings.confirmNewPassword')}</FormLabel>
         <FormInput />
         <Text style={styles.header}>Email</Text>
-        <FormLabel>Current Email</FormLabel>
+        <FormLabel>{i18nService.t('settings.currentEmail')}</FormLabel>
         <FormInput />
-        <Text style={styles.header}>Payment Methods</Text>
+        <Text style={styles.header}>{i18nService.t('settings.paymentMethods')}</Text>
         <View style={styles.cardcontainer}>
-          <Text style={styles.creditcardtext}>ADD A NEW CARD</Text>
+          <Text style={styles.creditcardtext}>{i18nService.t('settings.addCard')}</Text>
           <Button backgroundColor="#4690D6"
-            title='ADD' icon={{ name: 'ios-card', type: 'ionicon'}} />
+            title={i18nService.t('settings.add')} icon={{ name: 'ios-card', type: 'ionicon'}} />
         </View>
-        <Text style={styles.header}>Recurring Payments</Text>
-        <Text style={[styles.header, {marginTop:20}]}>Categories</Text>
+        <Text style={styles.header}>{i18nService.t('settings.recurringPayments')}</Text>
+        <Text style={[styles.header, { marginTop: 20 }]}>{i18nService.t('categories')}</Text>
         <List containerStyle={{ flex: 1, borderTopWidth: 0, borderBottomWidth: 0}}>
           {
             this.state.categories.map((l, i) => (
@@ -63,10 +84,10 @@ export default class SettingsScreen extends Component {
             ))
           }
         </List>
-        <Text style={[styles.header, { marginTop: 20 }]}>Deactivate Channel</Text>
+        <Text style={[styles.header, { marginTop: 20 }]}>{i18nService.t('settings.deactivateChannel')}</Text>
         <View style={styles.deactivate}>
           <Button raised backgroundColor="#f53d3d"
-            title='DEACTIVATE' icon={{ name: 'ios-warning', type: 'ionicon' }} />
+            title={i18nService.t('settings.deactivate')} icon={{ name: 'ios-warning', type: 'ionicon' }} />
         </View>
       </ScrollView>
     );

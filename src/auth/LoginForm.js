@@ -19,6 +19,8 @@ import { ComponentsStyle } from '../styles/Components';
 
 import { Button } from 'react-native-elements'
 
+import i18n from '../common/services/i18n.service';
+
 /**
  * Login Form
  */
@@ -37,7 +39,7 @@ export default class LoginForm extends Component {
       <KeyboardAvoidingView behavior='padding'>
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder='Username'
+          placeholder={i18n.t('auth.username')}
           returnKeyType={'done'}
           placeholderTextColor="white"
           underlineColorAndroid='transparent'
@@ -47,7 +49,7 @@ export default class LoginForm extends Component {
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder='Password'
+          placeholder={i18n.t('auth.password')}
           secureTextEntry={true}
           autoCapitalize={'none'}
           returnKeyType={'done'}
@@ -59,7 +61,7 @@ export default class LoginForm extends Component {
         <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
             <Button
               onPress={() => this.props.onRegister()}
-              title="CREATE A CHANNEL"
+              title={i18n.t('auth.create')}
               backgroundColor="rgba(0,0,0, 0.5)"
               borderRadius={4}
               containerViewStyle ={ComponentsStyle.loginButton}
@@ -67,7 +69,7 @@ export default class LoginForm extends Component {
               />
             <Button
               onPress={() => this.onLoginPress()}
-              title="LOGIN"
+              title={i18n.t('auth.login')}
               backgroundColor="rgba(0,0,0, 0.5)"
               borderRadius={4}
               containerViewStyle ={ComponentsStyle.loginButton}

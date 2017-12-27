@@ -14,6 +14,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnative.photoview.PhotoViewPackage;
+import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,7 +37,8 @@ public class MainApplication extends Application implements ReactApplication {
           new ImagePickerPackage(),
           new RCTCameraPackage(),
           new VectorIconsPackage(),
-          new PhotoViewPackage()
+          new PhotoViewPackage(),
+          new RNI18nPackage()
       );
     }
 
