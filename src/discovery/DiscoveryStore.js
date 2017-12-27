@@ -77,6 +77,12 @@ class DiscoveryStore {
     this.loadList(true);
   }
 
+  @action
+  reset() {
+    this.type = 'object/image';
+    this.filter = 'featured';
+  }
+
   /**
    * search
    * @param {string} text
@@ -85,8 +91,10 @@ class DiscoveryStore {
   search(text) {
     this.list.clearList();
     this.searchtext = text;
+    this.filter = 'search';
+
     if (text == '') {
-      this.type = 'object/image';
+      this.reset();
     } else if (text.indexOf("#") > -1) {
       this.type = "activity";
     } else {
