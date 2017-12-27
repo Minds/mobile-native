@@ -59,6 +59,11 @@ class NewsfeedStore {
   }
 
   @action
+  clearBoosts() {
+    this.boosts = [];
+  }
+
+  @action
   refresh() {
     this.list.refresh();
     this.loadFeed()

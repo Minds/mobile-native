@@ -42,12 +42,14 @@ export default class LoginForm extends Component {
           placeholderTextColor="white"
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ username: value })}
+          autoCapitalize={'none'}
           value={this.state.username}
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder='Password'
           secureTextEntry={true}
+          autoCapitalize={'none'}
           returnKeyType={'done'}
           placeholderTextColor="white"
           underlineColorAndroid='transparent'

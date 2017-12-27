@@ -6,7 +6,8 @@ import {
   TextInput,
   View,
   StyleSheet,
-  Platform
+  Platform,
+  TouchableOpacity
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -15,10 +16,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
  * Search Component
  */
 export default class SearchView extends PureComponent {
+
+  /**
+   * Render
+   */
   render() {
     const {
+      iconRight,
+      iconRightOnPress,
       ...attributes
     } = this.props;
+
+    let rIcon = this.getRightIcon(iconRight, iconRightOnPress);
+
     return (
       <View style={styles.container}>
         <Icon size={16} style={styles.icon} name={'md-search'} color={'#444'} />
@@ -29,8 +39,29 @@ export default class SearchView extends PureComponent {
           }
           style={styles.input}
         />
+        {rIcon}
       </View>
     );
+  }
+
+  /**
+   * Get right icon or null
+   * @param {string} iconRight
+   * @param {function} iconRightOnPress
+   */
+  getRightIcon(iconRight, iconRightOnPress) {
+    if (iconRight) {
+      if (iconRightOnPress) {
+        return (
+          <TouchableOpacity style={[styles.icon, styles.iconRight]} onPress={iconRightOnPress}>
+            <Icon size={16} name={iconRight} color={'#444'} />
+          </TouchableOpacity>
+        )
+      } else {
+        return <Icon size={16} style={[styles.icon, styles.iconRight]} name={iconRight} color={'#444'} />
+      }
+    }
+    return null;
   }
 }
 
@@ -40,6 +71,10 @@ const styles = StyleSheet.create({
     borderTopColor: '#000',
     backgroundColor: '#FFF',
     height:55
+  },
+  iconRight: {
+    right:0,
+    paddingRight: 10,
   },
   icon: {
     backgroundColor: 'transparent',
