@@ -34,6 +34,8 @@ import {
 import { thumbActivity } from './ActionsService';
 import Remind from './remind/Remind';
 
+import { CommonStyle } from '../../styles/Common';
+
 @inject('newsfeed')
 @inject('user')
 @observer
@@ -72,24 +74,24 @@ export default class Actions extends Component {
   }
   render() {
     return (
-      <View style={{flex:1}}>
+      <View style={CommonStyle.flexContainer}>
         <View style={styles.container}>
-          <View style={styles.actionIconWrapper}>
+          <View style={CommonStyle.flexContainer}>
             <Icon onPress={this.toggleThumb.bind(this, 'thumbs:up')} color={this.state.votedUp ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-up' size={20} />
             <Text style={styles.actionIconText}>{this.state.votedUpCount > 0 ? this.state.votedUpCount : ''}</Text>
           </View>
-          <View style={styles.actionIconWrapper}>
+          <View style={CommonStyle.flexContainer}>
             <Icon onPress={this.toggleThumb.bind(this, 'thumbs:down')} color={this.state.votedDown ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'}  name='thumb-down' size={20} />
             <Text style={styles.actionIconText}>{this.state.votedDownCount > 0 ? this.state.votedDownCount : ''}</Text>
           </View>
-          <View style={styles.actionWireIconWrapper}>
+          <View style={[CommonStyle.flexContainer, CommonStyle.centered]}>
             <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={40} onPress={this.openWire}/>
           </View>
-          <View style={styles.actionIconWrapper}>
+          <View style={CommonStyle.flexContainer}>
             <Icon style={styles.actionIcon} color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={20} onPress={this.openComments} />
             <Text style={styles.actionIconText}>{this.props.entity['comments:count'] > 0 ? this.props.entity['comments:count']: ''}</Text>
           </View>
-          <View onPress={this.remind} style={styles.actionIconWrapper}>
+          <View onPress={this.remind} style={CommonStyle.flexContainer}>
             <Icon onPress={this.remind} color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20}/>
             <Text onPress={this.remind} style={styles.actionIconText}>{this.props.entity['reminds'] > 0 ? this.props.entity['reminds']: ''}</Text>
           </View>
@@ -177,15 +179,6 @@ const styles = StyleSheet.create({
     borderRadius: 23,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
-  },
-  actionIconWrapper: {
-    flex: 1,
-  },
-  actionWireIconWrapper: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignContent: 'center',
   },
   actionIconText: {
     position: 'absolute',
