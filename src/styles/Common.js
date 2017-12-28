@@ -21,6 +21,11 @@ export const CommonStyle = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
   },
+  centered: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
   rowJustifyEnd: {
     flexDirection: 'row',
     justifyContent: 'flex-end'
@@ -143,4 +148,27 @@ export const CommonStyle = StyleSheet.create({
   fontXL: {
     fontSize: 18
   },
+
+
+  //position
+  positionAbsolute:{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  },
+  positionAbsoluteBottom:{
+    position: "absolute",
+    bottom: 0,
+    left: 0
+  },
+  positionRelative:{
+    position: "relative",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0
+  }
+  
 });
