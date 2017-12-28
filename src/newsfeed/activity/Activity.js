@@ -121,9 +121,9 @@ export default class Activity extends Component {
 
   getVideo() {
     return (
-      <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer}>
+      <View style={styles.imageContainer}>
         <MindsVideo video={{'uri': MINDS_URI + 'api/v1/media/' + this.props.entity.custom_data.guid + '/play'}} volume={1} entity={this.props.entity}/>
-      </TouchableOpacity>
+      </View>
     );
   }
   /**
