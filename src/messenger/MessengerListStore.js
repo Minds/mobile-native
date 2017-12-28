@@ -9,13 +9,16 @@ import {
 
 import messengerService from './MessengerService';
 import session from './../common/services/session.service';
+import crypto from './../common/services/crypto.service';
 
 /**
  * Messenger Conversation List Store
  */
 class MessengerListStore {
+  @observable.shallow messages = [];
   @observable.shallow conversations = [];
   @observable refreshing = false;
+
   /**
    * Search string
    */
@@ -27,19 +30,18 @@ class MessengerListStore {
   @observable configured = false;
   @observable unlocking  = false;
 
-  offset    = '';
-  newsearch = true;
-  loaded    = false;
-  privateKey   = null;
+  offset     = '';
+  newsearch  = true;
+  loaded     = false;
 
   constructor() {
     session.getPrivateKey()
       .then((privateKey) => {
         if (privateKey) {
-          this.configured = true;
-          this.privateKey = privateKey;
+          this.setPrivateKey(privateKey);
         }
-      })
+      });
+
   }
 
   /**
@@ -67,6 +69,13 @@ class MessengerListStore {
       }).catch(err => {
         console.log('error');
       });
+  }
+
+  loadMessages(guid, offset='') {
+    return messengerService.getConversationFromRemote(15, guid, offset)
+      .then(conversation => {
+        this.messages = conversation.messages;
+      })
   }
 
   /**
@@ -98,13 +107,18 @@ class MessengerListStore {
   }
 
   @action
+  clearMessages() {
+    this.messages = [];
+  }
+
+  @action
   setUnlocking(val) {
     this.unlocking = val;
   }
 
   @action
   setPrivateKey(privateKey) {
-    this.privateKey = privateKey;
+    crypto.setPrivate(privateKey);
     this.configured = true;
   }
 

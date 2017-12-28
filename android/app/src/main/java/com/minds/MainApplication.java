@@ -3,6 +3,7 @@ package com.minds;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.RNRSA.RNRSAPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNRSAPackage(),
             new ReactVideoPackage(),
             new BlurViewPackage(),
           new FastImageViewPackage(),

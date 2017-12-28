@@ -99,6 +99,7 @@ android {
 
     defaultConfig {
         applicationId "com.minds"
+        multiDexEnabled true
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -151,6 +152,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-rsa-native')
     compile project(':react-native-i18n')
     compile project(':react-native-video')
     compile project(':react-native-blur')

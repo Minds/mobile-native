@@ -16,19 +16,21 @@ import {
   observer
 } from 'mobx-react/native'
 
+import Async from 'react-promise'
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MINDS_URI } from '../config/Config';
+
+import crypto from './../common/services/crypto.service';
 
 // styles
 const styles = StyleSheet.create({
   listView: {
-    paddingTop: 20,
     flex: 1
   },
   container: {
     flex: 1,
-    paddingLeft: 5,
-    paddingRight: 5,
+    paddingHorizontal: 5,
     backgroundColor: '#FFF',
   },
   tbarbutton: {
@@ -40,10 +42,14 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    flexGrow: 1,
+    width: '100%'
     // alignSelf: 'baseline',
   },
   right: {
     justifyContent: 'flex-end',
+  },
+  rightText: {
     textAlign: 'right',
   },
   messagePoster: {
@@ -72,6 +78,12 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
   },
+  textContainer: {
+    flexGrow: 1,
+    width: 0,
+    flexDirection: "column",
+    justifyContent: "center"
+  },
   message: {
     paddingLeft:10,
     paddingRight:10,
@@ -80,7 +92,9 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     backgroundColor: '#EEE',
     marginLeft:10,
-    marginRight:10
+    marginRight:10,
+    flexWrap: "wrap",
+    flexGrow: 1,
   },
   messagedate: {
     fontSize:9,
@@ -93,36 +107,32 @@ const styles = StyleSheet.create({
  * Messenger Conversation Screen
  */
 @inject('user')
+@inject('messengerList')
+@observer
 export default class ConversationScreen extends Component {
+
+  state = {
+    text: ''
+  }
 
   static navigationOptions = ({ navigation }) => ({
     headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.tbarbutton}/>
   });
 
-  state = {
-    fakedata: [
-      {'owner': {'guid':''}}
-
-    ]
-  }
-
   componentWillMount() {
     const conversation = this.props.navigation.state.params.conversation;
-    this.setState({
-      fakedata: [
-        { 'owner': { 'guid': conversation.participants[0].guid }, message: 'Hello World!!!' },
-        { 'owner': { 'guid': conversation.participants[0].guid }, message: 'Are you there?' },
-        { 'owner': { 'guid': this.props.user.me.guid }, message: 'Yeeees!!!' },
-        { 'owner': { 'guid': this.props.user.me.guid }, message: 'Good bye World!' },
-      ]
-    });
+    this.props.messengerList.loadMessages(conversation.guid);
+  }
+
+  componentWillUnmount() {
+    this.props.messengerList.clearMessages();
   }
 
   /**
    * Render component
    */
   render() {
-    const messages     = this.state.fakedata;
+    const messages = this.props.messengerList.messages;
     const conversation = this.props.navigation.state.params.conversation;
     const avatarImg    = { uri: MINDS_URI + 'icon/' + this.props.user.me.guid + '/medium' };
 
@@ -156,12 +166,21 @@ export default class ConversationScreen extends Component {
    */
   renderMessage = (row) => {
     const avatarImg = { uri: MINDS_URI + 'icon/' + row.item.owner.guid + '/small' };
+
+    const decrypPromise = crypto.decrypt(row.item.message);
+
     if (row.item.owner.guid == this.props.user.me.guid) {
       return (
         <View>
           <View style={styles.messageContainer}>
             <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
-            <Text style={styles.message}>{row.item.message}</Text>
+            <View style={styles.textContainer}>
+              <Async
+                promise={decrypPromise}
+                then={(val) => <Text style={styles.message}>{val}</Text>}
+                pending={<Text style={styles.message}>decrypting...</Text>}
+                />
+            </View>
           </View>
           <Text style={styles.messagedate}>Dec 6, 2017, 11:47:46 AM</Text>
         </View>
@@ -171,10 +190,16 @@ export default class ConversationScreen extends Component {
     return (
       <View>
         <View style={[styles.messageContainer, styles.right]}>
-          <Text style={styles.message}>{row.item.message}</Text>
+          <View style={styles.textContainer}>
+            <Async
+              promise={decrypPromise}
+              then={(val) => <Text style={styles.message}>{val}</Text>}
+              pending={<Text style={styles.message}>decrypting...</Text>}
+            />
+          </View>
           <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
         </View>
-        <Text style={[styles.messagedate, styles.right]}>Dec 6, 2017, 11:47:46 AM</Text>
+        <Text style={[styles.messagedate, styles.rightText]}>Dec 6, 2017, 11:47:46 AM</Text>
       </View>
     );
   }

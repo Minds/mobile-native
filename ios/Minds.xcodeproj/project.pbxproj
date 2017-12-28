@@ -55,6 +55,7 @@
 		7D5FB52590FA48EAA8E8D06C /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E481AA756C4F8BB79E1002 /* libFastImage.a */; };
 		B68F3320D9574622A8AAFDA6 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AC370D909384684A944857E /* libRNBlur.a */; };
 		DC9EFC7BBB874CFE959D19AE /* libRNI18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 613B3EDA96314750A2963215 /* libRNI18n.a */; };
+		3B1092EFC79C4854BEB7FFC0 /* libRNRSA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1E64DC2CA049B29BC2978E /* libRNRSA.a */; };
 		AE529C3B754A426FA30111EA /* libRNPhotoView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85323829DFC8409E8245477B /* libRNPhotoView.a */; };
 		A8AA6A9857A244E2B0F5483B /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D16511C5824E44A6219D2D /* libRCTVideo.a */; };
 /* End PBXBuildFile section */
@@ -338,6 +339,8 @@
 		9AC370D909384684A944857E /* libRNBlur.a */ = {isa = PBXFileReference; name = "libRNBlur.a"; path = "libRNBlur.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		254BE3790DDC44F9A9F09BF9 /* RNI18n.xcodeproj */ = {isa = PBXFileReference; name = "RNI18n.xcodeproj"; path = "../node_modules/react-native-i18n/ios/RNI18n.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		613B3EDA96314750A2963215 /* libRNI18n.a */ = {isa = PBXFileReference; name = "libRNI18n.a"; path = "libRNI18n.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		55F2E63316D24FF3AB17F79A /* RNRSA.xcodeproj */ = {isa = PBXFileReference; name = "RNRSA.xcodeproj"; path = "../node_modules/react-native-rsa-native/ios/RNRSA.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		2C1E64DC2CA049B29BC2978E /* libRNRSA.a */ = {isa = PBXFileReference; name = "libRNRSA.a"; path = "libRNRSA.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		0F46FA4E2F1B448AA1108CA1 /* RNPhotoView.xcodeproj */ = {isa = PBXFileReference; name = "RNPhotoView.xcodeproj"; path = "../node_modules/react-native-photo-view/ios/RNPhotoView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		85323829DFC8409E8245477B /* libRNPhotoView.a */ = {isa = PBXFileReference; name = "libRNPhotoView.a"; path = "libRNPhotoView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		537857A1C3684FB287A404E3 /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; name = "RCTVideo.xcodeproj"; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
@@ -377,6 +380,7 @@
 				7D5FB52590FA48EAA8E8D06C /* libFastImage.a in Frameworks */,
 				B68F3320D9574622A8AAFDA6 /* libRNBlur.a in Frameworks */,
 				DC9EFC7BBB874CFE959D19AE /* libRNI18n.a in Frameworks */,
+				3B1092EFC79C4854BEB7FFC0 /* libRNRSA.a in Frameworks */,
 				AE529C3B754A426FA30111EA /* libRNPhotoView.a in Frameworks */,
 				A8AA6A9857A244E2B0F5483B /* libRCTVideo.a in Frameworks */,
 			);
@@ -564,6 +568,7 @@
 				AEFBE0F0A7E94899993559B8 /* FastImage.xcodeproj */,
 				85EB21A2212B4BE4B64903BB /* RNBlur.xcodeproj */,
 				254BE3790DDC44F9A9F09BF9 /* RNI18n.xcodeproj */,
+				55F2E63316D24FF3AB17F79A /* RNRSA.xcodeproj */,
 				0F46FA4E2F1B448AA1108CA1 /* RNPhotoView.xcodeproj */,
 				537857A1C3684FB287A404E3 /* RCTVideo.xcodeproj */,
 			);
@@ -1175,6 +1180,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fast-image\ios\FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
+					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 				);
@@ -1215,6 +1221,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fast-image\ios\FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
+					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 				);
@@ -1257,6 +1264,7 @@
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
+					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 				);
 				INFOPLIST_FILE = Minds/Info.plist;
@@ -1285,6 +1293,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fast-image\ios\FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
+					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 				);
@@ -1321,6 +1330,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fast-image\ios\FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
+					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 				);
@@ -1370,6 +1380,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-fast-image\ios\FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
+					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
 				);
