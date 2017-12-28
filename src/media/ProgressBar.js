@@ -1,11 +1,13 @@
 import _ from "lodash";
 import React, {Component, PropTypes} from "react";
 import {Animated, PanResponder, Slider, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import colors from '../styles/Colors';
+import { CommonStyle } from '../styles/Common';
 
 let radiusOfHolder = 5;
 let radiusOfActiveHolder = 7;
 
-export default class ProgressController extends Component {
+export default class ProgressBar extends Component {
 
   constructor(props, context, ...args) {
     super(props, context, ...args);
@@ -93,20 +95,20 @@ export default class ProgressController extends Component {
   render() {
     let {moving} = this.state;
     let {currentTime, duration, percent} = this.props;
-    return <View style={styles.view}>
-      <Text style={[styles.timeText, {marginRight: 10}]}>{this.formatSeconds(currentTime)}</Text>
-      <View style={styles.barView}
-          onLayout={this.onLayout.bind(this)} {...this.holderPanResponder.panHandlers}>
-        <View style={{flex: 1, flexDirection: "row", top: moving ? radiusOfActiveHolder : radiusOfHolder}}>
-          <TouchableOpacity style={[styles.line, {flex: percent, borderColor: "blue"}]}
-                            onPress={this.onLinePressed.bind(this)}/>
-          <TouchableOpacity style={[styles.line, {flex: 100 - percent, borderColor: "white"}]}
-                            onPress={this.onLinePressed.bind(this)}/>
-        </View>
-        <Animated.View style={this.getHolderStyle()}/>
-      </View>
-      <Text style={[styles.timeText, {marginLeft: 10}]}>{this.formatSeconds(duration)}</Text>
-    </View>
+    return  <View style={styles.view}>
+              <Text style={[styles.timeText, {marginRight: 10}]}>{this.formatSeconds(currentTime)}</Text>
+              <View style={styles.barView}
+                  onLayout={this.onLayout.bind(this)} {...this.holderPanResponder.panHandlers}>
+                <View style={[CommonStyle.flexContainer ,{flexDirection: "row", top: moving ? radiusOfActiveHolder : radiusOfHolder}]}>
+                  <TouchableOpacity style={[styles.line, {flex: percent, borderColor: colors.primary}]}
+                      onPress={this.onLinePressed.bind(this)}/>
+                  <TouchableOpacity style={[styles.line, {flex: 100 - percent, borderColor: colors.light}]}
+                    onPress={this.onLinePressed.bind(this)}/>
+                </View>
+                <Animated.View style={this.getHolderStyle()}/>
+              </View>
+              <Text style={[styles.timeText, {marginLeft: 10}]}>{this.formatSeconds(duration)}</Text>
+            </View>;
   }
 }
 
