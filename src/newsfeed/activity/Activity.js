@@ -119,10 +119,12 @@ export default class Activity extends Component {
     return null;
   }
 
+  /* URL is -> MINDS_URI + 'api/v1/media/' + this.props.entity.custom_data.guid + '/play'*/
   getVideo() {
     return (
       <View style={styles.imageContainer}>
-        <MindsVideo video={{'uri': MINDS_URI + 'api/v1/media/' + this.props.entity.custom_data.guid + '/play'}} volume={1} entity={this.props.entity}/>
+        
+        <MindsVideo video={{'uri': 'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/' + this.props.entity.custom_data.guid +  '/360.mp4'}} entity={this.props.entity}/>
       </View>
     );
   }
