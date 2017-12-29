@@ -4,7 +4,6 @@ import api from './../common/services/api.service';
  * Messenger Service
  */
 class MessengerService {
-  privateKey = null;
 
   /**
    * Get Crypto Keys from server
@@ -68,6 +67,20 @@ class MessengerService {
       limit: limit,
       offset: offset
     });
+  }
+
+  /**
+   * Send encrypted messages
+   * @param {string} guid
+   * @param {object} messages
+   */
+  send(guid, messages) {
+    let data = {};
+    for (var index in messages) {
+      data["message:" + index] = messages[index];
+    }
+
+    return api.post('api/v2/conversations/' + guid, data)
   }
 }
 

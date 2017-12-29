@@ -8,7 +8,8 @@ import {
   Image,
   TextInput,
   FlatList,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 
 import {
@@ -16,12 +17,11 @@ import {
   observer
 } from 'mobx-react/native'
 
-import Async from 'react-promise'
-
 import Icon from 'react-native-vector-icons/Ionicons';
-import { MINDS_URI } from '../config/Config';
 
+import { MINDS_URI } from '../config/Config';
 import crypto from './../common/services/crypto.service';
+import Message from './conversation/Message';
 
 // styles
 const styles = StyleSheet.create({
@@ -33,25 +33,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     backgroundColor: '#FFF',
   },
-  tbarbutton: {
-    padding: 8,
-  },
-  messageContainer: {
-    marginTop: 20,
-    flexDirection: 'row',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    flexGrow: 1,
-    width: '100%'
-    // alignSelf: 'baseline',
-  },
-  right: {
-    justifyContent: 'flex-end',
-  },
-  rightText: {
-    textAlign: 'right',
-  },
   messagePoster: {
     height: 50,
     flexDirection: 'row',
@@ -60,54 +41,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'baseline',
   },
+  tbarbutton: {
+    padding: 8,
+  },
   input: {
     flex: 1
   },
   sendicon: {
     width:25
   },
-  smallavatar: {
-    height: 28,
-    width: 28,
-    borderRadius: 14,
-  },
-  avatar: {
-    height: 36,
-    width: 36,
-    borderRadius: 18,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#EEE',
-  },
-  textContainer: {
-    flexGrow: 1,
-    width: 0,
-    flexDirection: "column",
-    justifyContent: "center"
-  },
-  message: {
-    paddingLeft:10,
-    paddingRight:10,
-    paddingTop: 5,
-    paddingBottom: 5,
-    borderRadius: 3,
-    backgroundColor: '#EEE',
-    marginLeft:10,
-    marginRight:10,
-    flexWrap: "wrap",
-    flexGrow: 1,
-  },
-  messagedate: {
-    fontSize:9,
-    marginLeft: 38,
-    marginRight: 38
-  }
 });
 
 /**
  * Messenger Conversation Screen
  */
 @inject('user')
-@inject('messengerList')
+@inject('messengerConversation')
 @observer
 export default class ConversationScreen extends Component {
 
@@ -121,18 +70,25 @@ export default class ConversationScreen extends Component {
 
   componentWillMount() {
     const conversation = this.props.navigation.state.params.conversation;
-    this.props.messengerList.loadMessages(conversation.guid);
+    // load conversation
+    this.props.messengerConversation.load(conversation.guid);
   }
 
+  /**
+   * Clear messages on unmount
+   */
   componentWillUnmount() {
-    this.props.messengerList.clearMessages();
+    // clear messages from store
+    this.props.messengerConversation.clear();
+    // clear public keys
+    crypto.setPublicKeys({});
   }
 
   /**
    * Render component
    */
   render() {
-    const messages = this.props.messengerList.messages;
+    const messages = this.props.messengerConversation.messages;
     const conversation = this.props.navigation.state.params.conversation;
     const avatarImg    = { uri: MINDS_URI + 'icon/' + this.props.user.me.guid + '/medium' };
 
@@ -140,6 +96,7 @@ export default class ConversationScreen extends Component {
       <View style={styles.container}>
         <FlatList
           data={messages}
+          ref={(c) => {this.list = c}}
           renderItem={this.renderMessage}
           keyExtractor={item => item.guid}
           style={styles.listView}
@@ -151,13 +108,29 @@ export default class ConversationScreen extends Component {
             editable={true}
             underlineColorAndroid='transparent'
             placeholder='Type your message...'
-            // onChangeText={(text) => this.setState({ text })}
+            onChangeText={(text) => this.setState({ text })}
             value={this.state.text}
           />
-          <Icon style={styles.sendicon} name="md-send" size={24}></Icon>
+          <TouchableOpacity onPress={this.send} style={styles.sendicon}><Icon name="md-send" size={24} /></TouchableOpacity>
         </View>
       </View>
     );
+  }
+
+  /**
+   * Send message
+   */
+  send = () => {
+    const guid = this.props.navigation.state.params.conversation.guid;
+    const msg  = this.state.text;
+    this.props.messengerConversation.send(guid, msg)
+      .catch(err=> {
+        console.log(err);
+      })
+    this.setState({text: ''})
+    setTimeout(() => {
+      this.list.scrollToEnd({ animated: false });
+    }, 100);
   }
 
   /**
@@ -165,43 +138,7 @@ export default class ConversationScreen extends Component {
    * @param {object} row
    */
   renderMessage = (row) => {
-    const avatarImg = { uri: MINDS_URI + 'icon/' + row.item.owner.guid + '/small' };
-
-    const decrypPromise = crypto.decrypt(row.item.message);
-
-    if (row.item.owner.guid == this.props.user.me.guid) {
-      return (
-        <View>
-          <View style={styles.messageContainer}>
-            <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
-            <View style={styles.textContainer}>
-              <Async
-                promise={decrypPromise}
-                then={(val) => <Text style={styles.message}>{val}</Text>}
-                pending={<Text style={styles.message}>decrypting...</Text>}
-                />
-            </View>
-          </View>
-          <Text style={styles.messagedate}>Dec 6, 2017, 11:47:46 AM</Text>
-        </View>
-      );
-    }
-
-    return (
-      <View>
-        <View style={[styles.messageContainer, styles.right]}>
-          <View style={styles.textContainer}>
-            <Async
-              promise={decrypPromise}
-              then={(val) => <Text style={styles.message}>{val}</Text>}
-              pending={<Text style={styles.message}>decrypting...</Text>}
-            />
-          </View>
-          <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
-        </View>
-        <Text style={[styles.messagedate, styles.rightText]}>Dec 6, 2017, 11:47:46 AM</Text>
-      </View>
-    );
+    return <Message message={row.item} right={row.item.owner.guid == this.props.user.me.guid}/>
   }
 }
 
