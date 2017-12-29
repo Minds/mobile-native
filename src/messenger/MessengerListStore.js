@@ -15,7 +15,6 @@ import crypto from './../common/services/crypto.service';
  * Messenger Conversation List Store
  */
 class MessengerListStore {
-  @observable.shallow messages = [];
   @observable.shallow conversations = [];
   @observable refreshing = false;
 
@@ -71,13 +70,6 @@ class MessengerListStore {
       });
   }
 
-  loadMessages(guid, offset='') {
-    return messengerService.getConversationFromRemote(15, guid, offset)
-      .then(conversation => {
-        this.messages = conversation.messages;
-      })
-  }
-
   /**
    * Get crypto keys and unlock
    * @param {string} password
@@ -107,18 +99,13 @@ class MessengerListStore {
   }
 
   @action
-  clearMessages() {
-    this.messages = [];
-  }
-
-  @action
   setUnlocking(val) {
     this.unlocking = val;
   }
 
   @action
   setPrivateKey(privateKey) {
-    crypto.setPrivate(privateKey);
+    crypto.setPrivateKey(privateKey);
     this.configured = true;
   }
 
