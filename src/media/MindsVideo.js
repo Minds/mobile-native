@@ -130,7 +130,7 @@ export default class MindsVideo extends Component {
   getFullscreenTopControls() {
     if(this.state.fullScreen) {
       return <View style={styles.controlTopWrapper}>
-              <View style={[CommonStyle.centered, CommonStyle.flexContainer]}>
+              <View style={[CommonStyle.centered, CommonStyle.flexContainer, {flex:7}]}>
                 <Text style={styles.controlTopTexts}>{this.props.entity.message}</Text>
               </View>
               <View style={[CommonStyle.centered, CommonStyle.flexContainer]}>
