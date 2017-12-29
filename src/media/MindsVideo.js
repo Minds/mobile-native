@@ -34,7 +34,15 @@ export default class MindsVideo extends Component {
   }
 
   onVideoLoad(e) {
-    this.setState({loaded: false, currentTime: e.currentTime, duration: e.duration});
+    let current = 0;
+    if (this.state.changedModeTime > 0) {
+      current = this.state.changedModeTime;
+    } else {
+      current = e.currentTime;
+    }
+
+    this.setState({loaded: false, currentTime: current, duration: e.duration});
+    this.player.seek(current)
   }
 
   onProgress(e) {
@@ -85,19 +93,11 @@ export default class MindsVideo extends Component {
   }
 
   closeVolume() {
-    this.setState({volumeVisible: false});
+    setTimeout(() => {this.setState({volumeVisible: false})}, 500);
   }
 
   toggleFullscreen() {
-    this.setState({fullScreen: !this.state.fullScreen});
-  }
-
-  getFullscreen() {
-    let {height, width} = Dimensions.get('window');
-    if(width > height){
-
-    }
-    return {width: width, height: height, zIndex:10000}
+    this.setState({fullScreen: !this.state.fullScreen, changedModeTime: this.state.currentTime});
   }
 
   getPlayIcon(size, hideOnPause = false, showLoading = false) {
@@ -127,14 +127,27 @@ export default class MindsVideo extends Component {
   onModalHide = () => {
   }
 
-  getVideo(video) {
-    if(!this.state.fullScreen) {
-      return video
+  getFullscreenTopControls() {
+    if(this.state.fullScreen) {
+      return <View style={styles.controlTopWrapper}>
+              <View style={[CommonStyle.centered, CommonStyle.flexContainer]}>
+                <Text style={styles.controlTopTexts}>{this.props.entity.message}</Text>
+              </View>
+              <View style={[CommonStyle.centered, CommonStyle.flexContainer]}>
+                <Icon onPress={this.hideModal.bind(this)} name="md-close" size={20} color={colors.light} />
+              </View>
+            </View>;
+    } else {
+      return null;
     }
   }
 
-  getFullscreenTopControls() {
-
+  showVideo(videoElement, isFullscreen){
+    if(this.state.fullScreen && isFullscreen) {
+      return videoElement;
+    } else if(!this.state.fullScreen && !isFullscreen) {
+      return videoElement;
+    }
   }
 
   render() {
@@ -155,7 +168,7 @@ export default class MindsVideo extends Component {
                             paused={paused}
                             volume={parseFloat(this.state.volume)}
                             resizeMode={ "contain"}
-                            style={[CommonStyle.positionAbsolute, this.state.fullScreen ? this.getFullscreen():{}]}/>
+                            style={[CommonStyle.positionAbsolute]}/>
                             {this.getPlayIcon(50, true, true)}
                             { this.state.volumeVisible ?
                               <Slider
@@ -195,7 +208,7 @@ export default class MindsVideo extends Component {
                           </View>
                         </View>
                       </View>;
-    return  <View style={{flex:1}}>{this.getVideo(videoElement)}
+    return  <View style={[CommonStyle.flexContainer]}>{this.showVideo(videoElement, false)}
               <Modal
                 visible={this.state.fullScreen}
                 animationType = {"slide"}
@@ -205,7 +218,7 @@ export default class MindsVideo extends Component {
                 onModalHide={this.onModalHide}
               >
                 {this.getFullscreenTopControls()}
-                {videoElement}
+                {this.showVideo(videoElement, true)}
               </Modal>
             </View>;
   }
@@ -215,7 +228,7 @@ let styles = StyleSheet.create({
   volumeSlider: {
     position: 'absolute',
     width:100,
-    bottom:65,
+    bottom:25,
     right:0,
     zIndex: 1600,
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -230,6 +243,16 @@ let styles = StyleSheet.create({
     width:'100%',
     zIndex:200,
     flexDirection: 'row'
+  },
+  controlTopWrapper: {
+    top:0, 
+    position:'absolute', 
+    width:'100%',
+    zIndex:200,
+    flexDirection: 'row'
+  },
+  controlTopTexts: {
+    color: 'white'
   },
   progressWrapper: {
     flex:9
