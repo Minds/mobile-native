@@ -86,8 +86,8 @@ export default class ProgressBar extends Component {
 
   formatSeconds(seconds = 0) {
     let {duration = 0} = this.props;
-    seconds = Math.min(Math.max(seconds, 0), duration);
-    var minutes = seconds / 60;
+    seconds = parseFloat(seconds, 0);
+    var minutes = Math.floor(seconds / 60);
     var remainingSeconds = seconds % 60;
     return _.padStart(minutes.toFixed(0), 2, 0) + ":" + _.padStart(remainingSeconds.toFixed(0), 2, 0);
   }
