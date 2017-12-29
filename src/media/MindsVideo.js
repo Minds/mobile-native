@@ -15,7 +15,7 @@ export default class MindsVideo extends Component {
 
   constructor(props, context, ...args) {
       super(props, context, ...args);
-    this.state = {paused: false, volume:1, volumeVisible:false, fullScreen:false};
+    this.state = {paused: false, volume:0, volumeVisible:false, fullScreen:false};
   }
 
   //Handle vertical sliding
@@ -170,7 +170,7 @@ let styles = StyleSheet.create({
     width:100,
     bottom:60,
     right:0,
-    borderRadius: 4,
+    borderRadius: 15,
     transform: [
       { rotateZ : '-90deg' },
     ],
