@@ -91,11 +91,12 @@ export default class ConversationScreen extends Component {
     const messages = this.props.messengerConversation.messages;
     const conversation = this.props.navigation.state.params.conversation;
     const avatarImg    = { uri: MINDS_URI + 'icon/' + this.props.user.me.guid + '/medium' };
-
+    console.log('render screen');
     return (
       <View style={styles.container}>
         <FlatList
-          data={messages}
+          inverted={true}
+          data={messages.slice()}
           ref={(c) => {this.list = c}}
           renderItem={this.renderMessage}
           keyExtractor={item => item.guid}
@@ -121,15 +122,16 @@ export default class ConversationScreen extends Component {
    * Send message
    */
   send = () => {
-    const guid = this.props.navigation.state.params.conversation.guid;
+    const conversationGuid = this.props.navigation.state.params.conversation.guid;
+    const myGuid = this.props.user.me.guid
     const msg  = this.state.text;
-    this.props.messengerConversation.send(guid, msg)
+    this.props.messengerConversation.send(conversationGuid, myGuid, msg)
       .catch(err=> {
         console.log(err);
       })
     this.setState({text: ''})
     setTimeout(() => {
-      this.list.scrollToEnd({ animated: false });
+      this.list.scrollToOffset({ offset: 0, animated: false });
     }, 100);
   }
 

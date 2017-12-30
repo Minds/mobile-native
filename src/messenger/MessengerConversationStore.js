@@ -1,6 +1,7 @@
 import {
   observable,
-  action
+  action,
+  inject
 } from 'mobx';
 
 import {
@@ -29,22 +30,23 @@ class MessengerConversationStore {
     return messengerService.getConversationFromRemote(15, guid, offset)
       .then(conversation => {
         crypto.setPublicKeys( conversation.publickeys );
-        this.messages = conversation.messages;
+        this.messages = conversation.messages.reverse();
       })
   }
 
   /**
    * Send a message
-   * @param {string} guid
+   * @param {string} guid conversation guid
+   * @param {string} myGuid user guid
    * @param {string} text
    */
   @action
-  send(guid, text) {
-    this.messages.push({
-      guid: guid,
+  send(guid, myGuid, text) {
+    this.messages.unshift({
+      guid: myGuid + this.messages.length,
       message: text,
       decrypted: true,
-      owner: { guid },
+      owner: { guid: myGuid },
       time_created: Date.now() / 1000
     });
 
