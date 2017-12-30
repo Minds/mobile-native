@@ -22,7 +22,6 @@ export default class Message extends PureComponent {
 
 
   render() {
-    console.log('render')
     const message = this.props.message;
 
     const avatarImg = { uri: MINDS_URI + 'icon/' + message.owner.guid + '/small' };
