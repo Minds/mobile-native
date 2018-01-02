@@ -47,6 +47,9 @@ export const CommonStyle = StyleSheet.create({
     justifyContent: 'center',
   },
   // color
+  colorWhite: {
+    color: 'white'
+  },
   colorLight: {
     color: colors.light
   },
@@ -170,5 +173,5 @@ export const CommonStyle = StyleSheet.create({
     bottom: 0,
     right: 0
   }
-  
+
 });

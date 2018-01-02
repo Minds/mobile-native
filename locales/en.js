@@ -6,6 +6,8 @@ export default {
     username: 'Username',
     password: 'Password',
     confirmpassword: 'Confirm Password',
+    requestNewPassword: 'To request a new password, enter your username',
+    requestNewPasswordSuccess: 'We have sent an unlock code to your registered email address.'
   },
   settings: {
     currentPassword: 'Current Password',
@@ -19,6 +21,7 @@ export default {
     deactivate: 'DEACTIVATE',
     deactivateChannel: 'Deactivate Channel',
   },
+  continue: 'CONTINUE',
   goback: 'GO BACK',
   language: 'Language',
   categories: 'Categories'

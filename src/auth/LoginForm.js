@@ -8,6 +8,7 @@ import {
 
 import {
   View,
+  Text,
   TextInput,
   StyleSheet,
   KeyboardAvoidingView,
@@ -59,25 +60,32 @@ export default class LoginForm extends Component {
           value={this.state.password}
         />
         <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
-            <Button
-              onPress={() => this.props.onRegister()}
-              title={i18n.t('auth.create')}
-              backgroundColor="rgba(0,0,0, 0.5)"
-              borderRadius={4}
-              containerViewStyle ={ComponentsStyle.loginButton}
-              textStyle={ComponentsStyle.loginButtonText}
-              />
-            <Button
-              onPress={() => this.onLoginPress()}
-              title={i18n.t('auth.login')}
-              backgroundColor="rgba(0,0,0, 0.5)"
-              borderRadius={4}
-              containerViewStyle ={ComponentsStyle.loginButton}
-              textStyle={ComponentsStyle.loginButtonText}
+          <Button
+            onPress={() => this.props.onRegister()}
+            title={i18n.t('auth.create')}
+            backgroundColor="rgba(0,0,0, 0.5)"
+            borderRadius={4}
+            containerViewStyle ={ComponentsStyle.loginButton}
+            textStyle={ComponentsStyle.loginButtonText}
             />
+          <Button
+            onPress={() => this.onLoginPress()}
+            title={i18n.t('auth.login')}
+            backgroundColor="rgba(0,0,0, 0.5)"
+            borderRadius={4}
+            containerViewStyle ={ComponentsStyle.loginButton}
+            textStyle={ComponentsStyle.loginButtonText}
+          />
+        </View>
+        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop3x]}>
+          <Text style={[CommonStyle.colorWhite, ComponentsStyle.link]} onPress={this.onForgotPress}>FORGOT PASSWORD</Text>
         </View>
       </KeyboardAvoidingView>
     );
+  }
+
+  onForgotPress = () => {
+    this.props.onForgot()
   }
 
   /**
