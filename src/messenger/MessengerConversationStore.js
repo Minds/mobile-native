@@ -30,8 +30,13 @@ class MessengerConversationStore {
     return messengerService.getConversationFromRemote(15, guid, offset)
       .then(conversation => {
         crypto.setPublicKeys( conversation.publickeys );
-        this.messages = conversation.messages.reverse();
+        this.setMessages(conversation.messages.reverse());
       })
+  }
+
+  @action
+  setMessages(msgs) {
+    this.messages = msgs;
   }
 
   /**

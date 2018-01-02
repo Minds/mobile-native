@@ -91,7 +91,6 @@ export default class ConversationScreen extends Component {
     const messages = this.props.messengerConversation.messages;
     const conversation = this.props.navigation.state.params.conversation;
     const avatarImg    = { uri: MINDS_URI + 'icon/' + this.props.user.me.guid + '/medium' };
-    console.log('render screen');
     return (
       <View style={styles.container}>
         <FlatList
@@ -99,8 +98,10 @@ export default class ConversationScreen extends Component {
           data={messages.slice()}
           ref={(c) => {this.list = c}}
           renderItem={this.renderMessage}
+          maxToRenderPerBatch={15}
           keyExtractor={item => item.guid}
           style={styles.listView}
+          windowSize={11}
         />
         <View style={styles.messagePoster}>
           <Image source={avatarImg} style={styles.avatar} />
