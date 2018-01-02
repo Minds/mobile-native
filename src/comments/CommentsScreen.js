@@ -145,6 +145,7 @@ export default class CommentsScreen extends Component {
             <View style={styles.commentPoster}>
               <TextInput
                 style={{flex: 5}}
+                autoFocus={true}
                 editable = {true}
                 underlineColorAndroid = 'transparent'
                 onChangeText={(text) => this.setState({text})}
