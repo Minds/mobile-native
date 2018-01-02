@@ -7,14 +7,17 @@ import api from './../common/services/api.service';
 class GroupsService {
 
   /**
-   * Load Categories
+   * Load groups
    */
   loadList(filter, offset) {
     const rcategories = [];
     return api.get('api/v1/groups/' + filter, { limit: 12, offset: offset })
       .then((data) => {
+        if (offset && data.groups) {
+          data.groups.shift();
+        }
         return {
-          groups: data.groups || [],
+          entities: data.groups || [],
           offset: data['load-next'] || '',
         };
       });
@@ -23,7 +26,6 @@ class GroupsService {
   loadEntity(guid) {
     return api.get('api/v1/groups/group/'+ guid)
       .then((response) => {
-        console.log(response, guid)
         return response.group;
       });
   }

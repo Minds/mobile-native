@@ -5,58 +5,81 @@ import React, {
 import {
   ScrollView,
   StyleSheet,
+  FlatList
 } from 'react-native';
 
 import {
-  NavigationActions
-} from 'react-navigation';
+  observer,
+  inject
+} from 'mobx-react/native'
 
-import { List, ListItem } from 'react-native-elements';
-import { FormLabel, FormInput, Button, Avatar } from 'react-native-elements';
-import groupsService from './GroupsService';
+import { ListItem } from 'react-native-elements';
+import { Avatar } from 'react-native-elements';
 
 import { MINDS_URI } from '../config/Config';
 
 /**
  * Groups list screen
  */
+@inject('groups')
+@observer
 export default class GroupsListScreen extends Component {
-  state = {
-    groups: []
+  componentWillMount() {
+    this.props.groups.loadList()
   }
 
-  componentWillMount() {
-    groupsService.loadList('featured', '')
-      .then(data => {
-        this.setState({
-          groups: data.groups
-        });
-      });
+  componentWillUnmount() {
+    this.props.groups.list.clearList();
   }
 
   navigateToGroupJoin(group) {
     this.props.navigation.navigate('GroupsJoin', { group: group})
   }
 
+  renderItem = (row) => {
+    const item = row.item;
+    return (
+      <ListItem
+        containerStyle={{ borderBottomWidth: 0 }}
+        title={item.name}
+        avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_URI + 'fs/v1/avatars/' + item.guid + '/small' }} />}
+        subtitle={'Members ' + item['members:count']}
+        hideChevron={true}
+        onPress={() => this.navigateToGroupJoin(item)}
+      />
+    )
+  }
+
+  /**
+   * Load data
+   */
+  loadMore = () => {
+    this.props.groups.loadList();
+  }
+
+
+  /**
+   * Refresh data
+   */
+  refresh = () => {
+    this.props.groups.refresh()
+  }
+
+
   render() {
     return (
-      <ScrollView style={styles.screen}>
-        <List containerStyle={styles.list}>
-          {
-            this.state.groups.map((l, i) => (
-              <ListItem
-                containerStyle={{ borderBottomWidth: 0}}
-                key={i}
-                title={l.name}
-                avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_URI + 'fs/v1/avatars/' + l.guid + '/small' }} />}
-                subtitle={'Members '+l['members:count']}
-                hideChevron={true}
-                onPress={() => this.navigateToGroupJoin(l)}
-              />
-            ))
-          }
-        </List>
-      </ScrollView>
+      <FlatList
+        data={this.props.groups.list.entities.slice()}
+        renderItem={this.renderItem}
+        keyExtractor={item => item.guid}
+        onRefresh={this.refresh}
+        refreshing={this.props.groups.list.refreshing}
+        onEndReached={this.loadMore}
+        onEndThreshold={0}
+        style={styles.list}
+        initialNumToRender={3}
+        removeClippedSubviews={true}
+      />
     );
   }
 }
