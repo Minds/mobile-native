@@ -9,7 +9,6 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import Async from 'react-promise';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { MINDS_URI } from '../../config/Config';
@@ -20,19 +19,34 @@ import crypto from '../../common/services/crypto.service';
  */
 export default class Message extends PureComponent {
 
+  componentWillMount() {
+    const message = this.props.message;
+    this.setState({decrypted: message.decrypted});
+    if (!message.decrypted) {
+
+      this.setState({
+        decrypted: false,
+        msg: 'decrypting...'
+      });
+
+      // we need to decrypt inside a settimeout to fix blank list until decryption ends
+      setTimeout(() => {
+        crypto.decrypt(message.message)
+        .then(msg => {
+            this.setState({ decrypted: true, msg });
+            message.decrypted = true;
+            message.message = msg;
+          });
+      }, 0);
+
+    } else {
+      this.setState({ decrypted: true, msg: message.message });
+    }
+  }
 
   render() {
     const message = this.props.message;
-
     const avatarImg = { uri: MINDS_URI + 'icon/' + message.owner.guid + '/small' };
-
-    let decrypPromise;
-
-    if (message.decrypted) {
-      decrypPromise = Promise.resolve(message.message);
-    } else {
-      decrypPromise = crypto.decrypt(message.message);
-    }
 
     if (this.props.right) {
       return (
@@ -40,11 +54,7 @@ export default class Message extends PureComponent {
           <View style={styles.messageContainer}>
             <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
             <View style={styles.textContainer}>
-              <Async
-                promise={decrypPromise}
-                then={(val) => <Text style={styles.message}>{val}</Text>}
-                pending={<Text style={styles.message}>decrypting...</Text>}
-              />
+              <Text style={styles.message}>{this.state.msg}</Text>
             </View>
           </View>
           <Text style={styles.messagedate}>Dec 6, 2017, 11:47:46 AM</Text>
@@ -56,11 +66,7 @@ export default class Message extends PureComponent {
       <View>
         <View style={[styles.messageContainer, styles.right]}>
           <View style={styles.textContainer}>
-            <Async
-              promise={decrypPromise}
-              then={(val) => <Text style={styles.message}>{val}</Text>}
-              pending={<Text style={styles.message}>decrypting...</Text>}
-            />
+            <Text style={styles.message}>{this.state.msg}</Text>
           </View>
           <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
         </View>
