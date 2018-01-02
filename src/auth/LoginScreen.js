@@ -6,7 +6,6 @@ import { NavigationActions } from 'react-navigation';
 import FastImage from 'react-native-fast-image';
 
 import {
-  Text,
   StyleSheet,
   ScrollView,
   View,
@@ -14,6 +13,7 @@ import {
 } from 'react-native';
 
 import LoginForm from './LoginForm';
+import ForgotPassword from './ForgotPassword';
 import session from '../common/services/session.service';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
@@ -22,6 +22,11 @@ import { ComponentsStyle } from '../styles/Components';
  * Login screen
  */
 export default class LoginScreen extends Component {
+
+  state = {
+    forgotPassword: false
+  }
+
   /**
    * Disable navigation bar
    */
@@ -34,6 +39,26 @@ export default class LoginScreen extends Component {
    */
   render() {
     const resizeMode = 'center';
+
+    let body;
+
+    if (this.state.forgotPassword) {
+      body = (
+        <ForgotPassword
+          onBack={this.onForgotBack}
+          onForgotSend={this.onForgotSend}
+        />
+      );
+    } else {
+      body = (
+        <LoginForm
+          onLogin={() => this.login()}
+          onRegister={() => this.onPressRegister()}
+          onForgot={this.onForgot}
+        />
+      );
+    }
+
     return (
       <View style={CommonStyle.flexContainer}>
         <FastImage
@@ -47,13 +72,18 @@ export default class LoginScreen extends Component {
             style={ComponentsStyle.logo}
             source={require('../assets/logos/medium-white.png')}
           />
-          <LoginForm
-            onLogin={() => this.login()}
-            onRegister={() => this.onPressRegister()}
-          />
+          {body}
         </View>
       </View>
     );
+  }
+
+  onForgotBack = () => {
+    this.setState({ forgotPassword: false });
+  }
+
+  onForgot = () => {
+    this.setState({forgotPassword: true});
   }
 
   /**

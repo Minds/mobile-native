@@ -27,3 +27,7 @@ export function me() {
     return data;
   });
 }
+
+export function forgot(username) {
+  return api.post('api/v1/forgotpassword/request', { username });
+}

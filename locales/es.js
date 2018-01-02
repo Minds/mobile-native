@@ -6,6 +6,8 @@ export default {
     username: 'Usuario',
     password: 'Clave',
     confirmpassword: 'Confirmar Clave',
+    requestNewPassword: 'Para solicitar una nueva clave ingresa tu usuario',
+    requestNewPasswordSuccess: 'Enviamos un código de desbloqueo a tu correo registrado.'
   },
   settings: {
     currentPassword: 'Clave Actual',
@@ -19,6 +21,7 @@ export default {
     deactivate: 'DESACTIVAR',
     deactivateChannel: 'Desactivar Canal',
   },
+  continue: 'CONTINUAR',
   goback: 'VOLVER',
   language: 'Lenguaje',
   categories: 'Categorias'
