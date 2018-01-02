@@ -39,6 +39,7 @@ import blogs from './src/blogs/BlogsStore';
 import wallet from './src/wallet/WalletStore';
 import walletHistory from './src/wallet/WalletHistoryStore';
 import wire from './src/wire/WireStore';
+import groups from './src/groups/GroupsStore';
 
 /**
  * Just for testing. We can call an endpoint here to report the exception
@@ -132,7 +133,8 @@ const stores = {
   wallet,
   wire,
   boost,
-  walletHistory
+  walletHistory,
+  groups
 }
 
 // clear states on logout
