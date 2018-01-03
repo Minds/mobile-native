@@ -124,6 +124,26 @@ export const CommonStyle = StyleSheet.create({
   paddingTop: {
     paddingTop: 5
   },
+  // padding Left
+  paddingLeft3x: {
+    paddingLeft: 15
+  },
+  paddingLeft2x: {
+    paddingLeft: 10
+  },
+  paddingLeft: {
+    paddingLeft: 5
+  },
+  // padding Right
+  paddingRight3x: {
+    paddingRight: 15
+  },
+  paddingRight2x: {
+    paddingRight: 10
+  },
+  paddingRight: {
+    paddingRight: 5
+  },
   // padding bottom
   paddingBottom3x: {
     paddingBottom: 15
