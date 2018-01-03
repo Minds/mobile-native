@@ -37,8 +37,6 @@ class BlogsStore {
       });
     }
     this.offset = response.offset || '';
-
-    console.log('loaded '+this.entities.slice().length);
   }
 
   @action

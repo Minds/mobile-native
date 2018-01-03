@@ -53,6 +53,9 @@ export const CommonStyle = StyleSheet.create({
   colorLight: {
     color: colors.light
   },
+  colorMedium: {
+    color: colors.medium
+  },
   colorSecondary: {
     color: colors.secondary
   },
