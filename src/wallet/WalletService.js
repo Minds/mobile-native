@@ -5,11 +5,8 @@ import api from './../common/services/api.service';
  */
 class WalletService {
 
-  getCount() {
-    return api.get('api/v1/wallet/count')
-      .then((response) => {
-        return response.count;
-      })
+  async getCount() {
+    return (await api.get('api/v1/wallet/count')).count;
   }
 
   getHistory(offset) {
@@ -20,6 +17,16 @@ class WalletService {
           offset: response['load-next'],
         };
       })
+  }
+
+  // Other currencies (money, usd)
+
+  async getMoneyBalance() {
+    return (await api.get(`api/v1/monetization/revenue/overview`)).balance;
+  }
+
+  async getTokensBalance() {
+    return (await api.get(`api/v1/blockchain/wallet/balance`)).wallet.balance;
   }
 }
 

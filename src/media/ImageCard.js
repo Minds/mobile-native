@@ -16,7 +16,7 @@ import React, {
   } from 'mobx-react/native'
   
   import Icon from 'react-native-vector-icons/Ionicons';
-  import { MINDS_URI } from '../config/Config';
+  import { MINDS_CDN_URI } from '../config/Config';
   import FastImage from 'react-native-fast-image';
   import formatDate from '../common/helpers/date';
   /**
@@ -31,7 +31,7 @@ import React, {
      */
     getAvatar() {
       const channel = this.props.entity.ownerObj;
-      return { uri: MINDS_URI + 'icon/' + channel.guid + '/small/' + channel.icontime };
+      return { uri: MINDS_CDN_URI + 'icon/' + channel.guid + '/small/' + channel.icontime };
     }
   
     /**
@@ -126,4 +126,3 @@ import React, {
       backgroundColor: '#FFF'
     }
   });
-  

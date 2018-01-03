@@ -3,15 +3,16 @@ import React, {
 } from 'react';
 
 import {
-  Image,
   Text,
   ScrollView,
   View,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+
+import WalletOverviewView from './WalletOverviewView';
 
 /**
  * Wallet screen
@@ -29,27 +30,36 @@ export default class WalletScreen extends Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.screen}>
-        <View style={styles.mainContainer}>
-          <Icon style={styles.icon} name="bank" size={100}/>
-          <Text style={styles.points}>58231</Text>
-          <Text style={styles.detail}>1 point = 1 view</Text>
-        </View>
-        <View style={styles.datailsContainer}>
-          <Text style={styles.title} onPress={ () => this.props.navigation.navigate('WalletHistory')}>History</Text>
-          <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('WalletHistory')}>View your points</Text>
-        </View>
-        <View style={styles.datailsContainer}>
-          <Text style={styles.title}>Purchase points</Text>
-          <Text style={styles.subtitle}>Support Minds and buy points</Text>
-        </View>
-        <View style={styles.datailsContainer} >
-          <Text style={styles.title} onPress={ () => this.props.navigation.navigate('BoostConsole')}>Boost Console</Text>
-          <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('BoostConsole')}>Accept or reject boosts made to you</Text>
-        </View>
-        <View style={styles.datailsContainer}>
-          <Text style={styles.title}>Plan Subscriptions</Text>
-          <Text style={styles.subtitle}>Check your currently active plan subscriptions</Text>
+      <ScrollView style={ styles.mainContainer }>
+        <WalletOverviewView />
+
+        <View>
+          <View style={styles.datailsContainer}>
+            <Text style={styles.title} onPress={ () => this.props.navigation.navigate('WalletHistory')}>History</Text>
+            <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('WalletHistory')}>View your points</Text>
+          </View>
+
+          <View style={styles.datailsContainer}>
+            <Text style={styles.title}>Purchase points</Text>
+            <Text style={styles.subtitle}>Support Minds and buy points</Text>
+          </View>
+
+          <View style={styles.datailsContainer} >
+            <Text style={styles.title} onPress={ () => this.props.navigation.navigate('BoostConsole')}>Boost Console</Text>
+            <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('BoostConsole')}>Accept or reject boosts made to you</Text>
+          </View>
+
+          <View style={styles.datailsContainer}>
+            <Text style={styles.title}>Plan Subscriptions</Text>
+            <Text style={styles.subtitle}>Check your currently active plan subscriptions</Text>
+          </View>
+
+          <TouchableOpacity onPress={ () => this.props.navigation.navigate('BlockchainSettings') }>
+            <View style={styles.datailsContainer}>
+              <Text style={styles.title}>Crypto Settings</Text>
+              <Text style={styles.subtitle}>Setup your Ethereum wallet and crypto related settings</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );
@@ -83,12 +93,6 @@ const styles = StyleSheet.create({
     padding: 20
   },
   mainContainer: {
-    //flex:1,
-    alignItems: 'center',
-  },
-  screen: {
-    // alignItems: 'center',
-    backgroundColor: '#FFF',
-    flex: 1,
+    backgroundColor: '#fff'
   }
 });

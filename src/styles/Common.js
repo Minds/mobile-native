@@ -152,7 +152,6 @@ export const CommonStyle = StyleSheet.create({
     fontSize: 18
   },
 
-
   //position
   positionAbsolute:{
     position: "absolute",
@@ -172,6 +171,46 @@ export const CommonStyle = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0
-  }
+  },
+  
+  // Generic screens
+  screen: {
+    padding: 20,
+  },
+  modalScreen: {
+    padding: 20,
+    paddingTop: 40
+  },
 
+  // Headings
+  viewTitleContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingBottom: 10,
+  },
+  viewTitle: {
+    fontSize: 18,
+    fontWeight: '300',
+    paddingBottom: 8, // 1.5 line height
+    paddingRight: 10, // just in case we have an activity indicator
+  },
+
+  // Fields
+  field: {
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  fieldLabel: {
+    fontSize: 14,
+    fontWeight: '300',
+    paddingBottom: 3, // ~1.25 line height
+  },
+  fieldTextInput: {
+    backgroundColor: '#fff',
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#e4e4e4',
+    borderRadius: 2
+  }
 });

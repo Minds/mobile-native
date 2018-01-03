@@ -1,3 +1,7 @@
+import './global';
+import './shim'
+import crypto from "crypto"; // DO NOT REMOVE!
+
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { Provider } from 'mobx-react/native'; // import from mobx-react/native instead of mobx-react fix test
@@ -23,6 +27,8 @@ import BlogsViewScreen from './src/blogs/BlogsViewScreen';
 import FabScreen from './src/wire/FabScreen';
 import ActivityScreen from './src/newsfeed/ActivityScreen';
 import ViewImageScreen from './src/media/ViewImageScreen';
+import BlockchainSettingsScreen from "./src/blockchain/BlockchainSettingsScreen";
+import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import boost from './src/boost/BoostStore';
@@ -40,6 +46,8 @@ import wallet from './src/wallet/WalletStore';
 import walletHistory from './src/wallet/WalletHistoryStore';
 import wire from './src/wire/WireStore';
 import groups from './src/groups/GroupsStore';
+import blockchain from './src/blockchain/BlockchainStore';
+import keychain from './src/keychain/KeychainStore';
 
 /**
  * Just for testing. We can call an endpoint here to report the exception
@@ -114,7 +122,10 @@ const Stack = StackNavigator({
   },
   ViewImage: {
     screen: ViewImageScreen
-  }
+  },
+  BlockchainSettings: {
+    screen: BlockchainSettingsScreen
+  },
 });
 
 // Stores
@@ -134,8 +145,10 @@ const stores = {
   wire,
   boost,
   walletHistory,
-  groups
-}
+  groups,
+  blockchain,
+  keychain,
+};
 
 // clear states on logout
 sessionService.onLogout(() => {
@@ -147,10 +160,16 @@ sessionService.onLogout(() => {
 
 export default class App extends Component {
   render() {
-    return (
-      <Provider {...stores}>
+    const app = (
+      <Provider key="app" {...stores}>
         <Stack />
       </Provider>
     );
+
+    const keychainModal = (
+      <KeychainModalScreen key="keychainModal" keychain={ keychain } />
+    );
+
+    return [ app, keychainModal ];
   }
 }

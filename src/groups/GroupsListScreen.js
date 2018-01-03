@@ -15,8 +15,7 @@ import {
 
 import { ListItem } from 'react-native-elements';
 import { Avatar } from 'react-native-elements';
-
-import { MINDS_URI } from '../config/Config';
+import { MINDS_CDN_URI } from '../config/Config';
 
 /**
  * Groups list screen
@@ -42,7 +41,7 @@ export default class GroupsListScreen extends Component {
       <ListItem
         containerStyle={{ borderBottomWidth: 0 }}
         title={item.name}
-        avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_URI + 'fs/v1/avatars/' + item.guid + '/small' }} />}
+        avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_CDN_URI + 'fs/v1/avatars/' + item.guid + '/small' }} />}
         subtitle={'Members ' + item['members:count']}
         hideChevron={true}
         onPress={() => this.navigateToGroupJoin(item)}

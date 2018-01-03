@@ -152,6 +152,10 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-udp')
+    compile project(':react-native-tcp')
+    compile project(':react-native-randombytes')
+    compile project(':react-native-os')
     compile project(':react-native-rsa-native')
     compile project(':react-native-i18n')
     compile project(':react-native-video')

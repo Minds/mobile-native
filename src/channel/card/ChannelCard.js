@@ -17,7 +17,7 @@ import {
 } from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import { MINDS_URI } from '../../config/Config';
+import { MINDS_CDN_URI } from '../../config/Config';
 import channelService from '../ChannelService';
 import abbrev from '../../common/helpers/abbrev';
 import FastImage from 'react-native-fast-image';
@@ -34,7 +34,7 @@ export default class ChannelCard extends Component {
    */
   getBannerFromChannel() {
     const channel = this.props.entity;
-    return MINDS_URI + 'fs/v1/banners/' + channel.guid + '/0/' + channel.banner + '/medium';
+    return MINDS_CDN_URI + 'fs/v1/banners/' + channel.guid + '/fat/' + channel.icontime;
   }
 
   /**
@@ -42,7 +42,7 @@ export default class ChannelCard extends Component {
    */
   getAvatar() {
     const channel = this.props.entity;
-    return MINDS_URI + 'icon/' + channel.guid + '/large/' + channel.icontime;
+    return MINDS_CDN_URI + 'icon/' + channel.guid + '/large/' + channel.icontime;
   }
 
   subscribe() {

@@ -1,21 +1,55 @@
 import session from './session.service';
-import { MINDS_URI } from '../../config/Config';
+import { MINDS_URI, MINDS_URI_SETTINGS } from '../../config/Config';
 
 class ApiService {
 
+  async buildHeaders() {
+    const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
+      accessToken = await session.getAccessToken(),
+      headers = new Headers();
+
+    if (basicAuth) {
+      headers.append('Authorization', `Basic ${btoa(basicAuth)}`);
+    } else if (accessToken) {
+      // Send via header if basic auth is not enabled
+      headers.append('Authorization', `Bearer ${accessToken.toString()}`);
+    }
+
+    return headers;
+  }
+
+  async buildParamsString(params) {
+    const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
+      accessToken = await session.getAccessToken();
+
+    if (accessToken && basicAuth) {
+      // Send via GET only if basic auth is enabled
+      params['access_token'] = accessToken.toString();
+    }
+
+    const paramsString = this.getParamsString(params);
+
+    if (paramsString) {
+      return `?${paramsString}`;
+    }
+
+    return '';
+  }
+
   getParamsString(params) {
-    return Object.keys(params).map((k) => {
+    return Object.keys(params).map(k => {
       return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
     }).join('&');
   }
 
+  // Legacy (please, refactor!)
+
   async get(url, params={}) {
-    const access_token = await session.getAccessToken();
-    params.access_token = access_token;
-    const paramsString = this.getParamsString(params);
+    const paramsString = await this.buildParamsString(params);
+    const headers = await this.buildHeaders();
 
     return new Promise((resolve, reject) => {
-      fetch(MINDS_URI + url + '?' + paramsString)
+      fetch(MINDS_URI + url + paramsString, { headers })
         // throw if response status is not 200
         .then(resp => {
           if (!resp.ok) {
@@ -43,15 +77,11 @@ class ApiService {
   }
 
   async post(url, body={}) {
-    const access_token = await session.getAccessToken();
+    const paramsString = await this.buildParamsString({});
+    const headers = await this.buildHeaders();
 
-    let headers = new Headers();
-    if(access_token){
-      headers.append("Authorization", 'Bearer ' + access_token.toString());
-    }
-    
     return new Promise((resolve, reject) => {
-      fetch(MINDS_URI + url, {method: 'POST', body: JSON.stringify(body), headers: headers})
+      fetch(MINDS_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers })
         .then(resp => {
           if (!resp.ok) {
             throw resp;
@@ -75,15 +105,11 @@ class ApiService {
   }
 
   async put(url, body={}) {
-    const access_token = await session.getAccessToken();
-
-    let headers = new Headers();
-    if(access_token){
-      headers.append("Authorization", 'Bearer ' + access_token.toString());
-    }
+    const paramsString = await this.buildParamsString({});
+    const headers = await this.buildHeaders();
     
     return new Promise((resolve, reject) => {
-      fetch(MINDS_URI + url, {method: 'PUT', body: JSON.stringify(body), headers: headers})
+      fetch(MINDS_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers })
         .then(resp => {
           if (!resp.ok) {
             throw resp;
@@ -107,15 +133,11 @@ class ApiService {
   }
 
   async delete(url, body={}) {
-    const access_token = await session.getAccessToken();
-
-    let headers = new Headers();
-    if(access_token){
-      headers.append("Authorization", 'Bearer ' + access_token.toString());
-    }
+    const paramsString = await this.buildParamsString({});
+    const headers = await this.buildHeaders();
     
     return new Promise((resolve, reject) => {
-      fetch(MINDS_URI + url, {method: 'DELETE', body: JSON.stringify(body), headers: headers})
+      fetch(MINDS_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers })
         .then(resp => {
           if (!resp.ok) {
             throw resp;

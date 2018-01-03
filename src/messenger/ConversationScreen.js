@@ -19,7 +19,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { MINDS_URI } from '../config/Config';
+import { MINDS_CDN_URI } from '../config/Config';
 import crypto from './../common/services/crypto.service';
 import Message from './conversation/Message';
 
@@ -90,7 +90,7 @@ export default class ConversationScreen extends Component {
   render() {
     const messages = this.props.messengerConversation.messages;
     const conversation = this.props.navigation.state.params.conversation;
-    const avatarImg    = { uri: MINDS_URI + 'icon/' + this.props.user.me.guid + '/medium' };
+    const avatarImg    = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium' };
     return (
       <View style={styles.container}>
         <FlatList

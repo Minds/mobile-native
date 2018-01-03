@@ -11,8 +11,7 @@ import { observer, inject } from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Avatar } from 'react-native-elements';
 
-import { MINDS_URI } from '../config/Config';
-import abbrev from '../common/helpers/abbrev';
+import { MINDS_CDN_URI } from '../config/Config';
 
 @inject('user')
 @inject('notifications')
@@ -20,8 +19,8 @@ import abbrev from '../common/helpers/abbrev';
 @observer
 export default class Topbar extends Component {
 
-  componentWillMount() {
-    this.props.wallet.loadCount();
+  componentDidMount() {
+    this.props.wallet.refresh();
   }
 
   render() {
@@ -39,7 +38,7 @@ export default class Topbar extends Component {
           <View style={styles.topbarCenter}>
             <Avatar
               rounded
-              source={{ uri: MINDS_URI + 'icon/' + this.props.user.me.guid }}
+              source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid }}
               width={38}
               height={38}
               onPress={() => this.props.navigation.navigate('Channel', { guid: this.props.user.me.guid })}
@@ -49,7 +48,7 @@ export default class Topbar extends Component {
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Wallet', { navigation: this.props.navigation })} >
             <View style={styles.topbarRight}>
               <Icon name="bank" size={18} color='#444' style={ styles.button }/>
-              <Text>{abbrev(this.props.wallet.points)}</Text>
+              <Text>{ this.props.wallet.pointsFormatted }</Text>
             </View>
           </TouchableOpacity>
 

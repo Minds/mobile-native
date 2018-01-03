@@ -58,6 +58,10 @@
 		3B1092EFC79C4854BEB7FFC0 /* libRNRSA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C1E64DC2CA049B29BC2978E /* libRNRSA.a */; };
 		AE529C3B754A426FA30111EA /* libRNPhotoView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85323829DFC8409E8245477B /* libRNPhotoView.a */; };
 		A8AA6A9857A244E2B0F5483B /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D16511C5824E44A6219D2D /* libRCTVideo.a */; };
+		C24986F76B3A428597B0079C /* libRNOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 931A515A5CF04E3DA21702AA /* libRNOS.a */; };
+		2152C4AF5E404BF1BF237205 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61964F7762744EA397023B14 /* libRNRandomBytes.a */; };
+		40322D1771104D4B82B65394 /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DE2115255F34DD294400C3B /* libTcpSockets.a */; };
+		161AFF8288654D2AB6BCE95D /* libUdpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 080D8DB7329B46C2B27E2992 /* libUdpSockets.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -345,6 +349,14 @@
 		85323829DFC8409E8245477B /* libRNPhotoView.a */ = {isa = PBXFileReference; name = "libRNPhotoView.a"; path = "libRNPhotoView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		537857A1C3684FB287A404E3 /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; name = "RCTVideo.xcodeproj"; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		52D16511C5824E44A6219D2D /* libRCTVideo.a */ = {isa = PBXFileReference; name = "libRCTVideo.a"; path = "libRCTVideo.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		20D87165B2AA40DD833BAAC8 /* RNOS.xcodeproj */ = {isa = PBXFileReference; name = "RNOS.xcodeproj"; path = "../node_modules/react-native-os/ios/RNOS.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		931A515A5CF04E3DA21702AA /* libRNOS.a */ = {isa = PBXFileReference; name = "libRNOS.a"; path = "libRNOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		EC2AC798D78D46389F433DF4 /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; name = "RNRandomBytes.xcodeproj"; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		61964F7762744EA397023B14 /* libRNRandomBytes.a */ = {isa = PBXFileReference; name = "libRNRandomBytes.a"; path = "libRNRandomBytes.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		3CC023A1131C460F8DDE2D73 /* TcpSockets.xcodeproj */ = {isa = PBXFileReference; name = "TcpSockets.xcodeproj"; path = "../node_modules/react-native-tcp/ios/TcpSockets.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		1DE2115255F34DD294400C3B /* libTcpSockets.a */ = {isa = PBXFileReference; name = "libTcpSockets.a"; path = "libTcpSockets.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		79BAA91D55794A6B8FA11D78 /* UdpSockets.xcodeproj */ = {isa = PBXFileReference; name = "UdpSockets.xcodeproj"; path = "../node_modules/react-native-udp/ios/UdpSockets.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		080D8DB7329B46C2B27E2992 /* libUdpSockets.a */ = {isa = PBXFileReference; name = "libUdpSockets.a"; path = "libUdpSockets.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +395,10 @@
 				3B1092EFC79C4854BEB7FFC0 /* libRNRSA.a in Frameworks */,
 				AE529C3B754A426FA30111EA /* libRNPhotoView.a in Frameworks */,
 				A8AA6A9857A244E2B0F5483B /* libRCTVideo.a in Frameworks */,
+				C24986F76B3A428597B0079C /* libRNOS.a in Frameworks */,
+				2152C4AF5E404BF1BF237205 /* libRNRandomBytes.a in Frameworks */,
+				40322D1771104D4B82B65394 /* libTcpSockets.a in Frameworks */,
+				161AFF8288654D2AB6BCE95D /* libUdpSockets.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -571,6 +587,10 @@
 				55F2E63316D24FF3AB17F79A /* RNRSA.xcodeproj */,
 				0F46FA4E2F1B448AA1108CA1 /* RNPhotoView.xcodeproj */,
 				537857A1C3684FB287A404E3 /* RCTVideo.xcodeproj */,
+				20D87165B2AA40DD833BAAC8 /* RNOS.xcodeproj */,
+				EC2AC798D78D46389F433DF4 /* RNRandomBytes.xcodeproj */,
+				3CC023A1131C460F8DDE2D73 /* TcpSockets.xcodeproj */,
+				79BAA91D55794A6B8FA11D78 /* UdpSockets.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1183,12 +1203,20 @@
 					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
+					"$(SRCROOT)/../node_modules/react-native-os/ios",
+					"$(SRCROOT)/../node_modules/react-native-randombytes",
+					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 				);
 				INFOPLIST_FILE = MindsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1224,12 +1252,20 @@
 					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
+					"$(SRCROOT)/../node_modules/react-native-os/ios",
+					"$(SRCROOT)/../node_modules/react-native-randombytes",
+					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 				);
 				INFOPLIST_FILE = MindsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1266,6 +1302,10 @@
 					"$(SRCROOT)\..\node_modules\react-native-i18n\ios",
 					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
+					"$(SRCROOT)/../node_modules/react-native-os/ios",
+					"$(SRCROOT)/../node_modules/react-native-randombytes",
+					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 				);
 				INFOPLIST_FILE = Minds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1296,6 +1336,10 @@
 					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
+					"$(SRCROOT)/../node_modules/react-native-os/ios",
+					"$(SRCROOT)/../node_modules/react-native-randombytes",
+					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 				);
 				INFOPLIST_FILE = Minds/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1333,11 +1377,19 @@
 					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
+					"$(SRCROOT)/../node_modules/react-native-os/ios",
+					"$(SRCROOT)/../node_modules/react-native-randombytes",
+					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 				);
 				INFOPLIST_FILE = "Minds-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1383,11 +1435,19 @@
 					"$(SRCROOT)\..\node_modules\react-native-rsa-native\ios",
 					"$(SRCROOT)/../node_modules/react-native-photo-view/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-video/ios",
+					"$(SRCROOT)/../node_modules/react-native-os/ios",
+					"$(SRCROOT)/../node_modules/react-native-randombytes",
+					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
 				);
 				INFOPLIST_FILE = "Minds-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1432,6 +1492,10 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Minds-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1456,6 +1520,10 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

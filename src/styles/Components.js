@@ -17,7 +17,7 @@ export const ComponentsStyle = StyleSheet.create({
     fontSize: 16,
     letterSpacing: 2,
     padding: 15,
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
     backgroundColor: 'rgba(255,255,255, 0.2)',
     height: 50,
     borderRadius: 4,
@@ -28,7 +28,7 @@ export const ComponentsStyle = StyleSheet.create({
     marginLeft: 10,
   },
   loginButtonText: {
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
     fontWeight: 'bold'
   },
   registerCheckboxText: {
@@ -79,7 +79,6 @@ export const ComponentsStyle = StyleSheet.create({
     fontWeight: 'bold',
   },
   terms: {
-    fontFamily: 'Roboto',
     color: 'white'
   },
 });

@@ -11,7 +11,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { MINDS_URI } from '../../config/Config';
+import { MINDS_CDN_URI } from '../../config/Config';
 import crypto from '../../common/services/crypto.service';
 
 /**
@@ -46,7 +46,7 @@ export default class Message extends PureComponent {
 
   render() {
     const message = this.props.message;
-    const avatarImg = { uri: MINDS_URI + 'icon/' + message.owner.guid + '/small' };
+    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + message.owner.guid + '/small' };
 
     if (this.props.right) {
       return (

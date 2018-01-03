@@ -14,7 +14,7 @@ import {
 } from 'mobx-react/native'
 
 import {
-  MINDS_URI
+  MINDS_CDN_URI
 } from '../config/Config';
 
 import abbrev from '../common/helpers/abbrev'
@@ -32,7 +32,7 @@ export default class DiscoveryUser extends PureComponent {
 
   render() {
     const item = this.props.entity.item;
-    const avatarImg = { uri: MINDS_URI + 'icon/' + item.guid + '/medium' };
+    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + item.guid + '/medium' };
     return (
       <TouchableOpacity style={styles.row} onPress={this._navToConversation}>
         <Image source={avatarImg} style={styles.avatar} />

@@ -3,6 +3,10 @@ package com.minds;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.tradle.react.UdpSocketsModule;
+import com.peel.react.TcpSocketsModule;
+import com.bitgo.randombytes.RandomBytesPackage;
+import com.peel.react.rnos.RNOSModule;
 import com.RNRSA.RNRSAPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.cmcewen.blurview.BlurViewPackage;
@@ -33,6 +37,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new UdpSocketsModule(),
+            new TcpSocketsModule(),
+            new RandomBytesPackage(),
+            new RNOSModule(),
             new RNRSAPackage(),
             new ReactVideoPackage(),
             new BlurViewPackage(),

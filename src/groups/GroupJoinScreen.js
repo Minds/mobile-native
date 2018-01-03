@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import { MINDS_URI } from '../config/Config';
+import { MINDS_CDN_URI } from '../config/Config';
 import groupsService from './GroupsService';
 import CenteredLoading from '../common/components/CenteredLoading';
 /**
@@ -43,8 +43,8 @@ export default class GroupJoinScreen extends Component {
       return <CenteredLoading />
     }
 
-    const avatar = { uri: MINDS_URI + 'fs/v1/avatars/' + group.guid + '/large' };
-    const iurl = { uri: MINDS_URI + 'fs/v1/banners/' + group.guid + '/fat/' + group.icontime };
+    const avatar = { uri: MINDS_CDN_URI + 'fs/v1/avatars/' + group.guid + '/large' };
+    const iurl = { uri: MINDS_CDN_URI + 'fs/v1/banners/' + group.guid + '/fat/' + group.icontime };
 
     return (
       <ScrollView contentContainerStyle={styles.screen}>

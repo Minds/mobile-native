@@ -14,7 +14,7 @@ import {
 
 import FastImage from 'react-native-fast-image';
 
-import { MINDS_URI } from '../../config/Config';
+import { MINDS_CDN_URI } from '../../config/Config';
 import formatDate from '../../common/helpers/date'
 
 /**
@@ -42,7 +42,7 @@ export default class ListItem extends PureComponent {
               width={35}
               height={35}
               rounded
-              source={{ uri: MINDS_URI + 'icon/' + blog.ownerObj.guid + '/medium' }}
+              source={{ uri: MINDS_CDN_URI + 'icon/' + blog.ownerObj.guid + '/medium' }}
             />
             <Text style={styles.text}>{blog.ownerObj.name}</Text>
           </View>

@@ -9,7 +9,7 @@ import {
   View
 } from 'react-native';
 
-import { MINDS_URI } from '../../config/Config';
+import { MINDS_CDN_URI } from '../../config/Config';
 
 import BoostAcceptedView from './view/BoostAcceptedView';
 import BoostCompletedView from './view/BoostCompletedView';
@@ -43,7 +43,7 @@ import WelcomePointsView from './view/WelcomePointsView';
 export default class Notification extends Component {
 
   state = {
-    avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.owner_guid }
+    avatarSrc: { uri: MINDS_CDN_URI + 'icon/' + this.props.entity.owner_guid }
   };
 
   // Notifications are stateless, therefore they don't need to be rendered more than once

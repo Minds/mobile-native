@@ -17,14 +17,14 @@ import {
 import ActivityActions from './ActivityActions';
 
 import {
-  MINDS_URI
+  MINDS_CDN_URI
 } from '../../config/Config';
 
 
 export default class OwnerBlock extends PureComponent {
 
   state = {
-    avatarSrc: { uri: MINDS_URI + 'icon/' + this.props.entity.ownerObj.guid + '/medium' }
+    avatarSrc: { uri: MINDS_CDN_URI + 'icon/' + this.props.entity.ownerObj.guid + '/medium' }
   };
 
   /**

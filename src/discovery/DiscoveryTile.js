@@ -9,7 +9,7 @@ import {
 import FastImage from 'react-native-fast-image';
 
 import {
-  MINDS_URI
+  MINDS_CDN_URI
 } from '../config/Config';
 
 import {
@@ -29,7 +29,7 @@ export default class DiscoveryTile extends PureComponent {
   }
 
   render() {
-    const url = { uri: MINDS_URI + 'api/v1/archive/thumbnails/' + this.props.entity.item.guid + '/medium' };
+    const url = { uri: MINDS_CDN_URI + 'api/v1/archive/thumbnails/' + this.props.entity.item.guid + '/medium' };
 
     const style = { width: this.props.size, height: this.props.size};
 
