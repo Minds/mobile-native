@@ -14,13 +14,13 @@ import {
   View
 } from 'react-native';
 
-import ActivityActions from './ActivityActions';
-
 import {
   MINDS_URI
 } from '../../config/Config';
 
-
+/**
+ * Owner Block Component
+ */
 export default class OwnerBlock extends PureComponent {
 
   state = {
@@ -31,14 +31,19 @@ export default class OwnerBlock extends PureComponent {
    * Navigate To channel
    */
   _navToChannel = () => {
-    // only active if NewsfeedList receive the navigation property
+    // only active if receive the navigation property
     if (this.props.navigation) {
       this.props.navigation.navigate('Channel', { guid:this.props.entity.ownerObj.guid});
     }
   }
 
+  /**
+   * Render
+   */
   render() {
     const entity = this.props.entity.ownerObj;
+    const rightToolbar = this.props.rightToolbar||null;
+
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this._navToChannel}>
@@ -52,14 +57,10 @@ export default class OwnerBlock extends PureComponent {
           </TouchableOpacity>
           {this.props.children}
         </View>
-        <View style={styles.settings}>
-          <ActivityActions newsfeed={this.props.newsfeed} entity={this.props.entity}/>
-        </View>
+        {rightToolbar}
       </View>
     );
   }
-
-
 }
 
 const styles = StyleSheet.create({
@@ -78,12 +79,6 @@ const styles = StyleSheet.create({
   },
   body: {
     marginLeft: 8,
-  },
-  settings: {
-    alignSelf: 'flex-end',
-    position: 'absolute',
-    right: 10,
-    top: 20
   },
   username: {
     fontWeight: 'bold',
