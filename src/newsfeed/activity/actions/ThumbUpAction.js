@@ -57,9 +57,9 @@ export default class ThumbUpAction extends PureComponent {
    */
   render() {
     return (
-      <View style={CommonStyle.flexContainer}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
         <Icon onPress={this.toggleThumb} color={this.state.voted ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={this.iconName} size={20} />
-        <Text style={styles.actionIconText}>{this.state.votedCount > 0 ? this.state.votedCount : ''}</Text>
+        <Text style={CommonStyle.paddingLeft}>{this.state.votedCount > 0 ? this.state.votedCount : ''}</Text>
       </View>
     );
   }
@@ -83,25 +83,3 @@ export default class ThumbUpAction extends PureComponent {
     })
   }
 }
-
-const styles = StyleSheet.create({
-  actionIconText: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    left: 52,
-    alignContent: 'center',
-    justifyContent: 'center'
-  },
-  modal: {
-    flex: 1,
-    paddingTop: 4,
-  },
-  modalContainer: {
-    alignItems: 'center',
-    backgroundColor: '#ede3f2',
-  },
-  modalHeader: {
-    padding: 5
-  }
-});

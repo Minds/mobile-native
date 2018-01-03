@@ -28,9 +28,9 @@ export default class RemindAction extends PureComponent {
    */
   render() {
     return (
-      <View onPress={this.remind} style={CommonStyle.flexContainer}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
         <Icon onPress={this.remind} color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20} />
-        <Text onPress={this.remind} style={styles.actionIconText}>{this.props.entity['reminds'] > 0 ? this.props.entity['reminds'] : ''}</Text>
+        <Text onPress={this.remind} style={CommonStyle.paddingLeft}>{this.props.entity['reminds'] > 0 ? this.props.entity['reminds'] : ''}</Text>
         <View style={styles.modalContainer}>
           <Modal animationType={"slide"} transparent={false}
             visible={this.state.remindModalVisible}
@@ -63,14 +63,6 @@ export default class RemindAction extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  actionIconText: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    left: 52,
-    alignContent: 'center',
-    justifyContent: 'center'
-  },
   modal: {
     flex: 1,
     paddingTop: 4,
