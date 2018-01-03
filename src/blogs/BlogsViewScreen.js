@@ -18,11 +18,14 @@ import AutoHeightWebView from '../common/components/AutoHeightWebView';
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import formatDate from '../common/helpers/date';
 import { CommonStyle } from '../styles/Common';
+import colors from '../styles/Colors';
 
 import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 import RemindAction from '../newsfeed/activity/actions/RemindAction';
 import CommentsAction from '../newsfeed/activity/actions/CommentsAction';
+import shareService from '../share/ShareService';
+
 /**
  * Blog View Screen
  */
@@ -36,14 +39,17 @@ export default class BlogsViewScreen extends Component {
     header: null
   }
 
+  share = () => {
+    const blog = this.props.navigation.state.params.blog;
+    shareService.share(blog.title, blog.perma_url);
+  }
+
   /**
    * Render
    */
   render() {
     const blog = this.props.navigation.state.params.blog;
     const image = { uri: blog.thumbnail_src };
-
-    console.log(blog)
 
     const actions = (
       <View style={[CommonStyle.flexContainer, CommonStyle.paddingLeft2x]}>
@@ -63,6 +69,11 @@ export default class BlogsViewScreen extends Component {
         <OwnerBlock entity={blog} navigation={this.props.navigation} rightToolbar={actions}>
           <Text style={styles.timestamp}>{formatDate(blog.time_created)}</Text>
         </OwnerBlock>
+        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.alignCenter, CommonStyle.paddingRight2x]}>
+          <Icon color={colors.medium} size={18} name='public' onPress={() => this.props.navigation.goBack()} />
+          <Text style={[CommonStyle.fontXS, CommonStyle.paddingLeft, CommonStyle.colorMedium, CommonStyle.paddingRight2x]}>{blog.license}</Text>
+          <Icon color={colors.primary} size={20} name='share' onPress={this.share} />
+        </View>
         <View style={styles.description}>
           <AutoHeightWebView html={blog.description}/>
         </View>
