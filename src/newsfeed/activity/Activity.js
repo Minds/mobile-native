@@ -32,6 +32,7 @@ import Actions from './Actions';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../../common/helpers/date';
 import domain from '../../common/helpers/domain';
+import ActivityActions from './ActivityActions';
 
 /**
  * Activity
@@ -123,7 +124,7 @@ export default class Activity extends Component {
   getVideo() {
     return (
       <View style={styles.imageContainer}>
-        
+
         <MindsVideo video={{'uri': 'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/' + this.props.entity.custom_data.guid +  '/360.mp4'}} entity={this.props.entity}/>
       </View>
     );
@@ -147,8 +148,13 @@ export default class Activity extends Component {
    */
   showOwner() {
     if (!this.props.entity.remind_object) {
+      const rightToolbar = (
+         <View style={styles.rightToolbar}>
+            <ActivityActions newsfeed={this.props.newsfeed} entity={this.props.entity}/>
+          </View>
+      )
       return (
-        <OwnerBlock entity={this.props.entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation}>
+        <OwnerBlock entity={this.props.entity} navigation={this.props.navigation} rightToolbar={rightToolbar}>
           <TouchableOpacity onPress={this.navToActivity}>
             <Text style={styles.timestamp}>{formatDate(this.props.entity.time_created)}</Text>
           </TouchableOpacity>
@@ -211,5 +217,11 @@ const styles = StyleSheet.create({
   },
   remind: {
     flex:1,
-  }
+  },
+  rightToolbar: {
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    right: 10,
+    top: 20
+  },
 });

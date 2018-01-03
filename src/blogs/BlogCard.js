@@ -19,15 +19,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { MINDS_CDN_URI } from '../config/Config';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../common/helpers/date';
-/**
- * Channel Card
- */
 
+/**
+ * Blog Card
+ */
 @observer
 export default class BlogCard extends Component {
 
   /**
-   * Get Channel Avatar
+   * Get Blog Avatar
    */
   getAvatar() {
     const channel = this.props.entity.ownerObj;
@@ -80,10 +80,10 @@ const styles = StyleSheet.create({
     flex:1,
   },
   ownerContainer: {
-    flex:1, 
+    flex:1,
     flexDirection: 'row',
-    alignSelf: 'flex-start', 
-    padding:3 , 
+    alignSelf: 'flex-start',
+    padding:3 ,
     alignItems: 'center',
     justifyContent: 'center'
   },
