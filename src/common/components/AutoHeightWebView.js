@@ -19,6 +19,9 @@ const style = `
   body, html, #height-calculator {
     margin: 0;
     padding: 0;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    line-height: 22px;
   }
 </style>
 `;
@@ -38,18 +41,30 @@ export default class AutoHeightWebView extends Component {
       const htmlHeight = Number(event.title) //convert to number
       this.setState({ height: htmlHeight });
     }
-
   }
+
+  renderHTML() {
+    return `
+    <!DOCTYPE html>
+    <title>${this.props.title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <html>${style}
+    <body class="${this.props.bodyClass}">
+    ${this.props.html}
+    ${script}
+    </body>
+    </html>`;
+  }
+
+
   render() {
     return (
       <WebView scrollEnabled={false}
-        source={{ html: this.props.html + style + script }}
+        source={{ html: this.renderHTML() }}
         style={{ height: this.state.height }}
         javaScriptEnabled={true}
         onNavigationStateChange={this.onNavigationChange.bind(this)}>
       </WebView>
-
     )
   }
-
 }
