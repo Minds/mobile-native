@@ -7,13 +7,8 @@ import {
 } from 'react-navigation';
 
 import {
-  Button,
   Text,
-  TextInput,
   StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-  ActivityIndicator,
   TouchableOpacity,
   Image,
   View
