@@ -1,5 +1,6 @@
 import session from './session.service';
 import { MINDS_URI, MINDS_URI_SETTINGS } from '../../config/Config';
+import { btoa } from 'abab';
 
 class ApiService {
 
@@ -107,7 +108,7 @@ class ApiService {
   async put(url, body={}) {
     const paramsString = await this.buildParamsString({});
     const headers = await this.buildHeaders();
-    
+
     return new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers })
         .then(resp => {
@@ -135,7 +136,7 @@ class ApiService {
   async delete(url, body={}) {
     const paramsString = await this.buildParamsString({});
     const headers = await this.buildHeaders();
-    
+
     return new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers })
         .then(resp => {
