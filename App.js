@@ -48,6 +48,7 @@ import wire from './src/wire/WireStore';
 import groups from './src/groups/GroupsStore';
 import blockchain from './src/blockchain/BlockchainStore';
 import keychain from './src/keychain/KeychainStore';
+import tabs from './src/tabs/TabsStore';
 
 /**
  * Just for testing. We can call an endpoint here to report the exception
@@ -148,6 +149,7 @@ const stores = {
   groups,
   blockchain,
   keychain,
+  tabs
 };
 
 // clear states on logout
