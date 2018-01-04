@@ -17,7 +17,7 @@ import BoostsCarousel from './boosts/BoostsCarousel';
 /**
  * News Feed Screen
  */
-@inject('newsfeed')
+@inject('newsfeed', 'tabs')
 @observer
 export default class NewsfeedScreen extends Component {
 
@@ -33,8 +33,22 @@ export default class NewsfeedScreen extends Component {
   componentWillMount() {
     this.props.newsfeed.loadFeed();
     this.props.newsfeed.loadBoosts();
+
+    // on tap news feed again refresh
+    this.dispose = this.props.tabs.onState((state) => {
+      if (!state.previousScene) return;
+      if (state.previousScene.key == "Newsfeed" && state.previousScene.key == state.scene.route.key) {
+        this.props.newsfeed.refresh();
+      }
+    });
   }
 
+  /**
+   * Dispose autorun of tabstate
+   */
+  componentWillUnmount() {
+    this.dispose();
+  }
 
   render() {
     const newsfeed = this.props.newsfeed;
