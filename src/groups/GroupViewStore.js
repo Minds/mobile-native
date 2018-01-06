@@ -7,11 +7,16 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 /**
  * Groups store
  */
-class GroupsStore {
+class GroupViewStore {
   /**
    * List store
    */
-  @observable list = new OffsetFeedListStore('shallow');
+  @observable list = new OffsetFeedListStore();
+
+  /**
+   * Group
+   */
+  @observable group = null;
 
   /**
    * List loading
@@ -21,14 +26,14 @@ class GroupsStore {
   /**
    * Load list
    */
-  loadList() {
+  loadList(guid) {
 
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
     this.loading = true;
 
-    return groupsService.loadList('featured', this.list.offset)
+    return groupsService.loadFeed(guid, this.list.offset)
       .then(data => {
         this.list.setList(data);
         this.loaded = true;
@@ -41,6 +46,18 @@ class GroupsStore {
       });
   }
 
+  loadGroup(guid) {
+    groupsService.loadEntity(this.props.navigation.state.params.guid)
+      .then(group => {
+        this.setGroup(group);
+      });
+  }
+
+  @action
+  setGroup(group) {
+    this.group = group;
+  }
+
   @action
   refresh() {
     this.list.refresh();
@@ -51,4 +68,4 @@ class GroupsStore {
   }
 }
 
-export default new GroupsStore();
+export default new GroupViewStore();

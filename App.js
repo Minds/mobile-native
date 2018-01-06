@@ -4,6 +4,7 @@ import crypto from "crypto"; // DO NOT REMOVE!
 
 import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
+import { Alert } from 'react-native';
 import { Provider } from 'mobx-react/native'; // import from mobx-react/native instead of mobx-react fix test
 
 import LoadingScreen from './src/LoadingScreen';
@@ -18,7 +19,7 @@ import DiscoveryViewScreen from './src/discovery/DiscoveryViewScreen';
 import ConversationScreen from './src/messenger/ConversationScreen';
 import SettingsScreen from './src/settings/SettingsScreen';
 import GroupsListScreen from './src/groups/GroupsListScreen';
-import GroupJoinScreen from './src/groups/GroupJoinScreen';
+import GroupViewScreen from './src/groups/GroupViewScreen';
 import WalletScreen from './src/wallet/WalletScreen';
 import WalletHistoryScreen from './src/wallet/WalletHistoryScreen';
 import BoostConsoleScreen from './src/boost/BoostConsoleScreen';
@@ -46,6 +47,7 @@ import wallet from './src/wallet/WalletStore';
 import walletHistory from './src/wallet/WalletHistoryStore';
 import wire from './src/wire/WireStore';
 import groups from './src/groups/GroupsStore';
+import groupView from './src/groups/GroupViewStore';
 import blockchain from './src/blockchain/BlockchainStore';
 import keychain from './src/keychain/KeychainStore';
 import tabs from './src/tabs/TabsStore';
@@ -54,8 +56,29 @@ import tabs from './src/tabs/TabsStore';
  * Just for testing. We can call an endpoint here to report the exception
  * js UI functionality is not available on native exceptions!
  */
-import { setNativeExceptionHandler } from 'react-native-exception-handler';
+import { setNativeExceptionHandler, setJSExceptionHandler } from 'react-native-exception-handler';
 import sessionService from './src/common/services/session.service';
+
+// Error Handlers
+const errorHandler = (e, isFatal) => {
+  if (isFatal) {
+    Alert.alert(
+      'Unexpected error occurred',
+      `
+        Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
+      `,
+      [{
+        text: 'Ok',
+      }]
+    );
+  } else {
+    console.log(e); // So that we can see it in the ADB logs in case of Android if needed
+  }
+};
+  //Second argument is a boolean with a default value of false if unspecified.
+  //If set to true the handler to be called in place of RED screen
+  //in development mode also.
+setJSExceptionHandler(errorHandler, true);
 setNativeExceptionHandler((exceptionString) => {
   console.log(exceptionString);
 });
@@ -97,8 +120,8 @@ const Stack = StackNavigator({
   GroupsList: {
     screen: GroupsListScreen
   },
-  GroupsJoin: {
-    screen: GroupJoinScreen
+  GroupView: {
+    screen: GroupViewScreen
   },
   Wallet: {
     screen: WalletScreen
@@ -147,6 +170,7 @@ const stores = {
   boost,
   walletHistory,
   groups,
+  groupView,
   blockchain,
   keychain,
   tabs

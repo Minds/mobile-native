@@ -26,6 +26,18 @@ export const CommonStyle = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
   },
+  columnAlignCenter: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  columnAlignStart: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
+  columnAlignEnd: {
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+  },
   rowJustifyEnd: {
     flexDirection: 'row',
     justifyContent: 'flex-end'
@@ -195,7 +207,7 @@ export const CommonStyle = StyleSheet.create({
     bottom: 0,
     right: 0
   },
-  
+
   // Generic screens
   screen: {
     padding: 20,
