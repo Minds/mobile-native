@@ -9,14 +9,26 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
  */
 class GroupViewStore {
   /**
-   * List store
+   * List feed store
    */
   @observable list = new OffsetFeedListStore();
 
   /**
    * Group
+   *
+   * (Used a ref observable to keep the same object of the list)
    */
-  @observable group = null;
+  @observable.ref group = null;
+
+  /**
+   * Selected tab
+   */
+  @observable tab = 'feed';
+
+  /**
+   * is saving
+   */
+  @observable saving = false;
 
   /**
    * List loading
@@ -24,9 +36,9 @@ class GroupViewStore {
   loading = false;
 
   /**
-   * Load list
+   * Load feed
    */
-  loadList(guid) {
+  loadFeed(guid) {
 
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
@@ -46,6 +58,10 @@ class GroupViewStore {
       });
   }
 
+  /**
+   * Load one group
+   * @param {string} guid
+   */
   loadGroup(guid) {
     groupsService.loadEntity(this.props.navigation.state.params.guid)
       .then(group => {
@@ -53,15 +69,77 @@ class GroupViewStore {
       });
   }
 
+  /**
+   * Set saving
+   * @param {boolean} s
+   */
+  @action
+  setSaving(s) {
+    this.saving = s;
+  }
+
+  /**
+   * Join group
+   * @param {string} guid
+   */
+  join(guid) {
+    this.setSaving(true);
+    return groupsService.join(guid)
+      .then(action(() => {
+        this.group['is:member'] = true
+        this.setSaving(false);
+      }));
+  }
+
+  /**
+   * Leave group
+   * @param {string} guid
+   */
+  leave(guid) {
+    this.setSaving(true);
+    return groupsService.leave(guid)
+      .then(action(() => {
+        this.group['is:member'] = false
+        this.setSaving(false);
+      }));
+  }
+
+  /**
+   * clear the store to default values
+   */
+  @action
+  clear() {
+    this.list.clearList();
+    this.group = null;
+    this.tab = 'feed';
+  }
+
+  /**
+   * Set tab
+   * @param {string} tab
+   */
+  @action
+  setTab(tab) {
+    this.tab = tab;
+  }
+
+  /**
+   * Set the group
+   * @param {object} group
+   */
   @action
   setGroup(group) {
     this.group = group;
+    this.group.algo = 2;
   }
 
+  /**
+   * Refresh feed
+   */
   @action
-  refresh() {
+  refresh(guid) {
     this.list.refresh();
-    this.loadList()
+    this.loadFeed(guid)
       .finally(() => {
         this.list.refreshDone();
       });

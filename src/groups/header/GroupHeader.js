@@ -6,7 +6,6 @@ import {
   Text,
   Image,
   View,
-  ActivityIndicator,
   TouchableHighlight,
 } from 'react-native';
 
@@ -14,17 +13,14 @@ import {
   observer
 } from 'mobx-react/native'
 
-import { Button } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 import Toolbar from '../../common/components/toolbar/Toolbar';
 import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
-
-import colors from '../../styles/Colors'
+import CenteredLoading from '../../common/components/CenteredLoading';
 
 /**
  * Group Header
@@ -52,35 +48,76 @@ export default class GroupHeader extends Component {
    * Get Action Button, Message or Subscribe
    */
   getActionButton() {
-    const group = this.props.store.group;
-    if (!group['is:owner'] && !group['is:member']) {
+    const store = this.props.store;
+    const group = store.group;
+
+    if (store.saving) return <CenteredLoading />;
+
+    if (!group['is:member']) {
       return (
         <TouchableHighlight
-          onPress={() => { this.subscribe() }}
+          onPress={() => { store.join(group.guid) }}
           underlayColor='transparent'
           style={ComponentsStyle.bluebutton}
           accessibilityLabel="Subscribe to this group"
+          disabled={store.saving}
         >
-          <Text style={{ color: colors.primary }} > JOIN </Text>
+          <Text style={CommonStyle.colorPrimary} ref="btntext"> JOIN </Text>
         </TouchableHighlight>
       );
     } else {
-      <View style={{ width: 40 }}></View>
+      return (
+        <TouchableHighlight
+          onPress={() => { store.leave(group.guid)  }}
+          underlayColor='transparent'
+          style={ComponentsStyle.bluebutton}
+          accessibilityLabel="Subscribe to this group"
+          disabled={store.saving}
+        >
+          <Text style={CommonStyle.colorPrimary} ref="btntext"> LEAVE </Text>
+        </TouchableHighlight>
+      );
     }
   }
 
-  subscribe() {
-    let group = this.props.store.group;
-    this.props.store.groupbe(group.guid);
-  }
-
+  /**
+   * Render Tabs
+   */
   renderToolbar() {
     const typeOptions = [
       { text: 'Feed', icon: 'list', value: 'feed' },
-      { text: 'Description', icon: 'short-text', value: 'object/video' },
-      { text: 'Members', icon: 'ios-people', iconType: 'ion', value: 'user' }
+      { text: 'Description', icon: 'short-text', value: 'desc' },
+      { text: 'Members', icon: 'ios-people', iconType: 'ion', value: 'members' }
     ]
-    return < Toolbar options={ typeOptions } initial = 'feed' onChange = { this.onFilterChange } />
+    return (
+      <Toolbar
+        options={ typeOptions }
+        initial={ this.props.store.tab }
+        onChange={ this.onTabChange }
+      />
+    )
+  }
+
+  /**
+   * On tab change
+   */
+  onTabChange = (tab) => {
+    const group = this.props.store.group;
+
+    switch (tab) {
+      case 'feed':
+        // clear list without mark loaded flag
+        this.props.store.refresh(group.guid);
+      case 'desc':
+        // clear list without mark loaded flag
+        this.props.store.list.clearList(false)
+        break;
+
+      default:
+        break;
+    }
+
+    this.props.store.setTab(tab);
   }
 
   /**
@@ -92,6 +129,16 @@ export default class GroupHeader extends Component {
     const styles = this.props.styles;
     const avatar = { uri: this.getAvatar() };
     const iurl = { uri: this.getBannerFromGroup() };
+
+    let body = null;
+
+    if (this.props.store.tab == 'desc') {
+      body = (
+        <View style={CommonStyle.padding2x}>
+          <Text>{group.briefdescription}</Text>
+        </View>
+      )
+    }
 
     return (
       <View >
@@ -120,8 +167,9 @@ export default class GroupHeader extends Component {
             </View>
           </View>
         </View>
-        {this.renderToolbar()}
         <Image source={avatar} style={styles.avatar} />
+        {this.renderToolbar()}
+        {body}
       </View>
     )
   }

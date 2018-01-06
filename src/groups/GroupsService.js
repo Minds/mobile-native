@@ -6,7 +6,7 @@ import api from './../common/services/api.service';
  */
 class GroupsService {
 
-  currentFilter = '';
+  currentFilter = 'activity';
 
   /**
    * Load groups
@@ -55,6 +55,18 @@ class GroupsService {
           offset: response['load-next'] || ''
         }
       });
+  }
+
+  loadMembers(guid, offset, limit = 21) {
+    return api.get('api/v1/groups/membership/' + guid, {limit});
+  }
+
+  join(guid) {
+    return api.put('api/v1/groups/membership/' + guid);
+  }
+
+  leave(guid) {
+    return api.delete('api/v1/groups/membership/' + guid);
   }
 
 }

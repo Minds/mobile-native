@@ -3,8 +3,7 @@ import React, {
 } from 'react';
 
 import {
-
-  ScrollView,
+  View,
   StyleSheet,
 } from 'react-native';
 
@@ -21,6 +20,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import GroupHeader from './header/GroupHeader';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
+import NewsfeedList from '../newsfeed/NewsfeedList';
 
 /**
  * Groups view screen
@@ -44,9 +44,18 @@ export default class GroupViewScreen extends Component {
 
     if (params.group) {
       this.props.groupView.setGroup(params.group);
+      this.props.groupView.loadFeed(params.group.guid);
     } else {
       this.props.groupView.loadGroup(params.guid);
+      this.props.groupView.loadFeed(params.guid);
     }
+  }
+
+  /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    this.props.groupView.clear();
   }
 
   /**
@@ -55,18 +64,18 @@ export default class GroupViewScreen extends Component {
   render() {
     const group = this.props.groupView.group;
 
-    if (!group) {
+    if (!group || !this.props.groupView.list.loaded) {
       return <CenteredLoading />
     }
 
-    console.log(group)
-
-    return (
-      <ScrollView contentContainerStyle={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
+    const header = (
+      <View>
         <GroupHeader store={this.props.groupView} me={this.props.user.me} styles={styles}/>
         <Icon color={colors.primary} containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} raised />
-      </ScrollView>
-    );
+      </View>
+    )
+
+    return <NewsfeedList newsfeed={ this.props.groupView } guid = { group.guid } header = { header } navigation = { this.props.navigation } />
   }
 }
 
