@@ -32,7 +32,7 @@ export default class GroupsListScreen extends Component {
   }
 
   navigateToGroupJoin(group) {
-    this.props.navigation.navigate('GroupsJoin', { group: group})
+    this.props.navigation.navigate('GroupView', { group: group})
   }
 
   renderItem = (row) => {
@@ -88,10 +88,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    marginTop: 5
-  },
-  screen: {
-    backgroundColor: '#FFF',
-    flex: 1,
+    marginTop: 5,
+    backgroundColor: '#FFF'
   }
 });

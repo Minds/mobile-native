@@ -11,7 +11,7 @@ class GroupsStore {
   /**
    * List store
    */
-  @observable list = new OffsetFeedListStore();
+  @observable list = new OffsetFeedListStore('shallow');
 
   /**
    * List loading
