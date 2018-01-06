@@ -88,10 +88,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    marginTop: 5
-  },
-  screen: {
-    backgroundColor: '#FFF',
-    flex: 1,
+    marginTop: 5,
+    backgroundColor: '#FFF'
   }
 });
