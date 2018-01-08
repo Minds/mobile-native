@@ -10,6 +10,8 @@ import {
 
 import OffsetListStore from '../common/stores/OffsetListStore';
 
+import session from '../common/services/session.service';
+
 /**
  * Notifications Store
  */
@@ -44,15 +46,22 @@ class NotificationsStore {
    * Class constructor
    */
   constructor() {
-    // load count on start
-    this.loadCount();
-    // start polling for count every 10 seconds
-    this.startPollCount();
+    const dispose = session.onSession(token => {
+      if (token) {
+        // load count on session start
+        this.loadCount();
+        // start polling for count every 10 seconds
+        this.startPollCount();
+      } else {
+        this.stopPollCount();
+      }
+    });
 
     // fix to clear the interval when are developing with hot reload (timers was not cleared automatically)
     if (module.hot) {
       module.hot.accept(() => {
         this.stopPollCount();
+        dispose();
       });
     }
   }

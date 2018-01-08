@@ -33,18 +33,19 @@ export default class LoadingScreen extends Component {
   }
 
   componentWillMount() {
-    session.isLoggedIn().then(isLoggedIn => {
-      if (isLoggedIn) {
-        this.props.user.load().then( (result) => {
-          this.goToTabs();
-        }).catch( (err) => {
-          alert('Error logging in');
+    session.init()
+      .then(token => {
+        if (token) {
+          this.props.user.load().then((result) => {
+            this.goToTabs();
+          }).catch((err) => {
+            alert('Error logging in');
+            this.goToLogin();
+          });
+        } else {
           this.goToLogin();
-        });
-      } else {
-        this.goToLogin();
-      }
-    });
+        }
+      });
   }
 
   goToTabs() {

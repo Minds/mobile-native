@@ -34,7 +34,7 @@ class MessengerListStore {
   loaded     = false;
 
   constructor() {
-    session.getPrivateKey()
+    session.sessionStorage.getPrivateKey()
       .then((privateKey) => {
         if (privateKey) {
           this.setPrivateKey(privateKey);

@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 
 import messengerService from './MessengerService';
-import session from './../common/services/session.service';
 import crypto from './../common/services/crypto.service';
 
 /**

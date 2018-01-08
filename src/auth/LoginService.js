@@ -11,7 +11,7 @@ export function login(username, password) {
     'password': password
   };
   return api.post('oauth2/token', params).then(data => {
-    session.setAccessToken(data.access_token);
+    session.login(data.access_token);
   });
 }
 
