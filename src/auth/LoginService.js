@@ -15,6 +15,13 @@ export function login(username, password) {
   });
 }
 
+export function twoFactorAuth(token, code) {
+  return api.post('api/v1/authenticate/two-factor', { token, code })
+    .then((data) => {
+      session.login(data.access_token);
+    });
+}
+
 export function me() {
   let params = {
     grant_type: 'password',

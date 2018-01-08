@@ -11,6 +11,7 @@ import {
   View,
   Button,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import LoginForm from './LoginForm';
 import ForgotPassword from './ForgotPassword';
@@ -66,12 +67,16 @@ export default class LoginScreen extends Component {
           source={require('../assets/bg-2.jpg')}
         />
         <View style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
-          <FastImage
-            resizeMode={FastImage.resizeMode.cover}
-            style={ComponentsStyle.logo}
-            source={require('../assets/logos/medium-white.png')}
-          />
-          {body}
+          <Animatable.View animation="bounceIn">
+            <FastImage
+              resizeMode={FastImage.resizeMode.cover}
+              style={ComponentsStyle.logo}
+              source={require('../assets/logos/medium-white.png')}
+            />
+          </Animatable.View>
+          <Animatable.View animation="fadeInUp">
+            {body}
+          </Animatable.View>
         </View>
       </View>
     );

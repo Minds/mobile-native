@@ -6,6 +6,8 @@ import {
   NavigationActions
 } from 'react-navigation';
 
+import * as Animatable from 'react-native-animatable';
+
 import {
   View,
   Text,
@@ -14,7 +16,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import { login } from './LoginService';
+import { login, twoFactorAuth } from './LoginService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
@@ -29,15 +31,79 @@ export default class LoginForm extends Component {
 
   state = {
     username: '',
-    password: ''
+    password: '',
+    msg: '',
+    twoFactorToken: '',
+    twoFactorCode: ''
   };
 
   /**
    * Render
    */
   render() {
+    const msg = (this.state.msg) ? <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]}>{this.state.msg}</Animatable.Text>:null;
+
+    const inputs = this.getInputs();
+    const buttons = this.getButtons();
+
     return (
       <KeyboardAvoidingView behavior='padding'>
+        {msg}
+        {inputs}
+        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
+          {buttons}
+        </View>
+        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop3x]}>
+          <Text style={[CommonStyle.colorWhite, ComponentsStyle.link]} onPress={this.onForgotPress}>FORGOT PASSWORD</Text>
+        </View>
+      </KeyboardAvoidingView>
+    );
+  }
+
+  getButtons() {
+    const buttons = [
+      <Button
+        onPress={() => this.onLoginPress()}
+        title={i18n.t('auth.login')}
+        backgroundColor="rgba(0,0,0, 0.5)"
+        borderRadius={4}
+        containerViewStyle={ComponentsStyle.loginButton}
+        textStyle={ComponentsStyle.loginButtonText}
+      />
+    ]
+
+    if (!this.state.twoFactorToken) {
+      buttons.unshift(
+        <Button
+          onPress={() => this.props.onRegister()}
+          title={i18n.t('auth.create')}
+          backgroundColor="rgba(0,0,0, 0.5)"
+          borderRadius={4}
+          containerViewStyle={ComponentsStyle.loginButton}
+          textStyle={ComponentsStyle.loginButtonText}
+        />
+      );
+    }
+
+    return buttons;
+  }
+
+  getInputs() {
+    if (this.state.twoFactorToken) {
+      return (
+        <TextInput
+          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+          placeholder={i18n.t('auth.code')}
+          returnKeyType={'done'}
+          placeholderTextColor="white"
+          underlineColorAndroid='transparent'
+          onChangeText={(value) => this.setState({ twoFactorCode: value })}
+          autoCapitalize={'none'}
+          value={this.state.twoFactorCode}
+        />
+      );
+    } else {
+      return [
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.username')}
@@ -47,7 +113,7 @@ export default class LoginForm extends Component {
           onChangeText={(value) => this.setState({ username: value })}
           autoCapitalize={'none'}
           value={this.state.username}
-        />
+        />,
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.password')}
@@ -59,29 +125,8 @@ export default class LoginForm extends Component {
           onChangeText={(value) => this.setState({ password: value })}
           value={this.state.password}
         />
-        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
-          <Button
-            onPress={() => this.props.onRegister()}
-            title={i18n.t('auth.create')}
-            backgroundColor="rgba(0,0,0, 0.5)"
-            borderRadius={4}
-            containerViewStyle ={ComponentsStyle.loginButton}
-            textStyle={ComponentsStyle.loginButtonText}
-            />
-          <Button
-            onPress={() => this.onLoginPress()}
-            title={i18n.t('auth.login')}
-            backgroundColor="rgba(0,0,0, 0.5)"
-            borderRadius={4}
-            containerViewStyle ={ComponentsStyle.loginButton}
-            textStyle={ComponentsStyle.loginButtonText}
-          />
-        </View>
-        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop3x]}>
-          <Text style={[CommonStyle.colorWhite, ComponentsStyle.link]} onPress={this.onForgotPress}>FORGOT PASSWORD</Text>
-        </View>
-      </KeyboardAvoidingView>
-    );
+      ];
+    }
   }
 
   onForgotPress = () => {
@@ -92,12 +137,37 @@ export default class LoginForm extends Component {
    * On login press
    */
   onLoginPress() {
-    login(this.state.username, this.state.password)
-      .then(data => {
-        this.props.onLogin();
-      })
-      .catch(err => {
-        alert(JSON.stringify(err));
-      });
+    this.setState({ msg: ''});
+    // is two factor auth
+    if (this.state.twoFactorToken) {
+      twoFactorAuth(this.state.twoFactorToken, this.state.twoFactorCode)
+        .then(data => {
+          this.props.onLogin();
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      login(this.state.username, this.state.password)
+        .then(data => {
+          this.props.onLogin();
+        })
+        .catch(err => {
+          err.json()
+            .then(errJson => {
+              if (errJson.error === 'invalid_grant') {
+                this.setState({ msg: i18n.t('auth.invalidGrant') });
+              }
+
+              //TODO implement on backend and edit
+              if (errJson.error === 'two_factor') {
+                this.setState({ twoFactorToken: errJson.message });
+              }
+            })
+            .catch(err => {
+              this.setState({ msg: 'Unexpected error, please try again.' });
+            });
+        });
+    }
   }
 }
