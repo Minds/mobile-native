@@ -6,7 +6,7 @@ class ApiService {
 
   async buildHeaders() {
     const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
-      accessToken = await session.getAccessToken(),
+      accessToken = session.token,
       headers = new Headers();
 
     if (basicAuth) {
@@ -21,7 +21,7 @@ class ApiService {
 
   async buildParamsString(params) {
     const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
-      accessToken = await session.getAccessToken();
+      accessToken = session.token;
 
     if (accessToken && basicAuth) {
       // Send via GET only if basic auth is enabled
@@ -70,7 +70,7 @@ class ApiService {
         // catch all errors
         .catch(err => {
           if (err.status && err.status == 401) {
-            session.clear();
+            session.logout();
           }
           return reject(err);
         })
@@ -98,7 +98,7 @@ class ApiService {
         })
         .catch(err => {
           if (err.status && err.status == 401) {
-            session.clear();
+            session.logout();
           }
           return reject(err);
         })
@@ -126,7 +126,7 @@ class ApiService {
         })
         .catch(err => {
           if (err.status && err.status == 401) {
-            session.clear();
+            session.logout();
           }
           return reject(err);
         })
@@ -154,7 +154,7 @@ class ApiService {
         })
         .catch(err => {
           if (err.status && err.status == 401) {
-            session.clear();
+            session.logout();
           }
           return reject(err);
         })
@@ -167,7 +167,7 @@ class ApiService {
     for (var key in data) {
       formData.append(key, data[key]);
     }
-    const access_token = await session.getAccessToken();
+    const access_token = session.token;
     return new Promise((resolve, reject)=>{
       fetch(MINDS_URI + url, {
         method: 'POST',
@@ -192,7 +192,7 @@ class ApiService {
         })
         .catch(err => {
           if (err.status && err.status == 401) {
-            session.clear();
+            session.logout();
           }
           return reject(err);
         })

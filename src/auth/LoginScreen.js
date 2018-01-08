@@ -14,7 +14,6 @@ import {
 
 import LoginForm from './LoginForm';
 import ForgotPassword from './ForgotPassword';
-import session from '../common/services/session.service';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 

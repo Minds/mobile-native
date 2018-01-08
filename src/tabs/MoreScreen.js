@@ -111,7 +111,7 @@ export default class MoreScreen extends Component {
   }
 
   onPressLogout = () => {
-    session.clear();
+    session.logout();
     const loginAction = NavigationActions.reset({
       index: 0,
       actions: [

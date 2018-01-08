@@ -1,78 +1,109 @@
 import { AsyncStorage } from 'react-native';
+import {
+  observable,
+  action,
+  autorun
+} from 'mobx'
 
-const namespace = '@Minds:';
+import sessionStorage from './session.storage.service';
 
 /**
  * Session service
  */
 class SessionService {
-  _onLogout = null;
 
   /**
-   * set onlogout callback
+   * Session token
+   */
+  @observable token = '';
+
+  /**
+   * Session storage service
+   */
+  sessionStorage = null;
+
+  /**
+   * Constructor
+   * @param {object} sessionStorage
+   */
+  constructor(sessionStorage) {
+    this.sessionStorage = sessionStorage;
+  }
+
+  init() {
+    return this.sessionStorage.getAccessToken()
+      .then(token => {
+        this.setToken(token);
+        return token;
+      });
+  }
+
+  @action
+  setToken(token) {
+    this.token = token;
+  }
+
+  /**
+   * Login
+   * @param {string} token
+   */
+  login(token) {
+    this.setToken(token)
+    this.sessionStorage.setAccessToken(token);
+  }
+
+  /**
+   * Logout
+   */
+  logout() {
+    this.setToken(null);
+    this.sessionStorage.clear();
+  }
+
+
+  /**
+   * Run on session change
+   * @return dispose (remember to dispose!)
+   * @param {function} fn
+   */
+  onSession(fn) {
+    return autorun(() => {
+      fn(this.token);
+    });
+  }
+
+  /**
+   * Run on session change
+   * @return dispose (remember to dispose!)
+   * @param {function} fn
+   */
+  onLogin(fn) {
+    return autorun(() => {
+      if (this.token) {
+        fn(this.token);
+      }
+    });
+  }
+
+  /**
+   * Run on session
+   * @return dispose (remember to dispose!)
+   * @param {function} fn
    */
   onLogout(fn) {
-    this._onLogout = fn;
-  }
-
-
-  /**
-   * Get access token of the current user
-   */
-  async getAccessToken() {
-    try {
-      const token = await AsyncStorage.getItem(namespace + 'access_token');
-      return token;
-    } catch(err) {
-      return null;
-    }
-  }
-
-  /**
-   * Get messenger private key of the current user
-   */
-  getPrivateKey() {
-    return AsyncStorage.getItem(namespace + 'private_key');
-  }
-
-  /**
-   * Set private key
-   * @param {string} privateKey
-   */
-  setPrivateKey(privateKey) {
-    AsyncStorage.setItem(namespace + 'private_key', privateKey);
-  }
-
-  /**
-   * Set access token
-   * @param {string} access_token
-   */
-  async setAccessToken(access_token) {
-    await AsyncStorage.setItem(namespace + 'access_token', access_token);
-    return true;
-  }
-
-  /**
-   * Clear all session data (logout)
-   */
-  async clear() {
-    await AsyncStorage.removeItem(namespace + 'access_token');
-    await AsyncStorage.removeItem(namespace + 'private_key');
-
-    if (this._onLogout) {
-      this._onLogout();
-    }
-    // TODO: navigate to login
+    return autorun(() => {
+      if (!this.token) {
+        fn(this.token);
+      }
+    });
   }
 
   /**
    * There is a user logged in?
    */
-  async isLoggedIn() {
-    const loggedin = await this.getAccessToken();
-    return loggedin !== null;
+  isLoggedIn() {
+    return this.token !== null;
   }
-
 }
 
-export default new SessionService();
+export default new SessionService(sessionStorage);

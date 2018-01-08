@@ -182,7 +182,7 @@ sessionService.onLogout(() => {
   newsfeed.clearBoosts();
   discovery.list.clearList();
   user.clearUser();
-})
+});
 
 export default class App extends Component {
   render() {
