@@ -1,4 +1,4 @@
-import { observable, action, autorun } from 'mobx'
+import { observable, action, reaction } from 'mobx'
 
 /**
  * Tabs store
@@ -17,9 +17,11 @@ class TabsStore {
    * @param {function} fn
    */
   onState(fn) {
-    return autorun(() => {
-      fn(this.tabstate);
-    });
+    return reaction(
+      () => this.tabstate,
+      state => fn(state),
+      { fireImmediately: true}
+    );
   }
 }
 

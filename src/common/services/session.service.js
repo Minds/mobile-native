@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 import {
   observable,
   action,
-  autorun
+  reaction
 } from 'mobx'
 
 import sessionStorage from './session.storage.service';
@@ -67,9 +67,11 @@ class SessionService {
    * @param {function} fn
    */
   onSession(fn) {
-    return autorun(() => {
-      fn(this.token);
-    });
+    return reaction(
+      () => this.token,
+      token => fn(token),
+      { fireImmediately: true }
+    );
   }
 
   /**
@@ -78,11 +80,15 @@ class SessionService {
    * @param {function} fn
    */
   onLogin(fn) {
-    return autorun(() => {
-      if (this.token) {
-        fn(this.token);
-      }
-    });
+    return reaction(
+      () => this.token,
+      token => {
+        if (token) {
+          fn(token);
+        }
+      },
+      { fireImmediately: true }
+    );
   }
 
   /**
@@ -91,11 +97,15 @@ class SessionService {
    * @param {function} fn
    */
   onLogout(fn) {
-    return autorun(() => {
-      if (!this.token) {
-        fn(this.token);
-      }
-    });
+    return reaction(
+      () => this.token,
+      token => {
+        if (!token) {
+          fn(token);
+        }
+      },
+      { fireImmediately: true }
+    );
   }
 
   /**
