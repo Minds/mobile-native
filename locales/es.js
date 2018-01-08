@@ -7,7 +7,9 @@ export default {
     password: 'Clave',
     confirmpassword: 'Confirmar Clave',
     requestNewPassword: 'Para solicitar una nueva clave ingresa tu usuario',
-    requestNewPasswordSuccess: 'Enviamos un código de desbloqueo a tu correo registrado.'
+    requestNewPasswordSuccess: 'Enviamos un código de desbloqueo a tu correo registrado.',
+    invalidGrant: 'usuario/clave incorrectos. Intente nuevamente.',
+    code: 'Código'
   },
   settings: {
     currentPassword: 'Clave Actual',

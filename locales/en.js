@@ -7,7 +7,9 @@ export default {
     password: 'Password',
     confirmpassword: 'Confirm Password',
     requestNewPassword: 'To request a new password, enter your username',
-    requestNewPasswordSuccess: 'We have sent an unlock code to your registered email address.'
+    requestNewPasswordSuccess: 'We have sent an unlock code to your registered email address.',
+    invalidGrant: 'Incorrect username/password. Please try again.',
+    code: 'Code'
   },
   settings: {
     currentPassword: 'Current Password',
