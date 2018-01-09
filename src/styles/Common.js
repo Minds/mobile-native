@@ -62,6 +62,9 @@ export const CommonStyle = StyleSheet.create({
   colorWhite: {
     color: 'white'
   },
+  colorBlack: {
+    color: 'black'
+  },
   colorLight: {
     color: colors.light
   },
@@ -83,6 +86,9 @@ export const CommonStyle = StyleSheet.create({
   // backgrounds
   backgroundWhite: {
     backgroundColor: 'white'
+  },
+  backgroundBlack: {
+    backgroundColor: 'black'
   },
   backgroundLight: {
     backgroundColor: colors.light
