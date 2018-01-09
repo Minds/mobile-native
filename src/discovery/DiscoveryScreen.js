@@ -31,7 +31,7 @@ import Toolbar from '../common/components/toolbar/Toolbar';
 /**
  * Discovery screen
  */
-@inject('discovery')
+@inject('discovery', 'tabs')
 @observer
 export default class DiscoveryScreen extends Component {
 
@@ -48,15 +48,35 @@ export default class DiscoveryScreen extends Component {
     )
   }
 
+  /**
+   * Load data on mount
+   */
   componentWillMount() {
     const params = this.props.navigation.state.params;
     const q = (params) ? params.q : false;
 
-    if (q) {
-      this.props.discovery.search(q);
-    } else {
-      this.loadFeed();
-    }
+    // on leave tab clear list to free memory
+    this.dispose = this.props.tabs.onState((state) => {
+      if (!state.previousScene) return;
+
+      if (state.scene.route.key == "Discovery") {
+        if (q) {
+          this.props.discovery.search(q);
+        } else {
+          this.props.discovery.loadList();
+        }
+      }
+      if (state.previousScene.key == "Discovery" && state.scene.route.key != "Discovery") {
+        this.props.discovery.list.clearList();
+      }
+    });
+  }
+
+  /**
+   * Dispose autorun of tabstate
+   */
+  componentWillUnmount() {
+    this.dispose();
   }
 
   /**
@@ -81,6 +101,9 @@ export default class DiscoveryScreen extends Component {
     return { length: itemHeight, offset: itemHeight * index, index }
   }
 
+  /**
+   * Render
+   */
   render() {
     let body;
 
