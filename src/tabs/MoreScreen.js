@@ -20,7 +20,10 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import session from './../common/services/session.service';
 import { List, ListItem } from 'react-native-elements'
+import FastImage from 'react-native-fast-image';
 
+import { ComponentsStyle } from '../styles/Components';
+import { CommonStyle } from '../styles/Common';
 import shareService from '../share/ShareService';
 
 @inject('user')
@@ -77,7 +80,7 @@ export default class MoreScreen extends Component {
     ];
 
     return (
-      <ScrollView>
+      <ScrollView >
         <List containerStyle={{flex:1}}>
           {
             list.map((l, i) => (
@@ -93,13 +96,20 @@ export default class MoreScreen extends Component {
             ))
           }
         </List>
-        <View style={styles.footer}>
-          <Text style={styles.version} textAlign={'center'}>v1.0.0 (201712)</Text>
-          <View style={styles.footercol}>
-            <Text style={styles.link}>FAQ</Text>
-            <Text style={styles.link}>Code</Text>
-            <Text style={styles.link}>Terms</Text>
-            <Text style={styles.link}>Privacy</Text>
+        <View style={styles.logoBackground}>
+          <FastImage
+            resizeMode={FastImage.resizeMode.cover}
+            style={[ComponentsStyle.logo, CommonStyle.marginTop2x]}
+            source={require('../assets/logos/medium-white.png')}
+          />
+          <View style={styles.footer}>
+            <Text style={styles.version} textAlign={'center'}>v1.0.0 (201712)</Text>
+            <View style={styles.footercol}>
+              <Text style={CommonStyle.colorWhite}>FAQ</Text>
+              <Text style={CommonStyle.colorWhite}>Code</Text>
+              <Text style={CommonStyle.colorWhite}>Terms</Text>
+              <Text style={CommonStyle.colorWhite}>Privacy</Text>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -124,6 +134,9 @@ export default class MoreScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  logoBackground: {
+    backgroundColor: '#444'
+  },
 	screen: {
     //paddingTop: 20,
     backgroundColor: '#FFF',
@@ -147,6 +160,7 @@ const styles = StyleSheet.create({
   version: {
     fontSize: 15,
     textAlign: 'center',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: 'white'
   }
 });
