@@ -39,8 +39,8 @@ export default class Topbar extends Component {
             <Avatar
               rounded
               source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid }}
-              width={38}
-              height={38}
+              width={42}
+              height={42}
               onPress={() => this.props.navigation.navigate('Channel', { guid: this.props.user.me.guid })}
             />
           </View>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     height: 56,
     display: 'flex',
     flexDirection: 'row',
-    paddingTop: 12,
+    paddingTop: 0,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
     backgroundColor: '#FFFFFF',
@@ -74,8 +74,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   topbarLeft: {
-    //paddingLeft: 8,
+    width: 100,
     alignItems: 'center',
+    justifyContent: 'flex-start',
     flexDirection: 'row'
   },
   topbarCenter: {
@@ -83,7 +84,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topbarRight: {
+    width:100,
     alignItems: 'center',
+    justifyContent: 'flex-end',
     flexDirection: 'row',
     paddingRight: 10
   },
