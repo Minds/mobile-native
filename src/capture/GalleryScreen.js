@@ -1,19 +1,16 @@
-import React, { 
-  Component 
+import React, {
+  Component
 } from 'react';
+
 import {
   Text,
-  TextInput,
   StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
   CameraRoll,
   ActivityIndicator,
   TouchableOpacity,
   Image,
   View,
   FlatList,
-  ListView
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -25,13 +22,17 @@ import {
 } from '../config/Config';
 import { Button } from 'react-native-elements';
 
-export default class GalleryScreen extends Component<{}> {
+/**
+ * Gallery Screen
+ */
+export default class GalleryScreen extends Component {
 
   state = {
     photos: [],
     imageUri: '',
     isPosting: false,
   }
+
   static navigationOptions = {
     header: null,
     tabBarIcon: ({ tintColor }) => (
@@ -39,13 +40,16 @@ export default class GalleryScreen extends Component<{}> {
     )
   }
 
+  /**
+   * Render
+   */
   render() {
     return (
       <View style={styles.screenWrapper}>
         { this.state.imageUri.length > 0 ?
           <View style={styles.submitButton}>
             { this.state.isPosting ?
-              <ActivityIndicator size="small" color="#00ff00" /> : 
+              <ActivityIndicator size="small" color="#00ff00" /> :
               <Icon onPress={() => this.upload()} color="white" name="md-send" size={28}></Icon>
             }
           </View> : <View></View>
@@ -82,14 +86,21 @@ export default class GalleryScreen extends Component<{}> {
     );
   }
 
+  /**
+   * upload
+   */
   upload() {
-    this.setState({ 
+    this.setState({
       isPosting:true,
     });
     this.props.submitToPoster(this.state.imageUri);
   }
 
+  /**
+   * render list tile
+   */
   renderTile = (row) => {
+    console.log(row.item)
     return (
       <TouchableOpacity style={styles.tileImage} onPress={() => this.setState({imageUri: row.item.node.image.uri})}>
         <Image
@@ -100,13 +111,16 @@ export default class GalleryScreen extends Component<{}> {
     );
   }
 
+  /**
+   * On component mount
+   */
   componentDidMount() {
     CameraRoll.getPhotos({
       first: 27,
       assetType: 'All',
     })
     .then(r => {
-      this.setState({ 
+      this.setState({
         photos: r.edges,
         navigation: r.page_info,
       });
@@ -115,7 +129,6 @@ export default class GalleryScreen extends Component<{}> {
       //Error Loading Images
     });
   }
-
 }
 
 const styles = StyleSheet.create({
