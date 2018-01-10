@@ -58,12 +58,6 @@ export default class MoreScreen extends Component {
           this.props.navigation.navigate('GroupsJoin', { guid: '100000000000000681'});
         }
       },{
-        name: 'Autoplay videos',
-        switchButton: true,
-      },{
-        name: 'Points animation',
-        switchButton: true,
-      },{
         name: 'Invite',
         onPress: () => {
           shareService.invite(this.props.user.me.guid);
@@ -73,6 +67,12 @@ export default class MoreScreen extends Component {
         onPress: () => {
           this.props.navigation.navigate('Settings');
         }
+      },{
+        name: 'Autoplay videos',
+        switchButton: true,
+      }, {
+        name: 'Points animation',
+        switchButton: true,
       },{
         name: 'Logout',
         onPress: this.onPressLogout
