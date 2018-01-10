@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image,
   View,
+  Platform,
   TouchableOpacity
 } from 'react-native';
 
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
     height: 56,
     display: 'flex',
     flexDirection: 'row',
-    paddingTop: 0,
+    paddingTop: Platform.OS === 'ios'?12:0,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
     backgroundColor: '#FFFFFF',
