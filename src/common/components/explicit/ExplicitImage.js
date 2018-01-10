@@ -49,6 +49,7 @@ export default class ExplicitImage extends Component {
 const styles = StyleSheet.create({
   absolute: {
     position: "absolute",
+    backgroundColor: 'black',
     top: 0, left: 0, bottom: 0, right: 0,
   },
 });

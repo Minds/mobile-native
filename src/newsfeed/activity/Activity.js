@@ -29,7 +29,6 @@ import ExplicitText from '../../common/components/explicit/ExplicitText'
 import OwnerBlock from './OwnerBlock';
 import RemindOwnerBlock from './RemindOwnerBlock';
 import Actions from './Actions';
-import FastImage from 'react-native-fast-image';
 import formatDate from '../../common/helpers/date';
 import domain from '../../common/helpers/domain';
 import ActivityActions from './ActivityActions';
