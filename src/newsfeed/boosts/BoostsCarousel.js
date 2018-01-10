@@ -12,7 +12,7 @@ import Carousel, {
   Pagination
 } from 'react-native-snap-carousel';
 
-import Activity from '../activity/Activity';
+import BoostItem from './BoostItem';
 import colors from '../../styles/Colors';
 
 /**
@@ -20,9 +20,24 @@ import colors from '../../styles/Colors';
  */
 export default class BoostsCarousel extends PureComponent {
 
+  /**
+   * Items height
+   */
+  itemsRef = [];
+
+  /**
+   * Component State
+   */
   state = {
     activeSlide:0,
     width: Dimensions.get('window').width
+  }
+
+  /**
+   * on unmount delete references
+   */
+  onComponentUnmount() {
+    this.itemsRef = [];
   }
 
   /**
@@ -30,12 +45,13 @@ export default class BoostsCarousel extends PureComponent {
    */
   _renderItem = ({ item, index }) => {
     return (
-      <View style={this.styles.slide}>
-        <Activity
-          entity={item}
-          navigation={this.props.navigation}
-          />
-      </View>
+      <BoostItem
+        entity={item}
+        navigation={this.props.navigation}
+        ref={(ref) => {
+          this.itemsRef[index] = ref;
+        }}
+        />
     );
   }
 
@@ -44,12 +60,19 @@ export default class BoostsCarousel extends PureComponent {
    */
   _onLayout = (e) => {
     this.setState({
+      height: this.itemsRef[this.state.activeSlide].height,
       width: Dimensions.get('window').width,
     });
   }
 
+  /**
+   * On item snap
+   */
   _onSnapToItem = (index) => {
-    this.setState({ activeSlide: index });
+    this.setState({
+      activeSlide: index,
+      height: this.itemsRef[index].height,
+    });
   }
 
   /**
@@ -79,8 +102,6 @@ export default class BoostsCarousel extends PureComponent {
     );
   }
 
-
-
   /**
    * Render carousel
    */
@@ -91,13 +112,20 @@ export default class BoostsCarousel extends PureComponent {
 
     this.styles = {
       slide: {
-        flex: 1,
         width: this.state.width, //full size slider
+      },
+      containerStyle: {
+        flexGrow: 1
       },
       flexContainer: {
         flex: 1
-      }
+      },
+      itemHeight: {}
     };
+
+    if (this.state.height) {
+      this.styles.itemHeight.height = this.state.height;
+    }
 
     const carousel = (
       <Carousel
@@ -106,17 +134,23 @@ export default class BoostsCarousel extends PureComponent {
         renderItem={this._renderItem}
         sliderWidth={this.state.width}
         itemWidth={this.state.width}
-        containerCustomStyle={this.styles.flexContainer}
-        slideStyle={this.styles.flexContainer}
+        containerCustomStyle={this.state.containerStyle}
+        //slideStyle={[this.styles.slide, { height: this.state.height }]}
+        slideStyle={this.styles.slide}
         onSnapToItem={this._onSnapToItem}
-        removeClippedSubviews={true}
+        // Must be equal to the total number of boosts in order to autoheight workaround works
+        windowSize={15}
+        maxToRenderPerBatch={15}
+        initialNumToRender={15}
       />
     )
 
     return (
-      <View style={ this.styles.flexContainer } onLayout={this._onLayout}>
+      <View style={[this.styles.flexContainer] } onLayout={this._onLayout}>
         { this.pagination }
+        <View style={this.styles.itemHeight}>
         { carousel }
+        </View>
       </View>
     );
   }
