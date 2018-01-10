@@ -7,11 +7,9 @@ import {
 
 import {
   StyleSheet,
-  Image,
   CameraRoll,
   View,
   Text,
-  FlatList,
   TouchableHighlight,
 } from 'react-native';
 
@@ -26,7 +24,10 @@ import Poster from '../newsfeed/Poster';
 
 import { uploadAttachment } from '../newsfeed/NewsfeedService';
 
-export default class CaptureTab extends Component {  
+/**
+ * Capture tab
+ */
+export default class CaptureTab extends Component {
   state = {
     screen: 'gallery',
     imageUri: '',
@@ -41,6 +42,9 @@ export default class CaptureTab extends Component {
     )
   }
 
+  /**
+   * Render
+   */
   render() {
     return (
       <View style={{flex:1}}>
@@ -58,13 +62,16 @@ export default class CaptureTab extends Component {
                 <Text>Video</Text>
               </TouchableHighlight>
             </View>
-          </View> : 
+          </View> :
           <View></View>
         }
       </View>
     );
   }
 
+  /**
+   * Submit to poster
+   */
   submitToPoster = (imageUri) => {
     this.setState({
       isPosting : true,
@@ -82,23 +89,30 @@ export default class CaptureTab extends Component {
         isPosting : false,
       });
     });
-    
+
   }
 
+  /**
+   * Return tab style
+   * @param {string} value
+   */
   tabButtonStyle(value) {
     if(value === this.state.screen) {
-      return { 
+      return {
         flex: 1,
         borderRadius:0
       }
     } else {
-      return { 
+      return {
         flex: 1,
         borderRadius:0
       }
     }
   }
 
+  /**
+   * Load selected screen
+   */
   loadScreen() {
     switch (this.state.screen) {
       case 'gallery':
@@ -114,9 +128,12 @@ export default class CaptureTab extends Component {
         return <Poster reset={() => this.resetState()} attachmentGuid={this.state.attachmentGuid} imageUri={this.state.imageUri}  />;
         break;
     }
-    
+
   }
 
+  /**
+   * Reset state to default
+   */
   resetState() {
     this.setState({
       screen: 'gallery',
@@ -126,6 +143,9 @@ export default class CaptureTab extends Component {
     });
   }
 
+  /**
+   * Move to capture screen
+   */
   moveToCaptureScreen() {
     this.setState({screen:'captureImage'});
   }
@@ -137,13 +157,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   buttons: {
-    flex:1, 
-    justifyContent: 'center', 
+    flex:1,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   selectedButton: {
-    flex:1, 
-    justifyContent: 'center', 
+    flex:1,
+    justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth:3,
     borderColor: 'yellow'

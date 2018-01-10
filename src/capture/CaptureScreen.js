@@ -1,30 +1,25 @@
-import React, { 
-    Component 
+import React, {
+    Component
 } from 'react';
+
 import {
-    Text,
-    TextInput,
     StyleSheet,
-    KeyboardAvoidingView,
-    ScrollView,
     ActivityIndicator,
-    TouchableOpacity,
     Image,
     View,
-    FlatList,
-    ListView
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-
 import Camera from 'react-native-camera';
 
 import Poster from '../newsfeed/Poster';
 
-export default class CaptureScreen extends Component<{}> {
+/**
+ * Capture screen
+ */
+export default class CaptureScreen extends Component {
 
   state = {
-    activities: [],
     isImageTaken: false,
     isPosting: false,
     imageUri: ''
@@ -36,6 +31,9 @@ export default class CaptureScreen extends Component<{}> {
     )
   }
 
+  /**
+   * Render
+   */
   render() {
     return (
       <View style={styles.screenWrapper}>
@@ -43,15 +41,15 @@ export default class CaptureScreen extends Component<{}> {
           <View style={styles.selectedImage}>
             <View style={styles.submitButton}>
               { this.props.isPosting || this.state.isPosting ?
-                <ActivityIndicator size="small" color="#00ff00" /> : 
+                <ActivityIndicator size="small" color="#00ff00" /> :
                 <Icon onPress={() => this.upload()} color="white" name="md-send" size={28}></Icon>
               }
             </View>
             <Image
               source={{ uri : this.state.imageUri }}
               style={styles.preview}
-            /> 
-          </View> : 
+            />
+          </View> :
           <Camera
             ref={(cam) => {
               this.camera = cam;
@@ -97,7 +95,8 @@ const styles = StyleSheet.create({
   preview: {
     flex: 1,
     justifyContent: 'flex-end',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: '#ccc'
   },
   selectedImage: {
     flex: 1
