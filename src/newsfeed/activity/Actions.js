@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -14,25 +14,29 @@ import ThumbDownAction from './actions/ThumbDownAction';
 import WireAction from './actions/WireAction';
 import CommentsAction from './actions/CommentsAction';
 import RemindAction from './actions/RemindAction';
+import BoostAction from './actions/BoostAction';
 
 import { CommonStyle } from '../../styles/Common';
 
 @inject('user')
-@observer
-export default class Actions extends Component {
+export default class Actions extends PureComponent {
 
   /**
    * Render
    */
   render() {
+    const entity = this.props.entity;
+    const isOwner = this.props.user.me.guid === entity.owner_guid;
+
     return (
       <View style={CommonStyle.flexContainer}>
         <View style={styles.container}>
-          <ThumbUpAction entity={this.props.entity} me={this.props.user.me}/>
-          <ThumbDownAction entity={this.props.entity} me={this.props.user.me}/>
-          <WireAction entity={this.props.entity} navigation={this.props.navigation}/>
-          <CommentsAction entity={this.props.entity} navigation={this.props.navigation}/>
-          <RemindAction entity={this.props.entity}/>
+          <ThumbUpAction entity={entity} me={this.props.user.me}/>
+          <ThumbDownAction entity={entity} me={this.props.user.me}/>
+          {!isOwner && <WireAction entity={entity} navigation={this.props.navigation}/>}
+          <CommentsAction entity={entity} navigation={this.props.navigation}/>
+          <RemindAction entity={entity}/>
+          {isOwner && <BoostAction entity={entity} navigation={this.props.navigation}/>}
         </View>
       </View>
     );
