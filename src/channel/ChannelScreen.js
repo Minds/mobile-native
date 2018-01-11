@@ -29,7 +29,6 @@ import NewsfeedList from '../newsfeed/NewsfeedList';
 /**
  * Channel Screen
  */
-
 @inject('user')
 @inject('channel')
 @inject('channelfeed')

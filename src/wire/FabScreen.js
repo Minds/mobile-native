@@ -59,7 +59,7 @@ export default class FabScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     header: (
       <View style={styles.header}>
-        <Icon size={28} name="ios-close" onPress={() => navigation.goBack()} style={styles.iconclose}/>
+        <Icon size={36} name="ios-close" onPress={() => navigation.goBack()} style={styles.iconclose}/>
       </View>
     ),
     transitionConfig: {
