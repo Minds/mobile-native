@@ -40,7 +40,7 @@ export default class MessengerSetup extends Component {
   render() {
     const unlocking = this.props.messengerList.unlocking;
 
-    const button = (unlocking) ? <CenteredLoading /> : <Button title="UNLOCK" onPress={this.unlock} />
+    const button = (unlocking) ? <View style={{height:40}}><CenteredLoading /></View> : <Button title="UNLOCK" onPress={this.unlock} />
 
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>

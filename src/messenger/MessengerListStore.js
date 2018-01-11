@@ -79,7 +79,7 @@ class MessengerListStore {
     messengerService.getCrytoKeys(password)
       .then(privateKey => {
         if (privateKey) {
-          session.setPrivateKey(privateKey);
+          session.sessionStorage.setPrivateKey(privateKey);
           this.setPrivateKey(privateKey);
         }
       })

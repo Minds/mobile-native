@@ -21,6 +21,10 @@ import BoostsCarousel from './boosts/BoostsCarousel';
 @observer
 export default class NewsfeedScreen extends Component {
 
+  state = {
+    active: false
+  }
+
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <Icon name="md-home" size={24} color={tintColor} />
@@ -35,10 +39,21 @@ export default class NewsfeedScreen extends Component {
     this.props.newsfeed.loadBoosts();
 
     // on tap news feed again refresh
-    this.dispose = this.props.tabs.onState((state) => {
+    this.disposeState = this.props.tabs.onState((state) => {
       if (!state.previousScene) return;
       if (state.previousScene.key == "Newsfeed" && state.previousScene.key == state.scene.route.key) {
         this.props.newsfeed.refresh();
+      }
+    });
+
+    /**
+     * Set to active when is the selected tab
+     */
+    this.disposeTab = this.props.tabs.onTab(tab => {
+      let active = false;
+      if (tab == 'Newsfeed') active = true;
+      if (this.state.active != active) {
+        this.setState({active});
       }
     });
   }
@@ -47,7 +62,7 @@ export default class NewsfeedScreen extends Component {
    * Dispose autorun of tabstate
    */
   componentWillUnmount() {
-    this.dispose();
+    this.disposeState();
   }
 
   render() {

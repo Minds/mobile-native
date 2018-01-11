@@ -26,10 +26,14 @@ import { ComponentsStyle } from '../styles/Components';
 import { CommonStyle } from '../styles/Common';
 import shareService from '../share/ShareService';
 
-@inject('user')
+/**
+ * More screen (menu)
+ */
+@inject('user', 'tabs')
 export default class MoreScreen extends Component {
 
   state = {
+    active: false,
     activities: [],
     refreshing: false
   }
@@ -40,7 +44,33 @@ export default class MoreScreen extends Component {
     )
   }
 
+  /**
+   * On component will mount
+   */
+  componentWillMount() {
+    // Set to active when is the selected tab
+    this.disposeTab = this.props.tabs.onTab(tab => {
+      let active = false;
+      if (tab == 'More') active = true;
+      if (this.state.active != active) {
+        this.setState({ active });
+      }
+    });
+  }
+
+  /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    this.disposeTab();
+  }
+
   render() {
+    // if tab is not active we return a blank view
+    if (!this.state.active) {
+      return <View style={CommonStyle.flexContainer} />
+    }
+
     const list = [
       {
         name: 'Blogs',

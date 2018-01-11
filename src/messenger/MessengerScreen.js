@@ -21,18 +21,43 @@ import ConversationView from './conversation/ConversationView';
 import SearchView from '../common/components/SearchView';
 import debounce from '../common/helpers/debounce';
 import MessengerSetup from './MessengerSetup';
+import { CommonStyle } from '../styles/Common';
 
 /**
  * Messenger Conversarion List Screen
  */
-@inject('messengerList')
+@inject('messengerList', 'tabs')
 @observer
 export default class MessengerScreen extends Component {
+  state = {
+    active: false,
+  }
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <Icon name="md-chatbubbles" size={24} color={tintColor} />
     )
+  }
+
+  /**
+   * On component will mount
+   */
+  componentWillMount() {
+    // Set to active when is the selected tab
+    this.disposeTab = this.props.tabs.onTab(tab => {
+      let active = false;
+      if (tab == 'Messenger') active = true;
+      if (this.state.active != active) {
+        this.setState({ active });
+      }
+    });
+  }
+
+  /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    this.disposeTab();
   }
 
   searchDebouncer = debounce((search) => {
@@ -45,8 +70,16 @@ export default class MessengerScreen extends Component {
   render() {
     const messengerList = this.props.messengerList;
 
+    // this must be before the active check in order to be observed by the component
+    const shouldSetup = !messengerList.configured;
+
+    // if tab is not active we return a blank view
+    if (!this.state.active) {
+      return <View style={CommonStyle.flexContainer} />
+    }
+
     // show setup !configured yet
-    if (!messengerList.configured) {
+    if (shouldSetup) {
       return <MessengerSetup/>
     }
 

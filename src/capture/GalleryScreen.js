@@ -100,7 +100,6 @@ export default class GalleryScreen extends Component {
    * render list tile
    */
   renderTile = (row) => {
-    console.log(row.item)
     return (
       <TouchableOpacity style={styles.tileImage} onPress={() => this.setState({imageUri: row.item.node.image.uri})}>
         <Image
