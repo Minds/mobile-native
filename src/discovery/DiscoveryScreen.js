@@ -38,6 +38,7 @@ export default class DiscoveryScreen extends Component {
   col = 3;
 
   state = {
+    active: false,
     itemHeight: 0,
     isModalVisible: false,
   }
@@ -52,31 +53,36 @@ export default class DiscoveryScreen extends Component {
    * Load data on mount
    */
   componentWillMount() {
-    const params = this.props.navigation.state.params;
-    const q = (params) ? params.q : false;
-
-    // on leave tab clear list to free memory
-    this.dispose = this.props.tabs.onState((state) => {
-      if (!state.previousScene) return;
-
-      if (state.scene.route.key == "Discovery") {
-        if (q) {
-          this.props.discovery.search(q);
-        } else {
-          this.props.discovery.loadList();
-        }
-      }
-      if (state.previousScene.key == "Discovery" && state.scene.route.key != "Discovery") {
+    // Set to active when is the selected tab
+    this.disposeTab = this.props.tabs.onTab(tab => {
+      let active = false;
+      if (tab == 'Discovery') {
+        this._loadData();
+        active = true;
+      } else {
         this.props.discovery.list.clearList();
       }
+      if (this.state.active != active) {
+        this.setState({ active });
+      }
     });
+  }
+
+  _loadData() {
+    const params = this.props.navigation.state.params;
+    const q = (params) ? params.q : false;
+    if (q) {
+      this.props.discovery.search(q);
+    } else {
+      this.props.discovery.loadList();
+    }
   }
 
   /**
    * Dispose autorun of tabstate
    */
   componentWillUnmount() {
-    this.dispose();
+    this.disposeTab();
   }
 
   /**

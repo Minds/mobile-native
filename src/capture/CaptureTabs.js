@@ -13,6 +13,10 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+import {
+  inject
+} from 'mobx-react/native'
+
 import { Button } from 'react-native-elements';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -23,12 +27,15 @@ import GalleryScreen from './GalleryScreen';
 import Poster from '../newsfeed/Poster';
 
 import { uploadAttachment } from '../newsfeed/NewsfeedService';
+import { CommonStyle } from '../styles/Common';
 
 /**
  * Capture tab
  */
+@inject('tabs')
 export default class CaptureTab extends Component {
   state = {
+    active: false,
     screen: 'gallery',
     imageUri: '',
     attachmentGuid: '',
@@ -43,11 +50,37 @@ export default class CaptureTab extends Component {
   }
 
   /**
+   * On component will mount
+   */
+  componentWillMount() {
+    // Set to active when is the selected tab
+    this.disposeTab = this.props.tabs.onTab(tab => {
+      let active = false;
+      if (tab == 'Capture') active = true;
+      if (this.state.active != active) {
+        this.setState({ active });
+      }
+    });
+  }
+
+  /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    this.disposeTab();
+  }
+
+  /**
    * Render
    */
   render() {
+    // if tab is not active we return a blank view
+    if (!this.state.active) {
+      return <View style={CommonStyle.flexContainer}/>
+    }
+
     return (
-      <View style={{flex:1}}>
+      <View style={CommonStyle.flexContainer}>
         {this.loadScreen()}
         { this.state.screen != 'poster' ?
           <View style={{height:35}}>
