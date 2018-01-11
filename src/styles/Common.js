@@ -192,6 +192,9 @@ export const CommonStyle = StyleSheet.create({
   fontXL: {
     fontSize: 18
   },
+  fontXXL: {
+    fontSize: 24
+  },
 
   //position
   positionAbsolute:{

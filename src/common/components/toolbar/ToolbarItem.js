@@ -20,7 +20,8 @@ export default class ToolbarItem extends PureComponent {
       value,
       selected,
       onPress,
-      iconType
+      iconType,
+      iconSize
     }  = this.props;
 
     let IconType;
@@ -33,7 +34,7 @@ export default class ToolbarItem extends PureComponent {
 
     return (
       <TouchableOpacity style={styles.button} onPress={() => onPress(value)}>
-        <IconType name={icon} size={18} color={selected ? selectedcolor : color} />
+        <IconType name={icon} size={iconSize||18} color={selected ? selectedcolor : color} />
         <Text style={selected ? styles.buttonSelectedText : styles.buttonText}>{text}</Text>
       </TouchableOpacity>
     );
@@ -46,11 +47,13 @@ const color = '#444'
 const styles = StyleSheet.create({
   buttonSelectedText: {
     paddingTop: 5,
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 'bold',
+    textAlign: 'center',
     color: selectedcolor
   },
   buttonText: {
+    textAlign: 'center',
     paddingTop: 5,
     fontSize: 10
   },

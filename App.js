@@ -30,6 +30,7 @@ import ActivityScreen from './src/newsfeed/ActivityScreen';
 import ViewImageScreen from './src/media/ViewImageScreen';
 import BlockchainSettingsScreen from "./src/blockchain/BlockchainSettingsScreen";
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
+import BoostScreen from './src/boost/BoostScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import boost from './src/boost/BoostStore';
@@ -86,6 +87,9 @@ setNativeExceptionHandler((exceptionString) => {
 const Stack = StackNavigator({
   Loading: {
     screen: LoadingScreen,
+  },
+  Boost: {
+    screen: BoostScreen,
   },
   Login: {
     screen: LoginScreen,

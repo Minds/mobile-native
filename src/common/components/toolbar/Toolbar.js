@@ -36,8 +36,18 @@ export default class Toolbar extends PureComponent {
    * Render
    */
   render() {
-    options = this.props.options;
 
+    const {
+      disableBorder,
+      options
+    } = this.props;
+
+    const calcStyle = {};
+
+    if (disableBorder) {
+      calcStyle.borderBottomWidth = 0;
+      calcStyle.borderTopWidth = 0;
+    }
 
     // buttons
     const buttons = options.map(data => {
@@ -55,7 +65,7 @@ export default class Toolbar extends PureComponent {
     });
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, calcStyle]}>
         <View style={styles.topbar}>
         {buttons}
         </View>
@@ -69,7 +79,7 @@ const color = '#444'
 
 const styles = StyleSheet.create({
   container: {
-    height: 65,
+    //height: 65,
     display: 'flex',
     flexDirection: 'row',
     paddingTop: 12,
