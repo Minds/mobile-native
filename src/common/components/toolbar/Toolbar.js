@@ -6,7 +6,9 @@ import {
 
 import ToolbarItem from './ToolbarItem';
 
-
+/**
+ * Toolbar component
+ */
 export default class Toolbar extends PureComponent {
 
   state = {
@@ -54,6 +56,10 @@ export default class Toolbar extends PureComponent {
       return (
         <ToolbarItem
           text={data.text}
+          subtext={data.subtext}
+          selectedTextStyle={data.selectedTextStyle}
+          textStyle={data.textStyle}
+          subTextSyle={data.subTextSyle}
           icon={data.icon}
           key={data.value}
           value={data.value}

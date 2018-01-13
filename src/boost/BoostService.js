@@ -25,3 +25,7 @@ export function rejectBoost(guid) {
 export function acceptBoost(guid) {
   return api.put('api/v1/boost/peer/' + guid);
 }
+
+export function getRates() {
+  return api.get(`api/v1/boost/rates`);
+}

@@ -30,7 +30,7 @@ import ActivityScreen from './src/newsfeed/ActivityScreen';
 import ViewImageScreen from './src/media/ViewImageScreen';
 import BlockchainSettingsScreen from "./src/blockchain/BlockchainSettingsScreen";
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
-import BoostScreen from './src/boost/BoostScreen';
+import BoostScreen from './src/boost/creator/BoostScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import boost from './src/boost/BoostStore';
