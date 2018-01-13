@@ -39,7 +39,7 @@ export default class Poster extends Component {
         <View style={styles.posterWrapper}>
           <View style={styles.poster}>
             <TextInput
-              style={{flex: 5}}
+              style={{flex: 5, minHeight:40}}
               editable = {true}
               placeholder = 'Speak your mind...'
               placeholderTextColor = '#ccc'
