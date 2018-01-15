@@ -4,16 +4,16 @@ import { btoa } from 'abab';
 
 class ApiService {
 
-  async buildHeaders() {
+  buildHeaders() {
     const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
       accessToken = session.token,
-      headers = new Headers();
+      headers = {};
 
     if (basicAuth) {
-      headers.append('Authorization', `Basic ${btoa(basicAuth)}`);
+      headers.Authorization = `Basic ${btoa(basicAuth)}`;
     } else if (accessToken) {
       // Send via header if basic auth is not enabled
-      headers.append('Authorization', `Bearer ${accessToken.toString()}`);
+      headers.Authorization = `Bearer ${accessToken.toString()}`;
     }
 
     return headers;
@@ -47,7 +47,7 @@ class ApiService {
 
   async get(url, params={}) {
     const paramsString = await this.buildParamsString(params);
-    const headers = await this.buildHeaders();
+    const headers = this.buildHeaders();
 
     return new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { headers })
@@ -79,7 +79,7 @@ class ApiService {
 
   async post(url, body={}) {
     const paramsString = await this.buildParamsString({});
-    const headers = await this.buildHeaders();
+    const headers = this.buildHeaders();
 
     return new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers })
@@ -107,7 +107,7 @@ class ApiService {
 
   async put(url, body={}) {
     const paramsString = await this.buildParamsString({});
-    const headers = await this.buildHeaders();
+    const headers = this.buildHeaders();
 
     return new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers })
@@ -135,7 +135,7 @@ class ApiService {
 
   async delete(url, body={}) {
     const paramsString = await this.buildParamsString({});
-    const headers = await this.buildHeaders();
+    const headers = this.buildHeaders();
 
     return new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers })
