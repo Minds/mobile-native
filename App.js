@@ -3,7 +3,12 @@ import './shim'
 import crypto from "crypto"; // DO NOT REMOVE!
 
 import React, { Component } from 'react';
-import { StackNavigator } from 'react-navigation';
+
+import {
+  Observer,
+} from 'mobx-react/native'
+
+import { StackNavigator, addNavigationHelpers } from 'react-navigation';
 import { Alert } from 'react-native';
 import { Provider } from 'mobx-react/native'; // import from mobx-react/native instead of mobx-react fix test
 
@@ -52,6 +57,8 @@ import groupView from './src/groups/GroupViewStore';
 import blockchain from './src/blockchain/BlockchainStore';
 import keychain from './src/keychain/KeychainStore';
 import tabs from './src/tabs/TabsStore';
+
+import NavigatorStore from './src/common/stores/NavigationStore';
 
 /**
  * Just for testing. We can call an endpoint here to report the exception
@@ -156,6 +163,9 @@ const Stack = StackNavigator({
   },
 });
 
+// build navigation store
+const navigatorStore = new NavigatorStore(Stack);
+
 // Stores
 const stores = {
   newsfeed,
@@ -177,7 +187,8 @@ const stores = {
   groupView,
   blockchain,
   keychain,
-  tabs
+  tabs,
+  navigatorStore
 };
 
 // clear states on logout
@@ -189,10 +200,16 @@ sessionService.onLogout(() => {
 });
 
 export default class App extends Component {
+
   render() {
     const app = (
       <Provider key="app" {...stores}>
-        <Stack />
+        <Observer>{
+        () => <Stack navigation={addNavigationHelpers({
+          dispatch: navigatorStore.dispatch,
+          state: navigatorStore.navigationState,
+        })} />
+      }</Observer>
       </Provider>
     );
 

@@ -27,11 +27,10 @@ import { CommonStyle } from '../styles/Common';
 
 import Toolbar from '../common/components/toolbar/Toolbar';
 
-
 /**
  * Discovery screen
  */
-@inject('discovery', 'tabs')
+@inject('discovery', 'navigatorStore')
 @observer
 export default class DiscoveryScreen extends Component {
 
@@ -50,24 +49,24 @@ export default class DiscoveryScreen extends Component {
   }
 
   /**
-   * Load data on mount
+   * On component will mount
    */
   componentWillMount() {
-    // Set to active when is the selected tab
-    this.disposeTab = this.props.tabs.onTab(tab => {
-      let active = false;
-      if (tab == 'Discovery') {
-        this._loadData();
-        active = true;
-      } else {
-        this.props.discovery.list.clearList();
-      }
-      if (this.state.active != active) {
-        this.setState({ active });
-      }
+
+    // load data on enter
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Discovery',(s) => {
+      this._loadData();
+    });
+
+    // clear data on leave
+    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Discovery',(s) => {
+      this.props.discovery.list.clearList();
     });
   }
 
+  /**
+   * Load data
+   */
   _loadData() {
     const params = this.props.navigation.state.params;
     const q = (params) ? params.q : false;
@@ -79,10 +78,11 @@ export default class DiscoveryScreen extends Component {
   }
 
   /**
-   * Dispose autorun of tabstate
+   * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    this.disposeTab();
+    this.disposeEnter();
+    this.disposeLeave();
   }
 
   /**
