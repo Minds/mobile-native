@@ -17,6 +17,8 @@ import FastImage from 'react-native-fast-image';
 import { MINDS_CDN_URI } from '../../config/Config';
 import formatDate from '../../common/helpers/date'
 
+import api from '../../common/services/api.service';
+
 /**
  * Blogs List Item
  */
@@ -30,7 +32,7 @@ export default class ListItem extends PureComponent {
   render() {
     const blog = this.props.blog;
     const styles = this.props.styles;
-    const image = { uri: blog.thumbnail_src };
+    const image = { uri: blog.thumbnail_src, headers: api.buildHeaders()};
 
     return (
       <TouchableOpacity style={styles.listitem} onPress={this.navToBlog} >

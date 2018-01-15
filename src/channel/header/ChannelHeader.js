@@ -28,10 +28,12 @@ import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 
 import colors from '../../styles/Colors'
+
+import api from '../../common/services/api.service';
+
 /**
  * Channel Header
  */
-
 @observer
 export default class ChannelHeader extends Component {
 
@@ -100,7 +102,7 @@ export default class ChannelHeader extends Component {
     const channel = this.props.channel.channel;
     const styles  = this.props.styles;
     const avatar  = { uri: this.getAvatar() };
-    const iurl    = { uri: this.getBannerFromChannel() };
+    const iurl = { uri: this.getBannerFromChannel(), headers: api.buildHeaders() };
 
     return (
       <View>
@@ -123,9 +125,9 @@ export default class ChannelHeader extends Component {
             </View>
             <View style={styles.buttonscol}>
               {this.getActionButton()}
-              { this.props.me.guid !== this.props.channel.channel.guid? 
+              { this.props.me.guid !== this.props.channel.channel.guid?
                 <ChannelActions channel={this.props.channel} me={this.props.me}></ChannelActions> : <View></View>
-              }             
+              }
             </View>
           </View>
           <Text style={styles.briefdescription}>{channel.briefdescription}</Text>
