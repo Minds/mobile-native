@@ -4,8 +4,6 @@ import { observer } from 'mobx-react/native'
 
 import Activity from './activity/Activity';
 
-import { OptimizedFlatList } from 'react-native-optimized-flatlist';
-
 /**
  * News feed list component
  */
@@ -30,7 +28,7 @@ export default class NewsfeedList extends Component {
    */
   render() {
     return (
-      <OptimizedFlatList
+      <FlatList
         ListHeaderComponent={this.props.header}
         data={this.props.newsfeed.list.entities.slice()}
         renderItem={this.renderActivity}
@@ -40,8 +38,9 @@ export default class NewsfeedList extends Component {
         onEndReached={this.loadFeed}
         onEndThreshold={0}
         style={styles.listView}
-        initialNumToRender={3}
-        removeClippedSubviews={true}
+        initialNumToRender={6}
+        windowSize={11}
+        removeClippedSubviews={false}
       />
     );
   }

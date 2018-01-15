@@ -16,6 +16,10 @@ import {
   observer
 } from 'mobx-react/native'
 
+import { createImageProgress } from 'react-native-image-progress';
+import ProgressCircle from 'react-native-progress/Circle';
+
+const ProgressFastImage = createImageProgress(FastImage);
 
 export default class DiscoveryTile extends PureComponent {
 
@@ -24,20 +28,22 @@ export default class DiscoveryTile extends PureComponent {
    */
   _navToView = () => {
     if (this.props.navigation) {
-      this.props.navigation.navigate('Activity', { entity: this.props.entity.item });
+      this.props.navigation.navigate('Activity', { entity: this.props.entity });
     }
   }
 
   render() {
-    const url = { uri: MINDS_CDN_URI + 'api/v1/archive/thumbnails/' + this.props.entity.item.guid + '/medium' };
+    const url = { uri: MINDS_CDN_URI + 'api/v1/archive/thumbnails/' + this.props.entity.guid + '/medium' };
 
     const style = { width: this.props.size, height: this.props.size};
 
     return (
       <TouchableOpacity onPress={this._navToView} style={style}>
-        <FastImage
+        <ProgressFastImage
+          indicator={ProgressCircle}
           source={ url }
           style={style}
+          threshold={150}
         />
       </TouchableOpacity>
     );
