@@ -29,7 +29,7 @@ import shareService from '../share/ShareService';
 /**
  * More screen (menu)
  */
-@inject('user', 'tabs')
+@inject('user', 'navigatorStore')
 export default class MoreScreen extends Component {
 
   state = {
@@ -48,21 +48,23 @@ export default class MoreScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
-    // Set to active when is the selected tab
-    this.disposeTab = this.props.tabs.onTab(tab => {
-      let active = false;
-      if (tab == 'More') active = true;
-      if (this.state.active != active) {
-        this.setState({ active });
-      }
+    // load data on enter
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('More', (s) => {
+      this.setState({ active: true });
+    });
+
+    // clear data on leave
+    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('More', (s) => {
+      this.setState({ active: false });
     });
   }
 
   /**
-   * On component will unmount
+   * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    this.disposeTab();
+    this.disposeEnter();
+    this.disposeLeave();
   }
 
   render() {

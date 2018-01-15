@@ -26,7 +26,7 @@ import { CommonStyle } from '../styles/Common';
 /**
  * Messenger Conversarion List Screen
  */
-@inject('messengerList', 'tabs')
+@inject('messengerList', 'navigatorStore')
 @observer
 export default class MessengerScreen extends Component {
   state = {
@@ -43,21 +43,23 @@ export default class MessengerScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
-    // Set to active when is the selected tab
-    this.disposeTab = this.props.tabs.onTab(tab => {
-      let active = false;
-      if (tab == 'Messenger') active = true;
-      if (this.state.active != active) {
-        this.setState({ active });
-      }
+    // load data on enter
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Messenger', (s) => {
+      this.setState({ active: true });
+    });
+
+    // clear data on leave
+    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Messenger', (s) => {
+      this.setState({ active: false });
     });
   }
 
   /**
-   * On component will unmount
+   * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    this.disposeTab();
+    this.disposeEnter();
+    this.disposeLeave();
   }
 
   searchDebouncer = debounce((search) => {

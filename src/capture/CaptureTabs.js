@@ -32,7 +32,7 @@ import { CommonStyle } from '../styles/Common';
 /**
  * Capture tab
  */
-@inject('tabs')
+@inject('navigatorStore')
 export default class CaptureTab extends Component {
   state = {
     active: false,
@@ -53,22 +53,25 @@ export default class CaptureTab extends Component {
    * On component will mount
    */
   componentWillMount() {
-    // Set to active when is the selected tab
-    this.disposeTab = this.props.tabs.onTab(tab => {
-      let active = false;
-      if (tab == 'Capture') active = true;
-      if (this.state.active != active) {
-        this.setState({ active });
-      }
+    // load data on enter
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Capture', (s) => {
+      this.setState({ active: true });
+    });
+
+    // clear data on leave
+    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Capture', (s) => {
+      this.setState({ active: false });
     });
   }
 
   /**
-   * On component will unmount
+   * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    this.disposeTab();
+    this.disposeEnter();
+    this.disposeLeave();
   }
+
 
   /**
    * Render

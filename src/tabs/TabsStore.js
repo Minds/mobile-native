@@ -5,7 +5,6 @@ import { observable, action, reaction } from 'mobx'
  */
 class TabsStore {
   @observable.ref tabstate = {};
-  @observable currentTab = 'Newsfeed';
 
   /**
    * Set state
@@ -14,7 +13,6 @@ class TabsStore {
   @action
   setState(state) {
     this.tabstate = state;
-    this.currentTab = state.scene.route.key;
   }
 
   /**
@@ -28,19 +26,6 @@ class TabsStore {
       () => this.tabstate,
       state => fn(state),
       { fireImmediately: true}
-    );
-  }
-
-  /**
-   * Run on tab change
-   * @return dispose (remember to dispose!)
-   * @param {function} fn
-   */
-  onTab(fn) {
-    return reaction(
-      () => this.currentTab,
-      tab => fn(tab),
-      { fireImmediately: true }
     );
   }
 }
