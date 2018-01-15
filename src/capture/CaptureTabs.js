@@ -23,6 +23,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import Topbar from '../topbar/Topbar';
 import CaptureScreen from './CaptureScreen';
+import CaptureVideo from './CaptureVideo';
 import GalleryScreen from './GalleryScreen';
 import Poster from '../newsfeed/Poster';
 
@@ -108,13 +109,13 @@ export default class CaptureTab extends Component {
   /**
    * Submit to poster
    */
-  submitToPoster = (imageUri) => {
+  submitToPoster = (imageUri, type) => {
     this.setState({
       isPosting : true,
     });
     uploadAttachment('api/v1/archive/image', {
       uri: imageUri,
-      type: 'image/jpeg',
+      type: type,
       name: imageUri.substring(imageUri.lastIndexOf('/') + 1)
     }).then((res) => {
       this.setState({
@@ -158,7 +159,7 @@ export default class CaptureTab extends Component {
         return <CaptureScreen isPosting={this.state.isPosting} submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
         break;
       case 'captureVideo':
-        return <CaptureScreen isPosting={this.state.isPosting} submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
+        return <CaptureVideo isPosting={this.state.isPosting} submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
         break;
       case 'poster':
         return <Poster reset={() => this.resetState()} attachmentGuid={this.state.attachmentGuid} imageUri={this.state.imageUri}  />;

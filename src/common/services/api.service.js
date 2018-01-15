@@ -162,17 +162,18 @@ class ApiService {
   }
 
   async upload(url, file, data) {
+    const paramsString = await this.buildParamsString({});
     var formData = new FormData();
     formData.append('file', file);
     for (var key in data) {
       formData.append(key, data[key]);
     }
-    const access_token = session.token;
+    const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth;
     return new Promise((resolve, reject)=>{
-      fetch(MINDS_URI + url, {
+      fetch(MINDS_URI + url + paramsString, {
         method: 'POST',
         headers: {
-          'Authorization':  'Bearer ' + access_token.toString() ,
+          'Authorization': `Basic ${btoa(basicAuth)}` ,
           'Accept': 'application/json',
           'Content-Type': 'multipart/form-data;'
         },

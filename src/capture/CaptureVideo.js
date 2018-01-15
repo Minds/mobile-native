@@ -5,24 +5,27 @@ import React, {
 import {
     StyleSheet,
     ActivityIndicator,
-    Image,
+    Text,
     View,
 } from 'react-native';
 
+
+
+import Video from "react-native-video";
 import Icon from 'react-native-vector-icons/Ionicons';
 import Camera from 'react-native-camera';
-
 import Poster from '../newsfeed/Poster';
 
 /**
  * Capture screen
  */
-export default class CaptureScreen extends Component {
+export default class CaptureVideo extends Component {
 
   state = {
-    isImageTaken: false,
+    isRecordingEnded: false,
     isPosting: false,
-    imageUri: ''
+    isRecording: false,
+    videoPath: '',
   }
 
   static navigationOptions = {
@@ -37,7 +40,7 @@ export default class CaptureScreen extends Component {
   render() {
     return (
       <View style={styles.screenWrapper}>
-        { this.state.isImageTaken ?
+        { this.state.isRecordingEnded ?
           <View style={styles.selectedImage}>
             <View style={styles.submitButton}>
               { this.props.isPosting || this.state.isPosting ?
@@ -45,8 +48,8 @@ export default class CaptureScreen extends Component {
                 <Icon onPress={() => this.upload()} color="white" name="md-send" size={28}></Icon>
               }
             </View>
-            <Image
-              source={{ uri : this.state.imageUri }}
+            <Video
+              source={{ uri : this.state.path }}
               style={styles.preview}
             />
           </View> :
@@ -56,34 +59,38 @@ export default class CaptureScreen extends Component {
             }}
             style={styles.preview}
             aspect={Camera.constants.Aspect.fill}>
-            <Icon style={styles.capture} onPress={() => this.takePicture()} name="md-camera" size={24}></Icon>
+            { !this.state.isRecording ?
+              <Icon style={styles.capture} onPress={() => this.takeVid()} name="md-videocam" size={24}></Icon>:
+              <Icon style={styles.capture} onPress={() => this.stopVid()} name="ios-square" size={24}></Icon>
+            }
           </Camera>
         }
       </View>
     );
   }
 
-  upload() {
-    this.setState({
-      isPosting: true,
-    });
-    this.props.submitToPoster(this.state.imageUri, 'image/jpeg');
+  takeVid = () => {
+    if (this.camera) {
+      this.camera.capture({mode: Camera.constants.CaptureMode.video, captureQuality: 'low'})
+          .then((data) => {
+            this.setState({
+              isPosting: true,
+              videoPath : data.path,
+              isRecordingEnded: true,
+              isRecording: false,
+            });
+            this.props.submitToPoster(this.state.videoPath, 'video/mp4');
+          }).catch(err => console.error(err));
+      this.setState({
+        isRecording: true
+      });
+    }
   }
 
-  takePicture() {
-    const options = {};
-    this.setState({
-      isPosting: true,
-    });
-    this.camera.capture({metadata: options})
-      .then((data) => {
-        this.setState({
-          isPosting: false,
-          imageUri : data.mediaUri,
-          isImageTaken: true
-        });
-      })
-      .catch(err => console.error(err));
+  stopVid = () => {
+    if (this.camera) {
+      this.camera.stopCapture();
+    }
   }
 }
 
