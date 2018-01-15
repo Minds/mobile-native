@@ -8,9 +8,9 @@ export default class CenteredLoading extends Component {
 
   render() {
     return (
-    <View style={styles.activitycontainer}>
-      <ActivityIndicator size={'large'} />
-    </View>
+      <View style={styles.activitycontainer} onLayout={this.props.onLayout}>
+        <ActivityIndicator size={'large'} />
+      </View>
     );
   }
 }

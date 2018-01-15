@@ -5,6 +5,7 @@ import React, {
 import {
     StyleSheet,
     Text,
+    FlatList,
     View
 } from 'react-native';
 
@@ -14,7 +15,6 @@ import {
 } from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import { OptimizedFlatList } from 'react-native-optimized-flatlist';
 import Modal from 'react-native-modal'
 
 import DiscoveryTile from './DiscoveryTile';
@@ -89,10 +89,10 @@ export default class DiscoveryScreen extends Component {
    * Adjust tiles to 1/cols size
    */
   onLayout = e => {
-    const width = e.nativeEvent.layout.width
+    const width = e.nativeEvent.layout.width;
     this.setState({
       itemHeight: width / this.cols,
-    })
+    });
   }
 
   closeOptionsModal = () => {
@@ -103,8 +103,8 @@ export default class DiscoveryScreen extends Component {
    * Calculate item layout for better performance on tiles
    */
   getItemLayout = (data, index) => {
-    const { itemHeight } = this.state
-    return { length: itemHeight, offset: itemHeight * index, index }
+    const { itemHeight } = this.state;
+    return { length: itemHeight, offset: itemHeight * index, index };
   }
 
   /**
@@ -114,7 +114,6 @@ export default class DiscoveryScreen extends Component {
     let body;
 
     const discovery = this.props.discovery;
-
 
     if (!discovery.list.loaded) {
       body = <CenteredLoading />
@@ -137,7 +136,7 @@ export default class DiscoveryScreen extends Component {
           break;
       }
       body = (
-        <OptimizedFlatList
+        <FlatList
           onLayout={this.onLayout}
           key={'discofl' + this.cols} // we need to force component redering if we change cols
           data={discovery.list.entities.slice()}
@@ -151,6 +150,8 @@ export default class DiscoveryScreen extends Component {
           style={styles.listView}
           numColumns={this.cols}
           horizontal={false}
+          windowSize={9}
+          removeClippedSubviews={true}
           getItemLayout={getItemLayout}
           columnWrapperStyle={columnWrapperStyle}
         />
@@ -233,7 +234,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderTile = (row) => {
     return (
-      <DiscoveryTile entity={row} size={this.state.itemHeight} navigation={this.props.navigation}/>
+      <DiscoveryTile entity={row.item} size={this.state.itemHeight} navigation={this.props.navigation}/>
     );
   }
   /**
