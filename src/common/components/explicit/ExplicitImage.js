@@ -6,17 +6,19 @@ import {observer} from "mobx-react";
 
 import {
   StyleSheet,
-  ActivityIndicator,
-  TouchableOpacity,
-  Image,
   findNodeHandle,
   View
 } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
+import { createImageProgress } from 'react-native-image-progress';
+import ProgressCircle from 'react-native-progress/Circle';
 
 import { BlurView, VibrancyView } from 'react-native-blur';
 import { Icon } from 'react-native-elements';
+
+
+const ProgressFastImage = createImageProgress(FastImage);
 
 @observer
 export default class ExplicitImage extends Component {
@@ -32,7 +34,13 @@ export default class ExplicitImage extends Component {
   render() {
     return (
       <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-        <FastImage source={ this.props.source } onLoadEnd={this.imageLoaded.bind(this)} ref={(img) => { this.backgroundImage = img; }} style={styles.absolute}/>
+        <ProgressFastImage
+          indicator={ProgressCircle}
+          threshold={150}
+          source={ this.props.source }
+          onLoadEnd={this.imageLoaded.bind(this)}
+          ref={(img) => { this.backgroundImage = img; }} style={styles.absolute}
+        />
         { (this.props.entity.mature && this.state.viewRef) ?
           <BlurView
             style={styles.absolute}
