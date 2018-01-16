@@ -63,7 +63,7 @@ class GroupViewStore {
    * @param {string} guid
    */
   loadGroup(guid) {
-    groupsService.loadEntity(this.props.navigation.state.params.guid)
+    groupsService.loadEntity(guid)
       .then(group => {
         this.setGroup(group);
       });
