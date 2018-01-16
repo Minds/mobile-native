@@ -87,7 +87,7 @@ export default class MoreScreen extends Component {
       },{
         name: 'Help & Support',
         onPress: () => {
-          this.props.navigation.navigate('GroupsJoin', { guid: '100000000000000681'});
+          this.props.navigation.navigate('GroupView', { guid: '100000000000000681'});
         }
       },{
         name: 'Invite',
@@ -132,15 +132,15 @@ export default class MoreScreen extends Component {
           <FastImage
             resizeMode={FastImage.resizeMode.cover}
             style={[ComponentsStyle.logo, CommonStyle.marginTop2x]}
-            source={require('../assets/logos/medium-white.png')}
+            source={require('../assets/logos/medium.png')}
           />
           <View style={styles.footer}>
             <Text style={styles.version} textAlign={'center'}>v1.0.0 (201712)</Text>
             <View style={styles.footercol}>
-              <Text style={CommonStyle.colorWhite}>FAQ</Text>
-              <Text style={CommonStyle.colorWhite}>Code</Text>
-              <Text style={CommonStyle.colorWhite}>Terms</Text>
-              <Text style={CommonStyle.colorWhite}>Privacy</Text>
+              <Text style={CommonStyle.colorDark}>FAQ</Text>
+              <Text style={CommonStyle.colorDark}>Code</Text>
+              <Text style={CommonStyle.colorDark}>Terms</Text>
+              <Text style={CommonStyle.colorDark}>Privacy</Text>
             </View>
           </View>
         </View>
@@ -167,7 +167,7 @@ export default class MoreScreen extends Component {
 
 const styles = StyleSheet.create({
   logoBackground: {
-    backgroundColor: '#444'
+    backgroundColor: '#FFF'
   },
 	screen: {
     //paddingTop: 20,
@@ -193,6 +193,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     fontWeight: 'bold',
-    color: 'white'
+    color: '#444'
   }
 });
