@@ -8,7 +8,7 @@ import {
   Observer,
 } from 'mobx-react/native'
 
-import { StackNavigator, addNavigationHelpers } from 'react-navigation';
+import { StackNavigator, addNavigationHelpers, NavigationActions } from 'react-navigation';
 import { Alert } from 'react-native';
 import { Provider } from 'mobx-react/native'; // import from mobx-react/native instead of mobx-react fix test
 
@@ -59,6 +59,7 @@ import keychain from './src/keychain/KeychainStore';
 import tabs from './src/tabs/TabsStore';
 
 import NavigatorStore from './src/common/stores/NavigationStore';
+import { BackHandler } from "react-native";
 
 /**
  * Just for testing. We can call an endpoint here to report the exception
@@ -199,8 +200,34 @@ sessionService.onLogout(() => {
   user.clearUser();
 });
 
+/**
+ * App
+ */
 export default class App extends Component {
 
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  /**
+   * Handle hardware back button
+   */
+  onBackPress = () => {
+    const { dispatch } = this.props;
+    if (navigatorStore.navigationState.index === 0) {
+      return false;
+    }
+    navigatorStore.dispatch(NavigationActions.back());
+    return true;
+  };
+
+  /**
+   * Render
+   */
   render() {
     const app = (
       <Provider key="app" {...stores}>
