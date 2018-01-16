@@ -31,7 +31,6 @@ export default class NavigationStore {
     return this._getRouteName(this.navigationState);
   }
 
-
   /**
    * Constructor
    * @param {Navigator} nav
