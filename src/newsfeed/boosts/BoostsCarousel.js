@@ -59,10 +59,12 @@ export default class BoostsCarousel extends PureComponent {
    * On layout
    */
   _onLayout = (e) => {
-    this.setState({
-      height: this.itemsRef[this.state.activeSlide].height,
-      width: Dimensions.get('window').width,
-    });
+    setTimeout(() => {
+      this.setState({
+        height: this.itemsRef[this.state.activeSlide].height,
+        width: Dimensions.get('window').width,
+      });
+    }, 100);
   }
 
   /**

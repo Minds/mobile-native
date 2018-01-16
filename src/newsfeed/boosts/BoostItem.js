@@ -33,6 +33,7 @@ export default class BoostItem extends PureComponent {
         <Activity
           entity={this.props.entity}
           navigation={this.props.navigation}
+          disableProgress={true}
         />
       </View>
     )
