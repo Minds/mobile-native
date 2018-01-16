@@ -33,7 +33,7 @@ export default class BoostScreen extends Component {
 
   state = {
     type: 'feeds',
-    payment: 'USD',
+    payment: 'tokens',
     amount: '2500',
     rates: null,
     priority: false,
@@ -128,11 +128,11 @@ export default class BoostScreen extends Component {
     const value = this.calcBaseCharges(this.state.payment) * this.getPriorityRate(true);
 
     switch (this.state.payment) {
-      case 'USD':
+      case 'usd':
         return this.formatDolars(value) + ' USD';
-      case 'TOKENS':
+      case 'tokens':
         return value + ' TOKENS';
-      case 'REWARDS':
+      case 'rewards':
         return value + ' REWARDS';
     }
   }
@@ -141,7 +141,7 @@ export default class BoostScreen extends Component {
     // P2P should just round down amount points. It's bid based.
     if (this.state.type === 'channels') {
       switch (type) {
-        case 'REWARDS':
+        case 'rewards':
           return Math.floor(this.state.amount);
       }
       return this.state.amount;
@@ -149,17 +149,17 @@ export default class BoostScreen extends Component {
 
     // Non-P2P should do the views <-> ency conversion
     switch (type) {
-      case 'USD':
+      case 'usd':
         const usdFixRate = this.state.rates.usd / 100;
         return Math.ceil(this.state.amount / usdFixRate) / 100;
-      case 'REWARDS':
+      case 'rewards':
         return Math.floor(this.state.amount / this.state.rates.rate);
-      case 'TOKENS':
+      case 'tokens':
         const tokensFixRate = this.state.rates.tokens / 10000;
         return Math.ceil(this.state.amount / tokensFixRate) / 10000;
     }
 
-    throw new Error('Unknown ency');
+    throw new Error('Unknown currency');
   }
 
 
@@ -197,7 +197,7 @@ export default class BoostScreen extends Component {
    * Get priority
    */
   getPriority() {
-    if (this.state.type == 'channels' || this.state.payment == 'REWARDS') {
+    if (this.state.type == 'channels') {
       this.state.priority = false;
       return null;
     }
@@ -249,7 +249,7 @@ export default class BoostScreen extends Component {
         </View>
         <Divider style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]} />
         <Text style={styles.subtitleText}>PAYMEN METHOD</Text>
-        <PaymentSelector onChange={this.changePayment} valueUsd={this.formatDolars(this.calcCharges('USD'))} valueTokens={this.calcCharges('TOKENS')} valueRewards={this.calcCharges('REWARDS')}/>
+        <PaymentSelector onChange={this.changePayment} valueUsd={this.formatDolars(this.calcCharges('usd'))} valueTokens={this.calcCharges('tokens')} valueRewards={this.calcCharges('rewards')}/>
         {priority}
         <Divider style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]} />
         <Text style={styles.subtitleText}>TARGET</Text>

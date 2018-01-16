@@ -17,7 +17,7 @@ import { CommonStyle } from '../../styles/Common';
 export default class PaymentSelector extends PureComponent {
 
   state = {
-    selected: 'USD'
+    selected: 'tokens'
   }
 
   /**
@@ -33,15 +33,16 @@ export default class PaymentSelector extends PureComponent {
 
   /**
    * Get Option component
+   * @param {string} method
    * @param {string} text
    * @param {string} value
    * @param {Text} selected
    */
-  getOption(text, value, selected) {
-    const isSelected = this.state.selected == text;
+  getOption(method, text, value, selected) {
+    const isSelected = this.state.selected == method;
     const colorStlye = isSelected ? CommonStyle.colorDark : CommonStyle.colorMedium;
     return (
-      <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.paddingRight]} onPress={() => this.change(text)}>
+      <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.paddingRight]} onPress={() => this.change(method)}>
         <View>
           <Text style={[CommonStyle.fontXL, colorStlye]}>{value}</Text>
           <Text style={[CommonStyle.fontXS, colorStlye]}>{text}</Text>
@@ -56,9 +57,9 @@ export default class PaymentSelector extends PureComponent {
    */
   render() {
     const selected = <Text style={[CommonStyle.fontS, CommonStyle.colorPrimary]}>SELECTED</Text>;
-    const usd = this.getOption('USD', this.props.valueUsd, selected);
-    const rewards = this.getOption('REWARDS', this.props.valueRewards, selected);
-    const tokens = this.getOption('TOKENS', this.props.valueTokens, selected);
+    const usd = this.getOption('usd', 'USD', this.props.valueUsd, selected);
+    const rewards = this.getOption('rewards', 'REWARDS', this.props.valueRewards, selected);
+    const tokens = this.getOption('tokens', 'TOKENS', this.props.valueTokens, selected);
 
     return (
       <View style={CommonStyle.rowJustifyStart}>

@@ -16,6 +16,7 @@ class WireStore {
   @observable sending = false;
   @observable method  = 'money';
   @observable.shallow owner = null;
+  @observable recurring = false;
 
   guid = null;
 
@@ -46,20 +47,20 @@ class WireStore {
     if (this.method == 'points' && method == 'money')
       this.amount = this.amount / 500;
 
-    if (this.method == 'points' && method == 'mindscoin')
-      this.amount = (this.amount / 500) / 1024;
+    if (this.method == 'points' && method == 'tokens')
+      this.amount = this.amount / 500; // hook to live rate
 
     if (this.method == 'money' && method == 'points')
       this.amount = this.amount * 500;
 
-    if (this.method == 'money' && method == 'mindscoin')
-      this.amount = this.amount / 1024; //hook to the live mindscoin rate
+    if (this.method == 'money' && method == 'tokens')
+      this.amount = this.amount; //hook to the live tokens rate
 
-    if (this.method == 'mindscoin' && method == 'money')
-      this.amount = this.round(this.amount * 1024, 6); //hook to the live mindscoin rate
+    if (this.method == 'tokens' && method == 'money')
+      this.amount = this.round(this.amount, 2); //hook to the live tokens rate
 
-    if (this.method == 'mindscoin' && method == 'points')
-      this.amount = (this.amount * 1024) * 500;
+    if (this.method == 'tokens' && method == 'points')
+      this.amount = this.amount * 500;
 
     this.method = method;
   }
@@ -80,70 +81,50 @@ class WireStore {
         return amount.toLocaleString('en-US') + ' points';
       case 'money':
         return '$' + amount.toLocaleString('en-US');
-      case 'mindscoin':
-        return '';
+      case 'tokens':
+        return amount.toLocaleString('en-US') + ' tokens';
     }
+  }
+
+  @action
+  setRecurring(recurring) {
+    this.recurring = !!recurring;
+  }
+
+  @action
+  toggleRecurring() {
+    this.recurring = !this.recurring;
   }
 
   /**
    * Confirm and Send wire
-   * @param {callback} runs after successful wire
    */
-  send(cb) {
-    if(this.sending) return;
+  async send() {
+    if (this.sending) {
+      return;
+    }
 
-    if (this.method == 'points') {
-      Alert.alert(
-        'Are you sure?',
-        'You will send ' + this.formatAmount(this.amount) + ' to @' + this.owner.username,
-        [
-          { text: 'Cancel', onPress: () => this.canceledSend(), style: 'cancel' },
-          { text: 'OK', onPress: () => this.confirmedSend(cb) },
-        ],
-        { cancelable: false }
-      )
-    } else {
-      Alert.alert(
-        'We\'re working on it!',
-        this.method + ' is coming soon.',
-        [{ text: 'OK', onPress: () => this.canceledSend()}],
-        { cancelable: false }
-      )
+    try {
+      this.sending = true;
+
+      await wireService.send({
+        method: this.method,
+        amount: this.amount,
+        guid: this.guid,
+        owner: this.owner,
+        recurring: this.recurring
+      });
+    } catch (e) {
+      this.stopSending();
+      throw e;
+    } finally {
+      this.stopSending();
     }
   }
 
   @action
-  canceledSend() {
+  stopSending() {
     this.sending = false;
-  }
-
-  /**
-   * Send wire
-   * @param {callback} runs after successful wire
-   */
-  @action
-  confirmedSend(cb) {
-    this.sending = true;
-    wireService.send(this.method, this.amount, this.guid)
-      .then(() => {
-        this.canceledSend();
-        if (cb) {
-          setTimeout(() => {
-            cb();
-          }, 1000);
-        }
-      })
-      .catch((err) => {
-        if (!e || e.message != 'user cancelled apple pay') {
-          Alert.alert(
-            'There was a problem processing payment',
-            (err && err.message) || 'Unknown internal error',
-            [{ text: 'OK'}],
-            { cancelable: false }
-          )
-        }
-        this.canceledSend();
-      });
   }
 }
 

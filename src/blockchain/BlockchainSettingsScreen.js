@@ -20,7 +20,7 @@ import QRCode from 'react-native-qrcode';
 import { CommonStyle } from "../styles/Common";
 
 import BlockchainApiService from './BlockchainApiService';
-import Web3Service from "./Web3Service";
+import Web3Service from "./services/Web3Service";
 import StorageService from '../common/services/storage.service';
 import BlockchainSettingsOverviewView from "./BlockchainSettingsOverviewView";
 

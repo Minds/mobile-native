@@ -4,5 +4,6 @@ export default colors = {
   danger   : '#f53d3d',
   light    : '#f4f4f4',
   medium   : '#b0bec5',
-  dark     : '#222'
+  dark     : '#222222',
+  greyed   : '#cccccc',
 }

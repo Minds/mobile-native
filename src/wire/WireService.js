@@ -1,4 +1,6 @@
 import api from './../common/services/api.service';
+import BlockchainWireService from '../blockchain/services/BlockchainWireService';
+import BlockchainTokenService from '../blockchain/services/BlockchainTokenService';
 
 /**
  * Wire Service
@@ -32,35 +34,49 @@ class WireService {
 
   /**
    * Send wire
-   * @param {string} method
-   * @param {numneric} amount
-   * @param {string} guid
-   * @param {boolean} recurring
+   * @param {object} opts
    */
-  send(method, amount, guid, recurring=false) {
-    return this.getTransactionPayloads(method)
-      .then(payload => {
-        return api.post(`api/v1/wire/${guid}`, {
-          payload,
-          method,
-          amount,
-          recurring
-        });
-      });
+  async send(opts) {
+    const payload = await this.getTransactionPayloads(opts);
+
+    return await api.post(`api/v1/wire/${opts.guid}`, {
+      payload,
+      method: opts.method,
+      amount: opts.amount,
+      recurring: !!opts.recurring
+    });
   }
 
-  getTransactionPayloads(method) {
-    switch (method) {
+  async getTransactionPayloads(opts) {
+    switch (opts.method) {
       case "money":
-       return Promise.reject({ message: 'Not implemented' });
-      case "mindscoin":
-        return Promise.reject({ message: 'Not implemented' });
+       throw new Error('Not implemented');
+
+      case "tokens":
+        if (!opts.owner.eth_wallet) {
+          throw new Error('User cannot receive tokens');
+        }
+
+        if (opts.recurring) {
+          await BlockchainTokenService.increaseApproval(
+            (await BlockchainWireService.getContract()).options.address,
+            opts.amount * 11,
+            'We need you to pre-approve Minds Wire wallet for the recurring wire transactions.'
+          );
+
+          await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
+        }
+
+        return {
+          receiver: opts.owner.eth_wallet,
+          txHash: await BlockchainWireService.create(opts.owner.eth_wallet, opts.amount)
+        };
 
       case "points":
-        return Promise.resolve({});
+        return {};
     }
 
-    return Promise.reject({ message: 'Unknown method' });
+    throw new Error('Unknown method');
   }
 }
 

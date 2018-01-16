@@ -9,21 +9,27 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert
 } from 'react-native';
+
+import { CheckBox } from 'react-native-elements'
 
 import {
   observer,
   inject
 } from 'mobx-react/native'
 
+import { Button } from 'react-native-elements';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import colors from '../styles/Colors';
+import { CommonStyle } from '../styles/Common';
+
 import CenteredLoading from '../common/components/CenteredLoading';
 import RewardsCarousel from '../channel/carousel/RewardsCarousel';
-
-import { Button } from 'react-native-elements';
 
 /**
  * Wire Fab Screen
@@ -33,12 +39,13 @@ import { Button } from 'react-native-elements';
 export default class FabScreen extends Component {
 
   componentWillMount() {
-    this.props.wire.setMethod('money');
+    this.props.wire.setMethod('tokens');
     this.props.wire.setAmount(1);
 
     const owner = this.getOwner();
     this.props.wire.setGuid(owner.guid);
     this.props.wire.loadUser(owner.guid);
+    this.props.wire.setRecurring(true);
   }
 
   componentWillUnmount() {
@@ -97,9 +104,30 @@ export default class FabScreen extends Component {
     return (
       <ScrollView contentContainerStyle={styles.body}>
         {icon}
-        <Text style={styles.subtext}>Support <Text style={styles.bold}>@{ owner.username }</Text> by sending them dollars, points or Bitcoin. Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise, it's a donation.</Text>
-        <TextInput ref="input" onChangeText={this.changeInput} style={styles.input} underlineColorAndroid="transparent" value={this.props.wire.amount.toString()} keyboardType="numeric" />
+
+        <Text style={styles.subtext}>
+          Support <Text style={styles.bold}>@{ owner.username }</Text> by sending them dollars, points or Minds Tokens.
+          Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise,
+          it's a donation.
+        </Text>
+
+        <TextInput ref="input" onChangeText={this.changeInput} style={[CommonStyle.field, styles.input]} underlineColorAndroid="transparent" value={this.props.wire.amount.toString()} keyboardType="numeric" />
+
         {this.renderOptions()}
+
+        <View style={ CommonStyle.field }>
+          <CheckBox
+            title="Repeat this transaction every month"
+            checked={this.props.wire.recurring}
+            onPress={() => this.props.wire.toggleRecurring()}
+            center={true}
+            checkedIcon="check-circle-o"
+            checkedColor={ colors.primary }
+            uncheckedIcon="circle-o"
+            uncheckedColor={ colors.greyed }
+          />
+        </View>
+
         <Text style={styles.rewards}>{ owner.username }'s rewards</Text>
         <Text style={styles.lastmonth}>You have sent <Text style={styles.bold}>{txtAmount}</Text> in the last month.</Text>
 
@@ -109,18 +137,42 @@ export default class FabScreen extends Component {
           title="Send"
           buttonStyle={styles.send}
           disabled={this.props.wire.sending}
-          onPress={this.send}
+          onPress={() => this.confirmSend()}
           backgroundColor={selectedcolor}
         />
       </ScrollView>
     );
   }
 
+  confirmSend() {
+    Alert.alert(
+      'Are you sure?',
+      'You will send ' + this.props.wire.formatAmount(this.props.wire.amount) + ' to @' + this.props.wire.owner.username,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'OK', onPress: () => this.send() },
+      ],
+      { cancelable: false }
+    );
+  }
+
   /**
    * Call send and go back on success
    */
-  send = () => {
-    this.props.wire.send(() => this.props.navigation.goBack());
+  async send() {
+    try {
+      await this.props.wire.send();
+      this.props.navigation.goBack();
+    } catch (e) {
+      console.error('Wire/send()', e);
+
+      Alert.alert(
+        'There was a problem sending wire',
+        (e && e.message) || 'Unknown internal error',
+        [{ text: 'OK'}],
+        { cancelable: false }
+      )
+    }
   }
 
   /**
@@ -133,8 +185,8 @@ export default class FabScreen extends Component {
         return wire.formatAmount(wire.owner.sums.points);
       case 'money':
         return wire.formatAmount(wire.owner.sums.money);
-      case 'mindscoin':
-        return '';
+      case 'tokens':
+        return wire.formatAmount(wire.owner.sums.tokens);
     }
   }
 
@@ -154,9 +206,9 @@ export default class FabScreen extends Component {
             <Icon name="logo-usd" size={24} color={this.props.wire.method == 'money' ? selectedcolor : color} />
             <Text style={[styles.buttontext, { color: this.props.wire.method == 'money' ? selectedcolor : color}]}>Money</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => this.setMethod('mindscoin')} >
-            <Icon name="logo-bitcoin" size={24} color={this.props.wire.method == 'mindscoin' ? selectedcolor : color} />
-            <Text style={[styles.buttontext, (this.props.wire.method == 'mindscoin' ? styles.selected:null)]}>MindsCoin</Text>
+          <TouchableOpacity style={styles.button} onPress={() => this.setMethod('tokens')} >
+            <Icon name="md-bulb" size={24} color={this.props.wire.method == 'tokens' ? selectedcolor : color} />
+            <Text style={[styles.buttontext, (this.props.wire.method == 'tokens' ? styles.selected:null)]}>Tokens</Text>
           </TouchableOpacity>
         </View>
       </View>

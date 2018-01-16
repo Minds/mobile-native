@@ -33,7 +33,6 @@ class KeychainStore {
 
       unlockingSecretDispose = observe(this, 'unlockingSecret', action(change => {
         unlockingSecretDispose();
-        console.log('unlockingSecret', change);
 
         if (change.newValue) {
           resolve(change.newValue);

@@ -36,6 +36,7 @@ import ViewImageScreen from './src/media/ViewImageScreen';
 import BlockchainSettingsScreen from "./src/blockchain/BlockchainSettingsScreen";
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BoostScreen from './src/boost/creator/BoostScreen';
+import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
 
 import newsfeed from './src/newsfeed/NewsfeedStore';
 import boost from './src/boost/BoostStore';
@@ -57,6 +58,7 @@ import groupView from './src/groups/GroupViewStore';
 import blockchain from './src/blockchain/BlockchainStore';
 import keychain from './src/keychain/KeychainStore';
 import tabs from './src/tabs/TabsStore';
+import blockchainTransaction from './src/blockchain/transaction-modal/BlockchainTransactionStore';
 
 import NavigatorStore from './src/common/stores/NavigationStore';
 import { BackHandler } from "react-native";
@@ -80,8 +82,10 @@ const errorHandler = (e, isFatal) => {
         text: 'Ok',
       }]
     );
-  } else {
-    console.log(e); // So that we can see it in the ADB logs in case of Android if needed
+
+    console.log(e, 'Minds Uncaught (fatal)');
+  } else if (e) {
+    console.log(e, 'Minds Uncaught (non-fatal)'); // So that we can see it in the ADB logs in case of Android if needed
   }
 };
   //Second argument is a boolean with a default value of false if unspecified.
@@ -189,7 +193,8 @@ const stores = {
   blockchain,
   keychain,
   tabs,
-  navigatorStore
+  navigatorStore,
+  blockchainTransaction,
 };
 
 // clear states on logout
@@ -244,6 +249,10 @@ export default class App extends Component {
       <KeychainModalScreen key="keychainModal" keychain={ keychain } />
     );
 
-    return [ app, keychainModal ];
+    const blockchainTransactionModal = (
+      <BlockchainTransactionModalScreen key="blockchainTransactionModal" blockchainTransaction={ blockchainTransaction } />
+    );
+
+    return [ app, blockchainTransactionModal, keychainModal ];
   }
 }

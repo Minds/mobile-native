@@ -49,7 +49,7 @@ class ApiService {
     const paramsString = await this.buildParamsString(params);
     const headers = this.buildHeaders();
 
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { headers })
         // throw if response status is not 200
         .then(resp => {
@@ -81,7 +81,7 @@ class ApiService {
     const paramsString = await this.buildParamsString({});
     const headers = this.buildHeaders();
 
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers })
         .then(resp => {
           if (!resp.ok) {
@@ -109,7 +109,7 @@ class ApiService {
     const paramsString = await this.buildParamsString({});
     const headers = this.buildHeaders();
 
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers })
         .then(resp => {
           if (!resp.ok) {
@@ -137,7 +137,7 @@ class ApiService {
     const paramsString = await this.buildParamsString({});
     const headers = this.buildHeaders();
 
-    return new Promise((resolve, reject) => {
+    return await new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers })
         .then(resp => {
           if (!resp.ok) {
