@@ -137,7 +137,7 @@ export default class Activity extends Component {
     const autoHeight = this.props.autoHeight;
     return autoHeight ? <AutoHeightFastImage source={source} width={Dimensions.get('window').width} /> : (
       <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer}>
-        <ExplicitImage source={source} entity={this.props.entity} style={styles.image} />
+        <ExplicitImage source={source} entity={this.props.entity} style={styles.image} disableProgress={this.props.disableProgress}/>
       </TouchableOpacity>
     );
   }

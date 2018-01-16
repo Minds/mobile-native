@@ -32,15 +32,32 @@ export default class ExplicitImage extends Component {
   }
 
   render() {
-    return (
-      <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-        <ProgressFastImage
-          indicator={ProgressCircle}
-          threshold={150}
-          source={ this.props.source }
+    let image;
+    const disableProgress = this.props.disableProgress;
+
+    if(disableProgress) {
+      image = (
+        <FastImage
+          source={this.props.source}
           onLoadEnd={this.imageLoaded.bind(this)}
           ref={(img) => { this.backgroundImage = img; }} style={styles.absolute}
         />
+      )
+    } else {
+      image = (
+        <ProgressFastImage
+          indicator={ProgressCircle}
+          threshold={150}
+          source={this.props.source}
+          onLoadEnd={this.imageLoaded.bind(this)}
+          ref={(img) => { this.backgroundImage = img; }} style={styles.absolute}
+        />
+      )
+    }
+
+    return (
+      <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+        {image}
         { (this.props.entity.mature && this.state.viewRef) ?
           <BlurView
             style={styles.absolute}
