@@ -9,7 +9,6 @@ import {
   Image,
   View,
   ScrollView,
-  ActivityIndicator,
   Button
 } from 'react-native';
 
@@ -25,6 +24,7 @@ import RewardsCarousel from './carousel/RewardsCarousel';
 import ChannelHeader from './header/ChannelHeader';
 import Toolbar from './toolbar/Toolbar';
 import NewsfeedList from '../newsfeed/NewsfeedList';
+import CenteredLoading from '../common/components/CenteredLoading';
 
 /**
  * Channel Screen
@@ -73,7 +73,7 @@ export default class ChannelScreen extends Component {
 
     if (!channel.guid || !channelfeed.list.loaded) {
       return (
-        <ActivityIndicator size={'large'} />
+        <CenteredLoading />
       );
     }
 
