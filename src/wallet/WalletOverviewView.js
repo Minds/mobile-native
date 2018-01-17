@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native'
+import token from "../common/helpers/token";
 
 @inject('wallet')
 @observer
@@ -21,8 +22,8 @@ export default class WalletOverviewView extends Component {
     return (
       <View style={ styles.view }>
         <View style={ styles.cell }>
-          <Text style={ styles.amount }>{ this.props.wallet.pointsFormatted }</Text>
-          <Text style={ styles.currency }>POINTS</Text>
+          <Text style={ styles.amount }>{ this.props.wallet.rewardsFormatted }</Text>
+          <Text style={ styles.currency }>REWARDS</Text>
         </View>
 
         <View style={ styles.cell }>

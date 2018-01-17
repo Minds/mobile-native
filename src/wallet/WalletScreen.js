@@ -34,7 +34,7 @@ export default class WalletScreen extends Component {
         <WalletOverviewView />
 
         <View>
-          <View style={styles.datailsContainer}>
+         {/* <View style={styles.datailsContainer}>
             <Text style={styles.title} onPress={ () => this.props.navigation.navigate('WalletHistory')}>History</Text>
             <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('WalletHistory')}>View your points</Text>
           </View>
@@ -42,7 +42,7 @@ export default class WalletScreen extends Component {
           <View style={styles.datailsContainer}>
             <Text style={styles.title}>Purchase points</Text>
             <Text style={styles.subtitle}>Support Minds and buy points</Text>
-          </View>
+          </View>*/}
 
           <View style={styles.datailsContainer} >
             <Text style={styles.title} onPress={ () => this.props.navigation.navigate('BoostConsole')}>Boost Console</Text>
