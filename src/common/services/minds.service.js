@@ -5,7 +5,7 @@ class MindsService {
 
   async getSettings() {
     if (!this.settings) {
-      let settings = await api.get('api/v1/minds/settings');
+      let settings = await api.get('api/v1/minds/config');
 
       if (settings) {
         this.settings = settings;
