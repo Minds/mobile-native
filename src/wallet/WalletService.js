@@ -28,6 +28,10 @@ class WalletService {
   async getTokensBalance() {
     return (await api.get(`api/v1/blockchain/wallet/balance`)).wallet.balance;
   }
+
+  async getRewardsBalance() {
+    return (await api.get(`api/v1/blockchain/rewards/balance`)).balance;
+  }
 }
 
 export default new WalletService();

@@ -8,12 +8,14 @@ import {
 
 import walletService from './WalletService';
 import abbrev from "../common/helpers/abbrev";
+import token from "../common/helpers/token";
 
 /**
  * Wallet store
  */
 class WalletStore {
   @observable points = -1;
+  @observable rewards = -1;
   @observable money = -1;
   @observable tokens = -1;
 
@@ -37,6 +39,15 @@ class WalletStore {
       })
       .catch(e => {
         this.points = -1;
+      }));
+
+    // Rewards
+    asyncs.push(walletService.getRewardsBalance()
+      .then(rewards => {
+        this.rewards = rewards;
+      })
+      .catch(e => {
+        this.rewards = -1;
       }));
 
     // Money
@@ -67,6 +78,10 @@ class WalletStore {
   // Computed properties for display
   @computed get pointsFormatted() {
     return this.points > -1 ? abbrev(this.points) : '…'
+  }
+
+  @computed get rewardsFormatted() {
+    return this.rewards > -1 ? abbrev(token(this.rewards, 18)) : '…'
   }
 
   @computed get moneyFormatted() {
