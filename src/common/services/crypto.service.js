@@ -1,4 +1,4 @@
-import { RSA, RSAKeychain } from 'react-native-rsa-native';
+import Encryption from 'react-native-minds-encryption';
 
 /**
  * RSA crypto Service
@@ -8,22 +8,12 @@ class CryptoService {
   publicKeys = {};
 
   /**
-   * Convert a pkcs8 key to pkcs1
-   * @param {string} key
-   */
-  _convertPkcs8ToPkcs1(key, type) {
-    const rs = require('jsrsasign');
-    const pk = rs.KEYUTIL.getKeyFromPlainPrivatePKCS8PEM(key);
-    return rs.KEYUTIL.getPEM(pk, type);
-  }
-
-  /**
    * Set private key
    * @param {string} key
    */
   setPrivateKey(key) {
     //convert pkcs8 to pkcs1
-    this.privateKey = this._convertPkcs8ToPkcs1(key, 'PKCS1PRV')
+    this.privateKey = key;
   }
 
   /**
@@ -46,7 +36,7 @@ class CryptoService {
    * @param {string} message
    */
   decrypt(message) {
-    return RSA.decrypt(message, this.privateKey)
+    return Encryption.decrypt(message, this.privateKey)
   }
 
   /**
@@ -56,7 +46,7 @@ class CryptoService {
    */
   encrypt(message, keyIndex) {
     if (!this.publicKeys[keyIndex]) throw keyIndex+' public key is not defined';
-    return RSA.encrypt(message, this.publicKeys[keyIndex])
+    return Encryption.encrypt(message, this.publicKeys[keyIndex])
   }
 }
 
