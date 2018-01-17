@@ -37,6 +37,34 @@ class ChannelService {
       return api.delete('api/v1/block/' + guid);
     }
   }
+
+  getImageFeed(guid, offset) {
+    return api.get('api/v1/entities/owner/image/' + guid, { offset: offset, limit: 9 })
+    .then((data) => {
+      return {
+        entities: data.entities,
+        offset: data['load-next'],
+        }
+      })
+      .catch(err => {
+        console.log('error');
+        throw "Ooops";
+      })
+  }
+
+  getVideoFeed(guid, offset) {
+    return api.get('api/v1/entities/owner/video/' + guid, { offset: offset, limit: 6 })
+    .then((data) => {
+      return {
+        entities: data.entities,
+        offset: data['load-next'],
+        }
+      })
+      .catch(err => {
+        console.log('error');
+        throw "Ooops";
+      })
+  }
 }
 
 export default new ChannelService();

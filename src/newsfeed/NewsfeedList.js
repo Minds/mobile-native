@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react/native'
 
 import Activity from './activity/Activity';
+import TileElement from './TileElement';
 
 /**
  * News feed list component
@@ -11,6 +12,10 @@ import Activity from './activity/Activity';
 export default class NewsfeedList extends Component {
 
   nextBoostedId = 1;
+  
+  state = {
+    itemHeight: 0,
+  }
 
   get boostedId() {
     return this.nextBoostedId++;
@@ -24,11 +29,23 @@ export default class NewsfeedList extends Component {
   }
 
   /**
+   * Adjust tiles to 1/cols size
+   */
+  onLayout = e => {
+    const width = e.nativeEvent.layout.width;
+    this.setState({
+      itemHeight: width / 3,
+    });
+  }
+
+  /**
    * Render component
    */
   render() {
     return (
       <FlatList
+        key={(this.props.newsfeed.isTiled ? 't' : 'f')}
+        onLayout={this.onLayout}
         ListHeaderComponent={this.props.header}
         data={this.props.newsfeed.list.entities.slice()}
         renderItem={this.renderActivity}
@@ -37,6 +54,7 @@ export default class NewsfeedList extends Component {
         refreshing={this.props.newsfeed.list.refreshing}
         onEndReached={this.loadFeed}
         onEndThreshold={0}
+        numColumns={this.props.newsfeed.isTiled ? 3 : 1}
         style={styles.listView}
         initialNumToRender={6}
         windowSize={11}
@@ -65,9 +83,11 @@ export default class NewsfeedList extends Component {
    */
   renderActivity = (row) => {
     const entity = row.item;
-    return (
-      <Activity entity={entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation} />
-    );
+    if (this.props.newsfeed.isTiled) {
+      return <TileElement size={this.state.itemHeight} entity={entity} navigation={this.props.navigation} />;
+    } else {
+      return <Activity entity={entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation} />;
+    }
   }
 }
 
