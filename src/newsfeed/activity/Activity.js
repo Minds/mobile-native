@@ -50,7 +50,12 @@ export default class Activity extends Component {
    * Nav to full image with zoom
    */
   navToImage = () => {
-    this.props.navigation.navigate('ViewImage', { source: this.source });
+    // if is a rich embed should load link
+    if (this.props.entity.perma_url) {
+      this.openLink();
+    } else {
+      this.props.navigation.navigate('ViewImage', { source: this.source });
+    }
   }
 
   /**
@@ -123,7 +128,6 @@ export default class Activity extends Component {
   getVideo() {
     return (
       <View style={styles.imageContainer}>
-
         <MindsVideo video={{'uri': 'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/' + this.props.entity.custom_data.guid +  '/360.mp4'}} entity={this.props.entity}/>
       </View>
     );
@@ -136,7 +140,7 @@ export default class Activity extends Component {
     this.source = source;
     const autoHeight = this.props.autoHeight;
     return autoHeight ? <AutoHeightFastImage source={source} width={Dimensions.get('window').width} /> : (
-      <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer}>
+      <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer} activeOpacity={1}>
         <ExplicitImage source={source} entity={this.props.entity} style={styles.image} disableProgress={this.props.disableProgress}/>
       </TouchableOpacity>
     );
