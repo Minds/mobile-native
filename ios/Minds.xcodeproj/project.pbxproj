@@ -51,6 +51,7 @@
 		7D5FB52590FA48EAA8E8D06C /* libFastImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06E481AA756C4F8BB79E1002 /* libFastImage.a */; };
 		7E850A69733A4F908C4460B9 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25B982985ECA405E8EC9BA46 /* Octicons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		993AFD182010217300F90B52 /* libCrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 993AFD17201020AE00F90B52 /* libCrypto.a */; };
 		9BEA63D902244D38AFA20AEB /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD2F37EFA6042E4AE596D33 /* libRNImagePicker.a */; };
 		A24E455F521B4CD58AA8FE76 /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0690A780C3A34A75BDAF66F1 /* libReactNativeExceptionHandler.a */; };
 		A756E5492EB647C7988A57FB /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB693FE7AB3643EBB2B8686A /* Zocial.ttf */; };
@@ -283,6 +284,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		993AFD16201020AE00F90B52 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 993AFD12201020AE00F90B52 /* Crypto.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BF40FFBD1F05EC4000DC4E95;
+			remoteInfo = Crypto;
+		};
 		9975B588200FD80100E80F10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -296,13 +304,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = EBF21BFA1FC4989A0052F4D5;
 			remoteInfo = "jsinspector-tvOS";
-		};
-		9975B59F200FDAB700E80F10 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9975B59B200FDAB500E80F10 /* Crypto.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BF40FFBD1F05EC4000DC4E95;
-			remoteInfo = Crypto;
 		};
 		A548AB751FFEEC9800ACB8D6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -519,7 +520,7 @@
 		85323829DFC8409E8245477B /* libRNPhotoView.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNPhotoView.a; sourceTree = "<group>"; };
 		85EB21A2212B4BE4B64903BB /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
 		931A515A5CF04E3DA21702AA /* libRNOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNOS.a; sourceTree = "<group>"; };
-		9975B59B200FDAB500E80F10 /* Crypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Crypto.xcodeproj; path = "../node_modules/react-native-minds-encryption/ios/Crypto.xcodeproj"; sourceTree = "<group>"; };
+		993AFD12201020AE00F90B52 /* Crypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Crypto.xcodeproj; path = "../node_modules/react-native-minds-encryption/ios/Crypto.xcodeproj"; sourceTree = "<group>"; };
 		9AC370D909384684A944857E /* libRNBlur.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBlur.a; sourceTree = "<group>"; };
 		9F9E9F36BD5C4D09986635E6 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		AB6A68467242402FA309B048 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -562,6 +563,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				C3EF7D1E2005359300CFC22C /* libRCTCameraRoll.a in Frameworks */,
+				993AFD182010217300F90B52 /* libCrypto.a in Frameworks */,
 				16FE5403DAE64745AA4086FA /* libRNVectorIcons.a in Frameworks */,
 				67E3D8F7216144D994C882A6 /* libRCTCamera.a in Frameworks */,
 				9BEA63D902244D38AFA20AEB /* libRNImagePicker.a in Frameworks */,
@@ -749,6 +751,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				993AFD12201020AE00F90B52 /* Crypto.xcodeproj */,
 				C3EF7CC52005336C00CFC22C /* RCTCameraRoll.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -791,7 +794,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				9975B59B200FDAB500E80F10 /* Crypto.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* Minds */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* MindsTests */,
@@ -834,10 +836,10 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		9975B59C200FDAB500E80F10 /* Products */ = {
+		993AFD13201020AE00F90B52 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9975B5A0200FDAB700E80F10 /* libCrypto.a */,
+				993AFD17201020AE00F90B52 /* libCrypto.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1102,8 +1104,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 9975B59C200FDAB500E80F10 /* Products */;
-					ProjectRef = 9975B59B200FDAB500E80F10 /* Crypto.xcodeproj */;
+					ProductGroup = 993AFD13201020AE00F90B52 /* Products */;
+					ProjectRef = 993AFD12201020AE00F90B52 /* Crypto.xcodeproj */;
 				},
 				{
 					ProductGroup = A548ABA01FFEEC9900ACB8D6 /* Products */;
@@ -1424,6 +1426,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		993AFD17201020AE00F90B52 /* libCrypto.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCrypto.a;
+			remoteRef = 993AFD16201020AE00F90B52 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		9975B589200FD80100E80F10 /* libjsinspector.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1436,13 +1445,6 @@
 			fileType = archive.ar;
 			path = "libjsinspector-tvOS.a";
 			remoteRef = 9975B58A200FD80100E80F10 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9975B5A0200FDAB700E80F10 /* libCrypto.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCrypto.a;
-			remoteRef = 9975B59F200FDAB700E80F10 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		A548AB761FFEEC9800ACB8D6 /* libthird-party.a */ = {
