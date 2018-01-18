@@ -100,12 +100,6 @@ export default class MoreScreen extends Component {
           this.props.navigation.navigate('Settings');
         }
       },{
-        name: 'Autoplay videos',
-        switchButton: true,
-      }, {
-        name: 'Points animation',
-        switchButton: true,
-      },{
         name: 'Logout',
         onPress: this.onPressLogout
       },

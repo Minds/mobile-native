@@ -22,6 +22,7 @@ export default {
     recurringPayments: 'Pagos Periódicos',
     deactivate: 'DESACTIVAR',
     deactivateChannel: 'Desactivar Canal',
+    options: 'Opciones',
   },
   continue: 'CONTINUAR',
   goback: 'VOLVER',

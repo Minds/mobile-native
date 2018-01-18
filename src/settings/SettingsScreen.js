@@ -41,7 +41,17 @@ export default class SettingsScreen extends Component {
   }
 
   render() {
-    const languages = i18nService.getSupportedLocales()
+    const languages = i18nService.getSupportedLocales();
+
+    const optlist = [
+      {
+        name: 'Autoplay videos',
+        switchButton: true,
+      }, {
+        name: 'Points animation',
+        switchButton: true,
+      }
+    ];
 
     return (
       <ScrollView style={styles.screen}>
@@ -56,6 +66,22 @@ export default class SettingsScreen extends Component {
             })
           }
         </Picker>
+        <Text style={styles.header}>{i18nService.t('settings.options')}</Text>
+        <List containerStyle={{ flex: 1, borderTopWidth: 0, borderBottomWidth: 0 }}>
+          {
+            optlist.map((l, i) => (
+              <ListItem
+                key={i}
+                title={l.name}
+                titleStyle={{ padding: 8 }}
+                style={styles.listItem}
+                switchButton={l.switchButton}
+                hideChevron={true}
+                onPress={l.onPress}
+              />
+            ))
+          }
+        </List>
         <Text style={styles.header}>{i18nService.t('auth.password')}</Text>
         <FormLabel>{i18nService.t('settings.currentPassword')}</FormLabel>
         <FormInput/>
