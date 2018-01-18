@@ -22,6 +22,7 @@ export default {
     recurringPayments: 'Recurring Payments',
     deactivate: 'DEACTIVATE',
     deactivateChannel: 'Deactivate Channel',
+    options: 'Options',
   },
   continue: 'CONTINUE',
   goback: 'GO BACK',
