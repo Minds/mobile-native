@@ -7,7 +7,7 @@ import com.tradle.react.UdpSocketsModule;
 import com.peel.react.TcpSocketsModule;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.peel.react.rnos.RNOSModule;
-import com.RNRSA.RNRSAPackage;
+import com.minds.crypto.CryptoPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
@@ -41,7 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
             new TcpSocketsModule(),
             new RandomBytesPackage(),
             new RNOSModule(),
-            new RNRSAPackage(),
+            new CryptoPackage(),
             new ReactVideoPackage(),
             new BlurViewPackage(),
           new FastImageViewPackage(),

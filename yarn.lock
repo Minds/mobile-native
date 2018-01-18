@@ -3671,10 +3671,6 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-jsrsasign@^8.0.4:
-  version "8.0.4"
-  resolved "https://registry.yarnpkg.com/jsrsasign/-/jsrsasign-8.0.4.tgz#3f7b8238844f126b496a7556ec9f4b511f95f861"
-
 keccakjs@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/keccakjs/-/keccakjs-0.2.1.tgz#1d633af907ef305bbf9f2fa616d56c44561dfa4d"
@@ -5149,6 +5145,10 @@ react-native-level-fs@^3.0.0:
     level-filesystem "^1.0.1"
     levelup "^0.18.2"
 
+"react-native-minds-encryption@github:Minds/react-native-minds-encryption":
+  version "0.1.0"
+  resolved "git+ssh://git@github.com/Minds/react-native-minds-encryption.git#226e439c6a9ff1260369d1ff694ad27e59ae4f39"
+
 react-native-modal@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-4.1.1.tgz#4c1055dc045106542a8e3bb3fd656a6d3bc319d9"
@@ -5192,10 +5192,6 @@ react-native-randombytes@^3.0.0:
   dependencies:
     buffer "^4.9.1"
     sjcl "^1.0.3"
-
-react-native-rsa-native@^1.0.14:
-  version "1.0.14"
-  resolved "https://registry.yarnpkg.com/react-native-rsa-native/-/react-native-rsa-native-1.0.14.tgz#74964869d33eea8a5b9c251eae0553d7d9136771"
 
 react-native-snap-carousel@^3.4.0:
   version "3.5.0"
