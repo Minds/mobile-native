@@ -29,7 +29,7 @@ class DiscoveryStore {
   loadList(force=false) {
     // no more data or loading? return
     if (!force && this.list.cantLoadMore() || this.loading) {
-      return;
+      return Promise.resolve();
     }
     this.loading = true;
     return discoveryService.getFeed(this.list.offset, this.type, this.filter, this.searchtext)

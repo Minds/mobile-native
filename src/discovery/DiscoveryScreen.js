@@ -227,7 +227,7 @@ export default class DiscoveryScreen extends Component {
    * Refresh feed data
    */
   refresh = () => {
-    this.props.discovery.list.refresh()
+    this.props.discovery.refresh()
   }
   /**
    * Render a tile
