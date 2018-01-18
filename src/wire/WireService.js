@@ -63,8 +63,6 @@ class WireService {
             opts.amount * 11,
             'We need you to pre-approve Minds Wire wallet for the recurring wire transactions.'
           );
-
-          await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
         }
 
         return {

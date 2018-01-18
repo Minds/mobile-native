@@ -1,5 +1,3 @@
-import { AsyncStorage } from 'react-native';
-
 import KeychainStore from '../../keychain/KeychainStore';
 
 class KeychainService {
@@ -10,15 +8,21 @@ class KeychainService {
       return this.unlocked[keychain];
     }
 
-    KeychainStore.setUnlock(keychain);
-    let secret = await KeychainStore.waitForUnlock();
+    let secret = await KeychainStore.waitForUnlock(keychain);
+    await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
 
     if (!secret) {
-      // TODO: Retry?
+      return null;
     }
 
     this.unlocked[keychain] = secret;
     return secret;
+  }
+
+  disposeCachedSecret(keychain) {
+    if (typeof this.unlocked[keychain] !== 'undefined') {
+      delete this.unlocked[keychain];
+    }
   }
 }
 

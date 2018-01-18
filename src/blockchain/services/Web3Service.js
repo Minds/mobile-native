@@ -99,6 +99,7 @@ class Web3Service {
     } catch (e) { }
 
     const sendOptions = await BlockchainTransactionStore.waitForApproval(method, message, baseOptions, Math.ceil(estimatedGas * 1.5));
+    await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
 
     if (sendOptions) {
       const nonce = await this.web3.eth.getTransactionCount(sendOptions.from, 'pending');

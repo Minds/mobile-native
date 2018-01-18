@@ -12,20 +12,18 @@ let unlockingSecretDispose;
 class KeychainStore {
   @observable isUnlocking = false;
   @observable unlockingKeychain = '';
-  @observable unlockingSecret = '';
+  @observable unlockingSecret = void 0;
 
-  @action setUnlock(keychain) {
-    this.isUnlocking = true;
-    this.unlockingKeychain = keychain;
-    this.unlockingSecret = '';
-  }
-
-  waitForUnlock() {
-    if (!this.isUnlocking) {
-      throw new Error('E_NOT_UNLOCKING');
+  @action async waitForUnlock(keychain) {
+    if (this.isUnlocking) {
+      throw new Error('E_ALREADY_UNLOCKING');
     }
 
-    return new Promise((resolve, reject) => {
+    this.isUnlocking = true;
+    this.unlockingKeychain = keychain;
+    this.unlockingSecret = void 0;
+
+    return await new Promise(resolve => {
       if (unlockingSecretDispose) {
         unlockingSecretDispose();
         unlockingSecretDispose = void 0;
@@ -34,24 +32,24 @@ class KeychainStore {
       unlockingSecretDispose = observe(this, 'unlockingSecret', action(change => {
         unlockingSecretDispose();
 
-        if (change.newValue) {
-          resolve(change.newValue);
-        } else {
-          reject(Error('E_NO_SECRET_OR_CANCELLED'));
-        }
+        this.isUnlocking = false;
+        this.unlockingKeychain = '';
+        this.unlockingSecret = void 0;
 
-        this.unlockingSecret = '';
+        if (typeof change.newValue !== 'undefined') {
+          resolve(change.newValue);
+        }
       }));
     });
   }
 
-  @action doUnlock(secret) {
+  @action unlock(secret) {
     this.isUnlocking = false;
     this.unlockingKeychain = '';
     this.unlockingSecret = secret;
   }
 
-  @action cancelUnlock() {
+  @action cancel() {
     this.isUnlocking = false;
     this.unlockingKeychain = '';
     this.unlockingSecret = '';

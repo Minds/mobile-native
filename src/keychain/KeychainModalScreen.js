@@ -24,11 +24,13 @@ export default class KeychainModalScreen extends Component {
       return;
     }
 
-    this.props.keychain.doUnlock(this.state.secret);
+    this.props.keychain.unlock(this.state.secret);
+    this.setState({ secret: '' });
   }
 
   cancel() {
-    this.props.keychain.cancelUnlock();
+    this.props.keychain.cancel();
+    this.setState({ secret: '' });
   }
 
   render() {
@@ -39,7 +41,7 @@ export default class KeychainModalScreen extends Component {
         backdropOpacity={ 1 }
       >
         { this.props.keychain.isUnlocking && <View style={ [ CommonStyle.flexContainer, CommonStyle.modalScreen ] }>
-          <Text style={ CommonStyle.viewTitle }>UNLOCK { this.props.keychain.unlockingKeychain } KEYCHAIN</Text>
+          <Text style={ CommonStyle.viewTitle }>UNLOCK { this.props.keychain.unlockingKeychain.toUpperCase() } KEYCHAIN</Text>
 
           <TextInput
             style={ CommonStyle.fieldTextInput }
@@ -47,7 +49,7 @@ export default class KeychainModalScreen extends Component {
             secureTextEntry={ true }
             returnKeyType={ 'done' }
             onChangeText={ secret => this.setState({ secret }) }
-            value={ this.state.secret }
+            value={ this.state.secret || '' }
           />
 
           <Button

@@ -8,8 +8,11 @@ const CRYPTO_AES_PREFIX = 'crypto:aes:';
 import KeychainService from './keychain.service';
 
 class StorageService {
+  MAX_ATTEMPTS = 3;
+
   async getItem(key) {
-    let value = await AsyncStorage.getItem(`${STORAGE_KEY_PREFIX}${key}`);
+    let value = await AsyncStorage.getItem(`${STORAGE_KEY_PREFIX}${key}`),
+      originalValue = value;
 
     if (value === null) {
       // No data
@@ -19,8 +22,31 @@ class StorageService {
     if (value.startsWith(CRYPTO_AES_PREFIX)) {
       const keychain = await AsyncStorage.getItem(`${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`);
 
-      value = CryptoJS.AES.decrypt(value.substr(CRYPTO_AES_PREFIX.length), await KeychainService.getSecret(keychain))
-        .toString(CryptoJS.enc.Utf8);
+      let attempts = 0;
+
+      while (attempts < this.MAX_ATTEMPTS) {
+        attempts++;
+
+        try {
+          let secret = await KeychainService.getSecret(keychain);
+
+          if (!secret) {
+            value = '';
+            break;
+          }
+
+          value = CryptoJS.AES.decrypt(originalValue.substr(CRYPTO_AES_PREFIX.length), secret)
+            .toString(CryptoJS.enc.Utf8);
+        } catch (e) {
+          value = null;
+        }
+
+        if (value) {
+          break;
+        }
+
+        KeychainService.disposeCachedSecret(keychain);
+      }
 
       if (!value) {
         throw new Error('E_INVALID_STORAGE_PASSWORD');
@@ -38,7 +64,13 @@ class StorageService {
         throw new Error('E_INVALID_KEYCHAIN');
       }
 
-      rawValue = CRYPTO_AES_PREFIX + CryptoJS.AES.encrypt(rawValue, await KeychainService.getSecret(keychain))
+      let secret = await KeychainService.getSecret(keychain);
+
+      if (!secret) {
+        throw new Error('E_NO_SECRET');
+      }
+
+      rawValue = CRYPTO_AES_PREFIX + CryptoJS.AES.encrypt(rawValue, secret)
         .toString();
 
       await AsyncStorage.setItem(`${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`, keychain);
