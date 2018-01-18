@@ -5145,6 +5145,10 @@ react-native-level-fs@^3.0.0:
     level-filesystem "^1.0.1"
     levelup "^0.18.2"
 
+"react-native-minds-encryption@github:Minds/react-native-minds-encryption":
+  version "0.1.0"
+  resolved "git+ssh://git@github.com/Minds/react-native-minds-encryption.git#226e439c6a9ff1260369d1ff694ad27e59ae4f39"
+
 react-native-modal@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-4.1.1.tgz#4c1055dc045106542a8e3bb3fd656a6d3bc319d9"
