@@ -28,7 +28,7 @@ import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 
 import colors from '../../styles/Colors'
-
+import Tags from '../../common/components/Tags';
 import api from '../../common/services/api.service';
 
 /**
@@ -130,7 +130,7 @@ export default class ChannelHeader extends Component {
               }
             </View>
           </View>
-          <Text style={styles.briefdescription}>{channel.briefdescription}</Text>
+          <Text style={styles.briefdescription}><Tags navigation={this.props.navigation}>{channel.briefdescription}</Tags></Text>
         </View>
         <Image source={avatar} style={styles.avatar} />
       </View>
