@@ -3,30 +3,24 @@ import React, {
 } from 'react';
 
 import {
-  StyleSheet,
   Text,
-  View,
-  TouchableOpacity
+  View
 } from 'react-native';
 
 import { CommonStyle } from '../../styles/Common';
+import currency from '../../common/helpers/currency';
+import Touchable from '../../common/components/Touchable';
 
 /**
  * Type Selector
  */
 export default class PaymentSelector extends PureComponent {
-
-  state = {
-    selected: 'tokens'
-  }
-
   /**
    * change option
    * @param {string} selected
    */
   change(selected) {
-    if (this.state.selected != selected) {
-      this.setState({ selected });
+    if (selected !== this.props.value) {
       this.props.onChange(selected);
     }
   }
@@ -39,16 +33,16 @@ export default class PaymentSelector extends PureComponent {
    * @param {Text} selected
    */
   getOption(method, text, value, selected) {
-    const isSelected = this.state.selected == method;
+    const isSelected = this.props.value === method;
     const colorStlye = isSelected ? CommonStyle.colorDark : CommonStyle.colorMedium;
     return (
-      <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.paddingRight]} onPress={() => this.change(method)}>
+      <Touchable style={[CommonStyle.flexContainer, CommonStyle.paddingRight]} onPress={() => this.change(method)}>
         <View>
-          <Text style={[CommonStyle.fontXL, colorStlye]}>{value}</Text>
+          <Text style={[CommonStyle.fontXL, colorStlye]}>{currency(!isNaN(value) ? value : 0, method, 'prefix')}</Text>
           <Text style={[CommonStyle.fontXS, colorStlye]}>{text}</Text>
           {isSelected && selected}
         </View>
-      </TouchableOpacity>
+      </Touchable>
     )
   }
 
@@ -56,15 +50,15 @@ export default class PaymentSelector extends PureComponent {
    * Render
    */
   render() {
-    const selected = <Text style={[CommonStyle.fontS, CommonStyle.colorPrimary]}>SELECTED</Text>;
-    const usd = this.getOption('usd', 'USD', this.props.valueUsd, selected);
-    const rewards = this.getOption('rewards', 'REWARDS', this.props.valueRewards, selected);
-    const tokens = this.getOption('tokens', 'TOKENS', this.props.valueTokens, selected);
+    const selected = <Text style={[CommonStyle.fontS, CommonStyle.colorPrimary]}>SELECTED</Text>,
+      usd = this.getOption('usd', 'USD', this.props.values.usd, selected),
+      rewards = this.getOption('rewards', 'REWARDS', this.props.values.rewards, selected),
+      tokens = this.getOption('tokens', 'TOKENS', this.props.values.tokens, selected);
 
     return (
       <View style={CommonStyle.rowJustifyStart}>
         {usd}
-        {rewards}
+        {this.props.type !== 'p2p' && rewards}
         {tokens}
       </View>
     )
