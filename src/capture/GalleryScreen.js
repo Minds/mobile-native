@@ -8,6 +8,7 @@ import {
   CameraRoll,
   ActivityIndicator,
   TouchableOpacity,
+  InteractionManager,
   Image,
   View,
   FlatList,
@@ -21,6 +22,7 @@ import {
   MINDS_URI
 } from '../config/Config';
 import { Button } from 'react-native-elements';
+import CenteredLoading from '../common/components/CenteredLoading'
 
 /**
  * Gallery Screen
@@ -31,6 +33,8 @@ export default class GalleryScreen extends Component {
     photos: [],
     imageUri: '',
     isPosting: false,
+    disabled: true,
+    imagesLoaded: false,
   }
 
   static navigationOptions = {
@@ -44,6 +48,28 @@ export default class GalleryScreen extends Component {
    * Render
    */
   render() {
+    if (this.state.disabled) {
+      InteractionManager.runAfterInteractions(() => {
+        setTimeout(() => {
+          CameraRoll.getPhotos({
+              first: 27,
+              assetType: 'All',
+            })
+            .then(r => {
+              this.setState({
+                imagesLoaded: true,
+                photos: r.edges,
+                navigation: r.page_info,
+              });
+            })
+            .catch((err) => {
+              //Error Loading Images
+            });
+
+          this.setState({ disabled: false });
+        }, 100);
+      });
+    }
     return (
       <View style={styles.screenWrapper}>
         { this.state.imageUri.length > 0 ?
@@ -56,14 +82,7 @@ export default class GalleryScreen extends Component {
         }
         <View style={styles.selectedImage} >
           { this.state.imageUri.length == 0 ?
-            <Camera
-              ref={(cam) => {
-                this.camera = cam;
-              }}
-              style={styles.preview}
-              aspect={Camera.constants.Aspect.fill}>
-              <Text style={styles.capture} onPress={() => this.props.moveToCapture()} name="md-camera" size={24}> Take a new photo </Text>
-            </Camera> :
+            this.getCamera() :
             <Image
               source={{ uri : this.state.imageUri }}
               style={styles.tileImage}
@@ -71,18 +90,35 @@ export default class GalleryScreen extends Component {
           }
         </View>
         <View style={{flex:2}}>
-          <FlatList
-            data={this.state.photos}
-            renderItem={this.renderTile}
-            keyExtractor={item => item.node.image.uri}
-            onEndThreshold={0}
-            initialNumToRender={27}
-            style={styles.listView}
-            numColumns={3}
-            horizontal={false}
-          />
+          { this.state.imagesLoaded ?
+            <FlatList
+              data={this.state.photos}
+              renderItem={this.renderTile}
+              keyExtractor={item => item.node.image.uri}
+              onEndThreshold={0}
+              initialNumToRender={27}
+              style={styles.listView}
+              numColumns={3}
+              horizontal={false}
+            /> :
+            <CenteredLoading/>
+          }
         </View>
       </View>
+    );
+  }
+
+  getCamera() {
+    if (this.state.disabled) return null;
+    return (
+      <Camera
+        ref={(cam) => {
+          this.camera = cam;
+        }}
+        style={styles.preview}
+        aspect={Camera.constants.Aspect.fill}>
+        <Text style={styles.capture} onPress={() => this.props.moveToCapture()} name="md-camera" size={24}> Take a new photo </Text>
+      </Camera>
     );
   }
 
@@ -109,31 +145,13 @@ export default class GalleryScreen extends Component {
       </TouchableOpacity>
     );
   }
-
-  /**
-   * On component mount
-   */
-  componentDidMount() {
-    CameraRoll.getPhotos({
-      first: 27,
-      assetType: 'All',
-    })
-    .then(r => {
-      this.setState({
-        photos: r.edges,
-        navigation: r.page_info,
-      });
-    })
-    .catch((err) => {
-      //Error Loading Images
-    });
-  }
 }
 
 const styles = StyleSheet.create({
   screenWrapper: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: '#FFF'
   },
   preview: {
     flex: 1,

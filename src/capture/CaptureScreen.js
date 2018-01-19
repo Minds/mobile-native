@@ -5,6 +5,7 @@ import React, {
 import {
     StyleSheet,
     ActivityIndicator,
+    InteractionManager,
     Image,
     View,
 } from 'react-native';
@@ -22,7 +23,8 @@ export default class CaptureScreen extends Component {
   state = {
     isImageTaken: false,
     isPosting: false,
-    imageUri: ''
+    imageUri: '',
+    disabled: true
   }
 
   static navigationOptions = {
@@ -35,6 +37,15 @@ export default class CaptureScreen extends Component {
    * Render
    */
   render() {
+
+    if (this.state.disabled) {
+      InteractionManager.runAfterInteractions(() => {
+        setTimeout(() => {
+          this.setState({disabled: false});
+        }, 100);
+      });
+    }
+
     return (
       <View style={styles.screenWrapper}>
         { this.state.isImageTaken ?
@@ -49,17 +60,23 @@ export default class CaptureScreen extends Component {
               source={{ uri : this.state.imageUri }}
               style={styles.preview}
             />
-          </View> :
-          <Camera
-            ref={(cam) => {
-              this.camera = cam;
-            }}
-            style={styles.preview}
-            aspect={Camera.constants.Aspect.fill}>
-            <Icon style={styles.capture} onPress={() => this.takePicture()} name="md-camera" size={24}></Icon>
-          </Camera>
+          </View> : this.getCamera()
         }
       </View>
+    );
+  }
+
+  getCamera() {
+    if (this.state.disabled) return null;
+    return (
+      <Camera
+        ref={(cam) => {
+          this.camera = cam;
+        }}
+        style={styles.preview}
+        aspect={Camera.constants.Aspect.fill}>
+        <Icon style={styles.capture} onPress={() => this.takePicture()} name="md-camera" size={24}></Icon>
+      </Camera>
     );
   }
 
