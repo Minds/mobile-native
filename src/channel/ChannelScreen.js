@@ -48,9 +48,9 @@ export default class ChannelScreen extends Component {
   componentWillMount() {
     const guid = this.getGuid();
     this.props.channel.load(guid);
-    this.props.channel.loadrewards(guid);
     this.props.channelfeed.setGuid(guid);
     this.props.channelfeed.loadFeed();
+    this.props.channel.loadrewards(guid);
   }
 
   componentWillUnmount() {
@@ -71,7 +71,7 @@ export default class ChannelScreen extends Component {
     const channelfeed = this.props.channelfeed;
     const guid        = this.getGuid();
 
-    if (!channel.guid || !channelfeed.list.loaded) {
+    if (!channel.guid) {
       return (
         <CenteredLoading />
       );

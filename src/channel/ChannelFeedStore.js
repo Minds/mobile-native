@@ -14,7 +14,7 @@ class ChannelFeedStore {
   @observable filter      = 'feed';
   @observable showrewards = false;
   @observable list = new OffsetFeedListStore();
-  @observable isTiled = false; 
+  @observable isTiled = false;
   /**
    * List loading
    */
@@ -40,6 +40,7 @@ class ChannelFeedStore {
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
+    this.loading = true;
 
     return getFeedChannel(this.guid, this.list.offset)
     .then(feed => {
@@ -128,7 +129,7 @@ class ChannelFeedStore {
 
     switch (filter) {
       case 'rewards':
-      
+
         this.showrewards = true;
         this.list.clearList(false);
         break;
