@@ -44,6 +44,13 @@ const styles = StyleSheet.create({
   tbarbutton: {
     padding: 8,
   },
+  avatar: {
+    height: 36,
+    width: 36,
+    borderRadius: 18,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#EEE',
+  },
   input: {
     flex: 1
   },

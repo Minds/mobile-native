@@ -23,7 +23,8 @@ import Comment from './Comment';
 
 import { getComments, postComment } from './CommentsService';
 import session from '../common/services/session.service';
-
+import { CommonStyle } from '../styles/Common';
+import { MINDS_CDN_URI } from '../config/Config';
 
 @inject('comments')
 @inject('user')
@@ -117,6 +118,7 @@ export default class CommentsScreen extends Component {
               initialNumToRender={25}
               refreshing={this.props.comments.refreshing}
               style={styles.listView}
+              inverted={true}
             /> :
             <CenteredLoading/>
           }
@@ -127,45 +129,21 @@ export default class CommentsScreen extends Component {
   }
 
   renderPoster() {
-    if(!session.isLoggedIn()){
-      return (
-        <View style={styles.posterWrapper}></View>
-      );
-    }
-
-    if (!this.props.loading) {
-      return (
-        <View style={styles.posterWrapper}>
-          <View style={styles.container}>
-            <View style={styles.author}>
-              <TouchableOpacity>
-                <Image source={this.state.avatarSrc} style={styles.avatar}/>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.commentPoster}>
-              <TextInput
-                style={{flex: 5}}
-                autoFocus={true}
-                editable = {true}
-                underlineColorAndroid = 'transparent'
-                onChangeText={(text) => this.setState({text})}
-                value={this.state.text}
-              />
-              <Icon onPress={() => this.saveComment()} style={{flex: 1}} name="md-send" size={24}></Icon>
-            </View>
-          </View>
-        </View>
-      );
-    } else if (this.props.loading || this.props.loading) {
-      return (
-        <ActivityIndicator size="small" color="#00ff00" />
-      );
-    } else {
-      return (
-        <View style={styles.posterWrapper}></View>
-      );
-    }
-
+    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium' };
+    return (
+      <View style={styles.messagePoster}>
+        <Image source={avatarImg} style={styles.posterAvatar} />
+        <TextInput
+          style={CommonStyle.flexContainer}
+          editable={true}
+          underlineColorAndroid='transparent'
+          placeholder='Type your comment...'
+          onChangeText={(text) => this.setState({ text })}
+          value={this.state.text}
+        />
+        <TouchableOpacity onPress={() => this.saveComment()} style={styles.sendicon}><Icon name="md-send" size={24} /></TouchableOpacity>
+      </View>
+    )
   }
 
   saveComment = () => {
@@ -234,17 +212,26 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#F8F8F8',
   },
-  commentPoster: {
-    flex: 5,
+  messagePoster: {
+    height: 50,
     flexDirection: 'row',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'baseline',
+    backgroundColor: '#FFF',
+    padding: 5
   },
   iconclose: {
     alignSelf: 'flex-end',
     padding: 10
+  },
+  posterAvatar: {
+    height: 36,
+    width: 36,
+    borderRadius: 18,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#EEE',
   },
   avatar: {
     height: 24,
