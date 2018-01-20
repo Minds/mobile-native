@@ -22,7 +22,7 @@ class CommentsStore {
   @observable saving = false;
 
   guid = '';
-  reversed = true;
+  reversed = false;
   loadNext = '';
   loadPrevious = '';
   socketRoom = '';
@@ -50,7 +50,7 @@ class CommentsStore {
   setComments(response) {
     if (response.comments) {
       response.comments.forEach(comment => {
-          this.comments.push(comment);
+          this.comments.unshift(comment);
       });
     }
     this.reversed = response.reversed;
@@ -61,7 +61,7 @@ class CommentsStore {
 
   @action
   setComment(comment) {
-    this.comments.push(comment);
+    this.comments.unshift(comment);
   }
 
   post(text) {
