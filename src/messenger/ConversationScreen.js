@@ -22,6 +22,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { MINDS_CDN_URI } from '../config/Config';
 import crypto from './../common/services/crypto.service';
 import Message from './conversation/Message';
+import MessengerSetup from './MessengerSetup';
 
 // styles
 const styles = StyleSheet.create({
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
  * Messenger Conversation Screen
  */
 @inject('user')
-@inject('messengerConversation')
+@inject('messengerConversation', 'messengerList')
 @observer
 export default class ConversationScreen extends Component {
 
@@ -95,6 +96,16 @@ export default class ConversationScreen extends Component {
    * Render component
    */
   render() {
+
+    const messengerList = this.props.messengerList;
+
+    const shouldSetup = !messengerList.configured;
+
+    // show setup !configured yet
+    if (shouldSetup) {
+      return <MessengerSetup/>
+    }
+
     const messages = this.props.messengerConversation.messages;
     const conversation = this.props.navigation.state.params.conversation;
     const avatarImg    = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium' };

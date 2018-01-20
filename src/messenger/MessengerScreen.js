@@ -20,7 +20,6 @@ import ConversationView from './conversation/ConversationView';
 
 import SearchView from '../common/components/SearchView';
 import debounce from '../common/helpers/debounce';
-import MessengerSetup from './MessengerSetup';
 import { CommonStyle } from '../styles/Common';
 
 /**
@@ -72,17 +71,9 @@ export default class MessengerScreen extends Component {
   render() {
     const messengerList = this.props.messengerList;
 
-    // this must be before the active check in order to be observed by the component
-    const shouldSetup = !messengerList.configured;
-
     // if tab is not active we return a blank view
     if (!this.state.active) {
       return <View style={CommonStyle.flexContainer} />
-    }
-
-    // show setup !configured yet
-    if (shouldSetup) {
-      return <MessengerSetup/>
     }
 
     return (
