@@ -9,7 +9,8 @@ import {
 import {observer} from "mobx-react";
 
 import {
-  MINDS_URI
+  MINDS_URI,
+  MINDS_CDN_URI
 } from '../../config/Config';
 
 import {
@@ -90,11 +91,10 @@ export default class Activity extends Component {
     let source;
 
     const type = this.props.entity.custom_type||this.props.entity.subtype;
-
     switch (type) {
       case 'image':
         source = {
-          uri: this.props.entity.thumbnail_src
+          uri: MINDS_CDN_URI + 'api/v1/archive/thumbnails/' + this.props.entity.guid + '/medium' 
         }
         return this.getImage(source);
       case 'batch':
@@ -126,9 +126,15 @@ export default class Activity extends Component {
 
   /* URL is -> MINDS_URI + 'api/v1/media/' + this.props.entity.custom_data.guid + '/play'*/
   getVideo() {
+    let guid;
+    if (this.props.entity.custom_data) {
+      guid = this.props.entity.custom_data.guid;
+    } else {
+      guid = this.props.entity.cinemr_guid;
+    }
     return (
       <View style={styles.imageContainer}>
-        <MindsVideo video={{'uri': 'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/' + this.props.entity.custom_data.guid +  '/360.mp4'}} entity={this.props.entity}/>
+        <MindsVideo video={{'uri': 'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/' + guid +  '/360.mp4'}} entity={this.props.entity}/>
       </View>
     );
   }
@@ -136,7 +142,7 @@ export default class Activity extends Component {
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
    */
-  getImage(source) {
+  getImage(source) { 
     this.source = source;
     const autoHeight = this.props.autoHeight;
     return autoHeight ? <AutoHeightFastImage source={source} width={Dimensions.get('window').width} /> : (
