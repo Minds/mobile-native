@@ -31,7 +31,7 @@ import React, {
      */
     _navToView = () => {
       if (this.props.navigation) {
-        this.props.navigation.navigate('ViewImage', { source: this.state.source });
+        this.props.navigation.navigate('Activity', { entity: this.props.entity });
       }
     }
   
