@@ -6,6 +6,8 @@ import {
   NavigationActions
 } from 'react-navigation';
 
+import FastImage from 'react-native-fast-image';
+
 import { observer, inject } from 'mobx-react/native';
 
 import {
@@ -16,6 +18,8 @@ import {
   View,
 } from 'react-native';
 
+import { ComponentsStyle } from './styles/Components';
+import { CommonStyle } from './styles/Common';
 import session from './common/services/session.service';
 
 @inject('user')
@@ -28,7 +32,13 @@ export default class LoadingScreen extends Component {
 
   render() {
     return (
-      <View style={ { backgroundColor: '#FFF' }}/>
+      <View style={[{ backgroundColor: '#ccc' } ,CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
+        <FastImage
+          resizeMode={FastImage.resizeMode.content}
+          style={ComponentsStyle.logo}
+          source={require('./assets/logos/medium-white.png')}
+        />
+      </View>
     );
   }
 
