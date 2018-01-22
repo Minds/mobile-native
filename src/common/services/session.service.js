@@ -18,6 +18,11 @@ class SessionService {
   @observable token = '';
 
   /**
+   * User guid
+   */
+  guid = null;
+
+  /**
    * Session storage service
    */
   sessionStorage = null;
@@ -32,9 +37,11 @@ class SessionService {
 
   init() {
     return this.sessionStorage.getAccessToken()
-      .then(token => {
-        this.setToken(token);
-        return token;
+      .then(data => {
+        if (!data) return null;
+        this.guid = data.guid;
+        this.setToken(data.token);
+        return data.token;
       });
   }
 
@@ -46,16 +53,19 @@ class SessionService {
   /**
    * Login
    * @param {string} token
+   * @param {string} guid
    */
-  login(token) {
+  login(token, guid) {
+    this.guid = guid;
     this.setToken(token)
-    this.sessionStorage.setAccessToken(token);
+    this.sessionStorage.setAccessToken(token, guid);
   }
 
   /**
    * Logout
    */
   logout() {
+    this.guid = null;
     this.setToken(null);
     this.sessionStorage.clear();
   }
@@ -68,8 +78,8 @@ class SessionService {
    */
   onSession(fn) {
     return reaction(
-      () => this.token,
-      token => fn(token),
+      () => [this.token, this.guid],
+      args => fn(...args),
       { fireImmediately: true }
     );
   }
@@ -84,7 +94,7 @@ class SessionService {
       () => this.token,
       token => {
         if (token) {
-          fn(token);
+          fn(token, this.guid);
         }
       },
       { fireImmediately: true }

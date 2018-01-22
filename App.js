@@ -27,6 +27,8 @@ import Stack from './AppScreens';
 import stores from './AppStores';
 import './AppErrors';
 
+import './src/common/services/socket.service';
+
 // build navigation store
 stores.navigatorStore = new NavigatorStore(Stack);
 

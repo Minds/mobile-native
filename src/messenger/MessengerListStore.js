@@ -10,12 +10,13 @@ import {
 import messengerService from './MessengerService';
 import session from './../common/services/session.service';
 import crypto from './../common/services/crypto.service';
+import socket from '../common/services/socket.service';
 
 /**
  * Messenger Conversation List Store
  */
 class MessengerListStore {
-  @observable.shallow conversations = [];
+  @observable conversations = [];
   @observable refreshing = false;
 
   /**
@@ -41,6 +42,32 @@ class MessengerListStore {
         }
       });
 
+  }
+
+  @action
+  touchConversation = action((guid) => {
+    // search conversation
+    const index = this.conversations.findIndex((conv) => {
+      return conv.guid == guid;
+    })
+
+    if (index !== -1) {
+      this.conversations[index].unread = true;
+    }
+  });
+
+  /**
+   * Start listen socket
+   */
+  listen() {
+    socket.subscribe('touchConversation', this.touchConversation);
+  }
+
+  /**
+   * Stop listen socket
+   */
+  unlisten() {
+    socket.unsubscribe('touchConversation', this.touchConversation);
   }
 
   /**

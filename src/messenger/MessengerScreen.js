@@ -45,11 +45,13 @@ export default class MessengerScreen extends Component {
     // load data on enter
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Messenger', (s) => {
       this.setState({ active: true });
+      this.props.messengerList.listen();
     });
 
     // clear data on leave
     this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Messenger', (s) => {
       this.setState({ active: false });
+      this.props.messengerList.unlisten();
     });
   }
 
@@ -69,7 +71,9 @@ export default class MessengerScreen extends Component {
    * Render component
    */
   render() {
+    console.log('render')
     const messengerList = this.props.messengerList;
+    const conversations = messengerList.conversations;
 
     // if tab is not active we return a blank view
     if (!this.state.active) {
@@ -83,7 +87,7 @@ export default class MessengerScreen extends Component {
           onChangeText={this.searchChange}
         />
         <FlatList
-          data={messengerList.conversations}
+          data={conversations}
           renderItem={this.renderMessage}
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
