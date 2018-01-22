@@ -149,7 +149,7 @@ export default class BoostsCarousel extends PureComponent {
 
     return (
       <View style={[this.styles.flexContainer] } onLayout={this._onLayout}>
-        { this.pagination }
+        { this._carousel ? this.pagination : null }
         <View style={this.styles.itemHeight}>
         { carousel }
         </View>
