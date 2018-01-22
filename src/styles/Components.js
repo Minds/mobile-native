@@ -13,23 +13,28 @@ export const ComponentsStyle = StyleSheet.create({
 
   // login
   loginInput: {
-    color: '#FFF',
+    color: '#444',
     fontSize: 16,
+    fontWeight: '600',
     letterSpacing: 2,
     padding: 15,
     // fontFamily: 'Roboto',
-    backgroundColor: 'rgba(255,255,255, 0.2)',
+    backgroundColor: 'rgba(255,255,255, 0.9)',
     height: 50,
     borderRadius: 4,
   },
   loginButton: {
-    borderRadius: 4,
+    borderRadius: 3,
     marginRight: 0,
     marginLeft: 10,
+    backgroundColor: 'transparent',
+    borderColor: '#FFF',
+    borderWidth: 1
   },
   loginButtonText: {
     // fontFamily: 'Roboto',
-    fontWeight: 'bold'
+    fontWeight: '600',
+    letterSpacing: 1.25
   },
   registerCheckboxText: {
     color: 'white'
@@ -79,6 +84,7 @@ export const ComponentsStyle = StyleSheet.create({
     fontWeight: 'bold',
   },
   terms: {
-    color: 'white'
+    color: 'white',
+    paddingRight: 8
   },
 });

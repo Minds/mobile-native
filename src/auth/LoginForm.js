@@ -65,8 +65,8 @@ export default class LoginForm extends Component {
       <Button
         onPress={() => this.onLoginPress()}
         title={i18n.t('auth.login')}
-        backgroundColor="rgba(0,0,0, 0.5)"
-        borderRadius={4}
+        borderRadius={3}
+        backgroundColor="transparent"
         containerViewStyle={ComponentsStyle.loginButton}
         textStyle={ComponentsStyle.loginButtonText}
       />
@@ -77,8 +77,8 @@ export default class LoginForm extends Component {
         <Button
           onPress={() => this.props.onRegister()}
           title={i18n.t('auth.create')}
-          backgroundColor="rgba(0,0,0, 0.5)"
-          borderRadius={4}
+          borderRadius={3}
+          backgroundColor="transparent"
           containerViewStyle={ComponentsStyle.loginButton}
           textStyle={ComponentsStyle.loginButtonText}
         />
@@ -95,7 +95,7 @@ export default class LoginForm extends Component {
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.code')}
           returnKeyType={'done'}
-          placeholderTextColor="white"
+          placeholderTextColor="#444"
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ twoFactorCode: value })}
           autoCapitalize={'none'}
@@ -108,7 +108,7 @@ export default class LoginForm extends Component {
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.username')}
           returnKeyType={'done'}
-          placeholderTextColor="white"
+          placeholderTextColor="#444"
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ username: value })}
           autoCapitalize={'none'}
@@ -120,7 +120,7 @@ export default class LoginForm extends Component {
           secureTextEntry={true}
           autoCapitalize={'none'}
           returnKeyType={'done'}
-          placeholderTextColor="white"
+          placeholderTextColor="#444"
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ password: value })}
           value={this.state.password}

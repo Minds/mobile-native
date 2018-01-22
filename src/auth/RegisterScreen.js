@@ -32,7 +32,7 @@ export default class Register extends Component {
         <FastImage
           resizeMode={FastImage.resizeMode.cover}
           style={ComponentsStyle.backgroundImage}
-          source={require('../assets/bg-2.jpg')}
+          source={require('../assets/photos/circles.png')}
         />
         <View style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
           <FastImage

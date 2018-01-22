@@ -7,7 +7,7 @@ import NotificationsScreen from './src/notifications/NotificationsScreen';
 import NotificationsSettingsScreen from './src/notifications/NotificationsSettingsScreen';
 import CommentsScreen from './src/comments/CommentsScreen';
 import ChannelScreen from './src/channel/ChannelScreen';
-import RegisterScreen from './src/register/RegisterScreen';
+import RegisterScreen from './src/auth/RegisterScreen';
 import DiscoveryViewScreen from './src/discovery/DiscoveryViewScreen';
 import ConversationScreen from './src/messenger/ConversationScreen';
 import SettingsScreen from './src/settings/SettingsScreen';

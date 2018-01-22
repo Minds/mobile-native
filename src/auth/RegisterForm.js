@@ -70,7 +70,7 @@ export default class RegisterForm extends Component {
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.username')}
-          placeholderTextColor="white"
+          placeholderTextColor="#444"
           returnKeyType={'done'}
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ username: value })}
@@ -80,7 +80,7 @@ export default class RegisterForm extends Component {
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.email')}
           returnKeyType={'done'}
-          placeholderTextColor="white"
+          placeholderTextColor="#444"
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ email: value })}
           value={this.state.email}
@@ -90,7 +90,7 @@ export default class RegisterForm extends Component {
           placeholder={i18n.t('auth.password')}
           secureTextEntry={true}
           returnKeyType={'done'}
-          placeholderTextColor="white"
+          placeholderTextColor="#444"
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ password: value })}
           value={this.state.password}
@@ -100,7 +100,7 @@ export default class RegisterForm extends Component {
           placeholder={i18n.t('auth.confirmpassword')}
           secureTextEntry={true}
           returnKeyType={'done'}
-          placeholderTextColor="white"
+          placeholderTextColor="#444"
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.validatePassword( value )}
           value={this.state.confirmPassword}
@@ -122,15 +122,15 @@ export default class RegisterForm extends Component {
             <Button
               onPress={() => this.onPressBack()}
               title={i18n.t('goback')}
-              backgroundColor="rgba(0,0,0, 0.5)"
               borderRadius={4}
+              backgroundColor="transparent"
               containerViewStyle={ComponentsStyle.loginButton}
               textStyle={ComponentsStyle.loginButtonText}
             />
             <Button
               onPress={() => this.onPressRegister()}
               title={i18n.t('auth.create')}
-              backgroundColor="rgba(0,0,0, 0.5)"
+              backgroundColor="transparent"
               borderRadius={4}
               containerViewStyle={ComponentsStyle.loginButton}
               textStyle={ComponentsStyle.loginButtonText}
