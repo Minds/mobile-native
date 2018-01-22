@@ -25,6 +25,17 @@ export default class LikeView extends Component {
     )
   }
 
+  navToGroup = () => {
+    this.props.navigation.navigate('GroupView', { guid: this.props.entity.entityObj.guid });
+  }
+
+  /**
+   * Navigate t
+   */
+  navToActivity = () => {
+    this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
+  }
+
   /**
    * Get body based in entity.entityObj.type
    * @param {object} entity
@@ -41,26 +52,27 @@ export default class LikeView extends Component {
     switch (entity.entityObj.type) {
       case "comment":
         return (
-            <Text>{entity.fromObj.name} down voted <Text style={styles.link}> your comment </Text></Text>
+          <Text onPress={this.navToActivity}>{entity.fromObj.name} voted up <Text style={styles.link}> your comment </Text></Text>
         )
       case "activity":
+      console.log(entity)
         if (entity.entityObj.title) {
           return (
-            <Text> {entity.fromObj.name} down voted <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
+            <Text onPress={this.navToActivity}> {entity.fromObj.name} voted up <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
           )
         } else {
           return (
-            <Text> {entity.fromObj.name} down voted <Text style={styles.link}>your activity</Text></Text>
+            <Text onPress={this.navToActivity}> {entity.fromObj.name} voted up <Text style={styles.link}>your activity</Text></Text>
           )
         }
       case "object":
         if (entity.entityObj.title) {
           return (
-            <Text> {entity.fromObj.name} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
+            <Text onPress={this.navToGroup}> {entity.fromObj.name} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
           )
         } else {
           return (
-            <Text> {entity.fromObj.name} <Text style={styles.link}>your {entity.entityObj.subtype}</Text></Text>
+            <Text onPress={this.navToGroup}> {entity.fromObj.name} <Text style={styles.link}>your {entity.entityObj.subtype}</Text></Text>
           )
         }
       default:

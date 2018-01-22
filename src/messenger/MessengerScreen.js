@@ -71,7 +71,6 @@ export default class MessengerScreen extends Component {
    * Render component
    */
   render() {
-    console.log('render')
     const messengerList = this.props.messengerList;
     const conversations = messengerList.conversations;
 
