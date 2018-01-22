@@ -58,14 +58,23 @@ export default class ChannelHeader extends Component {
   }
 
   /**
+   * Navigate To conversation
+   */
+  _navToConversation() {
+    if (this.props.navigation) {
+      this.props.navigation.navigate('Conversation', { conversation: { guid : this.props.channel.channel.guid + ':' + this.props.me.guid } });
+    }
+  }
+
+  /**
    * Get Action Button, Message or Subscribe
    */
   getActionButton() {
     const styles  = this.props.styles;
-    if(!!this.props.channel.channel.subscribed){
+    if(!!this.props.channel.channel.subscribed) {
       return (
         <TouchableHighlight
-          onPress={() => { console.log('press') }}
+          onPress={() => { this._navToConversation() }}
           underlayColor = 'transparent'
           style = {ComponentsStyle.bluebutton}
           accessibilityLabel="Send a message to this channel"
@@ -73,7 +82,7 @@ export default class ChannelHeader extends Component {
           <Text style={{color: colors.primary}} > MESSAGE </Text>
         </TouchableHighlight>
       );
-    } else if (this.props.me.guid !== this.props.channel.channel.guid){
+    } else if (this.props.me.guid !== this.props.channel.channel.guid) {
       return (
         <TouchableHighlight
           onPress={() => { this.subscribe() }}
@@ -85,7 +94,7 @@ export default class ChannelHeader extends Component {
         </TouchableHighlight>
       );
     } else {
-        <View style={{width:40}}></View>
+      return <View style={{width:40}}></View>;
     }
   }
 

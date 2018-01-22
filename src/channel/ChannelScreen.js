@@ -91,7 +91,7 @@ export default class ChannelScreen extends Component {
     // channel header
     const header = (
       <View>
-        <ChannelHeader styles={styles} me={this.props.user.me} channel={this.props.channel} />
+        <ChannelHeader styles={styles} me={this.props.user.me} channel={this.props.channel} navigation={this.props.navigation} />
         <Toolbar hasRewards={rewards.merged && rewards.merged.length}/>
         {carousel}
         <Icon color="white" containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
