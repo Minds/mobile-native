@@ -77,7 +77,13 @@ export default class ConversationScreen extends Component {
   });
 
   componentWillMount() {
-    const conversation = this.props.navigation.state.params.conversation;
+    let conversation;
+    if(this.props.navigation.state.params.conversation) {
+      conversation = this.props.navigation.state.params.conversation;
+    } else {
+      conversation = this.props.navigation.state.params.target;
+    }
+
     // load conversation
     this.props.messengerConversation.load(conversation.guid);
   }

@@ -26,6 +26,7 @@ class MessengerConversationStore {
    * @param {string} offset
    */
   load(guid, offset = '') {
+    alert(guid)
     return messengerService.getConversationFromRemote(15, guid, offset)
       .then(conversation => {
         crypto.setPublicKeys( conversation.publickeys );
