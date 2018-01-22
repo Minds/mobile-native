@@ -52,7 +52,7 @@ export default class Comment extends Component {
         <View style={styles.actionsContainer}>
           <ThumbUpAction entity={comment} me={this.props.user.me} />
           <ThumbDownAction entity={comment} me={this.props.user.me} />
-          <Icon name={'list'} onPress={this.showActions}/>
+          <Icon name={'dots-vertical'} type={'material-community'} onPress={this.showActions} color={'rgb(96, 125, 139)'}/>
         </View>
       </View>
     )
