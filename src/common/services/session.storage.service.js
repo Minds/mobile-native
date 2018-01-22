@@ -13,18 +13,20 @@ class SessionStorageService {
   async getAccessToken() {
     try {
       const token = await AsyncStorage.getItem(namespace + 'access_token');
-      return token;
+      return JSON.parse(token);
     } catch (err) {
+      this.clear();
       return null;
     }
   }
 
   /**
    * Set access token
-   * @param {string} access_token
+   * @param {string} token
+   * @param {string} guid
    */
-  setAccessToken(access_token) {
-    return AsyncStorage.setItem(namespace + 'access_token', access_token);
+  setAccessToken(token, guid) {
+    return AsyncStorage.setItem(namespace + 'access_token', JSON.stringify({token, guid}));
   }
 
   /**

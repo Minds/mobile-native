@@ -65,6 +65,7 @@
     "readable-stream": "1.0.33",
     "replace": "^0.3.0",
     "rn-nodeify": "^8.2.0",
+    "socket.io-client": "^2.0.4",
     "stream-browserify": "^1.0.0",
     "timers-browserify": "^1.0.1",
     "tty-browserify": "0.0.0",
@@ -83,7 +84,14 @@
     "reactotron-react-native": "^1.14.0"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-native|react-navigation)/"
+    ],
+    "moduleNameMapper": {
+      "^image![a-zA-Z0-9$_-]+$": "GlobalImageStub",
+      "^[@./a-zA-Z0-9$_-]+\\.(png|gif)$": "RelativeImageStub"
+    }
   },
   "react-native": {
     "crypto": "react-native-crypto",

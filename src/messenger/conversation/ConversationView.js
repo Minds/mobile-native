@@ -9,12 +9,14 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import { observer } from 'mobx-react/native'
 
 import { MINDS_CDN_URI } from '../../config/Config';
 
 /**
  * Conversation Component
  */
+@observer
 export default class ConversationView extends PureComponent {
 
   /**
