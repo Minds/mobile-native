@@ -135,7 +135,7 @@ export default class MessengerScreen extends Component {
 // styles
 const styles = StyleSheet.create({
 	listView: {
-    paddingTop: 20,
+    //paddingTop: 20,
     flex: 1
   },
   container: {

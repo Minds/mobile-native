@@ -24,42 +24,6 @@ import crypto from './../common/services/crypto.service';
 import Message from './conversation/Message';
 import MessengerSetup from './MessengerSetup';
 
-// styles
-const styles = StyleSheet.create({
-  listView: {
-    flex: 1
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 5,
-    backgroundColor: '#FFF',
-  },
-  messagePoster: {
-    height: 50,
-    flexDirection: 'row',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'baseline',
-  },
-  tbarbutton: {
-    padding: 8,
-  },
-  avatar: {
-    height: 36,
-    width: 36,
-    borderRadius: 18,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#EEE',
-  },
-  input: {
-    flex: 1
-  },
-  sendicon: {
-    width:25
-  },
-});
-
 /**
  * Messenger Conversation Screen
  */
@@ -167,5 +131,42 @@ export default class ConversationScreen extends Component {
   renderMessage = (row) => {
     return <Message message={row.item} right={row.item.owner.guid == this.props.user.me.guid}/>
   }
+
 }
 
+// styles
+const styles = StyleSheet.create({
+  listView: {
+    flex: 1
+  },
+  container: {
+    flex: 1,
+    paddingHorizontal: 5,
+    backgroundColor: '#FFF',
+  },
+  messagePoster: {
+    height: 50,
+    flexDirection: 'row',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'baseline',
+  },
+  tbarbutton: {
+    padding: 8,
+  },
+  avatar: {
+    height: 36,
+    width: 36,
+    borderRadius: 18,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#EEE',
+  },
+  input: {
+    flex: 1,
+    paddingLeft: 8,
+  },
+  sendicon: {
+    width:25
+  },
+});
