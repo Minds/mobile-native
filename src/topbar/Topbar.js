@@ -40,8 +40,8 @@ export default class Topbar extends Component {
             <Avatar
               rounded
               source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid }}
-              width={42}
-              height={42}
+              width={36}
+              height={36}
               onPress={() => this.props.navigation.navigate('Channel', { guid: this.props.user.me.guid })}
             />
           </View>
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   topbarCenter: {
     flex: 1,
     alignItems: 'center',
+    padding: 2,
   },
   topbarRight: {
     width:100,
