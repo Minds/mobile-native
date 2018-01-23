@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#000',
     borderTopColor: '#000',
     backgroundColor: '#FFF',
-    height:55
+    //height:50,
+    padding: 8,
   },
   iconRight: {
     right:0,
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
   input: {
     paddingLeft: 30,
     paddingRight: 19,
-    margin: 8,
+    marginLeft: 8,
     overflow: 'hidden',
     backgroundColor: 'transparent',
     fontSize: 14,

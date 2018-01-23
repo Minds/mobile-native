@@ -258,6 +258,8 @@ export default class DiscoveryScreen extends Component {
 const styles = StyleSheet.create({
 	listView: {
     backgroundColor: '#FFF',
-    flex:1
+    flex: 1,
+    marginLeft: -1,
+    marginRight: -1,
   }
 });
