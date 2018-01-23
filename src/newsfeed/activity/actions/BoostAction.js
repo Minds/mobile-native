@@ -4,6 +4,7 @@ import React, {
 
 import {
   Text,
+  View,
   StyleSheet,
   TouchableHighlight
 } from 'react-native';
@@ -21,17 +22,20 @@ export default class BoostAction extends PureComponent {
    */
   render() {
     return (
-      <TouchableHighlight
-        style={[
-          CommonStyle.flexContainer,
-          CommonStyle.rowJustifyCenter,
-          ComponentsStyle.bluebutton,
-          CommonStyle.backgroundPrimary
-        ]}
-        onPress={this.openBoost}
-      >
-        <Text style={[CommonStyle.paddingLeft, CommonStyle.colorWhite]}>BOOST</Text>
-      </TouchableHighlight>
+      <View style={[ CommonStyle.flexContainer, CommonStyle.rowJustifyCenter ]}>
+        <TouchableHighlight
+          style={[
+            CommonStyle.flexContainer,
+            CommonStyle.rowJustifyCenter,
+            ComponentsStyle.bluebutton,
+            CommonStyle.transparent
+          ]}
+          underlayColor="transparent"
+          onPress={this.openBoost}
+        >
+          <Text style={[{ paddingLeft: 2, paddingRight: 2}, CommonStyle.colorPrimary]}>BOOST</Text>
+        </TouchableHighlight>
+      </View>
     );
   }
 

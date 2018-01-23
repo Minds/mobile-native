@@ -49,9 +49,9 @@ export const ComponentsStyle = StyleSheet.create({
   //button
   bluebutton: {
     margin:4, 
-    padding:5, 
+    padding:4, 
     alignItems:'center', 
-    borderRadius: 5,
+    borderRadius: 3,
     backgroundColor:'white', 
     borderWidth:1, 
     borderColor: colors.primary
@@ -65,6 +65,18 @@ export const ComponentsStyle = StyleSheet.create({
     borderWidth:1, 
     borderColor: colors.danger,
   },
+
+  button: {
+    borderWidth: 1,
+    borderColor: '#ececec',
+    borderRadius: 3,
+    padding: 8,
+  },
+
+  buttonAction: {
+    borderColor: colors.primary,
+  },
+
   // background image
   backgroundImage: {
     flex: 1,

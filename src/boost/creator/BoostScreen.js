@@ -80,7 +80,7 @@ export default class BoostScreen extends Component {
    */
   static navigationOptions = ({ navigation }) => ({
     header: (
-      <View style={[CommonStyle.backgroundLight, CommonStyle.rowJustifyStart]}>
+      <View style={[CommonStyle.backgroundLight, CommonStyle.rowJustifyStart, { paddingTop: 16 }]}>
         <Text style={[styles.titleText, CommonStyle.flexContainer, CommonStyle.padding2x]}>Boost</Text>
         <Icon size={36} name="ios-close" onPress={() => navigation.goBack()} style={CommonStyle.padding2x} />
       </View>
@@ -552,11 +552,14 @@ export default class BoostScreen extends Component {
 
         <Divider style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]} />
 
-        <Touchable style={[ComponentsStyle.bluebutton, CommonStyle.backgroundPrimary, CommonStyle.marginTop2x, CommonStyle.marginBottom3x]}
-          onPress={() => this.submit()}
-        >
-          <Text style={CommonStyle.colorWhite}>BOOST</Text>
-        </Touchable>
+        <View style={{ flexDirection: 'row' }}>
+          <Touchable style={[ComponentsStyle.button, ComponentsStyle.buttonAction, { backgroundColor: 'transparent' }, CommonStyle.marginTop2x, CommonStyle.marginBottom3x]}
+            onPress={() => this.submit()}
+          >
+            <Text style={CommonStyle.colorPrimary}>BOOST</Text>
+          </Touchable>
+          <View style={{ flex: 1 }}></View>
+        </View>
 
         { !!this.state.error && <Text style={styles.error}>
           {this.state.error}
