@@ -23,13 +23,17 @@ import {
 } from '../config/Config';
 import { Button } from 'react-native-elements';
 import CenteredLoading from '../common/components/CenteredLoading'
+import CapturePoster from './CapturePoster';
+
+import CaptureTabs from './CaptureTabs';
 
 /**
- * Gallery Screen
+ * Gallery View
  */
-export default class GalleryScreen extends Component {
+export default class CaptureGallery extends Component {
 
   state = {
+    header: null,
     photos: [],
     imageUri: '',
     isPosting: false,
@@ -52,7 +56,7 @@ export default class GalleryScreen extends Component {
       InteractionManager.runAfterInteractions(() => {
         setTimeout(() => {
           CameraRoll.getPhotos({
-              first: 27,
+              first: 30,
               assetType: 'All',
             })
             .then(r => {
@@ -70,25 +74,16 @@ export default class GalleryScreen extends Component {
         }, 100);
       });
     }
+
+    const tabs = (
+      <View>
+        <CaptureTabs onSelectedMedia={ this.onSelected.bind(this) } />
+      </View>
+    );
+
     return (
       <View style={styles.screenWrapper}>
-        { this.state.imageUri.length > 0 ?
-          <View style={styles.submitButton}>
-            { this.state.isPosting ?
-              <ActivityIndicator size="small" color="#00ff00" /> :
-              <Icon onPress={() => this.upload()} color="white" name="md-send" size={28}></Icon>
-            }
-          </View> : <View></View>
-        }
-        <View style={styles.selectedImage} >
-          { this.state.imageUri.length == 0 ?
-            this.getCamera() :
-            <Image
-              source={{ uri : this.state.imageUri }}
-              style={styles.tileImage}
-            />
-          }
-        </View>
+
         <View style={{flex:2}}>
           { this.state.imagesLoaded ?
             <FlatList
@@ -100,25 +95,12 @@ export default class GalleryScreen extends Component {
               style={styles.listView}
               numColumns={3}
               horizontal={false}
+              ListHeaderComponent={ tabs }
             /> :
             <CenteredLoading/>
           }
         </View>
       </View>
-    );
-  }
-
-  getCamera() {
-    if (this.state.disabled) return null;
-    return (
-      <Camera
-        ref={(cam) => {
-          this.camera = cam;
-        }}
-        style={styles.preview}
-        aspect={Camera.constants.Aspect.fill}>
-        <Text style={styles.capture} onPress={() => this.props.moveToCapture()} name="md-camera" size={24}> Take a new photo </Text>
-      </Camera>
     );
   }
 
@@ -137,7 +119,7 @@ export default class GalleryScreen extends Component {
    */
   renderTile = (row) => {
     return (
-      <TouchableOpacity style={styles.tileImage} onPress={() => this.setState({imageUri: row.item.node.image.uri})}>
+      <TouchableOpacity style={styles.tileImage} onPress={() => this.onSelected({ uri: row.item.node.image.uri, type: 'image', fileName: row.item.node.image.filename })}>
         <Image
           source={{ uri : row.item.node.image.uri }}
           style={styles.tileImage}
@@ -145,6 +127,15 @@ export default class GalleryScreen extends Component {
       </TouchableOpacity>
     );
   }
+
+  onSelectedTile(row) {
+    console.log(row);
+  }
+
+  onSelected(response) {
+    this.props.onSelected(response);
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -169,10 +160,12 @@ const styles = StyleSheet.create({
   tileImage: {
     minHeight: 120,
     flex: 1,
+    padding: 1,
   },
   listView: {
     backgroundColor: '#FFF',
-    flex:1
+    flex:1,
+    padding: 1,
   },
   selectedImage: {
     flex:3,

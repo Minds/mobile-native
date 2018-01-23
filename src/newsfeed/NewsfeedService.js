@@ -95,14 +95,18 @@ export function remind(guid, post) {
     })
 }
 
-export function uploadAttachment(url, file) {
-  return api.upload(url, file).then((data) => {
+export async function uploadAttachment(url, file, progress) {
+  try {
+    let data = await api.upload(url, file, null, progress);
     return data;
-  })
-  .catch(err => {
-    console.log('error');
-    throw "Ooops";
-  });
+  } catch (e) {
+      throw {
+        error: e,
+        url: url,
+        file: file
+      };
+      throw "Ooops";
+  }
 }
 
 /**

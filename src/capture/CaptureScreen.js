@@ -10,10 +10,12 @@ import {
     View,
 } from 'react-native';
 
+import { NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Camera from 'react-native-camera';
 
-import Poster from '../newsfeed/Poster';
+import CapturePoster from './CapturePoster';
+import CaptureGallery from './CaptureGallery';
 
 /**
  * Capture screen
@@ -21,9 +23,6 @@ import Poster from '../newsfeed/Poster';
 export default class CaptureScreen extends Component {
 
   state = {
-    isImageTaken: false,
-    isPosting: false,
-    imageUri: '',
     disabled: true
   }
 
@@ -48,66 +47,34 @@ export default class CaptureScreen extends Component {
 
     return (
       <View style={styles.screenWrapper}>
-        { this.state.isImageTaken ?
-          <View style={styles.selectedImage}>
-            <View style={styles.submitButton}>
-              { this.props.isPosting || this.state.isPosting ?
-                <ActivityIndicator size="small" color="#00ff00" /> :
-                <Icon onPress={() => this.upload()} color="white" name="md-send" size={28}></Icon>
-              }
-            </View>
-            <Image
-              source={{ uri : this.state.imageUri }}
-              style={styles.preview}
-            />
-          </View> : this.getCamera()
-        }
+        <CapturePoster style={{ flex: 1, backgroundColor: '#FFF' }} onComplete={ (entity) => this.onComplete(entity) }/>
       </View>
     );
   }
 
-  getCamera() {
-    if (this.state.disabled) return null;
-    return (
-      <Camera
-        ref={(cam) => {
-          this.camera = cam;
-        }}
-        style={styles.preview}
-        aspect={Camera.constants.Aspect.fill}>
-        <Icon style={styles.capture} onPress={() => this.takePicture()} name="md-camera" size={24}></Icon>
-      </Camera>
-    );
-  }
+  onComplete(entity) {
+    const dispatch = NavigationActions.navigate({
+      routeName: 'Tabs',
+      params: {
+        prepend: entity,
+      },
+      actions: [
+        NavigationActions.navigate({ 
+          routeName: 'Newsfeed',
+        })
+      ]
+    })
 
-  upload() {
-    this.setState({
-      isPosting: true,
-    });
-    this.props.submitToPoster(this.state.imageUri, 'image/jpeg');
+    this.props.navigation.dispatch(dispatch);
   }
-
-  takePicture() {
-    const options = {};
-    this.setState({
-      isPosting: true,
-    });
-    this.camera.capture({metadata: options})
-      .then((data) => {
-        this.setState({
-          isPosting: false,
-          imageUri : data.mediaUri,
-          isImageTaken: true
-        });
-      })
-      .catch(err => console.error(err));
-  }
+  
 }
 
 const styles = StyleSheet.create({
 	screenWrapper: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: '#FFF',
   },
   preview: {
     flex: 1,
