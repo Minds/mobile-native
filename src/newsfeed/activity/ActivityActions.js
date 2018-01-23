@@ -8,9 +8,12 @@ import {
   View,
   ActivityIndicator,
   Button,
-  StyleSheet
+  StyleSheet,
+  Modal,
+
 } from 'react-native';
 
+import ReportModal from '../../report/ReportModal';
 import {
   observer,
   inject
@@ -32,6 +35,7 @@ export default class ActivityActions extends Component {
     super(props)
     this.state = {
       selected: '',
+      reportModalVisible: false,
       userBlocked: false,
       options: this.getOptions(),
     }
@@ -55,7 +59,6 @@ export default class ActivityActions extends Component {
     if (this.props.user.me.guid == this.props.entity.ownerObj.guid) {
       options.push( 'Edit' );
 
-      /*Admin check */
       options.push( 'Delete' );
 
       if (this.props.entity.comments_disabled) {
@@ -64,7 +67,6 @@ export default class ActivityActions extends Component {
         options.push( 'Disable Comments' );
       }
 
-      /*Admin check */
       if (!this.props.entity.mature) {
         options.push( 'Set explicit' );
       } else {
@@ -73,7 +75,17 @@ export default class ActivityActions extends Component {
 
     } else {
 
-      if(!this.props.entity.ownerObj.subscribed) {
+      if (this.props.user.isAdmin()) {
+        options.push( 'Delete' );
+
+        if (!this.props.entity.mature) {
+          options.push( 'Set explicit' );
+        } else {
+          options.push( 'Remove explicit' );
+        }
+      }
+
+      if (!this.props.entity.ownerObj.subscribed) {
         options.push( 'Subscribe' );
       } else {
         options.push( 'Unsubscribe' );
@@ -208,6 +220,9 @@ export default class ActivityActions extends Component {
       case 'Translate':
         break;
       case 'Report':
+        this.setState({
+          reportModalVisible: true,
+        });
         break;
       case 'Enable Comments':
         this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid).then( (result) => {
@@ -243,6 +258,13 @@ export default class ActivityActions extends Component {
   }
 
   /**
+   * Close report modal
+   */
+  closeReport = () => {
+    this.setState({ reportModalVisible: false });
+  }
+
+  /**
    * Render Header
    */
   render() {
@@ -258,6 +280,16 @@ export default class ActivityActions extends Component {
           onPress={this.handleSelection}
           cancelButtonIndex={0}
         />
+        <Modal animationType={"slide"} transparent={false}
+          visible={this.state.reportModalVisible}
+          onRequestClose={this.closeReport}>
+          <View style={styles.modal}>
+            <View style={styles.modalHeader}>
+              <Icon onPress={this.closeReport} color='gray' size={30} name='md-close' />
+            </View>
+            <ReportModal close={this.closeReport} entity={this.props.entity} />
+          </View>
+        </Modal>
       </View>
     )
   }
@@ -270,5 +302,16 @@ const styles = StyleSheet.create({
   },
   iconclose: {
     flex:1,
+  },
+  modal: {
+    flex: 1,
+    paddingTop: 4,
+  },
+  modalContainer: {
+    alignItems: 'center',
+    backgroundColor: '#ede3f2',
+  },
+  modalHeader: {
+    padding: 5
   }
 });

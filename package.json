@@ -55,6 +55,7 @@
     "react-native-progress": "^3.4.0",
     "react-native-qrcode": "^0.2.6",
     "react-native-randombytes": "^3.0.0",
+    "react-native-simple-radio-button": "^2.7.1",
     "react-native-snap-carousel": "^3.4.0",
     "react-native-tcp": "^3.2.1",
     "react-native-udp": "^2.1.0",
