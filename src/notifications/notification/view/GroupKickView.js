@@ -12,14 +12,20 @@ import {
  */
 export default class GroupKickView extends Component {
 
+  /**
+   * Navigate to group
+   */
+  navToGroup = () => {
+    this.props.navigation.navigate('GroupView', { guid: this.props.entity.params.group.guid });
+  }
+
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
 
-    //TODO: navigate to group entity.params.group.guid on click
     return (
       <View style={styles.bodyContents}>
-        <Text>You were kicked off from <Text>{entity.params.group.name}</Text></Text>
+        <Text onPress={this.navToGroup}>You were kicked off from <Text>{entity.params.group.name}</Text></Text>
       </View>
     )
   }

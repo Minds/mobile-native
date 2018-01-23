@@ -25,11 +25,20 @@ export default class CommentView extends Component {
 
     return (
       <View>
-        <Text>{entity.fromObj.name}</Text>
-        <Text>commented on</Text>
-        { body }
+        <Text onPress={this.navToActivity}>
+          <Text>{entity.fromObj.name}</Text>
+          <Text>commented on</Text>
+          { body }
+        </Text>
       </View>
     );
+  }
+
+  /**
+   * Navigate to activity
+   */
+  navToActivity = () => {
+    this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
   }
 
   /**

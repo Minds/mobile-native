@@ -11,6 +11,12 @@ import {
  * Tag Notification Component
  */
 export default class TagView extends Component {
+  /**
+   * Navigate to activity
+   */
+  navToActivity = () => {
+    this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
+  }
 
   render() {
     const entity = this.props.entity;
@@ -20,7 +26,7 @@ export default class TagView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text>{entity.fromObj.name} {isComment ? 'tagged you in a comment' : 'tagged you in a post' } </Text>
+        <Text onPress={this.navToActivity}>{entity.fromObj.name} {isComment ? 'tagged you in a comment' : 'tagged you in a post' } </Text>
       </View>
     )
   }

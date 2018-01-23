@@ -12,6 +12,13 @@ import {
  */
 export default class RemindView extends Component {
 
+  /**
+   * Navigate to activity
+   */
+  navToActivity = () => {
+    this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
+  }
+
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
@@ -35,10 +42,10 @@ export default class RemindView extends Component {
 
     switch (entity.entityObj.type) {
       case "activity":
-        return <Text>{entity.fromObj.name} reminded <Text style={styles.link}>{title ? title : `your {entity.entityObj.subtype}`}</Text></Text>
+        return <Text onPress={this.navToActivity}>{entity.fromObj.name} reminded <Text style={styles.link}>{title ? title : `your {entity.entityObj.subtype}`}</Text></Text>
 
       case "object":
-        return <Text>{entity.fromObj.name} reminded <Text style={styles.link}>{ title ? title : 'your activity' }</Text></Text>
+        return <Text onPress={this.navToActivity}>{entity.fromObj.name} reminded <Text style={styles.link}>{ title ? title : 'your activity' }</Text></Text>
 
       default:
         return <Text>... oops.</Text>

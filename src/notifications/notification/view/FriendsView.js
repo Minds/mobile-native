@@ -12,6 +12,13 @@ import {
  */
 export default class FriendsView extends Component {
 
+  /**
+   * Navigate To channel
+   */
+  navToChannel = () => {
+    this.props.navigation.navigate('Channel', { guid: this.props.entity.fromObj.guid });
+  }
+
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
