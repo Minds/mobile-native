@@ -137,7 +137,7 @@ export default class ConversationScreen extends Component {
             onChangeText={(text) => this.setState({ text })}
             value={this.state.text}
           />
-          <TouchableOpacity onPress={this.send} style={styles.sendicon}><Icon name="md-send" size={24} /></TouchableOpacity>
+          <TouchableOpacity onPress={this.send} style={styles.sendicon}><Icon name="md-send" size={24} style={{ color: '#444' }}/></TouchableOpacity>
         </View>
       </View>
     );

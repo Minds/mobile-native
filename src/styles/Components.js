@@ -7,8 +7,11 @@ import colors from './Colors';
  */
 export const ComponentsStyle = StyleSheet.create({
   passwordinput: {
-    backgroundColor: '#CCC',
-    borderRadius: 5
+    borderColor: '#ECECEC',
+    borderWidth: 1,
+    backgroundColor: '#FFF',
+    borderRadius: 3,
+    padding: 16,
   },
 
   // login
