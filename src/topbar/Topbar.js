@@ -61,10 +61,10 @@ export default class Topbar extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 56,
+    height: (Platform.OS === 'ios') ? 65 : 56,
     display: 'flex',
     flexDirection: 'row',
-    paddingTop: Platform.OS === 'ios'?12:0,
+    paddingTop: Platform.OS === 'ios'? 16 : 0,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
     backgroundColor: '#FFFFFF',
