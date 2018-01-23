@@ -2,8 +2,14 @@ import { Platform } from 'react-native';
 
 import api from './../common/services/api.service';
 
-export function getFeed(offset) {
-  return api.get('api/v1/newsfeed/network/', { offset: offset, limit: 12 })
+/**
+ * Common function to fetch feeds
+ * @param {string} endpoint
+ * @param {string} offset
+ * @param {int} limit
+ */
+function _getFeed(endpoint, offset, limit) {
+  return api.get(endpoint, { offset, limit })
     .then((data) => {
       return {
         entities: data.activity,
@@ -16,28 +22,51 @@ export function getFeed(offset) {
     })
 }
 
-export function getFeedChannel(guid, offset) {
-  return api.get('api/v1/newsfeed/personal/' + guid, { offset: offset, limit: 12 })
-  .then((data) => {
-    return {
-      entities: data.activity,
-      offset: data['load-next'],
-      }
-    })
-    .catch(err => {
-      console.log('error');
-      throw "Ooops";
-    })
-  }
+/**
+ * Fetch subscribed newsfeed
+ * @param {string} offset
+ * @param {int} limit
+ */
+export function getFeed(offset, limit = 12) {
+  return _getFeed('api/v1/newsfeed/', offset, limit);
+}
 
-export function getBoosts(limit) {
+/**
+ * Fetch top newsfeed
+ * @param {string} offset
+ * @param {int} limit
+ */
+export function getFeedTop(offset, limit = 12) {
+  return _getFeed('api/v1/newsfeed/top', offset, limit);
+}
+
+/**
+ * Fetch channel feed
+ * @param {string} guid
+ * @param {string} offset
+ * @param {int} limit
+ */
+export function getFeedChannel(guid, offset, limit = 12) {
+  return _getFeed('api/v1/newsfeed/personal/' + guid, offset, limit);
+}
+
+/**
+ * Fetch boosted content
+ * @param {string} offset
+ * @param {int} limit
+ */
+export function getBoosts(offset, limit) {
   return api.get('api/v1/boost/fetch/newsfeed', {
-    limit: limit,
+    limit,
+    offset,
     platform: Platform.OS === 'ios' ? 'ios' : 'other'
   })
-    .then(({ boosts = [] }) => {
-      return boosts;
-    })
+    .then((data) => {
+      return {
+        entities: data.boosts||[],
+        offset: data['load-next'],
+      }
+    });
 }
 
 export function post(post) {
