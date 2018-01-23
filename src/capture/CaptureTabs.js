@@ -17,18 +17,19 @@ import {
   inject
 } from 'mobx-react/native'
 
+import ImagePicker from 'react-native-image-picker';
+
 import { Button } from 'react-native-elements';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Topbar from '../topbar/Topbar';
-import CaptureScreen from './CaptureScreen';
 import CaptureVideo from './CaptureVideo';
-import GalleryScreen from './GalleryScreen';
 import Poster from '../newsfeed/Poster';
 
 import { uploadAttachment } from '../newsfeed/NewsfeedService';
 import { CommonStyle } from '../styles/Common';
+import colors from '../styles/Colors';
 
 /**
  * Capture tab
@@ -85,48 +86,93 @@ export default class CaptureTab extends Component {
 
     return (
       <View style={CommonStyle.flexContainer}>
-        {this.loadScreen()}
+      
         { this.state.screen != 'poster' ?
-          <View style={{height:35}}>
-            <View style={{flex:1, flexDirection:'row'}}>
-              <TouchableHighlight underlayColor='gray' onPress={() => this.setState({screen:'gallery'})} style={this.state.screen === 'gallery'? styles.selectedButton: styles.buttons}>
-                <Text>Gallery</Text>
+          <View style={{height:125}}>
+            <View style={{flex:1, flexDirection:'row', paddingLeft: 1, paddingRight: 1 }}>
+              <TouchableHighlight underlayColor='#FFF' onPress={() => this.gallery() } style={ styles.buttons}>
+                <View style={ styles.buttonsWrapper }>
+                  <Icon name="md-photos" size={36} style={ styles.icons }/>
+                  <Text style={ styles.labels }>Gallery</Text>
+                </View>
               </TouchableHighlight>
-              <TouchableHighlight underlayColor='gray' onPress={() => this.setState({screen:'captureImage'})} style={this.state.screen === 'captureImage'? styles.selectedButton: styles.buttons}>
-                <Text>Photo</Text>
+              <TouchableHighlight underlayColor='#FFF' onPress={() => this.photo() } style={ styles.buttons }>
+                <View style={ styles.buttonsWrapper }>
+                  <Icon name="md-camera" size={36} style={ styles.icons }/>
+                  <Text style={ styles.labels }>Photo</Text>
+                </View>
               </TouchableHighlight>
-              <TouchableHighlight underlayColor='gray' onPress={() => this.setState({screen:'captureVideo'})} style={this.state.screen === 'captureVideo'? styles.selectedButton: styles.buttons}>
-                <Text>Video</Text>
+              <TouchableHighlight underlayColor='#FFF' onPress={() => this.video() } style={ styles.buttons }>
+                <View style={ styles.buttonsWrapper }>
+                  <Icon name="md-videocam" size={36} style={ styles.icons }/>
+                  <Text style={ styles.labels }>Video</Text>
+                </View>
               </TouchableHighlight>
             </View>
           </View> :
           <View></View>
         }
+
       </View>
     );
   }
 
-  /**
-   * Submit to poster
-   */
-  submitToPoster = (imageUri, type) => {
-    this.setState({
-      isPosting : true,
-    });
-    uploadAttachment('api/v1/archive/image', {
-      uri: imageUri,
-      type: type,
-      name: imageUri.substring(imageUri.lastIndexOf('/') + 1)
-    }).then((res) => {
-      this.setState({
-        imageUri,
-        screen: 'poster',
-        attachmentGuid: res.guid,
-        attachmentDone: true,
-        isPosting : false,
-      });
-    });
+  video() {
+    ImagePicker.launchCamera({
+      mediaType: 'video',
+    },
+    (response) => {
 
+      if (response.didCancel) {
+        return;
+      }
+      else if (response.error) {
+        alert('ImagePicker Error: '+ response.error);
+      }
+      else if (response.customButton) {
+        return;
+      }
+
+      let item = {
+        uri: response.uri,
+        type: 'video',
+        fileName: 'image.mp4'
+      }
+      this.props.onSelectedMedia(item);
+    });
+  }
+
+  photo() {
+    ImagePicker.launchCamera({
+      mediaType: 'photo',
+    },
+    (response) => {
+
+      if (response.didCancel) {
+        return;
+      }
+      else if (response.error) {
+        alert('ImagePicker Error: '+ response.error);
+      }
+      else if (response.customButton) {
+        return;
+      }
+
+      let item = {
+        uri: response.uri,
+        type: 'image',
+        fileName: 'image.jpg'
+      }
+      this.props.onSelectedMedia(item);
+    });
+  }
+
+  gallery() {
+    ImagePicker.launchImageLibrary({
+    },
+    (response) => {
+      this.props.onSelectedMedia(response);
+    });
   }
 
   /**
@@ -145,27 +191,6 @@ export default class CaptureTab extends Component {
         borderRadius:0
       }
     }
-  }
-
-  /**
-   * Load selected screen
-   */
-  loadScreen() {
-    switch (this.state.screen) {
-      case 'gallery':
-        return <GalleryScreen moveToCapture={() => this.moveToCaptureScreen()} submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
-        break;
-      case 'captureImage':
-        return <CaptureScreen isPosting={this.state.isPosting} submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
-        break;
-      case 'captureVideo':
-        return <CaptureVideo isPosting={this.state.isPosting} submitToPoster={this.submitToPoster} style={styles.wrapper}/>;
-        break;
-      case 'poster':
-        return <Poster reset={() => this.resetState()} attachmentGuid={this.state.attachmentGuid} imageUri={this.state.imageUri}  />;
-        break;
-    }
-
   }
 
   /**
@@ -193,16 +218,37 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
+  icons: {
+    color: '#444',
+  },
+  labels: {
+    letterSpacing: 1.25,
+    color: '#444',
+  },
   buttons: {
     flex:1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    alignContent: 'center',
+    backgroundColor: '#FFF',
+    borderWidth: 1,
+    borderColor: '#ECECEC',
+    margin: 1,
+  },
+  buttonsWrapper: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
   },
   selectedButton: {
     flex:1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth:3,
-    borderColor: 'yellow'
+    backgroundColor: '#FFF',
+    borderColor: colors.primary,
   }
 });

@@ -43,6 +43,11 @@ export default class NewsfeedScreen extends Component {
     });
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    if (nextProps.navigation.state.params && nextProps.navigation.state.params.prepend)
+      nextProps.newsfeed.prepend(nextProps.navigation.state.params.prepend);
+  }
+
   /**
    * Dispose autorun of tabstate
    */
@@ -65,7 +70,7 @@ export default class NewsfeedScreen extends Component {
     );
 
     return (
-      <NewsfeedList newsfeed={newsfeed} header={poster} navigation={this.props.navigation}/>
+      <NewsfeedList newsfeed={newsfeed} navigation={this.props.navigation}/>
     );
   }
 }

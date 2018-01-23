@@ -53,6 +53,11 @@ export default class OffsetListStore {
   }
 
   @action
+  prepend(entity) {
+    this.entities.unshift(entity);
+  }
+
+  @action
   clearList(updateLoaded=true) {
     this.entities = [];
     this.offset   = '';

@@ -53,6 +53,10 @@ class NewsfeedStore {
       })
   }
 
+  prepend(entity) {
+    this.list.prepend(entity);
+  }
+
   @action
   clearFeed() {
     this.list.clearList();

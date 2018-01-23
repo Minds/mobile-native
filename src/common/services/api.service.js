@@ -161,7 +161,7 @@ class ApiService {
     });
   }
 
-  async upload(url, file, data) {
+  async upload(url, file, data, progress) {
     const paramsString = await this.buildParamsString({});
     var formData = new FormData();
     formData.append('file', file);
@@ -170,15 +170,29 @@ class ApiService {
     }
     const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth;
     return new Promise((resolve, reject)=>{
-      fetch(MINDS_URI + url + paramsString, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Basic ${btoa(basicAuth)}` ,
-          'Accept': 'application/json',
-          'Content-Type': 'multipart/form-data;'
-        },
-          body: formData
-        }).then(resp => {
+
+      let xhr = new XMLHttpRequest();
+
+      if (progress) {
+        xhr.upload.addEventListener("progress", progress);
+      }
+      xhr.open('POST', MINDS_URI + url + paramsString);
+      xhr.setRequestHeader('Authorization', `Basic ${btoa(basicAuth)}`);
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
+
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+          let data = JSON.parse(xhr.responseText);
+          if (data.status == 'error') 
+            return reject(data);
+
+          resolve(data);
+        }
+      };
+
+      xhr.send(formData);
+            /*.then(resp => {
           if (!resp.ok) {
             throw resp;
           }
@@ -196,7 +210,7 @@ class ApiService {
             session.logout();
           }
           return reject(err);
-        })
+        })*/
     });
   }
 }

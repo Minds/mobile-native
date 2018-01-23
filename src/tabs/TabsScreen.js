@@ -8,7 +8,7 @@ import {
 import Topbar from '../topbar/Topbar';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import DiscoveryScreen from '../discovery/DiscoveryScreen';
-import CaptureTabs from '../capture/CaptureTabs';
+import CaptureScreen from '../capture/CaptureScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
 import MoreScreen from './MoreScreen';
 import tabs from './TabsStore';
@@ -22,7 +22,7 @@ const Tabs = (
       screen: DiscoveryScreen,
     },
     Capture: {
-      screen: CaptureTabs,
+      screen: CaptureScreen,
     },
     Messenger: {
       screen: MessengerScreen
