@@ -13,6 +13,7 @@ import NewsfeedList from './NewsfeedList';
 import Poster from './Poster';
 import CenteredLoading from '../common/components/CenteredLoading';
 import BoostsCarousel from './boosts/BoostsCarousel';
+import Topbar from './topbar/Topbar';
 
 /**
  * News Feed Screen
@@ -59,6 +60,7 @@ export default class NewsfeedScreen extends Component {
 
     const poster = (
       <View>
+        <Topbar />
         <Poster />
         <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation}/>
       </View>

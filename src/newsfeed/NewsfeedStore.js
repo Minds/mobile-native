@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 
-import { getFeed, getBoosts } from './NewsfeedService';
+import { getFeedTop, getFeed, getBoosts } from './NewsfeedService';
 
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 /**
@@ -9,6 +9,8 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 class NewsfeedStore {
 
   @observable list = new OffsetFeedListStore();
+
+  @observable filter = 'subscribed';
 
   @observable.ref boosts = [];
 
@@ -22,12 +24,14 @@ class NewsfeedStore {
    */
   loadFeed() {
 
+    const fetchFn = this.getFetchFunction();
+
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
     this.loading = true;
 
-    return getFeed(this.list.offset)
+    return fetchFn(this.list.offset)
       .then(
         feed => {
           this.list.setList(feed);
@@ -43,13 +47,37 @@ class NewsfeedStore {
   }
 
   /**
+   * Set filter
+   * @param {string} filter
+   */
+  @action
+  setFilter(filter) {
+    this.filter = filter;
+    this.refresh();
+  }
+
+  /**
+   * return service method based on filter
+   */
+  getFetchFunction() {
+    switch (this.filter) {
+      case 'subscribed':
+        return getFeed;
+      case 'top':
+        return getFeedTop;
+      case 'boostfeed':
+        return getBoosts;
+    }
+  }
+
+  /**
    * Load boosts
    */
   loadBoosts() {
-    // get 15 boosts
-    getBoosts(15)
+    // get first 15 boosts
+    getBoosts('', 15)
       .then(boosts => {
-        this.boosts = boosts;
+        this.boosts = boosts.entities;
       })
   }
 
