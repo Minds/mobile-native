@@ -12,14 +12,20 @@ import {
  */
 export default class GroupInviteView extends Component {
 
+  /**
+   * Navigate to group
+   */
+  navToGroup = () => {
+    this.props.navigation.navigate('GroupView', { guid: this.props.entity.params.group.guid });
+  }
+
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
 
-    //TODO: navigate to group entity.params.group.guid on click
     return (
       <View style={styles.bodyContents}>
-        <Text>{entity.params.user} invited you to join <Text>{entity.params.group.name}</Text></Text>
+        <Text onPress={this.navToGroup}>{entity.params.user} invited you to join <Text>{entity.params.group.name}</Text></Text>
       </View>
     )
   }

@@ -5,6 +5,7 @@ import React, {
 import {
   Text,
   StyleSheet,
+  TouchableWithoutFeedback,
   Image,
   View
 } from 'react-native';
@@ -41,10 +42,15 @@ import WelcomePointsView from './view/WelcomePointsView';
  * Main Notification row Component
  */
 export default class Notification extends Component {
-
-  state = {
-    avatarSrc: { uri: MINDS_CDN_URI + 'icon/' + this.props.entity.owner_guid }
-  };
+  /**
+   * Navigate To channel
+   */
+  navToChannel = () => {
+    // only active if receive the navigation property
+    if (this.props.navigation) {
+      this.props.navigation.navigate('Channel', { guid: this.props.entity.fromObj.guid });
+    }
+  }
 
   // Notifications are stateless, therefore they don't need to be rendered more than once
   shouldComponentUpdate(nextProps, nextState) {
@@ -56,9 +62,13 @@ export default class Notification extends Component {
 
     const body = this.getBody(entity);
 
+    const avatarSrc = { uri: MINDS_CDN_URI + 'icon/' + this.props.entity.fromObj.guid + '/medium'};
+
     return (
       <View style={styles.container}>
-        <Image source={this.state.avatarSrc} style={styles.avatar}/>
+        <TouchableWithoutFeedback onPress={this.navToChannel}>
+          <Image source={avatarSrc} style={styles.avatar}/>
+        </TouchableWithoutFeedback>
         <View style={styles.body}>
           { body }
           <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
@@ -75,83 +85,82 @@ export default class Notification extends Component {
     switch (entity.notification_view) {
 
       case "boost_accepted":
-        return <BoostAcceptedView entity={entity} styles={styles} />
+        return <BoostAcceptedView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "boost_completed":
-        return <BoostCompletedView entity={entity} styles={styles} />
+        return <BoostCompletedView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "boost_gift":
-        return <BoostGiftView entity={entity} styles={styles} />
+        return <BoostGiftView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "boost_peer_accepted":
-        return <BoostPeerAcceptedView entity={entity} styles={styles} />
+        return <BoostPeerAcceptedView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "boost_peer_rejected":
-        return <BoostPeerRejectedView entity={entity} styles={styles} />
+        return <BoostPeerRejectedView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "boost_peer_request":
-        return <BoostPeerRequestView entity={entity} styles={styles} />
+        return <BoostPeerRequestView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "boost_rejected":
-        return <BoostRejectedView entity={entity} styles={styles} />
+        return <BoostRejectedView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "boost_submitted_p2p":
-        return <BoostSubmittedP2pView entity={entity} styles={styles} />
+        return <BoostSubmittedP2pView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "boost_submitted":
-        return <BoostSubmittedView entity={entity} styles={styles} />
+        return <BoostSubmittedView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "comment":
-        return <CommentView entity={entity} styles={styles} />
+        return <CommentView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "custom_message":
-        return <CustomMessageView entity={entity} styles={styles} />
+        return <CustomMessageView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "downvote":
-        return <DownvoteView entity={entity} styles={styles} />
+        return <DownvoteView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "feature":
-        return <FeatureView entity={entity} styles={styles} />
+        return <FeatureView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "friends":
-        return <FriendsView entity={entity} styles={styles} />
+        return <FriendsView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "group_activity":
-        return <GroupActivityView entity={entity} styles={styles} />
+        return <GroupActivityView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "group_invite":
-        return <GroupInviteView entity={entity} styles={styles} />
+        return <GroupInviteView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "group_kick":
-        return <GroupKickView entity={entity} styles={styles} />
+        return <GroupKickView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "like":
-        return <LikeView entity={entity} styles={styles} />
+        return <LikeView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "missed_call":
-        return <MissedCallView entity={entity} styles={styles} />
+        return <MissedCallView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "remind":
-        return <RemindView entity={entity} styles={styles} />
+        return <RemindView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "tag":
-        return <Tag entity={entity} styles={styles} />
+        return <Tag entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "welcome_boost":
-        return <WelcomeBoostView entity={entity} styles={styles} />
+        return <WelcomeBoostView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "welcome_chat":
-        return <WelcomeChatView entity={entity} styles={styles} />
+        return <WelcomeChatView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "welcome_discover":
-        return <WelcomeDiscoverView entity={entity} styles={styles} />
+        return <WelcomeDiscoverView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "welcome_points":
-        return <WelcomePointsView entity={entity} styles={styles} />
+        return <WelcomePointsView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "welcome_post":
-        return <WelcomePostView entity={entity} styles={styles} />
-
+        return <WelcomePostView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       default:
         return (
