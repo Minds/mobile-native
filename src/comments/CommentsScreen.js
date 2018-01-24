@@ -16,7 +16,6 @@ import { observer, inject } from 'mobx-react/native';
 import { extendObservable } from 'mobx';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import ActionSheet from 'react-native-actionsheet';
 
 import CenteredLoading from '../common/components/CenteredLoading';
 import Comment from './Comment';
@@ -59,53 +58,11 @@ export default class CommentsScreen extends Component {
   }
 
   /**
-   * Show actions menu
-   */
-  showActions = (comment) => {
-    if (this.actioncomment) {
-      this.actioncomment.editing = false;
-    }
-    this.actioncomment = comment;
-
-    let actions = ['Cancel'];
-
-    if (this.props.user.me.guid == comment.owner_guid) {
-      actions.push('Edit');
-    }
-    this.props.comments.setActions(actions);
-
-    this.actionSheet.show();
-  }
-
-  /**
-   * Handle action on comment
-   */
-  handleSelection = (i) => {
-    const action = this.props.comments.actions[i];
-
-    switch (action) {
-      case 'Edit':
-        this.actioncomment.editing = true;
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  /**
    * Render
    */
   render() {
     return (
       <View style={{flex:1}}>
-        <ActionSheet
-          ref={o => this.actionSheet = o}
-          title="actions"
-          options={this.props.comments.actions.slice()}
-          onPress={this.handleSelection}
-          cancelButtonIndex={0}
-        />
         <View style={{flex:14}}>
           { this.props.comments.loaded ?
             <FlatList
@@ -181,7 +138,7 @@ export default class CommentsScreen extends Component {
 
     return (
       <View>
-        <Comment comment={comment} actionSheet={this.actionSheet} onShowActions={this.showActions}/>
+        <Comment comment={comment}/>
       </View>
     );
   }
