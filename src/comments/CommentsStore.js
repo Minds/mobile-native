@@ -16,7 +16,6 @@ import Comment from './Comment';
  */
 class CommentsStore {
   @observable comments = [];
-  @observable actions = [];
   @observable refreshing = false;
   @observable loaded = false;
   @observable saving = false;
@@ -106,11 +105,6 @@ class CommentsStore {
   @action
   setCommentDescription(comment, description) {
     comment.description = description;
-  }
-
-  @action
-  setActions(actions) {
-    this.actions = actions;
   }
 
   cantLoadMore(guid) {
