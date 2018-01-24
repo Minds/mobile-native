@@ -207,7 +207,6 @@ export default class BlockchainSettingsScreen extends Component {
   render() {
     return (
       <ScrollView style={ CommonStyle.backgroundLight }>
-        <BlockchainSettingsOverviewView />
 
         <View style={ CommonStyle.screen }>
           <View style={ CommonStyle.viewTitleContainer } >

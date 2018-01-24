@@ -17,7 +17,7 @@ export default class WalletOverviewView extends Component {
   componentDidMount() {
     this.props.wallet.refresh();
   }
-
+ 
   render() {
     return (
       <View style={ styles.view }>

@@ -5,6 +5,7 @@ import React, {
 import {
   Text,
   ScrollView,
+  ListView,
   View,
   StyleSheet,
   TouchableOpacity,
@@ -13,6 +14,9 @@ import {
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import WalletOverviewView from './WalletOverviewView';
+import WalletBalanceRewards from './balances/WalletBalanceRewards';
+import WalletBalanceTokens from './balances/WalletBalanceTokens';
+import WalletBalanceUSD from './balances/WalletBalanceUSD';
 
 /**
  * Wallet screen
@@ -22,8 +26,8 @@ export default class WalletScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     headerRight: (
     <View style={{ flexDirection: 'row', paddingRight:10}}>
-      <IonIcon name="ios-card" size={18} color='#444' style={{paddingRight: 10}} onPress={() => navigation.navigate('NotificationsSettings')} />
-      <Text>PURCHASE</Text>
+      {/*<IonIcon name="ios-card" size={18} color='#444' style={{paddingRight: 10}} onPress={() => navigation.navigate('NotificationsSettings')} />
+      <Text>PURCHASE</Text>*/}
     </View>
     )
   });
@@ -31,7 +35,9 @@ export default class WalletScreen extends Component {
   render() {
     return (
       <ScrollView style={ styles.mainContainer }>
-        <WalletOverviewView />
+        <WalletBalanceTokens />
+        <WalletBalanceRewards />
+        <WalletBalanceUSD />
 
         <View>
          {/* <View style={styles.datailsContainer}>
@@ -56,8 +62,8 @@ export default class WalletScreen extends Component {
 
           <TouchableOpacity onPress={ () => this.props.navigation.navigate('BlockchainSettings') }>
             <View style={styles.datailsContainer}>
-              <Text style={styles.title}>Crypto Settings</Text>
-              <Text style={styles.subtitle}>Setup your Ethereum wallet and crypto related settings</Text>
+              <Text style={styles.title}>Token Settings</Text>
+              <Text style={styles.subtitle}>Configure your wallet and other token related settings</Text>
             </View>
           </TouchableOpacity>
         </View>
