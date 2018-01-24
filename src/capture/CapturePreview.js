@@ -39,14 +39,14 @@ export default class CapturePreview extends Component {
 
     return (
       <View style={styles.wrapper}>
-        { this.state.type == 'image' ?
+        { this.state.type == 'image/jpeg' ?
             <Image
               source={{ uri : this.state.uri }}
               style={styles.preview}
               />
               : null
         }
-        { this.state.type == 'video' ?
+        { this.state.type == 'video/mp4' ?
           <View style={styles.preview}>
             <MindsVideo video={{'uri': this.state.uri }}/>
           </View> 

@@ -135,7 +135,7 @@ export default class CaptureTab extends Component {
 
       let item = {
         uri: response.uri,
-        type: 'video',
+        type: 'video/mp4',
         fileName: 'image.mp4'
       }
       this.props.onSelectedMedia(item);
@@ -160,7 +160,7 @@ export default class CaptureTab extends Component {
 
       let item = {
         uri: response.uri,
-        type: 'image',
+        type: 'image/jpeg',
         fileName: 'image.jpg'
       }
       this.props.onSelectedMedia(item);

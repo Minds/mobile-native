@@ -20,6 +20,7 @@ export async function uploadAttachment(url, file, progress) {
     let data = await api.upload(url, file, null, progress);
     return data;
   } catch (e) {
+    console.log('error', e);
       throw {
         error: e,
         url: url,

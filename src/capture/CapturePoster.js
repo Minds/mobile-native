@@ -126,7 +126,7 @@ export default class CapturePoster extends Component {
         res = await uploadAttachment('api/v1/archive/image', {
             uri: response.uri,
             type: response.type,
-            name: response.fileName
+            name: response.fileName || 'test.jpg'
         }, 
         (e) => {
           let pct = e.loaded / e.total;
