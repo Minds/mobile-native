@@ -19,9 +19,11 @@ import {
   inject
 } from 'mobx-react/native'
 
+import shareService from '../../share/ShareService';
 import { toggleUserBlock } from '../NewsfeedService';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ActionSheet from 'react-native-actionsheet';
+import { MINDS_URI } from '../../config/Config';
 /**
  * Activity Actions
  */
@@ -134,7 +136,7 @@ export default class ActivityActions extends Component {
   makeAction(option) {
     switch (option) {
       case 'Edit':
-
+        this.props.toggleEdit(true);
         break;
       case 'Delete':
         this.props.newsfeed.list.deleteEntity(this.props.entity.guid).then( (result) => {
@@ -216,6 +218,7 @@ export default class ActivityActions extends Component {
         });
         break;
       case 'Share':
+        shareService.share(this.props.entity.message, MINDS_URI + 'newsfeed/' + this.props.entity.guid);
         break;
       case 'Translate':
         break;

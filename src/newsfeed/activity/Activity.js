@@ -33,6 +33,7 @@ import Actions from './Actions';
 import formatDate from '../../common/helpers/date';
 import domain from '../../common/helpers/domain';
 import ActivityActions from './ActivityActions';
+import ActivityEditor from './ActivityEditor';
 
 /**
  * Activity
@@ -40,6 +41,9 @@ import ActivityActions from './ActivityActions';
 @observer
 export default class Activity extends Component {
 
+  state = {
+    editing: false
+  }
   /**
    * Nav to activity full screen
    */
@@ -75,7 +79,12 @@ export default class Activity extends Component {
           { this.showOwner() }
           { this.props.entity.message || this.props.entity.title ?
             <View style={this.props.entity.message || this.props.entity.title ? styles.message : styles.emptyMessage}>
-              <ExplicitText entity={this.props.entity}  navigation={this.props.navigation}/>
+              {
+                (this.state.editing) ?
+                  //Passing the store in newsfeed (could be channel also)
+                  <ActivityEditor entity={this.props.entity} toggleEdit={this.toggleEdit} newsfeed={this.props.newsfeed}/> :
+                  <ExplicitText entity={this.props.entity}  navigation={this.props.navigation}/>
+              }
             </View>
             : null
           }
@@ -84,6 +93,10 @@ export default class Activity extends Component {
           { this.showActions() }
         </View>
     );
+  }
+
+  toggleEdit = (value) => {
+    this.setState({ editing: value });
   }
 
   /**
@@ -162,7 +175,7 @@ export default class Activity extends Component {
     if (!this.props.entity.remind_object) {
       const rightToolbar = (
          <View style={styles.rightToolbar}>
-            <ActivityActions newsfeed={this.props.newsfeed} entity={this.props.entity}/>
+            <ActivityActions newsfeed={this.props.newsfeed} toggleEdit={this.toggleEdit} entity={this.props.entity}/>
           </View>
       )
       return (
