@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit, toggleFeatured, deleteItem, monetize} from '../../newsfeed/NewsfeedService';
+import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit, toggleFeatured, deleteItem, monetize, update} from '../../newsfeed/NewsfeedService';
 
 import channelService from '../../channel/ChannelService';
 
@@ -11,6 +11,7 @@ import OffsetListStore from './OffsetListStore';
 export default class OffsetFeedListStore extends OffsetListStore {
 
   /*Activity Methods */
+  @observable saving = false;
 
   @action
   toggleCommentsAction(guid) {
@@ -137,5 +138,24 @@ export default class OffsetFeedListStore extends OffsetListStore {
         }));
     }
   }
+
+  @action
+  updateActivity(activity, message) {
+    this.saving = true;
+    activity.message = message;
+    return update(activity)
+      .finally(action(() => {
+        this.saving = false;
+      }))
+      .then(() => {
+        this.setActivityMessage(activity, message);
+      });
+  }
+
+  @action
+  setActivityMessage(activity, message) {
+    activity.message = message;
+  }
+
 
 }

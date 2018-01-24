@@ -82,6 +82,19 @@ export function post(post) {
     })
 }
 
+export function update(post) {
+  return api.post('api/v1/newsfeed/' + post.guid, post)
+    .then((data) => {
+      return {
+        entity: data.activity,
+      }
+    })
+    .catch(err => {
+      console.log('error');
+      throw "Ooops";
+    })
+}
+
 export function remind(guid, post) {
   return api.post('api/v1/newsfeed/remind/' + guid , post)
     .then((data) => {
