@@ -6,7 +6,7 @@ import {
   NavigationActions
 } from 'react-navigation';
 
-import {observer} from "mobx-react";
+import {observer} from "mobx-react/native";
 
 import {
   MINDS_URI,
@@ -97,7 +97,7 @@ export default class Activity extends Component {
     switch (type) {
       case 'image':
         source = {
-          uri: MINDS_CDN_URI + 'api/v1/archive/thumbnails/' + this.props.entity.guid + '/medium' 
+          uri: MINDS_CDN_URI + 'api/v1/archive/thumbnails/' + this.props.entity.guid + '/medium'
         }
         return this.getImage(source);
       case 'batch':
@@ -145,11 +145,15 @@ export default class Activity extends Component {
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
    */
-  getImage(source) { 
+  getImage(source) {
     this.source = source;
     const autoHeight = this.props.autoHeight;
-    return autoHeight ? <AutoHeightFastImage source={source} width={Dimensions.get('window').width} /> : (
+    return autoHeight ? (
       <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer} activeOpacity={1}>
+        <AutoHeightFastImage source={source} width={Dimensions.get('window').width} />
+      </TouchableOpacity>
+      ) : (
+      <TouchableOpacity onPress={this.navToActivity} style={styles.imageContainer} activeOpacity={1}>
         <ExplicitImage source={source} entity={this.props.entity} style={styles.image} disableProgress={this.props.disableProgress}/>
       </TouchableOpacity>
     );
@@ -173,10 +177,10 @@ export default class Activity extends Component {
         </OwnerBlock>
       );
     } else {
-      return <RemindOwnerBlock 
-                entity={this.props.entity} 
+      return <RemindOwnerBlock
+                entity={this.props.entity}
                 newsfeed={this.props.newsfeed}
-                navigation={this.props.navigation} 
+                navigation={this.props.navigation}
                 />;
     }
   }
@@ -188,7 +192,7 @@ export default class Activity extends Component {
     if (this.props.entity.remind_object) {
       return (
         <View style={styles.remind}>
-          <Activity 
+          <Activity
             hideTabs={true}
             newsfeed={this.props.newsfeed}
             entity={this.props.entity.remind_object}
@@ -204,7 +208,7 @@ export default class Activity extends Component {
    */
   showActions() {
     if (!this.props.hideTabs) {
-      return <Actions 
+      return <Actions
                 entity={this.props.entity}
                 navigation={this.props.navigation}
                 />
