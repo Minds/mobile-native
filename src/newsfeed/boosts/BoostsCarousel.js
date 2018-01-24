@@ -140,6 +140,7 @@ export default class BoostsCarousel extends PureComponent {
         //slideStyle={[this.styles.slide, { height: this.state.height }]}
         slideStyle={this.styles.slide}
         onSnapToItem={this._onSnapToItem}
+        inactiveSlideScale={1}
         // Must be equal to the total number of boosts in order to autoheight workaround works
         windowSize={15}
         maxToRenderPerBatch={15}
