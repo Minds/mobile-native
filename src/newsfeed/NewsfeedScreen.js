@@ -10,7 +10,6 @@ import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import NewsfeedList from './NewsfeedList';
-import Poster from './Poster';
 import CenteredLoading from '../common/components/CenteredLoading';
 import BoostsCarousel from './boosts/BoostsCarousel';
 import Topbar from './topbar/Topbar';
@@ -66,13 +65,12 @@ export default class NewsfeedScreen extends Component {
     const poster = (
       <View>
         <Topbar />
-        <Poster />
         <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation}/>
       </View>
     );
 
     return (
-      <NewsfeedList newsfeed={newsfeed} navigation={this.props.navigation}/>
+      <NewsfeedList newsfeed={newsfeed} header={poster} navigation={this.props.navigation}/>
     );
   }
 }
