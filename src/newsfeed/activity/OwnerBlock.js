@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     height: 46,
     width: 46,
     borderRadius: 23,
-    borderWidth: StyleSheet.hairlineWidth,
+    borderWidth: 1,
     borderColor: '#EEE',
   },
   body: {

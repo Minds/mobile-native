@@ -73,9 +73,12 @@ export default class Activity extends Component {
     return (
         <View style={styles.container}>
           { this.showOwner() }
-          <View style={this.props.entity.message || this.props.entity.title ? styles.message : styles.emptyMessage}>
-            <ExplicitText entity={this.props.entity}  navigation={this.props.navigation}/>
-          </View>
+          { this.props.entity.message || this.props.entity.title ?
+            <View style={this.props.entity.message || this.props.entity.title ? styles.message : styles.emptyMessage}>
+              <ExplicitText entity={this.props.entity}  navigation={this.props.navigation}/>
+            </View>
+            : null
+          }
           { this.showRemind() }
           { this.showMedia() }
           { this.showActions() }
@@ -170,7 +173,11 @@ export default class Activity extends Component {
         </OwnerBlock>
       );
     } else {
-      return <RemindOwnerBlock entity={this.props.entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation} />;
+      return <RemindOwnerBlock 
+                entity={this.props.entity} 
+                newsfeed={this.props.newsfeed}
+                navigation={this.props.navigation} 
+                />;
     }
   }
 
@@ -181,7 +188,12 @@ export default class Activity extends Component {
     if (this.props.entity.remind_object) {
       return (
         <View style={styles.remind}>
-          <Activity hideTabs={true} newsfeed={this.props.newsfeed} entity={this.props.entity.remind_object} navigation={this.props.navigation} />
+          <Activity 
+            hideTabs={true}
+            newsfeed={this.props.newsfeed}
+            entity={this.props.entity.remind_object}
+            navigation={this.props.navigation}
+            />
         </View>
       );
     }
@@ -192,7 +204,10 @@ export default class Activity extends Component {
    */
   showActions() {
     if (!this.props.hideTabs) {
-      return <Actions entity={this.props.entity} navigation={this.props.navigation}></Actions>
+      return <Actions 
+                entity={this.props.entity}
+                navigation={this.props.navigation}
+                />
     }
   }
 }
@@ -225,7 +240,7 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   remind: {
-    flex:1,
+  //  flex:1,
   },
   rightToolbar: {
     alignSelf: 'flex-end',

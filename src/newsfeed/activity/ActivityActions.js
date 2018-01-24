@@ -272,7 +272,12 @@ export default class ActivityActions extends Component {
 
     return (
       <View style={styles.wrapper}>
-        <Icon name="ios-arrow-down" onPress={() => this.showActionSheet()} size={20} />
+        <Icon 
+          name="ios-arrow-down"
+          onPress={() => this.showActionSheet()} 
+          size={32} 
+          style={styles.icon}
+          />
         <ActionSheet
           ref={o => this.ActionSheet = o}
           title={title}
@@ -299,6 +304,9 @@ const styles = StyleSheet.create({
   wrapper: {
     flex:1,
     alignSelf: 'center'
+  },
+  icon: {
+    color: '#ddd',
   },
   iconclose: {
     flex:1,
