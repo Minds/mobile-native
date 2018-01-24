@@ -42,7 +42,7 @@ export default class CommentEditor extends Component {
    * Cancel editing
    */
   cancel = () => {
-    this.props.comment.editing = false;
+    this.props.setEditing(false);
   }
 
   /**
@@ -54,7 +54,7 @@ export default class CommentEditor extends Component {
         console.log('error updating comment');
       })
       .finally(() => {
-        this.props.comment.editing = false;
+        this.props.setEditing(false);
       });
   }
 

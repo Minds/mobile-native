@@ -22,6 +22,8 @@ import {
   View
 } from 'react-native';
 
+
+import ActionSheet from 'react-native-actionsheet';
 import { thumbActivity } from '../newsfeed/activity/ActionsService';
 import CommentEditor from './CommentEditor';
 import { CommonStyle } from '../styles/Common';
@@ -37,9 +39,14 @@ import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 @observer
 export default class Comment extends Component {
 
-  state = {
-    avatarSrc: { uri: 'https://d3ae0shxev0cb7.cloudfront.net/' + 'icon/' + this.props.comment.ownerObj.guid }
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      avatarSrc: { uri: 'https://d3ae0shxev0cb7.cloudfront.net/' + 'icon/' + this.props.comment.ownerObj.guid },
+      options: this.getOptions(),
+      editing: false,
+    }
+  }
 
   /**
    * Render
@@ -64,20 +71,53 @@ export default class Comment extends Component {
         </OwnerBlock>
         <View style={styles.content}>
           {
-            (comment.editing) ?
-              <CommentEditor comment={comment}/>:
+            (this.state.editing) ?
+              <CommentEditor setEditing={this.setEditing} comment={comment}/>:
               <Text style={styles.message}>{comment.description}</Text>
           }
         </View>
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          options={this.state.options}
+          onPress={this.handleSelection}
+          cancelButtonIndex={0}
+        />
       </View>
     );
   }
 
+  setEditing = (value) => {
+    this.setState({editing: value});
+  }
   /**
    * Show actions
    */
   showActions = () => {
-    this.props.onShowActions(this.props.comment);
+    this.ActionSheet.show();
+  }
+
+  getOptions = () => {
+    let actions = ['Cancel'];
+    if (this.props.user.me.guid == this.props.comment.owner_guid) {
+      actions.push('Edit');
+    }
+    return actions;
+  }
+
+  /**
+   * Handle action on comment
+   */
+  handleSelection = (i) => {
+    const action = this.state.options[i];
+
+    switch (action) {
+      case 'Edit':
+        this.setState({editing: true});
+        break;
+
+      default:
+        break;
+    }
   }
 }
 
