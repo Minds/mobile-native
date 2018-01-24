@@ -101,27 +101,31 @@ export default class MoreScreen extends Component {
         }
       },{
         name: 'Logout',
+        hideChevron: true,
         onPress: this.onPressLogout
       },
     ];
 
     return (
-      <ScrollView >
-        <List containerStyle={{flex:1}}>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
+        <List containerStyle={styles.container}>
           {
             list.map((l, i) => (
               <ListItem
                 key={i}
                 title={l.name}
                 titleStyle={{padding:8}}
-                style={styles.listItem}
+                containerStyle={styles.listItem}
                 switchButton={l.switchButton}
-                hideChevron ={true}
+                hideChevron ={l.hideChevron}
                 onPress= {l.onPress}
+                noBorder
               />
             ))
           }
         </List>
+        <View style={{flexGrow: 1}}>
+        </View>
         <View style={styles.logoBackground}>
           <FastImage
             resizeMode={FastImage.resizeMode.cover}
@@ -129,13 +133,13 @@ export default class MoreScreen extends Component {
             source={require('../assets/logos/medium.png')}
           />
           <View style={styles.footer}>
-            <Text style={styles.version} textAlign={'center'}>v1.0.0 (201712)</Text>
             <View style={styles.footercol}>
               <Text style={CommonStyle.colorDark}>FAQ</Text>
               <Text style={CommonStyle.colorDark}>Code</Text>
               <Text style={CommonStyle.colorDark}>Terms</Text>
               <Text style={CommonStyle.colorDark}>Privacy</Text>
             </View>
+            <Text style={styles.version} textAlign={'center'}>v1.0.0 (201712)</Text>
           </View>
         </View>
       </ScrollView>
@@ -160,7 +164,22 @@ export default class MoreScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    backgroundColor: '#FFF',
+    flexDirection: 'column',
+  },
+  scrollViewContainer: {
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    alignContent: 'stretch',
+  },
+  container: {
+    flex: 1,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+  },
   logoBackground: {
+    paddingTop: 16,
     backgroundColor: '#FFF'
   },
 	screen: {
@@ -174,17 +193,20 @@ const styles = StyleSheet.create({
     height: 50,
   },
   listItem: {
-    borderBottomColor: '#eee',
-    height:20
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    paddingTop: 8,
+    paddingBottom: 8,
+    //height:20
   },
   footercol: {
-
-    flex:1,
     flexDirection: 'row',
     justifyContent: 'space-around'
   },
   version: {
-    fontSize: 15,
+    marginTop: 16,
+    fontSize: 16,
+    padding: 8,
     textAlign: 'center',
     fontWeight: 'bold',
     color: '#444'
