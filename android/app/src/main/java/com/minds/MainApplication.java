@@ -1,4 +1,4 @@
-package com.minds;
+package com.minds.mobile;
 
 import android.app.Application;
 

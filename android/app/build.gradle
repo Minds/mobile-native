@@ -98,12 +98,12 @@ android {
     buildToolsVersion "25.0.0"
 
     defaultConfig {
-        applicationId "com.minds"
+        applicationId "com.minds.mobile"
         multiDexEnabled true
         minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 25
+        versionCode 300001
+        versionName "3.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -144,8 +144,8 @@ android {
             def versionCodes = ["armeabi-v7a":1, "x86":2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
-                output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+                //output.versionCodeOverride =
+                //        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
         }
     }

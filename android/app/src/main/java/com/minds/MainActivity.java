@@ -1,4 +1,4 @@
-package com.minds;
+package com.minds.mobile;
 
 import com.facebook.react.ReactActivity;
 

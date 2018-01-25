@@ -1930,9 +1930,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile;
 				PRODUCT_NAME = Minds;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1968,9 +1968,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.minds.mobile;
 				PRODUCT_NAME = Minds;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
