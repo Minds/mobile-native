@@ -65,7 +65,9 @@ export default class NewsfeedScreen extends Component {
     const poster = (
       <View>
         <Topbar />
-        <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation} store={newsfeed} me={this.props.user.me}/>
+        { false ? 
+          <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation} store={newsfeed} me={this.props.user.me}/>
+          : null }
       </View>
     );
 
