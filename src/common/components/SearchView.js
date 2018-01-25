@@ -33,6 +33,8 @@ export default class SearchView extends PureComponent {
       <View style={styles.container}>
         <Icon size={16} style={styles.icon} name={'md-search'} color={'#444'} />
         <TextInput
+          onFocus={ this.props.onFocus }
+          onBlur={ this.props.onBlur }
           {...attributes}
           underlineColorAndroid={
             'transparent'

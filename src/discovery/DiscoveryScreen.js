@@ -4,17 +4,22 @@ import React, {
 
 import {
     StyleSheet,
+    Platform,
     Text,
     FlatList,
-    View
+    View,
+    TouchableHighlight,
 } from 'react-native';
+import { ListItem, Avatar } from 'react-native-elements';
 
 import {
   observer,
   inject
 } from 'mobx-react/native'
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import Modal from 'react-native-modal'
 
 import DiscoveryTile from './DiscoveryTile';
@@ -24,8 +29,12 @@ import SearchView from '../common/components/SearchView';
 import CenteredLoading from '../common/components/CenteredLoading';
 import debounce from '../common/helpers/debounce';
 import { CommonStyle } from '../styles/Common';
+import colors from '../styles/Colors';
+import BlogCard from '../blogs/BlogCard';
 
 import Toolbar from '../common/components/toolbar/Toolbar';
+import { MINDS_CDN_URI } from '../config/Config';
+
 
 /**
  * Discovery screen
@@ -38,13 +47,14 @@ export default class DiscoveryScreen extends Component {
 
   state = {
     active: false,
+    searching: false,
     itemHeight: 0,
     isModalVisible: false,
   }
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
-      <Icon name="md-search" size={24} color={tintColor} />
+      <Icon name="search" size={24} color={tintColor} />
     )
   }
 
@@ -114,8 +124,9 @@ export default class DiscoveryScreen extends Component {
     let body;
 
     const discovery = this.props.discovery;
+    const list = discovery.stores[discovery.type].list;
 
-    if (!discovery.list.loaded) {
+    if (!list.loaded) {
       body = <CenteredLoading />
     } else {
       let renderRow, columnWrapperStyle = null, getItemLayout=null;
@@ -125,8 +136,16 @@ export default class DiscoveryScreen extends Component {
           renderRow = this.renderUser;
           this.cols = 1;
           break;
+        case 'group':
+          renderRow = this.renderGroup;
+          this.cols = 1;
+          break;
         case 'activity':
           renderRow = this.renderActivity;
+          this.cols = 1;
+          break;
+        case 'object/blog':
+          renderRow = this.renderBlog;
           this.cols = 1;
           break;
         default:
@@ -139,11 +158,11 @@ export default class DiscoveryScreen extends Component {
         <FlatList
           onLayout={this.onLayout}
           key={'discofl' + this.cols} // we need to force component redering if we change cols
-          data={discovery.list.entities.slice()}
+          data={list.entities.slice()}
           renderItem={renderRow}
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
-          refreshing={discovery.list.refreshing}
+          refreshing={list.refreshing}
           onEndReached={this.loadFeed}
           onEndThreshold={0}
           initialNumToRender={12}
@@ -158,39 +177,71 @@ export default class DiscoveryScreen extends Component {
       )
     }
 
-    const typeOptions = [
-      { text: 'Image', icon: 'image', value: 'object/image' },
-      { text: 'Video', icon: 'md-videocam', iconType: 'ion', value: 'object/video' },
-      { text: 'Channel', icon: 'ios-people', iconType: 'ion', value: 'user' }
-    ]
-
-    const filterOptions = [
-      { text: 'Trending', icon: 'trending-up', value: 'trending' },
-      { text: 'Featured', icon: 'star', value: 'featured' },
-    ]
+    const navigation = (
+      <View style={styles.navigation}>
+        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('user') } underlayColor='#fff'>
+          <Icon 
+            name="people" 
+            style={[styles.icon, this.props.discovery.type == 'user' ? styles.iconActive : null ]} 
+            size={ 20 }
+          />
+        </TouchableHighlight>
+        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('object/video') } underlayColor='#fff'>
+          <Icon 
+            name="videocam"
+            style={[styles.icon, this.props.discovery.type == 'object/video' ? styles.iconActive : null ]}
+            size={ 20 
+            }/>
+        </TouchableHighlight>
+        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('object/image') } underlayColor='#fff'>
+          <IonIcon 
+            name="md-photos"
+            style={[styles.icon, this.props.discovery.type == 'object/image' ? styles.iconActive : null ]} 
+            size={ 20 }/>
+        </TouchableHighlight>
+        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('object/blog') } underlayColor='#fff'>
+          <Icon 
+            name="subject"
+            style={[styles.icon, this.props.discovery.type == 'object/blog' ? styles.iconActive : null ]} 
+            size={ 20 }
+            />
+        </TouchableHighlight>
+        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('group') } underlayColor='#fff'>
+          <Icon 
+            name="group-work"
+            style={[styles.icon, this.props.discovery.type == 'group' ? styles.iconActive : null ]} 
+            size={ 20 }
+            />
+        </TouchableHighlight>
+      </View>
+    );
 
     return (
       <View style={CommonStyle.flexContainer}>
-        <Modal
-          isVisible={this.state.isModalVisible}
-          useNativeDriver={true}
-          onBackdropPress={this.hideModal}
-          onModalHide={this.onModalHide}
-        >
-          <View style={[CommonStyle.alignJustifyCenter,{backgroundColor: 'white'}]}>
-            <Toolbar options={filterOptions} initial={discovery.filter} onChange={this.onFilterChange}/>
-            <Toolbar options={typeOptions} initial={discovery.type} onChange={this.onTypeChange}/>
+        <View style={{ flexDirection: 'row', alignItems: 'stretch', backgroundColor: '#FFF' }}>
+          <View style={{ flex: 1 }}>
+            <SearchView
+              placeholder='Search...'
+              onFocus={this.searchFocus.bind(this)}
+              onBlur={this.searchBlur.bind(this)}
+              onChangeText={this.searchDebouncer}
+            />
           </View>
-        </Modal>
-        <SearchView
-          placeholder='search...'
-          onChangeText={this.searchDebouncer}
-          iconRight={'md-options'}
-          iconRightOnPress={this.onPressOptions}
-        />
+          { !this.state.searching ? navigation : null }
+        </View>
         {body}
       </View>
     );
+  }
+
+  searchFocus() {
+    this.setState({ searching: true });
+  }
+
+  searchBlur() {
+    if (!this.props.discovery.searchtext) {
+      this.setState({ searching: false });
+    }
   }
 
   onFilterChange = (val) => {
@@ -253,6 +304,29 @@ export default class DiscoveryScreen extends Component {
       <Activity entity={row.item} navigation={this.props.navigation} />
     );
   }
+
+  /**
+   * Render blog
+   */
+  renderBlog = (row) => {
+    return (
+      <BlogCard entity={row.item} navigation={this.props.navigation} />
+    );
+  }
+
+  renderGroup = (row) => {
+    const item = row.item;
+    return (
+      <ListItem
+        containerStyle={{ borderBottomWidth: 0 }}
+        title={item.name}
+        avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_CDN_URI + 'fs/v1/avatars/' + item.guid + '/small' }} />}
+        subtitle={'Members ' + item['members:count']}
+        hideChevron={true}
+      />
+    )
+  }
+
 }
 
 const styles = StyleSheet.create({
@@ -261,5 +335,27 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: -1,
     marginRight: -1,
-  }
+  },
+  navigation: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    alignContent: 'stretch',
+    width: 230,
+    ...Platform.select({
+      android: {
+        paddingTop: 5,
+        paddingBottom: 5,
+      },
+    }),
+  },
+  iconContainer: {
+    flex: 1,
+    padding: 12,
+  },
+  icon: {
+    color: '#444'
+  },
+  iconActive: {
+    color: colors.primary,
+  },
 });

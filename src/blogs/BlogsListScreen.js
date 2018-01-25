@@ -33,7 +33,7 @@ export default class BlogsListScreen extends Component {
   renderRow = (row) => {
     const blog = row.item;
     return (
-      <ListItem blog={blog} styles={styles} navigation={this.props.navigation} />
+      <ListItem entity={blog} styles={styles} navigation={this.props.navigation} />
     );
   }
 

@@ -30,7 +30,7 @@ export default class ListItem extends PureComponent {
   }
 
   render() {
-    const blog = this.props.blog;
+    const blog = this.props.entity;
     const styles = this.props.styles;
     const image = { uri: blog.thumbnail_src, headers: api.buildHeaders()};
 

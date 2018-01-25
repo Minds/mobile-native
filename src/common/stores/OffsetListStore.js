@@ -58,19 +58,21 @@ export default class OffsetListStore {
   }
 
   @action
-  clearList(updateLoaded=true) {
+  async clearList(updateLoaded=true) {
     this.entities = [];
     this.offset   = '';
     if (updateLoaded) {
       this.loaded = false;
     }
+    return true;
   }
 
   @action
-  refresh() {
+  async refresh() {
     this.refreshing = true;
     this.entities = [];
     this.offset = '';
+    return true;
   }
 
   @action

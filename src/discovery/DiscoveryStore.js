@@ -14,6 +14,29 @@ class DiscoveryStore {
   /**
    * Notification list store
    */
+  stores = {
+    'object/image': {
+      list: new OffsetListStore('shallow'),
+      loading: false,
+    },
+    'object/video': {
+      list: new OffsetListStore('shallow'),
+      loading: false,
+    },
+    'object/blog': {
+      list: new OffsetListStore('shallow'),
+      loading: false,
+    },
+    'user': {
+      list: new OffsetListStore('shallow'),
+      loading: false,
+    },
+    'group': {
+      list: new OffsetListStore('shallow'),
+      loading: false,
+    }
+  };
+
   list = new OffsetListStore('shallow');
 
   @observable searchtext = '';
@@ -26,18 +49,19 @@ class DiscoveryStore {
   /**
    * Load feed
    */
-  loadList(force=false) {
+  async loadList(force=false) {
+    const store = this.stores[this.type];
     // no more data or loading? return
-    if (!force && this.list.cantLoadMore() || this.loading) {
+    if (!force && store.list.cantLoadMore() || store.loading) {
       return Promise.resolve();
     }
-    this.loading = true;
-    return discoveryService.getFeed(this.list.offset, this.type, this.filter, this.searchtext)
+    store.loading = true;
+    return discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext)
       .then(feed => {
-        this.list.setList(feed);
+        store.list.setList(feed);
       })
       .finally(() => {
-        this.loading = false;
+        store.loading = false;
       })
       .catch(err => {
         console.log('error', err);
@@ -48,10 +72,11 @@ class DiscoveryStore {
    * Refresh list
    */
   refresh() {
-    this.list.refresh();
+    const list = this.stores[this.type].list;
+    list.refresh();
     this.loadList()
       .finally(() => {
-        this.list.refreshDone();
+        list.refreshDone();
       });
   }
 
@@ -60,10 +85,10 @@ class DiscoveryStore {
    * @param {string} type
    */
   @action
-  setType(type) {
+  async setType(type) {
+    const store = this.stores[this.type];
     this.type = type;
-    this.list.clearList();
-    this.loadList(true);
+    this.loadList();
   }
 
   /**
@@ -89,7 +114,8 @@ class DiscoveryStore {
    */
   @action
   search(text) {
-    this.list.clearList();
+    const list = this.stores[this.type].list;
+    list.clearList();
     this.searchtext = text;
     this.filter = 'search';
 
