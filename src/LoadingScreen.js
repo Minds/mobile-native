@@ -32,11 +32,11 @@ export default class LoadingScreen extends Component {
 
   render() {
     return (
-      <View style={[{ backgroundColor: '#ccc' } ,CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
+      <View style={[{ backgroundColor: '#FFF' } ,CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
         <FastImage
           resizeMode={FastImage.resizeMode.content}
           style={ComponentsStyle.logo}
-          source={require('./assets/logos/medium-white.png')}
+          source={require('./assets/logos/medium-production.png')}
         />
       </View>
     );
