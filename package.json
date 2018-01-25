@@ -49,6 +49,7 @@
     "react-native-level-fs": "^3.0.0",
     "react-native-minds-encryption": "github:Minds/react-native-minds-encryption",
     "react-native-modal": "^4.1.1",
+    "react-native-modal-datetime-picker": "^4.13.0",
     "react-native-optimized-flatlist": "^1.0.4",
     "react-native-os": "^1.0.1",
     "react-native-phone-input": "^0.1.10",

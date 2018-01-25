@@ -4262,6 +4262,10 @@ mock-fs@^4.1.0:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/mock-fs/-/mock-fs-4.4.2.tgz#09dec5313f97095a450be6aa2ad8ab6738d63d6b"
 
+moment@^2.19.0:
+  version "2.20.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
+
 morgan@~1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.6.1.tgz#5fd818398c6819cba28a7cd6664f292fe1c0bbf2"
@@ -5192,6 +5196,21 @@ react-native-level-fs@^3.0.0:
 "react-native-minds-encryption@github:Minds/react-native-minds-encryption":
   version "0.1.0"
   resolved "git+ssh://git@github.com/Minds/react-native-minds-encryption.git#226e439c6a9ff1260369d1ff694ad27e59ae4f39"
+
+react-native-modal-datetime-picker@^4.13.0:
+  version "4.13.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-4.13.0.tgz#bcf9f62c691befb133bf6fd6e5d6189d397608ef"
+  dependencies:
+    moment "^2.19.0"
+    prop-types "15.5.10"
+    react-native-modal "3.1.0"
+
+react-native-modal@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-3.1.0.tgz#3e6911152e9dcd6e15457cf0c24d7fd833c4a57a"
+  dependencies:
+    prop-types "15.5.10"
+    react-native-animatable "^1.2.3"
 
 react-native-modal@^4.1.1:
   version "4.1.1"

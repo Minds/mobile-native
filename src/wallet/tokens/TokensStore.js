@@ -14,13 +14,13 @@ export default class TokensStore {
   /**
    * Load list
    */
-  loadList() {
+  loadList(from, to) {
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
     this.loading = true;
 
-    return walletService.getRewardsLedger(new Date('2017-12-25 00:01:01'), new Date(), this.list.offset)
+    return walletService.getRewardsLedger(from, to, this.list.offset)
       .then(
         feed => {
           this.list.setList(feed);
@@ -36,9 +36,9 @@ export default class TokensStore {
   }
 
   @action
-  refresh() {
+  refresh(from, to) {
     this.list.refresh();
-    this.loadList()
+    this.loadList(from, to)
       .finally(() => {
         this.list.refreshDone();
       });

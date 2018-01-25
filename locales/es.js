@@ -1,4 +1,10 @@
 export default {
+  date: {
+    formats: {
+      small: "%b %-d, %Y",
+      medium: "%a, %b %-d, %Y"
+    }
+  },
   auth: {
     login: 'INGRESAR',
     create: 'CREAR CANAL',
