@@ -55,10 +55,11 @@ export function getFeedChannel(guid, offset, limit = 12) {
  * @param {string} offset
  * @param {int} limit
  */
-export function getBoosts(offset, limit) {
+export function getBoosts(offset, limit, rating) {
   return api.get('api/v1/boost/fetch/newsfeed', {
     limit,
     offset,
+    rating,
     platform: Platform.OS === 'ios' ? 'ios' : 'other'
   })
     .then((data) => {

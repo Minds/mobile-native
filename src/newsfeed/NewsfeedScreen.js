@@ -17,7 +17,7 @@ import Topbar from './topbar/Topbar';
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'tabs')
+@inject('newsfeed', 'tabs', 'user')
 @observer
 export default class NewsfeedScreen extends Component {
 
@@ -65,7 +65,7 @@ export default class NewsfeedScreen extends Component {
     const poster = (
       <View>
         <Topbar />
-        <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation}/>
+        <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation} store={newsfeed} me={this.props.user.me}/>
       </View>
     );
 

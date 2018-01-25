@@ -18,7 +18,7 @@ class NewsfeedStore {
    * List loading
    */
   loading = false;
-
+  loadingBoost = true;
   /**
    * Load feed
    */
@@ -73,10 +73,12 @@ class NewsfeedStore {
   /**
    * Load boosts
    */
-  loadBoosts() {
+  loadBoosts(rating) {
     // get first 15 boosts
-    getBoosts('', 15)
+    this.loadingBoost = true;
+    getBoosts('', 15, rating)
       .then(boosts => {
+        this.loadingBoost = false;
         this.boosts = boosts.entities;
       })
   }
