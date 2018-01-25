@@ -17,25 +17,44 @@ export default class BoostConsoleScreen extends Component {
   state = {
     screen: 'gallery'
   }
+
+  showList() {
+    if(this.props.boost.list.entities.length > 0) {
+      return <FlatList
+                ListHeaderComponent={this.props.header}
+                data={this.props.boost.list.entities.slice()}
+                renderItem={this.renderBoost}
+                keyExtractor={item => item.guid}
+                onRefresh={this.refresh}
+                refreshing={this.props.boost.list.refreshing}
+                onEndReached={this.loadFeed}
+                onEndThreshold={0}
+                style={styles.listView}
+              />
+    } else {
+      return <View style={[CommonStyle.flexContainer, CommonStyle.alignJustifyCenter]}>
+                <Text style={{fontWeight: 'bold', fontSize:16}}>You have no boosted posts</Text>
+                <TouchableHighlight
+                  onPress={() => { this.createPost()}} 
+                  underlayColor = 'transparent'
+                  style = {ComponentsStyle.bluebutton}
+                >
+                  <Text style={{color: colors.primary}} > Create </Text>
+                </TouchableHighlight>
+              </View>
+    }
+  }
+
+  createPost() {
+    this.props.navigation.navigate('Capture');
+  }
   /**
    * Render component
    */
   render() {
     return (
       <View style={CommonStyle.flexContainer}>
-        <View style={CommonStyle.flexContainer}>
-          <FlatList
-            ListHeaderComponent={this.props.header}
-            data={this.props.boost.list.entities.slice()}
-            renderItem={this.renderBoost}
-            keyExtractor={item => item.guid}
-            onRefresh={this.refresh}
-            refreshing={this.props.boost.list.refreshing}
-            onEndReached={this.loadFeed}
-            onEndThreshold={0}
-            style={styles.listView}
-          />
-        </View>
+        {this.showList()}
         {
           this.props.boost.filter === 'peer' ? 
             <View style={styles.buttonBar}>

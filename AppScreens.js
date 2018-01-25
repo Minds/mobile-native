@@ -7,6 +7,7 @@ import NotificationsScreen from './src/notifications/NotificationsScreen';
 import NotificationsSettingsScreen from './src/notifications/NotificationsSettingsScreen';
 import CommentsScreen from './src/comments/CommentsScreen';
 import ChannelScreen from './src/channel/ChannelScreen';
+import CapturePoster from './src/capture/CapturePoster';
 import RegisterScreen from './src/auth/RegisterScreen';
 import DiscoveryViewScreen from './src/discovery/DiscoveryViewScreen';
 import ConversationScreen from './src/messenger/ConversationScreen';
@@ -52,6 +53,9 @@ const Stack = StackNavigator({
   },
   Channel: {
     screen: ChannelScreen
+  },
+  Capture: {
+    screen: CapturePoster
   },
   Comments: {
     screen: CommentsScreen
