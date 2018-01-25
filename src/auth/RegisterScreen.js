@@ -34,18 +34,12 @@ export default class Register extends Component {
           style={ComponentsStyle.backgroundImage}
           source={require('../assets/photos/circles.png')}
         />
-        <View style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
-          <FastImage
-            resizeMode={FastImage.resizeMode.cover}
-            style={ComponentsStyle.logo}
-            source={require('../assets/logos/medium-white.png')}
-          />
+        <KeyboardAvoidingView style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]} behavior="padding">
           <RegisterForm
             onRegister={() => this.onRegister()}
             onBack={() => this.onPressBack()}
           />
-
-        </View>
+        </KeyboardAvoidingView>
     </View>
     );
   }
