@@ -8,6 +8,7 @@ import {
   TextInput,
   Button,
   TouchableHighlight,
+  StyleSheet,
 } from 'react-native';
 
 import {
@@ -74,13 +75,20 @@ export default class MessengerSetup extends Component {
           </View>
         </View>
 
-        <View style={CommonStyle.marginTop2x}>
-          <Text style={CommonStyle.fontS}>· You only need to enter this encryption password once as long as you stay signed in.</Text>
-          <Text style={CommonStyle.fontS}>· It is important so that no one other than you and the people you are communicating with can access the content of your messages.</Text>
-          <Text style={CommonStyle.fontS}>· By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.</Text>
-          <Text style={CommonStyle.fontS}>· By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.</Text>
+        <View style={{ paddingTop: 32 }}>
+          <Text style={styles.infoText}>· You only need to enter this encryption password once as long as you stay signed in.</Text>
+          <Text style={styles.infoText}>· It is important so that no one other than you and the people you are communicating with can access the content of your messages.</Text>
+          <Text style={styles.infoText}>· By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.</Text>
+          <Text style={styles.infoText}>· By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.</Text>
         </View>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+	infoText: {
+    marginBottom: 16,
+    color: '#BBB',
+  },
+});
