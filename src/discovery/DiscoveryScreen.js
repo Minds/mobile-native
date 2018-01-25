@@ -52,16 +52,16 @@ export default class DiscoveryScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
-
+    this._loadData();
     // load data on enter
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Discovery',(s) => {
-      this._loadData();
-    });
+    //this.disposeEnter = this.props.navigatorStore.onEnterScreen('Discovery',(s) => {
+    //  this._loadData();
+    //});
 
     // clear data on leave
-    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Discovery',(s) => {
-      this.props.discovery.list.clearList();
-    });
+    //this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Discovery',(s) => {
+    //  this.props.discovery.list.clearList();
+    //});
   }
 
   /**
@@ -81,8 +81,8 @@ export default class DiscoveryScreen extends Component {
    * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    this.disposeEnter();
-    this.disposeLeave();
+    //this.disposeEnter();
+    //this.disposeLeave();
   }
 
   /**
@@ -151,7 +151,7 @@ export default class DiscoveryScreen extends Component {
           numColumns={this.cols}
           horizontal={false}
           windowSize={9}
-          removeClippedSubviews={true}
+          removeClippedSubviews={false}
           getItemLayout={getItemLayout}
           columnWrapperStyle={columnWrapperStyle}
         />

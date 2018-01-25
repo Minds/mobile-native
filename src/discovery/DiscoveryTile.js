@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 
 import {
+  Platform,
   TouchableOpacity
 } from 'react-native';
 
@@ -39,12 +40,19 @@ export default class DiscoveryTile extends PureComponent {
 
     return (
       <TouchableOpacity onPress={this._navToView} style={[ style, styles.tile ]}>
-        <ProgressFastImage
-          indicator={ProgressCircle}
-          source={ url }
-          style={{ width: this.props.size -2, height: this.props.size -2}}
-          threshold={150}
-        />
+        { Platform.OS === 'android' ? 
+          <ProgressFastImage
+            indicator={ProgressCircle}
+            source={ url }
+            style={{ width: this.props.size -2, height: this.props.size -2}}
+            threshold={150}
+          />
+          : 
+          <FastImage
+            source={ url }
+            style={{ width: this.props.size -2, height: this.props.size -2}}
+          />
+      }
       </TouchableOpacity>
     );
   }
