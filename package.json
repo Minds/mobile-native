@@ -51,6 +51,7 @@
     "react-native-modal": "^4.1.1",
     "react-native-optimized-flatlist": "^1.0.4",
     "react-native-os": "^1.0.1",
+    "react-native-phone-input": "^0.1.10",
     "react-native-photo-view": "^1.5.2",
     "react-native-progress": "^3.4.0",
     "react-native-qrcode": "^0.2.6",

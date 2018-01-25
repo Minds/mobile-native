@@ -4,12 +4,10 @@ import {
   action
 } from 'mobx'
 
-
-
 import walletService from './WalletService';
 import abbrev from "../common/helpers/abbrev";
 import token from "../common/helpers/token";
-
+import TokensStore from './tokens/TokensStore';
 /**
  * Wallet store
  */
@@ -18,6 +16,8 @@ class WalletStore {
   @observable rewards = -1;
   @observable money = -1;
   @observable tokens = -1;
+
+  ledger = new TokensStore();
 
   refreshing = false;
   loaded = false;
@@ -90,6 +90,24 @@ class WalletStore {
 
   @computed get tokensFormatted() {
     return this.tokens > -1 ? this.tokens : '…'
+  }
+
+  /**
+   * Join to wallet tokens
+   * @param {string} number
+   */
+  join(number) {
+    return walletService.join(number)
+  }
+
+  /**
+   * Confirm join
+   * @param {string} number
+   * @param {string} code
+   * @param {string} secret
+   */
+  confirm(number, code, secret) {
+    return walletService.confirm(number, code, secret);
   }
 
   // TODO: Implement forced auto-refresh every X minutes

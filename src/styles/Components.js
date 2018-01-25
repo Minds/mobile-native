@@ -50,22 +50,30 @@ export const ComponentsStyle = StyleSheet.create({
   },
 
   //button
-  bluebutton: {
-    margin:4, 
-    padding:4, 
-    alignItems:'center', 
+  commonButton: {
+    margin: 4,
+    padding: 4,
+    alignItems: 'center',
     borderRadius: 3,
-    backgroundColor:'white', 
-    borderWidth:1, 
+    backgroundColor: 'white',
+    borderWidth: 1,
+  },
+  bluebutton: {
+    margin:4,
+    padding:4,
+    alignItems:'center',
+    borderRadius: 3,
+    backgroundColor:'white',
+    borderWidth:1,
     borderColor: colors.primary
   },
   redbutton: {
-    margin:4, 
-    padding:5, 
-    alignItems:'center', 
+    margin:4,
+    padding:5,
+    alignItems:'center',
     borderRadius: 5,
-    backgroundColor:'white', 
-    borderWidth:1, 
+    backgroundColor:'white',
+    borderWidth:1,
     borderColor: colors.danger,
   },
 

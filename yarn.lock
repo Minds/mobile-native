@@ -2716,6 +2716,10 @@ glogg@^1.0.0:
   dependencies:
     sparkles "^1.0.0"
 
+google-libphonenumber@^2.0.9:
+  version "2.0.19"
+  resolved "https://registry.yarnpkg.com/google-libphonenumber/-/google-libphonenumber-2.0.19.tgz#a6d5ff60412aa33b161bb830d70aa39682583054"
+
 got@7.1.0, got@^7.1.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/got/-/got-7.1.0.tgz#05450fd84094e6bbea56f451a43a9c289166385a"
@@ -5205,6 +5209,14 @@ react-native-optimized-flatlist@^1.0.4:
 react-native-os@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-os/-/react-native-os-1.1.0.tgz#bfbe1c44d8a5b14a6f3a3a405d8ada6f547a516e"
+
+react-native-phone-input@^0.1.10:
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/react-native-phone-input/-/react-native-phone-input-0.1.10.tgz#8caaad50991d8867687bad16631284bac8462e9e"
+  dependencies:
+    google-libphonenumber "^2.0.9"
+    lodash "^4.17.4"
+    prop-types "^15.5.10"
 
 react-native-photo-view@^1.5.2:
   version "1.5.2"

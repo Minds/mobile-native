@@ -23,6 +23,7 @@ import ActivityScreen from './src/newsfeed/ActivityScreen';
 import ViewImageScreen from './src/media/ViewImageScreen';
 import BoostScreen from './src/boost/creator/BoostScreen';
 import BlockchainSettingsScreen from "./src/blockchain/BlockchainSettingsScreen";
+import TokensRewardsScreen from "./src/wallet/tokens/TokensRewardsScreen";
 
 /**
  * Main stack navigator
@@ -97,6 +98,9 @@ const Stack = StackNavigator({
   BlockchainSettings: {
     screen: BlockchainSettingsScreen
   },
+  TokensRewards: {
+    screen: TokensRewardsScreen
+  }
 });
 
 export default Stack;

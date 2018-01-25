@@ -55,6 +55,11 @@ export default class WalletScreen extends Component {
             <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('BoostConsole')}>Accept or reject boosts made to you</Text>
           </View>
 
+          <View style={styles.datailsContainer} >
+            <Text style={styles.title} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Tokens & Rewards</Text>
+            <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Check and withdraw your rewards</Text>
+          </View>
+
           <View style={styles.datailsContainer}>
             <Text style={styles.title}>Plan Subscriptions</Text>
             <Text style={styles.subtitle}>Check your currently active plan subscriptions</Text>

@@ -32,6 +32,51 @@ class WalletService {
   async getRewardsBalance() {
     return (await api.get(`api/v1/blockchain/rewards/balance`)).balance;
   }
+
+  /**
+   * Join tokens & rewards
+   * @param {string} number
+   */
+  join(number) {
+    return api.post('api/v1/blockchain/rewards/verify', { number });
+  }
+
+  /**
+   * Confirm join
+   * @param {string} number
+   * @param {string} code
+   * @param {string} secret
+   */
+  confirm(number, code, secret) {
+    return api.post('api/v1/blockchain/rewards/confirm', {
+      number,
+      code,
+      secret
+    });
+  }
+
+  /**
+   * Get rewards ledger
+   * @param {date} startDate
+   * @param {date} endDate
+   * @param {string} offset
+   */
+  getRewardsLedger(startDate, endDate, offset) {
+    startDate.setHours(0, 0, 0);
+    endDate.setHours(23, 59, 59);
+
+    return api.get(`api/v1/blockchain/rewards/ledger`, {
+        from: Math.floor(+startDate / 1000),
+        to: Math.floor(+endDate / 1000),
+        offset: offset
+      })
+      .then((data) => {
+        return {
+          entities: data.rewards||[],
+          offset: data['load-next'],
+        }
+      });
+  }
 }
 
 export default new WalletService();

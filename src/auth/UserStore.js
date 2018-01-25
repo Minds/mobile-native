@@ -13,7 +13,13 @@ class UserStore {
 
   @action
   setUser(user) {
+    if (!user.phone_number_hash) user.phone_number_hash = '';
     this.me = user;
+  }
+
+  @action
+  setPhoneHash(hash) {
+    this.me.phone_number_hash = hash;
   }
 
   @action
@@ -25,9 +31,9 @@ class UserStore {
   load() {
     this.me = {};
      return channelService.load('me')
-      .then(action(response => {
-        this.me = response.channel;
-      }))
+      .then(response => {
+        this.setUser(response.channel);
+      })
       .catch(err => {
         console.log('error', err);
       });
