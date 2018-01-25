@@ -10,6 +10,15 @@ import OffsetListStore from '../../common/stores/OffsetListStore';
 export default class TokensStore {
   list = new OffsetListStore('shallow');
   loading = false;
+  mode = 'rewards';
+
+  /**
+   * Set mode
+   * @param {string} rewards|contributions
+   */
+  setMode(mode) {
+    this.mode = mode;
+  }
 
   /**
    * Load list
@@ -20,7 +29,9 @@ export default class TokensStore {
     }
     this.loading = true;
 
-    return walletService.getRewardsLedger(from, to, this.list.offset)
+    fetchFn = (this.mode == 'rewards') ? walletService.getRewardsLedger : walletService.getContributions;
+
+    return fetchFn(from, to, this.list.offset)
       .then(
         feed => {
           this.list.setList(feed);

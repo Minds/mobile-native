@@ -196,6 +196,17 @@ export const CommonStyle = StyleSheet.create({
     fontSize: 24
   },
 
+  // text align
+  textRight: {
+    textAlign: 'right'
+  },
+  textLeft: {
+    textAlign: 'left'
+  },
+  textCenter: {
+    textAlign: 'center'
+  },
+
   //position
   positionAbsolute:{
     position: "absolute",

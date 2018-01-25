@@ -77,6 +77,24 @@ class WalletService {
         }
       });
   }
+
+  getContributions(startDate, endDate, offset) {
+    startDate.setHours(0, 0, 0);
+    endDate.setHours(23, 59, 59);
+
+    return api.get(`api/v1/blockchain/contributions`, {
+        from: Math.floor(+startDate / 1000),
+        to: Math.floor(+endDate / 1000),
+        offset: offset
+      })
+      .then((data) => {
+        console.log(data)
+        return {
+          entities: data.contributions || [],
+          offset: data['load-next'],
+        }
+      });
+  }
 }
 
 export default new WalletService();

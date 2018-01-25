@@ -21,11 +21,11 @@ import i18n from '../../common/services/i18n.service';
 import DateRangePicker from '../../common/components/DateRangePicker';
 
 /**
- * Rewards view
+ * Contributions view
  */
 @inject('wallet')
 @observer
-export default class RewardsView extends Component {
+export default class ContributionsView extends Component {
 
   /**
    * On component will unmount
@@ -38,11 +38,11 @@ export default class RewardsView extends Component {
    * On component will mount
    */
   componentWillMount() {
-    this.props.wallet.ledger.setMode('rewards');
+    this.props.wallet.ledger.setMode('contributions');
     this.props.wallet.ledger.list.clearList();
 
     const end = new Date();
-    const start   = new Date();
+    const start = new Date();
 
     end.setHours(23, 59, 59);
     start.setMonth(start.getMonth() - 1);
@@ -73,7 +73,7 @@ export default class RewardsView extends Component {
       <FlatList
         data={entities.slice()}
         renderItem={this.renderRow}
-        keyExtractor={(item, index) => item.timestamp+index}
+        keyExtractor={(item, index) => item.timestamp + index}
         onRefresh={this.refresh}
         refreshing={wallet.ledger.list.refreshing}
         onEndReached={this.loadMore}
@@ -102,7 +102,7 @@ export default class RewardsView extends Component {
    * Set to date
    */
   setTo = (value) => {
-    this.setState({toVisible: false, to: value}, () => {
+    this.setState({ toVisible: false, to: value }, () => {
       this.refresh();
     });
   }
@@ -111,7 +111,7 @@ export default class RewardsView extends Component {
    * Set from date
    */
   setFrom = (value) => {
-    this.setState({fromVisible: false, from: value}, () => {
+    this.setState({ fromVisible: false, from: value }, () => {
       this.refresh();
     });
   }
@@ -130,10 +130,11 @@ export default class RewardsView extends Component {
     const item = row.item;
     return (
       <View style={[CommonStyle.padding]}>
-        <Text style={[CommonStyle.fontXL, {color: 'green'}]}>+ {token(item.amount)}</Text>
         <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer]}>{item.type.toUpperCase()}</Text>
-          <Text style={[CommonStyle.fontS]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
+          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
+          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer]}>{item.metric.toUpperCase()}</Text>
+          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textRight]}>{item.amount}</Text>
+          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textRight]}>{item.score}</Text>
         </View>
       </View>
     )
