@@ -30,7 +30,7 @@ class UserStore {
   @action
   load() {
     this.me = {};
-     return channelService.load('me')
+    return channelService.load('me')
       .then(response => {
         this.setUser(response.channel);
       })

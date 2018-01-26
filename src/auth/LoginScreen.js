@@ -13,6 +13,7 @@ import {
   Button,
   Keyboard,
   Animated,
+  Platform,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
@@ -96,7 +97,7 @@ export default class LoginScreen extends Component {
     }
 
     return (
-      <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior="padding">
+      <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={ Platform.OS == 'ios' ? 'padding' : 'none' }>
         <FastImage
           resizeMode={FastImage.resizeMode.cover}
           style={ComponentsStyle.backgroundImage}

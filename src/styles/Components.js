@@ -13,6 +13,13 @@ export const ComponentsStyle = StyleSheet.create({
     borderRadius: 3,
     padding: 16,
   },
+  input: {
+    borderColor: '#ECECEC',
+    borderWidth: 1,
+    backgroundColor: '#FFF',
+    borderRadius: 3,
+    padding: 16,
+  },
 
   // login
   loginInput: {
@@ -99,7 +106,7 @@ export const ComponentsStyle = StyleSheet.create({
   // logo
   logo: {
     width: 200,
-    height: 80,
+    height: 84,
     marginBottom: 30,
     alignSelf: 'center'
   },

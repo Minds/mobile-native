@@ -36,6 +36,7 @@ export class SocketService {
       'reconnect': true,
       'reconnection': true,
       'timeout': 30000,
+      'pingTimeout': 30000,
       'autoConnect': false,
       transports: ['websocket'] // importat with RN
     });

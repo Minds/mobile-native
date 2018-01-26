@@ -27,6 +27,13 @@ export default class ThumbUpAction extends PureComponent {
   };
 
   /**
+   * Default Props
+   */
+  static defaultProps = {
+    size: 20,
+  };
+
+  /**
    * Thumb direction
    */
   direction = 'up';
@@ -59,8 +66,10 @@ export default class ThumbUpAction extends PureComponent {
   render() {
     return (
       <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.toggleThumb}>
-        <Icon color={this.state.voted ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={this.iconName} size={20} />
-        <Text style={CommonStyle.paddingLeft}>{this.state.votedCount > 0 ? this.state.votedCount : ''}</Text>
+        <Icon color={this.state.voted ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={this.iconName} size={this.props.size} />
+        <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={[CommonStyle.paddingLeft, { fontSize: Math.round(this.props.size * 0.75), color: '#444'}]}>{this.state.votedCount > 0 ? this.state.votedCount : ''}</Text>
+        </View>
       </TouchableOpacity>
     );
   }

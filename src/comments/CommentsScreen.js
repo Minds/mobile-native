@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
-  Text
+  Text,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native';
@@ -62,7 +64,7 @@ export default class CommentsScreen extends Component {
    */
   render() {
     return (
-      <View style={{flex:1}}>
+      <KeyboardAvoidingView style={{flex:1}} behavior={ Platform.OS == 'ios' ? 'padding' : 'none' } keyboardVerticalOffset={64}>
         <View style={{flex:14}}>
           { this.props.comments.loaded ?
             <FlatList
@@ -81,7 +83,7 @@ export default class CommentsScreen extends Component {
           }
         </View>
         { this.renderPoster() }
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 
@@ -91,7 +93,7 @@ export default class CommentsScreen extends Component {
       <View style={styles.messagePoster}>
         <Image source={avatarImg} style={styles.posterAvatar} />
         <TextInput
-          style={CommonStyle.flexContainer}
+          style={[CommonStyle.flexContainer, styles.input]}
           editable={true}
           underlineColorAndroid='transparent'
           placeholder='Type your comment...'
@@ -138,7 +140,7 @@ export default class CommentsScreen extends Component {
 
     return (
       <View>
-        <Comment comment={comment}/>
+        <Comment comment={comment} navigation={this.props.navigation}/>
       </View>
     );
   }
@@ -168,6 +170,7 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#F8F8F8',
+    paddingTop: Platform.OS == 'ios' ? 14 : 8,
   },
   messagePoster: {
     height: 50,
@@ -181,7 +184,7 @@ const styles = StyleSheet.create({
   },
   iconclose: {
     alignSelf: 'flex-end',
-    padding: 10
+    padding: Platform.OS == 'ios' ? 10 : 8
   },
   posterAvatar: {
     height: 36,
@@ -189,6 +192,9 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
+  },
+  input: {
+    marginLeft: 8,
   },
   avatar: {
     height: 24,

@@ -47,6 +47,10 @@ export default class ChannelScreen extends Component {
    */
   componentWillMount() {
     const guid = this.getGuid();
+
+    //grab stale channel data for quick load
+    this.props.channel.setChannel(this.props.navigation.state.params.entity);
+
     this.props.channel.load(guid);
     this.props.channelfeed.setGuid(guid);
     this.props.channelfeed.loadFeed();
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
   gobackicon: {
     position: 'absolute',
     left: 0,
-    top: 0,
+    top: 16,
     height: 40,
     width: 40,
   },
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    width: 100,
+    width: 150,
     alignSelf:'flex-end'
   },
   carouselcontainer: {
@@ -161,8 +165,10 @@ const styles = StyleSheet.create({
     color: '#999'
   },
   name: {
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: '800',
+    fontSize: 20,
+    letterSpacing: 0.5,
+    color: '#444',
   },
   countertitle: {
     color: '#666',
@@ -171,6 +177,7 @@ const styles = StyleSheet.create({
   countervalue: {
     paddingTop: 5,
     fontWeight: 'bold',
+    color: '#444',
   },
   countercontainer: {
     paddingLeft: 130,
@@ -194,5 +201,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#FFF'
+  },
+  bluebutton: {
+    marginRight: 8,
   },
 });

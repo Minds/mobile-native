@@ -19,9 +19,9 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Image,
   View
 } from 'react-native';
-
 
 import ActionSheet from 'react-native-actionsheet';
 import { thumbActivity } from '../newsfeed/activity/ActionsService';
@@ -31,6 +31,11 @@ import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import formatDate from '../common/helpers/date';
 import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
+import MediaView from '../common/components/MediaView';
+
+import {
+  MINDS_CDN_URI
+} from '../config/Config';
 
 /**
  * Comment
@@ -54,27 +59,39 @@ export default class Comment extends Component {
   render() {
     const comment = this.props.comment;
 
+    const avatarSrc = { uri: MINDS_CDN_URI + 'icon/' + comment.ownerObj.guid + '/medium' };
+
     const actions = (
-      <View style={[CommonStyle.flexContainer, CommonStyle.paddingLeft2x]}>
+      <View style={[CommonStyle.flexContainer ]}>
         <View style={styles.actionsContainer}>
-          <ThumbUpAction entity={comment} me={this.props.user.me} />
-          <ThumbDownAction entity={comment} me={this.props.user.me} />
-          <Icon name={'dots-vertical'} type={'material-community'} onPress={this.showActions} color={'rgb(96, 125, 139)'}/>
+          <Text style={styles.timestamp}>{formatDate(comment.time_created)}</Text>
+          <View style={{ flex: 2 }}></View>
+          <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter ]}>
+            <ThumbUpAction entity={comment} me={this.props.user.me} size={12}/>
+            <ThumbDownAction entity={comment} me={this.props.user.me} size={12} />
+          </View>
         </View>
       </View>
     )
 
     return (
-      <View style={styles.container}>
-        <OwnerBlock entity={comment} navigation={this.props.navigation} rightToolbar={actions}>
-          <Text style={styles.timestamp}>{formatDate(comment.time_created)}</Text>
-        </OwnerBlock>
-        <View style={styles.content}>
-          {
-            (this.state.editing) ?
-              <CommentEditor setEditing={this.setEditing} comment={comment}/>:
-              <Text style={styles.message}>{comment.description}</Text>
-          }
+      <TouchableOpacity style={styles.container} onPress={this.showActions}>
+        <TouchableOpacity onPress={this._navToChannel} style={styles.avatarContainer}>
+          <Image source={avatarSrc} style={styles.avatar}/>
+        </TouchableOpacity>
+
+        <View style={styles.contentContainer}>
+          <View style={styles.content}>
+            {
+              this.state.editing ?
+                <CommentEditor setEditing={this.setEditing} comment={comment}/>:
+                <Text style={styles.message}><Text style={styles.username}>@{comment.ownerObj.username}</Text> {comment.description}</Text>
+            }
+          </View>
+
+          <MediaView entity={ comment } style={ styles.media }/>
+
+          { actions }
         </View>
         <ActionSheet
           ref={o => this.ActionSheet = o}
@@ -82,7 +99,7 @@ export default class Comment extends Component {
           onPress={this.handleSelection}
           cancelButtonIndex={0}
         />
-      </View>
+      </TouchableOpacity>
     );
   }
 
@@ -105,6 +122,16 @@ export default class Comment extends Component {
   }
 
   /**
+   * Navigate To channel
+   */
+  _navToChannel = () => {
+    // only active if receive the navigation property
+    if (this.props.navigation) {
+      this.props.navigation.navigate('Channel', { guid:this.props.comment.ownerObj.guid});
+    }
+  }
+
+  /**
    * Handle action on comment
    */
   handleSelection = (i) => {
@@ -114,7 +141,6 @@ export default class Comment extends Component {
       case 'Edit':
         this.setState({editing: true});
         break;
-
       default:
         break;
     }
@@ -122,35 +148,58 @@ export default class Comment extends Component {
 }
 
 const styles = StyleSheet.create({
-  content: {
-    display: 'flex',
-    flexDirection: 'row',
-    padding: 8
-  },
   container: {
     borderBottomColor: '#EEE',
     borderBottomWidth: StyleSheet.hairlineWidth,
+    padding: 8,
+    paddingRight: 0,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  media: {
+    flex: 1,
+    margin: 8,
+    borderRadius: 3,
+    //marginLeft: 16,
+  },
+  contentContainer: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    paddingRight: 8,
   },
   actionsContainer: {
     display: 'flex',
     flexDirection: 'row',
-    alignSelf: 'flex-end',
-    width: 100,
-    padding: 4
+    alignSelf: 'stretch',
+    padding: 8
+  },
+  avatarContainer: {
+
   },
   avatar: {
-    height: 46,
-    width: 46,
-    borderRadius: 23,
+    height: 32,
+    width: 32,
+    borderRadius: 16,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
   },
   message: {
-    padding: 8,
-    paddingLeft: 16
+    paddingLeft: 8,
+    fontSize: 14,
+  },
+  username: {
+    fontWeight: '800',
+    paddingRight: 8,
+    color: '#444',
   },
   timestamp: {
-    fontSize: 11,
+    fontSize: 10,
     color: '#888',
   },
 });

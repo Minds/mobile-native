@@ -58,9 +58,12 @@ export default class Message extends PureComponent {
       return (
         <View>
           <View style={[styles.messageContainer, styles.right]}>
-            <TouchableHighlight style={[ styles.textContainer, { backgroundColor: colors.primary }]} onPress={ () => this.showDate() } underlayColor={colors.primary}>
-              <Text style={[styles.message, { color: '#FFF' } ]}>{this.state.msg}</Text>
-            </TouchableHighlight>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}></View>
+              <TouchableHighlight style={[ styles.textContainer, { backgroundColor: colors.primary }]} onPress={ () => this.showDate() } underlayColor={colors.primary}>
+                <Text style={[styles.message, { color: '#FFF' } ]}>{this.state.msg}</Text>
+              </TouchableHighlight>
+            </View>
             <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
           </View>
           { this.state.showDate ? 
@@ -74,9 +77,12 @@ export default class Message extends PureComponent {
       <View>
         <View style={styles.messageContainer}>
           <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
-          <TouchableHighlight style={styles.textContainer} onPress={ () => this.showDate() } underlayColor={'transparent'}>
-            <Text style={styles.message}>{this.state.msg}</Text>
-          </TouchableHighlight>
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            <TouchableHighlight style={styles.textContainer} onPress={ () => this.showDate() } underlayColor={'transparent'}>
+              <Text style={styles.message}>{this.state.msg}</Text>
+            </TouchableHighlight>
+            <View style={{ flex: 1 }}></View>
+          </View>
         </View>
         { this.state.showDate ? 
           <Text style={styles.messagedate}>Dec 6, 2017, 11:47:46 AM</Text>
@@ -116,8 +122,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginLeft: 8,
     marginRight: 8,
-    //borderWidth: 1,
-    //borderColor: '#EEE',
   },
   messageContainer: {
     marginTop: 20,
@@ -125,9 +129,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    flexGrow: 1,
-    width: '100%'
-    // alignSelf: 'baseline',
+    flex: 1,
   },
   right: {
     justifyContent: 'flex-end',
@@ -137,6 +139,8 @@ const styles = StyleSheet.create({
   },
   message: {
     padding: 12,
+    paddingLeft: 4,
+    paddingRight: 4,
     marginLeft: 10,
     marginRight: 10
   },

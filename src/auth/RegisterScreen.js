@@ -10,8 +10,11 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   View,
-  Image
+  Image,
+  Platform,
+  Animated,
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import RegisterForm from './RegisterForm';
 import { CommonStyle } from '../styles/Common';
@@ -34,11 +37,15 @@ export default class Register extends Component {
           style={ComponentsStyle.backgroundImage}
           source={require('../assets/photos/circles.png')}
         />
-        <KeyboardAvoidingView style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]} behavior="padding">
-          <RegisterForm
-            onRegister={() => this.onRegister()}
-            onBack={() => this.onPressBack()}
-          />
+        <KeyboardAvoidingView style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]} behavior={ Platform.OS == 'ios' ? 'padding' : 'height' }>
+          <Animatable.View animation="bounceIn">
+            <Animated.View>
+                <RegisterForm
+                  onRegister={() => this.onRegister()}
+                  onBack={() => this.onPressBack()}
+                />
+            </Animated.View>
+          </Animatable.View>
         </KeyboardAvoidingView>
     </View>
     );

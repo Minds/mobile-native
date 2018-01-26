@@ -9,7 +9,9 @@ import {
   TextInput,
   FlatList,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 
 import {
@@ -80,7 +82,7 @@ export default class ConversationScreen extends Component {
     const conversation = this.props.navigation.state.params.conversation;
     const avatarImg    = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium' };
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior={ Platform.OS == 'ios' ? 'padding' : 'none'} keyboardVerticalOffset={64}>
         <FlatList
           inverted={true}
           data={messages.slice()}
@@ -91,7 +93,7 @@ export default class ConversationScreen extends Component {
           style={styles.listView}
           windowSize={11}
         />
-        <View style={styles.messagePoster}>
+        <View style={styles.messagePoster} >
           <Image source={avatarImg} style={styles.avatar} />
           <TextInput
             style={styles.input}
@@ -103,7 +105,7 @@ export default class ConversationScreen extends Component {
           />
           <TouchableOpacity onPress={this.send} style={styles.sendicon}><Icon name="md-send" size={24} style={{ color: '#444' }}/></TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 

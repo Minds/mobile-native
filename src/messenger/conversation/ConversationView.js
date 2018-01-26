@@ -1,5 +1,5 @@
 import React, {
-  PureComponent
+  Component
 } from 'react';
 
 import {
@@ -17,7 +17,7 @@ import { MINDS_CDN_URI } from '../../config/Config';
  * Conversation Component
  */
 @observer
-export default class ConversationView extends PureComponent {
+export default class ConversationView extends Component {
 
   /**
    * Navigate To conversation
@@ -26,6 +26,10 @@ export default class ConversationView extends PureComponent {
     if (this.props.navigation) {
       this.props.navigation.navigate('Conversation', { conversation: this.props.item });
     }
+  }
+
+  shouldComponentUpdate() {
+    return false;
   }
 
 

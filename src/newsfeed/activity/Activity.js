@@ -24,8 +24,6 @@ import {
 
 import AutoHeightFastImage from '../../common/components/AutoHeightFastImage';
 
-import MindsVideo from '../../media/MindsVideo';
-import ExplicitImage from '../../common/components/explicit/ExplicitImage'
 import ExplicitText from '../../common/components/explicit/ExplicitText'
 import OwnerBlock from './OwnerBlock';
 import RemindOwnerBlock from './RemindOwnerBlock';
@@ -34,6 +32,7 @@ import formatDate from '../../common/helpers/date';
 import domain from '../../common/helpers/domain';
 import ActivityActions from './ActivityActions';
 import ActivityEditor from './ActivityEditor';
+import MediaView from '../../common/components/MediaView';
 
 /**
  * Activity
@@ -89,7 +88,7 @@ export default class Activity extends Component {
             : null
           }
           { this.showRemind() }
-          { this.showMedia() }
+          <MediaView entity={ this.props.entity } style={ styles.media }/>
           { this.showActions() }
         </View>
     );
@@ -97,79 +96,6 @@ export default class Activity extends Component {
 
   toggleEdit = (value) => {
     this.setState({ editing: value });
-  }
-
-  /**
-   * Show activity media
-   */
-  showMedia() {
-    let media;
-    let source;
-
-    const type = this.props.entity.custom_type||this.props.entity.subtype;
-    switch (type) {
-      case 'image':
-        source = {
-          uri: MINDS_CDN_URI + 'api/v1/archive/thumbnails/' + this.props.entity.guid + '/medium'
-        }
-        return this.getImage(source);
-      case 'batch':
-        source = {
-          uri: this.props.entity.custom_data[0].src
-        }
-        return this.getImage(source);
-      case 'video':
-        return this.getVideo();
-    }
-
-    if (this.props.entity.perma_url) {
-      source = {
-        uri: this.props.entity.thumbnail_src
-      }
-
-      return (
-        <View>
-          {this.getImage(source)}
-          <TouchableOpacity style={styles.message} onPress={this.openLink}>
-            <Text style={styles.title}>{this.props.entity.title}</Text>
-            <Text style={styles.timestamp}>{domain(this.props.entity.perma_url)}</Text>
-          </TouchableOpacity>
-        </View>
-      )
-    }
-    return null;
-  }
-
-  /* URL is -> MINDS_URI + 'api/v1/media/' + this.props.entity.custom_data.guid + '/play'*/
-  getVideo() {
-    let guid;
-    if (this.props.entity.custom_data) {
-      guid = this.props.entity.custom_data.guid;
-    } else {
-      guid = this.props.entity.cinemr_guid;
-    }
-    return (
-      <View style={styles.imageContainer}>
-        <MindsVideo video={{'uri': 'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/' + guid +  '/360.mp4'}} entity={this.props.entity}/>
-      </View>
-    );
-  }
-  /**
-   * Get image with autoheight or Touchable fixed height
-   * @param {object} source
-   */
-  getImage(source) {
-    this.source = source;
-    const autoHeight = this.props.autoHeight;
-    return autoHeight ? (
-      <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer} activeOpacity={1}>
-        <AutoHeightFastImage source={source} width={Dimensions.get('window').width} />
-      </TouchableOpacity>
-      ) : (
-      <TouchableOpacity onPress={this.navToActivity} style={styles.imageContainer} activeOpacity={1}>
-        <ExplicitImage source={source} entity={this.props.entity} style={styles.image} disableProgress={this.props.disableProgress}/>
-      </TouchableOpacity>
-    );
   }
 
   /**
@@ -241,16 +167,8 @@ const styles = StyleSheet.create({
   emptyMessage: {
     padding: 0
   },
-  imageContainer: {
+  media: {
     flex: 1,
-    alignItems: 'stretch',
-    minHeight: 200,
-  },
-  image: {
-    flex: 1,
-  },
-  title: {
-    fontWeight: 'bold',
   },
   timestamp: {
     fontSize: 11,

@@ -86,7 +86,11 @@ export default class NewsfeedList extends Component {
     if (this.props.newsfeed.isTiled) {
       return <TileElement size={this.state.itemHeight} entity={entity} navigation={this.props.navigation} />;
     } else {
-      return <Activity entity={entity} newsfeed={this.props.newsfeed} navigation={this.props.navigation} />;
+      return <Activity 
+        entity={entity}
+        newsfeed={this.props.newsfeed}
+        navigation={this.props.navigation} 
+        />;
     }
   }
 }

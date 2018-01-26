@@ -107,7 +107,7 @@ export default class ChannelActions extends Component {
 
     return (
       <View>
-        <Icon name="md-settings" onPress={() => this.showActionSheet()} size={20} />
+        <Icon name="md-settings" style={ styles.icon } onPress={() => this.showActionSheet()} size={20} />
         <ActionSheet
           ref={o => this.ActionSheet = o}
           title={title}
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     flex: 1,
   },
-  iconclose: {
-    flex:1,
-  }
+  icon: {
+    color: '#444',
+  },
 });

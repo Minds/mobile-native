@@ -12,7 +12,8 @@ import {
 
 import {
   observer,
-  inject
+  inject,
+  componentByNodeRegistery
 } from 'mobx-react/native'
 
 import { Button } from 'react-native-elements';
@@ -76,7 +77,7 @@ export default class ChannelHeader extends Component {
         <TouchableHighlight
           onPress={() => { this._navToConversation() }}
           underlayColor = 'transparent'
-          style = {ComponentsStyle.bluebutton}
+          style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
           accessibilityLabel="Send a message to this channel"
         >
           <Text style={{color: colors.primary}} > MESSAGE </Text>
@@ -87,7 +88,7 @@ export default class ChannelHeader extends Component {
         <TouchableHighlight
           onPress={() => { this.subscribe() }}
           underlayColor = 'transparent'
-          style = {ComponentsStyle.bluebutton}
+          style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
           accessibilityLabel="Subscribe to this channel"
         >
           <Text style={{color: colors.primary}} > SUBSCRIBE </Text>
@@ -129,7 +130,7 @@ export default class ChannelHeader extends Component {
           </View>
           <View style={styles.namecontainer}>
             <View style={styles.namecol}>
-              <Text style={styles.name}>{channel.name.toUpperCase()}</Text>
+              <Text style={styles.name}>{channel.name}</Text>
               <Text style={styles.username}>@{channel.username}</Text>
             </View>
             <View style={styles.buttonscol}>

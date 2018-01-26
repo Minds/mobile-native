@@ -95,16 +95,17 @@ export default class RegisterForm extends Component {
           onChangeText={(value) => this.setState({ password: value })}
           value={this.state.password}
         />
-        <TextInput
-          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder={i18n.t('auth.confirmpassword')}
-          secureTextEntry={true}
-          returnKeyType={'done'}
-          placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
-          onChangeText={(value) => this.validatePassword( value )}
-          value={this.state.confirmPassword}
-        />
+        { this.state.password ? 
+          <TextInput
+            style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+            placeholder={i18n.t('auth.confirmpassword')}
+            secureTextEntry={true}
+            returnKeyType={'done'}
+            placeholderTextColor="#444"
+            underlineColorAndroid='transparent'
+            onChangeText={(value) => this.validatePassword( value )}
+            value={this.state.confirmPassword}
+          /> : null }
         <View>
           <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
             {this.state.error.confirmPasswordError}

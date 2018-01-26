@@ -14,6 +14,8 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
+import colors from '../../styles/Colors';
+
 @inject('channelfeed')
 @observer
 export default class Toolbar extends Component {
@@ -29,7 +31,7 @@ export default class Toolbar extends Component {
     if (this.props.hasRewards) {
       rewards = (
         <TouchableOpacity style={styles.button} onPress={() => this.props.channelfeed.setFilter('rewards')}>
-          <IonIcon name="ios-flash" size={18} color={filter == 'rewards' ? selectedcolor : color} />
+          <IonIcon name="ios-flash" size={18} color={filter == 'rewards' ? colors.primary : color} />
           <Text style={styles.buttontext}>REWARDS</Text>
         </TouchableOpacity>
       )
@@ -39,19 +41,19 @@ export default class Toolbar extends Component {
       <View style={styles.container}>
         <View style={styles.topbar}>
           <TouchableOpacity style={styles.button} onPress={() => this.props.channelfeed.setFilter('feed')}>
-            <Icon name="list" size={18} color={filter == 'feed' ? selectedcolor : color} />
+            <Icon name="list" size={18} color={filter == 'feed' ? colors.primary : color} />
             <Text style={styles.buttontext}>FEED</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => this.props.channelfeed.setFilter('images')} >
-            <IonIcon name="md-image" size={18} color={filter == 'images' ? selectedcolor : color} />
+            <IonIcon name="md-image" size={18} color={filter == 'images' ? colors.primary : color} />
             <Text style={styles.buttontext}>IMAGES</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => this.props.channelfeed.setFilter('videos')} >
-            <IonIcon name="md-videocam" size={18} color={filter == 'videos' ? selectedcolor : color} />
+            <IonIcon name="md-videocam" size={18} color={filter == 'videos' ? colors.primary : color} />
             <Text style={styles.buttontext}>VIDEOS</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => this.props.channelfeed.setFilter('blogs')}>
-              <Icon name="subject" size={18} color={filter == 'blogs' ? selectedcolor : color} />
+              <Icon name="subject" size={18} color={filter == 'blogs' ? color.primary : color} />
               <Text style={styles.buttontext}>BLOGS</Text>
           </TouchableOpacity>
           {rewards}
@@ -61,7 +63,6 @@ export default class Toolbar extends Component {
   }
 }
 
-const selectedcolor = '#0071ff';
 const color = '#444'
 
 const styles = StyleSheet.create({
@@ -70,8 +71,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     paddingTop: 12,
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 0,
+    paddingRight: 0,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
     borderTopWidth: StyleSheet.hairlineWidth,
@@ -84,7 +85,8 @@ const styles = StyleSheet.create({
   },
   buttontext: {
     paddingTop:5,
-    fontSize: 10
+    fontSize: 10,
+    color: '#444',
   },
   button: {
     flex: 1,

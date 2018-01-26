@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import { CommonStyle } from '../../styles/Common';
+import colors from '../../styles/Colors';
 
 /**
  * Newsfeed top bar
@@ -81,6 +82,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFF',
   },
   tabSelected: {
-    borderBottomColor: '#AAF',
+    borderBottomColor: colors.primary,
   }
 });

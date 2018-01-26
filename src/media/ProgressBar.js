@@ -64,7 +64,7 @@ export default class ProgressBar extends Component {
 
   getHolderStyle() {
     let {moving, slideX, width} = this.state;
-
+    return [styles.holder];
     if (width > 0) {
       var interpolatedAnimation = slideX.interpolate({
         inputRange: [0, width],
