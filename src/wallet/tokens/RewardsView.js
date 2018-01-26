@@ -6,7 +6,8 @@ import {
   Text,
   FlatList,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 
 import {
@@ -78,7 +79,7 @@ export default class RewardsView extends Component {
         refreshing={wallet.ledger.list.refreshing}
         onEndReached={this.loadMore}
         onEndThreshold={0}
-        ListHeaderComponent={header}
+        //ListHeaderComponent={header}
         style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}
       />
     )
@@ -129,11 +130,14 @@ export default class RewardsView extends Component {
   renderRow = (row) => {
     const item = row.item;
     return (
-      <View style={[CommonStyle.padding]}>
-        <Text style={[CommonStyle.fontXL, {color: 'green'}]}>+ {token(item.amount)}</Text>
+      <View style={[ styles.row]}>
+        { item.amount >= 0 ?
+          <Text style={[styles.count, styles.positive]}>+ {token(item.amount)}</Text>
+          : <Text style={[styles.count, styles.negative]}>{token(item.amount)}</Text>
+        }
         <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer]}>{item.type.toUpperCase()}</Text>
-          <Text style={[CommonStyle.fontS]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
+          <Text style={[styles.subtext, CommonStyle.flexContainer]}>{item.type.toUpperCase()}</Text>
+          <Text style={[styles.subtext]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
         </View>
       </View>
     )
@@ -146,3 +150,29 @@ export default class RewardsView extends Component {
     this.props.wallet.ledger.refresh(this.state.from, this.state.to);
   }
 }
+
+const styles = StyleSheet.create({
+  row: {
+    paddingTop: 16,
+    paddingBottom: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ececec',
+  },
+  count: {
+    fontSize: 24,
+    fontWeight: '800',
+    marginBottom: 8,
+  },
+  positive: {
+    color: 'green',
+  },
+  negative: {
+    color: 'red',
+  },
+  subtext: {
+    fontSize: 11,
+    color: '#555',
+  },
+});

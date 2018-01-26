@@ -44,14 +44,14 @@ export default class TokensRewardsScreen extends Component {
     const body = this.getBody(hash);
 
     const options = [
-      { text: 'Rewards', icon: 'star', value: 'rewards' },
+      { text: 'Rewards', icon: 'stars', value: 'rewards' },
       { text: 'Contributions', icon: 'history', value: 'contributions' },
     ]
 
     const toolbar = (hash) ? <Toolbar options={options} initial={this.state.option} onChange={this.onChange} /> : null;
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite, CommonStyle.paddingLeft, CommonStyle.paddingRight]}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
         {toolbar}
         {body}
       </View>

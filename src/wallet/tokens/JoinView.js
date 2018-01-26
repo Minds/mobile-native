@@ -5,7 +5,9 @@ import React, {
 import {
   Text,
   TextInput,
-  View
+  View,
+  TouchableHighlight,
+  StyleSheet,
 } from 'react-native';
 
 import {
@@ -62,17 +64,17 @@ export default class JoinView extends Component {
     const number = this.refs.phone.getValue();
 
     this.props.wallet.join(number)
-    .then(({secret}) => {
-      this.setState({
-        secret,
-        number,
-        confirming: true
+      .then(({secret}) => {
+        this.setState({
+          secret,
+          number,
+          confirming: true
+        });
+      })
+      .catch(e => {
+        this.setState({error: e.message});
+        console.log(e);
       });
-    })
-    .catch(e => {
-      this.setState({error: e.message});
-      console.log(e);
-    });
   }
 
   /**
@@ -100,8 +102,13 @@ export default class JoinView extends Component {
 
     return (
       <View>
-        <Text style={CommonStyle.fontXXL}>Welcome to Rewards</Text>
-        <Text style={CommonStyle.fontS}>Rewards Tokens enable creators to earn from interactions on their content. You earn tokens based on a daily contributions pool. At the end of each day, your contributions score will be calculated and you will receive a share of the daily reward pool. In order to verify you are a unique users, we require a phone number to be provided. Your phone number will be securely hashed and sent alongside all interactions to protect against fraud and gaming.</Text>
+        <Text style={[CommonStyle.fontS, { marginTop: 8, color: '#444', padding: 4 }]}>
+          Rewards Tokens enable creators to earn from interactions on their content.
+          You earn tokens based on a daily contributions pool.
+          At the end of each day, your contributions score will be calculated and you will receive a share of the daily reward pool.
+          In order to verify you are a unique users, we require a phone number to be provided.
+          Your phone number will be securely hashed and sent alongside all interactions to protect against fraud and gaming.
+        </Text>
         {error}
         {body}
       </View>
@@ -130,12 +137,42 @@ export default class JoinView extends Component {
       return (
         <View>
           <View style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]}>
-            <TextInput ref="input" onChangeText={this.changeConfirmation} style={ComponentsStyle.passwordinput} underlineColorAndroid="transparent" value={this.state.confirmation} keyboardType="numeric" />
-            <Text style={CommonStyle.fontXS}>Please enter the code we just sent you, to verify that your number is correct</Text>
+            <TextInput
+              ref="input"
+              onChangeText={this.changeConfirmation}
+              style={[ComponentsStyle.input, { fontSize: 16 }]}
+              underlineColorAndroid="transparent"
+              value={this.state.confirmation}
+              placeholder="Please enter your code..."
+              keyboardType="numeric" 
+            />
           </View>
-          <View style={[CommonStyle.rowJustifyStart]}>
-            <Button text={'Cancel'} onPress={this.cancel} />
-            <Button text={'Confirm'} onPress={this.confirm} />
+          <View style={{ flexDirection: 'row', alignItems: 'stretch', marginTop: 8 }}>
+            <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingRight: 32, paddingLeft: 2 }}>
+              <Text style={[CommonStyle.fontXS, { color: '#444'}]}>Please enter the code we just sent you, to verify that your number is correct</Text>
+            </View>
+
+            <View style={[CommonStyle.rowJustifyStart]}>
+              <TouchableHighlight 
+                underlayColor='transparent' 
+                onPress={ this.cancel } 
+                style={[
+                  ComponentsStyle.button,
+                  { backgroundColor: 'transparent', marginRight: 4 },
+                ]}>
+                <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>Cancel</Text>
+              </TouchableHighlight>
+              <TouchableHighlight 
+                underlayColor='transparent' 
+                onPress={ this.confirm } 
+                style={[
+                  ComponentsStyle.button,
+                  ComponentsStyle.buttonAction,
+                  { backgroundColor: 'transparent' },
+                ]}>
+                <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Confirm</Text>
+              </TouchableHighlight>
+            </View>
           </View>
         </View>
       )
@@ -143,13 +180,35 @@ export default class JoinView extends Component {
       return (
         <View>
           <View style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]}>
-            <PhoneInput ref='phone' style={ComponentsStyle.passwordinput} />
-            {this.state.invalidNumber && <Text style={[CommonStyle.fontS, CommonStyle.colorDanger]}>The number is invalid</Text>}
-            <Text style={CommonStyle.fontXS}>Please enter your phone number in order to join the rewards program</Text>
+            <View style={ComponentsStyle.input}>
+              <PhoneInput ref='phone' textStyle={{ letterSpacing: 18, fontSize: 16 }} />
+            </View>
           </View>
-          <Button text={'Join'} onPress={this.join} />
+
+          <View style={{ flexDirection: 'row', alignItems: 'stretch', marginTop: 8 }}>
+            <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', paddingRight: 56, paddingLeft: 2 }}>
+              {this.state.invalidNumber && <Text style={[CommonStyle.fontS, CommonStyle.colorDanger]}>The number is invalid</Text>}
+              <Text style={[CommonStyle.fontXS, { color: '#444' }]}>Please enter your phone number in order to join the rewards program</Text>
+            </View>
+            <View>
+              <TouchableHighlight 
+                underlayColor='transparent' 
+                onPress={ this.join } 
+                style={[
+                  ComponentsStyle.button,
+                  ComponentsStyle.buttonAction,
+                  { backgroundColor: 'transparent' },
+                ]}>
+                <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Join</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
         </View>
       )
     }
   }
 }
+
+const styles = StyleSheet.create({
+
+});

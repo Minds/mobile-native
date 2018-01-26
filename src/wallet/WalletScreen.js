@@ -56,8 +56,8 @@ export default class WalletScreen extends Component {
           </View>
 
           <View style={styles.datailsContainer} >
-            <Text style={styles.title} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Tokens & Rewards</Text>
-            <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Check and withdraw your rewards</Text>
+            <Text style={styles.title} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Rewards & Contributions</Text>
+            <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Check and rewards and daily contribution scores</Text>
           </View>
 
           <View style={styles.datailsContainer}>

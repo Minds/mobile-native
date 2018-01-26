@@ -6,7 +6,8 @@ import {
   Text,
   FlatList,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 
 import {
@@ -88,14 +89,24 @@ export default class ContributionsView extends Component {
    * Get header
    */
   getHeader() {
-    return (
+    /*return (
       <DateRangePicker
         to={this.state.to}
         from={this.state.from}
         onToChange={this.setTo}
         onFromChange={this.setFrom}
       />
-    )
+    )*/
+    return (
+      <View style={styles.row}>
+        <View style={CommonStyle.rowJustifyStart}>
+          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 9 }]}>Date</Text>
+          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 9 }]}>Metric</Text>
+          <Text style={[CommonStyle.flexContainer, CommonStyle.textRight, {fontWeight: '800', fontSize: 9 }]}>Amount</Text>
+          <Text style={[CommonStyle.flexContainer, CommonStyle.textRight, {fontWeight: '800', fontSize: 9 }]}>Score</Text>
+        </View>
+      </View>
+    );
   }
 
   /**
@@ -129,12 +140,12 @@ export default class ContributionsView extends Component {
   renderRow = (row) => {
     const item = row.item;
     return (
-      <View style={[CommonStyle.padding]}>
+      <View style={styles.row}>
         <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer]}>{item.metric.toUpperCase()}</Text>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textRight]}>{item.amount}</Text>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textRight]}>{item.score}</Text>
+          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
+          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.metric.toUpperCase()}</Text>
+          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textRight, styles.column]}>{item.amount}</Text>
+          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textRight, styles.column]}>{item.score}</Text>
         </View>
       </View>
     )
@@ -147,3 +158,17 @@ export default class ContributionsView extends Component {
     this.props.wallet.ledger.refresh(this.state.from, this.state.to);
   }
 }
+
+const styles = StyleSheet.create({
+  row: {
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 8,
+    paddingRight: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ececec',
+  },
+  column: {
+    color: '#555',
+  },
+});

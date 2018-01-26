@@ -7,6 +7,7 @@ import {
 import walletService from './WalletService';
 import abbrev from "../common/helpers/abbrev";
 import token from "../common/helpers/token";
+import number from "../common/helpers/number";
 import TokensStore from './tokens/TokensStore';
 /**
  * Wallet store
@@ -81,7 +82,7 @@ class WalletStore {
   }
 
   @computed get rewardsFormatted() {
-    return this.rewards > -1 ? abbrev(token(this.rewards, 18)) : '…'
+    return this.rewards > -1 ? abbrev(number(token(this.rewards, 18), 2)) : '…'
   }
 
   @computed get moneyFormatted() {
@@ -89,7 +90,7 @@ class WalletStore {
   }
 
   @computed get tokensFormatted() {
-    return this.tokens > -1 ? this.tokens : '…'
+    return this.tokens > -1 ? number(this.tokens, 2) : '…'
   }
 
   /**
