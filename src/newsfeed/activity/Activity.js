@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     alignItems: 'stretch',
-    height: 200,
+    minHeight: 200,
   },
   image: {
     flex: 1,

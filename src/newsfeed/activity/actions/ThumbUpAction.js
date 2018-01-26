@@ -5,7 +5,8 @@ import React, {
 import {
   Text,
   StyleSheet,
-  View
+  View,
+  TouchableOpacity,
 } from 'react-native';
 
 import { Icon } from 'react-native-elements';
@@ -57,10 +58,10 @@ export default class ThumbUpAction extends PureComponent {
    */
   render() {
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
-        <Icon onPress={this.toggleThumb} color={this.state.voted ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={this.iconName} size={20} />
+      <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.toggleThumb}>
+        <Icon color={this.state.voted ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={this.iconName} size={20} />
         <Text style={CommonStyle.paddingLeft}>{this.state.votedCount > 0 ? this.state.votedCount : ''}</Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 

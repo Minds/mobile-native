@@ -6,7 +6,8 @@ import {
   Text,
   StyleSheet,
   Modal,
-  View
+  View,
+  TouchableOpacity,
 } from 'react-native';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -28,9 +29,9 @@ export default class RemindAction extends PureComponent {
    */
   render() {
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
-        <Icon onPress={this.remind} color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20} />
-        <Text onPress={this.remind} style={CommonStyle.paddingLeft}>{this.props.entity['reminds'] > 0 ? this.props.entity['reminds'] : ''}</Text>
+      <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.remind}>
+        <Icon color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20} />
+        <Text style={CommonStyle.paddingLeft}>{this.props.entity['reminds'] > 0 ? this.props.entity['reminds'] : ''}</Text>
         <View style={styles.modalContainer}>
           <Modal animationType={"slide"} transparent={false}
             visible={this.state.remindModalVisible}
@@ -43,7 +44,7 @@ export default class RemindAction extends PureComponent {
             </View>
           </Modal>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 

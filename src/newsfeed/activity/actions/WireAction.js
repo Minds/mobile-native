@@ -5,7 +5,8 @@ import React,{
 import {
   Text,
   StyleSheet,
-  View
+  View,
+  TouchableOpacity,
 } from 'react-native';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -18,9 +19,9 @@ import { CommonStyle } from '../../../styles/Common';
 export default class WireAction extends PureComponent {
   render() {
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.centered]}>
-        <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={40} onPress={this.openWire}/>
-      </View>
+      <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.centered]} onPress={this.openWire}>
+        <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={40} />
+      </TouchableOpacity>
     )
   }
 
