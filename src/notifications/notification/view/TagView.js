@@ -4,7 +4,8 @@ import React, {
 
 import {
   Text,
-  View
+  View,
+  TouchableOpacity,
 } from 'react-native';
 
 /**
@@ -25,9 +26,9 @@ export default class TagView extends Component {
     const isComment = entity.entityObj.type != 'comment';
 
     return (
-      <View style={styles.bodyContents}>
-        <Text onPress={this.navToActivity}>{entity.fromObj.name} {isComment ? 'tagged you in a comment' : 'tagged you in a post' } </Text>
-      </View>
+      <TouchableOpacity style={styles.bodyContents} onPress={this.navToActivity}>
+        <Text>{entity.fromObj.name} {isComment ? 'tagged you in a comment' : 'tagged you in a post' } </Text>
+      </TouchableOpacity>
     )
   }
 }

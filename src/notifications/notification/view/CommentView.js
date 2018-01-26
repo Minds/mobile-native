@@ -8,7 +8,8 @@ import {
 
 import {
   Text,
-  View
+  View,
+  TouchableOpacity,
 } from 'react-native';
 
 /**
@@ -24,13 +25,13 @@ export default class CommentView extends Component {
     const body = this.getBody(entity, user_guid);
 
     return (
-      <View>
-        <Text onPress={this.navToActivity}>
-          <Text>{entity.fromObj.name}</Text>
-          <Text>commented on</Text>
+      <TouchableOpacity onPress={this.navToActivity}>
+        <Text >
+          <Text style={styles.link}>{entity.fromObj.name}</Text>
+          <Text> commented on </Text>
           { body }
         </Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 
@@ -46,20 +47,22 @@ export default class CommentView extends Component {
    * @param {object} entity
    */
   getBody(entity, user_guid) {
+    const styles = this.props.styles;
+
     switch (entity.entityObj.type) {
       case "activity":
         if (entity.entityObj.owner_guid == user_guid) {
-          return <Text>your activity</Text>
+          return <Text style={styles.link}>your activity</Text>
         } else {
-          return <Text>{entity.entityObj.ownerObj.name}'s activity</Text>
+          return <Text style={styles.link}>{entity.entityObj.ownerObj.name}'s activity</Text>
         }
       case "object":
         if (entity.entityObj.title) {
-          return <Text>{entity.entityObj.title}</Text>
+          return <Text style={styles.link}>{entity.entityObj.title}</Text>
         } else if (entity.entityObj.owner_guid == user_guid) {
-          return <Text>your {entity.entityObj.subtype}</Text>
+          return <Text style={styles.link}>your {entity.entityObj.subtype}</Text>
         } else {
-          return <Text>{entity.entityObj.ownerObj.name}'s {entity.entityObj.subtype}</Text>
+          return <Text style={styles.link}>{entity.entityObj.ownerObj.name}'s {entity.entityObj.subtype}</Text>
         }
       default:
         return <Text>... oops.</Text>

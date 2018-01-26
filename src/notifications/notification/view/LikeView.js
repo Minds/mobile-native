@@ -4,7 +4,8 @@ import React, {
 
 import {
   Text,
-  View
+  View,
+  TouchableOpacity,
 } from 'react-native';
 
 /**
@@ -21,9 +22,9 @@ export default class LikeView extends Component {
     const body = this.getBody(entity);
 
     return (
-      <View style={styles.bodyContents}>
+      <TouchableOpacity style={styles.bodyContents} onPress={this.navToActivity}>
         {body}
-      </View>
+      </TouchableOpacity>
     )
   }
 
@@ -57,26 +58,26 @@ export default class LikeView extends Component {
     switch (entity.entityObj.type) {
       case "comment":
         return (
-          <Text onPress={this.navToActivity}>{entity.fromObj.name} {this.message} <Text style={styles.link}> your comment </Text></Text>
+          <Text>{entity.fromObj.name} {this.message} <Text style={styles.link}> your comment </Text></Text>
         )
       case "activity":
         if (entity.entityObj.title) {
           return (
-            <Text onPress={this.navToActivity}> {entity.fromObj.name} {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
+            <Text> {entity.fromObj.name} {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
           )
         } else {
           return (
-            <Text onPress={this.navToActivity}> {entity.fromObj.name} {this.message} <Text style={styles.link}>your activity</Text></Text>
+            <Text> {entity.fromObj.name} {this.message} <Text style={styles.link}>your activity</Text></Text>
           )
         }
       case "object":
         if (entity.entityObj.title) {
           return (
-            <Text onPress={this.navToGroup}> {entity.fromObj.name} {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
+            <Text> {entity.fromObj.name} {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
           )
         } else {
           return (
-            <Text onPress={this.navToGroup}> {entity.fromObj.name} {this.message} <Text style={styles.link}>your {entity.entityObj.subtype}</Text></Text>
+            <Text> {entity.fromObj.name} {this.message} <Text style={styles.link}>your {entity.entityObj.subtype}</Text></Text>
           )
         }
       default:

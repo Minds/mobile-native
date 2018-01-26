@@ -11,6 +11,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import colors from '../styles/Colors';
 
 @inject('notifications')
 @observer
@@ -28,19 +29,19 @@ export default class NotificacionsTopbar extends Component {
       <View style={styles.container}>
         <View style={styles.topbar}>
           <View style={[styles.tab, this.selected('all')]}>
-            <Icon name="bell" size={22} color={filter=='all'?selectedColor:color} onPress={()=> this.props.notifications.setFilter('all')} style={styles.button} />
+            <Icon name="bell" size={22} color={filter=='all' ? colors.primary : color} onPress={()=> this.props.notifications.setFilter('all')} style={styles.button} />
           </View>
           <View style={[styles.tab, this.selected('tags')]}>
-            <Icon name="tag" size={22} color={filter == 'tags' ? selectedColor : color} onPress={() => this.props.notifications.setFilter('tags')} style={styles.button} />
+            <Icon name="tag" size={22} color={filter == 'tags' ? colors.primary : color} onPress={() => this.props.notifications.setFilter('tags')} style={styles.button} />
           </View>
           <View style={[styles.tab, this.selected('comments')]}>
-           <IonIcon name="md-chatbubbles" size={22} color={filter == 'comments' ? selectedColor : color} onPress={() => this.props.notifications.setFilter('comments')} style={styles.button} />
+           <IonIcon name="md-chatbubbles" size={22} color={filter == 'comments' ? colors.primary : color} onPress={() => this.props.notifications.setFilter('comments')} style={styles.button} />
           </View>
           <View style={[styles.tab, this.selected('boosts')]}>
-            <Icon name="trending-up" size={22} color={filter =='boosts'?selectedColor:color} onPress={() => this.props.notifications.setFilter('boosts')} style={styles.button} />
+            <Icon name="trending-up" size={22} color={filter =='boosts' ? colors.primary : color} onPress={() => this.props.notifications.setFilter('boosts')} style={styles.button} />
           </View>
           <View style={[styles.tab, this.selected('votes')]}>
-            <IonIcon name="md-thumbs-up" size={22} color={filter =='votes'?selectedColor:color} onPress={() => this.props.notifications.setFilter('votes')} style={styles.button} />
+            <IonIcon name="md-thumbs-up" size={22} color={filter =='votes' ? colors.primary : color } onPress={() => this.props.notifications.setFilter('votes')} style={styles.button} />
           </View>
         </View>
       </View>
@@ -48,8 +49,7 @@ export default class NotificacionsTopbar extends Component {
   }
 }
 
-const selectedColor = '#444';
-const color = '#999';
+const color = '#444';
 
 const styles = StyleSheet.create({
   container: {
@@ -84,6 +84,6 @@ const styles = StyleSheet.create({
     borderBottomColor: '#FFF',
   },
   tabSelected: {
-    borderBottomColor: '#AAF',
+    borderBottomColor: colors.primary,
   }
 });

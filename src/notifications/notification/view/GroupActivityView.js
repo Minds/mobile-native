@@ -4,7 +4,8 @@ import React, {
 
 import {
   Text,
-  View
+  View,
+  TouchableOpacity,
 } from 'react-native';
 
 /**
@@ -16,7 +17,7 @@ export default class GroupActivityView extends Component {
    * Navigate to group
    */
   navToGroup = () => {
-    this.props.navigation.navigate('GroupView', { guid: this.props.entity.entityObj.guid });
+    this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
   }
 
   render() {
@@ -24,13 +25,13 @@ export default class GroupActivityView extends Component {
     const styles = this.props.styles;
 
     return (
-      <View style={styles.bodyContents}>
-        <Text onPress={this.navToGroup}>
+      <TouchableOpacity style={styles.bodyContents} onPress={this.navToGroup}>
+        <Text>
           <Text style={styles.link}>{entity.fromObj.name}</Text>
           <Text> posted in </Text>
           <Text style={styles.link}>{entity.params.group.name}</Text>
         </Text>
-      </View>
+      </TouchableOpacity>
     )
   }
 }

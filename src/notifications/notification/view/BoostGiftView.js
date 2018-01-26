@@ -26,11 +26,14 @@ export default class BoostGiftView extends Component {
   }
 
   getDescription(entity, pron='your') {
+    const styles = this.props.styles;
 
     if (!entity.entityObj) return '';
 
     let desc = 'for ' + (entity.entityObj.title || entity.entityObj.name || (entity.entityObj.type !== 'user' ? `{pron} post` : `{pron} channel`));
 
-    return desc;
+    return (
+      <Text style={styles.link}>desc</Text>
+    );
   }
 }

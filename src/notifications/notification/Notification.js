@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import { MINDS_CDN_URI } from '../../config/Config';
+import formatDate from '../../common/helpers/date';
 
 import BoostAcceptedView from './view/BoostAcceptedView';
 import BoostCompletedView from './view/BoostCompletedView';
@@ -71,7 +72,7 @@ export default class Notification extends Component {
         </TouchableWithoutFeedback>
         <View style={styles.body}>
           { body }
-          <Text style={styles.timestamp}>{this.formatDate(this.props.entity.time_created)}</Text>
+          <Text style={styles.timestamp}>{formatDate(this.props.entity.time_created)}</Text>
         </View>
       </View>
     );
@@ -145,7 +146,7 @@ export default class Notification extends Component {
         return <RemindView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "tag":
-        return <Tag entity={entity} navigation={this.props.navigation} styles={styles} />
+        return <TagView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "welcome_boost":
         return <WelcomeBoostView entity={entity} navigation={this.props.navigation} styles={styles} />
@@ -169,11 +170,6 @@ export default class Notification extends Component {
           </View>
         )
     }
-  }
-
-  formatDate(timestamp) {
-    const t = new Date(timestamp * 1000);
-    return t.toDateString();
   }
 
 }
@@ -210,6 +206,7 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: 'bold',
+    color: '#444',
   },
   timestamp: {
     fontSize: 11,
