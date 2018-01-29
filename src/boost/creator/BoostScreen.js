@@ -14,6 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Divider } from 'react-native-elements'
 
+import { inject } from 'mobx-react/native';
 import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import { getRates } from '../BoostService';
@@ -42,6 +43,7 @@ class VisibleError extends Error {
 /**
  * Boost Screen
  */
+@inject('user')
 export default class BoostScreen extends Component {
 
   textInput = void 0;
@@ -246,10 +248,21 @@ export default class BoostScreen extends Component {
   }
 
   selectTarget = target => {
-    this.setState({
-      isSearchingTarget: false,
-      target
-    });
+    if(target.guid == this.props.user.me.guid) {
+      Alert.alert(
+        'Error',
+        'You cant select yourself to make a p2p boost',
+        [
+          {text: 'OK', onPress: () => {}},
+        ],
+        { cancelable: false }
+      )
+    } else {
+      this.setState({
+        isSearchingTarget: false,
+        target
+      });
+    }
   };
 
   TargetPartial = () => {
@@ -368,7 +381,9 @@ export default class BoostScreen extends Component {
         throw new Error('You should select a target.')
       }
 
-      // TODO: Check for self P2P
+      if (!this.state.target.guid == this.props.user.me.guid) {
+        throw new VisibleError('Target cant be self.')
+      }
 
       if (!this.state.target.merchant && this.state.payment === 'usd') {
         throw new VisibleError('User cannot receive money.');
