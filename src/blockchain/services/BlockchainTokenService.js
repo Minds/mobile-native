@@ -21,6 +21,13 @@ class BlockchainTokenService {
     return result.transactionHash;
   }
 
+  async balanceOf(address) {
+    const token = await this.getContract(),
+      balance = await token.methods.balanceOf(address).call();
+
+    return Web3Service.web3.utils.fromWei(balance, 'ether');
+  }
+
   encodeParams(params) {
     const types = [ 'uint256', 'uint256' ],
       values = [ 0x80, 0x40 ];

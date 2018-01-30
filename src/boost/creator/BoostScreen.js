@@ -30,6 +30,7 @@ import api from '../../common/services/api.service';
 import number from '../../common/helpers/number';
 import BlockchainBoostService from '../../blockchain/services/BlockchainBoostService';
 import Web3Service from '../../blockchain/services/Web3Service';
+import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
 
 class VisibleError extends Error {
   visible = true;
@@ -462,12 +463,14 @@ export default class BoostScreen extends Component {
 
       if (this.state.type  !== 'p2p') {
         if (this.state.payment === 'tokens') {
+          await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Network Boost.`, true);
+
           const tokensFixRate = this.state.rates.tokens / 10000;
           let amount = Math.ceil(this.state.amount / tokensFixRate) / 10000;
 
           nonce = {
             txHash: await BlockchainBoostService.create(guid, amount),
-            address: await Web3Service.getCurrentWalletAddress()
+            address: await Web3Service.getCurrentWalletAddress(true)
           };
         }
 
@@ -480,9 +483,11 @@ export default class BoostScreen extends Component {
         });
       } else /* P2P */ {
         if (this.state.payment === 'tokens') {
+          await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Channel Boost.`, true);
+
           nonce = {
             txHash: await BlockchainBoostService.createPeer(this.state.target.eth_wallet, guid, this.state.amount),
-            address: await Web3Service.getCurrentWalletAddress()
+            address: await Web3Service.getCurrentWalletAddress(true)
           };
         }
 

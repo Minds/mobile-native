@@ -4,7 +4,8 @@ import {
   View,
   TextInput,
   Button,
-  Alert
+  Alert,
+  TouchableHighlight,
 } from 'react-native';
 
 import Modal from 'react-native-modal';
@@ -57,9 +58,9 @@ export default class BlockchainTransactionModalScreen extends Component {
         backdropOpacity={ 1 }
       >
         { this.props.blockchainTransaction.isApproving && <View style={ [ CommonStyle.flexContainer, CommonStyle.modalScreen ] }>
-          <Text style={ CommonStyle.viewTitle }>APPROVE ETHEREUM TRANSACTION</Text>
+          <Text style={ CommonStyle.modalTitle }>Approve transaction</Text>
 
-          <Text>{ this.props.blockchainTransaction.approvalMessage }</Text>
+          <Text style={ CommonStyle.modalNote }>{ this.props.blockchainTransaction.approvalMessage }</Text>
 
           <View style={ CommonStyle.field }>
             <Text style={ CommonStyle.fieldLabel }>GAS PRICE:</Text>
@@ -85,17 +86,31 @@ export default class BlockchainTransactionModalScreen extends Component {
             />
           </View>
 
-          <Button
-            disabled={ !this.state.ready }
-            onPress={ () => this.approve() }
-            title="Approve"
-          />
+          <View style={[CommonStyle.rowJustifyStart, { marginTop: 8 }]}>
+            <View style={{ flex: 1 }}></View>
+            <TouchableHighlight 
+              underlayColor='transparent' 
+              onPress={ this.reject.bind(this) } 
+              style={[
+                ComponentsStyle.button,
+                { backgroundColor: 'transparent', marginRight: 4 },
+              ]}>
+              <Text style={[ CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>Reject</Text>
+            </TouchableHighlight>
+            <TouchableHighlight 
+              underlayColor='transparent' 
+              onPress={ this.approve.bind(this) } 
+              style={[
+                ComponentsStyle.button,
+                ComponentsStyle.buttonAction,
+                { backgroundColor: 'transparent' },
+              ]}>
+              <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Approve</Text>
+            </TouchableHighlight>
+          </View>
 
-          <Button
-            onPress={ () => this.reject() }
-            title="Reject"
-          />
         </View> }
+
       </Modal>
     );
   }

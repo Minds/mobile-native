@@ -23,6 +23,7 @@ import {
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
 import NavigatorStore from './src/common/stores/NavigationStore';
+import NavigationStoreService from './src/common/services/navigation.service';
 import Stack from './AppScreens';
 import stores from './AppStores';
 import './AppErrors';
@@ -31,6 +32,9 @@ import './src/common/services/socket.service';
 
 // build navigation store
 stores.navigatorStore = new NavigatorStore(Stack);
+
+// Setup navigation store proxy (to avoid circular references issues)
+NavigationStoreService.set(stores.navigatorStore);
 
 /**
  * App
@@ -80,6 +84,6 @@ export default class App extends Component {
       <BlockchainTransactionModalScreen key="blockchainTransactionModal" blockchainTransaction={ stores.blockchainTransaction } />
     );
 
-    return [ app, blockchainTransactionModal, keychainModal ];
+    return [ app, keychainModal, blockchainTransactionModal ];
   }
 }

@@ -97,6 +97,10 @@ export default class NavigationStore {
       .getStateForAction(action, previousNavState);
   }
 
+  @action setButtons(opts) {
+    return this.navigator.setButtons(opts);
+  }
+
   /**
    * Get name from state
    * @param {object} navigationState

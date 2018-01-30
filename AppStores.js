@@ -15,10 +15,11 @@ import walletHistory from './src/wallet/WalletHistoryStore';
 import wire from './src/wire/WireStore';
 import groups from './src/groups/GroupsStore';
 import groupView from './src/groups/GroupViewStore';
-import blockchain from './src/blockchain/BlockchainStore';
 import keychain from './src/keychain/KeychainStore';
 import tabs from './src/tabs/TabsStore';
 import blockchainTransaction from './src/blockchain/transaction-modal/BlockchainTransactionStore';
+import blockchainWallet from './src/blockchain/wallet/BlockchainWalletStore';
+import blockchainWalletSelector from './src/blockchain/wallet/BlockchainWalletSelectorStore';
 
 import sessionService from './src/common/services/session.service';
 
@@ -43,10 +44,11 @@ const stores = {
   walletHistory,
   groups,
   groupView,
-  blockchain,
   keychain,
   tabs,
   blockchainTransaction,
+  blockchainWallet,
+  blockchainWalletSelector,
 };
 
 /**

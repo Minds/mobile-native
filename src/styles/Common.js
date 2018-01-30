@@ -233,22 +233,27 @@ export const CommonStyle = StyleSheet.create({
     padding: 20,
   },
   modalScreen: {
-    padding: 20,
+    //padding: 20,
     paddingTop: 40
   },
 
-  // Headings
-  viewTitleContainer: {
+  // Modal Headings
+  modalTitleContainer: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     paddingBottom: 10,
   },
-  viewTitle: {
+  modalTitle: {
+    fontWeight: '800',
     fontSize: 18,
-    fontWeight: '300',
-    paddingBottom: 8, // 1.5 line height
-    paddingRight: 10, // just in case we have an activity indicator
+    color: '#444',
+    marginBottom: 8,
+  },
+  modalNote: {
+    fontSize: 12,
+    marginBottom: 10,
+    color: '#aaa',
   },
 
   // Fields

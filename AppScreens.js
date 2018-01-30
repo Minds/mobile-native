@@ -23,8 +23,11 @@ import FabScreen from './src/wire/FabScreen';
 import ActivityScreen from './src/newsfeed/ActivityScreen';
 import ViewImageScreen from './src/media/ViewImageScreen';
 import BoostScreen from './src/boost/creator/BoostScreen';
-import BlockchainSettingsScreen from "./src/blockchain/BlockchainSettingsScreen";
 import TokensRewardsScreen from "./src/wallet/tokens/TokensRewardsScreen";
+import BlockchainWalletScreen from "./src/blockchain/wallet/BlockchainWalletScreen";
+import BlockchainWalletModalScreen from './src/blockchain/wallet/modal/BlockchainWalletModalScreen';
+import BlockchainWalletImportScreen from './src/blockchain/wallet/import/BlockchainWalletImportScreen';
+import BlockchainWalletDetailsScreen from './src/blockchain/wallet/details/BlockchainWalletDetailsScreen';
 
 /**
  * Main stack navigator
@@ -99,12 +102,21 @@ const Stack = StackNavigator({
   ViewImage: {
     screen: ViewImageScreen
   },
-  BlockchainSettings: {
-    screen: BlockchainSettingsScreen
+  BlockchainWallet: {
+    screen: BlockchainWalletScreen
   },
   TokensRewards: {
     screen: TokensRewardsScreen
-  }
+  },
+  BlockchainWalletModal: {
+    screen: BlockchainWalletModalScreen
+  },
+  BlockchainWalletImport: {
+    screen: BlockchainWalletImportScreen
+  },
+  BlockchainWalletDetails: {
+    screen: BlockchainWalletDetailsScreen
+  },
 });
 
 export default Stack;

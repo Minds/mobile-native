@@ -1,6 +1,7 @@
 import api from './../common/services/api.service';
 import BlockchainWireService from '../blockchain/services/BlockchainWireService';
 import BlockchainTokenService from '../blockchain/services/BlockchainTokenService';
+import BlockchainWalletService from '../blockchain/wallet/BlockchainWalletService';
 
 /**
  * Wire Service
@@ -56,6 +57,8 @@ class WireService {
         if (!opts.owner.eth_wallet) {
           throw new Error('User cannot receive tokens');
         }
+
+        await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Wire.`, true);
 
         if (opts.recurring) {
           await BlockchainTokenService.increaseApproval(

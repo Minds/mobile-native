@@ -13,8 +13,10 @@ class KeychainStore {
   @observable isUnlocking = false;
   @observable unlockingKeychain = '';
   @observable unlockingSecret = void 0;
+  @observable unlockingExisting = false;
+  @observable unlockingAttempts = 0;
 
-  @action async waitForUnlock(keychain) {
+  @action async waitForUnlock(keychain, existing = false, attempts = 0) {
     if (this.isUnlocking) {
       throw new Error('E_ALREADY_UNLOCKING');
     }
@@ -22,6 +24,8 @@ class KeychainStore {
     this.isUnlocking = true;
     this.unlockingKeychain = keychain;
     this.unlockingSecret = void 0;
+    this.unlockingExisting = existing;
+    this.unlockingAttempts = attempts;
 
     return await new Promise(resolve => {
       if (unlockingSecretDispose) {
@@ -35,6 +39,8 @@ class KeychainStore {
         this.isUnlocking = false;
         this.unlockingKeychain = '';
         this.unlockingSecret = void 0;
+        this.unlockingExisting = false;
+        this.unlockingAttempts = 0;
 
         if (typeof change.newValue !== 'undefined') {
           resolve(change.newValue);
@@ -47,12 +53,16 @@ class KeychainStore {
     this.isUnlocking = false;
     this.unlockingKeychain = '';
     this.unlockingSecret = secret;
+    this.unlockingExisting = false;
+    this.unlockingAttempts = 0;
   }
 
   @action cancel() {
     this.isUnlocking = false;
     this.unlockingKeychain = '';
     this.unlockingSecret = '';
+    this.unlockingExisting = false;
+    this.unlockingAttempts = 0;
   }
 }
 

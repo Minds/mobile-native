@@ -65,7 +65,7 @@ export default class WalletScreen extends Component {
             <Text style={styles.subtitle}>Check your currently active plan subscriptions</Text>
           </View>
 
-          <TouchableOpacity onPress={ () => this.props.navigation.navigate('BlockchainSettings') }>
+          <TouchableOpacity onPress={ () => this.props.navigation.navigate('BlockchainWallet') }>
             <View style={styles.datailsContainer}>
               <Text style={styles.title}>Token Settings</Text>
               <Text style={styles.subtitle}>Configure your wallet and other token related settings</Text>

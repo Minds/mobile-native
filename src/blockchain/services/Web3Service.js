@@ -1,3 +1,5 @@
+import BlockchainWalletService from '../wallet/BlockchainWalletService';
+
 const Web3 = require('web3');
 
 import { BLOCKCHAIN_URI } from "../../config/Config";
@@ -13,7 +15,6 @@ const sign = require('ethjs-signer').sign;
 class Web3Service {
   contractInstances = {};
   web3;
-  currentWalletAddress;
 
   constructor() {
     this.web3 = new Web3(
@@ -29,35 +30,26 @@ class Web3Service {
   }
 
   getAddressFromPK(privateKey) {
+    if (!privateKey) {
+      return null;
+    }
+
+    if (privateKey.substr(0, 2).toLowerCase() !== '0x') {
+      privateKey = `0x${privateKey}`;
+    }
+
     return this.web3.eth.accounts.privateKeyToAccount(privateKey).address;
   }
 
-  async getCurrentWalletAddress(force) {
-    if (!this.currentWalletAddress || force) {
-      this.currentWalletAddress = await BlockchainApiService.getWallet();
-    }
-
-    return this.currentWalletAddress;
+  async getCurrentWalletAddress(onlyWithPrivateKey = false) {
+    return (await BlockchainWalletService.getCurrent(onlyWithPrivateKey)).address;
   }
 
-  // Wallet locks
+  // Eth
 
-  async unlockWallet(address) {
-    if (!address) {
-      throw new Error('Missing wallet address');
-    }
-
-    if (!this.web3.utils.isAddress(address)) {
-      throw new Error('Invalid wallet address');
-    }
-
-    const privateKey = await StorageService.getItem(`${address.toLowerCase()}:pk`);
-
-    if (!privateKey) {
-      throw new Error('Cannot unlock wallet');
-    }
-
-    return privateKey;
+  async getBalance(address) {
+    const balance = await this.web3.eth.getBalance(address);
+    return this.web3.utils.fromWei(balance, 'ether');
   }
 
   // Contracts
@@ -74,7 +66,7 @@ class Web3Service {
 
   async getTransactionOptions() {
     return {
-      from: await this.getCurrentWalletAddress()
+      from: await this.getCurrentWalletAddress(true)
     }
   }
 
@@ -84,8 +76,7 @@ class Web3Service {
     const toHex = this.web3.utils.toHex,
       baseOptions = await this.getTransactionOptions();
 
-    const privateKey = await this.unlockWallet(baseOptions.from);
-    await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
+    const privateKey = await BlockchainWalletService.unlock(baseOptions.from);
 
     let estimatedGas = 0;
     try {
@@ -102,7 +93,7 @@ class Web3Service {
     await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
 
     if (sendOptions) {
-      const nonce = await this.web3.eth.getTransactionCount(sendOptions.from, 'pending');
+      const nonce = await this.web3.eth.getTransactionCount(sendOptions.from);
 
       const tx = {
         nonce,
@@ -114,7 +105,11 @@ class Web3Service {
         gasPrice: toHex(this.web3.utils.toWei(`${sendOptions.gasPrice}`, 'gwei')),
       }, signedTx = sign(tx, privateKey);
 
-      return await this.web3.eth.sendSignedTransaction(signedTx);
+      return await new Promise((resolve, reject) => {
+        this.web3.eth.sendSignedTransaction(signedTx)
+          .once('transactionHash', hash => resolve(hash))
+          .once('error', e => reject(e));
+      });
     } else {
       throw new Error('User cancelled');
     }
