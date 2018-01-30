@@ -12,7 +12,7 @@ import TileElement from './TileElement';
 export default class NewsfeedList extends Component {
 
   nextBoostedId = 1;
-  
+
   state = {
     itemHeight: 0,
   }
@@ -39,16 +39,34 @@ export default class NewsfeedList extends Component {
   }
 
   /**
+   * Calculate item layout for better performance on tiles
+   */
+  getItemLayout = (data, index) => {
+    const { itemHeight } = this.state;
+    return { length: itemHeight, offset: itemHeight * index, index };
+  }
+
+  /**
    * Render component
    */
   render() {
+    let renderRow, getItemLayout;
+
+    if (this.props.newsfeed.isTiled) {
+      renderRow = this.renderTileActivity;
+      getItemLayout  = this.getItemLayout;
+    } else {
+      renderRow = this.renderActivity;
+      getItemLayout  = null;
+    }
+
     return (
       <FlatList
         key={(this.props.newsfeed.isTiled ? 't' : 'f')}
         onLayout={this.onLayout}
         ListHeaderComponent={this.props.header}
         data={this.props.newsfeed.list.entities.slice()}
-        renderItem={this.renderActivity}
+        renderItem={renderRow}
         keyExtractor={item => item.guid + (item.boosted ? this.boostedId:'')}
         onRefresh={this.refresh}
         refreshing={this.props.newsfeed.list.refreshing}
@@ -58,7 +76,8 @@ export default class NewsfeedList extends Component {
         style={styles.listView}
         initialNumToRender={6}
         windowSize={11}
-        removeClippedSubviews={false}
+        getItemLayout={getItemLayout}
+        removeClippedSubviews={true}
       />
     );
   }
@@ -79,19 +98,24 @@ export default class NewsfeedList extends Component {
   }
 
   /**
-   * Render row
+   * Render activity
    */
   renderActivity = (row) => {
     const entity = row.item;
-    if (this.props.newsfeed.isTiled) {
-      return <TileElement size={this.state.itemHeight} entity={entity} navigation={this.props.navigation} />;
-    } else {
-      return <Activity 
-        entity={entity}
-        newsfeed={this.props.newsfeed}
-        navigation={this.props.navigation} 
-        />;
-    }
+
+    return <Activity
+      entity={entity}
+      newsfeed={this.props.newsfeed}
+      navigation={this.props.navigation}
+    />;
+  }
+
+  /**
+   * Render tile
+   */
+  renderTileActivity = (row) => {
+    const entity = row.item;
+    return <TileElement size={this.state.itemHeight} entity={entity} navigation={this.props.navigation} />;
   }
 }
 
