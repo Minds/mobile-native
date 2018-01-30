@@ -14,6 +14,7 @@ import {
   NavigationActions
 } from 'react-navigation';
 
+import session from './../common/services/session.service';
 import { List, ListItem } from 'react-native-elements';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from './SettingsService';
@@ -38,6 +39,19 @@ export default class SettingsScreen extends Component {
   changeLanguage = (val) => {
     i18nService.setLocale(val);
     this.setState({ language: val })
+  }
+
+
+  onPressLogout = () => {
+    session.logout();
+    const loginAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Login' })
+      ]
+    })
+
+    this.props.navigation.dispatch(loginAction);
   }
 
   render() {
@@ -111,6 +125,11 @@ export default class SettingsScreen extends Component {
             ))
           }
         </List>
+        <Text style={[styles.header, { marginTop: 20 }]}>{i18nService.t('settings.logout')}</Text>
+        <View style={styles.deactivate}>
+          <Button raised backgroundColor="#4690D6"
+            title={i18nService.t('settings.logout')} onPress={ () => {this.onPressLogout()}}/>
+        </View>
         <Text style={[styles.header, { marginTop: 20 }]}>{i18nService.t('settings.deactivateChannel')}</Text>
         <View style={styles.deactivate}>
           <Button raised backgroundColor="#f53d3d"

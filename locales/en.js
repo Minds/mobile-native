@@ -29,6 +29,7 @@ export default {
     deactivate: 'DEACTIVATE',
     deactivateChannel: 'Deactivate Channel',
     options: 'Options',
+    logout: 'Logout',
   },
   continue: 'CONTINUE',
   goback: 'GO BACK',

@@ -99,11 +99,7 @@ export default class MoreScreen extends Component {
         onPress: () => {
           this.props.navigation.navigate('Settings');
         }
-      },{
-        name: 'Logout',
-        hideChevron: true,
-        onPress: this.onPressLogout
-      },
+      }
     ];
 
     return (
@@ -148,18 +144,6 @@ export default class MoreScreen extends Component {
 
   onPressSettings = () => {
     this.props.navigation.navigate('Settings');
-  }
-
-  onPressLogout = () => {
-    session.logout();
-    const loginAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Login' })
-      ]
-    })
-
-    this.props.navigation.dispatch(loginAction);
   }
 }
 
