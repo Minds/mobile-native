@@ -5272,7 +5272,7 @@ react-native-simple-radio-button@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/react-native-simple-radio-button/-/react-native-simple-radio-button-2.7.1.tgz#4a4a5cae903b6bc680c5e4bd5931948aa7608da0"
 
-react-native-snap-carousel@^3.4.0:
+react-native-snap-carousel@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.5.0.tgz#40c7373111699e3c2ad80ac2bc1aae62958b3e97"
   dependencies:

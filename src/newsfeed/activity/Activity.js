@@ -74,7 +74,7 @@ export default class Activity extends Component {
    */
   render() {
     return (
-        <View style={styles.container}>
+        <View style={styles.container} onLayout={this.props.onLayout}>
           { this.showOwner() }
           { this.props.entity.message || this.props.entity.title ?
             <View style={this.props.entity.message || this.props.entity.title ? styles.message : styles.emptyMessage}>
@@ -157,7 +157,6 @@ export default class Activity extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     borderBottomColor: '#EEE',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },

@@ -29,13 +29,12 @@ export default class BoostItem extends PureComponent {
    */
   render() {
     return (
-      <View onLayout={this._onLayout}>
-        <Activity
-          entity={this.props.entity}
-          navigation={this.props.navigation}
-          disableProgress={true}
-        />
-      </View>
+      <Activity
+        onLayout={this._onLayout}
+        entity={this.props.entity}
+        navigation={this.props.navigation}
+        disableProgress={true}
+      />
     )
   }
 }

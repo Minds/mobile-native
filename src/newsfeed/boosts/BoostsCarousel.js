@@ -4,6 +4,7 @@ import React, {
 
 import {
   View,
+  ScrollView,
   Dimensions,
   StyleSheet,
   Switch,
@@ -37,12 +38,13 @@ export default class BoostsCarousel extends PureComponent {
    * Component State
    */
   state = {
+    firstRender: false,
     isModalVisible: false,
     autoRotate: true,
     mature: false,
     open: true,
     activeSlide:0,
-    width: Dimensions.get('window').width
+    width: Dimensions.get('window').width,
   }
 
   /**
@@ -52,16 +54,34 @@ export default class BoostsCarousel extends PureComponent {
     this.itemsRef = [];
   }
 
+  onComponentWillMount() {
+    this.setState({
+      firstRender: false,
+      isModalVisible: false,
+      autoRotate: true,
+      mature: false,
+      open: true,
+      activeSlide: 0,
+      width: Dimensions.get('window').width,
+    });
+  }
+
   /**
    * Render a item
    */
   _renderItem = ({ item, index }) => {
+
+    //(fix) if loop is active the index is not the real index of boosted
+    const realIndex = this.props.boosts.findIndex((i) => {
+      return i.guid == item.guid;
+    })
+
     return (
       <BoostItem
         entity={item}
         navigation={this.props.navigation}
         ref={(ref) => {
-          this.itemsRef[index] = ref;
+          this.itemsRef[realIndex] = ref;
         }}
         />
     );
@@ -71,22 +91,40 @@ export default class BoostsCarousel extends PureComponent {
    * On layout
    */
   _onLayout = (e) => {
-    setTimeout(() => {
+    const width = Dimensions.get('window').width;
+
+    // fix height of first element
+    if (!this.state.firstRender) {
       this.setState({
-        height: this.itemsRef[this.state.activeSlide].height,
+        firstRender: true,
+        height: this.itemsRef[0].height
+      })
+    }
+
+    // fix width on rotate
+    if (this.state.width != width) {
+      this.setState({
         width: Dimensions.get('window').width,
       });
-    }, 100);
+    }
   }
 
   /**
    * On item snap
    */
   _onSnapToItem = (index) => {
-    this.setState({
+
+    const ref = this.itemsRef[index];
+
+    const newState = {
       activeSlide: index,
-      height: this.itemsRef[index].height,
-    });
+    };
+
+    if (ref && ref.height && ref.height != this.state.height) {
+      newState.height = ref.height;
+    }
+
+    this.setState(newState);
   }
 
   /**
@@ -152,24 +190,27 @@ export default class BoostsCarousel extends PureComponent {
       if (this.state.height) {
         this.styles.itemHeight.height = this.state.height;
       }
-      return <Carousel
-              ref={(c) => { this._carousel = c; }}
-              data={this.props.boosts}
-              renderItem={this._renderItem}
-              sliderWidth={this.state.width}
-              itemWidth={this.state.width}
-              containerCustomStyle={this.state.containerStyle}
-              //slideStyle={[this.styles.slide, { height: this.state.height }]}
-              slideStyle={this.styles.slide}
-              onSnapToItem={this._onSnapToItem}
-              inactiveSlideScale={1}
-              loop={this.state.autoRotate}
-              // Must be equal to the total number of boosts in order to autoheight workaround works
-              windowSize={15}
-              maxToRenderPerBatch={15}
-              initialNumToRender={15}
-            />
-    } 
+      return (
+        <Carousel
+          onLayout={this._onLayout}
+          ref={(c) => { this._carousel = c; }}
+          data={this.props.boosts}
+          renderItem={this._renderItem}
+          sliderWidth={this.state.width}
+          itemWidth={this.state.width}
+          containerCustomStyle={this.state.containerStyle}
+          contentContainerCustomStyle={this.styles.contentContainerCustomStyle}
+          slideStyle={this.styles.slide}
+          onSnapToItem={this._onSnapToItem}
+          inactiveSlideScale={1}
+          loop={this.state.autoRotate}
+          // Must be equal to the total number of boosts in order to autoheight workaround works
+          windowSize={20}
+          maxToRenderPerBatch={3}
+          initialNumToRender={15}
+        />
+      )
+    }
   }
 
   showBoostCarousel() {
@@ -186,6 +227,7 @@ export default class BoostsCarousel extends PureComponent {
       return null;
     }
   }
+
   /**
    * Render carousel
    */
@@ -199,57 +241,59 @@ export default class BoostsCarousel extends PureComponent {
         width: this.state.width, //full size slider
       },
       containerStyle: {
-        flexGrow: 1
+        flexGrow: 1,
       },
       flexContainer: {
         flex: 1
       },
-      itemHeight: {}
+      itemHeight: {
+        flexWrap: 'wrap'
+      }
     };
 
     return (
-      <View style={[this.styles.flexContainer] } onLayout={this._onLayout}>
+      <View style={[this.styles.flexContainer] }>
         <View style={[CommonStyle.rowJustifyEnd]}>
           <Icon type='material-community' name='settings' size={20} onPress={this.onPressOptions} />
         </View>
+        { this.pagination }
+        <ScrollView scrollEnabled={false} style={this.styles.itemHeight}>
+          { this.showCarousel() }
+        </ScrollView>
         <Modal
           isVisible={this.state.isModalVisible}
           useNativeDriver={true}
           onBackdropPress={this.hideModal}
           onModalHide={this.onModalHide}
         >
-          <View style={[CommonStyle.alignJustifyCenter,{backgroundColor: 'white'}]}>
-            <View style={[CommonStyle.rowJustifyCenter, CommonStyle.centered, {height:50}]}>
+          <View style={[CommonStyle.alignJustifyCenter, { backgroundColor: 'white' }]}>
+            <View style={[CommonStyle.rowJustifyCenter, CommonStyle.centered, { height: 50 }]}>
               <Text>Open</Text>
               <Switch
-                onValueChange = {this.onOpenChanged}
-                onTintColor = {colors.primary}
-                thumbTintColor = {colors.primary}
-                value = {this.state.open}/>
+                onValueChange={this.onOpenChanged}
+                onTintColor={colors.primary}
+                thumbTintColor={colors.primary}
+                value={this.state.open} />
             </View>
-            <View style={[CommonStyle.rowJustifyCenter, CommonStyle.centered, {height:50}]}>
+            <View style={[CommonStyle.rowJustifyCenter, CommonStyle.centered, { height: 50 }]}>
               <Text>Explicit</Text>
               <Switch
-                onValueChange = {this.onExplicitChanged}
-                onTintColor = {colors.primary}
-                thumbTintColor = {colors.primary}
-                value = {this.state.mature}/>
+                onValueChange={this.onExplicitChanged}
+                onTintColor={colors.primary}
+                thumbTintColor={colors.primary}
+                value={this.state.mature} />
             </View>
-            <View style={[CommonStyle.rowJustifyCenter, CommonStyle.centered, {height:50}]}>
+            <View style={[CommonStyle.rowJustifyCenter, CommonStyle.centered, { height: 50 }]}>
               <Text>Auto-rotate</Text>
               <Switch
-                onValueChange = {this.onAutoRotateChanged}
-                onTintColor = {colors.primary}
-                thumbTintColor = {colors.primary}
-                value = {this.state.autoRotate}/>
+                onValueChange={this.onAutoRotateChanged}
+                onTintColor={colors.primary}
+                thumbTintColor={colors.primary}
+                value={this.state.autoRotate} />
             </View>
             {this.showBoostCarousel()}
           </View>
         </Modal>
-        { this._carousel ? this.pagination : null }
-        <View style={this.styles.itemHeight}>
-        { this.showCarousel() }
-        </View>
       </View>
     );
   }
