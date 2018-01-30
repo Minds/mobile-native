@@ -1,21 +1,43 @@
-import React, {Component, PropTypes} from "react";
-import {Image, PanResponder,Modal, Platform, StyleSheet,Dimensions, ActivityIndicator, Text,Slider, TouchableOpacity, View} from "react-native";
+import React, {
+  PureComponent,
+  PropTypes
+} from "react";
+
+import {
+  PanResponder,
+  Modal,
+  StyleSheet,
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+
 import ProgressBar from "./ProgressBar";
 import Video from "react-native-video";
+import FastImage from 'react-native-fast-image';
+
 import {
   MINDS_URI
 } from '../config/Config';
+
 let FORWARD_DURATION = 7;
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 
-export default class MindsVideo extends Component {
+export default class MindsVideo extends PureComponent {
 
   constructor(props, context, ...args) {
-      super(props, context, ...args);
-    this.state = {paused: false, loaded: true, volume:0, volumeVisible:false, fullScreen:false};
+    super(props, context, ...args);
+    this.state = {
+      paused: true,
+      volume: 1,
+      loaded: true,
+      active: false,
+      fullScreen:false
+    };
   }
 
   //Handle vertical sliding
@@ -26,7 +48,7 @@ export default class MindsVideo extends Component {
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true
     })
-}
+  }
 
   onVideoEnd() {
     this.player.seek(0);
@@ -45,12 +67,19 @@ export default class MindsVideo extends Component {
     this.player.seek(current)
   }
 
+  toggleVolume() {
+    const v = this.state.volume ? 0 : 1;
+    this.setState({volume: v});
+  }
+
   onProgress(e) {
     this.setState({currentTime: e.currentTime});
   }
 
   playOrPauseVideo(paused) {
-    this.setState({paused: !paused});
+    const stateChange = { paused: !paused };
+    if (!this.state.active) stateChange.active = true;
+    this.setState(stateChange);
   }
 
   onBackward(currentTime) {
@@ -84,18 +113,6 @@ export default class MindsVideo extends Component {
     this.player.seek(newTime);
   }
 
-  onVolumeChanged(value) {
-    this.setState({volume: value});
-  }
-
-  toggleVolume() {
-    this.setState({volumeVisible: !this.state.volumeVisible});
-  }
-
-  closeVolume() {
-    setTimeout(() => {this.setState({volumeVisible: false})}, 500);
-  }
-
   toggleFullscreen() {
     this.setState({fullScreen: !this.state.fullScreen, changedModeTime: this.state.currentTime});
   }
@@ -111,11 +128,9 @@ export default class MindsVideo extends Component {
   }
 
   getVolumeIcon() {
-    if (this.state.volume < 0.05) {
+    if (this.state.volume == 0) {
       return <Icon onPress={this.toggleVolume.bind(this)} name="md-volume-off" size={20} color={colors.light} />;
-    } else if(this.state.volume >= 0.05 && this.state.volume < 0.95){
-      return <Icon onPress={this.toggleVolume.bind(this)} name="md-volume-down" size={20} color={colors.light} />;
-    } else if(this.state.volume >= 0.95){
+    } else {
       return <Icon onPress={this.toggleVolume.bind(this)} name="md-volume-up" size={20} color={colors.light} />;
     }
   }
@@ -142,111 +157,109 @@ export default class MindsVideo extends Component {
     }
   }
 
-  showVideo(videoElement, isFullscreen){
-    if(this.state.fullScreen && isFullscreen) {
-      return videoElement;
-    } else if(!this.state.fullScreen && !isFullscreen) {
-      return videoElement;
+  /**
+   * Get video component or thumb
+   */
+  getVideo() {
+    let { video, entity } = this.props;
+    let { paused, volume } = this.state;
+    if (this.state.active) {
+      return (
+        <Video
+          ref={(ref) => {
+            this.player = ref
+          }}
+          onEnd={this.onVideoEnd.bind(this)}
+          onLoad={this.onVideoLoad.bind(this)}
+          onProgress={this.onProgress.bind(this)}
+          source={{ uri: video.uri }}
+          paused={paused}
+          volume={parseFloat(this.state.volume)}
+          resizeMode={"contain"}
+          style={[CommonStyle.positionAbsolute]}
+        />
+      )
+    } else {
+      const image = { uri: entity.custom_data.thumbnail_src };
+      return (
+        <FastImage source={image} style={[CommonStyle.positionAbsolute]} />
+      )
     }
   }
 
+  /**
+   * Render
+   */
   render() {
     let {video, volume} = this.props;
     let {currentTime, duration, paused} = this.state;
     const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
-    let videoElement = <View style={[CommonStyle.flexContainer , styles.fullScreen]} key={this.state.key}>
-                        <TouchableOpacity style={styles.videoView}
-                          onPress={this.playOrPauseVideo.bind(this, paused)}>
-                            <Video        
-                            ref={(ref) => {
-                              this.player = ref
-                            }}  
-                            onEnd={this.onVideoEnd.bind(this)}
-                            onLoad={this.onVideoLoad.bind(this)}
-                            onProgress={this.onProgress.bind(this)}
-                            source={{uri:video.uri}}
-                            paused={paused}
-                            volume={parseFloat(this.state.volume)}
-                            resizeMode={ "contain"}
-                            style={[CommonStyle.positionAbsolute]}/>
-                            {this.getPlayIcon(50, true, true)}
-                            { this.state.volumeVisible ?
-                              <Slider
-                                {...this._panResponder.panHandlers}
-                                minimumValue={0}
-                                maximumValue={1}
-                                step={0.05}
-                                style={styles.volumeSlider}
-                                value={parseFloat(this.state.volume)}
-                                thumbTintColor='white'
-                                maximumTrackTintColor='white'
-                                minimumTrackTintColor='white'
-                                onSlidingComplete={this.closeVolume.bind(this)}
-                                onValueChange={(value) => this.onVolumeChanged(value)}
-                              /> :null
-                            }
-                        </TouchableOpacity>
-                        <View style={styles.controlWrapper}>
-                          <View style={[CommonStyle.centered, CommonStyle.flexContainer]}>
-                            {this.getPlayIcon(20)}
-                          </View>
-                          <View style={styles.progressWrapper}>
-                            <View style={[styles.barWrapper]}>
-                              <View style={[styles.progressBar]}>
-                                <ProgressBar duration={duration}
-                                  currentTime={currentTime}
-                                  percent={completedPercentage}
-                                  onNewPercent={this.onProgressChanged.bind(this)}/>
-                              </View>
-                            </View>
-                          </View>
-                          <View style={[CommonStyle.centered, CommonStyle.flexContainer]}>
-                            {this.getVolumeIcon()}
-                          </View>
-                          <View style={[CommonStyle.centered, CommonStyle.flexContainer]}>
-                            <Icon onPress={this.toggleFullscreen.bind(this)} name="md-expand" size={20} color={colors.light} />
-                          </View>
-                        </View>
-                      </View>;
-    return  <View style={[CommonStyle.flexContainer]}>{this.showVideo(videoElement, false)}
-              <Modal
-                visible={this.state.fullScreen}
-                animationType = {"slide"}
-                transparent = {false}
-                onBackdropPress={this.hideModal}
-                onRequestClose={this.hideModal}
-                onModalHide={this.onModalHide}
-              >
-                {this.getFullscreenTopControls()}
-                {this.showVideo(videoElement, true)}
-              </Modal>
-            </View>;
+
+    let videoElement = (
+      <View style={[CommonStyle.flexContainer , styles.fullScreen]} key={this.state.key}>
+        <TouchableOpacity style={styles.videoView}
+            onPress={this.playOrPauseVideo.bind(this, paused)}>
+          { this.getVideo() }
+          {this.getPlayIcon(50, true, true)}
+        </TouchableOpacity>
+        <View style={styles.controlWrapper}>
+          <View style={[CommonStyle.centered, CommonStyle.flexContainer]}>
+            {this.getPlayIcon(20)}
+          </View>
+          <View style={styles.progressWrapper}>
+            <View style={[styles.barWrapper]}>
+              <View style={[styles.progressBar]}>
+                <ProgressBar duration={duration}
+                  currentTime={currentTime}
+                  percent={completedPercentage}
+                  onNewPercent={this.onProgressChanged.bind(this)}/>
+              </View>
+            </View>
+          </View>
+          <View style={[CommonStyle.centered, CommonStyle.flexContainer]}>
+            {this.getVolumeIcon()}
+          </View>
+          <View style={[CommonStyle.centered, CommonStyle.flexContainer]}>
+            <Icon onPress={this.toggleFullscreen.bind(this)} name="md-expand" size={20} color={colors.light} />
+          </View>
+        </View>
+      </View>
+    );
+
+    return (
+      <View style={[CommonStyle.flexContainer]}>
+        { videoElement }
+        <Modal
+          visible={this.state.fullScreen}
+          animationType = {"slide"}
+          transparent = {false}
+          onBackdropPress={this.hideModal}
+          onRequestClose={this.hideModal}
+          onModalHide={this.onModalHide}
+        >
+          {this.getFullscreenTopControls()}
+          {videoElement}
+        </Modal>
+      </View>
+    )
   }
 }
 
 let styles = StyleSheet.create({
-  volumeSlider: {
-    position: 'absolute',
-    width:100,
-    bottom:25,
-    right:0,
-    zIndex: 1600,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
   playerButtonWrapper: {
     flex:1,
     alignSelf:'center'
   },
   controlWrapper: {
-    bottom:0, 
-    position:'absolute', 
+    bottom:0,
+    position:'absolute',
     width:'100%',
     zIndex:200,
     flexDirection: 'row'
   },
   controlTopWrapper: {
-    top:0, 
-    position:'absolute', 
+    top:0,
+    position:'absolute',
     width:'100%',
     zIndex:200,
     flexDirection: 'row'

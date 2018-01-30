@@ -59,9 +59,6 @@ export default class SettingsScreen extends Component {
 
     const optlist = [
       {
-        name: 'Autoplay videos',
-        switchButton: true,
-      }, {
         name: 'Points animation',
         switchButton: true,
       }
@@ -81,7 +78,7 @@ export default class SettingsScreen extends Component {
           }
         </Picker>
         <Text style={styles.header}>{i18nService.t('settings.options')}</Text>
-        <List containerStyle={{ flex: 1, borderTopWidth: 0, borderBottomWidth: 0 }}>
+        <List containerStyle={{ flex: 1, borderTopWidth: 0, borderBottomWidth: 0, marginTop:0 }}>
           {
             optlist.map((l, i) => (
               <ListItem
