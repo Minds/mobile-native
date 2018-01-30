@@ -91,6 +91,8 @@ export default class MediaView extends Component {
       </View>
     );
   }
+
+  
   /**
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
@@ -98,7 +100,25 @@ export default class MediaView extends Component {
   getImage(source) {
     this.source = source;
     const autoHeight = this.props.autoHeight;
-    return autoHeight ? (
+    const custom_data = this.props.entity.custom_data;
+
+    if (custom_data && custom_data[0].height) {
+      let ratio = custom_data[0].height / custom_data[0].width;
+      let height = Dimensions.get('window').width * ratio;
+
+      return (
+        <TouchableOpacity onPress={this.navToImage} style={[styles.imageContainer, { height }]} activeOpacity={1}>
+          <ExplicitImage 
+            source={source}
+            entity={this.props.entity}
+            style={[styles.image, { height }]}
+            disableProgress={this.props.disableProgress}
+            />
+        </TouchableOpacity>
+      );
+    }
+
+    return autoHeight  ? (
       <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer} activeOpacity={1}>
         <AutoHeightFastImage source={source} width={Dimensions.get('window').width} />
       </TouchableOpacity>
@@ -124,6 +144,27 @@ export default class MediaView extends Component {
       </View>
     );
   }
+
+
+  /**
+   * Nav to activity full screen
+   */
+  navToActivity = () => {
+    this.props.navigation.navigate('Activity', {entity: this.props.entity});
+  }
+
+  /**
+   * Nav to full image with zoom
+   */
+  navToImage = () => {
+    // if is a rich embed should load link
+    if (this.props.entity.perma_url) {
+      this.openLink();
+    } else {
+      this.props.navigation.navigate('ViewImage', { source: this.source });
+    }
+  }
+
 
 }
 
