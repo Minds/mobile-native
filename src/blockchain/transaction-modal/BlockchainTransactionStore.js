@@ -3,6 +3,7 @@ import {
   action,
   observe
 } from 'mobx'
+import BlockchainWalletService from '../wallet/BlockchainWalletService';
 
 let approvalDispose;
 
@@ -15,6 +16,7 @@ class BlockchainTransactionStore {
   @observable approval = void 0;
   @observable baseOptions = {};
   @observable estimateGasLimit = 0;
+  @observable funds = null;
 
   @action async waitForApproval(method, approvalMessage, baseOptions = {}, estimatedGas = 0) {
     if (this.isApproving) {
@@ -25,8 +27,11 @@ class BlockchainTransactionStore {
     this.approval = void 0;
     this.baseOptions = baseOptions;
     this.estimateGasLimit = estimatedGas;
+    this.funds = null;
 
     this.isApproving = true;
+
+    this.refreshFunds();
 
     return await new Promise(resolve => {
       if (approvalDispose) {
@@ -43,6 +48,7 @@ class BlockchainTransactionStore {
         this.approval = void 0;
         this.baseOptions = {};
         this.estimateGasLimit = 0;
+        this.funds = null;
 
         if (change.newValue) {
           resolve(change.newValue);
@@ -63,6 +69,7 @@ class BlockchainTransactionStore {
     };
     this.baseOptions = {};
     this.estimateGasLimit = 0;
+    this.funds = null;
   }
 
   @action rejectTransaction() {
@@ -72,6 +79,17 @@ class BlockchainTransactionStore {
     this.approval = false;
     this.baseOptions = {};
     this.estimateGasLimit = 0;
+    this.funds = null;
+  }
+
+  refreshFunds() {
+    if (!this.baseOptions.from) {
+      this.funds = null;
+      return;
+    }
+
+    BlockchainWalletService.getFunds(this.baseOptions.from)
+      .then(action(funds => this.funds = funds));
   }
 }
 

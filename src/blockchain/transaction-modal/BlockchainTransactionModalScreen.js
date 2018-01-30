@@ -3,9 +3,9 @@ import {
   Text,
   View,
   TextInput,
-  Button,
   Alert,
   TouchableHighlight,
+  StyleSheet,
 } from 'react-native';
 
 import Modal from 'react-native-modal';
@@ -13,6 +13,8 @@ import Modal from 'react-native-modal';
 import { observer, inject } from 'mobx-react/native'
 import { ComponentsStyle } from '../../styles/Components';
 import { CommonStyle } from '../../styles/Common';
+import Web3Service from '../services/Web3Service';
+import number from '../../common/helpers/number';
 
 const defaults = {
   gasPrice: 1, // TODO: Read from Minds settings
@@ -50,6 +52,20 @@ export default class BlockchainTransactionModalScreen extends Component {
     this.props.blockchainTransaction.rejectTransaction();
   }
 
+  canAfford() {
+    if (!this.props.blockchainTransaction.funds) {
+      return true; // No info yet
+    }
+
+    const eth = this.props.blockchainTransaction.funds.eth,
+      wei = Web3Service.web3.utils.toWei(eth, 'ether'),
+      gwei = Web3Service.web3.utils.fromWei(wei, 'gwei')
+      gasPrice = this.state.gasPrice || defaults.gasPrice,
+      gasLimit = this.state.gasLimit || this.props.blockchainTransaction.estimateGasLimit || defaults.gasLimit;
+
+    return gwei >= (gasLimit * gasPrice);
+  }
+
   render() {
     return (
       <Modal
@@ -63,7 +79,7 @@ export default class BlockchainTransactionModalScreen extends Component {
           <Text style={ CommonStyle.modalNote }>{ this.props.blockchainTransaction.approvalMessage }</Text>
 
           <View style={ CommonStyle.field }>
-            <Text style={ CommonStyle.fieldLabel }>GAS PRICE:</Text>
+            <Text style={ CommonStyle.fieldLabel }>GAS PRICE (GWEI):</Text>
 
             <TextInput
               style={ CommonStyle.fieldTextInput }
@@ -109,9 +125,27 @@ export default class BlockchainTransactionModalScreen extends Component {
             </TouchableHighlight>
           </View>
 
+          {!this.canAfford() && <View>
+            <Text
+              style={[styles.error]}
+            >
+              You currently have {number(this.props.blockchainTransaction.funds.eth, 0, 4)} ETH. This amount
+              might be insufficient to cover the Ethereum network gas fee for the transaction. Try lowering the gas
+              price.
+            </Text>
+          </View>}
+
         </View> }
 
       </Modal>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  error: {
+    marginTop: 20,
+    color: '#c00',
+    textAlign: 'center',
+  }
+});

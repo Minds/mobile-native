@@ -10,6 +10,8 @@ import {
   Dimensions,
 } from 'react-native';
 
+import { btoa } from 'abab';
+
 import Share from 'react-native-share';
 
 import QRCode from 'react-native-qrcode';
