@@ -34,6 +34,7 @@ class NewsfeedStore {
     return fetchFn(this.list.offset)
       .then(
         feed => {
+          this.generateBoostedGuid(feed);
           this.list.setList(feed);
           this.loaded = true;
         }
@@ -44,6 +45,18 @@ class NewsfeedStore {
       .catch(err => {
         console.log('error', err);
       });
+  }
+
+  /**
+   * Generate a unique Id for boosted activities
+   * @param {object} feed
+   */
+  generateBoostedGuid(feed) {
+    feed.entities.forEach((entity, index) => {
+      if (entity.boosted) {
+        entity.boostedGuid = entity.guid + 'B' + index;
+      }
+    });
   }
 
   /**
