@@ -67,7 +67,7 @@ export default class NewsfeedList extends Component {
         ListHeaderComponent={this.props.header}
         data={this.props.newsfeed.list.entities.slice()}
         renderItem={renderRow}
-        keyExtractor={item => item.boosted ? item.boostedGuid : item.guid}
+        keyExtractor={item => item.rowKey}
         onRefresh={this.refresh}
         refreshing={this.props.newsfeed.list.refreshing}
         onEndReached={this.loadFeed}

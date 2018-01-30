@@ -34,7 +34,7 @@ class NewsfeedStore {
     return fetchFn(this.list.offset)
       .then(
         feed => {
-          this.generateBoostedGuid(feed);
+          this.assignRowKeys(feed);
           this.list.setList(feed);
           this.loaded = true;
         }
@@ -48,14 +48,12 @@ class NewsfeedStore {
   }
 
   /**
-   * Generate a unique Id for boosted activities
+   * Generate a unique Id for use with list views
    * @param {object} feed
    */
-  generateBoostedGuid(feed) {
+  assignRowKeys(feed) {
     feed.entities.forEach((entity, index) => {
-      if (entity.boosted) {
-        entity.boostedGuid = entity.guid + 'B' + index;
-      }
+      entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
     });
   }
 
