@@ -13,7 +13,7 @@ class ChannelFeedStore {
 
   @observable filter      = 'feed';
   @observable showrewards = false;
-  @observable list = new OffsetFeedListStore();
+  list = new OffsetFeedListStore();
   @observable isTiled = false;
   /**
    * List loading

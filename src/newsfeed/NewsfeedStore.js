@@ -8,7 +8,7 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
  */
 class NewsfeedStore {
 
-  @observable list = new OffsetFeedListStore();
+  list = new OffsetFeedListStore();
 
   @observable filter = 'subscribed';
 
