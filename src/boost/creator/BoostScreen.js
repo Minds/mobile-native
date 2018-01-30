@@ -344,6 +344,10 @@ export default class BoostScreen extends Component {
     this.setState({ allowedTypes })
   }
 
+  rewardsAmount() {
+    return this.state.rates.rewardsBalance / Math.pow(10, 18);
+  }
+
   // TODO: Move to service
 
   validate() {
@@ -361,7 +365,11 @@ export default class BoostScreen extends Component {
 
     switch (this.state.payment) {
       case 'rewards':
-        // TODO: Check balance
+        const charges = this.calcCharges(this.state.payment);
+
+        if ((this.state.rates.rewardsBalance !== null) && (charges > this.rewardsAmount())) {
+          throw new VisibleError(`You only have ${this.rewardsAmount()} rewards.`);
+        }
         break;
 
       case 'usd':
@@ -572,6 +580,10 @@ export default class BoostScreen extends Component {
 
         <Divider style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]} />
 
+        { !!this.state.error && <Text style={styles.error}>
+          {this.state.error}
+        </Text>}
+
         <View style={{ flexDirection: 'row' }}>
           <Touchable style={[ComponentsStyle.button, ComponentsStyle.buttonAction, { backgroundColor: 'transparent' }, CommonStyle.marginTop2x, CommonStyle.marginBottom3x]}
             onPress={() => this.submit()}
@@ -581,9 +593,6 @@ export default class BoostScreen extends Component {
           <View style={{ flex: 1 }}></View>
         </View>
 
-        { !!this.state.error && <Text style={styles.error}>
-          {this.state.error}
-        </Text>}
       </ScrollView>
     )
   }
@@ -643,6 +652,7 @@ const styles = StyleSheet.create({
     color: '#c00',
     fontSize: 12,
     textAlign: 'center',
-    marginTop: 10
+    marginTop: 10,
+    marginBottom:10
   }
 });
