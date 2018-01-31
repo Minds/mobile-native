@@ -119,12 +119,28 @@ export default class MediaView extends Component {
     }
 
     return autoHeight  ? (
-      <TouchableOpacity onPress={this.navToImage} style={styles.imageContainer} activeOpacity={1}>
-        <AutoHeightFastImage source={source} width={Dimensions.get('window').width} />
+      <TouchableOpacity
+        onPress={this.navToImage}
+        style={styles.imageContainer}
+        activeOpacity={1}
+      >
+        <AutoHeightFastImage 
+          source={source}
+          width={Dimensions.get('window').width} 
+        />
       </TouchableOpacity>
       ) : (
-      <TouchableOpacity onPress={this.navToActivity} style={styles.imageContainer} activeOpacity={1}>
-        <ExplicitImage source={source} entity={this.props.entity} style={styles.image} disableProgress={this.props.disableProgress}/>
+      <TouchableOpacity 
+        onPress={this.navToImage} 
+        style={styles.imageContainer} 
+        activeOpacity={1}
+      >
+        <ExplicitImage 
+          source={source}
+          entity={this.props.entity}
+          style={styles.image}
+          disableProgress={this.props.disableProgress}
+        />
       </TouchableOpacity>
     );
   }
@@ -165,6 +181,12 @@ export default class MediaView extends Component {
     }
   }
 
+  /**
+   * Open a link
+   */
+  openLink = () => {
+    Linking.openURL(this.props.entity.perma_url);
+  }
 
 }
 
