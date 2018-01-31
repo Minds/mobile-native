@@ -39,7 +39,11 @@ export default class ActivityModel extends BaseModel {
    */
   @computed
   get votedUp() {
-    if (this['thumbs:up:user_guids'] && this['thumbs:up:user_guids'].indexOf(SessionService.guid) >= 0) {
+    if (
+      this['thumbs:up:user_guids'] 
+      && this['thumbs:up:user_guids'].length
+      && this['thumbs:up:user_guids'].indexOf(SessionService.guid) >= 0
+    ) {
       return true;
     }
     return false;
@@ -50,7 +54,11 @@ export default class ActivityModel extends BaseModel {
    */
   @computed
   get votedDown() {
-    if (this['thumbs:down:user_guids'] && this['thumbs:down:user_guids'].indexOf(SessionService.guid) >= 0) {
+    if (
+      this['thumbs:down:user_guids']
+      && this['thumbs:down:user_guids'].length
+      && this['thumbs:down:user_guids'].indexOf(SessionService.guid) >= 0
+    ) {
       return true;
     }
     return false;
