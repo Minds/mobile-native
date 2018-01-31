@@ -22,6 +22,8 @@ import {
   Linking
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import AutoHeightFastImage from '../../common/components/AutoHeightFastImage';
 
 import ExplicitText from '../../common/components/explicit/ExplicitText'
@@ -89,6 +91,9 @@ export default class Activity extends Component {
           }
           { this.showRemind() }
           <MediaView entity={ this.props.entity } navigation={this.props.navigation} style={ styles.media }/>
+      
+          
+
           { this.showActions() }
         </View>
     );
@@ -110,8 +115,18 @@ export default class Activity extends Component {
       )
       return (
         <OwnerBlock entity={this.props.entity} navigation={this.props.navigation} rightToolbar={rightToolbar}>
-          <TouchableOpacity onPress={this.navToActivity}>
+          <TouchableOpacity onPress={this.navToActivity} style={{ flexDirection: 'row' }}>
             <Text style={styles.timestamp}>{formatDate(this.props.entity.time_created)}</Text>
+            { this.props.entity.boosted && 
+              <View style={styles.boostTagContainer}>
+                <View style={styles.boostTagColumn}>
+                  <Icon name="md-trending-up" style={styles.boostTagIcon} />
+                </View>
+                <View style={styles.boostTagColumn}>
+                  <Text style={styles.boostTagLabel}>BOOSTED</Text>
+                </View>
+              </View> 
+            }
           </TouchableOpacity>
         </OwnerBlock>
       );
@@ -167,7 +182,7 @@ const styles = StyleSheet.create({
     padding: 0
   },
   media: {
-    flex: 1,
+    //flex: 1,
   },
   timestamp: {
     fontSize: 11,
@@ -181,5 +196,22 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 10,
     top: 20
+  },
+  boostTagContainer: {
+    flexDirection: 'row',
+    paddingLeft: 8,
+  },
+  boostTagColumn: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  boostTagIcon: {
+    color: '#aaa',
+  },
+  boostTagLabel: {
+    color: '#aaa',
+    fontWeight: '800',
+    marginLeft: 2,
+    fontSize: 11,
   },
 });
