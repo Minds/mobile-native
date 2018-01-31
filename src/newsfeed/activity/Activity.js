@@ -90,7 +90,12 @@ export default class Activity extends Component {
             : null
           }
           { this.showRemind() }
-          <MediaView entity={ this.props.entity } navigation={this.props.navigation} style={ styles.media }/>
+          <MediaView 
+            entity={ this.props.entity }
+            navigation={this.props.navigation}
+            style={ styles.media }
+            autoHeight={ this.props.autoHeight }
+            />
       
           
 
