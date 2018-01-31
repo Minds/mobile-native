@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { 
+  FlatList,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import { observer } from 'mobx-react/native'
 
 import Activity from './activity/Activity';
@@ -60,11 +65,18 @@ export default class NewsfeedList extends Component {
       getItemLayout  = null;
     }
 
+    const footer = this.props.newsfeed.loading ? (
+      <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+        <ActivityIndicator size={'large'} />
+      </View>
+    ) : null;
+
     return (
       <FlatList
         key={(this.props.newsfeed.isTiled ? 't' : 'f')}
         onLayout={this.onLayout}
         ListHeaderComponent={this.props.header}
+        ListFooterComponent={footer}
         data={this.props.newsfeed.list.entities.slice()}
         renderItem={renderRow}
         keyExtractor={item => item.rowKey}
