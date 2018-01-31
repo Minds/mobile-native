@@ -32,7 +32,7 @@ import RemindOwnerBlock from './RemindOwnerBlock';
 import Actions from './Actions';
 import formatDate from '../../common/helpers/date';
 import domain from '../../common/helpers/domain';
-import ActivityActions from './ActivityActions';
+import ActivityActionSheet from './ActivityActionSheet';
 import ActivityEditor from './ActivityEditor';
 import MediaView from '../../common/components/MediaView';
 
@@ -110,7 +110,7 @@ export default class Activity extends Component {
     if (!this.props.entity.remind_object) {
       const rightToolbar = (
          <View style={styles.rightToolbar}>
-            <ActivityActions newsfeed={this.props.newsfeed} toggleEdit={this.toggleEdit} entity={this.props.entity}/>
+            <ActivityActionSheet newsfeed={this.props.newsfeed} toggleEdit={this.toggleEdit} entity={this.props.entity} navigation={this.props.navigation}/>
           </View>
       )
       return (

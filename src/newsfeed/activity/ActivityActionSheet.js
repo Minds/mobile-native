@@ -13,7 +13,6 @@ import {
 
 } from 'react-native';
 
-import ReportModal from '../../report/ReportModal';
 import {
   observer,
   inject
@@ -223,9 +222,7 @@ export default class ActivityActions extends Component {
       case 'Translate':
         break;
       case 'Report':
-        this.setState({
-          reportModalVisible: true,
-        });
+        this.props.navigation.navigate('Report', { entity: this.props.entity });
         break;
       case 'Enable Comments':
         this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid).then( (result) => {
@@ -288,16 +285,6 @@ export default class ActivityActions extends Component {
           onPress={this.handleSelection}
           cancelButtonIndex={0}
         />
-        <Modal animationType={"slide"} transparent={false}
-          visible={this.state.reportModalVisible}
-          onRequestClose={this.closeReport}>
-          <View style={styles.modal}>
-            <View style={styles.modalHeader}>
-              <Icon onPress={this.closeReport} color='gray' size={30} name='md-close' />
-            </View>
-            <ReportModal close={this.closeReport} entity={this.props.entity} />
-          </View>
-        </Modal>
       </View>
     )
   }

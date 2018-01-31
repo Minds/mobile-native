@@ -28,6 +28,7 @@ import BlockchainWalletScreen from "./src/blockchain/wallet/BlockchainWalletScre
 import BlockchainWalletModalScreen from './src/blockchain/wallet/modal/BlockchainWalletModalScreen';
 import BlockchainWalletImportScreen from './src/blockchain/wallet/import/BlockchainWalletImportScreen';
 import BlockchainWalletDetailsScreen from './src/blockchain/wallet/details/BlockchainWalletDetailsScreen';
+import ReportScreen from './src/report/ReportScreen';
 
 /**
  * Main stack navigator
@@ -116,6 +117,9 @@ const Stack = StackNavigator({
   },
   BlockchainWalletDetails: {
     screen: BlockchainWalletDetailsScreen
+  },
+  Report: {
+    screen: ReportScreen,
   },
 });
 
