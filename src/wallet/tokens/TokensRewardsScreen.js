@@ -44,7 +44,7 @@ export default class TokensRewardsScreen extends Component {
     const body = this.getBody(hash);
 
     const options = [
-      { text: 'Rewards', icon: 'stars', value: 'rewards' },
+      { text: 'Credits', icon: 'stars', value: 'rewards' },
       { text: 'Contributions', icon: 'history', value: 'contributions' },
     ]
 

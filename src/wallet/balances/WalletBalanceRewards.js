@@ -25,7 +25,7 @@ export default class WalletBalanceRewards extends Component {
     return (
       <TouchableHighlight onPress={ () => alert(123) } underlayColor={'white'}>
         <View style={ styles.view }>
-          <Text style={ styles.currency }>Rewards</Text>
+          <Text style={ styles.currency }>Credits</Text>
           <View style={{ flex: 1 }}></View>
           <Text style={ styles.amount }>{ this.props.wallet.rewardsFormatted }</Text>
         </View>

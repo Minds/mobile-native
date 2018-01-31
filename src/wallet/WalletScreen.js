@@ -37,7 +37,6 @@ export default class WalletScreen extends Component {
       <ScrollView style={ styles.mainContainer }>
         <WalletBalanceTokens />
         <WalletBalanceRewards />
-        <WalletBalanceUSD />
 
         <View>
          {/* <View style={styles.datailsContainer}>
@@ -56,7 +55,7 @@ export default class WalletScreen extends Component {
           </View>
 
           <View style={styles.datailsContainer} >
-            <Text style={styles.title} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Rewards & Contributions</Text>
+            <Text style={styles.title} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Credits & Contributions</Text>
             <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Check and rewards and daily contribution scores</Text>
           </View>
 
