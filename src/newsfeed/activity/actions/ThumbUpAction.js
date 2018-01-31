@@ -15,12 +15,14 @@ import {
 
 import { Icon } from 'react-native-elements';
 import { CommonStyle } from '../../../styles/Common';
+import Counter from './Counter';
 
 /**
  * Thumb Up Action Component
  */
 @observer
 export default class ThumbUpAction extends Component {
+
   /**
    * Default Props
    */
@@ -49,9 +51,7 @@ export default class ThumbUpAction extends Component {
     return (
       <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.toggleThumb}>
         <Icon color={this.voted ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={this.iconName} size={this.props.size} />
-        <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={[CommonStyle.paddingLeft, { fontSize: Math.round(this.props.size * 0.75), color: '#444' }]}>{count > 0 ? count : ''}</Text>
-        </View>
+        <Counter size={this.props.size * 0.75} count={count} />
       </TouchableOpacity>
     );
   }

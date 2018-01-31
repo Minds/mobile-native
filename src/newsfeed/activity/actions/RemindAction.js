@@ -14,6 +14,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import { Icon } from 'react-native-elements';
 import Remind from '../remind/Remind';
 import { CommonStyle } from '../../../styles/Common';
+import Counter from './Counter';
 
 /**
  * Remind Action Component
@@ -31,7 +32,7 @@ export default class RemindAction extends PureComponent {
     return (
       <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.remind}>
         <Icon color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20} />
-        <Text style={CommonStyle.paddingLeft}>{this.props.entity['reminds'] > 0 ? this.props.entity['reminds'] : ''}</Text>
+        <Counter count={this.props.entity['reminds']} />
         <View style={styles.modalContainer}>
           <Modal animationType={"slide"} transparent={false}
             visible={this.state.remindModalVisible}
