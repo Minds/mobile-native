@@ -62,7 +62,7 @@ export default class NewsfeedScreen extends Component {
       return <CenteredLoading/>
     }
 
-    const poster = (
+    const header = (
       <View>
         <Topbar />
         { false ? 
@@ -72,7 +72,7 @@ export default class NewsfeedScreen extends Component {
     );
 
     return (
-      <NewsfeedList newsfeed={newsfeed} header={poster} navigation={this.props.navigation}/>
+      <NewsfeedList newsfeed={newsfeed} header={header} navigation={this.props.navigation}/>
     );
   }
 }
