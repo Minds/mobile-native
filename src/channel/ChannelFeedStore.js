@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, computed } from 'mobx'
 
 import { getFeedChannel, toggleComments , toggleExplicit } from '../newsfeed/NewsfeedService';
 
@@ -9,21 +9,62 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 /**
  * Channel Feed store
  */
-class ChannelFeedStore {
+export default class ChannelFeedStore {
 
-  @observable filter      = 'feed';
+  @observable filter = 'feed';
   @observable showrewards = false;
-  list = new OffsetFeedListStore();
-  @observable isTiled = false;
-  /**
-   * List loading
-   */
-  loading = false;
+
+  stores = {
+    feed: {
+      list: new OffsetFeedListStore(),
+      loading: false,
+    },
+    images: {
+      list: new OffsetFeedListStore(),
+      loading: false,
+      isTiled: true,
+    },
+    videos: {
+      list: new OffsetFeedListStore(),
+      loading: false,
+      isTiled: true,
+    },
+    blogs: {
+      list: new OffsetFeedListStore(),
+      loading: false,
+      isTiled: false,
+    },
+  };
 
   /**
    * Channel guid
    */
-  guid    = null;
+  guid = null;
+
+  constructor(guid) {
+    this.guid = guid;
+  }
+
+  get list() {
+    return this.stores[this.filter].list;
+  }
+
+  set list(value) { 
+    this.stores[this.filter] = value;
+  }
+
+  get loading() {
+    return this.stores[this.filter].loading;
+  }
+
+  set loading(value) {
+    this.stores[this.filter].loading = value;
+  }
+
+  @computed
+  get isTiled() {
+    return this.stores[this.filter].isTiled;
+  }
 
   /**
    * Set channel guid
@@ -33,28 +74,43 @@ class ChannelFeedStore {
     this.guid = guid;
   }
 
+  async load() {
+    switch (this.filter) {
+      case 'feed':
+        await this.loadFeed();
+        break;
+      case 'images':
+        await this.loadImagesFeed();
+        break;
+      case 'images':
+        await this.loadBlogsFeed();
+        break;
+      case 'videos':
+        await this.loadVideosFeed();
+        break;
+      case 'blogs':
+        await this.loadBlogsFeed();
+        break;
+    }
+  }
+
   /**
    * Load channel feed
    */
-  loadFeed() {
+  async loadFeed() {
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
     this.loading = true;
 
-    return getFeedChannel(this.guid, this.list.offset)
-    .then(feed => {
-        if (this.filter != 'rewards') {
-          this.assignRowKeys(feed);
-          this.list.setList(feed);
-        }
-      })
-      .finally(() => {
-        this.loading = false;
-      })
-      .catch(err => {
-        console.error('error');
-      });
+    const feed = await getFeedChannel(this.guid, this.list.offset)
+    
+    if (this.filter != 'rewards') {
+      this.assignRowKeys(feed);
+      this.list.setList(feed);
+    }
+    
+    this.loading = false;
   }
 
   /**
@@ -70,45 +126,51 @@ class ChannelFeedStore {
   /**
    * Load channel images feed
    */
-  loadImagesFeed() {
+  async loadImagesFeed() {
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
-    return channelService.getImageFeed(this.guid, this.list.offset)
-      .then(feed => {
-          if (this.filter != 'rewards') {
-            this.isTiled = true;
-            this.list.setList(feed);
-          }
-        })
-        .finally(() => {
-          this.loading = false;
-        })
-        .catch(err => {
-          console.error('error');
-        });
+
+    this.loading = true;
+    const feed = await channelService.getImageFeed(this.guid, this.list.offset);
+    this.assignRowKeys(feed);
+    this.list.setList(feed);
+     
+    this.loading = false;
   }
 
   /**
    * Load channel videos feed
    */
-  loadVideosFeed() {
+  async loadVideosFeed() {
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
-    return channelService.getVideoFeed(this.guid, this.list.offset)
-      .then(feed => {
-          if (this.filter != 'rewards') {
-            this.isTiled = true;
-            this.list.setList(feed);
-          }
-        })
-        .finally(() => {
-          this.loading = false;
-        })
-        .catch(err => {
-          console.error('error');
-        });
+
+    this.loading = true;
+
+    const feed = await channelService.getVideoFeed(this.guid, this.list.offset);
+    this.assignRowKeys(feed);
+    this.list.setList(feed);
+       
+    this.loading = false;
+  }
+
+  /**
+   * Load channel videos feed
+   */
+  async loadBlogsFeed() {
+    if (this.list.cantLoadMore() || this.loading) {
+      return Promise.resolve();
+    }
+
+    this.loading = true;
+
+    const feed = await channelService.getBlogFeed(this.guid, this.list.offset);
+    this.assignRowKeys(feed);
+    this.list.setList(feed);
+       
+    this.loading = false;
   }
 
   @action
@@ -120,44 +182,22 @@ class ChannelFeedStore {
   }
 
   @action
-  refresh() {
+  async refresh() {
     //ignore refresh on rewards view
     if (this.filter == 'rewards') {
       return;
     }
-    this.list.refresh();
-    this.loadFeed()
-      .finally(action(() => {
-        this.list.refreshDone();
-      }));
+    //this.list.refresh();
+    this.list.clearList();
+    await this.load();
+    this.list.refreshDone();
   }
 
   @action
   setFilter(filter) {
-    if (filter == this.filter) return;
-    this.isTiled = false;
     this.filter = filter;
 
-    switch (filter) {
-      case 'rewards':
-
-        this.showrewards = true;
-        this.list.clearList(false);
-        break;
-      case 'images':
-        this.list.clearList(true);
-        this.loadImagesFeed(true);
-        break;
-      case 'videos':
-        this.list.clearList(true);
-        this.loadVideosFeed(true);
-        break;
-      default:
-        this.showrewards = false;
-        this.refresh();
-        break;
-    }
+    this.refresh();
   }
-}
 
-export default new ChannelFeedStore();
+}

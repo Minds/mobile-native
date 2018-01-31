@@ -31,7 +31,6 @@ import CenteredLoading from '../common/components/CenteredLoading';
  */
 @inject('user')
 @inject('channel')
-@inject('channelfeed')
 @observer
 export default class ChannelScreen extends Component {
 
@@ -46,23 +45,24 @@ export default class ChannelScreen extends Component {
    * Load data on mount
    */
   componentWillMount() {
-    const guid = this.getGuid();
-
     //grab stale channel data for quick load
-    this.props.channel.setChannel(this.props.navigation.state.params.entity);
+    if (this.props.navigation.state.params.entity)
+      this.props.channel.store(this.props.navigation.state.params.entity.guid)
+        .setChannel(this.props.navigation.state.params.entity);
+  }
 
-    this.props.channel.load(guid);
-    this.props.channelfeed.setGuid(guid);
-    this.props.channelfeed.loadFeed();
-    this.props.channel.loadrewards(guid);
+  componentDidMount() {
+    this.props.channel.store(this.guid).load();
+    this.props.channel.store(this.guid).loadFeeds();
+    //this.props.channel.loadrewards(this.guid);
   }
 
   componentWillUnmount() {
-    this.props.channelfeed.clearFeed();
-    this.props.channel.clear();
+    this.props.channel.garbageCollect();
+    this.props.channel.store(this.guid).markInactive();
   }
 
-  getGuid(){
+  get guid(){
     return this.props.navigation.state.params.guid;
   }
 
@@ -70,10 +70,10 @@ export default class ChannelScreen extends Component {
    * Render
    */
   render() {
-    const channel     = this.props.channel.channel;
-    const rewards     = this.props.channel.rewards;
-    const channelfeed = this.props.channelfeed;
-    const guid        = this.getGuid();
+    const feed = this.props.channel.store(this.guid).feedStore;
+    const channel     = this.props.channel.store(this.guid).channel;
+    const rewards     = this.props.channel.store(this.guid).rewards;
+    const guid        = this.guid;
 
     if (!channel.guid) {
       return (
@@ -84,26 +84,26 @@ export default class ChannelScreen extends Component {
     let carousel = null;
 
     // carousel only visible if we have data
-    if (rewards.merged && rewards.merged.length && channelfeed.showrewards) {
+    /*if (rewards.merged && rewards.merged.length && channelfeed.showrewards) {
       carousel = (
         <View style={styles.carouselcontainer}>
           <RewardsCarousel rewards={rewards.merged} />
         </View>
       );
-    }
+    }*/
 
     // channel header
     const header = (
       <View>
-        <ChannelHeader styles={styles} me={this.props.user.me} channel={this.props.channel} navigation={this.props.navigation} />
-        <Toolbar hasRewards={rewards.merged && rewards.merged.length}/>
+        <ChannelHeader styles={styles} me={this.props.user.me} channel={this.props.channel.store(this.guid)} navigation={this.props.navigation} />
+        <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>
         {carousel}
         <Icon color="white" containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
       </View>
     );
 
     return (
-      <NewsfeedList newsfeed={channelfeed} guid={guid} header={header} navigation={this.props.navigation} />
+      <NewsfeedList newsfeed={feed} guid={guid} header={header} navigation={this.props.navigation} />
     );
   }
 }

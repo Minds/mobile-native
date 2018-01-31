@@ -65,6 +65,20 @@ class ChannelService {
         throw "Ooops";
       })
   }
+
+  getBlogFeed(guid, offset) {
+    return api.get('api/v1/blog/owner/' + guid, { offset: offset, limit: 6 })
+    .then((data) => {
+      return {
+        entities: data.entities,
+        offset: data['load-next'],
+        }
+      })
+      .catch(err => {
+        console.log('error');
+        throw "Ooops";
+      })
+  }
 }
 
 export default new ChannelService();

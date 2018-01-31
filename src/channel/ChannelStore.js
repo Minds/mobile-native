@@ -5,13 +5,24 @@ import {
 
 import channelService from './ChannelService';
 import wireService from '../wire/WireService';
+import ChannelFeedStore from './ChannelFeedStore';
 
 /**
  * Channel Store
  */
-class ChannelStore {
+export default class ChannelStore {
+
+  guid = null;
+  feedStore = null;
+
+  constructor(guid) {
+    this.guid = guid;
+    this.feedStore = new ChannelFeedStore(guid);
+  }
+
   @observable channel = {};
   @observable rewards = {};
+  @observable active = false;
 
   @action
   clear() {
@@ -20,20 +31,26 @@ class ChannelStore {
   }
 
   @action
-  setChannel(channel) {
-    this.channel = channel;
+  markInactive() {
+    this.active = false;
   }
 
   @action
-  load(guid) {
-    this.channel = {};
-    channelService.load(guid)
-      .then(response => {
-        this.setChannel(response.channel);
-      })
-      .catch(err => {
-        console.log('error');
-      });
+  setChannel(channel) {
+    this.channel = channel;
+    this.active = true;
+  }
+
+  @action
+  async load() {
+    const { channel } = await channelService.load(this.guid);
+    if (channel)
+      this.setChannel(channel);
+  }
+
+  @action
+  async loadFeeds() {
+    await this.feedStore.load();
   }
 
   @action
@@ -81,5 +98,3 @@ class ChannelStore {
       });
   }
 }
-
-export default new ChannelStore();

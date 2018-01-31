@@ -4,9 +4,8 @@ import notifications from './src/notifications/NotificationsStore';
 import notificationsSettings from './src/notifications/NotificationsSettingsStore';
 import messengerList from './src/messenger/MessengerListStore';
 import messengerConversation from './src/messenger/MessengerConversationStore';
-import channel from './src/channel/ChannelStore';
+import channel from './src/channel/ChannelStores';
 import user from './src/auth/UserStore';
-import channelfeed from './src/channel/ChannelFeedStore';
 import comments from './src/comments/CommentsStore';
 import discovery from './src/discovery/DiscoveryStore';
 import blogs from './src/blogs/BlogsStore';
@@ -33,7 +32,6 @@ const stores = {
   messengerList,
   messengerConversation,
   channel,
-  channelfeed,
   comments,
   user,
   discovery,
