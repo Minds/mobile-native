@@ -95,10 +95,12 @@ export default class BoostsCarousel extends PureComponent {
 
     // fix height of first element
     if (!this.state.firstRender) {
-      this.setState({
-        firstRender: true,
-        height: this.itemsRef[0].height
-      })
+      setTimeout(() => {
+        this.setState({
+          firstRender: true,
+          height: this.itemsRef[0].height
+        });
+      }, 100);
     }
 
     // fix width on rotate
