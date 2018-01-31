@@ -6,4 +6,8 @@ import ThumbUpAction from './ThumbUpAction';
 export default class ThumbDownAction extends ThumbUpAction {
   direction = 'down';
   iconName = 'thumb-down';
+
+  get voted() {
+    return this.props.entity.votedDown;
+  }
 }

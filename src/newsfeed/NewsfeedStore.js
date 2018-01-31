@@ -1,14 +1,15 @@
 import { observable, action } from 'mobx'
 
 import { getFeedTop, getFeed, getBoosts } from './NewsfeedService';
-
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
+import ActivityModel from './ActivityModel';
+
 /**
  * News feed store
  */
 class NewsfeedStore {
 
-  list = new OffsetFeedListStore();
+  list = new OffsetFeedListStore('shallow');
 
   @observable filter = 'subscribed';
 
@@ -34,6 +35,7 @@ class NewsfeedStore {
     return fetchFn(this.list.offset)
       .then(
         feed => {
+          feed.entities = ActivityModel.createMany(feed.entities);
           this.assignRowKeys(feed);
           this.list.setList(feed);
           this.loaded = true;
