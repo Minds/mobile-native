@@ -31,6 +31,8 @@ import { CommonStyle } from '../styles/Common';
 import CenteredLoading from '../common/components/CenteredLoading';
 import RewardsCarousel from '../channel/carousel/RewardsCarousel';
 
+import FeaturesService from '../common/services/features.service';
+
 /**
  * Wire Fab Screen
  */
@@ -39,7 +41,7 @@ import RewardsCarousel from '../channel/carousel/RewardsCarousel';
 export default class FabScreen extends Component {
 
   componentWillMount() {
-    this.props.wire.setMethod('tokens');
+    this.props.wire.setMethod(FeaturesService.has('crypto') ? 'tokens' : 'money');
     this.props.wire.setAmount(1);
 
     const owner = this.getOwner();
@@ -106,7 +108,7 @@ export default class FabScreen extends Component {
         {icon}
 
         <Text style={styles.subtext}>
-          Support <Text style={styles.bold}>@{ owner.username }</Text> by sending them dollars, points or Minds Tokens.
+          Support <Text style={styles.bold}>@{ owner.username }</Text> by sending them dollars{FeaturesService.has('crypto') ? ' or Minds Tokens' : ''}.
           Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise,
           it's a donation.
         </Text>
@@ -206,10 +208,10 @@ export default class FabScreen extends Component {
             <Icon name="logo-usd" size={24} color={this.props.wire.method == 'money' ? selectedcolor : color} />
             <Text style={[styles.buttontext, { color: this.props.wire.method == 'money' ? selectedcolor : color}]}>Money</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => this.setMethod('tokens')} >
+          {FeaturesService.has('crypto') && <TouchableOpacity style={styles.button} onPress={() => this.setMethod('tokens')} >
             <Icon name="md-bulb" size={24} color={this.props.wire.method == 'tokens' ? selectedcolor : color} />
             <Text style={[styles.buttontext, (this.props.wire.method == 'tokens' ? styles.selected:null)]}>Tokens</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
       </View>
     )

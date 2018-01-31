@@ -18,6 +18,8 @@ import WalletBalanceRewards from './balances/WalletBalanceRewards';
 import WalletBalanceTokens from './balances/WalletBalanceTokens';
 import WalletBalanceUSD from './balances/WalletBalanceUSD';
 
+import FeaturesService from '../common/services/features.service';
+
 /**
  * Wallet screen
  */
@@ -35,7 +37,7 @@ export default class WalletScreen extends Component {
   render() {
     return (
       <ScrollView style={ styles.mainContainer }>
-        <WalletBalanceTokens />
+        {FeaturesService.has('crypto') && <WalletBalanceTokens />}
         <WalletBalanceRewards />
 
         <View>
@@ -64,12 +66,12 @@ export default class WalletScreen extends Component {
             <Text style={styles.subtitle}>Check your currently active plan subscriptions</Text>
           </View>
 
-          <TouchableOpacity onPress={ () => this.props.navigation.navigate('BlockchainWallet') }>
+          {FeaturesService.has('crypto') && <TouchableOpacity onPress={ () => this.props.navigation.navigate('BlockchainWallet') }>
             <View style={styles.datailsContainer}>
               <Text style={styles.title}>Token Settings</Text>
               <Text style={styles.subtitle}>Configure your wallet and other token related settings</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
       </ScrollView>
     );

@@ -31,6 +31,7 @@ import number from '../../common/helpers/number';
 import BlockchainBoostService from '../../blockchain/services/BlockchainBoostService';
 import Web3Service from '../../blockchain/services/Web3Service';
 import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
+import FeaturesService from '../../common/services/features.service';
 
 class VisibleError extends Error {
   visible = true;
@@ -52,7 +53,7 @@ export default class BoostScreen extends Component {
   state = {
     // boost
     type: null,
-    payment: 'tokens',
+    payment: '',
     amount: 1000,
     priority: false,
     target: null,
@@ -97,6 +98,10 @@ export default class BoostScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
+    this.setState({
+      payment: FeaturesService.has('crypto') ? 'tokens' : 'usd'
+    });
+
     getRates()
       .then(rates => {
         this.setState({ rates });
@@ -152,7 +157,7 @@ export default class BoostScreen extends Component {
     this.setState({ type });
 
     if (type === 'p2p' && this.state.payment === 'rewards') {
-      this.changePayment('tokens');
+      this.changePayment(FeaturesService.has('crypto') ? 'tokens' : 'usd');
     }
   };
 

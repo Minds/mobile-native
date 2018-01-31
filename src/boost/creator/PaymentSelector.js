@@ -10,6 +10,7 @@ import {
 import { CommonStyle } from '../../styles/Common';
 import currency from '../../common/helpers/currency';
 import Touchable from '../../common/components/Touchable';
+import FeaturesService from '../../common/services/features.service';
 
 /**
  * Type Selector
@@ -59,7 +60,7 @@ export default class PaymentSelector extends PureComponent {
       <View style={CommonStyle.rowJustifyStart}>
         {usd}
         {this.props.type !== 'p2p' && rewards}
-        {tokens}
+        {FeaturesService.has('crypto') && tokens}
       </View>
     )
   }

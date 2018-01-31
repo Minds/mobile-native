@@ -14,3 +14,7 @@ export const MINDS_CDN_URI = 'https://d3ae0shxev0cb7.cloudfront.net/';
 export const BLOCKCHAIN_URI = 'https://rinkeby.infura.io/';
 // export const BLOCKCHAIN_URI = 'http://localhost:9545';
 
+export const MINDS_FEATURES = {
+  crypto: true
+};
+
