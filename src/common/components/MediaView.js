@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     alignItems: 'stretch',
-    minHeight: 200,
+    //minHeight: 200,
   },
   image: {
     flex: 1,
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   richMediaContainer: {
+    minHeight: 250,
     //borderWidth: 1,
     //borderColor: '#ececec',
   },
