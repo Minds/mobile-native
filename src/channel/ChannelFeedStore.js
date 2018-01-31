@@ -45,6 +45,7 @@ class ChannelFeedStore {
     return getFeedChannel(this.guid, this.list.offset)
     .then(feed => {
         if (this.filter != 'rewards') {
+          this.assignRowKeys(feed);
           this.list.setList(feed);
         }
       })
@@ -54,6 +55,16 @@ class ChannelFeedStore {
       .catch(err => {
         console.error('error');
       });
+  }
+
+  /**
+   * Generate a unique Id for use with list views
+   * @param {object} feed
+   */
+  assignRowKeys(feed) {
+    feed.entities.forEach((entity, index) => {
+      entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
+    });
   }
 
   /**
