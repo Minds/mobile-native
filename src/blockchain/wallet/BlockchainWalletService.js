@@ -2,6 +2,7 @@ import BlockchainWalletSelectorStore from './BlockchainWalletSelectorStore';
 import StorageService from '../../common/services/storage.service';
 import Web3Service from '../services/Web3Service';
 import BlockchainTokenService from '../services/BlockchainTokenService';
+import KeychainService from '../../common/services/keychain.service';
 
 // Helper functions
 
@@ -290,6 +291,22 @@ class BlockchainWalletService {
     this.fundsCache[address] = Object.assign({}, result);
 
     return result;
+  }
+
+  // !! DANGEROUS !! Wipe
+
+  async _DANGEROUS_wipe(confirmation) {
+    if (confirmation !== true) {
+      return;
+    }
+
+    await KeychainService._DANGEROUS_wipe(true, 'wallet');
+
+    const keys = await StorageService.getKeys(storageKey(''));
+
+    for (key of keys) {
+      await StorageService.removeItem(key);
+    }
   }
 }
 

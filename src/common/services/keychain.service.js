@@ -25,6 +25,10 @@ async function saveKeychainToStorage(keychain, secret) {
   await AsyncStorage.setItem(`${STORAGE_KEY_PREFIX}${keychain}`, CryptoJS.AES.encrypt(secret, secret).toString());
 }
 
+async function removeKeychainFromStorage(keychain) {
+  await AsyncStorage.removeItem(`${STORAGE_KEY_PREFIX}${keychain}`);
+}
+
 async function challengeKeychainFromSecret(keychain, secretAttempt) {
   if (!secretAttempt) {
     return false;
@@ -106,6 +110,24 @@ class KeychainService {
     };
 
     return secret;
+  }
+
+  async _DANGEROUS_wipe(confirmation, keychain) {
+    if (confirmation !== true) {
+      return;
+    }
+
+    await removeKeychainFromStorage(keychain);
+
+    if (typeof this.unlocked[keychain] !== 'undefined') {
+      delete this.unlocked[keychain];
+    }
+
+    for (key of (await AsyncStorage.getAllKeys())) {
+      console.log(key, await AsyncStorage.getItem(key))
+    }
+
+    return true;
   }
 }
 

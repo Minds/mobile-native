@@ -7,7 +7,8 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  Picker
+  Picker,
+  Alert,
 } from 'react-native';
 
 import {
@@ -20,6 +21,7 @@ import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from './SettingsService';
 
 import i18nService from '../common/services/i18n.service';
+import BlockchainWalletStore from '../blockchain/wallet/BlockchainWalletStore';
 
 export default class SettingsScreen extends Component {
   state = {
@@ -53,6 +55,40 @@ export default class SettingsScreen extends Component {
 
     this.props.navigation.dispatch(loginAction);
   }
+
+  wipeEthereumKeychainAction = () => {
+    const _confirm3 = async (confirmation) => {
+      await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
+
+      await BlockchainWalletStore._DANGEROUS_wipe(confirmation);
+
+      Alert.alert('Wiped', `Your Ethereum keychain was completely removed.`);
+    };
+
+    const _confirm2 = async () => {
+      await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
+
+      Alert.alert(
+        'Are you 100% sure?',
+        `Please, confirm once again that you REALLY want to delete your keychain from this phone. There's no UNDO!`,
+        [
+          { text: 'No', style: 'cancel' },
+          { text: `Yes, I'm 100% sure`, onPress: () => _confirm3(true) },
+        ],
+        { cancelable: false }
+      );
+    };
+
+    Alert.alert(
+      'Are you sure?',
+      `This will delete your Ethereum keychain from this phone. Ensure you backed up the private keys. If you didn't you can lose access to all your funds. There's NO UNDO!`,
+      [
+        { text: 'No', style: 'cancel' },
+        { text: `Yes, I'm sure`, onPress: () => _confirm2() },
+      ],
+      { cancelable: false }
+    );
+  };
 
   render() {
     const languages = i18nService.getSupportedLocales();
@@ -132,6 +168,17 @@ export default class SettingsScreen extends Component {
           <Button raised backgroundColor="#f53d3d"
             title={i18nService.t('settings.deactivate')} icon={{ name: 'ios-warning', type: 'ionicon' }} />
         </View>
+
+        <Text style={[styles.header, { marginTop: 20 }]}>Delete Ethereum Keychain</Text>
+        <View style={styles.deactivate}>
+          <Button
+            onPress={this.wipeEthereumKeychainAction}
+            raised
+            backgroundColor="#f53d3d"
+            title="Delete Keychain"
+            icon={{ name: 'ios-warning', type: 'ionicon' }}
+          />
+        </View>
       </ScrollView>
     );
   }
@@ -168,6 +215,6 @@ const styles = StyleSheet.create({
   deactivate: {
     paddingTop: 20,
     paddingBottom: 20,
-    width:180
+    width:220
   }
 });

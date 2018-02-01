@@ -65,13 +65,28 @@ class StorageService {
   }
 
   async removeItem(key) {
-    await AsyncStorage.removeItem(`${STORAGE_KEY_PREFIX}${key}`);
+    try {
+      await AsyncStorage.removeItem(`${STORAGE_KEY_PREFIX}${key}`);
+      await AsyncStorage.removeItem(`${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`);
+    } catch (e) {
+      console.warn('Storage.removeItem', key, e);
+    }
 
     return this;
   }
 
   async hasItem(key) {
     return !!(await AsyncStorage.getItem(`${STORAGE_KEY_PREFIX}${key}`));
+  }
+
+  async getKeys(prefix) {
+    if (!prefix) {
+      return [];
+    }
+
+    return (await AsyncStorage.getAllKeys())
+      .filter(key => key.indexOf(`${STORAGE_KEY_PREFIX}${prefix}`) === 0)
+      .map(key => key.substr(STORAGE_KEY_PREFIX.length));
   }
 }
 

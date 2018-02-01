@@ -110,6 +110,14 @@ class BlockchainWalletStore {
     this.wallets = [];
   }
 
+  @action async _DANGEROUS_wipe(confirmation) {
+    if (confirmation !== true) {
+      return;
+    }
+
+    await BlockchainWalletService._DANGEROUS_wipe(confirmation);
+    this.load(true);
+  }
 }
 
 export default new BlockchainWalletStore();
