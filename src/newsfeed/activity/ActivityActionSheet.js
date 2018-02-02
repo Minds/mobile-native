@@ -62,12 +62,6 @@ export default class ActivityActions extends Component {
 
       options.push( 'Delete' );
 
-      if (this.props.entity.comments_disabled) {
-        options.push( 'Enable Comments' );
-      } else {
-        options.push( 'Disable Comments' );
-      }
-
       if (!this.props.entity.mature) {
         options.push( 'Set explicit' );
       } else {
@@ -102,12 +96,6 @@ export default class ActivityActions extends Component {
     }
 
     if(this.props.user && this.props.user.isAdmin()){
-      if (!this.props.entity.featured) {
-        options.push( 'Feature' );
-      } else {
-        options.push( 'Un-feature' );
-      }
-  
 
       if (!this.props.entity.monetized) {
         options.push( 'Monetize' );
@@ -186,21 +174,7 @@ export default class ActivityActions extends Component {
           });
         });
         break;
-      case 'Feature':
-        this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid, 'not-selected').then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
-        break;
-      case 'Un-feature':
-        this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
-        break;
-        case 'Monetize':
+      case 'Monetize':
         this.props.newsfeed.list.toggleMonetization(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
@@ -219,20 +193,6 @@ export default class ActivityActions extends Component {
         break;
       case 'Report':
         this.props.navigation.navigate('Report', { entity: this.props.entity });
-        break;
-      case 'Enable Comments':
-        this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
-        break;
-      case 'Disable Comments':
-        this.props.newsfeed.list.toggleCommentsAction(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
         break;
       case 'Subscribe':
         this.props.newsfeed.list.newsfeedToggleSubscription(this.props.entity.guid).then( (result) => {
