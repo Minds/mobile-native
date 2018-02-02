@@ -60,14 +60,14 @@ export default class Message extends PureComponent {
           <View style={[styles.messageContainer, styles.right]}>
             <View style={{ flex: 1, flexDirection: 'row' }}>
               <View style={{ flex: 1 }}></View>
-              <TouchableHighlight style={[ styles.textContainer, { backgroundColor: colors.primary }]} onPress={ () => this.showDate() } underlayColor={colors.primary}>
-                <Text style={[styles.message, { color: '#FFF' } ]}>{this.state.msg}</Text>
-              </TouchableHighlight>
+              <View style={[ styles.textContainer, { backgroundColor: colors.primary }]}  >
+                <Text selectable={true} style={[styles.message, { color: '#FFF' } ]} onPress={ () => this.showDate() }>{this.state.msg}</Text>
+              </View>
             </View>
             <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
           </View>
           { this.state.showDate ? 
-            <Text style={[styles.messagedate, styles.rightText]}>Dec 6, 2017, 11:47:46 AM</Text>
+            <Text selectable={true} style={[styles.messagedate, styles.rightText]}>Dec 6, 2017, 11:47:46 AM</Text>
             : null }
         </View>
       );
@@ -78,14 +78,14 @@ export default class Message extends PureComponent {
         <View style={styles.messageContainer}>
           <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
           <View style={{ flex: 1, flexDirection: 'row' }}>
-            <TouchableHighlight style={styles.textContainer} onPress={ () => this.showDate() } underlayColor={'transparent'}>
-              <Text style={styles.message}>{this.state.msg}</Text>
-            </TouchableHighlight>
+            <View style={[ styles.textContainer ]}  >
+              <Text selectable={true} style={[styles.message]} onPress={ () => this.showDate() }>{this.state.msg}</Text>
+            </View>
             <View style={{ flex: 1 }}></View>
           </View>
         </View>
         { this.state.showDate ? 
-          <Text style={styles.messagedate}>Dec 6, 2017, 11:47:46 AM</Text>
+          <Text selectable={true} style={styles.messagedate}>Dec 6, 2017, 11:47:46 AM</Text>
           : null }
       </View>
     );
