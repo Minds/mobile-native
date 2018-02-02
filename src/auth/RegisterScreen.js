@@ -41,8 +41,8 @@ export default class Register extends Component {
           <Animatable.View animation="bounceIn">
             <Animated.View>
                 <RegisterForm
-                  onRegister={() => this.onRegister()}
-                  onBack={() => this.onPressBack()}
+                  onRegister={this.onRegister}
+                  onBack={this.onPressBack}
                 />
             </Animated.View>
           </Animatable.View>
@@ -51,23 +51,32 @@ export default class Register extends Component {
     );
   }
 
-  onPressBack() {
+  onPressBack = () => {
     this._navigate('Login');
   }
 
-  onRegister() {
+  onRegister = guid => {
+    // TODO: Fixme, Channel seems to be available after navigation
+    // this._navigate('Tabs', { routeName: 'Channel', params: { guid, edit: true } });
     this._navigate('Tabs');
   }
 
   /**
    * Navigate to screen
    * @param {string} destination
+   * @param {*} childRouterAction
    */
-  _navigate(destination) {
+  _navigate(destination, childRouterAction) {
+    const navigateAction = { routeName: destination };
+
+    if (childRouterAction) {
+      navigateAction.action = NavigationActions.navigate(childRouterAction);
+    }
+
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
-        NavigationActions.navigate({ routeName: destination })
+        NavigationActions.navigate(navigateAction)
       ]
     })
 

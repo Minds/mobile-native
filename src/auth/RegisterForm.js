@@ -25,6 +25,7 @@ import {
 } from 'react-native-elements'
 
 import i18n from '../common/services/i18n.service';
+import sessionService from '../common/services/session.service';
 
 /**
  * Register Form
@@ -157,7 +158,7 @@ export default class RegisterForm extends Component {
         .then(data => {
           login(this.state.username ,this.state.password)
             .then(response => {
-              this.props.onRegister();
+              this.props.onRegister(sessionService.guid);
             })
             .catch(err => {
               alert(err);

@@ -177,7 +177,9 @@ class ApiService {
         xhr.upload.addEventListener("progress", progress);
       }
       xhr.open('POST', MINDS_URI + url + paramsString);
-      xhr.setRequestHeader('Authorization', `Basic ${btoa(basicAuth)}`);
+      if (basicAuth) {
+        xhr.setRequestHeader('Authorization', `Basic ${btoa(basicAuth)}`);
+      }
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
 

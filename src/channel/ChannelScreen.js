@@ -26,6 +26,7 @@ import ChannelHeader from './header/ChannelHeader';
 import Toolbar from './toolbar/Toolbar';
 import NewsfeedList from '../newsfeed/NewsfeedList';
 import CenteredLoading from '../common/components/CenteredLoading';
+import colors from '../styles/Colors';
 
 /**
  * Channel Screen
@@ -34,6 +35,10 @@ import CenteredLoading from '../common/components/CenteredLoading';
 @inject('channel')
 @observer
 export default class ChannelScreen extends Component {
+
+  state = {
+    edit: false
+  };
 
   /**
    * Disable navigation bar
@@ -67,6 +72,16 @@ export default class ChannelScreen extends Component {
     return this.props.navigation.state.params.guid;
   }
 
+  onEditAction = async payload => {
+    if (this.state.edit) {
+      await this.props.channel.store(this.guid).save(payload);
+      this.setState({ edit: false });
+      this.props.channel.store(this.guid).load();
+    } else {
+      this.setState({ edit: true });
+    }
+  };
+
   /**
    * Render
    */
@@ -96,7 +111,15 @@ export default class ChannelScreen extends Component {
     // channel header
     const header = (
       <View>
-        <ChannelHeader styles={styles} me={this.props.user.me} channel={this.props.channel.store(this.guid)} navigation={this.props.navigation} />
+        <ChannelHeader
+          styles={styles}
+          me={this.props.user.me}
+          channel={this.props.channel.store(this.guid)}
+          navigation={this.props.navigation}
+          edit={this.state.edit}
+          onEdit={this.onEditAction}
+        />
+
         <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>
         {carousel}
         <Icon underlayColor="transparent" color="white" containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
@@ -198,6 +221,14 @@ const styles = StyleSheet.create({
     width: 110,
     borderRadius: 55
   },
+  wrappedAvatar: {
+    height: 110,
+    width: 110,
+    borderRadius: 55
+  },
+  wrappedAvatarOverlayView: {
+    borderRadius: 55,
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -206,4 +237,37 @@ const styles = StyleSheet.create({
   bluebutton: {
     marginRight: 8,
   },
+  tapOverlayView: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundColor: '#000',
+    opacity: 0.65,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  briefdescriptionTextInputView: {
+    marginTop: 20,
+    marginBottom: 20,
+    padding: 10,
+    paddingTop: 5,
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: colors.greyed
+  },
+  briefdescriptionTextInput: {
+    maxHeight: 100,
+  },
+  nameTextInput: {
+    borderWidth: 1,
+    borderRadius: 4,
+    borderColor: colors.greyed,
+    padding: 3,
+    fontWeight: '700',
+    fontSize: 14,
+    letterSpacing: 0.5,
+    marginBottom: 4,
+  }
 });

@@ -6,9 +6,9 @@ export function login(username, password) {
   let params = {
     grant_type: 'password',
     client_id: '',
-    cliemt_secret: '',
-    'username': username,
-    'password': password
+    client_secret: '',
+    username,
+    password
   };
   return api.post('oauth2/token', params).then(data => {
     session.login(data.access_token, data.user_id);
@@ -26,9 +26,9 @@ export function me() {
   let params = {
     grant_type: 'password',
     client_id: '',
-    cliemt_secret: '',
-    'username': username,
-    'password': password
+    client_secret: '',
+    username,
+    password
   };
   return api.get('api/v1/channel/me', params).then(data => {
     return data;

@@ -26,6 +26,7 @@ export default class ChannelStore {
 
   @observable rewards = {};
   @observable active = false;
+  @observable isUploading = false;
 
   @action
   clear() {
@@ -99,5 +100,34 @@ export default class ChannelStore {
       .catch(err => {
         console.log('error', err);
       });
+  }
+
+  @action
+  async save({ avatar, banner, ...data }) {
+    this.isUploading = true;
+
+    try {
+      if (avatar) {
+        await channelService.upload(this.guid, 'avatar', {
+          uri: avatar.uri,
+          type: avatar.type,
+          name: avatar.fileName || 'avatar.jpg'
+        });
+      }
+
+      if (banner) {
+        await channelService.upload(this.guid, 'banner', {
+          uri: banner.uri,
+          type: banner.type,
+          name: banner.fileName || 'banner.jpg'
+        });
+      }
+
+      await channelService.save(this.guid, data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.isUploading = false;
+    }
   }
 }

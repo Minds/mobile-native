@@ -14,6 +14,14 @@ class ChannelService {
     return api.get('api/v1/channel/' + guid);
   }
 
+  upload(guid, type, file) {
+    return api.upload(`api/v1/channel/${type}`, file);
+  }
+
+  save(guid, data) {
+    return api.post(`api/v1/channel/info`, data);
+  }
+
   /**
    * Subscribe to Channel
    * @param {string} guid
