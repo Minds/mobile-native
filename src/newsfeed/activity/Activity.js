@@ -36,6 +36,8 @@ import ActivityActionSheet from './ActivityActionSheet';
 import ActivityEditor from './ActivityEditor';
 import MediaView from '../../common/components/MediaView';
 
+import Lock from '../../wire/lock/Lock';
+
 /**
  * Activity
  */
@@ -75,29 +77,34 @@ export default class Activity extends Component {
    * Render
    */
   render() {
+    const entity = this.props.entity;
+
+    const lock = entity.paywall ? <Lock entity={entity} navigation={this.props.navigation}/> : null;
+
     return (
         <View style={styles.container} onLayout={this.props.onLayout}>
           { this.showOwner() }
-          { this.props.entity.message || this.props.entity.title ?
-            <View style={this.props.entity.message || this.props.entity.title ? styles.message : styles.emptyMessage}>
+          { lock }
+          { entity.message || entity.title ?
+            <View style={entity.message || entity.title ? styles.message : styles.emptyMessage}>
               {
                 (this.state.editing) ?
                   //Passing the store in newsfeed (could be channel also)
-                  <ActivityEditor entity={this.props.entity} toggleEdit={this.toggleEdit} newsfeed={this.props.newsfeed}/> :
-                  <ExplicitText entity={this.props.entity}  navigation={this.props.navigation}/>
+                  <ActivityEditor entity={entity} toggleEdit={this.toggleEdit} newsfeed={this.props.newsfeed}/> :
+                  <ExplicitText entity={entity}  navigation={this.props.navigation}/>
               }
             </View>
             : null
           }
           { this.showRemind() }
-          <MediaView 
-            entity={ this.props.entity }
+          <MediaView
+            entity={ entity }
             navigation={this.props.navigation}
             style={ styles.media }
             autoHeight={ this.props.autoHeight }
             />
-      
-          
+
+
 
           { this.showActions() }
         </View>
@@ -122,7 +129,7 @@ export default class Activity extends Component {
         <OwnerBlock entity={this.props.entity} navigation={this.props.navigation} rightToolbar={rightToolbar}>
           <TouchableOpacity onPress={this.navToActivity} style={{ flexDirection: 'row' }}>
             <Text style={styles.timestamp}>{formatDate(this.props.entity.time_created)}</Text>
-            { this.props.entity.boosted && 
+            { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
                 <View style={styles.boostTagColumn}>
                   <Icon name="md-trending-up" style={styles.boostTagIcon} />
@@ -130,7 +137,7 @@ export default class Activity extends Component {
                 <View style={styles.boostTagColumn}>
                   <Text style={styles.boostTagLabel}>BOOSTED</Text>
                 </View>
-              </View> 
+              </View>
             }
           </TouchableOpacity>
         </OwnerBlock>

@@ -40,16 +40,20 @@ export default class Button extends Component {
     const {
       onPress,
       textColor,
-      color
+      color,
+      children,
+      containerStyle,
+      textStyle
     } = this.props;
 
     return (
       <TouchableOpacity
         onPress={onPress}
         underlayColor='transparent'
-        style={[ComponentsStyle.commonButton, {borderColor: color}]}
+        style={[ComponentsStyle.commonButton, {borderColor: color}, containerStyle]}
       >
-        <Text style={{color: textColor||color}} > {this.props.text} </Text>
+        {children}
+        <Text style={[{ color: textColor || color }, textStyle]} > {this.props.text} </Text>
       </TouchableOpacity>
     )
   }

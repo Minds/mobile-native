@@ -5,7 +5,8 @@ import { getFeedChannel, toggleComments , toggleExplicit } from '../newsfeed/New
 import channelService from './ChannelService';
 
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
-
+import ActivityModel from '../newsfeed/ActivityModel';
+import BlogModel from '../blogs/BlogModel';
 /**
  * Channel Feed store
  */
@@ -16,21 +17,21 @@ export default class ChannelFeedStore {
 
   stores = {
     feed: {
-      list: new OffsetFeedListStore(),
+      list: new OffsetFeedListStore('shallow'),
       loading: false,
     },
     images: {
-      list: new OffsetFeedListStore(),
+      list: new OffsetFeedListStore('shallow'),
       loading: false,
       isTiled: true,
     },
     videos: {
-      list: new OffsetFeedListStore(),
+      list: new OffsetFeedListStore('shallow'),
       loading: false,
       isTiled: true,
     },
     blogs: {
-      list: new OffsetFeedListStore(),
+      list: new OffsetFeedListStore('shallow'),
       loading: false,
       isTiled: false,
     },
@@ -49,7 +50,7 @@ export default class ChannelFeedStore {
     return this.stores[this.filter].list;
   }
 
-  set list(value) { 
+  set list(value) {
     this.stores[this.filter] = value;
   }
 
@@ -82,9 +83,6 @@ export default class ChannelFeedStore {
       case 'images':
         await this.loadImagesFeed();
         break;
-      case 'images':
-        await this.loadBlogsFeed();
-        break;
       case 'videos':
         await this.loadVideosFeed();
         break;
@@ -104,12 +102,13 @@ export default class ChannelFeedStore {
     this.loading = true;
 
     const feed = await getFeedChannel(this.guid, this.list.offset)
-    
+
     if (this.filter != 'rewards') {
       this.assignRowKeys(feed);
+      feed.entities = ActivityModel.createMany(feed.entities);
       this.list.setList(feed);
     }
-    
+
     this.loading = false;
   }
 
@@ -118,6 +117,7 @@ export default class ChannelFeedStore {
    * @param {object} feed
    */
   assignRowKeys(feed) {
+    if (!feed.entities) return;
     feed.entities.forEach((entity, index) => {
       entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
     });
@@ -133,9 +133,10 @@ export default class ChannelFeedStore {
 
     this.loading = true;
     const feed = await channelService.getImageFeed(this.guid, this.list.offset);
+    feed.entities = ActivityModel.createMany(feed.entities);
     this.assignRowKeys(feed);
     this.list.setList(feed);
-     
+
     this.loading = false;
   }
 
@@ -150,9 +151,10 @@ export default class ChannelFeedStore {
     this.loading = true;
 
     const feed = await channelService.getVideoFeed(this.guid, this.list.offset);
+    feed.entities = ActivityModel.createMany(feed.entities);
     this.assignRowKeys(feed);
     this.list.setList(feed);
-       
+
     this.loading = false;
   }
 
@@ -163,13 +165,13 @@ export default class ChannelFeedStore {
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
-
     this.loading = true;
-
     const feed = await channelService.getBlogFeed(this.guid, this.list.offset);
+    feed.entities = BlogModel.createMany(feed.entities);
+
     this.assignRowKeys(feed);
     this.list.setList(feed);
-       
+
     this.loading = false;
   }
 

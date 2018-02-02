@@ -37,6 +37,7 @@ class WireStore {
   loadUser(guid) {
     return wireService.userRewards(guid)
       .then(owner => {
+        console.log(owner)
         this.setOwner(owner);
         return owner;
       });
@@ -84,6 +85,10 @@ class WireStore {
       case 'tokens':
         return amount.toLocaleString('en-US') + ' tokens';
     }
+  }
+
+  validate() {
+    //TODO: implement wire validation
   }
 
   @action

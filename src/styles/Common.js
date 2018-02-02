@@ -195,6 +195,9 @@ export const CommonStyle = StyleSheet.create({
   fontXXL: {
     fontSize: 24
   },
+  fontXXXL: {
+    fontSize: 30
+  },
 
   // text align
   textRight: {

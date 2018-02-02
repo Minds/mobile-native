@@ -26,7 +26,7 @@ import api from '../../common/services/api.service';
 export default class ListItem extends PureComponent {
 
   navToBlog = () => {
-    this.props.navigation.navigate('BlogView', {blog: this.props.blog});
+    this.props.navigation.navigate('BlogView', {blog: this.props.entity});
   }
 
   render() {

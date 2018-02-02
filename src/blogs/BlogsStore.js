@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx'
 
 import blogService from './BlogsService';
+import BlogModel from './BlogModel';
 
 /**
  * Blogs store
@@ -32,6 +33,7 @@ class BlogsStore {
       if (this.offset) {
         response.blogs.shift();
       }
+      response.blogs = BlogModel.createMany(response.blogs);
       response.blogs.forEach(element => {
         this.entities.push(element);
       });

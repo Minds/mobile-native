@@ -41,17 +41,49 @@ import FeaturesService from '../common/services/features.service';
 export default class FabScreen extends Component {
 
   componentWillMount() {
-    this.props.wire.setMethod(FeaturesService.has('crypto') ? 'tokens' : 'money');
-    this.props.wire.setAmount(1);
+    //this.props.wire.setMethod(FeaturesService.has('crypto') ? 'tokens' : 'money');
 
     const owner = this.getOwner();
     this.props.wire.setGuid(owner.guid);
-    this.props.wire.loadUser(owner.guid);
-    this.props.wire.setRecurring(true);
+
+    this.props.wire.loadUser(owner.guid)
+      .then(() => this.setDefaults());
   }
 
   componentWillUnmount() {
     this.props.wire.setOwner(null);
+  }
+
+  setDefaults() {
+    const params = this.props.navigation.state.params;
+    const wire = this.props.wire;
+    const owner = wire.owner;
+
+    if (params.default) {
+      wire.setMethod(params.default.type);
+      wire.setAmount(params.default.min);
+
+      if (!params.disableThresholdCheck && owner.sums && owner.sums[params.default.type]) {
+        wire.setAmount(wire.amount - Math.ceil(owner.sums[params.default.type]));
+      }
+    } else if (this.owner.eth_wallet) {
+      wire.setMethod('tokens');
+      wire.setAmount(1);
+      wire.setRecurring(true);
+    } else if (this.owner.merchant) {
+      wire.setCurrency('money');
+      wire.setAmount(1);
+      wire.setRecurring(true);
+    } else {
+      // TODO: Refactor to `rewards`
+      wire.setMethod('points');
+      wire.setAmount(1000);
+      wire.setRecurring(true);
+    }
+
+    if (wire.amount < 0) {
+      wire.setAmount(0);;
+    }
   }
 
   getOwner() {
@@ -136,17 +168,42 @@ export default class FabScreen extends Component {
         {carousel}
 
         <Button
-          title="Send"
+          title={(this.props.wire.amount == 0) ? 'Ok' : 'Send'}
           buttonStyle={styles.send}
           disabled={this.props.wire.sending}
-          onPress={() => this.confirmSend()}
+          onPress={this.confirmSend}
           backgroundColor={selectedcolor}
         />
       </ScrollView>
     );
   }
 
-  confirmSend() {
+  validate() {
+    try {
+      this.props.wire.validate();
+      return true;
+    } catch(e) {
+      Alert.alert(
+        'Atention',
+        (e && e.message) || 'Unknown internal error',
+        [{ text: 'OK' }],
+        { cancelable: false }
+      )
+      return false;
+    }
+  }
+
+  confirmSend = () => {
+    // is 0 just we execute complete
+    if (this.props.wire.amount == 0) {
+      const onComplete = this.props.navigation.state.params.onComplete;
+      if (onComplete) onComplete();
+      this.props.navigation.goBack();
+      return;
+    }
+
+    if (!this.validate()) return;
+
     Alert.alert(
       'Are you sure?',
       'You will send ' + this.props.wire.formatAmount(this.props.wire.amount) + ' to @' + this.props.wire.owner.username,
@@ -162,8 +219,10 @@ export default class FabScreen extends Component {
    * Call send and go back on success
    */
   async send() {
+    const onComplete = this.props.navigation.state.params.onComplete;
     try {
       await this.props.wire.send();
+      if (onComplete) onComplete();
       this.props.navigation.goBack();
     } catch (e) {
       console.error('Wire/send()', e);

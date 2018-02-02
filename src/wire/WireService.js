@@ -8,6 +8,18 @@ import BlockchainWalletService from '../blockchain/wallet/BlockchainWalletServic
  */
 class WireService {
 
+  unlock(guid) {
+    return api.get('api/v1/wire/threshold/' + guid)
+      .then((response) => {
+        if (response.hasOwnProperty('activity')) {
+          return response.activity;
+        } else if (response.hasOwnProperty('entity')) {
+          return response.entity;
+        }
+        return false;
+      });
+  }
+
   overview(guid) {
     return api.get('api/v1/wire/sums/overview/' + guid + '?merchant=1');
   }

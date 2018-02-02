@@ -1,5 +1,5 @@
 import { extendShallowObservable, extendObservable } from 'mobx';
-
+import _ from 'lodash';
 /**
  * Base model
  */
@@ -95,11 +95,22 @@ export default class BaseModel {
    */
   static createMany(arrayData) {
     const instances = [];
+    if (!arrayData) return instances;
+
+    if (!arrayData) return instances;
 
     arrayData.forEach((data) => {
       instances.push(new this(data));
     });
 
     return instances;
+  }
+
+  /**
+   * Get a property of the model if it exist or undefined
+   * @param {string|array} property ex: 'ownerObj.merchant.exclusive.intro'
+   */
+  get(property) {
+    return _.get(this, property);
   }
 }

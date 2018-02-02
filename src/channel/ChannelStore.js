@@ -6,6 +6,7 @@ import {
 import channelService from './ChannelService';
 import wireService from '../wire/WireService';
 import ChannelFeedStore from './ChannelFeedStore';
+import UserModel from './UserModel';
 
 /**
  * Channel Store
@@ -20,7 +21,9 @@ export default class ChannelStore {
     this.feedStore = new ChannelFeedStore(guid);
   }
 
-  @observable channel = {};
+  // only observable by reference because UserModel already have the needed observables
+  @observable.ref channel = {};
+
   @observable rewards = {};
   @observable active = false;
 
@@ -45,7 +48,7 @@ export default class ChannelStore {
   async load() {
     const { channel } = await channelService.load(this.guid);
     if (channel)
-      this.setChannel(channel);
+      this.setChannel(UserModel.create(channel));
   }
 
   @action
