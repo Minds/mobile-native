@@ -29,7 +29,7 @@ export default class TokensStore {
     }
     this.loading = true;
 
-    fetchFn = (this.mode == 'rewards') ? walletService.getRewardsLedger : walletService.getContributions;
+    fetchFn = (this.mode == 'transactions') ? walletService.getTransactionsLedger : walletService.getContributions;
 
     return fetchFn(from, to, this.list.offset)
       .then(

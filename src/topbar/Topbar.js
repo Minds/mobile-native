@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Avatar } from 'react-native-elements';
 
 import { MINDS_CDN_URI } from '../config/Config';
@@ -31,7 +32,7 @@ export default class Topbar extends Component {
 
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Notifications')} >
             <View style={styles.topbarLeft}>
-              <Icon name="bell" size={18} color='#444' style={ styles.button } />
+              <CIcon name="bell" size={18} color='#444' style={ styles.button } />
               <Text>{this.props.notifications.unread}</Text>
             </View>
           </TouchableOpacity>
@@ -46,10 +47,9 @@ export default class Topbar extends Component {
             />
           </View>
 
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Wallet', { navigation: this.props.navigation })} >
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('More', { navigation: this.props.navigation })} >
             <View style={styles.topbarRight}>
-              <Icon name="bank" size={18} color='#444' style={ styles.button }/>
-              <Text>{ this.props.wallet.pointsFormatted }</Text>
+              <Icon name="more-vert" size={18} color='#444' style={ styles.button }/>
             </View>
           </TouchableOpacity>
 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
     flexDirection: 'row',
-    paddingRight: 10
+    paddingRight: 4
   },
   button: {
     padding: 8,

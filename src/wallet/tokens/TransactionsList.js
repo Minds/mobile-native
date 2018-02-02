@@ -26,7 +26,7 @@ import DateRangePicker from '../../common/components/DateRangePicker';
  */
 @inject('wallet')
 @observer
-export default class RewardsView extends Component {
+export default class TransactionsList extends Component {
 
   /**
    * On component will unmount
@@ -39,7 +39,7 @@ export default class RewardsView extends Component {
    * On component will mount
    */
   componentWillMount() {
-    this.props.wallet.ledger.setMode('rewards');
+    this.props.wallet.ledger.setMode('transactions');
     this.props.wallet.ledger.list.clearList();
 
     const end = new Date();
@@ -136,8 +136,8 @@ export default class RewardsView extends Component {
           : <Text style={[styles.count, styles.negative]}>{token(item.amount)}</Text>
         }
         <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[styles.subtext, CommonStyle.flexContainer]}>{item.type.toUpperCase()}</Text>
-          <Text style={[styles.subtext]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
+          <Text style={[styles.subtext, CommonStyle.flexContainer]}>{item.contract.toUpperCase()}</Text>
+          <Text style={[styles.subtext]}>{i18n.l('date.formats.small', item.timestamp * 1000)}</Text>
         </View>
       </View>
     )

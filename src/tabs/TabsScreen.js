@@ -10,6 +10,7 @@ import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import DiscoveryScreen from '../discovery/DiscoveryScreen';
 import CaptureScreen from '../capture/CaptureScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
+import WalletScreen from '../wallet/WalletScreen';
 import MoreScreen from './MoreScreen';
 import tabs from './TabsStore';
 
@@ -27,9 +28,12 @@ const Tabs = (
     Messenger: {
       screen: MessengerScreen
     },
-    More: {
-      screen: MoreScreen
+    Wallet: {
+      screen: WalletScreen,
     },
+    //More: {
+    //  screen: MoreScreen
+    //},
   }, {
     tabBarPosition: 'bottom',
     animationEnabled: false,

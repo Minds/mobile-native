@@ -21,16 +21,8 @@ class WalletService {
 
   // Other currencies (money, usd)
 
-  async getMoneyBalance() {
-    return (await api.get(`api/v1/monetization/revenue/overview`)).balance;
-  }
-
-  async getTokensBalance() {
-    return (await api.get(`api/v1/blockchain/wallet/balance`)).wallet.balance;
-  }
-
-  async getRewardsBalance() {
-    return (await api.get(`api/v1/blockchain/rewards/balance`)).balance;
+  async getBalances() {
+    return await api.get(`api/v1/blockchain/wallet/balance`);
   }
 
   /**
@@ -61,18 +53,18 @@ class WalletService {
    * @param {date} endDate
    * @param {string} offset
    */
-  getRewardsLedger(startDate, endDate, offset) {
+  getTransactionsLedger(startDate, endDate, offset) {
     startDate.setHours(0, 0, 0);
     endDate.setHours(23, 59, 59);
 
-    return api.get(`api/v1/blockchain/rewards/ledger`, {
+    return api.get(`api/v1/blockchain/transactions/ledger`, {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
         offset: offset
       })
       .then((data) => {
         return {
-          entities: data.rewards||[],
+          entities: data.transactions||[],
           offset: data['load-next'],
         }
       });

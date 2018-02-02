@@ -33,7 +33,7 @@
     "process": "^0.11.0",
     "querystring-es3": "~0.2.0",
     "react": "16.2.0",
-    "react-native": "^0.52.0",
+    "react-native": "0.52.2",
     "react-native-actionsheet": "^2.3.0",
     "react-native-animatable": "^1.2.4",
     "react-native-blur": "^3.2.2",
@@ -148,5 +148,10 @@
     "tty": "tty-browserify",
     "vm": "vm-browserify",
     "tls": false
+  },
+  "rnpm": {
+    "assets": [
+      "./src/assets/fonts/Roboto"
+    ]
   }
 }

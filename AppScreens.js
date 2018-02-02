@@ -23,12 +23,14 @@ import FabScreen from './src/wire/FabScreen';
 import ActivityScreen from './src/newsfeed/ActivityScreen';
 import ViewImageScreen from './src/media/ViewImageScreen';
 import BoostScreen from './src/boost/creator/BoostScreen';
-import TokensRewardsScreen from "./src/wallet/tokens/TokensRewardsScreen";
+import ContributionsScreen from "./src/wallet/tokens/ContributionsScreen";
+import TransactionsScreen from "./src/wallet/tokens/TransactionsScreen";
 import BlockchainWalletScreen from "./src/blockchain/wallet/BlockchainWalletScreen";
 import BlockchainWalletModalScreen from './src/blockchain/wallet/modal/BlockchainWalletModalScreen';
 import BlockchainWalletImportScreen from './src/blockchain/wallet/import/BlockchainWalletImportScreen';
 import BlockchainWalletDetailsScreen from './src/blockchain/wallet/details/BlockchainWalletDetailsScreen';
 import ReportScreen from './src/report/ReportScreen';
+import MoreScreen from './src/tabs/MoreScreen';
 
 /**
  * Main stack navigator
@@ -56,7 +58,8 @@ const Stack = StackNavigator({
     screen: NotificationsSettingsScreen
   },
   Channel: {
-    screen: ChannelScreen
+    screen: ChannelScreen,
+    path: 'channel/:guid',
   },
   Capture: {
     screen: CapturePoster
@@ -89,13 +92,15 @@ const Stack = StackNavigator({
     screen: BoostConsoleScreen
   },
   BlogView: {
-    screen: BlogsViewScreen
+    screen: BlogsViewScreen,
+    path: 'blog/view/:guid',
   },
   WireFab: {
     screen: FabScreen
   },
   Activity: {
-    screen: ActivityScreen
+    screen: ActivityScreen,
+    path: 'activity/:guid',
   },
   WalletHistory: {
     screen: WalletHistoryScreen
@@ -106,8 +111,11 @@ const Stack = StackNavigator({
   BlockchainWallet: {
     screen: BlockchainWalletScreen
   },
-  TokensRewards: {
-    screen: TokensRewardsScreen
+  Contributions: {
+    screen: ContributionsScreen,
+  },
+  Transactions: {
+    screen: TransactionsScreen
   },
   BlockchainWalletModal: {
     screen: BlockchainWalletModalScreen
@@ -120,6 +128,9 @@ const Stack = StackNavigator({
   },
   Report: {
     screen: ReportScreen,
+  },
+  More: {
+    screen: MoreScreen
   },
 });
 

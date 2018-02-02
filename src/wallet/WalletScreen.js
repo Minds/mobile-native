@@ -11,12 +11,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import WalletOverviewView from './WalletOverviewView';
-import WalletBalanceRewards from './balances/WalletBalanceRewards';
 import WalletBalanceTokens from './balances/WalletBalanceTokens';
-import WalletBalanceUSD from './balances/WalletBalanceUSD';
 
 import FeaturesService from '../common/services/features.service';
 
@@ -34,42 +34,56 @@ export default class WalletScreen extends Component {
     )
   });
 
+  static navigationOptions = {
+    tabBarIcon: ({ tintColor }) => (
+      <CIcon name="bank" size={24} color={tintColor} />
+    )
+  }
+
   render() {
     return (
       <ScrollView style={ styles.mainContainer }>
         {FeaturesService.has('crypto') && <WalletBalanceTokens />}
-        <WalletBalanceRewards />
 
         <View>
-         {/* <View style={styles.datailsContainer}>
-            <Text style={styles.title} onPress={ () => this.props.navigation.navigate('WalletHistory')}>History</Text>
-            <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('WalletHistory')}>View your points</Text>
-          </View>
 
-          <View style={styles.datailsContainer}>
-            <Text style={styles.title}>Purchase points</Text>
-            <Text style={styles.subtitle}>Support Minds and buy points</Text>
-          </View>*/}
+          <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('BoostConsole') }>
+            <View style={styles.iconContainer}>
+              <Icon name="trending-up" size={24} style={ styles.icon } />
+            </View>
+            <View style={styles.item}>
+              <Text style={styles.title}>Boost Console</Text>
+              <Text style={styles.subtitle}>Accept or reject boosts made to you</Text>
+            </View>
+          </TouchableOpacity>
 
-          <View style={styles.datailsContainer} >
-            <Text style={styles.title} onPress={ () => this.props.navigation.navigate('BoostConsole')}>Boost Console</Text>
-            <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('BoostConsole')}>Accept or reject boosts made to you</Text>
-          </View>
+          <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Transactions')} >
+            <View style={styles.iconContainer}>
+              <Icon name="history" size={24} style={ styles.icon } />
+            </View>
+            <View style={styles.item}>
+              <Text style={styles.title}>Transactions</Text>
+              <Text style={styles.subtitle}>A list of transactions you have made with your addresses</Text>
+            </View>
+          </TouchableOpacity>
 
-          <View style={styles.datailsContainer} >
-            <Text style={styles.title} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Credits & Contributions</Text>
-            <Text style={styles.subtitle} onPress={ () => this.props.navigation.navigate('TokensRewards')}>Check and rewards and daily contribution scores</Text>
-          </View>
+          <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Contributions')} >
+            <View style={styles.iconContainer}>
+              <Icon name="stars" size={24} style={ styles.icon } />
+            </View>
+            <View style={styles.item}>
+              <Text style={styles.title}>Contributions</Text>
+              <Text style={styles.subtitle}>Check and rewards and daily contribution scores</Text>
+            </View>
+          </TouchableOpacity>
 
-          <View style={styles.datailsContainer}>
-            <Text style={styles.title}>Plan Subscriptions</Text>
-            <Text style={styles.subtitle}>Check your currently active plan subscriptions</Text>
-          </View>
-
-          {FeaturesService.has('crypto') && <TouchableOpacity onPress={ () => this.props.navigation.navigate('BlockchainWallet') }>
-            <View style={styles.datailsContainer}>
-              <Text style={styles.title}>Token Settings</Text>
-              <Text style={styles.subtitle}>Configure your wallet and other token related settings</Text>
+          {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('BlockchainWallet') }>
+            <View style={styles.iconContainer}>
+              <Icon name="settings" size={24} style={ styles.icon } />
+            </View>
+            <View style={styles.item}>
+              <Text style={styles.title}>Addresses</Text>
+              <Text style={styles.subtitle}>Configure your crypto addresses and other token related settings</Text>
             </View>
           </TouchableOpacity>}
         </View>
@@ -85,8 +99,13 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     color: '#888',
   },
+  iconContainer: {
+    width: 36,
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
   icon: {
-    paddingTop: 20,
+    color: '#455a64',
   },
   points: {
     paddingTop: 20,
@@ -95,14 +114,24 @@ const styles = StyleSheet.create({
     fontSize: 35,
   },
   title: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    color: '#444',
   },
   subtitle: {
     fontSize: 12,
     color: '#888'
   },
+  itemContainer: {
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+  },
+  item: {
+    flex: 1,
+  },
   datailsContainer: {
-    padding: 20
+    padding: 16,
   },
   mainContainer: {
     backgroundColor: '#fff'

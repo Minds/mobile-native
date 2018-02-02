@@ -22,7 +22,7 @@ import {
   NavigationActions
 } from 'react-navigation';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import session from './../common/services/session.service';
 import { List, ListItem } from 'react-native-elements'
 import FastImage from 'react-native-fast-image';
@@ -30,6 +30,9 @@ import FastImage from 'react-native-fast-image';
 import { ComponentsStyle } from '../styles/Components';
 import { CommonStyle } from '../styles/Common';
 import shareService from '../share/ShareService';
+
+
+const ICON_SIZE = 24;
 
 /**
  * More screen (menu)
@@ -41,12 +44,6 @@ export default class MoreScreen extends Component {
     active: false,
     activities: [],
     refreshing: false
-  }
-
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <Icon name="menu" size={24} color={tintColor} />
-    )
   }
 
   /**
@@ -81,46 +78,55 @@ export default class MoreScreen extends Component {
     const list = [
       {
         name: 'Blogs',
+        icon: (<Icon name='subject' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('BlogList');
         }
       },{
         name: 'Groups',
+        icon: (<Icon name='group-work' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('GroupsList');
         }
       },{
         name: 'Help & Support',
+        icon: (<Icon name='help-outline' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('GroupView', { guid: '100000000000000681'});
         }
       },{
         name: 'Invite',
+        icon: (<Icon name='share' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           shareService.invite(this.props.user.me.guid);
         }
       },{
         name: 'Settings',
+        icon: (<Icon name='settings' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('Settings');
         }
       }, {
         name: 'FAQ',
+        icon: (<Icon name='open-in-new' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           Linking.openURL(MINDS_URI + 'faq');
         }
       }, {
         name: 'Code',
+        icon: (<Icon name='open-in-new' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           Linking.openURL('https://github.com/Minds');
         }
       }, {
         name: 'Terms',
+        icon: (<Icon name='open-in-new' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           Linking.openURL(MINDS_URI + 'p/terms');
         }
       }, {
         name: 'Privacy',
+        icon: (<Icon name='open-in-new' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           Linking.openURL(MINDS_URI + 'p/privacy');
         }
@@ -128,33 +134,36 @@ export default class MoreScreen extends Component {
     ];
 
     return (
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContainer}>
-        <List containerStyle={styles.container}>
-          {
-            list.map((l, i) => (
-              <ListItem
-                key={i}
-                title={l.name}
-                titleStyle={{padding:8}}
-                containerStyle={styles.listItem}
-                switchButton={l.switchButton}
-                hideChevron ={l.hideChevron}
-                onPress= {l.onPress}
-                noBorder
-              />
-            ))
-          }
-        </List>
-        <View style={{flexGrow: 1}}>
-        </View>
-        <View style={styles.logoBackground}>
-          <FastImage
-            resizeMode={FastImage.resizeMode.cover}
-            style={[ComponentsStyle.logo, CommonStyle.marginTop2x]}
-            source={require('../assets/logos/medium.png')}
-          />
-          <View style={styles.footer}>
-            <Text style={styles.version} textAlign={'center'}>v1.0.0 (201712)</Text>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.scrollViewContainer}>
+          <List containerStyle={styles.container}>
+            {
+              list.map((l, i) => (
+                <ListItem
+                  key={i}
+                  title={l.name}
+                  titleStyle={styles.listTitle}
+                  containerStyle={styles.listItem}
+                  switchButton={l.switchButton}
+                  hideChevron ={l.hideChevron}
+                  leftIcon={l.icon}
+                  onPress= {l.onPress}
+                  noBorder
+                />
+              ))
+            }
+          </List>
+          <View style={{flexGrow: 1}}>
+          </View>
+          <View style={styles.logoBackground}>
+            { /*<FastImage
+              resizeMode={FastImage.resizeMode.cover}
+              style={[ComponentsStyle.logo, CommonStyle.marginTop2x]}
+              source={require('../assets/logos/medium.png')}
+            /> */ }
+            <View style={styles.footer}>
+              <Text style={styles.version} textAlign={'center'}>v1.0.0 (201712)</Text>
+            </View>
           </View>
         </View>
       </ScrollView>
@@ -172,12 +181,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   scrollViewContainer: {
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    alignContent: 'stretch',
   },
   container: {
     flex: 1,
+    marginTop: 0,
     borderTopWidth: 0,
     borderBottomWidth: 0,
   },
@@ -201,6 +208,14 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     //height:20
+  },
+  listTitle: {
+    padding:8,
+    fontFamily: 'Roboto',
+  },
+  icon: {
+    color: '#455a64',
+    alignSelf: 'center',
   },
   footercol: {
     flexDirection: 'row',

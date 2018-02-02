@@ -13,10 +13,9 @@ import TokensStore from './tokens/TokensStore';
  * Wallet store
  */
 class WalletStore {
-  @observable points = -1;
-  @observable rewards = -1;
-  @observable money = -1;
-  @observable tokens = -1;
+
+  @observable balance = -1;
+  @observable addresses = [];
 
   ledger = new TokensStore();
 
@@ -28,69 +27,19 @@ class WalletStore {
       return;
     }
 
-    console.log('Refreshing wallet…');
-
     this.refreshing = true;
-    const asyncs = [];
+  
 
-    // Points
-    asyncs.push(walletService.getCount()
-      .then(points => {
-        this.points = points;
-      })
-      .catch(e => {
-        this.points = -1;
-      }));
+    const { balance, addresses } = await walletService.getBalances();
+    this.balance = balance;
+    this.addresses = addresses;
 
-    // Rewards
-    asyncs.push(walletService.getRewardsBalance()
-      .then(rewards => {
-        this.rewards = rewards;
-      })
-      .catch(e => {
-        this.rewards = -1;
-      }));
-
-    // Money
-    asyncs.push(walletService.getMoneyBalance()
-      .then(money => {
-        this.money = money;
-      })
-      .catch(e => {
-        this.money = -1;
-      }));
-
-    // Tokens
-    asyncs.push(walletService.getTokensBalance()
-      .then(tokens => {
-        this.tokens = tokens;
-      })
-      .catch(e => {
-        this.tokens = -1;
-      }));
-
-    //
-
-    await Promise.all(asyncs); // Wait for all 3 requests to finish
     this.refreshing = false;
     this.loaded = true;
   }
 
-  // Computed properties for display
-  @computed get pointsFormatted() {
-    return this.points > -1 ? abbrev(this.points) : '…'
-  }
-
-  @computed get rewardsFormatted() {
-    return this.rewards > -1 ? abbrev(number(token(this.rewards, 18), 2)) : '…'
-  }
-
-  @computed get moneyFormatted() {
-    return this.money > -1 ? `$ ${this.money}` : '$ …'
-  }
-
-  @computed get tokensFormatted() {
-    return this.tokens > -1 ? number(this.tokens, 2) : '…'
+  @computed get formattedBalance() {
+    return this.balance > -1 ? number(token(this.balance, 18), 3) : '…'
   }
 
   /**
