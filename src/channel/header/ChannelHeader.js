@@ -149,7 +149,18 @@ export default class ChannelHeader extends Component {
    */
   getActionButton() {
     const styles  = this.props.styles;
-    if (!!this.props.channel.channel.subscribed) {
+    if (this.props.me.guid === this.props.channel.channel.guid) {
+      return (
+        <TouchableHighlight
+          onPress={this.onEditAction}
+          underlayColor = 'transparent'
+          style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
+          accessibilityLabel={this.props.edit ? 'Save your changes' : 'Edit your channel settings'}
+        >
+          <Text style={{color: colors.primary}}> {this.props.edit ? 'SAVE' : 'EDIT'} </Text>
+        </TouchableHighlight>
+      );
+    } else if (!!this.props.channel.channel.subscribed) {
       return (
         <TouchableHighlight
           onPress={() => { this._navToConversation() }}
@@ -175,17 +186,6 @@ export default class ChannelHeader extends Component {
       return (
         <ActivityIndicator size="small" />
       )
-    } else {
-      return (
-        <TouchableHighlight
-          onPress={this.onEditAction}
-          underlayColor = 'transparent'
-          style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
-          accessibilityLabel={this.props.edit ? 'Save your changes' : 'Edit your channel settings'}
-        >
-          <Text style={{color: colors.primary}}> {this.props.edit ? 'SAVE' : 'EDIT'} </Text>
-        </TouchableHighlight>
-      );
     }
   }
 

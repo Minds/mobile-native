@@ -173,12 +173,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 190,
   },
-  briefdescription: {
-    fontSize: 12,
-    paddingTop: 25,
-    paddingBottom: 20,
-    color: '#919191'
-  },
   headercontainer: {
     flex: 1,
     height: 200,
@@ -189,10 +183,45 @@ const styles = StyleSheet.create({
     color: '#999'
   },
   name: {
-    fontWeight: '800',
+    fontWeight: '700',
+    fontFamily: 'Roboto',
     fontSize: 20,
     letterSpacing: 0.5,
     color: '#444',
+  },
+  nameTextInput: {
+    color: '#444',
+    borderWidth: 1,
+    borderRadius: 3,
+    borderColor: '#ececec',
+    padding: 3,
+    fontWeight: '700',
+    fontFamily: 'Roboto',
+    fontSize: 20,
+    letterSpacing: 0.5,
+    marginBottom: 4,
+  },
+  briefdescription: {
+    fontSize: 13,
+    paddingTop: 25,
+    paddingBottom: 20,
+    color: '#777',
+    fontFamily: 'Roboto',
+  },
+  briefdescriptionTextInputView: {
+    marginTop: 20,
+    marginBottom: 20,
+    padding: 8,
+    paddingTop: 3,
+    borderWidth: 1,
+    borderRadius: 3,
+    borderColor: '#ececec',
+  },
+  briefdescriptionTextInput: {
+    maxHeight: 100,
+    fontSize: 13,
+    color: '#777',
+    fontFamily: 'Roboto',
   },
   countertitle: {
     color: '#666',
@@ -248,26 +277,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  briefdescriptionTextInputView: {
-    marginTop: 20,
-    marginBottom: 20,
-    padding: 10,
-    paddingTop: 5,
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: colors.greyed
-  },
-  briefdescriptionTextInput: {
-    maxHeight: 100,
-  },
-  nameTextInput: {
-    borderWidth: 1,
-    borderRadius: 4,
-    borderColor: colors.greyed,
-    padding: 3,
-    fontWeight: '700',
-    fontSize: 14,
-    letterSpacing: 0.5,
-    marginBottom: 4,
-  }
 });
