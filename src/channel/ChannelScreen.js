@@ -9,7 +9,8 @@ import {
   Image,
   View,
   ScrollView,
-  Button
+  Button,
+  TouchableHighlight
 } from 'react-native';
 
 import {
@@ -98,7 +99,7 @@ export default class ChannelScreen extends Component {
         <ChannelHeader styles={styles} me={this.props.user.me} channel={this.props.channel.store(this.guid)} navigation={this.props.navigation} />
         <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>
         {carousel}
-        <Icon color="white" containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
+        <Icon underlayColor="transparent" color="white" containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
       </View>
     );
 
