@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
-import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, Text,Button, TouchableHighlight, Image, ActivityIndicator } from 'react-native';
+import {
+  ListView,
+  StyleSheet,
+  View,
+  ScrollView,
+  FlatList,
+  TextInput,
+  Text,
+  Button,
+  TouchableHighlight,
+  Image,
+  ActivityIndicator
+} from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-picker';
@@ -18,6 +30,10 @@ import {
   NavigationActions
 } from 'react-navigation';
 
+import Util from '../common/helpers/util';
+import RichEmbedService from '../common/services/rich-embed.service';
+import CaptureMetaPreview from './CaptureMetaPreview';
+
 @inject('user')
 @observer
 export default class CapturePoster extends Component {
@@ -25,81 +41,77 @@ export default class CapturePoster extends Component {
   state = {
     isPosting: false,
     text: '',
-    hasAttachment:false,
+    hasAttachment: false,
     attachmentGuid: '',
     attachmentDone: false,
-    postImageUri: ''
+    postImageUri: '',
+    hasRichEmbed: false,
+    richEmbedUrl: '',
+    meta: null
   };
+
+  _RichEmbedFetchTimer;
+
+  componentWillUnmount() {
+    if (this._RichEmbedFetchTimer) {
+      clearTimeout(this._RichEmbedFetchTimer);
+    }
+  }
 
   render() {
 
     return (
       <View style={styles.posterAndPreviewWrapper}>
-      
+
         <View style={styles.posterWrapper}>
           <TextInput
             style={styles.poster}
-            editable = {true}
-            placeholder = 'Speak your mind...'
-            placeholderTextColor = '#ccc'
-            underlineColorAndroid = 'transparent'
-            onChangeText={(text) => this.setState({text})}
+            editable={true}
+            placeholder='Speak your mind...'
+            placeholderTextColor='#ccc'
+            underlineColorAndroid='transparent'
+            onChangeText={this.setText}
             value={this.state.text}
+            multiline={true}
           />
 
           <View style={styles.posterActions}>
-            { 
-            this.state.hasAttachment && !this.state.attachmentGuid ? 
-              <Progress.Pie progress={this.state.progress} size={36}/>
-            :
-              <TouchableHighlight 
-                underlayColor='#FFF' 
-                onPress={() => this.submit()}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>POST</Text>
-              </TouchableHighlight>
+            {
+              this.state.hasAttachment && !this.state.attachmentGuid ?
+                <Progress.Pie progress={this.state.progress} size={36}/>
+                :
+                <TouchableHighlight
+                  underlayColor='#FFF'
+                  onPress={() => this.submit()}
+                  style={styles.button}
+                >
+                  <Text style={styles.buttonText}>POST</Text>
+                </TouchableHighlight>
             }
           </View>
         </View>
 
-        { 
-          this.state.hasAttachment ? 
-            <View style={ styles.preview }>
-              
-              <CapturePreview
-                uri={this.state.attachmentUri}
-                type={this.state.attachmentType}
-                />
+        {(this.state.meta || this.state.metaInProgress) && <CaptureMetaPreview
+          meta={this.state.meta}
+          inProgress={this.state.metaInProgress}
+          onRemove={this.clearRichEmbedAction}
+        />}
 
-              <Icon name="md-close" size={36} style={ styles.deleteAttachment } onPress={() => this.deleteAttachment() }/>
-            </View>
-            : null 
-        }
-
-        <CaptureGallery 
-          style={{ flex: 1 }} 
-          onSelected={ this.onAttachedMedia.bind(this) }
+        {this.state.hasAttachment && <View style={styles.preview}>
+          <CapturePreview
+            uri={this.state.attachmentUri}
+            type={this.state.attachmentType}
           />
-    
+
+          <Icon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
+        </View>}
+
+        <CaptureGallery
+          style={{ flex: 1 }}
+          onSelected={this.onAttachedMedia.bind(this)}
+        />
       </View>
     );
-  }
-
-  showPostButton() {
-      return  
-        <View style={{flex:1, flexDirection: 'row'}}>
-          <View style={{flex: 1}}>
-            <TouchableHighlight
-              onPress={() => this.submitPost()} 
-              underlayColor = 'transparent'
-              style = {styles.button}
-              accessibilityLabel="Subscribe to this channel"
-            >
-              <Text style={{color: colors.primary}} > POST </Text>
-            </TouchableHighlight>
-          </View>
-        </View>;
   }
 
   async onAttachedMedia(response) {
@@ -107,7 +119,7 @@ export default class CapturePoster extends Component {
     if (response.didCancel) {
     }
     else if (response.error) {
-      alert('ImagePicker Error: '+ response.error);
+      alert('ImagePicker Error: ' + response.error);
     }
     else if (response.customButton) {
       //do nothng but leave it for future
@@ -115,7 +127,7 @@ export default class CapturePoster extends Component {
     else {
 
       this.setState({
-        hasAttachment:true,
+        hasAttachment: true,
         attachmentUri: response.uri,
         attachmentType: response.type,
       });
@@ -127,14 +139,14 @@ export default class CapturePoster extends Component {
             uri: response.uri,
             type: response.type,
             name: response.fileName || 'test.jpg'
-        }, 
-        (e) => {
-          let pct = e.loaded / e.total;
+          },
+          (e) => {
+            let pct = e.loaded / e.total;
 
-          this.setState({
-            'progress': pct
+            this.setState({
+              'progress': pct
+            });
           });
-        });
 
       } catch (e) {
         alert(JSON.stringify(e));
@@ -142,13 +154,13 @@ export default class CapturePoster extends Component {
         throw e;
       }
 
-      if (!res) 
+      if (!res)
         return;
 
-      this.setState({ 
+      this.setState({
         attachmentGuid: res.guid,
         attachmentDone: true
-      });  
+      });
 
     }
 
@@ -174,17 +186,21 @@ export default class CapturePoster extends Component {
       return false;
     }
 
-    let newPost = {message: this.state.text}
-    if(this.props.attachmentGuid) {
+    let newPost = { message: this.state.text }
+    if (this.props.attachmentGuid) {
       newPost.attachment_guid = this.props.attachmentGuid;
     }
-    if(this.state.attachmentGuid)
+    if (this.state.attachmentGuid)
       newPost.attachment_guid = this.state.attachmentGuid;
     this.setState({
       isPosting: true,
     });
-    
-    try { 
+
+    if (this.state.meta) {
+      newPost = Object.assign(newPost, this.state.meta);
+    }
+
+    try {
       let response = await post(newPost);
 
       if (this.props.reset) {
@@ -197,20 +213,82 @@ export default class CapturePoster extends Component {
         isPosting: false,
         text: '',
         attachmentGuid: '',
-        hasAttachment:false
+        hasAttachment: false,
+        meta: null
       });
 
     } catch (e) {
       console.log('error', e);
       alert('Oooppppss. Looks like there was an error.');
     }
-  
+  }
+
+  setText = (text) => {
+    this.setState({ text });
+
+    if (this._RichEmbedFetchTimer) {
+      clearTimeout(this._RichEmbedFetchTimer);
+    }
+
+    setTimeout(this.richEmbedCheck);
+  };
+
+  richEmbedCheck = () => {
+    const matches = Util.urlReSingle.exec(this.state.text);
+
+    if (!matches && this.state.hasRichEmbed) {
+      this.clearRichEmbed();
+    } else if (matches) {
+      const url = (!matches[3] ? 'https://' : '') + matches[0];
+
+      if (
+        !this.state.hasRichEmbed ||
+        (this.state.hasRichEmbed && url.toLowerCase() !== this.state.richEmbedUrl.toLowerCase())
+      ) {
+        this.clearRichEmbed();
+        this._RichEmbedFetchTimer = setTimeout(() => this.setRichEmbed(url), 750);
+      }
+    }
+  };
+
+  clearRichEmbedAction = () => {
+    this.clearRichEmbed();
+
+    if (this._RichEmbedFetchTimer) {
+      clearTimeout(this._RichEmbedFetchTimer);
+    }
+  };
+
+  clearRichEmbed() {
+    this.setState({
+      hasRichEmbed: false,
+      richEmbedUrl: '',
+      meta: null
+    });
+  }
+
+  async setRichEmbed(url) {
+    this.setState({
+      hasRichEmbed: true,
+      richEmbedUrl: url,
+      meta: null,
+      metaInProgress: true
+    });
+
+    try {
+      const meta = await RichEmbedService.getMeta(url);
+
+      this.setState({ meta, metaInProgress: false })
+    } catch (e) {
+      this.setState({ metaInProgress: false });
+      console.error(e);
+    }
   }
 }
 
 const styles = StyleSheet.create({
   posterAndPreviewWrapper: {
-    flex:1,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'stretch',
     alignContent: 'stretch',
@@ -221,16 +299,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   poster: {
-    flex:1,
+    flex: 1,
+    maxHeight: 100,
   },
   posterActions: {
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
   },
   posterButton: {
     flex: 1,
-    alignItems: 'center', 
+    alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
   },
@@ -241,7 +320,7 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   avatar: {
-    flex:1,
+    flex: 1,
   },
   gallery: {
     flex: 1,
@@ -249,14 +328,14 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   button: {
-    margin: 4, 
-    padding: 8, 
+    margin: 4,
+    padding: 8,
     paddingLeft: 16,
     paddingRight: 16,
-    alignItems:'center', 
+    alignItems: 'center',
     borderRadius: 3,
-    backgroundColor: 'white', 
-    borderWidth: 1, 
+    backgroundColor: 'white',
+    borderWidth: 1,
     borderColor: colors.primary,
   },
   buttonText: {
