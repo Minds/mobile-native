@@ -4,7 +4,8 @@ import React, {
 
 import {
   Text,
-  View
+  View,
+  StyleSheet,
 } from 'react-native';
 
 import { Icon } from 'react-native-elements'
@@ -33,8 +34,10 @@ export default class Lock extends PureComponent {
 
     if (entity.isOwner()) {
       return (
-        <View style={[CommonStyle.padding2x, CommonStyle.alignJustifyCenter]}>
-          <Text style={CommonStyle.fontS}>{this.getOwnerIntro()}</Text>
+        <View style={[CommonStyle.padding2x, CommonStyle.rowJustifyCenter, CommonStyle.alignJustifyCenter]}>
+          <View style={ styles.textContainer }>
+            <Text style={CommonStyle.fontS}>{this.getOwnerIntro()}</Text>
+          </View>
           <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignJustifyCenter]}>
             <Icon
               reverse
@@ -56,8 +59,10 @@ export default class Lock extends PureComponent {
 
     return (
       <View>
-        <View style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.alignJustifyCenter]}>
-          <Text>{intro}</Text>
+        <View style={[CommonStyle.paddingLeft, CommonStyle.paddingRight,  CommonStyle.rowJustifyCenter, CommonStyle.alignJustifyCenter]}>
+          <View style={ styles.textContainer }>
+            <Text>{intro}</Text>
+          </View>
           <Button text='UNLOCK' color='#4caf50' containerStyle={CommonStyle.rowJustifyCenter} onPress={this.unlock}>
             <Icon
               name='ios-flash'
@@ -71,7 +76,7 @@ export default class Lock extends PureComponent {
           source={imageUri}
           style={{height: 200, width: '100%'}}
         />
-        <View style={[CommonStyle.alignJustifyCenter, CommonStyle.padding2x, style.mask]}>
+        <View style={[CommonStyle.alignJustifyCenter, CommonStyle.padding2x, styles.mask]}>
           <Icon
             name='ios-flash'
             type='ionicon'
@@ -147,7 +152,11 @@ export default class Lock extends PureComponent {
   }
 }
 
-const style = {
+const styles = StyleSheet.create({
+  textContainer: {
+    flex: 1,
+    padding: 8,
+  },
   mask: {
     position: 'absolute',
     bottom: 0,
@@ -155,4 +164,4 @@ const style = {
     width: '100%',
     backgroundColor: 'rgba(0,0,0,0.4)'
   }
-}
+});
