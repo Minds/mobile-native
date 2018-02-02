@@ -6,12 +6,17 @@ import {
   View,
   StyleSheet,
   Text,
-  ScrollView
+  ScrollView,
+  Linking
 } from 'react-native';
 
 import {
   inject
 } from 'mobx-react/native'
+
+import {
+  MINDS_URI
+} from '../config/Config';
 
 import {
   NavigationActions
@@ -99,6 +104,26 @@ export default class MoreScreen extends Component {
         onPress: () => {
           this.props.navigation.navigate('Settings');
         }
+      }, {
+        name: 'FAQ',
+        onPress: () => {
+          Linking.openURL(MINDS_URI + 'faq');
+        }
+      }, {
+        name: 'Code',
+        onPress: () => {
+          Linking.openURL('https://github.com/Minds');
+        }
+      }, {
+        name: 'Terms',
+        onPress: () => {
+          Linking.openURL(MINDS_URI + 'p/terms');
+        }
+      }, {
+        name: 'Privacy',
+        onPress: () => {
+          Linking.openURL(MINDS_URI + 'p/privacy');
+        }
       }
     ];
 
@@ -129,12 +154,6 @@ export default class MoreScreen extends Component {
             source={require('../assets/logos/medium.png')}
           />
           <View style={styles.footer}>
-            <View style={styles.footercol}>
-              <Text style={CommonStyle.colorDark}>FAQ</Text>
-              <Text style={CommonStyle.colorDark}>Code</Text>
-              <Text style={CommonStyle.colorDark}>Terms</Text>
-              <Text style={CommonStyle.colorDark}>Privacy</Text>
-            </View>
             <Text style={styles.version} textAlign={'center'}>v1.0.0 (201712)</Text>
           </View>
         </View>
