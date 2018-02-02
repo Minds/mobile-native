@@ -110,10 +110,6 @@ export default class BoostScreen extends Component {
 
   componentDidMount() {
     this.buildAllowedTypes();
-
-    if (this.textInput) {
-      this.textInput.focus();
-    }
   }
 
   /**
