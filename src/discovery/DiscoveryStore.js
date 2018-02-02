@@ -4,7 +4,8 @@ import {
 } from 'mobx';
 
 import discoveryService from './DiscoveryService';
-
+import ActivityModel from '../newsfeed/ActivityModel';
+import BlogModel from '../blogs/BlogModel';
 import OffsetListStore from '../common/stores/OffsetListStore';
 
 /**
@@ -50,7 +51,7 @@ class DiscoveryStore {
   /**
    * Load feed
    */
-  async loadList(force=false) {
+  async loadList(force=false, preloadImage=false) {
     const store = this.stores[this.type];
     // no more data or loading? return
     if (!force && store.list.cantLoadMore() || store.loading) {
@@ -59,6 +60,7 @@ class DiscoveryStore {
     store.loading = true;
     return discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext)
       .then(feed => {
+        this.createModels(feed, preloadImage);
         store.list.setList(feed);
       })
       .finally(() => {
@@ -67,6 +69,20 @@ class DiscoveryStore {
       .catch(err => {
         console.log('error', err);
       });
+  }
+
+  createModels(feed, preloadImage) {
+    switch (this.type) {
+      case 'object/image':
+      case 'object/video':
+        feed.entities = ActivityModel.createMany(feed.entities);
+        if (preloadImage) {
+          feed.entities.each.preloadThumb();
+        }
+        break;
+      case 'object/blog':
+        feed.entities = BlogModel.createMany(feed.entities);
+    }
   }
 
   /**
@@ -127,7 +143,7 @@ class DiscoveryStore {
     } else {
       this.type = 'user';
     }
-    this.loadList(true);
+    return this.loadList(true);
   }
 
   @action

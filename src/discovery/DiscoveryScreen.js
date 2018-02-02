@@ -63,27 +63,28 @@ export default class DiscoveryScreen extends Component {
    */
   componentWillMount() {
     this._loadData();
+
     // load data on enter
-    //this.disposeEnter = this.props.navigatorStore.onEnterScreen('Discovery',(s) => {
-    //  this._loadData();
-    //});
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Discovery',(s) => {
+      this.setState({active: true});
+    });
 
     // clear data on leave
-    //this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Discovery',(s) => {
-    //  this.props.discovery.list.clearList();
-    //});
+    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Discovery',(s) => {
+      this.setState({active: false});
+    });
   }
 
   /**
    * Load data
    */
-  _loadData() {
+  _loadData(preload=false) {
     const params = this.props.navigation.state.params;
     const q = (params) ? params.q : false;
     if (q) {
-      this.props.discovery.search(q);
+      return this.props.discovery.search(q);
     } else {
-      this.props.discovery.loadList();
+      return this.props.discovery.loadList(false, true);
     }
   }
 
@@ -91,8 +92,8 @@ export default class DiscoveryScreen extends Component {
    * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    //this.disposeEnter();
-    //this.disposeLeave();
+    this.disposeEnter();
+    this.disposeLeave();
   }
 
   /**
@@ -121,6 +122,9 @@ export default class DiscoveryScreen extends Component {
    * Render
    */
   render() {
+
+    if (!this.state.active) return <View/>;
+
     let body;
 
     const discovery = this.props.discovery;
@@ -180,36 +184,36 @@ export default class DiscoveryScreen extends Component {
     const navigation = (
       <View style={styles.navigation}>
         <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('user') } underlayColor='#fff'>
-          <Icon 
-            name="people" 
-            style={[styles.icon, this.props.discovery.type == 'user' ? styles.iconActive : null ]} 
+          <Icon
+            name="people"
+            style={[styles.icon, this.props.discovery.type == 'user' ? styles.iconActive : null ]}
             size={ 20 }
           />
         </TouchableHighlight>
         <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('object/video') } underlayColor='#fff'>
-          <Icon 
+          <Icon
             name="videocam"
             style={[styles.icon, this.props.discovery.type == 'object/video' ? styles.iconActive : null ]}
-            size={ 20 
+            size={ 20
             }/>
         </TouchableHighlight>
         <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('object/image') } underlayColor='#fff'>
-          <IonIcon 
+          <IonIcon
             name="md-photos"
-            style={[styles.icon, this.props.discovery.type == 'object/image' ? styles.iconActive : null ]} 
+            style={[styles.icon, this.props.discovery.type == 'object/image' ? styles.iconActive : null ]}
             size={ 20 }/>
         </TouchableHighlight>
         <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('object/blog') } underlayColor='#fff'>
-          <Icon 
+          <Icon
             name="subject"
-            style={[styles.icon, this.props.discovery.type == 'object/blog' ? styles.iconActive : null ]} 
+            style={[styles.icon, this.props.discovery.type == 'object/blog' ? styles.iconActive : null ]}
             size={ 20 }
             />
         </TouchableHighlight>
         <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('group') } underlayColor='#fff'>
-          <Icon 
+          <Icon
             name="group-work"
-            style={[styles.icon, this.props.discovery.type == 'group' ? styles.iconActive : null ]} 
+            style={[styles.icon, this.props.discovery.type == 'group' ? styles.iconActive : null ]}
             size={ 20 }
             />
         </TouchableHighlight>

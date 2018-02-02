@@ -34,20 +34,20 @@ export default class DiscoveryTile extends PureComponent {
   }
 
   render() {
-    const url = { uri: MINDS_CDN_URI + 'api/v1/archive/thumbnails/' + this.props.entity.guid + '/medium' };
+    const url = this.props.entity.getThumbSource();
 
     const style = { width: this.props.size, height: this.props.size };
 
     return (
       <TouchableOpacity onPress={this._navToView} style={[ style, styles.tile ]}>
-        { Platform.OS === 'android' ? 
+        { Platform.OS === 'android' ?
           <ProgressFastImage
             indicator={ProgressCircle}
             source={ url }
             style={{ width: this.props.size -2, height: this.props.size -2}}
             threshold={150}
           />
-          : 
+          :
           <FastImage
             source={ url }
             style={{ width: this.props.size -2, height: this.props.size -2}}

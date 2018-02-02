@@ -3,7 +3,7 @@
 import React, {
   Component
 } from 'react';
-  
+
 import {
   NavigationActions
 } from 'react-navigation';
@@ -46,9 +46,7 @@ export default class MediaView extends Component {
     const type = this.props.entity.custom_type||this.props.entity.subtype;
     switch (type) {
       case 'image':
-        source = {
-          uri: MINDS_CDN_URI + 'api/v1/archive/thumbnails/' + this.props.entity.guid + '/medium'
-        }
+        source = this.props.entity.getThumbSource();
         return this.getImage(source);
       case 'batch':
         source = {
@@ -92,7 +90,7 @@ export default class MediaView extends Component {
     );
   }
 
-  
+
   /**
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
@@ -108,7 +106,7 @@ export default class MediaView extends Component {
 
       return (
         <TouchableOpacity onPress={this.navToImage} style={[styles.imageContainer, { height }]} activeOpacity={1}>
-          <ExplicitImage 
+          <ExplicitImage
             source={source}
             entity={this.props.entity}
             style={[styles.image, { height }]}
@@ -124,18 +122,18 @@ export default class MediaView extends Component {
         style={styles.imageContainer}
         activeOpacity={1}
       >
-        <AutoHeightFastImage 
+        <AutoHeightFastImage
           source={source}
-          width={Dimensions.get('window').width} 
+          width={Dimensions.get('window').width}
         />
       </TouchableOpacity>
       ) : (
-      <TouchableOpacity 
-        onPress={this.navToImage} 
-        style={styles.imageContainer} 
+      <TouchableOpacity
+        onPress={this.navToImage}
+        style={styles.imageContainer}
         activeOpacity={1}
       >
-        <ExplicitImage 
+        <ExplicitImage
           source={source}
           entity={this.props.entity}
           style={styles.image}
