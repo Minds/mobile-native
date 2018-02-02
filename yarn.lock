@@ -5157,9 +5157,9 @@ react-native-exception-handler@^2.6.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.7.0.tgz#4dff22df2f3f36ac7ac0f03a6f67c20c554473bd"
 
-react-native-fast-image@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-2.0.1.tgz#210fe23a8ed5ae4a68977b555167eb7440ad7374"
+react-native-fast-image@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-2.2.4.tgz#bc240feed8019337e8289ea6acd5fdf6aeab1b6d"
   dependencies:
     prop-types "^15.5.10"
 

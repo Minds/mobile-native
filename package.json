@@ -41,7 +41,7 @@
     "react-native-crypto": "^2.1.0",
     "react-native-elements": "^0.18.4",
     "react-native-exception-handler": "^2.6.0",
-    "react-native-fast-image": "^2.0.1",
+    "react-native-fast-image": "^2.2.4",
     "react-native-http": "tradle/react-native-http#834492d",
     "react-native-i18n": "^2.0.10",
     "react-native-image-picker": "^0.26.7",
