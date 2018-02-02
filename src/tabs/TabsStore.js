@@ -4,6 +4,7 @@ import { observable, action, reaction } from 'mobx'
  * Tabs store
  */
 class TabsStore {
+
   @observable.ref tabstate = {};
 
   /**
@@ -28,6 +29,12 @@ class TabsStore {
       { fireImmediately: true}
     );
   }
+
+  @action
+  reset() {
+    this.tabstate = {};
+  }
+
 }
 
 export default new TabsStore();

@@ -16,17 +16,17 @@ export default class ChannelStore {
   guid = null;
   feedStore = null;
 
-  constructor(guid) {
-    this.guid = guid;
-    this.feedStore = new ChannelFeedStore(guid);
-  }
-
   // only observable by reference because UserModel already have the needed observables
   @observable.ref channel = {};
 
   @observable rewards = {};
   @observable active = false;
   @observable isUploading = false;
+
+  constructor(guid) {
+    this.guid = guid;
+    this.feedStore = new ChannelFeedStore(guid);
+  }
 
   @action
   clear() {
@@ -130,4 +130,16 @@ export default class ChannelStore {
       this.isUploading = false;
     }
   }
+
+  @action
+  reset() {
+    this.guid = null;
+    this.feedStore = null;
+    // only observable by reference because UserModel already have the needed observables
+    this.channel = {};
+    this.rewards = {};
+    this.active = false;
+    this.sUploading = false;
+  }
+
 }

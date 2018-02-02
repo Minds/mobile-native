@@ -37,9 +37,9 @@ const stores = {
   discovery,
   blogs,
   wallet,
+  walletHistory,
   wire,
   boost,
-  walletHistory,
   groups,
   groupView,
   keychain,
@@ -53,19 +53,10 @@ const stores = {
  * Clear stores on session log out
  */
 sessionService.onLogout(() => {
-  newsfeed.clearFeed();
-  newsfeed.clearBoosts();
-  discovery.list.clearList();
-  user.clearUser();
-  channel.clearStores();
-  comments.clearComments();
-  blogs.clearFeed();
-  groups.list.clearList();
-  groupView.list.clearList();
-  boost.list.clearList();
-  messengerConversation.clear();
-  messengerList.clearConversations();
-  notifications.list.clearList();
+  for (id in stores) {
+    if (stores[id].reset)
+      stores[id].reset();
+  }
 });
 
 export default stores;

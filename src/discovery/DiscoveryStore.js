@@ -11,6 +11,7 @@ import OffsetListStore from '../common/stores/OffsetListStore';
  * Discovery Store
  */
 class DiscoveryStore {
+
   /**
    * Notification list store
    */
@@ -128,6 +129,39 @@ class DiscoveryStore {
     }
     this.loadList(true);
   }
+
+  @action
+  reset() {
+    this.stores = {
+      'object/image': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      },
+      'object/video': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      },
+      'object/blog': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      },
+      'user': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      },
+      'group': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      }
+    };
+    this.list = new OffsetListStore('shallow');
+    this.searchtext = '';
+    this.filter = 'featured';
+    this.type  = 'object/image';
+    this.category = 'all';
+    this.loading = false;
+  }
+
 }
 
 export default new DiscoveryStore();

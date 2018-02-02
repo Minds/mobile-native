@@ -90,6 +90,11 @@ class MessengerConversationStore {
     this.messages = [];
   }
 
+  @action
+  reset() {
+    this.messages = [];
+  }
+
 }
 
 export default new MessengerConversationStore();

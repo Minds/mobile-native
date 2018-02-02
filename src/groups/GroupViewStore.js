@@ -8,6 +8,7 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
  * Groups store
  */
 class GroupViewStore {
+
   /**
    * List feed store
    */
@@ -144,6 +145,16 @@ class GroupViewStore {
         this.list.refreshDone();
       });
   }
+
+  @action
+  reset() {
+    this.list = new OffsetFeedListStore();
+    this.group = null;
+    this.tab = 'feed';
+    this.saving = false;
+    this.loading = false;
+  }
+
 }
 
 export default new GroupViewStore();

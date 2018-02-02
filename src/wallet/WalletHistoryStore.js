@@ -59,6 +59,12 @@ class WalletHistoryStore {
       clearInterval(this.pollInterval);
     }
   }
+
+  @action reset() {
+    this.loading = false;
+    this.list = new OffsetListStore();
+  }
+
 }
 
 export default new WalletHistoryStore();

@@ -65,6 +65,15 @@ class BlogsStore {
     this.filter = filter;
   }
 
+  @action
+  reset() {
+    this.entities = [];
+    this.refreshing = false
+    this.filter = 'featured';
+    this.loaded = false;
+    this.offset = '';
+  }
+
 }
 
 export default new BlogsStore();

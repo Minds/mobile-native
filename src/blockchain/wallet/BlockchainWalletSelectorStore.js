@@ -14,6 +14,7 @@ let dispose;
  * Blockchain Store
  */
 class BlockchainWalletSelectorStore {
+
   @observable isSelecting = false;
   @observable selected = void 0;
   @observable selectMessage = '';
@@ -70,6 +71,15 @@ class BlockchainWalletSelectorStore {
     this.selectMessage = '';
     this.signableOnly = false;
   }
+
+  @action
+  reset() {
+    this.isSelecting = false;
+    this.selected = void 0;
+    this.selectMessage = '';
+    this.signableOnly = false;
+  }
+
 }
 
 export default new BlockchainWalletSelectorStore();

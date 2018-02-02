@@ -131,6 +131,17 @@ class WireStore {
   stopSending() {
     this.sending = false;
   }
+
+  @action 
+  reset() {
+    this.amount = 1;
+    this.sending = false;
+    this.method = 'money';
+    this.owner = null;
+    this.recurring = false;
+    this.guid = null;
+  }
+
 }
 
 export default new WireStore()

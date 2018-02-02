@@ -8,6 +8,7 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
  * Groups store
  */
 class GroupsStore {
+
   /**
    * List store
    */
@@ -49,6 +50,13 @@ class GroupsStore {
         this.list.refreshDone();
       });
   }
+
+  @action
+  reset() {
+    this.list = new OffsetFeedListStore('shallow');
+    this.loading = false;
+  }
+
 }
 
 export default new GroupsStore();

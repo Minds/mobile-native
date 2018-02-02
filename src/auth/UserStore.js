@@ -42,6 +42,12 @@ class UserStore {
   isAdmin() {
     return this.me.admin;
   }
+
+  @action
+  reset() {
+    this.me = {};
+  }
+
 }
 
 export default new UserStore();

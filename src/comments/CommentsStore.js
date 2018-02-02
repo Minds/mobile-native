@@ -15,6 +15,7 @@ import Comment from './Comment';
  * Comments Store
  */
 class CommentsStore {
+
   @observable comments = [];
   @observable refreshing = false;
   @observable loaded = false;
@@ -110,6 +111,20 @@ class CommentsStore {
   cantLoadMore(guid) {
     return this.loaded && !this.offset && !this.refreshing && this.guid === guid;
   }
+
+  @action
+  reset() {
+    this.comments = [];
+    this.refreshing = false;
+    this.loaded = false;
+    this.saving = false;
+    this.guid = '';
+    this.reversed = false;
+    this.loadNext = '';
+    this.loadPrevious = '';
+    this.socketRoom = '';
+  }
+
 }
 
 export default new CommentsStore();

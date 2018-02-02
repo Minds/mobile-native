@@ -119,6 +119,15 @@ class NewsfeedStore {
       });
   }
 
+  @action
+  reset() {
+    this.list = new OffsetFeedListStore('shallow');
+    this.filter = 'subscribed';
+    this.boosts = [];
+    this.loading = false;
+    this.loadingBoost = true;
+  }
+
 }
 
 export default new NewsfeedStore();

@@ -10,6 +10,7 @@ let unlockingSecretDispose;
  * Keychain Store
  */
 class KeychainStore {
+
   @observable isUnlocking = false;
   @observable unlockingKeychain = '';
   @observable unlockingSecret = void 0;
@@ -64,6 +65,16 @@ class KeychainStore {
     this.unlockingExisting = false;
     this.unlockingAttempts = 0;
   }
+
+  @action
+  reset() {
+    this.isUnlocking = false;
+    this.unlockingKeychain = '';
+    this.unlockingSecret = void 0;
+    this.unlockingExisting = false;
+    this.unlockingAttempts = 0;
+  }
+
 }
 
 export default new KeychainStore()

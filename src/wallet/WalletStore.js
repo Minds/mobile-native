@@ -60,6 +60,13 @@ class WalletStore {
     return walletService.confirm(number, code, secret);
   }
 
+  @action reset() {
+    this.balance = -1;
+    this.addresses = [];
+    this.refreshing = false;
+    this.loaded = false;
+  }
+
   // TODO: Implement forced auto-refresh every X minutes
   // TODO: Implement socket and atomic increases/decreases
 }

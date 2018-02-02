@@ -8,6 +8,7 @@ import BlockchainApiService from '../BlockchainApiService';
 import BlockchainWalletService from './BlockchainWalletService';
 
 class BlockchainWalletStore {
+
   @observable inProgress = false;
   @observable loaded = false;
   @observable wallets = [];
@@ -101,6 +102,14 @@ class BlockchainWalletStore {
     await BlockchainWalletService.delete(address);
     this.load(true);
   }
+
+  @action
+  reset() {
+    this.inProgress = false;
+    this.loaded = false;
+    this.wallets = [];
+  }
+
 }
 
 export default new BlockchainWalletStore();

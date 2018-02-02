@@ -119,6 +119,14 @@ class BoostStore {
     }
   }
 
+  @action
+  reset() {
+    this.list = new OffsetListStore();
+    this.filter = 'newsfeed';
+    this.peer_filter = 'inbox';
+    this.loading = false;
+  }
+
 }
 
 export default new BoostStore();

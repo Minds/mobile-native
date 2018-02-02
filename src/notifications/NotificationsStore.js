@@ -139,6 +139,16 @@ class NotificationsStore {
   setUnread(count) {
     this.unread = count;
   }
+
+  @action
+  reset() {
+    this.list = new OffsetFeedListStore('shallow');
+    this.unread = 0;
+    this.filter = 'all';
+    this.pollInterval = null;
+    this.loading = false;
+  }
+
 }
 
 export default new NotificationsStore();

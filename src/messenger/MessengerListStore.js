@@ -16,6 +16,7 @@ import socket from '../common/services/socket.service';
  * Messenger Conversation List Store
  */
 class MessengerListStore {
+
   @observable conversations = [];
   @observable refreshing = false;
 
@@ -176,6 +177,19 @@ class MessengerListStore {
         this.refreshing = false;
       }));
   }
+
+  @action
+  reset() {
+    this.conversations = [];
+    this.refreshing = false;
+    this.search = '';
+    this.configured = false;
+    this.unlocking = false;
+    this.offset = '';
+    this.newsearch = true;
+    this.loaded = false;
+  }
+
 }
 
 export default new MessengerListStore();

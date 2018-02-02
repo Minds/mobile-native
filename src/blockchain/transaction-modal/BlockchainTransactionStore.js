@@ -11,6 +11,7 @@ let approvalDispose;
  * Blockchain Transaction Store
  */
 class BlockchainTransactionStore {
+
   @observable isApproving = false;
   @observable approvalMessage = '';
   @observable approval = void 0;
@@ -90,6 +91,16 @@ class BlockchainTransactionStore {
 
     BlockchainWalletService.getFunds(this.baseOptions.from)
       .then(action(funds => this.funds = funds));
+  }
+
+  @action
+  reset() {
+    this.isApproving = false;
+    this.approvalMessage = '';
+    this.approval = void 0;
+    this.baseOptions = {};
+    this.estimateGasLimit = 0;
+    this.funds = null;
   }
 }
 
