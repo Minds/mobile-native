@@ -118,8 +118,6 @@ export default class ActivityActions extends Component {
     }
 
     options.push( 'Share' );
-    options.push( 'Translate' );
-
 
     if (!this.props.entity['is:muted']) {
       options.push( 'Mute notifications' );
@@ -218,8 +216,6 @@ export default class ActivityActions extends Component {
         break;
       case 'Share':
         shareService.share(this.props.entity.message, MINDS_URI + 'newsfeed/' + this.props.entity.guid);
-        break;
-      case 'Translate':
         break;
       case 'Report':
         this.props.navigation.navigate('Report', { entity: this.props.entity });
