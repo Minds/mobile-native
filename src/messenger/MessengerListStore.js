@@ -158,6 +158,11 @@ class MessengerListStore {
   }
 
   @action
+  clearConversations() {
+    this.conversations = [];
+  }
+
+  @action
   refresh() {
     this.refreshing    = true;
     this.loaded        = false;

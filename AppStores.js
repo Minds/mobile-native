@@ -57,6 +57,15 @@ sessionService.onLogout(() => {
   newsfeed.clearBoosts();
   discovery.list.clearList();
   user.clearUser();
+  channel.clearStores();
+  comments.clearComments();
+  blogs.clearFeed();
+  groups.list.clearList();
+  groupView.list.clearList();
+  boost.list.clearList();
+  messengerConversation.clear();
+  messengerList.clearConversations();
+  notifications.list.clearList();
 });
 
 export default stores;

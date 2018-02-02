@@ -35,6 +35,13 @@ class ChannelStores {
     }
   }
 
+  @action
+  clearStores() {
+    for (guid in this.stores) {
+      this.stores[guid] = null;
+    }
+  }
+
 }
 
 export default new ChannelStores();
