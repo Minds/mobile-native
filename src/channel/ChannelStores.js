@@ -36,7 +36,7 @@ class ChannelStores {
   }
 
   @action
-  clearStores() {
+  reset() {
     for (guid in this.stores) {
       this.stores[guid] = null;
     }
