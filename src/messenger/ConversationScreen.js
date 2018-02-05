@@ -97,6 +97,9 @@ export default class ConversationScreen extends Component {
             underlineColorAndroid='transparent'
             placeholder='Type your message...'
             onChangeText={(text) => this.setState({ text })}
+            multiline={true}
+            autogrow={true}
+            maxHeight={110}
             value={this.state.text}
           />
           <TouchableOpacity onPress={this.send} style={styles.sendicon}><Icon name="md-send" size={24} style={{ color: '#444' }}/></TouchableOpacity>
@@ -143,7 +146,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   messagePoster: {
-    height: 50,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ccc',
     flexDirection: 'row',
     display: 'flex',
     alignItems: 'center',
