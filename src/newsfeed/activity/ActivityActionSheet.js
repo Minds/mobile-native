@@ -79,13 +79,7 @@ export default class ActivityActions extends Component {
           options.push( 'Remove explicit' );
         }
       }
-
-      if (!this.props.entity.ownerObj.subscribed) {
-        options.push( 'Subscribe' );
-      } else {
-        options.push( 'Unsubscribe' );
-      }
-
+      
       if (this.state && this.state.userBlocked) {
         options.push( 'Unblock user' );
       } else {
@@ -193,20 +187,6 @@ export default class ActivityActions extends Component {
         break;
       case 'Report':
         this.props.navigation.navigate('Report', { entity: this.props.entity });
-        break;
-      case 'Subscribe':
-        this.props.newsfeed.list.newsfeedToggleSubscription(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
-        break;
-      case 'Unsubscribe':
-        this.props.newsfeed.list.newsfeedToggleSubscription(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
         break;
     }
 
