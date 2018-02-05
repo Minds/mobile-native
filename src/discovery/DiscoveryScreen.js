@@ -122,9 +122,6 @@ export default class DiscoveryScreen extends Component {
    * Render
    */
   render() {
-
-    if (!this.state.active) return <View/>;
-
     let body;
 
     const discovery = this.props.discovery;
@@ -288,6 +285,7 @@ export default class DiscoveryScreen extends Component {
    * Render a tile
    */
   renderTile = (row) => {
+    if (!this.state.active) return <View />;
     return (
       <DiscoveryTile entity={row.item} size={this.state.itemHeight} navigation={this.props.navigation}/>
     );
