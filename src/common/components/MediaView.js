@@ -84,7 +84,7 @@ export default class MediaView extends Component {
       guid = this.props.entity.cinemr_guid;
     }
     return (
-      <View style={styles.imageContainer}>
+      <View style={styles.videoContainer}>
         <MindsVideo video={{'uri': 'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/' + guid +  '/360.mp4'}} entity={this.props.entity}/>
       </View>
     );
@@ -128,9 +128,9 @@ export default class MediaView extends Component {
         />
       </TouchableOpacity>
       ) : (
-      <TouchableOpacity
-        onPress={this.navToImage}
-        style={styles.imageContainer}
+      <TouchableOpacity 
+        onPress={this.navToImage} 
+        style={[styles.imageContainer, { minHeight: 200 }]} 
         activeOpacity={1}
       >
         <ExplicitImage
@@ -195,7 +195,13 @@ const styles = StyleSheet.create({
     //minHeight: 200,
   },
   image: {
+    //height: 200,
     flex: 1,
+  },
+  videoContainer: {
+    flex: 1,
+    alignItems: 'stretch',
+    minHeight: 250,
   },
   title: {
     fontWeight: 'bold',
