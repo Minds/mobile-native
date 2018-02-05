@@ -42,7 +42,7 @@ class DiscoveryStore {
   list = new OffsetListStore('shallow');
 
   @observable searchtext = '';
-  @observable filter     = 'featured';
+  @observable filter     = 'trending';
   @observable type       = 'object/image';
   @observable category   = 'all';
 
@@ -123,7 +123,7 @@ class DiscoveryStore {
   }
 
   @action
-  reset() {
+  clearList() {
     this.type = 'object/image';
     this.filter = 'featured';
   }
@@ -140,7 +140,7 @@ class DiscoveryStore {
     this.filter = 'search';
 
     if (text == '') {
-      this.reset();
+      this.clearList();
     } else if (text.indexOf("#") > -1) {
       this.type = "activity";
     } else {
@@ -175,7 +175,7 @@ class DiscoveryStore {
     };
     this.list = new OffsetListStore('shallow');
     this.searchtext = '';
-    this.filter = 'featured';
+    this.filter = 'trending';
     this.type  = 'object/image';
     this.category = 'all';
     this.loading = false;
