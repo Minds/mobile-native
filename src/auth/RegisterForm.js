@@ -19,6 +19,8 @@ import { register } from './RegisterService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
+import { observer, inject } from 'mobx-react/native';
+
 import {
   CheckBox,
   Button
@@ -30,6 +32,8 @@ import sessionService from '../common/services/session.service';
 /**
  * Register Form
  */
+@inject('user')
+@observer
 export default class RegisterForm extends Component {
   state = {
     error: {},
@@ -158,10 +162,15 @@ export default class RegisterForm extends Component {
         .then(data => {
           login(this.state.username ,this.state.password)
             .then(response => {
-              this.props.onRegister(sessionService.guid);
+              this.props.user.load().then((result) => { 
+                this.props.onRegister(sessionService.guid);
+              }).catch((err) => {
+                alert('Error logging in');
+                this.goToLogin();
+              });
             })
             .catch(err => {
-              alert(err);
+              alert(JSON.stringify(err));
             });
 
         })
