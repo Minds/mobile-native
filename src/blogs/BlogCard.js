@@ -1,11 +1,12 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
   Text,
   Image,
   View,
+  TouchableOpacity,
   Button,
   StyleSheet,
 } from 'react-native';
@@ -15,16 +16,25 @@ import {
   inject
 } from 'mobx-react/native'
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  Avatar,
+} from 'react-native-elements';
+
 import { MINDS_CDN_URI } from '../config/Config';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../common/helpers/date';
-
+import api from '../common/services/api.service';
 /**
  * Blog Card
  */
-@observer
-export default class BlogCard extends Component {
+export default class BlogCard extends PureComponent {
+
+  /**
+   * Navigate to blog
+   */
+  navToBlog = () => {
+    this.props.navigation.navigate('BlogView', { blog: this.props.entity });
+  }
 
   /**
    * Get Blog Avatar
@@ -40,24 +50,29 @@ export default class BlogCard extends Component {
   render() {
     const blog = this.props.entity;
 
-    const image = { uri: blog.thumbnail_src };
+    const image = { uri: blog.thumbnail_src, headers: api.buildHeaders() };
 
     return (
-      <View>
+      <TouchableOpacity onPress={this.navToBlog} >
         <FastImage source={image} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
         <View style={styles.headertextcontainer}>
           <View style={styles.namecontainer}>
             <View style={styles.namecol}>
               <Text style={styles.name}>{blog.title}</Text>
               <View style={styles.ownerContainer}>
-                <Image source={this.getAvatar()} style={styles.avatar} />
+                <Avatar
+                  width={35}
+                  height={35}
+                  rounded
+                  source={this.getAvatar()}
+                />
                 <Text style={styles.username}>{blog.ownerObj.username.toUpperCase()}</Text>
                 <Text style={styles.createdDate}>{formatDate(blog.time_created)}</Text>
               </View>
             </View>
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   }
 }
