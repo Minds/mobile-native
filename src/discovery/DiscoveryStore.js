@@ -77,7 +77,9 @@ class DiscoveryStore {
       case 'object/video':
         feed.entities = ActivityModel.createMany(feed.entities);
         if (preloadImage) {
-          feed.entities.each.preloadThumb();
+          feed.entities.forEach(entity => {
+            entity.preloadThumb();
+          });
         }
         break;
       case 'object/blog':

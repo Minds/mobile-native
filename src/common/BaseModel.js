@@ -1,6 +1,5 @@
 import { extendShallowObservable, extendObservable } from 'mobx';
 import _ from 'lodash';
-import Collection from './Collection';
 
 /**
  * Base model
@@ -96,7 +95,7 @@ export default class BaseModel {
    * @param {array} arrayData
    */
   static createMany(arrayData) {
-    const collection = new Collection();
+    const collection = [];
     if (!arrayData) return collection;
 
     arrayData.forEach((data) => {
