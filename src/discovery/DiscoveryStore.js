@@ -52,6 +52,7 @@ class DiscoveryStore {
    * Load feed
    */
   async loadList(force=false, preloadImage=false) {
+    const type = this.type;
     const store = this.stores[this.type];
     // no more data or loading? return
     if (!force && store.list.cantLoadMore() || store.loading) {
@@ -60,7 +61,7 @@ class DiscoveryStore {
     store.loading = true;
     return discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext)
       .then(feed => {
-        this.createModels(feed, preloadImage);
+        this.createModels(type, feed, preloadImage);
         store.list.setList(feed);
       })
       .finally(() => {
@@ -71,8 +72,8 @@ class DiscoveryStore {
       });
   }
 
-  createModels(feed, preloadImage) {
-    switch (this.type) {
+  createModels(type, feed, preloadImage) {
+    switch (type) {
       case 'object/image':
       case 'object/video':
         feed.entities = ActivityModel.createMany(feed.entities);
