@@ -32,6 +32,7 @@ class GroupsStore {
     return groupsService.loadList('featured', this.list.offset)
       .then(data => {
         this.list.setList(data);
+        this.assignRowKeys(data);
         this.loaded = true;
       })
       .finally(() => {
@@ -40,6 +41,16 @@ class GroupsStore {
       .catch(err => {
         console.log('error', err);
       });
+  }
+
+  /**
+   * Generate a unique Id for use with list views
+   * @param {object} feed
+   */
+  assignRowKeys(feed) {
+    feed.entities.forEach((entity, index) => {
+      entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
+    });
   }
 
   @action

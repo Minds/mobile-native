@@ -41,6 +41,7 @@ export default class GroupsListScreen extends Component {
       <ListItem
         containerStyle={{ borderBottomWidth: 0 }}
         title={item.name}
+        keyExtractor={item => item.rowKey}
         avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_CDN_URI + 'fs/v1/avatars/' + item.guid + '/small' }} />}
         subtitle={'Members ' + item['members:count']}
         hideChevron={true}
