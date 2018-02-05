@@ -325,10 +325,14 @@ export default class DiscoveryScreen extends Component {
         avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_CDN_URI + 'fs/v1/avatars/' + item.guid + '/small' }} />}
         subtitle={'Members ' + item['members:count']}
         hideChevron={true}
+        onPress={() => this.navigateToGroup(item)}
       />
     )
   }
 
+  navigateToGroup(group) {
+    this.props.navigation.navigate('GroupView', { group: group })
+  }
 }
 
 const styles = StyleSheet.create({

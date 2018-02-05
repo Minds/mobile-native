@@ -6,10 +6,9 @@ import api from './../common/services/api.service';
 class DiscoveryService {
 
   async getFeed(offset, type, filter, q) {
-
+    let endpoint;
     // is search
     if (q) {
-      let endpoint;
       switch (type) {
         case 'activity':
           endpoint = 'api/v1/search';
@@ -35,8 +34,18 @@ class DiscoveryService {
         });
     }
 
-    return api.get('api/v1/entities/' + filter + '/' + type, { limit: 12, offset: offset })
-      .then((data) => {
+    if (type == 'group') {
+      endpoint = '/api/v1/groups/featured';
+    } else {
+      endpoint = 'api/v1/entities/' + filter + '/' + type;
+    }
+
+
+    return api.get(endpoint, { limit: 12, offset: offset })
+    .then((data) => {
+        if (type == 'group' && offset && data.entities) {
+          data.entities.shift();
+        }
         return {
           entities: data.entities,
           offset: data['load-next'],
