@@ -87,6 +87,20 @@ class ChannelService {
         throw "Ooops";
       })
   }
+
+  getSubscribers(guid, filter, offset) {
+    return api.get('api/v1/subscribe/' + filter + '/' + guid, { offset: offset, limit: 6 })
+    .then((data) => {
+      return {
+        entities: data.users,
+        offset: data['load-next'],
+        }
+      })
+      .catch(err => {
+        console.log('error');
+        throw "Ooops";
+      })
+  }
 }
 
 export default new ChannelService();

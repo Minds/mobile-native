@@ -142,7 +142,7 @@ class NotificationsStore {
 
   @action
   reset() {
-    this.list = new OffsetFeedListStore('shallow');
+    this.list = new OffsetListStore('shallow');
     this.unread = 0;
     this.filter = 'all';
     this.pollInterval = null;

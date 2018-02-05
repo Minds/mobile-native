@@ -123,6 +123,12 @@ export default class ChannelHeader extends Component {
     }
   }
 
+  _navToSubscribers() {
+    if (this.props.navigation) {
+      this.props.navigation.navigate('Subscribers', { guid : this.props.channel.channel.guid });
+    }
+  }
+
   onEditAction = () => {
     let editing = this.props.edit,
       payload = null;
@@ -299,10 +305,12 @@ export default class ChannelHeader extends Component {
 
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
-            <View style={styles.counter}>
-              <Text style={styles.countertitle}>SUBSCRIBERS</Text>
-              <Text style={styles.countervalue}>{abbrev(channel.subscribers_count, 0)}</Text>
-            </View>
+            <TouchableHighlight underlayColor="transparent" style={[styles.counter]} onPress={() => { this._navToSubscribers() }}>
+              <View style={styles.counter}>
+                <Text style={styles.countertitle}>SUBSCRIBERS</Text>
+                <Text style={styles.countervalue}>{abbrev(channel.subscribers_count, 0)}</Text>
+              </View>
+            </TouchableHighlight>
             <View style={styles.counter}>
               <Text style={styles.countertitle}>VIEWS</Text>
               <Text style={styles.countervalue}>{abbrev(channel.impressions, 0)}</Text>

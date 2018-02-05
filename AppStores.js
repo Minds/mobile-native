@@ -14,6 +14,7 @@ import walletHistory from './src/wallet/WalletHistoryStore';
 import wire from './src/wire/WireStore';
 import groups from './src/groups/GroupsStore';
 import groupView from './src/groups/GroupViewStore';
+import channelSubscribersStore from './src/channel/subscribers/ChannelSubscribersStore';
 import keychain from './src/keychain/KeychainStore';
 import tabs from './src/tabs/TabsStore';
 import blockchainTransaction from './src/blockchain/transaction-modal/BlockchainTransactionStore';
@@ -47,6 +48,7 @@ const stores = {
   blockchainTransaction,
   blockchainWallet,
   blockchainWalletSelector,
+  channelSubscribersStore
 };
 
 /**
