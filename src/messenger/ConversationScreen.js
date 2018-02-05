@@ -38,10 +38,6 @@ export default class ConversationScreen extends Component {
     text: ''
   }
 
-  static navigationOptions = ({ navigation }) => ({
-    headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.tbarbutton}/>
-  });
-
   componentWillMount() {
     let conversation;
     if(this.props.navigation.state.params.conversation) {
