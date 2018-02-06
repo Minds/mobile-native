@@ -53,11 +53,6 @@ export default class ChannelStore {
   }
 
   @action
-  async loadFeeds() {
-    await this.feedStore.load();
-  }
-
-  @action
   subscribe() {
     let value = !this.channel.subscribed;
     return channelService.toggleSubscription(this.channel.guid, value)

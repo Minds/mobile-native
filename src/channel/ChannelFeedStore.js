@@ -75,43 +75,6 @@ export default class ChannelFeedStore {
     this.guid = guid;
   }
 
-  async load() {
-    switch (this.filter) {
-      case 'feed':
-        await this.loadFeed();
-        break;
-      case 'images':
-        await this.loadImagesFeed();
-        break;
-      case 'videos':
-        await this.loadVideosFeed();
-        break;
-      case 'blogs':
-        await this.loadBlogsFeed();
-        break;
-    }
-  }
-
-  /**
-   * Load channel feed
-   */
-  async loadFeed() {
-    if (this.list.cantLoadMore() || this.loading) {
-      return Promise.resolve();
-    }
-    this.loading = true;
-
-    const feed = await getFeedChannel(this.guid, this.list.offset)
-
-    if (this.filter != 'rewards') {
-      this.assignRowKeys(feed);
-      feed.entities = ActivityModel.createMany(feed.entities);
-      this.list.setList(feed);
-    }
-
-    this.loading = false;
-  }
-
   /**
    * Generate a unique Id for use with list views
    * @param {object} feed
@@ -123,14 +86,49 @@ export default class ChannelFeedStore {
     });
   }
 
-  /**
-   * Load channel images feed
-   */
-  async loadImagesFeed() {
+  async loadFeed() {
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
+    switch (this.filter) {
+      case 'feed':
+        await this._loadFeed();
+        break;
+      case 'images':
+        await this._loadImagesFeed();
+        break;
+      case 'videos':
+        await this._loadVideosFeed();
+        break;
+      case 'blogs':
+        await this._loadBlogsFeed();
+        break;
+    }
+  }
 
+  /**
+   * Load channel feed
+   */
+  async _loadFeed() {
+    this.loading = true;
+
+    const feed = await getFeedChannel(this.guid, this.list.offset)
+    console.log('feed', feed)
+
+    if (this.filter != 'rewards') {
+      this.assignRowKeys(feed);
+      feed.entities = ActivityModel.createMany(feed.entities);
+      this.list.setList(feed);
+    }
+
+    this.loading = false;
+  }
+
+
+  /**
+   * Load channel images feed
+   */
+  async _loadImagesFeed() {
     this.loading = true;
     const feed = await channelService.getImageFeed(this.guid, this.list.offset);
     feed.entities = ActivityModel.createMany(feed.entities);
@@ -143,11 +141,7 @@ export default class ChannelFeedStore {
   /**
    * Load channel videos feed
    */
-  async loadVideosFeed() {
-    if (this.list.cantLoadMore() || this.loading) {
-      return Promise.resolve();
-    }
-
+  async _loadVideosFeed() {
     this.loading = true;
 
     const feed = await channelService.getVideoFeed(this.guid, this.list.offset);
@@ -161,10 +155,7 @@ export default class ChannelFeedStore {
   /**
    * Load channel videos feed
    */
-  async loadBlogsFeed() {
-    if (this.list.cantLoadMore() || this.loading) {
-      return Promise.resolve();
-    }
+  async _loadBlogsFeed() {
     this.loading = true;
     const feed = await channelService.getBlogFeed(this.guid, this.list.offset);
     feed.entities = BlogModel.createMany(feed.entities);
@@ -191,7 +182,7 @@ export default class ChannelFeedStore {
     }
     //this.list.refresh();
     this.list.clearList();
-    await this.load();
+    await this.loadFeed();
     this.list.refreshDone();
   }
 

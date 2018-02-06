@@ -19,6 +19,26 @@ import colors from '../../styles/Colors';
 @observer
 export default class Toolbar extends Component {
 
+  filterRewards = () => {
+    this.props.feed.setFilter('rewards');
+  }
+
+  filterFeed = () => {
+    this.props.feed.setFilter('feed');
+  }
+
+  filterImages = () => {
+    this.props.feed.setFilter('images');
+  }
+
+  filterVideos = () => {
+    this.props.feed.setFilter('videos');
+  }
+
+  filterBlogs = () => {
+    this.props.feed.setFilter('blogs');
+  }
+
   render() {
     const filter = this.props.feed.filter;
 
@@ -28,7 +48,7 @@ export default class Toolbar extends Component {
 
     if (this.props.hasRewards) {
       rewards = (
-        <TouchableOpacity style={styles.button} onPress={() => this.props.feed.setFilter('rewards')}>
+        <TouchableOpacity style={styles.button} onPress={this.filterRewards}>
           <IonIcon name="ios-flash" size={18} color={filter == 'rewards' ? colors.primary : color} />
           <Text style={styles.buttontext}>REWARDS</Text>
         </TouchableOpacity>
@@ -38,19 +58,19 @@ export default class Toolbar extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.topbar}>
-          <TouchableOpacity style={styles.button} onPress={() => this.props.feed.setFilter('feed')}>
+          <TouchableOpacity style={styles.button} onPress={this.filterFeed}>
             <Icon name="list" size={18} color={filter == 'feed' ? colors.primary : color} />
             <Text style={styles.buttontext}>FEED</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => this.props.feed.setFilter('images')} >
+          <TouchableOpacity style={styles.button} onPress={this.filterImages} >
             <IonIcon name="md-image" size={18} color={filter == 'images' ? colors.primary : color} />
             <Text style={styles.buttontext}>IMAGES</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => this.props.feed.setFilter('videos')} >
+          <TouchableOpacity style={styles.button} onPress={this.filterVideos} >
             <IonIcon name="md-videocam" size={18} color={filter == 'videos' ? colors.primary : color} />
             <Text style={styles.buttontext}>VIDEOS</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => this.props.feed.setFilter('blogs')}>
+          <TouchableOpacity style={styles.button} onPress={this.filterBlogs}>
               <Icon name="subject" size={18} color={filter == 'blogs' ? colors.primary : color} />
               <Text style={styles.buttontext}>BLOGS</Text>
           </TouchableOpacity>
