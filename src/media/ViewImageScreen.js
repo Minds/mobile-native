@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 
 import {
-  View, 
+  View,
   Dimensions,
   Image,
   StatusBar,
@@ -14,6 +14,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import PhotoView from 'react-native-photo-view';
+
+import { CommonStyle } from '../styles/Common';
 
 /**
  * Full screen image viewer
@@ -45,7 +47,7 @@ export default class ViewImageScreen extends Component {
         minimumZoomScale={1}
         maximumZoomScale={3}
         androidScaleType="fitCenter"
-        style={{ flex:1 }} />
+        style={[CommonStyle.flexContainer, CommonStyle.backgroundBlack]} />
     )
   }
 }
