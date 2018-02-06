@@ -27,6 +27,7 @@ import Toolbar from './toolbar/Toolbar';
 import NewsfeedList from '../newsfeed/NewsfeedList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import colors from '../styles/Colors';
+import BlogCard from '../blogs/BlogCard'
 
 /**
  * Channel Screen
@@ -59,7 +60,7 @@ export default class ChannelScreen extends Component {
 
   componentDidMount() {
     this.props.channel.store(this.guid).load();
-    this.props.channel.store(this.guid).loadFeeds();
+    this.props.channel.store(this.guid).feedStore.loadFeed();
     //this.props.channel.loadrewards(this.guid);
   }
 
@@ -86,10 +87,10 @@ export default class ChannelScreen extends Component {
    * Render
    */
   render() {
-    const feed = this.props.channel.store(this.guid).feedStore;
-    const channel     = this.props.channel.store(this.guid).channel;
-    const rewards     = this.props.channel.store(this.guid).rewards;
-    const guid        = this.guid;
+    const feed    = this.props.channel.store(this.guid).feedStore;
+    const channel = this.props.channel.store(this.guid).channel;
+    const rewards = this.props.channel.store(this.guid).rewards;
+    const guid    = this.guid;
 
     if (!channel.guid) {
       return (
@@ -126,8 +127,17 @@ export default class ChannelScreen extends Component {
       </View>
     );
 
+    let renderActivity = null
+
+    // is a blog? use blog card to render
+    if(feed.filter == 'blogs') {
+      renderActivity = (row) => {
+        return <BlogCard entity={row.item} navigation={this.props.navigation}/>
+      }
+    }
+
     return (
-      <NewsfeedList newsfeed={feed} guid={guid} header={header} navigation={this.props.navigation} />
+      <NewsfeedList newsfeed={feed} renderActivity={renderActivity} guid={guid} header={header} navigation={this.props.navigation} />
     );
   }
 }
