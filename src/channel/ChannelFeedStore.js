@@ -113,7 +113,6 @@ export default class ChannelFeedStore {
     this.loading = true;
 
     const feed = await getFeedChannel(this.guid, this.list.offset)
-    console.log('feed', feed)
 
     if (this.filter != 'rewards') {
       this.assignRowKeys(feed);
