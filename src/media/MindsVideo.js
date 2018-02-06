@@ -180,7 +180,7 @@ export default class MindsVideo extends PureComponent {
         />
       )
     } else {
-      const image = { uri: entity.custom_data.thumbnail_src };
+      const image = { uri: entity.get('custom_data.thumbnail_src') || entity.thumbnail_src };
       return (
         <FastImage source={image} style={[CommonStyle.positionAbsolute]} />
       )
