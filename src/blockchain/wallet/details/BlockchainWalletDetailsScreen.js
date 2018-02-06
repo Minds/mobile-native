@@ -57,6 +57,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
     address: '',
     alias: '',
     remote: false,
+    offchain: false,
     current: false,
     tokens: null,
     eth: null
@@ -71,6 +72,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
       address: this.props.navigation.state.params.address,
       edit: !!this.props.navigation.state.params.edit,
       new: this.props.navigation.state.params.new,
+      offchain: false,
       tokens: null,
       eth: null,
     });
@@ -88,20 +90,24 @@ export default class BlockchainWalletDetailsScreen extends Component {
     this.setLabel();
   }
 
-  async load(address) {
-    const wallet = await BlockchainWalletService.get(address || this.state.address);
+  async load(passedAddress) {
+    const address = passedAddress || this.state.address,
+      offchain = address.toLowerCase() === 'offchain';
+
+    const wallet = !offchain && (await BlockchainWalletService.get(address));
 
     if (!wallet) {
       this.setState({
         editable: false,
-        importable: true,
+        importable: !offchain,
         delete: false,
-        alias: '',
-        remote: true,
+        alias: 'OffChain Wallet',
+        remote: !offchain,
+        offchain: offchain,
         current: false,
       });
 
-      this.loadFunds();
+      this.loadFunds(address);
 
       return;
     }
@@ -113,19 +119,22 @@ export default class BlockchainWalletDetailsScreen extends Component {
       alias: wallet.alias || '',
       remote: wallet.remote,
       current: wallet.current,
+      offchain: false,
     });
 
-    this.loadFunds();
+    this.loadFunds(address);
     this.loadRemote();
   }
 
-  async loadFunds() {
+  async loadFunds(passedAddress) {
+    const address = passedAddress || this.state.address
+
     this.setState({
       tokens: null,
       eth: null,
     });
 
-    const { tokens, eth } = await BlockchainWalletService.getFunds(this.state.address, true);
+    const { tokens, eth } = await BlockchainWalletService.getFunds(address, true);
 
     this.setState({
       tokens,
@@ -375,12 +384,12 @@ export default class BlockchainWalletDetailsScreen extends Component {
   qrCode() {
     return (
       <View>
-        <View style={[ CommonStyle.rowJustifyCenter, styles.qrCodeView ]}>
+        {!this.state.offchain && <View style={[ CommonStyle.rowJustifyCenter, styles.qrCodeView ]}>
           <QRCode
             value={`ethereum:${this.state.address.toLowerCase()}`}
             size={getQRSize(3 / 4)}
           />
-        </View>
+        </View>}
 
         <View style={[ CommonStyle.rowJustifyCenter, styles.qrCodeView ]}>
           <Text style={styles.qrCodeLegend} selectable>{this.state.address.toUpperCase()}</Text>
@@ -399,7 +408,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
 
           {this.balanceItem()}
 
-          {this.receiverItem()}
+          {!this.state.offchain && this.receiverItem()}
          
           {this.state.editable && this.labelItem()}
 

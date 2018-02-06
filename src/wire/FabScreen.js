@@ -41,8 +41,6 @@ import FeaturesService from '../common/services/features.service';
 export default class FabScreen extends Component {
 
   componentWillMount() {
-    //this.props.wire.setMethod(FeaturesService.has('crypto') ? 'tokens' : 'money');
-
     const owner = this.getOwner();
     this.props.wire.setGuid(owner.guid);
 
@@ -60,38 +58,20 @@ export default class FabScreen extends Component {
     const owner = wire.owner;
 
     if (params.default) {
-      wire.setMethod(params.default.type);
       wire.setAmount(params.default.min);
 
       if (!params.disableThresholdCheck && owner.sums && owner.sums[params.default.type]) {
         wire.setAmount(wire.amount - Math.ceil(owner.sums[params.default.type]));
       }
-    } else if (this.owner.eth_wallet) {
-      wire.setMethod('tokens');
-      wire.setAmount(1);
-      wire.setRecurring(true);
-    } else if (this.owner.merchant) {
-      wire.setCurrency('money');
-      wire.setAmount(1);
-      wire.setRecurring(true);
-    } else {
-      // TODO: Refactor to `rewards`
-      wire.setMethod('points');
-      wire.setAmount(1000);
-      wire.setRecurring(true);
     }
 
     if (wire.amount < 0) {
-      wire.setAmount(0);;
+      wire.setAmount(0);
     }
   }
 
   getOwner() {
     return this.props.navigation.state.params.owner;
-  }
-
-  setMethod(opt) {
-    this.props.wire.setMethod(opt);
   }
 
   /**
@@ -123,8 +103,8 @@ export default class FabScreen extends Component {
     let carousel = null;
 
     // show carousel?
-    if (this.props.wire.method == 'money' && this.props.wire.owner.wire_rewards) {
-      carousel = <RewardsCarousel rewards={this.props.wire.owner.wire_rewards.rewards.money} textAlign={'center'} backgroundColor="#F8F8F8" hideIcon={true} />
+    if (this.props.wire.owner.wire_rewards && this.props.wire.owner.wire_rewards.length) {
+      carousel = <RewardsCarousel rewards={this.props.wire.owner.wire_rewards.rewards.tokens} textAlign={'center'} backgroundColor="#F8F8F8" hideIcon={true} />
     }
 
     // sending?
@@ -140,30 +120,46 @@ export default class FabScreen extends Component {
         {icon}
 
         <Text style={styles.subtext}>
-          Support <Text style={styles.bold}>@{ owner.username }</Text> by sending them dollars{FeaturesService.has('crypto') ? ' or Minds Tokens' : ''}.
+          Support <Text style={styles.bold}>@{ owner.username }</Text> by sending them tokens.
           Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise,
           it's a donation.
         </Text>
 
-        <TextInput ref="input" onChangeText={this.changeInput} style={[CommonStyle.field, styles.input]} underlineColorAndroid="transparent" value={this.props.wire.amount.toString()} keyboardType="numeric" />
+        <View style={{ flexDirection: 'row', marginTop: 32, marginBottom: 32, }}>
+          <TextInput 
+            ref="input"
+            onChangeText={this.changeInput}
+            style={[CommonStyle.field, styles.input]}
+            underlineColorAndroid="transparent"
+            value={this.props.wire.amount.toString()}
+            keyboardType="numeric"
+            />
 
-        {this.renderOptions()}
+          <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+            <Text style={{ fontSize: 24, fontWeight: '600', fontFamily: 'Roboto', padding: 16, color: '#555' }}>
+              Tokens
+            </Text>
+          </View>
+        </View>
 
-        <View style={ CommonStyle.field }>
+        <View style={{ width: '100%', alignSelf: 'flex-start', }}>
           <CheckBox
             title="Repeat this transaction every month"
             checked={this.props.wire.recurring}
             onPress={() => this.props.wire.toggleRecurring()}
-            center={true}
+            left
             checkedIcon="check-circle-o"
             checkedColor={ colors.primary }
             uncheckedIcon="circle-o"
             uncheckedColor={ colors.greyed }
+            containerStyle={{ margin: 0 }}
           />
         </View>
 
-        <Text style={styles.rewards}>{ owner.username }'s rewards</Text>
-        <Text style={styles.lastmonth}>You have sent <Text style={styles.bold}>{txtAmount}</Text> in the last month.</Text>
+        { this.props.wire.owner.wire_rewards && this.props.wire.owner.wire_rewards.length && <View>
+          <Text style={styles.rewards}>{ owner.username }'s rewards</Text>
+          <Text style={styles.lastmonth}>You have sent <Text style={styles.bold}>{txtAmount}</Text> in the last month.</Text>
+          </View> }
 
         {carousel}
 
@@ -240,40 +236,11 @@ export default class FabScreen extends Component {
    * Get formated amount of last month sum
    */
   getTextAmount() {
-    const wire = this.props.wire;
-    switch (wire.method) {
-      case 'points':
-        return wire.formatAmount(wire.owner.sums.points);
-      case 'money':
-        return wire.formatAmount(wire.owner.sums.money);
-      case 'tokens':
-        return wire.formatAmount(wire.owner.sums.tokens);
-    }
+    return this.props.wire.formatAmount(this.props.wire.owner.sums.tokens);
   }
 
   changeInput = (val) => {
     this.props.wire.setAmount(val);
-  }
-
-  renderOptions() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.topbar}>
-          <TouchableOpacity style={styles.button} onPress={() => this.setMethod('points')}>
-            <McIcon name="bank" size={23} color={this.props.wire.method == 'points' ? selectedcolor : color} />
-            <Text style={[styles.buttontext, { color: this.props.wire.method == 'points' ? selectedcolor : color}]}>Points</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => this.setMethod('money')} >
-            <Icon name="logo-usd" size={24} color={this.props.wire.method == 'money' ? selectedcolor : color} />
-            <Text style={[styles.buttontext, { color: this.props.wire.method == 'money' ? selectedcolor : color}]}>Money</Text>
-          </TouchableOpacity>
-          {FeaturesService.has('crypto') && <TouchableOpacity style={styles.button} onPress={() => this.setMethod('tokens')} >
-            <Icon name="md-bulb" size={24} color={this.props.wire.method == 'tokens' ? selectedcolor : color} />
-            <Text style={[styles.buttontext, (this.props.wire.method == 'tokens' ? styles.selected:null)]}>Tokens</Text>
-          </TouchableOpacity>}
-        </View>
-      </View>
-    )
   }
 }
 
@@ -294,16 +261,19 @@ const styles = {
   },
   input: {
     fontSize: 50,
+    paddingRight: 16,
+    backgroundColor: '#eee',
+    borderRadius: 3,
     color: '#666',
-    width:'100%',
-    textAlign: 'center',
+    flex: 1,
+    textAlign: 'right',
   },
   bold: {
     fontWeight: 'bold'
   },
   subtext: {
     fontWeight: '200',
-    textAlign: 'center',
+    textAlign: 'left',
     fontSize: 12,
     color: '#666666',
     marginTop: 12,
@@ -335,8 +305,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     paddingTop: 12,
-    paddingLeft: 10,
-    paddingRight: 10
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   topbar: {
     flex: 1,

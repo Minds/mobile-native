@@ -10,6 +10,12 @@ import NavigationStoreService from '../../common/services/navigation.service';
 
 let dispose;
 
+const DEFAULT_OPTS = {
+  signable: false,
+  offchain: false,
+  buyable: false,
+};
+
 /**
  * Blockchain Store
  */
@@ -18,16 +24,18 @@ class BlockchainWalletSelectorStore {
   @observable isSelecting = false;
   @observable selected = void 0;
   @observable selectMessage = '';
-  @observable signableOnly = false;
+  @observable opts = false;
 
-  @action async waitForSelect(message = '', signableOnly = false) {
+  @action async waitForSelect(message = '', opts = {}) {
     if (this.isSelecting) {
       throw new Error('E_ALREADY_SELECTING');
     }
 
+    opts = Object.assign({}, DEFAULT_OPTS, opts);
+
     this.selected = void 0;
     this.selectMessage = message;
-    this.signableOnly = signableOnly;
+    this.opts = opts;
     this.isSelecting = true;
 
     NavigationStoreService.get().dispatch(NavigationActions.navigate({ routeName: 'BlockchainWalletModal' }));
@@ -46,7 +54,7 @@ class BlockchainWalletSelectorStore {
           this.isSelecting = false;
           this.selected = void 0;
           this.selectMessage = '';
-          this.signableOnly = false;
+          this.opts = Object.assign({}, DEFAULT_OPTS);
 
           resolve(change.newValue);
 
@@ -62,14 +70,14 @@ class BlockchainWalletSelectorStore {
     this.isSelecting = false;
     this.selected = item;
     this.selectMessage = '';
-    this.signableOnly = false;
+    this.opts = Object.assign({}, DEFAULT_OPTS);
   }
 
   @action cancel() {
     this.isSelecting = false;
     this.selected = null;
     this.selectMessage = '';
-    this.signableOnly = false;
+    this.opts = Object.assign({}, DEFAULT_OPTS);
   }
 
   @action
@@ -77,7 +85,7 @@ class BlockchainWalletSelectorStore {
     this.isSelecting = false;
     this.selected = void 0;
     this.selectMessage = '';
-    this.signableOnly = false;
+    this.opts = Object.assign({}, DEFAULT_OPTS);
   }
 
 }

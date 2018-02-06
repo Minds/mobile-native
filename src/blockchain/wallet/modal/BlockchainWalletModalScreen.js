@@ -20,11 +20,16 @@ import BlockchainWalletSelectorStore from '../BlockchainWalletSelectorStore';
 @observer
 export default class BlockchainWalletModalScreen extends Component {
   select(wallet) {
-    if (!wallet || (this.props.blockchainWalletSelector.signableOnly && !wallet.privateKey)) {
-      return;
-    }
+    const opts = this.props.blockchainWalletSelector.opts;
 
-    this.props.blockchainWalletSelector.select(wallet);
+    if (
+      wallet ||
+      (opts.offchain && wallet.address == 'offchain') ||
+      (opts.buyable && wallet.address == 'creditcard') ||
+      (opts.signable && wallet.privateKey)
+    ) {
+      this.props.blockchainWalletSelector.select(wallet);
+    }
   }
 
   cancel() {
@@ -46,6 +51,8 @@ export default class BlockchainWalletModalScreen extends Component {
   });
 
   render() {
+    const opts = this.props.blockchainWalletSelector.opts;
+
     return (
       <View style={[ CommonStyle.flexContainer, CommonStyle.backgroundWhite ]}>
 
@@ -59,7 +66,9 @@ export default class BlockchainWalletModalScreen extends Component {
 
         <BlockchainWalletList
           onSelect={wallet => this.select(wallet)}
-          signableOnly={this.props.blockchainWalletSelector.signableOnly}
+          signableOnly={opts.signable}
+          allowOffchain={opts.offchain}
+          allowCreditCard={opts.buyable}
         />
   
       </View>

@@ -22,7 +22,7 @@ class WalletService {
   // Other currencies (money, usd)
 
   async getBalances() {
-    return await api.get(`api/v1/blockchain/wallet/balance`);
+    return await api.get(`api/v2/blockchain/wallet/balance`);
   }
 
   /**
@@ -30,7 +30,7 @@ class WalletService {
    * @param {string} number
    */
   join(number) {
-    return api.post('api/v1/blockchain/rewards/verify', { number });
+    return api.post('api/v2/blockchain/rewards/verify', { number });
   }
 
   /**
@@ -40,7 +40,7 @@ class WalletService {
    * @param {string} secret
    */
   confirm(number, code, secret) {
-    return api.post('api/v1/blockchain/rewards/confirm', {
+    return api.post('api/v2/blockchain/rewards/confirm', {
       number,
       code,
       secret
@@ -57,7 +57,7 @@ class WalletService {
     startDate.setHours(0, 0, 0);
     endDate.setHours(23, 59, 59);
 
-    return api.get(`api/v1/blockchain/transactions/ledger`, {
+    return api.get(`api/v2/blockchain/transactions/ledger`, {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
         offset: offset
@@ -74,7 +74,7 @@ class WalletService {
     startDate.setHours(0, 0, 0);
     endDate.setHours(23, 59, 59);
 
-    return api.get(`api/v1/blockchain/contributions`, {
+    return api.get(`api/v2/blockchain/contributions`, {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
         offset: offset

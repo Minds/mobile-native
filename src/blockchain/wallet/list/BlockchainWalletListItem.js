@@ -22,9 +22,11 @@ function aliasOrAddressExcerpt(item) {
   return addressExcerpt(item.address);
 }
 
-function addressExcerpt(address, length) {
-  if (!length) 
-    length = 5;
+function addressExcerpt(address, length = 5) {
+  if (!address || (address.toLowerCase().indexOf('0x') !== 0)) {
+    return address;
+  }
+
   return `0×${address.substr(2, length)}...${address.substr(-length)}`;
 }
 
@@ -41,6 +43,10 @@ export default class BlockchainWalletListItem extends Component {
   }
 
   async loadFunds() {
+    if (this.props.item.address === 'creditcard') {
+      return;
+    }
+
     this.setState({
       tokens: null,
       eth: null,
@@ -56,7 +62,13 @@ export default class BlockchainWalletListItem extends Component {
 
   displayValue(value, currency) {
     if (value === null) {
-      return null;
+      return value;
+    }
+
+    if (isNaN(value)) {
+      return (<Text style={styles.value}>
+        {`${value}`}
+      </Text>);
     }
 
     let amount = number(value, 0, 4);
@@ -76,29 +88,29 @@ export default class BlockchainWalletListItem extends Component {
     return (
       <View style={styles.container}>
 
-        <View style={styles.metaContaier}>
+        <View>
           <View style={styles.headerContainer}>
-
-            <Text style={[
-              styles.label,
-              //styles.listAliasHighlight,
-            ]}>
+            <Text style={[styles.label]}>
               {aliasOrAddressExcerpt(this.props.item).toUpperCase()}
             </Text>
-            
 
             { this.props.item.remote ? 
               <Text style={[styles.tag, styles.tagPrimary]}>RECEIVER</Text>
               : null }
 
+            { this.props.item.offchain ? 
+              <Text style={[styles.tag, styles.tagPrimary]}>OFFCHAIN</Text>
+              : null }
           </View>
 
           <View style={styles.subContainer}>
-            { !this.props.item.privateKey ? 
+            { !this.props.item.privateKey && !this.props.item.offchain && !this.props.item.creditcard ? 
               <Text style={[styles.tag, { marginRight: 8, marginLeft: 0}]}>RECEIVE ONLY</Text>
               : null }
 
-            <Text style={styles.listAddress}>{addressExcerpt(this.props.item.address, 5)}</Text>
+            { !this.props.item.creditcard && <Text style={styles.listAddress}>{addressExcerpt(this.props.item.address, 5)}</Text>}
+
+            { this.props.item.creditcard && <Text style={styles.listAddress}>No tokens? No problem!</Text> }
           </View>
 
         </View>

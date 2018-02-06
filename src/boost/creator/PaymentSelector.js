@@ -53,13 +53,11 @@ export default class PaymentSelector extends PureComponent {
   render() {
     const selected = <Text style={[CommonStyle.fontS, CommonStyle.colorPrimary]}>SELECTED</Text>,
       usd = this.getOption('usd', 'USD', this.props.values.usd, selected),
-      rewards = this.getOption('rewards', 'REWARDS', this.props.values.rewards, selected),
       tokens = this.getOption('tokens', 'TOKENS', this.props.values.tokens, selected);
 
     return (
       <View style={CommonStyle.rowJustifyStart}>
         {usd}
-        {this.props.type !== 'p2p' && rewards}
         {FeaturesService.has('crypto') && tokens}
       </View>
     )

@@ -22,6 +22,28 @@ class BlockchainWalletStore {
       .filter(wallet => !!wallet.privateKey);
   }
 
+  getList(signableOnly, allowOffchain, allowCreditCard) {
+    const wallets = (signableOnly ? this.signableWallets : this.wallets).slice();
+
+    if (allowOffchain) {
+      wallets.push({
+        address: 'offchain',
+        alias: 'OffChain Wallet',
+        offchain: true
+      })
+    }
+
+    if (allowCreditCard) {
+      wallets.push({
+        address: 'creditcard',
+        alias: 'Credit Card',
+        creditcard: true
+      })
+    }
+
+    return wallets;
+  }
+
   @action async load(force) {
     if (this.inProgress && !force) {
       return false;
@@ -88,6 +110,10 @@ class BlockchainWalletStore {
   }
 
   @action async save(address, data) {
+    if (!address || address.toLowerCase().indexOf('0x') !== 0) {
+      return;
+    }
+
     await BlockchainWalletService.set(address, data);
     this.load(true);
   }

@@ -98,6 +98,7 @@ export default class BlockchainWalletScreen extends Component {
         <BlockchainWalletList
           onSelect={this.detailsAction}
           disableCreation={true}
+          allowOffchain={true}
         />
 
       </View>

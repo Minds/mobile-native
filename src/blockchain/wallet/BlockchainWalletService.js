@@ -3,6 +3,8 @@ import StorageService from '../../common/services/storage.service';
 import Web3Service from '../services/Web3Service';
 import BlockchainTokenService from '../services/BlockchainTokenService';
 import KeychainService from '../../common/services/keychain.service';
+import api from '../../common/services/api.service';
+import noExponents from '../../common/helpers/no-exponents';
 
 // Helper functions
 
@@ -163,7 +165,7 @@ class BlockchainWalletService {
 
   async getCurrent(onlyWithPrivateKey = false) {
     if (!this.current || (!this.current.privateKey && onlyWithPrivateKey)) {
-      this.current = await this.selectCurrent('Select the wallet you would like to use', onlyWithPrivateKey);
+      this.current = await this.selectCurrent('Select the wallet you would like to use', { signable: onlyWithPrivateKey, offchain: false, buyable: false });
     }
 
     return this.current;
@@ -183,16 +185,18 @@ class BlockchainWalletService {
     return privateKey;
   }
 
-  async selectCurrent(message = '', signable = false) {
-    let wallet = await BlockchainWalletSelectorStore.waitForSelect(message, signable);
+  async selectCurrent(message = '', opts = {}) {
+    const wallet = await BlockchainWalletSelectorStore.waitForSelect(message, opts);
 
     if (!wallet) {
       this.current = null;
       throw new Error('E_NO_WALLET_SELECTED');
     }
 
-    this.current = wallet;
-    await saveCurrentWalletAddressToStorage(wallet.address);
+    if (wallet.address.toLowerCase().indexOf('0x') === 0) {
+      this.current = wallet;
+      await saveCurrentWalletAddressToStorage(wallet.address);
+    }
 
     return wallet.address;
   }
@@ -282,15 +286,41 @@ class BlockchainWalletService {
       return this.fundsCache[address];
     }
 
-    const result = {
-      tokens: await BlockchainTokenService.balanceOf(address),
-      eth: await Web3Service.getBalance(address),
-      timestamp: Date.now()
-    };
+    const result = address.toLowerCase() !== 'offchain' ?
+      await this.getOnchainFunds(address) :
+      await this.getOffchainFunds(address);
 
     this.fundsCache[address] = Object.assign({}, result);
 
     return result;
+  }
+
+  async getOnchainFunds(address) {
+    return {
+      tokens: await BlockchainTokenService.balanceOf(address),
+      eth: await Web3Service.getBalance(address),
+      timestamp: Date.now()
+    };
+  }
+
+  async getOffchainFunds(address) {
+    try {
+      let response = await api.get(`api/v2/blockchain/wallet/balance`);
+
+      return {
+        tokens: Web3Service.web3.utils.fromWei(noExponents(response.addresses[1].balance), 'ether'),
+        eth: 0,
+        timestamp: Date.now()
+      }
+    } catch (e) {
+      console.error(e);
+
+      return {
+        tokens: 'N/A',
+        eth: 0,
+        timestamp: Date.now()
+      }
+    }
   }
 
   // !! DANGEROUS !! Wipe

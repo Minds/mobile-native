@@ -61,16 +61,19 @@ class WireService {
   }
 
   async getTransactionPayloads(opts) {
-    switch (opts.method) {
-      case "money":
-       throw new Error('Not implemented');
+    const methodOrAddress = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Wire.`, { signable: true, offchain: false, buyable: true });
 
-      case "tokens":
+    switch (methodOrAddress) {
+      case 'creditcard':
+        throw new Error('Not implemented');
+
+      case 'offchain':
+        throw new Error('Cannot send OffChain tokens');
+
+      default:
         if (!opts.owner.eth_wallet) {
           throw new Error('User cannot receive tokens');
         }
-
-        await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Wire.`, true);
 
         if (opts.recurring) {
           await BlockchainTokenService.increaseApproval(
@@ -84,9 +87,6 @@ class WireService {
           receiver: opts.owner.eth_wallet,
           txHash: await BlockchainWireService.create(opts.owner.eth_wallet, opts.amount)
         };
-
-      case "points":
-        return {};
     }
 
     throw new Error('Unknown method');

@@ -66,7 +66,6 @@ export default class BoostScreen extends Component {
     error: '',
     rates: rates = {
       balance: null,
-      rewardsBalance: null,
       rate: 1,
       min: 250,
       cap: 5000,
@@ -151,10 +150,6 @@ export default class BoostScreen extends Component {
    */
   changeType = (type) => {
     this.setState({ type });
-
-    if (type === 'p2p' && this.state.payment === 'rewards') {
-      this.changePayment(FeaturesService.has('crypto') ? 'tokens' : 'usd');
-    }
   };
 
   /**
@@ -204,7 +199,6 @@ export default class BoostScreen extends Component {
         const usdFixRate = this.state.rates.usd / 100;
         return Math.ceil(this.state.amount / usdFixRate) / 100;
 
-      case 'rewards':
       case 'tokens':
         const tokensFixRate = this.state.rates.tokens / 10000;
         return Math.ceil(this.state.amount / tokensFixRate) / 10000;
@@ -302,8 +296,7 @@ export default class BoostScreen extends Component {
   getAmountValues() {
     return {
       usd: this.calcCharges('usd'),
-      tokens: this.calcCharges('tokens'),
-      rewards: this.calcCharges('rewards'),
+      tokens: this.calcCharges('tokens')
     };
   }
 
@@ -345,10 +338,6 @@ export default class BoostScreen extends Component {
     this.setState({ allowedTypes })
   }
 
-  rewardsAmount() {
-    return this.state.rates.rewardsBalance / Math.pow(10, 18);
-  }
-
   // TODO: Move to service
 
   validate() {
@@ -365,14 +354,6 @@ export default class BoostScreen extends Component {
     }
 
     switch (this.state.payment) {
-      case 'rewards':
-        const charges = this.calcCharges(this.state.payment);
-
-        if ((this.state.rates.rewardsBalance !== null) && (charges > this.rewardsAmount())) {
-          throw new VisibleError(`You only have ${this.rewardsAmount()} rewards.`);
-        }
-        break;
-
       case 'usd':
         if (this.calcCharges(this.state.payment) < this.state.rates.minUsd) {
           throw new VisibleError(`You must spend at least ${currency(this.state.rates.minUsd, 'usd')}.`);
@@ -466,33 +447,43 @@ export default class BoostScreen extends Component {
     let nonce = this.state.nonce;
 
     try {
+      if (this.state.payment === 'usd') {
+        throw new Error('Not implemented');
+      }
+
       if (this.state.payment === 'tokens') {
         guid = await this.generateGuid();
       }
 
-      if (this.state.type  !== 'p2p') {
+      if (this.state.type !== 'p2p') {
+        let bidType = this.state.payment;
+
         if (this.state.payment === 'tokens') {
-          await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Network Boost.`, true);
+          let walletOrAddress = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Network Boost.`, { signable: true, offchain: true, buyable: false });
 
           const tokensFixRate = this.state.rates.tokens / 10000;
           let amount = Math.ceil(this.state.amount / tokensFixRate) / 10000;
 
-          nonce = {
-            txHash: await BlockchainBoostService.create(guid, amount),
-            address: await Web3Service.getCurrentWalletAddress(true)
-          };
+          if (walletOrAddress === 'offchain') {
+            bidType = 'offchain';
+          } else {
+            nonce = {
+              txHash: await BlockchainBoostService.create(guid, amount),
+              address: await Web3Service.getCurrentWalletAddress(true)
+            };
+          }
         }
 
         await api.post(`api/v1/boost/${entity.type}/${entity.guid}/${entity.owner_guid}`, {
           guid,
-          bidType: this.state.payment,
+          bidType: bidType,
           impressions: this.state.amount,
           priority: this.state.priority ? 1 : null,
           paymentMethod: nonce
         });
       } else /* P2P */ {
         if (this.state.payment === 'tokens') {
-          await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Channel Boost.`, true);
+          await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Channel Boost.`, { signable: true, offchain: false, buyable: false });
 
           nonce = {
             txHash: await BlockchainBoostService.createPeer(this.state.target.eth_wallet, guid, this.state.amount),

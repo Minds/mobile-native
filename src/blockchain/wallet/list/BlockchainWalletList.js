@@ -62,13 +62,15 @@ export default class BlockchainWalletList extends Component {
   keyExtractor = item => item.address;
 
   render() {
+    const wallets = this.props.blockchainWallet.getList(
+      this.props.signableOnly,
+      this.props.allowOffchain,
+      this.props.allowCreditCard
+    );
+
     return (
       <FlatList
-        data={
-          this.props.signableOnly ?
-            this.props.blockchainWallet.signableWallets :
-            this.props.blockchainWallet.wallets
-        }
+        data={wallets}
         ListEmptyComponent={this.EmptyPartial}
         renderItem={this.ItemPartial}
         keyExtractor={this.keyExtractor}

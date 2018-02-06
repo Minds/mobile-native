@@ -14,7 +14,6 @@ class WireStore {
 
   @observable amount  = 1;
   @observable sending = false;
-  @observable method  = 'money';
   @observable.shallow owner = null;
   @observable recurring = false;
 
@@ -43,29 +42,6 @@ class WireStore {
       });
   }
 
-  @action
-  setMethod(method) {
-    if (this.method == 'points' && method == 'money')
-      this.amount = this.amount / 500;
-
-    if (this.method == 'points' && method == 'tokens')
-      this.amount = this.amount / 500; // hook to live rate
-
-    if (this.method == 'money' && method == 'points')
-      this.amount = this.amount * 500;
-
-    if (this.method == 'money' && method == 'tokens')
-      this.amount = this.amount; //hook to the live tokens rate
-
-    if (this.method == 'tokens' && method == 'money')
-      this.amount = this.round(this.amount, 2); //hook to the live tokens rate
-
-    if (this.method == 'tokens' && method == 'points')
-      this.amount = this.amount * 500;
-
-    this.method = method;
-  }
-
   round(number, precision) {
     const factor = Math.pow(10, precision);
     const tempNumber = number * factor;
@@ -77,14 +53,7 @@ class WireStore {
    * Get formated amount
    */
   formatAmount(amount) {
-    switch (this.method) {
-      case 'points':
-        return amount.toLocaleString('en-US') + ' points';
-      case 'money':
-        return '$' + amount.toLocaleString('en-US');
-      case 'tokens':
-        return amount.toLocaleString('en-US') + ' tokens';
-    }
+    return amount.toLocaleString('en-US') + ' tokens';
   }
 
   validate() {
@@ -113,7 +82,6 @@ class WireStore {
       this.sending = true;
 
       await wireService.send({
-        method: this.method,
         amount: this.amount,
         guid: this.guid,
         owner: this.owner,
@@ -136,7 +104,6 @@ class WireStore {
   reset() {
     this.amount = 1;
     this.sending = false;
-    this.method = 'money';
     this.owner = null;
     this.recurring = false;
     this.guid = null;
