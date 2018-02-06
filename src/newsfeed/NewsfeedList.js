@@ -60,10 +60,10 @@ export default class NewsfeedList extends Component {
     const newsfeed = this.props.newsfeed;
 
     if (newsfeed.isTiled) {
-      renderRow = this.renderTileActivity;
+      renderRow = this.props.renderTileActivity || this.renderTileActivity;
       getItemLayout  = this.getItemLayout;
     } else {
-      renderRow = this.renderActivity;
+      renderRow = this.props.renderActivity || this.renderActivity;
       getItemLayout  = null;
     }
 
