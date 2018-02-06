@@ -58,14 +58,10 @@ export default class NewsfeedScreen extends Component {
   render() {
     const newsfeed = this.props.newsfeed;
 
-    if (!newsfeed.list.loaded) {
-      return <CenteredLoading/>
-    }
-
     const header = (
       <View>
         <Topbar />
-        { false ? 
+        { false ?
           <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation} store={newsfeed} me={this.props.user.me}/>
           : null }
       </View>

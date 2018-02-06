@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { 
+import {
   FlatList,
   StyleSheet,
   View,
@@ -57,7 +57,9 @@ export default class NewsfeedList extends Component {
   render() {
     let renderRow, getItemLayout;
 
-    if (this.props.newsfeed.isTiled) {
+    const newsfeed = this.props.newsfeed;
+
+    if (newsfeed.isTiled) {
       renderRow = this.renderTileActivity;
       getItemLayout  = this.getItemLayout;
     } else {
@@ -65,7 +67,7 @@ export default class NewsfeedList extends Component {
       getItemLayout  = null;
     }
 
-    const footer = this.props.newsfeed.loading ? (
+    const footer = (newsfeed.loading && !newsfeed.list.refreshing) ?  (
       <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
         <ActivityIndicator size={'large'} />
       </View>
@@ -73,18 +75,18 @@ export default class NewsfeedList extends Component {
 
     return (
       <FlatList
-        key={(this.props.newsfeed.isTiled ? 't' : 'f')}
+        key={(newsfeed.isTiled ? 't' : 'f')}
         onLayout={this.onLayout}
         ListHeaderComponent={this.props.header}
         ListFooterComponent={footer}
-        data={this.props.newsfeed.list.entities.slice()}
+        data={newsfeed.list.entities.slice()}
         renderItem={renderRow}
         keyExtractor={item => item.rowKey}
         onRefresh={this.refresh}
-        refreshing={this.props.newsfeed.list.refreshing}
+        refreshing={newsfeed.list.refreshing}
         onEndReached={this.loadFeed}
         onEndThreshold={0}
-        numColumns={this.props.newsfeed.isTiled ? 3 : 1}
+        numColumns={newsfeed.isTiled ? 3 : 1}
         style={styles.listView}
         initialNumToRender={6}
         windowSize={11}
