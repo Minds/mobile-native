@@ -13,8 +13,10 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import colors from '../../styles/Colors';
+import { CommonStyle } from '../../styles/Common';
 import { MINDS_CDN_URI } from '../../config/Config';
 import crypto from '../../common/services/crypto.service';
+import Tags from '../../common/components/Tags';
 
 /**
  * Message Component
@@ -58,15 +60,15 @@ export default class Message extends PureComponent {
       return (
         <View>
           <View style={[styles.messageContainer, styles.right]}>
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}></View>
-              <View style={[ styles.textContainer, { backgroundColor: colors.primary }]}  >
-                <Text selectable={true} style={[styles.message, { color: '#FFF' } ]} onPress={ () => this.showDate() }>{this.state.msg}</Text>
+            <View style={CommonStyle.rowJustifyCenter}>
+              <View style={CommonStyle.flexContainer}></View>
+              <View style={[styles.textContainer, CommonStyle.backgroundPrimary]}  >
+                <Text selectable={true} style={[styles.message, CommonStyle.colorWhite]} onPress={() => this.showDate()}><Tags color={'#444'} navigation={this.props.navigation}>{this.state.msg}</Tags></Text>
               </View>
             </View>
             <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
           </View>
-          { this.state.showDate ? 
+          { this.state.showDate ?
             <Text selectable={true} style={[styles.messagedate, styles.rightText]}>Dec 6, 2017, 11:47:46 AM</Text>
             : null }
         </View>
@@ -77,14 +79,14 @@ export default class Message extends PureComponent {
       <View>
         <View style={styles.messageContainer}>
           <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
-          <View style={{ flex: 1, flexDirection: 'row' }}>
+          <View style={CommonStyle.rowJustifyCenter}>
             <View style={[ styles.textContainer ]}  >
-              <Text selectable={true} style={[styles.message]} onPress={ () => this.showDate() }>{this.state.msg}</Text>
+              <Text selectable={true} style={[styles.message]} onPress={() => this.showDate()}><Tags navigation={this.props.navigation}>{this.state.msg}</Tags></Text>
             </View>
-            <View style={{ flex: 1 }}></View>
+            <View style={CommonStyle.flexContainer}></View>
           </View>
         </View>
-        { this.state.showDate ? 
+        { this.state.showDate ?
           <Text selectable={true} style={styles.messagedate}>Dec 6, 2017, 11:47:46 AM</Text>
           : null }
       </View>

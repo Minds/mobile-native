@@ -130,7 +130,7 @@ export default class ConversationScreen extends Component {
    * @param {object} row
    */
   renderMessage = (row) => {
-    return <Message message={row.item} right={row.item.owner.guid == this.props.user.me.guid}/>
+    return <Message message={row.item} right={row.item.owner.guid == this.props.user.me.guid} navigation={this.props.navigation}/>
   }
 
 }
