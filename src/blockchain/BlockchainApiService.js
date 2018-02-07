@@ -11,7 +11,7 @@ class BlockchainApiService {
     this.serverWalletAddressCache = void 0;
 
     try {
-      let response = await api.get(`api/v1/blockchain/wallet/address`);
+      let response = await api.get(`api/v2/blockchain/wallet/address`);
 
       if (response.wallet) {
         this.serverWalletAddressCache = response.wallet.address;
@@ -23,8 +23,16 @@ class BlockchainApiService {
   }
 
   async setWallet(address) {
-    await api.post(`api/v1/blockchain/wallet`, { address });
+    await api.post(`api/v2/blockchain/wallet`, { address });
     this.serverWalletAddressCache = address;
+  }
+
+  async getUSDRate() {
+    try {
+      return (await api.get(`api/v2/blockchain/rate`)).rate;
+    } catch (e) {
+      return null;
+    }
   }
 }
 

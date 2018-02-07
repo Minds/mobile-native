@@ -4,6 +4,8 @@ import {
   observe
 } from 'mobx'
 import BlockchainWalletService from '../wallet/BlockchainWalletService';
+import BlockchainApiService from '../BlockchainApiService';
+import Web3Service from '../services/Web3Service';
 
 let approvalDispose;
 
@@ -18,6 +20,7 @@ class BlockchainTransactionStore {
   @observable baseOptions = {};
   @observable estimateGasLimit = 0;
   @observable funds = null;
+  @observable gweiPriceCents = null;
 
   @action async waitForApproval(method, approvalMessage, baseOptions = {}, estimatedGas = 0) {
     if (this.isApproving) {
@@ -29,10 +32,12 @@ class BlockchainTransactionStore {
     this.baseOptions = baseOptions;
     this.estimateGasLimit = estimatedGas;
     this.funds = null;
+    this.gweiPriceCents = null;
 
     this.isApproving = true;
 
     this.refreshFunds();
+    this.getGweiPriceCents();
 
     return await new Promise(resolve => {
       if (approvalDispose) {
@@ -50,6 +55,7 @@ class BlockchainTransactionStore {
         this.baseOptions = {};
         this.estimateGasLimit = 0;
         this.funds = null;
+        this.gweiPriceCents = null;
 
         if (change.newValue) {
           resolve(change.newValue);
@@ -71,6 +77,7 @@ class BlockchainTransactionStore {
     this.baseOptions = {};
     this.estimateGasLimit = 0;
     this.funds = null;
+    this.gweiPriceCents = null;
   }
 
   @action rejectTransaction() {
@@ -81,6 +88,7 @@ class BlockchainTransactionStore {
     this.baseOptions = {};
     this.estimateGasLimit = 0;
     this.funds = null;
+    this.gweiPriceCents = null;
   }
 
   refreshFunds() {
@@ -91,6 +99,21 @@ class BlockchainTransactionStore {
 
     BlockchainWalletService.getFunds(this.baseOptions.from)
       .then(action(funds => this.funds = funds));
+  }
+
+  async getGweiPriceCents() {
+    const ethPrice = await BlockchainApiService.getUSDRate();
+
+    if (ethPrice === null) {
+      this.gweiPriceCents = null;
+      return;
+    }
+
+    const gweiRate = Web3Service.web3.utils.fromWei(Web3Service.web3.utils.toWei('1', 'ether'), 'gwei');
+
+    // NOTE: Saving in cents to avoid JS rounding issue
+    const ethPriceInCents = ethPrice * 100;
+    this.gweiPriceCents = ethPriceInCents / gweiRate;
   }
 
   @action

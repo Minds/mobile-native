@@ -15,6 +15,7 @@ import { ComponentsStyle } from '../../styles/Components';
 import { CommonStyle } from '../../styles/Common';
 import Web3Service from '../services/Web3Service';
 import number from '../../common/helpers/number';
+import currency from '../../common/helpers/currency';
 
 const defaults = {
   gasPrice: 1, // TODO: Read from Minds settings
@@ -52,21 +53,30 @@ export default class BlockchainTransactionModalScreen extends Component {
     this.props.blockchainTransaction.rejectTransaction();
   }
 
+  gasFee() {
+    const gasPrice = this.state.gasPrice || defaults.gasPrice,
+      gasLimit = this.state.gasLimit || this.props.blockchainTransaction.estimateGasLimit || defaults.gasLimit;
+
+    return gasLimit * gasPrice;
+  }
+
   canAfford() {
     if (!this.props.blockchainTransaction.funds) {
       return true; // No info yet
     }
 
     const eth = this.props.blockchainTransaction.funds.eth,
-      wei = Web3Service.web3.utils.toWei(eth, 'ether'),
+      wei = Web3Service.web3.utils.toWei(`${eth}`, 'ether'),
       gwei = Web3Service.web3.utils.fromWei(wei, 'gwei')
-      gasPrice = this.state.gasPrice || defaults.gasPrice,
-      gasLimit = this.state.gasLimit || this.props.blockchainTransaction.estimateGasLimit || defaults.gasLimit;
 
-    return gwei >= (gasLimit * gasPrice);
+    return gwei >= this.gasFee();
   }
 
   render() {
+    const gasFeeUsd = this.props.blockchainTransaction.gweiPriceCents ?
+      (this.gasFee() * this.props.blockchainTransaction.gweiPriceCents) / 100 :
+      null;
+
     return (
       <Modal
         isVisible={ this.props.blockchainTransaction.isApproving }
@@ -102,6 +112,10 @@ export default class BlockchainTransactionModalScreen extends Component {
             />
           </View>
 
+          {!!gasFeeUsd && <Text style={styles.gasFee}>
+            MAX. GAS FEE: {currency(gasFeeUsd, 'usd')}
+          </Text>}
+
           <View style={[CommonStyle.rowJustifyStart, { marginTop: 8 }]}>
             <View style={{ flex: 1 }}></View>
             <TouchableHighlight 
@@ -134,7 +148,6 @@ export default class BlockchainTransactionModalScreen extends Component {
               price.
             </Text>
           </View>}
-
         </View> }
 
       </Modal>
@@ -147,5 +160,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: '#c00',
     textAlign: 'center',
+  },
+  gasFee: {
+    marginTop: 8,
+    marginBottom: 8,
+    textAlign: 'right',
+    color: '#999',
+    fontSize: 12,
+    letterSpacing: 0.5,
   }
 });
