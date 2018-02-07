@@ -128,9 +128,9 @@ export default class MediaView extends Component {
         />
       </TouchableOpacity>
       ) : (
-      <TouchableOpacity 
-        onPress={this.navToImage} 
-        style={[styles.imageContainer, { minHeight: 200 }]} 
+      <TouchableOpacity
+        onPress={this.navToImage}
+        style={[styles.imageContainer, { minHeight: 200 }]}
         activeOpacity={1}
       >
         <ExplicitImage
@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   richMediaContainer: {
-    minHeight: 250,
+    minHeight: 20,
     //borderWidth: 1,
     //borderColor: '#ececec',
   },
