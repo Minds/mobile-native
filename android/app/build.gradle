@@ -152,6 +152,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-keep-awake')
     compile project(':react-native-share')
     compile project(':react-native-udp')
     compile project(':react-native-tcp')

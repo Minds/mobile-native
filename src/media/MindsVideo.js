@@ -23,6 +23,7 @@ import {
 
 let FORWARD_DURATION = 7;
 
+import KeepAwake from 'react-native-keep-awake';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
@@ -52,6 +53,7 @@ export default class MindsVideo extends PureComponent {
 
   onVideoEnd() {
     this.player.seek(0);
+    KeepAwake.deactivate();
     this.setState({key: new Date(), currentTime: 0, paused: true});
   }
 
@@ -78,6 +80,11 @@ export default class MindsVideo extends PureComponent {
 
   playOrPauseVideo(paused) {
     const stateChange = { paused: !paused };
+    if (!paused) {
+      KeepAwake.activate();
+    } else {
+      KeepAwake.deactivate();
+    }
     if (!this.state.active) stateChange.active = true;
     this.setState(stateChange);
   }
