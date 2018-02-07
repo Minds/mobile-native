@@ -34,6 +34,7 @@ import formatDate from '../../common/helpers/date';
 import domain from '../../common/helpers/domain';
 import ActivityActionSheet from './ActivityActionSheet';
 import ActivityEditor from './ActivityEditor';
+import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
 
 import Lock from '../../wire/lock/Lock';
@@ -107,6 +108,7 @@ export default class Activity extends Component {
 
 
           { this.showActions() }
+          <ActivityMetrics entity={entity}/>
         </View>
     );
   }
