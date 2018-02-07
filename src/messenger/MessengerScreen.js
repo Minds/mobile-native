@@ -42,9 +42,12 @@ export default class MessengerScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
+
+    this.props.messengerList.loadList();
+
     // load data on enter
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Messenger', (s) => {
-      this.props.messengerList.refresh();
+      //this.props.messengerList.refresh();
       this.setState({ active: true });
       this.props.messengerList.listen();
     });
