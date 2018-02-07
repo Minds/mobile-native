@@ -124,9 +124,24 @@ export default class CommentsScreen extends Component {
   }
 
   loadComments = () => {
-    let guid = this.state.entity.guid;
-    if (this.state.entity.entity_guid)
-      guid = this.state.entity.entity_guid;
+    const entity = this.state.entity;
+    let guid;
+
+    switch (entity.type) {
+      case "comment":
+        guid = this.state.entity.parent_guid;
+        break;
+
+      case "activity":
+          guid = this.state.entity.guid;
+          if (this.state.entity.entity_guid) {
+            guid = this.state.entity.entity_guid;
+          }
+        break;
+      default:
+        guid = this.state.entity.guid;
+    }
+
     this.props.comments.loadComments(guid);
   }
 
