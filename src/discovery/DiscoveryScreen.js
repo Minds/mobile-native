@@ -66,12 +66,16 @@ export default class DiscoveryScreen extends Component {
 
     // load data on enter
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Discovery',(s) => {
-      this.setState({active: true});
+      setTimeout(() => {
+        this.setState({active: true});
+      }, 50);
     });
 
     // clear data on leave
     this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Discovery',(s) => {
-      this.setState({active: false});
+      setTimeout(() => {
+        this.setState({active: false});
+      }, 50);
     });
   }
 
@@ -285,7 +289,7 @@ export default class DiscoveryScreen extends Component {
    * Render a tile
    */
   renderTile = (row) => {
-    if (!this.state.active) return <View />;
+    if (!this.state.active && row.item.gif) return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight }}/>;
     return (
       <DiscoveryTile entity={row.item} size={this.state.itemHeight} navigation={this.props.navigation}/>
     );
