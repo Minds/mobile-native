@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react/native'
 
 import Boost from './Boost';
 
+import CenteredLoading from '../common/components/CenteredLoading';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
@@ -18,8 +19,15 @@ export default class BoostConsoleScreen extends Component {
     screen: 'gallery'
   }
 
+  /**
+   * On component will mount
+   */
+  componentWillMount() {
+    this.props.boost.loadList(this.props.guid);
+  }
+
   showList() {
-    if(this.props.boost.list.entities.length > 0) {
+    if(!this.props.boost.loading && this.props.boost.list.entities.length > 0) {
       return <FlatList
                 ListHeaderComponent={this.props.header}
                 data={this.props.boost.list.entities.slice()}
@@ -31,7 +39,9 @@ export default class BoostConsoleScreen extends Component {
                 onEndThreshold={0}
                 style={styles.listView}
               />
-    } else {
+    } else if(this.props.boost.loading) {
+      return <CenteredLoading/>;
+    } else if(!this.props.boost.loading && this.props.boost.list.entities.length === 0) {
       return <View style={[CommonStyle.flexContainer, CommonStyle.alignJustifyCenter]}>
                 <Text style={{fontWeight: 'bold', fontSize:16}}>You have no boosted posts</Text>
                 <TouchableHighlight

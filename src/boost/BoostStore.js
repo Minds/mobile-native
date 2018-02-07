@@ -24,7 +24,7 @@ class BoostStore {
   /**
    * List loading
    */
-  loading = false;
+  @observable loading = false;
 
   /**
    * Load boost list
