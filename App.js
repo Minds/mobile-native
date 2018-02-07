@@ -8,7 +8,7 @@ import React, {
 
 import {
   Observer,
-  Provider
+  Provider,
 } from 'mobx-react/native'  // import from mobx-react/native instead of mobx-react fix test
 
 import {
@@ -17,7 +17,10 @@ import {
 } from 'react-navigation';
 
 import {
-  BackHandler
+  BackHandler,
+  Platform,
+  Linking,
+  Text,
 } from 'react-native';
 
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
@@ -40,13 +43,23 @@ NavigationStoreService.set(stores.navigatorStore);
  * App
  */
 export default class App extends Component {
+  
+  componentWillMount() {
+    Text.defaultProps.style = { 
+      fontFamily: 'Roboto',
+      color: '#444',
+    };
+  }
 
   componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    Linking.addEventListener('url', event => this.handleOpenURL(event.url));
+    Linking.getInitialURL().then(url => url && this.handleOpenURL(url));
   }
 
   componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    Linking.removeEventListener('url', this.handleOpenURL);
   }
 
   /**
@@ -61,6 +74,13 @@ export default class App extends Component {
     return true;
   };
 
+  handleOpenURL = (url) => {
+    const path = url.split('://')[1];
+    const action = stores.navigatorStore.navigator.router.getActionForPathAndParams(path);
+    if (action)
+      stores.navigatorStore.dispatch(action);
+  }
+
   /**
    * Render
    */
@@ -71,7 +91,7 @@ export default class App extends Component {
         () => <Stack navigation={addNavigationHelpers({
           dispatch: stores.navigatorStore.dispatch,
           state: stores.navigatorStore.navigationState,
-        })} />
+        })}/>
       }</Observer>
       </Provider>
     );
