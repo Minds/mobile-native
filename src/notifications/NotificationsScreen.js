@@ -4,6 +4,7 @@ import React, {
 
 import {
   StyleSheet,
+  Text,
   View
 } from 'react-native';
 
@@ -18,6 +19,8 @@ import { OptimizedFlatList } from 'react-native-optimized-flatlist';
 import CenteredLoading from '../common/components/CenteredLoading';
 import Notification from './notification/Notification';
 import NotificationsTopbar from './NotificationsTopbar';
+
+import { CommonStyle } from '../styles/Common';
 
 // style
 const styles = StyleSheet.create({
@@ -78,6 +81,7 @@ export default class NotificationsScreen extends Component {
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
+          ListEmptyComponent={<Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>There is no notifications to show</Text>}
           onEndThreshold={0.05}
           refreshing={this.props.notifications.list.refreshing}
           style={styles.listView}
