@@ -28,7 +28,7 @@ export default class TagView extends Component {
     const entity = this.props.entity;
     const styles = this.props.styles;
 
-    const isComment = entity.entityObj.type != 'comment';
+    const isComment = entity.entityObj.type === 'comment';
 
     return (
       <TouchableOpacity style={styles.bodyContents} onPress={this.navToActivity}>
