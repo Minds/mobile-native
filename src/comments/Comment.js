@@ -13,6 +13,7 @@ import {
 } from 'react-navigation';
 
 import { observer, inject } from 'mobx-react/native';
+import entities from 'entities';
 
 import {
   Text,
@@ -85,7 +86,9 @@ export default class Comment extends Component {
             {
               this.state.editing ?
                 <CommentEditor setEditing={this.setEditing} comment={comment}/>:
-                <Text style={styles.message}><Text style={styles.username}>@{comment.ownerObj.username}</Text> {comment.description}</Text>
+                <Text style={styles.message}>
+                  <Text style={styles.username}>@{comment.ownerObj.username}</Text> {entities.decodeHTML(comment.description)}
+                </Text>
             }
           </View>
 

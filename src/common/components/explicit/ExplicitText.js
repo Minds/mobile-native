@@ -7,7 +7,7 @@ import {
 } from 'react-navigation';
 
 import {observer} from "mobx-react/native";
-
+import entities from 'entities';
 import {
   Text,
   StyleSheet,
@@ -21,7 +21,7 @@ export default class ExplicitText extends Component {
 
   render() {
     const entity = this.props.entity;
-    const message = this.props.entity.message || this.props.entity.title;
+    const message = entities.decodeHTML(this.props.entity.message || this.props.entity.title);
     return (
         <View style={{flex:1}}>
           { entity.mature ?

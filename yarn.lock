@@ -2120,6 +2120,10 @@ engine.io-parser@~2.1.1:
     blob "0.0.4"
     has-binary2 "~1.0.2"
 
+entities@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
+
 envinfo@^3.0.0:
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-3.10.0.tgz#24b52a5c19af379dc32465d1909e37344dc41c20"
