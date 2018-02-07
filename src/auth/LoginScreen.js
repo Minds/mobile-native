@@ -108,7 +108,7 @@ export default class LoginScreen extends Component {
             <Animated.Image
               resizeMode="contain"
               style={[styles.logo, { height: this.logoHeight }]}
-              source={require('../assets/logos/medium-white.png')}
+              source={require('../assets/logos/logo-white.png')}
             />
           </Animatable.View>
           <Animatable.View animation="fadeInUp">

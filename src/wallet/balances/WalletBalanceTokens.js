@@ -50,7 +50,7 @@ export default class WalletBalanceTokens extends Component {
           <FastImage
             resizeMode={FastImage.resizeMode.contain}
             style={styles.logo}
-            source={require('../../assets/logos/crypto.png')}
+            source={require('../../assets/logos/bulb.png')}
           />
           <Text style={ styles.amount }>{ this.props.wallet.formattedBalance }</Text>
           <Text style={ styles.currency }>Tokens</Text>
