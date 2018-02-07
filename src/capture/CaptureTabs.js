@@ -24,7 +24,6 @@ import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Topbar from '../topbar/Topbar';
-import CaptureVideo from './CaptureVideo';
 import Poster from '../newsfeed/Poster';
 
 import { uploadAttachment } from '../newsfeed/NewsfeedService';
@@ -86,7 +85,7 @@ export default class CaptureTab extends Component {
 
     return (
       <View style={CommonStyle.flexContainer}>
-      
+
         { this.state.screen != 'poster' ?
           <View style={{height:125}}>
             <View style={{flex:1, flexDirection:'row', paddingLeft: 1, paddingRight: 1 }}>

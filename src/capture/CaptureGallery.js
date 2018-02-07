@@ -16,8 +16,6 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Camera from 'react-native-camera';
-
 import {
   MINDS_URI
 } from '../config/Config';

@@ -13,7 +13,6 @@ import com.cmcewen.blurview.BlurViewPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import com.imagepicker.ImagePickerPackage;
-import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -47,7 +46,6 @@ public class MainApplication extends Application implements ReactApplication {
           new FastImageViewPackage(),
           new ReactNativeExceptionHandlerPackage(),
           new ImagePickerPackage(),
-          new RCTCameraPackage(),
           new VectorIconsPackage(),
           new PhotoViewPackage(),
           new RNI18nPackage()

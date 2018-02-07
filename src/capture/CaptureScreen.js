@@ -12,7 +12,6 @@ import {
 
 import { NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Camera from 'react-native-camera';
 
 import CapturePoster from './CapturePoster';
 import CaptureGallery from './CaptureGallery';
@@ -59,7 +58,7 @@ export default class CaptureScreen extends Component {
         prepend: entity,
       },
       actions: [
-        NavigationActions.navigate({ 
+        NavigationActions.navigate({
           routeName: 'Newsfeed',
         })
       ]
@@ -67,7 +66,7 @@ export default class CaptureScreen extends Component {
 
     this.props.navigation.dispatch(dispatch);
   }
-  
+
 }
 
 const styles = StyleSheet.create({
