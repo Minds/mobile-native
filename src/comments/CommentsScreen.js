@@ -98,6 +98,9 @@ export default class CommentsScreen extends Component {
           underlineColorAndroid='transparent'
           placeholder='Type your comment...'
           onChangeText={(text) => this.setState({ text })}
+          multiline={true}
+          autogrow={true}
+          maxHeight={110}
           value={this.state.text}
         />
         <TouchableOpacity onPress={() => this.saveComment()} style={styles.sendicon}><Icon name="md-send" size={24} /></TouchableOpacity>
@@ -188,7 +191,6 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS == 'ios' ? 14 : 8,
   },
   messagePoster: {
-    height: 50,
     flexDirection: 'row',
     display: 'flex',
     alignItems: 'center',
