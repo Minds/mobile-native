@@ -76,7 +76,7 @@ export default class Comment extends Component {
     )
 
     return (
-      <TouchableOpacity style={styles.container} onPress={this.showActions}>
+      <View style={styles.container}>
         <TouchableOpacity onPress={this._navToChannel} style={styles.avatarContainer}>
           <Image source={avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
@@ -86,7 +86,7 @@ export default class Comment extends Component {
             {
               this.state.editing ?
                 <CommentEditor setEditing={this.setEditing} comment={comment}/>:
-                <Text style={styles.message}>
+                <Text style={styles.message} selectable={true} onPress={this.showActions}>
                   <Text style={styles.username}>@{comment.ownerObj.username}</Text> {entities.decodeHTML(comment.description)}
                 </Text>
             }
@@ -102,7 +102,7 @@ export default class Comment extends Component {
           onPress={this.handleSelection}
           cancelButtonIndex={0}
         />
-      </TouchableOpacity>
+      </View>
     );
   }
 

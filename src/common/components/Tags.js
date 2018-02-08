@@ -29,7 +29,7 @@ export default class Tags extends PureComponent {
   render() {
     const tags = this.parseTags(this.props.children);
     return (
-      <Text>{tags}</Text>
+      <Text selectable={true}>{tags}</Text>
     )
   }
 
