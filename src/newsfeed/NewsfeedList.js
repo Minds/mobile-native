@@ -3,13 +3,14 @@ import {
   FlatList,
   StyleSheet,
   View,
+  Text,
   ActivityIndicator,
 } from 'react-native';
 import { observer } from 'mobx-react/native'
 
 import Activity from './activity/Activity';
 import TileElement from './TileElement';
-
+import { CommonStyle } from '../styles/Common';
 /**
  * News feed list component
  */
@@ -55,7 +56,7 @@ export default class NewsfeedList extends Component {
    * Render component
    */
   render() {
-    let renderRow, getItemLayout;
+    let renderRow, getItemLayout, emptyMessage = null;
 
     const newsfeed = this.props.newsfeed;
 
@@ -72,6 +73,11 @@ export default class NewsfeedList extends Component {
         <ActivityIndicator size={'large'} />
       </View>
     ) : null;
+
+    // empty message
+    if(newsfeed.list.loaded) {
+      emptyMessage = <Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>There is no data to show</Text>;
+    }
 
     return (
       <FlatList
@@ -92,6 +98,7 @@ export default class NewsfeedList extends Component {
         windowSize={11}
         getItemLayout={getItemLayout}
         removeClippedSubviews={true}
+        ListEmptyComponent={emptyMessage}
       />
     );
   }

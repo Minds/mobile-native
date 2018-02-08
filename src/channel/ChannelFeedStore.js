@@ -111,16 +111,17 @@ export default class ChannelFeedStore {
    */
   async _loadFeed() {
     this.loading = true;
+    const filter = this.filter;
 
     const feed = await getFeedChannel(this.guid, this.list.offset)
 
-    if (this.filter != 'rewards') {
+    if (this.filter == 'feed') {
       this.assignRowKeys(feed);
       feed.entities = ActivityModel.createMany(feed.entities);
       this.list.setList(feed);
     }
 
-    this.loading = false;
+    this.stores[filter].loading = false;
   }
 
 
@@ -129,12 +130,17 @@ export default class ChannelFeedStore {
    */
   async _loadImagesFeed() {
     this.loading = true;
-    const feed = await channelService.getImageFeed(this.guid, this.list.offset);
-    feed.entities = ActivityModel.createMany(feed.entities);
-    this.assignRowKeys(feed);
-    this.list.setList(feed);
+    const filter = this.filter;
 
-    this.loading = false;
+    const feed = await channelService.getImageFeed(this.guid, this.list.offset);
+
+    if (this.filter == 'images') {
+      feed.entities = ActivityModel.createMany(feed.entities);
+      this.assignRowKeys(feed);
+      this.list.setList(feed);
+    }
+
+    this.stores[filter].loading = false;
   }
 
   /**
@@ -142,13 +148,17 @@ export default class ChannelFeedStore {
    */
   async _loadVideosFeed() {
     this.loading = true;
+    const filter = this.filter;
 
     const feed = await channelService.getVideoFeed(this.guid, this.list.offset);
-    feed.entities = ActivityModel.createMany(feed.entities);
-    this.assignRowKeys(feed);
-    this.list.setList(feed);
 
-    this.loading = false;
+    if (this.filter == 'videos') {
+      feed.entities = ActivityModel.createMany(feed.entities);
+      this.assignRowKeys(feed);
+      this.list.setList(feed);
+    }
+
+    this.stores[filter].loading = false;
   }
 
   /**
@@ -156,13 +166,17 @@ export default class ChannelFeedStore {
    */
   async _loadBlogsFeed() {
     this.loading = true;
+    const filter = this.filter;
+
     const feed = await channelService.getBlogFeed(this.guid, this.list.offset);
-    feed.entities = BlogModel.createMany(feed.entities);
 
-    this.assignRowKeys(feed);
-    this.list.setList(feed);
+    if (this.filter == 'blogs') {
+      feed.entities = BlogModel.createMany(feed.entities);
+      this.assignRowKeys(feed);
+      this.list.setList(feed);
+    }
 
-    this.loading = false;
+    this.stores[filter].loading = false;
   }
 
   @action
