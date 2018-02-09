@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Keyboard,
   Text
 } from 'react-native';
 
@@ -25,6 +26,7 @@ export default class DiscoveryUser extends PureComponent {
    * Navigate To conversation
    */
   _navToConversation = () => {
+    Keyboard.dismiss();
     if (this.props.navigation) {
       this.props.navigation.navigate('Channel', { guid: this.props.entity.item.guid });
     }

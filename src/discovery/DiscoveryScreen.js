@@ -178,6 +178,7 @@ export default class DiscoveryScreen extends Component {
           removeClippedSubviews={false}
           getItemLayout={getItemLayout}
           columnWrapperStyle={columnWrapperStyle}
+          keyboardShouldPersistTaps={'handled'}
         />
       )
     }
