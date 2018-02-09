@@ -34,11 +34,12 @@ import Util from '../common/helpers/util';
 import RichEmbedService from '../common/services/rich-embed.service';
 import CaptureMetaPreview from './CaptureMetaPreview';
 
-@inject('user')
+@inject('user', 'navigatorStore')
 @observer
 export default class CapturePoster extends Component {
 
   state = {
+    active: false,
     isPosting: false,
     text: '',
     hasAttachment: false,
@@ -56,6 +57,18 @@ export default class CapturePoster extends Component {
     if (this._RichEmbedFetchTimer) {
       clearTimeout(this._RichEmbedFetchTimer);
     }
+  }
+
+  componentWillMount() {
+    // load data on enter
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Capture', (s) => {
+      this.setState({ active: true });
+    });
+
+    // clear data on leave
+    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Capture', (s) => {
+      this.setState({ active: false });
+    });
   }
 
   render() {
@@ -106,10 +119,10 @@ export default class CapturePoster extends Component {
           <Icon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
         </View>}
 
-        <CaptureGallery
+        {this.state.active &&<CaptureGallery
           style={{ flex: 1 }}
           onSelected={this.onAttachedMedia}
-        />
+        />}
       </View>
     );
   }

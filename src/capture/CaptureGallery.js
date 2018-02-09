@@ -24,6 +24,7 @@ import CenteredLoading from '../common/components/CenteredLoading'
 import CapturePoster from './CapturePoster';
 
 import CaptureTabs from './CaptureTabs';
+import androidPermissionsService from '../common/services/android-permissions.service'
 
 /**
  * Gallery View
@@ -35,7 +36,6 @@ export default class CaptureGallery extends Component {
     photos: [],
     imageUri: '',
     isPosting: false,
-    disabled: true,
     imagesLoaded: false,
   }
 
@@ -47,31 +47,42 @@ export default class CaptureGallery extends Component {
   }
 
   /**
+   * Load Photos
+   */
+  loadPhotos() {
+    CameraRoll.getPhotos({
+      first: 30,
+      assetType: 'All',
+    })
+      .then(r => {
+        this.setState({
+          imagesLoaded: true,
+          photos: r.edges,
+          navigation: r.page_info,
+        });
+      })
+      .catch((err) => {
+        if (androidPermissionsService.readExternalStorage()) {
+          this.loadPhotos();
+        }
+        console.log('Error loading images', err)
+        //Error Loading Images
+      });
+  }
+
+  /**
+   * on component mount load photos
+   */
+  componentWillMount() {
+    setTimeout(() => {
+      this.loadPhotos();
+    }, 50);
+  }
+
+  /**
    * Render
    */
   render() {
-    if (this.state.disabled) {
-      InteractionManager.runAfterInteractions(() => {
-        setTimeout(() => {
-          CameraRoll.getPhotos({
-              first: 30,
-              assetType: 'All',
-            })
-            .then(r => {
-              this.setState({
-                imagesLoaded: true,
-                photos: r.edges,
-                navigation: r.page_info,
-              });
-            })
-            .catch((err) => {
-              //Error Loading Images
-            });
-
-          this.setState({ disabled: false });
-        }, 100);
-      });
-    }
 
     const tabs = (
       <View>

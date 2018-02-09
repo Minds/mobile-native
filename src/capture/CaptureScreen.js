@@ -10,6 +10,7 @@ import {
     View,
 } from 'react-native';
 
+
 import { NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -21,10 +22,6 @@ import CaptureGallery from './CaptureGallery';
  */
 export default class CaptureScreen extends Component {
 
-  state = {
-    disabled: true
-  }
-
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <Icon name="md-radio-button-on" size={24} color={tintColor} />
@@ -35,15 +32,6 @@ export default class CaptureScreen extends Component {
    * Render
    */
   render() {
-
-    if (this.state.disabled) {
-      InteractionManager.runAfterInteractions(() => {
-        setTimeout(() => {
-          this.setState({disabled: false});
-        }, 100);
-      });
-    }
-
     return (
       <View style={styles.screenWrapper}>
         <CapturePoster style={{ flex: 1, backgroundColor: '#FFF' }} onComplete={ (entity) => this.onComplete(entity) }/>
@@ -66,7 +54,6 @@ export default class CaptureScreen extends Component {
 
     this.props.navigation.dispatch(dispatch);
   }
-
 }
 
 const styles = StyleSheet.create({
