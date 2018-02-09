@@ -33,6 +33,7 @@ import formatDate from '../common/helpers/date';
 import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 import MediaView from '../common/components/MediaView';
+import Tags from '../common/components/Tags';
 
 import {
   MINDS_CDN_URI
@@ -87,7 +88,7 @@ export default class Comment extends Component {
               this.state.editing ?
                 <CommentEditor setEditing={this.setEditing} comment={comment}/>:
                 <Text style={styles.message} selectable={true} onPress={this.showActions}>
-                  <Text style={styles.username}>@{comment.ownerObj.username}</Text> {entities.decodeHTML(comment.description)}
+                  <Text style={styles.username}>@{comment.ownerObj.username}</Text> <Tags navigation={this.props.navigation}>{entities.decodeHTML(comment.description)}</Tags>
                 </Text>
             }
           </View>
