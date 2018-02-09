@@ -42,7 +42,6 @@ export default class MediaView extends Component {
   showMedia() {
     let media;
     let source;
-
     const type = this.props.entity.custom_type||this.props.entity.subtype;
     switch (type) {
       case 'image':
@@ -100,10 +99,9 @@ export default class MediaView extends Component {
     const autoHeight = this.props.autoHeight;
     const custom_data = this.props.entity.custom_data;
 
-    if (custom_data && custom_data[0].height) {
+    if (custom_data && custom_data[0].height && custom_data[0].height != '0') {
       let ratio = custom_data[0].height / custom_data[0].width;
       let height = Dimensions.get('window').width * ratio;
-
       return (
         <TouchableOpacity onPress={this.navToImage} style={[styles.imageContainer, { height }]} activeOpacity={1}>
           <ExplicitImage
