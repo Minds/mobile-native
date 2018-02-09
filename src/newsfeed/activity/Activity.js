@@ -52,7 +52,7 @@ export default class Activity extends Component {
    * Nav to activity full screen
    */
   navToActivity = () => {
-    this.props.navigation.navigate('Activity', {entity: this.props.entity});
+    this.props.navigation.navigate('Activity', {entity: this.props.entity, store: this.props.newsfeed});
   }
 
   /**

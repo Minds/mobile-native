@@ -6,13 +6,14 @@ import {
 import Activity from './activity/Activity';
 
 export default class ActivityScreen extends Component {
+
   render() {
     const entity = this.props.navigation.state.params.entity;
     return (
       <ScrollView style={styles.screen}>
         <Activity
           entity={ entity }
-          newsfeed={ this.props.newsfeed }
+          newsfeed={ this.props.navigation.state.params.store }
           navigation={ this.props.navigation }
           autoHeight={true}
         />

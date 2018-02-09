@@ -136,7 +136,7 @@ export default class NewsfeedList extends Component {
    */
   renderTileActivity = (row) => {
     const entity = row.item;
-    return <TileElement size={this.state.itemHeight} entity={entity} navigation={this.props.navigation} />;
+    return <TileElement size={this.state.itemHeight} newsfeed={this.props.newsfeed} entity={entity} navigation={this.props.navigation} />;
   }
 }
 
