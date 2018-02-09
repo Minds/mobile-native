@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, Text,Button, TouchableHighlight, Image, ActivityIndicator } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -13,45 +13,34 @@ import colors from '../styles/Colors';
 import {
   NavigationActions
 } from 'react-navigation';
-
-export default class CapturePreview extends Component {
-
-  state = {
-    uri: '',
-    type: '',
-  };
-
-  componentWillMount() {
-    this.setState({ 
-      uri: this.props.uri,
-      type: this.props.type
-    });
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState({ 
-      uri: props.uri,
-      type: props.type
-    });
-  }
-
+/**
+ * Capture preview
+ */
+export default class CapturePreview extends PureComponent {
+  /**
+   * Render
+   */
   render() {
+    let body = null;
+
+    switch (this.props.type) {
+      case 'image/gif':
+      case 'image/jpeg':
+        body = <Image
+          source={{ uri: this.props.uri }}
+          style={styles.preview}
+        />
+        break;
+      case 'video/mp4':
+        body = <View style={styles.preview}>
+          <MindsVideo video={{ 'uri': this.props.uri }} />
+        </View>
+        break;
+    }
 
     return (
       <View style={styles.wrapper}>
-        { this.state.type == 'image/jpeg' ?
-            <Image
-              source={{ uri : this.state.uri }}
-              style={styles.preview}
-              />
-              : null
-        }
-        { this.state.type == 'video/mp4' ?
-          <View style={styles.preview}>
-            <MindsVideo video={{'uri': this.state.uri }}/>
-          </View> 
-          : null
-        }
+        {body}
       </View>
     );
   }

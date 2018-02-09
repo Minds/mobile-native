@@ -108,13 +108,13 @@ export default class CapturePoster extends Component {
 
         <CaptureGallery
           style={{ flex: 1 }}
-          onSelected={this.onAttachedMedia.bind(this)}
+          onSelected={this.onAttachedMedia}
         />
       </View>
     );
   }
 
-  async onAttachedMedia(response) {
+  onAttachedMedia = async (response) => {
 
     if (response.didCancel) {
     }
