@@ -1,6 +1,6 @@
 import { observable, action, computed } from 'mobx'
 
-import { getFeedChannel, toggleComments , toggleExplicit } from '../newsfeed/NewsfeedService';
+import { getFeedChannel, toggleComments , toggleExplicit, setViewed } from '../newsfeed/NewsfeedService';
 
 import channelService from './ChannelService';
 
@@ -15,6 +15,7 @@ export default class ChannelFeedStore {
   @observable filter = 'feed';
   @observable showrewards = false;
 
+  viewed = [];
   stores = {
     feed: {
       list: new OffsetFeedListStore('shallow'),
@@ -84,6 +85,21 @@ export default class ChannelFeedStore {
     feed.entities.forEach((entity, index) => {
       entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
     });
+  }
+
+  @action
+  async addViewed(entity) {
+    if(this.viewed.indexOf(entity.guid) < 0) {
+      let response;
+      try {
+        response = await setViewed(entity);
+        if (response) {
+          this.viewed.push(entity.guid);
+        }
+      } catch (e) {
+        throw new Error('There was an issue storing the view');
+      }
+    }
   }
 
   async loadFeed() {
@@ -196,6 +212,7 @@ export default class ChannelFeedStore {
     //this.list.refresh();
     this.list.clearList();
     await this.loadFeed();
+    this.viewed = [];
     this.list.refreshDone();
   }
 

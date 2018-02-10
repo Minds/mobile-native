@@ -18,9 +18,12 @@ import { CommonStyle } from '../styles/Common';
 export default class NewsfeedList extends Component {
 
   nextBoostedId = 1;
-
+  viewOpts = {
+    viewAreaCoveragePercentThreshold: 50
+  }
   state = {
     itemHeight: 0,
+    viewed: []
   }
 
   get boostedId() {
@@ -99,8 +102,19 @@ export default class NewsfeedList extends Component {
         getItemLayout={getItemLayout}
         removeClippedSubviews={true}
         ListEmptyComponent={emptyMessage}
+        viewabilityConfig={this.viewOpts}
+        onViewableItemsChanged={this.onViewableItemsChanged}
       />
     );
+  }
+
+  onViewableItemsChanged = ({viewableItems}) => {
+    viewableItems.forEach((item) => {
+      const { isViewable, key } = item;
+      if (isViewable ) {
+        this.props.newsfeed.addViewed(item.item);
+      }
+    });
   }
 
   /**

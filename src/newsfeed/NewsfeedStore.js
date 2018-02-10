@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 
-import { getFeedTop, getFeed, getBoosts } from './NewsfeedService';
+import { getFeedTop, getFeed, getBoosts , setViewed} from './NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from './ActivityModel';
 
@@ -11,6 +11,7 @@ class NewsfeedStore {
 
   list = new OffsetFeedListStore('shallow');
 
+  viewed = [];
   @observable filter = 'subscribed';
 
   @observable.ref boosts = [];
@@ -69,6 +70,21 @@ class NewsfeedStore {
     this.refresh();
   }
 
+  @action
+  async addViewed(entity) {
+    if (this.viewed.indexOf(entity.guid) < 0) {
+      let response;
+      try {
+        response = await setViewed(entity);
+        if (response) {
+          this.viewed.push(entity.guid);
+        }
+      } catch (e) {
+        throw new Error('There was an issue storing the view');
+      }
+    }
+  }
+
   /**
    * return service method based on filter
    */
@@ -124,6 +140,7 @@ class NewsfeedStore {
     this.list = new OffsetFeedListStore('shallow');
     this.filter = 'subscribed';
     this.boosts = [];
+    this.viewed = [];
     this.loading = false;
     this.loadingBoost = true;
   }

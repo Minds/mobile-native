@@ -136,6 +136,27 @@ export function toggleComments(guid, value) {
   }
 }
 
+/**
+ * Mark as viewed
+ * @param {object} entity
+ */
+export async function setViewed(entity) {
+  let data;
+  try {
+    if (entity.boosted) {
+      data = await api.put('api/v1/boost/fetch/newsfeed/' + entity.boosted_guid );
+    } else {
+      data = await api.put('api/v1/newsfeed/' + entity.guid + '/view');
+    }
+    return data;
+  } catch (e) {
+      throw {
+        error: e,
+        url: url,
+        file: file
+      };
+  }
+}
 
 /**
  * Toggle user block
