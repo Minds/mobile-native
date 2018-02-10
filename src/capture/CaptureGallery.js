@@ -116,10 +116,23 @@ export default class CaptureGallery extends Component {
    * render list tile
    */
   renderTile = (row) => {
+    const node = row.item.node;
     return (
-      <TouchableOpacity style={styles.tileImage} onPress={() => this.onSelected({ uri: row.item.node.image.uri, type: row.item.node.type, fileName: row.item.node.image.filename })}>
+      <TouchableOpacity
+        style={styles.tileImage}
+        onPress={() => {
+            this.onSelected({
+              uri: node.image.uri,
+              type: node.type,
+              fileName: node.image.filename,
+              width: node.image.width,
+              height: node.image.height
+            })
+          }
+        }
+        >
         <Image
-          source={{ uri : row.item.node.image.uri }}
+          source={{ uri : node.image.uri }}
           style={styles.tileImage}
         />
       </TouchableOpacity>

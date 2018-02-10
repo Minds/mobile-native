@@ -1,6 +1,7 @@
 import React, {
     Component,
 } from 'react';
+
 import {
   TabNavigator
 } from 'react-navigation';
@@ -11,12 +12,14 @@ import {
   View,
   Text,
   TouchableHighlight,
+  Platform
 } from 'react-native';
 
 import {
   inject
 } from 'mobx-react/native'
 
+import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-picker';
 
 import { Button } from 'react-native-elements';
@@ -36,7 +39,6 @@ import colors from '../styles/Colors';
 @inject('navigatorStore')
 export default class CaptureTab extends Component {
   state = {
-    active: false,
     screen: 'gallery',
     imageUri: '',
     attachmentGuid: '',
@@ -51,36 +53,18 @@ export default class CaptureTab extends Component {
   }
 
   /**
-   * On component will mount
-   */
-  componentWillMount() {
-    // load data on enter
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Capture', (s) => {
-      this.setState({ active: true });
-    });
-
-    // clear data on leave
-    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Capture', (s) => {
-      this.setState({ active: false });
-    });
-  }
-
-  /**
-   * Dispose reactions of navigation store on unmount
-   */
-  componentWillUnmount() {
-    this.disposeEnter();
-    this.disposeLeave();
-  }
-
-
-  /**
    * Render
    */
   render() {
-    // if tab is not active we return a blank view
-    if (!this.state.active) {
-      return <View style={CommonStyle.flexContainer}/>
+    let actionsheet = null;
+
+    if (Platform.OS != 'ios') {
+      actionsheet = <ActionSheet
+        ref={o => this.actionSheet = o}
+        options={['Cancel', 'Images', 'Videos']}
+        onPress={this._selectMediaType}
+        cancelButtonIndex={0}
+      />
     }
 
     return (
@@ -111,11 +95,14 @@ export default class CaptureTab extends Component {
           </View> :
           <View></View>
         }
-
+        {actionsheet}
       </View>
     );
   }
 
+  /**
+   * Capture video
+   */
   video() {
     ImagePicker.launchCamera({
       mediaType: 'video',
@@ -141,6 +128,9 @@ export default class CaptureTab extends Component {
     });
   }
 
+  /**
+   * Capture photo
+   */
   photo() {
     ImagePicker.launchCamera({
       mediaType: 'photo',
@@ -166,12 +156,41 @@ export default class CaptureTab extends Component {
     });
   }
 
+  /**
+   * Open gallery
+   */
   gallery() {
-    ImagePicker.launchImageLibrary({
-    },
-    (response) => {
-      this.props.onSelectedMedia(response);
-    });
+    if (Platform.OS == 'ios') {
+      this._openGallery('mixed');
+    } else {
+      this.actionSheet.show()
+    }
+  }
+
+  /**
+   * On media type select
+   */
+  _selectMediaType = (i) => {
+    switch (i) {
+      case 1:
+        this._openGallery('photo');
+        break;
+      case 2:
+        this._openGallery('video');
+        break;
+    }
+  }
+
+  /**
+   * Open gallery with given media type
+   * @param {string} mediaType
+   */
+  _openGallery(mediaType) {
+    ImagePicker.launchImageLibrary(
+      { mediaType },
+      (response) => {
+        this.props.onSelectedMedia(response);
+      });
   }
 
   /**

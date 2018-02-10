@@ -49,6 +49,10 @@ export default class MindsVideo extends PureComponent {
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true
     })
+
+    if (!this.props.entity) {
+      this.setState({active: true})
+    }
   }
 
   onVideoEnd() {

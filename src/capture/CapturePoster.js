@@ -116,6 +116,17 @@ export default class CapturePoster extends Component {
 
   onAttachedMedia = async (response) => {
 
+    let type = 'image'
+
+    if (!response.width) {
+      let extension = 'mp4';
+      if (response.path) {
+        extension = response.path.split('.').pop();
+      }
+      type = 'video';
+      response.type = 'video/' + extension;
+    }
+
     if (response.didCancel) {
     }
     else if (response.error) {
@@ -135,10 +146,11 @@ export default class CapturePoster extends Component {
       let res;
 
       try {
-        res = await uploadAttachment('api/v1/archive/image', {
+        res = await uploadAttachment('api/v1/archive/'+type, {
             uri: response.uri,
+            path: response.path||null,
             type: response.type,
-            name: response.fileName || 'test.jpg'
+            name: response.fileName || 'test'
           },
           (e) => {
             let pct = e.loaded / e.total;
