@@ -150,11 +150,7 @@ export async function setViewed(entity) {
     }
     return data;
   } catch (e) {
-      throw {
-        error: e,
-        url: url,
-        file: file
-      };
+      throw e;
   }
 }
 

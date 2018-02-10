@@ -72,6 +72,7 @@ export default class OffsetListStore {
     this.refreshing = true;
     this.entities = [];
     this.offset = '';
+    this.loaded = false;
     return true;
   }
 
