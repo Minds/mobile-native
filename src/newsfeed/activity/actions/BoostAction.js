@@ -6,7 +6,7 @@ import {
   Text,
   View,
   StyleSheet,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 
 import { CommonStyle } from '../../../styles/Common';
@@ -33,7 +33,7 @@ export default class BoostAction extends PureComponent {
           underlayColor="transparent"
           onPress={this.openBoost}
         >
-          <Text style={[{ paddingLeft: 2, paddingRight: 2}, CommonStyle.colorPrimary]}>BOOST</Text>
+          <Text style={[styles.text, CommonStyle.colorPrimary]}>BOOST</Text>
         </TouchableHighlight>
       </View>
     );
@@ -46,3 +46,11 @@ export default class BoostAction extends PureComponent {
     this.props.navigation.navigate('Boost', { entity: this.props.entity });
   }
 }
+
+const styles = StyleSheet.create({
+  text: {
+    paddingLeft: 2,
+    paddingRight: 2,
+    fontFamily: 'Roboto',
+  },
+});

@@ -105,7 +105,7 @@ export default class Activity extends Component {
             autoHeight={ this.props.autoHeight }
             />
           { this.showActions() }
-          <ActivityMetrics entity={entity}/>
+          { !this.props.hideTabs && false && <ActivityMetrics entity={entity}/> }
         </View>
     );
   }
@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
   container: {
     borderBottomColor: '#EEE',
     borderBottomWidth: StyleSheet.hairlineWidth,
+    overflow: 'visible',
   },
   message: {
     padding: 8

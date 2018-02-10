@@ -6,7 +6,7 @@ export function thumbActivity(guid, direction) {
       return { data }
     })
     .catch(err => {
-      console.log('error');
+      console.log('error', err);
       throw "Ooops";
     })
 }

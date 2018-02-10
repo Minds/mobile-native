@@ -30,14 +30,14 @@ export default class Actions extends PureComponent {
 
     return (
       <View style={CommonStyle.flexContainer}>
-        <View style={styles.container}>
+        { entity && <View style={styles.container}>
           <ThumbUpAction entity={entity} me={this.props.user.me}/>
           <ThumbDownAction entity={entity} me={this.props.user.me}/>
           {!isOwner && <WireAction entity={entity} navigation={this.props.navigation}/>}
           <CommentsAction entity={entity} navigation={this.props.navigation}/>
           <RemindAction entity={entity}/>
           {isOwner && <BoostAction entity={entity} navigation={this.props.navigation}/>}
-        </View>
+        </View> }
       </View>
     );
   }
