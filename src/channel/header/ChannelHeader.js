@@ -16,21 +16,22 @@ import {
 } from 'mobx-react/native'
 
 import { toJS } from 'mobx'
+import Icon from 'react-native-vector-icons/Ionicons';
+import ActionSheet from 'react-native-actionsheet';
+import ImagePicker from 'react-native-image-picker';
+import FastImage from 'react-native-fast-image';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
-import FastImage from 'react-native-fast-image';
 import ChannelActions from '../ChannelActions';
-
 import { ComponentsStyle } from '../../styles/Components';
-
 import colors from '../../styles/Colors'
 import Tags from '../../common/components/Tags';
 import api from '../../common/services/api.service';
 import Touchable from '../../common/components/Touchable';
-import Icon from 'react-native-vector-icons/Ionicons';
-import ActionSheet from 'react-native-actionsheet';
-import ImagePicker from 'react-native-image-picker';
+import ChannelBadges from '../badges/ChannelBadges';
+import { CommonStyle } from '../../styles/Common';
+
 
 /**
  * Channel Header
@@ -39,6 +40,7 @@ import ImagePicker from 'react-native-image-picker';
 export default class ChannelHeader extends Component {
 
   ActionSheetRef;
+  loaded;
 
   state = {
     isSelectingMedia: false,
@@ -55,8 +57,6 @@ export default class ChannelHeader extends Component {
     avatar: null,
     banner: null
   };
-
-  loaded;
 
   componentWillMount() {
     const channel = toJS(this.props.channel.channel);
@@ -325,7 +325,7 @@ export default class ChannelHeader extends Component {
                 value={this.state.name}
                 onChangeText={this.setName}
               />}
-              {!isEditable && <Text style={styles.name}>{this.state.name}</Text>}
+              {!isEditable && <Text style={styles.name}>{this.state.name} <ChannelBadges channel={channel} /></Text>}
 
               <Text style={styles.username}>@{channel.username}</Text>
             </View>
