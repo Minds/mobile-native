@@ -112,7 +112,6 @@ export default class ActivityModel extends BaseModel {
     }
 
     this['thumbs:' + direction + ':count'] += delta;
-
     // class service
     thumbActivity(this.guid, direction).then((data) => { }).catch(err => {
       alert(err);

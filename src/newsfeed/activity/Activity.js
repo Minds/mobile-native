@@ -104,9 +104,6 @@ export default class Activity extends Component {
             style={ styles.media }
             autoHeight={ this.props.autoHeight }
             />
-
-
-
           { this.showActions() }
           <ActivityMetrics entity={entity}/>
         </View>
@@ -123,12 +120,16 @@ export default class Activity extends Component {
   showOwner() {
     if (!this.props.entity.remind_object) {
       const rightToolbar = (
-         <View style={styles.rightToolbar}>
-            <ActivityActionSheet newsfeed={this.props.newsfeed} toggleEdit={this.toggleEdit} entity={this.props.entity} navigation={this.props.navigation}/>
-          </View>
+        <View style={styles.rightToolbar}>
+          <ActivityActionSheet newsfeed={this.props.newsfeed} toggleEdit={this.toggleEdit} entity={this.props.entity} navigation={this.props.navigation}/>
+        </View>
       )
       return (
-        <OwnerBlock entity={this.props.entity} navigation={this.props.navigation} rightToolbar={rightToolbar}>
+        <OwnerBlock 
+          entity={this.props.entity} 
+          navigation={this.props.navigation} 
+          rightToolbar={this.props.hideTabs ? null : rightToolbar}
+          >
           <TouchableOpacity onPress={this.navToActivity} style={{ flexDirection: 'row' }}>
             <Text style={styles.timestamp}>{formatDate(this.props.entity.time_created)}</Text>
             { this.props.entity.boosted &&
@@ -145,11 +146,22 @@ export default class Activity extends Component {
         </OwnerBlock>
       );
     } else {
-      return <RemindOwnerBlock
-                entity={this.props.entity}
-                newsfeed={this.props.newsfeed}
-                navigation={this.props.navigation}
-                />;
+      return  <View>
+                <RemindOwnerBlock
+                  entity={this.props.entity}
+                  newsfeed={this.props.newsfeed}
+                  navigation={this.props.navigation}
+                  />
+                <View style={styles.rightToolbar}>
+                  <ActivityActionSheet 
+                    newsfeed={this.props.newsfeed}
+                    toggleEdit={this.toggleEdit}
+                    entity={this.props.entity}
+                    navigation={this.props.navigation}
+                  />
+                </View>
+              </View>
+             
     }
   }
 
