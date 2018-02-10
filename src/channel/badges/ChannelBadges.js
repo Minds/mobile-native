@@ -4,7 +4,8 @@ import React, {
 
 import {
   View,
-  Text
+  Text,
+  StyleSheet,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -35,17 +36,28 @@ export default class ChannelBadges extends PureComponent {
     const badges = []
 
     if (channel.plus) {
-      badges.push(<Icon name="add-circle-outline" size={size} color={colors.primary} key={1} />)
+      badges.push(<Icon name="add-circle-outline" size={size} style={styles.icon} key={1} />)
     }
 
     if (channel.verified) {
-      badges.push(<Icon name="verified-user" size={size} color={colors.primary} key={2} />)
+      badges.push(<Icon name="verified-user" size={size} style={styles.icon} key={2} />)
     }
 
     if (channel.founder) {
-      badges.push(<Icon name="flight-takeoff" size={size}  color={colors.primary} key={3} />)
+      badges.push(<Icon name="flight-takeoff" size={size} style={styles.icon} key={3} />)
     }
 
-    return <Text>{badges}</Text>
+    return <View style={{ 
+      height: size, 
+      width: (badges.length + 4)*size, 
+      flexDirection: 'row', 
+      //marginTop: 3
+    }}>{badges}</View>
   }
 }
+
+const styles = StyleSheet.create({
+  icon: {
+    color: colors.primary,
+  }
+});

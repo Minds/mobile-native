@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   namecol: {
-    flex:1
+    flex: 1,
   },
   namecontainer: {
     flexDirection: 'row',
@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontSize: 20,
     letterSpacing: 0.5,
+    marginRight: 8,
     color: '#444',
   },
   nameTextInput: {

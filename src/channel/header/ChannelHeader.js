@@ -325,8 +325,11 @@ export default class ChannelHeader extends Component {
                 value={this.state.name}
                 onChangeText={this.setName}
               />}
-              {!isEditable && <Text style={styles.name}>{this.state.name} <ChannelBadges channel={channel} /></Text>}
-
+              {!isEditable &&
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={styles.name}>{this.state.name}</Text>
+                  <ChannelBadges channel={channel} />
+                </View>}
               <Text style={styles.username}>@{channel.username}</Text>
             </View>
             <View style={styles.buttonscol}>
