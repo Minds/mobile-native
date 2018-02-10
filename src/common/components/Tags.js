@@ -94,7 +94,7 @@ export default class Tags extends PureComponent {
     const hash = /(?:^|\s)\@(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
-      return <Text key={i} style={this.styles} onPress={() => { this.navToDiscovery(content) }}> @{content}</Text>
+      return <Text key={i} style={this.styles} onPress={() => { this.navToChannel(content) }}> @{content}</Text>
     });
   }
 
@@ -103,6 +103,13 @@ export default class Tags extends PureComponent {
    */
   navToDiscovery = (q) => {
     this.props.navigation.navigate('Discovery', {q});
+  }
+
+  /**
+   * Navigate to discovery
+   */
+  navToChannel = (q) => {
+    this.props.navigation.navigate('Channel', {username : q});
   }
 
   /**

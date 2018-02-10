@@ -10,6 +10,7 @@ import {
   View,
   ScrollView,
   Button,
+  Alert,
   TouchableHighlight
 } from 'react-native';
 
@@ -25,6 +26,7 @@ import RewardsCarousel from './carousel/RewardsCarousel';
 import ChannelHeader from './header/ChannelHeader';
 import Toolbar from './toolbar/Toolbar';
 import NewsfeedList from '../newsfeed/NewsfeedList';
+import channelService from './ChannelService';
 import CenteredLoading from '../common/components/CenteredLoading';
 import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard'
@@ -38,7 +40,8 @@ import BlogCard from '../blogs/BlogCard'
 export default class ChannelScreen extends Component {
 
   state = {
-    edit: false
+    edit: false,
+    guid: ''
   };
 
   /**
@@ -56,11 +59,17 @@ export default class ChannelScreen extends Component {
     if (this.props.navigation.state.params.entity)
       this.props.channel.store(this.props.navigation.state.params.entity.guid)
         .setChannel(this.props.navigation.state.params.entity);
+        
+    if (this.props.navigation.state.params.username) {
+      this.loadByUsername(this.props.navigation.state.params.username);
+    }
   }
 
   componentDidMount() {
-    this.props.channel.store(this.guid).load();
-    this.props.channel.store(this.guid).feedStore.loadFeed();
+    if(this.guid){
+      this.props.channel.store(this.guid).load();
+      this.props.channel.store(this.guid).feedStore.loadFeed();
+    }
     //this.props.channel.loadrewards(this.guid);
   }
 
@@ -69,8 +78,27 @@ export default class ChannelScreen extends Component {
     this.props.channel.store(this.guid).markInactive();
   }
 
+  //TODO: make a reverse map so we can cache usernames
+  async loadByUsername(username) {
+    try {
+      let response = await channelService.load(username);
+
+      this.setState({ guid: response.channel.guid });
+      this.props.channel.store(response.channel.guid)
+        .setChannel(response.channel);
+      //this.props.channel.store(response.channel.guid).loadFeeds();
+    } catch(err) {
+      Alert.alert(
+        'Atention',
+        'Channel not found',
+        [{ text: 'OK' }],
+        { cancelable: false }
+      );
+    };
+  }
+
   get guid(){
-    return this.props.navigation.state.params.guid;
+    return this.props.navigation.state.params.guid ? this.props.navigation.state.params.guid: this.state.guid;
   }
 
   onEditAction = async payload => {
