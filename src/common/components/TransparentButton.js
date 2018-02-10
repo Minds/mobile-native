@@ -18,6 +18,21 @@ export default class TransparentButton extends Component {
   };
 
   render() {
+    let submitContent;
+    if (typeof this.props.title === 'string') {
+      submitContent = (<Text
+        style={[
+          CommonStyle.paddingLeft,
+          CommonStyle.paddingRight,
+          style.buttonText,
+          this.props.textStyle,
+          { color: this.props.color || '#000' }
+        ]}
+      >{this.props.title}</Text>);
+    } else {
+      submitContent = this.props.title;
+    }
+
     return (
       <TouchableHighlight
         activeOpacity={this.props.disabled ? 1 : 0.7}
@@ -30,15 +45,7 @@ export default class TransparentButton extends Component {
           { borderColor: this.props.color || '#000' }
         ]}
       >
-        <Text
-          style={[
-            CommonStyle.paddingLeft,
-            CommonStyle.paddingRight,
-            style.buttonText,
-            this.props.textStyle,
-            { color: this.props.color || '#000' }
-          ]}
-        >{this.props.title}</Text>
+        {submitContent}
       </TouchableHighlight>
     );
   }

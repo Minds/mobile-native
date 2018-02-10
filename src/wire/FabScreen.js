@@ -217,18 +217,25 @@ export default class FabScreen extends Component {
   async send() {
     const onComplete = this.props.navigation.state.params.onComplete;
     try {
-      await this.props.wire.send();
+      let done = await this.props.wire.send();
+
+      if (!done) {
+        return;
+      }
+
       if (onComplete) onComplete();
       this.props.navigation.goBack();
     } catch (e) {
-      console.error('Wire/send()', e);
+      if (!e || e.message !== 'E_CANCELLED') {
+        console.error('Wire/send()', e);
 
-      Alert.alert(
-        'There was a problem sending wire',
-        (e && e.message) || 'Unknown internal error',
-        [{ text: 'OK'}],
-        { cancelable: false }
-      )
+        Alert.alert(
+          'There was a problem sending wire',
+          (e && e.message) || 'Unknown internal error',
+          [{ text: 'OK' }],
+          { cancelable: false }
+        );
+      }
     }
   }
 

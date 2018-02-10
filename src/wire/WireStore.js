@@ -78,21 +78,25 @@ class WireStore {
       return;
     }
 
+    let done;
+
     try {
       this.sending = true;
 
-      await wireService.send({
+      done = await wireService.send({
         amount: this.amount,
         guid: this.guid,
         owner: this.owner,
         recurring: this.recurring
       });
+
+      this.stopSending();
     } catch (e) {
       this.stopSending();
       throw e;
-    } finally {
-      this.stopSending();
     }
+
+    return done;
   }
 
   @action

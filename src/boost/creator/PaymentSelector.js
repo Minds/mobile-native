@@ -57,7 +57,7 @@ export default class PaymentSelector extends PureComponent {
 
     return (
       <View style={CommonStyle.rowJustifyStart}>
-        {usd}
+        {this.props.type !== 'p2p' && usd}
         {FeaturesService.has('crypto') && tokens}
       </View>
     )

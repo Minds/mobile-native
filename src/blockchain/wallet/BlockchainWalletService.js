@@ -165,7 +165,13 @@ class BlockchainWalletService {
 
   async getCurrent(onlyWithPrivateKey = false) {
     if (!this.current || (!this.current.privateKey && onlyWithPrivateKey)) {
-      this.current = await this.selectCurrent('Select the wallet you would like to use', { signable: onlyWithPrivateKey, offchain: false, buyable: false });
+      const payload = await this.selectCurrent('Select the wallet you would like to use', { signable: onlyWithPrivateKey, offchain: false, buyable: false });
+
+      if (payload && payload.type === 'onchain') {
+        this.current = payload.wallet;
+      } else {
+        throw new Error('E_CANCELLED');
+      }
     }
 
     return this.current;
@@ -186,19 +192,23 @@ class BlockchainWalletService {
   }
 
   async selectCurrent(message = '', opts = {}) {
-    const wallet = await BlockchainWalletSelectorStore.waitForSelect(message, opts);
+    const payload = await BlockchainWalletSelectorStore.waitForSelect(message, opts);
 
-    if (!wallet) {
+    if (!payload) {
       this.current = null;
-      throw new Error('E_NO_WALLET_SELECTED');
+
+      return {
+        type: '',
+        cancelled: true
+      };
     }
 
-    if (wallet.address.toLowerCase().indexOf('0x') === 0) {
-      this.current = wallet;
-      await saveCurrentWalletAddressToStorage(wallet.address);
+    if (payload.type === 'onchain') {
+      this.current = payload.wallet;
+      await saveCurrentWalletAddressToStorage(payload.wallet.address);
     }
 
-    return wallet.address;
+    return payload;
   }
 
   async setCurrent(address) {

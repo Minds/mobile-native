@@ -20,6 +20,8 @@ import tabs from './src/tabs/TabsStore';
 import blockchainTransaction from './src/blockchain/transaction-modal/BlockchainTransactionStore';
 import blockchainWallet from './src/blockchain/wallet/BlockchainWalletStore';
 import blockchainWalletSelector from './src/blockchain/wallet/BlockchainWalletSelectorStore';
+import payments from './src/payments/PaymentsStore';
+import checkoutModal from './src/payments/checkout/CheckoutModalStore';
 
 import sessionService from './src/common/services/session.service';
 
@@ -48,7 +50,9 @@ const stores = {
   blockchainTransaction,
   blockchainWallet,
   blockchainWalletSelector,
-  channelSubscribersStore
+  channelSubscribersStore,
+  payments,
+  checkoutModal,
 };
 
 /**

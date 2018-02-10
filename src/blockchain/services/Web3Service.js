@@ -111,7 +111,7 @@ class Web3Service {
           .once('error', e => reject(e));
       });
     } else {
-      throw new Error('User cancelled');
+      throw new Error('E_CANCELLED');
     }
   }
 }

@@ -392,7 +392,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
         </View>}
 
         <View style={[ CommonStyle.rowJustifyCenter, styles.qrCodeView ]}>
-          <Text style={styles.qrCodeLegend} selectable>{this.state.address.toUpperCase()}</Text>
+          <Text style={styles.qrCodeLegend} selectable>{this.state.address}</Text>
         </View>
       </View>
     );

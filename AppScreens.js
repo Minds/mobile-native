@@ -32,6 +32,7 @@ import BlockchainWalletImportScreen from './src/blockchain/wallet/import/Blockch
 import BlockchainWalletDetailsScreen from './src/blockchain/wallet/details/BlockchainWalletDetailsScreen';
 import ReportScreen from './src/report/ReportScreen';
 import MoreScreen from './src/tabs/MoreScreen';
+import CheckoutModalScreen from './src/payments/checkout/CheckoutModalScreen';
 
 /**
  * Main stack navigator
@@ -136,6 +137,9 @@ const Stack = StackNavigator({
   More: {
     screen: MoreScreen
   },
+  CheckoutModal: {
+    screen: CheckoutModalScreen
+  }
 });
 
 export default Stack;

@@ -45,7 +45,7 @@ class VisibleError extends Error {
 /**
  * Boost Screen
  */
-@inject('user')
+@inject('user', 'checkoutModal')
 export default class BoostScreen extends Component {
 
   textInput = void 0;
@@ -57,7 +57,6 @@ export default class BoostScreen extends Component {
     amount: 1000,
     priority: false,
     target: null,
-    nonce: null,
     scheduleTs: null,
     postToFacebook: false,
 
@@ -150,6 +149,10 @@ export default class BoostScreen extends Component {
    */
   changeType = (type) => {
     this.setState({ type });
+
+    if (type === 'p2p') {
+      this.changePayment('tokens');
+    }
   };
 
   /**
@@ -359,11 +362,6 @@ export default class BoostScreen extends Component {
           throw new VisibleError(`You must spend at least ${currency(this.state.rates.minUsd, 'usd')}.`);
         }
 
-        // TODO: Implement checkout
-        if (!this.state.nonce) {
-          throw new Error('Payment method not processed.');
-        }
-
         break;
     }
 
@@ -374,14 +372,6 @@ export default class BoostScreen extends Component {
 
       if (!this.state.target.guid == this.props.user.me.guid) {
         throw new VisibleError('Target cant be self.')
-      }
-
-      if (!this.state.target.merchant && this.state.payment === 'usd') {
-        throw new VisibleError('User cannot receive money.');
-      }
-
-      if (!this.state.target.eth_wallet && this.state.payment === 'tokens') {
-        throw new VisibleError('User cannot receive tokens.');
       }
     } else /* non-P2P */ {
       if (this.state.amount < this.state.rates.min || this.state.amount > this.state.rates.cap) {
@@ -444,13 +434,9 @@ export default class BoostScreen extends Component {
 
     this.setState({ inProgress: true });
     let guid = null;
-    let nonce = this.state.nonce;
+    let nonce;
 
     try {
-      if (this.state.payment === 'usd') {
-        throw new Error('Not implemented');
-      }
-
       if (this.state.payment === 'tokens') {
         guid = await this.generateGuid();
       }
@@ -458,37 +444,91 @@ export default class BoostScreen extends Component {
       if (this.state.type !== 'p2p') {
         let bidType = this.state.payment;
 
-        if (this.state.payment === 'tokens') {
-          let walletOrAddress = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Network Boost.`, { signable: true, offchain: true, buyable: false });
+        switch (this.state.payment) {
+          case 'tokens':
+            let payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Network Boost.`, { signable: true, offchain: true, buyable: false });
 
-          const tokensFixRate = this.state.rates.tokens / 10000;
-          let amount = Math.ceil(this.state.amount / tokensFixRate) / 10000;
+            if (!payload || payload.cancelled) {
+              return;
+            }
 
-          if (walletOrAddress === 'offchain') {
-            bidType = 'offchain';
-          } else {
-            nonce = {
-              txHash: await BlockchainBoostService.create(guid, amount),
-              address: await Web3Service.getCurrentWalletAddress(true)
-            };
-          }
+            const tokensFixRate = this.state.rates.tokens / 10000;
+            let amount = Math.ceil(this.state.amount / tokensFixRate) / 10000;
+
+            switch (payload.type) {
+              case 'onchain':
+                if (!this.state.target.eth_wallet) {
+                  throw new VisibleError('User cannot receive tokens.');
+                }
+
+                nonce = {
+                  txHash: await BlockchainBoostService.create(guid, amount),
+                  address: await Web3Service.getCurrentWalletAddress(true)
+                };
+                break;
+
+              case 'offchain':
+                bidType = 'offchain';
+                break;
+
+              default:
+                throw new Error('Not supported');
+                break;
+            }
+            break;
+
+          case 'usd':
+            const token = await this.props.checkoutModal.show();
+
+            if (!token) {
+              return;
+            }
+
+            nonce = token;
+            break;
+
+          default:
+            throw new Error('Not supported');
         }
 
         await api.post(`api/v1/boost/${entity.type}/${entity.guid}/${entity.owner_guid}`, {
           guid,
-          bidType: bidType,
+          bidType,
           impressions: this.state.amount,
           priority: this.state.priority ? 1 : null,
           paymentMethod: nonce
         });
       } else /* P2P */ {
-        if (this.state.payment === 'tokens') {
-          await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Channel Boost.`, { signable: true, offchain: false, buyable: false });
+        switch (this.state.payment) {
+          case 'tokens':
+            let payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Channel Boost.`, { signable: true, offchain: false, buyable: true });
 
-          nonce = {
-            txHash: await BlockchainBoostService.createPeer(this.state.target.eth_wallet, guid, this.state.amount),
-            address: await Web3Service.getCurrentWalletAddress(true)
-          };
+            if (!payload || payload.cancelled) {
+              return;
+            }
+
+            switch (payload.type) {
+              case 'onchain':
+                nonce = {
+                  txHash: await BlockchainBoostService.createPeer(this.state.target.eth_wallet, guid, this.state.amount),
+                  address: await Web3Service.getCurrentWalletAddress(true)
+                };
+                break;
+
+              case 'creditcard':
+                nonce = {
+                  token: payload.token
+                };
+                break;
+
+              default:
+                throw new Error('Not supported');
+                break;
+            }
+            break;
+
+          default:
+            throw new Error('Not supported');
         }
 
         await api.post(`api/v1/boost/peer/${entity.guid}/${entity.owner_guid}`, {
@@ -505,15 +545,17 @@ export default class BoostScreen extends Component {
 
       this.props.navigation.goBack();
     } catch (e) {
-      let error;
+      if (!e || e.message !== 'E_CANCELLED') {
+        let error;
 
-      if (e && e.stage === 'transaction') {
-        error = 'Sorry, your payment failed. Please, try again, use another card or wallet';
-      } else {
-        error = (e && e.message) || 'Sorry, something went wrong';
+        if (e && e.stage === 'transaction') {
+          error = 'Sorry, your payment failed. Please, try again, use another card or wallet';
+        } else {
+          error = (e && e.message) || 'Sorry, something went wrong';
+        }
+
+        this.setState({ error });
       }
-
-      this.setState({ error });
     } finally {
       this.setState({ inProgress: false });
     }

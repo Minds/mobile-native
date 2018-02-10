@@ -29,10 +29,14 @@ class BlockchainApiService {
 
   async getUSDRate() {
     try {
-      return (await api.get(`api/v2/blockchain/rate`)).rate;
+      return this.getRate('');
     } catch (e) {
       return null;
     }
+  }
+
+  async getRate(currency = '') {
+    return (await api.get(`api/v2/blockchain/rate/${currency}`)).rate;
   }
 }
 

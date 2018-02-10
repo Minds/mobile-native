@@ -1,6 +1,25 @@
 {
     "compilerOptions": {
         "experimentalDecorators": true,
-        "allowJs": true
-    }
+        "allowJs": true,
+        "moduleResolution": "node",
+        "module": "commonjs",
+        "target": "es6",
+        "lib": [
+            "es2015"
+        ],
+        "rootDir": "./",
+        "strictNullChecks": true,
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "include": [
+        "App.js",
+        "src/**/*.js",
+    ]
 }
