@@ -11,6 +11,8 @@ import {
 
 import Comment from './Comment';
 
+import CommentModel from './CommentModel';
+
 /**
  * Comments Store
  */
@@ -38,6 +40,7 @@ class CommentsStore {
 
     return getComments(this.guid, this.reversed, this.loadNext, this.loadPrevious)
       .then(action(response => {
+        response.comments = CommentModel.createMany(response.comments);
         this.loaded = true;
         this.setComments(response)
       }))
