@@ -1,5 +1,5 @@
 import { observable, action, extendObservable } from 'mobx'
-
+import channelService from '../../channel/ChannelService';
 /**
  * Common infinite scroll list
  */
@@ -83,5 +83,24 @@ export default class OffsetListStore {
 
   cantLoadMore() {
     return this.loaded && !this.offset && !this.refreshing;
+  }
+
+  @action
+  toggleSubscription(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.entities[index];
+      let value = !entity.subscribed;
+      return channelService.toggleSubscription(entity.guid, value)
+        .then(action(response => {
+          entity.subscribed = value;
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          entity.subscribed = !value;
+          this.entities[index] = entity;
+          console.log('error');
+        }));
+    }
   }
 }

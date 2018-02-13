@@ -17,7 +17,7 @@ export default class ChannelStore {
   feedStore = null;
 
   // only observable by reference because UserModel already have the needed observables
-  @observable.ref channel = {};
+  @observable channel = {};
 
   @observable rewards = {};
   @observable active = false;

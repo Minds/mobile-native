@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
   Keyboard,
+  TouchableHighlight,
   Text
 } from 'react-native';
 
@@ -20,6 +21,10 @@ import {
 
 import abbrev from '../common/helpers/abbrev'
 
+import colors from '../styles/Colors'
+import { ComponentsStyle } from '../styles/Components';
+
+@observer
 export default class DiscoveryUser extends PureComponent {
 
   /**
@@ -32,6 +37,34 @@ export default class DiscoveryUser extends PureComponent {
     }
   }
 
+  toggleSubscribe = () => {
+    const item = this.props.entity.item;
+    alert(JSON.stringify(item))
+    this.props.store.list.toggleSubscription(item.guid);
+  }
+
+  subscribeButton() {
+    const item = this.props.entity.item;
+    if (item.subscribed) {
+      return <TouchableHighlight
+          onPress={ this.toggleSubscribe }
+          underlayColor='transparent'
+          style={[ComponentsStyle.button, ComponentsStyle.buttonAction]}
+          accessibilityLabel="Subscribe to this channel"
+        >
+          <Text style={{ color: colors.primary }} > UNSUBSCRIBE </Text>
+        </TouchableHighlight>;
+    } else {
+      return <TouchableHighlight
+          onPress={ this.toggleSubscribe }
+          underlayColor='transparent'
+          style={[ComponentsStyle.button, ComponentsStyle.buttonAction]}
+          accessibilityLabel="Unsubscribe to this channel"
+        >
+          <Text style={{ color: colors.primary }} > SUBSCRIBE </Text>
+        </TouchableHighlight>;
+    }
+  }
   render() {
     const item = this.props.entity.item;
     const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + item.guid + '/medium' };
@@ -39,6 +72,7 @@ export default class DiscoveryUser extends PureComponent {
       <TouchableOpacity style={styles.row} onPress={this._navToConversation}>
         <Image source={avatarImg} style={styles.avatar} />
         <Text style={styles.body}>{item.name}</Text>
+        {this.subscribeButton()}
       </TouchableOpacity>
     );
   }

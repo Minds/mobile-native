@@ -307,7 +307,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderUser = (row) => {
     return (
-      <DiscoveryUser entity={row} navigation={this.props.navigation} />
+      <DiscoveryUser store={this.props.discovery.stores['user']} entity={row} navigation={this.props.navigation} />
     );
   }
   /**

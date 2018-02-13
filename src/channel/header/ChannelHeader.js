@@ -45,7 +45,7 @@ export default class ChannelHeader extends Component {
   state = {
     isSelectingMedia: false,
     uploadType: null,
-
+    
     preview_avatar: null,
     preview_banner: null,
 
@@ -197,7 +197,7 @@ export default class ChannelHeader extends Component {
 
   subscribe() {
     let channel = this.props.channel.channel;
-    this.props.channel.subscribe(channel.guid);
+    this.props.channel.subscribe();
   }
 
   changeBannerAction = async () => {

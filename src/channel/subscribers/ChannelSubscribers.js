@@ -116,7 +116,7 @@ export default class ChannelSubscribers extends Component {
    */
   renderRow = (row) => {
     return (
-      <DiscoveryUser entity={row} navigation={this.props.navigation} />
+      <DiscoveryUser store={this.props.channelSubscribersStore} entity={row} navigation={this.props.navigation} />
     );
   }
 }
