@@ -134,6 +134,7 @@ export class SocketService {
   }
 
   unsubscribe(name, callback) {
+    if (!this.socket) return;
     this.socket.off(name, callback);
     return this;
   }

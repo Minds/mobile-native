@@ -10,6 +10,8 @@ import {
 
 import messengerService from './MessengerService';
 import crypto from './../common/services/crypto.service';
+import socket from '../common/services/socket.service';
+import session from '../common/services/session.service';
 
 /**
  * Messenger Conversation Store
@@ -20,22 +22,41 @@ class MessengerConversationStore {
    */
   @observable.shallow messages = [];
 
+  socketRoomName = null;
+  guid = null;
+
   /**
    * Load conversation from remote
-   * @param {string} guid
    * @param {string} offset
    */
-  load(guid, offset = '') {
-    return messengerService.getConversationFromRemote(15, guid, offset)
+  load(offset = '') {
+    return messengerService.getConversationFromRemote(15, this.guid, offset)
       .then(conversation => {
         crypto.setPublicKeys( conversation.publickeys );
         this.setMessages(conversation.messages.reverse());
+        this.checkListen(conversation);
       })
+  }
+
+  checkListen(conversation) {
+    if (!this.socketRoomName && conversation.socketRoomName) {
+      this.socketRoomName = conversation.socketRoomName;
+      this.listen();
+    }
+  }
+
+  setGuid(guid) {
+    this.guid = guid;
   }
 
   @action
   setMessages(msgs) {
     this.messages = msgs;
+  }
+
+  @action
+  addMessage(msg) {
+    this.messages.unshift(msg);
   }
 
   /**
@@ -45,7 +66,7 @@ class MessengerConversationStore {
    * @param {string} text
    */
   @action
-  send(guid, myGuid, text) {
+  send(myGuid, text) {
     this.messages.unshift({
       guid: myGuid + this.messages.length,
       message: text,
@@ -56,7 +77,7 @@ class MessengerConversationStore {
 
     return this._encryptMessage(text)
       .then(encrypted => {
-        return messengerService.send(guid, encrypted)
+        return messengerService.send(this.guid, encrypted)
       })
   }
 
@@ -87,14 +108,60 @@ class MessengerConversationStore {
    */
   @action
   clear() {
-    this.messages = [];
+    if (this.lastMessageGuid) {
+      // on leave set all messages as readed
+      messengerService.getConversationFromRemote(1, this.guid, this.lastMessageGuid);
+      this.lastMessageGuid = null;
+    }
+    this.socketRoomName  = null;
+    this.guid            = null;
+    this.messages        = [];
+    // unlisten socket
+    this.unlisten();
   }
+
+  reset() {
+    this.clear();
+  }
+
+  /**
+   * Socket pushConversationMessage
+   */
+  pushConversationMessage = (guid, message) => {
+    if (guid != this.guid) {
+      return;
+    }
+
+    const fromSelf = session.guid == message.ownerObj.guid;
+
+    if (!fromSelf) {
+      message.message = message.messages[1];
+      this.addMessage(message);
+      this.lastMessageGuid = message.guid;
+      // @todo: play sound and notify user
+    }
+  };
 
   @action
-  reset() {
+  clearConversation = (guid, actor) => {
     this.messages = [];
   }
 
+  unlisten() {
+    socket.leave(this.socketRoomName);
+    socket.unsubscribe('pushConversationMessage', this.pushConversationMessage);
+    socket.unsubscribe('clearConversation', this.clearConversation);
+  }
+
+  listen() {
+    socket.join(this.socketRoomName);
+    socket.subscribe('pushConversationMessage', this.pushConversationMessage);
+    socket.subscribe('clearConversation', this.clearConversation);
+
+    // TODO: implement block
+    //socket.subscribe('block', this.block);
+    //socket.subscribe('unblock', this.unblock);
+  }
 }
 
 export default new MessengerConversationStore();
