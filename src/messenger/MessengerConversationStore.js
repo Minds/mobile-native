@@ -23,6 +23,7 @@ class MessengerConversationStore {
   @observable.shallow messages = [];
 
   socketRoomName = null;
+  participants = null;
   guid = null;
 
   /**
@@ -41,6 +42,7 @@ class MessengerConversationStore {
   checkListen(conversation) {
     if (!this.socketRoomName && conversation.socketRoomName) {
       this.socketRoomName = conversation.socketRoomName;
+      this.participants = conversation.participants;
       this.listen();
     }
   }
@@ -114,6 +116,7 @@ class MessengerConversationStore {
       this.lastMessageGuid = null;
     }
     this.socketRoomName  = null;
+    this.participants    = null;
     this.guid            = null;
     this.messages        = [];
     // unlisten socket
@@ -135,7 +138,9 @@ class MessengerConversationStore {
     const fromSelf = session.guid == message.ownerObj.guid;
 
     if (!fromSelf) {
-      message.message = message.messages[1];
+      const index = this.participants.findIndex((e) => { return e.guid == message.ownerObj.guid});
+
+      message.message = message.messages[index];
       this.addMessage(message);
       this.lastMessageGuid = message.guid;
       // @todo: play sound and notify user
