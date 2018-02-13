@@ -47,7 +47,8 @@ export default class ConversationScreen extends Component {
     }
 
     // load conversation
-    this.props.messengerConversation.load(conversation.guid);
+    this.props.messengerConversation.setGuid(conversation.guid);
+    this.props.messengerConversation.load();
   }
 
   /**

@@ -63,10 +63,11 @@ class MessengerService {
    * @param {string} offset
    */
   getConversationFromRemote(limit, guid, offset = "") {
-    return api.get('api/v2/conversations/' + guid, {
-      limit: limit,
-      offset: offset
-    });
+    return api.get('api/v2/conversations/' + guid, { limit, offset })
+      .then(conversation => {
+        conversation.messages = conversation.messages || [];
+        return conversation;
+      });
   }
 
   /**

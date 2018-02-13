@@ -11,6 +11,10 @@ import {
 
 import Comment from './Comment';
 
+import CommentModel from './CommentModel';
+import socket from '../common/services/socket.service';
+import session from '../common/services/session.service';
+
 /**
  * Comments Store
  */
@@ -25,25 +29,65 @@ class CommentsStore {
   reversed = false;
   loadNext = '';
   loadPrevious = '';
-  socketRoom = '';
+  socketRoomName = '';
 
   /**
    * Load Comments
    */
-  loadComments(guid) {
+  loadComments(guid, limit = 25) {
     if (this.cantLoadMore(guid)) {
       return;
     }
     this.guid = guid;
 
-    return getComments(this.guid, this.reversed, this.loadNext, this.loadPrevious)
+    return getComments(this.guid, this.reversed, this.loadNext, this.loadPrevious, limit)
       .then(action(response => {
+        response.comments = CommentModel.createMany(response.comments);
         this.loaded = true;
-        this.setComments(response)
+        this.setComments(response);
+        this.checkListen(response);
       }))
       .catch(err => {
         console.log('error', err);
       });
+  }
+
+  /**
+   * Check for socketRoomName and start listen
+   * @param {object} response
+   */
+  checkListen(response) {
+    if (!this.socketRoomName && response.socketRoomName) {
+      this.socketRoomName = response.socketRoomName;
+      this.listen();
+    }
+  }
+
+  /**
+   * Listen for socket
+   */
+  listen() {
+    socket.join(this.socketRoomName);
+    socket.subscribe('comment', this.comment);
+  }
+  /**
+   * Stop listen for socket
+   */
+  unlisten() {
+    socket.leave(this.socketRoomName);
+    socket.unsubscribe('comment', this.comment);
+  }
+
+  /**
+   * socket comment message
+   */
+  comment = (parent_guid, owner_guid, guid, more) => {
+    if (owner_guid === session.guid) {
+      return;
+    }
+
+    this.loadNext = guid;
+    this.loadComments(this.guid, 1);
   }
 
   @action
@@ -56,7 +100,6 @@ class CommentsStore {
     this.reversed = response.reversed;
     this.loadNext = response.loadNext;
     this.loadPrevious = response.loadPrevious;
-    this.socketRoom = response.socketRoom;
   }
 
   @action
@@ -76,7 +119,7 @@ class CommentsStore {
     this.reversed = '';
     this.loadNext = '';
     this.loadPrevious = '';
-    this.socketRoom = '';
+    this.socketRoomName = '';
     this.loaded = false;
   }
 
@@ -109,7 +152,7 @@ class CommentsStore {
   }
 
   cantLoadMore(guid) {
-    return this.loaded && !this.offset && !this.refreshing && this.guid === guid;
+    return this.loaded && !this.loadNext && !this.refreshing && this.guid === guid;
   }
 
   @action
@@ -122,7 +165,7 @@ class CommentsStore {
     this.reversed = false;
     this.loadNext = '';
     this.loadPrevious = '';
-    this.socketRoom = '';
+    this.socketRoomName = '';
   }
 
 }

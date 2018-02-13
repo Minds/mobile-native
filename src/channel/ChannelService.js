@@ -89,7 +89,7 @@ class ChannelService {
   }
 
   getSubscribers(guid, filter, offset) {
-    return api.get('api/v1/subscribe/' + filter + '/' + guid, { offset: offset, limit: 6 })
+    return api.get('api/v1/subscribe/' + filter + '/' + guid, { offset: offset, limit: 15 })
     .then((data) => {
       return {
         entities: data.users,

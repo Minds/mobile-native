@@ -6,13 +6,24 @@ import {
 import channelService from './ChannelService';
 import ChannelStore from './ChannelStore';
 import wireService from '../wire/WireService';
+import ModelStorageList from '../common/ModelStorageList';
 
 /**
  * Channel Stores
  */
 class ChannelStores {
+  /**
+   * Last visited channels (local storage)
+   */
+  lastVisited = new ModelStorageList('lastchannels', 10);
 
   stores = {};
+
+  async addVisited(channel) {
+    result = await this.lastVisited.unshift(channel);
+    // if it already exist we move it to the beggining
+    if (result == -1) this.lastVisited.moveFirst(channel.guid);
+  }
 
   @observable
   store(guid) {

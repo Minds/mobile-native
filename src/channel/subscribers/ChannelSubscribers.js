@@ -83,10 +83,10 @@ export default class ChannelSubscribers extends Component {
       <View style={CommonStyle.flexContainer}>
         <View style={styles.topbar}>
           <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
-            <TouchableHighlight underlayColor='transparent' onPress={() => channels.setFilter('subscribers')} style={channels.filter === 'subscribers'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
+            <TouchableHighlight underlayColor='transparent' onPress={() => channels.setFilter('subscribers')} style={channels.filter == 'subscribers'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
               <Text>Subscribers</Text>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor='transparent' onPress={() => channels.setFilter('subscriptions')} style={channels.filter === 'subscription'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter ]}>
+            <TouchableHighlight underlayColor='transparent' onPress={() => channels.setFilter('subscriptions')} style={channels.filter == 'subscriptions'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter ]}>
               <Text>Subscriptions</Text>
             </TouchableHighlight>
           </View>
