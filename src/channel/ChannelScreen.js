@@ -8,10 +8,7 @@ import {
   Text,
   Image,
   View,
-  ScrollView,
-  Button,
   Alert,
-  TouchableHighlight
 } from 'react-native';
 
 import {
@@ -28,8 +25,12 @@ import Toolbar from './toolbar/Toolbar';
 import NewsfeedList from '../newsfeed/NewsfeedList';
 import channelService from './ChannelService';
 import CenteredLoading from '../common/components/CenteredLoading';
+import Button from '../common/components/Button';
 import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard'
+import { CommonStyle } from '../styles/Common';
+
+
 
 /**
  * Channel Screen
@@ -114,6 +115,13 @@ export default class ChannelScreen extends Component {
   };
 
   /**
+   * navigate to create post
+   */
+  createPost = () => {
+    this.props.navigation.navigate('Capture');
+  }
+
+  /**
    * Render
    */
   render() {
@@ -121,6 +129,7 @@ export default class ChannelScreen extends Component {
     const channel = this.props.channel.store(this.guid).channel;
     const rewards = this.props.channel.store(this.guid).rewards;
     const guid    = this.guid;
+    const isOwner = guid == this.props.user.me.guid;
 
     if (!channel.guid) {
       return (
@@ -128,6 +137,7 @@ export default class ChannelScreen extends Component {
       );
     }
 
+    let emptyMessage = null;
     let carousel = null;
 
     // carousel only visible if we have data
@@ -166,8 +176,27 @@ export default class ChannelScreen extends Component {
       }
     }
 
+    // is owner? show custom empty message
+    if (isOwner) {
+      emptyMessage = (
+        <View style={CommonStyle.centered}>
+          <Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>
+            Create your first post
+          </Text>
+          <Button text="Create" onPress={this.createPost} />
+        </View>
+      );
+    }
+
     return (
-      <NewsfeedList newsfeed={feed} renderActivity={renderActivity} guid={guid} header={header} navigation={this.props.navigation} />
+      <NewsfeedList
+        newsfeed={feed}
+        renderActivity={renderActivity}
+        guid={guid}
+        header={header}
+        navigation={this.props.navigation}
+        emptyMessage={emptyMessage}
+      />
     );
   }
 }

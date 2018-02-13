@@ -78,10 +78,14 @@ export default class NewsfeedList extends Component {
     ) : null;
 
     // empty message
-    if(newsfeed.list.loaded) {
-      emptyMessage = <Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>
-        There is no data to show
-      </Text>;
+    if (newsfeed.list.loaded && !newsfeed.list.refreshing) {
+      emptyMessage = this.props.emptyMessage;
+      // if there is no empty message prop we use default
+      if (!emptyMessage) {
+        emptyMessage = <Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>
+          There is no data to show
+        </Text>;
+      }
     }
 
     return (
