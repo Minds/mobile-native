@@ -36,10 +36,11 @@ class DiscoveryStore {
     'group': {
       list: new OffsetListStore('shallow'),
       loading: false,
+    },
+    'lastchannels': {
+      list: new OffsetListStore('shallow'),
     }
   };
-
-  list = new OffsetListStore('shallow');
 
   @observable searchtext = '';
   @observable filter     = 'trending';
@@ -47,6 +48,17 @@ class DiscoveryStore {
   @observable category   = 'all';
 
   loading = false;
+
+  /**
+   * current list
+   */
+  get list() {
+    return this.stores[this.type].list;
+  }
+
+  set list(list) {
+    this.stores[this.type].list = list
+  }
 
   /**
    * Load feed
@@ -58,6 +70,7 @@ class DiscoveryStore {
     if (!force && store.list.cantLoadMore() || store.loading) {
       return Promise.resolve();
     }
+
     store.loading = true;
     return discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext)
       .then(feed => {
@@ -105,7 +118,7 @@ class DiscoveryStore {
    * @param {string} type
    */
   @action
-  async setType(type) {
+  setType(type) {
     const store = this.stores[this.type];
     this.type = type;
     this.loadList();
@@ -171,16 +184,18 @@ class DiscoveryStore {
       'group': {
         list: new OffsetListStore('shallow'),
         loading: false,
+      },
+      'lastchannels': {
+        list: new OffsetListStore('shallow'),
       }
     };
-    this.list = new OffsetListStore('shallow');
+
     this.searchtext = '';
     this.filter = 'trending';
     this.type  = 'object/image';
     this.category = 'all';
     this.loading = false;
   }
-
 }
 
 export default new DiscoveryStore();

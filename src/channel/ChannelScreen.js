@@ -67,7 +67,9 @@ export default class ChannelScreen extends Component {
 
   componentDidMount() {
     if(this.guid){
-      this.props.channel.store(this.guid).load();
+      this.props.channel.store(this.guid).load()
+        .then(channel => this.props.channel.addVisited(channel)); // add visited channels
+
       this.props.channel.store(this.guid).feedStore.loadFeed();
     }
     //this.props.channel.loadrewards(this.guid);

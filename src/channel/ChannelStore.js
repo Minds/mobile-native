@@ -50,6 +50,8 @@ export default class ChannelStore {
     const { channel } = await channelService.load(this.guid);
     if (channel)
       this.setChannel(UserModel.create(channel));
+
+    return this.channel;
   }
 
   @action

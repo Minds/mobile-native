@@ -39,7 +39,7 @@ import { MINDS_CDN_URI } from '../config/Config';
 /**
  * Discovery screen
  */
-@inject('discovery', 'navigatorStore')
+@inject('discovery', 'navigatorStore', 'channel')
 @observer
 export default class DiscoveryScreen extends Component {
 
@@ -129,7 +129,7 @@ export default class DiscoveryScreen extends Component {
     let body;
 
     const discovery = this.props.discovery;
-    const list = discovery.stores[discovery.type].list;
+    const list = discovery.list;
 
     if (!list.loaded) {
       body = <CenteredLoading />
@@ -137,6 +137,7 @@ export default class DiscoveryScreen extends Component {
       let renderRow, columnWrapperStyle = null, getItemLayout=null;
       this.cols = 3;
       switch (discovery.type) {
+        case 'lastchannels':
         case 'user':
           renderRow = this.renderUser;
           this.cols = 1;
@@ -228,8 +229,8 @@ export default class DiscoveryScreen extends Component {
           <View style={{ flex: 1 }}>
             <SearchView
               placeholder='Search...'
-              onFocus={this.searchFocus.bind(this)}
-              onBlur={this.searchBlur.bind(this)}
+              onFocus={this.searchFocus}
+              onBlur={this.searchBlur}
               onChangeText={this.searchDebouncer}
             />
           </View>
@@ -240,11 +241,17 @@ export default class DiscoveryScreen extends Component {
     );
   }
 
-  searchFocus() {
+  searchFocus = () => {
+    this.props.channel.lastVisited.first(10)
+      .then(list => {
+        this.props.discovery.setType('lastchannels');
+        this.props.discovery.list.clearList();
+        this.props.discovery.list.setList({entities: list});
+      });
     this.setState({ searching: true });
   }
 
-  searchBlur() {
+  searchBlur = () => {
     if (!this.props.discovery.searchtext) {
       this.setState({ searching: false });
     }

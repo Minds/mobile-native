@@ -114,7 +114,7 @@ class SessionService {
           fn(token);
         }
       },
-      { fireImmediately: true }
+      { fireImmediately: false }
     );
   }
 
