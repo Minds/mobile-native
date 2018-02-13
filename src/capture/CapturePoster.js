@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import {
-  ListView,
   StyleSheet,
   View,
-  ScrollView,
-  FlatList,
   TextInput,
   Text,
   Button,
   TouchableHighlight,
-  Image,
-  ActivityIndicator
 } from 'react-native';
+
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-picker';
@@ -72,12 +68,11 @@ export default class CapturePoster extends Component {
   }
 
   render() {
-
     return (
       <View style={styles.posterAndPreviewWrapper}>
 
-        <View style={styles.posterWrapper}>
-          <TextInput
+        <View style={styles.posterWrapper} pointerEvents="box-none">
+          {this.state.active && <TextInput
             style={styles.poster}
             editable={true}
             placeholder='Speak your mind...'
@@ -86,7 +81,8 @@ export default class CapturePoster extends Component {
             onChangeText={this.setText}
             value={this.state.text}
             multiline={true}
-          />
+            selectTextOnFocus={true}
+          />}
 
           <View style={styles.posterActions}>
             {
@@ -325,7 +321,7 @@ const styles = StyleSheet.create({
   },
   poster: {
     flex: 1,
-    maxHeight: 100,
+    maxHeight: 100
   },
   posterActions: {
     alignItems: 'center',
