@@ -9,6 +9,7 @@ import {
     FlatList,
     View,
     TouchableHighlight,
+    Keyboard,
 } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 
@@ -240,6 +241,8 @@ export default class DiscoveryScreen extends Component {
       </View>
     );
 
+    const fullSearchBar = this.props.discovery.searchtext || this.props.discovery.type == 'lastchannels';
+
     return (
       <View style={CommonStyle.flexContainer}>
         <View style={{ flexDirection: 'row', alignItems: 'stretch', backgroundColor: '#FFF' }}>
@@ -250,29 +253,43 @@ export default class DiscoveryScreen extends Component {
               onBlur={this.searchBlur}
               onChangeText={this.setQ}
               value={this.state.q}
+              iconRight={ fullSearchBar ? 'md-close-circle' : '' }
+              iconRightOnPress={this.clearSearch}
             />
           </View>
-          {!this.props.discovery.searchtext && navigation}
+          {!fullSearchBar && navigation}
         </View>
         {body}
       </View>
     );
   }
 
-  searchFocus = () => {
-    this.props.channel.lastVisited.first(10)
-      .then(list => {
-        this.props.discovery.setType('lastchannels');
-        this.props.discovery.list.clearList();
-        this.props.discovery.list.setList({entities: list});
-      });
+  searchFocus = async () => {
     this.setState({ searching: true });
+
+    const list = await this.props.channel.lastVisited.first(10)
+
+    if (!list.length)
+      return;
+  
+    this.props.discovery.setType('lastchannels');
+    this.props.discovery.list.clearList();
+    this.props.discovery.list.setList({entities: list});
   }
 
   searchBlur = () => {
     if (!this.props.discovery.searchtext) {
       this.setState({ searching: false });
     }
+  }
+
+  clearSearch = () => {
+    this.setState({
+      q: '',
+      searching: false,
+    });
+    this.setQ('');
+    Keyboard.dismiss();
   }
 
   onFilterChange = (val) => {

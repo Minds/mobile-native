@@ -24,6 +24,7 @@ export default class SearchView extends PureComponent {
     const {
       iconRight,
       iconRightOnPress,
+      right,
       ...attributes
     } = this.props;
 

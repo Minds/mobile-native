@@ -12,18 +12,9 @@ import ModelStorageList from '../common/ModelStorageList';
  * Channel Stores
  */
 class ChannelStores {
-  /**
-   * Last visited channels (local storage)
-   */
+
   lastVisited = new ModelStorageList('lastchannels', 10);
-
   stores = {};
-
-  async addVisited(channel) {
-    result = await this.lastVisited.unshift(channel);
-    // if it already exist we move it to the beggining
-    if (result == -1) this.lastVisited.moveFirst(channel.guid);
-  }
 
   @observable
   store(guid) {
@@ -46,8 +37,15 @@ class ChannelStores {
     }
   }
 
+  async addVisited(channel) {
+    result = await this.lastVisited.unshift(channel);
+    // if it already exist we move it to the beggining
+    if (result == -1) this.lastVisited.moveFirst(channel.guid);
+  }
+
   @action
   reset() {
+    this.lastVisited = new ModelStorageList('lastchannels', 10);
     for (guid in this.stores) {
       this.stores[guid] = null;
     }
