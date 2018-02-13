@@ -5,7 +5,8 @@ import {
   Image,
   View,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native'
@@ -59,12 +60,26 @@ export default class Topbar extends Component {
   }
 }
 
+let topbarHeight = 56;
+let topbarPadding = 0;
+
+if (Platform.OS == 'ios') {
+  topbarHeight = 65;
+  topbarPadding = 16;
+}
+
+const d = Dimensions.get('window');
+if (d.height == 812 || d.width == 812) {
+  topbarHeight = 76;
+  topbarPadding = 32;
+}
+
 const styles = StyleSheet.create({
   container: {
-    height: (Platform.OS === 'ios') ? 65 : 56,
+    height: topbarHeight,
     display: 'flex',
     flexDirection: 'row',
-    paddingTop: Platform.OS === 'ios'? 16 : 0,
+    paddingTop: topbarPadding,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
     backgroundColor: '#FFFFFF',

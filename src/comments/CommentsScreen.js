@@ -11,6 +11,7 @@ import {
   Text,
   KeyboardAvoidingView,
   Platform,
+  Dimensions,
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native';
@@ -65,7 +66,7 @@ export default class CommentsScreen extends Component {
    */
   render() {
     return (
-      <KeyboardAvoidingView style={{flex:1}} behavior={ Platform.OS == 'ios' ? 'padding' : 'none' } keyboardVerticalOffset={64}>
+      <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : 'none' } keyboardVerticalOffset={64}>
         <View style={{flex:14}}>
           { this.props.comments.loaded ?
             <FlatList
@@ -165,7 +166,18 @@ export default class CommentsScreen extends Component {
   }
 }
 
+let paddingBottom = 0;
+
+const d = Dimensions.get('window');
+if (d.height == 812 || d.width == 812) {
+  paddingBottom = 16;
+}
+
 const styles = StyleSheet.create({
+  containerContainer: {
+    flex: 1,
+    paddingBottom: paddingBottom,
+  },
 	listView: {
     backgroundColor: '#FFF',
     flex: 1,
