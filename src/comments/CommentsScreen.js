@@ -55,7 +55,8 @@ export default class CommentsScreen extends Component {
     this.loadComments();
   }
 
-  componentWillUnount() {
+  componentWillUnmount() {
+    this.props.comments.unlisten();
     this.props.comments.clearComments();
   }
 
