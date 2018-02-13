@@ -31,7 +31,7 @@ export default class RemindModal extends Component {
     return (
       <ScrollView style={{flex:1, flexDirection:'column'}}>
         <View style={{flex:1}}>
-          <Poster isRemind={true} guid={this.props.entity.guid} />
+          <Poster isRemind={true} closeAction={this.props.onClose} guid={this.props.entity.guid} />
         </View>
         <View style={{flex:4}}>
           <Activity hideTabs={true} entity={this.props.entity} />

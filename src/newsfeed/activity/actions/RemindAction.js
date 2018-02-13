@@ -41,7 +41,7 @@ export default class RemindAction extends PureComponent {
               <View style={styles.modalHeader}>
                 <IonIcon onPress={this.closeRemind} color='gray' size={30} name='md-close' />
               </View>
-              <Remind entity={this.props.entity} />
+              <Remind entity={this.props.entity} onClose={this.closeRemind} />
             </View>
           </Modal>
         </View>

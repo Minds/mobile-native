@@ -167,6 +167,8 @@ export default class Poster extends Component {
         attachmentGuid: '',
         hasAttachment:false
       });
+      
+      this.props.closeAction();    
     })
     .catch(err => {
       console.log('error');
