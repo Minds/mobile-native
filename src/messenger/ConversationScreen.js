@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
+  Dimensions,
 } from 'react-native';
 
 import {
@@ -116,7 +117,7 @@ export default class ConversationScreen extends Component {
     const conversationGuid = this.props.navigation.state.params.conversation.guid;
     const myGuid = this.props.user.me.guid
     const msg  = this.state.text;
-    this.props.messengerConversation.send(conversationGuid, myGuid, msg)
+    this.props.messengerConversation.send(myGuid, msg)
       .catch(err=> {
         console.log(err);
       })
@@ -136,6 +137,8 @@ export default class ConversationScreen extends Component {
 
 }
 
+const d = Dimensions.get('window');
+
 // styles
 const styles = StyleSheet.create({
   listView: {
@@ -154,6 +157,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'baseline',
+    padding: 8,
+
+    ... (d.height == 812) ? {
+      paddingTop: 4,
+      paddingBottom: 24,
+    } : {}
   },
   tbarbutton: {
     padding: 8,

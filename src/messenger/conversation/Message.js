@@ -63,7 +63,9 @@ export default class Message extends PureComponent {
             <View style={CommonStyle.rowJustifyCenter}>
               <View style={CommonStyle.flexContainer}></View>
               <View style={[styles.textContainer, CommonStyle.backgroundPrimary]}  >
-                <Text selectable={true} style={[styles.message, CommonStyle.colorWhite]} onPress={() => this.showDate()}><Tags color={'#444'} navigation={this.props.navigation}>{this.state.msg}</Tags></Text>
+                <Text selectable={true} style={[styles.message, CommonStyle.colorWhite]} onPress={() => this.showDate()}>
+                  <Tags color={'#fff'} style={{ color: '#FFF' }} navigation={this.props.navigation}>{this.state.msg}</Tags>
+                </Text>
               </View>
             </View>
             <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
@@ -81,7 +83,9 @@ export default class Message extends PureComponent {
           <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
           <View style={CommonStyle.rowJustifyCenter}>
             <View style={[ styles.textContainer ]}  >
-              <Text selectable={true} style={[styles.message]} onPress={() => this.showDate()}><Tags navigation={this.props.navigation}>{this.state.msg}</Tags></Text>
+              <Text selectable={true} style={[styles.message]} onPress={() => this.showDate()}>
+                <Tags navigation={this.props.navigation}>{this.state.msg}</Tags>
+              </Text>
             </View>
             <View style={CommonStyle.flexContainer}></View>
           </View>
@@ -126,7 +130,9 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   messageContainer: {
-    marginTop: 20,
+    margin: 4,
+    marginTop: 8,
+    marginBottom: 8,
     flexDirection: 'row',
     display: 'flex',
     alignItems: 'center',
@@ -140,11 +146,8 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   message: {
-    padding: 12,
-    paddingLeft: 4,
-    paddingRight: 4,
-    marginLeft: 10,
-    marginRight: 10
+    padding: 16,
+    maxWidth: 272,
   },
   messagedate: {
     fontSize: 9,
