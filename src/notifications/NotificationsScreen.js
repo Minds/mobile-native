@@ -81,7 +81,7 @@ export default class NotificationsScreen extends Component {
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
-          ListEmptyComponent={<Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>There is no notifications to show</Text>}
+          ListEmptyComponent={<Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>There are no notifications to load</Text>}
           onEndThreshold={0.05}
           refreshing={this.props.notifications.list.refreshing}
           style={styles.listView}
