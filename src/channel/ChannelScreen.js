@@ -59,7 +59,7 @@ export default class ChannelScreen extends Component {
     if (this.props.navigation.state.params.entity)
       this.props.channel.store(this.props.navigation.state.params.entity.guid)
         .setChannel(this.props.navigation.state.params.entity);
-        
+
     if (this.props.navigation.state.params.username) {
       this.loadByUsername(this.props.navigation.state.params.username);
     }
@@ -151,7 +151,7 @@ export default class ChannelScreen extends Component {
 
         <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>
         {carousel}
-        <Icon underlayColor="transparent" color="white" containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
+        <Icon raised color={colors.primary} containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
       </View>
     );
 
