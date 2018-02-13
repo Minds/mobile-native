@@ -83,7 +83,7 @@ export default class Tags extends PureComponent {
     const hash = /(?:^|\s)#(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
-      return <Text key={i} style={this.styles} onPress={() => { this.navToDiscovery('#'+content) }}> #{content}</Text>
+      return <Text key={i} style={this.styles} onPress={() => { this.navToDiscovery(`#${content}`) }}> #{content}</Text>
     });
   }
 

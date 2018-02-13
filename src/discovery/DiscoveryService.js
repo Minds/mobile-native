@@ -5,33 +5,37 @@ import api from './../common/services/api.service';
  */
 class DiscoveryService {
 
+  async search({ offset, type, filter, q }) {
+    let endpoint = 'api/v2/search',
+      params = {
+        q,
+        limit: 12,
+        offset
+      };
+
+    switch (type) {
+      case 'user':
+        endpoint = 'api/v2/search/suggest/user';
+        break;
+
+      default:
+        params.taxonomies = [ type ];
+        break;
+    }
+
+    const response = (await api.get(endpoint, params)) || {};
+
+    return {
+      entities: response.entities || [],
+      offset: response['load-next'] || ''
+    };
+  }
+
   async getFeed(offset, type, filter, q) {
     let endpoint;
     // is search
     if (q) {
-      switch (type) {
-        case 'activity':
-          endpoint = 'api/v1/search';
-          break;
-        case 'user':
-          endpoint = 'api/v1/search/suggest';
-          break;
-      }
-      return api.get(endpoint, {
-          q: q,
-          type: type == 'activity' ? 'activities' : type,
-          limit: 12,
-          offset: ''
-        })
-        .then((response) => {
-          const rtn = { offset: response['load-next'] || '' };
-          if (type == 'activity') {
-            rtn.entities = response.entities;
-          } else {
-            rtn.entities = response.suggestions;
-          }
-          return rtn;
-        });
+      return await this.search({ offset, type, filter, q });
     }
 
     if (type == 'group') {
@@ -39,7 +43,6 @@ class DiscoveryService {
     } else {
       endpoint = 'api/v1/entities/' + filter + '/' + type;
     }
-
 
     return api.get(endpoint, { limit: 12, offset: offset })
     .then((data) => {

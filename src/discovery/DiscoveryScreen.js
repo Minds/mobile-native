@@ -50,6 +50,8 @@ export default class DiscoveryScreen extends Component {
     searching: false,
     itemHeight: 0,
     isModalVisible: false,
+    currentSearchParam: void 0,
+    q: ''
   }
 
   static navigationOptions = {
@@ -79,13 +81,28 @@ export default class DiscoveryScreen extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps && nextProps.navigation) {
+      const params = nextProps.navigation.state.params,
+        q = params && params.q;
+
+      if (this.state.currentSearchParam !== q) {
+        this.setState({ currentSearchParam: q });
+        setTimeout(() => this._loadData());
+      }
+    }
+  }
+
   /**
    * Load data
    */
-  _loadData(preload=false) {
-    const params = this.props.navigation.state.params;
-    const q = (params) ? params.q : false;
+  _loadData(preload = false) {
+    const params = this.props.navigation.state.params,
+      q = params && params.q;
+
     if (q) {
+      this.setState({ q });
+
       return this.props.discovery.search(q);
     } else {
       return this.props.discovery.loadList(false, true);
@@ -231,10 +248,11 @@ export default class DiscoveryScreen extends Component {
               placeholder='Search...'
               onFocus={this.searchFocus}
               onBlur={this.searchBlur}
-              onChangeText={this.searchDebouncer}
+              onChangeText={this.setQ}
+              value={this.state.q}
             />
           </View>
-          { !this.state.searching ? navigation : null }
+          {!this.props.discovery.searchtext && navigation}
         </View>
         {body}
       </View>
@@ -279,6 +297,11 @@ export default class DiscoveryScreen extends Component {
   searchDebouncer = debounce((text) => {
     this.props.discovery.search(text);
   }, 300);
+
+  setQ = q => {
+    this.setState({ q, currentSearchParam: q });
+    this.searchDebouncer(q);
+  };
 
   /**
    * Load feed data

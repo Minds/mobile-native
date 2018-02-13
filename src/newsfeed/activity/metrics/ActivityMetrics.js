@@ -27,7 +27,13 @@ export default class ActivityMetrics extends PureComponent {
    */
   render() {
     const entity = this.props.entity;
+
+    if (!entity.wire_totals) {
+      return <View />;
+    }
+
     const isOwner = this.props.user.me.guid == entity.owner_guid;
+
     return (
     <View style={[styles.container, isOwner ? styles.ownerContainer : null ]}>
       <View style={[CommonStyle.rowJustifyCenter]}>
