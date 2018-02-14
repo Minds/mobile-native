@@ -1,5 +1,5 @@
 import React, {
-  PureComponent
+  Component
 } from 'react';
 
 import {
@@ -25,7 +25,7 @@ import colors from '../styles/Colors'
 import { ComponentsStyle } from '../styles/Components';
 
 @observer
-export default class DiscoveryUser extends PureComponent {
+export default class DiscoveryUser extends Component {
 
   /**
    * Navigate To conversation

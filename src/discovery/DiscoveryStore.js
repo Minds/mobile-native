@@ -70,6 +70,10 @@ class DiscoveryStore {
   async loadList(force=false, preloadImage=false) {
     const type = this.type;
     const store = this.stores[this.type];
+
+    // ignore last visited channels
+    if (type == 'lastchannels') return Promise.resolve();
+
     // no more data or loading? return
     if (!force && store.list.cantLoadMore() || store.loading) {
       return Promise.resolve();
@@ -79,7 +83,7 @@ class DiscoveryStore {
     return discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext)
       .then(feed => {
         this.createModels(type, feed, preloadImage);
-        store.list.setList(feed);
+        this.stores[type].list.setList(feed);
       })
       .finally(() => {
         store.loading = false;
