@@ -24,8 +24,7 @@ import ActionSheet from 'react-native-actionsheet';
 /**
  * Channel Actions
  */
-const title = 'Actions'
-
+const title = 'Actions';
 @observer
 export default class ChannelActions extends Component {
 
@@ -33,34 +32,29 @@ export default class ChannelActions extends Component {
     super(props)
     this.state = {
       selected: '',
-      options: this.getOptions(),
     }
 
     this.handleSelection = this.handleSelection.bind(this);
   }
 
   showActionSheet() {
-    this.state = {
-      options: this.getOptions(),
-    }
     this.ActionSheet.show();
   }
 
   handleSelection(i) {
-    this.makeAction(this.state.options[i]);
+    this.makeAction(i);
   }
 
   getOptions() {
     let options = [ 'Cancel' ];
-    if(!!this.props.channel.channel.subscribed){
+
+    if(this.props.channel.channel.subscribed){
       options.push( 'Unsubscribe' );
     }
 
-    if(!this.props.channel.channel.blocked){
+    if (!this.props.channel.channel.blocked) {
       options.push( 'Block' );
-    }
-
-    if(!!this.props.channel.channel.blocked){
+    } else {
       options.push( 'Un-Block' );
     }
 
@@ -71,27 +65,17 @@ export default class ChannelActions extends Component {
   }
 
   makeAction(option) {
-    switch (option) {
+    let options = this.getOptions();
+    let selected = options[option];
+    switch (selected) {
       case 'Unsubscribe':
-        this.props.channel.subscribe().then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          })
-        });
+        this.props.channel.subscribe();
         break;
       case 'Block':
-        this.props.channel.toggleBlock().then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          })
-        });
+        this.props.channel.toggleBlock();
         break;
       case 'Un-Block':
-        this.props.channel.toggleBlock().then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          })
-        });
+        this.props.channel.toggleBlock();
         break;
     }
 
@@ -111,7 +95,7 @@ export default class ChannelActions extends Component {
         <ActionSheet
           ref={o => this.ActionSheet = o}
           title={title}
-          options={this.state.options}
+          options={this.getOptions()}
           onPress={this.handleSelection}
           cancelButtonIndex={0}
         />

@@ -17,7 +17,7 @@ export default class ChannelStore {
   feedStore = null;
 
   // only observable by reference because UserModel already have the needed observables
-  @observable channel = {};
+  @observable.ref channel = {};
 
   @observable rewards = {};
   @observable active = false;
@@ -50,8 +50,6 @@ export default class ChannelStore {
     const { channel } = await channelService.load(this.guid);
     if (channel)
       this.setChannel(UserModel.create(channel));
-
-    return this.channel;
   }
 
   @action
