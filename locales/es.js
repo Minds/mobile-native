@@ -29,6 +29,7 @@ export default {
     deactivate: 'DESACTIVAR',
     deactivateChannel: 'Desactivar Canal',
     options: 'Opciones',
+    notifications: 'Notificaciones',
     logout: 'Salir',
   },
   continue: 'CONTINUAR',

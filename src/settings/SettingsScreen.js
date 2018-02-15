@@ -43,6 +43,9 @@ export default class SettingsScreen extends Component {
     this.setState({ language: val })
   }
 
+  onPressNotifications = () => {
+    this.props.navigation.navigate('Notifications');
+  }
 
   onPressLogout = () => {
     session.logout();
@@ -158,6 +161,11 @@ export default class SettingsScreen extends Component {
             ))
           }
         </List>
+        <Text style={[styles.header, { marginTop: 20 }]}>{i18nService.t('settings.notifications')}</Text>
+        <View style={styles.deactivate}>
+          <Button raised backgroundColor="#4690D6"
+            title={i18nService.t('settings.notifications')} onPress={ this.onPressNotifications}/>
+        </View>
         <Text style={[styles.header, { marginTop: 20 }]}>{i18nService.t('settings.logout')}</Text>
         <View style={styles.deactivate}>
           <Button raised backgroundColor="#4690D6"
