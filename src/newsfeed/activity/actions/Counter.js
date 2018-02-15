@@ -10,6 +10,8 @@ import {
 
 import { CommonStyle } from '../../../styles/Common';
 
+import abbrev from '../../../common/helpers/abbrev';
+
 /**
  * Counters
  */
@@ -31,7 +33,7 @@ export default class Counter extends Component {
         <Text
           style={[styles.counter, { fontSize: Math.round(this.props.size * 0.75)}]}
           >
-          {this.props.count > 0 ? this.props.count : ''}
+          {this.props.count > 0 ? abbrev(this.props.count,0) : ''}
         </Text>
       </View>
     )
