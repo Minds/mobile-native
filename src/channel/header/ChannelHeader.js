@@ -273,7 +273,7 @@ export default class ChannelHeader extends Component {
     });
 
     this.uploads[type] = file;
-
+    
     this.setState({ uploadType: null, isSelectingMedia: false });
   }
 
@@ -291,17 +291,16 @@ export default class ChannelHeader extends Component {
     const iurl = { uri: this.getBannerFromChannel(), headers: api.buildHeaders() };
     const isUploading = this.props.channel.isUploading;
     const isEditable = this.props.edit && !isUploading;
-
     return (
       <View>
         {isEditable && <Touchable onPress={this.changeBannerAction}>
-          <FastImage source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
+          <Image source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
 
           <View style={styles.tapOverlayView}>
             <Icon name="md-create" size={30} color="#fff" />
           </View>
         </Touchable>}
-        {!isEditable && <FastImage source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />}
+        {!isEditable && <Image source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />}
 
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
