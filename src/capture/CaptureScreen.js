@@ -10,6 +10,7 @@ import {
     View,
 } from 'react-native';
 
+import { inject } from 'mobx-react/native';
 
 import { NavigationActions } from 'react-navigation';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,6 +21,7 @@ import CaptureGallery from './CaptureGallery';
 /**
  * Capture screen
  */
+@inject('newsfeed')
 export default class CaptureScreen extends Component {
 
   static navigationOptions = {
@@ -40,6 +42,9 @@ export default class CaptureScreen extends Component {
   }
 
   onComplete(entity) {
+
+    this.props.newsfeed.prepend(entity);
+
     const dispatch = NavigationActions.navigate({
       routeName: 'Tabs',
       params: {

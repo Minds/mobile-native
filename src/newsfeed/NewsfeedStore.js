@@ -113,7 +113,11 @@ class NewsfeedStore {
   }
 
   prepend(entity) {
-    this.list.prepend(entity);
+    const model = ActivityModel.create(entity)
+
+    model.rowKey = `${model.guid}:0:${this.list.entities.length}`
+
+    this.list.prepend(model);
   }
 
   @action
