@@ -14,18 +14,3 @@ export function post(post) {
       throw "Ooops";
     })
 }
-
-export async function uploadAttachment(url, file, progress) {
-  try {
-    let data = await api.upload(url, file, null, progress);
-    return data;
-  } catch (e) {
-    console.log('error', e);
-      throw {
-        error: e,
-        url: url,
-        file: file
-      };
-      throw "Ooops";
-  }
-}

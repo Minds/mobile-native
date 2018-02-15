@@ -86,7 +86,7 @@ export default class CaptureGallery extends Component {
 
     const tabs = (
       <View>
-        <CaptureTabs onSelectedMedia={ this.onSelected.bind(this) } />
+        <CaptureTabs onSelectedMedia={ this.onSelected } />
       </View>
     );
 
@@ -154,7 +154,7 @@ export default class CaptureGallery extends Component {
     console.log(row);
   }
 
-  onSelected(response) {
+  onSelected = (response) => {
     this.props.onSelected(response);
   }
 

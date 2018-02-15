@@ -10,22 +10,20 @@ import {
 
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ImagePicker from 'react-native-image-picker';
-import api from './../common/services/api.service';
+import {
+  NavigationActions
+} from 'react-navigation';
+
 import * as Progress from 'react-native-progress';
 
-import { post, uploadAttachment } from './CaptureService';
+import { post } from './CaptureService';
 
 import colors from '../styles/Colors';
 
 import CaptureGallery from './CaptureGallery';
 import CaptureTabs from './CaptureTabs';
 import CapturePreview from './CapturePreview';
-
-import {
-  NavigationActions
-} from 'react-navigation';
-
+import attachmentService from '../common/services/attachment.service';
 import Util from '../common/helpers/util';
 import RichEmbedService from '../common/services/rich-embed.service';
 import CaptureMetaPreview from './CaptureMetaPreview';
@@ -64,6 +62,9 @@ export default class CapturePoster extends Component {
     // clear data on leave
     this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Capture', (s) => {
       this.setState({ active: false });
+
+      // if there is an attached file not posted we delete it from server
+      this.deleteAttachment() ;
     });
   }
 
@@ -125,17 +126,6 @@ export default class CapturePoster extends Component {
 
   onAttachedMedia = async (response) => {
 
-    let type = 'image'
-
-    if (!response.width) {
-      let extension = 'mp4';
-      if (response.path) {
-        extension = response.path.split('.').pop();
-      }
-      type = 'video';
-      response.type = 'video/' + extension;
-    }
-
     if (response.didCancel) {
     }
     else if (response.error) {
@@ -155,28 +145,18 @@ export default class CapturePoster extends Component {
       let res;
 
       try {
-        res = await uploadAttachment('api/v1/archive/'+type, {
-            uri: response.uri,
-            path: response.path||null,
-            type: response.type,
-            name: response.fileName || 'test'
-          },
-          (e) => {
-            let pct = e.loaded / e.total;
-
-            this.setState({
-              'progress': pct
-            });
+        res = await attachmentService.attachMedia(response, (pct) => {
+          this.setState({
+            'progress': pct
           });
-
+        });
       } catch (e) {
         alert(JSON.stringify(e));
         alert('caught upload error');
         throw e;
       }
 
-      if (!res)
-        return;
+      if (!res) return;
 
       this.setState({
         attachmentGuid: res.guid,
@@ -188,8 +168,9 @@ export default class CapturePoster extends Component {
   }
 
   async deleteAttachment() {
-    //TODO: delete from server side
-
+    if (this.state.attachmentGuid) {
+      attachmentService.deleteMedia(this.state.attachmentGuid);
+    }
     this.setState({
       attachmentGuid: '',
       hasAttachment: false,
@@ -228,8 +209,6 @@ export default class CapturePoster extends Component {
         this.props.reset();
       }
 
-      this.props.onComplete(response.entity);
-
       this.setState({
         isPosting: false,
         text: '',
@@ -237,6 +216,8 @@ export default class CapturePoster extends Component {
         hasAttachment: false,
         meta: null
       });
+
+      this.props.onComplete(response.entity);
 
     } catch (e) {
       console.log('error', e);

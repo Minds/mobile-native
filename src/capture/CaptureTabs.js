@@ -15,28 +15,19 @@ import {
   Platform
 } from 'react-native';
 
-import {
-  inject
-} from 'mobx-react/native'
-
 import ActionSheet from 'react-native-actionsheet';
-import ImagePicker from 'react-native-image-picker';
-
 import { Button } from 'react-native-elements';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Topbar from '../topbar/Topbar';
 import Poster from '../newsfeed/Poster';
-
-import { uploadAttachment } from '../newsfeed/NewsfeedService';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
+import attachmentService from '../common/services/attachment.service';
 
 /**
  * Capture tab
  */
-@inject('navigatorStore')
 export default class CaptureTab extends Component {
   state = {
     screen: 'gallery',
@@ -100,68 +91,35 @@ export default class CaptureTab extends Component {
     );
   }
 
-  /**
-   * Capture video
-   */
-  video() {
-    ImagePicker.launchCamera({
-      mediaType: 'video',
-    },
-    (response) => {
-
-      if (response.didCancel) {
-        return;
-      }
-      else if (response.error) {
-        alert('ImagePicker Error: '+ response.error);
-      }
-      else if (response.customButton) {
-        return;
-      }
-
-      let item = {
-        uri: response.uri,
-        type: 'video/mp4',
-        fileName: 'image.mp4'
-      }
-      this.props.onSelectedMedia(item);
-    });
+  async video() {
+    try {
+      const response = await attachmentService.photo();
+      if (response) this.props.onSelectedMedia(response);
+    } catch(e) {
+      alert(e);
+    }
   }
 
-  /**
-   * Capture photo
-   */
-  photo() {
-    ImagePicker.launchCamera({
-      mediaType: 'photo',
-    },
-    (response) => {
-
-      if (response.didCancel) {
-        return;
-      }
-      else if (response.error) {
-        alert('ImagePicker Error: '+ response.error);
-      }
-      else if (response.customButton) {
-        return;
-      }
-
-      let item = {
-        uri: response.uri,
-        type: 'image/jpeg',
-        fileName: 'image.jpg'
-      }
-      this.props.onSelectedMedia(item);
-    });
+  async photo() {
+    try {
+      const response = await attachmentService.gallery('mixed');
+      if (response) this.props.onSelectedMedia(response);
+    } catch(e) {
+      alert(e);
+    }
   }
 
   /**
    * Open gallery
    */
-  gallery() {
+  async gallery() {
     if (Platform.OS == 'ios') {
-      this._openGallery('mixed');
+      try {
+        const response = await attachmentService.gallery('mixed');
+        if (response) this.props.onSelectedMedia(response);
+      } catch (e) {
+        alert(e);
+      }
     } else {
       this.actionSheet.show()
     }
@@ -170,27 +128,22 @@ export default class CaptureTab extends Component {
   /**
    * On media type select
    */
-  _selectMediaType = (i) => {
-    switch (i) {
-      case 1:
-        this._openGallery('photo');
-        break;
-      case 2:
-        this._openGallery('video');
-        break;
-    }
-  }
+  _selectMediaType = async (i) => {
+    try {
+      let response;
+      switch (i) {
+        case 1:
+          response = await attachmentService.gallery('photo');
+          break;
+        case 2:
+          response = await attachmentService.gallery('video');
+          break;
+      }
 
-  /**
-   * Open gallery with given media type
-   * @param {string} mediaType
-   */
-  _openGallery(mediaType) {
-    ImagePicker.launchImageLibrary(
-      { mediaType },
-      (response) => {
-        this.props.onSelectedMedia(response);
-      });
+      if (response) this.props.onSelectedMedia(response);
+    } catch(e) {
+      alert(e);
+    }
   }
 
   /**
