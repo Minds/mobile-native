@@ -32,11 +32,15 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import RewardsCarousel from '../channel/carousel/RewardsCarousel';
 
 import FeaturesService from '../common/services/features.service';
+import number from '../common/helpers/number';
+import token from '../common/helpers/token';
+import addressExcerpt from '../common/helpers/address-excerpt';
 
 /**
  * Wire Fab Screen
  */
 @inject('wire')
+@inject('wallet')
 @observer
 export default class FabScreen extends Component {
 
@@ -46,7 +50,9 @@ export default class FabScreen extends Component {
 
     this.props.wire.loadUser(owner.guid)
       .then(() => this.setDefaults());
-  }
+
+    this.props.wallet.refresh();
+    }
 
   componentWillUnmount() {
     this.props.wire.setOwner(null);
@@ -170,6 +176,21 @@ export default class FabScreen extends Component {
           onPress={this.confirmSend}
           backgroundColor={selectedcolor}
         />
+
+        {!!this.props.wallet.addresses && <View style={styles.addressViewWrapper}>
+          {this.props.wallet.addresses.map((address, i) => (
+            <View style={styles.addressView} key={address.address}>
+              <View style={styles.addressMetaView}>
+                <Text style={styles.addressLabel}>{address.label} Address</Text>
+                <Text style={styles.addressAddress} ellipsizeMode='tail' numberOfLines={1}>{addressExcerpt(address.address)}</Text>
+              </View>
+
+              <View style={styles.addressBalanceView}>
+                <Text style={styles.addressBalanceText}>{number(token(address.balance, 18), 3)}</Text>
+              </View>
+            </View>
+          ))}
+        </View>}
       </ScrollView>
     );
   }
@@ -335,5 +356,37 @@ const styles = {
   },
   carousel: {
     paddingTop: 20
+  },
+
+  addressViewWrapper: {
+    marginTop: 30,
+    borderWidth: 1,
+    borderColor: colors.greyed,
+    borderRadius: 4,
+    width: '100%',
+  },
+  addressView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    margin: 10
+  },
+  addressMetaView: {
+    flexGrow: 1,
+  },
+  addressLabel: {
+    fontWeight: '700',
+  },
+  addressAddress: {
+    color: colors.darkGreyed,
+    fontSize: 10
+  },
+  addressBalanceView: {
+    paddingLeft: 10,
+  },
+  addressBalanceText: {
+    color: 'green',
+    fontSize: 18,
+    fontWeight: '700'
   }
 }

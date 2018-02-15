@@ -65,7 +65,7 @@ class WireService {
   }
 
   async getTransactionPayloads(opts) {
-    const payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Wire.`, { signable: true, offchain: false, buyable: true, confirmTokenExchange: opts.amount });
+    const payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Wire.`, { signable: true, offchain: true, buyable: true, confirmTokenExchange: opts.amount });
 
     if (!payload || payload.cancelled) {
       return;
@@ -76,7 +76,13 @@ class WireService {
         return {
           method: payload.type,
           address: 'offchain',
-          token: payload.token 
+          token: payload.token
+        };
+
+      case 'offchain':
+        return {
+          method: 'offchain',
+          address: 'offchain'
         };
 
       case 'onchain':
