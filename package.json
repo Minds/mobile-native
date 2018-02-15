@@ -54,7 +54,7 @@
     "react-native-modal-datetime-picker": "^4.13.0",
     "react-native-optimized-flatlist": "^1.0.4",
     "react-native-os": "^1.0.1",
-    "react-native-phone-input": "^0.1.10",
+    "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
     "react-native-photo-view": "^1.5.2",
     "react-native-progress": "^3.4.0",
     "react-native-qrcode": "^0.2.6",
@@ -86,19 +86,31 @@
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-remove-console": "^6.8.5",
     "babel-preset-react-native": "4.0.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.1",
     "jest": "21.3.0-beta.13",
+    "jest-serializer-enzyme": "^1.0.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dom": "^16.2.0",
     "react-test-renderer": "16.2.0",
     "reactotron-react-native": "^1.14.0"
   },
   "jest": {
     "preset": "react-native",
+    "setupFiles": [
+      "<rootDir>/setupTests.js"
+    ],
     "transformIgnorePatterns": [
-      "node_modules/(?!react-native|react-navigation)/"
+      "node_modules/(?!react-native|react-navigation|jest-serializer-enzyme)/"
     ],
     "moduleNameMapper": {
       "^image![a-zA-Z0-9$_-]+$": "GlobalImageStub",
       "^[@./a-zA-Z0-9$_-]+\\.(png|gif)$": "RelativeImageStub"
-    }
+    },
+    "snapshotSerializers": [
+      "./node_modules/enzyme-to-json/serializer"
+    ]
   },
   "react-native": {
     "crypto": "react-native-crypto",

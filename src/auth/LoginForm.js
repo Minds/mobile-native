@@ -69,6 +69,7 @@ export default class LoginForm extends Component {
         backgroundColor="transparent"
         containerViewStyle={ComponentsStyle.loginButton}
         textStyle={ComponentsStyle.loginButtonText}
+        key={1}
       />
     ]
 
@@ -81,6 +82,7 @@ export default class LoginForm extends Component {
           backgroundColor="transparent"
           containerViewStyle={ComponentsStyle.loginButton}
           textStyle={ComponentsStyle.loginButtonText}
+          key={2}
         />
       );
     }
@@ -113,6 +115,7 @@ export default class LoginForm extends Component {
           onChangeText={(value) => this.setState({ username: value })}
           autoCapitalize={'none'}
           value={this.state.username}
+          key={1}
         />,
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
@@ -124,6 +127,7 @@ export default class LoginForm extends Component {
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ password: value })}
           value={this.state.password}
+          key={2}
         />
       ];
     }
