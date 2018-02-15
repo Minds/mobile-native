@@ -77,7 +77,7 @@ export default class BaseModel {
   static parseObj(observables, t) {
     const obs = {}
     observables.forEach(prop => {
-      if (t[prop]) obs[prop] = t[prop];
+      if (t.hasOwnProperty(prop)) obs[prop] = t[prop];
     });
     return obs;
   }
