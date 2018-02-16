@@ -16,6 +16,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { OptimizedFlatList } from 'react-native-optimized-flatlist';
 
+import NotificationsTabIcon from './NotificationsTabIcon';
 import CenteredLoading from '../common/components/CenteredLoading';
 import Notification from './notification/Notification';
 import NotificationsTopbar from './NotificationsTopbar';
@@ -41,22 +42,25 @@ const styles = StyleSheet.create({
 /**
  * Notification Screen
  */
-@inject('notifications')
+@inject('notifications', 'navigatorStore')
 @observer
 export default class NotificationsScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
+    tabBarIcon: ({ tintColor }) => (
+      <NotificationsTabIcon tintColor={tintColor} />
+    ),
     headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.button} onPress={() => navigation.navigate('NotificationsSettings')} />
   });
-
+  
   /**
    * On component mount
    */
   componentWillMount() {
-    // reset counter
-    this.props.notifications.setUnread(0);
-    // initial load
-    this.props.notifications.loadList();
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Notifications', (s) => {
+      this.props.notifications.loadList();
+      this.props.notifications.setUnread(0);
+    });   
   }
 
   /**

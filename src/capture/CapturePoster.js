@@ -6,6 +6,7 @@ import {
   Text,
   Button,
   TouchableHighlight,
+  ActivityIndicator,
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native';
@@ -32,7 +33,7 @@ import CaptureMetaPreview from './CaptureMetaPreview';
 export default class CapturePoster extends Component {
 
   state = {
-    active: false,
+    active: true,
     isPosting: false,
     text: '',
     postImageUri: '',
@@ -43,6 +44,25 @@ export default class CapturePoster extends Component {
 
   _RichEmbedFetchTimer;
 
+
+  /**
+   * On component will mount
+   */
+  componentWillMount() {
+    // load data on enter
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Capture', (s) => {
+      //this.setState({ active: true });
+    });
+
+    // clear data on leave
+    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Capture', (s) => {
+      //this.setState({ active: false });
+
+      // if there is an attached file not posted we delete it from server
+      this.deleteAttachment() ;
+    });
+  }
+
   /**
    * On component will unmount
    */
@@ -52,22 +72,19 @@ export default class CapturePoster extends Component {
     }
   }
 
-  /**
-   * On component will mount
-   */
-  componentWillMount() {
-    // load data on enter
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Capture', (s) => {
-      this.setState({ active: true });
-    });
+  showContext () {
+    let group = this.props.navigation.state.params? this.props.navigation.state.params.group : null;
+    return group? <Text style={styles.title}> { '( Posting in ' + group.name + ')'} </Text> :null;
+  }
 
-    // clear data on leave
-    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Capture', (s) => {
-      this.setState({ active: false });
-
-      // if there is an attached file not posted we delete it from server
-      this.deleteAttachment() ;
-    });
+  defaultRouting(entity) {
+    const dispatch = NavigationActions.navigate({
+      routeName: 'Newsfeed',
+      params: {
+        prepend: entity,
+      },
+    })
+    this.props.navigation.dispatch(dispatch);
   }
 
   /**
@@ -78,7 +95,7 @@ export default class CapturePoster extends Component {
 
     return (
       <View style={styles.posterAndPreviewWrapper}>
-
+        {this.showContext()}
         <View style={styles.posterWrapper} pointerEvents="box-none">
           {this.state.active && <TextInput
             style={styles.poster}
@@ -97,13 +114,16 @@ export default class CapturePoster extends Component {
               attachment.uploading ?
                 <Progress.Pie progress={attachment.progress} size={36}/>
                 :
-                <TouchableHighlight
-                  underlayColor='#FFF'
-                  onPress={() => this.submit()}
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonText}>POST</Text>
-                </TouchableHighlight>
+                this.state.isPosting ?
+                  <ActivityIndicator size={'large'} />
+                  :
+                  <TouchableHighlight
+                    underlayColor='#FFF'
+                    onPress={() => this.submit()}
+                    style={styles.button}
+                  >
+                    <Text style={styles.buttonText}>POST</Text>
+                  </TouchableHighlight>
             }
           </View>
         </View>
@@ -190,6 +210,10 @@ export default class CapturePoster extends Component {
       newPost = Object.assign(newPost, this.state.meta);
     }
 
+    if (this.props.navigation.state.params && this.props.navigation.state.params.group) {
+      newPost.container_guid = this.props.navigation.state.params.group.guid;
+    }
+
     try {
       let response = await post(newPost);
 
@@ -206,7 +230,13 @@ export default class CapturePoster extends Component {
         meta: null
       });
 
-      this.props.onComplete(response.entity);
+      if (this.props.onComplete) {
+        this.props.onComplete(response.entity);
+      } else if (this.props.navigation.state.params && this.props.navigation.state.params.group) {
+        this.onGroupComplete(this.props.navigation.state.params.group);
+      } else {
+        this.defaultRouting(response.entity);
+      }
 
     } catch (e) {
       console.log('error', e);
@@ -223,6 +253,17 @@ export default class CapturePoster extends Component {
 
     setTimeout(this.richEmbedCheck);
   };
+
+  onGroupComplete(group) {
+    const dispatch = NavigationActions.navigate({
+      routeName: 'GroupView',
+      params: {
+        group: group,
+      }
+    })
+
+    this.props.navigation.dispatch(dispatch);
+  }
 
   richEmbedCheck = () => {
     const matches = Util.urlReSingle.exec(this.state.text);
@@ -288,6 +329,12 @@ const styles = StyleSheet.create({
     padding: 16,
     minHeight: 100,
     flexDirection: 'row',
+    backgroundColor: '#FFF',
+  },
+  title: {
+    margin:2,
+    padding:4,
+    color: '#4b4b4b'
   },
   poster: {
     flex: 1,

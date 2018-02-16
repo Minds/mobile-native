@@ -22,10 +22,10 @@ export default class CapturePreview extends PureComponent {
    */
   render() {
     let body = null;
-
     switch (this.props.type) {
       case 'image/gif':
       case 'image/jpeg':
+      default:
         body = <Image
           source={{ uri: this.props.uri }}
           style={styles.preview}

@@ -34,6 +34,7 @@ import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
 
 import Toolbar from '../common/components/toolbar/Toolbar';
+import CaptureFab from '../capture/CaptureFab';
 import { MINDS_CDN_URI } from '../config/Config';
 
 
@@ -245,6 +246,7 @@ export default class DiscoveryScreen extends Component {
 
     return (
       <View style={CommonStyle.flexContainer}>
+        <CaptureFab navigation={this.props.navigation} />
         <View style={{ flexDirection: 'row', alignItems: 'stretch', backgroundColor: '#FFF' }}>
           <View style={{ flex: 1 }}>
             <SearchView

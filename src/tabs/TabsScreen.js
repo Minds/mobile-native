@@ -7,8 +7,8 @@ import {
 
 import Topbar from '../topbar/Topbar';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
+import NotificationsScreen from '../notifications/NotificationsScreen';
 import DiscoveryScreen from '../discovery/DiscoveryScreen';
-import CaptureScreen from '../capture/CaptureScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
 import WalletScreen from '../wallet/WalletScreen';
 import MoreScreen from './MoreScreen';
@@ -16,24 +16,21 @@ import tabs from './TabsStore';
 
 const Tabs = (
   TabNavigator({
-    Newsfeed: {
-      screen: NewsfeedScreen,
+    Wallet: {
+      screen: WalletScreen,
     },
     Discovery: {
       screen: DiscoveryScreen,
     },
-    Capture: {
-      screen: CaptureScreen,
+    Newsfeed: {
+      screen: NewsfeedScreen,
     },
     Messenger: {
       screen: MessengerScreen
     },
-    Wallet: {
-      screen: WalletScreen,
-    },
-    //More: {
-    //  screen: MoreScreen
-    //},
+    Notifications: {
+      screen: NotificationsScreen,
+    }
   }, {
     tabBarPosition: 'bottom',
     animationEnabled: false,
@@ -49,9 +46,10 @@ const Tabs = (
       showIcon: true,
       activeTintColor: '#FFF',
       style: {
-        backgroundColor: '#222'
+        backgroundColor: '#222',
       }
     },
+    initialRouteName: 'Newsfeed',
   })
 );
 

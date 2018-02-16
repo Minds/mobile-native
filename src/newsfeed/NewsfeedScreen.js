@@ -7,12 +7,14 @@ import {
 
 import { View } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Icon } from 'react-native-elements'
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import NewsfeedList from './NewsfeedList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import BoostsCarousel from './boosts/BoostsCarousel';
 import Topbar from './topbar/Topbar';
+import CaptureFab from '../capture/CaptureFab';
 
 /**
  * News Feed Screen
@@ -23,8 +25,15 @@ export default class NewsfeedScreen extends Component {
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
-      <Icon name="md-home" size={24} color={tintColor} />
+      <IonIcon name="md-home" size={24} color={tintColor} />
     )
+  }
+
+  /**
+   * Nav to activity full screen
+   */
+  navToCapture = () => {
+    this.props.navigation.navigate('Capture');
   }
 
   /**
@@ -60,7 +69,7 @@ export default class NewsfeedScreen extends Component {
 
     const header = (
       <View>
-        <Topbar />
+        <Topbar />           
         { false ?
           <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation} store={newsfeed} me={this.props.user.me}/>
           : null }
@@ -68,7 +77,10 @@ export default class NewsfeedScreen extends Component {
     );
 
     return (
-      <NewsfeedList newsfeed={newsfeed} header={header} navigation={this.props.navigation}/>
+      <View style={{flex:1}}>
+        <CaptureFab navigation={this.props.navigation}/>
+        <NewsfeedList newsfeed={newsfeed} header={header} navigation={this.props.navigation}/>
+      </View>
     );
   }
 }

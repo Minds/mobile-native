@@ -10,14 +10,13 @@ import {
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native'
-import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Avatar } from 'react-native-elements';
 
 import { MINDS_CDN_URI } from '../config/Config';
 
 @inject('user')
-@inject('notifications')
 @inject('wallet')
 @observer
 export default class Topbar extends Component {
@@ -31,13 +30,12 @@ export default class Topbar extends Component {
       <View style={styles.container}>
         <View style={styles.topbar}>
 
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Notifications')} >
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} >
             <View style={styles.topbarLeft}>
-              <CIcon name="bell" size={18} color='#444' style={ styles.button } />
-              <Text>{this.props.notifications.unread}</Text>
+              <Icon name="trending-up" size={18} color='#444' style={ styles.button }/>
             </View>
           </TouchableOpacity>
-
+  
           <View style={styles.topbarCenter}>
             <Avatar
               rounded
