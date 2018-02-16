@@ -15,6 +15,8 @@ import {
   inject
 } from 'mobx-react/native';
 
+import JoinView from './JoinView';
+
 import WithdrawService from './WithdrawService';
 
 import TransparentButton from '../../common/components/TransparentButton';
@@ -126,6 +128,14 @@ export default class WithdrawScreen extends Component {
   }
 
   render() {
+    if (!this.props.user.me.rewards) {
+      return (
+        <View style={style.view}>
+          <JoinView />
+        </View>
+      );
+    }
+
     let withdrawButonContent = 'WITHDRAW';
 
     if (this.state.inProgress) {

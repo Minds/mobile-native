@@ -34,11 +34,9 @@ export default class ContributionsScreen extends Component {
    * Render
    */
   render() {
-    const hash = this.props.user.me.phone_number_hash;
-
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
-        { hash ? <ContributionsView/> : <JoinView /> }
+        {this.props.user.me.rewards ? <ContributionsView/> : <JoinView /> }
       </View>
     )
   }

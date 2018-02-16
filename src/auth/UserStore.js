@@ -13,13 +13,12 @@ class UserStore {
 
   @action
   setUser(user) {
-    if (!user.phone_number_hash) user.phone_number_hash = '';
     this.me = user;
   }
 
   @action
-  setPhoneHash(hash) {
-    this.me.phone_number_hash = hash;
+  setRewards(value) {
+    this.me.rewards = !!value;
   }
 
   @action
