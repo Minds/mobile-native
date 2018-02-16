@@ -67,6 +67,16 @@ export default class WalletScreen extends Component {
             </View>
           </TouchableOpacity>
 
+          <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Withdraw')} >
+            <View style={styles.iconContainer}>
+              <Icon name="local-atm" size={24} style={ styles.icon } />
+            </View>
+            <View style={styles.item}>
+              <Text style={styles.title}>Withdraw</Text>
+              <Text style={styles.subtitle}>Request withdrawal of your token rewards to your OnChain wallet.</Text>
+            </View>
+          </TouchableOpacity>
+
           <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Contributions')} >
             <View style={styles.iconContainer}>
               <Icon name="stars" size={24} style={ styles.icon } />

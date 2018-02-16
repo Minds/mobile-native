@@ -33,6 +33,7 @@ import BlockchainWalletDetailsScreen from './src/blockchain/wallet/details/Block
 import ReportScreen from './src/report/ReportScreen';
 import MoreScreen from './src/tabs/MoreScreen';
 import CheckoutModalScreen from './src/payments/checkout/CheckoutModalScreen';
+import WithdrawScreen from './src/wallet/tokens/WithdrawScreen';
 
 /**
  * Main stack navigator
@@ -139,6 +140,9 @@ const Stack = StackNavigator({
   },
   CheckoutModal: {
     screen: CheckoutModalScreen
+  },
+  Withdraw: {
+    screen: WithdrawScreen
   }
 });
 
