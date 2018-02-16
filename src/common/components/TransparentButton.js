@@ -26,7 +26,8 @@ export default class TransparentButton extends Component {
           CommonStyle.paddingRight,
           style.buttonText,
           this.props.textStyle,
-          { color: this.props.color || '#000' }
+          { color: this.props.color || '#000' },
+          !!this.props.disabled && { color: this.props.disabledColor || '#aaa' }
         ]}
       >{this.props.title}</Text>);
     } else {
@@ -42,7 +43,8 @@ export default class TransparentButton extends Component {
           ComponentsStyle.button,
           style.button,
           this.props.style,
-          { borderColor: this.props.color || '#000' }
+          { borderColor: this.props.color || '#000' },
+          !!this.props.disabled && { borderColor: this.props.disabledColor || '#aaa' }
         ]}
       >
         {submitContent}
