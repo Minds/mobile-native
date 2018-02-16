@@ -25,6 +25,7 @@ import {
 
 import Activity from '../newsfeed/activity/Activity'
 import FastImage from 'react-native-fast-image';
+import ActivityModel from '../newsfeed/ActivityModel';
 
 export default class Boost extends Component {
 
@@ -48,7 +49,7 @@ export default class Boost extends Component {
 
   renderEntity() {
     if(this.props.boost.entity.type == 'activity') {
-      return <Activity entity={this.props.boost.entity} hideTabs={true} navigation={this.props.navigation} />;
+      return <Activity entity={ActivityModel.create(this.props.boost.entity)} hideTabs={true} navigation={this.props.navigation} />;
     } else if (this.props.boost.entity.type == 'user') {
       return <ChannelCard entity={this.props.boost.entity} navigation={this.props.navigation} />;
     } else if (this.props.boost.entity.type == 'object' && this.props.boost.entity.subtype == 'blog') {
