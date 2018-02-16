@@ -16,11 +16,22 @@ import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { CommonStyle } from '../../../styles/Common';
 
+import abbrev from '../../../common/helpers/abbrev';
+
 /**
  * Activity metrics component
  */
 @inject("user")
 export default class ActivityMetrics extends PureComponent {
+
+  showCounter(value, label) {
+    return value > 0 ?
+      <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
+        <Text style={[styles.counter]}> · </Text>
+        <Text style={styles.counter}>{abbrev(value,0)}</Text>
+        <Text style={styles.counter}>{label} </Text>
+      </View> : null;
+  }
 
   /**
    * Render
@@ -35,48 +46,18 @@ export default class ActivityMetrics extends PureComponent {
     const isOwner = this.props.user.me.guid == entity.owner_guid;
 
     return (
-    <View style={[styles.container, isOwner ? styles.ownerContainer : null ]}>
       <View style={[CommonStyle.rowJustifyCenter]}>
-        <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
-          <McIcon name="bank" size={8} style={ styles.icon }/>
-          <Text style={styles.counter}>{entity.wire_totals.tokens}</Text>
-        </View>
-        <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter, CommonStyle.paddingLeft]}>
-          <McIcon name="eye" size={8} style={ styles.icon }/>
-          <Text style={styles.counter}>{entity.impressions}</Text>
-        </View>
+        {this.showCounter(entity.wire_totals.tokens, 'TOKENS')}
+        {this.showCounter(entity.impressions, 'VIEWS')}
       </View>
-    </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    bottom: -8,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: 3,
-    borderColor: '#ececec',
-    backgroundColor: '#FFF',
-    //width: 80,
-    paddingTop: 2,
-    paddingBottom: 2,
-    paddingLeft: 8,
-    paddingRight: 8,
-    alignSelf: 'center'
-  },
-  ownerContainer: {
-    alignSelf: 'flex-end',
-    right: 8,
-  },
-  icon: {
-    marginTop: 1,
-    color: '#777',
-  },
   counter: {
     color: '#777',
-    fontSize: 8,
+    fontSize: 11,
     marginLeft: 4,
-  }
+  },
 })

@@ -105,7 +105,6 @@ export default class Activity extends Component {
             autoHeight={ this.props.autoHeight }
             />
           { this.showActions() }
-          { !this.props.hideTabs && false && <ActivityMetrics entity={entity}/> }
         </View>
     );
   }
@@ -142,6 +141,7 @@ export default class Activity extends Component {
                 </View>
               </View>
             }
+            <ActivityMetrics entity={this.props.entity}/>
           </TouchableOpacity>
         </OwnerBlock>
       );
