@@ -22,6 +22,7 @@ import blockchainWallet from './src/blockchain/wallet/BlockchainWalletStore';
 import blockchainWalletSelector from './src/blockchain/wallet/BlockchainWalletSelectorStore';
 import payments from './src/payments/PaymentsStore';
 import checkoutModal from './src/payments/checkout/CheckoutModalStore';
+import capture from './src/capture/CaptureStore';
 
 import sessionService from './src/common/services/session.service';
 
@@ -53,6 +54,7 @@ const stores = {
   channelSubscribersStore,
   payments,
   checkoutModal,
+  capture
 };
 
 /**

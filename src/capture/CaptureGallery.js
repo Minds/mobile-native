@@ -114,16 +114,6 @@ export default class CaptureGallery extends Component {
   }
 
   /**
-   * upload
-   */
-  upload() {
-    this.setState({
-      isPosting:true,
-    });
-    this.props.submitToPoster(this.state.imageUri);
-  }
-
-  /**
    * render list tile
    */
   renderTile = (row) => {

@@ -93,7 +93,7 @@ export default class CaptureTab extends Component {
 
   async video() {
     try {
-      const response = await attachmentService.photo();
+      const response = await attachmentService.video();
       if (response) this.props.onSelectedMedia(response);
     } catch(e) {
       alert(e);
@@ -102,7 +102,7 @@ export default class CaptureTab extends Component {
 
   async photo() {
     try {
-      const response = await attachmentService.gallery('mixed');
+      const response = await attachmentService.photo();
       if (response) this.props.onSelectedMedia(response);
     } catch(e) {
       alert(e);

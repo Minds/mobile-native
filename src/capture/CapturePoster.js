@@ -21,14 +21,13 @@ import { post } from './CaptureService';
 import colors from '../styles/Colors';
 
 import CaptureGallery from './CaptureGallery';
-import CaptureTabs from './CaptureTabs';
 import CapturePreview from './CapturePreview';
-import attachmentService from '../common/services/attachment.service';
+
 import Util from '../common/helpers/util';
 import RichEmbedService from '../common/services/rich-embed.service';
 import CaptureMetaPreview from './CaptureMetaPreview';
 
-@inject('user', 'navigatorStore')
+@inject('user', 'navigatorStore', 'capture')
 @observer
 export default class CapturePoster extends Component {
 
@@ -36,9 +35,6 @@ export default class CapturePoster extends Component {
     active: false,
     isPosting: false,
     text: '',
-    hasAttachment: false,
-    attachmentGuid: '',
-    attachmentDone: false,
     postImageUri: '',
     hasRichEmbed: false,
     richEmbedUrl: '',
@@ -47,12 +43,18 @@ export default class CapturePoster extends Component {
 
   _RichEmbedFetchTimer;
 
+  /**
+   * On component will unmount
+   */
   componentWillUnmount() {
     if (this._RichEmbedFetchTimer) {
       clearTimeout(this._RichEmbedFetchTimer);
     }
   }
 
+  /**
+   * On component will mount
+   */
   componentWillMount() {
     // load data on enter
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Capture', (s) => {
@@ -68,7 +70,12 @@ export default class CapturePoster extends Component {
     });
   }
 
+  /**
+   * Render
+   */
   render() {
+    const attachment = this.props.capture.attachment;
+
     return (
       <View style={styles.posterAndPreviewWrapper}>
 
@@ -87,8 +94,8 @@ export default class CapturePoster extends Component {
 
           <View style={styles.posterActions}>
             {
-              this.state.hasAttachment && !this.state.attachmentGuid ?
-                <Progress.Pie progress={this.state.progress} size={36}/>
+              attachment.uploading ?
+                <Progress.Pie progress={attachment.progress} size={36}/>
                 :
                 <TouchableHighlight
                   underlayColor='#FFF'
@@ -107,10 +114,10 @@ export default class CapturePoster extends Component {
           onRemove={this.clearRichEmbedAction}
         />}
 
-        {this.state.hasAttachment && <View style={styles.preview}>
+        {attachment.hasAttachment && <View style={styles.preview}>
           <CapturePreview
-            uri={this.state.attachmentUri}
-            type={this.state.attachmentType}
+            uri={attachment.uri}
+            type={attachment.type}
           />
 
           <Icon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
@@ -124,66 +131,47 @@ export default class CapturePoster extends Component {
     );
   }
 
+  /**
+   * Attach Media
+   */
   onAttachedMedia = async (response) => {
+    if (response.didCancel) return;
 
-    if (response.didCancel) {
-    }
-    else if (response.error) {
+    if (response.error) {
       alert('ImagePicker Error: ' + response.error);
-    }
-    else if (response.customButton) {
-      //do nothng but leave it for future
-    }
-    else {
-
-      this.setState({
-        hasAttachment: true,
-        attachmentUri: response.uri,
-        attachmentType: response.type,
-      });
-
-      let res;
-
-      try {
-        res = await attachmentService.attachMedia(response, (pct) => {
-          this.setState({
-            'progress': pct
-          });
-        });
-      } catch (e) {
-        alert(JSON.stringify(e));
-        alert('caught upload error');
-        throw e;
-      }
-
-      if (!res) return;
-
-      this.setState({
-        attachmentGuid: res.guid,
-        attachmentDone: true
-      });
-
+      return;
     }
 
+    const attachment = this.props.capture.attachment;
+
+    const result = await attachment.attachMedia(response);
+
+    if (result === false) alert('caught upload error');
   }
 
+  /**
+   * Delete attachment
+   */
   async deleteAttachment() {
-    if (this.state.attachmentGuid) {
-      attachmentService.deleteMedia(this.state.attachmentGuid);
-    }
-    this.setState({
-      attachmentGuid: '',
-      hasAttachment: false,
-    });
+    const attachment = this.props.capture.attachment;
+    // delete
+    const result = await attachment.delete();
+
+    if (result === false) alert('caught error deleting the file');
   }
 
+  /**
+   * Submit
+   */
   async submit() {
-    if (this.state.hasAttachment && !(this.state.hasAttachment && this.state.attachmentGuid.length > 0)) {
+    const attachment = this.props.capture.attachment;
+
+    if (attachment.hasAttachment && attachment.uploading) {
       alert('Please try again in a moment.');
       return false;
     }
 
-    if (!this.state.hasAttachment && !this.state.text) {
+    if (!attachment.hasAttachment && !this.state.text) {
       alert('Nothing to post...');
       return false;
     }
@@ -192,8 +180,8 @@ export default class CapturePoster extends Component {
     if (this.props.attachmentGuid) {
       newPost.attachment_guid = this.props.attachmentGuid;
     }
-    if (this.state.attachmentGuid)
-      newPost.attachment_guid = this.state.attachmentGuid;
+    if (attachment.guid)
+      newPost.attachment_guid = attachment.guid;
     this.setState({
       isPosting: true,
     });
@@ -209,11 +197,12 @@ export default class CapturePoster extends Component {
         this.props.reset();
       }
 
+      // clear attachment data
+      attachment.clear();
+
       this.setState({
         isPosting: false,
         text: '',
-        attachmentGuid: '',
-        hasAttachment: false,
         meta: null
       });
 

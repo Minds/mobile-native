@@ -16,7 +16,7 @@ class AttachmentService {
 
     let type = 'image'
 
-    if (!media.width) {
+    if (!media.width && media.type != 'image/jpeg') {
       let extension = 'mp4';
       if (media.path) {
         extension = media.path.split('.').pop();
