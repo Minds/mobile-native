@@ -10,7 +10,8 @@ export default class AttachmentStore {
   @observable hasQueue = false;
   @observable uploading = false;
   @observable progress = 0;
-  
+  deleteUploading = false;
+
   queue = {};
 
   guid = '';
@@ -58,6 +59,13 @@ export default class AttachmentStore {
         this.queue = {};
         this.hasQueue = false;
       }
+
+      if (this.deleteUploading) {
+        attachmentService.deleteMedia(this.guid);
+        this.deleteUploading = false;
+        this.clear();
+        return true;
+      }
       
       return this.guid;
     } catch(err) {
@@ -85,6 +93,9 @@ export default class AttachmentStore {
       } catch (err) {
         return false;
       }
+    } else {
+      this.deleteUploading = true;
+      this.clear();
     }
     return true;
   }
