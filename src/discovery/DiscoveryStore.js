@@ -114,11 +114,10 @@ class DiscoveryStore {
    * Refresh list
    */
   refresh() {
-    const list = this.stores[this.type].list;
-    list.refresh();
-    this.loadList()
+    this.list.refresh();
+    this.loadList(true)
       .finally(() => {
-        list.refreshDone();
+        this.list.refreshDone();
       });
   }
 

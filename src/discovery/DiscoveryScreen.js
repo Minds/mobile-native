@@ -150,58 +150,55 @@ export default class DiscoveryScreen extends Component {
     const discovery = this.props.discovery;
     const list = discovery.list;
 
-    if (!list.loaded) {
-      body = <CenteredLoading />
-    } else {
-      let renderRow, columnWrapperStyle = null, getItemLayout=null;
-      this.cols = 3;
-      switch (discovery.type) {
-        case 'lastchannels':
-        case 'user':
-          renderRow = this.renderUser;
-          this.cols = 1;
-          break;
-        case 'group':
-          renderRow = this.renderGroup;
-          this.cols = 1;
-          break;
-        case 'activity':
-          renderRow = this.renderActivity;
-          this.cols = 1;
-          break;
-        case 'object/blog':
-          renderRow = this.renderBlog;
-          this.cols = 1;
-          break;
-        default:
-          renderRow = this.renderTile;
-          columnWrapperStyle = { height: this.state.itemHeight };
-          getItemLayout = this.getItemLayout;
-          break;
-      }
-      body = (
-        <FlatList
-          onLayout={this.onLayout}
-          key={'discofl' + this.cols} // we need to force component redering if we change cols
-          data={list.entities.slice()}
-          renderItem={renderRow}
-          keyExtractor={item => item.guid}
-          onRefresh={this.refresh}
-          refreshing={list.refreshing}
-          onEndReached={this.loadFeed}
-          onEndThreshold={0}
-          initialNumToRender={12}
-          style={styles.listView}
-          numColumns={this.cols}
-          horizontal={false}
-          windowSize={9}
-          removeClippedSubviews={false}
-          getItemLayout={getItemLayout}
-          columnWrapperStyle={columnWrapperStyle}
-          keyboardShouldPersistTaps={'handled'}
-        />
-      )
+
+    let renderRow, columnWrapperStyle = null, getItemLayout=null;
+    this.cols = 3;
+    switch (discovery.type) {
+      case 'lastchannels':
+      case 'user':
+        renderRow = this.renderUser;
+        this.cols = 1;
+        break;
+      case 'group':
+        renderRow = this.renderGroup;
+        this.cols = 1;
+        break;
+      case 'activity':
+        renderRow = this.renderActivity;
+        this.cols = 1;
+        break;
+      case 'object/blog':
+        renderRow = this.renderBlog;
+        this.cols = 1;
+        break;
+      default:
+        renderRow = this.renderTile;
+        columnWrapperStyle = { height: this.state.itemHeight };
+        getItemLayout = this.getItemLayout;
+        break;
     }
+    body = (
+      <FlatList
+        onLayout={this.onLayout}
+        key={'discofl' + this.cols} // we need to force component redering if we change cols
+        data={list.entities.slice()}
+        renderItem={renderRow}
+        keyExtractor={item => item.guid}
+        onRefresh={this.refresh}
+        refreshing={list.refreshing}
+        onEndReached={this.loadFeed}
+        onEndThreshold={0}
+        initialNumToRender={12}
+        style={styles.listView}
+        numColumns={this.cols}
+        horizontal={false}
+        windowSize={9}
+        removeClippedSubviews={false}
+        getItemLayout={getItemLayout}
+        columnWrapperStyle={columnWrapperStyle}
+        keyboardShouldPersistTaps={'handled'}
+      />
+    )
 
     const navigation = (
       <View style={styles.navigation}>
@@ -273,7 +270,7 @@ export default class DiscoveryScreen extends Component {
 
     if (!list.length)
       return;
-  
+
     this.props.discovery.setType('lastchannels');
     this.props.discovery.list.clearList();
     this.props.discovery.list.setList({entities: list});

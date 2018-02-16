@@ -4,6 +4,7 @@ import React, {
 
 import {
   Platform,
+  Text,
   TouchableOpacity
 } from 'react-native';
 
@@ -18,7 +19,7 @@ import {
 } from 'mobx-react/native'
 
 import { createImageProgress } from 'react-native-image-progress';
-import ProgressCircle from 'react-native-progress/Circle';
+//import ProgressCircle from 'react-native-progress/Circle';
 
 const ProgressFastImage = createImageProgress(FastImage);
 
@@ -33,6 +34,10 @@ export default class DiscoveryTile extends PureComponent {
     }
   }
 
+  errorRender = (err) => {
+    return <Text>Image Error</Text>
+  }
+
   render() {
     const url = this.props.entity.getThumbSource();
 
@@ -42,10 +47,11 @@ export default class DiscoveryTile extends PureComponent {
       <TouchableOpacity onPress={this._navToView} style={[ style, styles.tile ]}>
         { Platform.OS === 'android' ?
           <ProgressFastImage
-            indicator={ProgressCircle}
+            indicator={null}
             source={ url }
             style={{ width: this.props.size -2, height: this.props.size -2}}
             threshold={150}
+            renderError={this.errorRender}
           />
           :
           <FastImage
