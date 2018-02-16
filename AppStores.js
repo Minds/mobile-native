@@ -23,6 +23,7 @@ import blockchainWalletSelector from './src/blockchain/wallet/BlockchainWalletSe
 import payments from './src/payments/PaymentsStore';
 import checkoutModal from './src/payments/checkout/CheckoutModalStore';
 import capture from './src/capture/CaptureStore';
+import withdraw from './src/wallet/tokens/WithdrawStore';
 
 import sessionService from './src/common/services/session.service';
 
@@ -54,7 +55,8 @@ const stores = {
   channelSubscribersStore,
   payments,
   checkoutModal,
-  capture
+  capture,
+  withdraw,
 };
 
 /**
