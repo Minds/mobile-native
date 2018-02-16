@@ -28,6 +28,9 @@ import session from '../common/services/session.service';
 import { CommonStyle } from '../styles/Common';
 import { MINDS_CDN_URI } from '../config/Config';
 import CapturePreview from '../capture/CapturePreview';
+import ActionSheet from 'react-native-actionsheet';
+import * as Progress from 'react-native-progress';
+import attachmentService from '../common/services/attachment.service';
 
 @inject('comments')
 @inject('user')
@@ -59,6 +62,18 @@ export default class CommentsScreen extends Component {
    * Render
    */
   render() {
+    let actionsheet = null;
+
+    if (Platform.OS != 'ios') {
+      actionsheet = <ActionSheet
+        ref={o => this.actionSheet = o}
+        options={['Cancel', 'Images', 'Videos']}
+        onPress={this._selectMediaType}
+        cancelButtonIndex={0}
+      />
+    }
+
+
     return (
       <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={64}>
         <View style={{flex:14}}>
@@ -79,11 +94,20 @@ export default class CommentsScreen extends Component {
           }
         </View>
         { this.renderPoster() }
+        { actionsheet }
+        <ActionSheet
+          ref={o => this.actionAttachmentSheet = o}
+          options={['Cancel', 'Gallery', 'Photo', 'Video']}
+          onPress={this._selectMediaSource}
+          cancelButtonIndex={0}
+        />
       </KeyboardAvoidingView>
     );
   }
 
   renderPoster() {
+    const attachment = this.props.comments.attachment;
+
     const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium' };
 
     const comments = this.props.comments;
@@ -103,18 +127,121 @@ export default class CommentsScreen extends Component {
             maxHeight={110}
             value={comments.text}
           />
-          <TouchableOpacity onPress={() => this.postComment()} style={styles.sendicon}><Icon name="md-send" size={24} /></TouchableOpacity>
+          {attachment.uploading ?
+            <Progress.Pie progress={attachment.progress} size={36} />:
+            <View style={CommonStyle.rowJustifyEnd}>
+              <TouchableOpacity onPress={() => this.actionAttachmentSheet.show()} style={styles.sendicon}><Icon name="md-attach" size={24} style={CommonStyle.paddingRight2x} /></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.postComment()} style={styles.sendicon}><Icon name="md-send" size={24} /></TouchableOpacity>
+            </View>}
         </View>
-        {this.state.hasAttachment && <View style={styles.preview}>
+          {attachment.hasAttachment && <View style={styles.preview}>
             <CapturePreview
-              uri={this.state.attachmentUri}
-              type={this.state.attachmentType}
+              uri={attachment.uri}
+              type={attachment.type}
             />
 
             <Icon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.deleteAttachment()} />
           </View>}
       </View>
     )
+  }
+
+  _selectMediaSource = (opt) => {
+    switch (opt) {
+      case 1:
+        this.gallery();
+        break;
+      case 2:
+        this.photo();
+        break;
+      case 3:
+        this.video();
+        break;
+    }
+  }
+
+  /**
+   * On media type select
+   */
+  _selectMediaType = async (i) => {
+    try {
+      let response;
+      switch (i) {
+        case 1:
+          response = await attachmentService.gallery('photo');
+          break;
+        case 2:
+          response = await attachmentService.gallery('video');
+          break;
+      }
+
+      if (response) this.onAttachedMedia(response);
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  /**
+   * Delete attachment
+   */
+  async deleteAttachment() {
+    const attachment = this.props.comments.attachment;
+    // delete
+    const result = await attachment.delete();
+
+    if (result === false) alert('caught error deleting the file');
+  }
+
+  async video() {
+    try {
+      const response = await attachmentService.video();
+      if (response) this.onAttachedMedia(response);
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  async photo() {
+    try {
+      const response = await attachmentService.photo();
+      if (response) this.onAttachedMedia(response);
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  /**
+   * Attach Media
+   */
+  onAttachedMedia = async (response) => {
+    if (response.didCancel) return;
+
+    if (response.error) {
+      alert('ImagePicker Error: ' + response.error);
+      return;
+    }
+
+    const attachment = this.props.comments.attachment;
+
+    const result = await attachment.attachMedia(response);
+
+    if (result === false) alert('caught upload error');
+  }
+
+  /**
+   * Open gallery
+   */
+  async gallery() {
+    if (Platform.OS == 'ios') {
+      try {
+        const response = await attachmentService.gallery('mixed');
+        if (response) this.props.onSelectedMedia(response);
+      } catch (e) {
+        alert(e);
+      }
+    } else {
+      this.actionSheet.show()
+    }
   }
 
   setText = (text) => {
@@ -127,7 +254,7 @@ export default class CommentsScreen extends Component {
   postComment = () => {
     const comments = this.props.comments;
 
-    if (!comments.saving && comments.text.length > 1){
+    if (!comments.saving && comments.text != ''){
       comments.post();
     }
   }
@@ -142,17 +269,17 @@ export default class CommentsScreen extends Component {
 
     switch (entity.type) {
       case "comment":
-        guid = this.state.entity.parent_guid;
+        guid = entity.parent_guid;
         break;
 
       case "activity":
-          guid = this.state.entity.guid;
-          if (this.state.entity.entity_guid) {
-            guid = this.state.entity.entity_guid;
+          guid = entity.guid;
+          if (entity.entity_guid) {
+            guid = entity.entity_guid;
           }
         break;
       default:
-        guid = this.state.entity.guid;
+        guid = entity.guid;
     }
 
     this.props.comments.loadComments(guid);
@@ -246,9 +373,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   preview: {
-    flex: 1,
+    height: 200,
     flexDirection: 'row',
     alignItems: 'stretch',
     position: 'relative',
   },
+  deleteAttachment: {
+    position: 'absolute',
+    right: 8,
+    top: 0,
+    color: '#FFF'
+  }
 });

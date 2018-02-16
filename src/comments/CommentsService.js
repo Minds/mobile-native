@@ -11,15 +11,8 @@ export function getComments(guid, reversed, loadNext, loadPrevious, limit = 25) 
     })
 }
 
-export function postComment(id, text) {
-  return api.post('api/v1/comments/' + id + '/', { comment: text })
-    .then((data) => {
-      return data;
-    })
-    .catch(err => {
-      console.log('error');
-      throw "Ooops";
-    })
+export function postComment(id, comment) {
+  return api.post('api/v1/comments/' + id + '/', comment);
 }
 
 export function updateComment(guid, description) {

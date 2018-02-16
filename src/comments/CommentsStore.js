@@ -118,16 +118,34 @@ class CommentsStore {
     this.comments.unshift(comment);
   }
 
+  /**
+   * Post comment
+   */
   post() {
     this.saving = true;
-    return postComment(this.guid, this.text)
-      .finally(action(() => {
-        this.saving = false;
-      }))
+
+    const comment = {
+      comment: this.text
+    }
+
+    if (this.attachment.guid) {
+      comment.attachment_guid = this.attachment.guid;
+    }
+
+    return postComment(this.guid, comment)
+
       .then((data) => {
         this.setComment(data.comment);
         this.setText('');
-      });
+        this.attachment.clear();
+      })
+      .finally(action(() => {
+        this.saving = false;
+      }))
+      .catch(err => {
+        console.log(err);
+        alert('Error sending comment');
+      })
   }
 
   @action
