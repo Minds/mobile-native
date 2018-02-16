@@ -73,6 +73,10 @@ class Web3Service {
   // Contract methods
 
   async sendSignedContractMethod(method, message = '') {
+    return await this.sendSignedContractMethod(method, 0, message);
+  }
+
+  async sendSignedContractMethodWithValue(method, value = 0, message = '') {
     const toHex = this.web3.utils.toHex,
       baseOptions = await this.getTransactionOptions();
 
@@ -89,7 +93,7 @@ class Web3Service {
       });
     } catch (e) { }
 
-    const sendOptions = await BlockchainTransactionStore.waitForApproval(method, message, baseOptions, Math.ceil(estimatedGas * 1.5));
+    const sendOptions = await BlockchainTransactionStore.waitForApproval(method, message, baseOptions, Math.ceil(estimatedGas * 1.5), value);
     await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
 
     if (sendOptions) {
@@ -100,14 +104,14 @@ class Web3Service {
         from: sendOptions.from,
         to: method._parent.options.address,
         data: method.encodeABI(),
-        value: toHex(0),
+        value: toHex(value),
         gas: toHex(parseInt(sendOptions.gasLimit, 10)),
         gasPrice: toHex(this.web3.utils.toWei(`${sendOptions.gasPrice}`, 'gwei')),
       }, signedTx = sign(tx, privateKey);
 
       return await new Promise((resolve, reject) => {
         this.web3.eth.sendSignedTransaction(signedTx)
-          .once('transactionHash', hash => resolve(hash))
+          .once('transactionHash', hash => resolve({ transactionHash: hash }))
           .once('error', e => reject(e));
       });
     } else {

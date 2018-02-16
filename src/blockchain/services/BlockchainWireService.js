@@ -16,12 +16,12 @@ class BlockchainWireService {
       BlockchainTokenService.encodeParams([ { type: 'address', value: receiver } ])
     );
 
-    const txHash = await Web3Service.sendSignedContractMethod(
+    const result = await Web3Service.sendSignedContractMethod(
       tokenApproveAndCallWire,
       `Send ${amount} Minds Tokens to ${receiver}. ${message}`.trim()
     );
 
-    return txHash;
+    return result.transactionHash;
   }
 }
 

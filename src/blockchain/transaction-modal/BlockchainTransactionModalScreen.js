@@ -16,6 +16,7 @@ import { CommonStyle } from '../../styles/Common';
 import Web3Service from '../services/Web3Service';
 import number from '../../common/helpers/number';
 import currency from '../../common/helpers/currency';
+import Colors from '../../styles/Colors';
 
 const defaults = {
   gasPrice: 1, // TODO: Read from Minds settings
@@ -112,6 +113,16 @@ export default class BlockchainTransactionModalScreen extends Component {
             />
           </View>
 
+          {!!this.props.blockchainTransaction.weiValue && <View style={CommonStyle.field}>
+            <Text style={CommonStyle.fieldLabel}>ETH TO BE TRANSFERRED:</Text>
+
+            <TextInput
+              editable={false}
+              style={[CommonStyle.fieldTextInput, styles.nonEditable]}
+              value={`${this.props.blockchainTransaction.weiValue / Math.pow(10, 18)}`}
+            />
+          </View>}
+
           {!!gasFeeUsd && <Text style={styles.gasFee}>
             MAX. GAS FEE: {currency(gasFeeUsd, 'usd')}
           </Text>}
@@ -168,5 +179,8 @@ const styles = StyleSheet.create({
     color: '#999',
     fontSize: 12,
     letterSpacing: 0.5,
+  },
+  nonEditable: {
+    color: Colors.darkGreyed
   }
 });

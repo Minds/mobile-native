@@ -21,8 +21,9 @@ class BlockchainTransactionStore {
   @observable estimateGasLimit = 0;
   @observable funds = null;
   @observable gweiPriceCents = null;
+  @observable weiValue = null;
 
-  @action async waitForApproval(method, approvalMessage, baseOptions = {}, estimatedGas = 0) {
+  @action async waitForApproval(method, approvalMessage, baseOptions = {}, estimatedGas = 0, weiValue = 0) {
     if (this.isApproving) {
       throw new Error('Already approving a transaction');
     }
@@ -33,6 +34,7 @@ class BlockchainTransactionStore {
     this.estimateGasLimit = estimatedGas;
     this.funds = null;
     this.gweiPriceCents = null;
+    this.weiValue = weiValue;
 
     this.isApproving = true;
 
@@ -56,6 +58,7 @@ class BlockchainTransactionStore {
         this.estimateGasLimit = 0;
         this.funds = null;
         this.gweiPriceCents = null;
+        this.weiValue = 0;
 
         if (change.newValue) {
           resolve(change.newValue);
@@ -78,6 +81,7 @@ class BlockchainTransactionStore {
     this.estimateGasLimit = 0;
     this.funds = null;
     this.gweiPriceCents = null;
+    this.weiValue = 0;
   }
 
   @action rejectTransaction() {
@@ -89,6 +93,7 @@ class BlockchainTransactionStore {
     this.estimateGasLimit = 0;
     this.funds = null;
     this.gweiPriceCents = null;
+    this.weiValue = 0;
   }
 
   refreshFunds() {
@@ -124,6 +129,7 @@ class BlockchainTransactionStore {
     this.baseOptions = {};
     this.estimateGasLimit = 0;
     this.funds = null;
+    this.weiValue = 0;
   }
 }
 
