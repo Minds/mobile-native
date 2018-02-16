@@ -27,6 +27,7 @@ import { getComments, postComment } from './CommentsService';
 import session from '../common/services/session.service';
 import { CommonStyle } from '../styles/Common';
 import { MINDS_CDN_URI } from '../config/Config';
+import CapturePreview from '../capture/CapturePreview';
 
 @inject('comments')
 @inject('user')
@@ -42,14 +43,7 @@ export default class CommentsScreen extends Component {
     transitionConfig: {
       isModal: true
     }
-  })
-
-  state = {
-    loading: false,
-    text: '',
-    entity: this.getEntity(),
-    avatarSrc: { uri: 'https://d3ae0shxev0cb7.cloudfront.net/icon/' + this.props.user.guid + '/medium/1511964398' }
-  };
+  });
 
   componentWillMount() {
     this.props.comments.clearComments();
@@ -66,7 +60,7 @@ export default class CommentsScreen extends Component {
    */
   render() {
     return (
-      <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : 'none' } keyboardVerticalOffset={64}>
+      <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={64}>
         <View style={{flex:14}}>
           { this.props.comments.loaded ?
             <FlatList
@@ -91,36 +85,50 @@ export default class CommentsScreen extends Component {
 
   renderPoster() {
     const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium' };
+
+    const comments = this.props.comments;
+
     return (
-      <View style={styles.messagePoster}>
-        <Image source={avatarImg} style={styles.posterAvatar} />
-        <TextInput
-          style={[CommonStyle.flexContainer, styles.input]}
-          editable={true}
-          underlineColorAndroid='transparent'
-          placeholder='Type your comment...'
-          onChangeText={(text) => this.setState({ text })}
-          multiline={true}
-          autogrow={true}
-          maxHeight={110}
-          value={this.state.text}
-        />
-        <TouchableOpacity onPress={() => this.saveComment()} style={styles.sendicon}><Icon name="md-send" size={24} /></TouchableOpacity>
+      <View>
+        <View style={styles.messagePoster}>
+          <Image source={avatarImg} style={styles.posterAvatar} />
+          <TextInput
+            style={[CommonStyle.flexContainer, styles.input]}
+            editable={true}
+            underlineColorAndroid='transparent'
+            placeholder='Type your comment...'
+            onChangeText={this.setText}
+            multiline={true}
+            autogrow={true}
+            maxHeight={110}
+            value={comments.text}
+          />
+          <TouchableOpacity onPress={() => this.postComment()} style={styles.sendicon}><Icon name="md-send" size={24} /></TouchableOpacity>
+        </View>
+        {this.state.hasAttachment && <View style={styles.preview}>
+            <CapturePreview
+              uri={this.state.attachmentUri}
+              type={this.state.attachmentType}
+            />
+
+            <Icon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.deleteAttachment()} />
+          </View>}
       </View>
     )
   }
 
-  saveComment = () => {
-    if(this.state.text.length > 1){
-      this.setState({
-        loading: true,
-      })
-      this.props.comments.post(this.state.text).then( (data) => {
-        this.setState({
-          text:'',
-          loading: false,
-        })
-      });
+  setText = (text) => {
+    this.props.comments.setText(text);
+  }
+
+  /**
+   * Post comment
+   */
+  postComment = () => {
+    const comments = this.props.comments;
+
+    if (!comments.saving && comments.text.length > 1){
+      comments.post();
     }
   }
 
@@ -129,7 +137,7 @@ export default class CommentsScreen extends Component {
   }
 
   loadComments = () => {
-    const entity = this.state.entity;
+    const entity = this.getEntity();
     let guid;
 
     switch (entity.type) {
@@ -236,5 +244,11 @@ const styles = StyleSheet.create({
   listView: {
     backgroundColor: '#FFF',
     flex: 1,
-  }
+  },
+  preview: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    position: 'relative',
+  },
 });

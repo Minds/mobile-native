@@ -15,6 +15,8 @@ import CommentModel from './CommentModel';
 import socket from '../common/services/socket.service';
 import session from '../common/services/session.service';
 
+import AttachmentStore from '../common/stores/AttachmentStore';
+
 /**
  * Comments Store
  */
@@ -24,6 +26,10 @@ class CommentsStore {
   @observable refreshing = false;
   @observable loaded = false;
   @observable saving = false;
+  @observable text = '';
+
+  // attachment store
+  attachment = new AttachmentStore();
 
   guid = '';
   reversed = false;
@@ -91,6 +97,11 @@ class CommentsStore {
   }
 
   @action
+  setText(txt) {
+    this.text = txt;
+  }
+
+  @action
   setComments(response) {
     if (response.comments) {
       response.comments.forEach(comment => {
@@ -107,10 +118,16 @@ class CommentsStore {
     this.comments.unshift(comment);
   }
 
-  post(text) {
-    return postComment(this.guid, text).then((data) => {
-      this.setComment(data.comment);
-    });
+  post() {
+    this.saving = true;
+    return postComment(this.guid, this.text)
+      .finally(action(() => {
+        this.saving = false;
+      }))
+      .then((data) => {
+        this.setComment(data.comment);
+        this.setText('');
+      });
   }
 
   @action
@@ -121,6 +138,8 @@ class CommentsStore {
     this.loadPrevious = '';
     this.socketRoomName = '';
     this.loaded = false;
+    this.saving = false;
+    this.text = '';
   }
 
   @action
