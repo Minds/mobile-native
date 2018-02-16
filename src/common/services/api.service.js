@@ -182,7 +182,6 @@ class ApiService {
       }
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
-
       xhr.onreadystatechange = () => {
         if (xhr.readyState == XMLHttpRequest.DONE) {
           let data = JSON.parse(xhr.responseText);
@@ -194,25 +193,6 @@ class ApiService {
       };
 
       xhr.send(formData);
-            /*.then(resp => {
-          if (!resp.ok) {
-            throw resp;
-          }
-          return resp;
-        })
-        .then(response => response.json())
-        .then(jsonResp => {
-          if (jsonResp.status === 'error') {
-            return reject(jsonResp);
-          }
-          return resolve(jsonResp)
-        })
-        .catch(err => {
-          if (err.status && err.status == 401) {
-            session.logout();
-          }
-          return reject(err);
-        })*/
     });
   }
 }
