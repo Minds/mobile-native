@@ -3,6 +3,11 @@ import React, {
 } from 'react';
 
 import {
+  observer,
+  inject
+} from 'mobx-react/native'
+
+import {
   Text,
   ScrollView,
   ListView,
@@ -28,7 +33,7 @@ import FeaturesService from '../common/services/features.service';
 /**
  * Wallet screen
  */
-@inject('wallet', 'user', 'navigatorStore')
+@inject('wallet', 'user', 'tabs', 'navigatorStore')
 @observer
 export default class WalletScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -47,6 +52,12 @@ export default class WalletScreen extends Component {
   }
 
   componentWillMount() {
+    this.disposeState = this.props.tabs.onState((state) => {
+      if (!state.previousScene) return;
+      if (state.previousScene.key == "Wallet" && state.previousScene.key == state.scene.route.key) {
+        this.props.wallet.refresh();
+      }
+    });
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Wallet', async () => {
       if ((await this.props.wallet.canShowOnboarding()) && (!this.props.user.hasRewards() || !this.props.user.hasEthWallet())) {
         setImmediate(() => {

@@ -41,7 +41,7 @@ import { MINDS_CDN_URI } from '../config/Config';
 /**
  * Discovery screen
  */
-@inject('discovery', 'navigatorStore', 'channel')
+@inject('discovery', 'tabs', 'navigatorStore', 'channel')
 @observer
 export default class DiscoveryScreen extends Component {
 
@@ -80,6 +80,13 @@ export default class DiscoveryScreen extends Component {
       setTimeout(() => {
         this.setState({active: false});
       }, 50);
+    });
+
+    this.disposeState = this.props.tabs.onState((state) => {
+      if (!state.previousScene) return;
+      if (state.previousScene.key == "Discovery" && state.previousScene.key == state.scene.route.key) {
+        this.props.discovery.refresh();
+      }
     });
   }
 

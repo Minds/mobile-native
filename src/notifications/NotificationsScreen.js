@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
 /**
  * Notification Screen
  */
-@inject('notifications', 'navigatorStore')
+@inject('notifications', 'tabs', 'navigatorStore')
 @observer
 export default class NotificationsScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
     tabBarIcon: ({ tintColor }) => (
-      <NotificationsTabIcon tintColor={tintColor} />
+      <NotificationsTabIcon tintColor={tintColor}/>
     ),
     headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.button} onPress={() => navigation.navigate('NotificationsSettings')} />
   });
@@ -61,6 +61,13 @@ export default class NotificationsScreen extends Component {
       this.props.notifications.loadList();
       this.props.notifications.setUnread(0);
     });
+
+    this.disposeState = this.props.tabs.onState((state) => {
+      if (!state.previousScene) return;
+      if (state.previousScene.key == "Notifications" && state.previousScene.key == state.scene.route.key) {
+        this.props.notifications.refresh();
+      }
+    });
   }
 
   /**
@@ -69,6 +76,7 @@ export default class NotificationsScreen extends Component {
   componentWillUnmount() {
     // clear data to free memory
     this.props.notifications.list.clearList();
+    this.disposeState();
   }
 
   /**
