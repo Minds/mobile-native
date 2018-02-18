@@ -39,7 +39,7 @@ export default class Topbar extends Component {
           <View style={styles.topbarCenter}>
             <Avatar
               rounded
-              source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid }}
+              source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' +  this.props.user.me.icontime}}
               width={36}
               height={36}
               onPress={() => this.props.navigation.navigate('Channel', { guid: this.props.user.me.guid })}

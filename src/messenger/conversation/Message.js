@@ -3,6 +3,11 @@ import React, {
 } from 'react';
 
 import {
+  inject,
+  observer
+} from 'mobx-react/native'
+
+import {
   Text,
   View,
   Image,
@@ -21,6 +26,8 @@ import Tags from '../../common/components/Tags';
 /**
  * Message Component
  */
+@inject('user')
+@observer
 export default class Message extends PureComponent {
 
   stats = {
@@ -52,10 +59,15 @@ export default class Message extends PureComponent {
     }
   }
 
+  getIcontime(owner) {
+    if (owner.guid == this.props.user.me.guid) 
+      return this.props.user.me.icontime;
+    return owner.icontime;
+  }
+
   render() {
     const message = this.props.message;
-    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + message.owner.guid + '/small' };
-
+    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + message.owner.guid + '/small/' + this.getIcontime(message.owner)};
     if (this.props.right) {
       return (
         <View>
