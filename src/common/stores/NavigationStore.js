@@ -5,6 +5,10 @@ import {
   computed
 } from 'mobx';
 
+import {
+  NavigationActions
+} from 'react-navigation';
+
 /**
  * Navigation Store
  */
@@ -95,6 +99,18 @@ export default class NavigationStore {
     return this.navigationState = this.navigator
       .router
       .getStateForAction(action, previousNavState);
+  }
+
+  /**
+   * Navigate helper method
+   * @param {string} navigateTo
+   * @param {object} params
+   * @param {*} action
+   */
+  navigate(navigateTo, params, action) {
+    return this.dispatch(
+      NavigationActions.navigate({ routeName: navigateTo, params, action })
+    );
   }
 
   @action setButtons(opts) {
