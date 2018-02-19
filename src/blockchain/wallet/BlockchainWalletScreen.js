@@ -71,10 +71,6 @@ export default class BlockchainWalletScreen extends Component {
     await this.props.blockchainWallet.load(true);
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
-
   createAction = () => {
     Alert.alert(
       'Create',
