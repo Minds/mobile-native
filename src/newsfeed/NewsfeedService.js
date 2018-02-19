@@ -215,3 +215,7 @@ export function monetize(guid, value) {
 export function deleteItem(guid) {
   return api.delete('api/v1/newsfeed/' + guid);
 }
+
+export function getSingle(guid) {
+  return api.get('api/v1/newsfeed/single/'+guid);
+}

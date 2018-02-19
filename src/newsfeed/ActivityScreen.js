@@ -3,12 +3,50 @@ import {
   ScrollView,
 } from 'react-native';
 
+import CenteredLoading from '../common/components/CenteredLoading'
 import Activity from './activity/Activity';
+import ActivityModel from './ActivityModel';
+import { getSingle } from './NewsfeedService';
 
 export default class ActivityScreen extends Component {
 
+  state = {
+    entity: null
+  }
+
+  /**
+   * On component will mount
+   */
+  componentWillMount() {
+    const params = this.props.navigation.state.params;
+
+    if (params.entity) {
+      this.setState({entity: params.entity});
+    } else {
+      getSingle(params.guid)
+        .then(resp => {
+          this.setState({ entity: ActivityModel.create(resp.activity)});
+        });
+    }
+  }
+
+  /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    this.setState({entity: null});
+  }
+
+  /**
+   * Render
+   */
   render() {
-    const entity = this.props.navigation.state.params.entity;
+    const entity = this.state.entity;
+
+    if (!entity) {
+      return <CenteredLoading/>
+    }
+
     return (
       <ScrollView style={styles.screen}>
         <Activity
