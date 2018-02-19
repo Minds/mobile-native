@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -59,6 +60,7 @@
 		97DE0674099A440F9BE5EF71 /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EADF485FA4194F9297C736F1 /* Roboto-Thin.ttf */; };
 		98E3D370C6A4467A83991774 /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B69EC177E2247548034C9FB /* Roboto-ThinItalic.ttf */; };
 		993AFD182010217300F90B52 /* libCrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 993AFD17201020AE00F90B52 /* libCrypto.a */; };
+		9950B9EA203B8E4B000CB6A1 /* libRNNotifications.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9950B9E2203B8D61000CB6A1 /* libRNNotifications.a */; };
 		9BEA63D902244D38AFA20AEB /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FD2F37EFA6042E4AE596D33 /* libRNImagePicker.a */; };
 		A24E455F521B4CD58AA8FE76 /* libReactNativeExceptionHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0690A780C3A34A75BDAF66F1 /* libReactNativeExceptionHandler.a */; };
 		A756E5492EB647C7988A57FB /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BB693FE7AB3643EBB2B8686A /* Zocial.ttf */; };
@@ -324,6 +326,13 @@
 			remoteGlobalIDString = BF40FFBD1F05EC4000DC4E95;
 			remoteInfo = Crypto;
 		};
+		9950B9E1203B8D61000CB6A1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9950B9AB203B8D60000CB6A1 /* RNNotifications.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNNotifications;
+		};
 		9975B588200FD80100E80F10 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -555,6 +564,7 @@
 		8F8AEFC626A647E5B7E8BA37 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BlackItalic.ttf"; path = "../src/assets/fonts/Roboto/Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		931A515A5CF04E3DA21702AA /* libRNOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNOS.a; sourceTree = "<group>"; };
 		993AFD12201020AE00F90B52 /* Crypto.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Crypto.xcodeproj; path = "../node_modules/react-native-minds-encryption/ios/Crypto.xcodeproj"; sourceTree = "<group>"; };
+		9950B9AB203B8D60000CB6A1 /* RNNotifications.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNNotifications.xcodeproj; path = "../node_modules/react-native-notifications/RNNotifications/RNNotifications.xcodeproj"; sourceTree = "<group>"; };
 		9AC370D909384684A944857E /* libRNBlur.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBlur.a; sourceTree = "<group>"; };
 		9F9E9F36BD5C4D09986635E6 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		AB6A68467242402FA309B048 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -604,6 +614,7 @@
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				C3EF7D1E2005359300CFC22C /* libRCTCameraRoll.a in Frameworks */,
 				993AFD182010217300F90B52 /* libCrypto.a in Frameworks */,
+				9950B9EA203B8E4B000CB6A1 /* libRNNotifications.a in Frameworks */,
 				16FE5403DAE64745AA4086FA /* libRNVectorIcons.a in Frameworks */,
 				9BEA63D902244D38AFA20AEB /* libRNImagePicker.a in Frameworks */,
 				A24E455F521B4CD58AA8FE76 /* libReactNativeExceptionHandler.a in Frameworks */,
@@ -808,6 +819,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				9950B9AB203B8D60000CB6A1 /* RNNotifications.xcodeproj */,
 				4D6B84AE20179504003A1E64 /* ART.xcodeproj */,
 				993AFD12201020AE00F90B52 /* Crypto.xcodeproj */,
 				C3EF7CC52005336C00CFC22C /* RCTCameraRoll.xcodeproj */,
@@ -914,11 +926,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9950B9AC203B8D60000CB6A1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9950B9E2203B8D61000CB6A1 /* libRNNotifications.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A548AB511FFEEC9600ACB8D6 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				F2CDEEB2C2D9494D9E8F71C4 /* libRNVectorIcons.a */,
-				51B567015D5443148939B028 /* libRCTCamera.a */,
 				2FD2F37EFA6042E4AE596D33 /* libRNImagePicker.a */,
 				0690A780C3A34A75BDAF66F1 /* libReactNativeExceptionHandler.a */,
 				06E481AA756C4F8BB79E1002 /* libFastImage.a */,
@@ -1251,6 +1270,10 @@
 					ProjectRef = 512A6ED379C64A0A9C1CAE40 /* RNImagePicker.xcodeproj */;
 				},
 				{
+					ProductGroup = 9950B9AC203B8D60000CB6A1 /* Products */;
+					ProjectRef = 9950B9AB203B8D60000CB6A1 /* RNNotifications.xcodeproj */;
+				},
+				{
 					ProductGroup = A548AB931FFEEC9900ACB8D6 /* Products */;
 					ProjectRef = 20D87165B2AA40DD833BAAC8 /* RNOS.xcodeproj */;
 				},
@@ -1519,6 +1542,13 @@
 			fileType = archive.ar;
 			path = libCrypto.a;
 			remoteRef = 993AFD16201020AE00F90B52 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9950B9E2203B8D61000CB6A1 /* libRNNotifications.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNNotifications.a;
+			remoteRef = 9950B9E1203B8D61000CB6A1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		9975B589200FD80100E80F10 /* libjsinspector.a */ = {
@@ -1873,9 +1903,7 @@
 				INFOPLIST_FILE = MindsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1912,9 +1940,7 @@
 				INFOPLIST_FILE = MindsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2036,9 +2062,7 @@
 				);
 				INFOPLIST_FILE = "Minds-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2084,9 +2108,7 @@
 				);
 				INFOPLIST_FILE = "Minds-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -2112,9 +2134,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Minds-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Minds-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
@@ -2136,9 +2156,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Minds-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Minds-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
