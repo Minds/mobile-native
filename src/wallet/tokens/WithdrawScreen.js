@@ -27,9 +27,8 @@ import number from '../../common/helpers/number';
 import formatDate from '../../common/helpers/date';
 import token from '../../common/helpers/token';
 
+@inject('user', 'withdraw')
 @observer
-@inject('user')
-@inject('withdraw')
 export default class WithdrawScreen extends Component {
   state = {
     amount: '0',
