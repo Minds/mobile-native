@@ -43,9 +43,11 @@ export default class WithdrawScreen extends Component {
     title: 'Withdraw'
   };
 
-  componentWillMount() {
-    this.load();
-    this.loadLedger();
+  async componentWillMount() {
+    return await Promise.all([
+      this.load(),
+      this.loadLedger()
+    ]);
   }
 
   async load() {
