@@ -21,6 +21,7 @@ import com.facebook.soloader.SoLoader;
 import com.reactnative.photoview.PhotoViewPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
+import com.wix.reactnativenotifications.RNNotificationsPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +51,8 @@ public class MainApplication extends Application implements ReactApplication {
           new VectorIconsPackage(),
           new PhotoViewPackage(),
           new RNI18nPackage(),
-          new KCKeepAwakePackage()
+          new KCKeepAwakePackage(),
+          new RNNotificationsPackage(MainApplication.this)
       );
     }
 

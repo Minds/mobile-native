@@ -30,8 +30,9 @@ import NavigationStoreService from './src/common/services/navigation.service';
 import Stack from './AppScreens';
 import stores from './AppStores';
 import './AppErrors';
-
 import './src/common/services/socket.service';
+import pushService from './src/common/services/push.service';
+import sessionService from './src/common/services/session.service';
 
 // build navigation store
 stores.navigatorStore = new NavigatorStore(Stack);
@@ -39,13 +40,22 @@ stores.navigatorStore = new NavigatorStore(Stack);
 // Setup navigation store proxy (to avoid circular references issues)
 NavigationStoreService.set(stores.navigatorStore);
 
+
+// init push service
+pushService.init();
+// register device token into backend on login
+sessionService.onLogin(() => {
+  pushService.registerToken();
+})
+
+
 /**
  * App
  */
 export default class App extends Component {
-  
+
   componentWillMount() {
-    Text.defaultProps.style = { 
+    Text.defaultProps.style = {
       fontFamily: 'Roboto',
       color: '#444',
     };

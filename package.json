@@ -52,6 +52,7 @@
     "react-native-minds-encryption": "github:Minds/react-native-minds-encryption",
     "react-native-modal": "^4.1.1",
     "react-native-modal-datetime-picker": "^4.13.0",
+    "react-native-notifications": "^1.2.0",
     "react-native-optimized-flatlist": "^1.0.4",
     "react-native-os": "^1.0.1",
     "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
@@ -101,8 +102,11 @@
     "setupFiles": [
       "<rootDir>/setupTests.js"
     ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
     "transformIgnorePatterns": [
-      "node_modules/(?!react-native|react-navigation|jest-serializer-enzyme)/"
+      "node_modules/(?!react-native|react-navigation)/"
     ],
     "moduleNameMapper": {
       "^image![a-zA-Z0-9$_-]+$": "GlobalImageStub",
