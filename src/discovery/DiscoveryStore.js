@@ -7,6 +7,7 @@ import discoveryService from './DiscoveryService';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
 import OffsetListStore from '../common/stores/OffsetListStore';
+import UserModel from '../channel/UserModel';
 
 /**
  * Discovery Store
@@ -107,6 +108,10 @@ class DiscoveryStore {
         break;
       case 'object/blog':
         feed.entities = BlogModel.createMany(feed.entities);
+        break;
+      case 'user':
+        feed.entities = UserModel.createMany(feed.entities);
+        break;
     }
   }
 
