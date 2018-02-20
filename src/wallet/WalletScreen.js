@@ -11,6 +11,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import {
+  observer,
+  inject
+} from 'mobx-react/native';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -23,8 +28,9 @@ import FeaturesService from '../common/services/features.service';
 /**
  * Wallet screen
  */
+@inject('wallet', 'user', 'navigatorStore')
+@observer
 export default class WalletScreen extends Component {
-
   static navigationOptions = ({ navigation }) => ({
     headerRight: (
     <View style={{ flexDirection: 'row', paddingRight:10}}>
@@ -38,6 +44,21 @@ export default class WalletScreen extends Component {
     tabBarIcon: ({ tintColor }) => (
       <CIcon name="bank" size={24} color={tintColor} />
     )
+  }
+
+  componentWillMount() {
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Wallet', async () => {
+      if ((await this.props.wallet.canShowOnboarding()) && (!this.props.user.hasRewards() || !this.props.user.hasEthWallet())) {
+        setImmediate(() => {
+          this.props.navigation.navigate('WalletOnboarding');
+        });
+      }
+    });
+  }
+
+  componentWillUnmount() {
+    if (this.disposeEnter)
+      this.disposeEnter();
   }
 
   render() {

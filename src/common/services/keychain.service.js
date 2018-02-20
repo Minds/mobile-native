@@ -59,6 +59,10 @@ class KeychainService {
   unlocked = {};
 
   async getSecret(keychain) {
+    if (!keychain) {
+      throw new Error('E_INVALID_KEYCHAIN');
+    }
+
     if (
       typeof this.unlocked[keychain] !== 'undefined' &&
       isCacheStillValid(this.unlocked[keychain])
@@ -104,12 +108,37 @@ class KeychainService {
       await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
     }
 
+    this.storeToCache(keychain, secret);
+
+    return secret;
+  }
+
+  async setSecretIfEmpty(keychain, secret) {
+    if (!keychain) {
+      throw new Error('E_INVALID_KEYCHAIN');
+    }
+
+    if (!secret) {
+      throw new Error('E_INVALID_SECRET');
+    }
+
+    if (await isKeychainInStorage(keychain)) {
+      throw new Error('E_ALREADY_SET');
+    }
+
+    await saveKeychainToStorage(keychain, secret);
+    this.storeToCache(keychain, secret);
+  }
+
+  storeToCache(keychain, secret) {
     this.unlocked[keychain] = {
       secret,
       timestamp: Date.now(),
     };
+  }
 
-    return secret;
+  async hasSecret(keychain) {
+    return await isKeychainInStorage(keychain);
   }
 
   async _DANGEROUS_wipe(confirmation, keychain) {
@@ -121,10 +150,6 @@ class KeychainService {
 
     if (typeof this.unlocked[keychain] !== 'undefined') {
       delete this.unlocked[keychain];
-    }
-
-    for (key of (await AsyncStorage.getAllKeys())) {
-      console.log(key, await AsyncStorage.getItem(key))
     }
 
     return true;

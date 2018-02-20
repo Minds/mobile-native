@@ -34,6 +34,7 @@ import ReportScreen from './src/report/ReportScreen';
 import MoreScreen from './src/tabs/MoreScreen';
 import CheckoutModalScreen from './src/payments/checkout/CheckoutModalScreen';
 import WithdrawScreen from './src/wallet/tokens/WithdrawScreen';
+import WalletOnboardingScreen from "./src/wallet/onboarding/WalletOnboardingScreen";
 
 /**
  * Main stack navigator
@@ -143,7 +144,10 @@ const Stack = StackNavigator({
   },
   Withdraw: {
     screen: WithdrawScreen
-  }
+  },
+  WalletOnboarding: {
+    screen: WalletOnboardingScreen
+  },
 });
 
 export default Stack;

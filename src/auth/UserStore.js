@@ -22,6 +22,19 @@ class UserStore {
   }
 
   @action
+  setWallet(value) {
+    this.me.eth_wallet = value;
+  }
+
+  hasRewards() {
+    return !!(this.me && this.me.rewards);
+  }
+
+  hasEthWallet() {
+    return !!(this.me && this.me.eth_wallet);
+  }
+
+  @action
   clearUser() {
     this.me = {};
   }

@@ -9,6 +9,7 @@ import abbrev from "../common/helpers/abbrev";
 import token from "../common/helpers/token";
 import number from "../common/helpers/number";
 import TokensStore from './tokens/TokensStore';
+import storageService from '../common/services/storage.service';
 /**
  * Wallet store
  */
@@ -16,6 +17,8 @@ class WalletStore {
 
   @observable balance = -1;
   @observable addresses = [];
+
+  @observable onboardingShown = false;
 
   ledger = new TokensStore();
 
@@ -69,6 +72,26 @@ class WalletStore {
 
   // TODO: Implement forced auto-refresh every X minutes
   // TODO: Implement socket and atomic increases/decreases
+
+  // Onboarding
+
+  async canShowOnboarding() {
+    return !this.isOnboardingShown && !(await storageService.getItem('walletOnboardingComplete'));
+  }
+
+  @action setOnboardingShown(value) {
+    this.isOnboardingShown = !!value;
+  }
+
+  async setOnboardingComplete(value) {
+    await storageService.setItem('walletOnboardingComplete', !!value);
+  }
+
+  async reset() {
+    // Onboarding
+    this.onboardingShown = false;
+    await storageService.removeItem('walletOnboardingComplete');
+  }
 }
 
 export default new WalletStore()

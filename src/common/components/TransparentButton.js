@@ -43,8 +43,8 @@ export default class TransparentButton extends Component {
           ComponentsStyle.button,
           style.button,
           this.props.style,
-          { borderColor: this.props.color || '#000' },
-          !!this.props.disabled && { borderColor: this.props.disabledColor || '#aaa' }
+          { borderColor: this.props.borderColor || this.props.color || '#000' },
+          !!this.props.disabled && { borderColor: this.props.disabledBorderColor || this.props.disabledColor || '#aaa' }
         ]}
       >
         {submitContent}

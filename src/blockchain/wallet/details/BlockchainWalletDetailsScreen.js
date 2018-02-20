@@ -65,6 +65,8 @@ export default class BlockchainWalletDetailsScreen extends Component {
 
   aliasTextInputRef;
 
+  _deleted = false;
+
   componentWillMount() {
     this.setState({
       editable: false,
@@ -203,9 +205,11 @@ export default class BlockchainWalletDetailsScreen extends Component {
   }
 
   async setLabel() {
-    await this.props.blockchainWallet.save(this.state.address, {
-      alias: this.state.alias,
-    });
+    if (!this._deleted) {
+      await this.props.blockchainWallet.save(this.state.address, {
+        alias: this.state.alias,
+      });  
+    }
   }
 
   receiverItem() {
@@ -332,6 +336,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
 
   async delete() {
     await this.props.blockchainWallet.delete(this.state.address);
+    this._deleted = true;
     this.props.navigation.goBack();
   }
 
