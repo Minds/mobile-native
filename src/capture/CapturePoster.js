@@ -6,6 +6,7 @@ import {
   Text,
   Button,
   TouchableHighlight,
+  TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
 
@@ -36,9 +37,9 @@ export default class CapturePoster extends Component {
   /**
    * Disable navigation bar
    */
-  static navigationOptions = {
-    header: null
-  }
+  static navigationOptions = ({ navigation }) => ({
+    headerRight: navigation.state.params && navigation.state.params.headerRight,
+  });
 
   state = {
     isPosting: false,
@@ -56,11 +57,28 @@ export default class CapturePoster extends Component {
    * On component will mount
    */
   componentWillMount() {
-    // load data on enter
-    // this.disposeEnter = this.props.navigatorStore.onEnterScreen('Capture', (s) => {
-    //   //this.setState({ active: true });
-    // });
-
+    //set header
+    const attachment = this.props.capture.attachment;
+    const headerRight = <View style={styles.posterActions}>
+      { 
+        attachment.uploading ?
+          <Progress.Pie progress={attachment.progress} size={36} />
+        :
+        this.state.isPosting ?
+          <ActivityIndicator size={'large'} />
+        :
+          <TouchableOpacity
+            onPress={() => this.submit()}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>POST</Text>
+          </TouchableOpacity>
+      }
+    </View>;
+    this.props.navigation.setParams({ 
+      headerRight
+    });
+  
     // clear data on leave
     this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Capture', (s) => {
       //this.setState({ active: false });
@@ -107,26 +125,6 @@ export default class CapturePoster extends Component {
 
     return (
       <View style={styles.posterAndPreviewWrapper}>
-        <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
-          <Icon size={36} name="ios-close" onPress={() => navigation.goBack()} style={CommonStyle.paddingLeft2x} />
-          <View style={styles.posterActions}>
-            {
-              attachment.uploading ?
-                <Progress.Pie progress={attachment.progress} size={36} />
-                :
-                this.state.isPosting ?
-                  <ActivityIndicator size={'large'} />
-                  :
-                  <TouchableHighlight
-                    underlayColor='#FFF'
-                    onPress={() => this.submit()}
-                    style={styles.button}
-                  >
-                    <Text style={styles.buttonText}>POST</Text>
-                  </TouchableHighlight>
-            }
-          </View>
-        </View>
         {this.showContext()}
         <View style={styles.posterWrapper} pointerEvents="box-none">
           <TextInput
@@ -386,10 +384,10 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     alignItems: 'center',
-    borderRadius: 3,
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: colors.primary,
+    //borderRadius: 3,
+    //backgroundColor: 'white',
+    //borderWidth: 1,
+    //borderColor: colors.primary,
   },
   buttonText: {
     color: colors.primary,
