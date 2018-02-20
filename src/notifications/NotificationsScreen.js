@@ -52,7 +52,7 @@ export default class NotificationsScreen extends Component {
     ),
     headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.button} onPress={() => navigation.navigate('NotificationsSettings')} />
   });
-  
+
   /**
    * On component mount
    */
@@ -60,7 +60,7 @@ export default class NotificationsScreen extends Component {
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Notifications', (s) => {
       this.props.notifications.loadList();
       this.props.notifications.setUnread(0);
-    });   
+    });
   }
 
   /**
@@ -76,18 +76,19 @@ export default class NotificationsScreen extends Component {
    */
   render() {
     let body;
+    const list = this.props.notifications.list;
 
-    if (this.props.notifications.list.loaded) {
+    if (list.loaded || list.refreshing) {
       body = (
         <OptimizedFlatList
-          data={this.props.notifications.list.entities.slice()}
+          data={list.entities.slice()}
           renderItem={this.renderRow}
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
           ListEmptyComponent={<Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>There are no notifications to load</Text>}
           onEndThreshold={0.05}
-          refreshing={this.props.notifications.list.refreshing}
+          refreshing={list.refreshing}
           style={styles.listView}
         />
       )

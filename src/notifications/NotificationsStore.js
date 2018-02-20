@@ -72,7 +72,7 @@ class NotificationsStore {
   loadList() {
     // no more data? return
     if (this.list.cantLoadMore() || this.loading) {
-      return;
+      return Promise.resolve();
     }
     this.loading = true;
     // always return promise for refresh!
