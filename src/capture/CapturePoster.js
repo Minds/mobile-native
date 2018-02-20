@@ -27,13 +27,20 @@ import CapturePreview from './CapturePreview';
 import Util from '../common/helpers/util';
 import RichEmbedService from '../common/services/rich-embed.service';
 import CaptureMetaPreview from './CaptureMetaPreview';
+import { CommonStyle } from '../styles/Common';
 
-@inject('user', 'navigatorStore', 'capture')
+@inject('user', 'navigatorStore', 'capture', 'newsfeed')
 @observer
 export default class CapturePoster extends Component {
 
+  /**
+   * Disable navigation bar
+   */
+  static navigationOptions = {
+    header: null
+  }
+
   state = {
-    active: true,
     isPosting: false,
     text: '',
     postImageUri: '',
@@ -50,9 +57,9 @@ export default class CapturePoster extends Component {
    */
   componentWillMount() {
     // load data on enter
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Capture', (s) => {
-      //this.setState({ active: true });
-    });
+    // this.disposeEnter = this.props.navigatorStore.onEnterScreen('Capture', (s) => {
+    //   //this.setState({ active: true });
+    // });
 
     // clear data on leave
     this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Capture', (s) => {
@@ -78,12 +85,16 @@ export default class CapturePoster extends Component {
   }
 
   defaultRouting(entity) {
+
+    this.props.newsfeed.prepend(entity);
+
     const dispatch = NavigationActions.navigate({
       routeName: 'Newsfeed',
       params: {
         prepend: entity,
       },
-    })
+    });
+
     this.props.navigation.dispatch(dispatch);
   }
 
@@ -92,27 +103,16 @@ export default class CapturePoster extends Component {
    */
   render() {
     const attachment = this.props.capture.attachment;
+    const navigation = this.props.navigation;
 
     return (
       <View style={styles.posterAndPreviewWrapper}>
-        {this.showContext()}
-        <View style={styles.posterWrapper} pointerEvents="box-none">
-          {this.state.active && <TextInput
-            style={styles.poster}
-            editable={true}
-            placeholder='Speak your mind...'
-            placeholderTextColor='#ccc'
-            underlineColorAndroid='transparent'
-            onChangeText={this.setText}
-            value={this.state.text}
-            multiline={true}
-            selectTextOnFocus={true}
-          />}
-
+        <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
+          <Icon size={36} name="ios-close" onPress={() => navigation.goBack()} style={CommonStyle.paddingLeft2x} />
           <View style={styles.posterActions}>
             {
               attachment.uploading ?
-                <Progress.Pie progress={attachment.progress} size={36}/>
+                <Progress.Pie progress={attachment.progress} size={36} />
                 :
                 this.state.isPosting ?
                   <ActivityIndicator size={'large'} />
@@ -127,6 +127,20 @@ export default class CapturePoster extends Component {
             }
           </View>
         </View>
+        {this.showContext()}
+        <View style={styles.posterWrapper} pointerEvents="box-none">
+          <TextInput
+            style={styles.poster}
+            editable={true}
+            placeholder='Speak your mind...'
+            placeholderTextColor='#ccc'
+            underlineColorAndroid='transparent'
+            onChangeText={this.setText}
+            value={this.state.text}
+            multiline={true}
+            selectTextOnFocus={true}
+          />
+        </View>
 
         {(this.state.meta || this.state.metaInProgress) && <CaptureMetaPreview
           meta={this.state.meta}
@@ -139,14 +153,13 @@ export default class CapturePoster extends Component {
             uri={attachment.uri}
             type={attachment.type}
           />
-
           <Icon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
         </View>}
 
-        {this.state.active &&<CaptureGallery
+        <CaptureGallery
           style={{ flex: 1 }}
           onSelected={this.onAttachedMedia}
-        />}
+        />
       </View>
     );
   }
@@ -324,6 +337,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'stretch',
     alignContent: 'stretch',
+    backgroundColor: 'white'
   },
   posterWrapper: {
     padding: 16,
@@ -341,7 +355,8 @@ const styles = StyleSheet.create({
     maxHeight: 100
   },
   posterActions: {
-    alignItems: 'center',
+    flex:1,
+    alignItems: 'flex-end',
     justifyContent: 'center',
     alignContent: 'center',
   },
