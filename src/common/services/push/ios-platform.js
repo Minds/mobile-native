@@ -1,4 +1,4 @@
-import { NotificationsIOS } from 'react-native-notifications';
+import NotificationsIOS from 'react-native-notifications';
 import AbstractPlatform from './abstract-platform';
 
 /**
