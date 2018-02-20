@@ -36,12 +36,12 @@ export default class CaptureScreen extends Component {
   render() {
     return (
       <View style={styles.screenWrapper}>
-        <CapturePoster style={{ flex: 1, backgroundColor: '#FFF' }} onComplete={ (entity) => this.onComplete(entity) }/>
+        <CapturePoster style={{ flex: 1, backgroundColor: '#FFF' }} navigation={this.props.navigation} onComplete={ this.onComplete }/>
       </View>
     );
   }
 
-  onComplete(entity) {
+  onComplete = (entity) => {
 
     this.props.newsfeed.prepend(entity);
 
