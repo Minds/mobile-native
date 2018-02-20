@@ -12,7 +12,7 @@ import {
   View,
   Image,
   StyleSheet,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -27,13 +27,15 @@ import Tags from '../../common/components/Tags';
  * Message Component
  */
 @inject('user')
-@observer
 export default class Message extends PureComponent {
 
   stats = {
     showDate: false
   };
 
+  /**
+   * On component will mount
+   */
   componentWillMount() {
     const message = this.props.message;
     this.setState({decrypted: message.decrypted});
@@ -60,11 +62,24 @@ export default class Message extends PureComponent {
   }
 
   getIcontime(owner) {
-    if (owner.guid == this.props.user.me.guid) 
+    if (owner.guid == this.props.user.me.guid)
       return this.props.user.me.icontime;
     return owner.icontime;
   }
 
+  /**
+   * Navigate To channel
+   */
+  _navToChannel = () => {
+    // only active if receive the navigation property
+    if (this.props.navigation) {
+      this.props.navigation.navigate('Channel', { guid: this.props.message.owner.guid });
+    }
+  }
+
+  /**
+   * Render
+   */
   render() {
     const message = this.props.message;
     const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + message.owner.guid + '/small/' + this.getIcontime(message.owner)};
@@ -80,7 +95,9 @@ export default class Message extends PureComponent {
                 </Text>
               </View>
             </View>
-            <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
+            <TouchableOpacity onPress={this._navToChannel}>
+              <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
+            </TouchableOpacity>
           </View>
           { this.state.showDate ?
             <Text selectable={true} style={[styles.messagedate, styles.rightText]}>Dec 6, 2017, 11:47:46 AM</Text>
@@ -92,7 +109,9 @@ export default class Message extends PureComponent {
     return (
       <View>
         <View style={styles.messageContainer}>
-          <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
+          <TouchableOpacity onPress={this._navToChannel}>
+            <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
+          </TouchableOpacity>
           <View style={CommonStyle.rowJustifyCenter}>
             <View style={[ styles.textContainer ]}  >
               <Text selectable={true} style={[styles.message]} onPress={() => this.showDate()}>
