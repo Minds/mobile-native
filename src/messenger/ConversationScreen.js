@@ -27,6 +27,8 @@ import crypto from './../common/services/crypto.service';
 import Message from './conversation/Message';
 import MessengerSetup from './MessengerSetup';
 
+import { CommonStyle } from '../styles/Common';
+
 /**
  * Messenger Conversation Screen
  */
@@ -36,8 +38,30 @@ import MessengerSetup from './MessengerSetup';
 export default class ConversationScreen extends Component {
 
   state = {
-    text: ''
+    text: '',
   }
+
+  static navigationOptions = ({ navigation }) => {
+    const conversation = navigation.state.params.conversation;
+
+    console.log(navigation.state.params)
+
+    if (!conversation || !conversation.name) {
+      return {
+        title: ''
+      };
+    }
+
+    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + conversation.participants[0].guid + '/medium/' };
+    return {
+      title: conversation.name,
+      headerRight: (
+        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}>
+          <Image source={avatarImg} style={styles.avatar} />
+        </View>
+      )
+    }
+  };
 
   componentWillMount() {
     let conversation;
@@ -49,7 +73,11 @@ export default class ConversationScreen extends Component {
 
     // load conversation
     this.props.messengerConversation.setGuid(conversation.guid);
-    this.props.messengerConversation.load();
+    this.props.messengerConversation.load()
+      .then(conversation => {
+        // we send the conversation to update the topbar (in case we only receive the guid)
+        this.props.navigation.setParams({ conversation });
+      })
   }
 
   /**

@@ -36,6 +36,7 @@ class MessengerConversationStore {
         crypto.setPublicKeys( conversation.publickeys );
         this.setMessages(conversation.messages.reverse());
         this.checkListen(conversation);
+        return conversation;
       })
   }
 
@@ -110,17 +111,17 @@ class MessengerConversationStore {
    */
   @action
   clear() {
+    // unlisten socket
+    this.unlisten();
+    this.socketRoomName  = null;
+    this.participants    = null;
+    this.guid            = null;
+    this.messages        = [];
     if (this.lastMessageGuid) {
       // on leave set all messages as readed
       messengerService.getConversationFromRemote(1, this.guid, this.lastMessageGuid);
       this.lastMessageGuid = null;
     }
-    this.socketRoomName  = null;
-    this.participants    = null;
-    this.guid            = null;
-    this.messages        = [];
-    // unlisten socket
-    this.unlisten();
   }
 
   reset() {
