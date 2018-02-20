@@ -23,7 +23,6 @@ class GroupsStore {
    * Load list
    */
   loadList() {
-
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }

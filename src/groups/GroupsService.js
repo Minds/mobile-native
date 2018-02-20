@@ -58,7 +58,7 @@ class GroupsService {
   }
 
   loadMembers(guid, offset, limit = 21) {
-    return api.get('api/v1/groups/membership/' + guid, {limit});
+    return api.get('api/v1/groups/membership/' + guid, {limit, offset});
   }
 
   join(guid) {

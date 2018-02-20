@@ -5,6 +5,9 @@ import React, {
 import {
   View,
   StyleSheet,
+  Text,
+  FlatList,
+  ScrollView,
 } from 'react-native';
 
 import {
@@ -14,6 +17,7 @@ import {
 
 import { Icon } from 'react-native-elements';
 
+import DiscoveryUser from '../discovery/DiscoveryUser';
 import { MINDS_CDN_URI } from '../config/Config';
 import groupsService from './GroupsService';
 import CenteredLoading from '../common/components/CenteredLoading';
@@ -59,6 +63,72 @@ export default class GroupViewScreen extends Component {
   }
 
   /**
+  
+   * Load subs data
+   */
+  loadMembers = () => {
+    this.props.groupView.loadMembers();
+  }
+
+  /**
+   * Refresh subs data
+   */
+  refresh = () => {
+    this.props.groupView.memberRefresh();
+  }
+
+  getList() {
+    const group = this.props.groupView;
+
+    const header = (
+      <View>
+        <GroupHeader store={this.props.groupView} me={this.props.user.me} styles={styles}/>
+        <Icon color={colors.primary} containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} raised />
+      </View>
+    )
+    switch (group.filter) {
+      case 'feed': 
+        return <NewsfeedList newsfeed={ group } guid = { group.group.guid } header = { header } navigation = { this.props.navigation } />;
+        break;
+      case 'members':
+        return <FlatList
+                ListHeaderComponent={header}
+                data={group.members.entities.slice()}
+                renderItem={this.renderRow}
+                keyExtractor={item => item.guid}
+                onRefresh={this.refresh}
+                refreshing={group.members.refreshing}
+                onEndReached={this.loadMembers}
+                onEndThreshold={0}
+                initialNumToRender={12}
+                style={styles.listView}
+                removeClippedSubviews={false}
+              />;
+        break;
+      case 'desc':
+        return  <ScrollView style={CommonStyle.backgroundLight}>
+                  {header}
+                  <View style={CommonStyle.padding2x}>
+                    <Text>{group.group.briefdescription}</Text>
+                  </View>
+                </ScrollView>;
+        break;
+      default:
+        return <NewsfeedList newsfeed={ group } guid = { group.group.guid } header = { header } navigation = { this.props.navigation } />;
+        break;
+    }
+  }
+
+  /**
+   * Render user row
+   */
+  renderRow = (row) => {
+    return (
+      <DiscoveryUser store={this.props.groupView} entity={row} navigation={this.props.navigation} />
+    );
+  }
+
+  /**
    * Render
    */
   render() {
@@ -68,21 +138,18 @@ export default class GroupViewScreen extends Component {
       return <CenteredLoading />
     }
 
-    const header = (
-      <View>
-        <GroupHeader store={this.props.groupView} me={this.props.user.me} styles={styles}/>
-        <Icon color={colors.primary} containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} raised />
-      </View>
-    )
-
     return (<View style={{flex:1}}> 
               <CaptureFab navigation={this.props.navigation} />
-              <NewsfeedList newsfeed={ this.props.groupView } guid = { group.guid } header = { header } navigation = { this.props.navigation } />
+              {this.getList()}
             </View>);
   }
 }
 
 const styles = StyleSheet.create({
+	listView: {
+    backgroundColor: '#FFF',
+    flex: 1,
+  },
   gobackicon: {
     position: 'absolute',
     left: 0,

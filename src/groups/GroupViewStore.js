@@ -3,6 +3,8 @@ import { observable, action } from 'mobx'
 import groupsService from './GroupsService';
 
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
+import OffsetListStore from '../common/stores/OffsetListStore';
+import UserModel from '../channel/UserModel';
 
 /**
  * Groups store
@@ -13,6 +15,11 @@ class GroupViewStore {
    * List feed store
    */
   @observable list = new OffsetFeedListStore();
+
+  /**
+   * List Members
+   */
+  @observable members = new OffsetListStore('shallow');
 
   /**
    * Group
@@ -35,12 +42,13 @@ class GroupViewStore {
    * List loading
    */
   loading = false;
-
+  guid = '';
+  @observable filter = 'feed';
   /**
    * Load feed
    */
   loadFeed(guid) {
-
+    this.guid = guid;
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
@@ -49,6 +57,33 @@ class GroupViewStore {
     return groupsService.loadFeed(guid, this.list.offset)
       .then(data => {
         this.list.setList(data);
+        this.assignRowKeys(data);
+        this.loaded = true;
+      })
+      .finally(() => {
+        this.loading = false;
+      })
+      .catch(err => {
+        console.log('error', err);
+      });
+  }
+
+  /**
+   * Load Members
+   */
+  loadMembers() {
+
+    if (this.members.cantLoadMore() || this.loading) {
+      return Promise.resolve();
+    }
+    this.loading = true;
+
+    return groupsService.loadMembers(this.guid, this.members.offset)
+      .then(data => {
+        data.entities = UserModel.createMany(data.members);
+        data.offset = data['load-next'];
+        this.members.setList(data);
+        this.assignRowKeys(data);
         this.loaded = true;
       })
       .finally(() => {
@@ -106,6 +141,20 @@ class GroupViewStore {
   }
 
   /**
+   * Generate a unique Id for use with list views
+   * @param {object} feed
+   */
+  assignRowKeys(feed) {
+    feed.entities.forEach((entity, index) => {
+      entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
+    });
+  }
+
+  setFilter(filter) {
+    this.filter = filter;
+  }
+
+  /**
    * clear the store to default values
    */
   @action
@@ -146,9 +195,22 @@ class GroupViewStore {
       });
   }
 
+  /**
+   * Refresh members
+   */
+  @action
+  memberRefresh(guid) {
+    this.members.refresh();
+    this.loadFeed(guid)
+      .finally(() => {
+        this.members.refreshDone();
+      });
+  }
+
   @action
   reset() {
     this.list = new OffsetFeedListStore();
+    this.members = new OffsetListStore('shallow');
     this.group = null;
     this.tab = 'feed';
     this.saving = false;

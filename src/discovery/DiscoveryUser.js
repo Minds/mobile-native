@@ -39,7 +39,12 @@ export default class DiscoveryUser extends Component {
 
   toggleSubscribe = () => {
     const item = this.props.entity.item;
-    this.props.store.list.toggleSubscription(item.guid);
+    if (this.props.store.members){
+      this.props.store.members.toggleSubscription(item.guid);
+    } else if (this.props.store.list) {
+      this.props.store.list.toggleSubscription(item.guid);
+    }
+    
   }
 
   subscribeButton() {

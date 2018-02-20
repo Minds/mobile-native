@@ -85,9 +85,9 @@ export default class GroupHeader extends Component {
    */
   renderToolbar() {
     const typeOptions = [
-      { text: 'Feed', icon: 'list', value: 'feed' },
-      { text: 'Description', icon: 'short-text', value: 'desc' },
-      { text: 'Members', icon: 'ios-people', iconType: 'ion', value: 'members' }
+      { text: 'FEED', icon: 'list', value: 'feed' },
+      { text: 'DESCRIPTION', icon: 'short-text', value: 'desc' },
+      { text: 'MEMBERS', icon: 'ios-people', iconType: 'ion', value: 'members' }
     ]
     return (
       <Toolbar
@@ -103,16 +103,18 @@ export default class GroupHeader extends Component {
    */
   onTabChange = (tab) => {
     const group = this.props.store.group;
-
+    this.props.store.setFilter(tab);
     switch (tab) {
       case 'feed':
         // clear list without mark loaded flag
         this.props.store.refresh(group.guid);
       case 'desc':
         // clear list without mark loaded flag
-        this.props.store.list.clearList(false)
+        this.props.store.list.clearList(false);
         break;
-
+      case 'members':  
+        this.props.store.loadMembers();
+        break;
       default:
         break;
     }
@@ -129,16 +131,6 @@ export default class GroupHeader extends Component {
     const styles = this.props.styles;
     const avatar = { uri: this.getAvatar() };
     const iurl = { uri: this.getBannerFromGroup() };
-
-    let body = null;
-
-    if (this.props.store.tab == 'desc') {
-      body = (
-        <View style={CommonStyle.padding2x}>
-          <Text>{group.briefdescription}</Text>
-        </View>
-      )
-    }
 
     return (
       <View >
@@ -169,7 +161,6 @@ export default class GroupHeader extends Component {
         </View>
         <Image source={avatar} style={styles.avatar} />
         {this.renderToolbar()}
-        {body}
       </View>
     )
   }

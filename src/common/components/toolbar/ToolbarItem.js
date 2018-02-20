@@ -8,6 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
+import colors from '../../../styles/Colors';
 /**
  * Toolbar Item
  */
@@ -88,11 +89,10 @@ export default class ToolbarItem extends PureComponent {
       IconType = Icon;
     }
 
-    return <IconType name={icon} size={iconSize || 18} color={selected ? selectedcolor : color} />
+    return <IconType name={icon} size={iconSize || 18} color={selected ? colors.primary : color} />
   }
 }
 
-const selectedcolor = '#0071ff';
 const color = '#444'
 
 const styles = StyleSheet.create({
@@ -102,15 +102,14 @@ const styles = StyleSheet.create({
   },
   buttonSelectedText: {
     paddingTop: 5,
-    fontSize: 12,
-    fontWeight: 'bold',
+    fontSize: 10,
     textAlign: 'center',
-    color: selectedcolor
+    color: colors.primary
   },
   buttonText: {
-    textAlign: 'center',
-    paddingTop: 5,
-    fontSize: 10
+    paddingTop:5,
+    fontSize: 10,
+    color: '#444',
   },
   button: {
     flex: 1,
