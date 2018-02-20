@@ -109,6 +109,7 @@ export default class ChannelScreen extends Component {
       await this.props.channel.store(this.guid).save(payload);
       this.setState({ edit: false });
       this.props.channel.store(this.guid).load();
+      this.props.user.load();
     } else {
       this.setState({ edit: true });
     }
