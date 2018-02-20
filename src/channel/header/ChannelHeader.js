@@ -155,6 +155,8 @@ export default class ChannelHeader extends Component {
    */
   getActionButton() {
     const styles  = this.props.styles;
+    if (!this.props.channel.loaded && this.props.me.guid !== this.props.channel.channel.guid )
+      return null;
     if (this.props.me.guid === this.props.channel.channel.guid) {
       return (
         <TouchableHighlight

@@ -21,6 +21,7 @@ export default class ChannelStore {
 
   @observable rewards = {};
   @observable active = false;
+  @observable loaded = false;
   @observable isUploading = false;
 
   constructor(guid) {
@@ -49,6 +50,7 @@ export default class ChannelStore {
   async load() {
     const { channel } = await channelService.load(this.guid);
     if (channel)
+      this.loaded = true;
       this.setChannel(UserModel.create(channel));
   }
 
@@ -133,6 +135,7 @@ export default class ChannelStore {
     // only observable by reference because UserModel already have the needed observables
     this.channel = {};
     this.rewards = {};
+    this.loaded = false;
     this.active = false;
     this.sUploading = false;
   }
