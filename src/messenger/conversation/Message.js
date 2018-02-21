@@ -63,8 +63,8 @@ export default class Message extends PureComponent {
 
   getIcontime(owner) {
     if (owner.guid == this.props.user.me.guid)
-      return this.props.user.me.icontime;
-    return owner.icontime;
+      return '/' + this.props.user.me.icontime;
+    return '';
   }
 
   /**
@@ -82,7 +82,7 @@ export default class Message extends PureComponent {
    */
   render() {
     const message = this.props.message;
-    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + message.owner.guid + '/small/' + this.getIcontime(message.owner)};
+    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + message.owner.guid + '/small' + this.getIcontime(message.owner)};
     if (this.props.right) {
       return (
         <View>
