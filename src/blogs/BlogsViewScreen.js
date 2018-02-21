@@ -5,6 +5,7 @@ import React, {
 import {
   View,
   ScrollView,
+  Dimensions,
   Text,
   ActivityIndicator,
 } from 'react-native';
@@ -14,7 +15,7 @@ import { inject } from 'mobx-react/native';
 
 import FastImage from 'react-native-fast-image';
 import { Icon } from 'react-native-elements'
-import AutoHeightWebView from '../common/components/AutoHeightWebView';
+import HTML from 'react-native-render-html';
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import formatDate from '../common/helpers/date';
 import { CommonStyle } from '../styles/Common';
@@ -75,9 +76,11 @@ export default class BlogsViewScreen extends Component {
           <Icon color={colors.primary} size={20} name='share' onPress={this.share} />
         </View>
         <View style={styles.description}>
-          <AutoHeightWebView html={blog.description}/>
+          <ScrollView style={CommonStyle.flexContainer}>
+            <HTML html={blog.description} baseFontStyle={{fontSize:16}} imagesMaxWidth={Dimensions.get('window').width} />
+          </ScrollView> 
         </View>
-        <Icon color="white" containerStyle={styles.header} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
+        <Icon raised color={colors.primary} containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
       </ScrollView>
     )
   }
@@ -87,6 +90,13 @@ export default class BlogsViewScreen extends Component {
  * Styles
  */
 const styles = {
+  gobackicon: {
+    position: 'absolute',
+    left: 0,
+    top: 16,
+    height: 40,
+    width: 40,
+  },
   header: {
     position: 'absolute',
     left: 0,
