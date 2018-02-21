@@ -27,7 +27,8 @@ import channelService from './ChannelService';
 import CenteredLoading from '../common/components/CenteredLoading';
 import Button from '../common/components/Button';
 import colors from '../styles/Colors';
-import BlogCard from '../blogs/BlogCard'
+import BlogCard from '../blogs/BlogCard';
+import CaptureFab from '../capture/CaptureFab';
 import { CommonStyle } from '../styles/Common';
 
 
@@ -193,14 +194,17 @@ export default class ChannelScreen extends Component {
     }
 
     return (
-      <NewsfeedList
-        newsfeed={feed}
-        renderActivity={renderActivity}
-        guid={guid}
-        header={header}
-        navigation={this.props.navigation}
-        emptyMessage={emptyMessage}
-      />
+      <View style={CommonStyle.flexContainer}>
+        <NewsfeedList
+          newsfeed={feed}
+          renderActivity={renderActivity}
+          guid={guid}
+          header={header}
+          navigation={this.props.navigation}
+          emptyMessage={emptyMessage}
+        />
+        <CaptureFab navigation={this.props.navigation} />
+      </View>
     );
   }
 }

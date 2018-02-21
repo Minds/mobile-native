@@ -14,10 +14,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-
+import CaptureFab from '../capture/CaptureFab';
 import WalletOverviewView from './WalletOverviewView';
 import WalletBalanceTokens from './balances/WalletBalanceTokens';
 
+import { CommonStyle } from '../styles/Common';
 import FeaturesService from '../common/services/features.service';
 
 /**
@@ -67,51 +68,65 @@ export default class WalletScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={ styles.mainContainer }>
-        {FeaturesService.has('crypto') && <WalletBalanceTokens />}
+      <View style={CommonStyle.flexContainer}>
+        <ScrollView style={ styles.mainContainer }>
+          {FeaturesService.has('crypto') && <WalletBalanceTokens />}
 
-        <View>
-          {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={() => this.props.navigation.navigate('Transactions')} >
-            <View style={styles.iconContainer}>
-              <Icon name="history" size={24} style={styles.icon} />
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.title}>Transactions</Text>
-              <Text style={styles.subtitle}>A list of transactions you have made with your addresses</Text>
-            </View>
-          </TouchableOpacity>}
+          <View>
 
-          {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={() => this.props.navigation.navigate('Withdraw')} >
-            <View style={styles.iconContainer}>
-              <Icon name="local-atm" size={24} style={styles.icon} />
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.title}>Withdraw</Text>
-              <Text style={styles.subtitle}>Request withdrawal of your token rewards to your OnChain wallet.</Text>
-            </View>
-          </TouchableOpacity>}
+            <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('BoostConsole') }>
+              <View style={styles.iconContainer}>
+                <Icon name="trending-up" size={24} style={ styles.icon } />
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.title}>Boost Console</Text>
+                <Text style={styles.subtitle}>Accept or reject boosts made to you</Text>
+              </View>
+            </TouchableOpacity>
 
-          {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={() => this.props.navigation.navigate('Contributions')} >
-            <View style={styles.iconContainer}>
-              <Icon name="stars" size={24} style={styles.icon} />
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.title}>Contributions</Text>
-              <Text style={styles.subtitle}>Check and rewards and daily contribution scores</Text>
-            </View>
-          </TouchableOpacity>}
+            <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Transactions')} >
+              <View style={styles.iconContainer}>
+                <Icon name="history" size={24} style={ styles.icon } />
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.title}>Transactions</Text>
+                <Text style={styles.subtitle}>A list of transactions you have made with your addresses</Text>
+              </View>
+            </TouchableOpacity>
 
-          {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('BlockchainWallet') }>
-            <View style={styles.iconContainer}>
-              <Icon name="settings" size={24} style={ styles.icon } />
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.title}>Addresses</Text>
-              <Text style={styles.subtitle}>Configure your crypto addresses and other token related settings</Text>
-            </View>
-          </TouchableOpacity>}
-        </View>
-      </ScrollView>
+            <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Withdraw')} >
+              <View style={styles.iconContainer}>
+                <Icon name="local-atm" size={24} style={ styles.icon } />
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.title}>Withdraw</Text>
+                <Text style={styles.subtitle}>Request withdrawal of your token rewards to your OnChain wallet.</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Contributions')} >
+              <View style={styles.iconContainer}>
+                <Icon name="stars" size={24} style={ styles.icon } />
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.title}>Contributions</Text>
+                <Text style={styles.subtitle}>Check and rewards and daily contribution scores</Text>
+              </View>
+            </TouchableOpacity>
+
+            {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('BlockchainWallet') }>
+              <View style={styles.iconContainer}>
+                <Icon name="settings" size={24} style={ styles.icon } />
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.title}>Addresses</Text>
+                <Text style={styles.subtitle}>Configure your crypto addresses and other token related settings</Text>
+              </View>
+            </TouchableOpacity>}
+          </View>
+        </ScrollView>
+        <CaptureFab navigation={this.props.navigation} />
+      </View>
     );
   }
 }

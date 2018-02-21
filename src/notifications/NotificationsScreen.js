@@ -20,7 +20,7 @@ import NotificationsTabIcon from './NotificationsTabIcon';
 import CenteredLoading from '../common/components/CenteredLoading';
 import Notification from './notification/Notification';
 import NotificationsTopbar from './NotificationsTopbar';
-
+import CaptureFab from '../capture/CaptureFab';
 import { CommonStyle } from '../styles/Common';
 
 // style
@@ -108,6 +108,7 @@ export default class NotificationsScreen extends Component {
       <View style={styles.container}>
         <NotificationsTopbar  />
         {body}
+        <CaptureFab navigation={this.props.navigation} />
       </View>
     );
   }

@@ -21,7 +21,7 @@ import GroupHeader from './header/GroupHeader';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import NewsfeedList from '../newsfeed/NewsfeedList';
-
+import CaptureFab from '../capture/CaptureFab';
 /**
  * Groups view screen
  */
@@ -59,13 +59,6 @@ export default class GroupViewScreen extends Component {
   }
 
   /**
-   * Nav to activity full screen
-   */
-  navToCapture = (group) => {
-    this.props.navigation.navigate('Capture', {group});
-  }
-
-  /**
    * Render
    */
   render() {
@@ -83,14 +76,7 @@ export default class GroupViewScreen extends Component {
     )
 
     return (<View style={{flex:1}}> 
-              <Icon
-                raised
-                name="md-radio-button-on"
-                type='ionicon'
-                color='#fff'
-                size={32}
-                containerStyle={{position:'absolute', backgroundColor:'#222', width:55, height:55, bottom:10, right:10, zIndex:1000}}
-                onPress={() => this.navToCapture(group)} />
+              <CaptureFab navigation={this.props.navigation} />
               <NewsfeedList newsfeed={ this.props.groupView } guid = { group.guid } header = { header } navigation = { this.props.navigation } />
             </View>);
   }
