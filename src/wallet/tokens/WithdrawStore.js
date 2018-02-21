@@ -5,6 +5,7 @@ import {
 } from 'mobx';
 
 import apiService from '../../common/services/api.service';
+import WithdrawService from './WithdrawService';
 
 class WithdrawStore {
   @observable ledger = [];
@@ -26,6 +27,14 @@ class WithdrawStore {
     });
 
     this.ledger = response.withdrawals || [];
+  }
+
+  @action async withdraw(guid, amount) {
+    const entity = await WithdrawService.withdraw(guid, amount);
+
+    if (entity) {
+      this.ledger.unshift(entity);
+    }
   }
 }
 

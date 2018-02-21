@@ -97,7 +97,8 @@ export default class WithdrawScreen extends Component {
     this.setState({ inProgress: true, error: '' });
 
     try {
-      const tx = await WithdrawService.withdraw(this.props.user.me.guid, parseFloat(this.state.amount));
+      await this.props.withdraw.withdraw(this.props.user.me.guid, parseFloat(this.state.amount));
+      this.setState({ amount: '0' });
     } catch (e) {
       if (!e || e.message !== 'E_CANCELLED') {
         const error = (e && e.message) || 'Error withdrawing tokens';

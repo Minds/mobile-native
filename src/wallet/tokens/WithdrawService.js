@@ -36,7 +36,7 @@ class WithdrawService {
         ...txResponse,
       });
 
-    return response && response.done;
+    return response && response.entity;
   }
 }
 
