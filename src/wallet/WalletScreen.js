@@ -74,16 +74,6 @@ export default class WalletScreen extends Component {
 
         <View>
 
-          <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('BoostConsole') }>
-            <View style={styles.iconContainer}>
-              <Icon name="trending-up" size={24} style={ styles.icon } />
-            </View>
-            <View style={styles.item}>
-              <Text style={styles.title}>Boost Console</Text>
-              <Text style={styles.subtitle}>Accept or reject boosts made to you</Text>
-            </View>
-          </TouchableOpacity>
-
           <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Transactions')} >
             <View style={styles.iconContainer}>
               <Icon name="history" size={24} style={ styles.icon } />
