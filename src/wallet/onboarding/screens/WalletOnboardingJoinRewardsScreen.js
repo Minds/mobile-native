@@ -20,6 +20,7 @@ import PhoneInput from 'react-native-phone-input'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import TransparentButton from '../../../common/components/TransparentButton';
+import NavNextButton from '../../../common/components/NavNextButton';
 
 import Colors from '../../../styles/Colors';
 
@@ -191,13 +192,10 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
 
   getNextButton = () => {
     return (
-      <TransparentButton
-        style={style.headerNext}
-        textStyle={style.headerNextText}
+      <NavNextButton
         onPress={this.props.onNext}
         title="SKIP. I DON'T WANT TO EARN TOKENS"
         color={Colors.darkGreyed}
-        borderColor={Colors.greyed}
       />
     );
   }

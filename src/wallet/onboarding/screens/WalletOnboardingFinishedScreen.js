@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import TransparentButton from '../../../common/components/TransparentButton';
+import NavNextButton from '../../../common/components/NavNextButton';
 
 import Colors from '../../../styles/Colors';
 
@@ -21,9 +22,7 @@ export default class WalletOnboardingFinishedScreen extends Component {
 
   getNextButton = () => {
     return (
-      <TransparentButton
-        style={style.headerNext}
-        textStyle={style.headerNextText}
+      <NavNextButton
         onPress={this.props.onNext}
         title="CONTINUE"
         color={Colors.primary}

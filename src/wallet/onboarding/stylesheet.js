@@ -12,13 +12,6 @@ export default {
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  headerNext: {
-    paddingTop: 4,
-    paddingBottom: 4
-  },
-  headerNextText: {
-    fontSize: 13,
-  },
 
   view: {
     backgroundColor: '#fff',

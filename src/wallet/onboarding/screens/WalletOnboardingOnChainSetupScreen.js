@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import keychainService from '../../../common/services/keychain.service';
 
 import TransparentButton from '../../../common/components/TransparentButton';
+import NavNextButton from '../../../common/components/NavNextButton';
 
 import Colors from '../../../styles/Colors';
 
@@ -230,13 +231,10 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
 
   getNextButton = () => {
     return (
-      <TransparentButton
-        style={style.headerNext}
-        textStyle={style.headerNextText}
+      <NavNextButton
         onPress={this.props.onNext}
         title="SKIP, I'M NOT INTERESTED"
         color={Colors.darkGreyed}
-        borderColor={Colors.greyed}
       />
     );
   }
