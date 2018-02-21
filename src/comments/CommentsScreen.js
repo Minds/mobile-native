@@ -254,7 +254,7 @@ export default class CommentsScreen extends Component {
   postComment = () => {
     const comments = this.props.comments;
 
-    if (!comments.saving && comments.text != ''){
+    if (!comments.saving && (comments.text != '' || comments.attachment.hasAttachment)){
       comments.post();
     }
   }
