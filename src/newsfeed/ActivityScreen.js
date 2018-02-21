@@ -21,6 +21,8 @@ export default class ActivityScreen extends Component {
     const params = this.props.navigation.state.params;
 
     if (params.entity) {
+      // verify if is a model instance or create it
+      params.entity = ActivityModel.checkOrCreate(params.entity);
       this.setState({entity: params.entity});
     } else {
       getSingle(params.guid)

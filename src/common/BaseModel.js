@@ -106,6 +106,18 @@ export default class BaseModel {
   }
 
   /**
+   * Check if data is an instance of the model and if it is not
+   * returns a new instance
+   * @param {object} data
+   */
+  static checkOrCreate(data) {
+    if (data instanceof this) {
+      return data;
+    }
+    return this.create(data);
+  }
+
+  /**
    * Get a property of the model if it exist or undefined
    * @param {string|array} property ex: 'ownerObj.merchant.exclusive.intro'
    */
