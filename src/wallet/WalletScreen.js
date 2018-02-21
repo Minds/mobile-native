@@ -11,6 +11,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import {
+  inject,
+  observer
+} from 'mobx-react';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -73,16 +78,6 @@ export default class WalletScreen extends Component {
           {FeaturesService.has('crypto') && <WalletBalanceTokens />}
 
           <View>
-
-            <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('BoostConsole') }>
-              <View style={styles.iconContainer}>
-                <Icon name="trending-up" size={24} style={ styles.icon } />
-              </View>
-              <View style={styles.item}>
-                <Text style={styles.title}>Boost Console</Text>
-                <Text style={styles.subtitle}>Accept or reject boosts made to you</Text>
-              </View>
-            </TouchableOpacity>
 
             <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Transactions')} >
               <View style={styles.iconContainer}>
