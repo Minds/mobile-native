@@ -55,8 +55,8 @@ export default class BlogsViewScreen extends Component {
       <View style={[CommonStyle.flexContainer, CommonStyle.paddingLeft2x]}>
         <View style={styles.container}>
           <RemindAction entity={blog} />
-          <ThumbUpAction entity={blog} me={this.props.user.me} />
-          <ThumbDownAction entity={blog} me={this.props.user.me} />
+          <ThumbUpAction entity={blog} orientation='column' me={this.props.user.me} />
+          <ThumbDownAction entity={blog} orientation='column' me={this.props.user.me} />
           <CommentsAction entity={blog} navigation={this.props.navigation} />
         </View>
       </View>

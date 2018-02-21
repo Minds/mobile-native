@@ -31,7 +31,7 @@ export default class Counter extends Component {
     return (
       <View style={styles.counterContainer}>
         <Text
-          style={[styles.counter, { fontSize: Math.round(this.props.size * 0.75)}]}
+          style={[ this.props.orientation != 'column' ? { paddingLeft: 4 } : { paddingLeft: 0}, styles.counter, { fontSize: Math.round(this.props.size * 0.75)}]}
           >
           {this.props.count > 0 ? abbrev(this.props.count,0) : ''}
         </Text>
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   counter: {
     color: '#888',
     fontWeight: '800',
-    paddingLeft: 8,
   },
 });
   
