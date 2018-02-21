@@ -97,7 +97,7 @@ export default class ChannelScreen extends Component {
       Alert.alert(
         'Atention',
         'Channel not found',
-        [{ text: 'OK' }],
+        [{ text: 'OK', onPress: () => this.props.navigation.goBack() }],
         { cancelable: false }
       );
     };
