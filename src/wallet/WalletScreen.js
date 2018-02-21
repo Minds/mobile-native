@@ -11,11 +11,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react/native';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
