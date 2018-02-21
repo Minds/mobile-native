@@ -3,11 +3,6 @@ import React, {
 } from 'react';
 
 import {
-  observer,
-  inject
-} from 'mobx-react/native'
-
-import {
   Text,
   ScrollView,
   ListView,
