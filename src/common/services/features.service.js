@@ -6,6 +6,10 @@ class FeaturesService {
   has(feature) {
     return (typeof this.features[feature] === 'undefined') || this.features[feature];
   }
+
+  isLegacy() {
+    return this.features.legacy;
+  }
 }
 
 export default new FeaturesService();

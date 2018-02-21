@@ -48,13 +48,16 @@ export default class WalletScreen extends Component {
         this.props.wallet.refresh();
       }
     });
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Wallet', async () => {
-      if ((await this.props.wallet.canShowOnboarding()) && (!this.props.user.hasRewards() || !this.props.user.hasEthWallet())) {
-        setImmediate(() => {
-          this.props.navigation.navigate('WalletOnboarding');
-        });
-      }
-    });
+
+    if (FeaturesService.has('crypto')) {
+      this.disposeEnter = this.props.navigatorStore.onEnterScreen('Wallet', async () => {
+        if ((await this.props.wallet.canShowOnboarding()) && (!this.props.user.hasRewards() || !this.props.user.hasEthWallet())) {
+          setImmediate(() => {
+            this.props.navigation.navigate('WalletOnboarding');
+          });
+        }
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -68,36 +71,35 @@ export default class WalletScreen extends Component {
         {FeaturesService.has('crypto') && <WalletBalanceTokens />}
 
         <View>
-
-          <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Transactions')} >
+          {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={() => this.props.navigation.navigate('Transactions')} >
             <View style={styles.iconContainer}>
-              <Icon name="history" size={24} style={ styles.icon } />
+              <Icon name="history" size={24} style={styles.icon} />
             </View>
             <View style={styles.item}>
               <Text style={styles.title}>Transactions</Text>
               <Text style={styles.subtitle}>A list of transactions you have made with your addresses</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity>}
 
-          <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Withdraw')} >
+          {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={() => this.props.navigation.navigate('Withdraw')} >
             <View style={styles.iconContainer}>
-              <Icon name="local-atm" size={24} style={ styles.icon } />
+              <Icon name="local-atm" size={24} style={styles.icon} />
             </View>
             <View style={styles.item}>
               <Text style={styles.title}>Withdraw</Text>
               <Text style={styles.subtitle}>Request withdrawal of your token rewards to your OnChain wallet.</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity>}
 
-          <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Contributions')} >
+          {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={() => this.props.navigation.navigate('Contributions')} >
             <View style={styles.iconContainer}>
-              <Icon name="stars" size={24} style={ styles.icon } />
+              <Icon name="stars" size={24} style={styles.icon} />
             </View>
             <View style={styles.item}>
               <Text style={styles.title}>Contributions</Text>
               <Text style={styles.subtitle}>Check and rewards and daily contribution scores</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity>}
 
           {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('BlockchainWallet') }>
             <View style={styles.iconContainer}>

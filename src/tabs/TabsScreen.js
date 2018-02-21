@@ -11,13 +11,24 @@ import NotificationsScreen from '../notifications/NotificationsScreen';
 import DiscoveryScreen from '../discovery/DiscoveryScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
 import WalletScreen from '../wallet/WalletScreen';
+import ComingSoonScreen from '../static-views/ComingSoonScreen';
+import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import MoreScreen from './MoreScreen';
 import tabs from './TabsStore';
+import featuresService from '../common/services/features.service';
+
+let platformWalletScreen = WalletScreen;
+
+if (featuresService.isLegacy()) {
+  platformWalletScreen = ComingSoonScreen;
+} else if (!featuresService.has('monetization')) {
+  platformWalletScreen = NotSupportedScreen;
+}
 
 const Tabs = (
   TabNavigator({
     Wallet: {
-      screen: WalletScreen,
+      screen: platformWalletScreen,
     },
     Discovery: {
       screen: DiscoveryScreen,

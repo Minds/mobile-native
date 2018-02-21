@@ -11,6 +11,7 @@ import {
 
 import { CommonStyle } from '../../../styles/Common';
 import { ComponentsStyle } from '../../../styles/Components';
+import featuresService from '../../../common/services/features.service';
 
 /**
  * Boost Action Component
@@ -43,6 +44,15 @@ export default class BoostAction extends PureComponent {
    * Open boost screen
    */
   openBoost = () => {
+    if (featuresService.isLegacy()) {
+      this.props.navigation.navigate('ComingSoon');
+      return;
+    } else if (!featuresService.has('monetization')) {
+      this.props.navigation.navigate('NotSupported');
+      return;
+    }
+
+
     this.props.navigation.navigate('Boost', { entity: this.props.entity });
   }
 }

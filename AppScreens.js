@@ -35,6 +35,8 @@ import MoreScreen from './src/tabs/MoreScreen';
 import CheckoutModalScreen from './src/payments/checkout/CheckoutModalScreen';
 import WithdrawScreen from './src/wallet/tokens/WithdrawScreen';
 import WalletOnboardingScreen from "./src/wallet/onboarding/WalletOnboardingScreen";
+import ComingSoonScreen from './src/static-views/ComingSoonScreen';
+import NotSupportedScreen from './src/static-views/NotSupportedScreen';
 
 /**
  * Main stack navigator
@@ -147,6 +149,12 @@ const Stack = StackNavigator({
   },
   WalletOnboarding: {
     screen: WalletOnboardingScreen
+  },
+  ComingSoon: {
+    screen: ComingSoonScreen
+  },
+  NotSupported: {
+    screen: NotSupportedScreen
   },
 });
 

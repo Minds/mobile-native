@@ -12,6 +12,7 @@ import {
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import { CommonStyle } from '../../../styles/Common';
+import featuresService from '../../../common/services/features.service';
 
 /**
  * Wire Action Component
@@ -26,6 +27,14 @@ export default class WireAction extends PureComponent {
   }
 
   openWire = () => {
-    this.props.navigation.navigate('WireFab', { owner: this.props.entity.ownerObj});
+    if (featuresService.isLegacy()) {
+      this.props.navigation.navigate('ComingSoon');
+      return;
+    } else if (!featuresService.has('monetization')) {
+      this.props.navigation.navigate('NotSupported');
+      return;
+    }
+
+    this.props.navigation.navigate('WireFab', { owner: this.props.entity.ownerObj });
   }
 }
