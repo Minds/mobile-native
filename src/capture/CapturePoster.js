@@ -16,8 +16,6 @@ import {
   NavigationActions
 } from 'react-navigation';
 
-import * as Progress from 'react-native-progress';
-
 import { post } from './CaptureService';
 
 import colors from '../styles/Colors';
@@ -28,6 +26,7 @@ import CapturePreview from './CapturePreview';
 import Util from '../common/helpers/util';
 import RichEmbedService from '../common/services/rich-embed.service';
 import CaptureMetaPreview from './CaptureMetaPreview';
+import CapturePostButton from './CapturePostButton';
 import { CommonStyle } from '../styles/Common';
 
 @inject('user', 'navigatorStore', 'capture', 'newsfeed')
@@ -38,11 +37,10 @@ export default class CapturePoster extends Component {
    * Disable navigation bar
    */
   static navigationOptions = ({ navigation }) => ({
-    headerRight: navigation.state.params && navigation.state.params.headerRight,
+    headerRight: navigation.state.params && navigation.state.params.headerRight
   });
 
   state = {
-    isPosting: false,
     text: '',
     postImageUri: '',
     hasRichEmbed: false,
@@ -52,40 +50,12 @@ export default class CapturePoster extends Component {
 
   _RichEmbedFetchTimer;
 
-
   /**
    * On component will mount
    */
   componentWillMount() {
-    //set header
-    const attachment = this.props.capture.attachment;
-    const headerRight = <View style={styles.posterActions}>
-      { 
-        attachment.uploading ?
-          <Progress.Pie progress={attachment.progress} size={36} />
-        :
-        this.state.isPosting ?
-          <ActivityIndicator size={'large'} />
-        :
-          <TouchableOpacity
-            onPress={() => this.submit()}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>POST</Text>
-          </TouchableOpacity>
-      }
-    </View>;
-    this.props.navigation.setParams({ 
-      headerRight
-    });
-  
-    // clear data on leave
-    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Capture', (s) => {
-      //this.setState({ active: false });
-
-      // if there is an attached file not posted we delete it from server
-      this.deleteAttachment() ;
-    });
+    const { setParams } = this.props.navigation;
+    setParams({headerRight: <CapturePostButton onPress={() => this.submit()} />});
   }
 
   /**
@@ -95,6 +65,8 @@ export default class CapturePoster extends Component {
     if (this._RichEmbedFetchTimer) {
       clearTimeout(this._RichEmbedFetchTimer);
     }
+
+    this.deleteAttachment();
   }
 
   showContext () {
@@ -211,11 +183,12 @@ export default class CapturePoster extends Component {
     if (this.props.attachmentGuid) {
       newPost.attachment_guid = this.props.attachmentGuid;
     }
-    if (attachment.guid)
+
+    if (attachment.guid) {
       newPost.attachment_guid = attachment.guid;
-    this.setState({
-      isPosting: true,
-    });
+    }
+
+    this.props.capture.setPosting(true);
 
     if (this.state.meta) {
       newPost = Object.assign(newPost, this.state.meta);
@@ -236,10 +209,11 @@ export default class CapturePoster extends Component {
       attachment.clear();
 
       this.setState({
-        isPosting: false,
         text: '',
         meta: null
       });
+
+      this.props.capture.setPosting(false);
 
       if (this.props.onComplete) {
         this.props.onComplete(response.entity);
@@ -352,12 +326,6 @@ const styles = StyleSheet.create({
     flex: 1,
     maxHeight: 100
   },
-  posterActions: {
-    flex:1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
   posterButton: {
     flex: 1,
     alignItems: 'center',
@@ -377,21 +345,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'stretch',
-  },
-  button: {
-    margin: 4,
-    padding: 8,
-    paddingLeft: 16,
-    paddingRight: 16,
-    alignItems: 'center',
-    //borderRadius: 3,
-    //backgroundColor: 'white',
-    //borderWidth: 1,
-    //borderColor: colors.primary,
-  },
-  buttonText: {
-    color: colors.primary,
-    fontSize: 16,
   },
   deleteAttachment: {
     position: 'absolute',

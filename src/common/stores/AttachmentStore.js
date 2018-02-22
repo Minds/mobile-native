@@ -7,7 +7,6 @@ import attachmentService from '../services/attachment.service';
  */
 export default class AttachmentStore {
   @observable hasAttachment = false;
-  @observable hasQueue = false;
   @observable uploading = false;
   @observable progress = 0;
   deleteUploading = false;
@@ -15,6 +14,7 @@ export default class AttachmentStore {
   queue = {};
 
   guid = '';
+  hasQueue = false;
   @observable uri  = '';
   @observable type = '';
 
@@ -24,12 +24,12 @@ export default class AttachmentStore {
    */
   @action
   async attachMedia(media) {
-  
+
     if (this.uploading) {
       this.setQueue(media);
       return;
     }
-    
+
     if (this.hasAttachment) {
       attachmentService.deleteMedia(this.guid);
     }
@@ -66,7 +66,7 @@ export default class AttachmentStore {
         this.clear();
         return true;
       }
-      
+
       return this.guid;
     } catch(err) {
       return false;
