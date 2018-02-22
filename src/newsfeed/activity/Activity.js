@@ -87,8 +87,8 @@ export default class Activity extends Component {
         //Passing the store in newsfeed (could be channel also)
         <ActivityEditor entity={entity} toggleEdit={this.toggleEdit} newsfeed={this.props.newsfeed} />
       ):(
-        <View style={hasText ? styles.message : styles.emptyMessage}>
-          {hasText ? <ExplicitText entity={entity} navigation={this.props.navigation} />: null}
+        <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
+          {hasText ? <ExplicitText entity={entity} navigation={this.props.navigation} style={styles.message} /> : null}
         </View>
       );
 
@@ -202,8 +202,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     overflow: 'visible',
   },
+  messageContainer: {
+    padding: 8,
+  },
   message: {
-    padding: 8
+    fontFamily: 'Roboto',
   },
   emptyMessage: {
     padding: 0

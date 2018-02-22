@@ -40,7 +40,7 @@ export default class RemindOwnerBlock extends PureComponent {
     const entity = this.props.entity.ownerObj;
     return (
       <View style={styles.container}>
-        <Icon color='rgb(70, 144, 214)' name='repeat' size={20} style={styles.icon}/>
+        <Icon color='rgb(70, 144, 214)' name='repeat' size={16} style={styles.icon}/>
         <TouchableOpacity onPress={this._navToChannel}>
           <Image source={this.state.avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
@@ -72,10 +72,10 @@ const styles = StyleSheet.create({
   },
   avatar: {
     marginLeft: 8,
-    height: 30,
-    width: 30,
-    borderRadius: 15,
-    borderWidth: 1,
+    height: 24,
+    width: 24,
+    borderRadius: 12,
+    borderWidth: 0.5,
     borderColor: '#EEE',
   },
   body: {
@@ -83,5 +83,8 @@ const styles = StyleSheet.create({
   },
   username: {
     fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    color: '#444',
+    fontSize: 13,
   },
 });

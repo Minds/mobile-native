@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     height: 46,
     width: 46,
     borderRadius: 23,
-    borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: '#EEE',
   },
   body: {
@@ -82,5 +82,7 @@ const styles = StyleSheet.create({
   },
   username: {
     fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    color: '#444',
   },
 });

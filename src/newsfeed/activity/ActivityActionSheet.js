@@ -20,7 +20,7 @@ import {
 
 import shareService from '../../share/ShareService';
 import { toggleUserBlock } from '../NewsfeedService';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 import { MINDS_URI } from '../../config/Config';
 /**
@@ -209,9 +209,9 @@ export default class ActivityActions extends Component {
     return (
       <View style={styles.wrapper}>
         <Icon 
-          name="ios-arrow-down"
+          name="more-vert"
           onPress={() => this.showActionSheet()} 
-          size={32} 
+          size={26} 
           style={styles.icon}
           />
         <ActionSheet
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   icon: {
-    color: '#ddd',
+    color: '#eee',
   },
   iconclose: {
     flex:1,
