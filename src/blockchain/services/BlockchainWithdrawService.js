@@ -28,7 +28,7 @@ class BlockchainWithdrawService {
       address: await Web3Service.getCurrentWalletAddress(true),
       amount: weiAmount.toString(),
       tx: result.transactionHash,
-      gas,
+      gas: gasWei.toString(),
     };
   }
 }
