@@ -1,9 +1,12 @@
+import _ from 'lodash';
+
 import React, {
   PureComponent
 } from 'react';
 
 import {
   Text,
+  View,
   Linking
 } from 'react-native';
 
@@ -27,9 +30,11 @@ export default class Tags extends PureComponent {
   }
 
   render() {
+    this.index = 0;
     const tags = this.parseTags(this.props.children);
+    const chunks = _.chunk(tags, 50);
     return (
-      <Text selectable={true} style={this.props.style}>{tags}</Text>
+      chunks.map((data) => <Text selectable={true} style={this.props.style}>{data}</Text>)
     )
   }
 
@@ -40,17 +45,18 @@ export default class Tags extends PureComponent {
     rtn = this.parseArrayOrString(rtn, this.parseWwwUrl);
     rtn = this.parseArrayOrString(rtn, this.parseHash);
     rtn = this.parseArrayOrString(rtn, this.parseUser);
-    return rtn;
+
+    return _.flattenDeep(rtn);
   }
 
   /**
    * full url
    */
   parseUrl = (str) => {
-    const url = /(\b(?:https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    const url = /(^|\s)(\b(?:https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={this.styles} onPress={() => { Linking.openURL(content);}}>{content}</Text>
+      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { Linking.openURL(content);}}>{content}</Text>
     });
   }
 
@@ -58,10 +64,10 @@ export default class Tags extends PureComponent {
    * url .com .org .net
    */
   parseShortUrl = (str) => {
-    const url = /(?:^|\s+)([-A-Z0-9+&@#\/%?=~_|!:,.;]+\.(com|org|net)\/[-A-Z0-9+&@#\/%=~_|]*)/gim;
+    const url = /(^|\s)([-A-Z0-9+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9+&@#\/%=~_|]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={this.styles} onPress={() => { Linking.openURL(content);}}> {content}</Text>
+      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { Linking.openURL(content);}}>{content}</Text>
     });
   }
 
@@ -69,10 +75,10 @@ export default class Tags extends PureComponent {
    * url starting with www
    */
   parseWwwUrl = (str) => {
-    const url = /(?:^|\s+)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]*)/gim;
+    const url = /(^|\s)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={this.styles} onPress={() => { Linking.openURL(content);}}> {content}</Text>
+      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { Linking.openURL(content);}}>{content}</Text>
     });
   }
 
@@ -80,10 +86,10 @@ export default class Tags extends PureComponent {
    * #tags
    */
   parseHash = (str) => {
-    const hash = /(?:^|\s)#(\w*[a-zA-Z_]+\w*)/gim;
+    const hash = /(^|\s)\#(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
-      return <Text key={i} style={this.styles} onPress={() => { this.navToDiscovery(`#${content}`) }}> #{content}</Text>
+      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { this.navToDiscovery(`#${content}`) }}>#{content}</Text>
     });
   }
 
@@ -91,10 +97,10 @@ export default class Tags extends PureComponent {
    * @tags
    */
   parseUser = (str) => {
-    const hash = /(?:^|\s)\@(\w*[a-zA-Z_]+\w*)/gim;
+    const hash = /(^|\s)\@(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
-      return <Text key={i} style={this.styles} onPress={() => { this.navToChannel(content) }}> @{content}</Text>
+      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { this.navToChannel(content) }}>@{content}</Text>
     });
   }
 
@@ -123,6 +129,9 @@ export default class Tags extends PureComponent {
         if (typeof child === 'string') {
           return fn(child);
         } else {
+          if (Array.isArray(child)) {
+            return this.parseArrayOrString(child, fn);
+          }
           return child
         }
       });
@@ -141,12 +150,12 @@ export default class Tags extends PureComponent {
     const result = str.split(regular);
     if (result.length == 1) return str;
 
-    for (let i = 1; i < result.length; i = i + 2) {
+    for (let i = 2; i < result.length; i = i + 3) {
       const content = result[i];
-      result[i] = replace(i, content);
+      result[i] = replace(this.index++, content);
     }
 
-    return result
+    return result.filter((d) => d != '');
   }
 
 }
