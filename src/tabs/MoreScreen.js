@@ -82,31 +82,58 @@ export default class MoreScreen extends Component {
         onPress: () => {
           this.props.navigation.navigate('BlogList');
         }
-      },{
+      },
+      {
         name: 'Groups',
         icon: (<Icon name='group-work' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('GroupsList');
         }
-      },{
+      },
+      {
         name: 'Help & Support',
         icon: (<Icon name='help-outline' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('GroupView', { guid: '100000000000000681'});
         }
-      },{
+      },
+      {
         name: 'Invite',
         icon: (<Icon name='share' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           shareService.invite(this.props.user.me.guid);
         }
-      },{
+      },
+      {
         name: 'Settings',
         icon: (<Icon name='settings' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('Settings');
         }
-      }, {
+      },
+      {
+        name: 'Push Notifications',
+        icon: (<Icon name='notifications' size={ICON_SIZE} style={ styles.icon } />),
+        onPress: () => {
+          this.props.navigation.navigate('NotificationsSettings');
+        }
+      },
+      {
+        name: 'Logout',
+        icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
+        onPress: () => {
+          session.logout();
+          const loginAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'Login' })
+            ]
+          })
+
+          this.props.navigation.dispatch(loginAction);
+        }
+      },
+      {
         name: 'FAQ',
         icon: (<Icon name='open-in-new' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {

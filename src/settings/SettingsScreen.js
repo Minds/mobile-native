@@ -15,6 +15,8 @@ import {
   NavigationActions
 } from 'react-navigation';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import session from './../common/services/session.service';
 import { List, ListItem } from 'react-native-elements';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
@@ -22,6 +24,8 @@ import settingsService from './SettingsService';
 
 import i18nService from '../common/services/i18n.service';
 import BlockchainWalletStore from '../blockchain/wallet/BlockchainWalletStore';
+
+const ICON_SIZE = 24;
 
 export default class SettingsScreen extends Component {
   state = {
@@ -44,7 +48,7 @@ export default class SettingsScreen extends Component {
   }
 
   onPressNotifications = () => {
-    this.props.navigation.navigate('Notifications');
+    this.props.navigation.navigate('NotificationsSettings');
   }
 
   onPressLogout = () => {
@@ -96,96 +100,84 @@ export default class SettingsScreen extends Component {
   render() {
     const languages = i18nService.getSupportedLocales();
 
-    const optlist = [
+    const list = [
       {
-        name: 'Points animation',
-        switchButton: true,
-      }
+        name: 'Password',
+        icon: (<Icon name='security' size={ICON_SIZE} style={ styles.icon }/>),
+        onPress: () => {
+          this.props.navigation.navigate('SettingsPassword');
+        }
+      },
+      {
+        name: 'Email',
+        icon: (<Icon name='email' size={ICON_SIZE} style={ styles.icon }/>),
+        onPress: () => {
+          this.props.navigation.navigate('SettingsEmail');
+        }
+      },
+      {
+        name: 'Billing',
+        icon: (<Icon name='credit-card' size={ICON_SIZE} style={ styles.icon }/>),
+        onPress: () => {
+          this.props.navigation.navigate('SettingsBilling');
+        }
+      },
+      {
+        name: 'Push Notifications',
+        icon: (<Icon name='notifications' size={ICON_SIZE} style={ styles.icon }/>),
+        onPress: () => {
+          this.props.navigation.navigate('NotificationsSettings');
+        }
+      },
+      {
+        name: 'Logout',
+        icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
+        onPress: () => {
+          session.logout();
+          const loginAction = NavigationActions.reset({
+            index: 0,
+            actions: [
+              NavigationActions.navigate({ routeName: 'Login' })
+            ]
+          })
+
+          this.props.navigation.dispatch(loginAction);
+        }
+      },
+      {
+        name: 'Deactivate',
+        icon: (<Icon name='warning' size={ICON_SIZE} style={ styles.icon } />),
+        onPress: () => {
+          alert('Please deactivate your account on the desktop');
+        }
+      },
+      {
+        name: 'Delete blockchain keychain',
+        icon: (<Icon name='warning' size={ICON_SIZE} style={ styles.icon } />),
+        onPress: this.wipeEthereumKeychainAction
+      },
     ];
 
     return (
-      <ScrollView style={styles.screen}>
-        <Text style={styles.header}>{i18nService.t('language')}</Text>
-        <Picker
-          selectedValue={this.state.language}
-          onValueChange={this.changeLanguage}
-          style={styles.language}>
-          {
-            languages.map(lang => {
-              return <Picker.Item label={lang.name} value={lang.value} key={lang.value}/>
-            })
-          }
-        </Picker>
-        <Text style={styles.header}>{i18nService.t('settings.options')}</Text>
-        <List containerStyle={{ flex: 1, borderTopWidth: 0, borderBottomWidth: 0, marginTop:0 }}>
-          {
-            optlist.map((l, i) => (
-              <ListItem
-                key={i}
-                title={l.name}
-                titleStyle={{ padding: 8 }}
-                style={styles.listItem}
-                switchButton={l.switchButton}
-                hideChevron={true}
-                onPress={l.onPress}
-              />
-            ))
-          }
-        </List>
-        <Text style={styles.header}>{i18nService.t('auth.password')}</Text>
-        <FormLabel>{i18nService.t('settings.currentPassword')}</FormLabel>
-        <FormInput/>
-        <FormLabel>{i18nService.t('settings.newPassword')}</FormLabel>
-        <FormInput />
-        <FormLabel>{i18nService.t('settings.confirmNewPassword')}</FormLabel>
-        <FormInput />
-        <Text style={styles.header}>Email</Text>
-        <FormLabel>{i18nService.t('settings.currentEmail')}</FormLabel>
-        <FormInput />
-        <Text style={styles.header}>{i18nService.t('settings.paymentMethods')}</Text>
-        <View style={styles.cardcontainer}>
-          <Text style={styles.creditcardtext}>{i18nService.t('settings.addCard')}</Text>
-          <Button backgroundColor="#4690D6"
-            title={i18nService.t('settings.add')} icon={{ name: 'ios-card', type: 'ionicon'}} />
-        </View>
-        <Text style={styles.header}>{i18nService.t('settings.recurringPayments')}</Text>
-        <Text style={[styles.header, { marginTop: 20 }]}>{i18nService.t('categories')}</Text>
-        <List containerStyle={{ flex: 1, borderTopWidth: 0, borderBottomWidth: 0}}>
-          {
-            this.state.categories.map((l, i) => (
-              <ListItem
-              key={i}
-              title={l.label}
-              hideChevron={true}
-              />
-            ))
-          }
-        </List>
-        <Text style={[styles.header, { marginTop: 20 }]}>{i18nService.t('settings.notifications')}</Text>
-        <View style={styles.deactivate}>
-          <Button raised backgroundColor="#4690D6"
-            title={i18nService.t('settings.notifications')} onPress={ this.onPressNotifications}/>
-        </View>
-        <Text style={[styles.header, { marginTop: 20 }]}>{i18nService.t('settings.logout')}</Text>
-        <View style={styles.deactivate}>
-          <Button raised backgroundColor="#4690D6"
-            title={i18nService.t('settings.logout')} onPress={ () => {this.onPressLogout()}}/>
-        </View>
-        <Text style={[styles.header, { marginTop: 20 }]}>{i18nService.t('settings.deactivateChannel')}</Text>
-        <View style={styles.deactivate}>
-          <Button raised backgroundColor="#f53d3d"
-            title={i18nService.t('settings.deactivate')} icon={{ name: 'ios-warning', type: 'ionicon' }} />
-        </View>
-
-        <Text style={[styles.header, { marginTop: 20 }]}>Delete Ethereum Keychain</Text>
-        <View style={styles.deactivate}>
-          <Button
-            onPress={this.wipeEthereumKeychainAction}
-            raised
-            backgroundColor="#f53d3d"
-            title="Delete Keychain"
-            icon={{ name: 'ios-warning', type: 'ionicon' }}
-          />
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.scrollViewContainer}>
+          <List containerStyle={styles.container}>
+            {
+              list.map((l, i) => (
+                <ListItem
+                  key={i}
+                  title={l.name}
+                  titleStyle={styles.listTitle}
+                  containerStyle={styles.listItem}
+                  switchButton={l.switchButton}
+                  hideChevron ={l.hideChevron}
+                  leftIcon={l.icon}
+                  onPress= {l.onPress}
+                  noBorder
+                />
+              ))
+            }
+          </List>
         </View>
       </ScrollView>
     );
@@ -193,19 +185,42 @@ export default class SettingsScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  screen: {
+  scrollView: {
     backgroundColor: '#FFF',
+    flexDirection: 'column',
+  },
+  scrollViewContainer: {
+  },
+  container: {
     flex: 1,
+    marginTop: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
   },
-  language: {
-    marginLeft: 10,
+  listItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    paddingTop: 8,
+    paddingBottom: 8,
+    //height:20
   },
+  listTitle: {
+    padding:8,
+    fontFamily: 'Roboto',
+  },
+  icon: {
+    color: '#455a64',
+    alignSelf: 'center',
+  },
+
   header: {
-    paddingLeft: 20,
+    paddingLeft: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
     textAlignVertical: 'center',
     backgroundColor: '#f4f4f4',
     width: '100%',
-    height: 40,
+    //height: 40,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#ccc',
   },
