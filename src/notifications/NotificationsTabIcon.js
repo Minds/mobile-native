@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: Platform.OS == 'ios' ? 6 : -2,
+    top: Platform.OS == 'ios' ? 6 : 0,
     left: 15
   },
 });
