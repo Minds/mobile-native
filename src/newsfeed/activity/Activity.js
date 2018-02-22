@@ -79,24 +79,24 @@ export default class Activity extends Component {
    */
   render() {
     const entity = this.props.entity;
-
+    const hasText = entity.message || entity.title;
     const lock = entity.paywall ? <Lock entity={entity} navigation={this.props.navigation}/> : null;
+
+    const message = this.state.editing ?
+      (
+        //Passing the store in newsfeed (could be channel also)
+        <ActivityEditor entity={entity} toggleEdit={this.toggleEdit} newsfeed={this.props.newsfeed} />
+      ):(
+        <View style={hasText ? styles.message : styles.emptyMessage}>
+          {hasText ? <ExplicitText entity={entity} navigation={this.props.navigation} />: null}
+        </View>
+      );
 
     return (
         <View style={styles.container} onLayout={this.props.onLayout}>
           { this.showOwner() }
           { lock }
-          { entity.message || entity.title ?
-            <View style={entity.message || entity.title ? styles.message : styles.emptyMessage}>
-              {
-                (this.state.editing) ?
-                  //Passing the store in newsfeed (could be channel also)
-                  <ActivityEditor entity={entity} toggleEdit={this.toggleEdit} newsfeed={this.props.newsfeed}/> :
-                  <ExplicitText entity={entity}  navigation={this.props.navigation}/>
-              }
-            </View>
-            : null
-          }
+          { message }
           { this.showRemind() }
           <MediaView
             entity={ entity }
@@ -124,9 +124,9 @@ export default class Activity extends Component {
         </View>
       )
       return (
-        <OwnerBlock 
-          entity={this.props.entity} 
-          navigation={this.props.navigation} 
+        <OwnerBlock
+          entity={this.props.entity}
+          navigation={this.props.navigation}
           rightToolbar={this.props.hideTabs ? null : rightToolbar}
           >
           <TouchableOpacity onPress={this.navToActivity} style={{ flexDirection: 'row' }}>
@@ -153,7 +153,7 @@ export default class Activity extends Component {
                   navigation={this.props.navigation}
                   />
                 <View style={styles.rightToolbar}>
-                  <ActivityActionSheet 
+                  <ActivityActionSheet
                     newsfeed={this.props.newsfeed}
                     toggleEdit={this.toggleEdit}
                     entity={this.props.entity}
@@ -161,7 +161,7 @@ export default class Activity extends Component {
                   />
                 </View>
               </View>
-             
+
     }
   }
 
