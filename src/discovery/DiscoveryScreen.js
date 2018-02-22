@@ -190,7 +190,7 @@ export default class DiscoveryScreen extends Component {
         key={'discofl' + this.cols} // we need to force component redering if we change cols
         data={list.entities.slice()}
         renderItem={renderRow}
-        keyExtractor={item => item.guid}
+        keyExtractor={item => item.rowKey}
         onRefresh={this.refresh}
         refreshing={list.refreshing}
         onEndReached={this.loadFeed}
@@ -330,6 +330,8 @@ export default class DiscoveryScreen extends Component {
    * Load feed data
    */
   loadFeed = () => {
+    if (this.props.discovery.type == 'lastchannels')
+      return;
     this.props.discovery.loadList();
   }
 

@@ -84,6 +84,7 @@ class DiscoveryStore {
     return discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext)
       .then(feed => {
         this.createModels(type, feed, preloadImage);
+        this.assignRowKeys(feed);
         this.stores[type].list.setList(feed);
       })
       .finally(() => {
@@ -92,6 +93,16 @@ class DiscoveryStore {
       .catch(err => {
         console.log('error', err);
       });
+  }
+
+  /**
+   * Generate a unique Id for use with list views
+   * @param {object} feed
+   */
+  assignRowKeys(feed) {
+    feed.entities.forEach((entity, index) => {
+      entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
+    });
   }
 
   createModels(type, feed, preloadImage) {
