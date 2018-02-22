@@ -107,6 +107,7 @@ class AttachmentService {
       ImagePicker.launchImageLibrary(
         { mediaType },
         (response) => {
+          if (!response.type && !response.width) response.type = 'video/mp4';
           resolve(response);
         });
     });
