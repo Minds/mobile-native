@@ -102,7 +102,7 @@ android {
         multiDexEnabled true
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 300017
+        versionCode 300019
         versionName "3.0.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -153,7 +153,6 @@ android {
 
 dependencies {
     compile project(':react-native-notifications')
-    compile project(':reactnativenotifications')
     compile project(':react-native-keep-awake')
     compile project(':react-native-share')
     compile project(':react-native-udp')
