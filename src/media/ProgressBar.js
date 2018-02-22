@@ -95,30 +95,58 @@ export default class ProgressBar extends Component {
   render() {
     let {moving} = this.state;
     let {currentTime, duration, percent} = this.props;
-    return  <View style={styles.view}>
-              <Text style={[styles.timeText, {marginRight: 10}]}>{this.formatSeconds(currentTime)}</Text>
-              <View style={styles.barView}
-                  onLayout={this.onLayout.bind(this)} {...this.holderPanResponder.panHandlers}>
-                <View style={[CommonStyle.flexContainer ,{flexDirection: "row", top: moving ? radiusOfActiveHolder : radiusOfHolder}]}>
-                  <TouchableOpacity style={[styles.line, {flex: percent, borderColor: colors.primary}]}
-                      onPress={this.onLinePressed.bind(this)}/>
-                  <TouchableOpacity style={[styles.line, {flex: 100 - percent, borderColor: colors.light}]}
-                    onPress={this.onLinePressed.bind(this)}/>
-                </View>
-                <Animated.View style={this.getHolderStyle()}/>
-              </View>
-              <Text style={[styles.timeText, {marginLeft: 10}]}>{this.formatSeconds(duration)}</Text>
-            </View>;
+    return  <View style={styles.container}>
+      <View style={styles.view}>
+        <Text style={[styles.timeText, {marginRight: 10}]}>{this.formatSeconds(currentTime)}</Text>
+        <View 
+          style={styles.barView}
+          onLayout={this.onLayout.bind(this)} {...this.holderPanResponder.panHandlers}
+          >
+          <TouchableOpacity 
+            style={[styles.line, {flex: percent, borderColor: colors.primary}]}
+            onPress={this.onLinePressed.bind(this)}
+          />
+          <TouchableOpacity 
+            style={[styles.line, {flex: 100 - percent, borderColor: colors.light}]}
+            onPress={this.onLinePressed.bind(this)}
+          />
+        </View>
+        <Text 
+          style={[styles.timeText, {marginLeft: 10}]}
+          >
+          {this.formatSeconds(duration)}
+        </Text>
+      </View>
+    </View>;
   }
 }
 
-let height = 40;
+let height = 3;
 
 let styles = StyleSheet.create({
-  view: {flex: 1, flexDirection: "row", height, alignItems: "center"},
-  barView: {flex: 1},
-  timeText: {color: "white"},
-  line: {borderWidth: 1, padding: 0},
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    height,
+    alignItems: "center",
+  },
+  view: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  barView: {
+    flex: 1,
+    height,
+    flexDirection: 'row',
+  },
+  timeText: {
+    color: "white"
+  },
+  line: {
+    borderWidth: 3,
+    padding: 0
+  },
   holder: {
     height: radiusOfHolder * 2,
     width: radiusOfHolder * 2,
