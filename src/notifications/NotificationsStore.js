@@ -125,6 +125,7 @@ class NotificationsStore {
   stopPollCount() {
     if (this.pollInterval) {
       clearInterval(this.pollInterval);
+      this.pollInterval = null;
     }
   }
 
@@ -145,7 +146,6 @@ class NotificationsStore {
     this.list = new OffsetListStore('shallow');
     this.unread = 0;
     this.filter = 'all';
-    this.pollInterval = null;
     this.loading = false;
   }
 
