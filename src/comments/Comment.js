@@ -93,7 +93,7 @@ export default class Comment extends Component {
             }
           </View>
 
-          <MediaView entity={ comment } style={ styles.media }/>
+          <MediaView entity={comment} style={styles.media} navigation={this.props.navigation}/>
 
           { actions }
         </View>
