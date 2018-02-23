@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import {
   Text,
+  ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
 
@@ -23,7 +24,8 @@ export default class Button extends Component {
    * Default props
    */
   static defaultProps = {
-    color: colors.primary
+    color: colors.primary,
+    loading: false
   };
 
   /**
@@ -43,17 +45,24 @@ export default class Button extends Component {
       color,
       children,
       containerStyle,
-      textStyle
+      textStyle,
+      loading
     } = this.props;
+
+    const body = this.props.loading ?
+      <ActivityIndicator/> :
+      <Text style={[{ color: textColor || color }, textStyle]} > {this.props.text} </Text>;
+
+    const onButtonPress = this.props.loading ? null : onPress;
 
     return (
       <TouchableOpacity
-        onPress={onPress}
+        onPress={onButtonPress}
         underlayColor='transparent'
         style={[ComponentsStyle.commonButton, {borderColor: color}, containerStyle]}
       >
         {children}
-        <Text style={[{ color: textColor || color }, textStyle]} > {this.props.text} </Text>
+        {body}
       </TouchableOpacity>
     )
   }
