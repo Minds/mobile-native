@@ -26,6 +26,10 @@ import {
  */
 export default class Lock extends PureComponent {
 
+  state = {
+    unlocking: false
+  }
+
   /**
    * Render
    */
@@ -63,7 +67,7 @@ export default class Lock extends PureComponent {
           <View style={ styles.textContainer }>
             <Text>{intro}</Text>
           </View>
-          <Button text='UNLOCK' color='#4caf50' containerStyle={CommonStyle.rowJustifyCenter} onPress={this.unlock}>
+          <Button loading={this.state.unlocking} text='UNLOCK' color='#4caf50' containerStyle={CommonStyle.rowJustifyCenter} onPress={this.unlock}>
             <Icon
               name='ios-flash'
               type='ionicon'
@@ -94,13 +98,20 @@ export default class Lock extends PureComponent {
    * Unlock
    */
   unlock = () => {
-    this.props.navigation.navigate('WireFab', {
-      owner: this.props.entity.ownerObj,
-      default: this.props.entity.wire_threshold,
-      onComplete: () => {
-        this.props.entity.unlock();
-      }
-    });
+    this.setState({unlocking: true});
+
+    this.props.entity.unlock(true)
+    .then(result => {
+      this.setState({unlocking: false});
+      if(result) return;
+      this.props.navigation.navigate('WireFab', {
+          owner: this.props.entity.ownerObj,
+          default: this.props.entity.wire_threshold,
+          onComplete: () => {
+            this.props.entity.unlock();
+          }
+        });
+      });
   }
 
   /**
