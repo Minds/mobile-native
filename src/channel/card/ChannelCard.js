@@ -25,25 +25,8 @@ import FastImage from 'react-native-fast-image';
 /**
  * Channel Card
  */
-
 @observer
 export default class ChannelCard extends Component {
-
-  /**
-   * Get Channel Banner
-   */
-  getBannerFromChannel() {
-    const channel = this.props.entity;
-    return MINDS_CDN_URI + 'fs/v1/banners/' + channel.guid + '/fat/' + channel.icontime;
-  }
-
-  /**
-   * Get Channel Avatar
-   */
-  getAvatar() {
-    const channel = this.props.entity;
-    return MINDS_CDN_URI + 'icon/' + channel.guid + '/large/' + channel.icontime;
-  }
 
   subscribe() {
     let channel = this.props.entity;
@@ -56,8 +39,8 @@ export default class ChannelCard extends Component {
   render() {
 
     const channel = this.props.entity;
-    const avatar  = { uri: this.getAvatar() };
-    const iurl    = { uri: this.getBannerFromChannel() };
+    const avatar  = channel.getAvatarSource();
+    const iurl    = channel.getBannerSource();
 
     return (
       <View>

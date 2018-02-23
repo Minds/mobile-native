@@ -37,19 +37,11 @@ export default class BlogCard extends PureComponent {
   }
 
   /**
-   * Get Blog Avatar
-   */
-  getAvatar() {
-    const channel = this.props.entity.ownerObj;
-    return { uri: MINDS_CDN_URI + 'icon/' + channel.guid + '/small/' + channel.icontime };
-  }
-
-  /**
    * Render Card
    */
   render() {
     const blog = this.props.entity;
-
+    const channel = this.props.entity.ownerObj;
     const image = { uri: blog.thumbnail_src, headers: api.buildHeaders() };
 
     return (
@@ -64,7 +56,7 @@ export default class BlogCard extends PureComponent {
                   width={35}
                   height={35}
                   rounded
-                  source={this.getAvatar()}
+                  source={channel.getAvatarSource()}
                 />
                 <Text style={styles.username}>{blog.ownerObj.username.toUpperCase()}</Text>
                 <Text style={styles.createdDate}>{formatDate(blog.time_created)}</Text>

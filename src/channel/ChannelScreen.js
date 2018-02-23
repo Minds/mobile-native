@@ -30,8 +30,7 @@ import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
 import CaptureFab from '../capture/CaptureFab';
 import { CommonStyle } from '../styles/Common';
-
-
+import UserModel from './UserModel';
 
 /**
  * Channel Screen
@@ -41,9 +40,11 @@ import { CommonStyle } from '../styles/Common';
 @observer
 export default class ChannelScreen extends Component {
 
+
+
   state = {
     edit: false,
-    guid: ''
+    guid: null
   };
 
   /**
@@ -57,27 +58,29 @@ export default class ChannelScreen extends Component {
    * Load data on mount
    */
   componentWillMount() {
-    //grab stale channel data for quick load
-    if (this.props.navigation.state.params.entity)
-      this.props.channel.store(this.props.navigation.state.params.entity.guid)
-        .setChannel(this.props.navigation.state.params.entity);
+    const params = this.props.navigation.state.params;
 
-    if (this.props.navigation.state.params.username) {
-      this.loadByUsername(this.props.navigation.state.params.username);
+    if (params.entity) {
+      //grab stale channel data for quick load
+      this.props.channel.store(params.entity.guid)
+        .setChannel(params.entity);
+      // load channel from endpoint
+      this.loadChannel(params.entity.guid);
+
+    } else if (params.username) {
+      this.loadByUsername(params.username);
+    } else if (params.guid) {
+      this.loadChannel(params.guid);
     }
   }
 
-  componentDidMount() {
-    if(this.guid){
-      this.props.channel.store(this.guid).load()
-        .then(channel => {
-          // add visited channels
-          if (channel) this.props.channel.addVisited(channel);
-        });
-
-      this.props.channel.store(this.guid).feedStore.loadFeed();
-    }
-    //this.props.channel.loadrewards(this.guid);
+  loadChannel(guid) {
+    this.props.channel.store(guid).load()
+      .then(channel => {
+        // add visited channels
+        if (channel) this.props.channel.addVisited(channel);
+      });
+    this.props.channel.store(guid).feedStore.loadFeed();
   }
 
   componentWillUnmount() {
@@ -90,10 +93,13 @@ export default class ChannelScreen extends Component {
     try {
       let response = await channelService.load(username);
 
-      this.setState({ guid: response.channel.guid });
+      this.props.channel.store(response.channel.guid).feedStore.loadFeed();
+
       this.props.channel.store(response.channel.guid)
-        .setChannel(response.channel);
-      //this.props.channel.store(response.channel.guid).loadFeeds();
+        .setChannel(UserModel.create(response.channel));
+
+      this.setState({guid: response.channel.guid});
+
     } catch(err) {
       Alert.alert(
         'Atention',
@@ -104,8 +110,12 @@ export default class ChannelScreen extends Component {
     };
   }
 
-  get guid(){
-    return this.props.navigation.state.params.guid ? this.props.navigation.state.params.guid: this.state.guid;
+  get guid() {
+    const params = this.props.navigation.state.params;
+
+    let guid = params.entity ? params.entity.guid : params.guid;
+
+    return guid || this.state.guid;
   }
 
   onEditAction = async payload => {
@@ -130,17 +140,18 @@ export default class ChannelScreen extends Component {
    * Render
    */
   render() {
+
+    if (!this.guid || !this.props.channel.store(this.guid).channel.guid) {
+      return (
+        <CenteredLoading />
+      );
+    }
+
     const feed    = this.props.channel.store(this.guid).feedStore;
     const channel = this.props.channel.store(this.guid).channel;
     const rewards = this.props.channel.store(this.guid).rewards;
     const guid    = this.guid;
     const isOwner = guid == this.props.user.me.guid;
-
-    if (!channel.guid) {
-      return (
-        <CenteredLoading />
-      );
-    }
 
     let emptyMessage = null;
     let carousel = null;

@@ -32,7 +32,6 @@ import Touchable from '../../common/components/Touchable';
 import ChannelBadges from '../badges/ChannelBadges';
 import { CommonStyle } from '../../styles/Common';
 
-
 /**
  * Channel Header
  */
@@ -45,7 +44,7 @@ export default class ChannelHeader extends Component {
   state = {
     isSelectingMedia: false,
     uploadType: null,
-    
+
     preview_avatar: null,
     preview_banner: null,
 
@@ -91,15 +90,10 @@ export default class ChannelHeader extends Component {
    */
   getBannerFromChannel() {
     if (this.state.preview_banner) {
-      return this.state.preview_banner;
+      return {uri: this.state.preview_banner};
     }
 
-    const channel = this.props.channel.channel;
-    if (channel && channel.carousels) {
-      return channel.carousels[0].src;
-    }
-
-    return MINDS_CDN_URI + 'fs/v1/banners/' + channel.guid + '/fat/' + channel.icontime;
+    return this.props.channel.channel.getBannerSource();
   }
 
   /**
@@ -110,8 +104,7 @@ export default class ChannelHeader extends Component {
       return this.state.preview_avatar;
     }
 
-    const channel = this.props.channel.channel;
-    return `${MINDS_CDN_URI}icon/${channel.guid}/large/${channel.icontime}`;
+    return this.props.channel.channel.getAvatarSource();
   }
 
   /**
@@ -275,7 +268,7 @@ export default class ChannelHeader extends Component {
     });
 
     this.uploads[type] = file;
-    
+
     this.setState({ uploadType: null, isSelectingMedia: false });
   }
 
@@ -289,8 +282,8 @@ export default class ChannelHeader extends Component {
 
     const channel = this.props.channel.channel;
     const styles  = this.props.styles;
-    const avatar  = { uri: this.getAvatar() };
-    const iurl = { uri: this.getBannerFromChannel(), headers: api.buildHeaders() };
+    const avatar  = this.getAvatar();
+    const iurl = this.getBannerFromChannel();
     const isUploading = this.props.channel.isUploading;
     const isEditable = this.props.edit && !isUploading;
     return (

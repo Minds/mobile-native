@@ -23,10 +23,6 @@ import {
  */
 export default class OwnerBlock extends PureComponent {
 
-  state = {
-    avatarSrc: { uri: MINDS_CDN_URI + 'icon/' + this.props.entity.ownerObj.guid + '/medium' }
-  };
-
   /**
    * Navigate To channel
    */
@@ -41,18 +37,20 @@ export default class OwnerBlock extends PureComponent {
    * Render
    */
   render() {
-    const entity = this.props.entity.ownerObj;
+    const channel = this.props.entity.ownerObj;
     const rightToolbar = this.props.rightToolbar||null;
+
+    const avatarSrc = channel.getAvatarSource();
 
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={this._navToChannel}>
-          <Image source={this.state.avatarSrc} style={styles.avatar}/>
+          <Image source={avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
         <View style={styles.body}>
           <TouchableOpacity onPress={this._navToChannel}>
             <Text style={styles.username}>
-              { entity.username }
+              { channel.username }
             </Text>
           </TouchableOpacity>
           {this.props.children}

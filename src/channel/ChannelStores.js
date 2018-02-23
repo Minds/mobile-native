@@ -16,7 +16,6 @@ class ChannelStores {
   lastVisited = new ModelStorageList('lastchannels', 10);
   stores = {};
 
-  @observable
   store(guid) {
     if (!this.stores[guid]) {
       this.stores[guid] = new ChannelStore(guid);
