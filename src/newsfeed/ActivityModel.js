@@ -137,14 +137,18 @@ export default class ActivityModel extends BaseModel {
    * Unlock the activity and update data on success
    */
   @action
-  async unlock() {
+  async unlock(ignoreError=false) {
     try {
       result = await wireService.unlock(this.guid);
       if (result) {
-        Object.assign(this, result);
+        // create a new model because we need the child models
+        const model = ActivityModel.create(result);
+        Object.assign(this, model);
       }
+      return true;
     } catch(err) {
-      alert(err.message);
+      if (!ignoreError) alert(err.message);
+      return false;
     }
   }
 }
