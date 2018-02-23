@@ -18,6 +18,8 @@ export default {
     code: 'Code'
   },
   settings: {
+    submit: 'Submit',
+    passwordTitle: 'Change your password',
     currentPassword: 'Current Password',
     newPassword: 'New Password',
     confirmNewPassword: 'Confirm New Password',

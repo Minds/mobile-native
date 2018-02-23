@@ -18,6 +18,8 @@ export default {
     code: 'Código'
   },
   settings: {
+    submit: 'Enviar',
+    passwordTitle: 'Cambio de contraseña',
     currentPassword: 'Clave Actual',
     newPassword: 'Nueva Clave',
     confirmNewPassword: 'Confirme Nueva Clave',

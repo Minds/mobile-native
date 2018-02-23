@@ -167,7 +167,7 @@ const Stack = StackNavigator({
   },
   NotSupported: {
     screen: NotSupportedScreen
-  },
+  }
 });
 
 export default Stack;
