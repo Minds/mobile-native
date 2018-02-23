@@ -16,6 +16,7 @@ class DiscoveryService {
     switch (type) {
       case 'user':
         endpoint = 'api/v2/search/suggest/user';
+        params.hydrate = 1;
         break;
 
       default:
