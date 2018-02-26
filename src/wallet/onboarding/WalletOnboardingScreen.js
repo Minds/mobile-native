@@ -76,13 +76,7 @@ export default class WalletOnboardingScreen extends Component {
         await this.props.wallet.setOnboardingComplete(true);
 
         if (this.props.navigation.state.params && this.props.navigation.state.params.next) {
-          // TODO: Change this with .replace (after upgrading react-navigation to 1.0.3)
-          this.props.navigation.dispatch({
-            type: 'ReplaceCurrentScreen',
-            key: this.props.navigation.state.params.next,
-            routeName: this.props.navigation.state.params.next,
-            params: { }
-          });
+          this.props.navigation.replace('ReplaceCurrentScreen');
         } else {
           this.props.navigation.goBack();
         }
