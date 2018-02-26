@@ -17,3 +17,11 @@ export function getFeed(offset, filter) {
 export function getCount() {
   return api.get('api/v1/notifications/count');
 }
+
+export function getSettings() {
+  return api.get('api/v1/notifications/settings');
+}
+
+export function setSetting(id, toggle) {
+  return api.post('api/v1/notifications/settings', { id, toggle });
+}

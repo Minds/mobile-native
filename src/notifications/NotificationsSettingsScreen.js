@@ -19,6 +19,16 @@ import {
 @observer
 export default class NotificationsSettingsScreen extends Component {
 
+  /**
+   * On component will mount
+   */
+  componentWillMount() {
+    this.props.notificationsSettings.load();
+  }
+
+  /**
+   * Render
+   */
   render() {
     const settings = this.props.notificationsSettings.settings;
     const notificationsSettings = this.props.notificationsSettings
@@ -26,11 +36,12 @@ export default class NotificationsSettingsScreen extends Component {
     return (
       <ScrollView  style={styles.container}>
         <Text style={styles.title}>Enable and disable push notifications</Text>
-        {settings.map(function (toggle) {
+        {Object.keys(settings).map(function (key) {
+          const toggle = settings[key];
           return (
             <View style={styles.row} key={toggle.id}>
               <Text>{toggle.name}</Text>
-              <Switch value={toggle.value} onValueChange={(val) => notificationsSettings.setSetting(toggle.id, val)}></Switch>
+              <Switch value={toggle.value} onValueChange={(val) => notificationsSettings.saveSetting(key, val)}></Switch>
             </View>
           )
         })}
