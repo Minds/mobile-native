@@ -77,6 +77,9 @@ export default class ChannelActions extends Component {
       case 'Un-Block':
         this.props.channel.toggleBlock();
         break;
+      case 'Report':
+        this.props.navigation.navigate('Report', { entity: this.props.channel.channel });
+        break;
     }
 
     
