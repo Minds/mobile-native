@@ -29,6 +29,7 @@ import AutoHeightFastImage from './AutoHeightFastImage';
 import formatDate from '../helpers/date';
 import domain from '../helpers/domain';
 import MindsVideo from '../../media/MindsVideo';
+import mediaProxyUrl from '../helpers/media-proxy-url';
 
 /**
  * Activity
@@ -58,7 +59,7 @@ export default class MediaView extends Component {
 
     if (this.props.entity.perma_url) {
       source = {
-        uri: this.props.entity.thumbnail_src
+        uri: mediaProxyUrl(this.props.entity.thumbnail_src)
       }
 
       return (

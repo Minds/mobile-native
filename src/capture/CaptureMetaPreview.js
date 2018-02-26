@@ -14,6 +14,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import colors from '../styles/Colors';
 
 import Touchable from '../common/components/Touchable';
+import mediaProxyUrl from '../common/helpers/media-proxy-url';
 
 export default class CaptureMetaPreview extends Component {
   inProgress() {
@@ -30,7 +31,7 @@ export default class CaptureMetaPreview extends Component {
         {!this.inProgress() && <View style={style.content}>
           {this.props.meta.thumbnail && <View style={style.thumbnailContainer}>
           <FastImage
-            source={{ uri: this.props.meta.thumbnail }}
+            source={{ uri: mediaProxyUrl(this.props.meta.thumbnail) }}
             resizeMode={FastImage.resizeMode.cover}
             style={style.thumbnail}
           />
