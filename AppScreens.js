@@ -13,6 +13,9 @@ import RegisterScreen from './src/auth/RegisterScreen';
 import DiscoveryViewScreen from './src/discovery/DiscoveryViewScreen';
 import ConversationScreen from './src/messenger/ConversationScreen';
 import SettingsScreen from './src/settings/SettingsScreen';
+import PasswordScreen from './src/settings/screens/PasswordScreen';
+import EmailScreen from './src/settings/screens/EmailScreen';
+import BillingScreen from './src/settings/screens/BillingScreen';
 import GroupsListScreen from './src/groups/GroupsListScreen';
 import GroupViewScreen from './src/groups/GroupViewScreen';
 import WalletScreen from './src/wallet/WalletScreen';
@@ -84,6 +87,15 @@ const Stack = StackNavigator({
   },
   Settings: {
     screen: SettingsScreen
+  },
+  SettingsEmail: {
+    screen: EmailScreen
+  },
+  SettingsPassword: {
+    screen: PasswordScreen
+  },
+  SettingsBilling: {
+    screen: BillingScreen
   },
   GroupsList: {
     screen: GroupsListScreen
