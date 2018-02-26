@@ -31,8 +31,14 @@ export default {
     options: 'Opciones',
     notifications: 'Notificaciones',
     logout: 'Salir',
+    errorSaving: 'Error guardando la configuracion, intente nuevamente'
+  },
+  validation: {
+    email: 'Email invalido',
+    number: 'Número invalido'
   },
   continue: 'CONTINUAR',
+  save: 'GUARDAR',
   goback: 'VOLVER',
   language: 'Lenguaje',
   categories: 'Categorias'

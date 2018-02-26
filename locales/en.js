@@ -31,8 +31,14 @@ export default {
     options: 'Options',
     notifications: 'Notifications',
     logout: 'Logout',
+    errorSaving: 'Error saving setting, please try again'
+  },
+  validation: {
+    email: 'Invalid email',
+    number: 'Invalid number'
   },
   continue: 'CONTINUE',
+  save: 'SAVE',
   goback: 'GO BACK',
   language: 'Language',
   categories: 'Categories'
