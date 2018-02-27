@@ -1,5 +1,6 @@
 import { observable, action, extendObservable } from 'mobx'
 import channelService from '../../channel/ChannelService';
+import { revokeBoost, rejectBoost, acceptBoost} from '../../boost/BoostService';
 /**
  * Common infinite scroll list
  */
@@ -100,6 +101,53 @@ export default class OffsetListStore {
           entity.subscribed = !value;
           this.entities[index] = entity;
           console.log('error');
+        }));
+    }
+  }
+
+  @action
+  reject(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.entities[index];
+      return rejectBoost(guid)
+        .then(action(response => {
+          entity.state = 'rejected';
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          console.log(err);
+        }));
+    }
+  }
+
+  @action
+  accept(guid) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.entities[index];
+      return acceptBoost(guid)
+        .then(action(response => {
+          entity.state = 'accepted';
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
+  revoke(guid, filter) {
+    let index = this.entities.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      return revokeBoost(guid, filter)
+        .then(action(response => {
+          entity.state = 'revoked';
+          this.entities[index] = entity;
+        }))
+        .catch(action(err => {
+          console.log(err);
         }));
     }
   }

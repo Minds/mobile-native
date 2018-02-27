@@ -32,7 +32,7 @@ export default class BoostConsoleScreen extends Component {
                 ListHeaderComponent={this.props.header}
                 data={this.props.boost.list.entities.slice()}
                 renderItem={this.renderBoost}
-                keyExtractor={item => item.guid}
+                keyExtractor={item => item.rowKey}
                 onRefresh={this.refresh}
                 refreshing={this.props.boost.list.refreshing}
                 onEndReached={this.loadFeed}

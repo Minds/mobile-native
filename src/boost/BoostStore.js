@@ -5,6 +5,9 @@ import {
 
 import OffsetListStore from '../common/stores/OffsetListStore';
 import { getBoosts, revokeBoost, rejectBoost, acceptBoost} from './BoostService';
+
+import BoostModel from './BoostModel';
+
 /**
  * Boosts Store
  */
@@ -36,6 +39,8 @@ class BoostStore {
     this.loading = true;
     return getBoosts(this.list.offset, this.filter, this.filter === 'peer'? this.peer_filter: null)
       .then( feed => {
+        this.assignRowKeys(feed);
+        feed.entities = BoostModel.createMany(feed.entities);
         this.list.setList(feed);
       })
       .finally(() => {
@@ -44,6 +49,17 @@ class BoostStore {
       .catch(err => {
         console.log('error', err);
       })
+  }
+
+  /**
+   * Generate a unique Id for use with list views
+   * @param {object} feed
+   */
+  assignRowKeys(feed) {
+    if (!feed.entities) return;
+    feed.entities.forEach((entity, index) => {
+      entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
+    });
   }
 
   /**
@@ -69,54 +85,6 @@ class BoostStore {
     this.peer_filter = filter;
     this.list.clearList();
     this.loadList();
-  }
-
-  @action
-  revoke(guid) {
-    let index = this.list.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.list.entities[index];
-      return revokeBoost(guid, this.filter)
-        .then(action(response => {
-          entity.state = 'revoked';
-          this.list.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          console.log('error');
-        }));
-    }
-  }
-
-  @action
-  accept(guid) {
-    let index = this.list.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.list.entities[index];
-      return acceptBoost(guid, this.filter)
-        .then(action(response => {
-          entity.state = 'accepted';
-          this.list.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          console.log('error');
-        }));
-    }
-  }
-
-  @action
-  reject(guid) {
-    let index = this.list.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.list.entities[index];
-      return rejectBoost(guid, this.filter)
-        .then(action(response => {
-          entity.state = 'rejected';
-          this.list.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          console.log('error');
-        }));
-    }
   }
 
   @action
