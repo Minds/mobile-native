@@ -29,17 +29,19 @@ export default class LikeView extends Component {
   }
 
   /**
-   * Navigate to group
-   */
-  navToGroup = () => {
-    this.props.navigation.navigate('GroupView', { guid: this.props.entity.entityObj.guid });
-  }
-
-  /**
    * Navigate to activity
    */
   navToActivity = () => {
-    this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
+    let params = {};
+    switch (this.props.entity.entityObj.type) {
+      case "comment":
+        params.guid = this.props.entity.entityObj.parent_guid;
+        break;
+      default:
+        params.entity = this.props.entity.entityObj;
+        break;
+    }
+    this.props.navigation.navigate('Activity', params);
   }
 
   /**
@@ -58,26 +60,26 @@ export default class LikeView extends Component {
     switch (entity.entityObj.type) {
       case "comment":
         return (
-          <Text>{entity.fromObj.name} {this.message} <Text style={styles.link}> your comment </Text></Text>
+          <Text> <Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}> your comment </Text></Text>
         )
       case "activity":
         if (entity.entityObj.title) {
           return (
-            <Text> {entity.fromObj.name} {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
+            <Text> <Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
           )
         } else {
           return (
-            <Text> {entity.fromObj.name} {this.message} <Text style={styles.link}>your activity</Text></Text>
+            <Text> <Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>your activity</Text></Text>
           )
         }
       case "object":
         if (entity.entityObj.title) {
           return (
-            <Text> {entity.fromObj.name} {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
+            <Text> <Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
           )
         } else {
           return (
-            <Text> {entity.fromObj.name} {this.message} <Text style={styles.link}>your {entity.entityObj.subtype}</Text></Text>
+            <Text> <Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>your {entity.entityObj.subtype}</Text></Text>
           )
         }
       default:
