@@ -32,10 +32,16 @@ import ActionSheet from 'react-native-actionsheet';
 import * as Progress from 'react-native-progress';
 import attachmentService from '../common/services/attachment.service';
 
-@inject('comments')
+import commentsStoreProvider from './CommentsStoreProvider';
+
 @inject('user')
 @observer
 export default class CommentsScreen extends Component {
+
+  /**
+   * Each instance of Comments Screen has is own store instance
+   */
+  comments = null;
 
   static navigationOptions = ({ navigation }) => ({
     header: (
@@ -49,13 +55,15 @@ export default class CommentsScreen extends Component {
   });
 
   componentWillMount() {
-    this.props.comments.clearComments();
+    // get a new instance of Comments Store
+    this.comments = commentsStoreProvider.get();
     this.loadComments();
   }
 
   componentWillUnmount() {
-    this.props.comments.unlisten();
-    this.props.comments.clearComments();
+    this.comments.unlisten();
+    this.comments.clearComments();
+    this.comments = null;
   }
 
   /**
@@ -77,16 +85,16 @@ export default class CommentsScreen extends Component {
     return (
       <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={64}>
         <View style={{flex:14}}>
-          { this.props.comments.loaded ?
+          { this.comments.loaded ?
             <FlatList
               ListHeaderComponent={this.props.header}
-              data={this.props.comments.comments.slice()}
+              data={this.comments.comments.slice()}
               renderItem={this.renderComment}
               keyExtractor={item => item.guid}
               onEndThreshold={0.3}
               onEndReached={this.loadComments}
               initialNumToRender={25}
-              refreshing={this.props.comments.refreshing}
+              refreshing={this.comments.refreshing}
               style={styles.listView}
               inverted={true}
             /> :
@@ -106,11 +114,11 @@ export default class CommentsScreen extends Component {
   }
 
   renderPoster() {
-    const attachment = this.props.comments.attachment;
+    const attachment = this.comments.attachment;
 
     const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium' };
 
-    const comments = this.props.comments;
+    const comments = this.comments;
 
     return (
       <View>
@@ -185,7 +193,7 @@ export default class CommentsScreen extends Component {
    * Delete attachment
    */
   async deleteAttachment() {
-    const attachment = this.props.comments.attachment;
+    const attachment = this.comments.attachment;
     // delete
     const result = await attachment.delete();
 
@@ -221,7 +229,7 @@ export default class CommentsScreen extends Component {
       return;
     }
 
-    const attachment = this.props.comments.attachment;
+    const attachment = this.comments.attachment;
 
     const result = await attachment.attachMedia(response);
 
@@ -245,14 +253,14 @@ export default class CommentsScreen extends Component {
   }
 
   setText = (text) => {
-    this.props.comments.setText(text);
+    this.comments.setText(text);
   }
 
   /**
    * Post comment
    */
   postComment = () => {
-    const comments = this.props.comments;
+    const comments = this.comments;
 
     if (!comments.saving && (comments.text != '' || comments.attachment.hasAttachment)){
       comments.post();
@@ -282,7 +290,7 @@ export default class CommentsScreen extends Component {
         guid = entity.guid;
     }
 
-    this.props.comments.loadComments(guid);
+    this.comments.loadComments(guid);
   }
 
   renderComment = (row) => {

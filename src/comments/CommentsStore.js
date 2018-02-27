@@ -20,7 +20,7 @@ import AttachmentStore from '../common/stores/AttachmentStore';
 /**
  * Comments Store
  */
-class CommentsStore {
+export default class CommentsStore {
 
   @observable comments = [];
   @observable refreshing = false;
@@ -206,5 +206,3 @@ class CommentsStore {
   }
 
 }
-
-export default new CommentsStore();

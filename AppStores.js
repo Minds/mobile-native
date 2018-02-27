@@ -6,7 +6,6 @@ import messengerList from './src/messenger/MessengerListStore';
 import messengerConversation from './src/messenger/MessengerConversationStore';
 import channel from './src/channel/ChannelStores';
 import user from './src/auth/UserStore';
-import comments from './src/comments/CommentsStore';
 import discovery from './src/discovery/DiscoveryStore';
 import blogs from './src/blogs/BlogsStore';
 import wallet from './src/wallet/WalletStore';
@@ -37,7 +36,6 @@ const stores = {
   messengerList,
   messengerConversation,
   channel,
-  comments,
   user,
   discovery,
   blogs,
