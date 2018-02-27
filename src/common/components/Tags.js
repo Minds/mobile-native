@@ -23,21 +23,37 @@ export default class Tags extends PureComponent {
     color: colors.primary
   }
 
+  /**
+   * On component will mount
+   */
   componentWillMount() {
     if (this.props.color) {
       this.styles.color = this.props.color;
     }
   }
 
+  /**
+   * Render
+   */
   render() {
     this.index = 0;
     const tags = this.parseTags(this.props.children);
-    const chunks = _.chunk(tags, 50);
-    return (
-      chunks.map((data, i) => <Text selectable={true} style={this.props.style} key={i}>{data}</Text>)
-    )
+
+    if (Array.isArray(tags)) {
+      // workaround to prevent styling problems when there is many tags
+      const chunks = _.chunk(tags, 50);
+
+      return chunks.map((data, i) => {
+        <Text selectable={true} style={this.props.style} key={i}>{data}</Text>
+      });
+    } else {
+      return <Text selectable={true} style={this.props.style}>{tags}</Text>
+    }
   }
 
+  /**
+   * Parse Tags
+   */
   parseTags(children) {
     if (!children) return;
     let rtn = this.parseArrayOrString(children, this.parseUrl);
@@ -46,7 +62,11 @@ export default class Tags extends PureComponent {
     rtn = this.parseArrayOrString(rtn, this.parseHash);
     rtn = this.parseArrayOrString(rtn, this.parseUser);
 
-    return _.flattenDeep(rtn);
+    if (Array.isArray(rtn)) {
+      return _.flattenDeep(rtn);
+    }
+
+    return rtn;
   }
 
   /**
