@@ -91,7 +91,7 @@ export default class MessengerScreen extends Component {
     return (
       <View style={styles.container}>
         <SearchView
-          placeholder='search...'
+          placeholder='Search...'
           onChangeText={this.searchChange}
         />
         <FlatList
