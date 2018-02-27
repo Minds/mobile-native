@@ -13,6 +13,10 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import { CommonStyle } from '../../../styles/Common';
 import featuresService from '../../../common/services/features.service';
+import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+
+// prevent double tap in touchable
+const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
  * Wire Action Component
@@ -20,9 +24,9 @@ import featuresService from '../../../common/services/features.service';
 export default class WireAction extends PureComponent {
   render() {
     return (
-      <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.centered]} onPress={this.openWire}>
+      <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.centered]} onPress={this.openWire}>
         <IonIcon color='rgb(70, 144, 214)' name='ios-flash' size={40} />
-      </TouchableOpacity>
+      </TouchableOpacityCustom>
     )
   }
 

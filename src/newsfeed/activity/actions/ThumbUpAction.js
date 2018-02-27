@@ -16,6 +16,10 @@ import {
 import { Icon } from 'react-native-elements';
 import { CommonStyle } from '../../../styles/Common';
 import Counter from './Counter';
+import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+
+// prevent double tap in touchable
+const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
  * Thumb Up Action Component
@@ -49,10 +53,10 @@ export default class ThumbUpAction extends Component {
     const count = entity[`thumbs:${this.direction}:count`];
 
     return (
-      <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.centered, this.props.orientation == 'column' ? CommonStyle.columnAlignCenter : CommonStyle.rowJustifyCenter ]} onPress={this.toggleThumb}>
+      <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.centered, this.props.orientation == 'column' ? CommonStyle.columnAlignCenter : CommonStyle.rowJustifyCenter ]} onPress={this.toggleThumb}>
         <Icon color={this.voted ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={this.iconName} size={this.props.size} />
         <Counter size={this.props.size * 0.75} count={count} orientation={this.props.orientation}/>
-      </TouchableOpacity>
+      </TouchableOpacityCustom>
     );
   }
 

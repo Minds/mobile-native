@@ -15,6 +15,10 @@ import { Icon } from 'react-native-elements';
 import Remind from '../remind/Remind';
 import { CommonStyle } from '../../../styles/Common';
 import Counter from './Counter';
+import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+
+// prevent double tap in touchable
+const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
  * Remind Action Component
@@ -30,7 +34,7 @@ export default class RemindAction extends PureComponent {
    */
   render() {
     return (
-      <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.remind}>
+      <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.remind}>
         <Icon color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20} />
         <Counter count={this.props.entity['reminds']} />
         <View style={styles.modalContainer}>
@@ -45,7 +49,7 @@ export default class RemindAction extends PureComponent {
             </View>
           </Modal>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacityCustom>
     )
   }
 

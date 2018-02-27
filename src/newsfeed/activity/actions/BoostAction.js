@@ -13,6 +13,10 @@ import { CommonStyle } from '../../../styles/Common';
 import { ComponentsStyle } from '../../../styles/Components';
 import featuresService from '../../../common/services/features.service';
 
+import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+
+// prevent double tap in touchable
+const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
 /**
  * Boost Action Component
  */
@@ -24,7 +28,7 @@ export default class BoostAction extends PureComponent {
   render() {
     return (
       <View style={[ CommonStyle.flexContainer, CommonStyle.rowJustifyCenter ]}>
-        <TouchableHighlight
+        <TouchableHighlightCustom
           style={[
             CommonStyle.flexContainer,
             CommonStyle.rowJustifyCenter,
@@ -35,7 +39,7 @@ export default class BoostAction extends PureComponent {
           onPress={this.openBoost}
         >
           <Text style={[styles.text, CommonStyle.colorPrimary]}>BOOST</Text>
-        </TouchableHighlight>
+        </TouchableHighlightCustom>
       </View>
     );
   }
