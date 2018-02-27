@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 
 import {
-  observer
+  observer,
+  inject
 } from 'mobx-react/native'
 
 import {
@@ -24,6 +25,7 @@ import abbrev from '../common/helpers/abbrev'
 import colors from '../styles/Colors'
 import { ComponentsStyle } from '../styles/Components';
 
+@inject('user')
 @observer
 export default class DiscoveryUser extends Component {
 
@@ -49,6 +51,9 @@ export default class DiscoveryUser extends Component {
 
   subscribeButton() {
     const item = this.props.entity.item;
+    if (this.props.user.me.guid === item.guid) {
+      return;
+    }
     if (item.subscribed) {
       return <TouchableHighlight
           onPress={ this.toggleSubscribe }
