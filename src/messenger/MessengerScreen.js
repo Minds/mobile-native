@@ -21,6 +21,7 @@ import ConversationView from './conversation/ConversationView';
 import SearchView from '../common/components/SearchView';
 import debounce from '../common/helpers/debounce';
 import { CommonStyle } from '../styles/Common';
+import CenteredLoading from '../common/components/CenteredLoading';
 
 /**
  * Messenger Conversarion List Screen
@@ -43,13 +44,13 @@ export default class MessengerScreen extends Component {
    */
   componentWillMount() {
 
-    this.props.messengerList.loadList();
 
     // load data on enter
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Messenger', (s) => {
       //this.props.messengerList.refresh();
-      this.setState({ active: true });
+      this.props.messengerList.refresh();
       this.props.messengerList.listen();
+      this.setState({ active: true });
     });
 
     // clear data on leave
@@ -78,9 +79,13 @@ export default class MessengerScreen extends Component {
     const messengerList = this.props.messengerList;
     const conversations = messengerList.conversations;
 
-    // if tab is not active we return a blank view
+    // if tab is not active we return a blank view to save memory
     if (!this.state.active) {
       return <View style={CommonStyle.flexContainer} />
+    }
+
+    if (!messengerList.loaded) {
+      return <CenteredLoading />
     }
 
     return (
