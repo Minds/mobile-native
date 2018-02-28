@@ -59,7 +59,6 @@ export default class ChannelScreen extends Component {
    */
   componentWillMount() {
     const params = this.props.navigation.state.params;
-
     if (params.entity) {
       //grab stale channel data for quick load
       this.props.channel.store(params.entity.guid)
@@ -75,12 +74,18 @@ export default class ChannelScreen extends Component {
   }
 
   loadChannel(guid) {
+    let isOwner = guid == this.props.user.me.guid;
     this.props.channel.store(guid).load()
       .then(channel => {
         // add visited channels
         if (channel) this.props.channel.addVisited(channel);
       });
-    this.props.channel.store(guid).feedStore.loadFeed();
+
+    if(isOwner) {
+      this.props.channel.store(guid).feedStore.refresh();
+    } else {
+      this.props.channel.store(guid).feedStore.loadFeed();
+    }
   }
 
   componentWillUnmount() {
