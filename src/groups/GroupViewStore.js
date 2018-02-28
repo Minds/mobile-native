@@ -2,9 +2,11 @@ import { observable, action } from 'mobx'
 
 import groupsService from './GroupsService';
 
+import { getFeedChannel, toggleComments , toggleExplicit, setViewed } from '../newsfeed/NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import UserModel from '../channel/UserModel';
+import ActivityModel from '../newsfeed/ActivityModel';
 
 /**
  * Groups store
@@ -41,6 +43,7 @@ class GroupViewStore {
   /**
    * List loading
    */
+  viewed = [];
   loading = false;
   guid = '';
   @observable filter = 'feed';
@@ -56,6 +59,7 @@ class GroupViewStore {
 
     return groupsService.loadFeed(guid, this.list.offset)
       .then(data => {
+        data.entities = ActivityModel.createMany(data.entities);
         this.list.setList(data);
         this.assignRowKeys(data);
         this.loaded = true;
@@ -92,6 +96,22 @@ class GroupViewStore {
       .catch(err => {
         console.log('error', err);
       });
+  }
+
+
+  @action
+  async addViewed(entity) {
+    if(this.viewed.indexOf(entity.guid) < 0) {
+      let response;
+      try {
+        response = await setViewed(entity);
+        if (response) {
+          this.viewed.push(entity.guid);
+        }
+      } catch (e) {
+        throw new Error('There was an issue storing the view');
+      }
+    }
   }
 
   /**
