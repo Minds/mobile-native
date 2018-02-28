@@ -434,41 +434,51 @@ export default class BoostScreen extends Component {
 
     this.setState({ inProgress: true });
     let guid = null;
+    let checksum = ''
     let nonce;
 
     try {
       if (this.state.payment === 'tokens') {
-        guid = await this.generateGuid();
+        const prepared = await this.prepare(entity.guid);
+
+        guid = prepared.guid;
+        checksum = prepared.checksum;
       }
 
       if (this.state.type !== 'p2p') {
-        let bidType = this.state.payment;
-
         switch (this.state.payment) {
           case 'tokens':
-            let payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Network Boost.`, { signable: true, offchain: true, buyable: false });
+            let payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Network Boost.`, { signable: true, offchain: true, buyable: true });
 
             if (!payload || payload.cancelled) {
               return;
             }
 
             const tokensFixRate = this.state.rates.tokens / 10000;
-            let amount = Math.ceil(this.state.amount / tokensFixRate) / 10000;
+            let amount = Web3Service.web3.utils.toWei(`${Math.ceil(this.state.amount / tokensFixRate) / 10000}`, 'ether').toString();
 
             switch (payload.type) {
               case 'onchain':
-                if (!this.state.target.eth_wallet) {
-                  throw new VisibleError('User cannot receive tokens.');
-                }
-
                 nonce = {
-                  txHash: await BlockchainBoostService.create(guid, amount),
+                  method: 'onchain',
+                  txHash: await BlockchainBoostService.create(guid, amount, checksum),
                   address: await Web3Service.getCurrentWalletAddress(true)
                 };
                 break;
 
               case 'offchain':
-                bidType = 'offchain';
+                nonce = {
+                  method: 'offchain',
+                  address: 'offchain'
+                }
+                break;
+
+              case 'creditcard':
+                nonce = {
+                  method: 'creditcard',
+                  address: 'creditcard',
+                  token: payload.token
+                };
                 break;
 
               default:
@@ -491,32 +501,59 @@ export default class BoostScreen extends Component {
             throw new Error('Not supported');
         }
 
-        await api.post(`api/v1/boost/${entity.type}/${entity.guid}/${entity.owner_guid}`, {
+        await api.post(`api/v2/boost/${entity.type}/${entity.guid}/${entity.owner_guid}`, {
           guid,
-          bidType,
+          bidType: this.state.payment,
           impressions: this.state.amount,
           priority: this.state.priority ? 1 : null,
-          paymentMethod: nonce
+          paymentMethod: nonce,
+          checksum
         });
       } else /* P2P */ {
+        let amount = this.state.amount;
+
         switch (this.state.payment) {
           case 'tokens':
-            let payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Channel Boost.`, { signable: true, offchain: false, buyable: true });
+            let payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Channel Boost.`, { signable: true, offchain: true, buyable: true });
 
             if (!payload || payload.cancelled) {
               return;
             }
 
+            amount = Web3Service.web3.utils.toWei(this.state.amount, 'ether').toString();
+
             switch (payload.type) {
               case 'onchain':
+                if (!this.state.target.eth_wallet) {
+                  throw new VisibleError('Boost target should have a Receiver Address.');
+                }
+
                 nonce = {
-                  txHash: await BlockchainBoostService.createPeer(this.state.target.eth_wallet, guid, this.state.amount),
+                  method: 'onchain',
+                  txHash: await BlockchainBoostService.createPeer(this.state.target.eth_wallet, guid, amount, checksum),
                   address: await Web3Service.getCurrentWalletAddress(true)
                 };
                 break;
 
-              case 'creditcard':
+              case 'offchain':
+                if (!this.state.target.rewards) {
+                  throw new VisibleError('Boost target should participate in the Rewards program.');
+                }
+
                 nonce = {
+                  method: 'offchain',
+                  address: 'offchain'
+                }
+                break;
+
+              case 'creditcard':
+                if (!this.state.target.rewards) {
+                  throw new VisibleError('Boost target should participate in the Rewards program.');
+                }
+
+                nonce = {
+                  method: 'creditcard',
+                  address: 'creditcard',
                   token: payload.token
                 };
                 break;
@@ -531,15 +568,15 @@ export default class BoostScreen extends Component {
             throw new Error('Not supported');
         }
 
-        await api.post(`api/v1/boost/peer/${entity.guid}/${entity.owner_guid}`, {
+        await api.post(`api/v2/boost/peer/${entity.guid}/${entity.owner_guid}`, {
           guid,
-          type: 'pro',
           currency: this.state.payment,
-          bid: this.state.amount,
+          paymentMethod: nonce,
+          bid: amount,
           destination: this.state.target.guid,
           scheduleTs: this.state.scheduleTs,
           postToFacebook: this.state.postToFacebook ? 1 : null,
-          nonce
+          checksum
         });
       }
 
@@ -555,21 +592,22 @@ export default class BoostScreen extends Component {
         }
 
         this.setState({ error });
+        console.warn(e);
       }
     } finally {
       this.setState({ inProgress: false });
     }
   }
 
-  generateGuid() {
-    return api.get('api/v1/guid')
-      .then(response => {
-        if (!response || !response.guid) {
-          throw new Error('Cannot generate GUID');
-        }
+  async prepare(entityGuid) {
+    const { guid, checksum } =
+      (await api.get(`api/v2/boost/prepare/${entityGuid}`)) || {};
 
-        return response.guid;
-      });
+    if (!guid) {
+      throw new Error('Cannot generate GUID');
+    }
+
+    return { guid, checksum };
   }
 
   //

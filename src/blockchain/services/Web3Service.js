@@ -73,7 +73,7 @@ class Web3Service {
   // Contract methods
 
   async sendSignedContractMethod(method, message = '') {
-    return await this.sendSignedContractMethod(method, 0, message);
+    return await this.sendSignedContractMethodWithValue(method, 0, message);
   }
 
   async sendSignedContractMethodWithValue(method, value = 0, message = '') {

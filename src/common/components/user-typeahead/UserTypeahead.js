@@ -14,6 +14,7 @@ import {
 import Modal from 'react-native-modal';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import MdIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Touchable from '../Touchable';
 
@@ -155,8 +156,8 @@ export default class UserTypeahead extends Component {
           <Image source={{ uri: channelAvatarUrl(item) }} style={this.styles.itemAvatar} />
           <Text style={this.styles.itemUsername}>@{item.username}</Text>
 
-          {!!item.merchant && <Icon name="logo-usd" size={20} color="#000" style={this.styles.itemIcon} />}
-          {!!item.eth_wallet && <Icon name="md-bulb" size={20} color="#000" style={this.styles.itemIcon} />}
+          {!!item.eth_wallet && <MdIcon name="check-circle" size={20} color="#000" style={this.styles.itemIcon} />}
+          {!!item.rewards && <MdIcon name="donut-large" size={20} color="#000" style={this.styles.itemIcon} />}
 
           {!!item.subscribers_count && [
             <Text style={this.styles.itemIconText}>{abbrev(item.subscribers_count || 0)}</Text>,
