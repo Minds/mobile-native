@@ -19,6 +19,7 @@ class MessengerListStore {
 
   @observable conversations = [];
   @observable refreshing = false;
+  @observable loading    = false;
 
   /**
    * Search string
@@ -74,26 +75,38 @@ class MessengerListStore {
   /**
    * Load conversations list
    */
-  loadList() {
+  loadList(reload=false) {
     const rows = 24;
     let fetching;
+
+    if(this.loading) return;
+    this.setLoading(true);
 
     // is a search?
     if (this.search && this.newsearch) {
       this.newsearch = false;
       fetching = messengerService.searchConversations(this.search, rows);
     } else {
-      if (this.loaded && !this.offset) {
+      if (this.loaded && !this.offset && !reload) {
+        this.setLoading(false);
         return;
       }
+      if (reload) this.offset = '';
       fetching = messengerService.getConversations(rows, this.offset, this.newsearch);
     }
 
-    return fetching.then(response => {
+    return fetching
+      .then( response => {
+        if (reload) this.clearConversations();
         this.loaded = true;
         this.offset = response.offset;
         this.pushConversations(response.entities);
-      }).catch(err => {
+      })
+      .finally(() => {
+        this.setLoading(false);
+        this.setRefreshing(false);
+      })
+      .catch(err => {
         console.log('error');
       });
   }
@@ -129,6 +142,11 @@ class MessengerListStore {
   @action
   setUnlocking(val) {
     this.unlocking = val;
+  }
+
+  @action
+  setLoading(val) {
+    this.loading = val;
   }
 
   @action
@@ -173,9 +191,9 @@ class MessengerListStore {
     if (this.search) this.newsearch = true;
 
     this.loadList()
-      .finally(action(() => {
-        this.refreshing = false;
-      }));
+      .finally(() => {
+        this.setRefreshing(false);
+      });
   }
 
   @action

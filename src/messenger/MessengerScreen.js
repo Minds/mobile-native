@@ -6,8 +6,10 @@ import {
   Text,
   View,
   Image,
+  Platform,
   FlatList,
-  StyleSheet
+  StyleSheet,
+  ActivityIndicator
 } from 'react-native';
 
 import {
@@ -21,7 +23,6 @@ import ConversationView from './conversation/ConversationView';
 import SearchView from '../common/components/SearchView';
 import debounce from '../common/helpers/debounce';
 import { CommonStyle } from '../styles/Common';
-import CenteredLoading from '../common/components/CenteredLoading';
 
 /**
  * Messenger Conversarion List Screen
@@ -44,11 +45,11 @@ export default class MessengerScreen extends Component {
    */
   componentWillMount() {
 
+    this.props.messengerList.loadList();
 
     // load data on enter
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Messenger', (s) => {
-      //this.props.messengerList.refresh();
-      this.props.messengerList.refresh();
+      this.props.messengerList.loadList(true);
       this.props.messengerList.listen();
       this.setState({ active: true });
     });
@@ -78,14 +79,15 @@ export default class MessengerScreen extends Component {
   render() {
     const messengerList = this.props.messengerList;
     const conversations = messengerList.conversations;
+    const loading = messengerList.loading;
+    let loadingCmp   = null;
 
-    // if tab is not active we return a blank view to save memory
-    if (!this.state.active) {
-      return <View style={CommonStyle.flexContainer} />
+    if (loading && !messengerList.refreshing) {
+      loadingCmp = <ActivityIndicator style={styles.loading} />
     }
 
-    if (!messengerList.loaded) {
-      return <CenteredLoading />
+    if (!this.state.active) {
+      return <View/>
     }
 
     return (
@@ -94,6 +96,7 @@ export default class MessengerScreen extends Component {
           placeholder='Search...'
           onChangeText={this.searchChange}
         />
+        {loadingCmp}
         <FlatList
           data={conversations}
           renderItem={this.renderMessage}
@@ -127,6 +130,8 @@ export default class MessengerScreen extends Component {
    * Load more rows
    */
   loadMore = () => {
+    // prevent multiple calls before fist load
+    //if (!this.props.messengerList.loaded) return;
     this.props.messengerList.loadList()
   }
 
@@ -146,6 +151,16 @@ const styles = StyleSheet.create({
 	listView: {
     //paddingTop: 20,
     flex: 1
+  },
+  loading: {
+    position: 'absolute',
+    right: 10,
+    top: 15,
+    ...Platform.select({
+      android: {
+        top: 20,
+      },
+    }),
   },
   container: {
     flex: 1,
