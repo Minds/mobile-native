@@ -144,9 +144,9 @@ export async function setViewed(entity) {
   let data;
   try {
     if (entity.boosted) {
-      data = await api.put('api/v1/boost/fetch/newsfeed/' + entity.boosted_guid );
+      data = await api.post('api/v2/analytics/views/boost/newsfeed/' + entity.boosted_guid );
     } else {
-      data = await api.put('api/v1/newsfeed/' + entity.guid + '/view');
+      data = await api.post('api/v2/analytics/views/activity/' + entity.guid);
     }
     return data;
   } catch (e) {
