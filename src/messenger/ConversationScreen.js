@@ -108,7 +108,7 @@ export default class ConversationScreen extends Component {
     const conversation = this.props.navigation.state.params.conversation;
     const avatarImg    = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' + this.props.user.me.icontime };
     return (
-      <KeyboardAvoidingView style={styles.container} behavior={ Platform.OS == 'ios' ? 'padding' : 'none'} keyboardVerticalOffset={64}>
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : null} keyboardVerticalOffset={64}>
         <FlatList
           inverted={true}
           data={messages.slice()}
