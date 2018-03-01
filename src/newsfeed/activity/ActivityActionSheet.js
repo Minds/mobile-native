@@ -79,7 +79,7 @@ export default class ActivityActions extends Component {
           options.push( 'Remove explicit' );
         }
       }
-      
+
       if (this.state && this.state.userBlocked) {
         options.push( 'Unblock user' );
       } else {
@@ -96,7 +96,7 @@ export default class ActivityActions extends Component {
       } else {
         options.push( 'Un-monetize' );
       }
-  
+
     }
 
     options.push( 'Share' );
@@ -183,7 +183,7 @@ export default class ActivityActions extends Component {
         });
         break;
       case 'Share':
-        shareService.share(this.props.entity.message, MINDS_URI + 'newsfeed/' + this.props.entity.guid);
+        shareService.share(this.props.entity.text, MINDS_URI + 'newsfeed/' + this.props.entity.guid);
         break;
       case 'Report':
         this.props.navigation.navigate('Report', { entity: this.props.entity });
@@ -208,10 +208,10 @@ export default class ActivityActions extends Component {
 
     return (
       <View style={styles.wrapper}>
-        <Icon 
+        <Icon
           name="more-vert"
-          onPress={() => this.showActionSheet()} 
-          size={26} 
+          onPress={() => this.showActionSheet()}
+          size={26}
           style={styles.icon}
           />
         <ActionSheet

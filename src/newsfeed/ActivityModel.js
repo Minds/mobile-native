@@ -134,6 +134,13 @@ export default class ActivityModel extends BaseModel {
   }
 
   /**
+   * Get activity text
+   */
+  get text() {
+    return this.message || this.title || '';
+  }
+
+  /**
    * Unlock the activity and update data on success
    */
   @action

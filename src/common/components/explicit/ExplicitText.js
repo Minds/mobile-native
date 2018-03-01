@@ -21,7 +21,7 @@ export default class ExplicitText extends Component {
 
   render() {
     const entity = this.props.entity;
-    const message = entities.decodeHTML(this.props.entity.message || this.props.entity.title);
+    const message = entities.decodeHTML(this.props.entity.text);
     return (
         <View style={{flex:1}}>
           { entity.mature ?
