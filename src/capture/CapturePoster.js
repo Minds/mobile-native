@@ -329,6 +329,7 @@ const styles = StyleSheet.create({
   },
   preview: {
     flex: 1,
+    minHeight: 200,
     flexDirection: 'row',
     alignItems: 'stretch',
     position: 'relative',

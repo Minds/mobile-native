@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -31,7 +31,7 @@ import androidPermissionsService from '../common/services/android-permissions.se
 /**
  * Gallery View
  */
-export default class CaptureGallery extends Component {
+export default class CaptureGallery extends PureComponent {
 
   state = {
     header: null,
@@ -87,22 +87,27 @@ export default class CaptureGallery extends Component {
   render() {
 
     const body = this.state.imagesLoaded ?
-      _.chunk(this.state.photos.map(p => this.renderTile(p)), 3)
-        .map((c) => <View style={styles.row}>{c}</View>)
+      _.chunk(this.state.photos.map((p, i) => this.renderTile(p, i)), 3)
+        .map((c, i) => <View style={styles.row} key={i}>{c}</View>)
       : <CenteredLoading />
 
-    //<CaptureTabs onSelectedMedia={ this.onSelected } />
-    return [<CaptureTabs onSelectedMedia={this.onSelected} />, body]
+    return (
+      <View>
+        <CaptureTabs onSelectedMedia={this.onSelected} />
+        {body}
+      </View>
+    )
   }
 
   /**
    * render list tile
    */
-  renderTile = (item) => {
+  renderTile = (item, index) => {
     const node = item.node;
     return (
       <TouchableOpacity
         style={styles.tileImage}
+        key={index}
         onPress={() => {
             this.onSelected({
               uri: node.image.uri,
