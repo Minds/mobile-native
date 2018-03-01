@@ -26,7 +26,7 @@ export default class ExplicitText extends Component {
         <View style={{flex:1}}>
           { entity.mature ?
             <Text style={styles.mature}>{message}</Text>:
-            <Tags navigation={this.props.navigation}>{message}</Tags>
+          <Tags navigation={this.props.navigation}>{message.trim()}</Tags>
           }
         </View>
     );
