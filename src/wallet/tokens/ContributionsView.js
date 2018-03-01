@@ -143,7 +143,7 @@ export default class ContributionsView extends Component {
       <View style={styles.row}>
         <View style={CommonStyle.rowJustifyStart}>
           <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.metric.toUpperCase()}</Text>
+          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.metric && item.metric.toUpperCase()}</Text>
           <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textRight, styles.column]}>{item.amount}</Text>
           <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textRight, styles.column]}>{item.score}</Text>
         </View>

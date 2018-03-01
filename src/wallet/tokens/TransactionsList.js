@@ -136,7 +136,7 @@ export default class TransactionsList extends Component {
           : <Text style={[styles.count, styles.negative]}>{token(item.amount)}</Text>
         }
         <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[styles.subtext, CommonStyle.flexContainer]}>{item.contract.toUpperCase()}</Text>
+          <Text style={[styles.subtext, CommonStyle.flexContainer]}>{item.contract && item.contract.toUpperCase()}</Text>
           <Text style={[styles.subtext]}>{i18n.l('date.formats.small', item.timestamp * 1000)}</Text>
         </View>
       </View>
