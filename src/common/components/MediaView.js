@@ -46,7 +46,7 @@ export default class MediaView extends Component {
     const type = this.props.entity.custom_type||this.props.entity.subtype;
     switch (type) {
       case 'image':
-        source = this.props.entity.getThumbSource();
+        source = this.props.entity.getThumbSource('xlarge');
         return this.getImage(source);
       case 'batch':
         source = {
