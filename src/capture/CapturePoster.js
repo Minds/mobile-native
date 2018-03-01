@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   View,
+  ScrollView,
   TextInput,
   Text,
   Button,
@@ -45,7 +46,7 @@ export default class CapturePoster extends Component {
     postImageUri: '',
     hasRichEmbed: false,
     richEmbedUrl: '',
-    meta: null
+    meta: null,
   };
 
   _RichEmbedFetchTimer;
@@ -96,7 +97,7 @@ export default class CapturePoster extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <View style={styles.posterAndPreviewWrapper}>
+      <ScrollView style={styles.posterAndPreviewWrapper}>
         {this.showContext()}
         <View style={styles.posterWrapper} pointerEvents="box-none">
           <TextInput
@@ -127,10 +128,9 @@ export default class CapturePoster extends Component {
         </View>}
 
         <CaptureGallery
-          style={{ flex: 1 }}
           onSelected={this.onAttachedMedia}
         />
-      </View>
+      </ScrollView>
     );
   }
 
@@ -305,14 +305,9 @@ export default class CapturePoster extends Component {
 
 const styles = StyleSheet.create({
   posterAndPreviewWrapper: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    alignContent: 'stretch',
     backgroundColor: 'white'
   },
   posterWrapper: {
-    padding: 16,
     minHeight: 100,
     flexDirection: 'row',
     backgroundColor: '#FFF',
@@ -323,8 +318,8 @@ const styles = StyleSheet.create({
     color: '#4b4b4b'
   },
   poster: {
+    padding: 12,
     flex: 1,
-    maxHeight: 100
   },
   posterButton: {
     flex: 1,

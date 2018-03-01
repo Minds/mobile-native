@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import React, {
   Component
 } from 'react';
@@ -84,40 +86,20 @@ export default class CaptureGallery extends Component {
    */
   render() {
 
-    const tabs = (
-      <View>
-        <CaptureTabs onSelectedMedia={ this.onSelected } />
-      </View>
-    );
+    const body = this.state.imagesLoaded ?
+      _.chunk(this.state.photos.map(p => this.renderTile(p)), 3)
+        .map((c) => <View style={styles.row}>{c}</View>)
+      : <CenteredLoading />
 
-    return (
-      <View style={styles.screenWrapper}>
-
-        <View style={{flex:2}}>
-          { this.state.imagesLoaded ?
-            <FlatList
-              data={this.state.photos}
-              renderItem={this.renderTile}
-              keyExtractor={item => item.node.image.uri}
-              onEndThreshold={0}
-              initialNumToRender={27}
-              style={styles.listView}
-              numColumns={3}
-              horizontal={false}
-              ListHeaderComponent={ tabs }
-            /> :
-            <CenteredLoading/>
-          }
-        </View>
-      </View>
-    );
+    //<CaptureTabs onSelectedMedia={ this.onSelected } />
+    return [<CaptureTabs onSelectedMedia={this.onSelected} />, body]
   }
 
   /**
    * render list tile
    */
-  renderTile = (row) => {
-    const node = row.item.node;
+  renderTile = (item) => {
+    const node = item.node;
     return (
       <TouchableOpacity
         style={styles.tileImage}
@@ -155,6 +137,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#FFF'
+  },
+  row: {
+    flexDirection: 'row',
+    minHeight: 120,
+    flex:1,
   },
   preview: {
     flex: 1,
