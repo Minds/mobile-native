@@ -45,16 +45,16 @@ export default class BlogCard extends PureComponent {
     const image = { uri: blog.thumbnail_src, headers: api.buildHeaders() };
 
     return (
-      <TouchableOpacity onPress={this.navToBlog} >
+      <TouchableOpacity onPress={this.navToBlog} style={styles.container}>
         <FastImage source={image} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
-        <View style={styles.headertextcontainer}>
-          <View style={styles.namecontainer}>
-            <View style={styles.namecol}>
-              <Text style={styles.name}>{blog.title}</Text>
+        <View style={styles.bodyContainer}>
+          <View style={styles.titleContainer}>
+            <View style={styles.titlecol}>
+              <Text style={styles.title}>{blog.title}</Text>
               <View style={styles.ownerContainer}>
                 <Avatar
-                  width={35}
-                  height={35}
+                  width={24}
+                  height={24}
                   rounded
                   source={channel.getAvatarSource()}
                 />
@@ -71,26 +71,37 @@ export default class BlogCard extends PureComponent {
 
 
 const styles = StyleSheet.create({
-  headertextcontainer: {
-    padding: 8,
-    paddingLeft: 15,
-    paddingRight: 15,
+  container: {
+    backgroundColor: '#FFF',
+  },
+  bodyContainer: {
+    padding: 12,
+    paddingLeft: 12,
+    paddingRight: 12,
     alignItems: 'stretch',
     flexDirection: 'column',
     width: '100%',
   },
-  namecol: {
+  titlecol: {
     flex:1
   },
-  namecontainer: {
+  titleContainer: {
     flexDirection: 'row',
     flex:1,
+  },
+  title: {
+    fontWeight: '800',
+    fontFamily: 'Roboto',
+    color: '#444',
+    letterSpacing: 0.5,
+    fontSize: 16,
   },
   ownerContainer: {
     flex:1,
     flexDirection: 'row',
     alignSelf: 'flex-start',
-    padding:3 ,
+    paddingTop: 4,
+    paddingBottom: 4,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -106,13 +117,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   username: {
-    paddingLeft: 5,
+    paddingLeft: 8,
     fontSize: 10,
-    color: '#999'
-  },
-  name: {
-    fontWeight: 'bold',
-    fontSize: 16,
+    color: '#888'
   },
   createdDate: {
     paddingLeft: 5,

@@ -14,7 +14,7 @@ import { inject } from 'mobx-react/native';
 
 import FastImage from 'react-native-fast-image';
 import { Icon } from 'react-native-elements'
-import AutoHeightWebView from '../common/components/AutoHeightWebView';
+import BlogViewHTML from './BlogViewHTML';
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import formatDate from '../common/helpers/date';
 import { CommonStyle } from '../styles/Common';
@@ -53,7 +53,7 @@ export default class BlogsViewScreen extends Component {
 
     const actions = (
       <View style={[CommonStyle.flexContainer, CommonStyle.paddingLeft2x]}>
-        <View style={styles.container}>
+        <View style={styles.actionsContainer}>
           <RemindAction entity={blog} />
           <ThumbUpAction entity={blog} orientation='column' me={this.props.user.me} />
           <ThumbDownAction entity={blog} orientation='column' me={this.props.user.me} />
@@ -66,16 +66,18 @@ export default class BlogsViewScreen extends Component {
       <ScrollView style={styles.screen}>
         <FastImage source={image} resizeMode={FastImage.resizeMode.cover} style={styles.image} />
         <Text style={styles.title}>{blog.title}</Text>
-        <OwnerBlock entity={blog} navigation={this.props.navigation} rightToolbar={actions}>
-          <Text style={styles.timestamp}>{formatDate(blog.time_created)}</Text>
-        </OwnerBlock>
-        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.alignCenter, CommonStyle.paddingRight2x]}>
+        <View style={styles.ownerBlockContainer}>
+          <OwnerBlock entity={blog} navigation={this.props.navigation} rightToolbar={actions}>
+            <Text style={styles.timestamp}>{formatDate(blog.time_created)}</Text>
+          </OwnerBlock>
+        </View>
+        <View style={styles.description}>
+          <BlogViewHTML html={blog.description} />
+        </View>
+        <View style={styles.moreInformation}>
           <Icon color={colors.medium} size={18} name='public' onPress={() => this.props.navigation.goBack()} />
           <Text style={[CommonStyle.fontXS, CommonStyle.paddingLeft, CommonStyle.colorMedium, CommonStyle.paddingRight2x]}>{blog.license}</Text>
           <Icon color={colors.primary} size={20} name='share' onPress={this.share} />
-        </View>
-        <View style={styles.description}>
-          <AutoHeightWebView html={blog.description}/>
         </View>
         <Icon color="white" containerStyle={styles.header} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
       </ScrollView>
@@ -94,15 +96,29 @@ const styles = {
     height: 40,
     width: 40,
   },
-  container: {
+  actionsContainer: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     padding: 4
   },
+  title: {
+    paddingTop: 12,
+    paddingBottom: 8,
+    paddingLeft: 12,
+    paddingRight: 12,
+    fontSize: 22,
+    color: '#444',
+    fontFamily: 'Roboto',
+    fontWeight: '800',
+  },
+  ownerBlockContainer: {
+    margin: 8,
+  },
   description: {
-    paddingLeft: 10,
-    paddingRight: 10,
+    paddingLeft: 12,
+    paddingRight: 12,
+    paddingBottom: 12,
   },
   screen: {
     backgroundColor: '#FFF'
@@ -114,12 +130,8 @@ const styles = {
     fontSize: 11,
     color: '#888',
   },
-  title: {
-    paddingTop: 10,
-    paddingBottom: 5,
-    paddingLeft: 15,
-    paddingRight: 15,
-    fontSize: 22,
-    color: 'black'
+  moreInformation: {
+    padding: 12,
+    flexDirection: 'row',
   },
 }

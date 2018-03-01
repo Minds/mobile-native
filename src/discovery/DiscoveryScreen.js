@@ -372,7 +372,9 @@ export default class DiscoveryScreen extends Component {
    */
   renderBlog = (row) => {
     return (
-      <BlogCard entity={row.item} navigation={this.props.navigation} />
+      <View style={styles.blogCardContainer}>
+        <BlogCard entity={row.item} navigation={this.props.navigation} />
+      </View>
     );
   }
 
@@ -423,5 +425,9 @@ const styles = StyleSheet.create({
   },
   iconActive: {
     color: colors.primary,
+  },
+  blogCardContainer: {
+    backgroundColor: '#ececec',
+    paddingBottom: 8,
   },
 });

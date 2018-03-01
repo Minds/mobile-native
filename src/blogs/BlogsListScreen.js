@@ -32,7 +32,9 @@ export default class BlogsListScreen extends Component {
   renderRow = (row) => {
     const blog = row.item;
     return (
-      <BlogCard entity={blog} navigation={this.props.navigation} />
+      <View style={styles.cardContainer}>
+        <BlogCard entity={blog} navigation={this.props.navigation} />
+      </View>
     );
   }
 
@@ -60,7 +62,7 @@ export default class BlogsListScreen extends Component {
         keyExtractor={item => item.guid}
         style={styles.list}
         getItemLayout={(data, index) => (
-          { length: 300, offset: 300 * index, index }
+          { length: 300, offset: 308 * index, index }
         )}
       />
     );
@@ -73,5 +75,9 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderBottomWidth: 0,
     backgroundColor: '#FFF'
+  },
+  cardContainer: {
+    backgroundColor: '#ececec',
+    paddingBottom: 8,
   }
 });
