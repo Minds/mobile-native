@@ -8,10 +8,10 @@ class BlockchainWithdrawService {
   async request(guid, amount, message = '') {
     const withdraw = await this.getContract(),
       weiAmount = Web3Service.web3.utils.toWei(`${amount}`, 'ether'),
-      gasLimit = 67839, //TODO: make this dynamic
-      gas = 1 * gasLimit, // TODO: make this dynamic
-      gasWei = Web3Service.web3.utils.toWei(`${gas}`, 'Gwei'),
-      gasEther = Web3Service.web3.utils.fromWei(gasWei, 'ether');
+      gasLimit = 167839, //TODO: make this dynamic
+      gasPrice = Web3Service.web3.utils.toWei(`1`, 'Gwei'),
+      gas = gasPrice * gasLimit, // TODO: make this dynamic
+      gasEther = Web3Service.web3.utils.fromWei(`${gas}`, 'ether');
 
     const withdrawRequest = await withdraw.methods.request(
       guid,
@@ -20,7 +20,7 @@ class BlockchainWithdrawService {
 
     const result = await Web3Service.sendSignedContractMethodWithValue(
       withdrawRequest,
-      gasWei,
+      gas,
       `Request a withdrawal of ${amount} Minds Tokens. ${gasEther.toString()} ETH will be transferred to cover the gas fee. If you send a low amount of gas fee, your withdrawal may fail. ${message}`.trim()
     );
 
@@ -28,7 +28,7 @@ class BlockchainWithdrawService {
       address: await Web3Service.getCurrentWalletAddress(true),
       amount: weiAmount.toString(),
       tx: result.transactionHash,
-      gas: gasWei.toString(),
+      gas: gas.toString(),
     };
   }
 }

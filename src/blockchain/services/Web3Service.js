@@ -89,9 +89,12 @@ class Web3Service {
       estimatedGas = await method.estimateGas({
         from: baseOptions.from,
         to: method._parent.options.address,
-        gas: latestBlock.gasLimit
+        gas: latestBlock.gasLimit,
+        value: value,
       });
-    } catch (e) { }
+    } catch (e) {
+      console.log(e);
+    }
 
     const sendOptions = await BlockchainTransactionStore.waitForApproval(method, message, baseOptions, Math.ceil(estimatedGas * 1.5), value);
     await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
