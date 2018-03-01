@@ -44,7 +44,7 @@ export default class Tags extends PureComponent {
       const chunks = _.chunk(tags, 50);
 
       return chunks.map((data, i) => {
-        <Text selectable={true} style={this.props.style} key={i}>{data}</Text>
+        return <Text selectable={true} style={this.props.style} key={i}>{data}</Text>
       });
     } else {
       return <Text selectable={true} style={this.props.style}>{tags}</Text>
