@@ -22,10 +22,7 @@ import {
 
 export default class RemindOwnerBlock extends PureComponent {
 
-  state = {
-    avatarSrc: { uri: MINDS_CDN_URI + 'icon/' + this.props.entity.ownerObj.guid + '/medium' }
-  };
-
+  
   /**
    * Navigate To channel
    */
@@ -38,11 +35,12 @@ export default class RemindOwnerBlock extends PureComponent {
 
   render() {
     const entity = this.props.entity.ownerObj;
+    const avatarSrc = entity.getAvatarSource();
     return (
       <View style={styles.container}>
         <Icon color='rgb(70, 144, 214)' name='repeat' size={16} style={styles.icon}/>
         <TouchableOpacity onPress={this._navToChannel}>
-          <Image source={this.state.avatarSrc} style={styles.avatar}/>
+          <Image source={avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
         <View style={styles.body}>
           <TouchableOpacity onPress={this._navToChannel}>
