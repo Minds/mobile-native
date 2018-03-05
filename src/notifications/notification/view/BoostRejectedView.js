@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import BoostGiftView from './BoostGiftView';
-import rejectionReasons from './../../../boost/RejectionReasons';
+import { rejectionReasons } from '../../../boost/RejectionReasons';
 
 /**
  * Boost Rejected Notification Component
@@ -34,7 +34,7 @@ export default class BoostRejectedView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text>Your boos {entity.params.points} {description} was rejected for <Text style={styles.link}>{entity.params.channel}</Text> {reason}. Your points have been credited back to your wallet.</Text>
+        <Text>Your boost {entity.params.points} {description} was rejected for <Text style={styles.link}>{entity.params.channel}</Text> {reason}. Your points have been credited back to your wallet.</Text>
       </View>
     )
   }
