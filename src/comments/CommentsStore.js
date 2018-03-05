@@ -32,7 +32,7 @@ export default class CommentsStore {
   attachment = new AttachmentStore();
 
   guid = '';
-  reversed = false;
+  reversed = true;
   loadNext = '';
   loadPrevious = '';
   socketRoomName = '';
@@ -46,7 +46,7 @@ export default class CommentsStore {
     }
     this.guid = guid;
 
-    return getComments(this.guid, this.reversed, this.loadNext, this.loadPrevious, limit)
+    return getComments(this.guid, this.reversed, this.loadPrevious, limit)
       .then(action(response => {
         response.comments = CommentModel.createMany(response.comments);
         this.loaded = true;
@@ -104,13 +104,13 @@ export default class CommentsStore {
   @action
   setComments(response) {
     if (response.comments) {
-      response.comments.forEach(comment => {
-          this.comments.unshift(comment);
-      });
+      let array = this.comments.concat(response.comments.reverse())
+      this.comments = CommentModel.createMany(array);
+     
     }
     this.reversed = response.reversed;
-    this.loadNext = response.loadNext;
-    this.loadPrevious = response.loadPrevious;
+    this.loadNext = response['load-next'];
+    this.loadPrevious = response['load-previous'];
   }
 
   @action
@@ -189,7 +189,7 @@ export default class CommentsStore {
   }
 
   cantLoadMore(guid) {
-    return this.loaded && !this.loadNext && !this.refreshing && this.guid === guid;
+    return this.loaded && !(this.loadPrevious) && !this.refreshing && this.guid === guid;
   }
 
   @action
@@ -199,7 +199,7 @@ export default class CommentsStore {
     this.loaded = false;
     this.saving = false;
     this.guid = '';
-    this.reversed = false;
+    this.reversed = true;
     this.loadNext = '';
     this.loadPrevious = '';
     this.socketRoomName = '';

@@ -1,7 +1,7 @@
 import api from './../common/services/api.service';
 
-export function getComments(guid, reversed, loadNext, loadPrevious, limit = 25) {
-  return api.get('api/v1/comments/' + guid + '/', { limit, offset: loadNext, loadPrevious, reversed })
+export function getComments(guid, reversed, offset, limit = 25) {
+  return api.get('api/v1/comments/' + guid + '/', { limit, offset: offset, reversed : true })
     .then((data) => {
       return data
     })

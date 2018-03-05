@@ -11,6 +11,7 @@ import {
   Text,
   KeyboardAvoidingView,
   Platform,
+  TouchableHighlight,
   Dimensions,
 } from 'react-native';
 
@@ -23,6 +24,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import CenteredLoading from '../common/components/CenteredLoading';
 import Comment from './Comment';
 
+import Activity from '../newsfeed/activity/Activity';
+
 import { getComments, postComment } from './CommentsService';
 import session from '../common/services/session.service';
 import { CommonStyle } from '../styles/Common';
@@ -31,7 +34,8 @@ import CapturePreview from '../capture/CapturePreview';
 import ActionSheet from 'react-native-actionsheet';
 import * as Progress from 'react-native-progress';
 import attachmentService from '../common/services/attachment.service';
-
+import { ComponentsStyle } from '../styles/Components';
+import Colors from '../styles/Colors';
 import commentsStoreProvider from './CommentsStoreProvider';
 
 @inject('user')
@@ -43,16 +47,9 @@ export default class CommentsScreen extends Component {
    */
   comments = null;
 
-  static navigationOptions = ({ navigation }) => ({
-    header: (
-      <View style={styles.header}>
-        <Icon size={28} name="ios-close" onPress={() => navigation.goBack()} style={styles.iconclose}/>
-      </View>
-    ),
-    transitionConfig: {
-      isModal: true
-    }
-  });
+  state = {
+    entity: null
+  }
 
   componentWillMount() {
     // get a new instance of Comments Store
@@ -64,6 +61,28 @@ export default class CommentsScreen extends Component {
     this.comments.unlisten();
     this.comments.clearComments();
     this.comments = null;
+  }
+
+  getHeader() {
+    let entity = this.getEntity();
+    return <View>
+             <Activity
+              entity={ entity }
+              newsfeed={ this.props.navigation.state.params.store }
+              navigation={ this.props.navigation }
+              autoHeight={true}
+            />
+            { this.comments.loadPrevious ?
+                <TouchableHighlight
+                onPress={() => { this.loadComments()}}
+                underlayColor = 'transparent'
+                style = {ComponentsStyle.bluebutton}
+              >
+                <Text style={{color: colors.primary}} > LOAD EARLIER </Text>
+              </TouchableHighlight> : null
+            }
+            
+          </View>;
   }
 
   /**
@@ -81,18 +100,15 @@ export default class CommentsScreen extends Component {
       />
     }
 
-
     return (
       <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={64}>
         <View style={{flex:14}}>
           { this.comments.loaded ?
             <FlatList
-              ListHeaderComponent={this.props.header}
+              ListFooterComponent={this.getHeader()}
               data={this.comments.comments.slice()}
               renderItem={this.renderComment}
               keyExtractor={item => item.guid}
-              onEndThreshold={0.3}
-              onEndReached={this.loadComments}
               initialNumToRender={25}
               refreshing={this.comments.refreshing}
               style={styles.listView}

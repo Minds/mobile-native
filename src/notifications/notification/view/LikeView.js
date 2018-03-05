@@ -33,15 +33,17 @@ export default class LikeView extends Component {
    */
   navToActivity = () => {
     let params = {};
+    let screen = 'Activity';
     switch (this.props.entity.entityObj.type) {
       case "comment":
         params.guid = this.props.entity.entityObj.parent_guid;
+        screen = 'Comments';
         break;
       default:
         params.entity = this.props.entity.entityObj;
         break;
     }
-    this.props.navigation.navigate('Activity', params);
+    this.props.navigation.navigate(screen, params);
   }
 
   /**
