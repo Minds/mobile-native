@@ -132,6 +132,7 @@ export default class ChannelFeedStore {
     const feed = await getFeedChannel(this.guid, this.list.offset)
 
     if (this.filter == 'feed') {
+      this.loading = false;
       this.assignRowKeys(feed);
       feed.entities = ActivityModel.createMany(feed.entities);
       this.list.setList(feed);
@@ -151,6 +152,7 @@ export default class ChannelFeedStore {
     const feed = await channelService.getImageFeed(this.guid, this.list.offset);
 
     if (this.filter == 'images') {
+      this.loading = false;
       feed.entities = ActivityModel.createMany(feed.entities);
       this.assignRowKeys(feed);
       this.list.setList(feed);
@@ -169,6 +171,7 @@ export default class ChannelFeedStore {
     const feed = await channelService.getVideoFeed(this.guid, this.list.offset);
 
     if (this.filter == 'videos') {
+      this.loading = false;
       feed.entities = ActivityModel.createMany(feed.entities);
       this.assignRowKeys(feed);
       this.list.setList(feed);
