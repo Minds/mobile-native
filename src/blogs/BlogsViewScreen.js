@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 
-import { inject } from 'mobx-react/native';
+import { inject, observer } from 'mobx-react/native';
 
 import FastImage from 'react-native-fast-image';
 import { Icon } from 'react-native-elements'
@@ -25,11 +25,13 @@ import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 import RemindAction from '../newsfeed/activity/actions/RemindAction';
 import CommentsAction from '../newsfeed/activity/actions/CommentsAction';
 import shareService from '../share/ShareService';
+import CenteredLoading from '../common/components/CenteredLoading';
 
 /**
  * Blog View Screen
  */
-@inject('user')
+@inject('user', 'blogsView')
+@observer
 export default class BlogsViewScreen extends Component {
 
   /**
@@ -40,15 +42,29 @@ export default class BlogsViewScreen extends Component {
   }
 
   share = () => {
-    const blog = this.props.navigation.state.params.blog;
+    const blog = this.props.blogsView.blog;
     shareService.share(blog.title, blog.perma_url);
+  }
+
+  componentWillMount() {
+    const params = this.props.navigation.state.params;
+
+    if (params.blog) {
+      this.props.blogsView.setBlog(params.blog);
+    } else {
+      this.props.blogsView.setBlog(null);
+      this.props.blogsView.loadBlog(params.guid);
+    }
   }
 
   /**
    * Render
    */
   render() {
-    const blog = this.props.navigation.state.params.blog;
+    const blog = this.props.blogsView.blog;
+
+    if (!blog) return <CenteredLoading/>
+
     const image = { uri: blog.thumbnail_src };
 
     const actions = (

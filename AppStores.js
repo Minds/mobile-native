@@ -8,6 +8,7 @@ import channel from './src/channel/ChannelStores';
 import user from './src/auth/UserStore';
 import discovery from './src/discovery/DiscoveryStore';
 import blogs from './src/blogs/BlogsStore';
+import blogsView from './src/blogs/BlogsViewStore';
 import wallet from './src/wallet/WalletStore';
 import walletHistory from './src/wallet/WalletHistoryStore';
 import wire from './src/wire/WireStore';
@@ -39,6 +40,7 @@ const stores = {
   user,
   discovery,
   blogs,
+  blogsView,
   wallet,
   walletHistory,
   wire,

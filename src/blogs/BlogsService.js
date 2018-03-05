@@ -19,6 +19,14 @@ class BlogsService {
         };
       });
   }
+
+  /**
+   * Load a blog entity
+   * @param {string} guid
+   */
+  loadEntity(guid) {
+    return api.get('api/v1/blog/'+guid);
+  }
 }
 
 export default new BlogsService();
