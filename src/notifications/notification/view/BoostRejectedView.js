@@ -34,7 +34,7 @@ export default class BoostRejectedView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text>Your boos {entity.params.points} {description} was rejected: <Text style={styles.link}>{entity.params.channel}</Text> {reason} Your points have been credited back to your wallet.</Text>
+        <Text>Your boos {entity.params.points} {description} was rejected for <Text style={styles.link}>{entity.params.channel}</Text> {reason}. Your points have been credited back to your wallet.</Text>
       </View>
     )
   }
