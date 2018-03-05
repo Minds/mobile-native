@@ -6,7 +6,10 @@ class WithdrawService {
     const response = await apiService.get(`api/v2/blockchain/wallet/balance`);
 
     if (response && typeof response.addresses !== 'undefined') {
-      return balance = response.addresses[1].balance / Math.pow(10, 18);
+      return {
+        balance: response.addresses[1].balance / Math.pow(10, 18),
+        available: response.addresses[1].available / Math.pow(10, 18)
+      }
     } else {
       throw new Error('Error reading balances');
     }

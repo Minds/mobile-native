@@ -36,6 +36,8 @@ export default class WithdrawScreen extends Component {
     error: '',
     hasWithdrawnToday: false,
     balance: 0,
+    available: 0,
+    withholding: 0,
   };
 
   static navigationOptions = {
@@ -80,17 +82,23 @@ export default class WithdrawScreen extends Component {
   }
 
   async getBalance() {
-    const balance = await WithdrawService.getBalance();
+    const { balance, available } = await WithdrawService.getBalance();
 
-    this.setState({ balance });
-    this.setAmount(balance);
+    let withholding = 0;
+
+    if (balance > available) {
+      withholding = balance - available;
+    }
+
+    this.setState({ balance, available, withholding });
+    this.setAmount(available);
   }
 
   canWithdraw() {
     return !this.state.hasWithdrawnToday &&
       !this.state.inProgress &&
       parseFloat(this.state.amount) > 0 &&
-      parseFloat(this.state.amount) <= this.state.balance;
+      parseFloat(this.state.amount) <= this.state.available;
   }
 
   async withdraw() {
@@ -152,9 +160,12 @@ export default class WithdrawScreen extends Component {
     return (
       <View style={style.formWrapperView}>
         <Text style={style.legendText}>
-          You can request to withdraw your token rewards to your 'onchain' wallet below.
+          You can request to withdraw your token rewards to your 'OnChain' wallet below.
           Note: a small amount of ETH will be charged to cover the transaction fee.
-          Withdrawals may take a few hours to complete.
+          Withdrawals may take a few hours to complete. {
+            !!this.state.withholding ?
+            `${number(this.state.withholding, 0, 4)} tokens are unavailable due to credit card payment. They will be released after 30 days the payment occurred.` : ''
+          }
         </Text>
 
         <View style={style.formView}>
