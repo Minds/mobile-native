@@ -1,5 +1,7 @@
 // export const MINDS_URI = 'https://www.minds.com/';
 // export const MINDS_URI = 'http://dev.minds.io/';
+
+// remember to update deeplink uri on AndroidManifest.xml !!!
 export const MINDS_URI = 'https://walrus.minds.com/';
 
 export const MINDS_URI_SETTINGS = {
@@ -19,3 +21,12 @@ export const MINDS_FEATURES = {
   monetization: true,
   legacy: false,
 };
+
+/**
+ * Deeplink to screen/params maping
+ */
+export const MINDS_DEEPLINK = [
+  ['newsfeed/:guid', 'Activity'],
+  ['blog/view/:guid', 'BlogView'],
+  [':username', 'Channel'],
+]
