@@ -1,11 +1,20 @@
 import { MINDS_CDN_URI } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
+import UserStore from '../auth/UserStore';
 
 /**
  * User model
  */
 export default class UserModel extends BaseModel {
+
+  getOwnerIcontime() {
+    if(UserStore.me && UserStore.me.guid === this.guid) {
+      return UserStore.me.icontime;
+    } else {
+      return this.guid;
+    }
+  }
 
   /**
    * Get banner source
@@ -26,7 +35,7 @@ export default class UserModel extends BaseModel {
    * @param {string} size
    */
   getAvatarSource(size='medium') {
-    return { uri: `${MINDS_CDN_URI}icon/${this.guid}/${size}/${this.icontime}`, headers: api.buildHeaders()};
+    return { uri: `${MINDS_CDN_URI}icon/${this.guid}/${size}/${this.getOwnerIcontime()}`, headers: api.buildHeaders()};
   }
 
   /**
