@@ -177,7 +177,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
       <View style={styles.itemContainer}>
 
         <View style={styles.itemBody}>
-          <Text style={styles.label}>Label</Text>
+          <Text style={styles.label}>Name</Text>
           <View style={styles.supportingTextContainer}>
             <Text style={[styles.supportingText, { minWidth: 200 }]}>eg. Mobile Spending</Text>
           </View>
@@ -409,13 +409,13 @@ export default class BlockchainWalletDetailsScreen extends Component {
 
         <View style={[ CommonStyle.flexContainer, { flex: 1 } ]}>
 
+          {this.state.editable && this.labelItem()}
+
           {!this.state.edit && this.qrCode()}
 
           {this.balanceItem()}
 
           {!this.state.offchain && this.receiverItem()}
-         
-          {this.state.editable && this.labelItem()}
 
           {this.state.importable && this.importItem()}
 
@@ -478,7 +478,6 @@ const styles = StyleSheet.create({
   itemSpacer: {
     flex: 1,
   },
-
   label: {
     color: '#444',
     fontSize: 16,
@@ -523,6 +522,7 @@ const styles = StyleSheet.create({
 
   aliasTextInput: {
     fontSize: 16,
+    width: 150,
     fontWeight: '700',
   },
   aliasTextInputReadonly: {
