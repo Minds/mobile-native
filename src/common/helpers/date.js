@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 function pad(n, width, z) {
   z = z || '0';
   n = n + '';
@@ -5,38 +7,21 @@ function pad(n, width, z) {
 }
 
 export default function formatDate(timestamp, format = 'datetime') {
-  const t = new Date(timestamp * 1000);
-
   let options;
 
   switch (format) {
     case 'date':
-      options = {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-      }
+      options = 'MMM DD, YYYY';
       break;
-
     case 'time':
-      options = {
-        hour: '2-digit',
-        minute: '2-digit',
-      }
+      options = 'hh:mm';
       break;
-
     case 'datetime':
     default:
-      options = {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      };
+      options = 'MMM DD, YYYY, HH:MM';
   }
 
-  return t.toLocaleString('en-US', options).toUpperCase();
+  return moment(timestamp * 1000).format(options);
 
   // const months = [
   //   'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'
