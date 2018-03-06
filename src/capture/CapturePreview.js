@@ -27,6 +27,7 @@ export default class CapturePreview extends PureComponent {
       case 'image/jpeg':
       default:
         body = <Image
+          resizeMode='contain'
           source={{ uri: this.props.uri }}
           style={styles.preview}
         />
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'stretch',
+    backgroundColor: 'black'
   },
   preview: {
     flex: 1,

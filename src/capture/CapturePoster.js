@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Icon } from 'react-native-elements'
 import {
   NavigationActions
 } from 'react-navigation';
@@ -29,6 +29,7 @@ import RichEmbedService from '../common/services/rich-embed.service';
 import CaptureMetaPreview from './CaptureMetaPreview';
 import CapturePostButton from './CapturePostButton';
 import { CommonStyle } from '../styles/Common';
+import Colors from '../styles/Colors';
 
 @inject('user', 'navigatorStore', 'capture', 'newsfeed')
 @observer
@@ -124,7 +125,7 @@ export default class CapturePoster extends Component {
             uri={attachment.uri}
             type={attachment.type}
           />
-          <Icon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
+          <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
         </View>}
 
         <CaptureGallery
@@ -344,8 +345,10 @@ const styles = StyleSheet.create({
   },
   deleteAttachment: {
     position: 'absolute',
+    backgroundColor:'#4690DF',
+    width:28,
+    height:28,
     right: 8,
     top: 0,
-    color: '#FFF'
   }
 });
