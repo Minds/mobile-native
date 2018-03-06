@@ -1,7 +1,7 @@
 import { MINDS_CDN_URI } from "../../config/Config";
 
 export default function mediaProxyUrl(url, size = 1024) {
-  if (!url || url.indexOf('http') !== 0) {
+  if (!url || typeof url !== 'string') {
     return url;
   }
 
