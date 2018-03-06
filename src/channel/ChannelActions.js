@@ -93,8 +93,8 @@ export default class ChannelActions extends Component {
     const channel = this.props.channel.channel;
 
     return (
-      <View>
-        <Icon name="md-settings" style={ styles.icon } onPress={() => this.showActionSheet()} size={20} />
+      <View style={styles.wrapper}>
+        <Icon name="md-settings" style={ styles.icon } onPress={() => this.showActionSheet()} size={24} />
         <ActionSheet
           ref={o => this.ActionSheet = o}
           title={title}
@@ -110,9 +110,9 @@ export default class ChannelActions extends Component {
 const styles = StyleSheet.create({
 	wrapper: {
     backgroundColor: '#FFF',
-    flex: 1,
+    paddingLeft: 8
   },
   icon: {
-    color: '#444',
+    color: '#888888',
   },
 });
