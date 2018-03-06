@@ -38,6 +38,7 @@ import WelcomeChatView from './view/WelcomeChatView';
 import WelcomeDiscoverView from './view/WelcomeDiscoverView';
 import WelcomePostView from './view/WelcomePostView';
 import WelcomePointsView from './view/WelcomePointsView';
+import WireHappenedView from './view/WireHappenedView';
 
 /**
  * Main Notification row Component
@@ -162,6 +163,10 @@ export default class Notification extends Component {
 
       case "welcome_post":
         return <WelcomePostView entity={entity} navigation={this.props.navigation} styles={styles} />
+        
+      case "wire_happened":
+        return <WireHappenedView entity={entity} navigation={this.props.navigation} styles={styles} />
+        
 
       default:
         return (
