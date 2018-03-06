@@ -75,10 +75,16 @@ class NotificationsStore {
       return Promise.resolve();
     }
     this.loading = true;
+
+    const filter = this.filter;
+    
     // always return promise for refresh!
     return getFeed(this.list.offset, this.filter)
-      .then( feed => {
-        this.list.setList(feed);
+      .then(feed => {
+        // prevent race conditions when filter change
+        if (filter == this.filter) {
+          this.list.setList(feed);
+        }
       })
       .finally(() => {
         this.loading = false;
