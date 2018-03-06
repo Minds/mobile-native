@@ -31,7 +31,6 @@ class WalletStore {
     }
 
     this.refreshing = true;
-  
 
     const { balance, addresses } = await walletService.getBalances();
     this.balance = balance;
@@ -68,6 +67,9 @@ class WalletStore {
     this.addresses = [];
     this.refreshing = false;
     this.loaded = false;
+    // Onboarding
+    this.onboardingShown = false;
+    storageService.removeItem('walletOnboardingComplete');
   }
 
   // TODO: Implement forced auto-refresh every X minutes
@@ -85,12 +87,6 @@ class WalletStore {
 
   async setOnboardingComplete(value) {
     await storageService.setItem('walletOnboardingComplete', !!value);
-  }
-
-  async reset() {
-    // Onboarding
-    this.onboardingShown = false;
-    await storageService.removeItem('walletOnboardingComplete');
   }
 }
 
