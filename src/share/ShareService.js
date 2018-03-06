@@ -25,8 +25,7 @@ class ShareService {
   share(title, url) {
     msg = {
       title: title,
-      message: title + ' ' + url,
-      url: url
+      message: url,
     };
 
     opt = {
