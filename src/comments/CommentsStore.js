@@ -104,9 +104,9 @@ export default class CommentsStore {
   @action
   setComments(response) {
     if (response.comments) {
-      let array = this.comments.concat(response.comments.reverse())
-      this.comments = CommentModel.createMany(array);
-     
+      let comments = this.comments;
+      this.comments = [];
+      this.comments = response.comments.concat(CommentModel.createMany(comments));
     }
     this.reversed = response.reversed;
     this.loadNext = response['load-next'];

@@ -37,7 +37,7 @@ export default class LikeView extends Component {
     switch (this.props.entity.entityObj.type) {
       case "comment":
         params.guid = this.props.entity.entityObj.parent_guid;
-        screen = 'Comments';
+        screen = 'Activity';
         break;
       default:
         params.entity = this.props.entity.entityObj;

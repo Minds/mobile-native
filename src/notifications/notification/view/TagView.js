@@ -18,7 +18,7 @@ export default class TagView extends Component {
   navToActivity = () => {
     const isComment = this.props.entity.entityObj.type == 'comment';
     if (isComment) {
-      this.props.navigation.navigate('Comments', { entity: this.props.entity.entityObj });
+      this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
     } else {
       this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
     }

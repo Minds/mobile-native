@@ -39,7 +39,7 @@ export default class Router {
           let entity_type = data.json.entity_type.split(':');
 
           if (entity_type[0] === 'comment') {
-            navigation.get().navigate('Comments', { guid: data.json.parent_guid });
+            navigation.get().navigate('Activity', { guid: data.json.parent_guid });
           } else if (entity_type[0] === 'activity') {
             navigation.get().navigate('Activity', { guid: data.json.entity_guid });
           } else if (entity_type[1] === 'blog') {
@@ -58,7 +58,7 @@ export default class Router {
           break;
 
         case 'comment':
-          navigation.get().navigate('Comments', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid });
+          navigation.get().navigate('Activity', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid });
           break;
 
         default:

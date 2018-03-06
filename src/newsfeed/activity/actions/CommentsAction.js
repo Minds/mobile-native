@@ -2,6 +2,8 @@ import React, {
   PureComponent
 } from 'react';
 
+import { observer, inject } from 'mobx-react/native';
+
 import {
   Text,
   StyleSheet,
@@ -21,6 +23,8 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 /**
  * Comments Action Component
  */
+@inject('navigatorStore')
+@observer
 export default class CommentsAction extends PureComponent {
 
   /**
@@ -39,6 +43,9 @@ export default class CommentsAction extends PureComponent {
    * Open comments screen
    */
   openComments = () => {
-    this.props.navigation.navigate('Comments', { entity: this.props.entity });
+    if(this.props.navigatorStore.currentScreen == 'Activity' ){
+      return;
+    }
+    this.props.navigation.navigate('Activity', { entity: this.props.entity });
   }
 }

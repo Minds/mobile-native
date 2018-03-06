@@ -5,7 +5,7 @@ import LoginScreen from './src/auth/LoginScreen';
 import TabsScreen from './src/tabs/TabsScreen';
 import NotificationsScreen from './src/notifications/NotificationsScreen';
 import NotificationsSettingsScreen from './src/notifications/NotificationsSettingsScreen';
-import CommentsScreen from './src/comments/CommentsScreen';
+import ActivityScreen from './src/newsfeed/ActivityScreen';
 import ChannelScreen from './src/channel/ChannelScreen';
 import ChannelSubscribers from './src/channel/subscribers/ChannelSubscribers';
 import CapturePoster from './src/capture/CapturePoster';
@@ -24,7 +24,6 @@ import BoostConsoleScreen from './src/boost/BoostConsoleScreen';
 import BlogsListScreen from './src/blogs/BlogsListScreen';
 import BlogsViewScreen from './src/blogs/BlogsViewScreen';
 import FabScreen from './src/wire/FabScreen';
-import ActivityScreen from './src/newsfeed/ActivityScreen';
 import ViewImageScreen from './src/media/ViewImageScreen';
 import BoostScreen from './src/boost/creator/BoostScreen';
 import ContributionsScreen from "./src/wallet/tokens/ContributionsScreen";
@@ -73,8 +72,9 @@ const Stack = StackNavigator({
   Capture: {
     screen: CapturePoster
   },
-  Comments: {
-    screen: CommentsScreen
+  Activity: {
+    screen: ActivityScreen,
+    path: 'activity/:guid',
   },
   DiscoveryView: {
     screen: DiscoveryViewScreen
@@ -118,10 +118,6 @@ const Stack = StackNavigator({
   },
   WireFab: {
     screen: FabScreen
-  },
-  Activity: {
-    screen: ActivityScreen,
-    path: 'activity/:guid',
   },
   WalletHistory: {
     screen: WalletHistoryScreen
