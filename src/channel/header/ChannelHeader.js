@@ -101,7 +101,7 @@ export default class ChannelHeader extends Component {
    */
   getAvatar() {
     if (this.state.preview_avatar) {
-      return this.state.preview_avatar;
+      return { uri: this.state.preview_avatar };
     }
 
     return this.props.channel.channel.getAvatarSource();
