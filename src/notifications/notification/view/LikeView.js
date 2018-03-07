@@ -62,26 +62,26 @@ export default class LikeView extends Component {
     switch (entity.entityObj.type) {
       case "comment":
         return (
-          <Text> <Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}> your comment </Text></Text>
+          <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}> your comment </Text></Text>
         )
       case "activity":
         if (entity.entityObj.title) {
           return (
-            <Text> <Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
+            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
           )
         } else {
           return (
-            <Text> <Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>your activity</Text></Text>
+            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>your activity</Text></Text>
           )
         }
       case "object":
         if (entity.entityObj.title) {
           return (
-            <Text> <Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
+            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
           )
         } else {
           return (
-            <Text> <Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>your {entity.entityObj.subtype}</Text></Text>
+            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>your {entity.entityObj.subtype}</Text></Text>
           )
         }
       default:
