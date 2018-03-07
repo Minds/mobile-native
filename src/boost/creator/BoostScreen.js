@@ -459,6 +459,11 @@ export default class BoostScreen extends Component {
 
             switch (payload.type) {
               case 'onchain':
+                
+		if (this.state.target && !this.state.target.eth_wallet) {
+                  throw new VisibleError('User cannot receive tokens.');
+                }
+
                 nonce = {
                   method: 'onchain',
                   txHash: await BlockchainBoostService.create(guid, amount, checksum),

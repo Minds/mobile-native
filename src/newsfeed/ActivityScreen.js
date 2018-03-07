@@ -56,14 +56,20 @@ export default class ActivityScreen extends Component {
     const params = this.props.navigation.state.params;
     if (params.entity) {
       this.entity = ActivityModel.checkOrCreate(params.entity);
-      this.loadComments();
     } else {
       getSingle(params.guid)
         .then(resp => {
           this.entity = ActivityModel.checkOrCreate(resp.activity);
-          this.loadComments();
         });
     }
+  }
+  
+  componentDidMount() {
+    this.loadComments()
+      .then(() => {
+        if (this.comments.comments.length )
+        this.scrollToBottom();
+      })
   }
 
   componentWillUnmount() {
@@ -81,61 +87,23 @@ export default class ActivityScreen extends Component {
               navigation={ this.props.navigation }
               autoHeight={true}
             />
-            { this.comments.loadPrevious ?
+            { this.comments.loadPrevious && !this.comments.loading ?
                 <TouchableHighlight
                 onPress={() => { this.loadComments()}}
                 underlayColor = 'transparent'
-                style = {ComponentsStyle.bluebutton}
+                style = {styles.loadCommentsContainer}
               >
-                <Text style={{color: colors.primary}} > LOAD EARLIER </Text>
+                <Text style={styles.loadCommentsText}> LOAD EARLIER </Text>
               </TouchableHighlight> : null
             }
             
           </View>;
   }
 
-  /**
-   * Render
-   */
-  render() {
-    let actionsheet = null;
-
-    if (Platform.OS != 'ios') {
-      actionsheet = <ActionSheet
-        ref={o => this.actionSheet = o}
-        options={['Cancel', 'Images', 'Videos']}
-        onPress={this._selectMediaType}
-        cancelButtonIndex={0}
-      />
+  scrollToBottom() {
+    if (this.entity && this.props.navigation.state.params.scrollToBottom) {
+      setTimeout(() => this.listRef.scrollToEnd(), 300); //delay to allow rendering
     }
-
-    return (
-      <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={64}>
-        <View style={{flex:14}}>
-          { this.comments.loaded ?
-            <FlatList
-              ListHeaderComponent={this.getHeader()}
-              data={this.comments.comments.slice()}
-              renderItem={this.renderComment}
-              keyExtractor={item => item.guid}
-              initialNumToRender={25}
-              refreshing={this.comments.refreshing}
-              style={styles.listView}
-              inverted={false}
-            /> :
-            <CenteredLoading/>
-          }
-        </View>
-        { this.renderPoster() }
-        { actionsheet }
-        <ActionSheet
-          ref={o => this.actionAttachmentSheet = o}
-          options={['Cancel', 'Gallery', 'Photo', 'Video']}
-          onPress={this._selectMediaSource}
-          cancelButtonIndex={0}
-        />
-      </KeyboardAvoidingView>
-    );
   }
 
   renderPoster() {
@@ -305,7 +273,7 @@ export default class ActivityScreen extends Component {
     }
   }
 
-  loadComments = () => {
+  loadComments = async () => {
     const entity = this.entity;
     let guid;
     switch (entity.type) {
@@ -323,7 +291,7 @@ export default class ActivityScreen extends Component {
         guid = entity.guid;
     }
 
-    this.comments.loadComments(guid);
+    await this.comments.loadComments(guid);
   }
 
   renderComment = (row) => {
@@ -340,6 +308,52 @@ export default class ActivityScreen extends Component {
       </View>
     );
   }
+
+
+  /**
+   * Render
+   */
+  render() {
+    let actionsheet = null;
+
+    if (Platform.OS != 'ios') {
+      actionsheet = <ActionSheet
+        ref={o => this.actionSheet = o}
+        options={['Cancel', 'Images', 'Videos']}
+        onPress={this._selectMediaType}
+        cancelButtonIndex={0}
+      />
+    }
+
+    return (
+      <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={64}>
+        <View style={{flex:14}}>
+          { this.entity ?
+            <FlatList
+              ref={ ref => this.listRef = ref }
+              ListHeaderComponent={this.getHeader()}
+              data={this.comments.comments.slice()}
+              renderItem={this.renderComment}
+              keyExtractor={item => item.guid}
+              initialNumToRender={25}
+              refreshing={this.comments.refreshing}
+              style={styles.listView}
+            /> :
+            <CenteredLoading/>
+          }
+        </View>
+        { this.renderPoster() }
+        { actionsheet }
+        <ActionSheet
+          ref={o => this.actionAttachmentSheet = o}
+          options={['Cancel', 'Gallery', 'Photo', 'Video']}
+          onPress={this._selectMediaSource}
+          cancelButtonIndex={0}
+        />
+      </KeyboardAvoidingView>
+    );
+  }
+
 }
 
 let paddingBottom = 0;
@@ -424,5 +438,17 @@ const styles = StyleSheet.create({
     right: 8,
     top: 0,
     color: '#FFF'
-  }
+  },
+  loadCommentsContainer: {
+    backgroundColor: '#EEE',
+    borderRadius: 3,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    padding: 8,
+    margin: 8,
+  },
+  loadCommentsText: {
+    color: '#888',
+    fontSize: 10,
+  },
 });

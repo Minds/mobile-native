@@ -320,6 +320,7 @@ const styles = StyleSheet.create({
   },
   poster: {
     padding: 12,
+    paddingTop: 24,
     flex: 1,
   },
   posterButton: {

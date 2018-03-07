@@ -44,9 +44,10 @@ const Tabs = (
     }
   }, {
     tabBarPosition: 'bottom',
-    animationEnabled: true,
+    animationEnabled: false,
+    swipeEnabled: true,
     lazy: false,
-    removeClippedSubviews: false,
+    removeClippedSubviews: true,
     navigationOptions: ({ navigation }) => ({
       tabBarOnPress: (e) => {
         e.jumpToIndex(e.scene.index);

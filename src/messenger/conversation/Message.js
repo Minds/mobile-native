@@ -17,6 +17,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import formatDate from '../../common/helpers/date';
 import colors from '../../styles/Colors';
 import { CommonStyle } from '../../styles/Common';
 import { MINDS_CDN_URI } from '../../config/Config';
@@ -100,7 +101,7 @@ export default class Message extends PureComponent {
             </TouchableOpacity>
           </View>
           { this.state.showDate ?
-            <Text selectable={true} style={[styles.messagedate, styles.rightText]}>Dec 6, 2017, 11:47:46 AM</Text>
+            <Text selectable={true} style={[styles.messagedate, styles.rightText]}>{formatDate(this.props.message.time_created)}</Text>
             : null }
         </View>
       );

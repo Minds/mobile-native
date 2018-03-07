@@ -46,6 +46,9 @@ export default class CommentsAction extends PureComponent {
     if(this.props.navigatorStore.currentScreen == 'Activity' ){
       return;
     }
-    this.props.navigation.navigate('Activity', { entity: this.props.entity });
+    this.props.navigation.navigate('Activity', { 
+      entity: this.props.entity,
+      scrollToBottom: true,
+    });
   }
 }

@@ -255,10 +255,10 @@ export default class BoostsCarousel extends PureComponent {
 
     return (
       <View style={[this.styles.flexContainer] }>
-        <View style={[CommonStyle.rowJustifyEnd]}>
+        { false && <View style={[CommonStyle.rowJustifyEnd]}>
           <Icon type='material-community' name='settings' size={20} onPress={this.onPressOptions} />
-        </View>
-        { this.pagination }
+        </View> }
+        { false && this.pagination }
         <ScrollView scrollEnabled={false} style={this.styles.itemHeight}>
           { this.showCarousel() }
         </ScrollView>

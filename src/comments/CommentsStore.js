@@ -40,7 +40,7 @@ export default class CommentsStore {
   /**
    * Load Comments
    */
-  loadComments(guid, limit = 25) {
+  loadComments(guid, limit = 12) {
     if (this.cantLoadMore(guid)) {
       return;
     }
@@ -107,6 +107,10 @@ export default class CommentsStore {
       let comments = this.comments;
       this.comments = [];
       this.comments = response.comments.concat(CommentModel.createMany(comments));
+
+      if (response.comments.length < 12) { //nothing more to load
+        response['load-previous'] = '';
+      }
     }
     this.reversed = response.reversed;
     this.loadNext = response['load-next'];

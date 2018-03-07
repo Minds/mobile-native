@@ -146,12 +146,6 @@ export default class MindsVideo extends PureComponent {
   }
 
   pause() {
-    setTimeout(() => {
-      this.setState({
-        showOverlay: false,
-      });
-    }, 1000);
-
     KeepAwake.deactivate();
 
     this.setState({

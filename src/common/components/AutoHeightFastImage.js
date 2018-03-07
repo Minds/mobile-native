@@ -2,11 +2,16 @@ import React, { PureComponent } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import FastImage from 'react-native-fast-image';
+import { createImageProgress } from 'react-native-image-progress';
+import ProgressCircle from 'react-native-progress/Circle';
+
 const { source, resizeMode, ...autoHeightImagePropTypes } = Image.propTypes;
 
 export const NOOP = () => {};
 export const DEFAULT_WIDTH = 0;
 export const DEFAULT_HEIGHT = 0;
+
+const ProgressFastImage = createImageProgress(FastImage);
 
 /**
  * based in https://github.com/vivaxy/react-native-auto-height-image
@@ -85,7 +90,9 @@ export default class AutoHeightFastImage extends PureComponent {
     // remove `width` prop from `restProps`
     const { source, style, width, ...restProps } = this.props;
     return (
-      <FastImage
+      <ProgressFastImage
+        indicator={ProgressCircle}
+        threshold={150}
         source={source}
         style={[this.styles.image, style]}
         {...restProps}
