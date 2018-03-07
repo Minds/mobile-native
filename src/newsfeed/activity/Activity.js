@@ -102,6 +102,7 @@ export default class Activity extends Component {
             entity={ entity }
             navigation={this.props.navigation}
             style={ styles.media }
+            newsfeed={this.props.newsfeed}
             autoHeight={ this.props.autoHeight }
             />
           { this.showActions() }

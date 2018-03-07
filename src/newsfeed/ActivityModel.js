@@ -25,6 +25,7 @@ export default class ActivityModel extends BaseModel {
     'thumbs:down:count',
     'thumbs:up:count',
     'paywall',
+    'mature',
   ]
 
   /**

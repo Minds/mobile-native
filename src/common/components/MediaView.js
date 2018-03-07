@@ -170,6 +170,13 @@ export default class MediaView extends Component {
    * Nav to full image with zoom
    */
   navToImage = () => {
+    
+    // if is explicit then should toggle
+    if (this.props.entity.mature) {
+      this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid);
+      return;
+    }
+
     // if is a rich embed should load link
     if (this.props.entity.perma_url) {
       this.openLink();
