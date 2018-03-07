@@ -95,7 +95,7 @@ export default class WalletScreen extends Component {
               </View>
               <View style={styles.item}>
                 <Text style={styles.title}>Withdraw</Text>
-                <Text style={styles.subtitle}>Request withdrawal of your token rewards to your OnChain wallet.</Text>
+                <Text style={styles.subtitle}>Request a withdrawal of your token rewards to your OnChain address.</Text>
               </View>
             </TouchableOpacity>
 
@@ -105,7 +105,7 @@ export default class WalletScreen extends Component {
               </View>
               <View style={styles.item}>
                 <Text style={styles.title}>Contributions</Text>
-                <Text style={styles.subtitle}>Check and rewards and daily contribution scores</Text>
+                <Text style={styles.subtitle}>Check your rewards and daily contribution scores</Text>
               </View>
             </TouchableOpacity>
 
