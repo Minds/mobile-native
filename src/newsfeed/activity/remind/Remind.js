@@ -30,7 +30,7 @@ export default class RemindModal extends Component {
   render() {
     return (
       <ScrollView style={{flex:1, flexDirection:'column'}}>
-        <View style={{flex:1}}>
+        <View style={styles.posterWrapper}>
           <Poster isRemind={true} closeAction={this.props.onClose} guid={this.props.entity.guid} />
         </View>
         <View style={{flex:4}}>
@@ -42,6 +42,10 @@ export default class RemindModal extends Component {
 }
 
 const styles = StyleSheet.create({
+  posterWrapper: {
+    flex:1, 
+    paddingLeft:8
+  },
   modal: {
     flex:1,
     paddingTop: 10,
