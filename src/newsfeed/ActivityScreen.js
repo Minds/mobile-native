@@ -268,7 +268,20 @@ export default class ActivityScreen extends Component {
     if (Platform.OS == 'ios') {
       try {
         const response = await attachmentService.gallery('mixed');
-        if (response) this.props.onSelectedMedia(response);
+
+        if (response.didCancel) return;
+
+        if (response.error) {
+          alert('ImagePicker Error: ' + response.error);
+          return;
+        }
+
+        const attachment = this.comments.attachment;
+
+        const result = await attachment.attachMedia(response);
+
+        if (result === false) alert('caught upload error');
+
       } catch (e) {
         alert(e);
       }
