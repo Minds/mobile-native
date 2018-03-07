@@ -1,6 +1,7 @@
 import {
   observable,
-  action
+  action,
+  computed
 } from 'mobx';
 
 import {
@@ -35,6 +36,10 @@ class MessengerListStore {
   offset     = '';
   newsearch  = true;
   loaded     = false;
+
+  @computed get unread() {
+    return this.conversations.some(conv => conv.unread);
+  }
 
   constructor() {
     session.sessionStorage.getPrivateKey()

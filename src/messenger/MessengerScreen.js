@@ -17,12 +17,12 @@ import {
   observer
 } from 'mobx-react/native'
 
-import Icon from 'react-native-vector-icons/Ionicons';
 import ConversationView from './conversation/ConversationView';
 
 import SearchView from '../common/components/SearchView';
 import debounce from '../common/helpers/debounce';
 import { CommonStyle } from '../styles/Common';
+import MessengerTabIcon from './MessengerTabIcon';
 
 /**
  * Messenger Conversarion List Screen
@@ -36,7 +36,7 @@ export default class MessengerScreen extends Component {
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
-      <Icon name="md-chatbubbles" size={24} color={tintColor} />
+      <MessengerTabIcon tintColor={tintColor} />
     )
   }
 
@@ -47,24 +47,26 @@ export default class MessengerScreen extends Component {
 
     this.props.messengerList.loadList();
 
+    // listen socket on app start
+    this.props.messengerList.listen();
+
     // load data on enter
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Messenger', (s) => {
       this.props.messengerList.loadList(true);
-      this.props.messengerList.listen();
       this.setState({ active: true });
     });
 
     // clear data on leave
     this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Messenger', (s) => {
       this.setState({ active: false });
-      this.props.messengerList.unlisten();
     });
   }
-
+  
   /**
    * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
+    this.props.messengerList.unlisten();
     this.disposeEnter();
     this.disposeLeave();
   }
