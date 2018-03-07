@@ -160,9 +160,10 @@ export default class WithdrawScreen extends Component {
     return (
       <View style={style.formWrapperView}>
         <Text style={style.legendText}>
-          You can request to withdraw your token rewards to your 'OnChain' wallet below.
-          Note: a small amount of ETH will be charged to cover the transaction fee.
-          Withdrawals may take a few hours to complete. {
+          You can request to withdraw your OffChain token rewards to your OnChain address below. 
+          Note: a small amount of ETH will be charged to cover the transaction fee. 
+          Withdrawals may take up to a few hours to complete.
+         {
             !!this.state.withholding ?
             `${number(this.state.withholding, 0, 4)} tokens are unavailable due to credit card payment. They will be released after 30 days the payment occurred.` : ''
           }
