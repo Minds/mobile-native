@@ -115,7 +115,7 @@ export default class CommentsStore {
 
   @action
   setComment(comment) {
-    this.comments.unshift(comment);
+    this.comments.push(comment);
   }
 
   /**
