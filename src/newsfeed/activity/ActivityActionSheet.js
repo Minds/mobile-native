@@ -10,6 +10,7 @@ import {
   Button,
   StyleSheet,
   Modal,
+  Alert,
 
 } from 'react-native';
 
@@ -29,7 +30,7 @@ import { MINDS_URI } from '../../config/Config';
 const title = 'Actions';
 
 @inject("user")
-@inject("newsfeed")
+@inject("newsfeed", "navigatorStore")
 export default class ActivityActions extends Component {
 
   constructor(props) {
@@ -122,6 +123,19 @@ export default class ActivityActions extends Component {
           this.setState({
             options: this.getOptions(),
           });
+
+          Alert.alert(
+            'Sucess',
+            'Entity removed succesfully',
+            [
+              {text: 'OK', onPress: () => {}},
+            ],
+            { cancelable: false }
+          )
+
+          if(this.props.navigatorStore.currentScreen == 'Activity' ){
+            this.props.navigation.goBack();
+          }
         });
         break;
       case 'Set explicit':
