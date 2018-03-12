@@ -119,7 +119,7 @@ export default class CommentsStore {
 
   @action
   setComment(comment) {
-    this.comments.push(comment);
+    this.comments.push(CommentModel.create(comment));
   }
 
   /**
