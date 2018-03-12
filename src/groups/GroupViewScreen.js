@@ -139,7 +139,7 @@ export default class GroupViewScreen extends Component {
     }
 
     return (<View style={{flex:1}}> 
-              <CaptureFab navigation={this.props.navigation} />
+              <CaptureFab navigation={this.props.navigation} group={group} />
               {this.getList()}
             </View>);
   }

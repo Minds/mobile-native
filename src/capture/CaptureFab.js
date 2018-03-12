@@ -18,7 +18,7 @@ export default class CaptureFab extends Component {
    * Nav to activity full screen
    */
   navToCapture = () => {
-    this.props.navigation.navigate('Capture');
+    this.props.navigation.navigate('Capture', {group: this.props.group});
   }
 
   render() {

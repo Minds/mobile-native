@@ -181,10 +181,7 @@ export default class CapturePoster extends Component {
     }
 
     let newPost = { message: this.state.text }
-    if (this.props.attachmentGuid) {
-      newPost.attachment_guid = this.props.attachmentGuid;
-    }
-
+    
     if (attachment.guid) {
       newPost.attachment_guid = attachment.guid;
     }
@@ -194,7 +191,7 @@ export default class CapturePoster extends Component {
     if (this.state.meta) {
       newPost = Object.assign(newPost, this.state.meta);
     }
-
+    
     if (this.props.navigation.state.params && this.props.navigation.state.params.group) {
       newPost.container_guid = this.props.navigation.state.params.group.guid;
     }
