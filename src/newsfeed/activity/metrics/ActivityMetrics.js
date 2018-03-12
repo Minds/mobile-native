@@ -1,5 +1,5 @@
 import React, {
-  PureComponent
+  Component
 } from 'react';
 
 import {
@@ -10,6 +10,7 @@ import {
 
 import {
   inject,
+  observer
 } from 'mobx-react/native'
 
 import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -22,7 +23,8 @@ import abbrev from '../../../common/helpers/abbrev';
  * Activity metrics component
  */
 @inject("user")
-export default class ActivityMetrics extends PureComponent {
+@observer
+export default class ActivityMetrics extends Component {
 
   showCounter(value, label) {
     return value > 0 ?
@@ -45,10 +47,16 @@ export default class ActivityMetrics extends PureComponent {
 
     const isOwner = this.props.user.me.guid == entity.owner_guid;
 
+    const edited = entity.edited ? <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
+      <Text style={[styles.counter]}> · </Text>
+      <Text style={styles.counter}>EDITED</Text>
+    </View> : null
+
     return (
       <View style={[CommonStyle.rowJustifyCenter]}>
         {this.showCounter(entity.wire_totals.tokens, 'TOKENS')}
         {this.showCounter(entity.impressions, 'VIEWS')}
+        {edited}
       </View>
     )
   }

@@ -155,7 +155,6 @@ export default class OffsetFeedListStore extends OffsetListStore {
   @action
   setActivityMessage(activity, message) {
     activity.message = message;
+    activity.edited  = 1;
   }
-
-
 }
