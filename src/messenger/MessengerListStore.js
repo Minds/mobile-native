@@ -84,7 +84,7 @@ class MessengerListStore {
     const rows = 24;
     let fetching;
 
-    if(this.loading) return;
+    if(this.loading) return Promise.resolve();
     this.setLoading(true);
 
     // is a search?
@@ -94,7 +94,7 @@ class MessengerListStore {
     } else {
       if (this.loaded && !this.offset && !reload) {
         this.setLoading(false);
-        return;
+        return Promise.resolve();
       }
       if (reload) this.offset = '';
       fetching = messengerService.getConversations(rows, this.offset, this.newsearch);
@@ -188,6 +188,8 @@ class MessengerListStore {
 
   @action
   refresh() {
+    if (this.loading) return;
+
     this.refreshing    = true;
     this.loaded        = false;
     this.conversations = [];
