@@ -159,14 +159,18 @@ export default class LoginForm extends Component {
         .catch(err => {
           err.json()
             .then(errJson => {
-              if (errJson.error === 'invalid_grant') {
+              if (errJson.error === 'invalid_grant' || errJson.error === 'invalid_client') {
                 this.setState({ msg: i18n.t('auth.invalidGrant') });
+                return;
               }
 
               //TODO implement on backend and edit
               if (errJson.error === 'two_factor') {
                 this.setState({ twoFactorToken: errJson.message });
+                return;
               }
+
+              this.setState({ msg: errJson.message || 'Unknown error' });
             })
             .catch(err => {
               this.setState({ msg: 'Unexpected error, please try again.' });
