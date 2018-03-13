@@ -41,9 +41,11 @@ export default class ChannelStore {
   }
 
   @action
-  setChannel(channel) {
+  setChannel(channel, loaded = false) {
     this.channel = channel;
     this.active = true;
+    if(loaded) 
+      this.loaded = loaded;
   }
 
   @action

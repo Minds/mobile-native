@@ -101,7 +101,7 @@ export default class ChannelScreen extends Component {
       this.props.channel.store(response.channel.guid).feedStore.loadFeed();
 
       this.props.channel.store(response.channel.guid)
-        .setChannel(UserModel.create(response.channel));
+        .setChannel(UserModel.create(response.channel), true);
 
       this.setState({guid: response.channel.guid});
 
