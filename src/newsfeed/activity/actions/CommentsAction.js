@@ -1,5 +1,5 @@
 import React, {
-  PureComponent
+  Component
 } from 'react';
 
 import { observer, inject } from 'mobx-react/native';
@@ -25,7 +25,7 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
  */
 @inject('navigatorStore')
 @observer
-export default class CommentsAction extends PureComponent {
+export default class CommentsAction extends Component {
 
   /**
    * Render
