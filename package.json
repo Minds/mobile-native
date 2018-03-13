@@ -61,6 +61,7 @@
     "react-native-progress": "^3.4.0",
     "react-native-qrcode": "^0.2.6",
     "react-native-randombytes": "^3.0.0",
+    "react-native-read-more-text": "^1.0.0",
     "react-native-share": "^1.0.24",
     "react-native-simple-radio-button": "^2.7.1",
     "react-native-snap-carousel": "^3.5.0",

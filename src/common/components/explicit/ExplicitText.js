@@ -7,6 +7,7 @@ import {
 } from 'react-navigation';
 
 import {observer} from "mobx-react/native";
+import ReadMore from 'react-native-read-more-text';
 import entities from 'entities';
 import {
   Text,
@@ -16,24 +17,56 @@ import {
 
 import Tags from '../../../common/components/Tags';
 
+import colors from '../../../styles/Colors';
+
 @observer
 export default class ExplicitText extends Component {
 
   render() {
     const entity = this.props.entity;
     const message = entities.decodeHTML(this.props.entity.text);
+
+    const body = entity.mature ? <Text style={styles.mature}>{message.trim()}</Text> :
+      <Tags navigation={this.props.navigation} style={this.props.style}>{message.trim()}</Tags>
+
     return (
-        <View style={{flex:1}}>
-          { entity.mature ?
-	    <Text style={styles.mature}>{message.trim()}</Text>:
-            <Tags navigation={this.props.navigation} style={this.props.style}>{message.trim()}</Tags>
-          }
+        <View style={styles.container}>
+          <ReadMore
+            numberOfLines={4}
+            renderTruncatedFooter={this._renderTruncatedFooter}
+            renderRevealedFooter={this._renderRevealedFooter}
+          >
+            { body }
+          </ReadMore>
         </View>
+    );
+  }
+
+  _renderTruncatedFooter = (handlePress) => {
+    return (
+      <Text style={styles.readmore} onPress={handlePress}>
+        Read more
+      </Text>
+    );
+  }
+
+  _renderRevealedFooter = (handlePress) => {
+    return (
+      <Text style={styles.readmore} onPress={handlePress}>
+        Show less
+      </Text>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  readmore: {
+    color: colors.primary,
+    marginTop: 5
+  },
   mature: {
     color:'transparent',
     textShadowColor: 'rgba(107, 107, 107, 0.5)',
