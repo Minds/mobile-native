@@ -55,7 +55,7 @@ export default class ActivityEditor extends Component {
           onChangeText={(text) => this.setState({ text })}
           value={this.state.text}
         />
-        <View style={CommonStyle.rowJustifyEnd}>
+        <View style={[CommonStyle.rowJustifyEnd, {padding:8}]}>
           <Button title="Cancel" onPress={this.cancel} />
           <Button title="Save" backgroundColor={colors.primary} onPress={this.update} disabled={this.props.newsfeed.list.saving}/>
         </View>
