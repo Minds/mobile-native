@@ -86,16 +86,18 @@ export default class NotificationsScreen extends Component {
     let body;
     const list = this.props.notifications.list;
 
-    if (list.loaded || list.refreshing) {
+    if (list.loaded) {
       body = (
         <OptimizedFlatList
           data={list.entities.slice()}
           renderItem={this.renderRow}
-          keyExtractor={item => item.guid}
+          keyExtractor={item => item.rowKey}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
-          ListEmptyComponent={<Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>There are no notifications to load</Text>}
+          ListEmptyComponent={!this.props.notifications.loading && <Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>There are no notifications to load</Text>}
           onEndThreshold={0.05}
+          initialNumToRender={12}
+          windowSize={8}
           refreshing={list.refreshing}
           style={styles.listView}
         />

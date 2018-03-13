@@ -1,6 +1,7 @@
 import session from './session.service';
 import { MINDS_URI, MINDS_URI_SETTINGS } from '../../config/Config';
 import { btoa } from 'abab';
+import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill';
 
 class ApiService {
 
@@ -45,12 +46,12 @@ class ApiService {
 
   // Legacy (please, refactor!)
 
-  async get(url, params={}) {
+  async get(url, params={}, signal=null) {
     const paramsString = await this.buildParamsString(params);
     const headers = this.buildHeaders();
 
     return await new Promise((resolve, reject) => {
-      fetch(MINDS_URI + url + paramsString, { headers })
+      fetch(MINDS_URI + url + paramsString, { headers, signal })
         // throw if response status is not 200
         .then(resp => {
           if (!resp.ok) {

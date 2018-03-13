@@ -1,12 +1,12 @@
 import {
   observable,
-  action
+  action,
+  computed,
 } from 'mobx'
 
-import {
-  getFeed,
-  getCount
-} from './NotificationsService';
+import NotificationsService, { getFeed, getCount } from './NotificationsService';
+
+
 
 import OffsetListStore from '../common/stores/OffsetListStore';
 
@@ -23,6 +23,8 @@ class NotificationsStore {
    * Notification list store
    */
   list = new OffsetListStore('shallow');
+
+  service = new NotificationsService;
 
   /**
    * unread notifications counter
@@ -71,7 +73,7 @@ class NotificationsStore {
   /**
    * Load notification list
    */
-  loadList() {
+  async loadList(refresh = false) {
     // no more data? return
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
@@ -81,30 +83,37 @@ class NotificationsStore {
     const filter = this.filter;
     
     // always return promise for refresh!
-    return getFeed(this.list.offset, this.filter)
-      .then(feed => {
-        // prevent race conditions when filter change
-        if (filter == this.filter) {
-          this.list.setList(feed);
-        }
-      })
-      .finally(() => {
-        this.loading = false;
-      })
-      .catch(err => {
-        console.log('error', err);
-      })
+    try {
+      const feed = await this.service.getFeed(this.list.offset, this.filter)
+      // prevent race conditions when filter change
+      if (filter == this.filter) {
+        this.assignRowKeys(feed);
+        this.list.setList(feed, refresh);
+      }
+    } catch (err) {
+      console.log('error', err);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  /**
+   * Generate a unique Id for use with list views
+   * @param {object} feed
+   */
+  assignRowKeys(feed) {
+    feed.entities.forEach((entity, index) => {
+      entity.rowKey = `${entity.guid}:${index}:${this.filter}:${this.list.entities.length}`;
+    });
   }
 
   /**
    * Refresh list
    */
-  refresh() {
-    this.list.refresh();
-    this.loadList()
-      .finally(() => {
-        this.list.refreshDone();
-      });
+  async refresh() {
+    await this.list.refresh();
+    await this.loadList(true);
+    this.list.refreshDone();
   }
 
   /**
@@ -140,8 +149,7 @@ class NotificationsStore {
   @action
   setFilter(filter) {
     this.filter = filter;
-    this.list.clearList();
-    this.loadList();
+    this.refresh();
   }
 
   @action

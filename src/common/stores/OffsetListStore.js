@@ -5,6 +5,7 @@ import { revokeBoost, rejectBoost, acceptBoost} from '../../boost/BoostService';
  * Common infinite scroll list
  */
 export default class OffsetListStore {
+
   /**
    * list entities
    */
@@ -43,13 +44,18 @@ export default class OffsetListStore {
   }
 
   @action
-  setList(list) {
+  setList(list, replace = false) {
     this.loaded = true;
-    if (list.entities) {
+    if (list.entities && replace) {
+      this.entities = list.entities;
+    }
+
+    if (list.entities && !replace) {
       list.entities.forEach(element => {
         this.entities.push(element);
       });
     }
+
     this.offset = list.offset;
   }
 
