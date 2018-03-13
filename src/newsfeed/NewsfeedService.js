@@ -1,6 +1,87 @@
 import { Platform } from 'react-native';
+import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill';
 
 import api from './../common/services/api.service';
+
+
+export default class NewsfeedService {
+
+  controllers = {
+    getFeed: null
+  };
+
+  async _getFeed(endpoint, offset, limit) {
+    if (this.controllers._getFeed)
+      this.controllers._getFeed.abort();
+
+    this.controllers._getFeed = new AbortController();
+
+    try {
+      console.log('getting feed ' + endpoint);
+      const data = await api.get(endpoint, { offset, limit }, this.controllers._getFeed.signal);
+      console.log('got feed ' + endpoint);
+      return {
+        entities: data.activity,
+        offset: data['load-next'],
+      }
+    } catch (err) {
+      console.log('error');
+      throw "Ooops";
+    }
+  }
+
+  async getFeed(offset, limit = 12) {
+    return this._getFeed('api/v1/newsfeed/', offset, limit);
+  }
+
+  /**
+   * Fetch top newsfeed
+   * @param {string} offset
+   * @param {int} limit
+   */
+  async getFeedTop(offset, limit = 12) {
+    return this._getFeed('api/v1/newsfeed/top', offset, limit);
+  }
+
+  /**
+   * Fetch channel feed
+   * @param {string} guid
+   * @param {string} offset
+   * @param {int} limit
+   */
+  async getFeedChannel(guid, offset, limit = 12) {
+    return this._getFeed('api/v1/newsfeed/personal/' + guid, offset, limit);
+  }
+
+  /**
+   * Fetch boosted content
+   * @param {string} offset
+   * @param {int} limit
+  */
+  async getBoosts(offset, limit = 15, rating) {
+    if (this.controllers._getFeed)
+      this.controllers._getFeed.abort();
+
+    this.controllers._getFeed = new AbortController();
+    
+    try {
+      const data = await api.get('api/v1/boost/fetch/newsfeed', {
+          limit: limit || '',
+          offset: offset || '',
+          rating: rating || 1,
+          platform: Platform.OS === 'ios' ? 'ios' : 'other'
+        }, this.controllers._getFeed.signal);
+    
+        return {
+          entities: data.boosts||[],
+          offset: data['load-next'],
+        }
+    } catch (err) {
+
+    }
+  }
+
+}
 
 /**
  * Common function to fetch feeds

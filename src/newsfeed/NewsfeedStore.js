@@ -1,6 +1,6 @@
-import { observable, action } from 'mobx'
+import { observable, action, computed } from 'mobx'
 
-import { getFeedTop, getFeed, getBoosts , setViewed} from './NewsfeedService';
+import NewsfeedService, { getFeedTop, getFeed, getBoosts, setViewed } from './NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from './ActivityModel';
 
@@ -9,7 +9,22 @@ import ActivityModel from './ActivityModel';
  */
 class NewsfeedStore {
 
-  list = new OffsetFeedListStore('shallow');
+  stores = {
+    'subscribed': {
+      list: new OffsetFeedListStore('shallow'),
+      loading: false,
+    },
+    'top': {
+      list: new OffsetFeedListStore('shallow'),
+      loading: false,
+    },
+    'boostfeed': {
+      list: new OffsetFeedListStore('shallow'),
+      loading: false,
+    },
+  };
+
+  service = new NewsfeedService;
 
   viewed = [];
   @observable filter = 'subscribed';
@@ -19,35 +34,33 @@ class NewsfeedStore {
   /**
    * List loading
    */
-  loading = false;
   loadingBoost = true;
+
   /**
    * Load feed
    */
-  loadFeed() {
+  async loadFeed(refresh = false) {
+    const store = this.stores[this.filter];
+    const fetchFn = this.fetch;
 
-    const fetchFn = this.getFetchFunction();
-
-    if (this.list.cantLoadMore() || this.loading) {
+    if (store.list.cantLoadMore() || store.loading) {
       return Promise.resolve();
     }
-    this.loading = true;
+  
+    store.loading = true;
 
-    return fetchFn(this.list.offset)
-      .then(
-        feed => {
-          feed.entities = ActivityModel.createMany(feed.entities);
-          this.assignRowKeys(feed);
-          this.list.setList(feed);
-          this.loaded = true;
-        }
-      )
-      .finally(() => {
-        this.loading = false;
-      })
-      .catch(err => {
-        console.log('error', err);
-      });
+    try { 
+      const feed = await fetchFn(this.list.offset)
+      
+      feed.entities = ActivityModel.createMany(feed.entities);
+      this.assignRowKeys(feed);
+      store.list.setList(feed, refresh);
+      this.loaded = true;
+    } catch (e) {
+      console.log('error', err);
+    } finally {
+      store.loading = false;
+    }
   }
 
   /**
@@ -56,8 +69,18 @@ class NewsfeedStore {
    */
   assignRowKeys(feed) {
     feed.entities.forEach((entity, index) => {
-      entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
+      entity.rowKey = `${entity.guid}:${index}:${this.filter}:${this.list.entities.length}`;
     });
+  }
+
+  @computed
+  get list() {
+    return this.stores[this.filter].list;
+  }
+
+  @computed
+  get loading() {
+    return this.stores[this.filter].loading;
   }
 
   /**
@@ -88,14 +111,14 @@ class NewsfeedStore {
   /**
    * return service method based on filter
    */
-  getFetchFunction() {
+  get fetch() {
     switch (this.filter) {
       case 'subscribed':
-        return getFeed;
+        return this.service.getFeed.bind(this.service);
       case 'top':
-        return getFeedTop;
+        return this.service.getFeedTop.bind(this.service);
       case 'boostfeed':
-        return getBoosts;
+        return this.service.getBoosts.bind(this.service);
     }
   }
 
@@ -131,12 +154,10 @@ class NewsfeedStore {
   }
 
   @action
-  refresh() {
-    this.list.refresh();
-    this.loadFeed()
-      .finally(() => {
-        this.list.refreshDone();
-      });
+  async refresh() {
+    await this.list.refresh();
+    await this.loadFeed(true);
+    this.list.refreshDone();
   }
 
   @action
