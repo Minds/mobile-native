@@ -10,11 +10,25 @@ export default class AndroidPlatfom extends AbstractPlatform {
    * Init push service
    */
   init() {
-    console.log('init')
+    NotificationsAndroid.setNotificationReceivedListener((notification) => {
+      console.log("Notification received", notification);
+      //NotificationsAndroid.localNotification(notification.data);
+    });
+
+
     NotificationsAndroid.setRegistrationTokenUpdateListener((deviceToken) => {
-      //cd reconsole.log('token', deviceToken);
       this.token = deviceToken;
     });
+
+    NotificationsAndroid.setNotificationReceivedListener
+  }
+
+  /**
+   * Set app badge
+   * @param {integer} num 
+   */
+  setBadgeCount(num) {
+    NotificationsAndroid.setBadgeCount(num);
   }
 
   registerToken() {
@@ -33,7 +47,7 @@ export default class AndroidPlatfom extends AbstractPlatform {
    * Stop push notification service
    */
   stop() {
-    NotificationsAndroid.setNotificationOpenedListener(undefined);
+    NotificationsAndroid.clearNotificationOpenedListener();
   }
 
   /**

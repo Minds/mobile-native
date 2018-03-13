@@ -12,6 +12,9 @@ class PushService {
   push;
   router;
 
+  /**
+   * Constructor
+   */
   constructor() {
     // build platform instance
     const platform = (Platform.OS == 'ios') ? require('./push/ios-platform').default : require('./push/android-platform').default;
@@ -36,12 +39,26 @@ class PushService {
     this.push.init();
   }
 
+  /**
+   * Stop listen for push notification
+   */
   stop() {
     this.push.stop();
   }
 
+  /**
+   * Register push service token
+   */
   registerToken() {
     this.push.registerToken();
+  }
+
+  /**
+   * Set app badge
+   * @param {integer} num 
+   */
+  setBadgeCount(num) {
+    this.push.setBadgeCount(num);
   }
 }
 

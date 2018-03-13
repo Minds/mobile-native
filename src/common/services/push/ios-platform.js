@@ -26,6 +26,14 @@ export default class IosPlatfom extends AbstractPlatform {
   }
 
   /**
+   * Set app badge
+   * @param {integer} num 
+   */
+  setBadgeCount(num) {
+    NotificationsIOS.setBadgeCount(num);
+  }
+
+  /**
    * Set on notification opened handler
    * @param {function} handler
    */

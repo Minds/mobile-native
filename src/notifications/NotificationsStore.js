@@ -12,6 +12,8 @@ import OffsetListStore from '../common/stores/OffsetListStore';
 
 import session from '../common/services/session.service';
 
+import push from '../common/services/push.service';
+
 /**
  * Notifications Store
  */
@@ -145,6 +147,7 @@ class NotificationsStore {
   @action
   setUnread(count) {
     this.unread = count;
+    push.setBadgeCount(count);
   }
 
   @action
