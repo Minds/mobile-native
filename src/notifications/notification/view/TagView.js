@@ -20,8 +20,8 @@ export default class TagView extends Component {
   navToActivity = () => {
     const isComment = this.props.entity.entityObj.type == 'comment';
     if (isComment) {
-      if (this.props.entity.params && this.props.entity.params.parent && this.props.entity.params.parent.type === 'object') {
-        entityService.getEntity(this.props.entity.entityObj.parent_guid )
+      if (this.props.entity.params && this.props.entity.params.parent) {
+        entityService.getEntity(this.props.entity.entityObj.parent_guid)
           .then((entity) => {
             this.props.navigation.navigate('Activity', { entity: entity });
           })
@@ -29,9 +29,7 @@ export default class TagView extends Component {
             console.log('error');
             throw "Ooops";
           })
-      } else {
-        this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
-      }
+      } 
     } else {
       this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
     }
