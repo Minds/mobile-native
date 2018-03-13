@@ -24,20 +24,30 @@ export default class ExplicitText extends Component {
 
   render() {
     const entity = this.props.entity;
-    const message = entities.decodeHTML(this.props.entity.text);
+    const message = entities.decodeHTML(this.props.entity.text).trim();
 
-    const body = entity.mature ? <Text style={styles.mature}>{message.trim()}</Text> :
-      <Tags navigation={this.props.navigation} style={this.props.style}>{message.trim()}</Tags>
+    let body;
+
+    if (message == '') {
+      body = null;
+    } else {
+      body = 
+
+      body = <ReadMore
+        numberOfLines={4}
+        renderTruncatedFooter={this._renderTruncatedFooter}
+        renderRevealedFooter={this._renderRevealedFooter}
+      >
+        { entity.mature ? 
+          <Text style={styles.mature}>{message}</Text> :
+          <Tags navigation={this.props.navigation} style={this.props.style}>{message}</Tags> }
+      </ReadMore>
+    }
+
 
     return (
         <View style={styles.container}>
-          <ReadMore
-            numberOfLines={4}
-            renderTruncatedFooter={this._renderTruncatedFooter}
-            renderRevealedFooter={this._renderRevealedFooter}
-          >
             { body }
-          </ReadMore>
         </View>
     );
   }
