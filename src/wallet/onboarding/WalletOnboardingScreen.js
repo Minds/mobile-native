@@ -88,7 +88,7 @@ export default class WalletOnboardingScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={style.view}>
+      <ScrollView style={style.view} keyboardShouldPersistTaps='always'>
         {this.state.step === 0 && <WalletOnboardingWelcomeScreen
           onNext={this.nextStepAction}
           onSetNavNext={this.setNavNext}

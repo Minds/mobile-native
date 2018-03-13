@@ -74,7 +74,8 @@ export default class WalletScreen extends Component {
   render() {
     return (
       <View style={CommonStyle.flexContainer}>
-        <ScrollView style={ styles.mainContainer }>
+        <ScrollView style={ styles.mainContainer }
+          keyboardShouldPersistTaps='always'>
           {FeaturesService.has('crypto') && <WalletBalanceTokens />}
 
           <View>

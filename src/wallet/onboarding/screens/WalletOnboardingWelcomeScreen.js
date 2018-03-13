@@ -38,7 +38,7 @@ export default class WalletOnboardingWelcomeScreen extends Component {
 
         <Text style={style.p}>
           Tokens are the cryptocurrency used on Minds. Your total balance
-          of tokens will be stored in two different type of addresses.
+          of tokens will be stored in two different types of addresses.
         </Text>
 
         <View style={style.rows}>
