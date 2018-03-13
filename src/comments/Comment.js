@@ -67,10 +67,10 @@ export default class Comment extends Component {
       <View style={[CommonStyle.flexContainer ]}>
         <View style={styles.actionsContainer}>
           <Text style={styles.timestamp}>{formatDate(comment.time_created)}</Text>
-          <View style={{ flex: 2 }}></View>
+          <View style={{ flexGrow: 2 }}></View>
           <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter ]}>
-            <ThumbUpAction entity={comment} me={this.props.user.me} size={12}/>
-            <ThumbDownAction entity={comment} me={this.props.user.me} size={12} />
+            <ThumbUpAction entity={comment} me={this.props.user.me} size={16}/>
+            <ThumbDownAction entity={comment} me={this.props.user.me} size={16} />
           </View>
         </View>
       </View>
