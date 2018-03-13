@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   icon: {
-    color: '#eee',
+    color: '#888',
   },
   iconclose: {
     flex:1,
