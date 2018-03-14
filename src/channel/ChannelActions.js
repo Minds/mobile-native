@@ -20,6 +20,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import channelService from './ChannelService';
 import { MINDS_URI } from '../config/Config';
 import ActionSheet from 'react-native-actionsheet';
+import WireAction from '../newsfeed/activity/actions/WireAction';
 
 /**
  * Channel Actions
@@ -94,6 +95,7 @@ export default class ChannelActions extends Component {
 
     return (
       <View style={styles.wrapper}>
+        {!this.props.channel.channel.isOwner() && <WireAction owner={this.props.channel.channel} navigation={this.props.navigation}/>}
         <Icon name="md-settings" style={ styles.icon } onPress={() => this.showActionSheet()} size={24} />
         <ActionSheet
           ref={o => this.ActionSheet = o}
@@ -110,9 +112,13 @@ export default class ChannelActions extends Component {
 const styles = StyleSheet.create({
 	wrapper: {
     backgroundColor: '#FFF',
-    paddingLeft: 8
+    paddingLeft: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 60
   },
   icon: {
+    paddingLeft: 10,
     color: '#888888',
   },
 });

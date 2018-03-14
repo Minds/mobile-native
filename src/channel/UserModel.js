@@ -17,6 +17,13 @@ export default class UserModel extends BaseModel {
   }
 
   /**
+   * current user is owner of the channel
+   */
+  isOwner() {
+    return UserStore.me.guid === this.guid;
+  }
+
+  /**
    * Get banner source
    * @param {string} size
    */

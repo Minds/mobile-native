@@ -39,6 +39,6 @@ export default class WireAction extends PureComponent {
       return;
     }
 
-    this.props.navigation.navigate('WireFab', { owner: this.props.entity.ownerObj });
+    this.props.navigation.navigate('WireFab', { owner: this.props.owner });
   }
 }
