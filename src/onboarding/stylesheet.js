@@ -1,4 +1,4 @@
-import Colors from "../../styles/Colors";
+import Colors from "../styles/Colors";
 
 import { Platform } from "react-native";
 
@@ -57,22 +57,27 @@ export default {
 
   h1: {
     color: '#444',
-    fontSize: 30,
-    letterSpacing: 0.5,
+    fontSize: 36,
+    letterSpacing: 0.25,
     fontWeight: '700',
-    marginBottom: 15,
+    marginLeft: 8,
+    marginBottom: 16,
+    fontFamily: 'Roboto',
   },
   h2: {
     color: '#444',
-    fontSize: 20,
-    letterSpacing: 0.35,
+    fontSize: 26,
+    letterSpacing: 0.25,
     fontWeight: '700',
+    marginLeft: 8,
     marginBottom: 10,
+    fontFamily: 'Roboto',
   },
   p: {
     color: '#444',
     fontSize: 16,
     letterSpacing: 0.35,
+    marginLeft: 8,
     marginBottom: 10,
   },
   b: {

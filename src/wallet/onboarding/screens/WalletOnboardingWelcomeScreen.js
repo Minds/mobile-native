@@ -15,7 +15,8 @@ import NavNextButton from '../../../common/components/NavNextButton';
 
 import Colors from '../../../styles/Colors';
 
-import stylesheet from '../stylesheet';
+import stylesheet from '../../../onboarding/stylesheet';
+
 export default class WalletOnboardingWelcomeScreen extends Component {
   componentDidMount() {
     this.props.onSetNavNext(this.getNextButton());

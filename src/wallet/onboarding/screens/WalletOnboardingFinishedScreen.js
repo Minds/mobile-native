@@ -13,7 +13,7 @@ import NavNextButton from '../../../common/components/NavNextButton';
 
 import Colors from '../../../styles/Colors';
 
-import stylesheet from '../stylesheet';
+import stylesheet from '../../../onboarding/stylesheet';
 
 export default class WalletOnboardingFinishedScreen extends Component {
   componentDidMount() {

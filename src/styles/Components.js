@@ -75,10 +75,10 @@ export const ComponentsStyle = StyleSheet.create({
     borderColor: colors.primary
   },
   redbutton: {
-    margin:4,
-    padding:5,
+    margin: 4,
+    padding: 4,
     alignItems:'center',
-    borderRadius: 5,
+    borderRadius: 3,
     backgroundColor:'white',
     borderWidth:1,
     borderColor: colors.danger,

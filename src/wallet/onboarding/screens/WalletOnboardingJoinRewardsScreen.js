@@ -24,7 +24,7 @@ import NavNextButton from '../../../common/components/NavNextButton';
 
 import Colors from '../../../styles/Colors';
 
-import stylesheet from '../stylesheet';
+import stylesheet from '../../../onboarding/stylesheet';
 
 @inject('user', 'wallet')
 @observer  
@@ -194,7 +194,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
     return (
       <NavNextButton
         onPress={this.props.onNext}
-        title="SKIP. I DON'T WANT TO EARN TOKENS"
+        title="SKIP"
         color={Colors.darkGreyed}
       />
     );

@@ -20,7 +20,7 @@ import WalletOnboardingJoinRewardsScreen from './screens/WalletOnboardingJoinRew
 import WalletOnboardingOnChainSetupScreen from './screens/WalletOnboardingOnChainSetupScreen';
 import WalletOnboardingFinishedScreen from './screens/WalletOnboardingFinishedScreen';
 
-import stylesheet from './stylesheet';
+import stylesheet from '../../onboarding/stylesheet';
 
 @inject('user', 'wallet')
 @observer

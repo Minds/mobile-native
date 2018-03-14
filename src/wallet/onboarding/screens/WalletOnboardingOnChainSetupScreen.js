@@ -19,7 +19,7 @@ import NavNextButton from '../../../common/components/NavNextButton';
 
 import Colors from '../../../styles/Colors';
 
-import stylesheet from '../stylesheet';
+import stylesheet from '../../../onboarding/stylesheet';
 import BlockchainWalletService from '../../../blockchain/wallet/BlockchainWalletService';
 import BlockchainApiService from '../../../blockchain/BlockchainApiService';
 

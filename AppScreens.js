@@ -39,6 +39,7 @@ import WithdrawScreen from './src/wallet/tokens/WithdrawScreen';
 import WalletOnboardingScreen from "./src/wallet/onboarding/WalletOnboardingScreen";
 import ComingSoonScreen from './src/static-views/ComingSoonScreen';
 import NotSupportedScreen from './src/static-views/NotSupportedScreen';
+import OnboardingScreen from './src/onboarding/OnboardingScreen';
 
 /**
  * Main stack navigator
@@ -163,7 +164,10 @@ const Stack = StackNavigator({
   },
   NotSupported: {
     screen: NotSupportedScreen
-  }
+  },
+  OnboardingScreen: {
+    screen: OnboardingScreen,
+  },
 });
 
 export default Stack;
