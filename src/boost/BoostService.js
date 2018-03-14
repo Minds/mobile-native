@@ -1,17 +1,38 @@
 import api from './../common/services/api.service';
+import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill';
 
-export function getBoosts(offset, filter, peer_filter) {
-  return api.get('api/v2/boost/' + filter + '/' + peer_filter, { offset: offset, limit: 15 })
-    .then((data) => {
+export default class BoostService {
+
+  controllers = {
+    getBoosts: null
+  };
+
+  async getBoosts(offset, filter, peer_filter) {
+    if (this.controllers._getBoosts)
+      this.controllers._getBoosts.abort();
+
+    this.controllers._getBoosts = new AbortController();
+
+    try {
+      const data = await api.get('api/v2/boost/' + filter + '/' + peer_filter, 
+        { 
+          offset: offset, 
+          limit: 15 
+        },
+        this.controllers._getBoosts.signal
+      );
+    
       return {
         entities: data.boosts,
         offset: data['load-next'],
       }
-    })
-    .catch(err => {
+
+    } catch (err) {
       console.log('error', err);
       throw "Ooops";
-    })
+    }
+  }
+
 }
 
 export function revokeBoost(guid, filter) {

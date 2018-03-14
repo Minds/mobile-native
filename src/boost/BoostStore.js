@@ -7,6 +7,7 @@ import OffsetListStore from '../common/stores/OffsetListStore';
 import { getBoosts, revokeBoost, rejectBoost, acceptBoost} from './BoostService';
 
 import BoostModel from './BoostModel';
+import BoostService from './BoostService';
 
 /**
  * Boosts Store
@@ -17,6 +18,8 @@ class BoostStore {
    * Boost list store
    */
   @observable list = new OffsetListStore();
+
+  service = new BoostService();
 
   /**
    * Boosts list filter
@@ -32,23 +35,23 @@ class BoostStore {
   /**
    * Load boost list
    */
-  loadList() {
+  async loadList(refresh = false) {
     if (this.list.cantLoadMore() || this.loading) {
       return;
     }
     this.loading = true;
-    return getBoosts(this.list.offset, this.filter, this.filter === 'peer'? this.peer_filter: null)
-      .then( feed => {
-        this.assignRowKeys(feed);
-        feed.entities = BoostModel.createMany(feed.entities);
-        this.list.setList(feed);
-      })
-      .finally(() => {
-        this.loading = false;
-      })
-      .catch(err => {
-        console.log('error', err);
-      })
+
+    try {
+      const peer_filter = this.filter === 'peer' ? this.peer_filter : null;
+      const feed = await this.service.getBoosts(this.list.offset, this.filter, peer_filter);
+      this.assignRowKeys(feed);
+      feed.entities = BoostModel.createMany(feed.entities);
+      this.list.setList(feed, refresh);
+    } catch(err) {
+      console.log('error', err);
+    } finally {
+      this.loading = false;
+    }
   }
 
   /**
@@ -65,12 +68,10 @@ class BoostStore {
   /**
    * Refresh list
    */
-  refresh() {
-    this.list.refresh();
-    this.loadList()
-      .finally(() => {
-        this.list.refreshDone();
-      });
+  async refresh() {
+    await this.list.refresh();
+    await this.loadList();
+    this.list.refreshDone();
   }
 
   @action
