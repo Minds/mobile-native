@@ -22,7 +22,7 @@ export default class BoostSubmittedP2pView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text>{entity.params.points} points {description} is awaiting approval by <Text style={styles.link}>{entity.params.channel}</Text></Text>
+        <Text>{entity.params.points} points {description} is awaiting approval by <Text style={styles.link} onPress={this.navToChannel}>{entity.params.channel}</Text></Text>
       </View>
     )
   }

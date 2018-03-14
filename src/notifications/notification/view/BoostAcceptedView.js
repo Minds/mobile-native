@@ -22,7 +22,7 @@ export default class BoostAcceptedView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text>{entity.params.impressions || entity.params.points} points {description} were accepted.</Text>
+        <Text onPress={this.navToActivity}>{entity.params.impressions || entity.params.points} points {description} were accepted.</Text>
       </View>
     )
   }

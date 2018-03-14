@@ -17,8 +17,15 @@ export default class WelcomeDiscoverView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text><Text style={styles.link}>Tap here</Text> to discover new channels and media.</Text>
+        <Text onPress={this.navToDiscovery}><Text style={styles.link}>Tap here</Text> to discover new channels and media.</Text>
       </View>
     )
+  }
+
+  /**
+   * Navigate to discovery
+   */
+  navToDiscovery = () => {
+    this.props.navigation.navigate('Discovery');
   }
 }

@@ -20,9 +20,26 @@ export default class BoostGiftView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text>{entity.fromObj.name} gifted you {entity.params.impressions} views {description}</Text>
+        <Text onPress={this.navToChannel}>{entity.fromObj.name} gifted you {entity.params.impressions} views {description}</Text>
       </View>
     )
+  }
+
+  /**
+   * Navigate to activity
+   */
+  navToActivity = () => {
+    let params = {};
+    params.entity = this.props.entity.entityObj;
+
+    this.props.navigation.navigate('Activity', params);
+  }
+
+  /**
+   * Navigate To channel
+   */
+  navToChannel = () => {
+    this.props.navigation.navigate('Channel', { guid: this.props.entity.fromObj.guid });
   }
 
   getDescription(entity, pron='your') {

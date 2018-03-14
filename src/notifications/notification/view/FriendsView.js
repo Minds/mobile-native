@@ -24,8 +24,8 @@ export default class FriendsView extends Component {
     const styles = this.props.styles;
 
     const body = entity.fromObj.subscribed ?
-      <Text style={styles.link}>You have a match! {entity.fromObj.name} subscribed to you</Text> :
-      <Text style={styles.link}>{entity.fromObj.name} subscribed to you</Text>
+      <Text style={styles.link} onPress={this.navToChannel}>You have a match! {entity.fromObj.name} subscribed to you</Text> :
+      <Text style={styles.link} onPress={this.navToChannel}>{entity.fromObj.name} subscribed to you</Text>
 
     return (
       <View style={styles.bodyContents}>

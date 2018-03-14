@@ -24,7 +24,7 @@ export default class BoostPeerRejectedView extends BoostGiftView {
     return (
       <View style={styles.bodyContents}>
         <Text>
-          <Text style={style.bold}>@{entity.from.username}</Text> declined your bid of <Text style={style.bold}>{entity.params.bid} {type}</Text> {description}
+          <Text style={style.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> declined your bid of <Text style={style.bold} onPress={this.navToActivity}>{entity.params.bid} {type}</Text> {description}
           You have not been charged.
         </Text>
       </View>

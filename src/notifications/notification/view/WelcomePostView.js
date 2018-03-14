@@ -12,12 +12,16 @@ import {
  */
 export default class WelcomePostView extends Component {
 
+  navToCapture = () => {
+    this.props.navigation.navigate('Capture');
+  }
+
   render() {
     const styles = this.props.styles;
 
     return (
       <View style={styles.bodyContents}>
-        <Text><Text style={styles.link}>Tap here</Text> to create a post.</Text>
+        <Text><Text style={styles.link} onPress={this.navToCapture}>Tap here</Text> to create a post.</Text>
       </View>
     )
   }

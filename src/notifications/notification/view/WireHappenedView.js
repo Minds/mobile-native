@@ -29,6 +29,13 @@ export default class WireHappenedView extends Component {
   }
 
   /**
+   * Navigate to transactions
+   */
+  navToTransactions = () => {
+    this.props.navigation.navigate('Transactions');
+  }
+
+  /**
    * Render
    */
   render() {
@@ -41,13 +48,13 @@ export default class WireHappenedView extends Component {
     let text = '';
 
     if (!subscribed && isOwn) {
-      text = <Text>You have successfully wired {entity.params.amount} to <Text style={styles.link} onPress={this.navToChannel}>@{entity.params.to_username}</Text></Text>
+      text = <Text onPress={this.navToTransactions}>You have successfully wired {entity.params.amount} to <Text style={styles.link} onPress={this.navToChannel}>@{entity.params.to_username}</Text></Text>
     } else if (!subscribed && !isOwn) {
-      text = <Text>You have received a wire of {entity.params.amount} from <Text style={styles.link} onPress={this.navFromChannel}>@{entity.params.from_username}</Text></Text>
+      text = <Text onPress={this.navToTransactions}>You have received a wire of {entity.params.amount} from <Text style={styles.link} onPress={this.navFromChannel}>@{entity.params.from_username}</Text></Text>
     } else if (subscribed && isOwn) {
-      text = <Text>You have subscribed to wire {entity.params.amount}/month to <Text style={styles.link} onPress={this.navToChannel}>@{entity.params.to_username}</Text></Text>
+      text = <Text onPress={this.navToTransactions}>You have subscribed to wire {entity.params.amount}/month to <Text style={styles.link} onPress={this.navToChannel}>@{entity.params.to_username}</Text></Text>
     } else if (subscribed && !isOwn) {
-      text = <Text>You have received a wire subscription of {entity.params.amount}/month from <Text style={styles.link} onPress={this.navFromChannel}>@{entity.params.from_username}</Text></Text>
+      text = <Text onPress={this.navToTransactions}>You have received a wire subscription of {entity.params.amount}/month from <Text style={styles.link} onPress={this.navFromChannel}>@{entity.params.from_username}</Text></Text>
     }
 
     return (
