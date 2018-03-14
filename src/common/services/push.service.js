@@ -30,6 +30,17 @@ class PushService {
       this.router.navigate(data);
 
     })
+
+    this.push.setOnInitialNotification((notification) => {
+      // get notification data
+      const data = notification.getData();
+      if (data.json) data.json = JSON.parse(data.json);
+      // delay navigation on app start
+      setTimeout(() => {
+        this.router.navigate(data);
+      }, 100);
+
+    })
   }
 
   /**
@@ -59,6 +70,21 @@ class PushService {
    */
   setBadgeCount(num) {
     this.push.setBadgeCount(num);
+  }
+
+  /**
+   * Set initial notification handler
+   * @param {function} fn 
+   */
+  setOnInitialNotification(fn) {
+    this.push.setOnInitialNotification(fn);
+  }
+
+  /**
+   * Handle the notification that open the app
+   */ 
+  handleInitialNotification() {
+    this.push.handleInitialNotification();
   }
 }
 

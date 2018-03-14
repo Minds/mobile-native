@@ -48,11 +48,17 @@ sessionService.onLogin(() => {
   pushService.registerToken();
 })
 
+// disable yellow boxes
+//console.disableYellowBox = true;
+
 /**
  * App
  */
 export default class App extends Component {
 
+  /**
+   * On component will mount
+   */
   componentWillMount() {
     Text.defaultProps.style = {
       fontFamily: 'Roboto',
@@ -60,12 +66,21 @@ export default class App extends Component {
     };
   }
 
+  /**
+   * On component did mount
+   */
   componentDidMount() {
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
     Linking.addEventListener('url', event => this.handleOpenURL(event.url));
     Linking.getInitialURL().then(url => url && this.handleOpenURL(url));
+    
+    // handle initial notifications (if the app is opened by tap on one)
+    pushService.handleInitialNotification();
   }
 
+  /**
+   * On component will unmount
+   */
   componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
     Linking.removeEventListener('url', this.handleOpenURL);
@@ -83,6 +98,9 @@ export default class App extends Component {
     return true;
   };
 
+  /**
+   * Handle deeplink urls
+   */
   handleOpenURL = (url) => {
     deeplinkService.navigate(url);
   }

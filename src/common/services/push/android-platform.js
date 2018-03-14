@@ -1,4 +1,4 @@
-import { NotificationsAndroid } from 'react-native-notifications';
+import { NotificationsAndroid, PendingNotifications } from 'react-native-notifications';
 import AbstractPlatform from './abstract-platform';
 
 /**
@@ -20,7 +20,6 @@ export default class AndroidPlatfom extends AbstractPlatform {
       this.token = deviceToken;
     });
 
-    NotificationsAndroid.setNotificationReceivedListener
   }
 
   /**
@@ -43,6 +42,17 @@ export default class AndroidPlatfom extends AbstractPlatform {
     NotificationsAndroid.setNotificationOpenedListener(handler);
   }
 
+  /**
+   * Handle the notification that open the app
+   */ 
+  handleInitialNotification() {
+    PendingNotifications.getInitialNotification()
+      .then((notification) => {
+
+          if (notification && this.onInitialNotification) this.onInitialNotification(notification);
+      })  	
+      .catch((err) => console.error("getInitialNotifiation() failed", err));
+  }
   /**
    * Stop push notification service
    */

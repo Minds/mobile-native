@@ -7,6 +7,12 @@ export default class AbstractPlatform {
 
   token = null;
 
+  onInitialNotification;
+
+  setOnInitialNotification(fn) {
+    this.onInitialNotification = fn;
+  }
+
   /**
    * Register device to backend
    * @param {string} service apple or google
