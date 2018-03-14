@@ -17,6 +17,7 @@ import session from '../common/services/session.service';
 
 import AttachmentStore from '../common/stores/AttachmentStore';
 
+import {toggleExplicit, deleteItem} from '../newsfeed/NewsfeedService';
 /**
  * Comments Store
  */
@@ -207,6 +208,41 @@ export default class CommentsStore {
     this.loadNext = '';
     this.loadPrevious = '';
     this.socketRoomName = '';
+  }
+
+
+  @action
+  commentToggleExplicit(guid) {
+    let index = this.comments.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let comment = this.comments[index];
+      let value = !comment.mature;
+      return toggleExplicit(guid, value)
+        .then(action(response => {
+          comment.mature = value;
+          this.comments[index] = comment;
+        }))
+        .catch(action(err => {
+          comment.mature = !value;
+          this.comments[index] = comment;
+          console.log('error');
+        }));
+    }
+  }
+
+  @action
+  delete(guid) {
+    let index = this.comments.findIndex(x => x.guid == guid);
+    if(index >= 0) {
+      let entity = this.comments[index];
+      return deleteItem(guid)
+        .then(action(response => {
+          this.comments.splice(index, 1);
+        }))
+        .catch(action(err => {
+          console.log('error');
+        }));
+    }
   }
 
 }

@@ -34,7 +34,6 @@ import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 import MediaView from '../common/components/MediaView';
 import Tags from '../common/components/Tags';
-
 import {
   MINDS_CDN_URI
 } from '../config/Config';
@@ -85,8 +84,9 @@ export default class Comment extends Component {
             {
               this.state.editing ?
                 <CommentEditor setEditing={this.setEditing} comment={comment}/>:
+                
                 <Text style={styles.message} selectable={true} onPress={this.showActions}>
-                  <Text style={styles.username}>@{comment.ownerObj.username}</Text> <Tags navigation={this.props.navigation}>{entities.decodeHTML(comment.description)}</Tags>
+                  <Text style={styles.username}>@{comment.ownerObj.username}</Text> <Tags style={comment.mature? styles.mature : {}} navigation={this.props.navigation}>{entities.decodeHTML(comment.description)}</Tags>
                 </Text>
             }
           </View>
@@ -97,7 +97,7 @@ export default class Comment extends Component {
         </View>
         <ActionSheet
           ref={o => this.ActionSheet = o}
-          options={this.state.options}
+          options={this.getOptions()}
           onPress={this.handleSelection}
           cancelButtonIndex={0}
         />
@@ -119,7 +119,28 @@ export default class Comment extends Component {
     let actions = ['Cancel'];
     if (this.props.user.me.guid == this.props.comment.owner_guid) {
       actions.push('Edit');
+      actions.push( 'Delete' );
+
+      if (!this.props.comment.mature) {
+        actions.push( 'Set explicit' );
+      } else {
+        actions.push( 'Remove explicit' );
+      }
+    } else {
+      if (this.props.user.isAdmin()) {
+        actions.push( 'Delete' );
+  
+        if (!this.props.comment.mature) {
+          actions.push( 'Set explicit' );
+        } else {
+          actions.push( 'Remove explicit' );
+        }
+      }
+  
+      actions.push( 'Report' ); 
+      actions.push( 'Reply' ); 
     }
+
     return actions;
   }
 
@@ -142,6 +163,32 @@ export default class Comment extends Component {
     switch (action) {
       case 'Edit':
         this.setState({editing: true});
+        break;
+      case 'Delete':
+        this.props.store.delete(this.props.comment.guid).then( (result) => {
+          Alert.alert(
+            'Sucess',
+            'Entity removed succesfully',
+            [
+              {text: 'OK', onPress: () => {}},
+            ],
+            { cancelable: false }
+          )
+        });
+        break;
+      case 'Set explicit':
+        this.props.store.commentToggleExplicit(this.props.comment.guid).then( (result) => {
+        });
+        break;
+      case 'Remove explicit':
+        this.props.store.commentToggleExplicit(this.props.comment.guid).then( (result) => {
+        });
+        break;
+      case 'Report':
+        this.props.navigation.navigate('Report', { entity: this.props.comment });
+        break;
+      case 'Reply':
+        this.props.replyComment(this.props.comment);
         break;
       default:
         break;
@@ -167,6 +214,12 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
+  },
+  mature: {
+    color:'transparent',
+    textShadowColor: 'rgba(107, 107, 107, 0.5)',
+    textShadowOffset: {width: -1, height: 1},
+    textShadowRadius: 20
   },
   content: {
     flex: 1,

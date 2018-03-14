@@ -127,6 +127,7 @@ export default class ActivityScreen extends Component {
             autogrow={true}
             maxHeight={110}
             value={comments.text}
+            ref={textInput => this.textInput = textInput}
           />
           {attachment.uploading ?
             <Progress.Pie progress={attachment.progress} size={36} />:
@@ -258,6 +259,13 @@ export default class ActivityScreen extends Component {
     }
   }
 
+  replyComment = (comment) => {
+    this.comments.setText('@' + comment.ownerObj.username + ' ');
+    if (this.textInput) {
+      this.textInput.focus();
+    }
+  }
+
   setText = (text) => {
     this.comments.setText(text);
   }
@@ -304,7 +312,7 @@ export default class ActivityScreen extends Component {
 
     return (
       <View>
-        <Comment comment={comment} navigation={this.props.navigation}/>
+        <Comment comment={comment} replyComment={this.replyComment} store={this.comments} navigation={this.props.navigation}/>
       </View>
     );
   }
