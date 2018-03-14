@@ -4,7 +4,7 @@ import {
 } from 'mobx';
 
 import channelService from './../channel/ChannelService';
-
+import UserModel from './../channel/UserModel';
 /**
  * Login Store
  */
@@ -13,7 +13,7 @@ class UserStore {
 
   @action
   setUser(user) {
-    this.me = user;
+    this.me = UserModel.create(user);
   }
 
   @action

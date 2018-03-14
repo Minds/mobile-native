@@ -60,9 +60,7 @@ export default class Comment extends Component {
    */
   render() {
     const comment = this.props.comment;
-
-    const avatarSrc = { uri: MINDS_CDN_URI + 'icon/' + comment.ownerObj.guid + '/medium' };
-
+    const avatarSrc = comment.ownerObj.getAvatarSource();
     const actions = (
       <View style={[CommonStyle.flexContainer ]}>
         <View style={styles.actionsContainer}>

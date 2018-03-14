@@ -109,7 +109,7 @@ export default class ActivityScreen extends Component {
   renderPoster() {
     const attachment = this.comments.attachment;
 
-    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium' };
+    const avatarImg = this.props.user.me.getAvatarSource();
 
     const comments = this.comments;
 
