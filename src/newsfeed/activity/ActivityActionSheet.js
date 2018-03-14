@@ -113,30 +113,42 @@ export default class ActivityActions extends Component {
 
   }
 
+  deleteEntity() {
+    this.props.newsfeed.list.deleteEntity(this.props.entity.guid).then( (result) => {
+      this.setState({
+        options: this.getOptions(),
+      });
+
+      Alert.alert(
+        'Sucess',
+        'Entity removed succesfully',
+        [
+          {text: 'OK', onPress: () => {}},
+        ],
+        { cancelable: false }
+      )
+
+      if(this.props.navigatorStore.currentScreen == 'Activity' ){
+        this.props.navigation.goBack();
+      }
+    });
+  }
+
   makeAction(option) {
     switch (option) {
       case 'Edit':
         this.props.toggleEdit(true);
         break;
       case 'Delete':
-        this.props.newsfeed.list.deleteEntity(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-
-          Alert.alert(
-            'Sucess',
-            'Entity removed succesfully',
-            [
-              {text: 'OK', onPress: () => {}},
-            ],
-            { cancelable: false }
-          )
-
-          if(this.props.navigatorStore.currentScreen == 'Activity' ){
-            this.props.navigation.goBack();
-          }
-        });
+        Alert.alert(
+          'Delete',
+          "Are you sure? There's no UNDO",
+          [
+            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'OK', onPress: () => this.deleteEntity()},
+          ],
+          { cancelable: false }
+        )
         break;
       case 'Set explicit':
         this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
@@ -231,7 +243,7 @@ export default class ActivityActions extends Component {
         <ActionSheet
           ref={o => this.ActionSheet = o}
           title={title}
-          options={this.state.options}
+          options={this.getOptions()}
           onPress={this.handleSelection}
           cancelButtonIndex={0}
         />
