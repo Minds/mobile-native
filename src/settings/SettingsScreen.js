@@ -17,7 +17,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import session from './../common/services/session.service';
+import { logout } from './../auth/LoginService';
 import { List, ListItem } from 'react-native-elements';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from './SettingsService';
@@ -52,7 +52,7 @@ export default class SettingsScreen extends Component {
   }
 
   onPressLogout = () => {
-    session.logout();
+    logout();
     const loginAction = NavigationActions.reset({
       index: 0,
       actions: [

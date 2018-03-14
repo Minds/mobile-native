@@ -15,6 +15,12 @@ export function login(username, password) {
   });
 }
 
+export function logout() {
+  return api.post('api/v1/logout').then(data => {
+    session.logout();
+  });
+}
+
 export function twoFactorAuth(token, code) {
   return api.post('api/v1/authenticate/two-factor', { token, code })
     .then((data) => {

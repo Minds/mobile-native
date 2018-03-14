@@ -23,7 +23,7 @@ import {
 } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import session from './../common/services/session.service';
+import { logout } from './../auth/LoginService';
 import { List, ListItem } from 'react-native-elements'
 import FastImage from 'react-native-fast-image';
 
@@ -122,7 +122,7 @@ export default class MoreScreen extends Component {
         name: 'Logout',
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
-          session.logout();
+          logout();
           const loginAction = NavigationActions.reset({
             index: 0,
             actions: [
