@@ -18,7 +18,7 @@ export default function formatDate(timestamp, format = 'datetime') {
       break;
     case 'datetime':
     default:
-      options = 'MMM DD, YYYY, HH:MM';
+      options = 'MMM DD, YYYY, HH:mm';
   }
 
   return moment(timestamp * 1000).format(options);
