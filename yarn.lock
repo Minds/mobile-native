@@ -6903,10 +6903,6 @@ react-native-randombytes@^3.0.0:
     buffer "^4.9.1"
     sjcl "^1.0.3"
 
-"react-native-read-more-text@https://github.com/ymuzi/react-native-read-more-text":
-  version "1.0.0"
-  resolved "https://github.com/ymuzi/react-native-read-more-text#781d9c2ac52667230c17f1175bf7668f395145a8"
-
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.7.0.tgz#38f5ab9368d6ef9e5d18ab64212938af3ec39421"
