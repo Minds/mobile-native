@@ -55,9 +55,9 @@ export default class ConversationScreen extends Component {
     return {
       title: conversation.name,
       headerRight: (
-        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}>
-          <Image source={avatarImg} style={styles.avatar}  onPress={navigation.navigate('Channel', { guid:participant.guid})}/>
-        </View>
+        <TouchableOpacity style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}  onPress={() => navigation.navigate('Channel', { guid:participant.guid})}>
+          <Image source={avatarImg} style={styles.avatar} />
+        </TouchableOpacity>
       )
     }
   };
