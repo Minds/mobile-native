@@ -76,7 +76,7 @@ export default class WalletScreen extends Component {
       <View style={CommonStyle.flexContainer}>
         <ScrollView style={ styles.mainContainer }
           keyboardShouldPersistTaps='always'>
-          {FeaturesService.has('crypto') && <WalletBalanceTokens />}
+          <WalletBalanceTokens />
 
           <View>
 
@@ -90,7 +90,7 @@ export default class WalletScreen extends Component {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Withdraw')} >
+            { FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Withdraw')} >
               <View style={styles.iconContainer}>
                 <Icon name="local-atm" size={24} style={ styles.icon } />
               </View>
@@ -98,7 +98,7 @@ export default class WalletScreen extends Component {
                 <Text style={styles.title}>Withdraw</Text>
                 <Text style={styles.subtitle}>Request a withdrawal of your token rewards to your OnChain address.</Text>
               </View>
-            </TouchableOpacity>
+            </TouchableOpacity> }
 
             <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Contributions')} >
               <View style={styles.iconContainer}>

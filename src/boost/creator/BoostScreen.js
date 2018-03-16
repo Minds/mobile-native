@@ -53,7 +53,7 @@ export default class BoostScreen extends Component {
   state = {
     // boost
     type: null,
-    payment: '',
+    payment: 'tokens',
     amount: 1000,
     priority: false,
     target: null,
@@ -96,9 +96,14 @@ export default class BoostScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
-    this.setState({
-      payment: FeaturesService.has('crypto') ? 'tokens' : 'usd'
-    });
+
+    if (!FeaturesService.has('crypto')) {
+      Alert.alert(
+        'Oooopppss',
+        'This feature is currently unavailable on your platform',
+      );
+      return this.props.navigation.goBack();
+    }
 
     getRates()
       .then(rates => {

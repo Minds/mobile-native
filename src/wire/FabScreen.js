@@ -45,6 +45,15 @@ import addressExcerpt from '../common/helpers/address-excerpt';
 export default class FabScreen extends Component {
 
   componentWillMount() {
+
+    if (!FeaturesService.has('crypto')) {
+      Alert.alert(
+        'Oooopppss',
+        'This feature is currently unavailable on your platform',
+      );
+      return this.props.navigation.goBack();
+    }
+
     const owner = this.getOwner();
     this.props.wire.setGuid(owner.guid);
 

@@ -5,6 +5,8 @@ import {
 
 import channelService from './../channel/ChannelService';
 import UserModel from './../channel/UserModel';
+import { MINDS_FEATURES } from '../config/Config';
+
 /**
  * Login Store
  */
@@ -45,6 +47,9 @@ class UserStore {
     return channelService.load('me')
       .then(response => {
         this.setUser(response.channel);
+        if (response.channel.verified) {
+          MINDS_FEATURES.crypto = true;
+        }
       })
       .catch(err => {
         console.log('error', err);
