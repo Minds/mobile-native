@@ -12,7 +12,7 @@ import messengerService from './MessengerService';
 import session from './../common/services/session.service';
 import crypto from './../common/services/crypto.service';
 import socket from '../common/services/socket.service';
-
+import badge from '../common/services/badge.service';
 /**
  * Messenger Conversation List Store
  */
@@ -38,7 +38,9 @@ class MessengerListStore {
   loaded     = false;
 
   @computed get unread() {
-    return this.conversations.some(conv => conv.unread);
+    const count = this.conversations.filter(conv => conv.unread).length;
+    badge.setUnreadConversations(count);
+    return count;
   }
 
   constructor() {
@@ -48,7 +50,6 @@ class MessengerListStore {
           this.setPrivateKey(privateKey);
         }
       });
-
   }
 
   @action
