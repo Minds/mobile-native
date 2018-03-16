@@ -11,7 +11,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
   View,
-  Linking
+  Linking,
+  Alert,
 } from 'react-native';
 
 import { login } from '../auth/LoginService';
@@ -41,17 +42,17 @@ export default class RegisterForm extends Component {
     username: '',
     confirmPassword: '',
     email: '',
-    termsAccepted: false,
+    termsAccepted: true,
   };
 
   validatePassword(value) {
     let error = this.state.error;
-    if(this.state.password.length > value.length -2 &&  this.state.password !== value){
+    if (this.state.password !== value) {
       error.confirmPasswordError = 'Passwords should match';
-    }else{
+    } else {
       error.confirmPasswordError = '';
     }
-    this.setState({ confirmPassword: value, error});
+    this.setState({ error });
   }
 
   validateTerms(value) {
@@ -108,14 +109,9 @@ export default class RegisterForm extends Component {
             returnKeyType={'done'}
             placeholderTextColor="#444"
             underlineColorAndroid='transparent'
-            onChangeText={(value) => this.validatePassword( value )}
+            onChangeText={(value) => this.setState({ confirmPassword: value })}
             value={this.state.confirmPassword}
           /> : null }
-        <View>
-          <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
-            {this.state.error.confirmPasswordError}
-          </Text>
-        </View>
         <CheckBox
           iconRight
           containerStyle={ComponentsStyle.registerCheckbox}
@@ -156,29 +152,34 @@ export default class RegisterForm extends Component {
   /**
    * On press register
    */
-  onPressRegister() {
-    if (!this.state.error.termsAcceptedError && !this.state.error.confirmPasswordError) {
-      register(this.state.username ,this.state.email ,this.state.password)
-        .then(data => {
-          login(this.state.username ,this.state.password)
-            .then(response => {
-              this.props.user.load().then((result) => { 
-                this.props.onRegister(sessionService.guid);
-              }).catch((err) => {
-                alert('Error logging in');
-                this.goToLogin();
-              });
-            })
-            .catch(err => {
-              alert(JSON.stringify(err));
-            });
+  async onPressRegister() {
+    this.validatePassword(this.state.confirmPassword);
 
-        })
-        .catch(err => {
-          alert(err);
-        });
-    } else {
-      alert('Please check the form')
+    if (!this.state.termsAccepted) {
+      return Alert.alert(
+        'Oooopps',
+        'Please accept the Terms & Conditions'
+      );
+    } 
+    
+    if (this.state.error.confirmPasswordError) {
+      return Alert.alert(
+        'Oooopps',
+        'Please ensure your passwords match'
+      );
     }
+
+    try {
+      await register(this.state.username ,this.state.email ,this.state.password)
+      await login(this.state.username ,this.state.password)
+      await this.props.user.load();
+      this.props.onRegister(sessionService.guid);
+    } catch (err) {
+      Alert.alert(
+        'Oooopps',
+        err.message
+      );
+    }
+
   }
 }
