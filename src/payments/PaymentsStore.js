@@ -43,6 +43,11 @@ class PaymentsStore {
 
     return card;
   }
+
+  reset() {
+    this.inProgress = false;
+    this.cards = [];
+  }
 }
 
 export default new PaymentsStore();

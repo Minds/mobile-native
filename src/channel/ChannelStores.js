@@ -45,9 +45,7 @@ class ChannelStores {
   @action
   reset() {
     this.lastVisited = new ModelStorageList('lastchannels', 10);
-    for (guid in this.stores) {
-      this.stores[guid] = null;
-    }
+    this.stores = {};
   }
 
 }

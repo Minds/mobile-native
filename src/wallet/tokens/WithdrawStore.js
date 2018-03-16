@@ -36,6 +36,10 @@ class WithdrawStore {
       this.ledger.unshift(entity);
     }
   }
+
+  reset() {
+    this.ledger = [];
+  }
 }
 
 export default new WithdrawStore();

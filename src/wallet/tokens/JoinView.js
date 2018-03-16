@@ -83,7 +83,6 @@ export default class JoinView extends Component {
   confirm = () => {
     this.props.wallet.confirm(this.state.number, this.state.confirmation, this.state.secret)
       .then(response => {
-        console.log(response)
         this.props.user.setRewards(true);
       })
       .catch(e => {

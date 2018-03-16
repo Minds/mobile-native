@@ -17,35 +17,7 @@ class DiscoveryStore {
   /**
    * Notification list store
    */
-  stores = {
-    'object/image': {
-      list: new OffsetListStore('shallow'),
-      loading: false,
-    },
-    'object/video': {
-      list: new OffsetListStore('shallow'),
-      loading: false,
-    },
-    'object/blog': {
-      list: new OffsetListStore('shallow'),
-      loading: false,
-    },
-    'user': {
-      list: new OffsetListStore('shallow'),
-      loading: false,
-    },
-    'group': {
-      list: new OffsetListStore('shallow'),
-      loading: false,
-    },
-    'lastchannels': {
-      list: new OffsetListStore('shallow'),
-    },
-    'activity': {
-      list: new OffsetListStore('shallow'),
-      loading: false,
-    }
-  };
+  stores;
 
   @observable searchtext = '';
   @observable filter     = 'trending';
@@ -54,13 +26,55 @@ class DiscoveryStore {
 
   loading = false;
 
+  constructor() {
+    this.buildListStores();
+  }
+
   /**
-   * current list
+   * Build lists stores
+   */
+  buildListStores() {
+    this.stores = {
+      'object/image': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      },
+      'object/video': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      },
+      'object/blog': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      },
+      'user': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      },
+      'group': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      },
+      'lastchannels': {
+        list: new OffsetListStore('shallow'),
+      },
+      'activity': {
+        list: new OffsetListStore('shallow'),
+        loading: false,
+      }
+    };
+  }
+
+  /**
+   * get current list
    */
   get list() {
     return this.stores[this.type].list;
   }
 
+  /**
+   * set current list
+   */
   set list(list) {
     this.stores[this.type].list = list
   }
@@ -190,35 +204,7 @@ class DiscoveryStore {
 
   @action
   reset() {
-    this.stores = {
-      'object/image': {
-        list: new OffsetListStore('shallow'),
-        loading: false,
-      },
-      'object/video': {
-        list: new OffsetListStore('shallow'),
-        loading: false,
-      },
-      'object/blog': {
-        list: new OffsetListStore('shallow'),
-        loading: false,
-      },
-      'user': {
-        list: new OffsetListStore('shallow'),
-        loading: false,
-      },
-      'group': {
-        list: new OffsetListStore('shallow'),
-        loading: false,
-      },
-      'lastchannels': {
-        list: new OffsetListStore('shallow'),
-      },
-      'activity': {
-        list: new OffsetListStore('shallow'),
-        loading: false,
-      }
-    };
+    this.buildListStores();
 
     this.searchtext = '';
     this.filter = 'trending';

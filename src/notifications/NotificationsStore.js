@@ -164,6 +164,7 @@ class NotificationsStore {
     this.unread = 0;
     this.filter = 'all';
     this.loading = false;
+    this.stopPollCount();
   }
 
 }

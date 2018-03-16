@@ -9,20 +9,7 @@ import ActivityModel from './ActivityModel';
  */
 class NewsfeedStore {
 
-  stores = {
-    'subscribed': {
-      list: new OffsetFeedListStore('shallow'),
-      loading: false,
-    },
-    'top': {
-      list: new OffsetFeedListStore('shallow'),
-      loading: false,
-    },
-    'boostfeed': {
-      list: new OffsetFeedListStore('shallow'),
-      loading: false,
-    },
-  };
+  stores;
 
   service = new NewsfeedService;
 
@@ -36,6 +23,30 @@ class NewsfeedStore {
    */
   loadingBoost = true;
 
+  /**
+   * Constructors
+   */
+  constructor() {
+    this.buildStores();
+  }
+
+  buildStores() {
+    this.stores = {
+      'subscribed': {
+        list: new OffsetFeedListStore('shallow'),
+        loading: false,
+      },
+      'top': {
+        list: new OffsetFeedListStore('shallow'),
+        loading: false,
+      },
+      'boostfeed': {
+        list: new OffsetFeedListStore('shallow'),
+        loading: false,
+      },
+    };
+  }
+  
   /**
    * Load feed
    */
@@ -73,14 +84,16 @@ class NewsfeedStore {
     });
   }
 
-  @computed
   get list() {
     return this.stores[this.filter].list;
   }
 
-  @computed
   get loading() {
     return this.stores[this.filter].loading;
+  }
+
+  set loading(val) {
+    return this.stores[this.filter].loading = val;
   }
 
   /**
@@ -162,7 +175,7 @@ class NewsfeedStore {
 
   @action
   reset() {
-    this.list = new OffsetFeedListStore('shallow');
+    this.buildStores();
     this.filter = 'subscribed';
     this.boosts = [];
     this.viewed = [];

@@ -69,6 +69,7 @@ class WalletStore {
     this.loaded = false;
     // Onboarding
     this.onboardingShown = false;
+    this.ledger = new TokensStore();
     storageService.removeItem('walletOnboardingComplete');
   }
 

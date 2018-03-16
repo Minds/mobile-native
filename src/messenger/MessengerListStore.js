@@ -213,6 +213,7 @@ class MessengerListStore {
     this.offset = '';
     this.newsearch = true;
     this.loaded = false;
+    this.loading = false;
   }
 
 }

@@ -129,6 +129,7 @@ class BlockchainTransactionStore {
     this.baseOptions = {};
     this.estimateGasLimit = 0;
     this.funds = null;
+    this.gweiPriceCents = null;
     this.weiValue = 0;
   }
 }

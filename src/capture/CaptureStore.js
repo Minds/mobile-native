@@ -13,6 +13,11 @@ class CaptureStore {
   setPosting(val) {
     this.isPosting = val;
   }
+
+  reset() {
+    this.isPosting = false;
+    this.attachment.clear();
+  }
 }
 
 export default new CaptureStore();
