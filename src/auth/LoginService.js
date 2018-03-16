@@ -15,10 +15,13 @@ export function login(username, password) {
   });
 }
 
-export function logout() {
-  return api.post('api/v1/logout').then(data => {
+export async function logout() {
+  try {
+    await api.post('api/v1/logout', {});
     session.logout();
-  });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 export function twoFactorAuth(token, code) {

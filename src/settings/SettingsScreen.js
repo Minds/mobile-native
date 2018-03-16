@@ -133,7 +133,7 @@ export default class SettingsScreen extends Component {
         name: 'Logout',
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
-          session.logout();
+          logout();
           const loginAction = NavigationActions.reset({
             index: 0,
             actions: [
