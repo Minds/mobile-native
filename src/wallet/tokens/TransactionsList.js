@@ -124,6 +124,11 @@ export default class TransactionsList extends Component {
     this.props.wallet.ledger.loadList(this.state.from, this.state.to);
   }
 
+  formatContract(contract) {
+    if (!contract) return '';
+    return contract.toUpperCase().replace(':', ': ').replace('_', ' ');
+  }
+
   /**
    * Render list's rows
    */
@@ -132,11 +137,11 @@ export default class TransactionsList extends Component {
     return (
       <View style={[ styles.row]}>
         { item.amount >= 0 ?
-          <Text style={[styles.count, styles.positive]}>+ {token(item.amount)}</Text>
-          : <Text style={[styles.count, styles.negative]}>{token(item.amount)}</Text>
+          <Text style={[styles.count, styles.positive]}>+ {token(item.amount).toFixed(3)}</Text>
+          : <Text style={[styles.count, styles.negative]}>{token(item.amount).toFixed(3)}</Text>
         }
         <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[styles.subtext, CommonStyle.flexContainer]}>{item.contract && item.contract.toUpperCase()}</Text>
+          <Text style={[styles.subtext, CommonStyle.flexContainer]}>{this.formatContract(item.contract)}</Text>
           <Text style={[styles.subtext]}>{i18n.l('date.formats.small', item.timestamp * 1000)}</Text>
         </View>
       </View>
