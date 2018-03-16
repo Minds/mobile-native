@@ -4,6 +4,7 @@ import React, {
 
 import { NavigationActions } from 'react-navigation';
 import FastImage from 'react-native-fast-image';
+import Video from "react-native-video";
 
 import {
   Text,
@@ -17,6 +18,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 
 import RegisterForm from './RegisterForm';
+import VideoBackground from '../common/components/VideoBackground';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
@@ -32,11 +34,7 @@ export default class Register extends Component {
   render() {
     return (
       <View style={CommonStyle.flexContainer}>
-        <FastImage
-          resizeMode={FastImage.resizeMode.cover}
-          style={ComponentsStyle.backgroundImage}
-          source={require('../assets/photos/circles.png')}
-        />
+        <VideoBackground />
         <KeyboardAvoidingView style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]} behavior={ Platform.OS == 'ios' ? 'padding' : 'height' }>
           <Animatable.View animation="bounceIn">
             <Animated.View>

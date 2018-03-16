@@ -18,6 +18,7 @@ import {
 import * as Animatable from 'react-native-animatable';
 
 import LoginForm from './LoginForm';
+import VideoBackground from '../common/components/VideoBackground';
 import ForgotPassword from './ForgotPassword';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
@@ -98,11 +99,7 @@ export default class LoginScreen extends Component {
 
     return (
       <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={ Platform.OS == 'ios' ? 'padding' : 'none' }>
-        <FastImage
-          resizeMode={FastImage.resizeMode.cover}
-          style={ComponentsStyle.backgroundImage}
-          source={require('../assets/photos/circles.png')}
-        />
+        <VideoBackground />
         <View style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
           <Animatable.View animation="bounceIn">
             <Animated.Image
