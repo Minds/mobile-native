@@ -17,7 +17,7 @@ import {
 
 import { CommonStyle } from '../../styles/Common';
 import JoinView from './JoinView';
-import ContributionsView from './ContributionsView';
+import ContributionsView from './contributions/ContributionsView';
 import Toolbar from '../../common/components/toolbar/Toolbar';
 /**
  * Token and Rewards Screen

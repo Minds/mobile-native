@@ -36,9 +36,9 @@ export default class ContributionRow extends PureComponent {
       <View>
       <TouchableOpacity style={styles.row} onPress={this.toggle}>
         <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[...color,  CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textCenter, styles.column]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
-          <Text style={[...color, CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textCenter, styles.column]}>{item.score}</Text>
-          <Text style={[...color, CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textCenter, styles.column]}>{item.share.toFixed(6)}%</Text>
+          <Text style={[...color,  CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
+          <Text style={[...color, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.score}</Text>
+          <Text style={[...color, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.share.toFixed(6)}%</Text>
         </View>
       </TouchableOpacity>
       {detail}
@@ -62,9 +62,9 @@ export default class ContributionRow extends PureComponent {
       detail.push(
         <View style={styles.row}>
           <View style={CommonStyle.rowJustifyStart}>
-            <Text style={[CommonStyle.colorPrimary,  CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textCenter, styles.column]}>{data.metric[0].toUpperCase() + data.metric.slice(1)}</Text>
-            <Text style={[CommonStyle.colorPrimary, CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textCenter, styles.column]}>{data.score}</Text>
-            <Text style={[CommonStyle.colorPrimary, CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textCenter, styles.column]}>{share.toFixed(6)}%</Text>
+            <Text style={[CommonStyle.colorPrimary,  CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{data.metric[0].toUpperCase() + data.metric.slice(1)}</Text>
+            <Text style={[CommonStyle.colorPrimary, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{data.score}</Text>
+            <Text style={[CommonStyle.colorPrimary, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{share.toFixed(6)}%</Text>
           </View>
         </View>
       )

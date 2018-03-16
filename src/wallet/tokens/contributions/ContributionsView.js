@@ -15,12 +15,12 @@ import {
   inject
 } from 'mobx-react/native'
 
-import { CommonStyle } from '../../styles/Common';
-import CenteredLoading from '../../common/components/CenteredLoading';
-import token from "../../common/helpers/token";
-import i18n from '../../common/services/i18n.service';
-import DateRangePicker from '../../common/components/DateRangePicker';
-import ContributionRow from './contributions/ContributionRow';
+import { CommonStyle } from '../../../styles/Common';
+import CenteredLoading from '../../../common/components/CenteredLoading';
+import token from "../../../common/helpers/token";
+import i18n from '../../../common/services/i18n.service';
+import DateRangePicker from '../../../common/components/DateRangePicker';
+import ContributionRow from './ContributionRow';
 
 /**
  * Contributions view
@@ -65,9 +65,7 @@ export default class ContributionsView extends Component {
     const wallet = this.props.wallet;
     const entities = wallet.ledger.list.entities;
 
-    if (!wallet.ledger.list.loaded || !this.state.to) {
-      return <CenteredLoading />
-    }
+    let empty = (<CenteredLoading />);
 
     const header = this.getHeader();
 
@@ -81,6 +79,7 @@ export default class ContributionsView extends Component {
         onEndReached={this.loadMore}
         onEndThreshold={0}
         ListHeaderComponent={header}
+        ListEmptyComponent={(!wallet.ledger.list.loaded || !this.state.to) ? empty : <View />}
         style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}
       />
     )
@@ -100,10 +99,10 @@ export default class ContributionsView extends Component {
     )*/
     return (
       <View style={styles.header}>
-        <View style={[CommonStyle.rowJustifyStart, CommonStyle.paddingTop2x]}>
-          <Text style={[CommonStyle.flexContainer, CommonStyle.textCenter, {fontWeight: '800', fontSize: 10 }]}>Date</Text>
-          <Text style={[CommonStyle.flexContainer, CommonStyle.textCenter, {fontWeight: '800', fontSize: 10 }]}>Score</Text>
-          <Text style={[CommonStyle.flexContainer, CommonStyle.textCenter, {fontWeight: '800', fontSize: 10 }]}>Share</Text>
+        <View style={[CommonStyle.rowJustifyStart, styles.row]}>
+          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>Date</Text>
+          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>Score</Text>
+          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>Share</Text>
         </View>
       </View>
     );
@@ -155,7 +154,15 @@ export default class ContributionsView extends Component {
 const styles = StyleSheet.create({
   header: {
     paddingTop: 5,
-    paddingBottom: 15,
+    //paddingBottom: 15,
+    //borderBottomWidth: 1,
+    //borderBottomColor: '#ececec',
+  },
+  row: {
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 8,
+    paddingRight: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#ececec',
   },
