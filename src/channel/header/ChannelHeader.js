@@ -344,9 +344,11 @@ export default class ChannelHeader extends Component {
               onChangeText={this.setBriefdescription}
             />
           </View>}
-          {!isEditable && <Text style={styles.briefdescription}>
-            <Tags navigation={this.props.navigation}>{this.state.briefdescription}</Tags>
-          </Text>}
+          {!isEditable &&
+            <View style={CommonStyle.paddingTop2x}>
+              <Tags navigation={this.props.navigation}>{this.state.briefdescription}</Tags>
+            </View>
+          }
 
         </View>
 
