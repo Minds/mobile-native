@@ -5,7 +5,8 @@ import React, {
 import {
   StyleSheet,
   Text,
-  View
+  View,
+  FlatList,
 } from 'react-native';
 
 import {
@@ -83,28 +84,33 @@ export default class NotificationsScreen extends Component {
    * Render screen
    */
   render() {
-    let body;
+    let body, empty;
     const list = this.props.notifications.list;
 
-    if (list.loaded) {
-      body = (
-        <OptimizedFlatList
-          data={list.entities.slice()}
-          renderItem={this.renderRow}
-          keyExtractor={item => item.rowKey}
-          onRefresh={this.refresh}
-          onEndReached={this.loadMore}
-          ListEmptyComponent={!this.props.notifications.loading && <Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>There are no notifications to load</Text>}
-          onEndThreshold={0.05}
-          initialNumToRender={12}
-          windowSize={8}
-          refreshing={list.refreshing}
-          style={styles.listView}
-        />
-      )
+
+    if (this.props.notifications.loading || !this.props.notifications.list.loaded) {
+      empty = (<CenteredLoading />);
     } else {
-      body = <CenteredLoading/>
+      empty = (<Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>
+        There are no notifications to load
+      </Text>);
     }
+
+    body = (
+      <FlatList
+        data={list.entities.slice()}
+        renderItem={this.renderRow}
+        keyExtractor={item => item.rowKey}
+        onRefresh={this.refresh}
+        onEndReached={this.loadMore}
+        ListEmptyComponent={empty}
+        onEndThreshold={0.05}
+        initialNumToRender={12}
+        windowSize={8}
+        refreshing={list.refreshing}
+        style={styles.listView}
+      />
+    );
 
     return (
       <View style={styles.container}>

@@ -10,6 +10,7 @@ import {
 } from 'mobx-react/native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import colors from '../styles/Colors';
 
@@ -35,7 +36,7 @@ export default class NotificacionsTopbar extends Component {
             <Icon name="tag" size={22} color={filter == 'tags' ? colors.primary : color} onPress={() => this.props.notifications.setFilter('tags')} style={styles.button} />
           </View>
           <View style={[styles.tab, this.selected('comments')]}>
-           <IonIcon name="md-chatbubbles" size={22} color={filter == 'comments' ? colors.primary : color} onPress={() => this.props.notifications.setFilter('comments')} style={styles.button} />
+           <MIcon name="chat-bubble" size={22} color={filter == 'comments' ? colors.primary : color} onPress={() => this.props.notifications.setFilter('comments')} style={styles.button} />
           </View>
           <View style={[styles.tab, this.selected('boosts')]}>
             <Icon name="trending-up" size={22} color={filter =='boosts' ? colors.primary : color} onPress={() => this.props.notifications.setFilter('boosts')} style={styles.button} />

@@ -40,7 +40,7 @@ class NotificationsStore {
   /**
    * List loading
    */
-  loading = false;
+  @observable loading = false;
 
   /**
    * Class constructor
