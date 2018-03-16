@@ -28,6 +28,7 @@ import Message from './conversation/Message';
 import MessengerSetup from './MessengerSetup';
 
 import { CommonStyle } from '../styles/Common';
+import UserModel from '../channel/UserModel';
 
 /**
  * Messenger Conversation Screen
@@ -44,20 +45,18 @@ export default class ConversationScreen extends Component {
   static navigationOptions = ({ navigation }) => {
     const conversation = navigation.state.params.conversation;
 
-    console.log(navigation.state.params)
-
     if (!conversation || !conversation.name) {
       return {
         title: ''
       };
     }
-
-    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + conversation.participants[0].guid + '/medium/' };
+    const participant = UserModel.checkOrCreate(conversation.participants[0]);
+    const avatarImg = participant.getAvatarSource();
     return {
       title: conversation.name,
       headerRight: (
         <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}>
-          <Image source={avatarImg} style={styles.avatar} />
+          <Image source={avatarImg} style={styles.avatar}  onPress={navigation.navigate('Channel', { guid:participant.guid})}/>
         </View>
       )
     }
@@ -78,6 +77,16 @@ export default class ConversationScreen extends Component {
         // we send the conversation to update the topbar (in case we only receive the guid)
         this.props.navigation.setParams({ conversation });
       })
+  }
+
+  /**
+   * Navigate To channel
+   */
+  _navToChannel = () => {
+    // only active if receive the navigation property
+    if (this.props.navigation) {
+      this.props.navigation.navigate('Channel', { guid:this.props.comment.ownerObj.guid});
+    }
   }
 
   /**
