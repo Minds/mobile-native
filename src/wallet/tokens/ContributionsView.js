@@ -20,6 +20,7 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import token from "../../common/helpers/token";
 import i18n from '../../common/services/i18n.service';
 import DateRangePicker from '../../common/components/DateRangePicker';
+import ContributionRow from './contributions/ContributionRow';
 
 /**
  * Contributions view
@@ -98,12 +99,11 @@ export default class ContributionsView extends Component {
       />
     )*/
     return (
-      <View style={styles.row}>
-        <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 9 }]}>Date</Text>
-          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 9 }]}>Metric</Text>
-          <Text style={[CommonStyle.flexContainer, CommonStyle.textRight, {fontWeight: '800', fontSize: 9 }]}>Amount</Text>
-          <Text style={[CommonStyle.flexContainer, CommonStyle.textRight, {fontWeight: '800', fontSize: 9 }]}>Score</Text>
+      <View style={styles.header}>
+        <View style={[CommonStyle.rowJustifyStart, CommonStyle.paddingTop2x]}>
+          <Text style={[CommonStyle.flexContainer, CommonStyle.textCenter, {fontWeight: '800', fontSize: 10 }]}>Date</Text>
+          <Text style={[CommonStyle.flexContainer, CommonStyle.textCenter, {fontWeight: '800', fontSize: 10 }]}>Score</Text>
+          <Text style={[CommonStyle.flexContainer, CommonStyle.textCenter, {fontWeight: '800', fontSize: 10 }]}>Share</Text>
         </View>
       </View>
     );
@@ -137,17 +137,10 @@ export default class ContributionsView extends Component {
   /**
    * Render list's rows
    */
-  renderRow = (row) => {
+  renderRow = (row, i) => {
     const item = row.item;
     return (
-      <View style={styles.row}>
-        <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.metric && item.metric.toUpperCase()}</Text>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textRight, styles.column]}>{item.amount}</Text>
-          <Text style={[CommonStyle.fontS, CommonStyle.flexContainer, CommonStyle.textRight, styles.column]}>{item.score}</Text>
-        </View>
-      </View>
+      <ContributionRow item={item} key={i} />
     )
   }
 
@@ -160,11 +153,9 @@ export default class ContributionsView extends Component {
 }
 
 const styles = StyleSheet.create({
-  row: {
-    paddingTop: 16,
-    paddingBottom: 16,
-    paddingLeft: 8,
-    paddingRight: 8,
+  header: {
+    paddingTop: 5,
+    paddingBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ececec',
   },
