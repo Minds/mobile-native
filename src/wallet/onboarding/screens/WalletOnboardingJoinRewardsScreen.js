@@ -168,7 +168,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
           />
 
           <TransparentButton
-            style={[style.col, style.colLazy]}
+            style={[style.col, style.colLazy, style.colsVCenter]}
             disabled={!this.canConfirm()}
             onPress={this.confirmAction}
             title={confirmButtonContent}

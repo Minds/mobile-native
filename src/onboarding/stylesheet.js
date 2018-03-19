@@ -27,6 +27,9 @@ export default {
   colsCenter: {
     alignItems: 'center',
   },
+  colsVCenter: {
+    justifyContent: 'center'
+  },
   col: {
     flexBasis: 0,
     flexGrow: 1,
