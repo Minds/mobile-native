@@ -22,7 +22,8 @@ exports[`WithdrawScreen renders correctly 1`] = `
           }
         }
       >
-        You can request to withdraw your token rewards to your 'onchain' wallet below. Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals may take a few hours to complete.
+        You can request to withdraw your OffChain token rewards to your OnChain address below. Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals may take up to a few hours to complete.
+        
       </Text>
       <View
         style={
@@ -81,6 +82,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
   getItemCount={[Function]}
   horizontal={false}
   initialNumToRender={10}
+  invertStickyHeaders={undefined}
   keyExtractor={[Function]}
   maxToRenderPerBatch={10}
   numColumns={1}
@@ -129,7 +131,8 @@ exports[`WithdrawScreen renders correctly 1`] = `
             }
           }
         >
-          You can request to withdraw your token rewards to your 'onchain' wallet below. Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals may take a few hours to complete.
+          You can request to withdraw your OffChain token rewards to your OnChain address below. Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals may take up to a few hours to complete.
+          
         </Text>
         <View
           style={

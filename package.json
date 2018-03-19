@@ -96,7 +96,7 @@
     "jest-serializer-enzyme": "^1.0.0",
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.2.0",
-    "react-test-renderer": "16.2.0",
+    "react-test-renderer": "16.3.0-alpha.1",
     "reactotron-react-native": "^1.14.0"
   },
   "jest": {
