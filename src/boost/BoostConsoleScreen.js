@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
-import { FlatList, StyleSheet, View, TouchableHighlight, Text } from 'react-native';
-import { observer, inject } from 'mobx-react/native'
+import { 
+  FlatList,
+  StyleSheet,
+  View,
+  TouchableHighlight,
+  Text 
+} from 'react-native';
+import { observer, inject } from 'mobx-react/native';
+
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Boost from './Boost';
 
@@ -41,17 +49,20 @@ export default class BoostConsoleScreen extends Component {
       empty = (<CenteredLoading/>);
     }
 
-    if(!this.props.boost.loading && this.props.boost.list.entities.length === 0) {
-      empty = (<View style={[CommonStyle.flexContainer, CommonStyle.alignJustifyCenter]}>
-        <Text style={{fontWeight: 'bold', fontSize:16}}>You have no boosted posts</Text>
-        <TouchableHighlight
-          onPress={() => { this.createPost()}} 
-          underlayColor = 'transparent'
-          style = {ComponentsStyle.bluebutton}
-        >
-          <Text style={{color: colors.primary}} > Create </Text>
-        </TouchableHighlight>
-      </View>);
+    if (this.props.boost.list.loaded && !this.props.boost.list.refreshing) {
+      empty = (
+        <View style={ComponentsStyle.emptyComponentContainer}>
+          <View style={ComponentsStyle.emptyComponent}>
+            <Icon name="trending-up" size={72} color='#444' />
+            <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any boosts</Text>
+            <Text 
+              style={ComponentsStyle.emptyComponentLink}
+              onPress={() => this.props.navigation.navigate('Capture')}
+              >
+              Create a post
+            </Text>
+          </View>
+        </View>);
     }
 
     const tabs = (<BoostTabBar />);
