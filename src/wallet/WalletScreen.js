@@ -9,7 +9,12 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+
+import {
+  NavigationActions
+} from 'react-navigation';
 
 import {
   inject,
@@ -50,6 +55,11 @@ export default class WalletScreen extends Component {
   componentWillMount() {
     this.disposeState = this.props.tabs.onState((state) => {
       if (!state.previousScene) return;
+      if (state.scene.route.key == "Wallet" && !FeaturesService.has('crypto')) {
+        this.props.navigation.navigate('Newsfeed');
+        Alert.alert('Ooooppppsss', 'This feature is currently unavailable on your platform');
+        return;
+      }
       if (state.previousScene.key == "Wallet" && state.previousScene.key == state.scene.route.key) {
         this.props.wallet.refresh();
       }
