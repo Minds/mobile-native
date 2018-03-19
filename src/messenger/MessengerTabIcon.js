@@ -25,7 +25,7 @@ export default class MessengerTabIcon extends Component {
     return (
       <View style={styles.container}>
         <Icon name="md-chatbubbles" size={24} color={tintColor} />
-        { this.props.messengerList.unread ? <FAIcon name="circle" size={10} color={colors.primary} style={styles.unread} /> : null}
+        { this.props.messengerList.unread ? <FAIcon name="circle" size={10} color='rgba(70, 144, 223, 1)' style={styles.unread} /> : null}
       </View>
     );
   }
@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
     opacity: 1,
     position: 'absolute',
     top: Platform.OS == 'ios' ? 6 : 0,
-    left: 15
+    left: Platform.OS == 'ios' ? 15 : 12
   },
 });
