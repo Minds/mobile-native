@@ -83,10 +83,18 @@ export default class Comment extends Component {
           <View style={styles.content}>
             {
               this.state.editing ?
-                <CommentEditor setEditing={this.setEditing} comment={comment}/>:
+                <CommentEditor setEditing={this.setEditing} comment={comment}/> :
                 
                 <Text style={styles.message} selectable={true} onPress={this.showActions}>
-                  <Text style={styles.username}>@{comment.ownerObj.username}</Text> <Tags style={comment.mature? styles.mature : {}} navigation={this.props.navigation}>{entities.decodeHTML(comment.description)}</Tags>
+                  <Text style={styles.username}>@{comment.ownerObj.username} </Text>
+                  { comment.description &&
+                    <Tags 
+                      style={comment.mature? styles.mature : {}} 
+                      navigation={this.props.navigation}
+                      >
+                      {entities.decodeHTML(comment.description)}
+                    </Tags>
+                  }
                 </Text>
             }
           </View>
