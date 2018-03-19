@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
+import { createImageProgress } from 'react-native-image-progress';
+import ProgressCircle from 'react-native-progress/Circle';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
@@ -16,9 +18,28 @@ import colors from '../styles/Colors';
 import Touchable from '../common/components/Touchable';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
 
+const ProgressFastImage = createImageProgress(FastImage);
+
 export default class CaptureMetaPreview extends Component {
+  _currentThumbnail = void 0;
+
+  state = {
+    imageLoadFailed: false
+  };
+
   inProgress() {
     return this.props.inProgress && !this.props.meta;
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.meta && props.meta.thumbnail !== this._currentThumbnail) {
+      this.setState({ imageLoadFailed: false });
+      this._currentThumbnail = props.meta.thumbnail;
+    }
+  }
+
+  imageError = () => {
+    this.setState({ imageLoadFailed: true });
   }
 
   render() {
@@ -29,11 +50,14 @@ export default class CaptureMetaPreview extends Component {
         </View>}
 
         {!this.inProgress() && <View style={style.content}>
-          {this.props.meta.thumbnail && <View style={style.thumbnailContainer}>
-          <FastImage
-            source={{ uri: mediaProxyUrl(this.props.meta.thumbnail) }}
-            resizeMode={FastImage.resizeMode.cover}
+          {this.props.meta.thumbnail && !this.state.imageLoadFailed && <View style={style.thumbnailContainer}>
+          <ProgressFastImage
             style={style.thumbnail}
+            indicator={ProgressCircle}
+            threshold={150}
+            source={{ uri: mediaProxyUrl(this.props.meta.thumbnail) }}
+            resizeMode={FastImage.resizeMode.cover}  
+            onError={this.imageError}
           />
           </View>}
 

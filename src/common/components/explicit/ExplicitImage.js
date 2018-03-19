@@ -27,8 +27,14 @@ export default class ExplicitImage extends Component {
     this.state = { viewRef: null };
   }
 
-  imageLoaded() {
+  imageLoaded = () => {
     this.setState({ viewRef: findNodeHandle(this.backgroundImage) });
+  }
+
+  imageError = () => {
+    if (this.props.onError) {
+      this.props.onError();
+    }
   }
 
   render() {
@@ -39,8 +45,9 @@ export default class ExplicitImage extends Component {
       image = (
         <FastImage
           source={this.props.source}
-          onLoadEnd={this.imageLoaded.bind(this)}
-          ref={(img) => { this.backgroundImage = img; }} style={styles.absolute}
+          onLoadEnd={this.imageLoaded}
+          onError={this.imageError}
+          ref={(img) => { this.backgroundImage = img; }} style={[styles.absolute, this.props.imageStyle]}
         />
       )
     } else {
@@ -49,8 +56,9 @@ export default class ExplicitImage extends Component {
           indicator={ProgressCircle}
           threshold={150}
           source={this.props.source}
-          onLoadEnd={this.imageLoaded.bind(this)}
-          ref={(img) => { this.backgroundImage = img; }} style={styles.absolute}
+          onLoadEnd={this.imageLoaded}
+          onError={this.imageError}
+          ref={(img) => { this.backgroundImage = img; }} style={[styles.absolute, this.props.imageStyle]}
         />
       )
     }

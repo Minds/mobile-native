@@ -36,6 +36,11 @@ import mediaProxyUrl from '../helpers/media-proxy-url';
  */
 @observer
 export default class MediaView extends Component {
+  _currentThumbnail = void 0;
+
+  state = {
+    imageLoadFailed: false,
+  }
 
   /**
    * Show activity media
@@ -90,6 +95,9 @@ export default class MediaView extends Component {
     );
   }
 
+  imageError = () => {
+    this.setState({ imageLoadFailed: true });
+  }
 
   /**
    * Get image with autoheight or Touchable fixed height
@@ -99,6 +107,34 @@ export default class MediaView extends Component {
     this.source = source;
     const autoHeight = this.props.autoHeight;
     const custom_data = this.props.entity.custom_data;
+
+    if (this.state.imageLoadFailed) {
+      let height = 200;
+
+      if (!autoHeight && custom_data && custom_data[0].height && custom_data[0].height != '0') {
+        height = Dimensions.get('window').width * ratio;
+      }
+
+      let text = (
+        <Text
+          style={styles.imageLoadErrorText}
+        >The media could not be loaded.</Text>
+      );
+
+      if (this.props.entity.perma_url) {
+        text = (
+          <Text
+            style={styles.imageLoadErrorText}
+          >The media from <Text style={styles.imageLoadErrorTextDomain}>{domain(this.props.entity.perma_url)}</Text> could not be loaded.</Text>
+        );
+      }
+
+      return (
+        <View style={[styles.imageLoadError, { height }]}>
+          {text}
+        </View>
+      );
+    }
 
     if (custom_data && custom_data[0].height && custom_data[0].height != '0') {
       let ratio = custom_data[0].height / custom_data[0].width;
@@ -110,6 +146,8 @@ export default class MediaView extends Component {
             entity={this.props.entity}
             style={[styles.image, { height }]}
             disableProgress={this.props.disableProgress}
+            onError={this.imageError}
+            imageStyle={styles.innerImage}
             />
         </TouchableOpacity>
       );
@@ -137,6 +175,8 @@ export default class MediaView extends Component {
           entity={this.props.entity}
           style={styles.image}
           disableProgress={this.props.disableProgress}
+          onError={this.imageError}
+          imageStyle={styles.innerImage}
         />
       </TouchableOpacity>
     );
@@ -204,6 +244,9 @@ const styles = StyleSheet.create({
     //height: 200,
     flex: 1,
   },
+  innerImage: {
+    backgroundColor: 'transparent'
+  },
   videoContainer: {
     flex: 1,
     alignItems: 'stretch',
@@ -224,4 +267,17 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#888',
   },
+  imageLoadError: {
+    backgroundColor: '#f0f0f0',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageLoadErrorText: {
+    fontFamily: 'Roboto',
+    color: '#666',
+    fontSize: 12,
+  },
+  imageLoadErrorTextDomain: {
+    fontWeight: '600',
+  }
 });
