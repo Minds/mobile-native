@@ -25,7 +25,8 @@ export default class ExplicitText extends Component {
 
   state = {
     more: false,
-    width: Dimensions.get('window').width
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   }
 
   /**
@@ -65,7 +66,7 @@ export default class ExplicitText extends Component {
     if (message != '') {
       const truncated = this.truncate(message);
       // truncate if necessary
-      if (message.length != truncated.length) {
+      if (message.length > truncated.length) {
         if (!this.state.more) message = truncated;
         moreLess = this.getMoreLess();
       }
@@ -92,8 +93,8 @@ export default class ExplicitText extends Component {
 
     let truncated = false;
     let lines = message.split('\n');
-    if (lines.length > 4) {
-      lines = lines.slice(0,4);
+    if (lines.length > 20) {
+      lines = lines.slice(0,20);
       truncated = true;
     }
 
@@ -105,10 +106,10 @@ export default class ExplicitText extends Component {
   }
 
   /**
-   * Get text char limit based on screen width
+   * Get text char limit based on screen height
    */
   getTextLimit() {
-    return this.state.width / 2;
+    return this.state.height * 1.5;
   }
 
   /**
