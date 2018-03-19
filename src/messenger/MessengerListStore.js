@@ -35,7 +35,7 @@ class MessengerListStore {
 
   offset     = '';
   newsearch  = true;
-  loaded     = false;
+  @observable loaded     = false;
 
   @computed get unread() {
     const count = this.conversations.filter(conv => conv.unread).length;

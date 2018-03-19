@@ -9,7 +9,8 @@ import {
   Platform,
   FlatList,
   StyleSheet,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 
 import {
@@ -17,11 +18,14 @@ import {
   observer
 } from 'mobx-react/native'
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import ConversationView from './conversation/ConversationView';
 
 import SearchView from '../common/components/SearchView';
 import debounce from '../common/helpers/debounce';
 import { CommonStyle } from '../styles/Common';
+import Colors from '../styles/Colors';
 import MessengerTabIcon from './MessengerTabIcon';
 
 /**
@@ -92,6 +96,24 @@ export default class MessengerScreen extends Component {
       return <View/>
     }
 
+    let empty;
+
+    if (messengerList.loaded && !messengerList.refreshing) {
+      empty = (
+      <View style={styles.emptyComponentContainer}>
+        <View style={styles.emptyComponent}>
+          <Icon name="person-add" size={72} color='#444' />
+          <Text style={styles.emptyComponentMessage}>You don't have any messages</Text>
+          <Text 
+            style={styles.emptyComponentLink}
+            onPress={() => this.props.navigation.navigate('Discovery', { type: 'user' })}
+            >
+            Find channels
+          </Text>
+        </View>
+      </View>);
+    }
+
     return (
       <View style={styles.container}>
         <SearchView
@@ -108,6 +130,7 @@ export default class MessengerScreen extends Component {
           onEndThreshold={0.01}
           refreshing={messengerList.refreshing}
           style={styles.listView}
+          ListEmptyComponent={empty}
         />
       </View>
     );
@@ -194,5 +217,32 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
+  },
+  emptyComponentContainer: { 
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    height: Dimensions.get('window').height / 2,
+  },
+  emptyComponent: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  emptyComponentMessage: { 
+    fontSize: 24,
+    fontFamily: 'Roboto',
+    fontWeight: '600',
+    color: '#444',
+    textAlign: 'center',
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  emptyComponentLink: {
+    fontFamily: 'Roboto',
+    color: Colors.primary,
+    marginTop: 16,
   },
 });

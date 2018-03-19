@@ -88,6 +88,10 @@ export default class DiscoveryScreen extends Component {
         this.props.discovery.refresh();
       }
     });
+
+    const params = this.props.navigation.state.params;
+    if (params && params.type)
+      this.props.discovery.setType(params.type);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -100,6 +104,10 @@ export default class DiscoveryScreen extends Component {
         setTimeout(() => this._loadData());
       }
     }
+
+    const params = nextProps.navigation.state.params;
+    if (params && params.type)
+      this.props.discovery.setType(params.type);
   }
 
   /**
