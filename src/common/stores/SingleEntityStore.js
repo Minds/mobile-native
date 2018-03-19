@@ -10,7 +10,7 @@ import {
  */
 export default class SingleEntityStore {
 
-  @observable entity = {};
+  @observable entity;
 
   @action
   setEntity(entity) {
@@ -19,7 +19,7 @@ export default class SingleEntityStore {
   
   @action
   clear() {
-    this.entity = {};
+    this.entity = null;
   }
 }
 
