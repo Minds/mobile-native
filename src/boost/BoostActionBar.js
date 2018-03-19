@@ -104,7 +104,7 @@ export default class BoostActionBar extends Component {
   }
 
   renderBid() {
-    return  this.props.entity.bid ?
+    return this.props.entity.bid ?
               <View style={CommonStyle.flexColumnCentered} key="bid">
                 <Icon
                   type='material-community'
@@ -114,7 +114,15 @@ export default class BoostActionBar extends Component {
                   style={styles.icon}
                   />
                 <Text style={styles.value}>
-                  {token(this.props.entity.bid, 18) + ' Tokens'}
+                  { (this.props.entity.bidType == 'offchain' ||
+                    this.props.entity.bidType == 'onchain' ||
+                    this.props.entity.bidType == 'tokens') &&
+                    token(this.props.entity.bid, 18) + ' Tokens' }
+                  { (this.props.entity.bidType == 'usd' ||
+                    this.props.entity.bidType == 'money') &&
+                    '$' + this.props.entity.bid }
+                  { this.props.entity.bidType == 'points' &&
+                    this.props.entity.bid + ' points' }
                 </Text>
               </View> : <View></View>;
   }
