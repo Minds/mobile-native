@@ -153,6 +153,20 @@ export default class BoostScreen extends Component {
    * Change Type
    */
   changeType = (type) => {
+
+    if (this.state.type == type)
+      return;
+
+    if (this.state.type == 'p2p') {
+      this.setState({
+        amount: this.state.amount * this.state.rates.tokens,
+      });
+    } else if (type == 'p2p') {
+      this.setState({
+        amount: this.state.amount / this.state.rates.tokens,
+      });
+    }
+
     this.setState({ type });
 
     if (type === 'p2p') {
@@ -465,7 +479,7 @@ export default class BoostScreen extends Component {
             switch (payload.type) {
               case 'onchain':
                 
-		if (this.state.target && !this.state.target.eth_wallet) {
+		            if (this.state.target && !this.state.target.eth_wallet) {
                   throw new VisibleError('User cannot receive tokens.');
                 }
 
@@ -647,13 +661,20 @@ export default class BoostScreen extends Component {
 
         <Text style={styles.subtitleText}>{amountTitle}</Text>
         <View style={[CommonStyle.rowJustifyStart, CommonStyle.alignCenter, CommonStyle.paddingTop]}>
-          <TextInput ref={textInput => this.textInput = textInput} onChangeText={this.changeInput} style={styles.input} underlineColorAndroid="transparent" value={this.parsedAmount()} keyboardType="numeric" />
+          <TextInput 
+            ref={textInput => this.textInput = textInput}
+            onChangeText={this.changeInput}
+            style={styles.input}
+            underlineColorAndroid="transparent"
+            value={this.parsedAmount()}
+            keyboardType="numeric" 
+            />
           { this.state.type !== 'p2p' && <Text style={[CommonStyle.fontXXL, CommonStyle.paddingLeft2x]}>Views</Text> }
         </View>
 
         <Divider style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]} />
 
-        <Text style={styles.subtitleText}>PAYMENT METHOD</Text>
+        <Text style={styles.subtitleText}>COST</Text>
         <PaymentSelector onChange={this.changePayment} value={this.state.payment} type={this.state.type} values={this.getAmountValues()} />
 
         {PriorityPartial}

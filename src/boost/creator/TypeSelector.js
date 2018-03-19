@@ -53,7 +53,7 @@ export default class TypeSelector extends PureComponent {
   render() {
     const selected = <Text style={[CommonStyle.fontS, CommonStyle.colorPrimary]}>SELECTED</Text>,
       NewsfeedPartial = this.getOption('newsfeed', 'Feeds', 'Your content will appear on newsfeeds across the site.', selected),
-      P2pPartial = this.getOption('p2p', 'Channels', 'Your content will be shared to a specific channel in exchange for USD or tokens or rewards.', selected),
+      P2pPartial = this.getOption('p2p', 'Offers', 'Your content will be shared to a specific channel in exchange for USD or tokens or rewards.', selected),
       ContentPartial = this.getOption('content', 'Sidebars', 'Your content will display on the sidebars throughout the site.', selected),
       allowedTypes = this.props.allowedTypes;
 

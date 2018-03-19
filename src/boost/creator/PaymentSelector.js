@@ -41,7 +41,7 @@ export default class PaymentSelector extends PureComponent {
         <View>
           <Text style={[CommonStyle.fontXL, colorStlye]}>{currency(!isNaN(value) ? value : 0, method, 'prefix')}</Text>
           <Text style={[CommonStyle.fontXS, colorStlye]}>{text}</Text>
-          {isSelected && selected}
+          {isSelected && false && selected}
         </View>
       </Touchable>
     )
@@ -57,7 +57,7 @@ export default class PaymentSelector extends PureComponent {
 
     return (
       <View style={CommonStyle.rowJustifyStart}>
-        {this.props.type !== 'p2p' && usd}
+        {this.props.type !== 'p2p' && false && usd}
         {FeaturesService.has('crypto') && tokens}
       </View>
     )
