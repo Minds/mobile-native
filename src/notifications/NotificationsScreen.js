@@ -15,6 +15,7 @@ import {
 } from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import { OptimizedFlatList } from 'react-native-optimized-flatlist';
 
 import NotificationsTabIcon from './NotificationsTabIcon';
@@ -23,6 +24,7 @@ import Notification from './notification/Notification';
 import NotificationsTopbar from './NotificationsTopbar';
 import CaptureFab from '../capture/CaptureFab';
 import { CommonStyle } from '../styles/Common';
+import { ComponentsStyle } from '../styles/Components';
 
 // style
 const styles = StyleSheet.create({
@@ -84,18 +86,39 @@ export default class NotificationsScreen extends Component {
    * Render screen
    */
   render() {
-    let body, empty;
+    let body;
     const list = this.props.notifications.list;
+    let empty = (<CenteredLoading />);
 
 
-    if (this.props.notifications.loading || !this.props.notifications.list.loaded) {
-      empty = (<CenteredLoading />);
-    } else {
-      empty = (<Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>
-        There are no notifications to load
-      </Text>);
+    if (list.loaded && !list.refreshing) {
+      let filter = '';
+
+      if (this.props.notifications.filter != 'all') {
+        filter = this.props.notifications.filter.substr(0, this.props.notifications.filter.length - 1);
+      }
+
+      empty = (
+        <View style={ComponentsStyle.emptyComponentContainer}>
+          <View style={ComponentsStyle.emptyComponent}>
+            <MIcon name="notifications" size={72} color='#444' />
+            <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any {filter} notifications</Text>
+            <Text 
+              style={ComponentsStyle.emptyComponentLink}
+              onPress={() => this.props.navigation.navigate('Channel', { username: 'me' })}
+              >
+              Design your channel
+            </Text>
+            <Text 
+              style={ComponentsStyle.emptyComponentLink}
+              onPress={() => this.props.navigation.navigate('Capture')}
+              >
+              Create a post
+            </Text>
+          </View>
+        </View>);
     }
-
+  
     body = (
       <FlatList
         data={list.entities.slice()}

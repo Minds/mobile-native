@@ -25,6 +25,7 @@ import ConversationView from './conversation/ConversationView';
 import SearchView from '../common/components/SearchView';
 import debounce from '../common/helpers/debounce';
 import { CommonStyle } from '../styles/Common';
+import { ComponentsStyle } from '../styles/Components'; 
 import Colors from '../styles/Colors';
 import MessengerTabIcon from './MessengerTabIcon';
 
@@ -100,12 +101,12 @@ export default class MessengerScreen extends Component {
 
     if (messengerList.loaded && !messengerList.refreshing) {
       empty = (
-      <View style={styles.emptyComponentContainer}>
-        <View style={styles.emptyComponent}>
+      <View style={ComponentsStyle.emptyComponentContainer}>
+        <View style={ComponentsStyle.emptyComponent}>
           <Icon name="person-add" size={72} color='#444' />
-          <Text style={styles.emptyComponentMessage}>You don't have any messages</Text>
+          <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any messages</Text>
           <Text 
-            style={styles.emptyComponentLink}
+            style={ComponentsStyle.emptyComponentLink}
             onPress={() => this.props.navigation.navigate('Discovery', { type: 'user' })}
             >
             Find channels
@@ -217,32 +218,5 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
-  },
-  emptyComponentContainer: { 
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-    height: Dimensions.get('window').height / 2,
-  },
-  emptyComponent: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1,
-  },
-  emptyComponentMessage: { 
-    fontSize: 24,
-    fontFamily: 'Roboto',
-    fontWeight: '600',
-    color: '#444',
-    textAlign: 'center',
-    marginTop: 8,
-    marginBottom: 8,
-  },
-  emptyComponentLink: {
-    fontFamily: 'Roboto',
-    color: Colors.primary,
-    marginTop: 16,
   },
 });

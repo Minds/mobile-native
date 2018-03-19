@@ -1,4 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { 
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 
 import colors from './Colors';
 
@@ -29,7 +32,8 @@ export const ComponentsStyle = StyleSheet.create({
     letterSpacing: 2,
     padding: 15,
     // fontFamily: 'Roboto',
-    backgroundColor: 'rgba(255,255,255, 0.9)',
+    //backgroundColor: 'rgba(255,255,255, 0.9)',
+    backgroundColor: '#f8f8f8',
     height: 50,
     borderRadius: 4,
   },
@@ -116,5 +120,34 @@ export const ComponentsStyle = StyleSheet.create({
   terms: {
     color: 'white',
     paddingRight: 8
+  },
+
+
+  emptyComponentContainer: { 
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    height: Dimensions.get('window').height / 2,
+  },
+  emptyComponent: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  emptyComponentMessage: { 
+    fontSize: 24,
+    fontFamily: 'Roboto',
+    fontWeight: '600',
+    color: '#444',
+    textAlign: 'center',
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  emptyComponentLink: {
+    fontFamily: 'Roboto',
+    color: colors.primary,
+    marginTop: 16,
   },
 });
