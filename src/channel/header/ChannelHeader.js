@@ -321,7 +321,13 @@ export default class ChannelHeader extends Component {
               />}
               {!isEditable &&
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={styles.name}>{this.state.name}</Text>
+                  <Text 
+                    style={styles.name}
+                    ellipsizeMode='tail'
+                    numberOfLines={1}
+                    >
+                    {this.state.name}
+                  </Text>
                   <ChannelBadges channel={channel} />
                 </View>}
               <Text style={styles.username}>@{channel.username}</Text>

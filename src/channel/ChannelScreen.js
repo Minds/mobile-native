@@ -247,13 +247,13 @@ const styles = StyleSheet.create({
   },
   namecontainer: {
     flexDirection: 'row',
-    flex:1
+    flex:1,
   },
   buttonscol: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    width: 150,
+    //width: 150,
     alignSelf:'flex-end'
   },
   carouselcontainer: {
