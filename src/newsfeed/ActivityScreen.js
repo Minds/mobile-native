@@ -9,11 +9,15 @@ import {
   Image,
   ActivityIndicator,
   Text,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   TouchableHighlight,
   Dimensions,
 } from 'react-native';
+
+import ActionSheet from 'react-native-actionsheet';
+import * as Progress from 'react-native-progress';
 
 import { observer, inject } from 'mobx-react/native';
 
@@ -32,12 +36,12 @@ import { CommonStyle } from '../styles/Common';
 import { MINDS_CDN_URI } from '../config/Config';
 import CapturePreview from '../capture/CapturePreview';
 import ActivityModel from './ActivityModel';
-import ActionSheet from 'react-native-actionsheet';
-import * as Progress from 'react-native-progress';
+
 import attachmentService from '../common/services/attachment.service';
 import { ComponentsStyle } from '../styles/Components';
 import Colors from '../styles/Colors';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
+import SingleEntityStoreProvider from '../common/stores/SingleEntityStore';
 import { getSingle } from './NewsfeedService';
 
 @inject('user')
@@ -49,17 +53,17 @@ export default class ActivityScreen extends Component {
    */
   comments = null;
   entity = null;
-  
 
   componentWillMount() {
     this.comments = commentsStoreProvider.get();
+    this.entity = new SingleEntityStoreProvider();
     const params = this.props.navigation.state.params;
     if (params.entity) {
-      this.entity = ActivityModel.checkOrCreate(params.entity);
+      this.entity.setEntity(ActivityModel.checkOrCreate(params.entity));
     } else {
       getSingle(params.guid)
         .then(resp => {
-          this.entity = ActivityModel.checkOrCreate(resp.activity);
+          this.entity.setEntity(ActivityModel.checkOrCreate(resp.activity));
         });
     }
   }
@@ -67,8 +71,8 @@ export default class ActivityScreen extends Component {
   componentDidMount() {
     this.loadComments()
       .then(() => {
-        if (this.comments.comments.length )
-        this.scrollToBottom();
+        if (this.comments.comments.length)
+          this.scrollToBottom();
       })
   }
 
@@ -79,10 +83,9 @@ export default class ActivityScreen extends Component {
   }
 
   getHeader() {
-    let entity = this.entity;
     return <View>
              <Activity
-              entity={ entity }
+              entity={ this.entity.entity }
               newsfeed={ this.props.navigation.state.params.store }
               navigation={ this.props.navigation }
               autoHeight={true}
@@ -101,8 +104,8 @@ export default class ActivityScreen extends Component {
   }
 
   scrollToBottom() {
-    if (this.entity && this.props.navigation.state.params.scrollToBottom) {
-      setTimeout(() => this.listRef.scrollToEnd(), 300); //delay to allow rendering
+    if (this.entity.entity && this.props.navigation.state.params.scrollToBottom) {
+      setTimeout(() => this.listRef.scrollToEnd(), 200); //delay to allow rendering
     }
   }
 
@@ -275,28 +278,21 @@ export default class ActivityScreen extends Component {
    */
   postComment = () => {
     const comments = this.comments;
-
+    Keyboard.dismiss();
     if (!comments.saving && (comments.text != '' || comments.attachment.hasAttachment)){
       comments.post();
     }
   }
 
   loadComments = async () => {
-    const entity = this.entity;
     let guid;
-    switch (entity.type) {
-      case "comment":
-        guid = entity.parent_guid;
-        break;
+    const entity = this.entity.entity;
 
-      case "activity":
-          guid = entity.guid;
-          if (entity.entity_guid) {
-            guid = entity.entity_guid;
-          }
-        break;
-      default:
-        guid = entity.guid;
+    if (this.entity.entity) {
+      guid = entity.guid;
+      if (entity.entity_guid) {
+        guid = entity.entity_guid;
+      }
     }
 
     await this.comments.loadComments(guid);
@@ -336,19 +332,17 @@ export default class ActivityScreen extends Component {
     return (
       <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={64}>
         <View style={{flex:14}}>
-          { this.entity ?
-            <FlatList
-              ref={ ref => this.listRef = ref }
-              ListHeaderComponent={this.getHeader()}
-              data={this.comments.comments.slice()}
-              renderItem={this.renderComment}
-              keyExtractor={item => item.guid}
-              initialNumToRender={25}
-              refreshing={this.comments.refreshing}
-              style={styles.listView}
-            /> :
-            <CenteredLoading/>
-          }
+          <FlatList
+            ref={ ref => this.listRef = ref }
+            ListHeaderComponent={this.getHeader()}
+            data={this.comments.comments.slice()}
+            renderItem={this.renderComment}
+            keyExtractor={item => item.guid}
+            initialNumToRender={25}
+            refreshing={this.comments.refreshing}
+            ListEmptyComponent={this.comments.loaded && !this.comments.refreshing ? <View/> : <CenteredLoading />}
+            style={styles.listView}
+          />
         </View>
         { this.renderPoster() }
         { actionsheet }
