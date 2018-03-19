@@ -54,21 +54,21 @@ export default class ActivityScreen extends Component {
   comments = null;
   entity = null;
 
-  componentWillMount() {
+  async componentWillMount() {
     this.comments = commentsStoreProvider.get();
     this.entity = new SingleEntityStoreProvider();
     const params = this.props.navigation.state.params;
     if (params.entity) {
-      this.entity.setEntity(ActivityModel.checkOrCreate(params.entity));
-    } else {
-      getSingle(params.guid)
-        .then(resp => {
-          this.entity.setEntity(ActivityModel.checkOrCreate(resp.activity));
-        });
+      await this.entity.setEntity(ActivityModel.checkOrCreate(params.entity));
     }
   }
   
-  componentDidMount() {
+  async componentDidMount() {
+    const params = this.props.navigation.state.params;
+    if (!this.entity.entity) {
+      const resp = await getSingle(params.guid);
+      await this.entity.setEntity(ActivityModel.checkOrCreate(resp.activity));
+    }
     this.loadComments()
       .then(() => {
         if (this.comments.comments.length)
@@ -84,12 +84,12 @@ export default class ActivityScreen extends Component {
 
   getHeader() {
     return <View>
-             <Activity
+             { this.entity.entity && <Activity
               entity={ this.entity.entity }
               newsfeed={ this.props.navigation.state.params.store }
               navigation={ this.props.navigation }
               autoHeight={true}
-            />
+             /> }
             { this.comments.loadPrevious && !this.comments.loading ?
                 <TouchableHighlight
                 onPress={() => { this.loadComments()}}
@@ -112,7 +112,7 @@ export default class ActivityScreen extends Component {
   renderPoster() {
     const attachment = this.comments.attachment;
 
-    const avatarImg = this.props.user.me.getAvatarSource();
+    const avatarImg = this.props.user.me && this.props.user.me.getAvatarSource ? this.props.user.me.getAvatarSource() : {};
 
     const comments = this.comments;
 
