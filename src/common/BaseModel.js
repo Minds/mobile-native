@@ -185,7 +185,6 @@ export default class BaseModel {
 
     this['thumbs:' + direction + ':count'] += delta;
 
-    return;
     // class service
     try {
       await vote(this.guid, direction)
