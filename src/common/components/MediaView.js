@@ -269,6 +269,7 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   imageLoadError: {
+    padding: 20,
     backgroundColor: '#f0f0f0',
     alignItems: 'center',
     justifyContent: 'center',
@@ -277,6 +278,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     color: '#666',
     fontSize: 12,
+    lineHeight: 16,
   },
   imageLoadErrorTextDomain: {
     fontWeight: '600',
