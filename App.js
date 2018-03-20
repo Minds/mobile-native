@@ -67,15 +67,45 @@ export default class App extends Component {
   }
 
   /**
+   * Go to screen
+   * @param {string} screen 
+   */
+  goTo(screen) {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: screen })
+      ]
+    })
+    stores.navigatorStore.dispatch(resetAction);
+  }
+
+  /**
    * On component did mount
    */
-  componentDidMount() {
+  async componentDidMount() {
+    const token = await sessionService.init();
+
+    if (token) {
+      try {
+        const result = await stores.user.load();
+        // go to main screen.
+        this.goTo('Tabs');
+        // handle initial notifications (if the app is opened by tap on one)
+        pushService.handleInitialNotification();
+        // handle deep link (if the app is opened by one)
+        Linking.getInitialURL().then(url => url && this.handleOpenURL(url));
+      } catch(err) {
+        console.log(err)
+        alert('Error logging in');
+        this.goTo('Login');
+      };
+    } else {
+      this.goTo('Login');
+    }
+
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
     Linking.addEventListener('url', event => this.handleOpenURL(event.url));
-    Linking.getInitialURL().then(url => url && this.handleOpenURL(url));
-    
-    // handle initial notifications (if the app is opened by tap on one)
-    pushService.handleInitialNotification();
   }
 
   /**
@@ -102,7 +132,9 @@ export default class App extends Component {
    * Handle deeplink urls
    */
   handleOpenURL = (url) => {
-    deeplinkService.navigate(url);
+    setTimeout(() => {
+      deeplinkService.navigate(url);
+    }, 100);
   }
 
   /**
