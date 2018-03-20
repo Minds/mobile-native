@@ -168,7 +168,7 @@ export default class CapturePoster extends Component {
       return false;
     }
 
-    if (!attachment.hasAttachment && !this.state.text) {
+    if (!attachment.hasAttachment && !this.state.text && !this.state.meta) {
       alert('Nothing to post...');
       return false;
     }
