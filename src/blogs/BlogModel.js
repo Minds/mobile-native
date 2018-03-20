@@ -5,7 +5,7 @@ import UserModel from '../channel/UserModel';
 /**
  * User model
  */
-export default class BoostModel extends BaseModel {
+export default class BlogModel extends BaseModel {
 
   /**
    * observables

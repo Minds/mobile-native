@@ -1,4 +1,8 @@
-import { observable, action } from 'mobx'
+import { 
+  observable,
+  action,
+  inject
+} from 'mobx'
 import blogService from './BlogsService';
 import BlogModel from './BlogModel';
 
@@ -6,12 +10,14 @@ import BlogModel from './BlogModel';
  * Blogs View Store
  */
 class BlogsViewStore {
+
   @observable blog = {};
 
   /**
    * Load blog
    * @param {string} guid
    */
+  @action
   loadBlog(guid) {
     return blogService.loadEntity(guid)
       .then(result => {
@@ -25,7 +31,7 @@ class BlogsViewStore {
    */
   @action
   setBlog(blog) {
-    this.blog = blog;
+    this.blog = BlogModel.checkOrCreate(blog);
   }
 }
 

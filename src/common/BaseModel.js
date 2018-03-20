@@ -1,5 +1,12 @@
-import { extendShallowObservable, extendObservable } from 'mobx';
+import { 
+  extendShallowObservable, 
+  extendObservable,
+  action,
+  computed,
+} from 'mobx';
 import _ from 'lodash';
+import sessionService from './services/session.service';
+import { vote } from './services/votes.service'; 
 
 /**
  * Base model
@@ -121,7 +128,78 @@ export default class BaseModel {
    * Get a property of the model if it exist or undefined
    * @param {string|array} property ex: 'ownerObj.merchant.exclusive.intro'
    */
+  @action
   get(property) {
     return _.get(this, property);
   }
+
+  /**
+   * voted up
+   */
+  @computed
+  get votedUp() {
+    if (
+      this['thumbs:up:user_guids']
+      && this['thumbs:up:user_guids'].length
+      && this['thumbs:up:user_guids'].indexOf(sessionService.guid) >= 0
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * voted down
+   */
+  @computed
+  get votedDown() {
+    if (
+      this['thumbs:down:user_guids']
+      && this['thumbs:down:user_guids'].length
+      && this['thumbs:down:user_guids'].indexOf(sessionService.guid) >= 0
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Toggle vote
+   * @param {string} direction
+   */
+  @action
+  async toggleVote(direction) {
+
+    const voted = (direction == 'up') ? this.votedUp : this.votedDown;
+    const delta = (voted) ? -1 : 1;
+
+    const guids = this['thumbs:' + direction + ':user_guids'];
+
+    if (voted) {
+      this['thumbs:' + direction + ':user_guids'] = guids.filter(function (item) {
+        return item !== sessionService.guid;
+      });
+    } else {
+      this['thumbs:' + direction + ':user_guids'] = [sessionService.guid, ...guids];
+    }
+
+    this['thumbs:' + direction + ':count'] += delta;
+
+    return;
+    // class service
+    try {
+      await vote(this.guid, direction)
+    } catch (err) {
+      alert(err);
+      if (!voted) {
+        this['thumbs:' + direction + ':user_guids'] = guids.filter(function (item) {
+          return item !== sessionService.guid;
+        });
+      } else {
+        this['thumbs:' + direction + ':user_guids'] = [sessionService.guid, ...guids];
+      }
+      this['thumbs:' + direction + ':count'] -= delta;
+    }
+  }
+
 }
