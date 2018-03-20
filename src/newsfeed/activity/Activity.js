@@ -79,7 +79,7 @@ export default class Activity extends Component {
    */
   render() {
     const entity = this.props.entity;
-    const hasText = entity.message || (!entity.perma_url && entity.title);
+    const hasText = entity.message || entity.title;
     const lock = entity.paywall ? <Lock entity={entity} navigation={this.props.navigation}/> : null;
 
     const message = this.state.editing ?
