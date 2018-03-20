@@ -112,6 +112,7 @@ export default class MediaView extends Component {
       let height = 200;
 
       if (!autoHeight && custom_data && custom_data[0].height && custom_data[0].height != '0') {
+        let ratio = custom_data[0].height / custom_data[0].width;
         height = Dimensions.get('window').width * ratio;
       }
 
