@@ -4,7 +4,7 @@ export default function domain(value) {
 
   var matches,
     output = value,
-    urls = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im;
+    urls = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n\?]+)/im;
 
   matches = urls.exec(value);
 

@@ -244,16 +244,13 @@ export default class CapturePoster extends Component {
   richEmbedCheck = () => {
     const matches = Util.urlReSingle.exec(this.state.text);
 
-    if (!matches && this.state.hasRichEmbed) {
-      this.clearRichEmbed();
-    } else if (matches) {
+    if (matches) {
       const url = (!matches[3] ? 'https://' : '') + matches[0];
 
       if (
         !this.state.hasRichEmbed ||
         (this.state.hasRichEmbed && url.toLowerCase() !== this.state.richEmbedUrl.toLowerCase())
       ) {
-        this.clearRichEmbed();
         this._RichEmbedFetchTimer = setTimeout(() => this.setRichEmbed(url), 750);
       }
     }
