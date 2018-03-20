@@ -20,7 +20,6 @@ import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import Topbar from '../topbar/Topbar';
-import Poster from '../newsfeed/Poster';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import attachmentService from '../common/services/attachment.service';

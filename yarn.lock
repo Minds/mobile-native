@@ -6808,6 +6808,10 @@ react-native-image-picker@^0.26.7:
   version "0.26.7"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.26.7.tgz#ad2ee957f7f6cc01396893ea03d84cb2adb2e376"
 
+react-native-image-picker@react-community/react-native-image-picker#60169dc5dfcea47094703fe4adf54be262540b6b:
+  version "0.26.7"
+  resolved "https://codeload.github.com/react-community/react-native-image-picker/tar.gz/60169dc5dfcea47094703fe4adf54be262540b6b"
+
 react-native-image-progress@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-image-progress/-/react-native-image-progress-1.1.0.tgz#737140d699fb3fb107ec70615736dfdc2eef7b35"

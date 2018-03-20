@@ -17,8 +17,6 @@ import {
 
 import { toJS } from 'mobx'
 import Icon from 'react-native-vector-icons/Ionicons';
-import ActionSheet from 'react-native-actionsheet';
-import ImagePicker from 'react-native-image-picker';
 import FastImage from 'react-native-fast-image';
 
 import { MINDS_CDN_URI } from '../../config/Config';
@@ -31,6 +29,14 @@ import api from '../../common/services/api.service';
 import Touchable from '../../common/components/Touchable';
 import ChannelBadges from '../badges/ChannelBadges';
 import { CommonStyle } from '../../styles/Common';
+import imagePicker from '../../common/services/image-picker.service';
+import Button from '../../common/components/Button';
+import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
+
+// prevent accidental double tap in touchables
+const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
+const TouchableCustom = withPreventDoubleTap(Touchable);
+const ButtonCustom = withPreventDoubleTap(Button);
 
 /**
  * Channel Header
@@ -42,14 +48,11 @@ export default class ChannelHeader extends Component {
   loaded;
 
   state = {
-    isSelectingMedia: false,
-    uploadType: null,
-
     preview_avatar: null,
     preview_banner: null,
-
     briefdescription: '',
-    name: ''
+    name: '',
+    saving: false
   };
 
   uploads = {
@@ -57,6 +60,9 @@ export default class ChannelHeader extends Component {
     banner: null
   };
 
+  /** 
+   * Component will mount
+   */
   componentWillMount() {
     const channel = toJS(this.props.channel.channel);
     this.loaded = false;
@@ -67,6 +73,10 @@ export default class ChannelHeader extends Component {
     }
   }
 
+  /**
+   * Component will receive props
+   * @param {object} nextProps 
+   */
   componentWillReceiveProps(nextProps) {
     const channel = toJS(nextProps.channel.channel);
 
@@ -76,6 +86,10 @@ export default class ChannelHeader extends Component {
     }
   }
 
+  /**
+   * Update state
+   * @param {object} channel 
+   */
   updateEditable(channel) {
     this.setState({
       preview_avatar: null,
@@ -122,7 +136,7 @@ export default class ChannelHeader extends Component {
     }
   }
 
-  onEditAction = () => {
+  onEditAction = async () => {
     let editing = this.props.edit,
       payload = null;
 
@@ -138,9 +152,12 @@ export default class ChannelHeader extends Component {
         avatar: null,
         banner: null
       };
+      this.setState({saving: true});
     }
 
-    this.props.onEdit(payload);
+    await this.props.onEdit(payload);
+    
+    if (this.state.saving) this.setState({saving: false});
   }
 
   /**
@@ -152,36 +169,34 @@ export default class ChannelHeader extends Component {
       return null;
     if (this.props.me.guid === this.props.channel.channel.guid) {
       return (
-        <TouchableHighlight
+        <ButtonCustom
           onPress={this.onEditAction}
-          underlayColor = 'transparent'
-          style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
           accessibilityLabel={this.props.edit ? 'Save your changes' : 'Edit your channel settings'}
-        >
-          <Text style={{color: colors.primary}}> {this.props.edit ? 'SAVE' : 'EDIT'} </Text>
-        </TouchableHighlight>
+          text={this.props.edit ? 'SAVE' : 'EDIT'}
+          loading={this.state.saving}
+        />
       );
     } else if (!!this.props.channel.channel.subscribed) {
       return (
-        <TouchableHighlight
+        <TouchableHighlightCustom
           onPress={() => { this._navToConversation() }}
           underlayColor='transparent'
           style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
           accessibilityLabel="Send a message to this channel"
         >
           <Text style={{ color: colors.primary }} > MESSAGE </Text>
-        </TouchableHighlight>
+        </TouchableHighlightCustom>
       );
     } else if (this.props.me.guid !== this.props.channel.channel.guid) {
       return (
-        <TouchableHighlight
+        <TouchableHighlightCustom
           onPress={() => { this.subscribe() }}
           underlayColor='transparent'
           style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
           accessibilityLabel="Subscribe to this channel"
         >
           <Text style={{ color: colors.primary }} > SUBSCRIBE </Text>
-        </TouchableHighlight>
+        </TouchableHighlightCustom>
       );
     } else if (this.props.channel.isUploading) {
       return (
@@ -196,70 +211,27 @@ export default class ChannelHeader extends Component {
   }
 
   changeBannerAction = async () => {
-    if (this.state.isSelectingMedia) {
-      return;
-    }
-
-    this.setState({ uploadType: 'banner', isSelectingMedia: true });
-    setTimeout(() => this.ActionSheetRef.show(), 20);
+    imagePicker.show('Select banner', 'photo')
+      .then(response => {
+        if (response) {
+          this.selectMedia('banner', response);
+        }
+      }) 
+      .catch(err => {
+        alert(err);
+      });
   };
 
   changeAvatarAction = async () => {
-    if (this.state.isSelectingMedia) {
-      return;
-    }
-
-    this.setState({ uploadType: 'avatar', isSelectingMedia: true });
-    setTimeout(() => this.ActionSheetRef.show(), 20);
-  };
-
-  setAvatarOrBannerSource = i => {
-    const type = this.state.uploadType;
-
-    switch (i) {
-      case 1:
-        ImagePicker.launchCamera({
-            mediaType: 'photo',
-        }, response => {
-          try {
-            if (response.didCancel) {
-              return;
-            } else if (response.error) {
-              alert('ImagePicker Error: '+ response.error);
-            } else if (response.customButton) {
-              return;
-            }
-
-            this.selectMedia(type, response);
-          } catch (e) {
-            this.setState({ uploadType: null, isSelectingMedia: false });
-          }
-        });
-
-        break;
-
-      case 2:
-        ImagePicker.launchImageLibrary({}, response => {
-          try {
-            if (response.didCancel) {
-              return;
-            } else if (response.error) {
-              alert('ImagePicker Error: '+ response.error);
-            } else if (response.customButton) {
-              return;
-            }
-
-            this.selectMedia(type, response);
-          } catch (e) {
-            this.setState({ uploadType: null, isSelectingMedia: false });
-          }
-        });
-
-        break;
-
-      default:
-        this.setState({ uploadType: null, isSelectingMedia: false });
-    }
+    imagePicker.show('Select avatar', 'photo')
+      .then(response => {
+        if (response) {
+          this.selectMedia('avatar', response);
+        }
+      }) 
+      .catch(err => {
+        alert(err);
+      });
   };
 
   selectMedia(type, file) {
@@ -268,8 +240,6 @@ export default class ChannelHeader extends Component {
     });
 
     this.uploads[type] = file;
-
-    this.setState({ uploadType: null, isSelectingMedia: false });
   }
 
   setBriefdescription = briefdescription => this.setState({ briefdescription });
@@ -288,23 +258,23 @@ export default class ChannelHeader extends Component {
     const isEditable = this.props.edit && !isUploading;
     return (
       <View>
-        {isEditable && <Touchable onPress={this.changeBannerAction}>
+        {isEditable && <TouchableCustom onPress={this.changeBannerAction}>
           <Image source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
 
           <View style={styles.tapOverlayView}>
             <Icon name="md-create" size={30} color="#fff" />
           </View>
-        </Touchable>}
+        </TouchableCustom>}
         {!isEditable && <Image source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />}
 
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
-            <TouchableHighlight underlayColor="transparent" style={[styles.counter]} onPress={() => { this._navToSubscribers() }}>
+            <TouchableHighlightCustom underlayColor="transparent" style={[styles.counter]} onPress={() => { this._navToSubscribers() }}>
               <View style={styles.counter}>
                 <Text style={styles.countertitle}>SUBSCRIBERS</Text>
                 <Text style={styles.countervalue}>{abbrev(channel.subscribers_count, 0)}</Text>
               </View>
-            </TouchableHighlight>
+            </TouchableHighlightCustom>
             <View style={styles.counter}>
               <Text style={styles.countertitle}>VIEWS</Text>
               <Text style={styles.countervalue}>{abbrev(channel.impressions, 0)}</Text>
@@ -358,22 +328,14 @@ export default class ChannelHeader extends Component {
 
         </View>
 
-        {isEditable && <Touchable onPress={this.changeAvatarAction} style={styles.avatar}>
+        {isEditable && <TouchableCustom onPress={this.changeAvatarAction} style={styles.avatar}>
           <Image source={avatar} style={styles.wrappedAvatar} />
 
           <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
             <Icon name="md-create" size={30} color="#fff" />
           </View>
-        </Touchable>}
+        </TouchableCustom>}
         {!isEditable && <Image source={avatar} style={styles.avatar} />}
-
-        <ActionSheet
-          title={`Upload ${this.state.uploadType}`}
-          ref={ref => this.ActionSheetRef = ref}
-          options={[ 'Cancel', 'Camera', 'Gallery' ]}
-          onPress={this.setAvatarOrBannerSource}
-          cancelButtonIndex={0}
-        />
 
       </View>
     )

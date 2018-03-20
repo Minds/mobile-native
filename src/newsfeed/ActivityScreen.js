@@ -219,13 +219,6 @@ export default class ActivityScreen extends Component {
    * Attach Media
    */
   onAttachedMedia = async (response) => {
-    if (response.didCancel) return;
-
-    if (response.error) {
-      alert('ImagePicker Error: ' + response.error);
-      return;
-    }
-
     const attachment = this.comments.attachment;
 
     const result = await attachment.attachMedia(response);
@@ -240,13 +233,6 @@ export default class ActivityScreen extends Component {
     if (Platform.OS == 'ios') {
       try {
         const response = await attachmentService.gallery('mixed');
-
-        if (response.didCancel) return;
-
-        if (response.error) {
-          alert('ImagePicker Error: ' + response.error);
-          return;
-        }
 
         const attachment = this.comments.attachment;
 

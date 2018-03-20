@@ -14,6 +14,7 @@ import {
   Image,
   View,
   FlatList,
+  Platform,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -26,7 +27,7 @@ import CenteredLoading from '../common/components/CenteredLoading'
 import CapturePoster from './CapturePoster';
 
 import CaptureTabs from './CaptureTabs';
-import androidPermissionsService from '../common/services/android-permissions.service'
+import androidPermissionsService from '../common/services/android-permissions.service';
 
 /**
  * Gallery View
@@ -51,7 +52,22 @@ export default class CaptureGallery extends PureComponent {
   /**
    * Load Photos
    */
-  loadPhotos() {
+  async loadPhotos() {
+    let allowed = true;
+    if (Platform.OS != 'ios' ) {
+      allowed = await androidPermissionsService.checkReadExternalStorage();
+      if(!allowed) {
+        allowed = await androidPermissionsService.readExternalStorage();
+      }
+    }
+
+    if (allowed) this._loadPhotos();
+  }
+
+  /**
+   * Load photos
+   */
+  _loadPhotos() {
     CameraRoll.getPhotos({
       first: 30,
       assetType: 'All',
@@ -64,9 +80,6 @@ export default class CaptureGallery extends PureComponent {
         });
       })
       .catch((err) => {
-        if (androidPermissionsService.readExternalStorage()) {
-          this.loadPhotos();
-        }
         console.log('Error loading images', err)
         //Error Loading Images
       });

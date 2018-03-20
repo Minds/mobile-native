@@ -1,6 +1,6 @@
-import ImagePicker from 'react-native-image-picker';
 import { uploadAttachment } from '../../capture/CaptureService';
 import api from './api.service';
+import imagePicker from './image-picker.service';
 
 /**
  * Attacment service
@@ -49,68 +49,58 @@ class AttachmentService {
   /**
    * Capture video
    */
-  video() {
-    return new Promise((resolve, reject) => {
-      ImagePicker.launchCamera({
-        mediaType: 'video',
-      },
-        (response) => {
-          if (response.didCancel) {
-            resolve(null);
-            return;
-          }
-          else if (response.error) {
-            reject('ImagePicker Error: ' + response.error);
-            return;
-          }
+  async video() {
+    
+    const response = await imagePicker.launchCamera('video');
 
-          let item = {
-            uri: response.uri,
-            type: 'video/mp4',
-            fileName: 'image.mp4'
-          }
-          resolve(item);
-        });
-    });
+    if (!response) return response;
+ 
+    if (reponse) {
+      return {
+        uri: response.uri,
+        type: 'video/mp4',
+        fileName: 'image.mp4'
+      }
+    }
 
+    return null;
   }
 
   /**
    * Capture photo
    */
-  photo() {
-    return new Promise((resolve, reject) => {
-      ImagePicker.launchCamera({
-        mediaType: 'photo',
-      },
-        (response) => {
-          if (response.didCancel) {
-            resolve(null);
-            return;
-          }
-          else if (response.error) {
-            reject('ImagePicker Error: ' + response.error);
-            return;
-          }
-          let item = {
-            uri: response.uri,
-            type: 'image/jpeg',
-            fileName: 'image.jpg'
-          }
-          resolve(item);
-        });
-    });
+  async photo() {
+
+    const response = await imagePicker.launchCamera('photo');
+
+    if (!response) return response;
+ 
+    if (reponse) {
+      return {
+        uri: response.uri,
+        type: 'image/jpeg',
+        fileName: 'image.jpg'
+      }
+    }
+
+    return null;
   }
 
-  gallery(mediaType = 'photo') {
-    return new Promise((resolve, reject) => {
-      ImagePicker.launchImageLibrary(
-        { mediaType },
-        (response) => {
-          if (!response.type && !response.width) response.type = 'video/mp4';
-          resolve(response);
-        });
-    });
+  /**
+   * Open gallery
+   * @param {string} mediaType photo or video (or mixed only ios)
+   */
+  async gallery(mediaType = 'photo') {
+    
+    const response = await imagePicker.launchImageLibrary(mediaType);
+
+    if (!response) return response;
+
+    if (!response.type && !response.width) {
+      response.type = 'video/mp4';
+    }
+
+    return response;
   }
 }
 
