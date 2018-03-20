@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, Text,Button, TouchableHighlight, Image, ActivityIndicator } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ImagePicker from 'react-native-image-picker';
 import NewsfeedList from './NewsfeedList';
 import api from './../common/services/api.service';
+import imagePicker from '../common/services/image-picker.service';
 
 import { post, remind, uploadAttachment } from './NewsfeedService';
 
@@ -111,46 +111,35 @@ export default class Poster extends Component {
     }
   }
 
-  showImagePicker = () => {
-    var options = {
-      title: 'Select Image',
-      customButtons: [
-      ],
-      storageOptions: {
-        skipBackup: true,
-        path: 'images'
-      }
-    };
+  showImagePicker = async () => {
+    
+    const response = await imagePicker.show('Select Image') 
+   
+    if (!response) return;
 
-    ImagePicker.showImagePicker(options, (response) => {
-      if (response.didCancel) {
-      }
-      else if (response.error) {
-        alert('ImagePicker Error: '+ response.error);
-      }
-      else if (response.customButton) {
-        //do nothng but leave it for future
-      }
-      else {
-        uploadAttachment('api/v1/archive/image', {
-            uri: response.uri,
-            type: response.type,
-            name: response.fileName
-        }).then((res) => {
-          this.setState({ 
-            attachmentGuid: res.guid,
-            attachmentDone: true
-          });
-        });
-        
-        this.setState({
-          hasAttachment:true,
-          postImageUri: response.uri
-        });
-
-      }
+    this.setState({
+      hasAttachment:true,
+      postImageUri: response.uri
     });
 
+    try {
+      const res = await uploadAttachment('api/v1/archive/image', {
+          uri: response.uri,
+          type: response.type,
+          name: response.fileName
+      });
+  
+      this.setState({ 
+        attachmentGuid: res.guid,
+        attachmentDone: true
+      });
+    }
+    catch(err) {
+      this.setState({
+        hasAttachment: false,
+        postImageUri: null
+      });
+    }
   }
 
 

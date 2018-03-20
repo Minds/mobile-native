@@ -39,6 +39,11 @@ export default {
     email: 'Invalid email',
     number: 'Invalid number'
   },
+  imagePicker: {
+    gallery: 'Choose from gallery',
+    camera: 'Take new photo',
+    cancel: 'Cancel'
+  },
   continue: 'CONTINUE',
   save: 'SAVE',
   goback: 'GO BACK',

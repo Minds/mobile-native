@@ -139,13 +139,6 @@ export default class CapturePoster extends Component {
    * Attach Media
    */
   onAttachedMedia = async (response) => {
-    if (response.didCancel) return;
-
-    if (response.error) {
-      alert('ImagePicker Error: ' + response.error);
-      return;
-    }
-
     const attachment = this.props.capture.attachment;
 
     const result = await attachment.attachMedia(response);

@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, Text,Button, TouchableHighlight, Image, ActivityIndicator } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ImagePicker from 'react-native-image-picker';
 import api from './../common/services/api.service';
 
 import { post, remind, uploadAttachment } from '../newsfeed/NewsfeedService';
