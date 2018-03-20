@@ -11,7 +11,17 @@ export default class BlogModel extends BaseModel {
    * observables
    */
   static observables = [
+    'thumbs:down:count',
+    'thumbs:up:count',
     'state',
+  ]
+
+  /**
+   * shallow observables
+   */
+  static observablesShallow = [
+    'thumbs:down:user_guids',
+    'thumbs:up:user_guids',
   ]
 
   /**
