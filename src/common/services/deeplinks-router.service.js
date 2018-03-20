@@ -1,4 +1,4 @@
-import { MINDS_URI, MINDS_DEEPLINK } from '../../config/Config';
+import { MINDS_DEEPLINK } from '../../config/Config';
 import navigationService from './navigation.service';
 
 /**
@@ -48,7 +48,8 @@ class DeeplinksRouter {
    * @param {string} url
    */
   _getUrlRoute(url) {
-    const surl = url.replace(MINDS_URI, '');
+
+    const surl = url.replace(/^(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+\//, '');
 
     for (var i = 0; i < this.routes.length; i++) {
       const route = this.routes[i];
