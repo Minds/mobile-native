@@ -176,7 +176,7 @@ class DiscoveryStore {
   @action
   clearList() {
     this.type = 'object/image';
-    this.filter = 'featured';
+    this.filter = 'trending';
   }
 
   /**
