@@ -46,7 +46,6 @@ class GroupViewStore {
   viewed = [];
   loading = false;
   guid = '';
-  @observable filter = 'feed';
   /**
    * Load feed
    */
@@ -170,10 +169,17 @@ class GroupViewStore {
     });
   }
 
-  setFilter(filter) {
-    this.filter = filter;
-  }
+  /**
+   * Prepend an entity into the feed
+   * @param {object} entity 
+   */
+  prepend(entity) {
+    const model = ActivityModel.create(entity)
 
+    model.rowKey = `${model.guid}:0:${this.list.entities.length}`
+
+    this.list.prepend(model);
+  }
   /**
    * clear the store to default values
    */
@@ -221,7 +227,7 @@ class GroupViewStore {
   @action
   memberRefresh(guid) {
     this.members.refresh();
-    this.loadFeed(guid)
+    this.loadMembers(guid)
       .finally(() => {
         this.members.refreshDone();
       });

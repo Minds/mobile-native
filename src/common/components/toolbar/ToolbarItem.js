@@ -9,6 +9,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import colors from '../../../styles/Colors';
+
+import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+
+DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
+
 /**
  * Toolbar Item
  */
@@ -35,11 +40,11 @@ export default class ToolbarItem extends PureComponent {
     const subTextStyle = this.getSubTextStyle();
 
     return (
-      <TouchableOpacity style={styles.button} onPress={() => onPress(value)}>
+      <DebouncedTouchableOpacity style={styles.button} onPress={() => onPress(value)}>
         {iconCmp}
         <Text style={textStyle}>{text}</Text>
         {subtext && <Text style={subTextStyle}>{subtext}</Text>}
-      </TouchableOpacity>
+      </DebouncedTouchableOpacity>
     );
   }
 

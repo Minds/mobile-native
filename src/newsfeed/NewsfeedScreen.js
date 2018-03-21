@@ -19,7 +19,7 @@ import CaptureFab from '../capture/CaptureFab';
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'tabs', 'user')
+@inject('newsfeed', 'tabs', 'user', 'navigatorStore')
 @observer
 export default class NewsfeedScreen extends Component {
 
@@ -50,11 +50,13 @@ export default class NewsfeedScreen extends Component {
         this.props.newsfeed.refresh();
       }
     });
-  }
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps.navigation.state.params && nextProps.navigation.state.params.prepend)
-      nextProps.newsfeed.prepend(nextProps.navigation.state.params.prepend);
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Newsfeed',(s) => {
+      const params = this.props.navigation.state.params;
+      if (params && params.prepend) {
+        this.props.newsfeed.prepend(params.prepend);
+      }
+    });
   }
 
   /**
@@ -62,6 +64,7 @@ export default class NewsfeedScreen extends Component {
    */
   componentWillUnmount() {
     this.disposeState();
+    this.disposeEnter();
   }
 
   render() {

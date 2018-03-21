@@ -20,7 +20,6 @@ import { Icon } from 'react-native-elements';
 import DiscoveryUser from '../discovery/DiscoveryUser';
 import { MINDS_CDN_URI } from '../config/Config';
 import groupsService from './GroupsService';
-import CenteredLoading from '../common/components/CenteredLoading';
 import GroupHeader from './header/GroupHeader';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
@@ -29,8 +28,7 @@ import CaptureFab from '../capture/CaptureFab';
 /**
  * Groups view screen
  */
-@inject('groupView')
-@inject('user')
+@inject('groupView', 'user', 'navigatorStore')
 @observer
 export default class GroupViewScreen extends Component {
   /**
@@ -53,12 +51,20 @@ export default class GroupViewScreen extends Component {
       this.props.groupView.loadGroup(params.guid);
       this.props.groupView.loadFeed(params.guid);
     }
+
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('GroupView',(s) => {
+      const params = this.props.navigation.state.params;
+      if (params && params.prepend) {
+        this.props.groupView.prepend(params.prepend);
+      }
+    });
   }
 
   /**
    * On component will unmount
    */
   componentWillUnmount() {
+    this.disposeEnter();
     this.props.groupView.clear();
   }
 
@@ -86,35 +92,43 @@ export default class GroupViewScreen extends Component {
         <Icon color={colors.primary} containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} raised />
       </View>
     )
-    switch (group.filter) {
+    switch (group.tab) {
       case 'feed': 
-        return <NewsfeedList newsfeed={ group } guid = { group.group.guid } header = { header } navigation = { this.props.navigation } />;
+        return (
+          <NewsfeedList
+            newsfeed={ group } 
+            guid={ group.group.guid } 
+            header={ header } 
+            navigation={ this.props.navigation } 
+          />
+        );
         break;
       case 'members':
-        return <FlatList
-                ListHeaderComponent={header}
-                data={group.members.entities.slice()}
-                renderItem={this.renderRow}
-                keyExtractor={item => item.guid}
-                onRefresh={this.refresh}
-                refreshing={group.members.refreshing}
-                onEndReached={this.loadMembers}
-                onEndThreshold={0}
-                initialNumToRender={12}
-                style={styles.listView}
-                removeClippedSubviews={false}
-              />;
+        return (
+          <FlatList
+            ListHeaderComponent={header}
+            data={group.members.entities.slice()}
+            renderItem={this.renderRow}
+            keyExtractor={item => item.guid}
+            onRefresh={this.refresh}
+            refreshing={group.members.refreshing}
+            onEndReached={this.loadMembers}
+            onEndThreshold={0}
+            initialNumToRender={12}
+            style={styles.listView}
+            removeClippedSubviews={false}
+          />
+        );
         break;
       case 'desc':
-        return  <ScrollView style={CommonStyle.backgroundLight}>
-                  {header}
-                  <View style={CommonStyle.padding2x}>
-                    <Text>{group.group.briefdescription}</Text>
-                  </View>
-                </ScrollView>;
-        break;
-      default:
-        return <NewsfeedList newsfeed={ group } guid = { group.group.guid } header = { header } navigation = { this.props.navigation } />;
+        return (
+          <ScrollView style={CommonStyle.backgroundLight}>
+            {header}
+            <View style={CommonStyle.padding2x}>
+              <Text>{group.group.briefdescription}</Text>
+            </View>
+          </ScrollView>
+        );
         break;
     }
   }
@@ -134,14 +148,12 @@ export default class GroupViewScreen extends Component {
   render() {
     const group = this.props.groupView.group;
 
-    if (!group || !this.props.groupView.list.loaded) {
-      return <CenteredLoading />
-    }
-
-    return (<View style={{flex:1}}> 
-              <CaptureFab navigation={this.props.navigation} group={group} />
-              {this.getList()}
-            </View>);
+    return (
+      <View style={{flex:1}}> 
+        <CaptureFab navigation={this.props.navigation} group={group} />
+        {this.getList()}
+      </View>
+    );
   }
 }
 

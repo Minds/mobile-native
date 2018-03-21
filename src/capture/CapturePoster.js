@@ -31,7 +31,7 @@ import CapturePostButton from './CapturePostButton';
 import { CommonStyle } from '../styles/Common';
 import Colors from '../styles/Colors';
 
-@inject('user', 'navigatorStore', 'capture', 'newsfeed')
+@inject('user', 'navigatorStore', 'capture')
 @observer
 export default class CapturePoster extends Component {
 
@@ -76,10 +76,11 @@ export default class CapturePoster extends Component {
     return group? <Text style={styles.title}> { '( Posting in ' + group.name + ')'} </Text> :null;
   }
 
-  defaultRouting(entity) {
-
-    this.props.newsfeed.prepend(entity);
-
+  /**
+   * Nav to newsfeed
+   * @param {object} entity 
+   */
+  navToNewsfeed(entity) {
     const dispatch = NavigationActions.navigate({
       routeName: 'Newsfeed',
       params: {
@@ -88,6 +89,27 @@ export default class CapturePoster extends Component {
     });
 
     this.props.navigation.dispatch(dispatch);
+  }
+
+  /**
+   * Nav to group
+   */
+  navToGroup(group, entity) {
+
+    const {state, dispatch, goBack} = this.props.navigation;
+
+    const params = {
+      group: group,
+      prepend: entity,
+    };
+
+    dispatch(NavigationActions.setParams({
+      params,
+      key: state.params.parentKey, // passed from index
+    }));
+
+    goBack(null);
+
   }
 
   /**
@@ -209,9 +231,9 @@ export default class CapturePoster extends Component {
       if (this.props.onComplete) {
         this.props.onComplete(response.entity);
       } else if (this.props.navigation.state.params && this.props.navigation.state.params.group) {
-        this.onGroupComplete(this.props.navigation.state.params.group);
+        this.navToGroup(this.props.navigation.state.params.group, response.entity);
       } else {
-        this.defaultRouting(response.entity);
+        this.navToNewsfeed(response.entity);
       }
 
     } catch (e) {
@@ -229,17 +251,6 @@ export default class CapturePoster extends Component {
 
     setTimeout(this.richEmbedCheck);
   };
-
-  onGroupComplete(group) {
-    const dispatch = NavigationActions.navigate({
-      routeName: 'GroupView',
-      params: {
-        group: group,
-      }
-    })
-
-    this.props.navigation.dispatch(dispatch);
-  }
 
   richEmbedCheck = () => {
     const matches = Util.urlReSingle.exec(this.state.text);

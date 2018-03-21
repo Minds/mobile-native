@@ -103,7 +103,7 @@ export default class GroupHeader extends Component {
    */
   onTabChange = (tab) => {
     const group = this.props.store.group;
-    this.props.store.setFilter(tab);
+
     switch (tab) {
       case 'feed':
         // clear list without mark loaded flag
