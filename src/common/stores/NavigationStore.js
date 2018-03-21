@@ -113,6 +113,20 @@ export default class NavigationStore {
     );
   }
 
+  /**
+   * Reset navigate helper method
+   * @param {string} screen 
+   */
+  resetNavigate(navigateTo) {
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: navigateTo })
+      ]
+    })
+    this.dispatch(resetAction);
+  }
+
   @action setButtons(opts) {
     return this.navigator.setButtons(opts);
   }

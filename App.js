@@ -43,9 +43,23 @@ NavigationStoreService.set(stores.navigatorStore);
 
 // init push service
 pushService.init();
-// register device token into backend on login
-sessionService.onLogin(() => {
+
+// On app login (runs if the user login or if it is already logged in)
+sessionService.onLogin(async () => {
+
+  // register device token into backend on login
   pushService.registerToken();
+  
+  // load user
+  await stores.user.load();
+
+  stores.navigatorStore.resetNavigate('Tabs');
+
+  // handle deep link (if the app is opened by one)
+  Linking.getInitialURL().then(url => url && deeplinkService.navigate(url));
+
+  // handle initial notifications (if the app is opened by tap on one)
+  pushService.handleInitialNotification();
 })
 
 // disable yellow boxes
@@ -67,41 +81,13 @@ export default class App extends Component {
   }
 
   /**
-   * Go to screen
-   * @param {string} screen 
-   */
-  goTo(screen) {
-    const resetAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: screen })
-      ]
-    })
-    stores.navigatorStore.dispatch(resetAction);
-  }
-
-  /**
    * On component did mount
    */
   async componentDidMount() {
     const token = await sessionService.init();
 
-    if (token) {
-      try {
-        const result = await stores.user.load();
-        // go to main screen.
-        this.goTo('Tabs');
-        // handle initial notifications (if the app is opened by tap on one)
-        pushService.handleInitialNotification();
-        // handle deep link (if the app is opened by one)
-        Linking.getInitialURL().then(url => url && this.handleOpenURL(url));
-      } catch(err) {
-        console.log(err)
-        alert('Error logging in');
-        this.goTo('Login');
-      };
-    } else {
-      this.goTo('Login');
+    if (!token) {
+      stores.navigatorStore.resetNavigate('Login');
     }
 
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
