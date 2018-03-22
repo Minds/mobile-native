@@ -303,6 +303,10 @@ let styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
     margin: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+    borderRadius: 3,
+    backgroundColor: 'rgba(0,0,0,0.4)'
   },
   progressBarContainer: {
     flex: 1,
