@@ -38,6 +38,10 @@ import mediaProxyUrl from '../helpers/media-proxy-url';
 export default class MediaView extends Component {
   _currentThumbnail = void 0;
 
+  static defaultProps = {
+    width: Dimensions.get('window').width
+  };
+
   state = {
     imageLoadFailed: false,
   }
@@ -113,7 +117,7 @@ export default class MediaView extends Component {
 
       if (!autoHeight && custom_data && custom_data[0].height && custom_data[0].height != '0') {
         let ratio = custom_data[0].height / custom_data[0].width;
-        height = Dimensions.get('window').width * ratio;
+        height = this.props.width * ratio;
       }
 
       let text = (
@@ -139,7 +143,7 @@ export default class MediaView extends Component {
 
     if (custom_data && custom_data[0].height && custom_data[0].height != '0') {
       let ratio = custom_data[0].height / custom_data[0].width;
-      let height = Dimensions.get('window').width * ratio;
+      let height = this.props.width * ratio;
       return (
         <TouchableOpacity onPress={this.navToImage} style={[styles.imageContainer, { height }]} activeOpacity={1}>
           <ExplicitImage
@@ -162,7 +166,7 @@ export default class MediaView extends Component {
       >
         <AutoHeightFastImage
           source={source}
-          width={Dimensions.get('window').width}
+          width={this.props.width}
         />
       </TouchableOpacity>
       ) : (

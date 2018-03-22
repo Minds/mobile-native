@@ -21,7 +21,8 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  View
+  View,
+  Dimensions
 } from 'react-native';
 
 import ActionSheet from 'react-native-actionsheet';
@@ -99,7 +100,12 @@ export default class Comment extends Component {
             }
           </View>
 
-          <MediaView entity={comment} style={styles.media} navigation={this.props.navigation}/>
+          <MediaView
+            entity={comment}
+            style={styles.media}
+            navigation={this.props.navigation}
+            width={Dimensions.get('window').width - 60}
+            />
 
           { actions }
         </View>
