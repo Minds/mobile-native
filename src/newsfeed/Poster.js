@@ -46,6 +46,8 @@ export default class Poster extends Component {
               underlineColorAndroid = 'transparent'
               onChangeText={(text) => this.setState({text})}
               value={this.state.text}
+              multiline={true}
+              selectTextOnFocus={true}
             />
           </View>
           { this.showAttachmentIcon() }
