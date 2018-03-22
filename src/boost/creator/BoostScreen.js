@@ -544,7 +544,7 @@ export default class BoostScreen extends Component {
               return;
             }
 
-            amount = Web3Service.web3.utils.toWei(this.state.amount, 'ether').toString();
+            amount = Web3Service.web3.utils.toWei(`${this.state.amount}`, 'ether').toString();
 
             switch (payload.type) {
               case 'onchain':
