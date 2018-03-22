@@ -120,7 +120,7 @@ export default class ActivityActions extends Component {
       });
 
       Alert.alert(
-        'Sucess',
+        'Success',
         'Entity removed succesfully',
         [
           {text: 'OK', onPress: () => {}},

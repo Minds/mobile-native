@@ -181,7 +181,7 @@ export default class Comment extends Component {
       case 'Delete':
         this.props.store.delete(this.props.comment.guid).then( (result) => {
           Alert.alert(
-            'Sucess',
+            'Success',
             'Entity removed succesfully',
             [
               {text: 'OK', onPress: () => {}},
