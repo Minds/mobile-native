@@ -7,4 +7,5 @@ export default colors = {
   dark      : '#222222',
   greyed    : '#cccccc',
   darkGreyed: '#777777',
+  explicit  : '#f44336',
 }

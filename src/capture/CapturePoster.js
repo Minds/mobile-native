@@ -30,6 +30,7 @@ import CaptureMetaPreview from './CaptureMetaPreview';
 import CapturePostButton from './CapturePostButton';
 import { CommonStyle } from '../styles/Common';
 import Colors from '../styles/Colors';
+import CapturePosterFlags from './CapturePosterFlags';
 
 @inject('user', 'navigatorStore', 'capture')
 @observer
@@ -48,6 +49,9 @@ export default class CapturePoster extends Component {
     hasRichEmbed: false,
     richEmbedUrl: '',
     meta: null,
+    mature: false,
+    share: {},
+    lock: null,
   };
 
   _RichEmbedFetchTimer;
@@ -142,6 +146,15 @@ export default class CapturePoster extends Component {
           onRemove={this.clearRichEmbedAction}
         />}
 
+        <CapturePosterFlags
+          matureValue={this.state.mature}
+          shareValue={this.state.share}
+          lockValue={this.state.lock}
+          onMature={this.onMature}
+          onShare={this.onShare}
+          onLocking={this.onLocking}
+        />
+
         {attachment.hasAttachment && <View style={styles.preview}>
           <CapturePreview
             uri={attachment.uri}
@@ -195,10 +208,20 @@ export default class CapturePoster extends Component {
       return false;
     }
 
-    let newPost = { message: this.state.text }
-    
+    let newPost = {
+      message: this.state.text,
+      mature: this.state.mature ? 1 : 0,
+      wire_threshold: this.state.lock
+    }
+
     if (attachment.guid) {
       newPost.attachment_guid = attachment.guid;
+    }
+
+    for (let network in this.state.share) {
+      if (this.state.share[network]) {
+        newPost[network] = 1;
+      }
     }
 
     this.props.capture.setPosting(true);
@@ -206,7 +229,7 @@ export default class CapturePoster extends Component {
     if (this.state.meta) {
       newPost = Object.assign(newPost, this.state.meta);
     }
-    
+
     if (this.props.navigation.state.params && this.props.navigation.state.params.group) {
       newPost.container_guid = this.props.navigation.state.params.group.guid;
     }
@@ -223,7 +246,10 @@ export default class CapturePoster extends Component {
 
       this.setState({
         text: '',
-        meta: null
+        meta: null,
+        mature: false,
+        share: {},
+        lock: null,
       });
 
       this.props.capture.setPosting(false);
@@ -299,6 +325,28 @@ export default class CapturePoster extends Component {
       this.setState({ metaInProgress: false });
       console.error(e);
     }
+  }
+
+
+  onMature = () => {
+    const mature = !this.state.mature;
+    this.setState({ mature });
+  }
+
+  onShare = network => {
+    const share = Object.assign({}, this.state.share);
+
+    if (share[network]) {
+      delete share[network];
+    } else {
+      share[network] = true;
+    }
+
+    this.setState({ share });
+  }
+
+  onLocking = lock => {
+    this.setState({ lock });
   }
 }
 
