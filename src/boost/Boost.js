@@ -9,17 +9,13 @@ import {
 import BoostActionBar from './BoostActionBar';
 import ChannelCard from '../channel/card/ChannelCard';
 import BlogCard from '../blogs/BlogCard';
+import VideoCard from '../media/VideoCard';
 import ImageCard from '../media/ImageCard';
 
+
 import {
-  Button,
   Text,
-  TextInput,
   StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-  ActivityIndicator,
-  TouchableOpacity,
   View
 } from 'react-native';
 
@@ -28,6 +24,7 @@ import FastImage from 'react-native-fast-image';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
 import UserModel from '../channel/UserModel';
+
 
 export default class Boost extends Component {
 
@@ -50,15 +47,27 @@ export default class Boost extends Component {
   }
 
   renderEntity() {
-    if(this.props.boost.entity.type == 'activity') {
-      return <Activity entity={ActivityModel.create(this.props.boost.entity)} hideTabs={true} navigation={this.props.navigation} />;
-    } else if (this.props.boost.entity.type == 'user') {
-      return <ChannelCard entity={UserModel.create(this.props.boost.entity)} navigation={this.props.navigation} />;
-    } else if (this.props.boost.entity.type == 'object' && this.props.boost.entity.subtype == 'blog') {
-      return <BlogCard entity={BlogModel.create(this.props.boost.entity)} navigation={this.props.navigation} />;
-    } else if (this.props.boost.entity.type == 'object' && this.props.boost.entity.subtype == 'image') {
-      return <ImageCard entity={this.props.boost.entity} navigation={this.props.navigation} />;
+    const entity = this.props.boost.entity;
+
+    console.log(entity)
+
+    switch (entity.type) {
+      case 'activity':
+        return <Activity entity={ActivityModel.create(entity)} hideTabs={true} navigation={this.props.navigation} />;
+      case 'user':
+        return <ChannelCard entity={UserModel.create(entity)} navigation={this.props.navigation} />;
+      case 'object':
+
+        switch (entity.subtype) {
+          case 'blog':
+            return <BlogCard entity={BlogModel.create(entity)} navigation={this.props.navigation} />;
+          case 'image':
+            return <ImageCard entity={entity} navigation={this.props.navigation} />;
+          case 'video':
+            return <VideoCard entity={ActivityModel.create(entity)} navigation={this.props.navigation} />
+        }
     }
+    return <Text>Entity {entity.type} {entity.subtype} not supported</Text>
   }
 }
 
