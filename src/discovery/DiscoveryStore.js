@@ -24,7 +24,7 @@ class DiscoveryStore {
   @observable type       = 'object/image';
   @observable category   = 'all';
 
-  loading = false;
+  @observable loading = false;
 
   constructor() {
     this.buildListStores();
