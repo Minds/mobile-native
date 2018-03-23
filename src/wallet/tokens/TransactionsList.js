@@ -5,6 +5,7 @@ import React, {
 import {
   Text,
   FlatList,
+  Image,
   View,
   TouchableOpacity,
   StyleSheet,
@@ -15,16 +16,25 @@ import {
   inject
 } from 'mobx-react/native'
 
+import {
+  NavigationActions
+} from 'react-navigation';
+
 import { CommonStyle } from '../../styles/Common';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import token from "../../common/helpers/token";
 import i18n from '../../common/services/i18n.service';
 import DateRangePicker from '../../common/components/DateRangePicker';
+import Colors from '../../styles/Colors';
+import MdIcon from 'react-native-vector-icons/MaterialIcons';
+import Touchable from '../../common/components/Touchable';
+import channelAvatarUrl from '../../common/helpers/channel-avatar-url';
+import navigationService from '../../common/services/navigation.service';
 
 /**
  * Rewards view
  */
-@inject('wallet')
+@inject('wallet', 'user')
 @observer
 export default class TransactionsList extends Component {
 
@@ -124,25 +134,79 @@ export default class TransactionsList extends Component {
     this.props.wallet.ledger.loadList(this.state.from, this.state.to);
   }
 
-  formatContract(contract) {
-    if (!contract) return '';
-    return contract.toUpperCase().replace(':', ': ').replace('_', ' ');
+  //
+
+  getSelf() {
+    const user = this.props.user.me;
+
+    return {
+      avatar: channelAvatarUrl(user),
+      username: user.username,
+    }
+  }
+
+  getOther(transaction) {
+    const self = this.props.user.me,
+      isSender = transaction.sender.guid != self.guid,
+      user = isSender ? transaction.sender : transaction.receiver;
+
+    return {
+      avatar: channelAvatarUrl(user),
+      username: user.username,
+      guid: user.guid,
+      isSender,
+    }
+  }
+
+  isP2p(transaction) {
+    const contractName = this.getNormalizedContractName(transaction.contract);
+
+    if (contractName === 'wire' || contractName === 'boost') {
+      return !!transaction.sender && !!transaction.receiver;
+    }
+  }
+
+  getNormalizedContractName(contractName) {
+    return contractName.indexOf('offchain:') > -1 ? contractName.substr(9) : contractName;
+  }
+
+  navToChannel = guid => {
+    navigationService.get()
+      .dispatch(NavigationActions.navigate({ routeName: 'Channel', params: { guid } }));
   }
 
   /**
    * Render list's rows
    */
   renderRow = (row) => {
-    const item = row.item;
+    const item = row.item,
+      Sep = (<Text style={styles.rowColumnCellSep}>|</Text>),
+      negative = item.amount < 0;
+
     return (
-      <View style={[ styles.row]}>
-        { item.amount >= 0 ?
-          <Text style={[styles.count, styles.positive]}>+ {token(item.amount).toFixed(3)}</Text>
-          : <Text style={[styles.count, styles.negative]}>{token(item.amount).toFixed(3)}</Text>
-        }
-        <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[styles.subtext, CommonStyle.flexContainer]}>{this.formatContract(item.contract)}</Text>
-          <Text style={[styles.subtext]}>{i18n.l('date.formats.small', item.timestamp * 1000)}</Text>
+      <View style={[styles.row]}>
+        <View style={[styles.rowColumn, styles.rowColumnAmount]}>
+          <Text style={[styles.count, !negative && styles.positive, negative && styles.negative]}>
+            {negative ? '-' : '+'} {Math.abs(token(item.amount)).toFixed(3)}
+          </Text>
+
+          {this.isP2p(item) && <View style={styles.rowColumn}>
+            <Image source={{ uri: this.getSelf().avatar }} style={[styles.rowColumnCellAvatar, styles.rowColumnCellSpacing]} />
+
+            <MdIcon style={styles.rowColumnCellSpacing} name={this.getOther(item).isSender ? 'arrow-back' : 'arrow-forward'} size={20} color="#555" />
+
+            <Image source={{ uri: this.getOther(item).avatar }} style={[styles.rowColumnCellAvatar, styles.rowColumnCellSpacing]} />
+
+            <Touchable onPress={() => this.navToChannel(this.getOther(item).guid)}>
+              <Text style={[styles.rowColumnCellUsername, styles.rowColumnCellSpacing]}>{'@' + this.getOther(item).username}</Text>
+            </Touchable>
+          </View>}
+        </View>
+
+        <View style={styles.rowColumn}>
+          <Text style={[styles.subtext, styles.rowColumnCell]}>{this.getNormalizedContractName(item.contract).toUpperCase()} {Sep}</Text>
+          <Text style={[styles.subtext, styles.rowColumnCell]}>{item.wallet_address} {Sep}</Text>
+          <Text style={[styles.subtext, styles.rowColumnCellRight]}>{i18n.l('date.formats.small', item.timestamp * 1000)}</Text>
         </View>
       </View>
     )
@@ -168,7 +232,7 @@ const styles = StyleSheet.create({
   count: {
     fontSize: 24,
     fontWeight: '800',
-    marginBottom: 8,
+    flexGrow: 1,
   },
   positive: {
     color: 'green',
@@ -177,7 +241,41 @@ const styles = StyleSheet.create({
     color: 'red',
   },
   subtext: {
-    fontSize: 11,
+    fontSize: 14,
     color: '#555',
   },
+  rowColumn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rowColumnNotFirst: {
+    marginTop: 10,
+  },
+  rowColumnCell: {
+    marginLeft: 2,
+  },
+  rowColumnAmount: {
+    marginBottom: 10,
+  },
+  rowColumnCellSep: {
+    fontSize: 14,
+    color: Colors.greyed,
+  },
+  rowColumnCellRight: {
+    flexGrow: 1,
+    textAlign: 'right',
+  },
+  rowColumnCellSpacing: {
+    marginLeft: 3,
+  },
+  rowColumnCellAvatar: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+  },
+  rowColumnCellUsername: {
+    fontFamily: 'Roboto',
+    fontSize: 14,
+    color: '#555',
+  }
 });
