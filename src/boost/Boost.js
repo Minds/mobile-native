@@ -24,7 +24,7 @@ import FastImage from 'react-native-fast-image';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
 import UserModel from '../channel/UserModel';
-
+import GroupCard from '../groups/card/GroupCard';
 
 export default class Boost extends Component {
 
@@ -56,6 +56,8 @@ export default class Boost extends Component {
         return <Activity entity={ActivityModel.create(entity)} hideTabs={true} navigation={this.props.navigation} />;
       case 'user':
         return <ChannelCard entity={UserModel.create(entity)} navigation={this.props.navigation} />;
+      case 'group':
+        return <GroupCard entity={UserModel.create(entity)} navigation={this.props.navigation} />;
       case 'object':
 
         switch (entity.subtype) {
