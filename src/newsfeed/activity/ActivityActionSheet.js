@@ -90,16 +90,6 @@ export default class ActivityActions extends Component {
       options.push( 'Report' );
     }
 
-    if(this.props.user && this.props.user.isAdmin()){
-
-      if (!this.props.entity.monetized) {
-        options.push( 'Monetize' );
-      } else {
-        options.push( 'Un-monetize' );
-      }
-
-    }
-
     options.push( 'Share' );
 
     if (!this.props.entity['is:muted']) {
