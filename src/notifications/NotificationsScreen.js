@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 /**
  * Notification Screen
  */
-@inject('notifications', 'tabs', 'navigatorStore')
+@inject('notifications', 'tabs', 'navigatorStore', 'user')
 @observer
 export default class NotificationsScreen extends Component {
 
@@ -87,15 +87,26 @@ export default class NotificationsScreen extends Component {
    */
   render() {
     let body;
+    const me = this.props.user.me;
     const list = this.props.notifications.list;
     let empty = (<CenteredLoading />);
 
 
     if (list.loaded && !list.refreshing) {
       let filter = '';
+      let design = null;
 
       if (this.props.notifications.filter != 'all') {
         filter = this.props.notifications.filter.substr(0, this.props.notifications.filter.length - 1);
+      }
+
+      if (!me.hasBanner()) { //TODO: check for avatar too
+        design = <Text 
+          style={ComponentsStyle.emptyComponentLink}
+          onPress={() => this.props.navigation.navigate('Channel', { username: 'me' })}
+          >
+          Design your channel
+        </Text>
       }
 
       empty = (
@@ -103,12 +114,7 @@ export default class NotificationsScreen extends Component {
           <View style={ComponentsStyle.emptyComponent}>
             <MIcon name="notifications" size={72} color='#444' />
             <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any {filter} notifications</Text>
-            <Text 
-              style={ComponentsStyle.emptyComponentLink}
-              onPress={() => this.props.navigation.navigate('Channel', { username: 'me' })}
-              >
-              Design your channel
-            </Text>
+            {design}
             <Text 
               style={ComponentsStyle.emptyComponentLink}
               onPress={() => this.props.navigation.navigate('Capture')}

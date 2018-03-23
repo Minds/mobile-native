@@ -46,6 +46,13 @@ export default class UserModel extends BaseModel {
   }
 
   /**
+   * Has banner
+   */
+  hasBanner() {
+    return !!this.carousels;
+  }
+
+  /**
    * observables
    */
   static observables = [
