@@ -144,7 +144,7 @@ export default class CapturePosterFlags extends Component {
   }
 
   isLocking() {
-    return this.state.lock;
+    return parseInt(this.state.min) > 0;
   }
 
   setMin = min => {
@@ -175,7 +175,7 @@ export default class CapturePosterFlags extends Component {
   emitLockChanges() {
     let lockValue = null;
 
-    if (this.state.lock && this.state.min && parseFloat(this.state.min) > 0) {
+    if (this.state.min && parseFloat(this.state.min) > 0) {
       lockValue = {
         type: 'tokens',
         min: parseFloat(this.state.min)
@@ -218,24 +218,9 @@ export default class CapturePosterFlags extends Component {
           </View>
 
           <View>
-            <Touchable
-              style={styles.lockModalCheck}
-              onPress={this.toggleLock}
-            >
-              <IonIcon
-                name={this.state.lock ? 'ios-checkmark-circle-outline' : 'ios-radio-button-off-outline'}
-                color={this.state.lock ? Colors.primary : Colors.darkGreyed}
-                size={25}
-              />
-
-              <Text style={styles.lockModalCheckText}>
-                ENABLE WIRE LOCKING
-              </Text>
-            </Touchable>
 
             <View style={styles.lockModalInputView}>
               <TextInput
-                editable={this.state.lock}
                 style={styles.lockModalInputTextInput}
                 keyboardType="numeric"
                 value={this.state.min}
@@ -251,10 +236,9 @@ export default class CapturePosterFlags extends Component {
 
             <View style={styles.lockModalSubmitView}>
               <TransparentButton
-                disabled={!this.canSetLock()}
                 color={colors.primary}
                 onPress={this.setLock}
-                title="SET"
+                title="Done"
               />
             </View>
           </View>
@@ -268,6 +252,7 @@ export default class CapturePosterFlags extends Component {
   render() {
     return (
       <View style={styles.view}>
+        <View style={{ flex: 1}} />
         <Touchable style={styles.cell} onPress={this.props.onMature}>
           <MdIcon
             name="explicit"
@@ -306,22 +291,24 @@ export default class CapturePosterFlags extends Component {
 const styles = StyleSheet.create({
   view: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 5,
     borderRadius: 5,
-    borderWidth: 1,
-    borderColor: '#ececec',
-    marginLeft: 2,
-    marginRight: 2,
+    //borderWidth: 1,
+    //borderColor: '#ececec',
+    //marginLeft: 2,
+    marginRight: 8,
   },
   cell: {
     // padding provided by IonIcon{ios-flash} cell
-    flexGrow: 1,
-    flexBasis: '33.333%',
+    //flexGrow: 1,
+    //flexBasis: '33.333%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRightWidth: 1,
-    borderColor: '#ececec',
+    paddingLeft: 8,
+    //borderRightWidth: 1,
+    //borderColor: '#ececec',
   },
   cell__last: {
     borderRightWidth: 0,
