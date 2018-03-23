@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   Button,
   StyleSheet,
+  Platform,
+  Linking,
 } from 'react-native';
 
 import {
@@ -20,7 +22,7 @@ import {
   Avatar,
 } from 'react-native-elements';
 
-import { MINDS_CDN_URI } from '../config/Config';
+import { MINDS_CDN_URI, MINDS_LINK_URI } from '../config/Config';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../common/helpers/date';
 import api from '../common/services/api.service';
@@ -33,7 +35,10 @@ export default class BlogCard extends PureComponent {
    * Navigate to blog
    */
   navToBlog = () => {
-    this.props.navigation.navigate('BlogView', { blog: this.props.entity });
+    if (Platform.OS == 'ios') {
+      return this.props.navigation.navigate('BlogView', { blog: this.props.entity });
+    }
+    Linking.openURL(MINDS_LINK_URI + 'blog/view/' + this.props.entity.guid);
   }
 
   /**

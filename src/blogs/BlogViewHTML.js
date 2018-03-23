@@ -7,6 +7,7 @@ import {
   View,
   Dimensions,
   Linking,
+  ActivityIndicator,
 } from "react-native";
 
 const style = `
@@ -94,6 +95,10 @@ const style = `
       border: 0;
     }
 
+    img {
+      max-width: 100%;
+    }
+
     .medium-insert-embeds {
       width: 100%;
     }
@@ -161,17 +166,20 @@ export default class BlogViewHTML extends Component {
 
   render() {
     return (
-      <View>
       <WebView
         ref={(ref) => { this.webview = ref; }}
         scrollEnabled={false}
         source={{ html: this.renderHTML() }}
+        mixedContentMode='compatibility'
         style={{ height: this.state.height }}
         javaScriptEnabled={true}
+        domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
         startInLoadingState={false}
         injectedJavaScript={`(${String(this.injectedScript)})()`}
         onMessage={this.onMessage}
+        renderLoading={() => <ActivityIndicator size={'small'} />}
+        renderError={() => (<Text>Sorry, failed to load. please try again</Text>)}
         onNavigationStateChange={(event) => {
           if (event.url.indexOf('http') > -1) {
             this.webview.stopLoading();
@@ -180,7 +188,6 @@ export default class BlogViewHTML extends Component {
         }}
         >
       </WebView>
-      </View>
     )
   }
 }
