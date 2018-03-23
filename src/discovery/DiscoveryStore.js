@@ -1,6 +1,7 @@
 import {
   observable,
-  action
+  action,
+  computed,
 } from 'mobx';
 
 import discoveryService from './DiscoveryService';
@@ -17,14 +18,12 @@ class DiscoveryStore {
   /**
    * Notification list store
    */
-  stores;
+  @observable stores;
 
   @observable searchtext = '';
   @observable filter     = 'trending';
   @observable type       = 'object/image';
   @observable category   = 'all';
-
-  @observable loading = false;
 
   constructor() {
     this.buildListStores();
@@ -57,6 +56,7 @@ class DiscoveryStore {
       },
       'lastchannels': {
         list: new OffsetListStore('shallow'),
+        loading: false,
       },
       'activity': {
         list: new OffsetListStore('shallow'),
@@ -68,6 +68,7 @@ class DiscoveryStore {
   /**
    * get current list
    */
+  @computed
   get list() {
     return this.stores[this.type].list;
   }
@@ -82,7 +83,8 @@ class DiscoveryStore {
   /**
    * Load feed
    */
-  async loadList(force=false, preloadImage=false) {
+  @action
+  async loadList(refresh=false, preloadImage=false) {
     const type = this.type;
     const store = this.stores[this.type];
 
@@ -90,23 +92,23 @@ class DiscoveryStore {
     if (type == 'lastchannels') return Promise.resolve();
 
     // no more data or loading? return
-    if (!force && store.list.cantLoadMore() || store.loading) {
+    if (this.list.cantLoadMore() || this.loading) {
+      console.log('can not load more', this.list.cantLoadMore(), this.loading);
       return Promise.resolve();
     }
 
-    store.loading = true;
-    return discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext)
-      .then(feed => {
-        this.createModels(type, feed, preloadImage);
-        this.assignRowKeys(feed);
-        this.stores[type].list.setList(feed);
-      })
-      .finally(() => {
-        store.loading = false;
-      })
-      .catch(err => {
-        console.log('error', err);
-      });
+    this.loading = true;
+
+    try {
+      const feed = await discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext);
+      this.createModels(type, feed, preloadImage);
+      this.assignRowKeys(feed);
+      this.list.setList(feed, refresh);
+    } catch (err) {
+      console.log('error', err);
+    } finally {
+      this.loading = false;
+    }
   }
 
   /**
@@ -117,6 +119,15 @@ class DiscoveryStore {
     feed.entities.forEach((entity, index) => {
       entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
     });
+  }
+
+  @computed
+  get loading() {
+    return this.stores[this.type].loading;
+  }
+
+  set loading(val) {
+    return this.stores[this.type].loading = val;
   }
 
   createModels(type, feed, preloadImage) {
@@ -143,12 +154,16 @@ class DiscoveryStore {
   /**
    * Refresh list
    */
-  refresh() {
-    this.list.refresh();
-    this.loadList(true)
-      .finally(() => {
-        this.list.refreshDone();
-      });
+  @action
+  async refresh() {
+    //can we refresh
+    if (this.list.refreshing || this.loading) {
+      return;
+    }
+
+    await this.list.refresh();
+    await this.loadList(true);
+    this.list.refreshDone();
   }
 
   /**

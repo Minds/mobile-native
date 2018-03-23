@@ -25,7 +25,7 @@ export default class OffsetListStore {
    * list next offset
    * if loaded == true and offset == '' there is no more data
    */
-  offset = '';
+  @observable offset = '';
 
   /**
    * Constructor
@@ -45,7 +45,6 @@ export default class OffsetListStore {
 
   @action
   setList(list, replace = false) {
-    this.loaded = true;
     if (list.entities && replace) {
       this.entities = list.entities;
     }
@@ -56,6 +55,7 @@ export default class OffsetListStore {
       });
     }
 
+    this.loaded = true;
     this.offset = list.offset;
   }
 
@@ -88,6 +88,7 @@ export default class OffsetListStore {
     this.refreshing = false;
   }
 
+  @action
   cantLoadMore() {
     return this.loaded && !this.offset && !this.refreshing;
   }

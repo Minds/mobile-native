@@ -10,6 +10,7 @@ import {
     View,
     TouchableHighlight,
     Keyboard,
+    ActivityIndicator,
 } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 
@@ -165,7 +166,6 @@ export default class DiscoveryScreen extends Component {
     const discovery = this.props.discovery;
     const list = discovery.list;
 
-
     let renderRow, columnWrapperStyle = null, getItemLayout=null;
     this.cols = 3;
     switch (discovery.type) {
@@ -192,12 +192,20 @@ export default class DiscoveryScreen extends Component {
         getItemLayout = this.getItemLayout;
         break;
     }
+
+    const footer = (discovery.loading && !list.refreshing) ?  (
+      <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+        <ActivityIndicator size={'large'} />
+      </View>
+    ) : null;
+
     body = (
       <FlatList
         onLayout={this.onLayout}
         key={'discofl' + this.cols} // we need to force component redering if we change cols
         data={list.entities.slice()}
         renderItem={renderRow}
+        ListFooterComponent={footer}
         keyExtractor={item => item.rowKey}
         onRefresh={this.refresh}
         refreshing={list.refreshing}
