@@ -58,10 +58,10 @@ export default class DiscoveryUser extends Component {
       return <TouchableHighlight
           onPress={ this.toggleSubscribe }
           underlayColor='transparent'
-          style={[ComponentsStyle.button, ComponentsStyle.buttonAction]}
+          style={[ComponentsStyle.button ]}
           accessibilityLabel="Subscribe to this channel"
         >
-          <Text style={{ color: colors.primary }} > UNSUBSCRIBE </Text>
+          <Text style={{ color: '#888' }} > UNSUBSCRIBE </Text>
         </TouchableHighlight>;
     } else {
       return <TouchableHighlight
