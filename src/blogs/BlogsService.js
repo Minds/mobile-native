@@ -9,15 +9,14 @@ class BlogsService {
   /**
    * Load Blogs
    */
-  loadList(filter, offset) {
-    const rcategories = [];
-    return api.get('api/v1/blog/' + filter, { limit: 12, offset: offset })
-      .then((data) => {
-        return {
-          blogs: data.blogs || [],
-          offset: data['load-next'] || '',
-        };
-      });
+  async loadList(filter, offset) {
+    try {
+      const data = await api.get('api/v1/blog/' + filter, { limit: 12, offset: offset });
+      return {
+        blogs: data.entities || [],
+        offset: data['load-next'] || '',
+      };
+    } catch (err) { }
   }
 
   /**
@@ -27,6 +26,7 @@ class BlogsService {
   loadEntity(guid) {
     return api.get('api/v1/blog/'+guid);
   }
+
 }
 
 export default new BlogsService();

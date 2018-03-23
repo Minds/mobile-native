@@ -11,19 +11,18 @@ class BlogsStore {
   @observable.shallow entities = [];
 
   @observable refreshing = false
-  @observable filter     = 'featured';
+  @observable filter     = 'trending';
   @observable loaded     = false;
 
   offset = '';
 
-  loadList() {
-    return blogService.loadList(this.filter, this.offset)
-      .then(response => {
-        this.setEntities(response);
-      })
-      .catch(err => {
-        console.error('error', err);
-      });
+  async loadList() {
+    try {
+      const response = await blogService.loadList(this.filter, this.offset)
+      this.setEntities(response);
+    } catch (err) {
+      console.error('error', err);
+    }
   }
 
   @action
@@ -69,7 +68,7 @@ class BlogsStore {
   reset() {
     this.entities = [];
     this.refreshing = false
-    this.filter = 'featured';
+    this.filter = 'trending';
     this.loaded = false;
     this.offset = '';
   }
