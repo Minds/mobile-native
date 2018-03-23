@@ -47,7 +47,7 @@ class ChannelService {
   }
 
   getImageFeed(guid, offset) {
-    return api.get('api/v1/entities/owner/image/' + guid, { offset: offset, limit: 9 })
+    return api.get('api/v1/entities/owner/image/' + guid, { offset: offset, limit: 12 })
     .then((data) => {
       return {
         entities: data.entities,
@@ -61,7 +61,7 @@ class ChannelService {
   }
 
   getVideoFeed(guid, offset) {
-    return api.get('api/v1/entities/owner/video/' + guid, { offset: offset, limit: 6 })
+    return api.get('api/v1/entities/owner/video/' + guid, { offset: offset, limit: 12 })
     .then((data) => {
       return {
         entities: data.entities,
@@ -75,7 +75,7 @@ class ChannelService {
   }
 
   getBlogFeed(guid, offset) {
-    return api.get('api/v1/blog/owner/' + guid, { offset: offset, limit: 6 })
+    return api.get('api/v1/blog/owner/' + guid, { offset: offset, limit: 12 })
     .then((data) => {
       return {
         entities: data.entities,
@@ -89,7 +89,7 @@ class ChannelService {
   }
 
   getSubscribers(guid, filter, offset) {
-    return api.get('api/v1/subscribe/' + filter + '/' + guid, { offset: offset, limit: 15 })
+    return api.get('api/v1/subscribe/' + filter + '/' + guid, { offset: offset, limit: 12 })
     .then((data) => {
       return {
         entities: data.users,

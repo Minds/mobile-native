@@ -127,7 +127,7 @@ export default class NewsfeedList extends Component {
    * Load feed data
    */
   loadFeed = () => {
-    this.props.newsfeed.loadFeed(this.props.guid);
+    this.props.newsfeed.loadFeed();
   }
 
   /**
@@ -135,7 +135,7 @@ export default class NewsfeedList extends Component {
    */
   refresh = () => {
     this.nextBoostedId = 1;
-    this.props.newsfeed.refresh(this.props.guid)
+    this.props.newsfeed.refresh(true)
   }
 
   /**
@@ -157,7 +157,12 @@ export default class NewsfeedList extends Component {
    */
   renderTileActivity = (row) => {
     const entity = row.item;
-    return <TileElement size={this.state.itemHeight} newsfeed={this.props.newsfeed} entity={entity} navigation={this.props.navigation} />;
+    return <TileElement
+      size={this.state.itemHeight}
+      newsfeed={this.props.newsfeed}
+      entity={entity}
+      navigation={this.props.navigation}
+      />;
   }
 }
 
