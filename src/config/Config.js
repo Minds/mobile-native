@@ -19,6 +19,7 @@ export const MINDS_CDN_URI = 'https://cdn.minds.com/';
 
 export const BLOCKCHAIN_URI = 'https://rinkeby.infura.io/';
 // export const BLOCKCHAIN_URI = 'http://localhost:9545';
+export const MINDS_LINK_URI = 'https://www.minds.com/';
 
 export const MINDS_FEATURES = {
   crypto: Platform.OS === 'ios' ? false : true,
