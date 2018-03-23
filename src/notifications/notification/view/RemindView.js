@@ -42,10 +42,10 @@ export default class RemindView extends Component {
 
     switch (entity.entityObj.type) {
       case "activity":
-        return <Text onPress={this.navToActivity}>{entity.fromObj.name} reminded <Text style={styles.link}>{ title ? title : 'your activity' }</Text></Text>
+        return <Text onPress={this.navToActivity} style={styles.link}>{entity.fromObj.name} reminded <Text style={styles.link}>{ title ? title : 'your activity' }</Text></Text>
 
       case "object":
-        return <Text onPress={this.navToActivity}>{entity.fromObj.name} reminded <Text style={styles.link}>{title ? title : `your ${entity.subtype}`}</Text></Text>
+        return <Text onPress={this.navToActivity} style={styles.link}>{entity.fromObj.name} reminded <Text style={styles.link}>{title ? title : `your ${entity.subtype}`}</Text></Text>
 
       default:
         return <Text>... oops.</Text>
