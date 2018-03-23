@@ -23,8 +23,8 @@ export default class BoostPeerRequestView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text>
-          <Text style={styles.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> is offering <Text style={styles.bold} onPress={this.navToActivity}>{entity.params.bid} {type} {description}</Text>
+        <Text onPress={() => this.navToBoostConsole({filter:'peer'})}>
+          <Text style={styles.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> is offering <Text style={styles.bold}>{entity.params.bid} {type} {description}</Text>
         </Text>
       </View>
     )

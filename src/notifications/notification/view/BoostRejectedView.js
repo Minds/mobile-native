@@ -34,7 +34,7 @@ export default class BoostRejectedView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToActivity}>Your boost {entity.params.points} {description} was rejected for <Text style={styles.link} onPress={this.navToChannel}>{entity.params.channel}</Text> {reason}. Your points have been credited back to your wallet.</Text>
+        <Text onPress={this.navToBoostConsole}>Your boost {entity.params.points} {description} was rejected for <Text style={styles.link} onPress={this.navToChannel}>{entity.params.channel}</Text> {reason}. Your points have been credited back to your wallet.</Text>
       </View>
     )
   }

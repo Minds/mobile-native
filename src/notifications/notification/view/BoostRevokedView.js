@@ -10,9 +10,9 @@ import {
 import BoostGiftView from './BoostGiftView';
 
 /**
- * Boost Accepted Notification Component
+ * Boost Revoked Notification Component
  */
-export default class BoostAcceptedView extends BoostGiftView {
+export default class BoostRevokedView extends BoostGiftView {
 
   render() {
     const entity = this.props.entity;
@@ -22,7 +22,7 @@ export default class BoostAcceptedView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToBoostConsole}>{entity.params.impressions || entity.params.points} points {description} were accepted.</Text>
+        <Text onPress={this.navToBoostConsole}>Your boost {entity.params.points} {description} was revoked.</Text>
       </View>
     )
   }

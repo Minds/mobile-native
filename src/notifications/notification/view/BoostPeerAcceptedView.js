@@ -22,9 +22,9 @@ export default class BoostPeerAcceptedView extends BoostGiftView {
     const type = (entity.params.type == 'pro') ? 'USD' : 'points';
 
     return (
-      <View style={styles.bodyContents}>
-        <Text>
-          <Text style={style.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> accepted your bid of <Text style={style.bold} onPress={this.navToActivity}>{entity.params.bid} {type}</Text> {description}
+      <View style={styles.bodyContents} >
+        <Text onPress={() => this.navToBoostConsole({filter:'peer'})}>
+          <Text style={style.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> accepted your bid of <Text style={style.bold}>{entity.params.bid} {type}</Text> {description}
         </Text>
       </View>
     )

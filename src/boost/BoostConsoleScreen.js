@@ -32,6 +32,12 @@ export default class BoostConsoleScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
+    const filter = this.props.navigation.state.params.filter;
+
+    if (filter) {
+      this.props.boost.setFilter(filter);
+    }
+
     this.props.boost.loadList(this.props.guid);
   }
 

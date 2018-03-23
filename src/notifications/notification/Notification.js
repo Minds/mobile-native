@@ -19,6 +19,7 @@ import BoostGiftView from './view/BoostGiftView';
 import BoostPeerAcceptedView from './view/BoostPeerAcceptedView';
 import BoostPeerRequestView from './view/BoostPeerRequestView';
 import BoostRejectedView from './view/BoostRejectedView';
+import BoostRevokedView from './view/BoostRevokedView';
 import BoostSubmittedP2pView from './view/BoostSubmittedP2pView';
 import BoostSubmittedView from './view/BoostSubmittedView';
 import CommentView from './view/CommentView';
@@ -106,6 +107,9 @@ export default class Notification extends Component {
 
       case "boost_rejected":
         return <BoostRejectedView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "boost_revoked":
+        return <BoostRevokedView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "boost_submitted_p2p":
         return <BoostSubmittedP2pView entity={entity} navigation={this.props.navigation} styles={styles} />

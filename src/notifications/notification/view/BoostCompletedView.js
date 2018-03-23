@@ -22,7 +22,7 @@ export default class BoostCompletedView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToActivity}>{entity.params.impressions}/{entity.params.impressions} views {description} have been met.</Text>
+        <Text onPress={this.navToBoostConsole}>{entity.params.impressions}/{entity.params.impressions} views {description} have been met.</Text>
       </View>
     )
   }

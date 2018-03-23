@@ -24,7 +24,7 @@ export default class BoostSubmittedView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text>{entity.params.impressions} views {description} is awaiting approval</Text>
+        <Text onPress={this.navToBoostConsole}>{entity.params.impressions} views {description} is awaiting approval</Text>
       </View>
     )
   }

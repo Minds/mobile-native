@@ -20,7 +20,7 @@ export default class BoostGiftView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToChannel}>{entity.fromObj.name} gifted you {entity.params.impressions} views {description}</Text>
+        <Text onPress={this.navToBoostConsole}>{entity.fromObj.name} gifted you {entity.params.impressions} views {description}</Text>
       </View>
     )
   }
@@ -33,6 +33,13 @@ export default class BoostGiftView extends Component {
     params.entity = this.props.entity.entityObj;
 
     this.props.navigation.navigate('Activity', params);
+  }
+
+  /**
+   * Nav to boost console
+   */
+  navToBoostConsole = (params={}) => {
+    this.props.navigation.navigate('BoostConsole', params);
   }
 
   /**
