@@ -56,7 +56,7 @@ export default class IosPlatfom extends AbstractPlatform {
   }
 
   _onNotificationOpened(notification) {
-    this._onNotificationOpenedHandler(handler);
+    this._onNotificationOpenedHandler(notification);
   }
 
   _onPushRegistered(deviceToken) {
