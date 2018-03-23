@@ -191,14 +191,14 @@ export default class TransactionsList extends Component {
           </Text>
 
           {this.isP2p(item) && <View style={styles.rowColumn}>
-            <Image source={{ uri: this.getSelf().avatar }} style={[styles.rowColumnCellAvatar, styles.rowColumnCellSpacing]} />
+            <Touchable onPress={() => this.navToChannel(this.getSelf().guid)}>
+              <Image source={{ uri: this.getSelf().avatar }} style={[styles.rowColumnCellAvatar, styles.rowColumnCellSpacing]} />
+            </Touchable>
 
             <MdIcon style={styles.rowColumnCellSpacing} name={this.getOther(item).isSender ? 'arrow-back' : 'arrow-forward'} size={20} color="#555" />
 
-            <Image source={{ uri: this.getOther(item).avatar }} style={[styles.rowColumnCellAvatar, styles.rowColumnCellSpacing]} />
-
             <Touchable onPress={() => this.navToChannel(this.getOther(item).guid)}>
-              <Text style={[styles.rowColumnCellUsername, styles.rowColumnCellSpacing]}>{'@' + this.getOther(item).username}</Text>
+              <Image source={{ uri: this.getOther(item).avatar }} style={[styles.rowColumnCellAvatar, styles.rowColumnCellSpacing]} />
             </Touchable>
           </View>}
         </View>
@@ -223,7 +223,7 @@ export default class TransactionsList extends Component {
 const styles = StyleSheet.create({
   row: {
     paddingTop: 16,
-    paddingBottom: 8,
+    paddingBottom: 16,
     paddingLeft: 8,
     paddingRight: 8,
     borderBottomWidth: 1,
