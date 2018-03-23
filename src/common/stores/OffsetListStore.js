@@ -148,6 +148,7 @@ export default class OffsetListStore {
   revoke(guid, filter) {
     let index = this.entities.findIndex(x => x.guid == guid);
     if(index >= 0) {
+      let entity = this.entities[index];
       return revokeBoost(guid, filter)
         .then(action(response => {
           entity.state = 'revoked';

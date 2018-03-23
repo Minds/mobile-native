@@ -49,8 +49,6 @@ export default class Boost extends Component {
   renderEntity() {
     const entity = this.props.boost.entity;
 
-    console.log(entity)
-
     switch (entity.type) {
       case 'activity':
         return <Activity entity={ActivityModel.create(entity)} hideTabs={true} navigation={this.props.navigation} />;
