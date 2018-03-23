@@ -13,7 +13,7 @@ if (!__DEV__) {
    */
   const jsErrorHandler = (e, isFatal) => {
     if (isFatal) {
-      Alert.alert(
+      /*Alert.alert(
         'Unexpected error occurred',
         `
         Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
@@ -21,7 +21,7 @@ if (!__DEV__) {
         [{
           text: 'Ok',
         }]
-      );
+      );*/
 
       console.log(e, 'Minds Uncaught (fatal)');
     } else if (e) {
