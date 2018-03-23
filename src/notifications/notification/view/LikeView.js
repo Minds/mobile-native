@@ -41,6 +41,7 @@ export default class LikeView extends Component {
         break;
       default:
         params.entity = this.props.entity.entityObj;
+        params.hydrate = true;
         break;
     }
     this.props.navigation.navigate(screen, params);

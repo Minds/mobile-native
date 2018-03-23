@@ -29,7 +29,7 @@ export default class BoostGiftView extends Component {
    * Navigate to activity
    */
   navToActivity = () => {
-    let params = {};
+    let params = { hydrate: true };
     params.entity = this.props.entity.entityObj;
 
     this.props.navigation.navigate('Activity', params);

@@ -65,8 +65,8 @@ export default class ActivityScreen extends Component {
   
   async componentDidMount() {
     const params = this.props.navigation.state.params;
-    if (!this.entity.entity) {
-      const resp = await getSingle(params.guid);
+    if (!this.entity.entity || params.hydrate) {
+      const resp = await getSingle(params.guid || params.entity.guid);
       await this.entity.setEntity(ActivityModel.checkOrCreate(resp.activity));
     }
     this.loadComments()

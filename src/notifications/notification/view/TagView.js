@@ -31,7 +31,7 @@ export default class TagView extends Component {
           })
       } 
     } else {
-      this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj });
+      this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj, hydrate: true });
     }
   }
 
