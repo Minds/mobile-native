@@ -30,6 +30,8 @@ export default function number(rawValue, minDecimals = 0, maxDecimals = minDecim
     for (let i = maxDecimals - 1; i >= minDecimals; i--) {
       if (formattedDecimalsValue.charAt(i) === '0') {
         formattedDecimalsValue = formattedDecimalsValue.substr(0, formattedDecimalsValue.length - 1);
+      } else {
+        break;
       }
     }
 

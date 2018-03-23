@@ -123,10 +123,12 @@ export default class BoostScreen extends Component {
       amount = amount.replace(/,/g, '');
     }
 
-    if (typeof amount === 'string' && amount.substring(amount.length - 1) === '.') {
-      // Nothing, since we're inputting numbers, let's keep the dot
-    } else if (typeof amount === 'string' && !isNaN(+amount - parseFloat(amount))) {
-      amount = `${+amount}`;
+    if (this.state.type != 'p2p') {
+      if (typeof amount === 'string' && amount.substring(amount.length - 1) === '.') {
+        // Nothing, since we're inputting numbers, let's keep the dot
+      } else if (typeof amount === 'string' && !isNaN(+amount - parseFloat(amount))) {
+        amount = `${+amount}`;
+      }
     }
 
     this.setState({ amount });
@@ -135,6 +137,10 @@ export default class BoostScreen extends Component {
   parsedAmount() {
     if (!this.state.amount && this.state.amount !== 0) {
       return '';
+    }
+
+    if (this.state.type == 'p2p') {
+      return `${this.state.amount}` || '0';
     }
 
     let withDot = false;
@@ -663,6 +669,7 @@ export default class BoostScreen extends Component {
         <View style={[CommonStyle.rowJustifyStart, CommonStyle.alignCenter, CommonStyle.paddingTop]}>
           <TextInput 
             ref={textInput => this.textInput = textInput}
+            placeholder="0"
             onChangeText={this.changeInput}
             style={styles.input}
             underlineColorAndroid="transparent"
