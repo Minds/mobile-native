@@ -1,6 +1,15 @@
-import { observable, action, computed } from 'mobx'
+import { 
+  observable,
+  action,
+  computed 
+} from 'mobx'
 
-import { getFeedChannel, toggleComments , toggleExplicit, setViewed } from '../newsfeed/NewsfeedService';
+import { 
+  getFeedChannel,
+  toggleComments, 
+  toggleExplicit, 
+  setViewed 
+} from '../newsfeed/NewsfeedService';
 
 import channelService from './ChannelService';
 
@@ -55,6 +64,7 @@ export default class ChannelFeedStore {
     this.stores[this.filter] = value;
   }
 
+  @computed
   get loading() {
     return this.stores[this.filter].loading;
   }
