@@ -33,13 +33,13 @@ class BlockchainWalletStore {
       })
     }
 
-    if (allowCreditCard) {
+    /*if (allowCreditCard) {
       wallets.push({
         address: 'creditcard',
         alias: 'Credit Card',
         creditcard: true
       })
-    }
+    }*/
 
     return wallets;
   }
