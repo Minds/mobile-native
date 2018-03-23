@@ -34,6 +34,7 @@ import './src/common/services/socket.service';
 import pushService from './src/common/services/push.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
+import badgeService from './src/common/services/badge.service';
 
 // build navigation store
 stores.navigatorStore = new NavigatorStore(Stack);
@@ -60,7 +61,14 @@ sessionService.onLogin(async () => {
 
   // handle initial notifications (if the app is opened by tap on one)
   pushService.handleInitialNotification();
-})
+});
+
+//on app logout
+sessionService.onLogout(() => {
+  // clear app badge
+  badgeService.setUnreadConversations(0);
+  badgeService.setUnreadNotifications(0);
+});
 
 // disable yellow boxes
 //console.disableYellowBox = true;
