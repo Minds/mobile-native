@@ -25,6 +25,7 @@ import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import NewsfeedList from '../newsfeed/NewsfeedList';
 import CaptureFab from '../capture/CaptureFab';
+import CenteredLoading from '../common/components/CenteredLoading';
 /**
  * Groups view screen
  */
@@ -147,6 +148,10 @@ export default class GroupViewScreen extends Component {
    */
   render() {
     const group = this.props.groupView.group;
+
+    if (!group) {
+      return <CenteredLoading/>
+    }
 
     return (
       <View style={{flex:1}}> 
