@@ -13,6 +13,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
+  ActivityIndicator
 } from 'react-native';
 
 import {
@@ -100,17 +101,28 @@ export default class ConversationScreen extends Component {
   }
 
   /**
+   * Load more
+   */
+  loadMore = () => {
+    this.props.messengerConversation.loadMore();
+  }
+
+  /**
    * Render component
    */
   render() {
 
     const messengerList = this.props.messengerList;
-
     const shouldSetup = !messengerList.configured;
+    let footer = null;
 
     // show setup !configured yet
     if (shouldSetup) {
       return <MessengerSetup/>
+    }
+
+    if (this.props.messengerConversation.loading) {
+      footer = <ActivityIndicator animating size="large" />
     }
 
     const messages = this.props.messengerConversation.messages;
@@ -126,7 +138,10 @@ export default class ConversationScreen extends Component {
           maxToRenderPerBatch={15}
           keyExtractor={item => item.guid}
           style={styles.listView}
-          windowSize={11}
+          ListFooterComponent={footer}
+          windowSize={3}
+          onEndReached={this.loadMore}
+          onEndThreshold={0}
         />
         <View style={styles.messagePoster} >
           <Image source={avatarImg} style={styles.avatar} />

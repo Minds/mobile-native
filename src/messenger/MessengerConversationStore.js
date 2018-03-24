@@ -21,23 +21,51 @@ class MessengerConversationStore {
    * Messages observable
    */
   @observable.shallow messages = [];
-
+  @observable loading = false;
+  
+  offset = ''
   socketRoomName = null;
   participants = null;
   guid = null;
 
   /**
-   * Load conversation from remote
+   * Initial load
    * @param {string} offset
    */
-  load(offset = '') {
-    return messengerService.getConversationFromRemote(15, this.guid, offset)
+  load() {
+    if (this.loading) return;
+    this.loading = true;
+    return messengerService.getConversationFromRemote(15, this.guid, '')
       .then(conversation => {
+        this.offset = conversation['load-previous'];
         crypto.setPublicKeys( conversation.publickeys );
         this.setMessages(conversation.messages.reverse());
         this.checkListen(conversation);
         return conversation;
       })
+      .finally(() => {
+        this.loading = false;
+      });
+  }
+
+  /**
+   * Load more
+   * @param {string} offset 
+   */
+  loadMore() {
+    if (this.loading) return;
+    this.loading = true;
+    return messengerService.getConversationFromRemote(15, this.guid, this.offset)
+      .then(conversation => {
+        this.offset = conversation['load-previous'];
+        // remove first item (repeated)
+        conversation.messages.pop();
+        this.setMessages(conversation.messages.reverse());
+        return conversation;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   checkListen(conversation) {
@@ -54,7 +82,7 @@ class MessengerConversationStore {
 
   @action
   setMessages(msgs) {
-    this.messages = msgs;
+    msgs.forEach(m => this.messages.push(m));
   }
 
   @action
