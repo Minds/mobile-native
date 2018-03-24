@@ -7,12 +7,6 @@ import {
   TextInput,
 } from 'react-native';
 
-
-import {
-  observer,
-  inject
-} from 'mobx-react/native';
-
 import { Button } from 'react-native-elements';
 
 import { CommonStyle } from '../styles/Common';
@@ -22,7 +16,6 @@ import colors from '../styles/Colors';
 /**
  * Comment editor
  */
-@inject('comments')
 export default class CommentEditor extends Component {
 
   state = {
@@ -49,7 +42,7 @@ export default class CommentEditor extends Component {
    * Update comment
    */
   update = () => {
-    this.props.comments.updateComment(this.props.comment, this.state.text)
+    this.props.store.updateComment(this.props.comment, this.state.text)
       .catch((err) => {
         console.log('error updating comment');
       })
@@ -73,7 +66,7 @@ export default class CommentEditor extends Component {
         />
         <View style={CommonStyle.rowJustifyEnd}>
           <Button title="Cancel" onPress={this.cancel} />
-          <Button title="Save" backgroundColor={colors.primary} onPress={this.update} disabled={this.props.comments.saving}/>
+          <Button title="Save" backgroundColor={colors.primary} onPress={this.update} disabled={this.props.store.saving}/>
         </View>
       </View>
     )
