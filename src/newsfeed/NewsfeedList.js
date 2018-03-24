@@ -6,14 +6,18 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import { observer } from 'mobx-react/native'
+import { inject, observer } from 'mobx-react/native'
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Activity from './activity/Activity';
 import TileElement from './TileElement';
 import { CommonStyle } from '../styles/Common';
+import { ComponentsStyle } from '../styles/Components';
+
 /**
  * News feed list component
  */
+@inject('user')
 @observer
 export default class NewsfeedList extends Component {
 
@@ -59,9 +63,12 @@ export default class NewsfeedList extends Component {
    * Render component
    */
   render() {
-    let renderRow, getItemLayout, emptyMessage = null;
+    let renderRow,
+    getItemLayout, 
+    empty = null;
 
     const newsfeed = this.props.newsfeed;
+    const me = this.props.user.me;
 
     if (newsfeed.isTiled) {
       renderRow = this.props.renderTileActivity || this.renderTileActivity;
@@ -77,14 +84,41 @@ export default class NewsfeedList extends Component {
       </View>
     ) : null;
 
-    // empty message
+    // empty view
     if (newsfeed.list.loaded && !newsfeed.list.refreshing) {
-      emptyMessage = this.props.emptyMessage;
-      // if there is no empty message prop we use default
-      if (!emptyMessage) {
-        emptyMessage = <Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>
-          There is no data to show
-        </Text>;
+      if (this.props.emptyMessage) {
+        empty = this.props.emptyMessage;
+      } else if (newsfeed.filter == 'subscribed') {
+        if (!me.hasBanner()) { //TODO: check for avatar too
+          design = <Text 
+            style={ComponentsStyle.emptyComponentLink}
+            onPress={() => this.props.navigation.navigate('Channel', { username: 'me' })}
+            >
+            Design your channel
+          </Text>
+        }
+  
+        empty = (
+          <View style={ComponentsStyle.emptyComponentContainer}>
+            <View style={ComponentsStyle.emptyComponent}>
+              <MIcon name="home" size={72} color='#444' />
+              <Text style={ComponentsStyle.emptyComponentMessage}>Your newsfeed is empty</Text>
+              {design}
+              <Text 
+                style={ComponentsStyle.emptyComponentLink}
+                onPress={() => this.props.navigation.navigate('Capture')}
+                >
+                Create a post
+              </Text>
+            </View>
+          </View>);
+      } else {
+        empty = (
+          <View style={ComponentsStyle.emptyComponentContainer}>
+            <View style={ComponentsStyle.emptyComponent}>
+              <Text style={ComponentsStyle.emptyComponentMessage}>This feed is empty</Text>
+            </View>
+          </View>);
       }
     }
 
@@ -107,7 +141,7 @@ export default class NewsfeedList extends Component {
         windowSize={11}
         getItemLayout={getItemLayout}
         removeClippedSubviews={true}
-        ListEmptyComponent={emptyMessage}
+        ListEmptyComponent={empty}
         viewabilityConfig={this.viewOpts}
         onViewableItemsChanged={this.onViewableItemsChanged}
       />

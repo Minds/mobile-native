@@ -25,7 +25,7 @@ export default class ChannelFeedStore {
   @observable showrewards = false;
 
   viewed = [];
-  stores = {
+  @observable stores = {
     feed: {
       list: new OffsetFeedListStore('shallow'),
       loading: false,
@@ -139,18 +139,16 @@ export default class ChannelFeedStore {
     this.loading = true;
     const filter = this.filter;
 
-    const feed = await getFeedChannel(this.guid, this.list.offset)
-
-    if (this.filter == 'feed') {
-      this.loading = false;
+    try {
+      const feed = await getFeedChannel(this.guid, this.list.offset)
       this.assignRowKeys(feed);
       feed.entities = ActivityModel.createMany(feed.entities);
       this.list.setList(feed, refresh);
+    } catch (err) {
+    } finally {
+      this.loading = false;
     }
-
-    this.stores[filter].loading = false;
   }
-
 
   /**
    * Load channel images feed
