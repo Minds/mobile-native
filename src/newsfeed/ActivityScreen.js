@@ -54,6 +54,9 @@ export default class ActivityScreen extends Component {
   comments = null;
   entity = null;
 
+  /**
+   * Component will mount
+   */
   async componentWillMount() {
     this.comments = commentsStoreProvider.get();
     this.entity = new SingleEntityStoreProvider();
@@ -61,8 +64,13 @@ export default class ActivityScreen extends Component {
     if (params.entity) {
       await this.entity.setEntity(ActivityModel.checkOrCreate(params.entity));
     }
+
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
   }
   
+  /**
+   * Component did mount
+   */
   async componentDidMount() {
     const params = this.props.navigation.state.params;
     if (!this.entity.entity || params.hydrate) {
@@ -72,11 +80,15 @@ export default class ActivityScreen extends Component {
     this.loadComments()
       .then(() => {
         if (this.comments.comments.length)
-          this.scrollToBottom();
+          this.scrollBottomIfNeeded();
       })
   }
 
+  /**
+   * Component will unmount
+   */
   componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
     this.comments.unlisten();
     this.comments.clearComments();
     this.comments = null;
@@ -103,12 +115,32 @@ export default class ActivityScreen extends Component {
           </View>;
   }
 
-  scrollToBottom() {
+  /**
+   * On keyboard show
+   */
+  _keyboardDidShow = () => {
+    this.scrollBottomIfNeeded();
+  }
+
+  /**
+   * Scrolls to bottoms if the param is received
+   */
+  scrollBottomIfNeeded() {
     if (this.entity.entity && this.props.navigation.state.params.scrollToBottom) {
-      setTimeout(() => this.listRef.scrollToEnd(), 200); //delay to allow rendering
+      this.scrollToBottom();
     }
   }
 
+  /**
+   * Scroll to bottom
+   */
+  scrollToBottom = () => {
+    setTimeout(() => this.listRef.scrollToEnd(), 250); //delay to allow rendering
+  }
+
+  /**
+   * Render poster
+   */
   renderPoster() {
     const attachment = this.comments.attachment;
 
@@ -126,6 +158,7 @@ export default class ActivityScreen extends Component {
             underlineColorAndroid='transparent'
             placeholder='Type your comment...'
             onChangeText={this.setText}
+            onFocus={this.scrollToBottom}
             multiline={true}
             autogrow={true}
             maxHeight={110}
@@ -267,6 +300,7 @@ export default class ActivityScreen extends Component {
     Keyboard.dismiss();
     if (!comments.saving && (comments.text != '' || comments.attachment.hasAttachment)){
       comments.post();
+      this.scrollToBottom();
     }
   }
 
@@ -299,7 +333,6 @@ export default class ActivityScreen extends Component {
     );
   }
 
-
   /**
    * Render
    */
@@ -317,7 +350,7 @@ export default class ActivityScreen extends Component {
 
     return (
       <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={64}>
-        <View style={{flex:14}}>
+        <View style={{flex:1}}>
           <FlatList
             ref={ ref => this.listRef = ref }
             ListHeaderComponent={this.getHeader()}
@@ -329,8 +362,8 @@ export default class ActivityScreen extends Component {
             ListEmptyComponent={this.comments.loaded && !this.comments.refreshing ? <View/> : <CenteredLoading />}
             style={styles.listView}
           />
-        </View>
         { this.renderPoster() }
+        </View>
         { actionsheet }
         <ActionSheet
           ref={o => this.actionAttachmentSheet = o}
