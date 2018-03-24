@@ -22,6 +22,7 @@ class MessengerConversationStore {
    */
   @observable.shallow messages = [];
   @observable loading = false;
+  @observable moreData = true;
   
   offset = ''
   socketRoomName = null;
@@ -32,40 +33,48 @@ class MessengerConversationStore {
    * Initial load
    * @param {string} offset
    */
-  load() {
-    if (this.loading) return;
+  async load() {
+    if (this.loading || !this.moreData) return;
     this.loading = true;
-    return messengerService.getConversationFromRemote(15, this.guid, '')
-      .then(conversation => {
-        this.offset = conversation['load-previous'];
-        crypto.setPublicKeys( conversation.publickeys );
-        this.setMessages(conversation.messages.reverse());
-        this.checkListen(conversation);
-        return conversation;
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+    
+    try {
+      const conversation = await messengerService.getConversationFromRemote(12, this.guid, this.offset)
+    
+      this.offset = conversation['load-previous'];
+      if (!this.offset || !conversation.messages.length) {
+        this.moreData = false;
+      }
+
+      crypto.setPublicKeys( conversation.publickeys );
+
+      if (this.messages.length)
+        conversation.messages.pop();
+
+      this.assignRowKeys(conversation);
+      this.setMessages(conversation.messages.reverse());
+      this.checkListen(conversation);
+    } catch (err) {
+    } finally {
+      this.loading = false;
+    }
   }
 
   /**
    * Load more
    * @param {string} offset 
    */
-  loadMore() {
-    if (this.loading) return;
-    this.loading = true;
-    return messengerService.getConversationFromRemote(15, this.guid, this.offset)
-      .then(conversation => {
-        this.offset = conversation['load-previous'];
-        // remove first item (repeated)
-        conversation.messages.pop();
-        this.setMessages(conversation.messages.reverse());
-        return conversation;
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+  async loadMore() {
+    return await this.load();
+  }
+
+  /**
+   * Generate a unique Id for use with list views
+   * @param {object} feed
+   */
+  assignRowKeys(conversation) {
+    conversation.messages.forEach((message, index) => {
+      message.rowKey = `${message.guid}:${index}:${this.messages.length}`;
+    });
   }
 
   checkListen(conversation) {

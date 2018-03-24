@@ -136,7 +136,7 @@ export default class ConversationScreen extends Component {
           ref={(c) => {this.list = c}}
           renderItem={this.renderMessage}
           maxToRenderPerBatch={15}
-          keyExtractor={item => item.guid}
+          keyExtractor={item => item.rowKey}
           style={styles.listView}
           ListFooterComponent={footer}
           windowSize={3}
