@@ -90,7 +90,7 @@ export default class NewsfeedList extends Component {
       if (this.props.emptyMessage) {
         empty = this.props.emptyMessage;
       } else if (newsfeed.filter == 'subscribed') {
-        if (!me.hasBanner()) { //TODO: check for avatar too
+        if (me && me.hasBanner && !me.hasBanner()) { //TODO: check for avatar too
           design = <Text 
             style={ComponentsStyle.emptyComponentLink}
             onPress={() => this.props.navigation.navigate('Channel', { username: 'me' })}

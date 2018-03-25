@@ -100,7 +100,7 @@ export default class NotificationsScreen extends Component {
         filter = this.props.notifications.filter.substr(0, this.props.notifications.filter.length - 1);
       }
 
-      if (!me.hasBanner()) { //TODO: check for avatar too
+      if (me && me.hasBanned && !me.hasBanner()) { //TODO: check for avatar too
         design = <Text 
           style={ComponentsStyle.emptyComponentLink}
           onPress={() => this.props.navigation.navigate('Channel', { username: 'me' })}
