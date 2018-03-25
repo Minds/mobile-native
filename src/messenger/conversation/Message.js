@@ -123,7 +123,7 @@ export default class Message extends PureComponent {
           </View>
         </View>
         { this.state.showDate ?
-          <Text selectable={true} style={styles.messagedate}>Dec 6, 2017, 11:47:46 AM</Text>
+          <Text selectable={true} style={styles.messagedate}>{formatDate(this.props.message.time_created)}</Text>
           : null }
       </View>
     );
