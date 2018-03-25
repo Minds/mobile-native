@@ -167,7 +167,11 @@ export default class MessengerScreen extends Component {
    */
   renderMessage = (row) => {
     return (
-      <ConversationView item={row.item} styles={styles} navigation={this.props.navigation} />
+      <ConversationView 
+        item={row.item}
+        styles={styles}
+        navigation={this.props.navigation}
+        />
     );
   }
 }
