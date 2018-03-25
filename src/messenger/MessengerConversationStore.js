@@ -27,7 +27,7 @@ class MessengerConversationStore {
   offset = ''
   socketRoomName = null;
   participants = null;
-  guid = null;
+  @observable guid = null;
 
   /**
    * Initial load

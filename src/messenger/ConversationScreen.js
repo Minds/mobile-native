@@ -166,13 +166,14 @@ export default class ConversationScreen extends Component {
    * Send message
    */
   send = () => {
-    const conversationGuid = this.props.navigation.state.params.conversation.guid;
-    const myGuid = this.props.user.me.guid
+    const conversationGuid = this.props.messengerConversation.guid;
+    const myGuid = this.props.user.me.guid;
     const msg  = this.state.text;
-    this.props.messengerConversation.send(myGuid, msg)
-      .catch(err=> {
-        console.log(err);
-      })
+    try {
+      this.props.messengerConversation.send(myGuid, msg);
+    } catch(err) {
+      console.log(err);
+    } 
     this.setState({text: ''})
     setTimeout(() => {
       this.list.scrollToOffset({ offset: 0, animated: false });
