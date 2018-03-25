@@ -154,6 +154,7 @@ class MessengerConversationStore {
     this.participants    = null;
     this.guid            = null;
     this.messages        = [];
+    this.offset          = ''
     if (this.lastMessageGuid) {
       // on leave set all messages as readed
       messengerService.getConversationFromRemote(1, this.guid, this.lastMessageGuid);
