@@ -65,6 +65,7 @@ export default class NewsfeedList extends Component {
   render() {
     let renderRow,
     getItemLayout, 
+    design,
     empty = null;
 
     const newsfeed = this.props.newsfeed;
