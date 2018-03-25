@@ -46,21 +46,29 @@ class GroupViewStore {
   viewed = [];
   loading = false;
   guid = '';
+
+  /**
+   * Set guid
+   * @param {stirng} guid 
+   */
+  setGuid(guid) {
+    this.guid = guid;
+  }
+
   /**
    * Load feed
    */
-  loadFeed(guid) {
-    this.guid = guid;
+  loadFeed() {
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
     this.loading = true;
 
-    return groupsService.loadFeed(guid, this.list.offset)
+    return groupsService.loadFeed(this.guid, this.list.offset)
       .then(data => {
         data.entities = ActivityModel.createMany(data.entities);
-        this.list.setList(data);
         this.assignRowKeys(data);
+        this.list.setList(data);
         this.loaded = true;
       })
       .finally(() => {
@@ -206,16 +214,16 @@ class GroupViewStore {
   @action
   setGroup(group) {
     this.group = group;
-    this.group.algo = 2;
+    this.setGuid(group.guid);
   }
 
   /**
    * Refresh feed
    */
   @action
-  refresh(guid) {
+  refresh() {
     this.list.refresh();
-    this.loadFeed(guid)
+    this.loadFeed(this.guid)
       .finally(() => {
         this.list.refreshDone();
       });
@@ -225,9 +233,9 @@ class GroupViewStore {
    * Refresh members
    */
   @action
-  memberRefresh(guid) {
+  memberRefresh() {
     this.members.refresh();
-    this.loadMembers(guid)
+    this.loadMembers(this.guid)
       .finally(() => {
         this.members.refreshDone();
       });

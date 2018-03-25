@@ -47,10 +47,11 @@ export default class GroupViewScreen extends Component {
 
     if (params.group) {
       this.props.groupView.setGroup(params.group);
-      this.props.groupView.loadFeed(params.group.guid);
+      this.props.groupView.loadFeed();
     } else {
+      this.props.groupView.setGuid(params.guid)
       this.props.groupView.loadGroup(params.guid);
-      this.props.groupView.loadFeed(params.guid);
+      this.props.groupView.loadFeed();
     }
 
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('GroupView',(s) => {
