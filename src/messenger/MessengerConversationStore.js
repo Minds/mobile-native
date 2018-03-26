@@ -109,6 +109,7 @@ class MessengerConversationStore {
   send(myGuid, text) {
     this.messages.unshift({
       guid: myGuid + this.messages.length,
+      rowKey: Date.now(),
       message: text,
       decrypted: true,
       owner: { guid: myGuid },
@@ -169,7 +170,7 @@ class MessengerConversationStore {
   /**
    * Socket pushConversationMessage
    */
-  pushConversationMessage = (guid, message) => {
+  pushConversationMessage = async (guid, message) => {
     if (guid != this.guid) {
       return;
     }
@@ -177,9 +178,17 @@ class MessengerConversationStore {
     const fromSelf = session.guid == message.ownerObj.guid;
 
     if (!fromSelf) {
-      const index = this.participants.findIndex((e) => { return e.guid == message.ownerObj.guid});
 
-      message.message = message.messages[index];
+      //const index = 
+
+      for (let index in message.messages) {
+        try {
+          message.message = await crypto.decrypt(message.messages[index]);
+          message.rowKey = Date.now();
+          message.decrypted = true;
+        } catch (err) {}
+      }
+
       this.addMessage(message);
       this.lastMessageGuid = message.guid;
       // @todo: play sound and notify user

@@ -93,9 +93,9 @@ export default class MessengerScreen extends Component {
       loadingCmp = <ActivityIndicator style={styles.loading} />
     }
 
-    if (!this.state.active) {
-      return <View/>
-    }
+    //if (!this.state.active) {
+    //  return <View/>
+    //}
 
     let empty;
 
@@ -158,7 +158,8 @@ export default class MessengerScreen extends Component {
   loadMore = () => {
     // prevent multiple calls before fist load
     //if (!this.props.messengerList.loaded) return;
-    this.props.messengerList.loadList()
+    if (this.state.active)
+      this.props.messengerList.loadList()
   }
 
   /**
