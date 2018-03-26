@@ -111,6 +111,12 @@ export default class NewsfeedList extends Component {
                 >
                 Create a post
               </Text>
+              <Text 
+                style={ComponentsStyle.emptyComponentLink}
+                onPress={() => this.props.navigation.navigate('Discovery', { type: 'user' })}
+                >
+                Find channels
+              </Text>
             </View>
           </View>);
       } else {
