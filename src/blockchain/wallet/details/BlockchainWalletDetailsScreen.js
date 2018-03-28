@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Switch,
   Dimensions,
+  Platform,
 } from 'react-native';
 
 import { btoa } from 'abab';
@@ -289,13 +290,15 @@ export default class BlockchainWalletDetailsScreen extends Component {
       privateKey = privateKey.substr(2);
     }
 
-    const url = `data:text/csv;base64,${btoa(privateKey)}`;
+    const shareOptions = {
+      message: privateKey
+    };
 
-    console.log(url);
+    if (Platform.OS == 'android') {
+      shareOptions.url = 'data:text/plain;base64,';
+    }
 
-    await Share.open({
-      url
-    });
+    await Share.open(shareOptions);
   };
 
   deleteItem() {

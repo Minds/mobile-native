@@ -43,6 +43,15 @@
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
       <meta-data android:name="com.wix.reactnativenotifications.gcmSenderId" android:value="81109256529\0"/>
+      <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="${applicationId}.provider"
+        android:grantUriPermissions="true"
+        android:exported="false">
+        <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/filepaths" />
+      </provider>
     </application>
 
 </manifest>

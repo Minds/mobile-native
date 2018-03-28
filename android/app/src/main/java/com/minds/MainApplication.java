@@ -22,11 +22,13 @@ import com.reactnative.photoview.PhotoViewPackage;
 import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
 import com.wix.reactnativenotifications.RNNotificationsPackage;
+import cl.json.RNSharePackage;
+import cl.json.ShareApplication;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends Application implements ReactApplication {
+public class MainApplication extends Application implements ShareApplication, ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
@@ -52,7 +54,8 @@ public class MainApplication extends Application implements ReactApplication {
           new PhotoViewPackage(),
           new RNI18nPackage(),
           new KCKeepAwakePackage(),
-          new RNNotificationsPackage(MainApplication.this)
+          new RNNotificationsPackage(MainApplication.this),
+          new RNSharePackage()
       );
     }
 
@@ -71,5 +74,10 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+  }
+
+  @Override
+  public String getFileProviderAuthority() {
+    return "com.minds.mobile.provider";
   }
 }
