@@ -14,9 +14,8 @@ import FastImage from 'react-native-fast-image';
 import { createImageProgress } from 'react-native-image-progress';
 import ProgressCircle from 'react-native-progress/Circle';
 
-import { BlurView, VibrancyView } from 'react-native-blur';
 import { Icon } from 'react-native-elements';
-
+import ExplicitOverlay from './ExplicitOverlay';
 
 const ProgressFastImage = createImageProgress(FastImage);
 
@@ -67,11 +66,10 @@ export default class ExplicitImage extends Component {
       <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
         {image}
         { (this.props.entity.mature && this.state.viewRef) ?
-          <BlurView
-            style={styles.absolute}
+          <ExplicitOverlay
+            entity={this.props.entity}
             viewRef={this.state.viewRef}
-            blurType="light"
-            blurAmount={20}
+            style={styles.absolute}
           /> : null
         }
       </View>

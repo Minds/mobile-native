@@ -223,12 +223,32 @@ export const CommonStyle = StyleSheet.create({
     bottom: 0,
     left: 0
   },
+  positionAbsoluteTop:{
+    position: "absolute",
+    top: 0,
+    left: 0
+  },
+  positionAbsoluteTopRight:{
+    position: "absolute",
+    top: 0,
+    right: 0
+  },
   positionRelative:{
     position: "relative",
     top: 0,
     left: 0,
     bottom: 0,
     right: 0
+  },
+
+  //shadow
+  shadow: {
+    shadowColor: 'black',
+    shadowOpacity: 0.5,
+    shadowRadius: StyleSheet.hairlineWidth,
+    shadowOffset: {
+      height: StyleSheet.hairlineWidth,
+    },
   },
 
   // Generic screens

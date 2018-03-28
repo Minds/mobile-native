@@ -12,12 +12,15 @@ import {
   Text,
   StyleSheet,
   View,
-  Dimensions
+  TouchableOpacity,
+  Dimensions,
+  Platform
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Tags from '../../../common/components/Tags';
-
 import colors from '../../../styles/Colors';
+import { CommonStyle } from '../../../styles/Common';
 
 @observer
 export default class ExplicitText extends Component {
@@ -54,6 +57,13 @@ export default class ExplicitText extends Component {
   }
 
   /**
+   * toggle overlay
+   */
+  toogle = () => {
+    this.props.entity.toggleMatureVisibility();
+  }
+
+  /**
    * Render
    */
   render() {
@@ -62,6 +72,7 @@ export default class ExplicitText extends Component {
     
     let body = null;
     let moreLess = null;
+    let explicitToggle = null;
     
     if (message != '') {
       const truncated = this.truncate(message);
@@ -71,15 +82,29 @@ export default class ExplicitText extends Component {
         moreLess = this.getMoreLess();
       }
 
-      body = entity.mature ? 
+      body = (entity.mature && !entity.mature_visibility) ? 
           <Text style={styles.mature}>{message}</Text> :
           <Tags navigation={this.props.navigation} style={this.props.style}>{message}</Tags>
+
+      if (entity.mature ) {
+        if (!entity.mature_visibility) {
+          explicitToggle = <TouchableOpacity style={[CommonStyle.positionAbsolute, CommonStyle.centered]} onPress={this.toogle}>
+            <Icon name="explicit" size={18} color={'black'} style={CommonStyle.shadow}/>
+            <Text> Confirm you are 18+</Text>
+          </TouchableOpacity>
+        } else {
+          explicitToggle = <TouchableOpacity style={[CommonStyle.positionAbsoluteTopRight, {marginTop: -15}]} onPress={this.toogle}>
+            <Icon name="explicit" size={18} color={'red'} style={CommonStyle.shadow}/>
+          </TouchableOpacity>
+        }
+      }
     }
 
     return (
       <View style={styles.container}>
         { body }
         { moreLess }
+        { explicitToggle }
       </View>
     );
   }
@@ -137,9 +162,22 @@ const styles = StyleSheet.create({
     marginTop: 5
   },
   mature: {
-    color:'transparent',
-    textShadowColor: 'rgba(107, 107, 107, 0.5)',
-    textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 20
+    ...Platform.select({
+      ios: {
+        color: 'rgba(255, 255, 255, 0.1)',
+        shadowColor: 'black',
+        shadowOpacity: 1,
+        shadowRadius: 2,
+        shadowOffset: {
+          height: -1
+        },
+      },
+      android: {
+        color:'transparent',
+        textShadowColor: 'rgba(107, 107, 107, 0.5)',
+        textShadowOffset: {width: -1, height: 1},
+        textShadowRadius: 20
+      }
+    })
   }
 });

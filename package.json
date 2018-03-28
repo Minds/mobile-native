@@ -40,7 +40,7 @@
     "react-native": "^0.54.1",
     "react-native-actionsheet": "^2.3.0",
     "react-native-animatable": "^1.2.4",
-    "react-native-blur": "^3.2.2",
+    "react-native-blur": "react-native-community/react-native-blur#a308f3c510b14e10fca33193216d0bf13f848bfd",
     "react-native-crypto": "^2.1.0",
     "react-native-elements": "^0.18.4",
     "react-native-exception-handler": "^2.6.0",

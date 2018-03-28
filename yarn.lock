@@ -6736,9 +6736,9 @@ react-native-animatable@^1.2.3, react-native-animatable@^1.2.4:
   dependencies:
     prop-types "^15.5.10"
 
-react-native-blur@^3.2.2:
+react-native-blur@react-native-community/react-native-blur#a308f3c510b14e10fca33193216d0bf13f848bfd:
   version "3.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-blur/-/react-native-blur-3.2.2.tgz#5bfb50638d148982c9560436554ed01d77d6d07d"
+  resolved "https://codeload.github.com/react-native-community/react-native-blur/tar.gz/a308f3c510b14e10fca33193216d0bf13f848bfd"
   dependencies:
     prop-types "^15.5.10"
 
@@ -6803,10 +6803,6 @@ react-native-i18n@^2.0.10:
   resolved "https://registry.yarnpkg.com/react-native-i18n/-/react-native-i18n-2.0.12.tgz#4a503cc73b2fe55e8518f6d4a1340d3b449d8d1a"
   dependencies:
     i18n-js "^3.0.3"
-
-react-native-image-picker@^0.26.7:
-  version "0.26.7"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.26.7.tgz#ad2ee957f7f6cc01396893ea03d84cb2adb2e376"
 
 react-native-image-picker@react-community/react-native-image-picker#60169dc5dfcea47094703fe4adf54be262540b6b:
   version "0.26.7"

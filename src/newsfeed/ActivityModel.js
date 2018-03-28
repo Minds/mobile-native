@@ -1,4 +1,4 @@
-import { computed, action } from 'mobx';
+import { computed, action, observable } from 'mobx';
 
 import BaseModel from '../common/BaseModel';
 import sessionService from '../common/services/session.service';
@@ -17,6 +17,9 @@ import {
  * Activity model
  */
 export default class ActivityModel extends BaseModel {
+
+  // add an extra observable property
+  @observable mature_visibility = false;
 
   /**
    * observables
@@ -75,6 +78,11 @@ export default class ActivityModel extends BaseModel {
    */
   get text() {
     return this.message || this.title || '';
+  }
+
+  @action
+  toggleMatureVisibility() {
+    this.mature_visibility = !this.mature_visibility;
   }
 
   /**
