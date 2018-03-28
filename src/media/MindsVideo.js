@@ -57,13 +57,13 @@ export default class MindsVideo extends PureComponent {
     }
   }
 
-  onVideoEnd() {
+  onVideoEnd = () => {
     this.player.seek(0);
     KeepAwake.deactivate();
     this.setState({key: new Date(), currentTime: 0, paused: true});
   }
 
-  onVideoLoad(e) {
+  onVideoLoad = (e) => {
     let current = 0;
     if (this.state.changedModeTime > 0) {
       current = this.state.changedModeTime;
@@ -75,24 +75,13 @@ export default class MindsVideo extends PureComponent {
     this.player.seek(current)
   }
 
-  toggleVolume() {
+  toggleVolume = () => {
     const v = this.state.volume ? 0 : 1;
     this.setState({volume: v});
   }
 
-  onProgress(e) {
+  onProgress = (e) => {
     this.setState({currentTime: e.currentTime});
-  }
-
-  playOrPauseVideo(paused) {
-    const stateChange = { paused: !paused };
-    if (!paused) {
-      KeepAwake.activate();
-    } else {
-      KeepAwake.deactivate();
-    }
-    if (!this.state.active) stateChange.active = true;
-    this.setState(stateChange);
   }
 
   onBackward(currentTime) {
@@ -130,7 +119,7 @@ export default class MindsVideo extends PureComponent {
     this.setState({fullScreen: !this.state.fullScreen, changedModeTime: this.state.currentTime});
   }
 
-  play() {
+  play = () => {
     setTimeout(() => {
       this.setState({
         showOverlay: false,
@@ -145,11 +134,10 @@ export default class MindsVideo extends PureComponent {
     });
   }
 
-  pause() {
+  pause = () => {
     KeepAwake.deactivate();
 
     this.setState({
-      active: false,
       paused: true,
     });
   }
@@ -158,7 +146,7 @@ export default class MindsVideo extends PureComponent {
     const size = 56;
     if (this.state.paused) {
       return <Icon 
-        onPress={ () => this.play() } 
+        onPress={this.play} 
         style={styles.videoIcon} 
         name="md-play" 
         size={size} 
@@ -167,7 +155,7 @@ export default class MindsVideo extends PureComponent {
     }
 
     return <Icon 
-      onPress={ () => this.pause()}
+      onPress={this.pause}
       style={styles.videoIcon}
       name="md-pause"
       size={size}
@@ -189,9 +177,9 @@ export default class MindsVideo extends PureComponent {
 
   get volumeIcon() {
     if (this.state.volume == 0) {
-      return <Icon onPress={this.toggleVolume.bind(this)} name="md-volume-off" size={20} color={colors.light} />;
+      return <Icon onPress={this.toggleVolume} name="md-volume-off" size={20} color={colors.light} />;
     } else {
-      return <Icon onPress={this.toggleVolume.bind(this)} name="md-volume-up" size={20} color={colors.light} />;
+      return <Icon onPress={this.toggleVolume} name="md-volume-up" size={20} color={colors.light} />;
     }
   }
 
@@ -207,9 +195,9 @@ export default class MindsVideo extends PureComponent {
           ref={(ref) => {
             this.player = ref
           }}
-          onEnd={this.onVideoEnd.bind(this)}
-          onLoad={this.onVideoLoad.bind(this)}
-          onProgress={this.onProgress.bind(this)}
+          onEnd={this.onVideoEnd}
+          onLoad={this.onVideoLoad}
+          onProgress={this.onProgress}
           source={{ uri: video.uri }}
           paused={paused}
           volume={parseFloat(this.state.volume)}
