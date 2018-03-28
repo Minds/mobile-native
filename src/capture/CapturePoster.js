@@ -61,7 +61,8 @@ export default class CapturePoster extends Component {
    */
   componentWillMount() {
     const { setParams } = this.props.navigation;
-    setParams({headerRight: <CapturePostButton onPress={() => this.submit()} />});
+    setParams({ headerRight: <CapturePostButton onPress={() => this.submit()} /> });
+
   }
 
   /**
@@ -203,7 +204,11 @@ export default class CapturePoster extends Component {
       return false;
     }
 
-    if (!attachment.hasAttachment && !this.state.text) {
+    if (
+      !attachment.hasAttachment &&
+      !this.state.text &&
+      (!this.state.meta || !this.state.meta.perma_url)
+    ) {
       alert('Nothing to post...');
       return false;
     }
@@ -212,7 +217,7 @@ export default class CapturePoster extends Component {
       message: this.state.text,
       mature: this.state.mature ? 1 : 0,
       wire_threshold: this.state.lock
-    }
+    };
 
     if (attachment.guid) {
       newPost.attachment_guid = attachment.guid;
