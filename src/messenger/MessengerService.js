@@ -63,7 +63,6 @@ class MessengerService {
    * @param {string} offset
    */
   getConversationFromRemote(limit, guid, offset = "") {
-    console.log(offset);
     return api.get('api/v2/conversations/' + guid, {
       limit: 8, 
       offset: offset,
@@ -87,6 +86,14 @@ class MessengerService {
     }
 
     return api.post('api/v2/conversations/' + guid, data)
+  }
+
+  /**
+   * Invite a user
+   * @param {string} guid 
+   */
+  invite(guid) {
+    return api.put(`api/v2/conversations/invite/${guid}`);
   }
 }
 

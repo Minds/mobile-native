@@ -27,6 +27,7 @@ import { MINDS_CDN_URI } from '../config/Config';
 import crypto from './../common/services/crypto.service';
 import Message from './conversation/Message';
 import MessengerSetup from './MessengerSetup';
+import MessengerInvite from './MessengerInvite';
 
 import { CommonStyle } from '../styles/Common';
 import UserModel from '../channel/UserModel';
@@ -114,6 +115,7 @@ export default class ConversationScreen extends Component {
 
     const messengerList = this.props.messengerList;
     const shouldSetup = !messengerList.configured;
+    const shouldInvite = this.props.messengerConversation.invitable;
     let footer = null;
 
     // show setup !configured yet
@@ -123,6 +125,10 @@ export default class ConversationScreen extends Component {
 
     if (this.props.messengerConversation.loading) {
       footer = <ActivityIndicator animating size="large" />
+    }
+    
+    if (shouldInvite) {
+      return <MessengerInvite navigation={this.props.navigation}/>
     }
 
     const messages = this.props.messengerConversation.messages;
@@ -165,14 +171,15 @@ export default class ConversationScreen extends Component {
   /**
    * Send message
    */
-  send = () => {
+  send = async () => {
     const conversationGuid = this.props.messengerConversation.guid;
     const myGuid = this.props.user.me.guid;
     const msg  = this.state.text;
+
     try {
-      this.props.messengerConversation.send(myGuid, msg);
+      const result = await this.props.messengerConversation.send(myGuid, msg);
     } catch(err) {
-      console.log(err);
+      console.log('error', err);
     } 
     this.setState({text: ''})
     setTimeout(() => {

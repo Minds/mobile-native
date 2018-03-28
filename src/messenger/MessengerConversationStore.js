@@ -23,10 +23,12 @@ class MessengerConversationStore {
   @observable.shallow messages = [];
   @observable loading = false;
   @observable moreData = true;
+  @observable invited = false;
   
   offset = ''
   socketRoomName = null;
   participants = null;
+  invitable = null;
   @observable guid = null;
 
   /**
@@ -39,20 +41,25 @@ class MessengerConversationStore {
     
     try {
       const conversation = await messengerService.getConversationFromRemote(12, this.guid, this.offset)
-    
+      // offset to scroll
       this.offset = conversation['load-previous'];
+      // invitable
+      this.invitable = conversation.invitable || null;
+      // set public keys for encryption
+      crypto.setPublicKeys( conversation.publickeys );
+    
+      // remove repeated message
+      if (this.messages.length)
+       conversation.messages.pop();
+   
       if (!this.offset || !conversation.messages.length) {
         this.moreData = false;
       }
 
-      crypto.setPublicKeys( conversation.publickeys );
-
-      if (this.messages.length)
-        conversation.messages.pop();
-
       this.assignRowKeys(conversation);
       this.setMessages(conversation.messages.reverse());
       this.checkListen(conversation);
+      return conversation;
     } catch (err) {
     } finally {
       this.loading = false;
@@ -109,7 +116,7 @@ class MessengerConversationStore {
   send(myGuid, text) {
     this.messages.unshift({
       guid: myGuid + this.messages.length,
-      rowKey: Date.now(),
+      rowKey: Date.now().toString(),
       message: text,
       decrypted: true,
       owner: { guid: myGuid },
@@ -122,6 +129,18 @@ class MessengerConversationStore {
       })
   }
 
+  @action
+  invite() {
+    if (!this.invitable || !this.invitable.length) {
+      return;
+    }
+
+    this.invited = true;
+    this.invitable.forEach(participant => {
+      messengerService.invite(participant.guid);
+    });
+  }
+
   /**
    * Encript the message ussing public keys
    * @param {string} message
@@ -130,8 +149,9 @@ class MessengerConversationStore {
     const encrypted = {};
     const publickeys = crypto.getPublicKeys();
 
+    if (!Object.keys(publickeys).length) return Promise.reject('No public keys to encrypt')
+    
     return new Promise((resolve, reject) => {
-
       for (let guid in publickeys) {
         crypto.encrypt(message, guid)
           .then(success => {
@@ -154,6 +174,9 @@ class MessengerConversationStore {
     this.socketRoomName  = null;
     this.participants    = null;
     this.guid            = null;
+    this.invitable       = null;
+    this.moreData        = true;
+    this.invited         = false;
     this.messages        = [];
     this.offset          = ''
     if (this.lastMessageGuid) {
@@ -184,8 +207,10 @@ class MessengerConversationStore {
       for (let index in message.messages) {
         try {
           message.message = await crypto.decrypt(message.messages[index]);
-          message.rowKey = Date.now();
+          message.rowKey = Date.now().toString();
           message.decrypted = true;
+          // break on correct decryption
+          break;
         } catch (err) {}
       }
 
