@@ -16,6 +16,7 @@ import {
 import { ListItem } from 'react-native-elements';
 import { Avatar } from 'react-native-elements';
 import { MINDS_CDN_URI } from '../config/Config';
+import CenteredLoading from '../common/components/CenteredLoading';
 
 /**
  * Groups list screen
@@ -65,19 +66,23 @@ export default class GroupsListScreen extends Component {
     this.props.groups.refresh()
   }
 
-
+  /**
+   * Render
+   */
   render() {
+    const list = this.props.groups.list;
+
     return (
       <FlatList
-        data={this.props.groups.list.entities.slice()}
+        data={list.entities.slice()}
         renderItem={this.renderItem}
         keyExtractor={item => item.guid}
         onRefresh={this.refresh}
-        refreshing={this.props.groups.list.refreshing}
+        refreshing={list.refreshing || !list.loaded}
         onEndReached={this.loadMore}
         onEndThreshold={0}
         style={styles.list}
-        initialNumToRender={3}
+        initialNumToRender={12}
         removeClippedSubviews={true}
       />
     );
@@ -89,7 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    marginTop: 5,
+    marginTop: 0,
     backgroundColor: '#FFF'
   }
 });

@@ -19,6 +19,7 @@ const styles = {
   activitycontainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
     flex: 1
   }
 }
