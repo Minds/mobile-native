@@ -94,7 +94,7 @@ export default class MediaView extends Component {
     }
     return (
       <View style={styles.videoContainer}>
-        <MindsVideo video={{'uri': 'https://d2isvgrdif6ua5.cloudfront.net/cinemr_com/' + guid +  '/360.mp4'}} entity={this.props.entity}/>
+        <MindsVideo video={{'uri': MINDS_URI + 'api/v1/media/' + guid + '/play'}} entity={this.props.entity}/>
       </View>
     );
   }
