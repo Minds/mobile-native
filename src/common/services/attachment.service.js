@@ -50,12 +50,9 @@ class AttachmentService {
    * Capture video
    */
   async video() {
-    
     const response = await imagePicker.launchCamera('video');
 
-    if (!response) return response;
- 
-    if (reponse) {
+    if (response) {
       return {
         uri: response.uri,
         type: 'video/mp4',
@@ -63,19 +60,16 @@ class AttachmentService {
       }
     }
 
-    return null;
+    return response;
   }
 
   /**
    * Capture photo
    */
   async photo() {
-
     const response = await imagePicker.launchCamera('photo');
 
-    if (!response) return response;
- 
-    if (reponse) {
+    if (response) {
       return {
         uri: response.uri,
         type: 'image/jpeg',
@@ -83,7 +77,7 @@ class AttachmentService {
       }
     }
 
-    return null;
+    return response;
   }
 
   /**
