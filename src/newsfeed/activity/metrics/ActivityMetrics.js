@@ -18,6 +18,7 @@ import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { CommonStyle } from '../../../styles/Common';
 
 import abbrev from '../../../common/helpers/abbrev';
+import token from '../../../common/helpers/token';
 
 /**
  * Activity metrics component
@@ -54,7 +55,7 @@ export default class ActivityMetrics extends Component {
 
     return (
       <View style={[CommonStyle.rowJustifyCenter]}>
-        {this.showCounter(entity.wire_totals.tokens, 'TOKENS')}
+        {this.showCounter(token(entity.wire_totals.tokens), 'TOKENS')}
         {this.showCounter(entity.impressions, 'VIEWS')}
         {edited}
       </View>
