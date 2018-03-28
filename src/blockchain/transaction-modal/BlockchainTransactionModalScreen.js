@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import {
   Text,
   View,
+  ScrollView,
   TextInput,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
   TouchableHighlight,
   StyleSheet,
 } from 'react-native';
@@ -77,7 +80,7 @@ export default class BlockchainTransactionModalScreen extends Component {
     const gasFeeUsd = this.props.blockchainTransaction.gweiPriceCents ?
       (this.gasFee() * this.props.blockchainTransaction.gweiPriceCents) / 100 :
       null;
-
+      
     return (
       <Modal
         isVisible={ this.props.blockchainTransaction.isApproving }
@@ -85,80 +88,83 @@ export default class BlockchainTransactionModalScreen extends Component {
         backdropOpacity={ 1 }
       >
         { this.props.blockchainTransaction.isApproving && <View style={ [ CommonStyle.flexContainer, CommonStyle.modalScreen ] }>
-          <Text style={ CommonStyle.modalTitle }>Approve transaction</Text>
+          <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={Platform.OS == 'ios' ? 'padding' : null} >
+            <ScrollView style={CommonStyle.flexContainer}>
+              <Text style={ CommonStyle.modalTitle }>Approve transaction</Text>
 
-          <Text style={ CommonStyle.modalNote }>{ this.props.blockchainTransaction.approvalMessage }</Text>
+              <Text style={ CommonStyle.modalNote }>{ this.props.blockchainTransaction.approvalMessage }</Text>
 
-          <View style={ CommonStyle.field }>
-            <Text style={ CommonStyle.fieldLabel }>GAS PRICE (GWEI):</Text>
+              <View style={ CommonStyle.field }>
+                <Text style={ CommonStyle.fieldLabel }>GAS PRICE (GWEI):</Text>
 
-            <TextInput
-              style={ CommonStyle.fieldTextInput }
-              placeholder={ `Gas price (default: ${ defaults.gasPrice })` }
-              returnKeyType={ 'next' }
-              onChangeText={ gasPrice => this.setState({ gasPrice }) }
-              value={ `${this.state.gasPrice}` }
-            />
-          </View>
+                <TextInput
+                  style={ CommonStyle.fieldTextInput }
+                  placeholder={ `Gas price (default: ${ defaults.gasPrice })` }
+                  returnKeyType={ 'next' }
+                  onChangeText={ gasPrice => this.setState({ gasPrice }) }
+                  value={ `${this.state.gasPrice}` }
+                />
+              </View>
 
-          <View style={ CommonStyle.field }>
-            <Text style={ CommonStyle.fieldLabel }>GAS LIMIT:</Text>
+              <View style={ CommonStyle.field }>
+                <Text style={ CommonStyle.fieldLabel }>GAS LIMIT:</Text>
 
-            <TextInput
-              style={ CommonStyle.fieldTextInput }
-              placeholder={ `Gas limit (default: ${ this.props.blockchainTransaction.estimateGasLimit || defaults.gasLimit })` }
-              returnKeyType={ 'done' }
-              onChangeText={ gasLimit => this.setState({ gasLimit }) }
-              value={ `${this.state.gasLimit}` }
-            />
-          </View>
+                <TextInput
+                  style={ CommonStyle.fieldTextInput }
+                  placeholder={ `Gas limit (default: ${ this.props.blockchainTransaction.estimateGasLimit || defaults.gasLimit })` }
+                  returnKeyType={ 'done' }
+                  onChangeText={ gasLimit => this.setState({ gasLimit }) }
+                  value={ `${this.state.gasLimit}` }
+                />
+              </View>
 
-          {!!this.props.blockchainTransaction.weiValue && <View style={CommonStyle.field}>
-            <Text style={CommonStyle.fieldLabel}>ETH TO BE TRANSFERRED:</Text>
+              {!!this.props.blockchainTransaction.weiValue && <View style={CommonStyle.field}>
+                <Text style={CommonStyle.fieldLabel}>ETH TO BE TRANSFERRED:</Text>
 
-            <TextInput
-              editable={false}
-              style={[CommonStyle.fieldTextInput, styles.nonEditable]}
-              value={`${this.props.blockchainTransaction.weiValue / Math.pow(10, 18)}`}
-            />
-          </View>}
+                <TextInput
+                  editable={false}
+                  style={[CommonStyle.fieldTextInput, styles.nonEditable]}
+                  value={`${this.props.blockchainTransaction.weiValue / Math.pow(10, 18)}`}
+                />
+              </View>}
 
-          {!!gasFeeUsd && <Text style={styles.gasFee}>
-            MAX. GAS FEE: {currency(gasFeeUsd, 'usd')}
-          </Text>}
+              {!!gasFeeUsd && <Text style={styles.gasFee}>
+                MAX. GAS FEE: {currency(gasFeeUsd, 'usd')}
+              </Text>}
+              <View style={[CommonStyle.rowJustifyStart, { marginTop: 8 }]}>
+                <View style={{ flex: 1 }}></View>
+                <TouchableHighlight 
+                  underlayColor='transparent' 
+                  onPress={ this.reject.bind(this) } 
+                  style={[
+                    ComponentsStyle.button,
+                    { backgroundColor: 'transparent', marginRight: 4 },
+                  ]}>
+                  <Text style={[ CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>Reject</Text>
+                </TouchableHighlight>
+                <TouchableHighlight 
+                  underlayColor='transparent' 
+                  onPress={ this.approve.bind(this) } 
+                  style={[
+                    ComponentsStyle.button,
+                    ComponentsStyle.buttonAction,
+                    { backgroundColor: 'transparent' },
+                  ]}>
+                  <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Approve</Text>
+                </TouchableHighlight>
+              </View>
 
-          <View style={[CommonStyle.rowJustifyStart, { marginTop: 8 }]}>
-            <View style={{ flex: 1 }}></View>
-            <TouchableHighlight 
-              underlayColor='transparent' 
-              onPress={ this.reject.bind(this) } 
-              style={[
-                ComponentsStyle.button,
-                { backgroundColor: 'transparent', marginRight: 4 },
-              ]}>
-              <Text style={[ CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>Reject</Text>
-            </TouchableHighlight>
-            <TouchableHighlight 
-              underlayColor='transparent' 
-              onPress={ this.approve.bind(this) } 
-              style={[
-                ComponentsStyle.button,
-                ComponentsStyle.buttonAction,
-                { backgroundColor: 'transparent' },
-              ]}>
-              <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Approve</Text>
-            </TouchableHighlight>
-          </View>
-
-          {!this.canAfford() && <View>
-            <Text
-              style={[styles.error]}
-            >
-              You currently have {number(this.props.blockchainTransaction.funds.eth, 0, 4)} ETH. This amount
-              might be insufficient to cover the Ethereum network gas fee for the transaction. Try lowering the gas
-              price.
-            </Text>
-          </View>}
+              {!this.canAfford() && <View>
+                <Text
+                  style={[styles.error]}
+                >
+                  You currently have {number(this.props.blockchainTransaction.funds.eth, 0, 4)} ETH. This amount
+                  might be insufficient to cover the Ethereum network gas fee for the transaction. Try lowering the gas
+                  price.
+                </Text>
+              </View>}
+              </ScrollView>
+          </KeyboardAvoidingView>
         </View> }
 
       </Modal>
