@@ -10,7 +10,7 @@ class MessengerService {
    * @param {string} password
    */
   getCrytoKeys(password) {
-    return api.get('api/v1/keys', {
+    return api.get('api/v2/messenger/keys', {
       password: password
     }).then((response) => {
       if (response.key) {
@@ -32,7 +32,7 @@ class MessengerService {
       params.refresh = true
     }
 
-    return api.get('api/v2/conversations', params)
+    return api.get('api/v2/messenger/conversations', params)
       .then((data) => {
         return {
           entities: data.conversations || [],
@@ -46,8 +46,8 @@ class MessengerService {
    * @param {number} limit
    * @param {string} offset
    */
-  searchConversations(q, limit, offset) {
-    return api.get('api/v2/conversations/search', {q: q, limit: limit, offset: offset})
+  searchConversations(q, limit, offset='') {
+    return api.get('api/v2/messenger/search', {q: q, limit: limit, offset: offset})
       .then((data) => {
         return {
           entities: data.conversations || [],
@@ -63,7 +63,7 @@ class MessengerService {
    * @param {string} offset
    */
   getConversationFromRemote(limit, guid, offset = "") {
-    return api.get('api/v2/conversations/' + guid, {
+    return api.get('api/v2/messenger/conversations/' + guid, {
       limit: 8, 
       offset: offset,
       finish: '',
@@ -85,7 +85,7 @@ class MessengerService {
       data["message:" + index] = messages[index];
     }
 
-    return api.post('api/v2/conversations/' + guid, data)
+    return api.post('api/v2/messenger/conversations/' + guid, data)
   }
 
   /**
