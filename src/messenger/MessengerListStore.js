@@ -13,6 +13,7 @@ import session from './../common/services/session.service';
 import crypto from './../common/services/crypto.service';
 import socket from '../common/services/socket.service';
 import badge from '../common/services/badge.service';
+
 /**
  * Messenger Conversation List Store
  */
@@ -36,6 +37,8 @@ class MessengerListStore {
   offset     = '';
   newsearch  = true;
   @observable loaded     = false;
+
+  controller = null;
 
   @computed get unread() {
     const count = this.conversations.filter(conv => conv.unread).length;
@@ -81,40 +84,47 @@ class MessengerListStore {
   /**
    * Load conversations list
    */
-  loadList(reload=false) {
+  async loadList(reload=false) {
+  
     const rows = 24;
-    let fetching;
-
-    if(this.loading) return Promise.resolve();
+    
+    // abort if we have a previous call
+    if (this.controller) {
+      this.controller.abort();
+    }
+    // abortable call controller
+    this.controller = new AbortController();
+    
     this.setLoading(true);
 
-    // is a search?
-    if (this.search && this.newsearch) {
-      this.newsearch = false;
-      fetching = messengerService.searchConversations(this.search, rows);
-    } else {
-      if (this.loaded && !this.offset && !reload) {
-        this.setLoading(false);
-        return Promise.resolve();
+    try {
+      // is a search?
+      if (this.search && this.newsearch) {
+        this.newsearch = false;
+        response = await messengerService.searchConversations(this.search, rows, this.controller.signal);
+      } else {
+        
+        if (this.loaded && !this.offset && !reload) {
+          this.setLoading(false);
+          return;
+        }
+        if (reload) this.offset = '';
+        response = await messengerService.getConversations(rows, this.offset, this.newsearch, this.controller.signal);
       }
-      if (reload) this.offset = '';
-      fetching = messengerService.getConversations(rows, this.offset, this.newsearch);
-    }
 
-    return fetching
-      .then( response => {
-        if (reload) this.clearConversations();
-        this.loaded = true;
-        this.offset = response.offset;
-        this.pushConversations(response.entities);
-      })
-      .finally(() => {
+      if (reload) this.clearConversations();
+      this.loaded = true;
+      this.offset = response.offset;
+      this.pushConversations(response.entities);
+      this.setLoading(false);
+      this.setRefreshing(false);
+    } catch (err) {
+      if (err.name != 'AbortError') {
+        console.log('error', err);
         this.setLoading(false);
         this.setRefreshing(false);
-      })
-      .catch(err => {
-        console.log('error');
-      });
+      }
+    }
   }
 
   /**
@@ -164,7 +174,7 @@ class MessengerListStore {
   @action
   setSearch(search) {
     this.search        = search;
-    this.newsearch     = true;
+    this.newsearch     = search != '';
     this.loaded        = false;
     this.conversations = [];
     this.offset        = '';

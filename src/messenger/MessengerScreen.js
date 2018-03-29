@@ -18,12 +18,13 @@ import {
   observer
 } from 'mobx-react/native'
 
+import _ from 'lodash';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import ConversationView from './conversation/ConversationView';
 
 import SearchView from '../common/components/SearchView';
-import debounce from '../common/helpers/debounce';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components'; 
 import Colors from '../styles/Colors';
@@ -76,9 +77,9 @@ export default class MessengerScreen extends Component {
     this.disposeLeave();
   }
 
-  searchDebouncer = debounce((search) => {
+  searchDebouncer = _.debounce((search) => {
     this.props.messengerList.setSearch(search);
-  }, 300);
+  }, 200);
 
   /**
    * Render component

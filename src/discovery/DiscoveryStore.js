@@ -89,12 +89,11 @@ class DiscoveryStore {
     const store = this.stores[this.type];
 
     // ignore last visited channels
-    if (type == 'lastchannels') return Promise.resolve();
+    if (type == 'lastchannels') return;
 
     // no more data or loading? return
-    if (this.list.cantLoadMore() || this.loading) {
-      console.log('can not load more', this.list.cantLoadMore(), this.loading);
-      return Promise.resolve();
+    if (!refresh && this.list.cantLoadMore() || this.loading) {
+      return;
     }
 
     this.loading = true;
@@ -200,19 +199,21 @@ class DiscoveryStore {
    */
   @action
   search(text) {
-    const list = this.stores[this.type].list;
-    list.clearList();
-
     this.searchtext = text.trim();
     this.filter = 'search';
-
-    if (text == '') {
+    this.loading = false;
+    
+    if (text.trim() == '') {
+      console.log('limpiando')
       this.clearList();
     } else if ((text.indexOf('#') === 0) || (text.indexOf(' ') > -1)) {
       this.type = 'activity';
     } else {
       this.type = 'user';
     }
+    
+    const list = this.stores[this.type].list;
+    list.clearList();
 
     return this.loadList(true);
   }

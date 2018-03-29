@@ -1,5 +1,4 @@
 import { Platform } from 'react-native';
-import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill';
 
 import api from './../common/services/api.service';
 

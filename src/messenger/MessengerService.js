@@ -25,14 +25,14 @@ class MessengerService {
    * @param {number} limit
    * @param {string} offset
    */
-  getConversations(limit, offset = "", refresh=false) {
+  getConversations(limit, offset = "", refresh=false, signal) {
 
     const params = { limit: limit, offset: offset };
     if ( refresh ) {
       params.refresh = true
     }
 
-    return api.get('api/v2/messenger/conversations', params)
+    return api.get('api/v2/messenger/conversations', params, signal)
       .then((data) => {
         return {
           entities: data.conversations || [],
@@ -46,8 +46,8 @@ class MessengerService {
    * @param {number} limit
    * @param {string} offset
    */
-  searchConversations(q, limit, offset='') {
-    return api.get('api/v2/messenger/search', {q: q, limit: limit, offset: offset})
+  searchConversations(q, limit, signal) {
+    return api.get('api/v2/messenger/search', {q: q, limit: limit, offset: ''}, signal)
       .then((data) => {
         return {
           entities: data.conversations || [],

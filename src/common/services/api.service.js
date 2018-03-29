@@ -1,8 +1,10 @@
 import session from './session.service';
 import { MINDS_URI, MINDS_URI_SETTINGS } from '../../config/Config';
 import { btoa } from 'abab';
-import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill';
 
+/**
+ * Api service
+ */
 class ApiService {
 
   buildHeaders() {
@@ -20,7 +22,7 @@ class ApiService {
     return headers;
   }
 
-  async buildParamsString(params) {
+  buildParamsString(params) {
     const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
       accessToken = session.token;
 
@@ -46,11 +48,11 @@ class ApiService {
 
   // Legacy (please, refactor!)
 
-  async get(url, params={}, signal=null) {
-    const paramsString = await this.buildParamsString(params);
+  get(url, params={}, signal=null) {
+    const paramsString = this.buildParamsString(params);
     const headers = this.buildHeaders();
 
-    return await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { headers, signal })
         // throw if response status is not 200
         .then(resp => {

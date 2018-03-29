@@ -1,5 +1,4 @@
 import api from './../common/services/api.service';
-import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill';
 
 export default class BoostService {
 
@@ -8,8 +7,9 @@ export default class BoostService {
   };
 
   async getBoosts(offset, filter, peer_filter) {
-    if (this.controllers._getBoosts)
+    if (this.controllers._getBoosts) {
       this.controllers._getBoosts.abort();
+    }
 
     this.controllers._getBoosts = new AbortController();
 

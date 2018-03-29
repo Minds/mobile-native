@@ -19,6 +19,8 @@ import {
   inject
 } from 'mobx-react/native'
 
+import _ from 'lodash';
+
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -29,7 +31,6 @@ import DiscoveryUser from './DiscoveryUser';
 import Activity from '../newsfeed/activity/Activity';
 import SearchView from '../common/components/SearchView';
 import CenteredLoading from '../common/components/CenteredLoading';
-import debounce from '../common/helpers/debounce';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
@@ -162,7 +163,7 @@ export default class DiscoveryScreen extends Component {
    */
   render() {
     let body;
-
+    
     const discovery = this.props.discovery;
     const list = discovery.list;
 
@@ -333,7 +334,7 @@ export default class DiscoveryScreen extends Component {
   onModalHide = () => {
   }
 
-  searchDebouncer = debounce((text) => {
+  searchDebouncer = _.debounce((text) => {
     this.props.discovery.search(text);
   }, 300);
 

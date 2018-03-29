@@ -1,21 +1,13 @@
 import api from './../common/services/api.service';
-import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill';
 
 /**
  * Discovery Service
  */
 class DiscoveryService {
 
-  controllers = {
-    search: null,
-    getFeed: null
-  };
+  controller = null
 
   async search({ offset, type, filter, q }) {
-    if (this.controllers.search)
-      this.controllers.search.abort();
-
-    this.controllers.search = new AbortController();
 
     let endpoint = 'api/v2/search',
       params = {
@@ -35,7 +27,7 @@ class DiscoveryService {
         break;
     }
 
-    const response = (await api.get(endpoint, params, this.controllers.search.signal)) || {};
+    const response = (await api.get(endpoint, params, this.controller.signal)) || {};
 
     return {
       entities: response.entities || [],
@@ -44,15 +36,15 @@ class DiscoveryService {
   }
 
   async getFeed(offset, type, filter, q) {
-    if (this.controllers.getFeed)
-      this.controllers.getFeed.abort();
+    if (this.controller)
+      this.controller.abort();
 
-    this.controllers.getFeed = new AbortController();
+    this.controller = new AbortController();
 
     let endpoint;
     // is search
     if (q) {
-      return await this.search({ offset, type, filter, q });
+      return this.search({ offset, type, filter, q });
     }
 
     if (type == 'group') {
@@ -62,7 +54,7 @@ class DiscoveryService {
     }
 
     try { 
-      const data = await api.get(endpoint, { limit: 12, offset: offset }, this.controllers.getFeed.signal)
+      const data = await api.get(endpoint, { limit: 12, offset: offset }, this.controller.signal)
       if (type == 'group' && offset && data.entities) {
         data.entities.shift();
       }
