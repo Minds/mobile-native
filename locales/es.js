@@ -5,6 +5,11 @@ export default {
       medium: "%a, %b %-d, %Y"
     }
   },
+  datetime: {
+    formats: {
+      small: "%b %-d, %Y %H:%M",
+    }
+  },
   auth: {
     login: 'INGRESAR',
     create: 'CREAR CANAL',

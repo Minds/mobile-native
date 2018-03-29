@@ -206,7 +206,7 @@ export default class TransactionsList extends Component {
         <View style={styles.rowColumn}>
           <Text style={[styles.subtext, styles.rowColumnCell]}>{this.getNormalizedContractName(item.contract).toUpperCase()} {Sep}</Text>
           <Text style={[styles.subtext, styles.rowColumnCell]}>{item.wallet_address} {Sep}</Text>
-          <Text style={[styles.subtext, styles.rowColumnCellRight]}>{i18n.l('date.formats.small', item.timestamp * 1000)}</Text>
+          <Text style={[styles.subtext, styles.rowColumnCellRight]}>{i18n.l('datetime.formats.small', item.timestamp * 1000)}</Text>
         </View>
       </View>
     )
