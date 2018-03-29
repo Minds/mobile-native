@@ -267,6 +267,8 @@ export default class ChannelHeader extends Component {
         </TouchableCustom>}
         {!isEditable && <Image source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />}
 
+        <ChannelBadges channel={channel} style={{position: 'absolute', right: 5, top: 160}} />
+
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
             <TouchableHighlightCustom underlayColor="transparent" style={[styles.counter]} onPress={() => { this._navToSubscribers() }}>
@@ -298,7 +300,6 @@ export default class ChannelHeader extends Component {
                     >
                     {this.state.name}
                   </Text>
-                  <ChannelBadges channel={channel} />
                 </View>}
               <Text style={styles.username}>@{channel.username}</Text>
             </View>

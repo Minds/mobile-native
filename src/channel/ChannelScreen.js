@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     width: '100%',
     height: 190,
+    backgroundColor: '#eee',
   },
   headercontainer: {
     flex: 1,

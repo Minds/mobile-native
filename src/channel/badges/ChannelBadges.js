@@ -30,10 +30,10 @@ export default class ChannelBadges extends PureComponent {
    * Render
    */
   render() {
-    const size = this.props.size || 18;
+    const size = this.props.size || 25;
     const channel = this.props.channel;
 
-    const badges = []
+    const badges = [];
 
     if (channel.plus) {
       badges.push(<Icon name="add-circle-outline" size={size} style={styles.icon} key={1} />)
@@ -47,17 +47,22 @@ export default class ChannelBadges extends PureComponent {
       badges.push(<Icon name="flight-takeoff" size={size} style={styles.icon} key={3} />)
     }
 
-    return <View style={{ 
-      height: size, 
-      width: (badges.length + 4)*size, 
-      flexDirection: 'row', 
-      //marginTop: 3
-    }}>{badges}</View>
+    return <View style={[styles.view, this.props.style]}>{badges}</View>
   }
 }
 
 const styles = StyleSheet.create({
+  view: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   icon: {
-    color: colors.primary,
+    color: '#fff',
+    textShadowOffset:{ width: 1, height: 1 },
+    textShadowColor:'#000000',
+    shadowOpacity: 0.35,
+    marginLeft: 5,
+    textShadowRadius: 5,
+    paddingBottom: 5,
   }
 });
