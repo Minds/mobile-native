@@ -210,7 +210,9 @@ class MessengerConversationStore {
           message.rowKey = Date.now().toString();
           message.decrypted = true;
           // break on correct decryption
-          break;
+          
+          if (message.message)
+            break;
         } catch (err) {}
       }
 
@@ -242,4 +244,4 @@ class MessengerConversationStore {
   }
 }
 
-export default new MessengerConversationStore();
+export default MessengerConversationStore;

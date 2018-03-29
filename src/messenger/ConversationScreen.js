@@ -31,18 +31,20 @@ import MessengerInvite from './MessengerInvite';
 
 import { CommonStyle } from '../styles/Common';
 import UserModel from '../channel/UserModel';
+import MessengerConversationStore from './MessengerConversationStore';
 
 /**
  * Messenger Conversation Screen
  */
 @inject('user')
-@inject('messengerConversation', 'messengerList')
+@inject('messengerList')
 @observer
 export default class ConversationScreen extends Component {
 
   state = {
     text: '',
   }
+  store;
 
   static navigationOptions = ({ navigation }) => {
     const conversation = navigation.state.params.conversation;
@@ -65,6 +67,7 @@ export default class ConversationScreen extends Component {
   };
 
   componentWillMount() {
+    this.store = new MessengerConversationStore();
     let conversation;
     if(this.props.navigation.state.params.conversation) {
       conversation = this.props.navigation.state.params.conversation;
@@ -73,8 +76,8 @@ export default class ConversationScreen extends Component {
     }
 
     // load conversation
-    this.props.messengerConversation.setGuid(conversation.guid);
-    this.props.messengerConversation.load()
+    this.store.setGuid(conversation.guid);
+    this.store.load()
       .then(conversation => {
         // we send the conversation to update the topbar (in case we only receive the guid)
         this.props.navigation.setParams({ conversation });
@@ -96,7 +99,7 @@ export default class ConversationScreen extends Component {
    */
   componentWillUnmount() {
     // clear messages from store
-    this.props.messengerConversation.clear();
+    this.store.clear();
     // clear public keys
     crypto.setPublicKeys({});
   }
@@ -105,7 +108,7 @@ export default class ConversationScreen extends Component {
    * Load more
    */
   loadMore = () => {
-    this.props.messengerConversation.loadMore();
+    this.store.loadMore();
   }
 
   /**
@@ -115,7 +118,7 @@ export default class ConversationScreen extends Component {
 
     const messengerList = this.props.messengerList;
     const shouldSetup = !messengerList.configured;
-    const shouldInvite = this.props.messengerConversation.invitable;
+    const shouldInvite = this.store.invitable;
     let footer = null;
 
     // show setup !configured yet
@@ -123,7 +126,7 @@ export default class ConversationScreen extends Component {
       return <MessengerSetup/>
     }
 
-    if (this.props.messengerConversation.loading) {
+    if (this.store.loading) {
       footer = <ActivityIndicator animating size="large" />
     }
     
@@ -131,7 +134,7 @@ export default class ConversationScreen extends Component {
       return <MessengerInvite navigation={this.props.navigation}/>
     }
 
-    const messages = this.props.messengerConversation.messages;
+    const messages = this.store.messages;
     const conversation = this.props.navigation.state.params.conversation;
     const avatarImg    = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' + this.props.user.me.icontime };
     return (
@@ -172,12 +175,12 @@ export default class ConversationScreen extends Component {
    * Send message
    */
   send = async () => {
-    const conversationGuid = this.props.messengerConversation.guid;
+    const conversationGuid = this.store.guid;
     const myGuid = this.props.user.me.guid;
     const msg  = this.state.text;
 
     try {
-      const result = await this.props.messengerConversation.send(myGuid, msg);
+      const result = await this.store.send(myGuid, msg);
     } catch(err) {
       console.log('error', err);
     } 
