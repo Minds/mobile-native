@@ -108,8 +108,15 @@ export default class JoinView extends Component {
           In order to verify you are a unique users, we require a phone number to be provided.
           Your phone number will be securely hashed and sent alongside all interactions to protect against fraud and gaming.
         </Text>
+
         {error}
         {body}
+
+        <Text style={[CommonStyle.fontS, { marginTop: 20, color: '#444', padding: 4 }]}>
+          Note: Minds does not store the phone numbers you provide. The numbers
+          are hashed using SHA-256 and combined with a salt key for encryption
+          and privacy purposes.
+        </Text>
       </View>
     )
   }

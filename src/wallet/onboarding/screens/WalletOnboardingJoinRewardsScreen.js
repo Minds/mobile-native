@@ -218,6 +218,11 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
         {!!this.state.error && <View>
           <Text style={style.error}>{this.state.error}</Text>
         </View>}
+
+        <Text style={[style.p, style.note]}>
+          Note: Minds does not store the phone numbers you provide. The numbers
+          are hashed using SHA-256 and combined with a salt key for privacy purposes.
+        </Text>
       </View>
     );
   }

@@ -8,6 +8,7 @@ import {
   TextInput,
   ActivityIndicator,
   StyleSheet,
+  Alert,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -71,6 +72,8 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
 
       await BlockchainApiService.setWallet(address);
 
+      await this.showEphemeralWarning();
+
       this.props.onNext({ address });
     } catch (e) {
       error = (e && e.message) || 'Unknown error';
@@ -79,6 +82,19 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     } finally {
       this.setState({ inProgress: false });
     }
+  }
+
+  showEphemeralWarning() {
+    return new Promise(resolve => {
+      Alert.alert('Heads up!', `
+      Ensure you EXPORT and back-up your key before uninstalling
+      or wiping the app data, or you will lose your funds.
+      ${"\n"}
+      Exporting can be done from the Address detail screen.
+      `, [
+        { text: 'I understand', onPress: () => resolve() }
+      ], { cancelable: false });
+    });
   }
 
   canCreate() {
@@ -253,6 +269,12 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
         <Text style={style.p}>
           This address will be listed in your wallet as your Receiver Address
           and can be changed at any time.
+        </Text>
+
+        <Text style={style.p}>
+          OnChain addresses, and their private keys, are saved locally in an
+          encrypted storage space. They will be available to any channel
+          that is currently logged in onto this device.
         </Text>
 
         <View>

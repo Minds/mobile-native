@@ -86,6 +86,10 @@ export default {
   b: {
     fontWeight: '700',
   },
+  note: {
+    marginTop: 10,
+    fontSize: 12,
+  },
 
   form: {
     marginTop: 20
