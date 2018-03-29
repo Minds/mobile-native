@@ -21,6 +21,7 @@ import channelService from './ChannelService';
 import { MINDS_URI } from '../config/Config';
 import ActionSheet from 'react-native-actionsheet';
 import WireAction from '../newsfeed/activity/actions/WireAction';
+import featuresService from '../common/services/features.service';
 
 /**
  * Channel Actions
@@ -95,7 +96,7 @@ export default class ChannelActions extends Component {
 
     return (
       <View style={styles.wrapper}>
-        {!this.props.channel.channel.isOwner() && <WireAction owner={this.props.channel.channel} navigation={this.props.navigation}/>}
+        {!this.props.channel.channel.isOwner() && featuresService.has('crypto') && <WireAction owner={this.props.channel.channel} navigation={this.props.navigation}/>}
         <Icon name="md-settings" style={ styles.icon } onPress={() => this.showActionSheet()} size={24} />
         <ActionSheet
           ref={o => this.ActionSheet = o}
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    width: 60
+    width: featuresService.has('crypto') ? 60 : 40,
   },
   icon: {
     paddingLeft: 10,

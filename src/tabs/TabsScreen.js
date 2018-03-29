@@ -4,6 +4,13 @@ import React, {
 import {
   TabNavigator
 } from 'react-navigation';
+import {
+  Platform,
+  Dimensions,
+} from 'react-native';
+
+const { height, width } = Dimensions.get('window'); 
+const aspectRatio = height/width;
 
 import Topbar from '../topbar/Topbar';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
@@ -25,24 +32,30 @@ if (featuresService.isLegacy()) {
   platformWalletScreen = NotSupportedScreen;
 }
 
+const screens = {
+  Wallet: {
+    screen: platformWalletScreen,
+  },
+  Discovery: {
+    screen: DiscoveryScreen,
+  },
+  Newsfeed: {
+    screen: NewsfeedScreen,
+  },
+  Messenger: {
+    screen: MessengerScreen
+  },
+  Notifications: {
+    screen: NotificationsScreen,
+  }
+};
+
+if (!featuresService.has('crypto')) {
+  delete screens.Wallet;
+}
+
 const Tabs = (
-  TabNavigator({
-    Wallet: {
-      screen: platformWalletScreen,
-    },
-    Discovery: {
-      screen: DiscoveryScreen,
-    },
-    Newsfeed: {
-      screen: NewsfeedScreen,
-    },
-    Messenger: {
-      screen: MessengerScreen
-    },
-    Notifications: {
-      screen: NotificationsScreen,
-    }
-  }, {
+  TabNavigator(screens, {
     tabBarPosition: 'bottom',
     animationEnabled: false,
     swipeEnabled: true,
@@ -55,7 +68,7 @@ const Tabs = (
       },
     }),
     tabBarOptions: {
-      showLabel: false,
+      showLabel: (Platform.OS == 'ios' && aspectRatio < 1.6)  ? true : false,
       showIcon: true,
       activeTintColor: '#FFF',
       style: {

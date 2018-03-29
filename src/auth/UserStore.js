@@ -47,7 +47,7 @@ class UserStore {
     return channelService.load('me')
       .then(response => {
         this.setUser(response.channel);
-        if (response.channel.verified) {
+        if (this.me.canCrypto) {
           MINDS_FEATURES.crypto = true;
         }
       })

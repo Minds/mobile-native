@@ -17,6 +17,7 @@ import RemindAction from './actions/RemindAction';
 import BoostAction from './actions/BoostAction';
 
 import { CommonStyle } from '../../styles/Common';
+import featuresService from '../../common/services/features.service';
 
 @inject('user')
 export default class Actions extends PureComponent {
@@ -33,10 +34,10 @@ export default class Actions extends PureComponent {
         { entity && <View style={styles.container}>
           <ThumbUpAction entity={entity} me={this.props.user.me}/>
           <ThumbDownAction entity={entity} me={this.props.user.me}/>
-          {!isOwner && <WireAction owner={entity.ownerObj} navigation={this.props.navigation}/>}
+          {!isOwner && featuresService.has('crypto') && <WireAction owner={entity.ownerObj} navigation={this.props.navigation}/>}
           <CommentsAction entity={entity} navigation={this.props.navigation}/>
           <RemindAction entity={entity}/>
-          {isOwner && <BoostAction entity={entity} navigation={this.props.navigation}/>}
+          {isOwner && featuresService.has('crypto') && <BoostAction entity={entity} navigation={this.props.navigation}/>}
         </View> }
       </View>
     );
@@ -48,7 +49,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 4
+    padding: 4,
+    paddingTop: featuresService.has('crypto') ? 4 : 8,
+    paddingBottom:  featuresService.has('crypto') ? 4 : 8,
   },
   avatar: {
     height: 46,

@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Avatar } from 'react-native-elements';
 
 import { MINDS_CDN_URI } from '../config/Config';
+import featuresService from '../common/services/features.service';
 
 @inject('user')
 @inject('wallet')
@@ -30,11 +31,13 @@ export default class Topbar extends Component {
       <View style={styles.container}>
         <View style={styles.topbar}>
 
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} >
+          { featuresService.has('crypto') && <TouchableOpacity onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} >
             <View style={styles.topbarLeft}>
               <Icon name="trending-up" size={18} color='#444' style={ styles.button }/>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> }
+
+          { !featuresService.has('crypto') && <View style={styles.topbarLeft} />}
   
           <View style={styles.topbarCenter}>
             <Avatar
