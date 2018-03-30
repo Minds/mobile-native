@@ -11,6 +11,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import colors from '../../../styles/Colors';
 
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+import { CommonStyle } from '../../../styles/Common';
 
 DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -32,15 +33,17 @@ export default class ToolbarItem extends PureComponent {
       onPress,
       iconType,
       iconSize,
-      selectedTextStyle,
     } = this.props;
 
     const iconCmp = this.getIcon(icon, iconType, iconSize, selected);
     const textStyle = this.getTextStyle();
     const subTextStyle = this.getSubTextStyle();
+    const buttonStyle = selected ? [styles.button, styles.buttonSelected] : styles.button;
+
+    console.log(textStyle)
 
     return (
-      <DebouncedTouchableOpacity style={styles.button} onPress={() => onPress(value)}>
+      <DebouncedTouchableOpacity style={buttonStyle} onPress={() => onPress(value)}>
         {iconCmp}
         <Text style={textStyle}>{text}</Text>
         {subtext && <Text style={subTextStyle}>{subtext}</Text>}
@@ -53,7 +56,7 @@ export default class ToolbarItem extends PureComponent {
       subTextStyle,
     } = this.props;
 
-    const style = this.getTextStyle();
+    const style = this.getTextStyle() // clone
 
     style.push(styles.subtext);
 
@@ -72,10 +75,10 @@ export default class ToolbarItem extends PureComponent {
     } = this.props;
 
     if (selected) {
-      return (selectedTextStyle) ? [styles.buttonSelectedText, selectedTextStyle] : [styles.buttonSelectedText];
+      return (selectedTextStyle) ? [styles.buttonSelectedText, CommonStyle.fontXS, selectedTextStyle] : [styles.buttonSelectedText, CommonStyle.fontXS];
     }
 
-    return (textStyle) ? [styles.buttonText, textStyle] : [styles.buttonText];
+    return (textStyle) ? [styles.buttonText, CommonStyle.fontXS, textStyle] : [styles.buttonText, CommonStyle.fontXS];
   }
 
   /**
@@ -107,19 +110,21 @@ const styles = StyleSheet.create({
   },
   buttonSelectedText: {
     paddingTop: 5,
-    fontSize: 10,
     textAlign: 'center',
     color: colors.primary
   },
   buttonText: {
     paddingTop:5,
-    fontSize: 10,
-    color: '#444',
   },
   button: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    padding: 3,
+    padding: 5,
+    borderBottomWidth: 2,
+    borderBottomColor: '#FFF',
   },
+  buttonSelected: {
+    borderBottomColor: colors.primary,
+  }
 });
