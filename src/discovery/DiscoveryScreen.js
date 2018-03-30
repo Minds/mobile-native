@@ -35,7 +35,6 @@ import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
 
-import Toolbar from '../common/components/toolbar/Toolbar';
 import CaptureFab from '../capture/CaptureFab';
 import { MINDS_CDN_URI } from '../config/Config';
 

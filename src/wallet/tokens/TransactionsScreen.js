@@ -17,7 +17,7 @@ import {
 
 import { CommonStyle } from '../../styles/Common';
 import TransactionsList from './TransactionsList';
-import Toolbar from '../../common/components/toolbar/Toolbar';
+
 /**
  * Token and Rewards Screen
  */
