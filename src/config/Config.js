@@ -6,10 +6,10 @@ import {
 // export const MINDS_URI = 'http://dev.minds.io/';
 
 // remember to update deeplink uri on AndroidManifest.xml !!!
-export const MINDS_URI = 'https://mobile.minds.com/';
+export const MINDS_URI = 'https://www.minds.com/';
 
 export const MINDS_URI_SETTINGS = {
-  basicAuth: 'crypto:ohms',
+  //basicAuth: 'crypto:ohms',
 };
 
 export const SOCKET_URI = 'wss://ha-socket-io-us-east-1.minds.com:3030'

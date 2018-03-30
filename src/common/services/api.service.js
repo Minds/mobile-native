@@ -12,13 +12,6 @@ class ApiService {
       accessToken = session.token,
       headers = {};
 
-    if (basicAuth) {
-      headers.Authorization = `Basic ${btoa(basicAuth)}`;
-    } else if (accessToken) {
-      // Send via header if basic auth is not enabled
-      headers.Authorization = `Bearer ${accessToken.toString()}`;
-    }
-
     return headers;
   }
 
@@ -26,7 +19,7 @@ class ApiService {
     const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
       accessToken = session.token;
 
-    if (accessToken && basicAuth) {
+    if (accessToken) {
       // Send via GET only if basic auth is enabled
       params['access_token'] = accessToken.toString();
     }
@@ -180,9 +173,7 @@ class ApiService {
         xhr.upload.addEventListener("progress", progress);
       }
       xhr.open('POST', MINDS_URI + url + paramsString);
-      if (basicAuth) {
-        xhr.setRequestHeader('Authorization', `Basic ${btoa(basicAuth)}`);
-      }
+      xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.onreadystatechange = () => {

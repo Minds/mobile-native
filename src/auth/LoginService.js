@@ -32,14 +32,7 @@ export function twoFactorAuth(token, code) {
 }
 
 export function me() {
-  let params = {
-    grant_type: 'password',
-    client_id: '',
-    client_secret: '',
-    username,
-    password
-  };
-  return api.get('api/v1/channel/me', params).then(data => {
+  return api.get('api/v1/channel/me').then(data => {
     return data;
   });
 }
