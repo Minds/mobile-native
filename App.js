@@ -20,6 +20,7 @@ import {
 import {
   BackHandler,
   Platform,
+  AppState,
   Linking,
   Text,
 } from 'react-native';
@@ -33,6 +34,7 @@ import stores from './AppStores';
 import './AppErrors';
 import './src/common/services/socket.service';
 import pushService from './src/common/services/push.service';
+import receiveShare from './src/common/services/receive-share.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import badgeService from './src/common/services/badge.service';
@@ -62,6 +64,9 @@ sessionService.onLogin(async () => {
 
   // handle initial notifications (if the app is opened by tap on one)
   pushService.handleInitialNotification();
+
+  // handle shared 
+  receiveShare.handle();
 });
 
 //on app logout
@@ -78,6 +83,24 @@ sessionService.onLogout(() => {
  * App
  */
 export default class App extends Component {
+
+  constructor(props) {
+    super(props); 
+    this.state = {
+      appState: AppState.currentState
+    };
+  }
+
+  /**
+   * Handle app state changes
+   */
+  handleAppStateChange = (nextState) => {
+    // if the app turns active we check for shared 
+    if (this.state.appState.match(/inactive|background/) && nextState === 'active') {
+      receiveShare.handle();
+    }
+    this.setState({appState: nextState})
+  }
 
   /**
    * On component will mount
@@ -101,6 +124,7 @@ export default class App extends Component {
 
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
     Linking.addEventListener('url', event => this.handleOpenURL(event.url));
+    AppState.addEventListener('change', this.handleAppStateChange);
   }
 
   /**
@@ -109,6 +133,7 @@ export default class App extends Component {
   componentWillUnmount() {
     BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
     Linking.removeEventListener('url', this.handleOpenURL);
+    AppState.removeEventListener('change', this.handleAppStateChange);
   }
 
   /**

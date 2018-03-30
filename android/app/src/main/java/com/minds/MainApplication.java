@@ -24,6 +24,7 @@ import com.corbt.keepawake.KCKeepAwakePackage;
 import com.wix.reactnativenotifications.RNNotificationsPackage;
 import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
+import com.meedan.ShareMenuPackage; 
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,7 +56,8 @@ public class MainApplication extends Application implements ShareApplication, Re
           new RNI18nPackage(),
           new KCKeepAwakePackage(),
           new RNNotificationsPackage(MainApplication.this),
-          new RNSharePackage()
+          new RNSharePackage(),
+          new ShareMenuPackage()
       );
     }
 

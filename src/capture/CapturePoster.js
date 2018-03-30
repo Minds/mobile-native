@@ -62,7 +62,28 @@ export default class CapturePoster extends Component {
   componentWillMount() {
     const { setParams } = this.props.navigation;
     setParams({ headerRight: <CapturePostButton onPress={() => this.submit()} /> });
+  }
 
+  /**
+   * On component did mount
+   */
+  componentDidMount() {
+    const { params } = this.props.navigation.state;
+    if (params ) {
+      if (params.text) {
+        this.setState({text: params.text});
+      } else if (params.image) {
+        this.onAttachedMedia({
+          type: 'image/jpg',
+          uri: params.image
+        });
+      } else if (params.video) {
+        this.onAttachedMedia({
+          type: 'video/mp4',
+          uri: params.video
+        });
+      }
+    }
   }
 
   /**

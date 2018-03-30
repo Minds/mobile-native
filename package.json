@@ -63,6 +63,7 @@
     "react-native-qrcode": "^0.2.6",
     "react-native-randombytes": "^3.0.0",
     "react-native-share": "^1.0.24",
+    "react-native-share-menu": "Minds/react-native-share-menu",
     "react-native-simple-radio-button": "^2.7.1",
     "react-native-snap-carousel": "^3.5.0",
     "react-native-tcp": "^3.2.1",
