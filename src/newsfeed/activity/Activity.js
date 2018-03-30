@@ -52,8 +52,14 @@ export default class Activity extends Component {
    * Nav to activity full screen
    */
   navToActivity = () => {
-    this.props.navigation.navigate('Activity', {entity: this.props.entity, store: this.props.newsfeed});
-  }
+    const navOpts = { entity: this.props.entity, store: this.props.newsfeed };
+
+    if (this.props.entity.remind_object || this.props.hydrateOnNav) {
+      navOpts.hydrate = true;
+    }
+
+    this.props.navigation.navigate('Activity', navOpts);
+  };
 
   /**
    * Nav to full image with zoom
@@ -178,6 +184,7 @@ export default class Activity extends Component {
             newsfeed={this.props.newsfeed}
             entity={this.props.entity.remind_object}
             navigation={this.props.navigation}
+            hydrateOnNav={true}
             />
         </View>
       );

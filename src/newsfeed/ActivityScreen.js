@@ -74,8 +74,12 @@ export default class ActivityScreen extends Component {
   async componentDidMount() {
     const params = this.props.navigation.state.params;
     if (!this.entity.entity || params.hydrate) {
-      const resp = await getSingle(params.guid || params.entity.guid);
-      await this.entity.setEntity(ActivityModel.checkOrCreate(resp.activity));
+      try {
+        const resp = await getSingle(params.guid || params.entity.guid);
+        await this.entity.setEntity(ActivityModel.checkOrCreate(resp.activity));
+      } catch (e) {
+        console.error('Cannot hydrate activity', e);
+      }
     }
     this.loadComments()
       .then(() => {
