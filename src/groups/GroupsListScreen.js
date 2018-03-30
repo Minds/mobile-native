@@ -17,6 +17,7 @@ import { ListItem } from 'react-native-elements';
 import { Avatar } from 'react-native-elements';
 import { MINDS_CDN_URI } from '../config/Config';
 import CenteredLoading from '../common/components/CenteredLoading';
+import Toolbar from '../common/components/toolbar/Toolbar';
 
 /**
  * Groups list screen
@@ -34,6 +35,28 @@ export default class GroupsListScreen extends Component {
 
   navigateToGroupJoin(group) {
     this.props.navigation.navigate('GroupView', { group: group})
+  }
+
+  /**
+   * Render Tabs
+   */
+  renderToolbar() {
+    selectedTextStyle={color: 'black'};
+    const typeOptions = [
+      { text: 'TOP', value: 'featured', selectedTextStyle},
+      { text: 'MY GROUPS', value: 'member', selectedTextStyle}
+    ]
+    return (
+      <Toolbar
+        options={ typeOptions }
+        initial={ this.props.groups.filter }
+        onChange={ this.onTabChange }
+      />
+    )
+  }
+
+  onTabChange = (value) => {
+    this.props.groups.setFilter(value);
   }
 
   renderItem = (row) => {
@@ -76,6 +99,7 @@ export default class GroupsListScreen extends Component {
       <FlatList
         data={list.entities.slice()}
         renderItem={this.renderItem}
+        ListHeaderComponent={this.renderToolbar()}
         keyExtractor={item => item.guid}
         onRefresh={this.refresh}
         refreshing={list.refreshing || !list.loaded}

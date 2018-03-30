@@ -14,10 +14,18 @@ class GroupsStore {
    */
   @observable list = new OffsetFeedListStore('shallow');
 
+  @observable filter = 'featured';
+
   /**
    * List loading
    */
   loading = false;
+
+  @action
+  setFilter(value) {
+    this.filter = value;
+    this.refresh();
+  }
 
   /**
    * Load list
@@ -28,7 +36,7 @@ class GroupsStore {
     }
     this.loading = true;
 
-    return groupsService.loadList('featured', this.list.offset)
+    return groupsService.loadList(this.filter, this.list.offset)
       .then(data => {
         this.list.setList(data);
         this.assignRowKeys(data);
