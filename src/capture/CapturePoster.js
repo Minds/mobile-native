@@ -74,7 +74,7 @@ export default class CapturePoster extends Component {
         this.setState({text: params.text});
       } else if (params.image) {
         this.onAttachedMedia({
-          type: 'image/jpg',
+          type: 'image/jpeg',
           uri: params.image
         });
       } else if (params.video) {

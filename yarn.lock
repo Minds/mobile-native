@@ -6911,7 +6911,7 @@ react-native-safe-area-view@^0.7.0:
 
 react-native-share-menu@Minds/react-native-share-menu:
   version "2.0.0"
-  resolved "https://codeload.github.com/Minds/react-native-share-menu/tar.gz/359a89537e0c2cdf0aadd649e96e1c41403e0034"
+  resolved "https://codeload.github.com/Minds/react-native-share-menu/tar.gz/694fc76f2d5205b5cedbd2551bb2c2b158649159"
 
 react-native-share@^1.0.24:
   version "1.0.26"
