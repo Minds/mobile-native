@@ -2,61 +2,41 @@ import { observable, action } from 'mobx'
 
 import blogService from './BlogsService';
 import BlogModel from './BlogModel';
+import OffsetListStore from '../common/stores/OffsetListStore';
 
 /**
  * Blogs store
  */
 class BlogsStore {
 
-  @observable.shallow entities = [];
+  list = new OffsetListStore();
 
-  @observable refreshing = false
-  @observable filter     = 'trending';
-  @observable loaded     = false;
-
-  offset = '';
+  @observable filter = 'trending';
 
   async loadList() {
     try {
-      const response = await blogService.loadList(this.filter, this.offset)
-      this.setEntities(response);
+      const response = await blogService.loadList(this.filter, this.list.offset)
+
+      console.log(response)
+      if (response.entities) {
+        if (this.list.offset) {
+          response.entities.shift();
+        }
+        response.entities = BlogModel.createMany(response.entities);
+        this.list.setList(response);
+      }
+
+      return response;
     } catch (err) {
       console.error('error', err);
     }
   }
 
   @action
-  setEntities(response) {
-    this.loaded = true;
-    if (response.blogs) {
-      if (this.offset) {
-        response.blogs.shift();
-      }
-      response.blogs = BlogModel.createMany(response.blogs);
-      response.blogs.forEach(element => {
-        this.entities.push(element);
-      });
-    }
-    this.offset = response.offset || '';
-  }
-
-  @action
-  clearFeed() {
-    this.entities = [];
-    this.offset = '';
-    this.loaded = false;
-  }
-
-  @action
-  refresh(guid) {
-    this.loaded = false;
-    this.refreshing = true;
-    this.entities = [];
-    this.offset = ''
-    this.loadFeed(guid)
-      .finally(action(() => {
-        this.refreshing = false;
-      }));
+  async refresh() {
+    await this.list.refresh();
+    await this.loadList();
+    this.list.refreshDone();
   }
 
   @action
@@ -66,13 +46,9 @@ class BlogsStore {
 
   @action
   reset() {
-    this.entities = [];
-    this.refreshing = false
+    this.list.clearList();
     this.filter = 'trending';
-    this.loaded = false;
-    this.offset = '';
   }
-
 }
 
 export default new BlogsStore();

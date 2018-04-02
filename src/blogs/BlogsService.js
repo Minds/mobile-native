@@ -13,7 +13,7 @@ class BlogsService {
     try {
       const data = await api.get('api/v1/blog/' + filter, { limit: 12, offset: offset });
       return {
-        blogs: data.entities || [],
+        entities: data.entities || [],
         offset: data['load-next'] || '',
       };
     } catch (err) { }
