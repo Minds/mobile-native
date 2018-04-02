@@ -43,9 +43,10 @@ export default class ExplicitOverlay extends Component {
         style={CommonStyle.positionAbsolute}
         viewRef={this.props.viewRef}
         blurType="light"
+        key={0}
         blurAmount={20}
       />,
-      <TouchableOpacity style={[CommonStyle.positionAbsolute, CommonStyle.centered]} onPress={this.toogle}>
+      <TouchableOpacity style={[CommonStyle.positionAbsolute, CommonStyle.centered]} onPress={this.toogle} key={1}>
         <Icon name="explicit" size={80} color={'white'} style={CommonStyle.shadow}/>
         <Text style={[CommonStyle.colorWhite, CommonStyle.shadow]}>Confirm you are 18+</Text>
       </TouchableOpacity>

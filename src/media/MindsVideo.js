@@ -1,5 +1,5 @@
 import React, {
-  PureComponent,
+  Component,
   PropTypes
 } from "react";
 
@@ -16,7 +16,6 @@ import {
 
 import ProgressBar from "./ProgressBar";
 import Video from "react-native-video";
-import FastImage from 'react-native-fast-image';
 
 import {
   MINDS_URI
@@ -24,12 +23,17 @@ import {
 
 let FORWARD_DURATION = 7;
 
+import { observer } from 'mobx-react/native';
 import KeepAwake from 'react-native-keep-awake';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
+import ExplicitImage from '../common/components/explicit/ExplicitImage';
+import en from "../../locales/en";
 
-export default class MindsVideo extends PureComponent {
+@observer
+export default class MindsVideo extends Component {
 
   constructor(props, context, ...args) {
     super(props, context, ...args);
@@ -208,43 +212,61 @@ export default class MindsVideo extends PureComponent {
     } else {
       const image = { uri: entity.get('custom_data.thumbnail_src') || entity.thumbnail_src };
       return (
-        <FastImage source={image} style={[CommonStyle.positionAbsolute]} />
+        <ExplicitImage
+          source={image}
+          entity={entity}
+          style={[CommonStyle.positionAbsolute]}
+          disableProgress={true}
+        />
       )
     }
+  }
+
+  /**
+   * Render overlay
+   */
+  renderOverlay() {
+    const entity = this.props.entity;
+    let {currentTime, duration, paused} = this.state;
+    const mustShow = this.state.showOverlay && (!entity || !entity.mature || entity.mature_visibility);
+    
+    if (mustShow) {
+      const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
+      const progressBar = (
+        <View style={styles.progressBarContainer}>
+          <ProgressBar duration={duration}
+            currentTime={currentTime}
+            percent={completedPercentage}
+            onNewPercent={this.onProgressChanged.bind(this)}
+            />
+        </View>
+      );
+
+      return (
+        <View style={styles.controlOverlayContainer}>
+          <View style={styles.controlPlayButtonContainer}>
+            {this.play_button}
+          </View>
+          { this.player && <View style={styles.controlBarContainer}>
+            { progressBar }
+            <View style={{ padding: 8}}>
+              {this.volumeIcon}
+            </View>
+          </View> }
+        </View>
+      )
+    }
+
+    return null;
   }
 
   /**
    * Render
    */
   render() {
-    let {video, volume} = this.props;
-    let {currentTime, duration, paused} = this.state;
-    const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
+    let {video, volume, entity} = this.props;
 
-    let progressBar = (
-      <View style={styles.progressBarContainer}>
-        <ProgressBar duration={duration}
-          currentTime={currentTime}
-          percent={completedPercentage}
-          onNewPercent={this.onProgressChanged.bind(this)}
-          />
-      </View>
-    );
-
-    let overlay = this.state.showOverlay ? (<View style={styles.controlOverlayContainer}>
-
-      <View style={styles.controlPlayButtonContainer}>
-        {this.play_button}
-      </View>
-
-      { this.player && <View style={styles.controlBarContainer}>
-        { progressBar }
-        <View style={{ padding: 8}}>
-          {this.volumeIcon}
-        </View>
-      </View> }
-  
-    </View>) : null;
+    const overlay = this.renderOverlay();
 
     return (
       <View style={styles.container} >
@@ -254,7 +276,6 @@ export default class MindsVideo extends PureComponent {
           >
           { this.video }
         </TouchableWithoutFeedback>
-      
         { overlay }
       </View>
     )
