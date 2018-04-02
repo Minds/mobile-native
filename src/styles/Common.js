@@ -243,6 +243,7 @@ export const CommonStyle = StyleSheet.create({
 
   //shadow
   shadow: {
+    elevation: 1,
     shadowColor: 'black',
     shadowOpacity: 0.5,
     shadowRadius: StyleSheet.hairlineWidth,
