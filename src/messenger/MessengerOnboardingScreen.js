@@ -37,11 +37,10 @@ export default class MessengerOnboardingScreen extends Component {
     inProgress: false,
     password: null,
     password2: null,
-    inProgress: false
   }
 
   componentDidMount() {
-    this.props.onSetNavNext(this.getNextButton());
+    this.didChange();
   }
 
   getNextButton = () => {
@@ -70,15 +69,28 @@ export default class MessengerOnboardingScreen extends Component {
     }
 
     return next;
+  };
+
+  didChange() {
+    this.props.onSetNavNext(this.getNextButton());
   }
 
   async setup() {
     try {
       this.setState({ inProgress: true });
-      const { key } = await api.post('api/v2/keys/setup', { password: this.state.password, download: true });
+      setTimeout(() => this.didChange());
+
+      const { key } = await api.post('api/v2/messenger/keys/setup', { password: this.state.password, download: true });
       this.props.messengerList.setPrivateKey(key);
+
+      this.setState({ inProgress: false });
+      setTimeout(() => this.didChange());
+
       this.props.onNext();
     } catch (err) {
+      this.setState({ inProgress: false });
+      setTimeout(() => this.didChange());
+
       alert(err.message);
     }
 
@@ -99,8 +111,8 @@ export default class MessengerOnboardingScreen extends Component {
           <View style={{ flexDirection: 'row', alignItems: 'stretch' }}>
             <TextInput
               ref='password'
+              editable={!this.state.inProgress}
               style={ [ ComponentsStyle.passwordinput, { flex: 1 } ]}
-              editable={true}
               underlineColorAndroid='transparent'
               placeholder='Password'
               secureTextEntry={true}
@@ -114,8 +126,8 @@ export default class MessengerOnboardingScreen extends Component {
           <View style={{ flexDirection: 'row', alignItems: 'stretch', marginTop: 16 }}>
             <TextInput
               ref='password2'
+              editable={!this.state.inProgress}
               style={ [ ComponentsStyle.passwordinput, { flex: 1 } ]}
-              editable={true}
               underlineColorAndroid='transparent'
               placeholder='Confirm password'
               secureTextEntry={true}
