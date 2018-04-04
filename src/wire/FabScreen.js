@@ -186,7 +186,7 @@ export default class FabScreen extends Component {
           backgroundColor={selectedcolor}
         />
 
-        {!!this.props.wallet.addresses && <View style={styles.addressViewWrapper}>
+        {!!this.props.wallet.addresses && false && <View style={styles.addressViewWrapper}>
           {this.props.wallet.addresses.map((address, i) => (
             <View style={styles.addressView} key={address.address}>
               <View style={styles.addressMetaView}>
