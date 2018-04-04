@@ -16,9 +16,9 @@ import Button from '../../common/components/Button';
 const height = Platform.OS === 'ios' ? 300 : 150;
 
 /**
- * License piker component
+ * License picker component
  */
-export default class LicensePiker extends PureComponent {
+export default class LicensePicker extends PureComponent {
 
   state = {
     show: false,
@@ -78,7 +78,7 @@ export default class LicensePiker extends PureComponent {
   modal(content) {
     return (
       <Modal isVisible={this.state.show}>
-        <View style={[CommonStyle.backgroundWhite, {height}]}>
+        <View style={[CommonStyle.backgroundWhite, { height, paddingBottom: 8 }]}>
           <Text style={[CommonStyle.fontL, CommonStyle.textCenter, CommonStyle.backgroundPrimary, CommonStyle.padding2x, CommonStyle.colorWhite]}>Chosse a license</Text>
           <View style={[CommonStyle.flexContainer]}>
             {content}

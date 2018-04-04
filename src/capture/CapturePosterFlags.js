@@ -8,7 +8,7 @@ import Touchable from '../common/components/Touchable';
 import Modal from 'react-native-modal';
 import { CheckBox } from 'react-native-elements'
 import TransparentButton from '../common/components/TransparentButton';
-import LicensePicker from '../common/components/LicensePiker';
+import LicensePicker from '../common/components/LicensePicker';
 
 @inject('capture')
 @observer
