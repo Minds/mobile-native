@@ -8,6 +8,7 @@ import Touchable from '../common/components/Touchable';
 import Modal from 'react-native-modal';
 import { CheckBox } from 'react-native-elements'
 import TransparentButton from '../common/components/TransparentButton';
+import LicensePicker from '../common/components/LicensePiker';
 
 @inject('capture')
 @observer
@@ -250,9 +251,17 @@ export default class CapturePosterFlags extends Component {
   // Main
 
   render() {
+    const attachment = this.props.capture.attachment;
     return (
       <View style={styles.view}>
         <View style={{ flex: 1}} />
+        {attachment.hasAttachment && <View style={styles.cell}>
+          <LicensePicker 
+            onLicenseSelected={(v) => attachment.setLicense(v)} 
+            value={attachment.license} 
+            iconColor={attachment.license ? Colors.primary : Colors.darkGreyed}
+          />
+        </View>}
         <Touchable style={styles.cell} onPress={this.props.onMature}>
           <MdIcon
             name="explicit"
@@ -280,7 +289,6 @@ export default class CapturePosterFlags extends Component {
             size={30}
           />
         </Touchable>
-
         {this.shareModalPartial()}
         {this.lockingModalPartial()}
       </View>

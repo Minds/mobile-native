@@ -17,6 +17,7 @@ export default class AttachmentStore {
   hasQueue = false;
   @observable uri  = '';
   @observable type = '';
+  @observable license = '';
 
   /**
    * Attach media
@@ -116,7 +117,13 @@ export default class AttachmentStore {
   }
 
   @action
+  setLicense(value) {
+    this.license = value;
+  }
+
+  @action
   clear() {
+    this.license = '';
     this.guid = '';
     this.type = '';
     this.uri = '';

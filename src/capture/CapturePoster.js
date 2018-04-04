@@ -242,6 +242,7 @@ export default class CapturePoster extends Component {
 
     if (attachment.guid) {
       newPost.attachment_guid = attachment.guid;
+      newPost.attachment_license = attachment.license;
     }
 
     for (let network in this.state.share) {

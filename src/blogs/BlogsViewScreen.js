@@ -92,7 +92,7 @@ export default class BlogsViewScreen extends Component {
         </View>
         <View style={styles.moreInformation}>
           <Icon color={colors.medium} size={18} name='public' onPress={() => this.props.navigation.goBack()} />
-          <Text style={[CommonStyle.fontXS, CommonStyle.paddingLeft, CommonStyle.colorMedium, CommonStyle.paddingRight2x]}>{blog.license}</Text>
+          <Text style={[CommonStyle.fontXS, CommonStyle.paddingLeft, CommonStyle.colorMedium, CommonStyle.paddingRight2x]}>{blog.getLicenseText()}</Text>
           <Icon color={colors.primary} size={20} name='share' onPress={this.share} />
         </View>
         <Icon color="white" containerStyle={styles.header} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>

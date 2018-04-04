@@ -21,10 +21,10 @@ class BlogsViewStore {
   loadBlog(guid) {
     return blogService.loadEntity(guid)
       .then(result => {
-        this.setBlog(BlogModel.create(result.blog));
+        this.setBlog(result.blog);
       });
   }
-
+    
   /**
    * Set blog
    * @param {object} blog
