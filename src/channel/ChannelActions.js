@@ -93,10 +93,11 @@ export default class ChannelActions extends Component {
   render() {
 
     const channel = this.props.channel.channel;
+    const showWire = !channel.blocked && !channel.isOwner() && featuresService.has('crypto');
 
     return (
       <View style={styles.wrapper}>
-        {!this.props.channel.channel.isOwner() && featuresService.has('crypto') && <WireAction owner={this.props.channel.channel} navigation={this.props.navigation}/>}
+        {!!showWire && <WireAction owner={this.props.channel.channel} navigation={this.props.navigation}/>}
         <Icon name="md-settings" style={ styles.icon } onPress={() => this.showActionSheet()} size={24} />
         <ActionSheet
           ref={o => this.ActionSheet = o}
@@ -116,7 +117,9 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-end',
     width: featuresService.has('crypto') ? 60 : 40,
+    height: 40,
   },
   icon: {
     paddingLeft: 10,

@@ -31,6 +31,7 @@ import BlogCard from '../blogs/BlogCard';
 import CaptureFab from '../capture/CaptureFab';
 import { CommonStyle } from '../styles/Common';
 import UserModel from './UserModel';
+import Touchable from '../common/components/Touchable';
 
 /**
  * Channel Screen
@@ -178,13 +179,21 @@ export default class ChannelScreen extends Component {
           me={this.props.user.me}
           channel={this.props.channel.store(this.guid)}
           navigation={this.props.navigation}
-          edit={this.state.edit}
+          edit={!channel.blocked && this.state.edit}
           onEdit={this.onEditAction}
         />
 
-        <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>
+        {!channel.blocked && <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>}
         {carousel}
         <Icon raised color={colors.primary} containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
+
+        {!!channel.blocked && <View style={styles.blockView}>
+          <Text style={styles.blockText}>You have blocked @{channel.username}</Text>
+
+          <Touchable onPress={() => this.props.channel.store(this.guid).toggleBlock()}>
+            <Text style={styles.blockTextLink}>Tap to unblock</Text>
+          </Touchable>
+        </View>}
       </View>
     );
 
@@ -209,16 +218,27 @@ export default class ChannelScreen extends Component {
       );
     }
 
+    const emptyRender = () => <View />;
+
     return (
       <View style={CommonStyle.flexContainer}>
-        <NewsfeedList
+        {!channel.blocked && <NewsfeedList
           newsfeed={feed}
           renderActivity={renderActivity}
           guid={guid}
           header={header}
           navigation={this.props.navigation}
           emptyMessage={emptyMessage}
-        />
+        />}
+
+        {/* Not using FlatList breaks header layout */}
+        {channel.blocked && <FlatList
+          style={{ flex: 1, backgroundColor: '#fff' }}
+          ListHeaderComponent={header}
+          data={[]}
+          renderItem={emptyRender}
+        />}
+
         <CaptureFab navigation={this.props.navigation} />
       </View>
     );
@@ -371,5 +391,25 @@ const styles = StyleSheet.create({
     opacity: 0.65,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  blockView: {
+    alignItems: 'center',
+  },
+  blockText: {
+    padding: 20,
+    paddingTop: 0,
+    fontFamily: 'Roboto',
+    fontSize: 20,
+    fontWeight: '500',
+    letterSpacing: 1,
+  },
+  blockTextLink: {
+    padding: 20,
+    paddingTop: 0,
+    fontFamily: 'Roboto',
+    fontSize: 16,
+    fontWeight: '400',
+    letterSpacing: 1,
+    color: colors.primary
   },
 });

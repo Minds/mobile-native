@@ -304,7 +304,7 @@ export default class ChannelHeader extends Component {
               <Text style={styles.username}>@{channel.username}</Text>
             </View>
             <View style={styles.buttonscol}>
-              {this.getActionButton()}
+              { !this.props.channel.channel.blocked && this.getActionButton() }
               { this.props.me.guid !== this.props.channel.channel.guid?
                 <ChannelActions navigation={this.props.navigation} channel={this.props.channel} me={this.props.me}></ChannelActions> : <View></View>
               }
