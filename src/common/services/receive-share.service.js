@@ -1,5 +1,6 @@
 import ShareMenu from 'react-native-share-menu';
 import navigationService from './navigation.service';
+import { Platform } from 'react-native';
 
 const IMAGE_PREFIX = 'image/*@';
 const VIDEO_PREFIX = 'video/*@';
@@ -13,6 +14,8 @@ class ReceiveShareService {
    * Handle received data
    */
   handle() {
+    if (Platform.OS === 'ios') return;
+    
     ShareMenu.getSharedText((text) => {
       if (text)
         ShareMenu.clearSharedText();
