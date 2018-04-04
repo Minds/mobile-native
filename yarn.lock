@@ -6785,9 +6785,9 @@ react-native-exception-handler@^2.6.0:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.7.1.tgz#96eb20493050f4bccc88b9e3270afc40580f8dba"
 
-react-native-fast-image@^2.2.4:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-2.2.6.tgz#1fd5115f4b15968af6a6f5ac62bab273dd5eb689"
+react-native-fast-image@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-4.0.0.tgz#54f4013c9e0a5e9e649fc00e50028c79c7eacbea"
   dependencies:
     prop-types "^15.5.10"
 
@@ -6970,7 +6970,7 @@ react-native-video@^2.0.0:
     keymirror "0.1.1"
     prop-types "^15.5.10"
 
-react-native@^0.54.1:
+react-native@0.54.2:
   version "0.54.2"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.54.2.tgz#73786e7bf3f80b0b060ca0bfe5b192f9c2f253da"
   dependencies:
