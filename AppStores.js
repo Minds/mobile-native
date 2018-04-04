@@ -3,7 +3,7 @@ import boost from './src/boost/BoostStore';
 import notifications from './src/notifications/NotificationsStore';
 import notificationsSettings from './src/notifications/NotificationsSettingsStore';
 import messengerList from './src/messenger/MessengerListStore';
-import messengerConversation from './src/messenger/MessengerConversationStore';
+//import messengerConversation from './src/messenger/MessengerConversationStore';
 import channel from './src/channel/ChannelStores';
 import user from './src/auth/UserStore';
 import discovery from './src/discovery/DiscoveryStore';
@@ -35,7 +35,7 @@ const stores = {
   notifications,
   notificationsSettings,
   messengerList,
-  messengerConversation,
+  //messengerConversation,
   channel,
   user,
   discovery,
