@@ -116,13 +116,6 @@ export default class SettingsScreen extends Component {
         }
       },
       {
-        name: 'Billing',
-        icon: (<Icon name='credit-card' size={ICON_SIZE} style={ styles.icon }/>),
-        onPress: () => {
-          this.props.navigation.navigate('SettingsBilling');
-        }
-      },
-      {
         name: 'Push Notifications',
         icon: (<Icon name='notifications' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
