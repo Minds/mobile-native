@@ -6,7 +6,8 @@ import {
 import {
   getComments,
   postComment,
-  updateComment
+  updateComment,
+  deleteComment
 } from './CommentsService';
 
 import Comment from './Comment';
@@ -17,7 +18,7 @@ import session from '../common/services/session.service';
 
 import AttachmentStore from '../common/stores/AttachmentStore';
 
-import {toggleExplicit, deleteItem} from '../newsfeed/NewsfeedService';
+import {toggleExplicit} from '../newsfeed/NewsfeedService';
 /**
  * Comments Store
  */
@@ -48,7 +49,7 @@ export default class CommentsStore {
     this.guid = guid;
 
     return getComments(this.guid, this.reversed, this.loadPrevious, limit)
-      .then(action(response => {
+    .then(action(response => {
         response.comments = CommentModel.createMany(response.comments);
         this.loaded = true;
         this.setComments(response);
@@ -231,17 +232,14 @@ export default class CommentsStore {
   }
 
   @action
-  delete(guid) {
+  async delete(guid) {
     let index = this.comments.findIndex(x => x.guid == guid);
     if(index >= 0) {
       let entity = this.comments[index];
-      return deleteItem(guid)
-        .then(action(response => {
-          this.comments.splice(index, 1);
-        }))
-        .catch(action(err => {
-          console.log('error');
-        }));
+
+      const result = await deleteComment(guid);
+        
+      this.comments.splice(index, 1);
     }
   }
 

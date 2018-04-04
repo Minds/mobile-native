@@ -331,9 +331,7 @@ export default class ActivityScreen extends Component {
     });
 
     return (
-      <View>
-        <Comment comment={comment} replyComment={this.replyComment} store={this.comments} navigation={this.props.navigation}/>
-      </View>
+      <Comment comment={comment} entity={this.entity.entity} replyComment={this.replyComment} store={this.comments} navigation={this.props.navigation}/>
     );
   }
 

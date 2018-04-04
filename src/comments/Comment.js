@@ -17,6 +17,7 @@ import entities from 'entities';
 
 import {
   Text,
+  Alert,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
@@ -143,12 +144,14 @@ export default class Comment extends Component {
     } else {
       if (this.props.user.isAdmin()) {
         actions.push( 'Delete' );
-  
+        
         if (!this.props.comment.mature) {
           actions.push( 'Set explicit' );
         } else {
           actions.push( 'Remove explicit' );
         }
+      } else if (this.props.user.me.guid == this.props.entity.owner_guid) {
+        actions.push( 'Delete' );
       }
   
       actions.push( 'Report' ); 
@@ -182,7 +185,17 @@ export default class Comment extends Component {
         this.props.store.delete(this.props.comment.guid).then( (result) => {
           Alert.alert(
             'Success',
-            'Entity removed succesfully',
+            'Comment removed succesfully',
+            [
+              {text: 'OK', onPress: () => {}},
+            ],
+            { cancelable: false }
+          )
+        })
+        .catch(err => {
+          Alert.alert(
+            'Error',
+            'Error removing comment',
             [
               {text: 'OK', onPress: () => {}},
             ],
