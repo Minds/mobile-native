@@ -200,6 +200,9 @@ export default class ChannelFeedStore {
     const feed = await channelService.getBlogFeed(this.guid, this.list.offset);
 
     if (this.filter == 'blogs') {
+      if (this.list.offset) {
+        feed.entities.shift();
+      }
       feed.entities = BlogModel.createMany(feed.entities);
       this.assignRowKeys(feed);
       this.list.setList(feed, refresh);
