@@ -53,20 +53,20 @@ export default class GroupViewScreen extends Component {
       this.props.groupView.loadGroup(params.guid);
       this.props.groupView.loadFeed();
     }
+  }
 
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('GroupView',(s) => {
-      const params = this.props.navigation.state.params;
-      if (params && params.prepend) {
-        this.props.groupView.prepend(params.prepend);
-      }
-    });
+  componentDidMount() {
+    const navParams = this.props.navigation.state.params;
+
+    if (navParams && navParams.prepend) {
+      this.props.groupView.prepend(navParams.prepend);
+    }
   }
 
   /**
    * On component will unmount
    */
   componentWillUnmount() {
-    this.disposeEnter();
     this.props.groupView.clear();
   }
 

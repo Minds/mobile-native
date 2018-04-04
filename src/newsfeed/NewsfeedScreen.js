@@ -50,13 +50,14 @@ export default class NewsfeedScreen extends Component {
         this.props.newsfeed.refresh();
       }
     });
+  }
 
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Newsfeed',(s) => {
-      const params = this.props.navigation.state.params;
-      if (params && params.prepend) {
-        this.props.newsfeed.prepend(params.prepend);
-      }
-    });
+  componentDidMount() {
+    const navParams = this.props.navigation.state.params;
+
+    if (navParams && navParams.prepend) {
+      this.props.newsfeed.prepend(navParams.prepend);
+    }
   }
 
   /**
@@ -64,7 +65,6 @@ export default class NewsfeedScreen extends Component {
    */
   componentWillUnmount() {
     this.disposeState();
-    this.disposeEnter();
   }
 
   render() {
