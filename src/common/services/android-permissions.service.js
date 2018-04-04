@@ -32,6 +32,9 @@ class AndroidPermissionsService {
       const granted = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
       );
+
+      if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN || granted === false) return -1;
+
       return granted === PermissionsAndroid.RESULTS.GRANTED;
     } catch (err) {
       console.warn(err)
@@ -65,6 +68,9 @@ class AndroidPermissionsService {
       const granted = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.CAMERA
       );
+
+      if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN || granted === false) return -1;
+
       return granted === PermissionsAndroid.RESULTS.GRANTED;
     } catch (err) {
       console.warn(err)

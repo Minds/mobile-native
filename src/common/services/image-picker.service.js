@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Platform, Alert } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
 import androidPermissions from './android-permissions.service';
@@ -10,6 +10,14 @@ import i18n from './i18n.service';
  */
 class ImagePickerService {
 
+  showMessage(message) {
+    setTimeout(() => { // without settimeout alert is not shown
+      Alert.alert(
+        message
+      );
+    }, 100);
+  }
+
   /**
    * Check if we have permission or ask the user
    */
@@ -18,15 +26,18 @@ class ImagePickerService {
     
     if (Platform.OS != 'ios') {
       allowed = await androidPermissions.checkReadExternalStorage();
-      if (!allowed) {
+
+      if (allowed === -1) {
+        this.showMessage('You have denied permissions to external storage for Minds');
+      } else if (!allowed) {
         // request user permission
         allowed = await androidPermissions.readExternalStorage();
       }
     }
-
+    
     return allowed;
   }
-
+  
   /**
    * Check if we have permission or ask the user
    */
@@ -35,7 +46,10 @@ class ImagePickerService {
     
     if (Platform.OS != 'ios') {
       allowed = await androidPermissions.checkCamera();
-      if (!allowed) {
+
+      if (allowed === -1) {
+        this.showMessage('You have denied permissions to camera for Minds');
+      } else if (!allowed) {
         // request user permission
         allowed = await androidPermissions.camera();
       }
@@ -48,7 +62,7 @@ class ImagePickerService {
     const camera = await this.checkCameraPermissions();
     const gallery = await this.checkGalleryPermissions();
 
-    return gallery && camera;
+    return gallery === true && camera === true;
   }
 
   /**
@@ -94,8 +108,6 @@ class ImagePickerService {
 
     return new Promise((resolve, reject) => {
       ImagePicker.launchImageLibrary(opt, response => {
-
-        console.log(response)
         if (response.didCancel) {
           resolve(null);
         } else if (response.error) {
