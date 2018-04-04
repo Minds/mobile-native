@@ -50,6 +50,9 @@ const Stack = StackNavigator({
   },
   Boost: {
     screen: BoostScreen,
+    navigationOptions: {
+      gesturesEnabled: false
+    },
   },
   Login: {
     screen: LoginScreen,
@@ -118,7 +121,10 @@ const Stack = StackNavigator({
     path: 'blog/view/:guid',
   },
   WireFab: {
-    screen: FabScreen
+    screen: FabScreen,
+    navigationOptions: {
+      gesturesEnabled: false
+    },
   },
   WalletHistory: {
     screen: WalletHistoryScreen
@@ -136,7 +142,10 @@ const Stack = StackNavigator({
     screen: TransactionsScreen
   },
   BlockchainWalletModal: {
-    screen: BlockchainWalletModalScreen
+    screen: BlockchainWalletModalScreen,
+    navigationOptions: {
+      gesturesEnabled: false
+    },
   },
   BlockchainWalletImport: {
     screen: BlockchainWalletImportScreen
@@ -151,7 +160,10 @@ const Stack = StackNavigator({
     screen: MoreScreen
   },
   CheckoutModal: {
-    screen: CheckoutModalScreen
+    screen: CheckoutModalScreen,
+    navigationOptions: {
+      gesturesEnabled: false
+    },
   },
   Withdraw: {
     screen: WithdrawScreen

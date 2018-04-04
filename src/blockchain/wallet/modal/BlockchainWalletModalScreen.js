@@ -4,6 +4,7 @@ import {
   View,
   Button,
   StyleSheet,
+  BackHandler,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -75,6 +76,19 @@ export default class BlockchainWalletModalScreen extends Component {
 
   cancel() {
     this.props.blockchainWalletSelector.cancel();
+  }
+
+  onBackPress = e => {
+    this.cancel();
+    return true;
+  };
+
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
 
   /**

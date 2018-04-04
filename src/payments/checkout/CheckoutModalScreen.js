@@ -7,6 +7,7 @@ import {
   Alert,
   ActivityIndicator,
   StyleSheet,
+  BackHandler,
 } from 'react-native';
 
 import {
@@ -30,6 +31,7 @@ export default class CheckoutModalScreen extends Component {
   componentWillMount() {
     this.props.payments.load();
     this.disposeLeave = this.props.navigatorStore.onLeaveScreen('CheckoutModal', () => this.props.checkoutModal.cancel(false));
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
   }
 
   componentWillUnmount() {
@@ -37,7 +39,14 @@ export default class CheckoutModalScreen extends Component {
       this.disposeLeave();
       this.disposeLeave = void 0;
     }
+
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
   }
+
+  onBackPress = e => {
+    this.props.checkoutModal.cancel();
+    return true;
+  };
 
   onExistingCardSelectAction = async ({ label, token }) => {
     Alert.alert(
