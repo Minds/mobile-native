@@ -61,7 +61,7 @@ export default class NotificationsScreen extends Component {
    */
   componentWillMount() {
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Notifications', (s) => {
-      this.props.notifications.loadList();
+      this.props.notifications.loadList(true);
       this.props.notifications.setUnread(0);
     });
 

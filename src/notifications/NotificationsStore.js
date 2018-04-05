@@ -71,16 +71,18 @@ class NotificationsStore {
    */
   async loadList(refresh = false) {
     // no more data? return
-    if (this.list.cantLoadMore() || this.loading) {
+    if (this.list.cantLoadMore()) {
       return Promise.resolve();
     }
+
     this.loading = true;
 
     const filter = this.filter;
+
+    const offset = refresh ? '' : this.list.offset;
     
-    // always return promise for refresh!
     try {
-      const feed = await this.service.getFeed(this.list.offset, this.filter)
+      const feed = await this.service.getFeed(offset, this.filter)
       // prevent race conditions when filter change
       if (filter == this.filter) {
         this.assignRowKeys(feed);
