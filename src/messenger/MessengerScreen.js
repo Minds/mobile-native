@@ -59,13 +59,13 @@ export default class MessengerScreen extends Component {
     // load data on enter
     this.disposeEnter = this.props.navigatorStore.onEnterScreen('Messenger', (s) => {
       this.props.messengerList.loadList(true);
-      this.setState({ active: true });
+      //this.setState({ active: true });
     });
-
-    // clear data on leave
-    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Messenger', (s) => {
-      this.setState({ active: false });
-    });
+    
+    // hidde on leave
+    // this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Messenger', (s) => {
+    //   this.setState({ active: false });
+    // });
   }
   
   /**
@@ -74,7 +74,7 @@ export default class MessengerScreen extends Component {
   componentWillUnmount() {
     this.props.messengerList.unlisten();
     this.disposeEnter();
-    this.disposeLeave();
+    //this.disposeLeave();
   }
 
   searchDebouncer = _.debounce((search) => {
@@ -124,7 +124,7 @@ export default class MessengerScreen extends Component {
         />
         {loadingCmp}
         <FlatList
-          data={conversations}
+          data={conversations.slice()}
           renderItem={this.renderMessage}
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}

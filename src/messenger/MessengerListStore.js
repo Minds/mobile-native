@@ -56,16 +56,22 @@ class MessengerListStore {
   }
 
   @action
-  touchConversation = action((guid) => {
+  touchConversation = (guid) => {
     // search conversation
     const index = this.conversations.findIndex((conv) => {
       return conv.guid == guid;
     })
 
     if (index !== -1) {
-      this.conversations[index].unread = true;
+      const conv = this.conversations[index];
+      conv.unread = true;
+      // put it on top
+      this.conversations.remove(conv);
+      this.conversations.unshift(conv);
+    } else {
+      this.loadList(true);
     }
-  });
+  };
 
   /**
    * Start listen socket
