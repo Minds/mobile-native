@@ -23,7 +23,7 @@ import {
 
 let FORWARD_DURATION = 7;
 
-import { observer } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react/native';
 import KeepAwake from 'react-native-keep-awake';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -32,6 +32,7 @@ import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import en from "../../locales/en";
 
+@inject('navigatorStore')
 @observer
 export default class MindsVideo extends Component {
 
@@ -47,7 +48,9 @@ export default class MindsVideo extends Component {
     };
   }
 
-  //Handle vertical sliding
+  /**
+   * On component will mount
+   */
   componentWillMount () {
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
@@ -59,6 +62,18 @@ export default class MindsVideo extends Component {
     if (!this.props.entity) {
       this.setState({active: true})
     }
+
+    // if there is a screen change we pause
+    this.onScreenDispose = this.props.navigatorStore.onScreen(() => {
+      this.pause();
+    });
+  }
+
+  /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    this.onScreenDispose();
   }
 
   onVideoEnd = () => {
