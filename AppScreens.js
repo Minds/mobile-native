@@ -16,6 +16,7 @@ import SettingsScreen from './src/settings/SettingsScreen';
 import PasswordScreen from './src/settings/screens/PasswordScreen';
 import EmailScreen from './src/settings/screens/EmailScreen';
 import BillingScreen from './src/settings/screens/BillingScreen';
+import RekeyScreen from './src/settings/screens/RekeyScreen';
 import GroupsListScreen from './src/groups/GroupsListScreen';
 import GroupViewScreen from './src/groups/GroupViewScreen';
 import WalletScreen from './src/wallet/WalletScreen';
@@ -94,6 +95,9 @@ const Stack = StackNavigator({
   },
   SettingsEmail: {
     screen: EmailScreen
+  },
+  SettingsRekey: {
+    screen: RekeyScreen
   },
   SettingsPassword: {
     screen: PasswordScreen

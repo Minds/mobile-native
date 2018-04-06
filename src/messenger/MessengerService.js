@@ -21,6 +21,23 @@ class MessengerService {
   }
 
   /**
+   * Setup messenger keys
+   * @param {string} password 
+   */
+  doSetup(password) {
+    return api.post('api/v2/messenger/keys/setup', { password: password, download: false })
+    .then(resp => {
+      if (resp.password) {
+        return resp.password;
+      }
+      return null;
+    })
+    .catch(err => {
+      console.log('error');
+    });
+  }
+
+  /**
    * Get conversations list
    * @param {number} limit
    * @param {string} offset

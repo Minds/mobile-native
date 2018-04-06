@@ -6,8 +6,7 @@ import {
   Text,
   View,
   TextInput,
-  Button,
-  TouchableHighlight,
+  Alert,
   StyleSheet,
 } from 'react-native';
 
@@ -18,11 +17,12 @@ import {
 
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
-import CenteredLoading from '../common/components/CenteredLoading';
+import Button from '../common/components/Button';
+
 /**
  * Messenger setup
  */
-@inject('messengerList')
+@inject('messengerList', 'user')
 @observer
 export default class MessengerSetup extends Component {
 
@@ -31,35 +31,42 @@ export default class MessengerSetup extends Component {
    * (don't use state to prevent render the component when password change)
    */
   password = '';
+  confirm  = '';
 
   unlock = () => {
-    this.props.messengerList.getCrytoKeys(this.password);
+    this.props.messengerList.getCrytoKeys(this.password)
+      .then(resp => {
+        this.handleOnDone(resp);
+      });
   }
 
-  /**
-   * Render
-   */
-  render() {
+  setup = () => {
+    if (this.password !== this.confirm) {
+      Alert.alert('password and confirmation do not match!');
+      return;
+    }
+    this.props.messengerList.doSetup(this.password)
+      .then(resp => {
+        this.handleOnDone(resp);
+      });
+  }
+
+  handleOnDone(resp) {
+    if (this.props.onDone) {
+      this.props.onDone(resp);
+    }
+  }
+
+  renderUnlock() {
     const unlocking = this.props.messengerList.unlocking;
 
-    const button = (unlocking) ? <View style={{height:40}}><CenteredLoading /></View> : 
-      <TouchableHighlight 
-        underlayColor='transparent' 
-        onPress={ this.unlock } 
-        style={[
-          ComponentsStyle.button,
-          ComponentsStyle.buttonAction,
-          { backgroundColor: 'transparent' },
-        ]}>
-        <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Unlock</Text>
-      </TouchableHighlight>
+    const button = <Button text='Unlock' loading={unlocking} onPress={ this.unlock } />
 
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>
-        <View style={{ flexDirection: 'row', alignItems: 'stretch' }}>
+        <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <TextInput
-            ref='password'
-            style={ [ ComponentsStyle.passwordinput, { flex: 1 } ]}
+            style={ComponentsStyle.passwordinput}
             editable={true}
             underlineColorAndroid='transparent'
             placeholder='password...'
@@ -69,7 +76,7 @@ export default class MessengerSetup extends Component {
         </View>
 
         <View style={{ flexDirection: 'row', alignItems: 'stretch', marginTop: 8 }}>
-          <View style={{ flex: 1 }}></View>
+          <View style={CommonStyle.flexContainer}></View>
           <View>
             {button}
           </View>
@@ -83,6 +90,61 @@ export default class MessengerSetup extends Component {
         </View>
       </View>
     )
+  }
+
+  renderOnboarding() {
+    const unlocking = this.props.messengerList.unlocking;
+
+    const button = <Button text='Setup' loading={unlocking} onPress={ this.setup } />
+
+    const text = this.props.user.me.chat ? 'Changing your encryption password will cause your previous messages to be unreadable':
+      'Hey @'+this.props.user.me.name+'! It looks like you haven\'t setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.'
+
+    return (
+      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>
+        <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+          <TextInput
+            style={ComponentsStyle.passwordinput}
+            editable={true}
+            underlineColorAndroid='transparent'
+            placeholder='password...'
+            secureTextEntry={true}
+            onChangeText={(password) => this.password = password}
+          /> 
+          <TextInput
+            style={[ComponentsStyle.passwordinput, CommonStyle.marginTop2x]}
+            editable={true}
+            underlineColorAndroid='transparent'
+            placeholder='confirm password...'
+            secureTextEntry={true}
+            onChangeText={(password) => this.confirm = password}
+          />
+        </View>
+
+        <View style={{ flexDirection: 'row', alignItems: 'stretch', marginTop: 8 }}>
+          <View style={CommonStyle.flexContainer}></View>
+          <View>
+            {button}
+          </View>
+        </View>
+
+        <View style={{ paddingTop: 32 }}>
+          <Text style={styles.infoText}>{text}</Text>
+        </View>
+      </View>
+    );
+  }
+
+  /**
+   * Render
+   */
+  render() {
+
+    if (this.props.user.me.chat && !this.props.rekey) {
+      return this.renderUnlock();
+    } else {
+      return this.renderOnboarding();
+    }
   }
 }
 

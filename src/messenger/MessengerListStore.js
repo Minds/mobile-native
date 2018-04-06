@@ -117,7 +117,6 @@ class MessengerListStore {
         if (reload) this.offset = '';
         response = await messengerService.getConversations(rows, this.offset, this.newsearch, this.controller.signal);
       }
-
       if (reload) this.clearConversations();
       this.loaded = true;
       this.offset = response.offset;
@@ -153,6 +152,34 @@ class MessengerListStore {
         Alert.alert(
           'Sorry!',
           'Please check your credentials',
+          [
+            { text: 'Try again'},
+          ],
+          { cancelable: false }
+        )
+      });
+  }
+
+  /**
+   * Setup messenger
+   * @param {string} password 
+   */
+  doSetup(password) {
+    this.setUnlocking(true);
+    return messengerService.doSetup(password)
+      .then(privateKey => {
+        if (privateKey) {
+          session.sessionStorage.setPrivateKey(privateKey);
+          this.setPrivateKey(privateKey);
+        }
+      })
+      .finally(() => {
+        this.setUnlocking(false);
+      })
+      .catch(() => {
+        Alert.alert(
+          'Sorry!',
+          'Error creating the encryptions keys',
           [
             { text: 'Try again'},
           ],
