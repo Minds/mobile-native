@@ -97,7 +97,7 @@ export default class ActivityModel extends BaseModel {
         const model = ActivityModel.create(result);
         Object.assign(this, model);
       }
-      return true;
+      return result;
     } catch(err) {
       if (!ignoreError) alert(err.message);
       return false;

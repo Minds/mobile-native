@@ -193,6 +193,9 @@ export default class MediaView extends Component {
   render() {
     const media = this.showMedia();
 
+    // dereference to force re render on change (mobx)
+    const paywall = this.props.entity.paywall;
+
     if (!media)
       return null;
 
