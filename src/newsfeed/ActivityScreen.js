@@ -474,4 +474,7 @@ const styles = StyleSheet.create({
     color: '#888',
     fontSize: 10,
   },
+  sendicon: {
+    paddingRight: 8
+  }
 });
