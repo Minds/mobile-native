@@ -89,8 +89,7 @@ export default class NotificationsScreen extends Component {
     let body;
     const me = this.props.user.me;
     const list = this.props.notifications.list;
-    let empty = (<CenteredLoading />);
-
+    let empty = null;
 
     if (list.loaded && !list.refreshing) {
       let filter = '';
