@@ -54,15 +54,10 @@ export default class ConversationScreen extends Component {
         title: ''
       };
     }
-    const participant = UserModel.checkOrCreate(conversation.participants[0]);
-    const avatarImg = participant.getAvatarSource();
+
     return {
       title: conversation.name,
-      headerRight: (
-        <TouchableOpacity style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}  onPress={() => navigation.navigate('Channel', { guid:participant.guid})}>
-          <Image source={avatarImg} style={styles.avatar} />
-        </TouchableOpacity>
-      )
+      headerRight: navigation.state.params && navigation.state.params.headerRight,
     }
   };
 
@@ -75,13 +70,19 @@ export default class ConversationScreen extends Component {
       conversation = this.props.navigation.state.params.target;
     }
 
+    if (this.props.messengerList.configured) {
+      const participant = UserModel.checkOrCreate(conversation.participants[0]);
+      const avatarImg = participant.getAvatarSource();
+      this.props.navigation.setParams({
+        headerRight: (
+          <TouchableOpacity style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}  onPress={() => this.props.navigation.navigate('Channel', { guid:participant.guid})}>
+            <Image source={avatarImg} style={styles.avatar} />
+          </TouchableOpacity>)
+      });
+    }
+
     // load conversation
     this.store.setGuid(conversation.guid);
-    this.store.load()
-      .then(conversation => {
-        // we send the conversation to update the topbar (in case we only receive the guid)
-        this.props.navigation.setParams({ conversation });
-      })
   }
 
   /**
@@ -108,7 +109,7 @@ export default class ConversationScreen extends Component {
    * Load more
    */
   loadMore = () => {
-    this.store.loadMore();
+    this.store.load();
   }
 
   /**
@@ -123,7 +124,7 @@ export default class ConversationScreen extends Component {
 
     // show setup !configured yet
     if (shouldSetup) {
-      return <MessengerSetup/>
+      return <MessengerSetup navigation={this.props.navigation} />
     }
 
     if (this.store.loading) {

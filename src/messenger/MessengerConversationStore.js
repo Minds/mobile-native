@@ -17,15 +17,16 @@ import session from '../common/services/session.service';
  * Messenger Conversation Store
  */
 class MessengerConversationStore {
+  
   /**
    * Messages observable
    */
-  @observable.shallow messages = [];
+  @observable messages = [];
   @observable loading = false;
   @observable moreData = true;
   @observable invited = false;
   
-  offset = ''
+  @observable offset = ''
   socketRoomName = null;
   participants = null;
   invitable = null;
@@ -35,12 +36,14 @@ class MessengerConversationStore {
    * Initial load
    * @param {string} offset
    */
+  @action
   async load() {
     if (this.loading || !this.moreData) return;
     this.loading = true;
     
     try {
       const conversation = await messengerService.getConversationFromRemote(12, this.guid, this.offset)
+
       // offset to scroll
       this.offset = conversation['load-previous'];
       // invitable
@@ -92,6 +95,7 @@ class MessengerConversationStore {
     }
   }
 
+  @action
   setGuid(guid) {
     this.guid = guid;
   }
@@ -178,7 +182,8 @@ class MessengerConversationStore {
     this.moreData        = true;
     this.invited         = false;
     this.messages        = [];
-    this.offset          = ''
+    this.offset          = '';
+    this.loading         = false;
     if (this.lastMessageGuid) {
       // on leave set all messages as readed
       messengerService.getConversationFromRemote(1, this.guid, this.lastMessageGuid);

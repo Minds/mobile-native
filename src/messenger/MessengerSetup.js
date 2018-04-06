@@ -17,7 +17,9 @@ import {
 
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
+import Colors from '../styles/Colors';
 import Button from '../common/components/Button';
+import NavNextButton from '../common/components/NavNextButton';
 
 /**
  * Messenger setup
@@ -32,6 +34,30 @@ export default class MessengerSetup extends Component {
    */
   password = '';
   confirm  = '';
+
+  componentWillMount() {
+    const { setParams } = this.props.navigation;
+    let button;
+
+    if (this.props.user.me.chat && !this.props.rekey) {
+      button = (
+        <NavNextButton
+          onPress={this.unlock}
+          title="UNLOCK"
+          color={Colors.primary}
+        />
+      );
+    } else {
+      button = (
+        <NavNextButton
+          onPress={this.setup}
+          title="SETUP"
+          color={Colors.primary}
+        />
+      );
+    }
+    setParams({ headerRight: button });
+  }
 
   unlock = () => {
     this.props.messengerList.getCrytoKeys(this.password)
@@ -60,8 +86,6 @@ export default class MessengerSetup extends Component {
   renderUnlock() {
     const unlocking = this.props.messengerList.unlocking;
 
-    const button = <Button text='Unlock' loading={unlocking} onPress={ this.unlock } />
-
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
@@ -74,14 +98,7 @@ export default class MessengerSetup extends Component {
             onChangeText={(password) => this.password = password}
           />
         </View>
-
-        <View style={{ flexDirection: 'row', alignItems: 'stretch', marginTop: 8 }}>
-          <View style={CommonStyle.flexContainer}></View>
-          <View>
-            {button}
-          </View>
-        </View>
-
+  
         <View style={{ paddingTop: 32 }}>
           <Text style={styles.infoText}>· You only need to enter this encryption password once as long as you stay signed in.</Text>
           <Text style={styles.infoText}>· It is important so that no one other than you and the people you are communicating with can access the content of your messages.</Text>
@@ -94,8 +111,6 @@ export default class MessengerSetup extends Component {
 
   renderOnboarding() {
     const unlocking = this.props.messengerList.unlocking;
-
-    const button = <Button text='Setup' loading={unlocking} onPress={ this.setup } />
 
     const text = this.props.user.me.chat ? 'Changing your encryption password will cause your previous messages to be unreadable':
       'Hey @'+this.props.user.me.name+'! It looks like you haven\'t setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.'
@@ -121,14 +136,7 @@ export default class MessengerSetup extends Component {
           />
         </View>
 
-        <View style={{ flexDirection: 'row', alignItems: 'stretch', marginTop: 8 }}>
-          <View style={CommonStyle.flexContainer}></View>
-          <View>
-            {button}
-          </View>
-        </View>
-
-        <View style={{ paddingTop: 32 }}>
+        <View style={{ paddingTop: 16 }}>
           <Text style={styles.infoText}>{text}</Text>
         </View>
       </View>

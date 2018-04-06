@@ -5,6 +5,10 @@ import api from './../common/services/api.service';
  */
 class MessengerService {
 
+  controllers = {
+    getConversationFromRemote: null,
+  };
+
   /**
    * Get Crypto Keys from server
    * @param {string} password
@@ -42,14 +46,14 @@ class MessengerService {
    * @param {number} limit
    * @param {string} offset
    */
-  getConversations(limit, offset = "", refresh=false, signal) {
+  getConversations(limit, offset = "", refresh=false) {
 
-    const params = { limit: limit, offset: offset };
+    const params = { limit: limit, offset: offset, ts: Date.now() };
     if ( refresh ) {
       params.refresh = true
     }
 
-    return api.get('api/v2/messenger/conversations', params, signal)
+    return api.get('api/v2/messenger/conversations', params)
       .then((data) => {
         return {
           entities: data.conversations || [],
@@ -80,11 +84,16 @@ class MessengerService {
    * @param {string} offset
    */
   getConversationFromRemote(limit, guid, offset = "") {
-    return api.get('api/v2/messenger/conversations/' + guid, {
+    if (this.controllers.getConversationFromRemote)
+      this.controllers.getConversationFromRemote.abort();
+
+    this.controllers.getConversationFromRemote = new AbortController();
+
+    return api.get('api/v2/messenger/conversations/' + guid + '/' + Date.now, {
       limit: 8, 
       offset: offset,
       finish: '',
-    })
+    }, this.controllers.getConversationFromRemote.signal)
       .then(conversation => {
         conversation.messages = conversation.messages || [];
         return conversation;

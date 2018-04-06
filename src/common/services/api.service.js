@@ -10,7 +10,10 @@ class ApiService {
   buildHeaders() {
     const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
       accessToken = session.token,
-      headers = {};
+      headers = {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache'
+      };
 
     return headers;
   }
@@ -23,6 +26,8 @@ class ApiService {
       // Send via GET only if basic auth is enabled
       params['access_token'] = accessToken.toString();
     }
+
+    params['cb'] = Date.now(); //bust the cache every time
 
     const paramsString = this.getParamsString(params);
 

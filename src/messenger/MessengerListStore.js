@@ -136,9 +136,9 @@ class MessengerListStore {
    * Get crypto keys and unlock
    * @param {string} password
    */
-  getCrytoKeys(password) {
+  async getCrytoKeys(password) {
     this.setUnlocking(true);
-    messengerService.getCrytoKeys(password)
+    return messengerService.getCrytoKeys(password)
       .then(privateKey => {
         if (privateKey) {
           session.sessionStorage.setPrivateKey(privateKey);
@@ -164,7 +164,7 @@ class MessengerListStore {
    * Setup messenger
    * @param {string} password 
    */
-  doSetup(password) {
+  async doSetup(password) {
     this.setUnlocking(true);
     return messengerService.doSetup(password)
       .then(privateKey => {
