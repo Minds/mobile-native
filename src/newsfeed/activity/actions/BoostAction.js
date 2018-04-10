@@ -38,7 +38,7 @@ export default class BoostAction extends PureComponent {
           underlayColor="transparent"
           onPress={this.openBoost}
         >
-          <Text style={[styles.text, CommonStyle.colorPrimary]}>BOOST</Text>
+          <Text style={[styles.text, CommonStyle.colorPrimary]} numberOfLines={1} adjustsFontSizeToFit={true}>BOOST</Text>
         </TouchableHighlightCustom>
       </View>
     );
@@ -66,5 +66,6 @@ const styles = StyleSheet.create({
     paddingLeft: 2,
     paddingRight: 2,
     fontFamily: 'Roboto',
+    fontSize: 12
   },
 });
