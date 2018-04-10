@@ -40,38 +40,34 @@ export default class AttachmentStore {
     this.type = media.type;
     this.uri  = media.uri;
 
-    try {
-      const result = await attachmentService.attachMedia(media, (pct) => {
+    const result = await attachmentService.attachMedia(media, (pct) => {
+      this.setProgress(pct);
+    });
+
+    this.setUploading(false);
+    this.guid = result.guid;
+
+    if (this.hasQueue) {
+      attachmentService.deleteMedia(this.guid);
+      this.setHasAttachment(true);
+      this.setUploading(true);
+      const result = await attachmentService.attachMedia(this.queue, (pct) => {
         this.setProgress(pct);
       });
-
       this.setUploading(false);
       this.guid = result.guid;
+      this.queue = {};
+      this.hasQueue = false;
+    }
 
-      if (this.hasQueue) {
-        attachmentService.deleteMedia(this.guid);
-        this.setHasAttachment(true);
-        this.setUploading(true);
-        result = await attachmentService.attachMedia(this.queue, (pct) => {
-          this.setProgress(pct);
-        });
-        this.setUploading(false);
-        this.guid = result.guid;
-        this.queue = {};
-        this.hasQueue = false;
-      }
-
-      if (this.deleteUploading) {
-        attachmentService.deleteMedia(this.guid);
-        this.deleteUploading = false;
-        this.clear();
-        return true;
-      }
-
-      return this.guid;
-    } catch(err) {
+    if (this.deleteUploading) {
+      attachmentService.deleteMedia(this.guid);
+      this.deleteUploading = false;
+      this.clear();
       return false;
     }
+
+    return this.guid;
   }
 
   @action

@@ -198,9 +198,12 @@ export default class CapturePoster extends Component {
   onAttachedMedia = async (response) => {
     const attachment = this.props.capture.attachment;
 
-    const result = await attachment.attachMedia(response);
-
-    if (result === false) alert('caught upload error');
+    try {
+      const result = await attachment.attachMedia(response);
+    } catch(err) {
+      console.error(err);
+      alert('caught upload error');
+    }
   }
 
   /**
@@ -208,10 +211,11 @@ export default class CapturePoster extends Component {
    */
   async deleteAttachment() {
     const attachment = this.props.capture.attachment;
-    // delete
-    const result = await attachment.delete();
-
-    if (result === false) alert('caught error deleting the file');
+    // delete only if it has an attachment
+    if (attachment.hasAttachment) {
+      const result = await attachment.delete();
+      if (result === false) alert('caught error deleting the file');
+    }
   }
 
   /**

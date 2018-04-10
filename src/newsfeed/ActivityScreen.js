@@ -258,9 +258,12 @@ export default class ActivityScreen extends Component {
   onAttachedMedia = async (response) => {
     const attachment = this.comments.attachment;
 
-    const result = await attachment.attachMedia(response);
-
-    if (result === false) alert('caught upload error');
+    try {
+      const result = await attachment.attachMedia(response);
+    } catch(err) {
+      console.error(err);
+      alert('caught upload error');
+    }
   }
 
   /**
