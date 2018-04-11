@@ -24,7 +24,7 @@ export default class BoostPeerAcceptedView extends BoostGiftView {
     return (
       <View style={styles.bodyContents} >
         <Text onPress={() => this.navToBoostConsole({filter:'peer'})}>
-          <Text style={style.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> accepted your bid of <Text style={style.bold}>{entity.params.bid} {type}</Text> {description}
+          <Text style={styles.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> accepted your bid of <Text style={styles.bold}>{entity.params.bid} {type}</Text> {description}
         </Text>
       </View>
     )
