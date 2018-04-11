@@ -9,10 +9,10 @@ import UserStore from '../auth/UserStore';
 export default class UserModel extends BaseModel {
 
   getOwnerIcontime() {
-    if(UserStore.me && UserStore.me.guid === this.guid) {
+    if (UserStore.me && UserStore.me.guid === this.guid) {
       return UserStore.me.icontime;
     } else {
-      return this.guid;
+      return this.icontime;
     }
   }
 

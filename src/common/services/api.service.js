@@ -162,23 +162,24 @@ class ApiService {
     });
   }
 
-  async upload(url, file, data, progress) {
+  async upload(url, file, data=null, progress) {
     const paramsString = await this.buildParamsString({});
     var formData = new FormData();
     formData.append('file', file);
     for (var key in data) {
       formData.append(key, data[key]);
     }
-    const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth;
+
     return new Promise((resolve, reject)=>{
-
+      
       let xhr = new XMLHttpRequest();
-
+      
       if (progress) {
         xhr.upload.addEventListener("progress", progress);
       }
       xhr.open('POST', MINDS_URI + url + paramsString);
-      xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
+      // fix XSRF
+      // xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.onreadystatechange = () => {

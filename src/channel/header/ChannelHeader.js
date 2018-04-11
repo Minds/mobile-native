@@ -13,6 +13,7 @@ import {
 
 import {
   observer,
+  inject
 } from 'mobx-react/native'
 
 import { toJS } from 'mobx'
@@ -26,6 +27,7 @@ import { ComponentsStyle } from '../../styles/Components';
 import colors from '../../styles/Colors'
 import Tags from '../../common/components/Tags';
 import api from '../../common/services/api.service';
+import session from '../../common/services/session.service';
 import Touchable from '../../common/components/Touchable';
 import ChannelBadges from '../badges/ChannelBadges';
 import { CommonStyle } from '../../styles/Common';
@@ -41,6 +43,7 @@ const ButtonCustom = withPreventDoubleTap(Button);
 /**
  * Channel Header
  */
+@inject('user')
 @observer
 export default class ChannelHeader extends Component {
 
@@ -52,7 +55,8 @@ export default class ChannelHeader extends Component {
     preview_banner: null,
     briefdescription: '',
     name: '',
-    saving: false
+    saving: false,
+    edit: false
   };
 
   uploads = {
@@ -126,7 +130,7 @@ export default class ChannelHeader extends Component {
    */
   _navToConversation() {
     if (this.props.navigation) {
-      this.props.navigation.navigate('Conversation', { conversation: { guid : this.props.channel.channel.guid + ':' + this.props.me.guid } });
+      this.props.navigation.navigate('Conversation', { conversation: { guid : this.props.channel.channel.guid + ':' + session.guid } });
     }
   }
 
@@ -137,7 +141,7 @@ export default class ChannelHeader extends Component {
   }
 
   onEditAction = async () => {
-    let editing = this.props.edit,
+    let editing = this.state.edit,
       payload = null;
 
     if (editing) {
@@ -148,31 +152,52 @@ export default class ChannelHeader extends Component {
         banner: this.uploads.banner,
       };
 
-      this.uploads = {
-        avatar: null,
-        banner: null
-      };
       this.setState({saving: true});
-    }
+      
+      const response = await this.props.channel.save(payload);
 
-    await this.props.onEdit(payload);
-    
-    if (this.state.saving) this.setState({saving: false});
+      if (response === true) {
+        this.props.user.load();
+        this.setState({saving: false, edit: false});
+        this.uploads = {
+          avatar: null,
+          banner: null
+        };
+      } else if (response === false) {
+        alert('Error saving channel');
+        this.setState({saving: false});
+      } else {
+        alert(response)
+        this.setState({saving: false});
+      }
+    } else {
+      this.setState({edit: true});
+    }
   }
+
+  save = async payload => {
+    if (this.state.edit) {
+      await this.props.channel.store(this.guid).save(payload);
+      this.setState({ edit: false });
+      this.props.channel.store(this.guid).load();
+    } else {
+      this.setState({ edit: true });
+    }
+  };
 
   /**
    * Get Action Button, Message or Subscribe
    */
   getActionButton() {
     const styles  = this.props.styles;
-    if (!this.props.channel.loaded && this.props.me.guid !== this.props.channel.channel.guid )
+    if (!this.props.channel.loaded && session.guid !== this.props.channel.channel.guid )
       return null;
-    if (this.props.me.guid === this.props.channel.channel.guid) {
+    if (session.guid === this.props.channel.channel.guid) {
       return (
         <ButtonCustom
           onPress={this.onEditAction}
-          accessibilityLabel={this.props.edit ? 'Save your changes' : 'Edit your channel settings'}
-          text={this.props.edit ? 'SAVE' : 'EDIT'}
+          accessibilityLabel={this.state.edit ? 'Save your changes' : 'Edit your channel settings'}
+          text={this.state.edit ? 'SAVE' : 'EDIT'}
           loading={this.state.saving}
         />
       );
@@ -187,7 +212,7 @@ export default class ChannelHeader extends Component {
           <Text style={{ color: colors.primary }} > MESSAGE </Text>
         </TouchableHighlightCustom>
       );
-    } else if (this.props.me.guid !== this.props.channel.channel.guid) {
+    } else if (session.guid !== this.props.channel.channel.guid) {
       return (
         <TouchableHighlightCustom
           onPress={() => { this.subscribe() }}
@@ -223,6 +248,7 @@ export default class ChannelHeader extends Component {
   };
 
   changeAvatarAction = async () => {
+    if (!this.state.edit) return;
     imagePicker.show('Select avatar', 'photo')
       .then(response => {
         if (response) {
@@ -255,7 +281,8 @@ export default class ChannelHeader extends Component {
     const avatar  = this.getAvatar();
     const iurl = this.getBannerFromChannel();
     const isUploading = this.props.channel.isUploading;
-    const isEditable = this.props.edit && !isUploading;
+    const isEditable = this.state.edit && !isUploading;
+    console.log('render HEADER channel', avatar)
     return (
       <View>
         {isEditable && <TouchableCustom onPress={this.changeBannerAction}>
@@ -305,8 +332,8 @@ export default class ChannelHeader extends Component {
             </View>
             <View style={styles.buttonscol}>
               { !this.props.channel.channel.blocked && this.getActionButton() }
-              { this.props.me.guid !== this.props.channel.channel.guid?
-                <ChannelActions navigation={this.props.navigation} channel={this.props.channel} me={this.props.me}></ChannelActions> : <View></View>
+              { session.guid !== this.props.channel.channel.guid?
+                <ChannelActions navigation={this.props.navigation} channel={this.props.channel} me={session}></ChannelActions> : <View></View>
               }
             </View>
           </View>
@@ -329,14 +356,13 @@ export default class ChannelHeader extends Component {
 
         </View>
 
-        {isEditable && <TouchableCustom onPress={this.changeAvatarAction} style={styles.avatar}>
+        <TouchableCustom onPress={this.changeAvatarAction} style={styles.avatar}>
           <Image source={avatar} style={styles.wrappedAvatar} />
 
-          <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
+          {isEditable && <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
             <Icon name="md-create" size={30} color="#fff" />
-          </View>
+          </View>}
         </TouchableCustom>}
-        {!isEditable && <Image source={avatar} style={styles.avatar} />}
 
       </View>
     )

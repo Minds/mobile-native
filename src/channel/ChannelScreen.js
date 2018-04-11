@@ -32,11 +32,11 @@ import CaptureFab from '../capture/CaptureFab';
 import { CommonStyle } from '../styles/Common';
 import UserModel from './UserModel';
 import Touchable from '../common/components/Touchable';
+import session from '../common/services/session.service';
 
 /**
  * Channel Screen
  */
-@inject('user')
 @inject('channel')
 @observer
 export default class ChannelScreen extends Component {
@@ -75,7 +75,7 @@ export default class ChannelScreen extends Component {
   }
 
   loadChannel(guid) {
-    let isOwner = guid == this.props.user.me.guid;
+    let isOwner = guid == session.guid;
     this.props.channel.store(guid).load()
       .then(channel => {
         // add visited channels
@@ -124,16 +124,7 @@ export default class ChannelScreen extends Component {
     return guid || this.state.guid;
   }
 
-  onEditAction = async payload => {
-    if (this.state.edit) {
-      await this.props.channel.store(this.guid).save(payload);
-      this.setState({ edit: false });
-      this.props.channel.store(this.guid).load();
-      this.props.user.load();
-    } else {
-      this.setState({ edit: true });
-    }
-  };
+
 
   /**
    * navigate to create post
@@ -147,21 +138,23 @@ export default class ChannelScreen extends Component {
    */
   render() {
 
+    
     if (!this.guid || !this.props.channel.store(this.guid).channel.guid) {
       return (
         <CenteredLoading />
       );
     }
-
+    
     const feed    = this.props.channel.store(this.guid).feedStore;
     const channel = this.props.channel.store(this.guid).channel;
     const rewards = this.props.channel.store(this.guid).rewards;
     const guid    = this.guid;
-    const isOwner = guid == this.props.user.me.guid;
-
+    const isOwner = guid == session.guid;
+    
     let emptyMessage = null;
     let carousel = null;
-
+    
+    console.log('render screen channel', channel)
     // carousel only visible if we have data
     /*if (rewards.merged && rewards.merged.length && channelfeed.showrewards) {
       carousel = (
@@ -176,11 +169,9 @@ export default class ChannelScreen extends Component {
       <View>
         <ChannelHeader
           styles={styles}
-          me={this.props.user.me}
           channel={this.props.channel.store(this.guid)}
           navigation={this.props.navigation}
           edit={!channel.blocked && this.state.edit}
-          onEdit={this.onEditAction}
         />
 
         {!channel.blocked && <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>}

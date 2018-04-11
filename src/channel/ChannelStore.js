@@ -111,24 +111,30 @@ export default class ChannelStore {
 
     try {
       if (avatar) {
-        await channelService.upload(this.guid, 'avatar', {
+        const avatarResult = await channelService.upload(this.guid, 'avatar', {
           uri: avatar.uri,
           type: avatar.type,
           name: avatar.fileName || 'avatar.jpg'
         });
+
+        if (avatarResult.error) return avatarResult.error;
       }
 
       if (banner) {
-        await channelService.upload(this.guid, 'banner', {
+        const bannerResult = await channelService.upload(this.guid, 'banner', {
           uri: banner.uri,
           type: banner.type,
           name: banner.fileName || 'banner.jpg'
         });
+        if (bannerResult.error) return bannerResult.error;
       }
 
-      await channelService.save(this.guid, data);
+      const result = await channelService.save(this.guid, data);
+
+      return result && result.status === 'success';
     } catch (e) {
       console.error(e);
+      return e;
     } finally {
       this.isUploading = false;
     }
