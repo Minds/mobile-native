@@ -48,18 +48,25 @@ class DiscoveryService {
     }
 
     if (type == 'group') {
-      endpoint = '/api/v1/groups/featured';
+      endpoint = 'api/v1/groups/featured';
     } else {
       endpoint = 'api/v1/entities/' + filter + '/' + type;
     }
 
     try { 
-      const data = await api.get(endpoint, { limit: 12, offset: offset }, this.controller.signal)
-      if (type == 'group' && offset && data.entities) {
-        data.entities.shift();
+      const data = await api.get(endpoint, { limit: 12, offset: offset })
+      let entities = [];
+      if (type == 'group') {
+        entities = data.groups;
+      } else {
+        entities = data.entities;
+      }
+
+      if (type == 'group' && offset && entities) {
+        entities.shift();
       }
       return {
-        entities: data.entities,
+        entities: entities,
         offset: data['load-next'],
       }
     } catch(err) {
