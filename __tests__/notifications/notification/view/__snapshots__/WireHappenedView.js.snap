@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly for not owner and not subscribed 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    onPress={[Function]}
+  >
+    You have received a wire of 
+    1000
+     from 
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      onPress={[Function]}
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      @
+      fromUser
+    </Text>
+  </Text>
+</View>
+`;
+
+exports[`renders correctly for owner and not subscribed 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    onPress={[Function]}
+  >
+    You have successfully wired 
+    1000
+     to 
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      onPress={[Function]}
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      @
+      toUser
+    </Text>
+  </Text>
+</View>
+`;
+
+exports[`renders correctly for owner and subscribed 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    onPress={[Function]}
+  >
+    You have subscribed to wire 
+    1000
+    /month to 
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      onPress={[Function]}
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      @
+      toUser
+    </Text>
+  </Text>
+</View>
+`;
+
+exports[`renders correctly for owner and subscribed 2`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+    }
+  }
+>
+  <Text
+    accessible={true}
+    allowFontScaling={true}
+    ellipsizeMode="tail"
+    onPress={[Function]}
+  >
+    You have received a wire subscription of 
+    1000
+    /month from 
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      onPress={[Function]}
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      @
+      fromUser
+    </Text>
+  </Text>
+</View>
+`;
