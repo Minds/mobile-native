@@ -44,6 +44,7 @@ export default class ConversationScreen extends Component {
   state = {
     text: '',
   }
+  topAvatar = false;
   store;
 
   static navigationOptions = ({ navigation }) => {
@@ -71,18 +72,31 @@ export default class ConversationScreen extends Component {
     }
 
     if (this.props.messengerList.configured) {
+      this.updateTopAvatar(conversation);
+    }
+
+    // load conversation
+    this.store.setGuid(conversation.guid);
+  }
+
+  /**
+   * Update top avatar
+   * @param {object} conversation
+   */
+  updateTopAvatar(conversation) {
+    if (conversation && conversation.participants && !this.topAvatar) {
       const participant = UserModel.checkOrCreate(conversation.participants[0]);
       const avatarImg = participant.getAvatarSource();
+
       this.props.navigation.setParams({
         headerRight: (
           <TouchableOpacity style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}  onPress={() => this.props.navigation.navigate('Channel', { guid:participant.guid})}>
             <Image source={avatarImg} style={styles.avatar} />
           </TouchableOpacity>)
       });
-    }
 
-    // load conversation
-    this.store.setGuid(conversation.guid);
+      this.topAvatar = true;
+    }
   }
 
   /**
@@ -108,8 +122,11 @@ export default class ConversationScreen extends Component {
   /**
    * Load more
    */
-  loadMore = () => {
-    this.store.load();
+  loadMore = async () => {
+    const conversation = await this.store.load();
+
+    // update top avatar if it is not set
+    this.updateTopAvatar(conversation);
   }
 
   /**
@@ -130,7 +147,7 @@ export default class ConversationScreen extends Component {
     if (this.store.loading) {
       footer = <ActivityIndicator animating size="large" />
     }
-    
+
     if (shouldInvite) {
       return <MessengerInvite navigation={this.props.navigation}/>
     }
@@ -184,7 +201,7 @@ export default class ConversationScreen extends Component {
       const result = await this.store.send(myGuid, msg);
     } catch(err) {
       console.log('error', err);
-    } 
+    }
     this.setState({text: ''})
     setTimeout(() => {
       this.list.scrollToOffset({ offset: 0, animated: false });
