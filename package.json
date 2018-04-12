@@ -58,7 +58,7 @@
     "react-native-optimized-flatlist": "^1.0.4",
     "react-native-os": "^1.0.1",
     "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
-    "react-native-photo-view": "^1.5.2",
+    "react-native-photo-view": "alwx/react-native-photo-view#e28f5416574cbfa07b2d4fa862c0048df56f7b02",
     "react-native-progress": "^3.4.0",
     "react-native-qrcode": "^0.2.6",
     "react-native-randombytes": "^3.0.0",
