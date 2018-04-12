@@ -64,7 +64,7 @@ export default class ChannelHeader extends Component {
     banner: null
   };
 
-  /** 
+  /**
    * Component will mount
    */
   componentWillMount() {
@@ -79,7 +79,7 @@ export default class ChannelHeader extends Component {
 
   /**
    * Component will receive props
-   * @param {object} nextProps 
+   * @param {object} nextProps
    */
   componentWillReceiveProps(nextProps) {
     const channel = toJS(nextProps.channel.channel);
@@ -92,7 +92,7 @@ export default class ChannelHeader extends Component {
 
   /**
    * Update state
-   * @param {object} channel 
+   * @param {object} channel
    */
   updateEditable(channel) {
     this.setState({
@@ -153,7 +153,7 @@ export default class ChannelHeader extends Component {
       };
 
       this.setState({saving: true});
-      
+
       const response = await this.props.channel.save(payload);
 
       if (response === true) {
@@ -174,16 +174,6 @@ export default class ChannelHeader extends Component {
       this.setState({edit: true});
     }
   }
-
-  save = async payload => {
-    if (this.state.edit) {
-      await this.props.channel.store(this.guid).save(payload);
-      this.setState({ edit: false });
-      this.props.channel.store(this.guid).load();
-    } else {
-      this.setState({ edit: true });
-    }
-  };
 
   /**
    * Get Action Button, Message or Subscribe
@@ -241,7 +231,7 @@ export default class ChannelHeader extends Component {
         if (response) {
           this.selectMedia('banner', response);
         }
-      }) 
+      })
       .catch(err => {
         alert(err);
       });
@@ -254,7 +244,7 @@ export default class ChannelHeader extends Component {
         if (response) {
           this.selectMedia('avatar', response);
         }
-      }) 
+      })
       .catch(err => {
         alert(err);
       });
@@ -282,7 +272,7 @@ export default class ChannelHeader extends Component {
     const iurl = this.getBannerFromChannel();
     const isUploading = this.props.channel.isUploading;
     const isEditable = this.state.edit && !isUploading;
-    console.log('render HEADER channel', avatar)
+
     return (
       <View>
         {isEditable && <TouchableCustom onPress={this.changeBannerAction}>
@@ -320,7 +310,7 @@ export default class ChannelHeader extends Component {
               />}
               {!isEditable &&
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text 
+                  <Text
                     style={styles.name}
                     ellipsizeMode='tail'
                     numberOfLines={1}
@@ -362,7 +352,7 @@ export default class ChannelHeader extends Component {
           {isEditable && <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
             <Icon name="md-create" size={30} color="#fff" />
           </View>}
-        </TouchableCustom>}
+        </TouchableCustom>
 
       </View>
     )

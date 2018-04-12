@@ -44,7 +44,6 @@ export default class ChannelScreen extends Component {
 
 
   state = {
-    edit: false,
     guid: null
   };
 
@@ -124,8 +123,6 @@ export default class ChannelScreen extends Component {
     return guid || this.state.guid;
   }
 
-
-
   /**
    * navigate to create post
    */
@@ -138,23 +135,21 @@ export default class ChannelScreen extends Component {
    */
   render() {
 
-    
     if (!this.guid || !this.props.channel.store(this.guid).channel.guid) {
       return (
         <CenteredLoading />
       );
     }
-    
+
     const feed    = this.props.channel.store(this.guid).feedStore;
     const channel = this.props.channel.store(this.guid).channel;
     const rewards = this.props.channel.store(this.guid).rewards;
     const guid    = this.guid;
     const isOwner = guid == session.guid;
-    
+
     let emptyMessage = null;
     let carousel = null;
-    
-    console.log('render screen channel', channel)
+
     // carousel only visible if we have data
     /*if (rewards.merged && rewards.merged.length && channelfeed.showrewards) {
       carousel = (
@@ -171,7 +166,6 @@ export default class ChannelScreen extends Component {
           styles={styles}
           channel={this.props.channel.store(this.guid)}
           navigation={this.props.navigation}
-          edit={!channel.blocked && this.state.edit}
         />
 
         {!channel.blocked && <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>}
