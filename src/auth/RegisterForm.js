@@ -15,7 +15,7 @@ import {
   Alert,
 } from 'react-native';
 
-import { login } from '../auth/LoginService';
+import authService from '../auth/AuthService';
 import { register } from './RegisterService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
@@ -101,7 +101,7 @@ export default class RegisterForm extends Component {
           onChangeText={(value) => this.setState({ password: value })}
           value={this.state.password}
         />
-        { this.state.password ? 
+        { this.state.password ?
           <TextInput
             style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
             placeholder={i18n.t('auth.confirmpassword')}
@@ -160,8 +160,8 @@ export default class RegisterForm extends Component {
         'Oooopps',
         'Please accept the Terms & Conditions'
       );
-    } 
-    
+    }
+
     if (this.state.error.confirmPasswordError) {
       return Alert.alert(
         'Oooopps',
@@ -171,7 +171,7 @@ export default class RegisterForm extends Component {
 
     try {
       await register(this.state.username ,this.state.email ,this.state.password)
-      await login(this.state.username ,this.state.password)
+      await authService.login(this.state.username ,this.state.password)
       await this.props.user.load();
       this.props.onRegister(sessionService.guid);
     } catch (err) {

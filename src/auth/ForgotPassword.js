@@ -14,7 +14,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import { forgot } from './LoginService';
+import authService from './AuthService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
@@ -91,7 +91,7 @@ export default class ForgotPassword extends PureComponent {
 
     if (!this.state.sent ) {
       this.setState({sending: true});
-      forgot(this.state.username)
+      authService.forgot(this.state.username)
         .then(data => {
             this.setState({ sent: true, msg: i18n.t('auth.requestNewPasswordSuccess') });
         })

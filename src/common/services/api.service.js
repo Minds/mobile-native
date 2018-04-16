@@ -2,6 +2,7 @@ import session from './session.service';
 import { MINDS_URI, MINDS_URI_SETTINGS } from '../../config/Config';
 import { btoa } from 'abab';
 
+
 /**
  * Api service
  */
@@ -78,11 +79,11 @@ class ApiService {
     });
   }
 
-  async post(url, body={}) {
-    const paramsString = await this.buildParamsString({});
+ post(url, body={}) {
+    const paramsString = this.buildParamsString({});
     const headers = this.buildHeaders();
 
-    return await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       fetch(MINDS_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers })
         .then(resp => {
           if (!resp.ok) {
@@ -171,9 +172,9 @@ class ApiService {
     }
 
     return new Promise((resolve, reject)=>{
-      
+
       let xhr = new XMLHttpRequest();
-      
+
       if (progress) {
         xhr.upload.addEventListener("progress", progress);
       }
@@ -185,7 +186,7 @@ class ApiService {
       xhr.onreadystatechange = () => {
         if (xhr.readyState == XMLHttpRequest.DONE) {
           let data = JSON.parse(xhr.responseText);
-          if (data.status == 'error') 
+          if (data.status == 'error')
             return reject(data);
 
           resolve(data);

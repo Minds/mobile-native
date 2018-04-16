@@ -16,7 +16,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import { login, twoFactorAuth } from './LoginService';
+import authService from './AuthService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
@@ -144,7 +144,7 @@ export default class LoginForm extends Component {
     this.setState({ msg: ''});
     // is two factor auth
     if (this.state.twoFactorToken) {
-      twoFactorAuth(this.state.twoFactorToken, this.state.twoFactorCode)
+      authService.twoFactorAuth(this.state.twoFactorToken, this.state.twoFactorCode)
         .then(data => {
           this.props.onLogin();
         })
@@ -152,7 +152,7 @@ export default class LoginForm extends Component {
           console.log(err);
         });
     } else {
-      login(this.state.username, this.state.password)
+      authService.login(this.state.username, this.state.password)
         .then(data => {
           this.props.onLogin();
         })

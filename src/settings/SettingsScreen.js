@@ -17,7 +17,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { logout } from './../auth/LoginService';
+import authService from './../auth/AuthService';
 import { List, ListItem } from 'react-native-elements';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from './SettingsService';
@@ -40,27 +40,6 @@ export default class SettingsScreen extends Component {
           language: i18nService.getCurrentLocale()
         });
       })
-  }
-
-  changeLanguage = (val) => {
-    i18nService.setLocale(val);
-    this.setState({ language: val })
-  }
-
-  onPressNotifications = () => {
-    this.props.navigation.navigate('NotificationsSettings');
-  }
-
-  onPressLogout = () => {
-    logout();
-    const loginAction = NavigationActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Login' })
-      ]
-    })
-
-    this.props.navigation.dispatch(loginAction);
   }
 
   wipeEthereumKeychainAction = () => {
@@ -132,7 +111,7 @@ export default class SettingsScreen extends Component {
         name: 'Logout',
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
-          logout();
+          authService.logout();
           const loginAction = NavigationActions.reset({
             index: 0,
             actions: [

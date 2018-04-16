@@ -1,0 +1,353 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginForm component renders correctly 1`] = `
+<View
+  enabled={true}
+  keyboardVerticalOffset={0}
+  onLayout={[Function]}
+  style={
+    Array [
+      undefined,
+      Object {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <TextInput
+    allowFontScaling={true}
+    autoCapitalize="none"
+    onChangeText={[Function]}
+    placeholder="Username"
+    placeholderTextColor="#444"
+    returnKeyType="done"
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#f8f8f8",
+          "borderRadius": 4,
+          "color": "#444",
+          "fontSize": 16,
+          "fontWeight": "600",
+          "height": 50,
+          "letterSpacing": 2,
+          "padding": 15,
+        },
+        Object {
+          "marginTop": 10,
+        },
+      ]
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <TextInput
+    allowFontScaling={true}
+    autoCapitalize="none"
+    onChangeText={[Function]}
+    placeholder="Password"
+    placeholderTextColor="#444"
+    returnKeyType="done"
+    secureTextEntry={true}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#f8f8f8",
+          "borderRadius": 4,
+          "color": "#444",
+          "fontSize": 16,
+          "fontWeight": "600",
+          "height": 50,
+          "letterSpacing": 2,
+          "padding": 15,
+        },
+        Object {
+          "marginTop": 10,
+        },
+      ]
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        },
+        Object {
+          "marginTop": 10,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "marginLeft": 15,
+            "marginRight": 15,
+          },
+          undefined,
+          Object {
+            "backgroundColor": "transparent",
+            "borderColor": "#FFF",
+            "borderRadius": 3,
+            "borderWidth": 1,
+            "marginLeft": 10,
+            "marginRight": 0,
+          },
+          Object {
+            "borderRadius": 3,
+          },
+        ]
+      }
+    >
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        hasTVPreferredFocus={undefined}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={null}
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <View
+          pointerEvents="box-only"
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#9E9E9E",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 19,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Object {
+                "borderRadius": 3,
+              },
+              Object {
+                "padding": 12,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Array [
+                Object {},
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {
+                    "color": "white",
+                    "fontSize": 20,
+                  },
+                  undefined,
+                  Object {
+                    "fontSize": 17.5,
+                  },
+                  undefined,
+                  Object {
+                    "fontWeight": "600",
+                    "letterSpacing": 1.25,
+                  },
+                  undefined,
+                  undefined,
+                ],
+              ]
+            }
+          >
+            CREATE A CHANNEL
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "marginLeft": 15,
+            "marginRight": 15,
+          },
+          undefined,
+          Object {
+            "backgroundColor": "transparent",
+            "borderColor": "#FFF",
+            "borderRadius": 3,
+            "borderWidth": 1,
+            "marginLeft": 10,
+            "marginRight": 0,
+          },
+          Object {
+            "borderRadius": 3,
+          },
+        ]
+      }
+    >
+      <View
+        accessibilityComponentType={undefined}
+        accessibilityLabel={undefined}
+        accessibilityTraits={undefined}
+        accessible={true}
+        hasTVPreferredFocus={undefined}
+        hitSlop={undefined}
+        isTVSelectable={true}
+        nativeID={undefined}
+        onLayout={undefined}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={null}
+        testID={undefined}
+        tvParallaxProperties={undefined}
+      >
+        <View
+          pointerEvents="box-only"
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#9E9E9E",
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 19,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              Object {
+                "backgroundColor": "transparent",
+              },
+              Object {
+                "borderRadius": 3,
+              },
+              Object {
+                "padding": 12,
+              },
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+            ]
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Array [
+                Object {},
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Array [
+                  Object {
+                    "color": "white",
+                    "fontSize": 20,
+                  },
+                  undefined,
+                  Object {
+                    "fontSize": 17.5,
+                  },
+                  undefined,
+                  Object {
+                    "fontWeight": "600",
+                    "letterSpacing": 1.25,
+                  },
+                  undefined,
+                  undefined,
+                ],
+              ]
+            }
+          >
+            LOGIN
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        },
+        Object {
+          "paddingTop": 15,
+        },
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "color": "white",
+          },
+          Object {
+            "fontWeight": "bold",
+          },
+        ]
+      }
+    >
+      FORGOT PASSWORD
+    </Text>
+  </View>
+</View>
+`;
