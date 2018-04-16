@@ -110,7 +110,7 @@ export default class CommentsStore {
       this.comments = [];
       this.comments = response.comments.concat(CommentModel.createMany(comments));
 
-      if (response.comments.length < 12) { //nothing more to load
+      if (response.comments.length < 11) { //nothing more to load
         response['load-previous'] = '';
       }
     }
@@ -238,7 +238,7 @@ export default class CommentsStore {
       let entity = this.comments[index];
 
       const result = await deleteComment(guid);
-        
+
       this.comments.splice(index, 1);
     }
   }
