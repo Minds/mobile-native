@@ -76,7 +76,7 @@ export default class Tags extends PureComponent {
     const url = /(^|\s)(\b(?:https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { Linking.openURL(content);}}>{content}</Text>
+      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { Linking.openURL(content.toLowerCase());}}>{content}</Text>
     });
   }
 
@@ -87,7 +87,7 @@ export default class Tags extends PureComponent {
     const url = /(^|\s)([-A-Z0-9+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9+&@#\/%=~_|]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { Linking.openURL(content);}}>{content}</Text>
+      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { Linking.openURL(content.toLowerCase());}}>{content}</Text>
     });
   }
 
@@ -98,7 +98,7 @@ export default class Tags extends PureComponent {
     const url = /(^|\s)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { Linking.openURL(content);}}>{content}</Text>
+      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { Linking.openURL('http://'+content.toLowerCase());}}>{content}</Text>
     });
   }
 
