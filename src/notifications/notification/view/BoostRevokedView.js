@@ -22,7 +22,7 @@ export default class BoostRevokedView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToBoostConsole}>Your boost {entity.params.points} {description} was revoked.</Text>
+        <Text onPress={this.navToBoostConsole}>Your boost {entity.params.points} {description} was revoked</Text>
       </View>
     )
   }
