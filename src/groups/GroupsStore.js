@@ -77,4 +77,4 @@ class GroupsStore {
 
 }
 
-export default new GroupsStore();
+export default GroupsStore;

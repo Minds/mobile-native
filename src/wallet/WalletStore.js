@@ -91,4 +91,4 @@ class WalletStore {
   }
 }
 
-export default new WalletStore()
+export default WalletStore;

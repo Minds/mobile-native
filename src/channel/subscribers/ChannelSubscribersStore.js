@@ -10,11 +10,11 @@ import channelService from '../ChannelService';
  */
 class ChannelSubscribersStore {
 
-  
+
   @observable list = new OffsetListStore();
   @observable filter = 'subscribers';
   @observable guid = '';
-  
+
   loading = false;
 
   setGuid(guid) {
@@ -61,4 +61,4 @@ class ChannelSubscribersStore {
   }
 }
 
-export default new ChannelSubscribersStore();
+export default ChannelSubscribersStore;

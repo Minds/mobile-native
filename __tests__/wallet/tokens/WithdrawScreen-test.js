@@ -4,18 +4,19 @@ import React from 'react';
 import { observable, useStrict } from 'mobx';
 
 import WithdrawScreen from '../../../src/wallet/tokens/WithdrawScreen';
-
+import UserStore from '../../../src/auth/UserStore';
+import WalletStore from '../../../src/wallet/WalletStore';
 import { shallow } from 'enzyme';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
-import userStoreMockFactory from '../../../__mocks__/stores/user.store';
-import withdrawStoreMockFactory from '../../../__mocks__/stores/withdraw.store';
-
 import componentOrWrappedComponent from '../../../tests-helpers/component-or-wrapped-component';
 import { FlatList } from 'react-native';
 import JoinView from '../../../src/wallet/tokens/JoinView';
+
+jest.mock('../../../src/auth/UserStore');
+jest.mock('../../../src/wallet/WalletStore');
 
 describe('WithdrawScreen', () => {
   let user, withdraw, screen;
@@ -23,8 +24,8 @@ describe('WithdrawScreen', () => {
   beforeEach(() => {
     useStrict(false);
 
-    user = observable(userStoreMockFactory());
-    withdraw = observable(withdrawStoreMockFactory());
+    user = new UserStore();
+    withdraw = new WalletStore();
 
     user.me.rewards = true;
 

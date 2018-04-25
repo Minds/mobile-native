@@ -27,8 +27,6 @@ import {
 
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
-import NavigatorStore from './src/common/stores/NavigationStore';
-import NavigationStoreService from './src/common/services/navigation.service';
 import Stack from './AppScreens';
 import stores from './AppStores';
 import './AppErrors';
@@ -38,12 +36,7 @@ import receiveShare from './src/common/services/receive-share.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import badgeService from './src/common/services/badge.service';
-
-// build navigation store
-stores.navigatorStore = new NavigatorStore(Stack);
-
-// Setup navigation store proxy (to avoid circular references issues)
-NavigationStoreService.set(stores.navigatorStore);
+import appNavigation from './AppNavigation';
 
 // init push service
 pushService.init();
@@ -53,7 +46,7 @@ sessionService.onLogin(async () => {
 
   // register device token into backend on login
   pushService.registerToken();
-  
+
   // load user
   await stores.user.load();
 
@@ -65,7 +58,7 @@ sessionService.onLogin(async () => {
   // handle initial notifications (if the app is opened by tap on one)
   pushService.handleInitialNotification();
 
-  // handle shared 
+  // handle shared
   receiveShare.handle();
 });
 
@@ -85,7 +78,7 @@ sessionService.onLogout(() => {
 export default class App extends Component {
 
   constructor(props) {
-    super(props); 
+    super(props);
     this.state = {
       appState: AppState.currentState
     };
@@ -95,7 +88,7 @@ export default class App extends Component {
    * Handle app state changes
    */
   handleAppStateChange = (nextState) => {
-    // if the app turns active we check for shared 
+    // if the app turns active we check for shared
     if (this.state.appState.match(/inactive|background/) && nextState === 'active') {
       receiveShare.handle();
     }
@@ -163,13 +156,7 @@ export default class App extends Component {
   render() {
     const app = (
       <Provider key="app" {...stores}>
-        <Observer>{
-        () => <Stack navigation={addNavigationHelpers({
-          dispatch: stores.navigatorStore.dispatch,
-          state: stores.navigatorStore.navigationState,
-          addListener: () => { }
-        })}/>
-      }</Observer>
+        <Observer>{() => <Stack navigation={appNavigation.buildNavigator()}/>}</Observer>
       </Provider>
     );
 

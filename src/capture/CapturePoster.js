@@ -5,6 +5,7 @@ import {
   ScrollView,
   TextInput,
   Text,
+  Alert,
   Button,
   TouchableHighlight,
   TouchableOpacity,
@@ -16,8 +17,6 @@ import { Icon } from 'react-native-elements'
 import {
   NavigationActions
 } from 'react-navigation';
-
-import { post } from './CaptureService';
 
 import colors from '../styles/Colors';
 
@@ -32,7 +31,7 @@ import { CommonStyle } from '../styles/Common';
 import Colors from '../styles/Colors';
 import CapturePosterFlags from './CapturePosterFlags';
 
-@inject('user', 'navigatorStore', 'capture')
+@inject('user', 'capture')
 @observer
 export default class CapturePoster extends Component {
 
@@ -104,7 +103,7 @@ export default class CapturePoster extends Component {
 
   /**
    * Nav to newsfeed
-   * @param {object} entity 
+   * @param {object} entity
    */
   navToNewsfeed(entity) {
     const dispatch = NavigationActions.navigate({
@@ -202,7 +201,7 @@ export default class CapturePoster extends Component {
       const result = await attachment.attachMedia(response);
     } catch(err) {
       console.error(err);
-      alert('caught upload error');
+      Alert.alert('caught upload error');
     }
   }
 
@@ -214,7 +213,7 @@ export default class CapturePoster extends Component {
     // delete only if it has an attachment
     if (attachment.hasAttachment) {
       const result = await attachment.delete();
-      if (result === false) alert('caught error deleting the file');
+      if (result === false) Alert.alert('caught error deleting the file');
     }
   }
 
@@ -225,7 +224,7 @@ export default class CapturePoster extends Component {
     const attachment = this.props.capture.attachment;
 
     if (attachment.hasAttachment && attachment.uploading) {
-      alert('Please try again in a moment.');
+      Alert.alert('Please try again in a moment.');
       return false;
     }
 
@@ -234,7 +233,7 @@ export default class CapturePoster extends Component {
       !this.state.text &&
       (!this.state.meta || !this.state.meta.perma_url)
     ) {
-      alert('Nothing to post...');
+      Alert.alert('Nothing to post...');
       return false;
     }
 
@@ -255,8 +254,6 @@ export default class CapturePoster extends Component {
       }
     }
 
-    this.props.capture.setPosting(true);
-
     if (this.state.meta) {
       newPost = Object.assign(newPost, this.state.meta);
     }
@@ -266,7 +263,7 @@ export default class CapturePoster extends Component {
     }
 
     try {
-      let response = await post(newPost);
+      let response = await this.props.capture.post(newPost);
 
       if (this.props.reset) {
         this.props.reset();
@@ -293,9 +290,10 @@ export default class CapturePoster extends Component {
         this.navToNewsfeed(response.entity);
       }
 
+      return response;
     } catch (e) {
       console.log('error', e);
-      alert('Oooppppss. Looks like there was an error.');
+      Alert.alert('Oooppppss. Looks like there was an error.');
     }
   }
 

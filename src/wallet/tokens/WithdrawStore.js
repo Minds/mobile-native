@@ -42,4 +42,4 @@ class WithdrawStore {
   }
 }
 
-export default new WithdrawStore();
+export default WithdrawStore;

@@ -77,4 +77,4 @@ class KeychainStore {
 
 }
 
-export default new KeychainStore()
+export default KeychainStore

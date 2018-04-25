@@ -1,4 +1,4 @@
-import { 
+import {
   observable,
   action,
   inject
@@ -24,7 +24,7 @@ class BlogsViewStore {
         this.setBlog(result.blog);
       });
   }
-    
+
   /**
    * Set blog
    * @param {object} blog
@@ -35,4 +35,4 @@ class BlogsViewStore {
   }
 }
 
-export default new BlogsViewStore();
+export default BlogsViewStore;

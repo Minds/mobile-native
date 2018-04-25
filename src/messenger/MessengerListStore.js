@@ -91,16 +91,16 @@ class MessengerListStore {
    * Load conversations list
    */
   async loadList(reload=false) {
-  
+
     const rows = 24;
-    
+
     // abort if we have a previous call
     if (this.controller) {
       this.controller.abort();
     }
     // abortable call controller
     this.controller = new AbortController();
-    
+
     this.setLoading(true);
 
     try {
@@ -109,7 +109,7 @@ class MessengerListStore {
         this.newsearch = false;
         response = await messengerService.searchConversations(this.search, rows, this.controller.signal);
       } else {
-        
+
         if (this.loaded && !this.offset && !reload) {
           this.setLoading(false);
           return;
@@ -162,7 +162,7 @@ class MessengerListStore {
 
   /**
    * Setup messenger
-   * @param {string} password 
+   * @param {string} password
    */
   async doSetup(password) {
     this.setUnlocking(true);
@@ -262,4 +262,4 @@ class MessengerListStore {
 
 }
 
-export default new MessengerListStore();
+export default MessengerListStore;
