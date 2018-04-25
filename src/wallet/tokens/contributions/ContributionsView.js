@@ -47,7 +47,7 @@ export default class ContributionsView extends Component {
     const start = new Date();
 
     end.setHours(23, 59, 59);
-    start.setMonth(start.getMonth() - 1);
+    start.setDate(start.getDate() - 7);
     start.setHours(0, 0, 0);
 
     this.setState({
