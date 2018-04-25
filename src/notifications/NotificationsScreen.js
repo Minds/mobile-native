@@ -60,15 +60,14 @@ export default class NotificationsScreen extends Component {
    * On component mount
    */
   componentWillMount() {
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Notifications', (s) => {
-      this.props.notifications.loadList(true);
-      this.props.notifications.setUnread(0);
-    });
-
     this.disposeState = this.props.tabs.onState((state) => {
       if (!state.previousScene) return;
-      if (state.previousScene.key == "Notifications" && state.previousScene.key == state.scene.route.key) {
+      if (state.previousScene.key == 'Notifications' && state.previousScene.key == state.scene.route.key) {
         this.props.notifications.refresh();
+        this.props.notifications.setUnread(0);
+      } else if(state.scene.route.key == 'Notifications') {
+        this.props.notifications.loadList(true);
+        this.props.notifications.setUnread(0);
       }
     });
   }
@@ -100,7 +99,7 @@ export default class NotificationsScreen extends Component {
       }
 
       if (me && me.hasBanned && !me.hasBanner()) { //TODO: check for avatar too
-        design = <Text 
+        design = <Text
           style={ComponentsStyle.emptyComponentLink}
           onPress={() => this.props.navigation.navigate('Channel', { username: 'me' })}
           >
@@ -114,7 +113,7 @@ export default class NotificationsScreen extends Component {
             <MIcon name="notifications" size={72} color='#444' />
             <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any {filter} notifications</Text>
             {design}
-            <Text 
+            <Text
               style={ComponentsStyle.emptyComponentLink}
               onPress={() => this.props.navigation.navigate('Capture')}
               >
@@ -123,7 +122,7 @@ export default class NotificationsScreen extends Component {
           </View>
         </View>);
     }
-  
+
     body = (
       <FlatList
         data={list.entities.slice()}
