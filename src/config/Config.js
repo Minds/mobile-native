@@ -1,4 +1,4 @@
-import { 
+import {
   Platform
 } from 'react-native';
 
@@ -11,6 +11,8 @@ export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_URI_SETTINGS = {
   //basicAuth: 'crypto:ohms',
 };
+
+export const MINDS_MAX_VIDEO_LENGTH = 5; // in minutes
 
 export const SOCKET_URI = 'wss://ha-socket-io-us-east-1.minds.com:3030'
 

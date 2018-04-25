@@ -146,7 +146,7 @@ export default class MindsVideo extends Component {
     }, 1000);
 
     KeepAwake.activate();
-  
+
     this.setState({
       active: true,
       paused: false,
@@ -164,21 +164,21 @@ export default class MindsVideo extends Component {
   get play_button() {
     const size = 56;
     if (this.state.paused) {
-      return <Icon 
-        onPress={this.play} 
-        style={styles.videoIcon} 
-        name="md-play" 
-        size={size} 
+      return <Icon
+        onPress={this.play}
+        style={styles.videoIcon}
+        name="md-play"
+        size={size}
         color={colors.light}
         />;
     }
 
-    return <Icon 
+    return <Icon
       onPress={this.pause}
       style={styles.videoIcon}
       name="md-pause"
       size={size}
-      color={colors.light} 
+      color={colors.light}
       />;
   }
 
@@ -217,7 +217,7 @@ export default class MindsVideo extends Component {
           onEnd={this.onVideoEnd}
           onLoad={this.onVideoLoad}
           onProgress={this.onProgress}
-          source={{ uri: video.uri }}
+          source={{ uri: video.uri.replace('file://',''), type: 'mp4' }}
           paused={paused}
           volume={parseFloat(this.state.volume)}
           resizeMode={"contain"}
@@ -244,7 +244,7 @@ export default class MindsVideo extends Component {
     const entity = this.props.entity;
     let {currentTime, duration, paused} = this.state;
     const mustShow = this.state.showOverlay && (!entity || !entity.mature || entity.mature_visibility);
-    
+
     if (mustShow) {
       const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
       const progressBar = (
@@ -285,7 +285,7 @@ export default class MindsVideo extends Component {
 
     return (
       <View style={styles.container} >
-        <TouchableWithoutFeedback 
+        <TouchableWithoutFeedback
           style={styles.videoContainer}
           onPress={this.openControlOverlay.bind(this)}
           >

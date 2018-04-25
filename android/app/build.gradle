@@ -152,6 +152,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fs')
+    compile project(':react-native-media-meta')
     compile project(':react-native-share-menu')
     compile project(':react-native-notifications')
     compile project(':react-native-keep-awake')

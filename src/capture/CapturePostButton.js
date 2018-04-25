@@ -25,7 +25,7 @@ export default class CapturePostButton extends Component {
           attachment.uploading ?
             <Progress.Pie progress={attachment.progress} size={36} />
             :
-            isPosting ?
+            (isPosting || attachment.checkingVideoLength) ?
               <ActivityIndicator size={'large'} />
               :
               <TouchableOpacity

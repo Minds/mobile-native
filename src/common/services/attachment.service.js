@@ -16,15 +16,6 @@ class AttachmentService {
 
     let type = 'image'
 
-    if (!media.width && media.type != 'image/jpeg') {
-      let extension = 'mp4';
-      if (media.path) {
-        extension = media.path.split('.').pop();
-      }
-      type = 'video';
-      media.type = 'video/' + extension;
-    }
-
     const file = {
       uri: media.uri,
       path: media.path || null,
@@ -55,6 +46,7 @@ class AttachmentService {
     if (response) {
       return {
         uri: response.uri,
+        path: response.path,
         type: 'video/mp4',
         fileName: 'image.mp4'
       }
@@ -72,6 +64,7 @@ class AttachmentService {
     if (response) {
       return {
         uri: response.uri,
+        path: response.path,
         type: 'image/jpeg',
         fileName: 'image.jpg'
       }
@@ -85,7 +78,7 @@ class AttachmentService {
    * @param {string} mediaType photo or video (or mixed only ios)
    */
   async gallery(mediaType = 'photo') {
-    
+
     const response = await imagePicker.launchImageLibrary(mediaType);
 
     if (!response) return response;

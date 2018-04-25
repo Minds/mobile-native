@@ -173,10 +173,12 @@ export default class ActivityScreen extends Component {
           />
           {attachment.uploading ?
             <Progress.Pie progress={attachment.progress} size={36} />:
-            <View style={CommonStyle.rowJustifyEnd}>
-              <TouchableOpacity onPress={() => this.actionAttachmentSheet.show()} style={styles.sendicon}><Icon name="md-attach" size={24} style={CommonStyle.paddingRight2x} /></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.postComment()} style={styles.sendicon}><Icon name="md-send" size={24} /></TouchableOpacity>
-            </View>}
+            (comments.saving || attachment.checkingVideoLength) ?
+              <ActivityIndicator size={'large'} /> :
+              <View style={CommonStyle.rowJustifyEnd}>
+                <TouchableOpacity onPress={() => this.actionAttachmentSheet.show()} style={styles.sendicon}><Icon name="md-attach" size={24} style={CommonStyle.paddingRight2x} /></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.postComment()} style={styles.sendicon}><Icon name="md-send" size={24} /></TouchableOpacity>
+              </View>}
         </View>
           {attachment.hasAttachment && <View style={styles.preview}>
             <CapturePreview
