@@ -7,14 +7,17 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { inject, observer } from 'mobx-react/native'
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Activity from './activity/Activity';
 import TileElement from './TileElement';
-import NewsfeedEmpty from './NewsfeedEmpty';
+import { CommonStyle } from '../styles/Common';
+import { ComponentsStyle } from '../styles/Components';
 
 /**
  * News feed list component
  */
+@inject('user')
 @observer
 export default class NewsfeedList extends Component {
 
@@ -61,11 +64,12 @@ export default class NewsfeedList extends Component {
    */
   render() {
     let renderRow,
-    getItemLayout,
+    getItemLayout, 
     design,
     empty = null;
 
     const newsfeed = this.props.newsfeed;
+    const me = this.props.user.me;
 
     if (newsfeed.isTiled) {
       renderRow = this.props.renderTileActivity || this.renderTileActivity;
@@ -82,11 +86,46 @@ export default class NewsfeedList extends Component {
     ) : null;
 
     // empty view
-    if ((newsfeed.list.loaded || newsfeed.lastError) && !newsfeed.list.refreshing) {
+    if (newsfeed.list.loaded && !newsfeed.list.refreshing) {
       if (this.props.emptyMessage) {
         empty = this.props.emptyMessage;
+      } else if (newsfeed.filter == 'subscribed') {
+        if (me && me.hasBanner && !me.hasBanner()) { //TODO: check for avatar too
+          design = <Text 
+            style={ComponentsStyle.emptyComponentLink}
+            onPress={() => this.props.navigation.navigate('Channel', { username: 'me' })}
+            >
+            Design your channel
+          </Text>
+        }
+  
+        empty = (
+          <View style={ComponentsStyle.emptyComponentContainer}>
+            <View style={ComponentsStyle.emptyComponent}>
+              <MIcon name="home" size={72} color='#444' />
+              <Text style={ComponentsStyle.emptyComponentMessage}>Your newsfeed is empty</Text>
+              {design}
+              <Text 
+                style={ComponentsStyle.emptyComponentLink}
+                onPress={() => this.props.navigation.navigate('Capture')}
+                >
+                Create a post
+              </Text>
+              <Text 
+                style={ComponentsStyle.emptyComponentLink}
+                onPress={() => this.props.navigation.navigate('Discovery', { type: 'user' })}
+                >
+                Find channels
+              </Text>
+            </View>
+          </View>);
       } else {
-        empty = <NewsfeedEmpty newsfeed={newsfeed} navigation={this.props.navigation}/>
+        empty = (
+          <View style={ComponentsStyle.emptyComponentContainer}>
+            <View style={ComponentsStyle.emptyComponent}>
+              <Text style={ComponentsStyle.emptyComponentMessage}>This feed is empty</Text>
+            </View>
+          </View>);
       }
     }
 

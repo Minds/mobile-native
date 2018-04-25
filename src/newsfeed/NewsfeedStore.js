@@ -1,4 +1,4 @@
-import { observable, action, computed, extendObservable } from 'mobx'
+import { observable, action, computed } from 'mobx'
 
 import NewsfeedService, { getFeedTop, getFeed, getBoosts, setViewed } from './NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
@@ -9,7 +9,6 @@ import ActivityModel from './ActivityModel';
  */
 class NewsfeedStore {
 
-
   stores;
 
   service = new NewsfeedService;
@@ -18,10 +17,6 @@ class NewsfeedStore {
   @observable filter = 'subscribed';
 
   @observable.ref boosts = [];
-  /**
-   * Last fetch error
-   */
-  @observable lastError = null;
 
   /**
    * List loading
@@ -37,31 +32,24 @@ class NewsfeedStore {
 
   buildStores() {
     this.stores = {
-      'subscribed': extendObservable({
-          list: new OffsetFeedListStore('shallow')
-        }, {
-          loading: false,
-        }
-      ),
-      'top': extendObservable({
-          list: new OffsetFeedListStore('shallow')
-        }, {
-          loading: false,
-        }
-      ),
-      'boostfeed': extendObservable({
-          list: new OffsetFeedListStore('shallow')
-        }, {
-          loading: false,
-        }
-      )
+      'subscribed': {
+        list: new OffsetFeedListStore('shallow'),
+        loading: false,
+      },
+      'top': {
+        list: new OffsetFeedListStore('shallow'),
+        loading: false,
+      },
+      'boostfeed': {
+        list: new OffsetFeedListStore('shallow'),
+        loading: false,
+      },
     };
   }
 
   /**
    * Load feed
    */
-  @action
   async loadFeed(refresh = false) {
     const store = this.stores[this.filter];
     const fetchFn = this.fetch;
@@ -79,10 +67,8 @@ class NewsfeedStore {
       this.assignRowKeys(feed);
       store.list.setList(feed, refresh);
       this.loaded = true;
-      this.lastError = null;
-    } catch (err) {
+    } catch (e) {
       console.log('error', err);
-      this.lastError = err;
     } finally {
       store.loading = false;
     }

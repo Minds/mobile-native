@@ -24,13 +24,13 @@ export default class NewsfeedService {
         offset: data['load-next'],
       }
     } catch (err) {
-      console.log('error', err);
+      console.log('error');
       throw "Ooops";
     }
   }
 
-  getFeed(offset, limit = 12) {
-    return this._getFeed('apu/v1/newsfeed/', offset, limit);
+  async getFeed(offset, limit = 12) {
+    return this._getFeed('api/v1/newsfeed/', offset, limit);
   }
 
   /**
@@ -38,7 +38,7 @@ export default class NewsfeedService {
    * @param {string} offset
    * @param {int} limit
    */
-  getFeedTop(offset, limit = 12) {
+  async getFeedTop(offset, limit = 12) {
     return this._getFeed('api/v1/newsfeed/top', offset, limit);
   }
 
@@ -48,7 +48,7 @@ export default class NewsfeedService {
    * @param {string} offset
    * @param {int} limit
    */
-  getFeedChannel(guid, offset, limit = 12) {
+  async getFeedChannel(guid, offset, limit = 12) {
     return this._getFeed('api/v1/newsfeed/personal/' + guid, offset, limit);
   }
 
@@ -62,7 +62,7 @@ export default class NewsfeedService {
       this.controllers._getFeed.abort();
 
     this.controllers._getFeed = new AbortController();
-
+    
     try {
       const data = await api.get('api/v1/boost/fetch/newsfeed', {
           limit: limit || '',
@@ -70,7 +70,7 @@ export default class NewsfeedService {
           rating: rating || 1,
           platform: Platform.OS === 'ios' ? 'ios' : 'other'
         }, this.controllers._getFeed.signal);
-
+    
         return {
           entities: data.boosts||[],
           offset: data['load-next'],
