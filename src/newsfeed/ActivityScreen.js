@@ -44,6 +44,8 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import SingleEntityStoreProvider from '../common/stores/SingleEntityStore';
 import { getSingle } from './NewsfeedService';
 
+import isIphoneX from '../common/helpers/isIphoneX';
+
 @inject('user')
 @observer
 export default class ActivityScreen extends Component {
@@ -67,7 +69,7 @@ export default class ActivityScreen extends Component {
 
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
   }
-  
+
   /**
    * Component did mount
    */
@@ -115,7 +117,7 @@ export default class ActivityScreen extends Component {
                 <Text style={styles.loadCommentsText}> LOAD EARLIER </Text>
               </TouchableHighlight> : null
             }
-            
+
           </View>;
   }
 
@@ -353,8 +355,10 @@ export default class ActivityScreen extends Component {
       />
     }
 
+    const vPadding = isIphoneX() ? 88 : 66;
+
     return (
-      <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={64}>
+      <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={vPadding}>
         <View style={{flex:1}}>
           <FlatList
             ref={ ref => this.listRef = ref }
