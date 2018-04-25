@@ -52,7 +52,7 @@ export default class BlogsViewScreen extends Component {
     if (params.blog) {
       this.props.blogsView.setBlog(params.blog);
     } else {
-      this.props.blogsView.setBlog(null);
+      this.props.blogsView.reset();
       this.props.blogsView.loadBlog(params.guid);
     }
   }

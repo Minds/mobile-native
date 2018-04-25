@@ -11,7 +11,7 @@ import BlogModel from './BlogModel';
  */
 class BlogsViewStore {
 
-  @observable blog = {};
+  @observable blog = null;
 
   /**
    * Load blog
@@ -23,6 +23,14 @@ class BlogsViewStore {
       .then(result => {
         this.setBlog(result.blog);
       });
+  }
+
+  /**
+   * Reset the store
+   */
+  @action
+  reset() {
+    this.blog = null;
   }
 
   /**
