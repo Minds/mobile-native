@@ -61,6 +61,9 @@ class WireService {
       method: 'tokens',
       amount: opts.amount,
       recurring: !!opts.recurring
+    }).then(result => {
+      result.payload = payload;
+      return result;
     });
   }
 

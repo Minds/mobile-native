@@ -141,7 +141,7 @@ export default class FabScreen extends Component {
         </Text>
 
         <View style={{ flexDirection: 'row', marginTop: 32, marginBottom: 32, }}>
-          <TextInput 
+          <TextInput
             ref="input"
             onChangeText={this.changeInput}
             style={[CommonStyle.field, styles.input]}
@@ -253,7 +253,7 @@ export default class FabScreen extends Component {
         return;
       }
 
-      if (onComplete) onComplete();
+      if (onComplete) onComplete(done);
       this.props.navigation.goBack();
     } catch (e) {
       if (!e || e.message !== 'E_CANCELLED') {

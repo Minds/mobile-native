@@ -5,6 +5,7 @@ import React, {
 import {
   Text,
   View,
+  Alert,
   StyleSheet,
 } from 'react-native';
 
@@ -107,8 +108,17 @@ export default class Lock extends PureComponent {
       this.props.navigation.navigate('WireFab', {
           owner: this.props.entity.ownerObj,
           default: this.props.entity.wire_threshold,
-          onComplete: () => {
-            this.props.entity.unlock();
+          onComplete: (result) => {
+            if (result && result.payload.method === 'onchain') {
+              setTimeout(() => {
+                Alert.alert(
+                  'We\'ve received your transaction',
+                  'Please try unlocking this post after it gets processed. We estimate it may take around 5 minutes.'
+                );
+              }, 400);
+            } else {
+              this.props.entity.unlock();
+            }
           }
         });
       });
