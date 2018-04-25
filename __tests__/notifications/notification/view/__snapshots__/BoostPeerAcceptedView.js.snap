@@ -49,14 +49,27 @@ exports[`renders correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
-      style={
-        Object {
-          "color": "#444",
-          "fontWeight": "bold",
-        }
-      }
     >
-      for some title
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        for 
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#444",
+            "fontWeight": "bold",
+          }
+        }
+      >
+        some title
+      </Text>
     </Text>
   </Text>
 </View>
