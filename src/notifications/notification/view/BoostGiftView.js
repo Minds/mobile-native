@@ -54,10 +54,13 @@ export default class BoostGiftView extends Component {
 
     if (!entity.entityObj) return '';
 
-    let desc = 'for ' + (entity.entityObj.title || entity.entityObj.name || (entity.entityObj.type !== 'user' ? `${pron} post` : `${pron} channel`));
+    let desc = (entity.entityObj.title || entity.entityObj.name || (entity.entityObj.type !== 'user' ? `${pron} post` : `${pron} channel`));
 
     return (
-      <Text style={styles.link}>{desc}</Text>
+      <Text>
+        <Text>for </Text>
+        <Text style={styles.link}>{desc}</Text>
+      </Text>
     );
   }
 }
