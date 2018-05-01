@@ -116,6 +116,7 @@ export default class BoostActionBar extends Component {
                 <Text style={styles.value}>
                   { (this.props.entity.bidType == 'offchain' ||
                     this.props.entity.bidType == 'onchain' ||
+                    this.props.entity.bidType == 'peer' ||
                     this.props.entity.bidType == 'tokens') &&
                     token(this.props.entity.bid, 18) + ' Tokens' }
                   { (this.props.entity.bidType == 'usd' ||
