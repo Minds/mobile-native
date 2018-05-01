@@ -61,7 +61,7 @@ export default class CaptureGallery extends PureComponent {
       }
     }
 
-    if (allowed) this._loadPhotos();
+    if (allowed === true) this._loadPhotos();
   }
 
   /**

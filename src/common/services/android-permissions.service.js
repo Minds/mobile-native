@@ -8,20 +8,15 @@ class AndroidPermissionsService {
   /**
    * Request external storage read permission
    */
-  async readExternalStorage() {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-        {
-          'title': 'Minds',
-          'message': 'Minds needs access to your external storage ' +
-            'so you can upload awesome pictures.'
-        }
-      )
-      return granted === PermissionsAndroid.RESULTS.GRANTED;
-    } catch (err) {
-      console.warn(err)
-    }
+  readExternalStorage() {
+    return this._request(
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      {
+        'title': 'Minds',
+        'message': 'Minds needs access to your external storage ' +
+        'so you can upload awesome pictures.'
+      }
+    );
   }
 
   /**
@@ -32,32 +27,24 @@ class AndroidPermissionsService {
       const granted = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
       );
-
-      if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN || granted === false) return -1;
-
-      return granted === PermissionsAndroid.RESULTS.GRANTED;
+      return granted;
     } catch (err) {
       console.warn(err)
+      return err;
     }
   }
 
   /**
    * Request camera permission
    */
-  async camera() {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          'title': 'Minds',
-          'message': 'Minds needs access to your external camera ' +
-            'so you can upload awesome pictures.'
-        }
-      )
-      return granted === PermissionsAndroid.RESULTS.GRANTED;
-    } catch (err) {
-      console.warn(err)
-    }
+  camera() {
+    return this._request(PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        'title': 'Minds',
+        'message': 'Minds needs access to your external camera ' +
+          'so you can upload awesome pictures.'
+      }
+    );
   }
 
   /**
@@ -68,12 +55,28 @@ class AndroidPermissionsService {
       const granted = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.CAMERA
       );
+      return granted;
+    } catch (err) {
+      console.warn(err)
+      return err;
+    }
+  }
 
-      if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN || granted === false) return -1;
+  /**
+   * Request permissions
+   * @param {string} permission
+   * @param {object} opt
+   */
+  async _request(permission, opt={}) {
+    try {
+      const granted = await PermissionsAndroid.request(permission, opt);
+
+      if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) return -1;
 
       return granted === PermissionsAndroid.RESULTS.GRANTED;
     } catch (err) {
-      console.warn(err)
+      console.warn(err);
+      return err;
     }
   }
 
