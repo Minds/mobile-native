@@ -124,6 +124,13 @@ class SessionService {
   isLoggedIn() {
     return this.token !== null;
   }
+
+  /**
+   * Clear messenger keys
+   */
+  clearMessengerKeys() {
+    return sessionStorage.clearPrivateKey();
+  }
 }
 
 export default new SessionService(sessionStorage);

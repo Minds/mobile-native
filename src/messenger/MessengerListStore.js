@@ -56,6 +56,12 @@ class MessengerListStore {
   }
 
   @action
+  async logout() {
+    session.clearMessengerKeys();
+    this.configured = false;
+  }
+
+  @action
   touchConversation = (guid) => {
     // search conversation
     const index = this.conversations.findIndex((conv) => {

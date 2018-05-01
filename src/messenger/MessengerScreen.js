@@ -5,6 +5,7 @@ import React, {
 import {
   Text,
   View,
+  Alert,
   Image,
   Platform,
   FlatList,
@@ -26,7 +27,7 @@ import ConversationView from './conversation/ConversationView';
 
 import SearchView from '../common/components/SearchView';
 import { CommonStyle } from '../styles/Common';
-import { ComponentsStyle } from '../styles/Components'; 
+import { ComponentsStyle } from '../styles/Components';
 import Colors from '../styles/Colors';
 import MessengerTabIcon from './MessengerTabIcon';
 
@@ -61,13 +62,13 @@ export default class MessengerScreen extends Component {
       this.props.messengerList.loadList(true);
       //this.setState({ active: true });
     });
-    
+
     // hidde on leave
     // this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Messenger', (s) => {
     //   this.setState({ active: false });
     // });
   }
-  
+
   /**
    * Dispose reactions of navigation store on unmount
    */
@@ -80,6 +81,20 @@ export default class MessengerScreen extends Component {
   searchDebouncer = _.debounce((search) => {
     this.props.messengerList.setSearch(search);
   }, 200);
+
+  /**
+   * On logout
+   */
+  onLogoutPress = () => {
+    Alert.alert(
+      'Confirm',
+      `Do you want to logout from messenger?`.trim(),
+      [
+        { text: 'No', style: 'cancel' },
+        { text: 'Yes', onPress: () => this.props.messengerList.logout() }
+      ]
+    );
+  }
 
   /**
    * Render component
@@ -106,7 +121,7 @@ export default class MessengerScreen extends Component {
         <View style={ComponentsStyle.emptyComponent}>
           <Icon name="person-add" size={72} color='#444' />
           <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any messages</Text>
-          <Text 
+          <Text
             style={ComponentsStyle.emptyComponentLink}
             onPress={() => this.props.navigation.navigate('Discovery', { type: 'user' })}
             >
@@ -116,11 +131,15 @@ export default class MessengerScreen extends Component {
       </View>);
     }
 
+    const iconRight = messengerList.configured ? 'md-unlock': null;
+
     return (
       <View style={styles.container}>
         <SearchView
           placeholder='Search...'
           onChangeText={this.searchChange}
+          iconRight={iconRight}
+          iconRightOnPress={this.onLogoutPress}
         />
         {loadingCmp}
         <FlatList
@@ -169,7 +188,7 @@ export default class MessengerScreen extends Component {
    */
   renderMessage = (row) => {
     return (
-      <ConversationView 
+      <ConversationView
         item={row.item}
         styles={styles}
         navigation={this.props.navigation}

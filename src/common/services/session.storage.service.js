@@ -50,6 +50,13 @@ class SessionStorageService {
   }
 
   /**
+   * Clear messenger private keys
+   */
+  clearPrivateKey() {
+    return AsyncStorage.removeItem(namespace + 'private_key');
+  }
+
+  /**
    * Clear all session data (logout)
    */
   async clear() {
