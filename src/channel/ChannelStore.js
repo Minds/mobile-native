@@ -23,6 +23,8 @@ export default class ChannelStore {
   @observable active = false;
   @observable loaded = false;
   @observable isUploading = false;
+  @observable avatarProgress = 0;
+  @observable bannerProgress = 0;
 
   constructor(guid) {
     this.guid = guid;
@@ -33,6 +35,9 @@ export default class ChannelStore {
   clear() {
     this.channel = {};
     this.rewards = {};
+    this.avatarProgress = 0;
+    this.bannerProgress = 0;
+    this.isUploading = false;
   }
 
   @action
@@ -44,7 +49,7 @@ export default class ChannelStore {
   setChannel(channel, loaded = false) {
     this.channel = channel;
     this.active = true;
-    if(loaded) 
+    if(loaded)
       this.loaded = loaded;
   }
 
@@ -106,8 +111,21 @@ export default class ChannelStore {
   }
 
   @action
+  setBannerProgress(value) {
+    this.bannerProgress = value;
+  }
+
+  @action
+  setAvatarProgress(value) {
+    this.avatarProgress = value;
+  }
+
+  @action
   async save({ avatar, banner, ...data }) {
     this.isUploading = true;
+
+    this.bannerProgress = 0;
+    this.avatarProgress = 0;
 
     try {
       if (avatar) {
@@ -115,7 +133,11 @@ export default class ChannelStore {
           uri: avatar.uri,
           type: avatar.type,
           name: avatar.fileName || 'avatar.jpg'
+        }, e => {
+          this.setAvatarProgress(e.loaded / e.total);
         });
+
+        this.setAvatarProgress(100);
 
         if (avatarResult.error) return avatarResult.error;
       }
@@ -125,7 +147,12 @@ export default class ChannelStore {
           uri: banner.uri,
           type: banner.type,
           name: banner.fileName || 'banner.jpg'
+        }, e => {
+          this.setBannerProgress(e.loaded / e.total);
         });
+
+        this.setBannerProgress(100);
+
         if (bannerResult.error) return bannerResult.error;
       }
 
@@ -149,7 +176,7 @@ export default class ChannelStore {
     this.rewards = {};
     this.loaded = false;
     this.active = false;
-    this.sUploading = false;
+    this.isUploading = false;
   }
 
 }

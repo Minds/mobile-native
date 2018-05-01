@@ -19,6 +19,7 @@ import {
 import { toJS } from 'mobx'
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
+import * as Progress from 'react-native-progress';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
@@ -275,14 +276,16 @@ export default class ChannelHeader extends Component {
 
     return (
       <View>
-        {isEditable && <TouchableCustom onPress={this.changeBannerAction}>
+        <TouchableCustom onPress={this.changeBannerAction} disabled={!isEditable}>
           <Image source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
 
-          <View style={styles.tapOverlayView}>
+          {isEditable && <View style={styles.tapOverlayView}>
             <Icon name="md-create" size={30} color="#fff" />
-          </View>
-        </TouchableCustom>}
-        {!isEditable && <Image source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />}
+          </View>}
+          {isUploading && this.props.channel.bannerProgress && <View style={styles.tapOverlayView}>
+            <Progress.Pie progress={this.props.channel.bannerProgress} size={36} />
+          </View>}
+        </TouchableCustom>
 
         <ChannelBadges channel={channel} style={{position: 'absolute', right: 5, top: 160}} />
 
@@ -346,11 +349,14 @@ export default class ChannelHeader extends Component {
 
         </View>
 
-        <TouchableCustom onPress={this.changeAvatarAction} style={styles.avatar}>
+        <TouchableCustom onPress={this.changeAvatarAction} style={styles.avatar} disabled={!isEditable}>
           <Image source={avatar} style={styles.wrappedAvatar} />
 
           {isEditable && <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
             <Icon name="md-create" size={30} color="#fff" />
+          </View>}
+          {isUploading && this.props.channel.avatarProgress && <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
+            <Progress.Pie progress={this.props.channel.avatarProgress} size={36} />
           </View>}
         </TouchableCustom>
 
