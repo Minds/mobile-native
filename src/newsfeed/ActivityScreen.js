@@ -103,6 +103,7 @@ export default class ActivityScreen extends Component {
   getHeader() {
     return <View>
              { this.entity.entity && <Activity
+              ref={o => this.activity = o}
               entity={ this.entity.entity }
               newsfeed={ this.props.navigation.state.params.store }
               navigation={ this.props.navigation }
@@ -138,10 +139,20 @@ export default class ActivityScreen extends Component {
   }
 
   /**
+   * On comment input focus
+   */
+  onFocus = () => {
+    this.scrollToBottom();
+    this.activity.pauseVideo();
+  }
+
+  /**
    * Scroll to bottom
    */
   scrollToBottom = () => {
-    setTimeout(() => this.listRef.scrollToEnd(), 250); //delay to allow rendering
+    setTimeout(() => {
+      this.listRef.scrollToEnd();
+    }, 250); //delay to allow rendering
   }
 
   /**
@@ -164,7 +175,7 @@ export default class ActivityScreen extends Component {
             underlineColorAndroid='transparent'
             placeholder='Type your comment...'
             onChangeText={this.setText}
-            onFocus={this.scrollToBottom}
+            onFocus={this.onFocus}
             multiline={true}
             autogrow={true}
             maxHeight={110}

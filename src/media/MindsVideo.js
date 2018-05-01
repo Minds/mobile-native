@@ -1,7 +1,7 @@
 import React, {
   Component,
   PropTypes
-} from "react";
+} from 'react';
 
 import {
   PanResponder,
@@ -12,10 +12,12 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-} from "react-native";
+} from 'react-native';
 
-import ProgressBar from "./ProgressBar";
-import Video from "react-native-video";
+import Video from 'react-native-video';
+import _ from 'lodash';
+
+import ProgressBar from './ProgressBar';
 
 import {
   MINDS_URI
@@ -77,9 +79,10 @@ export default class MindsVideo extends Component {
   }
 
   onVideoEnd = () => {
-    this.player.seek(0);
     KeepAwake.deactivate();
-    this.setState({key: new Date(), currentTime: 0, paused: true});
+    this.setState({key: new Date(), currentTime: 0, paused: true}, () => {
+      this.player.seek(0);
+    });
   }
 
   onVideoLoad = (e) => {
@@ -139,11 +142,9 @@ export default class MindsVideo extends Component {
   }
 
   play = () => {
-    setTimeout(() => {
-      this.setState({
-        showOverlay: false,
-      });
-    }, 1000);
+    this.setState({
+      showOverlay: false,
+    });
 
     KeepAwake.activate();
 
@@ -182,17 +183,23 @@ export default class MindsVideo extends Component {
       />;
   }
 
-  openControlOverlay() {
-    this.setState({
-      showOverlay: true,
-    });
+  openControlOverlay = () => {
+    if (!this.state.showOverlay) {
+      this.setState({
+        showOverlay: true,
+      });
+    }
 
-    setTimeout(() => {
+    this.hideOverlay();
+  }
+
+  hideOverlay = _.debounce(() => {
+    if (this.state.showOverlay) {
       this.setState({
         showOverlay: false,
       });
-    }, 2000);
-  }
+    }
+  }, 4000)
 
   get volumeIcon() {
     if (this.state.volume == 0) {
@@ -243,7 +250,7 @@ export default class MindsVideo extends Component {
   renderOverlay() {
     const entity = this.props.entity;
     let {currentTime, duration, paused} = this.state;
-    const mustShow = this.state.showOverlay && (!entity || !entity.mature || entity.mature_visibility);
+    const mustShow = (this.state.showOverlay || this.state.paused) && (!entity || !entity.mature || entity.mature_visibility);
 
     if (mustShow) {
       const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
@@ -258,17 +265,22 @@ export default class MindsVideo extends Component {
       );
 
       return (
-        <View style={styles.controlOverlayContainer}>
-          <View style={styles.controlPlayButtonContainer}>
-            {this.play_button}
-          </View>
-          { this.player && <View style={styles.controlBarContainer}>
-            { progressBar }
-            <View style={{ padding: 8}}>
-              {this.volumeIcon}
+        <TouchableWithoutFeedback
+        style={styles.controlOverlayContainer}
+        onPress={this.openControlOverlay}
+        >
+          <View style={styles.controlOverlayContainer}>
+            <View style={[styles.controlPlayButtonContainer, CommonStyle.marginTop2x]}>
+              {this.play_button}
             </View>
-          </View> }
-        </View>
+            { this.player && <View style={styles.controlBarContainer}>
+              { progressBar }
+              <View style={{ padding: 8}}>
+                {this.volumeIcon}
+              </View>
+            </View> }
+          </View>
+        </TouchableWithoutFeedback>
       )
     }
 
@@ -287,7 +299,7 @@ export default class MindsVideo extends Component {
       <View style={styles.container} >
         <TouchableWithoutFeedback
           style={styles.videoContainer}
-          onPress={this.openControlOverlay.bind(this)}
+          onPress={this.openControlOverlay}
           >
           { this.video }
         </TouchableWithoutFeedback>

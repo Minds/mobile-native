@@ -92,11 +92,19 @@ export default class MediaView extends Component {
     } else {
       guid = this.props.entity.cinemr_guid;
     }
+
     return (
       <View style={styles.videoContainer}>
-        <MindsVideo video={{'uri': MINDS_URI + 'api/v1/media/' + guid + '/play'}} entity={this.props.entity}/>
+        <MindsVideo video={{'uri': MINDS_URI + 'api/v1/media/' + guid + '/play'}} entity={this.props.entity} ref={o => {this.videoPlayer = o}}/>
       </View>
     );
+  }
+
+  /**
+   * Pause video if exist
+   */
+  pauseVideo() {
+    this.videoPlayer && this.videoPlayer.wrappedInstance && this.videoPlayer.wrappedInstance.pause();
   }
 
   imageError = () => {
@@ -218,7 +226,7 @@ export default class MediaView extends Component {
    * Nav to full image with zoom
    */
   navToImage = () => {
-    
+
     // if is explicit then should toggle
     if (this.props.entity.mature) {
       this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid);

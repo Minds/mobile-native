@@ -105,6 +105,7 @@ export default class Activity extends Component {
           { message }
           { this.showRemind() }
           <MediaView
+            ref={o => {this.mediaView = o}}
             entity={ entity }
             navigation={this.props.navigation}
             style={ styles.media }
@@ -114,6 +115,13 @@ export default class Activity extends Component {
           { this.showActions() }
         </View>
     );
+  }
+
+  /**
+   * Pause video if exist
+   */
+  pauseVideo() {
+    this.mediaView.pauseVideo();
   }
 
   toggleEdit = (value) => {
