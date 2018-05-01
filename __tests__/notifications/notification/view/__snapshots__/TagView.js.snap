@@ -76,7 +76,7 @@ exports[`renders correctly comment 1`] = `
   >
     someUser
      
-    tagged you in a post
+    tagged you in a comment
      
   </Text>
 </View>

@@ -33,7 +33,35 @@ exports[`renders correctly for activity 1`] = `
     allowFontScaling={true}
     ellipsizeMode="tail"
   >
-    ... oops.
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      someUser
+    </Text>
+     
+    down voted
+     
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      some title
+    </Text>
   </Text>
 </View>
 `;
@@ -71,7 +99,35 @@ exports[`renders correctly for comment 1`] = `
     allowFontScaling={true}
     ellipsizeMode="tail"
   >
-    ... oops.
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      someUser
+    </Text>
+     
+    down voted
+     
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+       your comment 
+    </Text>
   </Text>
 </View>
 `;
@@ -109,7 +165,35 @@ exports[`renders correctly for object 1`] = `
     allowFontScaling={true}
     ellipsizeMode="tail"
   >
-    ... oops.
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      someUser
+    </Text>
+     
+    down voted
+     
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      some title
+    </Text>
   </Text>
 </View>
 `;

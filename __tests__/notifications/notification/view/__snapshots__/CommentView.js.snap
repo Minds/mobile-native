@@ -55,8 +55,15 @@ exports[`renders correctly 1`] = `
       accessible={true}
       allowFontScaling={true}
       ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
     >
-      ... oops.
+      some owner
+      's activity
     </Text>
   </Text>
 </View>

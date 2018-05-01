@@ -1,0 +1,3194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`notification component renders correctly for every type 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        100
+         points 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            for 
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#444",
+                "fontWeight": "bold",
+              }
+            }
+          >
+            some title
+          </Text>
+        </Text>
+         were accepted.
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 2`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        100
+        /
+        100
+         views 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            for 
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#444",
+                "fontWeight": "bold",
+              }
+            }
+          >
+            some title
+          </Text>
+        </Text>
+         have been met.
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 3`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        someUser
+         gifted you 
+        100
+         views 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            for 
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#444",
+                "fontWeight": "bold",
+              }
+            }
+          >
+            some title
+          </Text>
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 4`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          onPress={[Function]}
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          @
+          someUser
+        </Text>
+         accepted your bid of 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          100
+           
+          points
+        </Text>
+         
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            for 
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#444",
+                "fontWeight": "bold",
+              }
+            }
+          >
+            some title
+          </Text>
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 5`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          onPress={[Function]}
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          @
+          someUser
+        </Text>
+         declined your bid of 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          100
+           
+          points
+        </Text>
+         
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            for 
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#444",
+                "fontWeight": "bold",
+              }
+            }
+          >
+            some title
+          </Text>
+        </Text>
+        You have not been charged.
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 6`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          onPress={[Function]}
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          @
+          someUser
+        </Text>
+         is offering 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "fontWeight": "bold",
+            }
+          }
+        >
+          100
+           
+          points
+           
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+            >
+              for 
+            </Text>
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Object {
+                  "color": "#444",
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              some title
+            </Text>
+          </Text>
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 7`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        Your boost 
+        100
+         
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            for 
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#444",
+                "fontWeight": "bold",
+              }
+            }
+          >
+            some title
+          </Text>
+        </Text>
+         was rejected for 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          onPress={[Function]}
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          someChannel
+        </Text>
+         
+        
+        . Your points have been credited back to your wallet.
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 8`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        Your boost 
+        100
+         
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            for 
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#444",
+                "fontWeight": "bold",
+              }
+            }
+          >
+            some title
+          </Text>
+        </Text>
+         was revoked
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 9`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        100
+         points 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            for 
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#444",
+                "fontWeight": "bold",
+              }
+            }
+          >
+            some title
+          </Text>
+        </Text>
+         is awaiting approval by 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          onPress={[Function]}
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          someChannel
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 10`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        100
+         views 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+          >
+            for 
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#444",
+                "fontWeight": "bold",
+              }
+            }
+          >
+            some title
+          </Text>
+        </Text>
+         is awaiting approval
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 11`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      collapsable={undefined}
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          someUser
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+           commented on 
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          some owner
+          's activity
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 12`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        some message
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 13`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      collapsable={undefined}
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+          "opacity": 1,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          someUser
+        </Text>
+         
+        down voted
+         
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          some title
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 14`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          some title
+        </Text>
+        was featured
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 15`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+        style={
+          Object {
+            "color": "#444",
+            "fontWeight": "bold",
+          }
+        }
+      >
+        someUser
+         subscribed to you
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 16`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      collapsable={undefined}
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+          "opacity": 1,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          someUser
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+           posted in 
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          someGroup
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 17`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+         invited you to join 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          someGroup
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 18`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        You were kicked off from 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+        >
+          someGroup
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 19`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      collapsable={undefined}
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+          "opacity": 1,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          someUser
+        </Text>
+         
+        voted up
+         
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          some title
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 20`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          someUser
+        </Text>
+         tried to call you.
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 21`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+        style={
+          Object {
+            "color": "#444",
+            "fontWeight": "bold",
+          }
+        }
+      >
+        someUser
+         reminded 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          some title
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 22`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      accessibilityComponentType={undefined}
+      accessibilityLabel={undefined}
+      accessibilityTraits={undefined}
+      accessible={true}
+      collapsable={undefined}
+      hasTVPreferredFocus={undefined}
+      hitSlop={undefined}
+      isTVSelectable={true}
+      nativeID={undefined}
+      onLayout={undefined}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+          "opacity": 1,
+        }
+      }
+      testID={undefined}
+      tvParallaxProperties={undefined}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        someUser
+         
+        tagged you in a post
+         
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 23`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        You can gain more reach by boosting your content. Hit the blue boost icon on your posts.
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 24`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        Chat securely with your mutual subscriptions.
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 25`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Tap here
+        </Text>
+         to discover new channels and media.
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 26`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        Welcome to Minds. We have given you 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          100 points
+        </Text>
+         to get you started.
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 27`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          onPress={[Function]}
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Tap here
+        </Text>
+         to create a post.
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`notification component renders correctly for every type 28`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "paddingBottom": 16,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 16,
+    }
+  }
+>
+  <Image
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    hitSlop={undefined}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    source={
+      Object {
+        "uri": "https://cdn.minds.com/icon/undefined/medium",
+      }
+    }
+    style={
+      Object {
+        "borderColor": "#EEE",
+        "borderRadius": 18,
+        "borderWidth": 0.5,
+        "height": 36,
+        "width": 36,
+      }
+    }
+    testID={undefined}
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "marginLeft": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        onPress={[Function]}
+      >
+        You have successfully wired 
+        1000
+         to 
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          onPress={[Function]}
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          @
+          toUser
+        </Text>
+      </Text>
+    </View>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#888",
+          "fontSize": 11,
+        }
+      }
+    >
+      Invalid date
+    </Text>
+  </View>
+</View>
+`;

@@ -1,13 +1,13 @@
 /**
- * 
- * @param {string} type notifiction type
- * @param {*} entityType 
- * @param {*} impressions 
- * @param {*} title 
+ *
+ * @param {string} notification_view notifiction type
+ * @param {*} entityType
+ * @param {*} impressions
+ * @param {*} title
  */
-export default function(type, entityType='activity', impressions=100, title='some title') {
+export default function(notification_view, entityType='activity', impressions=100, title='some title') {
   return {
-    type,
+    notification_view,
     params: {
       impressions,
       bid:100,
@@ -23,9 +23,12 @@ export default function(type, entityType='activity', impressions=100, title='som
       amount: 1000
     },
     entityObj: {
-      type,
+      type: entityType,
       title,
-      name: title
+      name: title,
+      ownerObj: {
+        name:'some owner'
+      }
     },
     fromObj: {
       username: 'someUser',
