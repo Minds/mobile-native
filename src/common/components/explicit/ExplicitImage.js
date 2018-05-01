@@ -7,7 +7,9 @@ import { observer } from 'mobx-react/native';
 import {
   StyleSheet,
   findNodeHandle,
-  View
+  View,
+  Platform,
+  Image
 } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
@@ -18,6 +20,7 @@ import { Icon } from 'react-native-elements';
 import ExplicitOverlay from './ExplicitOverlay';
 
 const ProgressFastImage = createImageProgress(FastImage);
+const ProgressImage = createImageProgress(Image);
 
 @observer
 export default class ExplicitImage extends Component {
@@ -38,25 +41,37 @@ export default class ExplicitImage extends Component {
   }
 
   render() {
-    let image;
+    let image, ImageCmp, ImageProgressCmp, blur = 0, imageLoaded=this.imageLoaded;
     const disableProgress = this.props.disableProgress;
+
+    if (Platform.OS === 'android' && this.props.entity.mature) {
+      ImageCmp = Image;
+      ImageProgressCmp = ProgressImage;
+      imageLoaded = null;
+      if (!this.props.entity.mature_visibility) blur=30;
+    } else {
+      ImageCmp = FastImage;
+      ImageProgressCmp = ProgressFastImage;
+    }
 
     if(disableProgress) {
       image = (
-        <FastImage
+        <ImageCmp
           source={this.props.source}
-          onLoadEnd={this.imageLoaded}
+          onLoadEnd={imageLoaded}
           onError={this.imageError}
+          blurRadius={blur}
           ref={(img) => { this.backgroundImage = img; }} style={[styles.absolute, this.props.imageStyle]}
-        />
-      )
-    } else {
-      image = (
-        <ProgressFastImage
+          />
+        )
+      } else {
+        image = (
+          <ImageProgressCmp
           indicator={ProgressCircle}
           threshold={150}
           source={this.props.source}
-          onLoadEnd={this.imageLoaded}
+          onLoadEnd={imageLoaded}
+          blurRadius={blur}
           onError={this.imageError}
           ref={(img) => { this.backgroundImage = img; }} style={[styles.absolute, this.props.imageStyle]}
         />
@@ -66,7 +81,7 @@ export default class ExplicitImage extends Component {
     return (
       <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
         {image}
-        { (this.props.entity.mature && this.state.viewRef) ?
+        { (this.props.entity.mature) ?
           <ExplicitOverlay
             entity={this.props.entity}
             viewRef={this.state.viewRef}
