@@ -17,6 +17,7 @@ import BoostCompletedView from './view/BoostCompletedView';
 import BoostGiftView from './view/BoostGiftView';
 import BoostPeerAcceptedView from './view/BoostPeerAcceptedView';
 import BoostPeerRequestView from './view/BoostPeerRequestView';
+import BoostPeerRejectedView from './view/BoostPeerRejectedView';
 import BoostRejectedView from './view/BoostRejectedView';
 import BoostRevokedView from './view/BoostRevokedView';
 import BoostSubmittedP2pView from './view/BoostSubmittedP2pView';
@@ -168,10 +169,10 @@ export default class Notification extends Component {
 
       case "welcome_post":
         return <WelcomePostView entity={entity} navigation={this.props.navigation} styles={styles} />
-        
+
       case "wire_happened":
         return <WireHappenedView entity={entity} navigation={this.props.navigation} styles={styles} />
-        
+
 
       default:
         return (
