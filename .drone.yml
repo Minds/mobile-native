@@ -1,0 +1,6 @@
+pipeline:
+  test:
+    image: node:9.6.1
+    commands:
+      - yarn install
+      - yarn test
