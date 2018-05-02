@@ -11,6 +11,8 @@ import {
   setViewed 
 } from '../newsfeed/NewsfeedService';
 
+import api from '../common/services/api.service';
+
 import channelService from './ChannelService';
 
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
@@ -23,6 +25,7 @@ export default class ChannelFeedStore {
 
   @observable filter = 'feed';
   @observable showrewards = false;
+  @observable channel;
 
   viewed = [];
   @observable stores = {
@@ -54,6 +57,11 @@ export default class ChannelFeedStore {
 
   constructor(guid) {
     this.guid = guid;
+  }
+
+  @action
+  setChannel(channel) {
+    this.channel = channel;
   }
 
   get list() {
@@ -136,15 +144,45 @@ export default class ChannelFeedStore {
    * Load channel feed
    */
   async _loadFeed(refresh = false) {
+    if (!this.channel)
+      return;
+
     this.loading = true;
     const filter = this.filter;
 
     try {
-      const feed = await getFeedChannel(this.guid, this.list.offset)
+
+      let opts = {
+        offset: this.list.offset,
+        limit: 12,
+      };
+
+      if (
+        this.channel.pinned_posts 
+        && this.channel.pinned_posts.length
+        && !this.offset
+      ) {
+        opts.pinned = this.channel.pinned_posts.join(',');
+      }
+
+      const data = await api.get('api/v1/newsfeed/personal/' + this.channel.guid, opts);
+
+      const feed = {
+        entities: [],
+        offset: data['load-next'],
+      };
+      
+      if (data.pinned) {
+        feed.entities = data.pinned;
+      }
+    
+      feed.entities = feed.entities.concat(data.activity);
+    
       this.assignRowKeys(feed);
       feed.entities = ActivityModel.createMany(feed.entities);
       this.list.setList(feed, refresh);
     } catch (err) {
+      console.log(err);
     } finally {
       this.loading = false;
     }

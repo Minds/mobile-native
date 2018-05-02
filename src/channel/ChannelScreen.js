@@ -73,37 +73,46 @@ export default class ChannelScreen extends Component {
     }
   }
 
-  loadChannel(guid) {
-    let isOwner = guid == session.guid;
-    this.props.channel.store(guid).load()
-      .then(channel => {
-        // add visited channels
-        if (channel) this.props.channel.addVisited(channel);
-      });
-
-    if(isOwner) {
-      this.props.channel.store(guid).feedStore.refresh();
-    } else {
-      this.props.channel.store(guid).feedStore.loadFeed();
-    }
-  }
-
   componentWillUnmount() {
     this.props.channel.garbageCollect();
     this.props.channel.store(this.guid).markInactive();
+  }
+
+  async loadChannel(guid) {
+    let isOwner = guid == session.guid;
+    const store = this.props.channel.store(guid);
+    
+    try {
+      const channel = await store.load();
+      if (channel) {
+        this.props.channel.addVisited(channel);
+        store.feedStore.setChannel(channel);
+      }
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+
+    if(isOwner) {
+      store.feedStore.refresh();
+    } else {
+      store.feedStore.loadFeed();
+    }
   }
 
   //TODO: make a reverse map so we can cache usernames
   async loadByUsername(username) {
     try {
       let response = await channelService.load(username);
+      const channel = response.channel;
 
-      this.props.channel.store(response.channel.guid).feedStore.loadFeed();
+      const store = this.props.channel.store(channel.guid);
+      store.setChannel(UserModel.create(response.channel), true);
+      this.setState({ guid: response.channel.guid });
 
-      this.props.channel.store(response.channel.guid)
-        .setChannel(UserModel.create(response.channel), true);
-
-      this.setState({guid: response.channel.guid});
+      //load feed now
+      store.feedStore.setChannel(channel);
+      store.feedStore.loadFeed();
 
     } catch(err) {
       Alert.alert(
