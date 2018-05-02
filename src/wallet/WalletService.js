@@ -19,6 +19,13 @@ class WalletService {
       })
   }
 
+  /**
+   * Get contributions overview
+   */
+  getContributionsOverview() {
+    return api.get('api/v2/blockchain/contributions/overview');
+  }
+
   // Other currencies (money, usd)
 
   async getBalances() {

@@ -87,6 +87,7 @@ export default class WalletScreen extends Component {
         <ScrollView style={ styles.mainContainer }
           keyboardShouldPersistTaps='always'>
           <WalletBalanceTokens />
+          <WalletOverviewView />
 
           <View>
 

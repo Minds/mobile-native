@@ -3,7 +3,7 @@ import {
   computed,
   action
 } from 'mobx'
-
+import moment from 'moment';
 import walletService from './WalletService';
 import abbrev from "../common/helpers/abbrev";
 import token from "../common/helpers/token";
@@ -17,6 +17,7 @@ class WalletStore {
 
   @observable balance = -1;
   @observable addresses = [];
+  @observable overview = {};
 
   @observable onboardingShown = false;
 
@@ -25,6 +26,12 @@ class WalletStore {
   refreshing = false;
   loaded = false;
 
+  @action
+  clockTick() {
+    this.overview.nextPayout--;
+  }
+
+  @action
   async refresh(force = false) {
     if ((this.refreshing || this.loaded) && !force) {
       return;
@@ -33,6 +40,13 @@ class WalletStore {
     this.refreshing = true;
 
     const { balance, addresses } = await walletService.getBalances();
+    const overview = await walletService.getContributionsOverview();
+
+    // next payout clock
+    this.interval && this.interval();
+    this.interval = setInterval(() => this.clockTick(), 1000);
+
+    this.overview = overview;
     this.balance = balance;
     this.addresses = addresses;
 
