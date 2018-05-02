@@ -129,6 +129,20 @@ export default class Activity extends Component {
   }
 
   /**
+   * Show group
+   */
+  showContainer() {
+    if(!this.props.entity.containerObj)
+      return null;
+
+    return (
+      <View>
+        <Text onPress={this.navToGroup} style={styles.groupNameLabel}>{this.props.entity.containerObj.name}</Text>
+      </View>
+    );
+  }
+
+  /**
    * Show Owner
    */
   showOwner() {

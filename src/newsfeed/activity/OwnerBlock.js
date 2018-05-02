@@ -34,6 +34,28 @@ export default class OwnerBlock extends PureComponent {
   }
 
   /**
+   * Navigate To group
+   */
+ _navToGroup = () => {
+    if (this.props.navigation) {
+      this.props.navigation.navigate('GroupView', { group: this.props.entity.containerObj });
+    }
+  };
+
+  get group() {
+    if(!this.props.entity.containerObj)
+      return null;
+
+    return (
+      <TouchableOpacity onPress={this._navToGroup} style={styles.groupContainer}>
+        <Text style={styles.groupName} lineBreakMode='tail' numberOfLines={1}>
+          > { this.props.entity.containerObj.name }
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
+  /**
    * Render
    */
   render() {
@@ -48,11 +70,14 @@ export default class OwnerBlock extends PureComponent {
           <Image source={avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
         <View style={styles.body}>
-          <TouchableOpacity onPress={this._navToChannel}>
-            <Text style={styles.username}>
-              { channel.username }
-            </Text>
-          </TouchableOpacity>
+          <View style={styles.nameContainer}>
+            <TouchableOpacity onPress={this._navToChannel}>
+              <Text style={styles.username}>
+                { channel.username }
+              </Text>
+            </TouchableOpacity>
+            { this.group }
+          </View>
           {this.props.children}
         </View>
         {rightToolbar}
@@ -77,10 +102,25 @@ const styles = StyleSheet.create({
   },
   body: {
     marginLeft: 8,
+    paddingRight: 36,
+    flexWrap: 'wrap',
+    flex: 1,
+  },
+  nameContainer: {
+    flexDirection: 'row',
   },
   username: {
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     color: '#444',
   },
+  groupContainer: {
+    marginLeft: 4,
+    flex: 1,
+  },
+  groupName: {
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    color: '#888',
+  }
 });
