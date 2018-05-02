@@ -43,12 +43,20 @@ import Colors from '../styles/Colors';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import SingleEntityStoreProvider from '../common/stores/SingleEntityStore';
 import { getSingle } from './NewsfeedService';
+import UserAutocomplete from '../common/components/UserAutocomplete';
 
 import isIphoneX from '../common/helpers/isIphoneX';
 
 @inject('user')
 @observer
 export default class ActivityScreen extends Component {
+
+  state = {
+    selection: {
+      start:0,
+      end: 0
+    }
+  };
 
   /**
    * Each instance of Comments Screen has is own store instance
@@ -181,6 +189,7 @@ export default class ActivityScreen extends Component {
             maxHeight={110}
             value={comments.text}
             ref={textInput => this.textInput = textInput}
+            onSelectionChange={this.onSelectionChanges}
           />
           {attachment.uploading ?
             <Progress.Pie progress={attachment.progress} size={36} />:
@@ -354,6 +363,13 @@ export default class ActivityScreen extends Component {
   }
 
   /**
+   * Set the state with cursor position
+   */
+  onSelectionChanges = (event) => {
+    this.setState({selection: event.nativeEvent.selection});
+  }
+
+  /**
    * Render
    */
   render() {
@@ -371,29 +387,37 @@ export default class ActivityScreen extends Component {
     const vPadding = isIphoneX() ? 88 : 66;
 
     return (
-      <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={vPadding}>
-        <View style={{flex:1}}>
-          <FlatList
-            ref={ ref => this.listRef = ref }
-            ListHeaderComponent={this.getHeader()}
-            data={this.comments.comments.slice()}
-            renderItem={this.renderComment}
-            keyExtractor={item => item.guid}
-            initialNumToRender={25}
-            refreshing={this.comments.refreshing}
-            ListEmptyComponent={this.comments.loaded && !this.comments.refreshing ? <View/> : <CenteredLoading />}
-            style={styles.listView}
+      <View style={CommonStyle.flexContainer}>
+        <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={vPadding}>
+          <View style={{flex:1}}>
+            <FlatList
+              ref={ ref => this.listRef = ref }
+              ListHeaderComponent={this.getHeader()}
+              data={this.comments.comments.slice()}
+              renderItem={this.renderComment}
+              keyExtractor={item => item.guid}
+              initialNumToRender={25}
+              refreshing={this.comments.refreshing}
+              ListEmptyComponent={this.comments.loaded && !this.comments.refreshing ? <View/> : <CenteredLoading />}
+              style={styles.listView}
+            />
+          { this.renderPoster() }
+          <UserAutocomplete
+            text={this.comments.text}
+            selection={this.state.selection}
+            onSelect={this.setText}
+            noFloat={true}
           />
-        { this.renderPoster() }
-        </View>
-        { actionsheet }
-        <ActionSheet
-          ref={o => this.actionAttachmentSheet = o}
-          options={['Cancel', 'Gallery', 'Photo', 'Video']}
-          onPress={this._selectMediaSource}
-          cancelButtonIndex={0}
-        />
-      </KeyboardAvoidingView>
+          </View>
+          { actionsheet }
+          <ActionSheet
+            ref={o => this.actionAttachmentSheet = o}
+            options={['Cancel', 'Gallery', 'Photo', 'Video']}
+            onPress={this._selectMediaSource}
+            cancelButtonIndex={0}
+          />
+        </KeyboardAvoidingView>
+      </View>
     );
   }
 

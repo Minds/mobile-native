@@ -1,15 +1,15 @@
 import api from '../../services/api.service';
 
 class UserTypeaheadService {
-  async search(query) {
-    if (!query || query.length < 3) {
+  async search(query, limit=8) {
+    if (!query || query.length < 2) {
       return [];
     }
 
     try {
       let result = await api.get('api/v2/search/suggest/user', {
         q: query,
-        limit: 8,
+        limit,
         hydrate: 1
       });
 

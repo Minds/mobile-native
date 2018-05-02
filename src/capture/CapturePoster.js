@@ -9,7 +9,7 @@ import {
   Button,
   TouchableHighlight,
   TouchableOpacity,
-  ActivityIndicator,
+  ActivityIndicator
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native';
@@ -30,6 +30,7 @@ import CapturePostButton from './CapturePostButton';
 import { CommonStyle } from '../styles/Common';
 import Colors from '../styles/Colors';
 import CapturePosterFlags from './CapturePosterFlags';
+import UserAutocomplete from '../common/components/UserAutocomplete';
 
 @inject('user', 'capture')
 @observer
@@ -51,7 +52,12 @@ export default class CapturePoster extends Component {
     mature: false,
     share: {},
     lock: null,
+    selection: {
+      start:0,
+      end: 0
+    }
   };
+
 
   _RichEmbedFetchTimer;
 
@@ -138,6 +144,20 @@ export default class CapturePoster extends Component {
   }
 
   /**
+   * On tag selected in the autocomplete
+   */
+  onSelectTag = (text) => {
+    this.setText(text);
+  }
+
+  /**
+   * Set the state with cursor position
+   */
+  onSelectionChanges = (event) => {
+    this.setState({selection: event.nativeEvent.selection});
+  }
+
+  /**
    * Render
    */
   render() {
@@ -145,49 +165,57 @@ export default class CapturePoster extends Component {
     const navigation = this.props.navigation;
 
     return (
-      <ScrollView style={styles.posterAndPreviewWrapper}>
-        {this.showContext()}
-        <View style={styles.posterWrapper} pointerEvents="box-none">
-          <TextInput
-            style={styles.poster}
-            editable={true}
-            placeholder='Speak your mind...'
-            placeholderTextColor='#ccc'
-            underlineColorAndroid='transparent'
-            onChangeText={this.setText}
-            value={this.state.text}
-            multiline={true}
-            selectTextOnFocus={true}
+      <View style={{flex:1}}>
+        <ScrollView style={styles.posterAndPreviewWrapper}>
+          {this.showContext()}
+          <View style={styles.posterWrapper} pointerEvents="box-none">
+            <TextInput
+              style={styles.poster}
+              editable={true}
+              placeholder='Speak your mind...'
+              placeholderTextColor='#ccc'
+              underlineColorAndroid='transparent'
+              onChangeText={this.setText}
+              value={this.state.text}
+              multiline={true}
+              selectTextOnFocus={false}
+              onSelectionChange={this.onSelectionChanges}
+            />
+          </View>
+
+          {(this.state.meta || this.state.metaInProgress) && <CaptureMetaPreview
+            meta={this.state.meta}
+            inProgress={this.state.metaInProgress}
+            onRemove={this.clearRichEmbedAction}
+          />}
+
+          <CapturePosterFlags
+            matureValue={this.state.mature}
+            shareValue={this.state.share}
+            lockValue={this.state.lock}
+            onMature={this.onMature}
+            onShare={this.onShare}
+            onLocking={this.onLocking}
           />
-        </View>
 
-        {(this.state.meta || this.state.metaInProgress) && <CaptureMetaPreview
-          meta={this.state.meta}
-          inProgress={this.state.metaInProgress}
-          onRemove={this.clearRichEmbedAction}
-        />}
+          {attachment.hasAttachment && <View style={styles.preview}>
+            <CapturePreview
+              uri={attachment.uri}
+              type={attachment.type}
+            />
+            <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
+          </View>}
 
-        <CapturePosterFlags
-          matureValue={this.state.mature}
-          shareValue={this.state.share}
-          lockValue={this.state.lock}
-          onMature={this.onMature}
-          onShare={this.onShare}
-          onLocking={this.onLocking}
-        />
-
-        {attachment.hasAttachment && <View style={styles.preview}>
-          <CapturePreview
-            uri={attachment.uri}
-            type={attachment.type}
+          <CaptureGallery
+            onSelected={this.onAttachedMedia}
           />
-          <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
-        </View>}
-
-        <CaptureGallery
-          onSelected={this.onAttachedMedia}
+        </ScrollView>
+        <UserAutocomplete
+          text={this.state.text}
+          selection={this.state.selection}
+          onSelect={this.onSelectTag}
         />
-      </ScrollView>
+      </View>
     );
   }
 
@@ -381,7 +409,8 @@ export default class CapturePoster extends Component {
 
 const styles = StyleSheet.create({
   posterAndPreviewWrapper: {
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    flex:1
   },
   posterWrapper: {
     minHeight: 100,

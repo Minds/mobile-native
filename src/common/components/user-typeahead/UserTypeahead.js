@@ -30,6 +30,7 @@ export default class UserTypeahead extends Component {
 
   state = {
     query: '',
+    text: '',
     users: []
   };
 
@@ -98,28 +99,47 @@ export default class UserTypeahead extends Component {
     }
   });
 
+  setText = (text, inmediate = false) => {
+    this.setState({text})
+    if (inmediate) {
+      this._query(text);
+    } else {
+      this.query(text);
+    }
+  };
+
   query = debounce(async query => {
+    this._query(query)
+  }, 300);
+
+  _query = async(query) => {
     try {
       this.setState({ query, users: await UserTypeaheadService.search(query) });
     } catch (e) {
       console.error(e);
       // TODO: Show error
     }
-  }, 300);
+  }
 
   onSelect = item => {
     this.props.onSelect(item);
   };
 
   onModalShow = () => {
-    if (this.textInput) {
-      this.textInput.focus();
+    if (this.props.value) {
+      this.setText(this.props.value, true);
     }
+    setTimeout(() => {
+      if (this.textInput) {
+        this.textInput.focus();
+      }
+    }, 50);
   };
 
   onModalHide = () => {
     this.setState({
       query: '',
+      text: '',
       users: []
     });
   };
@@ -133,9 +153,10 @@ export default class UserTypeahead extends Component {
           style={this.styles.headerTextInput}
           autoCorrect={false}
           autoCapitalize="none"
-          onChangeText={query => this.query(query)}
+          onChangeText={query => this.setText(query)}
           returnKeyType="search"
           ref={textInput => this.textInput = textInput}
+          value={this.state.text}
         />
 
         <Touchable onPress={this.props.onClose}>
@@ -197,6 +218,7 @@ export default class UserTypeahead extends Component {
         onModalHide={this.onModalHide}
       >
         <FlatList
+          keyboardShouldPersistTaps='always'
           data={this.state.users}
           ListHeaderComponent={this.HeaderPartial}
           ListEmptyComponent={this.EmptyPartial}
