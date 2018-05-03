@@ -6896,9 +6896,9 @@ react-native-media-meta@^0.0.10:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/react-native-media-meta/-/react-native-media-meta-0.0.10.tgz#097cc19d04505258e481547bcfd16db6d390e3dd"
 
-"react-native-minds-encryption@github:Minds/react-native-minds-encryption":
+"react-native-minds-encryption@https://github.com/Minds/react-native-minds-encryption":
   version "0.1.0"
-  resolved "git+ssh://git@github.com/Minds/react-native-minds-encryption.git#226e439c6a9ff1260369d1ff694ad27e59ae4f39"
+  resolved "https://github.com/Minds/react-native-minds-encryption#226e439c6a9ff1260369d1ff694ad27e59ae4f39"
 
 react-native-modal-datetime-picker@^4.13.0:
   version "4.13.0"
@@ -6922,9 +6922,9 @@ react-native-modal@^4.1.1:
     prop-types "15.5.10"
     react-native-animatable "^1.2.3"
 
-"react-native-notifications@github:Minds/react-native-notifications":
+"react-native-notifications@https://github.com/Minds/react-native-notifications":
   version "1.1.19"
-  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/239d9ffee36959b9697c24af12437111281892dd"
+  resolved "https://github.com/Minds/react-native-notifications#239d9ffee36959b9697c24af12437111281892dd"
   dependencies:
     core-js "^1.0.0"
     uuid "^2.0.3"
