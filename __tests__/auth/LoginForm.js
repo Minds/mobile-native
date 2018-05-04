@@ -16,14 +16,14 @@ describe('LoginForm component', () => {
     authService.login.mockClear();
   });
 
-  it('renders correctly', () => {
+  it('should renders correctly', () => {
     const loginForm = renderer.create(
       <LoginForm />
     ).toJSON();
     expect(loginForm).toMatchSnapshot();
   });
 
-  it('calls onLogin when user login', async () => {
+  it('should calls onLogin when user login', async () => {
 
     authService.login.mockResolvedValue();
 

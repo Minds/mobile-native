@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginScreen component should renders correctly 1`] = `
+<View
+  enabled={true}
+  keyboardVerticalOffset={0}
+  onLayout={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <VideoBackground />
+  <View
+    style={
+      Array [
+        Object {
+          "flex": 1,
+          "justifyContent": "center",
+        },
+        Object {
+          "padding": 10,
+        },
+      ]
+    }
+  >
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "opacity": 0,
+          "transform": Array [
+            Object {
+              "scale": 0.3,
+            },
+          ],
+        }
+      }
+    >
+      <Image
+        collapsable={undefined}
+        resizeMode="contain"
+        source={1}
+        style={
+          Object {
+            "alignSelf": "center",
+            "height": 100,
+            "marginBottom": 30,
+            "width": 200,
+          }
+        }
+      />
+    </View>
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "opacity": 0,
+          "transform": Array [
+            Object {
+              "translateY": 100,
+            },
+          ],
+        }
+      }
+    >
+      <LoginForm
+        onForgot={[Function]}
+        onLogin={[Function]}
+        onRegister={[Function]}
+      />
+    </View>
+  </View>
+</View>
+`;
