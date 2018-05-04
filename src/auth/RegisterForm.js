@@ -16,7 +16,6 @@ import {
 } from 'react-native';
 
 import authService from '../auth/AuthService';
-import { register } from './RegisterService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
@@ -170,7 +169,7 @@ export default class RegisterForm extends Component {
     }
 
     try {
-      await register(this.state.username ,this.state.email ,this.state.password)
+      await authService.register(this.state.username ,this.state.email ,this.state.password)
       await authService.login(this.state.username ,this.state.password)
       await this.props.user.load();
       this.props.onRegister(sessionService.guid);
