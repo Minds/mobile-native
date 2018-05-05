@@ -51,4 +51,4 @@ class BlogsStore {
   }
 }
 
-export default BlogsStore;
+export default new BlogsStore();

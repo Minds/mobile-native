@@ -98,4 +98,4 @@ class BoostStore {
 
 }
 
-export default BoostStore;
+export default new BoostStore();

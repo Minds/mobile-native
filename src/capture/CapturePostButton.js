@@ -13,7 +13,7 @@ import colors from '../styles/Colors';
 
 @inject('capture')
 @observer
-export default class CapturePostButton extends Component {
+export default class CapturePoster extends Component {
 
   render() {
     const attachment = this.props.capture.attachment;

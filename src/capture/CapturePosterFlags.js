@@ -16,6 +16,7 @@ export default class CapturePosterFlags extends Component {
   state = {
     shareModalVisible: false,
     lockingModalVisible: false,
+
     lock: false,
     min: '0',
   };
@@ -255,9 +256,9 @@ export default class CapturePosterFlags extends Component {
       <View style={styles.view}>
         <View style={{ flex: 1}} />
         {attachment.hasAttachment && <View style={styles.cell}>
-          <LicensePicker
-            onLicenseSelected={(v) => attachment.setLicense(v)}
-            value={attachment.license}
+          <LicensePicker 
+            onLicenseSelected={(v) => attachment.setLicense(v)} 
+            value={attachment.license} 
             iconColor={attachment.license ? Colors.primary : Colors.darkGreyed}
           />
         </View>}

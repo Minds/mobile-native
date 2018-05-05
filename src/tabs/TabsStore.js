@@ -37,4 +37,4 @@ class TabsStore {
 
 }
 
-export default TabsStore;
+export default new TabsStore();

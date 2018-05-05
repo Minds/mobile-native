@@ -63,19 +63,19 @@ export default class CaptureTab extends Component {
         { this.state.screen != 'poster' ?
           <View style={{height:125}}>
             <View style={{flex:1, flexDirection:'row', paddingLeft: 1, paddingRight: 1 }}>
-              <TouchableHighlight underlayColor='#FFF' onPress={ this.gallery } style={ styles.buttons}>
+              <TouchableHighlight underlayColor='#FFF' onPress={() => this.gallery() } style={ styles.buttons}>
                 <View style={ styles.buttonsWrapper }>
                   <Icon name="md-photos" size={36} style={ styles.icons }/>
                   <Text style={ styles.labels }>Gallery</Text>
                 </View>
               </TouchableHighlight>
-              <TouchableHighlight underlayColor='#FFF' onPress={ this.photo } style={ styles.buttons }>
+              <TouchableHighlight underlayColor='#FFF' onPress={() => this.photo() } style={ styles.buttons }>
                 <View style={ styles.buttonsWrapper }>
                   <Icon name="md-camera" size={36} style={ styles.icons }/>
                   <Text style={ styles.labels }>Photo</Text>
                 </View>
               </TouchableHighlight>
-              <TouchableHighlight underlayColor='#FFF' onPress={ this.video } style={ styles.buttons }>
+              <TouchableHighlight underlayColor='#FFF' onPress={() => this.video() } style={ styles.buttons }>
                 <View style={ styles.buttonsWrapper }>
                   <Icon name="md-videocam" size={36} style={ styles.icons }/>
                   <Text style={ styles.labels }>Video</Text>
@@ -90,7 +90,7 @@ export default class CaptureTab extends Component {
     );
   }
 
-  video = async () => {
+  async video() {
     try {
       const response = await attachmentService.video();
       if (response) this.props.onSelectedMedia(response);
@@ -99,7 +99,7 @@ export default class CaptureTab extends Component {
     }
   }
 
-  photo = async () => {
+  async photo() {
     try {
       const response = await attachmentService.photo();
       if (response) this.props.onSelectedMedia(response);
@@ -111,7 +111,7 @@ export default class CaptureTab extends Component {
   /**
    * Open gallery
    */
-  gallery = async () => {
+  async gallery() {
     if (Platform.OS == 'ios') {
       try {
         const response = await attachmentService.gallery('mixed');

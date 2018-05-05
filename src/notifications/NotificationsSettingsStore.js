@@ -67,4 +67,4 @@ class NotificationsSettingsStore {
 
 }
 
-export default NotificationsSettingsStore;
+export default new NotificationsSettingsStore();

@@ -134,4 +134,4 @@ class BlockchainTransactionStore {
   }
 }
 
-export default BlockchainTransactionStore;
+export default new BlockchainTransactionStore()

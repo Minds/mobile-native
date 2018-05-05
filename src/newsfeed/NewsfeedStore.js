@@ -46,7 +46,7 @@ class NewsfeedStore {
       },
     };
   }
-
+  
   /**
    * Load feed
    */
@@ -57,12 +57,12 @@ class NewsfeedStore {
     if (store.list.cantLoadMore() || store.loading) {
       return Promise.resolve();
     }
-
+  
     store.loading = true;
 
-    try {
+    try { 
       const feed = await fetchFn(this.list.offset)
-
+      
       feed.entities = ActivityModel.createMany(feed.entities);
       this.assignRowKeys(feed);
       store.list.setList(feed, refresh);
@@ -185,4 +185,4 @@ class NewsfeedStore {
 
 }
 
-export default NewsfeedStore;
+export default new NewsfeedStore();

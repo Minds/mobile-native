@@ -105,4 +105,4 @@ class WalletStore {
   }
 }
 
-export default WalletStore;
+export default new WalletStore()

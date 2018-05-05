@@ -67,4 +67,4 @@ class WalletHistoryStore {
 
 }
 
-export default WalletHistoryStore;
+export default new WalletHistoryStore();

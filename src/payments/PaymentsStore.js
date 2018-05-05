@@ -17,9 +17,9 @@ class PaymentsStore {
     try {
       this.inProgress = true;
       this.cards = [];
-
+  
       const response = await api.get(`api/v1/payments/stripe/cards`);
-
+  
       if (response.cards) {
         this.cards = response.cards.map(card => ({
           token: card.id,
@@ -50,4 +50,4 @@ class PaymentsStore {
   }
 }
 
-export default PaymentsStore;
+export default new PaymentsStore();

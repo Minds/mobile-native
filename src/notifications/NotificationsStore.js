@@ -80,7 +80,7 @@ class NotificationsStore {
     const filter = this.filter;
 
     const offset = refresh ? '' : this.list.offset;
-
+    
     try {
       const feed = await this.service.getFeed(offset, this.filter)
       // prevent race conditions when filter change
@@ -167,4 +167,4 @@ class NotificationsStore {
 
 }
 
-export default NotificationsStore;
+export default new NotificationsStore();

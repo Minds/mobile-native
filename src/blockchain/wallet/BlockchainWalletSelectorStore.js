@@ -90,4 +90,4 @@ class BlockchainWalletSelectorStore {
 
 }
 
-export default BlockchainWalletSelectorStore;
+export default new BlockchainWalletSelectorStore();

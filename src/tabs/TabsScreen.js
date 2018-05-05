@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window'); 
 const aspectRatio = height/width;
 
 import Topbar from '../topbar/Topbar';
@@ -21,7 +21,7 @@ import WalletScreen from '../wallet/WalletScreen';
 import ComingSoonScreen from '../static-views/ComingSoonScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import MoreScreen from './MoreScreen';
-import stores from '../../AppStores';
+import tabs from './TabsStore';
 import featuresService from '../common/services/features.service';
 
 let platformWalletScreen = WalletScreen;
@@ -64,7 +64,7 @@ const Tabs = (
     navigationOptions: ({ navigation }) => ({
       tabBarOnPress: (e) => {
         e.jumpToIndex(e.scene.index);
-        stores.tabs.setState({previousScene: e.previousScene, scene: e.scene});
+        tabs.setState({previousScene: e.previousScene, scene: e.scene});
       },
     }),
     tabBarOptions: {
