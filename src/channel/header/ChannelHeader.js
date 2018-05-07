@@ -282,9 +282,9 @@ export default class ChannelHeader extends Component {
           {isEditable && <View style={styles.tapOverlayView}>
             <Icon name="md-create" size={30} color="#fff" />
           </View>}
-          {isUploading && this.props.channel.bannerProgress && <View style={styles.tapOverlayView}>
+          {(isUploading && this.props.channel.bannerProgress) ? <View style={styles.tapOverlayView}>
             <Progress.Pie progress={this.props.channel.bannerProgress} size={36} />
-          </View>}
+          </View>:null}
         </TouchableCustom>
 
         <ChannelBadges channel={channel} style={{position: 'absolute', right: 5, top: 160}} />
@@ -355,9 +355,9 @@ export default class ChannelHeader extends Component {
           {isEditable && <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
             <Icon name="md-create" size={30} color="#fff" />
           </View>}
-          {isUploading && this.props.channel.avatarProgress && <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
+          {(isUploading && this.props.channel.avatarProgress) ? <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
             <Progress.Pie progress={this.props.channel.avatarProgress} size={36} />
-          </View>}
+          </View>: null}
         </TouchableCustom>
 
       </View>
