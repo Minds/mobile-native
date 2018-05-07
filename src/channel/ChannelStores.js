@@ -50,4 +50,4 @@ class ChannelStores {
 
 }
 
-export default new ChannelStores();
+export default ChannelStores;

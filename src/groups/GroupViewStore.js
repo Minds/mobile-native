@@ -49,7 +49,7 @@ class GroupViewStore {
 
   /**
    * Set guid
-   * @param {stirng} guid 
+   * @param {stirng} guid
    */
   setGuid(guid) {
     this.guid = guid;
@@ -179,7 +179,7 @@ class GroupViewStore {
 
   /**
    * Prepend an entity into the feed
-   * @param {object} entity 
+   * @param {object} entity
    */
   prepend(entity) {
     const model = ActivityModel.create(entity)
@@ -253,4 +253,4 @@ class GroupViewStore {
 
 }
 
-export default new GroupViewStore();
+export default GroupViewStore;

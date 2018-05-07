@@ -7,4 +7,4 @@ class CheckoutModalStore extends ModalControllerStore {
   };
 }
 
-export default new CheckoutModalStore();
+export default CheckoutModalStore;

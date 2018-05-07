@@ -202,7 +202,7 @@ class DiscoveryStore {
     this.searchtext = text.trim();
     this.filter = 'search';
     this.loading = false;
-    
+
     if (text.trim() == '') {
       console.log('limpiando')
       this.clearList();
@@ -211,7 +211,7 @@ class DiscoveryStore {
     } else {
       this.type = 'user';
     }
-    
+
     const list = this.stores[this.type].list;
     list.clearList();
 
@@ -230,4 +230,4 @@ class DiscoveryStore {
   }
 }
 
-export default new DiscoveryStore();
+export default DiscoveryStore;

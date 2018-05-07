@@ -1,4 +1,4 @@
-import BlockchainWalletSelectorStore from './BlockchainWalletSelectorStore';
+import appStores from '../../../AppStores';
 import StorageService from '../../common/services/storage.service';
 import Web3Service from '../services/Web3Service';
 import BlockchainTokenService from '../services/BlockchainTokenService';
@@ -192,7 +192,7 @@ class BlockchainWalletService {
   }
 
   async selectCurrent(message = '', opts = {}) {
-    const payload = await BlockchainWalletSelectorStore.waitForSelect(message, opts);
+    const payload = await appStores.blockchainWalletSelector.waitForSelect(message, opts);
 
     if (!payload) {
       this.current = null;

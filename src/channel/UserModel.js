@@ -1,7 +1,7 @@
 import { MINDS_CDN_URI } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
-import UserStore from '../auth/UserStore';
+import stores from '../../AppStores';
 
 /**
  * User model
@@ -9,8 +9,8 @@ import UserStore from '../auth/UserStore';
 export default class UserModel extends BaseModel {
 
   getOwnerIcontime() {
-    if (UserStore.me && UserStore.me.guid === this.guid) {
-      return UserStore.me.icontime;
+    if (stores.user.me && stores.user.me.guid === this.guid) {
+      return stores.user.me.icontime;
     } else {
       return this.icontime;
     }
@@ -20,7 +20,7 @@ export default class UserModel extends BaseModel {
    * current user is owner of the channel
    */
   isOwner() {
-    return UserStore.me.guid === this.guid;
+    return stores.user.me.guid === this.guid;
   }
 
   /**

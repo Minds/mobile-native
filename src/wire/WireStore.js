@@ -104,7 +104,7 @@ class WireStore {
     this.sending = false;
   }
 
-  @action 
+  @action
   reset() {
     this.amount = 1;
     this.sending = false;
@@ -115,4 +115,4 @@ class WireStore {
 
 }
 
-export default new WireStore()
+export default WireStore;

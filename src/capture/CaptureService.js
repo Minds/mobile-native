@@ -8,9 +8,5 @@ export function post(post) {
       return {
         entity: data.activity,
       }
-    })
-    .catch(err => {
-      console.log('error');
-      throw "Ooops";
-    })
+    });
 }

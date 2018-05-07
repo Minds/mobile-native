@@ -8,7 +8,7 @@ import MindsService from '../../common/services/minds.service';
 import BlockchainApiService from '../BlockchainApiService';
 import StorageService from '../../common/services/storage.service';
 
-import BlockchainTransactionStore from '../transaction-modal/BlockchainTransactionStore';
+import appStores from '../../../AppStores';
 
 const sign = require('ethjs-signer').sign;
 
@@ -96,7 +96,7 @@ class Web3Service {
       console.log(e);
     }
 
-    const sendOptions = await BlockchainTransactionStore.waitForApproval(method, message, baseOptions, Math.ceil(estimatedGas * 1.5), value);
+    const sendOptions = await appStores.blockchainTransaction.waitForApproval(method, message, baseOptions, Math.ceil(estimatedGas * 1.5), value);
     await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
 
     if (sendOptions) {

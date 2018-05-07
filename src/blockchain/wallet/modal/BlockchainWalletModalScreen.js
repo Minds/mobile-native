@@ -17,7 +17,7 @@ import BlockchainWalletList from '../list/BlockchainWalletList';
 
 import { CommonStyle } from '../../../styles/Common';
 
-import BlockchainWalletSelectorStore from '../BlockchainWalletSelectorStore';
+import appStores from '../../../../AppStores';
 import currency from '../../../common/helpers/currency';
 import BlockchainApiService from '../../BlockchainApiService';
 
@@ -97,7 +97,7 @@ export default class BlockchainWalletModalScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     header: (
       <View style={CommonStyle.backgroundWhite}>
-        <Icon size={36} name="ios-close" onPress={() => BlockchainWalletSelectorStore.cancel()} style={styles.navHeaderIcon}/>
+        <Icon size={36} name="ios-close" onPress={() => appStores.blockchainWalletSelector.cancel()} style={styles.navHeaderIcon}/>
       </View>
     ),
     transitionConfig: {

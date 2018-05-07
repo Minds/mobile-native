@@ -23,7 +23,7 @@ import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from './SettingsService';
 
 import i18nService from '../common/services/i18n.service';
-import BlockchainWalletStore from '../blockchain/wallet/BlockchainWalletStore';
+import appStores from '../../AppStores';
 
 const ICON_SIZE = 24;
 
@@ -46,7 +46,7 @@ export default class SettingsScreen extends Component {
     const _confirm3 = async (confirmation) => {
       await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
 
-      await BlockchainWalletStore._DANGEROUS_wipe(confirmation);
+      await appStores.blockchainWallet._DANGEROUS_wipe(confirmation);
 
       Alert.alert('Wiped', `Your Ethereum keychain was completely removed.`);
     };
