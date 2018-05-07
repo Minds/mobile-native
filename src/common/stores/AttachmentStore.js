@@ -14,12 +14,9 @@ export default class AttachmentStore {
   @observable uploading = false;
   @observable checkingVideoLength = false;
   @observable progress = 0;
-  deleteUploading = false;
-
-  queue = {};
 
   guid = '';
-  hasQueue = false;
+
   @observable uri  = '';
   @observable type = '';
   @observable license = '';
@@ -40,38 +37,31 @@ export default class AttachmentStore {
     if (!valid) return;
 
     if (this.uploading) {
-      this.setQueue(media);
-      return;
-    }
-
-    if (this.hasAttachment) {
+      // abort current upload
+     this.cancelCurrentUpload();
+    } else if (this.hasAttachment) {
+      // delete uploaded media
       attachmentService.deleteMedia(this.guid);
     }
 
     this.uri  = media.uri;
     this.type = media.type;
     this.setHasAttachment(true);
-    this.setUploading(true);
+
+    const uploadPromise = attachmentService.attachMedia(media, (pct) => {
+      this.setProgress(pct);
+    });
+
+    // we need to defer the set because a cenceled promise could set it to false
+    setTimeout(() => this.setUploading(true), 0);
+
+    this.uploadPromise = uploadPromise;
 
     try {
-      const result = await attachmentService.attachMedia(media, (pct) => {
-        this.setProgress(pct);
-      });
-      this.setUploading(false);
+      const result = await uploadPromise;
+      // ignore canceled
+      if (uploadPromise.isCanceled() || !result) return;
       this.guid = result.guid;
-
-      if (this.hasQueue) {
-        attachmentService.deleteMedia(this.guid);
-        this.setHasAttachment(true);
-        this.setUploading(true);
-        const result = await attachmentService.attachMedia(this.queue, (pct) => {
-          this.setProgress(pct);
-        });
-        this.guid = result.guid;
-        this.queue = {};
-        this.hasQueue = false;
-      }
-
     } catch (err) {
       this.clear();
       throw err;
@@ -85,14 +75,17 @@ export default class AttachmentStore {
       this.tempIosVideo = '';
     }
 
-    if (this.deleteUploading) {
-      attachmentService.deleteMedia(this.guid);
-      this.deleteUploading = false;
-      this.clear();
-      return false;
-    }
-
     return this.guid;
+  }
+
+  /**
+   * Cancel current upload promise and request
+   */
+  cancelCurrentUpload(clear=true)
+  {
+    this.uploadPromise && this.uploadPromise.cancel(() => {
+      if (clear) this.clear();
+    });
   }
 
   /**
@@ -143,14 +136,6 @@ export default class AttachmentStore {
     return rnFS.copyAssetsVideoIOS(media.uri, this.tempIosVideo);
   }
 
-  @action
-  setQueue(media) {
-    this.hasQueue = true;
-    this.queue = media;
-    this.uri = media.uri ? media.uri: this.uri;
-    this.type = media.type ? media.type: this.type;
-  }
-
   /**
    * Delete the uploaded attachment
    */
@@ -164,8 +149,7 @@ export default class AttachmentStore {
         return false;
       }
     } else {
-      this.deleteUploading = true;
-      this.clear();
+      this.cancelCurrentUpload();
     }
     return true;
   }

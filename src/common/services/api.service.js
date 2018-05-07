@@ -1,3 +1,5 @@
+import Cancelable from 'promise-cancelable';
+
 import session from './session.service';
 import { MINDS_URI, MINDS_URI_SETTINGS } from '../../config/Config';
 import { btoa } from 'abab';
@@ -163,17 +165,23 @@ class ApiService {
     });
   }
 
-  async upload(url, file, data=null, progress) {
-    const paramsString = await this.buildParamsString({});
+  upload(url, file, data=null, progress) {
+    const paramsString = this.buildParamsString({});
     var formData = new FormData();
     formData.append('file', file);
     for (var key in data) {
       formData.append(key, data[key]);
     }
 
-    return new Promise((resolve, reject)=>{
+    return new Cancelable((resolve, reject, onCancel) => {
 
       let xhr = new XMLHttpRequest();
+
+      // handle cancel
+      onCancel((cb) => {
+        xhr.abort();
+        cb();
+      });
 
       if (progress) {
         xhr.upload.addEventListener("progress", progress);
@@ -183,17 +191,25 @@ class ApiService {
       // xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
+      xhr.onload = () => {
+        if (xhr.status == 200) {
           let data = JSON.parse(xhr.responseText);
           if (data.status == 'error')
             return reject(data);
 
           resolve(data);
+        } else {
+          reject('Ooops: upload error');
         }
       };
 
       xhr.send(formData);
+    })
+    .catch( error => {
+      console.log(error)
+      if (error.name !== 'CancelationError') {
+        throw error;
+      }
     });
   }
 }
