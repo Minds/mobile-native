@@ -8,7 +8,7 @@ import {
 /**
  * Single Entity Store
  */
-export default class SingleEntityStore {
+class SingleEntityStore {
 
   @observable entity;
 
@@ -22,4 +22,6 @@ export default class SingleEntityStore {
     this.entity = null;
   }
 }
+
+export default SingleEntityStore;
 

@@ -158,7 +158,7 @@ export default class Activity extends Component {
           navigation={this.props.navigation}
           rightToolbar={this.props.hideTabs ? null : rightToolbar}
           >
-          <TouchableOpacity onPress={this.navToActivity} style={{ flexDirection: 'row' }}>
+          <TouchableOpacity onPress={() => this.navToActivity()} style={{ flexDirection: 'row' }}>
             <Text style={styles.timestamp}>{formatDate(this.props.entity.time_created)}</Text>
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>

@@ -1,0 +1,267 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Activity component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "borderBottomColor": "#EEE",
+      "borderBottomWidth": 0.5,
+      "overflow": "visible",
+    }
+  }
+>
+  <OwnerBlock
+    entity={
+      Object {
+        "attachment_guid": false,
+        "blurb": false,
+        "container_guid": "activityguid0",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "guid": "activityguid0",
+        "mature": false,
+        "message": "Smartphone Addiction & Cognitive Impairment ",
+        "ownerObj": Object {
+          "getAvatarSource": [Function],
+          "guid": "824853017709780997",
+          "subtype": false,
+          "time_created": "1522036284",
+          "type": "user",
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "perma_url": false,
+        "thumbnail_src": false,
+        "title": "TITLE",
+        "type": "activity",
+      }
+    }
+    navigation={
+      Object {
+        "navigate": [MockFunction],
+      }
+    }
+    rightToolbar={
+      <View
+        style={
+          Object {
+            "alignSelf": "flex-end",
+            "position": "absolute",
+            "right": 10,
+            "top": 20,
+          }
+        }
+      >
+        <ActivityActionSheet
+          entity={
+            Object {
+              "attachment_guid": false,
+              "blurb": false,
+              "container_guid": "activityguid0",
+              "custom_data": false,
+              "custom_type": false,
+              "description": "Congratulations! ",
+              "edited": "",
+              "guid": "activityguid0",
+              "mature": false,
+              "message": "Smartphone Addiction & Cognitive Impairment ",
+              "ownerObj": Object {
+                "getAvatarSource": [Function],
+                "guid": "824853017709780997",
+                "subtype": false,
+                "time_created": "1522036284",
+                "type": "user",
+              },
+              "owner_guid": "824853017709780997",
+              "parent_guid": "838106762591510528",
+              "perma_url": false,
+              "thumbnail_src": false,
+              "title": "TITLE",
+              "type": "activity",
+            }
+          }
+          navigation={
+            Object {
+              "navigate": [MockFunction],
+            }
+          }
+          newsfeed={undefined}
+          toggleEdit={[Function]}
+        />
+      </View>
+    }
+  >
+    <TouchableOpacity
+      activeOpacity={0.2}
+      onPress={[Function]}
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#888",
+            "fontSize": 11,
+          }
+        }
+      >
+        Invalid date
+      </Text>
+      <ActivityMetrics
+        entity={
+          Object {
+            "attachment_guid": false,
+            "blurb": false,
+            "container_guid": "activityguid0",
+            "custom_data": false,
+            "custom_type": false,
+            "description": "Congratulations! ",
+            "edited": "",
+            "guid": "activityguid0",
+            "mature": false,
+            "message": "Smartphone Addiction & Cognitive Impairment ",
+            "ownerObj": Object {
+              "getAvatarSource": [Function],
+              "guid": "824853017709780997",
+              "subtype": false,
+              "time_created": "1522036284",
+              "type": "user",
+            },
+            "owner_guid": "824853017709780997",
+            "parent_guid": "838106762591510528",
+            "perma_url": false,
+            "thumbnail_src": false,
+            "title": "TITLE",
+            "type": "activity",
+          }
+        }
+      />
+    </TouchableOpacity>
+  </OwnerBlock>
+  <View
+    style={
+      Object {
+        "padding": 8,
+      }
+    }
+  >
+    <ExplicitText
+      entity={
+        Object {
+          "attachment_guid": false,
+          "blurb": false,
+          "container_guid": "activityguid0",
+          "custom_data": false,
+          "custom_type": false,
+          "description": "Congratulations! ",
+          "edited": "",
+          "guid": "activityguid0",
+          "mature": false,
+          "message": "Smartphone Addiction & Cognitive Impairment ",
+          "ownerObj": Object {
+            "getAvatarSource": [Function],
+            "guid": "824853017709780997",
+            "subtype": false,
+            "time_created": "1522036284",
+            "type": "user",
+          },
+          "owner_guid": "824853017709780997",
+          "parent_guid": "838106762591510528",
+          "perma_url": false,
+          "thumbnail_src": false,
+          "title": "TITLE",
+          "type": "activity",
+        }
+      }
+      navigation={
+        Object {
+          "navigate": [MockFunction],
+        }
+      }
+      style={
+        Object {
+          "fontFamily": "Roboto",
+        }
+      }
+    />
+  </View>
+  <MediaView
+    entity={
+      Object {
+        "attachment_guid": false,
+        "blurb": false,
+        "container_guid": "activityguid0",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "guid": "activityguid0",
+        "mature": false,
+        "message": "Smartphone Addiction & Cognitive Impairment ",
+        "ownerObj": Object {
+          "getAvatarSource": [Function],
+          "guid": "824853017709780997",
+          "subtype": false,
+          "time_created": "1522036284",
+          "type": "user",
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "perma_url": false,
+        "thumbnail_src": false,
+        "title": "TITLE",
+        "type": "activity",
+      }
+    }
+    navigation={
+      Object {
+        "navigate": [MockFunction],
+      }
+    }
+    style={Object {}}
+    width={750}
+  />
+  <Actions
+    entity={
+      Object {
+        "attachment_guid": false,
+        "blurb": false,
+        "container_guid": "activityguid0",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "guid": "activityguid0",
+        "mature": false,
+        "message": "Smartphone Addiction & Cognitive Impairment ",
+        "ownerObj": Object {
+          "getAvatarSource": [Function],
+          "guid": "824853017709780997",
+          "subtype": false,
+          "time_created": "1522036284",
+          "type": "user",
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "perma_url": false,
+        "thumbnail_src": false,
+        "title": "TITLE",
+        "type": "activity",
+      }
+    }
+    navigation={
+      Object {
+        "navigate": [MockFunction],
+      }
+    }
+  />
+</View>
+`;

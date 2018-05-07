@@ -1,0 +1,316 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Activity screen component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <KeyboardAvoidingView
+    behavior="padding"
+    enabled={true}
+    keyboardVerticalOffset={66}
+    style={
+      Object {
+        "flex": 1,
+        "paddingBottom": 0,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <FlatList
+        ListEmptyComponent={<CenteredLoading />}
+        ListHeaderComponent={
+          <View>
+            <TouchableHighlight
+              activeOpacity={0.85}
+              delayPressOut={100}
+              onPress={[Function]}
+              style={
+                Object {
+                  "backgroundColor": "#EEE",
+                  "borderRadius": 3,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "margin": 8,
+                  "padding": 8,
+                }
+              }
+              underlayColor="transparent"
+            >
+              <Text
+                accessible={true}
+                allowFontScaling={true}
+                ellipsizeMode="tail"
+                style={
+                  Object {
+                    "color": "#888",
+                    "fontSize": 10,
+                  }
+                }
+              >
+                 LOAD EARLIER 
+              </Text>
+            </TouchableHighlight>
+          </View>
+        }
+        data={
+          Array [
+            Object {
+              "attachment_guid": false,
+              "blurb": false,
+              "container_guid": "guid0",
+              "custom_data": false,
+              "custom_type": false,
+              "description": "Congratulations! ",
+              "edited": "",
+              "guid": "guid0",
+              "mature": false,
+              "ownerObj": Object {
+                "guid": "824853017709780997",
+                "subtype": false,
+                "time_created": "1522036284",
+                "type": "user",
+              },
+              "owner_guid": "824853017709780997",
+              "parent_guid": "838106762591510528",
+              "perma_url": false,
+              "thumbnail_src": false,
+              "type": "comment",
+            },
+            Object {
+              "attachment_guid": false,
+              "blurb": false,
+              "container_guid": "guid1",
+              "custom_data": false,
+              "custom_type": false,
+              "description": "Congratulations! ",
+              "edited": "",
+              "guid": "guid1",
+              "mature": false,
+              "ownerObj": Object {
+                "guid": "824853017709780997",
+                "subtype": false,
+                "time_created": "1522036284",
+                "type": "user",
+              },
+              "owner_guid": "824853017709780997",
+              "parent_guid": "838106762591510528",
+              "perma_url": false,
+              "thumbnail_src": false,
+              "type": "comment",
+            },
+            Object {
+              "attachment_guid": false,
+              "blurb": false,
+              "container_guid": "guid2",
+              "custom_data": false,
+              "custom_type": false,
+              "description": "Congratulations! ",
+              "edited": "",
+              "guid": "guid2",
+              "mature": false,
+              "ownerObj": Object {
+                "guid": "824853017709780997",
+                "subtype": false,
+                "time_created": "1522036284",
+                "type": "user",
+              },
+              "owner_guid": "824853017709780997",
+              "parent_guid": "838106762591510528",
+              "perma_url": false,
+              "thumbnail_src": false,
+              "type": "comment",
+            },
+            Object {
+              "attachment_guid": false,
+              "blurb": false,
+              "container_guid": "guid3",
+              "custom_data": false,
+              "custom_type": false,
+              "description": "Congratulations! ",
+              "edited": "",
+              "guid": "guid3",
+              "mature": false,
+              "ownerObj": Object {
+                "guid": "824853017709780997",
+                "subtype": false,
+                "time_created": "1522036284",
+                "type": "user",
+              },
+              "owner_guid": "824853017709780997",
+              "parent_guid": "838106762591510528",
+              "perma_url": false,
+              "thumbnail_src": false,
+              "type": "comment",
+            },
+            Object {
+              "attachment_guid": false,
+              "blurb": false,
+              "container_guid": "guid4",
+              "custom_data": false,
+              "custom_type": false,
+              "description": "Congratulations! ",
+              "edited": "",
+              "guid": "guid4",
+              "mature": false,
+              "ownerObj": Object {
+                "guid": "824853017709780997",
+                "subtype": false,
+                "time_created": "1522036284",
+                "type": "user",
+              },
+              "owner_guid": "824853017709780997",
+              "parent_guid": "838106762591510528",
+              "perma_url": false,
+              "thumbnail_src": false,
+              "type": "comment",
+            },
+          ]
+        }
+        disableVirtualization={false}
+        horizontal={false}
+        initialNumToRender={25}
+        keyExtractor={[Function]}
+        maxToRenderPerBatch={10}
+        numColumns={1}
+        onEndReachedThreshold={2}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        style={
+          Object {
+            "backgroundColor": "#FFF",
+            "flex": 1,
+          }
+        }
+        updateCellsBatchingPeriod={50}
+        windowSize={21}
+      />
+      <View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "alignSelf": "baseline",
+              "backgroundColor": "#FFF",
+              "display": "flex",
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 5,
+            }
+          }
+        >
+          <Image
+            source={Object {}}
+            style={
+              Object {
+                "borderColor": "#EEE",
+                "borderRadius": 18,
+                "borderWidth": 0.5,
+                "height": 36,
+                "width": 36,
+              }
+            }
+          />
+          <TextInput
+            allowFontScaling={true}
+            autogrow={true}
+            editable={true}
+            maxHeight={110}
+            multiline={true}
+            onChangeText={[Function]}
+            onFocus={[Function]}
+            onSelectionChange={[Function]}
+            placeholder="Type your comment..."
+            style={
+              Array [
+                Object {
+                  "flex": 1,
+                },
+                Object {
+                  "marginLeft": 8,
+                },
+              ]
+            }
+            underlineColorAndroid="transparent"
+          />
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "flex-end",
+              }
+            }
+          >
+            <TouchableOpacity
+              activeOpacity={0.2}
+              onPress={[Function]}
+              style={
+                Object {
+                  "paddingRight": 8,
+                }
+              }
+            >
+              <Icon
+                allowFontScaling={false}
+                name="md-attach"
+                size={24}
+                style={
+                  Object {
+                    "paddingRight": 10,
+                  }
+                }
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.2}
+              onPress={[Function]}
+              style={
+                Object {
+                  "paddingRight": 8,
+                }
+              }
+            >
+              <Icon
+                allowFontScaling={false}
+                name="md-send"
+                size={24}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+      <UserAutocomplete
+        noFloat={true}
+        onSelect={[Function]}
+        selection={
+          Object {
+            "end": 0,
+            "start": 0,
+          }
+        }
+      />
+    </View>
+    <ActionSheet
+      cancelButtonIndex={0}
+      onPress={[Function]}
+      options={
+        Array [
+          "Cancel",
+          "Gallery",
+          "Photo",
+          "Video",
+        ]
+      }
+    />
+  </KeyboardAvoidingView>
+</View>
+`;

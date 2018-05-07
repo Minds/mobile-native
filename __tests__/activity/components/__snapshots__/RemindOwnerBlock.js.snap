@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Remind owner component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "row",
+      "paddingLeft": 8,
+      "paddingTop": 8,
+    }
+  }
+>
+  <Icon
+    color="rgb(70, 144, 214)"
+    name="repeat"
+    raised={false}
+    reverse={false}
+    reverseColor="white"
+    size={16}
+    style={
+      Object {
+        "marginLeft": 8,
+        "marginRight": 8,
+      }
+    }
+    underlayColor="white"
+  />
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+  >
+    <Image
+      source={
+        Object {
+          "source": "http://thisisaurl",
+        }
+      }
+      style={
+        Object {
+          "borderColor": "#EEE",
+          "borderRadius": 12,
+          "borderWidth": 0.5,
+          "height": 24,
+          "marginLeft": 8,
+          "width": 24,
+        }
+      }
+    />
+  </TouchableOpacity>
+  <View
+    style={
+      Object {
+        "marginLeft": 8,
+      }
+    }
+  >
+    <TouchableOpacity
+      activeOpacity={0.2}
+      onPress={[Function]}
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Object {
+            "color": "#444",
+            "fontFamily": "Roboto",
+            "fontSize": 13,
+            "fontWeight": "bold",
+          }
+        }
+      />
+    </TouchableOpacity>
+  </View>
+</View>
+`;

@@ -41,7 +41,7 @@ import attachmentService from '../common/services/attachment.service';
 import { ComponentsStyle } from '../styles/Components';
 import Colors from '../styles/Colors';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
-import SingleEntityStoreProvider from '../common/stores/SingleEntityStore';
+import SingleEntityStore from '../common/stores/SingleEntityStore';
 import { getSingle } from './NewsfeedService';
 import UserAutocomplete from '../common/components/UserAutocomplete';
 
@@ -61,15 +61,14 @@ export default class ActivityScreen extends Component {
   /**
    * Each instance of Comments Screen has is own store instance
    */
-  comments = null;
-  entity = null;
+  comments = null
+  entity = new SingleEntityStore();
 
   /**
    * Component will mount
    */
   async componentWillMount() {
     this.comments = commentsStoreProvider.get();
-    this.entity = new SingleEntityStoreProvider();
     const params = this.props.navigation.state.params;
     if (params.entity) {
       await this.entity.setEntity(ActivityModel.checkOrCreate(params.entity));
@@ -105,7 +104,7 @@ export default class ActivityScreen extends Component {
     this.keyboardDidShowListener.remove();
     this.comments.unlisten();
     this.comments.clearComments();
-    this.comments = null;
+    this.comments = null
   }
 
   getHeader() {

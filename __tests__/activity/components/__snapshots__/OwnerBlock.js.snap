@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Owner component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "row",
+      "padding": 8,
+    }
+  }
+>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+  >
+    <Image
+      source={
+        Object {
+          "source": "http://thisisaurl",
+        }
+      }
+      style={
+        Object {
+          "borderColor": "#EEE",
+          "borderRadius": 23,
+          "borderWidth": 0.5,
+          "height": 46,
+          "width": 46,
+        }
+      }
+    />
+  </TouchableOpacity>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexWrap": "wrap",
+        "marginLeft": 8,
+        "paddingRight": 36,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <TouchableOpacity
+        activeOpacity={0.2}
+        onPress={[Function]}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontFamily": "Roboto",
+              "fontWeight": "bold",
+            }
+          }
+        />
+      </TouchableOpacity>
+    </View>
+  </View>
+</View>
+`;
