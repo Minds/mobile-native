@@ -20,9 +20,11 @@ import {
   MINDS_CDN_URI
 } from '../../config/Config';
 
+import { CommonStyle } from '../../styles/Common';
+
 export default class RemindOwnerBlock extends PureComponent {
 
-  
+
   /**
    * Navigate To channel
    */
@@ -43,10 +45,20 @@ export default class RemindOwnerBlock extends PureComponent {
           <Image source={avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
         <View style={styles.body}>
-          <TouchableOpacity onPress={this._navToChannel}>
+          <TouchableOpacity onPress={this._navToChannel} style={[CommonStyle.flexContainer, CommonStyle.columnAlignStart]}>
             <Text style={styles.username}>
               { entity.username }
             </Text>
+            { this.props.entity.boosted &&
+              <View style={styles.boostTagContainer}>
+                <View style={styles.boostTagColumn}>
+                  <Icon name="md-trending-up" type='ionicon' size={13} iconStyle={styles.boostTagIcon} />
+                </View>
+                <View style={styles.boostTagColumn}>
+                  <Text style={styles.boostTagLabel}>BOOSTED</Text>
+                </View>
+              </View>
+            }
           </TouchableOpacity>
         </View>
       </View>
@@ -57,8 +69,27 @@ export default class RemindOwnerBlock extends PureComponent {
 }
 
 const styles = StyleSheet.create({
+  boostTagContainer: {
+    flexDirection: 'row',
+    flex:1,
+    paddingRight: 32
+  },
+  boostTagColumn: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  boostTagIcon: {
+    color: '#aaa',
+  },
+  boostTagLabel: {
+    color: '#aaa',
+    fontWeight: '800',
+    marginLeft: 2,
+    fontSize: 10,
+  },
   container: {
     display: 'flex',
+    flex: 1,
     paddingLeft: 8,
     paddingTop: 8,
     alignItems: 'center',
@@ -78,6 +109,7 @@ const styles = StyleSheet.create({
   },
   body: {
     marginLeft: 8,
+    flex:1
   },
   username: {
     fontWeight: 'bold',
