@@ -15,7 +15,6 @@ export default class BlogModel extends BaseModel {
   static observables = [
     'thumbs:down:count',
     'thumbs:up:count',
-    'state',
   ]
 
   /**
