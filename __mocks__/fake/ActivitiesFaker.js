@@ -24,7 +24,7 @@ function load(count) {
           }
         }
       },
-      message:"Smartphone Addiction & Cognitive Impairment ",
+      message:"Message",
       title:'TITLE',
       owner_guid:"824853017709780997",
       parent_guid:"838106762591510528",

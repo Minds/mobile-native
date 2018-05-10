@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Activity editor component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <TextInput
+    allowFontScaling={true}
+    multiline={true}
+    numberOfLines={4}
+    onChangeText={[Function]}
+    style={
+      Object {
+        "borderColor": "gray",
+        "width": "100%",
+      }
+    }
+    value="Message"
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "flex-end",
+        },
+        Object {
+          "padding": 8,
+        },
+      ]
+    }
+  >
+    <Button
+      onPress={[Function]}
+      title="Cancel"
+    />
+    <Button
+      backgroundColor="#4690D6"
+      onPress={[Function]}
+      title="Save"
+    />
+  </View>
+</View>
+`;
