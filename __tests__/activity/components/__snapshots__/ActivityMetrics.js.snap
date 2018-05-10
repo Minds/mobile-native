@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Owner component renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        Object {
+          "alignItems": "center",
+        },
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "#777",
+            "fontSize": 11,
+            "marginLeft": 4,
+          },
+        ]
+      }
+    >
+       · 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#777",
+          "fontSize": 11,
+          "marginLeft": 4,
+        }
+      }
+    >
+      2e-17
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#777",
+          "fontSize": 11,
+          "marginLeft": 4,
+        }
+      }
+    >
+      TOKENS
+       
+    </Text>
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        Object {
+          "alignItems": "center",
+        },
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": "#777",
+            "fontSize": 11,
+            "marginLeft": 4,
+          },
+        ]
+      }
+    >
+       · 
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#777",
+          "fontSize": 11,
+          "marginLeft": 4,
+        }
+      }
+    >
+      20
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#777",
+          "fontSize": 11,
+          "marginLeft": 4,
+        }
+      }
+    >
+      VIEWS
+       
+    </Text>
+  </View>
+</View>
+`;
