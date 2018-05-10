@@ -1,0 +1,1093 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`blog list screen component should renders correctly 1`] = `
+<RCTScrollView
+  ListHeaderComponent={
+    <Toolbar
+      initial="trending"
+      onChange={[Function]}
+      options={
+        Array [
+          Object {
+            "selectedTextStyle": Object {
+              "color": "black",
+            },
+            "text": "TOP",
+            "value": "trending",
+          },
+          Object {
+            "selectedTextStyle": Object {
+              "color": "black",
+            },
+            "text": "SUBSCRIPTIONS",
+            "value": "network",
+          },
+          Object {
+            "selectedTextStyle": Object {
+              "color": "black",
+            },
+            "text": "MY GROUPS",
+            "value": "owner",
+          },
+        ]
+      }
+    />
+  }
+  data={
+    Array [
+      Object {
+        "access_id": "2",
+        "boost_rejection_reason": -1,
+        "categories": Array [],
+        "category": "education",
+        "container_guid": "100",
+        "custom_meta": Object {
+          "author": "",
+          "description": "",
+          "title": "",
+        },
+        "description": "Some Blog",
+        "draft_access_id": "0",
+        "excerpt": "Some description",
+        "featured": false,
+        "featured_id": false,
+        "guid": "1",
+        "header_bg": "1",
+        "header_top": "0",
+        "last_save": "1524843907",
+        "last_updated": "1524838665",
+        "license": "attribution-noncommercial-cc",
+        "mature": false,
+        "monetized": false,
+        "ownerObj": Object {
+          "access_id": "2",
+          "banned": "no",
+          "boostProPlus": false,
+          "boost_autorotate": true,
+          "boost_rating": "2",
+          "briefdescription": "",
+          "categories": Array [
+            "music",
+            "nature",
+            "news",
+            "politics",
+            "science",
+            "technology",
+            "education",
+            "art",
+            "health",
+          ],
+          "chat": true,
+          "city": "",
+          "container_guid": "0",
+          "deleted": "0",
+          "disabled_boost": false,
+          "dob": "",
+          "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+          "fb": false,
+          "feature_flags": false,
+          "featured_id": "725165605782560768",
+          "founder": false,
+          "gender": "private",
+          "getAvatarSource": [MockFunction],
+          "guid": 100,
+          "icontime": "1523515420",
+          "language": "en",
+          "legacy_guid": false,
+          "mature": "1",
+          "mature_channel": "0",
+          "merchant": Object {
+            "exclusive": Object {
+              "amount": "10",
+              "enabled": true,
+            },
+            "id": "acct_Dsdfjdlsaf34243",
+            "service": "stripe",
+          },
+          "monetized": "",
+          "name": "Some User",
+          "owner_guid": "0",
+          "pinned_posts": Array [],
+          "plus": true,
+          "programs": Array [
+            "affiliate",
+          ],
+          "rating": "1",
+          "rewards": true,
+          "signup_method": false,
+          "site_guid": false,
+          "social_profiles": Array [],
+          "spam": "0",
+          "subscribed": false,
+          "subscriber": true,
+          "subtype": false,
+          "time_created": "1468113204",
+          "time_updated": false,
+          "type": "user",
+          "username": "someusermane",
+          "verified": true,
+          "website": "",
+          "wire_rewards": Object {
+            "description": "",
+            "rewards": Object {
+              "money": Array [],
+              "points": Array [],
+            },
+          },
+        },
+        "owner_guid": "1",
+        "paywall": false,
+        "perma_url": "https://www.minds.com/blog/view/836607056186159104",
+        "published": true,
+        "rating": 1,
+        "reminds": 58,
+        "route": "blog/view/836607056186159104",
+        "slug": "",
+        "subtype": "blog",
+        "thumbnail_src": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
+        "thumbs:down:count": 1,
+        "thumbs:down:user_guids": Array [
+          "3",
+        ],
+        "thumbs:up:count": 2,
+        "thumbs:up:user_guids": Array [
+          "1",
+          "2",
+        ],
+        "time_created": "1524838665",
+        "time_published": "1524838665",
+        "time_updated": "1524862542",
+        "title": "Some Title",
+        "type": "object",
+        "wire_threshold": "",
+      },
+      Object {
+        "access_id": "2",
+        "boost_rejection_reason": -1,
+        "categories": Array [],
+        "category": "education",
+        "container_guid": "100",
+        "custom_meta": Object {
+          "author": "",
+          "description": "",
+          "title": "",
+        },
+        "description": "Some Blog",
+        "draft_access_id": "0",
+        "excerpt": "Some description",
+        "featured": false,
+        "featured_id": false,
+        "guid": "2",
+        "header_bg": "1",
+        "header_top": "0",
+        "last_save": "1524843907",
+        "last_updated": "1524838665",
+        "license": "attribution-noncommercial-cc",
+        "mature": false,
+        "monetized": false,
+        "ownerObj": Object {
+          "access_id": "2",
+          "banned": "no",
+          "boostProPlus": false,
+          "boost_autorotate": true,
+          "boost_rating": "2",
+          "briefdescription": "",
+          "categories": Array [
+            "music",
+            "nature",
+            "news",
+            "politics",
+            "science",
+            "technology",
+            "education",
+            "art",
+            "health",
+          ],
+          "chat": true,
+          "city": "",
+          "container_guid": "0",
+          "deleted": "0",
+          "disabled_boost": false,
+          "dob": "",
+          "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+          "fb": false,
+          "feature_flags": false,
+          "featured_id": "725165605782560768",
+          "founder": false,
+          "gender": "private",
+          "getAvatarSource": [MockFunction],
+          "guid": 100,
+          "icontime": "1523515420",
+          "language": "en",
+          "legacy_guid": false,
+          "mature": "1",
+          "mature_channel": "0",
+          "merchant": Object {
+            "exclusive": Object {
+              "amount": "10",
+              "enabled": true,
+            },
+            "id": "acct_Dsdfjdlsaf34243",
+            "service": "stripe",
+          },
+          "monetized": "",
+          "name": "Some User",
+          "owner_guid": "0",
+          "pinned_posts": Array [],
+          "plus": true,
+          "programs": Array [
+            "affiliate",
+          ],
+          "rating": "1",
+          "rewards": true,
+          "signup_method": false,
+          "site_guid": false,
+          "social_profiles": Array [],
+          "spam": "0",
+          "subscribed": false,
+          "subscriber": true,
+          "subtype": false,
+          "time_created": "1468113204",
+          "time_updated": false,
+          "type": "user",
+          "username": "someusermane",
+          "verified": true,
+          "website": "",
+          "wire_rewards": Object {
+            "description": "",
+            "rewards": Object {
+              "money": Array [],
+              "points": Array [],
+            },
+          },
+        },
+        "owner_guid": "1",
+        "paywall": false,
+        "perma_url": "https://www.minds.com/blog/view/836607056186159104",
+        "published": true,
+        "rating": 1,
+        "reminds": 58,
+        "route": "blog/view/836607056186159104",
+        "slug": "",
+        "subtype": "blog",
+        "thumbnail_src": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
+        "thumbs:down:count": 1,
+        "thumbs:down:user_guids": Array [
+          "3",
+        ],
+        "thumbs:up:count": 2,
+        "thumbs:up:user_guids": Array [
+          "1",
+          "2",
+        ],
+        "time_created": "1524838665",
+        "time_published": "1524838665",
+        "time_updated": "1524862542",
+        "title": "Some Title",
+        "type": "object",
+        "wire_threshold": "",
+      },
+      Object {
+        "access_id": "2",
+        "boost_rejection_reason": -1,
+        "categories": Array [],
+        "category": "education",
+        "container_guid": "100",
+        "custom_meta": Object {
+          "author": "",
+          "description": "",
+          "title": "",
+        },
+        "description": "Some Blog",
+        "draft_access_id": "0",
+        "excerpt": "Some description",
+        "featured": false,
+        "featured_id": false,
+        "guid": "3",
+        "header_bg": "1",
+        "header_top": "0",
+        "last_save": "1524843907",
+        "last_updated": "1524838665",
+        "license": "attribution-noncommercial-cc",
+        "mature": false,
+        "monetized": false,
+        "ownerObj": Object {
+          "access_id": "2",
+          "banned": "no",
+          "boostProPlus": false,
+          "boost_autorotate": true,
+          "boost_rating": "2",
+          "briefdescription": "",
+          "categories": Array [
+            "music",
+            "nature",
+            "news",
+            "politics",
+            "science",
+            "technology",
+            "education",
+            "art",
+            "health",
+          ],
+          "chat": true,
+          "city": "",
+          "container_guid": "0",
+          "deleted": "0",
+          "disabled_boost": false,
+          "dob": "",
+          "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+          "fb": false,
+          "feature_flags": false,
+          "featured_id": "725165605782560768",
+          "founder": false,
+          "gender": "private",
+          "getAvatarSource": [MockFunction],
+          "guid": 100,
+          "icontime": "1523515420",
+          "language": "en",
+          "legacy_guid": false,
+          "mature": "1",
+          "mature_channel": "0",
+          "merchant": Object {
+            "exclusive": Object {
+              "amount": "10",
+              "enabled": true,
+            },
+            "id": "acct_Dsdfjdlsaf34243",
+            "service": "stripe",
+          },
+          "monetized": "",
+          "name": "Some User",
+          "owner_guid": "0",
+          "pinned_posts": Array [],
+          "plus": true,
+          "programs": Array [
+            "affiliate",
+          ],
+          "rating": "1",
+          "rewards": true,
+          "signup_method": false,
+          "site_guid": false,
+          "social_profiles": Array [],
+          "spam": "0",
+          "subscribed": false,
+          "subscriber": true,
+          "subtype": false,
+          "time_created": "1468113204",
+          "time_updated": false,
+          "type": "user",
+          "username": "someusermane",
+          "verified": true,
+          "website": "",
+          "wire_rewards": Object {
+            "description": "",
+            "rewards": Object {
+              "money": Array [],
+              "points": Array [],
+            },
+          },
+        },
+        "owner_guid": "1",
+        "paywall": false,
+        "perma_url": "https://www.minds.com/blog/view/836607056186159104",
+        "published": true,
+        "rating": 1,
+        "reminds": 58,
+        "route": "blog/view/836607056186159104",
+        "slug": "",
+        "subtype": "blog",
+        "thumbnail_src": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
+        "thumbs:down:count": 1,
+        "thumbs:down:user_guids": Array [
+          "3",
+        ],
+        "thumbs:up:count": 2,
+        "thumbs:up:user_guids": Array [
+          "1",
+          "2",
+        ],
+        "time_created": "1524838665",
+        "time_published": "1524838665",
+        "time_updated": "1524862542",
+        "title": "Some Title",
+        "type": "object",
+        "wire_threshold": "",
+      },
+    ]
+  }
+  disableVirtualization={false}
+  getItem={[Function]}
+  getItemCount={[Function]}
+  getItemLayout={[Function]}
+  horizontal={false}
+  initialNumToRender={10}
+  invertStickyHeaders={undefined}
+  keyExtractor={[Function]}
+  maxToRenderPerBatch={10}
+  numColumns={1}
+  onContentSizeChange={[Function]}
+  onEndReached={[Function]}
+  onEndReachedThreshold={2}
+  onEndThreshold={0.09}
+  onLayout={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onRefresh={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  refreshControl={
+    <RefreshControlMock
+      onRefresh={[Function]}
+      progressViewOffset={undefined}
+      refreshing={false}
+    />
+  }
+  refreshing={false}
+  removeClippedSubviews={true}
+  renderItem={[Function]}
+  scrollEventThrottle={50}
+  stickyHeaderIndices={Array []}
+  style={
+    Object {
+      "backgroundColor": "#FFF",
+      "borderBottomWidth": 0,
+      "borderTopWidth": 0,
+      "flex": 1,
+    }
+  }
+  updateCellsBatchingPeriod={50}
+  viewabilityConfigCallbackPairs={Array []}
+  windowSize={21}
+>
+  <RCTRefreshControl />
+  <View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "#FFF",
+              "borderBottomColor": "#EEE",
+              "borderTopColor": "#EEE",
+              "borderTopWidth": 0.5,
+              "display": "flex",
+              "flexDirection": "row",
+              "paddingLeft": 0,
+              "paddingRight": 0,
+              "paddingTop": 0,
+              "shadowColor": "black",
+              "shadowOffset": Object {
+                "height": 0.5,
+              },
+              "shadowOpacity": 0.1,
+              "shadowRadius": 0.5,
+            },
+            Object {},
+          ]
+        }
+      >
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "flexDirection": "row",
+              "justifyContent": "space-between",
+            }
+          }
+        >
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            collapsable={undefined}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "borderBottomColor": "#4690D6",
+                "borderBottomWidth": 2,
+                "flex": 1,
+                "flexDirection": "column",
+                "opacity": 1,
+                "padding": 5,
+              }
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "color": "#4690D6",
+                    "paddingTop": 5,
+                    "textAlign": "center",
+                  },
+                  Object {
+                    "fontSize": 10,
+                  },
+                  Object {
+                    "color": "black",
+                  },
+                ]
+              }
+            >
+              TOP
+            </Text>
+          </View>
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            collapsable={undefined}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "borderBottomColor": "#FFF",
+                "borderBottomWidth": 2,
+                "flex": 1,
+                "flexDirection": "column",
+                "opacity": 1,
+                "padding": 5,
+              }
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "paddingTop": 5,
+                  },
+                  Object {
+                    "fontSize": 10,
+                  },
+                ]
+              }
+            >
+              SUBSCRIPTIONS
+            </Text>
+          </View>
+          <View
+            accessibilityComponentType={undefined}
+            accessibilityLabel={undefined}
+            accessibilityTraits={undefined}
+            accessible={true}
+            collapsable={undefined}
+            hasTVPreferredFocus={undefined}
+            hitSlop={undefined}
+            isTVSelectable={true}
+            nativeID={undefined}
+            onLayout={undefined}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "borderBottomColor": "#FFF",
+                "borderBottomWidth": 2,
+                "flex": 1,
+                "flexDirection": "column",
+                "opacity": 1,
+                "padding": 5,
+              }
+            }
+            testID={undefined}
+            tvParallaxProperties={undefined}
+          >
+            <Text
+              accessible={true}
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              style={
+                Array [
+                  Object {
+                    "paddingTop": 5,
+                  },
+                  Object {
+                    "fontSize": 10,
+                  },
+                ]
+              }
+            >
+              MY GROUPS
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={undefined}
+      style={null}
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#ececec",
+            "paddingBottom": 8,
+          }
+        }
+      >
+        <BlogCard
+          entity={
+            Object {
+              "access_id": "2",
+              "boost_rejection_reason": -1,
+              "categories": Array [],
+              "category": "education",
+              "container_guid": "100",
+              "custom_meta": Object {
+                "author": "",
+                "description": "",
+                "title": "",
+              },
+              "description": "Some Blog",
+              "draft_access_id": "0",
+              "excerpt": "Some description",
+              "featured": false,
+              "featured_id": false,
+              "guid": "1",
+              "header_bg": "1",
+              "header_top": "0",
+              "last_save": "1524843907",
+              "last_updated": "1524838665",
+              "license": "attribution-noncommercial-cc",
+              "mature": false,
+              "monetized": false,
+              "ownerObj": Object {
+                "access_id": "2",
+                "banned": "no",
+                "boostProPlus": false,
+                "boost_autorotate": true,
+                "boost_rating": "2",
+                "briefdescription": "",
+                "categories": Array [
+                  "music",
+                  "nature",
+                  "news",
+                  "politics",
+                  "science",
+                  "technology",
+                  "education",
+                  "art",
+                  "health",
+                ],
+                "chat": true,
+                "city": "",
+                "container_guid": "0",
+                "deleted": "0",
+                "disabled_boost": false,
+                "dob": "",
+                "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+                "fb": false,
+                "feature_flags": false,
+                "featured_id": "725165605782560768",
+                "founder": false,
+                "gender": "private",
+                "getAvatarSource": [MockFunction],
+                "guid": 100,
+                "icontime": "1523515420",
+                "language": "en",
+                "legacy_guid": false,
+                "mature": "1",
+                "mature_channel": "0",
+                "merchant": Object {
+                  "exclusive": Object {
+                    "amount": "10",
+                    "enabled": true,
+                  },
+                  "id": "acct_Dsdfjdlsaf34243",
+                  "service": "stripe",
+                },
+                "monetized": "",
+                "name": "Some User",
+                "owner_guid": "0",
+                "pinned_posts": Array [],
+                "plus": true,
+                "programs": Array [
+                  "affiliate",
+                ],
+                "rating": "1",
+                "rewards": true,
+                "signup_method": false,
+                "site_guid": false,
+                "social_profiles": Array [],
+                "spam": "0",
+                "subscribed": false,
+                "subscriber": true,
+                "subtype": false,
+                "time_created": "1468113204",
+                "time_updated": false,
+                "type": "user",
+                "username": "someusermane",
+                "verified": true,
+                "website": "",
+                "wire_rewards": Object {
+                  "description": "",
+                  "rewards": Object {
+                    "money": Array [],
+                    "points": Array [],
+                  },
+                },
+              },
+              "owner_guid": "1",
+              "paywall": false,
+              "perma_url": "https://www.minds.com/blog/view/836607056186159104",
+              "published": true,
+              "rating": 1,
+              "reminds": 58,
+              "route": "blog/view/836607056186159104",
+              "slug": "",
+              "subtype": "blog",
+              "thumbnail_src": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
+              "thumbs:down:count": 1,
+              "thumbs:down:user_guids": Array [
+                "3",
+              ],
+              "thumbs:up:count": 2,
+              "thumbs:up:user_guids": Array [
+                "1",
+                "2",
+              ],
+              "time_created": "1524838665",
+              "time_published": "1524838665",
+              "time_updated": "1524862542",
+              "title": "Some Title",
+              "type": "object",
+              "wire_threshold": "",
+            }
+          }
+          navigation={undefined}
+        />
+      </View>
+    </View>
+    <View
+      onLayout={undefined}
+      style={null}
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#ececec",
+            "paddingBottom": 8,
+          }
+        }
+      >
+        <BlogCard
+          entity={
+            Object {
+              "access_id": "2",
+              "boost_rejection_reason": -1,
+              "categories": Array [],
+              "category": "education",
+              "container_guid": "100",
+              "custom_meta": Object {
+                "author": "",
+                "description": "",
+                "title": "",
+              },
+              "description": "Some Blog",
+              "draft_access_id": "0",
+              "excerpt": "Some description",
+              "featured": false,
+              "featured_id": false,
+              "guid": "2",
+              "header_bg": "1",
+              "header_top": "0",
+              "last_save": "1524843907",
+              "last_updated": "1524838665",
+              "license": "attribution-noncommercial-cc",
+              "mature": false,
+              "monetized": false,
+              "ownerObj": Object {
+                "access_id": "2",
+                "banned": "no",
+                "boostProPlus": false,
+                "boost_autorotate": true,
+                "boost_rating": "2",
+                "briefdescription": "",
+                "categories": Array [
+                  "music",
+                  "nature",
+                  "news",
+                  "politics",
+                  "science",
+                  "technology",
+                  "education",
+                  "art",
+                  "health",
+                ],
+                "chat": true,
+                "city": "",
+                "container_guid": "0",
+                "deleted": "0",
+                "disabled_boost": false,
+                "dob": "",
+                "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+                "fb": false,
+                "feature_flags": false,
+                "featured_id": "725165605782560768",
+                "founder": false,
+                "gender": "private",
+                "getAvatarSource": [MockFunction],
+                "guid": 100,
+                "icontime": "1523515420",
+                "language": "en",
+                "legacy_guid": false,
+                "mature": "1",
+                "mature_channel": "0",
+                "merchant": Object {
+                  "exclusive": Object {
+                    "amount": "10",
+                    "enabled": true,
+                  },
+                  "id": "acct_Dsdfjdlsaf34243",
+                  "service": "stripe",
+                },
+                "monetized": "",
+                "name": "Some User",
+                "owner_guid": "0",
+                "pinned_posts": Array [],
+                "plus": true,
+                "programs": Array [
+                  "affiliate",
+                ],
+                "rating": "1",
+                "rewards": true,
+                "signup_method": false,
+                "site_guid": false,
+                "social_profiles": Array [],
+                "spam": "0",
+                "subscribed": false,
+                "subscriber": true,
+                "subtype": false,
+                "time_created": "1468113204",
+                "time_updated": false,
+                "type": "user",
+                "username": "someusermane",
+                "verified": true,
+                "website": "",
+                "wire_rewards": Object {
+                  "description": "",
+                  "rewards": Object {
+                    "money": Array [],
+                    "points": Array [],
+                  },
+                },
+              },
+              "owner_guid": "1",
+              "paywall": false,
+              "perma_url": "https://www.minds.com/blog/view/836607056186159104",
+              "published": true,
+              "rating": 1,
+              "reminds": 58,
+              "route": "blog/view/836607056186159104",
+              "slug": "",
+              "subtype": "blog",
+              "thumbnail_src": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
+              "thumbs:down:count": 1,
+              "thumbs:down:user_guids": Array [
+                "3",
+              ],
+              "thumbs:up:count": 2,
+              "thumbs:up:user_guids": Array [
+                "1",
+                "2",
+              ],
+              "time_created": "1524838665",
+              "time_published": "1524838665",
+              "time_updated": "1524862542",
+              "title": "Some Title",
+              "type": "object",
+              "wire_threshold": "",
+            }
+          }
+          navigation={undefined}
+        />
+      </View>
+    </View>
+    <View
+      onLayout={undefined}
+      style={null}
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#ececec",
+            "paddingBottom": 8,
+          }
+        }
+      >
+        <BlogCard
+          entity={
+            Object {
+              "access_id": "2",
+              "boost_rejection_reason": -1,
+              "categories": Array [],
+              "category": "education",
+              "container_guid": "100",
+              "custom_meta": Object {
+                "author": "",
+                "description": "",
+                "title": "",
+              },
+              "description": "Some Blog",
+              "draft_access_id": "0",
+              "excerpt": "Some description",
+              "featured": false,
+              "featured_id": false,
+              "guid": "3",
+              "header_bg": "1",
+              "header_top": "0",
+              "last_save": "1524843907",
+              "last_updated": "1524838665",
+              "license": "attribution-noncommercial-cc",
+              "mature": false,
+              "monetized": false,
+              "ownerObj": Object {
+                "access_id": "2",
+                "banned": "no",
+                "boostProPlus": false,
+                "boost_autorotate": true,
+                "boost_rating": "2",
+                "briefdescription": "",
+                "categories": Array [
+                  "music",
+                  "nature",
+                  "news",
+                  "politics",
+                  "science",
+                  "technology",
+                  "education",
+                  "art",
+                  "health",
+                ],
+                "chat": true,
+                "city": "",
+                "container_guid": "0",
+                "deleted": "0",
+                "disabled_boost": false,
+                "dob": "",
+                "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+                "fb": false,
+                "feature_flags": false,
+                "featured_id": "725165605782560768",
+                "founder": false,
+                "gender": "private",
+                "getAvatarSource": [MockFunction],
+                "guid": 100,
+                "icontime": "1523515420",
+                "language": "en",
+                "legacy_guid": false,
+                "mature": "1",
+                "mature_channel": "0",
+                "merchant": Object {
+                  "exclusive": Object {
+                    "amount": "10",
+                    "enabled": true,
+                  },
+                  "id": "acct_Dsdfjdlsaf34243",
+                  "service": "stripe",
+                },
+                "monetized": "",
+                "name": "Some User",
+                "owner_guid": "0",
+                "pinned_posts": Array [],
+                "plus": true,
+                "programs": Array [
+                  "affiliate",
+                ],
+                "rating": "1",
+                "rewards": true,
+                "signup_method": false,
+                "site_guid": false,
+                "social_profiles": Array [],
+                "spam": "0",
+                "subscribed": false,
+                "subscriber": true,
+                "subtype": false,
+                "time_created": "1468113204",
+                "time_updated": false,
+                "type": "user",
+                "username": "someusermane",
+                "verified": true,
+                "website": "",
+                "wire_rewards": Object {
+                  "description": "",
+                  "rewards": Object {
+                    "money": Array [],
+                    "points": Array [],
+                  },
+                },
+              },
+              "owner_guid": "1",
+              "paywall": false,
+              "perma_url": "https://www.minds.com/blog/view/836607056186159104",
+              "published": true,
+              "rating": 1,
+              "reminds": 58,
+              "route": "blog/view/836607056186159104",
+              "slug": "",
+              "subtype": "blog",
+              "thumbnail_src": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
+              "thumbs:down:count": 1,
+              "thumbs:down:user_guids": Array [
+                "3",
+              ],
+              "thumbs:up:count": 2,
+              "thumbs:up:user_guids": Array [
+                "1",
+                "2",
+              ],
+              "time_created": "1524838665",
+              "time_published": "1524838665",
+              "time_updated": "1524862542",
+              "title": "Some Title",
+              "type": "object",
+              "wire_threshold": "",
+            }
+          }
+          navigation={undefined}
+        />
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;

@@ -40,8 +40,6 @@ export default class ToolbarItem extends PureComponent {
     const subTextStyle = this.getSubTextStyle();
     const buttonStyle = selected ? [styles.button, styles.buttonSelected] : styles.button;
 
-    console.log(textStyle)
-
     return (
       <DebouncedTouchableOpacity style={buttonStyle} onPress={() => onPress(value)}>
         {iconCmp}

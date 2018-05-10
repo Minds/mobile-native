@@ -17,7 +17,6 @@ class BlogsStore {
     try {
       const response = await blogService.loadList(this.filter, this.list.offset)
 
-      console.log(response)
       if (response.entities) {
         if (this.list.offset) {
           response.entities.shift();
