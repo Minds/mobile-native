@@ -32,7 +32,7 @@ exports[`Activity component renders correctly 1`] = `
           "edited": "",
           "guid": "activityguid0",
           "mature": false,
-          "message": "Smartphone Addiction & Cognitive Impairment ",
+          "message": "Message",
           "ownerObj": Object {
             "getAvatarSource": [Function],
             "guid": "824853017709780997",
@@ -66,7 +66,7 @@ exports[`Activity component renders correctly 1`] = `
           "edited": "",
           "guid": "activityguid0",
           "mature": false,
-          "message": "Smartphone Addiction & Cognitive Impairment ",
+          "message": "Message",
           "ownerObj": Object {
             "getAvatarSource": [Function],
             "guid": "824853017709780997",
@@ -111,7 +111,7 @@ exports[`Activity component renders correctly 1`] = `
           "edited": "",
           "guid": "activityguid0",
           "mature": false,
-          "message": "Smartphone Addiction & Cognitive Impairment ",
+          "message": "Message",
           "ownerObj": Object {
             "getAvatarSource": [Function],
             "guid": "824853017709780997",
@@ -140,7 +140,7 @@ exports[`Activity component renders correctly 1`] = `
           "edited": "",
           "guid": "activityguid0",
           "mature": false,
-          "message": "Smartphone Addiction & Cognitive Impairment ",
+          "message": "Message",
           "ownerObj": Object {
             "getAvatarSource": [Function],
             "guid": "824853017709780997",
