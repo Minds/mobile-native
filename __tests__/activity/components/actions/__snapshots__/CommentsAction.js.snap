@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Comment action component renders correctly 1`] = `
+<PreventDoubleTap
+  onPress={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+      },
+    ]
+  }
+>
+  <Icon
+    color="rgb(96, 125, 139)"
+    name="chat-bubble"
+    raised={false}
+    reverse={false}
+    reverseColor="white"
+    size={20}
+    underlayColor="white"
+  />
+  <Counter
+    size={16}
+  />
+</PreventDoubleTap>
+`;
