@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Thumb action component renders correctly 1`] = `
+<PreventDoubleTap
+  onPress={[Function]}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "alignContent": "center",
+        "alignItems": "center",
+        "justifyContent": "center",
+      },
+      Object {
+        "flexDirection": "row",
+        "justifyContent": "center",
+      },
+    ]
+  }
+>
+  <Icon
+    color="rgb(96, 125, 139)"
+    name="thumb-down"
+    raised={false}
+    reverse={false}
+    reverseColor="white"
+    size={20}
+    underlayColor="white"
+  />
+  <Counter
+    size={15}
+  />
+</PreventDoubleTap>
+`;
