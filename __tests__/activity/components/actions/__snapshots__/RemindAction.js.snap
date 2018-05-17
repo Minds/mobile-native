@@ -27,7 +27,7 @@ exports[`Thumb action component renders correctly 1`] = `
   <Counter
     size={15}
   />
-  <View
+  <Component
     style={
       Object {
         "alignItems": "center",
@@ -42,7 +42,7 @@ exports[`Thumb action component renders correctly 1`] = `
       transparent={false}
       visible={false}
     >
-      <View
+      <Component
         style={
           Object {
             "flex": 1,
@@ -50,7 +50,7 @@ exports[`Thumb action component renders correctly 1`] = `
           }
         }
       >
-        <View
+        <Component
           style={
             Object {
               "padding": 5,
@@ -64,7 +64,7 @@ exports[`Thumb action component renders correctly 1`] = `
             onPress={[Function]}
             size={30}
           />
-        </View>
+        </Component>
         <RemindModal
           entity={
             Object {
@@ -95,8 +95,8 @@ exports[`Thumb action component renders correctly 1`] = `
           }
           onClose={[Function]}
         />
-      </View>
+      </Component>
     </Component>
-  </View>
+  </Component>
 </PreventDoubleTap>
 `;

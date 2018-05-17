@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Boost action component renders correctly 1`] = `
-<View
+<Component
   style={
     Array [
       Object {
@@ -62,5 +62,5 @@ exports[`Boost action component renders correctly 1`] = `
       BOOST
     </Text>
   </PreventDoubleTap>
-</View>
+</Component>
 `;

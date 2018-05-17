@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Owner component renders correctly 1`] = `
-<View
+<Component
   style={
     Array [
       Object {
@@ -11,7 +11,7 @@ exports[`Owner component renders correctly 1`] = `
     ]
   }
 >
-  <View
+  <Component
     style={
       Array [
         Object {
@@ -69,8 +69,8 @@ exports[`Owner component renders correctly 1`] = `
       TOKENS
        
     </Text>
-  </View>
-  <View
+  </Component>
+  <Component
     style={
       Array [
         Object {
@@ -128,6 +128,6 @@ exports[`Owner component renders correctly 1`] = `
       VIEWS
        
     </Text>
-  </View>
-</View>
+  </Component>
+</Component>
 `;

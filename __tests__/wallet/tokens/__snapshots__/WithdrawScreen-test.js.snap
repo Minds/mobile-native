@@ -3,7 +3,7 @@
 exports[`WithdrawScreen renders correctly 1`] = `
 <RCTScrollView
   ListHeaderComponent={
-    <View
+    <Component
       style={
         Object {
           "paddingBottom": 30,
@@ -25,7 +25,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
         You can request to withdraw your OffChain token rewards to your OnChain address below. Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals may take up to a few hours to complete.
         
       </Text>
-      <View
+      <Component
         style={
           Object {
             "alignItems": "center",
@@ -73,8 +73,8 @@ exports[`WithdrawScreen renders correctly 1`] = `
             />
           }
         />
-      </View>
-    </View>
+      </Component>
+    </Component>
   }
   data={Array []}
   disableVirtualization={false}
