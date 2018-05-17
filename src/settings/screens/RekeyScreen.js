@@ -10,6 +10,12 @@ import MessengerSetup from '../../messenger/MessengerSetup';
  */
 export default class RekeyScreen extends Component {
 
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerRight: navigation.state.params && navigation.state.params.headerRight,
+    }
+  };
+
   /**
    * On done
    */
@@ -22,6 +28,6 @@ export default class RekeyScreen extends Component {
    * Render
    */
   render() {
-    return <MessengerSetup rekey={true} onDone={this.onDone}/>
+    return <MessengerSetup rekey={true} onDone={this.onDone} navigation={this.props.navigation}/>
   }
 }
