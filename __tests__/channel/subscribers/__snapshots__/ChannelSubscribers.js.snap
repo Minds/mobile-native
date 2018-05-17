@@ -727,7 +727,11 @@ exports[`channel subscribers component should render correctly 1`] = `
                 "offset": "",
                 "refreshing": false,
               },
-              "loadList": [MockFunction],
+              "loadList": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+              },
               "refresh": [MockFunction],
               "reset": [MockFunction],
               "setFilter": [MockFunction],
@@ -1081,7 +1085,11 @@ exports[`channel subscribers component should render correctly 1`] = `
                 "offset": "",
                 "refreshing": false,
               },
-              "loadList": [MockFunction],
+              "loadList": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+              },
               "refresh": [MockFunction],
               "reset": [MockFunction],
               "setFilter": [MockFunction],
@@ -1435,7 +1443,11 @@ exports[`channel subscribers component should render correctly 1`] = `
                 "offset": "",
                 "refreshing": false,
               },
-              "loadList": [MockFunction],
+              "loadList": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+              },
               "refresh": [MockFunction],
               "reset": [MockFunction],
               "setFilter": [MockFunction],
