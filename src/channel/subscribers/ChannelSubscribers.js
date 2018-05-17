@@ -43,12 +43,21 @@ export default class ChannelSubscribers extends Component {
   }
 
   /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    this.props.channelSubscribersStore.reset();
+  }
+
+  /**
    * Load data
    */
   _loadData() {
     const params = this.props.navigation.state.params;
     if (params.guid) {
       this.props.channelSubscribersStore.setGuid(params.guid);
+      this.props.channelSubscribersStore.loadList();
+
     }
   }
 
@@ -60,7 +69,7 @@ export default class ChannelSubscribers extends Component {
 
     const channels = this.props.channelSubscribersStore;
 
-    if (!channels.list.loaded) {
+    if (!channels.list.loaded && !channels.list.refreshing) {
       body = <CenteredLoading />
     } else {
       body = (
@@ -130,7 +139,7 @@ const styles = StyleSheet.create({
     height:35,
     justifyContent: 'center',
     flexDirection: 'row',
-    
+
   },
 
   buttons: {

@@ -9,11 +9,10 @@ import channelService from '../ChannelService';
  * Subscribers Store
  */
 class ChannelSubscribersStore {
-
-
-  @observable list = new OffsetListStore();
+  list = new OffsetListStore();
   @observable filter = 'subscribers';
-  @observable guid = '';
+  guid = '';
+  controller = null;
 
   loading = false;
 
@@ -26,11 +25,17 @@ class ChannelSubscribersStore {
    * Load boost list
    */
   loadList() {
-    if (this.list.cantLoadMore() || this.loading) {
-      return;
+    if (this.list.cantLoadMore()) {
+      return Promise.resolve();
     }
+    if (this.controller) {
+      this.controller.abort();
+    }
+    this.controller = new AbortController();
+
     this.loading = true;
-    return channelService.getSubscribers(this.guid, this.filter, this.list.offset)
+
+    return channelService.getSubscribers(this.guid, this.filter, this.list.offset, this.controller.signal)
       .then( feed => {
         this.list.setList(feed);
       })
@@ -40,6 +45,13 @@ class ChannelSubscribersStore {
       .catch(err => {
         console.log('error', err);
       })
+  }
+
+  @action
+  reset() {
+    this.guid = null;
+    this.list.clearList();
+    this.filter = 'subscribers';
   }
 
   /**
@@ -56,6 +68,7 @@ class ChannelSubscribersStore {
   @action
   setFilter(filter) {
     this.filter = filter;
+    this.loading = false;
     this.list.clearList();
     this.loadList();
   }
