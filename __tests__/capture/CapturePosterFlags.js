@@ -83,8 +83,6 @@ describe('cature poster flags component', () => {
       />
     );
 
-    // run will mount
-    wrapper.instance().componentWillMount();
 
     expect(store.loadThirdPartySocialNetworkStatus).toHaveBeenCalled();
   });

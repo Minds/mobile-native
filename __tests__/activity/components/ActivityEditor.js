@@ -18,16 +18,16 @@ describe('Activity editor component', () => {
 
   let user, comments, entity, screen, newsfeed, toggleEdit;
   beforeEach(() => {
-    newsfeed = { 
+    newsfeed = {
       list: {
         updateActivity: () => {
           return new Promise((r, rr) => {
             return value;
           });
         }
-      } 
+      }
     }
-  
+
     const navigation = { navigate: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
     toggleEdit = jest.fn();
@@ -51,20 +51,18 @@ describe('Activity editor component', () => {
 
   it('should set the default value when init, call toggle and submit',async () => {
 
-    await screen.instance().componentWillMount();
     screen.update()
     let instance = screen.instance();
     expect(instance.state.text).toBe('Message');
     const spy = jest.spyOn(instance.props.newsfeed.list, 'updateActivity');
     const render = screen.dive();
     render.find('Button').at(1).props().onPress();
-    
+
     expect(spy).toHaveBeenCalled();
   });
 
   it('should set the default value when init, call toggle and cancel',async () => {
 
-    await screen.instance().componentWillMount();
     screen.update()
     let instance = screen.instance();
     expect(instance.state.text).toBe('Message');
@@ -78,7 +76,6 @@ describe('Activity editor component', () => {
 
   it('should set the default value when init, call toggle and cancel',async () => {
 
-    await screen.instance().componentWillMount();
     screen.update()
     let instance = screen.instance();
     expect(instance.state.text).toBe('Message');

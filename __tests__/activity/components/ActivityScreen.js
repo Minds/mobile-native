@@ -10,9 +10,9 @@ import UserStore from '../../../src/auth/UserStore';
 
 import SingleEntityStore from '../../../src/common/stores/SingleEntityStore';
 import commentsStoreProvider from '../../../src/comments/CommentsStoreProvider';
-import { 
+import {
   FlatList,
-  KeyboardAvoidingView 
+  KeyboardAvoidingView
 } from 'react-native';
 
 
@@ -42,7 +42,7 @@ jest.mock('../../../src/auth/UserStore');
 jest.mock('../../../src/common/stores/SingleEntityStore', () => {
   return jest.fn().mockImplementation(() => {
     return mockEntityStore;
-  }); 
+  });
 });
 
 jest.mock('../../../src/comments/CommentsStore');
@@ -75,28 +75,24 @@ describe('Activity screen component', () => {
   });
 
   it('renders correctly', async () => {
-    await screen.instance().componentWillMount();
     screen.update();
     expect(screen).toMatchSnapshot();
   });
 
   it('should have a flatlist', async () => {
-    await screen.instance().componentWillMount();
     screen.update();
 
     expect(screen.find(FlatList)).toHaveLength(1);
   });
 
   it('should be wrapped in a keyboard avoiding view', async () => {
-    await screen.instance().componentWillMount();
     screen.update();
-    
+
     expect(screen.find(KeyboardAvoidingView)).toHaveLength(1);
   });
 
 
   it('should have n comments', async () => {
-    await screen.instance().componentWillMount();
 
     let instance = screen.instance();
     const spy = jest.spyOn(instance, 'renderComment');
@@ -107,7 +103,6 @@ describe('Activity screen component', () => {
 
 
   it('calls post when user comment', async () => {
-    await screen.instance().componentWillMount();
     screen.update();
     let instance = screen.instance();
     const spy = jest.spyOn(instance, 'postComment');

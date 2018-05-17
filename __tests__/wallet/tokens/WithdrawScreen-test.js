@@ -45,7 +45,6 @@ describe('WithdrawScreen', () => {
   });
 
   it('should have a flatlist', async () => {
-    await screen.instance().componentWillMount();
     screen.update();
 
     expect(screen.find(FlatList)).toHaveLength(1);
@@ -54,10 +53,11 @@ describe('WithdrawScreen', () => {
   it('should show join component', async () => {
     user.me.rewards = false;
 
+    // we call willmount again because user.me.rewards was updated
     await screen.instance().componentWillMount();
     screen.update();
 
-    expect(screen.findWhere(componentOrWrappedComponent(JoinView)))
+    expect(screen.find((JoinView)))
       .toHaveLength(1);
   })
 });

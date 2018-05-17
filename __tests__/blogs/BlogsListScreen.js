@@ -39,8 +39,6 @@ describe('blog list screen component', () => {
       <BlogsListScreen.wrappedComponent  blogs={store}/>
     );
 
-    // run will mount
-    wrapper.instance().componentWillMount();
 
     expect(store.loadList).toHaveBeenCalled();
   });

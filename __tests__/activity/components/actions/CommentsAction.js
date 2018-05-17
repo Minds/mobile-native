@@ -31,7 +31,6 @@ describe('Comment action component', () => {
   });
 
   it('renders correctly', async () => {
-    await screen.instance().componentWillMount();
     screen.update();
     expect(screen).toMatchSnapshot();
   });
@@ -39,7 +38,6 @@ describe('Comment action component', () => {
 
   it('should have a comment button', async () => {
 
-    await screen.instance().componentWillMount();
     screen.update();
 
     expect(screen.find('PreventDoubleTap')).toHaveLength(1)
@@ -47,7 +45,6 @@ describe('Comment action component', () => {
 
   it('should navigate a thumb on press ', async () => {
 
-    await screen.instance().componentWillMount();
     screen.update();
     let render = screen.dive();
     let touchables = screen.find('PreventDoubleTap');

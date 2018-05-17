@@ -35,8 +35,6 @@ describe('cature gallery component', () => {
       <CaptureGallery  />
     );
 
-    // run will mount
-    wrapper.instance().componentWillMount();
 
     // the call is dalayed (setTimeout) so we fast-forward timers
     jest.runAllTimers();
