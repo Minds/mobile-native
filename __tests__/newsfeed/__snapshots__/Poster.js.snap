@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Newsfeed poster component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 7,
+        }
+      }
+    >
+      <TextInput
+        allowFontScaling={true}
+        editable={true}
+        multiline={true}
+        onChangeText={[Function]}
+        placeholder="Speak your mind..."
+        placeholderTextColor="#ccc"
+        selectTextOnFocus={true}
+        style={
+          Object {
+            "flex": 5,
+            "minHeight": 40,
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "alignContent": "center",
+          "alignItems": "center",
+          "flex": 1,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Icon
+        allowFontScaling={false}
+        name="md-camera"
+        onPress={[Function]}
+        size={24}
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 5,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <TouchableHighlight
+        accessibilityLabel="Submit post"
+        activeOpacity={0.85}
+        delayPressOut={100}
+        onPress={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "white",
+            "borderColor": "#4690D6",
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "margin": 4,
+            "padding": 5,
+          }
+        }
+        underlayColor="transparent"
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#4690D6",
+            }
+          }
+        >
+           POST 
+        </Text>
+      </TouchableHighlight>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 5,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <View />
+    <View />
+  </View>
+</View>
+`;

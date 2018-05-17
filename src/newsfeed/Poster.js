@@ -79,7 +79,7 @@ export default class Poster extends Component {
                     onPress={() => this.submitPost()} 
                     underlayColor = 'transparent'
                     style = {styles.button}
-                    accessibilityLabel="Subscribe to this channel"
+                    accessibilityLabel="Submit post"
                   >
                     <Text style={{color: colors.primary}} > POST </Text>
                   </TouchableHighlight>
