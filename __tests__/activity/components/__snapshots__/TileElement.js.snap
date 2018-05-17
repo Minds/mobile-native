@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Owner component renders correctly 1`] = `
+<TouchableOpacity
+  activeOpacity={0.2}
+  onPress={[Function]}
+  style={
+    Object {
+      "height": 30,
+      "width": 30,
+    }
+  }
+>
+  <FastImage
+    resizeMode="cover"
+    style={
+      Object {
+        "height": 30,
+        "width": 30,
+      }
+    }
+  />
+</TouchableOpacity>
+`;
