@@ -18,6 +18,7 @@ import Button from '../../common/components/Button';
 
 import {
   MINDS_URI,
+  MINDS_ASSETS_CDN_URI,
   MINDS_CDN_URI
 } from '../../config/Config';
 
@@ -137,9 +138,8 @@ export default class Lock extends PureComponent {
     let background = entity.get('ownerObj.merchant.exclusive.background');
 
     if (!background) {
-      return MINDS_URI + '/assets/photos/andromeda-galaxy.jpg';
+      return MINDS_ASSETS_CDN_URI + 'front/dist/assets/photos/andromeda-galaxy.jpg';
     }
-
     return MINDS_CDN_URI + 'fs/v1/paywall/preview/' + entity.ownerObj.guid + '/' + background;
   }
 
