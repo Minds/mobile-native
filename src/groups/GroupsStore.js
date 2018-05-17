@@ -31,10 +31,10 @@ class GroupsStore {
    * Load list
    */
   loadList() {
-    if (this.list.cantLoadMore() || this.loading) {
+    if (this.list.cantLoadMore()) {
       return Promise.resolve();
     }
-    this.loading = true;
+    //this.loading = true;
 
     return groupsService.loadList(this.filter, this.list.offset)
       .then(data => {

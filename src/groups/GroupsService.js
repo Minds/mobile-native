@@ -12,8 +12,14 @@ class GroupsService {
    * Load groups
    */
   loadList(filter, offset) {
-    const rcategories = [];
-    return api.get('api/v1/groups/' + filter, { limit: 12, offset: offset })
+
+    if (this.listController) {
+      this.listController.abort();
+    }
+    // abortable call controller
+    this.listController = new AbortController();
+
+    return api.get('api/v1/groups/' + filter, { limit: 12, offset: offset }, this.listController.signal)
       .then((data) => {
         if (offset && data.groups) {
           data.groups.shift();
