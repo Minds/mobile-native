@@ -60,7 +60,7 @@ export default class MessengerSetup extends Component {
   }
 
   unlock = () => {
-    this.props.messengerList.getCrytoKeys(this.password)
+    this.props.messengerList.getCryptoKeys(this.password)
       .then(resp => {
         this.handleOnDone(resp);
       });
@@ -98,7 +98,7 @@ export default class MessengerSetup extends Component {
             onChangeText={(password) => this.password = password}
           />
         </View>
-  
+
         <View style={{ paddingTop: 32 }}>
           <Text style={styles.infoText}>· You only need to enter this encryption password once as long as you stay signed in.</Text>
           <Text style={styles.infoText}>· It is important so that no one other than you and the people you are communicating with can access the content of your messages.</Text>
@@ -125,7 +125,7 @@ export default class MessengerSetup extends Component {
             placeholder='password...'
             secureTextEntry={true}
             onChangeText={(password) => this.password = password}
-          /> 
+          />
           <TextInput
             style={[ComponentsStyle.passwordinput, CommonStyle.marginTop2x]}
             editable={true}

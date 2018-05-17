@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rekey screen component should renders correctly 1`] = `
+<MessengerSetup
+  navigation={Object {}}
+  onDone={[Function]}
+  rekey={true}
+/>
+`;

@@ -142,9 +142,9 @@ class MessengerListStore {
    * Get crypto keys and unlock
    * @param {string} password
    */
-  async getCrytoKeys(password) {
+  async getCryptoKeys(password) {
     this.setUnlocking(true);
-    return messengerService.getCrytoKeys(password)
+    return messengerService.getCryptoKeys(password)
       .then(privateKey => {
         if (privateKey) {
           session.sessionStorage.setPrivateKey(privateKey);

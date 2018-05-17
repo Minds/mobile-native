@@ -9,7 +9,7 @@ class MessengerService {
    * Get Crypto Keys from server
    * @param {string} password
    */
-  getCrytoKeys(password) {
+  getCryptoKeys(password) {
     return api.get('api/v2/messenger/keys', {
       password: password
     }).then((response) => {
@@ -22,7 +22,7 @@ class MessengerService {
 
   /**
    * Setup messenger keys
-   * @param {string} password 
+   * @param {string} password
    */
   doSetup(password) {
     return api.post('api/v2/messenger/keys/setup', { password: password, download: false })
@@ -81,7 +81,7 @@ class MessengerService {
    */
   getConversationFromRemote(limit, guid, offset = "") {
     return api.get('api/v2/messenger/conversations/' + guid, {
-      limit: 8, 
+      limit: 8,
       offset: offset,
       finish: '',
     })
@@ -107,7 +107,7 @@ class MessengerService {
 
   /**
    * Invite a user
-   * @param {string} guid 
+   * @param {string} guid
    */
   invite(guid) {
     return api.put(`api/v2/conversations/invite/${guid}`);

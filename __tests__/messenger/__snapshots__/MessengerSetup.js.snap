@@ -1,0 +1,194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Messenger setup component should render correctly for setup 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "padding": 10,
+      },
+      Object {
+        "backgroundColor": "#f7f7f7",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "stretch",
+        "flexDirection": "column",
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      editable={true}
+      onChangeText={[Function]}
+      placeholder="password..."
+      secureTextEntry={true}
+      style={
+        Object {
+          "backgroundColor": "#FFF",
+          "borderColor": "#ECECEC",
+          "borderRadius": 3,
+          "borderWidth": 1,
+          "padding": 16,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+    <TextInput
+      allowFontScaling={true}
+      editable={true}
+      onChangeText={[Function]}
+      placeholder="confirm password..."
+      secureTextEntry={true}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFF",
+            "borderColor": "#ECECEC",
+            "borderRadius": 3,
+            "borderWidth": 1,
+            "padding": 16,
+          },
+          Object {
+            "marginTop": 10,
+          },
+        ]
+      }
+      underlineColorAndroid="transparent"
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "paddingTop": 16,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#BBB",
+          "marginBottom": 16,
+        }
+      }
+    >
+      Hey @undefined! It looks like you haven't setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`Messenger setup component should render correctly for unlock 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "padding": 10,
+      },
+      Object {
+        "backgroundColor": "#f7f7f7",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "stretch",
+        "flexDirection": "column",
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      editable={true}
+      onChangeText={[Function]}
+      placeholder="password..."
+      secureTextEntry={true}
+      style={
+        Object {
+          "backgroundColor": "#FFF",
+          "borderColor": "#ECECEC",
+          "borderRadius": 3,
+          "borderWidth": 1,
+          "padding": 16,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "paddingTop": 32,
+      }
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#BBB",
+          "marginBottom": 16,
+        }
+      }
+    >
+      · You only need to enter this encryption password once as long as you stay signed in.
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#BBB",
+          "marginBottom": 16,
+        }
+      }
+    >
+      · It is important so that no one other than you and the people you are communicating with can access the content of your messages.
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#BBB",
+          "marginBottom": 16,
+        }
+      }
+    >
+      · By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={true}
+      ellipsizeMode="tail"
+      style={
+        Object {
+          "color": "#BBB",
+          "marginBottom": 16,
+        }
+      }
+    >
+      · By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.
+    </Text>
+  </View>
+</View>
+`;
