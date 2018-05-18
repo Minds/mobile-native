@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Newsfeed poster component renders correctly 1`] = `
-<View
+<Component
   style={
     Object {
       "flex": 1,
     }
   }
 >
-  <View
+  <Component
     style={
       Object {
         "flex": 1,
@@ -16,7 +16,7 @@ exports[`Newsfeed poster component renders correctly 1`] = `
       }
     }
   >
-    <View
+    <Component
       style={
         Object {
           "flex": 7,
@@ -40,8 +40,8 @@ exports[`Newsfeed poster component renders correctly 1`] = `
         underlineColorAndroid="transparent"
         value=""
       />
-    </View>
-    <View
+    </Component>
+    <Component
       style={
         Object {
           "alignContent": "center",
@@ -57,9 +57,9 @@ exports[`Newsfeed poster component renders correctly 1`] = `
         onPress={[Function]}
         size={24}
       />
-    </View>
-  </View>
-  <View
+    </Component>
+  </Component>
+  <Component
     style={
       Object {
         "flex": 1,
@@ -67,14 +67,14 @@ exports[`Newsfeed poster component renders correctly 1`] = `
       }
     }
   >
-    <View
+    <Component
       style={
         Object {
           "flex": 5,
         }
       }
     />
-    <View
+    <Component
       style={
         Object {
           "flex": 1,
@@ -112,9 +112,9 @@ exports[`Newsfeed poster component renders correctly 1`] = `
            POST 
         </Text>
       </TouchableHighlight>
-    </View>
-  </View>
-  <View
+    </Component>
+  </Component>
+  <Component
     style={
       Object {
         "flex": 5,
@@ -122,8 +122,8 @@ exports[`Newsfeed poster component renders correctly 1`] = `
       }
     }
   >
-    <View />
-    <View />
-  </View>
-</View>
+    <Component />
+    <Component />
+  </Component>
+</Component>
 `;
