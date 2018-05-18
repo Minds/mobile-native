@@ -23,18 +23,22 @@ import {
 } from 'react-native';
 
 import Activity from './../Activity';
+import BlogCard from '../../../blogs/BlogCard';
+import BlogModel from '../../../blogs/BlogModel';
 import Poster from './../../Poster';
 
 export default class RemindModal extends Component {
 
   render() {
+    const ShowComponent = this.props.entity.subtype == 'blog' ? BlogCard : Activity;
+
     return (
-      <ScrollView style={{flex:1, flexDirection:'column'}}>
+      <ScrollView style={styles.container}>
         <View style={styles.posterWrapper}>
           <Poster isRemind={true} closeAction={this.props.onClose} guid={this.props.entity.guid} />
         </View>
-        <View style={{flex:4}}>
-          <Activity hideTabs={true} entity={this.props.entity} />
+        <View style={styles.bodyContainer}>
+          <ShowComponent hideTabs={true} entity={this.props.entity} />
         </View>
       </ScrollView>
     );
@@ -42,19 +46,16 @@ export default class RemindModal extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    flexDirection:'column'
+  },
   posterWrapper: {
-    flex:1, 
+    flex:1,
     paddingLeft:8
   },
-  modal: {
-    flex:1,
-    paddingTop: 10,
-  },
-  modalContainer: {
-    alignItems: 'center',
-    backgroundColor: '#ede3f2',
-  },
-  modalHeader: {
-    padding: 5
+  bodyContainer: {
+    flex:4,
+    paddingTop:5
   }
 });
