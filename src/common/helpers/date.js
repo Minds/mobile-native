@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 function pad(n, width, z) {
   z = z || '0';
@@ -6,7 +6,7 @@ function pad(n, width, z) {
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
-export default function formatDate(timestamp, format = 'datetime') {
+export default function formatDate(timestamp, format = 'datetime', timezone='') {
   let options;
 
   switch (format) {
@@ -20,8 +20,11 @@ export default function formatDate(timestamp, format = 'datetime') {
     default:
       options = 'MMM DD, YYYY, HH:mm';
   }
+  let date = moment(timestamp * 1000);
 
-  return moment(timestamp * 1000).format(options);
+  if (timezone) date.tz(timezone);
+
+  return date.format(options);
 
   // const months = [
   //   'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'

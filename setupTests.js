@@ -14,3 +14,8 @@ jest.doMock('moment', () => {
   moment.tz.setDefault('America/Los_Angeles');
   return moment;
 });
+
+jest.doMock('moment-timezone', () => {
+  moment.tz.setDefault('America/Los_Angeles');
+  return moment;
+});

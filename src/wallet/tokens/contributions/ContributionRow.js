@@ -10,8 +10,7 @@ import {
 } from 'react-native';
 
 import { CommonStyle } from '../../../styles/Common';
-import i18n from '../../../common/services/i18n.service';
-
+import formatDate from '../../../common/helpers/date';
 /**
  * List row
  */
@@ -36,9 +35,9 @@ export default class ContributionRow extends PureComponent {
       <View>
       <TouchableOpacity style={styles.row} onPress={this.toggle}>
         <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[...color,  CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{i18n.l('date.formats.small', item.timestamp)}</Text>
+          <Text style={[...color,  CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{formatDate(item.timestamp/1000, 'date', 'Etc/GMT-0')}</Text>
           <Text style={[...color, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.score}</Text>
-          <Text style={[...color, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.share.toFixed(6)}%</Text>
+          <Text style={[...color, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.share.toFixed(6).toString()}%</Text>
         </View>
       </TouchableOpacity>
       {detail}
