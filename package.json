@@ -108,6 +108,7 @@
   },
   "jest": {
     "automock": false,
+    "cacheDirectory": "../jest/cache",
     "preset": "react-native",
     "setupFiles": [
       "<rootDir>/setupTests.js"

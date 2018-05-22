@@ -1,6 +1,19 @@
 pipeline:
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount: [ ./node_modules, ../jest/cache ]
+    volumes:
+      - /tmp/cache:/cache
   test:
     image: node:9.6.1
     commands:
       - yarn install
       - yarn test
+
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount: [ ./node_modules, ../jest/cache ]
+    volumes:
+      - /tmp/cache:/cache
