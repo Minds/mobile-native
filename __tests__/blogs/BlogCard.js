@@ -4,6 +4,7 @@ import { Platform, Linking } from 'react-native';
 import { shallow } from 'enzyme';
 import BlogCard from '../../src/blogs/BlogCard';
 import blogFakeFactory from '../../__mocks__/fake/blogs/BlogFactory'
+import BlogModel from '../../src/blogs/BlogModel';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
@@ -16,7 +17,8 @@ describe('blog card component', () => {
 
   it('should renders correctly', () => {
 
-    const blogEntity = blogFakeFactory(1);
+    const blogEntity = BlogModel.create(blogFakeFactory(1));
+
 
     const blog = renderer.create(
       <BlogCard entity={blogEntity} />
@@ -27,7 +29,7 @@ describe('blog card component', () => {
 
   it('should nav to blog on ios', async (done) => {
 
-    const blogEntity = blogFakeFactory(1);
+    const blogEntity = BlogModel.create(blogFakeFactory(1));
 
     const navigation = {navigate: jest.fn()};
 
@@ -51,7 +53,7 @@ describe('blog card component', () => {
 
   it('should open browser to blog on android', async (done) => {
 
-    const blogEntity = blogFakeFactory(1);
+    const blogEntity = BlogModel.create(blogFakeFactory(1));
 
     const navigation = {navigate: jest.fn()};
 
