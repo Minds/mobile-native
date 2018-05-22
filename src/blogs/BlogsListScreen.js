@@ -16,6 +16,7 @@ import {
 
 import BlogCard from './BlogCard';
 import Toolbar from '../common/components/toolbar/Toolbar';
+import CenteredLoading from '../common/components/CenteredLoading';
 
 /**
  * Blogs List screen
@@ -76,9 +77,7 @@ export default class BlogsListScreen extends Component {
     const store = this.props.blogs;
     if (!store.list.loaded && !store.list.refreshing) {
       return (
-        <View style={styles.activitycontainer}>
-          <ActivityIndicator size={'large'} />
-        </View>
+        <CenteredLoading />
       );
     }
 

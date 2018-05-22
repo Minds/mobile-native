@@ -65,7 +65,7 @@ export default class BlogsViewScreen extends Component {
 
     if (!blog) return <CenteredLoading/>
 
-    const image = { uri: blog.thumbnail_src };
+    const image = blog.getBannerSource();
 
     const actions = (
       <View style={[CommonStyle.flexContainer, CommonStyle.paddingLeft2x]}>

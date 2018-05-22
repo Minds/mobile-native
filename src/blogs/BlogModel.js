@@ -1,4 +1,4 @@
-import { MINDS_CDN_URI } from '../config/Config';
+import { MINDS_ASSETS_CDN_URI } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
@@ -24,6 +24,18 @@ export default class BlogModel extends BaseModel {
     'thumbs:down:user_guids',
     'thumbs:up:user_guids',
   ]
+
+  /**
+   * Get banner source
+   * @param {string} size
+   */
+  getBannerSource(size='medium') {
+    const uri = (this.thumbnail_src && this.thumbnail_src != 'https://cdn.minds.com/thumbProxy?src=&c=2708')?
+      this.thumbnail_src:
+      `${MINDS_ASSETS_CDN_URI}front/dist/assets/logos/placeholder-bulb.jpg`;
+
+    return { uri, headers: api.buildHeaders()};
+  }
 
   /**
    * Child models
