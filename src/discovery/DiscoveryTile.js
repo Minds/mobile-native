@@ -1,5 +1,5 @@
 import React, {
-  PureComponent
+  Component
 } from 'react';
 
 import {
@@ -23,16 +23,17 @@ import { createImageProgress } from 'react-native-image-progress';
 
 const ProgressFastImage = createImageProgress(FastImage);
 
-export default class DiscoveryTile extends PureComponent {
+@observer
+export default class DiscoveryTile extends Component {
 
   /**
    * Navigate to view
    */
   _navToView = () => {
     if (this.props.navigation) {
-      this.props.navigation.navigate('Activity', { 
+      this.props.navigation.navigate('Activity', {
         entity: this.props.entity,
-        scrollToBottom: false 
+        scrollToBottom: false
       });
     }
   }
@@ -42,6 +43,9 @@ export default class DiscoveryTile extends PureComponent {
   }
 
   render() {
+    if (this.props.entity.gif && this.props.entity.is_visible == false) {
+      return null;
+    }
     const url = this.props.entity.getThumbSource();
 
     const style = { width: this.props.size, height: this.props.size };

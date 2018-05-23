@@ -158,11 +158,25 @@ export default class DiscoveryScreen extends Component {
   }
 
   /**
+   * On viewable items change in the list
+   */
+  onViewableItemsChanged = (change) => {
+    if (this.props.discovery.type == 'object/image') {
+      change.changed.forEach(c => {
+        if (c.item.gif) {
+          console.log(c);
+          c.item.setVisible(c.isViewable);
+        }
+      })
+    }
+  }
+
+  /**
    * Render
    */
   render() {
     let body;
-    
+
     const discovery = this.props.discovery;
     const list = discovery.list;
 
@@ -220,6 +234,7 @@ export default class DiscoveryScreen extends Component {
         getItemLayout={getItemLayout}
         columnWrapperStyle={columnWrapperStyle}
         keyboardShouldPersistTaps={'handled'}
+        onViewableItemsChanged={this.onViewableItemsChanged}
       />
     )
 
@@ -361,7 +376,9 @@ export default class DiscoveryScreen extends Component {
    * Render a tile
    */
   renderTile = (row) => {
-    if (!this.state.active && row.item.gif) return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight }}/>;
+    if (!this.state.active && row.item.gif) {
+      return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight, backgroundColor: colors.dark }}/>;
+    }
     return (
       <DiscoveryTile entity={row.item} size={this.state.itemHeight} navigation={this.props.navigation}/>
     );

@@ -18,8 +18,13 @@ import {
  */
 export default class ActivityModel extends BaseModel {
 
-  // add an extra observable property
+  // add an extra observable properties
   @observable mature_visibility = false;
+
+  /**
+   * Is visible in flat list
+   */
+  @observable is_visible = false;
 
   /**
    * observables
@@ -83,6 +88,11 @@ export default class ActivityModel extends BaseModel {
   @action
   toggleMatureVisibility() {
     this.mature_visibility = !this.mature_visibility;
+  }
+
+  @action
+  setVisible(value) {
+    this.is_visible = value;
   }
 
   /**
