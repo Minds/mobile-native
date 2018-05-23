@@ -1,0 +1,220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`newsfeed list screen component should renders correctly 1`] = `
+<FlatList
+  ListEmptyComponent={
+    <Component
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "row",
+          "height": 667,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Component
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "column",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={
+            Object {
+              "color": "#444",
+              "fontFamily": "Roboto",
+              "fontSize": 24,
+              "fontWeight": "600",
+              "marginBottom": 8,
+              "marginTop": 8,
+              "textAlign": "center",
+            }
+          }
+        >
+          This feed is empty
+        </Text>
+      </Component>
+    </Component>
+  }
+  ListFooterComponent={null}
+  data={
+    Array [
+      Object {
+        "attachment_guid": false,
+        "blurb": false,
+        "container_guid": "activityguid0",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "getThumbSource": [Function],
+        "guid": "activityguid0",
+        "mature": false,
+        "message": "Message",
+        "ownerObj": Object {
+          "getAvatarSource": [Function],
+          "guid": "824853017709780997",
+          "subtype": false,
+          "time_created": "1522036284",
+          "type": "user",
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "perma_url": false,
+        "rowKey": "something0",
+        "thumbnail_src": false,
+        "title": "TITLE",
+        "type": "activity",
+      },
+      Object {
+        "attachment_guid": false,
+        "blurb": false,
+        "container_guid": "activityguid1",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "getThumbSource": [Function],
+        "guid": "activityguid1",
+        "mature": false,
+        "message": "Message",
+        "ownerObj": Object {
+          "getAvatarSource": [Function],
+          "guid": "824853017709780997",
+          "subtype": false,
+          "time_created": "1522036284",
+          "type": "user",
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "perma_url": false,
+        "rowKey": "something1",
+        "thumbnail_src": false,
+        "title": "TITLE",
+        "type": "activity",
+      },
+      Object {
+        "attachment_guid": false,
+        "blurb": false,
+        "container_guid": "activityguid2",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "getThumbSource": [Function],
+        "guid": "activityguid2",
+        "mature": false,
+        "message": "Message",
+        "ownerObj": Object {
+          "getAvatarSource": [Function],
+          "guid": "824853017709780997",
+          "subtype": false,
+          "time_created": "1522036284",
+          "type": "user",
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "perma_url": false,
+        "rowKey": "something2",
+        "thumbnail_src": false,
+        "title": "TITLE",
+        "type": "activity",
+      },
+      Object {
+        "attachment_guid": false,
+        "blurb": false,
+        "container_guid": "activityguid3",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "getThumbSource": [Function],
+        "guid": "activityguid3",
+        "mature": false,
+        "message": "Message",
+        "ownerObj": Object {
+          "getAvatarSource": [Function],
+          "guid": "824853017709780997",
+          "subtype": false,
+          "time_created": "1522036284",
+          "type": "user",
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "perma_url": false,
+        "rowKey": "something3",
+        "thumbnail_src": false,
+        "title": "TITLE",
+        "type": "activity",
+      },
+      Object {
+        "attachment_guid": false,
+        "blurb": false,
+        "container_guid": "activityguid4",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "getThumbSource": [Function],
+        "guid": "activityguid4",
+        "mature": false,
+        "message": "Message",
+        "ownerObj": Object {
+          "getAvatarSource": [Function],
+          "guid": "824853017709780997",
+          "subtype": false,
+          "time_created": "1522036284",
+          "type": "user",
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "perma_url": false,
+        "rowKey": "something4",
+        "thumbnail_src": false,
+        "title": "TITLE",
+        "type": "activity",
+      },
+    ]
+  }
+  disableVirtualization={false}
+  getItemLayout={null}
+  horizontal={false}
+  initialNumToRender={6}
+  key="f"
+  keyExtractor={[Function]}
+  maxToRenderPerBatch={10}
+  numColumns={1}
+  onEndReached={[Function]}
+  onEndReachedThreshold={2}
+  onEndThreshold={0}
+  onLayout={[Function]}
+  onRefresh={[Function]}
+  onViewableItemsChanged={[Function]}
+  refreshing={false}
+  removeClippedSubviews={true}
+  renderItem={[Function]}
+  scrollEventThrottle={50}
+  style={
+    Object {
+      "backgroundColor": "#FFF",
+      "flex": 1,
+    }
+  }
+  updateCellsBatchingPeriod={50}
+  viewabilityConfig={
+    Object {
+      "viewAreaCoveragePercentThreshold": 50,
+    }
+  }
+  windowSize={11}
+/>
+`;

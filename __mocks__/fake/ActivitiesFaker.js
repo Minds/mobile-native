@@ -9,6 +9,7 @@ function load(count) {
       container_guid:code,
       custom_data:false,
       custom_type:false,
+      rowKey: 'something' + i, 
       description:"Congratulations! ",
       edited:"",
       guid:code,
@@ -31,6 +32,11 @@ function load(count) {
       perma_url:false,
       thumbnail_src:false,
       type:"activity",
+      getThumbSource: () => {
+        return {
+          source:'http://thisisaurl'
+        }
+      }
     }
   });
 
