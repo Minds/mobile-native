@@ -20,6 +20,7 @@ export default {
     requestNewPassword: 'To request a new password, enter your username',
     requestNewPasswordSuccess: 'We have sent an unlock code to your registered email address.',
     invalidGrant: 'Incorrect username/password. Please try again.',
+    invalidPassword: 'Incorrect password. Please try again.',
     code: 'Code'
   },
   settings: {

@@ -18,6 +18,7 @@ import validator from '../../common/services/validator.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import Button from '../../common/components/Button';
 import { CommonStyle } from '../../styles/Common';
+import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
 
 /**
  * Email settings screen
@@ -30,7 +31,8 @@ export default class EmailScreen extends Component {
 
   state = {
     email: null,
-    saving: false
+    saving: false,
+    isVisible: false
   }
 
   /**
@@ -63,11 +65,17 @@ export default class EmailScreen extends Component {
         this.props.navigation.goBack();
       })
       .finally(() => {
+
+        this.setState({isVisible:false});
         this.setState({saving: false});
       })
       .catch(() => {
         Alert.alert('Error', i18n.t('settings.errorSaving'));
       });
+  }
+
+  confirmPassword = () => {
+    this.setState({isVisible:true});
   }
 
   /**
@@ -93,8 +101,9 @@ export default class EmailScreen extends Component {
           text={i18n.t('save')}
           loading={this.state.saving}
           containerStyle={[CommonStyle.marginTop3x, {alignSelf: 'center'}]}
-          onPress={this.save}
+          onPress={this.confirmPassword}
         />
+        <ModalConfirmPassword isVisible={this.state.isVisible} onSuccess={this.save}></ModalConfirmPassword>
       </View>
     );
   }

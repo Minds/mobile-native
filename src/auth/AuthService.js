@@ -50,6 +50,10 @@ class AuthService {
   forgot(username) {
     return api.post('api/v1/forgotpassword/request', { username });
   }
+
+  confirmPass(password) {
+    return api.post('api/v2/settings/password/validate', { password });
+  }
 }
 
 export default new AuthService();
