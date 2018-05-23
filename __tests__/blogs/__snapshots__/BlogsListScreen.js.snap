@@ -26,7 +26,7 @@ exports[`blog list screen component should renders correctly 1`] = `
             "selectedTextStyle": Object {
               "color": "black",
             },
-            "text": "MY GROUPS",
+            "text": "MY BLOGS",
             "value": "owner",
           },
         ]
@@ -647,7 +647,7 @@ exports[`blog list screen component should renders correctly 1`] = `
                 ]
               }
             >
-              MY GROUPS
+              MY BLOGS
             </Text>
           </View>
         </View>
