@@ -57,13 +57,13 @@ export default class BlogCard extends PureComponent {
             <View style={styles.titlecol}>
               <Text style={styles.title}>{blog.title}</Text>
               <View style={styles.ownerContainer}>
-                <Avatar
+                { channel && <Avatar
                   width={24}
                   height={24}
                   rounded
                   source={channel.getAvatarSource()}
-                />
-                <Text style={styles.username}>{blog.ownerObj.username.toUpperCase()}</Text>
+                /> }
+                <Text style={styles.username}>{blog.ownerObj && blog.ownerObj.username.toUpperCase()}</Text>
                 <Text style={styles.createdDate}>{formatDate(blog.time_created)}</Text>
               </View>
             </View>
