@@ -22,24 +22,29 @@ import { CommonStyle } from '../styles/Common';
 import Colors from '../styles/Colors';
 
 export default class ModalConfirmPassword extends Component {
+
   state = {
     password: '',
-    error: true
+    error: false
   };
 
-  submit() {
-    this.setState({error:false});
-    authService.confirmPass(this.state.password)
-      .then(data => {
-        this.props.onSuccess();
-      })
-      .catch(err => {
-        this.setState({error:true});
+  async submit() {
+    this.setState({
+      error:false
+    });
+    try {
+      await authService.validatePassword(this.state.password);
+      this.props.onSuccess();
+    } catch (err) {
+      console.log(err);
+      this.setState({
+        error: true
       });
+    }
   }
 
   render() {
-    const msg = (this.state.error) ? <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]}>{i18n.t('auth.invalidPassword')}</Animatable.Text>:null;
+    const msg = (this.state.error) ? <Text style={styles.error}>{i18n.t('auth.invalidPassword')}</Text> : null;
     return (
       <Modal
         isVisible={ this.props.isVisible }
@@ -81,7 +86,8 @@ export default class ModalConfirmPassword extends Component {
 
 const styles = StyleSheet.create({
   error: {
-    marginTop: 20,
+    marginTop: 8,
+    marginBottom: 8,
     color: '#c00',
     textAlign: 'center',
   },
