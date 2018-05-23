@@ -77,6 +77,12 @@ export default class ConversationScreen extends Component {
 
     // load conversation
     this.store.setGuid(conversation.guid);
+    this.store.load()
+      .then(conversation => {
+        // we send the conversation to update the topbar (in case we only receive the guid)
+        this.props.navigation.setParams({ conversation });
+      });
+    this.store.load(); //iOS needs to be preloaded
   }
 
   /**
