@@ -53,7 +53,7 @@ export default class BlogsListScreen extends Component {
     const typeOptions = [
       { text: 'TOP', value: 'trending', selectedTextStyle},
       { text: 'SUBSCRIPTIONS', value: 'network', selectedTextStyle},
-      { text: 'MY GROUPS', value: 'owner', selectedTextStyle},
+      { text: 'MY BLOGS', value: 'owner', selectedTextStyle},
     ]
     return (
       <Toolbar
