@@ -155,7 +155,7 @@ export default class ConversationScreen extends Component {
     }
 
     if (shouldInvite) {
-      return <MessengerInvite navigation={this.props.navigation}/>
+      return <MessengerInvite navigation={this.props.navigation} messengerConversation={this.store}/>
     }
 
     const messages = this.store.messages;

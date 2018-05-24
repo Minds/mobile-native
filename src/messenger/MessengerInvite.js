@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 
 import {
-  inject,
   observer
 } from 'mobx-react/native'
 
@@ -21,7 +20,6 @@ import Button from '../common/components/Button';
 /**
  * Messenger Invite
  */
-@inject('messengerConversation')
 @observer
 export default class MessengerInvite extends Component {
 
