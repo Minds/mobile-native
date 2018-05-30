@@ -6,7 +6,7 @@ import i18n from './i18n.service';
 class ValidatorService {
   rules = {
     number: /^(([0-9]*)|(([0-9]*)\.([0-9]*)))$/,
-    email: /^(\w)+(\.\w+)*@(\w)+((\.\w{2,3}){1,3})$/,
+    email: /^(\w)+(\.\w+)*@(\w)+((\.\w{2,20}){1,3})$/,
   }
 
   /**
