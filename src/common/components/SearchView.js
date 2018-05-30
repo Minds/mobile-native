@@ -18,6 +18,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 export default class SearchView extends PureComponent {
 
   /**
+   * Default props
+   */
+  static defaultProps = {
+    containerStyle: null
+  };
+
+  /**
    * Render
    */
   render() {
@@ -25,13 +32,14 @@ export default class SearchView extends PureComponent {
       iconRight,
       iconRightOnPress,
       right,
+      containerStyle,
       ...attributes
     } = this.props;
 
     let rIcon = this.getRightIcon(iconRight, iconRightOnPress);
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, containerStyle]}>
         <Icon size={16} style={styles.icon} name={'md-search'} color={'#444'} />
         <TextInput
           onFocus={ this.props.onFocus }

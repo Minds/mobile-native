@@ -176,6 +176,14 @@ export const CommonStyle = StyleSheet.create({
     paddingBottom: 5
   },
 
+  hairLineBottom: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#EEE',
+  },
+  hairLineTop: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: '#EEE',
+  },
   // fonts
   fontXS:{
     fontSize: 10

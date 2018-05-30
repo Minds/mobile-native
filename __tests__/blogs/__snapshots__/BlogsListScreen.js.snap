@@ -471,6 +471,7 @@ exports[`blog list screen component should renders correctly 1`] = `
             Object {
               "backgroundColor": "#FFF",
               "borderBottomColor": "#EEE",
+              "borderBottomWidth": 0.5,
               "borderTopColor": "#EEE",
               "borderTopWidth": 0.5,
               "display": "flex",

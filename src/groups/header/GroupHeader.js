@@ -12,6 +12,7 @@ import {
 import {
   observer
 } from 'mobx-react/native'
+import {debounce} from 'lodash';
 
 import FastImage from 'react-native-fast-image';
 
@@ -21,6 +22,7 @@ import Toolbar from '../../common/components/toolbar/Toolbar';
 import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import CenteredLoading from '../../common/components/CenteredLoading';
+import SearchView from '../../common/components/SearchView';
 
 /**
  * Group Header
@@ -80,6 +82,10 @@ export default class GroupHeader extends Component {
     }
   }
 
+  setMemberSearch = debounce((q) => {
+    this.props.store.setMemberSearch(q);
+  }, 300);
+
   /**
    * Render Tabs
    */
@@ -89,12 +95,23 @@ export default class GroupHeader extends Component {
       { text: 'DESCRIPTION', icon: 'short-text', value: 'desc' },
       { text: 'MEMBERS', icon: 'ios-people', iconType: 'ion', value: 'members' }
     ]
+
+    const searchBar = this.props.store.tab == 'members' ?
+      <SearchView
+        containerStyle={[CommonStyle.flexContainer, CommonStyle.hairLineBottom]}
+        placeholder='Search...'
+        onChangeText={this.setMemberSearch}
+      /> : null;
+
     return (
-      <Toolbar
-        options={ typeOptions }
-        initial={ this.props.store.tab }
-        onChange={ this.onTabChange }
-      />
+      <View>
+        <Toolbar
+          options={ typeOptions }
+          initial={ this.props.store.tab }
+          onChange={ this.onTabChange }
+        />
+        {searchBar}
+      </View>
     )
   }
 
@@ -112,7 +129,7 @@ export default class GroupHeader extends Component {
         // clear list without mark loaded flag
         this.props.store.list.clearList(false);
         break;
-      case 'members':  
+      case 'members':
         this.props.store.loadMembers();
         break;
       default:

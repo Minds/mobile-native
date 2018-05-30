@@ -8,6 +8,7 @@ import {
   Text,
   FlatList,
   ScrollView,
+  Alert
 } from 'react-native';
 
 import {
@@ -15,9 +16,12 @@ import {
   inject
 } from 'mobx-react/native'
 
+import ActionSheet from 'react-native-actionsheet';
 import { Icon } from 'react-native-elements';
 
-import DiscoveryUser from '../discovery/DiscoveryUser';
+import {truncate} from 'lodash';
+
+import GroupUser from './GroupUser';
 import { MINDS_CDN_URI } from '../config/Config';
 import groupsService from './GroupsService';
 import GroupHeader from './header/GroupHeader';
@@ -32,6 +36,12 @@ import CenteredLoading from '../common/components/CenteredLoading';
 @inject('groupView', 'user', 'navigatorStore')
 @observer
 export default class GroupViewScreen extends Component {
+
+  state = {
+    memberActions: null,
+    member: null,
+  }
+
   /**
    * Disable navigation bar
    */
@@ -71,7 +81,7 @@ export default class GroupViewScreen extends Component {
   }
 
   /**
-  
+
    * Load subs data
    */
   loadMembers = () => {
@@ -95,13 +105,13 @@ export default class GroupViewScreen extends Component {
       </View>
     )
     switch (group.tab) {
-      case 'feed': 
+      case 'feed':
         return (
           <NewsfeedList
-            newsfeed={ group } 
-            guid={ group.group.guid } 
-            header={ header } 
-            navigation={ this.props.navigation } 
+            newsfeed={ group }
+            guid={ group.group.guid }
+            header={ header }
+            navigation={ this.props.navigation }
           />
         );
         break;
@@ -136,12 +146,92 @@ export default class GroupViewScreen extends Component {
   }
 
   /**
+   * Member menu on press
+   */
+  memberMenuPress = (member) => {
+
+    const memberActions = ['Cancel'];
+    const imOwner = this.props.groupView.group['is:owner'];
+    const imModerator = this.props.groupView.group['is:moderator'];
+
+    if (imOwner) {
+      if (member['is:owner']) {
+        memberActions.push('Remove as Owner');
+      } else if (!member['is:moderator']) {
+        memberActions.push('Make Owner');
+        memberActions.push('Make Moderator');
+      } else {
+        memberActions.push('Remove as Moderator');
+      }
+    }
+
+    if ((imOwner || imModerator) && !member['is:owner'] && !member['is:moderator']) {
+      memberActions.push('Kick');
+      memberActions.push('Ban');
+    }
+
+    this.setState({
+      memberActions,
+      member
+    }, () => {
+      this.ActionSheet.show();
+    })
+  }
+
+  /**
    * Render user row
    */
   renderRow = (row) => {
     return (
-      <DiscoveryUser store={this.props.groupView} entity={row} navigation={this.props.navigation} />
-    );
+      <GroupUser
+        store={this.props.groupView}
+        entity={row}
+        navigation={this.props.navigation}
+        onRightIconPress={this.memberMenuPress}
+        isOwner={this.props.groupView.group['is:owner']}
+        isModerator={this.props.groupView.group['is:moderator']}
+      />
+     );
+  }
+
+  handleSelection = (option) => {
+    let selected = this.state.memberActions[option];
+
+    switch (selected) {
+      case 'Ban':
+        Alert.alert(
+          'Confirm',
+          `Are you sure? You want to ban this user?`,
+          [
+            { text: 'No', style: 'cancel' },
+            { text: 'Yes!', onPress: () => this.props.groupView.ban(this.state.member) }
+          ]
+        );
+        break;
+      case 'Kick':
+        Alert.alert(
+          'Confirm',
+          `Are you sure? You want to kick this user?`,
+          [
+            { text: 'No', style: 'cancel' },
+            { text: 'Yes!', onPress: () => this.props.groupView.kick(this.state.member) }
+          ]
+        );
+
+        break;
+      case 'Make Owner':
+        this.props.groupView.makeOwner(this.state.member);
+        break;
+      case 'Remove as Owner':
+        this.props.groupView.revokeOwner(this.state.member);
+        break;
+        case 'Make Moderator':
+        this.props.groupView.makeModerator(this.state.member);
+        break;
+      case 'Remove as Moderator':
+        this.props.groupView.revokeModerator(this.state.member);
+        break;
+    }
   }
 
   /**
@@ -154,10 +244,21 @@ export default class GroupViewScreen extends Component {
       return <CenteredLoading/>
     }
 
+    const memberActionSheet = this.state.memberActions ?
+      <ActionSheet
+        ref={o => this.ActionSheet = o}
+        title={truncate(this.state.member.name, {'length': 25, 'separator': ' '})}
+        options={this.state.memberActions}
+        onPress={this.handleSelection}
+        cancelButtonIndex={0}
+      /> :
+      null;
+
     return (
-      <View style={{flex:1}}> 
+      <View style={{flex:1}}>
         <CaptureFab navigation={this.props.navigation} group={group} />
         {this.getList()}
+        {memberActionSheet}
       </View>
     );
   }

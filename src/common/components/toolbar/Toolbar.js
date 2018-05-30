@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
       height: StyleSheet.hairlineWidth
     },
     borderTopWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#EEE',
   },
   topbar: {

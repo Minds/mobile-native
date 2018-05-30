@@ -30,9 +30,9 @@ import { ComponentsStyle } from '../styles/Components';
 export default class DiscoveryUser extends Component {
 
   /**
-   * Navigate To conversation
+   * Navigate To channel
    */
-  _navToConversation = () => {
+  _navToChannel = () => {
     Keyboard.dismiss();
     if (this.props.navigation) {
       this.props.navigation.navigate('Channel', { guid: this.props.entity.item.guid });
@@ -46,10 +46,10 @@ export default class DiscoveryUser extends Component {
     } else if (this.props.store.list) {
       this.props.store.list.toggleSubscription(item.guid);
     }
-    
   }
 
-  subscribeButton() {
+
+  renderRightButton() {
     const item = this.props.entity.item;
     if (this.props.user.me.guid === item.guid) {
       return;
@@ -74,14 +74,18 @@ export default class DiscoveryUser extends Component {
         </TouchableHighlight>;
     }
   }
+
+  /**
+   * Render
+   */
   render() {
     const item = this.props.entity.item;
     const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + item.guid + '/medium' };
     return (
-      <TouchableOpacity style={styles.row} onPress={this._navToConversation}>
+      <TouchableOpacity style={styles.row} onPress={this._navToChannel}>
         <Image source={avatarImg} style={styles.avatar} />
         <Text style={styles.body}>{item.name}</Text>
-        {this.subscribeButton()}
+        {this.renderRightButton()}
       </TouchableOpacity>
     );
   }

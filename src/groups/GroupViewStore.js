@@ -41,6 +41,11 @@ class GroupViewStore {
   @observable saving = false;
 
   /**
+   * member search
+   */
+  memberSearch = '';
+
+  /**
    * List loading
    */
   viewed = [];
@@ -80,6 +85,16 @@ class GroupViewStore {
   }
 
   /**
+   * Set the member search
+   * @param {string} q
+   */
+  setMemberSearch(q) {
+    this.memberSearch = q;
+    this.members.clearList();
+    this.loadMembers();
+  }
+
+  /**
    * Load Members
    */
   loadMembers() {
@@ -89,7 +104,11 @@ class GroupViewStore {
     }
     this.loading = true;
 
-    return groupsService.loadMembers(this.guid, this.members.offset)
+    const serviceFetch = this.memberSearch ?
+      groupsService.searchMembers(this.guid, this.members.offset, 21, this.memberSearch) :
+      groupsService.loadMembers(this.guid, this.members.offset);
+
+    return serviceFetch
       .then(data => {
         data.entities = UserModel.createMany(data.members);
         data.offset = data['load-next'];
@@ -139,6 +158,50 @@ class GroupViewStore {
   @action
   setSaving(s) {
     this.saving = s;
+  }
+
+  /**
+   * Kick given user
+   * @param {object} user
+   */
+  async kick(user) {
+    const result = await groupsService.kick(this.group.guid, user.guid);
+    if (!!result.done) {
+      this.members.entities.remove(user);
+    }
+  }
+
+  /**
+   * Ban given user
+   * @param {object} user
+   */
+  async ban(user) {
+    const result = await groupsService.ban(this.group.guid, user.guid);
+    if (!!result.done) {
+      this.members.entities.remove(user);
+    }
+  }
+
+  /**
+   * Make given user owner
+   * @param {object} user
+   */
+  async makeOwner(user) {
+    const result = await groupsService.makeOwner(this.group.guid, user.guid);
+    if (!!result.done) {
+      user['is:owner'] = true;
+    }
+  }
+
+  /**
+   * Revoke ownership to given user
+   * @param {object} user
+   */
+  async revokeOwner(user) {
+    const result = await groupsService.revokeOwner(this.group.guid, user.guid);
+    if (!!result.done) {
+      user['is:owner'] = false;
+    }
   }
 
   /**
@@ -194,8 +257,10 @@ class GroupViewStore {
   @action
   clear() {
     this.list.clearList();
+    this.members.clearList();
     this.group = null;
     this.tab = 'feed';
+    this.memberSearch = '';
   }
 
   /**
