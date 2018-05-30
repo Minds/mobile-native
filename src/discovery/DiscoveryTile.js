@@ -23,6 +23,8 @@ import { createImageProgress } from 'react-native-image-progress';
 
 const ProgressFastImage = createImageProgress(FastImage);
 
+const isAndroid = Platform.OS === 'android';
+
 @observer
 export default class DiscoveryTile extends Component {
 
@@ -43,7 +45,7 @@ export default class DiscoveryTile extends Component {
   }
 
   render() {
-    if (this.props.entity.gif && this.props.entity.is_visible == false) {
+    if ( !isAndroid && this.props.entity.gif && this.props.entity.is_visible == false) {
       return null;
     }
     const url = this.props.entity.getThumbSource();
@@ -52,7 +54,7 @@ export default class DiscoveryTile extends Component {
 
     return (
       <TouchableOpacity onPress={this._navToView} style={[ style, styles.tile ]}>
-        { Platform.OS === 'android' ?
+        { isAndroid ?
           <ProgressFastImage
             indicator={null}
             source={ url }

@@ -38,6 +38,7 @@ import BlogCard from '../blogs/BlogCard';
 import CaptureFab from '../capture/CaptureFab';
 import { MINDS_CDN_URI } from '../config/Config';
 
+const isIos = Platform.OS === 'ios';
 
 /**
  * Discovery screen
@@ -161,10 +162,9 @@ export default class DiscoveryScreen extends Component {
    * On viewable items change in the list
    */
   onViewableItemsChanged = (change) => {
-    if (this.props.discovery.type == 'object/image') {
+    if (this.props.discovery.type == 'object/image' && isIos) {
       change.changed.forEach(c => {
         if (c.item.gif) {
-          console.log(c);
           c.item.setVisible(c.isViewable);
         }
       })
