@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Explicit text component renders correctly 1`] = `
+<Component
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <Tags>
+    undefined
+  </Tags>
+  <TouchableOpacity
+    activeOpacity={0.2}
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        Object {
+          "marginTop": -15,
+        },
+      ]
+    }
+  >
+    <Icon
+      allowFontScaling={false}
+      color="red"
+      name="explicit"
+      size={18}
+      style={
+        Object {
+          "elevation": 1,
+          "shadowColor": "black",
+          "shadowOffset": Object {
+            "height": 0.5,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 0.5,
+        }
+      }
+    />
+  </TouchableOpacity>
+</Component>
+`;
