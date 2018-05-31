@@ -12,6 +12,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import _ from 'lodash';
+
 /**
  * Comment Notification Component
  */
@@ -49,6 +51,12 @@ export default class CommentView extends Component {
   getBody(entity, user_guid) {
     const styles = this.props.styles;
 
+    const title = entity.entityObj.title ? _.truncate(entity.entityObj.title, {
+      'length': 30,
+      'separator': ' ',
+      'omission': '...'
+    }) : null;
+
     switch (entity.entityObj.type) {
       case "activity":
         if (entity.entityObj.owner_guid == user_guid) {
@@ -57,8 +65,8 @@ export default class CommentView extends Component {
           return <Text style={styles.link}>{entity.entityObj.ownerObj.name}'s activity</Text>
         }
       case "object":
-        if (entity.entityObj.title) {
-          return <Text style={styles.link}>{entity.entityObj.title}</Text>
+        if (title) {
+          return <Text style={styles.link}>{title}</Text>
         } else if (entity.entityObj.owner_guid == user_guid) {
           return <Text style={styles.link}>your {entity.entityObj.subtype}</Text>
         } else {
