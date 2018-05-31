@@ -152,6 +152,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-android-sms-listener')
+    compile project(':react-native-fetch-blob')
     compile project(':react-native-fs')
     compile project(':react-native-media-meta')
     compile project(':react-native-share-menu')

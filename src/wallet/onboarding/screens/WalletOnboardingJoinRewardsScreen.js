@@ -27,7 +27,7 @@ import Colors from '../../../styles/Colors';
 import stylesheet from '../../../onboarding/stylesheet';
 
 @inject('user', 'wallet')
-@observer  
+@observer
 export default class WalletOnboardingJoinRewardsScreen extends Component {
   state = {
     inProgress: false,
@@ -56,18 +56,26 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
 
       this.setState({
         secret,
-        confirming: true
+        confirming: true,
+        inProgress: false
       });
+
+      // listen for the sms for 20 seconds
+      const code = await this.props.wallet.listenForSms();
+
+      if (code !== false) {
+        this.setState({code}, () => this.confirm());
+      }
+
     } catch (e) {
       const error = (e && e.message) || 'Unknown server error';
-      this.setState({ error });
+      this.setState({ error, inProgress: false });
       console.error(e);
-    } finally {
-      this.setState({ inProgress: false });
     }
   }
 
   async confirm() {
+
     if (this.state.inProgress || !this.canConfirm()) {
       return;
     }
@@ -155,7 +163,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
       <View>
         <Text style={style.p}>
           Please enter the code we just sent to {this.state.phone} in
-          order to verify that your number is correct.
+          order to verify that your number is correct, or keep the app visible and we will detect it automatically.
         </Text>
 
         <View style={[style.cols, style.form]}>

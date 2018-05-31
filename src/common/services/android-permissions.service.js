@@ -35,6 +35,64 @@ class AndroidPermissionsService {
   }
 
   /**
+   * Request read sms permission
+   */
+  readSms() {
+    return this._request(
+      PermissionsAndroid.PERMISSIONS.READ_SMS,
+      {
+        'title': 'Minds',
+        'message': 'Minds needs access to your external storage ' +
+        'so you can upload awesome pictures.'
+      }
+    );
+  }
+
+  /**
+   * Check read sms permission
+   */
+  async checkReadSms() {
+    try {
+      const granted = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.READ_SMS
+      );
+      return granted;
+    } catch (err) {
+      console.warn(err)
+      return err;
+    }
+  }
+
+  /**
+   * Request external storage write permission
+   */
+  writeExternalStorage() {
+    return this._request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      {
+        'title': 'Minds',
+        'message': 'Minds needs access to your external storage ' +
+        'so you can download awesome pictures.'
+      }
+    );
+  }
+
+  /**
+   * Check external storage write permission
+   */
+  async checkWriteExternalStorage() {
+    try {
+      const granted = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+      );
+      return granted;
+    } catch (err) {
+      console.warn(err)
+      return err;
+    }
+  }
+
+  /**
    * Request camera permission
    */
   camera() {

@@ -10,6 +10,9 @@ import token from "../common/helpers/token";
 import number from "../common/helpers/number";
 import TokensStore from './tokens/TokensStore';
 import storageService from '../common/services/storage.service';
+import smslistener from '../common/services/sms-listener.service';
+
+
 /**
  * Wallet store
  */
@@ -64,6 +67,17 @@ class WalletStore {
    */
   join(number) {
     return walletService.join(number)
+  }
+
+  /**
+   * Listen for the confirmation sms
+   */
+  async listenForSms() {
+    try {
+      return await smslistener.listen(/([\d]{6})/, 20000);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   /**

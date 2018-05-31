@@ -27,6 +27,8 @@ import cl.json.ShareApplication;
 import com.meedan.ShareMenuPackage;
 import com.mybigday.rnmediameta.RNMediaMetaPackage;
 import com.rnfs.RNFSPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import com.centaurwarchief.smslistener.SmsListenerPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -61,7 +63,9 @@ public class MainApplication extends Application implements ShareApplication, Re
           new RNSharePackage(),
           new ShareMenuPackage(),
           new RNMediaMetaPackage(),
-          new RNFSPackage()
+          new RNFSPackage(),
+          new RNFetchBlobPackage(),
+          new SmsListenerPackage()
       );
     }
 

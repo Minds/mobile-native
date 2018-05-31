@@ -7,17 +7,19 @@ import { observer } from 'mobx-react/native';
 import {
   StyleSheet,
   findNodeHandle,
-  View,
   Platform,
-  Image
+  Alert,
+  Image,
+  TouchableOpacity
 } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import { createImageProgress } from 'react-native-image-progress';
 import ProgressCircle from 'react-native-progress/Circle';
-
 import { Icon } from 'react-native-elements';
+
 import ExplicitOverlay from './ExplicitOverlay';
+import download from '../../services/download.service';
 
 const ProgressFastImage = createImageProgress(FastImage);
 const ProgressImage = createImageProgress(Image);
@@ -79,7 +81,7 @@ export default class ExplicitImage extends Component {
     }
 
     return (
-      <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+      <TouchableOpacity style={{flex:1, justifyContent: 'center', alignItems: 'center'}} onLongPress={this.download} activeOpacity={0.8}>
         {image}
         { (this.props.entity.mature) ?
           <ExplicitOverlay
@@ -88,8 +90,36 @@ export default class ExplicitImage extends Component {
             style={styles.absolute}
           /> : null
         }
-      </View>
+      </TouchableOpacity>
     );
+  }
+
+  /**
+   * Prompt user to download
+   */
+  download = () => {
+    Alert.alert(
+      'Download to galley',
+      `Do you want to download this image?`,
+      [
+        { text: 'No', style: 'cancel' },
+        { text: 'Yes', onPress: () => this.runDownload() },
+      ],
+      { cancelable: false }
+    );
+  }
+
+  /**
+   * Download the media to the gallery
+   */
+  runDownload = async () => {
+    try {
+      const result = await download.downloadToGallery(this.props.source.uri);
+      Alert.alert('Success', 'Image added to gallery!');
+    } catch (e) {
+      Alert.alert('Error downloading file');
+      console.log(e);
+    }
   }
 }
 

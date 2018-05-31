@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Explicit image component renders correctly 1`] = `
-<Component
+<TouchableOpacity
+  activeOpacity={0.8}
+  onLongPress={[Function]}
   style={
     Object {
       "alignItems": "center",
@@ -62,6 +64,7 @@ exports[`Explicit image component renders correctly 1`] = `
         "custom_type": false,
         "description": "Congratulations! ",
         "edited": "",
+        "getThumbSource": [Function],
         "guid": "activityguid0",
         "mature": true,
         "message": "Message",
@@ -75,6 +78,7 @@ exports[`Explicit image component renders correctly 1`] = `
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
         "perma_url": false,
+        "rowKey": "something0",
         "thumbnail_src": false,
         "title": "TITLE",
         "type": "activity",
@@ -94,5 +98,5 @@ exports[`Explicit image component renders correctly 1`] = `
     }
     viewRef={null}
   />
-</Component>
+</TouchableOpacity>
 `;
