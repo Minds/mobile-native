@@ -1,0 +1,401 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Channel screen component should renders correctly 1`] = `
+<Component
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <NewsfeedList
+    emptyMessage={null}
+    guid="activityguid0"
+    header={
+      <Component>
+        <ChannelHeader
+          channel={
+            Object {
+              "channel": Object {
+                "blocked": false,
+                "guid": "125",
+              },
+              "feedStore": Object {
+                "setChannel": [MockFunction],
+              },
+              "load": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+              },
+              "rewards": Object {
+                "merged": Array [],
+              },
+              "setChannel": [MockFunction] {
+                "calls": Array [
+                  Array [
+                    Object {
+                      "attachment_guid": false,
+                      "blurb": false,
+                      "container_guid": "activityguid0",
+                      "custom_data": false,
+                      "custom_type": false,
+                      "description": "Congratulations! ",
+                      "edited": "",
+                      "getThumbSource": [Function],
+                      "guid": "activityguid0",
+                      "impressions": 20,
+                      "mature": false,
+                      "message": "Message",
+                      "ownerObj": Object {
+                        "getAvatarSource": [Function],
+                        "guid": "824853017709780997",
+                        "subtype": false,
+                        "time_created": "1522036284",
+                        "type": "user",
+                      },
+                      "owner_guid": "824853017709780997",
+                      "parent_guid": "838106762591510528",
+                      "perma_url": false,
+                      "rowKey": "something0",
+                      "thumbnail_src": false,
+                      "title": "TITLE",
+                      "type": "activity",
+                      "wire_totals": Object {
+                        "tokens": 20,
+                      },
+                    },
+                  ],
+                ],
+              },
+            }
+          }
+          navigation={
+            Object {
+              "navigate": [MockFunction],
+              "state": Object {
+                "params": Object {
+                  "entity": Object {
+                    "attachment_guid": false,
+                    "blurb": false,
+                    "container_guid": "activityguid0",
+                    "custom_data": false,
+                    "custom_type": false,
+                    "description": "Congratulations! ",
+                    "edited": "",
+                    "getThumbSource": [Function],
+                    "guid": "activityguid0",
+                    "impressions": 20,
+                    "mature": false,
+                    "message": "Message",
+                    "ownerObj": Object {
+                      "getAvatarSource": [Function],
+                      "guid": "824853017709780997",
+                      "subtype": false,
+                      "time_created": "1522036284",
+                      "type": "user",
+                    },
+                    "owner_guid": "824853017709780997",
+                    "parent_guid": "838106762591510528",
+                    "perma_url": false,
+                    "rowKey": "something0",
+                    "thumbnail_src": false,
+                    "title": "TITLE",
+                    "type": "activity",
+                    "wire_totals": Object {
+                      "tokens": 20,
+                    },
+                  },
+                },
+              },
+            }
+          }
+          styles={
+            Object {
+              "avatar": Object {
+                "borderRadius": 55,
+                "height": 110,
+                "left": 20,
+                "position": "absolute",
+                "top": 135,
+                "width": 110,
+              },
+              "banner": Object {
+                "alignItems": "stretch",
+                "backgroundColor": "#eee",
+                "flexDirection": "row",
+                "height": 190,
+                "width": "100%",
+              },
+              "blockText": Object {
+                "fontFamily": "Roboto",
+                "fontSize": 20,
+                "fontWeight": "500",
+                "letterSpacing": 1,
+                "padding": 20,
+                "paddingTop": 0,
+              },
+              "blockTextLink": Object {
+                "color": "#4690D6",
+                "fontFamily": "Roboto",
+                "fontSize": 16,
+                "fontWeight": "400",
+                "letterSpacing": 1,
+                "padding": 20,
+                "paddingTop": 0,
+              },
+              "blockView": Object {
+                "alignItems": "center",
+              },
+              "bluebutton": Object {
+                "marginRight": 8,
+              },
+              "briefdescription": Object {
+                "color": "#777",
+                "fontFamily": "Roboto",
+                "fontSize": 13,
+                "paddingBottom": 20,
+                "paddingTop": 25,
+              },
+              "briefdescriptionTextInput": Object {
+                "color": "#777",
+                "fontFamily": "Roboto",
+                "fontSize": 13,
+                "maxHeight": 100,
+              },
+              "briefdescriptionTextInputView": Object {
+                "borderColor": "#ececec",
+                "borderRadius": 3,
+                "borderWidth": 1,
+                "marginBottom": 20,
+                "marginTop": 20,
+                "padding": 8,
+                "paddingTop": 3,
+              },
+              "buttonscol": Object {
+                "alignItems": "center",
+                "alignSelf": "flex-end",
+                "flexDirection": "row",
+                "justifyContent": "flex-end",
+              },
+              "carouselcontainer": Object {
+                "flex": 1,
+                "paddingBottom": 20,
+              },
+              "container": Object {
+                "backgroundColor": "#FFF",
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              "counter": Object {
+                "alignItems": "center",
+                "flex": 1,
+                "flexDirection": "column",
+              },
+              "countercontainer": Object {
+                "flexDirection": "row",
+                "height": 60,
+                "paddingLeft": 130,
+              },
+              "countertitle": Object {
+                "color": "#666",
+                "fontSize": 10,
+              },
+              "countervalue": Object {
+                "color": "#444",
+                "fontWeight": "bold",
+                "paddingTop": 5,
+              },
+              "gobackicon": Object {
+                "height": 40,
+                "left": 0,
+                "position": "absolute",
+                "top": 16,
+                "width": 40,
+              },
+              "headercontainer": Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "height": 200,
+              },
+              "headertextcontainer": Object {
+                "alignItems": "stretch",
+                "flexDirection": "column",
+                "padding": 8,
+                "paddingLeft": 15,
+                "paddingRight": 15,
+                "width": "100%",
+              },
+              "name": Object {
+                "color": "#444",
+                "fontFamily": "Roboto",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "letterSpacing": 0.5,
+                "marginRight": 8,
+              },
+              "nameTextInput": Object {
+                "borderColor": "#ececec",
+                "borderRadius": 3,
+                "borderWidth": 1,
+                "color": "#444",
+                "fontFamily": "Roboto",
+                "fontSize": 20,
+                "fontWeight": "700",
+                "letterSpacing": 0.5,
+                "marginBottom": 4,
+                "padding": 3,
+              },
+              "namecol": Object {
+                "flex": 1,
+              },
+              "namecontainer": Object {
+                "flex": 1,
+                "flexDirection": "row",
+              },
+              "tapOverlayView": Object {
+                "alignItems": "center",
+                "backgroundColor": "#000",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "opacity": 0.65,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              "username": Object {
+                "color": "#999",
+                "fontSize": 10,
+              },
+              "wrappedAvatar": Object {
+                "borderRadius": 55,
+                "height": 110,
+                "width": 110,
+              },
+              "wrappedAvatarOverlayView": Object {
+                "borderRadius": 55,
+              },
+            }
+          }
+        />
+        <Toolbar
+          feed={
+            Object {
+              "setChannel": [MockFunction],
+            }
+          }
+          hasRewards={0}
+        />
+        <Icon
+          color="#4690D6"
+          containerStyle={
+            Object {
+              "height": 40,
+              "left": 0,
+              "position": "absolute",
+              "top": 16,
+              "width": 40,
+            }
+          }
+          name="arrow-back"
+          onPress={[Function]}
+          raised={true}
+          reverse={false}
+          reverseColor="white"
+          size={30}
+          underlayColor="white"
+        />
+      </Component>
+    }
+    navigation={
+      Object {
+        "navigate": [MockFunction],
+        "state": Object {
+          "params": Object {
+            "entity": Object {
+              "attachment_guid": false,
+              "blurb": false,
+              "container_guid": "activityguid0",
+              "custom_data": false,
+              "custom_type": false,
+              "description": "Congratulations! ",
+              "edited": "",
+              "getThumbSource": [Function],
+              "guid": "activityguid0",
+              "impressions": 20,
+              "mature": false,
+              "message": "Message",
+              "ownerObj": Object {
+                "getAvatarSource": [Function],
+                "guid": "824853017709780997",
+                "subtype": false,
+                "time_created": "1522036284",
+                "type": "user",
+              },
+              "owner_guid": "824853017709780997",
+              "parent_guid": "838106762591510528",
+              "perma_url": false,
+              "rowKey": "something0",
+              "thumbnail_src": false,
+              "title": "TITLE",
+              "type": "activity",
+              "wire_totals": Object {
+                "tokens": 20,
+              },
+            },
+          },
+        },
+      }
+    }
+    newsfeed={
+      Object {
+        "setChannel": [MockFunction],
+      }
+    }
+    renderActivity={null}
+  />
+  <CaptureFab
+    navigation={
+      Object {
+        "navigate": [MockFunction],
+        "state": Object {
+          "params": Object {
+            "entity": Object {
+              "attachment_guid": false,
+              "blurb": false,
+              "container_guid": "activityguid0",
+              "custom_data": false,
+              "custom_type": false,
+              "description": "Congratulations! ",
+              "edited": "",
+              "getThumbSource": [Function],
+              "guid": "activityguid0",
+              "impressions": 20,
+              "mature": false,
+              "message": "Message",
+              "ownerObj": Object {
+                "getAvatarSource": [Function],
+                "guid": "824853017709780997",
+                "subtype": false,
+                "time_created": "1522036284",
+                "type": "user",
+              },
+              "owner_guid": "824853017709780997",
+              "parent_guid": "838106762591510528",
+              "perma_url": false,
+              "rowKey": "something0",
+              "thumbnail_src": false,
+              "title": "TITLE",
+              "type": "activity",
+              "wire_totals": Object {
+                "tokens": 20,
+              },
+            },
+          },
+        },
+      }
+    }
+  />
+</Component>
+`;
