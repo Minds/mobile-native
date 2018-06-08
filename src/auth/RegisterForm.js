@@ -28,6 +28,7 @@ import {
 
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
+import { ADDRGETNETWORKPARAMS } from 'dns';
 
 /**
  * Register Form
@@ -41,7 +42,8 @@ export default class RegisterForm extends Component {
     username: '',
     confirmPassword: '',
     email: '',
-    termsAccepted: true,
+    termsAccepted: false,
+    exclusive_promotions: false
   };
 
   validatePassword(value) {
@@ -112,6 +114,16 @@ export default class RegisterForm extends Component {
             value={this.state.confirmPassword}
           /> : null }
         <CheckBox
+          right
+          iconRight
+          containerStyle={ComponentsStyle.registerCheckbox}
+          title={<Text style={[ComponentsStyle.terms, CommonStyle.textRight]}>{`Receive exclusive promotions from Minds\n(recommended)`}</Text>}
+          checked={this.state.exclusive_promotions}
+          textStyle={[ComponentsStyle.registerCheckboxText, CommonStyle.textRight]}
+          onPress={() => { this.setState({ exclusive_promotions: !this.state.exclusive_promotions})}}
+        />
+        <CheckBox
+          right
           iconRight
           containerStyle={ComponentsStyle.registerCheckbox}
           title={<Text style={ComponentsStyle.terms}>I accept the <Text style={ComponentsStyle.link} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>terms and conditions</Text></Text>}
@@ -169,7 +181,13 @@ export default class RegisterForm extends Component {
     }
 
     try {
-      await authService.register(this.state.username ,this.state.email ,this.state.password)
+      const params = {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+        exclusive_promotions: this.state.exclusive_promotions
+      };
+      await authService.register(params)
       await authService.login(this.state.username ,this.state.password)
       await this.props.user.load();
       this.props.onRegister(sessionService.guid);

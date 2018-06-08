@@ -52,6 +52,9 @@ describe('RegisterForm component', () => {
     inputs.at(1).simulate('changeText', 'my@mail.com');
     inputs.at(2).simulate('changeText', 'somepassword');
 
+    // simulate press checkbox
+    await render.find('CheckBox').at(1).simulate('press');
+
     // update component (password confirmation is shown after the password field is set)
     await wrapper.update();
 
@@ -103,7 +106,7 @@ describe('RegisterForm component', () => {
     expect(Alert.alert).toBeCalled();
 
     // with error message
-    expect(Alert.alert.mock.calls[0][1]).toEqual('Please ensure your passwords match');
+    expect(Alert.alert.mock.calls[0][1]).toEqual('Please accept the Terms & Conditions');
   });
 
   it('should warn the user if the terms and conditions are not accepted', async () => {
@@ -133,9 +136,6 @@ describe('RegisterForm component', () => {
 
     // simulate user input for paddword confirmation
     inputs.at(3).simulate('changeText', 'somepassword');
-
-    // simulate press checkbox
-    await render.find('CheckBox').at(0).simulate('press');
 
     // simulate press register
     await render.find('Button').at(1).simulate('press');

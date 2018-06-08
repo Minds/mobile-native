@@ -149,7 +149,101 @@ exports[`RegisterForm component should renders correctly 1`] = `
             "alignItems": "center",
             "flexDirection": "row",
           },
+          Object {
+            "justifyContent": "flex-end",
+          },
           false,
+        ]
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        style={
+          Array [
+            Object {
+              "color": "white",
+              "paddingRight": 8,
+            },
+            Object {
+              "textAlign": "right",
+            },
+          ]
+        }
+      >
+        Receive exclusive promotions from Minds
+(recommended)
+      </Text>
+      <Text
+        accessible={true}
+        allowFontScaling={false}
+        ellipsizeMode="tail"
+        onLongPress={undefined}
+        onPress={undefined}
+        style={
+          Array [
+            Object {
+              "color": "#bfbfbf",
+              "fontSize": 24,
+            },
+            undefined,
+            Object {
+              "fontFamily": "FontAwesome",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+          ]
+        }
+      >
+        
+      </Text>
+    </View>
+  </View>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    collapsable={undefined}
+    hasTVPreferredFocus={undefined}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignSelf": "flex-end",
+        "backgroundColor": "transparent",
+        "borderColor": "#ededed",
+        "borderRadius": 3,
+        "borderWidth": 0,
+        "margin": 5,
+        "marginLeft": 10,
+        "marginRight": 0,
+        "opacity": 1,
+        "padding": 10,
+      }
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          },
+          Object {
+            "justifyContent": "flex-end",
+          },
           false,
         ]
       }
@@ -189,7 +283,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "green",
+              "color": "#bfbfbf",
               "fontSize": 24,
             },
             undefined,
@@ -201,7 +295,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
           ]
         }
       >
-        
+        
       </Text>
     </View>
   </View>

@@ -37,13 +37,7 @@ class AuthService {
     return data;
   }
 
-  register(username, email, password) {
-    let params = {
-      'email': email,
-      'username': username,
-      'password': password
-    };
-
+  register(params) {
     return api.post('api/v1/register', params);
   }
 
