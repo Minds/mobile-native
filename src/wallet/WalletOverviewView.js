@@ -40,7 +40,7 @@ export default class WalletOverviewView extends Component {
 
           <View style={ styles.cell }>
             <Text style={ styles.titles }>Your Share</Text>
-            <Text style={ styles.amount }>{  number(this.props.wallet.overview.yourShare || 0,2) }%</Text>
+            <Text style={ styles.amount }>{  number((this.props.wallet.overview.yourShare || 0) * 100 ,2,4) }%</Text>
           </View>
 
           <View style={ styles.cell }>
