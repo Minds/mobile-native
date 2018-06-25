@@ -55,6 +55,8 @@ class NotificationsSettingsStore {
       'boost_request': { name: 'Boosts Offers', value: true },
       'boost_rejected': { name: 'Boost Rejected', value: true },
       'boost_completed': { name: 'Fulfilled Boosts', value: true },
+      'rewards_reminder': { name: 'Rewards Reminder', value: true },
+      'rewards_summary': { name: 'Rewards Daily Summary', value: true },
       'chat': { name: 'Messenger', value: true },
       'messenger_invite': { name: 'Messenger Invites', value: true },
       'group_invite': { name: 'Group Invites', value: true }

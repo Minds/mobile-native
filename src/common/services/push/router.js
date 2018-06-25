@@ -1,6 +1,7 @@
 
 import navigation from '../navigation.service'
 import session from '../session.service'
+import featuresService from '../features.service';
 
 /**
  * Push Router
@@ -59,6 +60,15 @@ export default class Router {
 
         case 'comment':
           navigation.get().navigate('Activity', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid });
+          break;
+        
+        case 'rewards_reminder':
+        case 'rewards_summary':
+          if (featuresService.has('crypto')) {
+            navigation.get().navigate('Wallet', { });
+          } else {
+            navigation.get().navigate('Notifications', {});
+          }
           break;
 
         default:
