@@ -47,18 +47,14 @@ class NotificationsSettingsStore {
   @action
   reset() {
     this.settings = {
-      'daily': { name: 'Daily Reward', value: true },
       'comment': { name: 'Comments', value: true },
       'like': { name: 'Votes', value: true },
       'tag': { name: 'Tags', value: true },
       'friends': { name: 'Subscriptions', value: true },
       'remind': { name: 'Reminds', value: true },
-      'boost_request': { name: 'Peer2Peer Boosts', value: true },
-      'boost_accepted': { name: 'Boost Approvals', value: true },
+      'boost_request': { name: 'Boosts Offers', value: true },
       'boost_rejected': { name: 'Boost Rejected', value: true },
       'boost_completed': { name: 'Fulfilled Boosts', value: true },
-      'boost_revoked': { name: 'Boost Revoked', value: true },
-      'boost_gift': { name: 'Boost Gift', value: true },
       'chat': { name: 'Messenger', value: true },
       'messenger_invite': { name: 'Messenger Invites', value: true },
       'group_invite': { name: 'Group Invites', value: true }
