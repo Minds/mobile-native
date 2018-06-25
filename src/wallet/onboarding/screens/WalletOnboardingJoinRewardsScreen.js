@@ -23,8 +23,8 @@ import TransparentButton from '../../../common/components/TransparentButton';
 import NavNextButton from '../../../common/components/NavNextButton';
 
 import Colors from '../../../styles/Colors';
-
 import stylesheet from '../../../onboarding/stylesheet';
+import { CommonStyle } from '../../../styles/Common';
 
 @inject('user', 'wallet')
 @observer
@@ -32,10 +32,13 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
   state = {
     inProgress: false,
     confirming: false,
+    confirmFailed: false,
+    smsAllowed: true,
     phone: '+1',
     secret: '',
     code: '',
     error: '',
+    wait: 60
   }
 
   componentDidMount() {
@@ -44,27 +47,41 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
 
   //
 
-  async join() {
-    if (this.state.inProgress || !this.canJoin()) {
+  async join(retry = false) {
+    if (this.state.inProgress || (!retry && !this.canJoin())) {
       return;
     }
 
-    this.setState({ inProgress: true, error: '' });
+    this.setState({ inProgress: true, error: '',confirming: false, confirmFailed: false });
 
     try {
-      let { secret } = await this.props.wallet.join(this.state.phone);
+      let { secret } = await this.props.wallet.join(this.state.phone, retry);
 
       this.setState({
         secret,
         confirming: true,
-        inProgress: false
+        inProgress: false,
+        wait: 60
       });
+
+      this.waiting = setInterval(() => {
+        this.setState({wait: this.state.wait - 1});
+      }, 1000);
 
       // listen for the sms for 20 seconds
       const code = await this.props.wallet.listenForSms();
 
-      if (code !== false) {
-        this.setState({code}, () => this.confirm());
+      clearInterval(this.waiting);
+
+      switch(code) {
+        case false: // sms not recived
+          this.setState({confirmFailed: true});
+          break;
+        case -1: // sms read permission not allowed
+          this.setState({smsAllowed: false})
+          break;
+        default:
+          this.setState({code}, () => this.confirm());
       }
 
     } catch (e) {
@@ -106,6 +123,8 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
   }
 
   joinAction = () => this.join();
+
+  rejoinAction = () => this.join(true);
 
   canConfirm() {
     return this.state.code.length > 0;
@@ -159,12 +178,19 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
       confirmButtonContent = <ActivityIndicator size="small" color={Colors.primary} />;
     }
 
+    const body = this.state.confirmFailed ?
+      <Text style={[CommonStyle.fontXL, CommonStyle.textCenter]}>Sms was not received <Text style={CommonStyle.colorPrimary} onPress={this.rejoinAction}>Try again</Text></Text>:
+      this.state.smsAllowed ?
+        <Text style={[CommonStyle.colorPrimary, CommonStyle.fontXL, CommonStyle.textCenter]}> Keep the app visible and we will detect it automatically: {this.state.wait}</Text>:
+        null;
+
     return (
       <View>
         <Text style={style.p}>
-          Please enter the code we just sent to {this.state.phone} in
-          order to verify that your number is correct, or keep the app visible and we will detect it automatically.
+          We just sent the code to {this.state.phone} in
+          order to verify that your number is correct.
         </Text>
+        {body}
 
         <View style={[style.cols, style.form]}>
           <TextInput
@@ -187,16 +213,12 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
     );
   }
 
-
   getFormPartial() {
     if (!this.state.confirming)
       return this.getInputNumberPartial();
     else
       return this.getConfirmNumberPartial();
   }
-
-  //
-
 
   getNextButton = () => {
     return (

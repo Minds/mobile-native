@@ -64,9 +64,10 @@ class WalletStore {
   /**
    * Join to wallet tokens
    * @param {string} number
+   * @param {boolean} retry
    */
-  join(number) {
-    return walletService.join(number)
+  join(number, retry) {
+    return walletService.join(number, retry)
   }
 
   /**
@@ -74,7 +75,7 @@ class WalletStore {
    */
   async listenForSms() {
     try {
-      return await smslistener.listen(/([\d]{6})/, 20000);
+      return await smslistener.listen(/([\d]{6})/, 60000);
     } catch (e) {
       console.error(e);
     }

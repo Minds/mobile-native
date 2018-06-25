@@ -42,8 +42,8 @@ class AndroidPermissionsService {
       PermissionsAndroid.PERMISSIONS.READ_SMS,
       {
         'title': 'Minds',
-        'message': 'Minds needs access to your external storage ' +
-        'so you can upload awesome pictures.'
+        'message': 'Minds needs access to read sms ' +
+        'to auto-detect the validation code.'
       }
     );
   }

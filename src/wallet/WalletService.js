@@ -35,9 +35,12 @@ class WalletService {
   /**
    * Join tokens & rewards
    * @param {string} number
+   * @param {boolean} retry
    */
-  join(number) {
-    return api.post('api/v2/blockchain/rewards/verify', { number });
+  join(number, retry) {
+    const params = { number };
+    if (retry) params.retry = 1;
+    return api.post('api/v2/blockchain/rewards/verify', params);
   }
 
   /**
