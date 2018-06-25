@@ -61,7 +61,7 @@ export default class WalletScreen extends Component {
         return;
       }
       if (state.previousScene.key == "Wallet" && state.previousScene.key == state.scene.route.key) {
-        this.props.wallet.refresh();
+        this.props.wallet.refresh(true);
       }
     });
 
