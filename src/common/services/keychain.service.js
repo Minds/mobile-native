@@ -1,9 +1,9 @@
 import { AsyncStorage } from 'react-native';
 import CryptoJS from 'crypto-js';
 
-const STORAGE_KEY_PREFIX = '@MindsKeychainChallenge:';
+import stores from '../../../AppStores';
 
-import KeychainStore from '../../keychain/KeychainStore';
+const STORAGE_KEY_PREFIX = '@MindsKeychainChallenge:';
 
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
@@ -79,7 +79,7 @@ class KeychainService {
         attempts++;
 
         try {
-          const secretAttempt = await KeychainStore.waitForUnlock(keychain, true, attempts);
+          const secretAttempt = await stores.keychain.waitForUnlock(keychain, true, attempts);
           await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
 
           if (!secretAttempt) {
@@ -98,7 +98,7 @@ class KeychainService {
         throw new Error('E_INVALID_PASSWORD_CHALLENGE_OUTCOME');
       }
     } else {
-      secret = await KeychainStore.waitForUnlock(keychain, false);
+      secret = await stores.keychain.waitForUnlock(keychain, false);
 
       if (!secret) {
         throw new Error('E_INVALID_SECRET');
