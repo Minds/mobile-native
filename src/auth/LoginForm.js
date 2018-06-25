@@ -34,7 +34,8 @@ export default class LoginForm extends Component {
     password: '',
     msg: '',
     twoFactorToken: '',
-    twoFactorCode: ''
+    twoFactorCode: '',
+    inProgress: false
   };
 
   /**
@@ -70,6 +71,10 @@ export default class LoginForm extends Component {
         containerViewStyle={ComponentsStyle.loginButton}
         textStyle={ComponentsStyle.loginButtonText}
         key={1}
+        loading={this.state.inProgress}
+        loadingRight={true}
+        disabled={this.state.inProgress}
+        disabledStyle={CommonStyle.backgroundTransparent}
       />
     ]
 
@@ -141,7 +146,7 @@ export default class LoginForm extends Component {
    * On login press
    */
   onLoginPress() {
-    this.setState({ msg: ''});
+    this.setState({ msg: '', inProgress: true});
     // is two factor auth
     if (this.state.twoFactorToken) {
       authService.twoFactorAuth(this.state.twoFactorToken, this.state.twoFactorCode)
@@ -160,20 +165,20 @@ export default class LoginForm extends Component {
           err.json()
             .then(errJson => {
               if (errJson.error === 'invalid_grant' || errJson.error === 'invalid_client') {
-                this.setState({ msg: i18n.t('auth.invalidGrant') });
+                this.setState({ msg: i18n.t('auth.invalidGrant'), inProgress: false });
                 return;
               }
 
               //TODO implement on backend and edit
               if (errJson.error === 'two_factor') {
-                this.setState({ twoFactorToken: errJson.message });
+                this.setState({ twoFactorToken: errJson.message, inProgress: false });
                 return;
               }
 
-              this.setState({ msg: errJson.message || 'Unknown error' });
+              this.setState({ msg: errJson.message || 'Unknown error', inProgress: false });
             })
             .catch(err => {
-              this.setState({ msg: 'Unexpected error, please try again.' });
+              this.setState({ msg: 'Unexpected error, please try again.', inProgress: false });
             });
         });
     }

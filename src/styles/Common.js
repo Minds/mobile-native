@@ -105,6 +105,9 @@ export const CommonStyle = StyleSheet.create({
   backgroundDark: {
     backgroundColor: colors.dark
   },
+  backgroundTransparent: {
+    backgroundColor: 'transparent'
+  },
   // margin top
   marginTop3x: {
     marginTop: 15
