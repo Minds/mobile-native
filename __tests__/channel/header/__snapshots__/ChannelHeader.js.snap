@@ -1,0 +1,334 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`channel header component owner should render correctly 1`] = `
+<View>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    collapsable={undefined}
+    hasTVPreferredFocus={undefined}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <Image
+      resizeMode="cover"
+      source={
+        Object {
+          "headers": Object {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+          },
+          "uri": "https://cdn.minds.com/fs/v1/banners/1/fat/1523515420",
+        }
+      }
+      style={undefined}
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        },
+        Object {
+          "position": "absolute",
+          "right": 5,
+          "top": 160,
+        },
+      ]
+    }
+  >
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": undefined,
+            "fontSize": 25,
+          },
+          Object {
+            "color": "#fff",
+            "marginLeft": 5,
+            "paddingBottom": 5,
+            "shadowOpacity": 0.35,
+            "textShadowColor": "#000000",
+            "textShadowOffset": Object {
+              "height": 1,
+              "width": 1,
+            },
+            "textShadowRadius": 5,
+          },
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+    <Text
+      accessible={true}
+      allowFontScaling={false}
+      ellipsizeMode="tail"
+      style={
+        Array [
+          Object {
+            "color": undefined,
+            "fontSize": 25,
+          },
+          Object {
+            "color": "#fff",
+            "marginLeft": 5,
+            "paddingBottom": 5,
+            "shadowOpacity": 0.35,
+            "textShadowColor": "#000000",
+            "textShadowOffset": Object {
+              "height": 1,
+              "width": 1,
+            },
+            "textShadowRadius": 5,
+          },
+          Object {
+            "fontFamily": "Material Icons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+  <View
+    style={undefined}
+  >
+    <View
+      style={undefined}
+    >
+      <TouchableHighlight
+        onPress={[Function]}
+        style={
+          Array [
+            undefined,
+          ]
+        }
+        underlayColor="transparent"
+      >
+        <View
+          style={undefined}
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={undefined}
+          >
+            SUBSCRIBERS
+          </Text>
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={undefined}
+          />
+        </View>
+      </TouchableHighlight>
+      <View
+        style={undefined}
+      >
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={undefined}
+        >
+          VIEWS
+        </Text>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={undefined}
+        />
+      </View>
+    </View>
+    <View
+      style={undefined}
+    >
+      <View
+        style={undefined}
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            numberOfLines={1}
+            style={undefined}
+          >
+            Some User
+          </Text>
+        </View>
+        <Text
+          accessible={true}
+          allowFontScaling={true}
+          ellipsizeMode="tail"
+          style={undefined}
+        >
+          @
+          someusermane
+        </Text>
+      </View>
+      <View
+        style={undefined}
+      >
+        <TouchableHighlight
+          accessibilityLabel="Subscribe to this channel"
+          onPress={[Function]}
+          style={
+            Array [
+              Object {
+                "borderColor": "#ececec",
+                "borderRadius": 3,
+                "borderWidth": 1,
+                "padding": 8,
+              },
+              Object {
+                "borderColor": "#4690D6",
+              },
+              undefined,
+            ]
+          }
+          underlayColor="transparent"
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={true}
+            ellipsizeMode="tail"
+            style={
+              Object {
+                "color": "#4690D6",
+              }
+            }
+          >
+             SUBSCRIBE 
+          </Text>
+        </TouchableHighlight>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#FFF",
+              "flexDirection": "row",
+              "height": 40,
+              "justifyContent": "flex-end",
+              "paddingLeft": 8,
+              "width": 40,
+            }
+          }
+        >
+          <Text
+            accessible={true}
+            allowFontScaling={false}
+            ellipsizeMode="tail"
+            onPress={[Function]}
+            style={
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 24,
+                },
+                Object {
+                  "color": "#888888",
+                  "paddingLeft": 10,
+                },
+                Object {
+                  "fontFamily": "Ionicons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+              ]
+            }
+          >
+            
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "paddingTop": 10,
+        }
+      }
+    >
+      <Text
+        accessible={true}
+        allowFontScaling={true}
+        ellipsizeMode="tail"
+        selectable={true}
+        style={undefined}
+      />
+    </View>
+  </View>
+  <View
+    accessibilityComponentType={undefined}
+    accessibilityLabel={undefined}
+    accessibilityTraits={undefined}
+    accessible={true}
+    collapsable={undefined}
+    hasTVPreferredFocus={undefined}
+    hitSlop={undefined}
+    isTVSelectable={true}
+    nativeID={undefined}
+    onLayout={undefined}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID={undefined}
+    tvParallaxProperties={undefined}
+  >
+    <Image
+      source={undefined}
+      style={undefined}
+    />
+  </View>
+</View>
+`;
