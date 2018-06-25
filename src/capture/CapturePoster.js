@@ -104,7 +104,7 @@ export default class CapturePoster extends Component {
 
   showContext () {
     let group = this.props.navigation.state.params? this.props.navigation.state.params.group : null;
-    return group? <Text style={styles.title}> { '( Posting in ' + group.name + ')'} </Text> :null;
+    return group? <Text style={styles.title}> { '(Posting in ' + group.name + ')'} </Text> :null;
   }
 
   /**
