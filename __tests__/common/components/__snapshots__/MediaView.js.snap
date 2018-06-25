@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Media view component renders correctly 1`] = `
+<Component>
+  <TouchableOpacity
+    activeOpacity={1}
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "alignItems": "stretch",
+          "flex": 1,
+        },
+        Object {
+          "height": 1875,
+        },
+      ]
+    }
+  >
+    <ExplicitImage
+      entity={
+        Object {
+          "attachment_guid": false,
+          "blurb": false,
+          "container_guid": "activityguid0",
+          "custom_data": Array [
+            Object {
+              "height": 50,
+              "width": 20,
+            },
+          ],
+          "custom_type": false,
+          "description": "Congratulations! ",
+          "edited": "",
+          "getThumbSource": [MockFunction] {
+            "calls": Array [
+              Array [
+                "xlarge",
+              ],
+            ],
+          },
+          "guid": "activityguid0",
+          "mature": false,
+          "message": "Message",
+          "ownerObj": Object {
+            "getAvatarSource": [Function],
+            "guid": "824853017709780997",
+            "subtype": false,
+            "time_created": "1522036284",
+            "type": "user",
+          },
+          "owner_guid": "824853017709780997",
+          "parent_guid": "838106762591510528",
+          "perma_url": false,
+          "rowKey": "something0",
+          "subtype": "image",
+          "thumbnail_src": false,
+          "title": "TITLE",
+          "type": "activity",
+        }
+      }
+      imageStyle={
+        Object {
+          "backgroundColor": "transparent",
+        }
+      }
+      onError={[Function]}
+      source={
+        Object {
+          "uri": "www.something.com",
+        }
+      }
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+          Object {
+            "height": 1875,
+          },
+        ]
+      }
+    />
+  </TouchableOpacity>
+</Component>
+`;
