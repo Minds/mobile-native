@@ -18,13 +18,16 @@ export default class AndroidPlatfom extends AbstractPlatform {
 
     NotificationsAndroid.setRegistrationTokenUpdateListener((deviceToken) => {
       this.token = deviceToken;
+      if (this.shouldRegister) {
+        this.registerToken();
+      }
     });
 
   }
 
   /**
    * Set app badge
-   * @param {integer} num 
+   * @param {integer} num
    */
   setBadgeCount(num) {
     NotificationsAndroid.setBadgeCount(num);
@@ -44,13 +47,13 @@ export default class AndroidPlatfom extends AbstractPlatform {
 
   /**
    * Handle the notification that open the app
-   */ 
+   */
   handleInitialNotification() {
     PendingNotifications.getInitialNotification()
       .then((notification) => {
 
           if (notification && this.onInitialNotification) this.onInitialNotification(notification);
-      })  	
+      })
       .catch((err) => console.error("getInitialNotifiation() failed", err));
   }
   /**

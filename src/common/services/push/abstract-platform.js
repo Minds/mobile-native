@@ -7,6 +7,8 @@ export default class AbstractPlatform {
 
   token = null;
 
+  shouldRegister = false;
+
   onInitialNotification;
 
   setOnInitialNotification(fn) {
@@ -23,6 +25,8 @@ export default class AbstractPlatform {
         service: service,
         token: this.token
       });
+    } else {
+      this.shouldRegister = true;
     }
   }
 }

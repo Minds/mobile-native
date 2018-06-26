@@ -28,7 +28,7 @@ export default class IosPlatfom extends AbstractPlatform {
 
   /**
    * Set app badge
-   * @param {integer} num 
+   * @param {integer} num
    */
   setBadgeCount(num) {
     NotificationsIOS.setBadgeCount(num);
@@ -44,7 +44,7 @@ export default class IosPlatfom extends AbstractPlatform {
 
   /**
    * Handle the notification that open the app
-   */ 
+   */
   handleInitialNotification() {
   }
 
@@ -61,6 +61,10 @@ export default class IosPlatfom extends AbstractPlatform {
 
   _onPushRegistered(deviceToken) {
     this.token = deviceToken;
+
+    if (this.shouldRegister) {
+      this.registerToken();
+    }
   }
 
   // register token into backend
