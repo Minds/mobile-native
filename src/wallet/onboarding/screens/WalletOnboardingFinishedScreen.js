@@ -5,6 +5,7 @@ import React, {
 import {
   View,
   Text,
+  Linking,
   StyleSheet,
 } from 'react-native';
 
@@ -50,21 +51,21 @@ export default class WalletOnboardingFinishedScreen extends Component {
         <View style={style.vertButtonBar}>
           <TransparentButton
             style={style.vertButton}
-            onPress={() => {}}
+            onPress={() => {Linking.openURL('https://www.minds.com/wallet/tokens/101')}}
             title="MORE ON REWARDS"
             color={Colors.darkGreyed}
           />
 
           <TransparentButton
             style={style.vertButton}
-            onPress={() => {}}
+            onPress={() => {Linking.openURL('https://www.minds.com/faq/wire')}}
             title="LEARN ABOUT WIRE"
             color={Colors.darkGreyed}
           />
 
           <TransparentButton
             style={style.vertButton}
-            onPress={() => {}}
+            onPress={() => {Linking.openURL('https://www.minds.com/faq/boost')}}
             title="LEARN ABOUT BOOST"
             color={Colors.darkGreyed}
           />
