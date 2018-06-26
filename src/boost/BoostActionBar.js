@@ -121,7 +121,7 @@ export default class BoostActionBar extends Component {
                     token(this.props.entity.bid, 18) + ' Tokens' }
                   { (this.props.entity.bidType == 'usd' ||
                     this.props.entity.bidType == 'money') &&
-                    '$' + this.props.entity.bid }
+                    '$' + (this.props.entity.bid/100).toFixed(2) }
                   { this.props.entity.bidType == 'points' &&
                     this.props.entity.bid + ' points' }
                 </Text>
