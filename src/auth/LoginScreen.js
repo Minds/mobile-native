@@ -98,7 +98,7 @@ export default class LoginScreen extends Component {
     }
 
     return (
-      <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={ Platform.OS == 'ios' ? 'padding' : 'none' }>
+      <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
         <VideoBackground />
         <View style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
           <Animatable.View animation="bounceIn">

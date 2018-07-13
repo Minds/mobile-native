@@ -35,7 +35,7 @@ export default class Register extends Component {
     return (
       <View style={CommonStyle.flexContainer}>
         <VideoBackground />
-        <KeyboardAvoidingView style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]} behavior={ Platform.OS == 'ios' ? 'padding' : 'height' }>
+        <KeyboardAvoidingView style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
           <Animatable.View animation="bounceIn">
             <Animated.View>
                 <RegisterForm
