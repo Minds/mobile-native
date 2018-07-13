@@ -14,7 +14,7 @@ class GroupsStore {
    */
   @observable list = new OffsetFeedListStore('shallow');
 
-  @observable filter = 'featured';
+  @observable filter = 'trending';
 
   /**
    * List loading

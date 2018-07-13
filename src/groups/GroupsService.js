@@ -17,16 +17,20 @@ class GroupsService {
     if (this.listController) {
       this.listController.abort();
     }
+
+    let endpoint = (filter === 'trending')? 'api/v1/entities/trending/groups': 'api/v1/groups/' + filter;
     // abortable call controller
     this.listController = new AbortController();
 
-    return api.get('api/v1/groups/' + filter, { limit: 12, offset: offset }, this.listController.signal)
+    return api.get(endpoint, { limit: 12, offset: offset }, this.listController.signal)
       .then((data) => {
         if (offset && data.groups) {
           data.groups.shift();
         }
+
+        let entities = (filter === 'trending')? data.entities: data.groups;
         return {
-          entities: data.groups || [],
+          entities: entities || [],
           offset: data['load-next'] || '',
         };
       });

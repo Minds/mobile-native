@@ -43,7 +43,7 @@ export default class GroupsListScreen extends Component {
   renderToolbar() {
     selectedTextStyle={color: 'black'};
     const typeOptions = [
-      { text: 'TOP', value: 'featured', selectedTextStyle},
+      { text: 'TOP', value: 'trending', selectedTextStyle},
       { text: 'MY GROUPS', value: 'member', selectedTextStyle}
     ]
     return (

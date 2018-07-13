@@ -48,7 +48,7 @@ class DiscoveryService {
     }
 
     if (type == 'group') {
-      endpoint = 'api/v1/groups/featured';
+      endpoint = 'api/v1/entities/trending/groups';
     } else {
       endpoint = 'api/v1/entities/' + filter + '/' + type;
     }
@@ -56,11 +56,7 @@ class DiscoveryService {
     try { 
       const data = await api.get(endpoint, { limit: 12, offset: offset })
       let entities = [];
-      if (type == 'group') {
-        entities = data.groups;
-      } else {
-        entities = data.entities;
-      }
+      entities = data.entities;
 
       if (type == 'group' && offset && entities) {
         entities.shift();
