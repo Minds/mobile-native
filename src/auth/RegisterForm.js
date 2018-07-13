@@ -43,7 +43,8 @@ export default class RegisterForm extends Component {
     confirmPassword: '',
     email: '',
     termsAccepted: false,
-    exclusive_promotions: false
+    exclusive_promotions: false,
+    inProgress: false,
   };
 
   validatePassword(value) {
@@ -82,6 +83,7 @@ export default class RegisterForm extends Component {
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ username: value })}
           value={this.state.username}
+          editable={!this.state.inProgress}
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
@@ -91,6 +93,7 @@ export default class RegisterForm extends Component {
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ email: value })}
           value={this.state.email}
+          editable={!this.state.inProgress}
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
@@ -101,6 +104,7 @@ export default class RegisterForm extends Component {
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ password: value })}
           value={this.state.password}
+          editable={!this.state.inProgress}
         />
         { this.state.password ?
           <TextInput
@@ -112,6 +116,7 @@ export default class RegisterForm extends Component {
             underlineColorAndroid='transparent'
             onChangeText={(value) => this.setState({ confirmPassword: value })}
             value={this.state.confirmPassword}
+            editable={!this.state.inProgress}
           /> : null }
         <CheckBox
           right
@@ -120,7 +125,8 @@ export default class RegisterForm extends Component {
           title={<Text style={[ComponentsStyle.terms, CommonStyle.textRight]}>{`Receive exclusive promotions from Minds\n(recommended)`}</Text>}
           checked={this.state.exclusive_promotions}
           textStyle={[ComponentsStyle.registerCheckboxText, CommonStyle.textRight]}
-          onPress={() => { this.setState({ exclusive_promotions: !this.state.exclusive_promotions})}}
+          onPress={() => { this.setState({ exclusive_promotions: !this.state.exclusive_promotions }) }}
+          disabled={this.state.inProgress}
         />
         <CheckBox
           right
@@ -129,7 +135,8 @@ export default class RegisterForm extends Component {
           title={<Text style={ComponentsStyle.terms}>I accept the <Text style={ComponentsStyle.link} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>terms and conditions</Text></Text>}
           checked={this.state.termsAccepted}
           textStyle={ComponentsStyle.registerCheckboxText}
-          onPress={() => { this.setState({ termsAccepted: !this.state.termsAccepted})}}
+          onPress={() => { this.setState({ termsAccepted: !this.state.termsAccepted }) }}
+          disabled={this.state.inProgress}
         />
         <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
             <Button
@@ -139,6 +146,8 @@ export default class RegisterForm extends Component {
               backgroundColor="transparent"
               containerViewStyle={ComponentsStyle.loginButton}
               textStyle={ComponentsStyle.loginButtonText}
+              disabled={this.state.inProgress}
+              disabledStyle={CommonStyle.backgroundTransparent}
             />
             <Button
               onPress={() => this.onPressRegister()}
@@ -147,6 +156,10 @@ export default class RegisterForm extends Component {
               borderRadius={4}
               containerViewStyle={ComponentsStyle.loginButton}
               textStyle={ComponentsStyle.loginButtonText}
+              loading={this.state.inProgress}
+              loadingRight={true}
+              disabled={this.state.inProgress}
+              disabledStyle={CommonStyle.backgroundTransparent}
             />
         </View>
       </KeyboardAvoidingView>
@@ -180,6 +193,8 @@ export default class RegisterForm extends Component {
       );
     }
 
+    this.setState({ inProgress: true });
+
     try {
       const params = {
         username: this.state.username,
@@ -198,5 +213,6 @@ export default class RegisterForm extends Component {
       );
     }
 
+    this.setState({ inProgress: false });
   }
 }
