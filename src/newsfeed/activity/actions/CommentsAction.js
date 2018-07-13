@@ -27,14 +27,17 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 @observer
 export default class CommentsAction extends Component {
 
+  static defaultProps = {
+    size: 20,
+  };
   /**
    * Render
    */
   render() {
     return (
       <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.openComments}>
-        <Icon color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={20} />
-        <Counter size={16} count={this.props.entity['comments:count']} />
+        <Icon color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={this.props.size} />
+        <Counter size={this.props.size * 0.75} count={this.props.entity['comments:count']} />
       </TouchableOpacityCustom>
     );
   }

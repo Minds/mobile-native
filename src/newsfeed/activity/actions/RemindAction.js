@@ -25,6 +25,10 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
  */
 export default class RemindAction extends PureComponent {
 
+  static defaultProps = {
+    size: 20,
+  };
+
   state = {
     remindModalVisible: false,
   }
@@ -35,8 +39,8 @@ export default class RemindAction extends PureComponent {
   render() {
     return (
       <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.remind}>
-        <Icon color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={20} />
-        <Counter count={this.props.entity['reminds']} />
+        <Icon color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={this.props.size} />
+        <Counter count={this.props.entity['reminds']} size={this.props.size * 0.75} />
         <View style={styles.modalContainer}>
           <Modal animationType={"slide"} transparent={false}
             visible={this.state.remindModalVisible}
