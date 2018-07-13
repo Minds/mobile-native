@@ -28,6 +28,11 @@ class SessionService {
   sessionStorage = null;
 
   /**
+   * Initial screen
+   */
+  initialScreen = 'Tabs';
+
+  /**
    * Constructor
    * @param {object} sessionStorage
    */
@@ -43,6 +48,10 @@ class SessionService {
         this.setToken(data.token);
         return data.token;
       });
+  }
+
+  setInitialScreen(screen) {
+    this.initialScreen = screen;
   }
 
   @action

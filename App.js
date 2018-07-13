@@ -50,7 +50,7 @@ sessionService.onLogin(async () => {
   // load user
   await stores.user.load();
 
-  stores.navigatorStore.resetNavigate('Tabs');
+  stores.navigatorStore.resetNavigate(sessionService.initialScreen);
 
   // handle deep link (if the app is opened by one)
   Linking.getInitialURL().then(url => url && deeplinkService.navigate(url));

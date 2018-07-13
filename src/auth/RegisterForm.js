@@ -202,10 +202,9 @@ export default class RegisterForm extends Component {
         password: this.state.password,
         exclusive_promotions: this.state.exclusive_promotions
       };
-      await authService.register(params)
-      await authService.login(this.state.username ,this.state.password)
-      await this.props.user.load();
-      this.props.onRegister(sessionService.guid);
+      await authService.register(params);
+      sessionService.setInitialScreen('OnboardingScreen');
+      await authService.login(this.state.username ,this.state.password);
     } catch (err) {
       Alert.alert(
         'Oooopps',

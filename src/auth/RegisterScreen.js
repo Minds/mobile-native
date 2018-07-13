@@ -54,9 +54,7 @@ export default class Register extends Component {
   }
 
   onRegister = guid => {
-    // TODO: Fixme, Channel seems to be available after navigation
-    // this._navigate('Tabs', { routeName: 'Channel', params: { guid, edit: true } });
-    this._navigate('OnboardingScreen');
+    console.log('registered', guid);
   }
 
   /**

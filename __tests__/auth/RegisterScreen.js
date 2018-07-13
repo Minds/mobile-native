@@ -49,18 +49,6 @@ describe('RegisterScreen component', () => {
     // should contain 1 login form
     expect(registerForms.length).toBe(1);
 
-    // simulate onRegister event
-    registerForms.at(0).props().onRegister();
-
-    // should call navigate
-    expect(navigation.dispatch.mock.calls.length).toEqual(1);
-
-    // with a navigation action with route to OnboardingScreen
-    expect(navigation.dispatch.mock.calls[0][0].actions[0].routeName).toEqual('OnboardingScreen');
-
-    // clear the mock
-    navigation.dispatch.mockClear();
-
     // simulate onBack event
     registerForms.at(0).props().onBack();
 
