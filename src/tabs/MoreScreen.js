@@ -30,6 +30,7 @@ import FastImage from 'react-native-fast-image';
 import { ComponentsStyle } from '../styles/Components';
 import { CommonStyle } from '../styles/Common';
 import shareService from '../share/ShareService';
+import { Version } from '../config/Version';
 
 
 const ICON_SIZE = 24;
@@ -189,7 +190,7 @@ export default class MoreScreen extends Component {
               source={require('../assets/logos/medium.png')}
             /> */ }
             <View style={styles.footer}>
-              <Text style={styles.version} textAlign={'center'}>v1.0.0 (201712)</Text>
+              <Text style={styles.version} textAlign={'center'}>v{Version.VERSION} ({Version.BUILD})</Text>
             </View>
           </View>
         </View>
