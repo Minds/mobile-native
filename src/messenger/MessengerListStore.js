@@ -142,7 +142,7 @@ class MessengerListStore {
    * Get crypto keys and unlock
    * @param {string} password
    */
-  async getCryptoKeys(password) {
+  getCryptoKeys(password) {
     this.setUnlocking(true);
     return messengerService.getCryptoKeys(password)
       .then(privateKey => {
@@ -151,10 +151,7 @@ class MessengerListStore {
           this.setPrivateKey(privateKey);
         }
       })
-      .finally(() => {
-        this.setUnlocking(false);
-      })
-      .catch(() => {
+      .catch((e) => {
         Alert.alert(
           'Sorry!',
           'Please check your credentials',
@@ -163,6 +160,9 @@ class MessengerListStore {
           ],
           { cancelable: false }
         )
+      })
+      .finally(() => {
+        this.setUnlocking(false);
       });
   }
 

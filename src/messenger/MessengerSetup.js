@@ -7,12 +7,14 @@ import {
   View,
   TextInput,
   Alert,
+  ActivityIndicator,
   StyleSheet,
 } from 'react-native';
 
 import {
   inject,
-  observer
+  observer,
+  Observer
 } from 'mobx-react/native'
 
 import { CommonStyle } from '../styles/Common';
@@ -56,7 +58,14 @@ export default class MessengerSetup extends Component {
         />
       );
     }
-    setParams({ headerRight: button });
+
+    const headerRight = (
+      <Observer>
+        {() => this.props.messengerList.unlocking ? <ActivityIndicator style={CommonStyle.marginRight2x}/> : button }
+      </Observer>
+    )
+
+    setParams({ headerRight: headerRight });
   }
 
   unlock = () => {

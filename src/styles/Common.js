@@ -118,6 +118,26 @@ export const CommonStyle = StyleSheet.create({
   marginTop: {
     marginTop: 5
   },
+  // margin Right
+  marginRight3x: {
+    marginRight: 15
+  },
+  marginRight2x: {
+    marginRight: 10
+  },
+  marginRight: {
+    marginRight: 5
+  },
+  // margin Left
+  marginLeft3x: {
+    marginLeft: 15
+  },
+  marginLeft2x: {
+    marginLeft: 10
+  },
+  marginLeft: {
+    marginLeft: 5
+  },
   // margin bottom
   marginBottom3x: {
     marginBottom: 15
