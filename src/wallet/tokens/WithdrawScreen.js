@@ -26,6 +26,7 @@ import Colors from '../../styles/Colors';
 import number from '../../common/helpers/number';
 import formatDate from '../../common/helpers/date';
 import token from '../../common/helpers/token';
+import readableError from '../../common/helpers/readable-error';
 
 @inject('user', 'withdraw')
 @observer
@@ -110,7 +111,7 @@ export default class WithdrawScreen extends Component {
     } catch (e) {
       if (!e || e.message !== 'E_CANCELLED') {
         const error = (e && e.message) || 'Error withdrawing tokens';
-        this.setState({ error });
+        this.setState({ error: readableError(error) });
       }
     } finally {
       this.setState({ inProgress: false });

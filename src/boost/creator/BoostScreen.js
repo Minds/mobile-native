@@ -32,6 +32,7 @@ import BlockchainBoostService from '../../blockchain/services/BlockchainBoostSer
 import Web3Service from '../../blockchain/services/Web3Service';
 import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
 import FeaturesService from '../../common/services/features.service';
+import readableError from '../../common/helpers/readable-error';
 
 class VisibleError extends Error {
   visible = true;
@@ -621,7 +622,7 @@ export default class BoostScreen extends Component {
           error = (e && e.message) || 'Sorry, something went wrong';
         }
 
-        this.setState({ error });
+        this.setState({ error: readableError(error) });
         console.warn(e);
       }
     } finally {
