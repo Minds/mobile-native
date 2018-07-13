@@ -65,10 +65,12 @@ export default class NotificationsScreen extends Component {
       if (state.previousScene.key == 'Notifications' && state.previousScene.key == state.scene.route.key) {
         this.props.notifications.refresh();
         this.props.notifications.setUnread(0);
-      } else if(state.scene.route.key == 'Notifications') {
-        this.props.notifications.loadList(true);
-        this.props.notifications.setUnread(0);
       }
+    });
+
+    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Notifications', (s) => {
+      this.props.notifications.loadList(true);
+      this.props.notifications.setUnread(0);
     });
   }
 
@@ -79,6 +81,7 @@ export default class NotificationsScreen extends Component {
     // clear data to free memory
     this.props.notifications.list.clearList();
     this.disposeState();
+    this.disposeEnter();
   }
 
   /**
