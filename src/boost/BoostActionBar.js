@@ -36,8 +36,7 @@ import {
   MINDS_URI
 } from '../config/Config';
 
-@inject('boost')
-@inject('user')
+@inject('user', 'boost')
 @observer
 export default class BoostActionBar extends Component {
 
