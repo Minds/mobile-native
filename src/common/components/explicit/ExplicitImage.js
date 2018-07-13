@@ -32,6 +32,10 @@ export default class ExplicitImage extends Component {
   }
 
   imageLoaded = () => {
+    if (this.props.onLoadEnd) {
+      this.props.onLoadEnd();
+    }
+
     if (!this.props.entity.mature) return;
     this.setState({ viewRef: findNodeHandle(this.backgroundImage) });
   }

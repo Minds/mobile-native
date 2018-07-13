@@ -46,7 +46,9 @@ export default class MindsVideo extends Component {
       loaded: true,
       active: false,
       showOverlay: true,
-      fullScreen:false
+      fullScreen: false,
+      error: false,
+      inProgress: false,
     };
   }
 
@@ -95,7 +97,21 @@ export default class MindsVideo extends Component {
 
     this.setState({loaded: false, currentTime: current, duration: e.duration});
     this.player.seek(current)
+
+    this.onLoadEnd();
   }
+
+  onLoadStart = () => {
+    this.setState({ error: false, inProgress: true, });
+  };
+
+  onError = () => {
+    this.setState({ error: true, inProgress: false, });
+  };
+
+  onLoadEnd = () => {
+    this.setState({ error: false, inProgress: false, });
+  };
 
   toggleVolume = () => {
     const v = this.state.volume ? 0 : 1;
@@ -221,8 +237,10 @@ export default class MindsVideo extends Component {
           ref={(ref) => {
             this.player = ref
           }}
-          onEnd={this.onVideoEnd}
+          onLoadStart={this.onLoadStart}
           onLoad={this.onVideoLoad}
+          onEnd={this.onVideoEnd}
+          onError={this.onError}
           onProgress={this.onProgress}
           source={{ uri: video.uri.replace('file://',''), type: 'mp4' }}
           paused={paused}
@@ -235,6 +253,8 @@ export default class MindsVideo extends Component {
       const image = { uri: entity.get('custom_data.thumbnail_src') || entity.thumbnail_src };
       return (
         <ExplicitImage
+          onLoadEnd={this.onLoadEnd}
+          onError={this.onError}
           source={image}
           entity={entity}
           style={[CommonStyle.positionAbsolute]}
@@ -287,11 +307,26 @@ export default class MindsVideo extends Component {
     return null;
   }
 
+  renderErrorOverlay() {
+    return (<View style={[styles.controlOverlayContainer]}>
+      <Text
+        style={[styles.errorText]}
+      >There was an error displaying this media.</Text>
+    </View>);
+  }
+
+  renderInProgressOverlay() {
+    return (<View style={[styles.controlOverlayContainer, styles.controlOverlayContainerTransparent]}>
+      <ActivityIndicator size="large" />
+    </View>);
+  }
+
   /**
    * Render
    */
   render() {
-    let {video, volume, entity} = this.props;
+    const { video, volume, entity } = this.props;
+    const { error, inProgress } = this.state;
 
     const overlay = this.renderOverlay();
 
@@ -303,7 +338,9 @@ export default class MindsVideo extends Component {
           >
           { this.video }
         </TouchableWithoutFeedback>
-        { overlay }
+        { inProgress && this.renderInProgressOverlay() }
+        { !inProgress && error && this.renderErrorOverlay() }
+        { !inProgress && !error && overlay }
       </View>
     )
   }
@@ -329,11 +366,17 @@ let styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  controlOverlayContainerTransparent: {
+    backgroundColor: 'transparent',
+  },
   controlPlayButtonContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  errorText: {
+    color: 'white',
   },
   controlBarContainer: {
     flexDirection: 'row',
