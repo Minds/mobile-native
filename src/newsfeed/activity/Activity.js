@@ -36,6 +36,7 @@ import ActivityActionSheet from './ActivityActionSheet';
 import ActivityEditor from './ActivityEditor';
 import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
+import Translate from '../../common/components/Translate';
 
 import Lock from '../../wire/lock/Lock';
 
@@ -85,7 +86,7 @@ export default class Activity extends Component {
    */
   render() {
     const entity = this.props.entity;
-    const hasText = entity.message || entity.title;
+    const hasText = !!entity.text;
     const lock = entity.paywall ? <Lock entity={entity} navigation={this.props.navigation}/> : null;
 
     const message = this.state.editing ?
@@ -95,6 +96,7 @@ export default class Activity extends Component {
       ):(
         <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
           {hasText ? <ExplicitText entity={entity} navigation={this.props.navigation} style={styles.message} /> : null}
+          {hasText ? <Translate ref={r => this.translate=r} entity={entity} style={styles.message}/> : null}
         </View>
       );
 
@@ -143,14 +145,29 @@ export default class Activity extends Component {
   }
 
   /**
+   * Show translation
+   */
+  showTranslate = () => {
+    if (this.remind) this.remind.showTranslate();
+    if (!this.translate) return;
+    this.translate.show();
+  }
+
+  /**
    * Show Owner
    */
   showOwner() {
     if (!this.props.entity.remind_object) {
       const rightToolbar = (
         <View style={styles.rightToolbar}>
-          <ActivityActionSheet newsfeed={this.props.newsfeed} toggleEdit={this.toggleEdit} entity={this.props.entity} navigation={this.props.navigation}/>
-        </View>
+          <ActivityActionSheet
+            newsfeed={this.props.newsfeed}
+            toggleEdit={this.toggleEdit}
+            entity={this.props.entity}
+            navigation={this.props.navigation}
+            onTranslate={this.showTranslate}
+          />
+       </View>
       )
       return (
         <OwnerBlock
@@ -187,6 +204,7 @@ export default class Activity extends Component {
                     toggleEdit={this.toggleEdit}
                     entity={this.props.entity}
                     navigation={this.props.navigation}
+                    onTranslate={this.showTranslate}
                   />
                 </View>
               </View>
@@ -202,6 +220,7 @@ export default class Activity extends Component {
       return (
         <View style={styles.remind}>
           <Activity
+            ref={r => this.remind=r}
             hideTabs={true}
             newsfeed={this.props.newsfeed}
             entity={this.props.entity.remind_object}

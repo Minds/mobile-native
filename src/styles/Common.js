@@ -80,6 +80,12 @@ export const CommonStyle = StyleSheet.create({
   colorDanger: {
     color: colors.danger
   },
+  colorDarkGreyed: {
+    color: colors.darkGreyed
+  },
+  colorGreyed: {
+    color: colors.greyed
+  },
   colorDark: {
     color: colors.dark
   },
@@ -102,11 +108,48 @@ export const CommonStyle = StyleSheet.create({
   backgroundDanger: {
     backgroundColor: colors.danger
   },
+  backgroundDarkGreyed: {
+    backgroundColor: colors.darkGreyed
+  },
+  backgroundGreyed: {
+    backgroundColor: colors.greyed
+  },
   backgroundDark: {
     backgroundColor: colors.dark
   },
   backgroundTransparent: {
     backgroundColor: 'transparent'
+  },
+  // borders
+  borderWhite: {
+    borderColor: 'white'
+  },
+  borderBlack: {
+    borderColor: 'black'
+  },
+  borderLight: {
+    borderColor: colors.light
+  },
+  borderSecondary: {
+    borderColor: colors.secondary
+  },
+  borderPrimary: {
+    borderColor: colors.primary
+  },
+  borderDanger: {
+    borderColor: colors.danger
+  },
+  borderDarkGreyed: {
+    borderColor: colors.darkGreyed
+  },
+  borderGreyed: {
+    borderColor: colors.greyed
+  },
+  borderDark: {
+    borderColor: colors.dark
+  },
+  borderTransparent: {
+    borderColor: 'transparent'
   },
   // margin top
   marginTop3x: {
@@ -198,7 +241,6 @@ export const CommonStyle = StyleSheet.create({
   paddingBottom: {
     paddingBottom: 5
   },
-
   hairLineBottom: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
@@ -207,6 +249,46 @@ export const CommonStyle = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: '#EEE',
   },
+
+  // borders
+  borderLeft: {
+    borderLeftWidth: 1
+  },
+  borderLeft2x: {
+    borderLeftWidth: 2
+  },
+  borderLeft3x: {
+    borderLeftWidth: 3
+  },
+  borderRight: {
+    borderRightWidth: 1
+  },
+  borderRight2x: {
+    borderRightWidth: 2
+  },
+  borderRight3x: {
+    borderRightWidth: 3
+  },
+  borderTop: {
+    borderTopWidth: 1
+  },
+  borderTop2x: {
+    borderTopWidth: 2
+  },
+  borderTop3x: {
+    borderTopWidth: 3
+  },
+  borderBottom: {
+    borderBottomWidth: 1
+  },
+  borderBottom2x: {
+    borderBottomWidth: 2
+  },
+  borderBottom3x: {
+    borderBottomWidth: 3
+  },
+
+
   // fonts
   fontXS:{
     fontSize: 10
@@ -281,6 +363,10 @@ export const CommonStyle = StyleSheet.create({
     shadowOffset: {
       height: StyleSheet.hairlineWidth,
     },
+  },
+
+  bold: {
+    fontWeight: '800'
   },
 
   // Generic screens

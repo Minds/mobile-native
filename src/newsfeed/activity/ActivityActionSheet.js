@@ -19,6 +19,7 @@ import {
   inject
 } from 'mobx-react/native'
 
+import translationService from '../../common/services/translation.service';
 import shareService from '../../share/ShareService';
 import { toggleUserBlock } from '../NewsfeedService';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -87,6 +88,10 @@ export default class ActivityActions extends Component {
         options.push( 'Block user' );
       }
 
+      if (translationService.isTranslatable(this.props.entity)) {
+        options.push( 'Translate' );
+      }
+
       options.push( 'Report' );
     }
 
@@ -126,6 +131,9 @@ export default class ActivityActions extends Component {
 
   makeAction(option) {
     switch (option) {
+      case 'Translate':
+        if (this.props.onTranslate) this.props.onTranslate();
+        break;
       case 'Edit':
         this.props.toggleEdit(true);
         break;
