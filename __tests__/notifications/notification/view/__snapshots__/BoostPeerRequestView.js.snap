@@ -40,9 +40,9 @@ exports[`renders correctly 1`] = `
         }
       }
     >
-      100
+      0
        
-      points
+      tokens
        
       <Text
         accessible={true}

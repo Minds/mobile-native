@@ -7,6 +7,8 @@ import {
   View
 } from 'react-native';
 
+import number from '../../../../src/common/helpers/number';
+import token from '../../../../src/common/helpers/token';
 import BoostGiftView from './BoostGiftView';
 
 /**
@@ -19,12 +21,12 @@ export default class BoostPeerRequestView extends BoostGiftView {
     const styles = this.props.styles;
 
     const description = this.getDescription(entity, 'their');
-    const type = (entity.params.type == 'pro') ? 'USD' : 'points';
+    const type = (entity.params.type == 'pro') ? 'USD' : 'tokens';
 
     return (
       <View style={styles.bodyContents}>
         <Text onPress={() => this.navToBoostConsole({filter:'peer'})}>
-          <Text style={styles.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> is offering <Text style={styles.bold}>{entity.params.bid} {type} {description}</Text>
+          <Text style={styles.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> is offering <Text style={styles.bold}>{ number(token(entity.params.bid, 18), 0, 3) } {type} {description}</Text>
         </Text>
       </View>
     )

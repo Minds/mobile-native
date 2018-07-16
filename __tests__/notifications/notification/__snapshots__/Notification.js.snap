@@ -731,9 +731,9 @@ exports[`notification component renders correctly for every type 6`] = `
             }
           }
         >
-          100
+          0
            
-          points
+          tokens
            
           <Text
             accessible={true}
