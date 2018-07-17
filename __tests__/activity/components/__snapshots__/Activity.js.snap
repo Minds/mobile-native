@@ -12,7 +12,7 @@ exports[`Activity component renders correctly 1`] = `
 >
   <OwnerBlock
     entity={
-      Object {
+      ActivityModel {
         "attachment_guid": false,
         "blurb": false,
         "container_guid": "activityguid0",
@@ -22,9 +22,11 @@ exports[`Activity component renders correctly 1`] = `
         "edited": "",
         "getThumbSource": [Function],
         "guid": "activityguid0",
+        "is_visible": false,
         "mature": false,
+        "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": UserModel {
           "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
@@ -58,7 +60,7 @@ exports[`Activity component renders correctly 1`] = `
       >
         <ActivityActionSheet
           entity={
-            Object {
+            ActivityModel {
               "attachment_guid": false,
               "blurb": false,
               "container_guid": "activityguid0",
@@ -68,9 +70,11 @@ exports[`Activity component renders correctly 1`] = `
               "edited": "",
               "getThumbSource": [Function],
               "guid": "activityguid0",
+              "is_visible": false,
               "mature": false,
+              "mature_visibility": false,
               "message": "Message",
-              "ownerObj": Object {
+              "ownerObj": UserModel {
                 "getAvatarSource": [Function],
                 "guid": "824853017709780997",
                 "subtype": false,
@@ -92,6 +96,7 @@ exports[`Activity component renders correctly 1`] = `
             }
           }
           newsfeed={undefined}
+          onTranslate={[Function]}
           toggleEdit={[Function]}
         />
       </Component>
@@ -121,7 +126,7 @@ exports[`Activity component renders correctly 1`] = `
       </Text>
       <ActivityMetrics
         entity={
-          Object {
+          ActivityModel {
             "attachment_guid": false,
             "blurb": false,
             "container_guid": "activityguid0",
@@ -131,9 +136,11 @@ exports[`Activity component renders correctly 1`] = `
             "edited": "",
             "getThumbSource": [Function],
             "guid": "activityguid0",
+            "is_visible": false,
             "mature": false,
+            "mature_visibility": false,
             "message": "Message",
-            "ownerObj": Object {
+            "ownerObj": UserModel {
               "getAvatarSource": [Function],
               "guid": "824853017709780997",
               "subtype": false,
@@ -161,7 +168,7 @@ exports[`Activity component renders correctly 1`] = `
   >
     <ExplicitText
       entity={
-        Object {
+        ActivityModel {
           "attachment_guid": false,
           "blurb": false,
           "container_guid": "activityguid0",
@@ -171,9 +178,11 @@ exports[`Activity component renders correctly 1`] = `
           "edited": "",
           "getThumbSource": [Function],
           "guid": "activityguid0",
+          "is_visible": false,
           "mature": false,
+          "mature_visibility": false,
           "message": "Message",
-          "ownerObj": Object {
+          "ownerObj": UserModel {
             "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
@@ -200,10 +209,48 @@ exports[`Activity component renders correctly 1`] = `
         }
       }
     />
+    <Translate
+      entity={
+        ActivityModel {
+          "attachment_guid": false,
+          "blurb": false,
+          "container_guid": "activityguid0",
+          "custom_data": false,
+          "custom_type": false,
+          "description": "Congratulations! ",
+          "edited": "",
+          "getThumbSource": [Function],
+          "guid": "activityguid0",
+          "is_visible": false,
+          "mature": false,
+          "mature_visibility": false,
+          "message": "Message",
+          "ownerObj": UserModel {
+            "getAvatarSource": [Function],
+            "guid": "824853017709780997",
+            "subtype": false,
+            "time_created": "1522036284",
+            "type": "user",
+          },
+          "owner_guid": "824853017709780997",
+          "parent_guid": "838106762591510528",
+          "perma_url": false,
+          "rowKey": "something0",
+          "thumbnail_src": false,
+          "title": "TITLE",
+          "type": "activity",
+        }
+      }
+      style={
+        Object {
+          "fontFamily": "Roboto",
+        }
+      }
+    />
   </Component>
   <MediaView
     entity={
-      Object {
+      ActivityModel {
         "attachment_guid": false,
         "blurb": false,
         "container_guid": "activityguid0",
@@ -213,9 +260,11 @@ exports[`Activity component renders correctly 1`] = `
         "edited": "",
         "getThumbSource": [Function],
         "guid": "activityguid0",
+        "is_visible": false,
         "mature": false,
+        "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": UserModel {
           "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
@@ -241,7 +290,7 @@ exports[`Activity component renders correctly 1`] = `
   />
   <Actions
     entity={
-      Object {
+      ActivityModel {
         "attachment_guid": false,
         "blurb": false,
         "container_guid": "activityguid0",
@@ -251,9 +300,11 @@ exports[`Activity component renders correctly 1`] = `
         "edited": "",
         "getThumbSource": [Function],
         "guid": "activityguid0",
+        "is_visible": false,
         "mature": false,
+        "mature_visibility": false,
         "message": "Message",
-        "ownerObj": Object {
+        "ownerObj": UserModel {
           "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,

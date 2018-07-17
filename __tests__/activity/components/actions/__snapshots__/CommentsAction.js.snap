@@ -25,7 +25,7 @@ exports[`Comment action component renders correctly 1`] = `
     underlayColor="white"
   />
   <Counter
-    size={16}
+    size={15}
   />
 </PreventDoubleTap>
 `;

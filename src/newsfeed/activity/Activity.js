@@ -147,10 +147,13 @@ export default class Activity extends Component {
   /**
    * Show translation
    */
-  showTranslate = () => {
-    if (this.remind) this.remind.showTranslate();
-    if (!this.translate) return;
-    this.translate.show();
+  showTranslate = async () => {
+    if (this.translate) {
+      const lang = await this.translate.show();
+      if (this.remind && lang) this.remind.showTranslate();
+    } else {
+      if (this.remind) this.remind.showTranslate();
+    }
   }
 
   /**

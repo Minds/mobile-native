@@ -31,6 +31,7 @@ import CenterLoading from '../../common/components/CenteredLoading';
 export default class Translate extends PureComponent {
 
   translatedFrom = null;
+  selectedResolve = null;
 
   state = {
     show: false,
@@ -45,7 +46,16 @@ export default class Translate extends PureComponent {
    */
   showPicker = async () => {
     const languages = await translationService.getLanguages();
-    this.setState({languages});
+
+    const current = this.state.current || languages[0].language;
+
+    this.setState({languages, current});
+
+    const selectPromise = new Promise((resolve, reject) => {
+      this.selectedResolve = resolve;
+    });
+
+    return await selectPromise;
   }
 
   /**
@@ -59,8 +69,11 @@ export default class Translate extends PureComponent {
    * On language selected
    */
   languageSelected = (language) => {
-    this.translate(language);
-    this.hidePicker();
+    this.setState({current: language}, async () => {
+      await this.translate(language);
+      this.selectedResolve(language);
+      this.hidePicker();
+    })
   }
 
   /**
@@ -72,10 +85,19 @@ export default class Translate extends PureComponent {
     this.setState({show: true});
 
     if (!lang) {
-      this.showPicker();
+      return await this.showPicker();
     } else {
       this.translate(lang);
+      return lang;
     }
+  }
+
+  /**
+   * Language selection canceled
+   */
+  cancel = () => {
+    this.selectedResolve();
+    this.hidePicker();
   }
 
   /**
@@ -174,7 +196,8 @@ export default class Translate extends PureComponent {
     return (
       <ModalPicker
         onSelect={this.languageSelected}
-        onCancel={this.hidePicker}
+        onCancel={this.cancel}
+        value={this.state.current}
         show={true}
         title="Select Language"
         valueField="language"

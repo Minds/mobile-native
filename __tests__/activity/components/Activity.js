@@ -20,7 +20,6 @@ import ActivityEditor from '../../../src/newsfeed/activity/ActivityEditor';
 import RemindOwnerBlock from '../../../src/newsfeed/activity/RemindOwnerBlock';
 import ActivityActionSheet from '../../../src/newsfeed/activity/ActivityActionSheet';
 import ActivityMetrics from '../../../src/newsfeed/activity/metrics/ActivityMetrics';
-
 import AutoHeightFastImage from '../../../src/common/components/AutoHeightFastImage';
 
 import formatDate from '../../../src/common/helpers/date';
@@ -28,7 +27,9 @@ import domain from '../../../src/common/helpers/domain';
 import MediaView from '../../../src/common/components/MediaView';
 
 import Lock from '../../../src/wire/lock/Lock';
+import ActivityModel from '../../../src/newsfeed/ActivityModel';
 
+jest.mock('../../../src/common/components/Translate', () => 'Translate');
 jest.mock('../../../src/common/components/explicit/ExplicitText', () => 'ExplicitText');
 jest.mock('../../../src/newsfeed/activity/OwnerBlock', () => 'OwnerBlock');
 jest.mock('../../../src/newsfeed/activity/Actions', () => 'Actions');
@@ -44,8 +45,11 @@ describe('Activity component', () => {
 
     const navigation = { navigate: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
+
+    const model = ActivityModel.create(activityResponse.activities[0]);
+
     screen = shallow(
-      <Activity entity={activityResponse.activities[0]} navigation={navigation} />
+      <Activity entity={model} navigation={navigation} />
     );
 
     jest.runAllTimers();
