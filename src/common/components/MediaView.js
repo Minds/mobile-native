@@ -52,6 +52,7 @@ export default class MediaView extends Component {
   showMedia() {
     let media;
     let source;
+    let title = (this.props.entity.title && this.props.entity.title.length > 200) ? this.props.entity.title.substring(0, 200) + '...' : this.props.entity.title;
     const type = this.props.entity.custom_type||this.props.entity.subtype;
     switch (type) {
       case 'image':
@@ -75,7 +76,7 @@ export default class MediaView extends Component {
         <View style={styles.richMediaContainer}>
           { source.uri ? this.getImage(source) : null }
           <TouchableOpacity style={styles.richMedia} onPress={this.openLink}>
-            <Text style={styles.title}>{this.props.entity.title}</Text>
+            <Text style={styles.title}>{title}</Text>
             <Text style={styles.domain}>{domain(this.props.entity.perma_url)}</Text>
           </TouchableOpacity>
         </View>
