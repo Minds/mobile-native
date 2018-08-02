@@ -40,48 +40,13 @@ describe('Messenger setup component', () => {
     ).toJSON();
     expect(component).toMatchSnapshot();
   });
+
   it('should render correctly for unlock', () => {
     userStore.me = {chat: true};
     const component = renderer.create(
       <MessengerSetup.wrappedComponent messengerList={store} user={userStore} navigation={navigation}/>
     ).toJSON();
     expect(component).toMatchSnapshot();
-  });
-
-  it('should show unlock button for users logged in messenger', () => {
-
-    userStore.me = {chat: true};
-
-    const wrapper = shallow(
-      <MessengerSetup.wrappedComponent messengerList={store} user={userStore} navigation={navigation}/>
-    );
-
-    expect(navigation.setParams).toBeCalled();
-    expect(navigation.setParams.mock.calls[0][0].headerRight.props.title).toEqual('UNLOCK');
-  });
-
-  it('should show setup button for users not logged in messenger', () => {
-
-    userStore.me = {chat: false};
-
-    const wrapper = shallow(
-      <MessengerSetup.wrappedComponent messengerList={store} user={userStore} navigation={navigation}/>
-    );
-
-    expect(navigation.setParams).toBeCalled();
-    expect(navigation.setParams.mock.calls[0][0].headerRight.props.title).toEqual('SETUP');
-  });
-
-  it('should show setup button for users not logged in messenger', () => {
-
-    userStore.me = {chat: false};
-
-    const wrapper = shallow(
-      <MessengerSetup.wrappedComponent messengerList={store} user={userStore} navigation={navigation}/>
-    );
-
-    expect(navigation.setParams).toBeCalled();
-    expect(navigation.setParams.mock.calls[0][0].headerRight.props.title).toEqual('SETUP');
   });
 
   it('should set the password property when input change', () => {

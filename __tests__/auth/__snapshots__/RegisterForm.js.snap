@@ -31,6 +31,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
   </View>
   <TextInput
     allowFontScaling={true}
+    editable={true}
     onChangeText={[Function]}
     placeholder="Username"
     placeholderTextColor="#444"
@@ -57,6 +58,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
   />
   <TextInput
     allowFontScaling={true}
+    editable={true}
     onChangeText={[Function]}
     placeholder="Email"
     placeholderTextColor="#444"
@@ -83,6 +85,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
   />
   <TextInput
     allowFontScaling={true}
+    editable={true}
     onChangeText={[Function]}
     placeholder="Password"
     placeholderTextColor="#444"
@@ -383,8 +386,8 @@ exports[`RegisterForm component should renders correctly 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
-              undefined,
+              false,
+              false,
             ]
           }
         >
@@ -500,8 +503,8 @@ exports[`RegisterForm component should renders correctly 1`] = `
               undefined,
               undefined,
               undefined,
-              undefined,
-              undefined,
+              false,
+              false,
             ]
           }
         >

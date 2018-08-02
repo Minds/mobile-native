@@ -349,6 +349,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "wire_threshold": "",
                 }
               }
+              size={16}
             />
             <ThumbUpAction
               entity={
@@ -489,6 +490,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 }
               }
               orientation="column"
+              size={16}
             />
             <ThumbDownAction
               entity={
@@ -629,6 +631,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 }
               }
               orientation="column"
+              size={16}
             />
             <CommentsAction
               entity={
@@ -772,6 +775,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   },
                 }
               }
+              size={16}
             />
           </View>
         </View>
