@@ -485,9 +485,9 @@ export default class BoostScreen extends Component {
 
             switch (payload.type) {
               case 'onchain':
-                
+
 		            if (this.state.target && !this.state.target.eth_wallet) {
-                  throw new VisibleError('User cannot receive tokens.');
+                  throw new VisibleError('User cannot receive OnChain tokens because they haven\'t setup an OnChain address. Please retry OffChain.');
                 }
 
                 nonce = {
@@ -668,14 +668,14 @@ export default class BoostScreen extends Component {
 
         <Text style={styles.subtitleText}>{amountTitle}</Text>
         <View style={[CommonStyle.rowJustifyStart, CommonStyle.alignCenter, CommonStyle.paddingTop]}>
-          <TextInput 
+          <TextInput
             ref={textInput => this.textInput = textInput}
             placeholder="0"
             onChangeText={this.changeInput}
             style={styles.input}
             underlineColorAndroid="transparent"
             value={this.parsedAmount()}
-            keyboardType="numeric" 
+            keyboardType="numeric"
             />
           { this.state.type !== 'p2p' && <Text style={[CommonStyle.fontXXL, CommonStyle.paddingLeft2x]}>Views</Text> }
         </View>

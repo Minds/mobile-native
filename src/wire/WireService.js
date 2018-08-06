@@ -90,7 +90,7 @@ class WireService {
 
       case 'onchain':
         if (!opts.owner.eth_wallet) {
-          throw new Error('User cannot receive tokens');
+          throw new Error('User cannot receive OnChain tokens because they haven\'t setup an OnChain address. Please retry OffChain.');
         }
 
         if (opts.recurring) {
