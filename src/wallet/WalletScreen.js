@@ -27,6 +27,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import CaptureFab from '../capture/CaptureFab';
 import WalletOverviewView from './WalletOverviewView';
 import WalletBalanceTokens from './balances/WalletBalanceTokens';
+import WalletScoresView from './WalletScoresView';
 
 import { CommonStyle } from '../styles/Common';
 import FeaturesService from '../common/services/features.service';
@@ -88,7 +89,7 @@ export default class WalletScreen extends Component {
           keyboardShouldPersistTaps='always'>
           <WalletBalanceTokens />
           <WalletOverviewView />
-
+          <WalletScoresView />
           <View>
 
             <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Transactions')} >

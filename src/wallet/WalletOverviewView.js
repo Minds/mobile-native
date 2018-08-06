@@ -12,8 +12,6 @@ import { observer, inject } from 'mobx-react/native'
 import token from "../common/helpers/token";
 import number from "../common/helpers/number";
 
-import colors from '../styles/Colors';
-
 @inject('wallet')
 @observer
 export default class WalletOverviewView extends Component {
