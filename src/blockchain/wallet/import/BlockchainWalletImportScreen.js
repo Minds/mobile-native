@@ -105,7 +105,7 @@ export default class BlockchainWalletImportScreen extends Component {
             value={this.state.privateKey}
             placeholder="1234567890abcdef…"
             multiline={true}
-            maxLength={64}
+            maxLength={66}
           />
         </View>
 
