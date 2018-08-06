@@ -31,6 +31,7 @@ import WalletScoresView from './WalletScoresView';
 
 import { CommonStyle } from '../styles/Common';
 import FeaturesService from '../common/services/features.service';
+import shareService from "../share/ShareService";
 
 /**
  * Wallet screen
@@ -131,6 +132,16 @@ export default class WalletScreen extends Component {
                 <Text style={styles.subtitle}>Configure your crypto addresses and other token related settings</Text>
               </View>
             </TouchableOpacity>}
+
+            <TouchableOpacity style={styles.itemContainer} onPress={ () => shareService.invite(this.props.user.me.guid)} >
+              <View style={styles.iconContainer}>
+                <Icon name="share" size={24} style={ styles.icon } />
+              </View>
+              <View style={styles.item}>
+                <Text style={styles.title}>Invite a Friend</Text>
+                <Text style={styles.subtitle}>Invite a friend and earn rewards</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </ScrollView>
         <CaptureFab navigation={this.props.navigation} />
