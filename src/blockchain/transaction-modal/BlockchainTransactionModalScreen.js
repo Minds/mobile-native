@@ -35,7 +35,10 @@ export default class BlockchainTransactionModalScreen extends Component {
     gasLimit: ''
   };
 
-  approve() {
+  /**
+   * Approve
+   */
+  approve = () => {
     Alert.alert(
       'Approve Transaction',
       `Are you sure? There's no UNDO.`,
@@ -46,24 +49,36 @@ export default class BlockchainTransactionModalScreen extends Component {
     );
   }
 
+  /**
+   * Execute approve
+   */
   _confirmApprove() {
     this.props.blockchainTransaction.approveTransaction({
-      gasPrice: this.state.gasPrice || defaults.gasPrice,
-      gasLimit: this.state.gasLimit || this.props.blockchainTransaction.estimateGasLimit || defaults.gasLimit
+      gasPrice: this.getGasPrice(),
+      gasLimit: this.getGasLimit()
     });
   }
 
-  reject() {
+  /**
+   * Reject
+   */
+  reject = () => {
     this.props.blockchainTransaction.rejectTransaction();
   }
 
+  /**
+   * Gas fee
+   */
   gasFee() {
-    const gasPrice = this.state.gasPrice || defaults.gasPrice,
-      gasLimit = this.state.gasLimit || this.props.blockchainTransaction.estimateGasLimit || defaults.gasLimit;
+    const gasPrice = this.getGasPrice(),
+      gasLimit = this.getGasLimit();
 
     return gasLimit * gasPrice;
   }
 
+  /**
+   * Can afford the transaction?
+   */
   canAfford() {
     if (!this.props.blockchainTransaction.funds) {
       return true; // No info yet
@@ -76,11 +91,37 @@ export default class BlockchainTransactionModalScreen extends Component {
     return gwei >= this.gasFee();
   }
 
-  render() {
-    const gasFeeUsd = this.props.blockchainTransaction.gweiPriceCents ?
+  /**
+   * Get gas in USD
+   */
+  getGasFeeUsd() {
+    return this.props.blockchainTransaction.gweiPriceCents ?
       (this.gasFee() * this.props.blockchainTransaction.gweiPriceCents) / 100 :
       null;
-      
+  }
+
+  /**
+   * Get gas price
+   */
+  getGasPrice() {
+    return this.state.gasPrice || defaults.gasPrice;
+  }
+
+  /**
+   * Get gas limit
+   */
+  getGasLimit() {
+    return this.state.gasLimit || this.props.blockchainTransaction.estimateGasLimit || defaults.gasLimit;
+  }
+
+  /**
+   * Render
+   */
+  render() {
+    const gasFeeUsd = this.getGasFeeUsd();
+    const canAfford = this.canAfford();
+    const gasFee = this.gasFee();
+
     return (
       <Modal
         isVisible={ this.props.blockchainTransaction.isApproving }
@@ -91,12 +132,9 @@ export default class BlockchainTransactionModalScreen extends Component {
           <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={Platform.OS == 'ios' ? 'padding' : null} >
             <ScrollView style={CommonStyle.flexContainer}>
               <Text style={ CommonStyle.modalTitle }>Approve transaction</Text>
-
               <Text style={ CommonStyle.modalNote }>{ this.props.blockchainTransaction.approvalMessage }</Text>
-
               <View style={ CommonStyle.field }>
                 <Text style={ CommonStyle.fieldLabel }>GAS PRICE (GWEI):</Text>
-
                 <TextInput
                   style={ CommonStyle.fieldTextInput }
                   placeholder={ `Gas price (default: ${ defaults.gasPrice })` }
@@ -131,30 +169,16 @@ export default class BlockchainTransactionModalScreen extends Component {
               {!!gasFeeUsd && <Text style={styles.gasFee}>
                 MAX. GAS FEE: {currency(gasFeeUsd, 'usd')}
               </Text>}
-              <View style={[CommonStyle.rowJustifyStart, { marginTop: 8 }]}>
-                <View style={{ flex: 1 }}></View>
-                <TouchableHighlight 
-                  underlayColor='transparent' 
-                  onPress={ this.reject.bind(this) } 
-                  style={[
-                    ComponentsStyle.button,
-                    { backgroundColor: 'transparent', marginRight: 4 },
-                  ]}>
-                  <Text style={[ CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>Reject</Text>
-                </TouchableHighlight>
-                <TouchableHighlight 
-                  underlayColor='transparent' 
-                  onPress={ this.approve.bind(this) } 
-                  style={[
-                    ComponentsStyle.button,
-                    ComponentsStyle.buttonAction,
-                    { backgroundColor: 'transparent' },
-                  ]}>
-                  <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Approve</Text>
-                </TouchableHighlight>
-              </View>
 
-              {!this.canAfford() && <View>
+              {gasFee == 0 && <Text style={[styles.error]}>
+                The gas fee must be bigger than 0.
+              </Text>}
+
+              {this.getGasLimit() < this.props.blockchainTransaction.estimateGasLimit && <Text style={[styles.warning]}>
+                If the gas limit is too low, the transaction may not be executed.
+              </Text>}
+
+              {!canAfford && <View>
                 <Text
                   style={[styles.error]}
                 >
@@ -163,7 +187,31 @@ export default class BlockchainTransactionModalScreen extends Component {
                   price.
                 </Text>
               </View>}
-              </ScrollView>
+
+              <View style={[CommonStyle.rowJustifyStart, { marginTop: 8 }]}>
+                <View style={{ flex: 1 }}></View>
+                <TouchableHighlight
+                  underlayColor='transparent'
+                  onPress={ this.reject.bind(this) }
+                  style={[
+                    ComponentsStyle.button,
+                    { backgroundColor: 'transparent', marginRight: 4 },
+                  ]}>
+                  <Text style={[ CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>Reject</Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  underlayColor='transparent'
+                  onPress={ this.approve.bind(this) }
+                  disabled={ gasFee == 0 || !canAfford }
+                  style={[
+                    ComponentsStyle.button,
+                    ComponentsStyle.buttonAction,
+                    { backgroundColor: 'transparent' },
+                  ]}>
+                  <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Approve</Text>
+                </TouchableHighlight>
+              </View>
+            </ScrollView>
           </KeyboardAvoidingView>
         </View> }
 
@@ -174,8 +222,15 @@ export default class BlockchainTransactionModalScreen extends Component {
 
 const styles = StyleSheet.create({
   error: {
-    marginTop: 20,
+    marginTop: 10,
+    marginBottom: 10,
     color: '#c00',
+    textAlign: 'center',
+  },
+  warning: {
+    marginTop: 10,
+    marginBottom: 10,
+    color: '#c90',
     textAlign: 'center',
   },
   gasFee: {
