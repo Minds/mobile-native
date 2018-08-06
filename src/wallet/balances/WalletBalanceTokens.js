@@ -21,12 +21,12 @@ export default class WalletBalanceTokens extends Component {
   componentDidMount() {
     this.props.wallet.refresh();
   }
- 
+
   render() {
 
     let addresses = null;
-    
-    if (this.props.wallet.addresses) { 
+
+    if (this.props.wallet.addresses) {
       addresses = (
         <View style={styles.addressesContainer}>
           { this.props.wallet.addresses.map((address, i) => {
@@ -37,6 +37,7 @@ export default class WalletBalanceTokens extends Component {
               </View>
               <View style={ styles.addressColumn }>
                 <Text style={ styles.addressesBalance }>{ number(token(address.balance, 18),3) }</Text>
+                {address.ethBalance && <Text style={[styles.addressesBalance, styles.addressesEthBalance]}>ETH { number(address.ethBalance, 3) }</Text>}
               </View>
             </View>);
           })}
@@ -55,7 +56,7 @@ export default class WalletBalanceTokens extends Component {
           <Text style={ styles.amount }>{ this.props.wallet.formattedBalance }</Text>
           <Text style={ styles.currency }>Tokens</Text>
           <View style={{ flex: 1 }}></View>
-          
+
         </View>
 
         { addresses }
@@ -106,7 +107,11 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     fontFamily: 'Roboto',
   },
-
+  addressesEthBalance: {
+    fontSize: 12,
+    fontWeight: '400',
+    color: '#444'
+  },
   logo: {
     width: 100,
     height: 100,

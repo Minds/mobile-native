@@ -11,6 +11,7 @@ import number from "../common/helpers/number";
 import TokensStore from './tokens/TokensStore';
 import storageService from '../common/services/storage.service';
 import smslistener from '../common/services/sms-listener.service';
+import web3Service from '../blockchain/services/Web3Service';
 
 
 /**
@@ -43,10 +44,19 @@ class WalletStore {
     this.refreshing = true;
 
     const { balance, addresses } = await walletService.getBalances();
+
+    if (addresses && addresses.length > 0) {
+      addresses.forEach(async address => {
+        if (address.label.toLowerCase() != 'offchain') {
+          address.ethBalance = await web3Service.getBalance(address.address);
+        }
+      });
+    }
+
     const overview = await walletService.getContributionsOverview();
 
     // next payout clock
-    this.interval && this.interval();
+    this.interval && clearInterval(this.interval);
     this.interval = setInterval(() => this.clockTick(), 1000);
 
     this.overview = overview;
