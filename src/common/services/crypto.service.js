@@ -45,7 +45,7 @@ class CryptoService {
    * @param {numeric} keyIndex
    */
   encrypt(message, keyIndex) {
-    if (!this.publicKeys[keyIndex]) throw keyIndex+' public key is not defined';
+    if (!this.publicKeys[keyIndex]) throw keyIndex + ' public key is not defined';
     return Encryption.encrypt(message, this.publicKeys[keyIndex])
   }
 }

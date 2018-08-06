@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegisterScreen component should renders correctly 1`] = `
+<View
+  style={
+<<<<<<< HEAD
+    Object {
+      "flex": 1,
+    }
+=======
+    Array [
+      Object {
+        "flex": 1,
+        "justifyContent": "center",
+      },
+      Object {
+        "padding": 10,
+      },
+    ]
+>>>>>>> 3dbc569... (feat) unit tests for services
+  }
+>
+  <VideoBackground />
+  <View
+    enabled={true}
+    keyboardVerticalOffset={0}
+    onLayout={[Function]}
+    style={
+      Array [
+        Array [
+          Object {
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          Object {
+            "padding": 10,
+          },
+        ],
+        Object {
+          "paddingBottom": 0,
+        },
+      ]
+    }
+  >
+    <View
+      collapsable={undefined}
+      style={
+        Object {
+          "opacity": 0,
+          "transform": Array [
+            Object {
+              "scale": 0.3,
+            },
+          ],
+        }
+      }
+    >
+      <View
+        collapsable={undefined}
+      >
+        <RegisterForm
+          onBack={[Function]}
+          onRegister={[Function]}
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
