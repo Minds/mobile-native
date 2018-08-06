@@ -22,7 +22,7 @@ export default class KeychainModalScreen extends Component {
     secretConfirmation: '',
   };
 
-  submit() {
+  submit = () => {
     if (!this.canSubmit()) {
       return;
     }
@@ -31,7 +31,7 @@ export default class KeychainModalScreen extends Component {
     this.setState({ secret: '' });
   }
 
-  cancel() {
+  cancel = () => {
     this.props.keychain.cancel();
     this.setState({ secret: '' });
   }
@@ -44,27 +44,13 @@ export default class KeychainModalScreen extends Component {
     return !!this.state.secret;
   }
 
-  render() {
-    return (
-      <Modal
-        isVisible={this.props.keychain.isUnlocking}
-        backdropColor="white"
-        backdropOpacity={1}
-      >
-        {this.props.keychain.isUnlocking && <View style={[ CommonStyle.flexContainer, CommonStyle.modalScreen ]}>
-          {this.props.keychain.unlockingExisting && <Text style={CommonStyle.modalTitle}>
+  renderBody() {
+    if (this.props.keychain.unlockingExisting) {
+      return (
+        <View>
+          <Text style={CommonStyle.modalTitle}>
             Unlock {this.props.keychain.unlockingKeychain} keychain
-          </Text>}
-
-          {!this.props.keychain.unlockingExisting && <Text style={CommonStyle.modalTitle}>
-            Setup {this.props.keychain.unlockingKeychain} keychain
-          </Text>}
-
-          {!this.props.keychain.unlockingExisting && <Text style={styles.note}>
-            Enter a password that will encrypt the {this.props.keychain.unlockingKeychain} keychain.
-            Remember the password or you will be unable to read/write from it.
-          </Text>}
-
+          </Text>
           <TextInput
             style={ComponentsStyle.input}
             placeholder='Password'
@@ -72,33 +58,70 @@ export default class KeychainModalScreen extends Component {
             onChangeText={secret => this.setState({ secret })}
             value={this.state.secret || ''}
           />
-
-          {!this.props.keychain.unlockingExisting && <TextInput
+        </View>
+      )
+    } else {
+      return (
+        <View>
+          <Text style={CommonStyle.modalTitle}>
+            Setup {this.props.keychain.unlockingKeychain} keychain
+          </Text>
+          <Text style={styles.note}>
+            Enter a password that will encrypt the {this.props.keychain.unlockingKeychain} keychain.
+            Remember the password or you will be unable to read/write from it.
+          </Text>
+          <TextInput
+            style={ComponentsStyle.input}
+            placeholder='Password'
+            secureTextEntry={true}
+            onChangeText={secret => this.setState({ secret })}
+            value={this.state.secret || ''}
+          />
+          <TextInput
             style={[ComponentsStyle.input, styles.confirmField]}
             placeholder='Confirm Password'
             secureTextEntry={true}
             onChangeText={secretConfirmation => this.setState({ secretConfirmation })}
             value={this.state.secretConfirmation || ''}
-          />}
+          />
+          { (this.state.secret !== this.state.secretConfirmation) && <Text style={[ styles.note, styles.error ]}>
+            The password and confirmation must match!
+          </Text>}
+        </View>
+      )
+    }
+  }
 
+  render() {
+
+    const body = this.renderBody();
+
+    return (
+      <Modal
+        isVisible={this.props.keychain.isUnlocking}
+        backdropColor="white"
+        backdropOpacity={1}
+      >
+        {this.props.keychain.isUnlocking && <View style={[ CommonStyle.flexContainer, CommonStyle.modalScreen ]}>
+          {body}
           {this.props.keychain.unlockingAttempts > 0 && <Text style={[ styles.note, styles.error ]}>
             The password you entered is invalid.
           </Text>}
 
           <View style={[CommonStyle.rowJustifyStart, { marginTop: 8 }]}>
             <View style={{ flex: 1 }}></View>
-            <TouchableHighlight 
-              underlayColor='transparent' 
-              onPress={ this.cancel.bind(this) } 
+            <TouchableHighlight
+              underlayColor='transparent'
+              onPress={ this.cancel }
               style={[
                 ComponentsStyle.button,
                 { backgroundColor: 'transparent', marginRight: 4 },
               ]}>
               <Text style={[ CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>Cancel</Text>
             </TouchableHighlight>
-            <TouchableHighlight 
-              underlayColor='transparent' 
-              onPress={ this.submit.bind(this) } 
+            <TouchableHighlight
+              underlayColor='transparent'
+              onPress={ this.submit }
               style={[
                 ComponentsStyle.button,
                 ComponentsStyle.buttonAction,
@@ -107,8 +130,6 @@ export default class KeychainModalScreen extends Component {
               <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Confirm</Text>
             </TouchableHighlight>
           </View>
-
-
         </View>}
       </Modal>
     );
