@@ -47,6 +47,7 @@ export default class Button extends Component {
       containerStyle,
       accessibilityLabel,
       textStyle,
+      disabled,
       loading
     } = this.props;
 
@@ -59,6 +60,7 @@ export default class Button extends Component {
     return (
       <TouchableOpacity
         onPress={onButtonPress}
+        disabled={disabled}
         underlayColor='transparent'
         accessibilityLabel={accessibilityLabel}
         style={[ComponentsStyle.commonButton, {borderColor: color}, containerStyle]}

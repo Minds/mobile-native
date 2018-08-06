@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import keychainService from '../../../common/services/keychain.service';
 
 import TransparentButton from '../../../common/components/TransparentButton';
+import Button from '../../../common/components/Button';
 import NavNextButton from '../../../common/components/NavNextButton';
 
 import Colors from '../../../styles/Colors';
@@ -98,23 +99,35 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   }
 
   canCreate() {
-    return this.state.pin && /^[0-9]{6}$/.test(this.state.pin);
+    return this.validatePin(this.state.pin);
+  }
+
+  validatePin(pin) {
+    return pin && /^[0-9a-z\-!$%^@&*()_#+|~=`{}\[\]:";'<>?,.\/]{6,}$/.test(pin);
+  }
+
+  matchPins() {
+    return this.state.pin === this.state.pinConfirmation;
   }
 
   canConfirm() {
     return this.state.alreadyHasPin ||
-      (this.state.pin && /^[0-9]{6}$/.test(this.state.pin) && this.state.pin === this.state.pinConfirmation);
+      (this.validatePin(this.state.pin) && this.matchPins());
   }
 
-  //
-
-  setPin = pin => this.setState({ pin: pin.replace(/[^0-9]/g, '') });
+  setPin = pin => {
+    const error = this.validatePin(pin) ? '' : 'Password must be at least 6 characters, which can be either alphanumeric or symbols';
+    this.setState({ pin, err });
+  }
 
   getPin() {
     return this.state.pin;
   }
 
-  setPinConfirmation = pinConfirmation => this.setState({ pinConfirmation: pinConfirmation.replace(/[^0-9]/g, '') });
+  setPinConfirmation = pinConfirmation => {
+    const error = pinConfirmation == this.state.pin ? '' : 'Password and confirmation should match.';
+    this.setState({ pinConfirmation, error });
+  }
 
   getPinConfirmation() {
     return this.state.pinConfirmation;
@@ -128,27 +141,28 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     return (
       <View>
         <Text style={style.p}>
-          To create a new wallet address, please enter a 6-digit PIN code
+          To create a new wallet address, please enter a keychain password
           that will be used to encrypt your private key onto this device.
         </Text>
+
+        {!!this.state.error && <View>
+          <Text style={style.error}>{this.state.error}</Text>
+        </View>}
 
         <View style={[style.cols, style.form]}>
           <TextInput
             style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
             value={this.getPin()}
             onChangeText={this.setPin}
-            placeholder="6-digit PIN"
-            keyboardType="numeric"
+            placeholder="password"
             secureTextEntry={true}
-            maxLength={6}
+            maxLength={12}
           />
-
-          <TransparentButton
-            style={[style.col, style.colLazy]}
-            disabled={!this.canCreate()}
+          <Button
+            text="CREATE"
             onPress={this.createAction}
-            title="CREATE"
-            color={Colors.primary}
+            containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
+            disabled={!this.canCreate()}
           />
         </View>
       </View>
@@ -156,46 +170,40 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   }
 
   getConfirmPinFormPartial() {
-    let confirmButtonContent = 'CONFIRM';
-
-    if (this.state.inProgress) {
-      confirmButtonContent = <ActivityIndicator size="small" color={Colors.primary} />;
-    }
-
     return (
       <View>
         <Text style={style.p}>
-          Please confirm once more your 6-digit PIN code. Once confirmed
+          Please confirm once more your keychain password. Once confirmed
           your wallet will be created on this device and attached
           to your account.
         </Text>
+
+        {!!this.state.error && <View>
+          <Text style={style.error}>{this.state.error}</Text>
+        </View>}
 
         <View style={[style.cols, style.form]}>
           <TextInput
             style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
             value={this.getPinConfirmation()}
             onChangeText={this.setPinConfirmation}
-            placeholder="6-digit PIN"
-            keyboardType="numeric"
+            placeholder="confirm password"
             secureTextEntry={true}
-            maxLength={6}
+            maxLength={12}
           />
 
-          <TransparentButton
-            disabled={this.state.inProgress}
-            style={[style.col, style.colLazy]}
+          <Button
+            text="RETRY"
             onPress={this.retryAction}
-            title="RETRY"
-            color={Colors.darkGreyed}
-            borderColor={Colors.greyed}
+            containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
           />
 
-          <TransparentButton
-            style={[style.col, style.colLazy]}
-            disabled={!this.canConfirm()}
+          <Button
+            text="CONFIRM"
             onPress={this.confirmAction}
-            title={confirmButtonContent}
-            color={Colors.primary}
+            loading={this.state.inProgress}
+            containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
+            disabled={!this.canConfirm()}
           />
         </View>
       </View>
@@ -203,16 +211,12 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   }
 
   getAlreadyHasPinFormPartial() {
-    let createButtonContent = 'CREATE';
 
-    if (this.state.inProgress) {
-      createButtonContent = <ActivityIndicator size="small" color={Colors.primary} />;
-    }
 
     return (
       <View>
         <Text style={style.p}>
-          Your 6-digit PIN is already setup, you just need to confirm the 
+          Your keychain password is already setup, you just need to confirm the
           wallet creation. Once confirmed your wallet will be created on
           this device and attached to your account.
         </Text>
@@ -221,15 +225,14 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
           {this.state.alreadyHasPin && <Text
             style={[style.col, style.colFirst, style.primaryLegendUppercase]}
           >
-            PIN ALREADY SETUP
+            KEYCHAIN ALREADY SETUP
           </Text>}
 
-          <TransparentButton
-            style={[style.col, style.colLazy]}
-            disabled={!this.canConfirm()}
+          <Button
+            text="CREATE"
             onPress={this.confirmAction}
-            title={createButtonContent}
-            color={Colors.primary}
+            containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
+            disabled={!this.canConfirm()}
           />
         </View>
       </View>
@@ -280,10 +283,6 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
         <View>
           {this.getFormPartial()}
         </View>
-
-        {!!this.state.error && <View>
-          <Text style={style.error}>{this.state.error}</Text>
-        </View>}
       </View>
     );
   }
