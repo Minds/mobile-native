@@ -17,20 +17,26 @@ class ChannelSubscribersStore {
   loading = false;
 
   setGuid(guid) {
+    let reload = (this.guid != guid);
     this.guid = guid;
-
-    this.loadList();
+    this.loadList(reload);
   }
   /**
    * Load boost list
    */
-  loadList() {
+  loadList(reload = false) {
+    
     if (this.list.cantLoadMore()) {
       return Promise.resolve();
     }
+
+    if(reload) 
+      this.list.clearList();
+
     if (this.controller) {
       this.controller.abort();
     }
+
     this.controller = new AbortController();
 
     this.loading = true;

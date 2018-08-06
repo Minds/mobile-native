@@ -56,8 +56,6 @@ export default class ChannelSubscribers extends Component {
     const params = this.props.navigation.state.params;
     if (params.guid) {
       this.props.channelSubscribersStore.setGuid(params.guid);
-      this.props.channelSubscribersStore.loadList();
-
     }
   }
 
