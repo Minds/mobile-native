@@ -46,6 +46,8 @@ import { getSingle } from './NewsfeedService';
 import UserAutocomplete from '../common/components/UserAutocomplete';
 
 import isIphoneX from '../common/helpers/isIphoneX';
+import FastImage from 'react-native-fast-image';
+
 
 @inject('user')
 @observer
@@ -87,7 +89,8 @@ export default class ActivityScreen extends Component {
         const resp = await getSingle(params.guid || params.entity.guid);
         await this.entity.setEntity(ActivityModel.checkOrCreate(resp.activity));
       } catch (e) {
-        console.error('Cannot hydrate activity', e);
+        this.setState({error: true});
+        //console.error('Cannot hydrate activity', e);
       }
     }
     this.loadComments()
@@ -387,28 +390,30 @@ export default class ActivityScreen extends Component {
 
     return (
       <View style={CommonStyle.flexContainer}>
-        <KeyboardAvoidingView style={styles.containerContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null } keyboardVerticalOffset={vPadding}>
-          <View style={{flex:1}}>
+        {!this.state.error &&
+        <KeyboardAvoidingView style={styles.containerContainer} behavior={Platform.OS == 'ios' ? 'padding' : null}
+          keyboardVerticalOffset={vPadding}>
+          <View style={{flex: 1}}>
             <FlatList
-              ref={ ref => this.listRef = ref }
+              ref={ref => this.listRef = ref}
               ListHeaderComponent={this.getHeader()}
               data={this.comments.comments.slice()}
               renderItem={this.renderComment}
               keyExtractor={item => item.guid}
               initialNumToRender={25}
               refreshing={this.comments.refreshing}
-              ListEmptyComponent={this.comments.loaded && !this.comments.refreshing ? <View/> : <CenteredLoading />}
+              ListEmptyComponent={this.comments.loaded && !this.comments.refreshing ? <View/> : <CenteredLoading/>}
               style={styles.listView}
             />
-          { this.renderPoster() }
-          <UserAutocomplete
-            text={this.comments.text}
-            selection={this.state.selection}
-            onSelect={this.setText}
-            noFloat={true}
-          />
+            {this.renderPoster()}
+            <UserAutocomplete
+              text={this.comments.text}
+              selection={this.state.selection}
+              onSelect={this.setText}
+              noFloat={true}
+            />
           </View>
-          { actionsheet }
+          {actionsheet}
           <ActionSheet
             ref={o => this.actionAttachmentSheet = o}
             options={['Cancel', 'Gallery', 'Photo', 'Video']}
@@ -416,6 +421,18 @@ export default class ActivityScreen extends Component {
             cancelButtonIndex={0}
           />
         </KeyboardAvoidingView>
+        }
+        {this.state.error &&
+        <View style={CommonStyle.flexColumnCentered}>
+          <FastImage
+            resizeMode={FastImage.resizeMode.contain}
+            style={ComponentsStyle.logo}
+            source={require('../assets/logos/logo.png')}
+          />
+          <Text style={styles.errorTitle}>SORRY, WE COULDN'T LOAD THE ACTIVITY</Text>
+          <Text style={styles.errorSubtitle}>PLEASE TRY AGAIN LATER</Text>
+        </View>
+        }
       </View>
     );
   }
@@ -519,5 +536,12 @@ const styles = StyleSheet.create({
   },
   sendicon: {
     paddingRight: 8
+  },
+  errorTitle: {
+    color: '#e57373',
+    fontSize: 16
+  },
+  errorSubtitle: {
+    fontSize: 14
   }
 });
