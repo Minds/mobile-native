@@ -11,6 +11,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   View,
+  ScrollView,
   Linking,
   Alert,
 } from 'react-native';
@@ -69,7 +70,7 @@ export default class RegisterForm extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView behavior='padding'>
+      <ScrollView>
         <View>
           <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
             {this.state.error.termsAcceptedError}
@@ -162,7 +163,7 @@ export default class RegisterForm extends Component {
               disabledStyle={CommonStyle.backgroundTransparent}
             />
         </View>
-      </KeyboardAvoidingView>
+      </ScrollView>
     );
   }
 

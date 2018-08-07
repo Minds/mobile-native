@@ -3,54 +3,38 @@
 exports[`RegisterScreen component should renders correctly 1`] = `
 <View
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "flex": 1,
+        "justifyContent": "center",
+      },
+      Object {
+        "padding": 10,
+      },
+    ]
   }
 >
   <VideoBackground />
   <View
-    enabled={true}
-    keyboardVerticalOffset={0}
-    onLayout={[Function]}
+    collapsable={undefined}
     style={
-      Array [
-        Array [
+      Object {
+        "opacity": 0,
+        "transform": Array [
           Object {
-            "flex": 1,
-            "justifyContent": "center",
-          },
-          Object {
-            "padding": 10,
+            "scale": 0.3,
           },
         ],
-        Object {
-          "paddingBottom": 0,
-        },
-      ]
+      }
     }
   >
     <View
       collapsable={undefined}
-      style={
-        Object {
-          "opacity": 0,
-          "transform": Array [
-            Object {
-              "scale": 0.3,
-            },
-          ],
-        }
-      }
     >
-      <View
-        collapsable={undefined}
-      >
-        <RegisterForm
-          onBack={[Function]}
-          onRegister={[Function]}
-        />
-      </View>
+      <RegisterForm
+        onBack={[Function]}
+        onRegister={[Function]}
+      />
     </View>
   </View>
 </View>
