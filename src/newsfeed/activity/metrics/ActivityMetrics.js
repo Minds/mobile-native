@@ -55,7 +55,7 @@ export default class ActivityMetrics extends Component {
 
     return (
       <View style={[CommonStyle.rowJustifyCenter]}>
-        {this.showCounter(token(entity.wire_totals.tokens), 'TOKENS')}
+        {this.showCounter(token(entity.wire_totals.tokens), 'TKN')}
         {this.showCounter(entity.impressions, 'VIEWS')}
         {edited}
       </View>
@@ -67,6 +67,5 @@ const styles = StyleSheet.create({
   counter: {
     color: '#777',
     fontSize: 11,
-    marginLeft: 4,
   },
 })

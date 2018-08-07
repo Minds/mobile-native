@@ -33,7 +33,6 @@ exports[`Owner component renders correctly 1`] = `
           Object {
             "color": "#777",
             "fontSize": 11,
-            "marginLeft": 4,
           },
         ]
       }
@@ -48,7 +47,6 @@ exports[`Owner component renders correctly 1`] = `
         Object {
           "color": "#777",
           "fontSize": 11,
-          "marginLeft": 4,
         }
       }
     >
@@ -62,11 +60,10 @@ exports[`Owner component renders correctly 1`] = `
         Object {
           "color": "#777",
           "fontSize": 11,
-          "marginLeft": 4,
         }
       }
     >
-      TOKENS
+      TKN
        
     </Text>
   </Component>
@@ -92,7 +89,6 @@ exports[`Owner component renders correctly 1`] = `
           Object {
             "color": "#777",
             "fontSize": 11,
-            "marginLeft": 4,
           },
         ]
       }
@@ -107,7 +103,6 @@ exports[`Owner component renders correctly 1`] = `
         Object {
           "color": "#777",
           "fontSize": 11,
-          "marginLeft": 4,
         }
       }
     >
@@ -121,7 +116,6 @@ exports[`Owner component renders correctly 1`] = `
         Object {
           "color": "#777",
           "fontSize": 11,
-          "marginLeft": 4,
         }
       }
     >
