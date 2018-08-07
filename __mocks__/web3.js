@@ -1,6 +1,28 @@
 let Web3 = function () {
   return {
-
+    utils: {
+      fromWei: jest.fn(),
+      toWei: jest.fn(),
+      isAddress: jest.fn(),
+      toHex: jest.fn()
+    },
+    eth:{
+      getBalance: jest.fn(),
+      getBlock: jest.fn(),
+      getTransactionCount: jest.fn(),
+      sendSignedTransaction: jest.fn(),
+      accounts: {
+        create: jest.fn(),
+        privateKeyToAccount: jest.fn()
+      },
+      abi: {
+        encodeParameters: jest.fn()
+      },
+      Contract: function(abi, address){
+        this.abi = abi;
+        this.address = address;
+      }
+    }
   };
 };
 

@@ -76,6 +76,10 @@ class Web3Service {
     return await this.sendSignedContractMethodWithValue(method, 0, message);
   }
 
+  wait() {
+    return new Promise(r => setTimeout(r, 500));
+  }
+
   async sendSignedContractMethodWithValue(method, value = 0, message = '') {
     const toHex = this.web3.utils.toHex,
       baseOptions = await this.getTransactionOptions();
@@ -97,7 +101,7 @@ class Web3Service {
     }
 
     const sendOptions = await appStores.blockchainTransaction.waitForApproval(method, message, baseOptions, Math.ceil(estimatedGas * 1.5), value);
-    await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
+    await this.wait(); // Modals have a "cooldown"
 
     if (sendOptions) {
       const nonce = await this.web3.eth.getTransactionCount(sendOptions.from);
