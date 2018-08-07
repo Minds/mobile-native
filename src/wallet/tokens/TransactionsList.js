@@ -74,21 +74,18 @@ export default class TransactionsList extends Component {
     const wallet = this.props.wallet;
     const entities = wallet.ledger.list.entities;
 
-    if (!wallet.ledger.list.loaded || !this.state.to) {
-      return <CenteredLoading />
-    }
-
     const header = this.getHeader();
 
     return (
       <FlatList
         data={entities.slice()}
         renderItem={this.renderRow}
-        keyExtractor={(item, index) => item.timestamp+index}
+        keyExtractor={(item, index) => (item.timestamp+index).toString()}
         onRefresh={this.refresh}
         refreshing={wallet.ledger.list.refreshing}
         onEndReached={this.loadMore}
         onEndThreshold={0}
+        ListEmptyComponent={!wallet.ledger.list.loaded && !wallet.ledger.list.refreshing? <CenteredLoading /> : null}
         //ListHeaderComponent={header}
         style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}
       />
