@@ -173,6 +173,24 @@ export default class BlockchainWalletDetailsScreen extends Component {
     );
   }
 
+  gasItem() {
+    return (
+      <View style={styles.itemContainer}>
+
+        <View style={styles.itemBody}>
+          <Text style={styles.label}>Gas (ETH)</Text>
+        </View>
+
+        <View style={styles.itemSpacer}></View>
+
+        <View style={styles.itemActions}>
+          <Text style={styles.fundsItemValue}>{this.state.eth !== null ? number(this.state.eth, 0, 4) : '...'}</Text>
+        </View>
+  
+      </View>
+    );
+  }
+
   labelItem() {
     return (
       <View style={styles.itemContainer}>
@@ -417,6 +435,8 @@ export default class BlockchainWalletDetailsScreen extends Component {
           {!this.state.edit && this.qrCode()}
 
           {this.balanceItem()}
+
+          {!this.state.offchain && this.gasItem()}
 
           {!this.state.offchain && this.receiverItem()}
 

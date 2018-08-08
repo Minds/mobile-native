@@ -84,6 +84,24 @@ export default class BlockchainWalletListItem extends Component {
     );
   }
 
+  displayETH(value) {
+    if (value === null) {
+      return value;
+    }
+
+    let amount = number(value, 0, 4);
+
+    if (value >= 1000) {
+      amount = abbrev(Math.floor(value), 0);
+    }
+
+    return (
+      <Text style={styles.eth}>
+        {`${amount}`} ETH
+      </Text>
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -119,6 +137,7 @@ export default class BlockchainWalletListItem extends Component {
 
         <View style={styles.valueContainer}>
           {this.displayValue(this.state.tokens, 'TOK')}
+          { !this.props.item.offchain && this.displayETH(this.state.eth)}
         </View>
       </View>
     );
@@ -160,7 +179,7 @@ const styles = StyleSheet.create({
   },
   valueContainer: {
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
   },
   value: {
@@ -172,6 +191,12 @@ const styles = StyleSheet.create({
     color: 'green',
     fontSize: 20,
     fontWeight: '800',
+    textAlign: 'right',
+  },
+  eth: {
+    fontSize: 11,
+    color: '#aaa',
+    textAlign: 'right',
   },
   tag: {
     padding: 1,

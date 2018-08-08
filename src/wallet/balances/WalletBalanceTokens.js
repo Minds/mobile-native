@@ -37,7 +37,7 @@ export default class WalletBalanceTokens extends Component {
               </View>
               <View style={ styles.addressColumn }>
                 <Text style={ styles.addressesBalance }>{ number(token(address.balance, 18),3) }</Text>
-                {address.ethBalance && <Text style={[styles.addressesBalance, styles.addressesEthBalance]}>ETH { number(address.ethBalance, 3) }</Text>}
+                { address.address != 'offchain' && <Text style={[styles.addressesBalance, styles.addressesEthBalance]}>{ address.ethBalance ? number(address.ethBalance, 3) : 0 } ETH</Text> }
               </View>
             </View>);
           })}
