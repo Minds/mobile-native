@@ -33,6 +33,7 @@ import { CommonStyle } from '../styles/Common';
 import UserModel from './UserModel';
 import Touchable from '../common/components/Touchable';
 import session from '../common/services/session.service';
+import isIphoneX from '../common/helpers/isIphoneX';
 
 /**
  * Channel Screen
@@ -41,7 +42,7 @@ import session from '../common/services/session.service';
 @observer
 export default class ChannelScreen extends Component {
 
-
+  gobackstyle = isIphoneX() ? {left: 10, top: 30} : {};
 
   state = {
     guid: null
@@ -81,7 +82,7 @@ export default class ChannelScreen extends Component {
   async loadChannel(guid) {
     let isOwner = guid == session.guid;
     const store = this.props.channel.store(guid);
-    
+
     try {
       const channel = await store.load();
       if (channel) {
@@ -179,7 +180,7 @@ export default class ChannelScreen extends Component {
 
         {!channel.blocked && <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>}
         {carousel}
-        <Icon raised color={colors.primary} containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
+        <Icon raised color={colors.primary} containerStyle={[styles.gobackicon, this.gobackstyle]} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
 
         {!!channel.blocked && <View style={styles.blockView}>
           <Text style={styles.blockText}>You have blocked @{channel.username}</Text>

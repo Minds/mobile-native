@@ -290,13 +290,16 @@ exports[`Channel screen component should renders correctly 1`] = `
         <Icon
           color="#4690D6"
           containerStyle={
-            Object {
-              "height": 40,
-              "left": 0,
-              "position": "absolute",
-              "top": 16,
-              "width": 40,
-            }
+            Array [
+              Object {
+                "height": 40,
+                "left": 0,
+                "position": "absolute",
+                "top": 16,
+                "width": 40,
+              },
+              Object {},
+            ]
           }
           name="arrow-back"
           onPress={[Function]}
