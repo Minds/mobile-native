@@ -47,6 +47,8 @@ import UserAutocomplete from '../common/components/UserAutocomplete';
 
 import isIphoneX from '../common/helpers/isIphoneX';
 import FastImage from 'react-native-fast-image';
+//import stores from '../../AppStores';
+import NewsfeedStore from "./NewsfeedStore";
 
 
 @inject('user')
@@ -63,7 +65,8 @@ export default class ActivityScreen extends Component {
   /**
    * Each instance of Comments Screen has is own store instance
    */
-  comments = null
+  comments = null;
+  store = null;
   entity = new SingleEntityStore();
 
   /**
@@ -72,8 +75,17 @@ export default class ActivityScreen extends Component {
   async componentWillMount() {
     this.comments = commentsStoreProvider.get();
     const params = this.props.navigation.state.params;
+
+    this.store = params.store ? params.store : new NewsfeedStore();
+
     if (params.entity) {
       await this.entity.setEntity(ActivityModel.checkOrCreate(params.entity));
+
+      let index = this.store.list.entities.findIndex(x => x.guid == this.entity.entity.guid);
+
+      if (index === -1) {
+        this.store.list.entities.push(this.entity.entity);
+      }
     }
 
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
@@ -115,7 +127,7 @@ export default class ActivityScreen extends Component {
              { this.entity.entity && <Activity
               ref={o => this.activity = o}
               entity={ this.entity.entity }
-              newsfeed={ this.props.navigation.state.params.store }
+              newsfeed={ this.store }
               navigation={ this.props.navigation }
               autoHeight={true}
              /> }
