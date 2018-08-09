@@ -19,6 +19,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Alert,
   View,
   Dimensions,
   Linking,
@@ -30,6 +31,7 @@ import formatDate from '../helpers/date';
 import domain from '../helpers/domain';
 import MindsVideo from '../../media/MindsVideo';
 import mediaProxyUrl from '../helpers/media-proxy-url';
+import download from '../services/download.service';
 
 /**
  * Activity
@@ -102,6 +104,34 @@ export default class MediaView extends Component {
   }
 
   /**
+   * Prompt user to download
+   */
+  download = () => {
+    Alert.alert(
+      'Download to galley',
+      `Do you want to download this image?`,
+      [
+        { text: 'No', style: 'cancel' },
+        { text: 'Yes', onPress: () => this.runDownload() },
+      ],
+      { cancelable: false }
+    );
+  }
+
+  /**
+   * Download the media to the gallery
+   */
+  runDownload = async () => {
+    try {
+      const result = await download.downloadToGallery(this.props.source.uri);
+      Alert.alert('Success', 'Image added to gallery!');
+    } catch (e) {
+      Alert.alert('Error downloading file');
+      console.log(e);
+    }
+  }
+
+  /**
    * Pause video if exist
    */
   pauseVideo() {
@@ -154,7 +184,7 @@ export default class MediaView extends Component {
       let ratio = custom_data[0].height / custom_data[0].width;
       let height = this.props.width * ratio;
       return (
-        <TouchableOpacity onPress={this.navToImage} style={[styles.imageContainer, { height }]} activeOpacity={1}>
+        <TouchableOpacity onPress={this.navToImage} onLongPress={this.download} style={[styles.imageContainer, { height }]} activeOpacity={1}>
           <ExplicitImage
             source={source}
             entity={this.props.entity}
@@ -170,8 +200,9 @@ export default class MediaView extends Component {
     return autoHeight  ? (
       <TouchableOpacity
         onPress={this.navToImage}
+        onLongPress={this.download}
         style={styles.imageContainer}
-        activeOpacity={1}
+         activeOpacity={0.8}
       >
         <AutoHeightFastImage
           source={source}
@@ -181,8 +212,9 @@ export default class MediaView extends Component {
       ) : (
       <TouchableOpacity
         onPress={this.navToImage}
+        onLongPress={this.download}
         style={[styles.imageContainer, { minHeight: 200 }]}
-        activeOpacity={1}
+         activeOpacity={0.8}
       >
         <ExplicitImage
           source={source}
