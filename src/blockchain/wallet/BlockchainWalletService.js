@@ -58,13 +58,13 @@ function isCacheStillValid(cacheEntry) {
 
 // Service
 
-class BlockchainWalletService {
+export class BlockchainWalletService {
   current = null;
 
   fundsCache = {};
 
-  constructor() {
-    this.restoreCurrentFromStorage();
+  async init() {
+    return await this.restoreCurrentFromStorage();
   }
 
   // Normalization and Checking
@@ -99,7 +99,7 @@ class BlockchainWalletService {
 
   async getAll() {
     const wallets = await fetchListFromStorage(),
-      current = this.current && this.current.address;
+    current = this.current && this.current.address;
 
     for (let i = 0; i < wallets.length; i++) {
       wallets[i] = Object.assign({}, wallets[i], {
@@ -182,7 +182,7 @@ class BlockchainWalletService {
       throw new Error('Missing wallet address');
     }
 
-    const privateKey = fetchPrivateKeyFromStorage(address);
+    const privateKey = await fetchPrivateKeyFromStorage(address);
 
     if (!privateKey) {
       throw new Error('E_CANNOT_UNLOCK_WALLET');
@@ -292,7 +292,7 @@ class BlockchainWalletService {
   // Funds
 
   async getFunds(address, force = false) {
-    if (isCacheStillValid(this.fundsCache[address])) {
+    if (!force && isCacheStillValid(this.fundsCache[address])) {
       return this.fundsCache[address];
     }
 
@@ -350,4 +350,7 @@ class BlockchainWalletService {
   }
 }
 
-export default new BlockchainWalletService();
+const serviceInstance = new BlockchainWalletService();
+serviceInstance.init();
+
+export default serviceInstance;

@@ -72,4 +72,19 @@ describe('blockchain token service', () => {
     // should return the contract
     expect(txHash).toBe('hash123');
   });
+
+  it('should encode params', async () => {
+    const encoded = ['encoded'];
+    web3Service.web3.eth.abi.encodeParameters.mockReturnValue(encoded);
+
+    const params = [{ type: 'address', value: '0x123123123'},{ type: 'uint256', value: '2222222333232323' }];
+
+    const result = blockchainTokenService.encodeParams(params);
+
+    // should call the web3 encode method
+    expect(web3Service.web3.eth.abi.encodeParameters).toBeCalledWith(["uint256", "uint256", "address", "uint256"], [128, 64, "0x123123123", "2222222333232323"]);
+
+    // should return the encoded params
+    expect(result).toBe(encoded);
+  });
 });
