@@ -4,6 +4,7 @@ import {
   View,
   ScrollView,
   TextInput,
+  Linking,
   Alert,
   KeyboardAvoidingView,
   Platform,
@@ -115,6 +116,13 @@ export default class BlockchainTransactionModalScreen extends Component {
   }
 
   /**
+   * open coinbase in the browser
+   */
+  linkToCoinbase = () => {
+    Linking.openURL('https://www.coinbase.com');
+  }
+
+  /**
    * Render
    */
   render() {
@@ -170,8 +178,12 @@ export default class BlockchainTransactionModalScreen extends Component {
                 MAX. GAS FEE: {currency(gasFeeUsd, 'usd')}
               </Text>}
 
-              {gasFee == 0 && <Text style={[styles.error]}>
+              { (gasFee == 0 && this.props.blockchainTransaction.funds && this.props.blockchainTransaction.funds.eth > 0) && <Text style={[styles.error]}>
                 The gas fee must be bigger than 0.
+              </Text>}
+
+              { this.props.blockchainTransaction.funds && this.props.blockchainTransaction.funds.eth === '0' && <Text style={[styles.error]}>
+                You do not have enough gas (ETH) to cover this transaction. <Text style={styles.link} onPress={this.linkToCoinbase}>BUY ETHER</Text>
               </Text>}
 
               {this.getGasLimit() < this.props.blockchainTransaction.estimateGasLimit && <Text style={[styles.warning]}>
@@ -208,7 +220,7 @@ export default class BlockchainTransactionModalScreen extends Component {
                     ComponentsStyle.buttonAction,
                     { backgroundColor: 'transparent' },
                   ]}>
-                  <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Approve</Text>
+                  <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, (gasFee != 0 && canAfford) ? CommonStyle.colorPrimary : null]}>Approve</Text>
                 </TouchableHighlight>
               </View>
             </ScrollView>
@@ -226,6 +238,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     color: '#c00',
     textAlign: 'center',
+  },
+  link: {
+    fontWeight: '800',
   },
   warning: {
     marginTop: 10,

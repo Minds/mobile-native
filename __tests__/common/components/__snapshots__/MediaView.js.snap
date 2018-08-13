@@ -4,6 +4,7 @@ exports[`Media view component renders correctly 1`] = `
 <Component>
   <TouchableOpacity
     activeOpacity={1}
+    onLongPress={[Function]}
     onPress={[Function]}
     style={
       Array [
