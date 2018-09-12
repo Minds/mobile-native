@@ -46,10 +46,7 @@ exports[`Activity screen component renders correctly 1`] = `
               }
               underlayColor="transparent"
             >
-              <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
+              <Component
                 style={
                   Object {
                     "color": "#888",
@@ -58,7 +55,7 @@ exports[`Activity screen component renders correctly 1`] = `
                 }
               >
                  LOAD EARLIER 
-              </Text>
+              </Component>
             </TouchableHighlight>
           </Component>
         }

@@ -10,9 +10,6 @@ exports[`renders correctly 1`] = `
   }
 >
   <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
     onPress={[Function]}
     style={
       Object {
@@ -24,9 +21,6 @@ exports[`renders correctly 1`] = `
     someUser
      reminded 
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#444",

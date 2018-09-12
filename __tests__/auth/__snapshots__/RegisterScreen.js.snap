@@ -16,7 +16,6 @@ exports[`RegisterScreen component should renders correctly 1`] = `
 >
   <VideoBackground />
   <View
-    collapsable={undefined}
     style={
       Object {
         "opacity": 0,
@@ -28,9 +27,7 @@ exports[`RegisterScreen component should renders correctly 1`] = `
       }
     }
   >
-    <View
-      collapsable={undefined}
-    >
+    <View>
       <RegisterForm
         onBack={[Function]}
         onRegister={[Function]}

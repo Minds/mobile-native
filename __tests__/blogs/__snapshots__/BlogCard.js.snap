@@ -2,16 +2,8 @@
 
 exports[`blog card component should renders correctly 1`] = `
 <View
-  accessibilityComponentType={undefined}
-  accessibilityLabel={undefined}
-  accessibilityTraits={undefined}
   accessible={true}
-  collapsable={undefined}
-  hasTVPreferredFocus={undefined}
-  hitSlop={undefined}
   isTVSelectable={true}
-  nativeID={undefined}
-  onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
@@ -26,8 +18,6 @@ exports[`blog card component should renders correctly 1`] = `
       "opacity": 1,
     }
   }
-  testID={undefined}
-  tvParallaxProperties={undefined}
 >
   <View
     style={
@@ -45,11 +35,6 @@ exports[`blog card component should renders correctly 1`] = `
     }
   >
     <FastImageView
-      onFastImageError={undefined}
-      onFastImageLoad={undefined}
-      onFastImageLoadEnd={undefined}
-      onFastImageLoadStart={undefined}
-      onFastImageProgress={undefined}
       resizeMode="cover"
       source={
         Object {
@@ -99,9 +84,6 @@ exports[`blog card component should renders correctly 1`] = `
         }
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -128,10 +110,7 @@ exports[`blog card component should renders correctly 1`] = `
           }
         >
           <View
-            activeOpacity={undefined}
             height={24}
-            onLongPress={undefined}
-            onPress={undefined}
             style={
               Array [
                 Object {
@@ -174,9 +153,6 @@ exports[`blog card component should renders correctly 1`] = `
             />
           </View>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#888",
@@ -188,9 +164,6 @@ exports[`blog card component should renders correctly 1`] = `
             SOMEUSERMANE
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "fontSize": 8,

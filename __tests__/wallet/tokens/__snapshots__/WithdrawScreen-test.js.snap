@@ -10,10 +10,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
         }
       }
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
+      <Component
         style={
           Object {
             "color": "#777777",
@@ -24,7 +21,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
       >
         You can request to withdraw your OffChain token rewards to your OnChain address below. Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals may take up to a few hours to complete.
         
-      </Text>
+      </Component>
       <Component
         style={
           Object {
@@ -52,6 +49,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
               "textAlign": "right",
             }
           }
+          underlineColorAndroid="transparent"
           value="0"
         />
         <TransparentButton
@@ -65,10 +63,8 @@ exports[`WithdrawScreen renders correctly 1`] = `
             }
           }
           title={
-            <ActivityIndicator
-              animating={true}
+            <Component
               color="#4690D6"
-              hidesWhenStopped={true}
               size="small"
             />
           }
@@ -82,7 +78,6 @@ exports[`WithdrawScreen renders correctly 1`] = `
   getItemCount={[Function]}
   horizontal={false}
   initialNumToRender={10}
-  invertStickyHeaders={undefined}
   keyExtractor={[Function]}
   maxToRenderPerBatch={10}
   numColumns={1}
@@ -120,9 +115,6 @@ exports[`WithdrawScreen renders correctly 1`] = `
         }
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#777777",
@@ -161,18 +153,12 @@ exports[`WithdrawScreen renders correctly 1`] = `
                 "textAlign": "right",
               }
             }
+            underlineColorAndroid="transparent"
             value="0"
           />
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -201,8 +187,6 @@ exports[`WithdrawScreen renders correctly 1`] = `
                 },
               ]
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <ActivityIndicator
               animating={true}

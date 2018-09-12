@@ -73,10 +73,7 @@ exports[`Remind owner component renders correctly 1`] = `
         ]
       }
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
+      <Component
         style={
           Object {
             "color": "#444",

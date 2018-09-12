@@ -25,7 +25,7 @@ describe('Owner component', () => {
     let activity = activityResponse.activities[0];
     activity.wire_totals = { tokens: 20};
     activity.impressions = 20;
-    screen = shallow(
+    screen = renderer.create(
       <ActivityMetrics.wrappedComponent entity={activity} user={user}/>
     );
 
@@ -33,14 +33,12 @@ describe('Owner component', () => {
   });
 
   it('renders correctly', async () => {
-    screen.update();
     expect(screen).toMatchSnapshot();
   });
 
   it('should have Text', async () => {
-    screen.update();
-    let render = screen.dive();
-    expect(render.find('Text')).toHaveLength(6);
+    let root = screen.root;
+    expect(root.findAllByType('Text')).toHaveLength(6);
   });
 
 

@@ -2,16 +2,11 @@
 
 exports[`LoginForm component should renders correctly 1`] = `
 <View
-  enabled={true}
-  keyboardVerticalOffset={0}
   onLayout={[Function]}
   style={
-    Array [
-      undefined,
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
+    Object {
+      "paddingBottom": 0,
+    }
   }
 >
   <TextInput
@@ -105,15 +100,8 @@ exports[`LoginForm component should renders correctly 1`] = `
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -121,8 +109,6 @@ exports[`LoginForm component should renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={null}
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <View
           pointerEvents="box-only"
@@ -159,9 +145,6 @@ exports[`LoginForm component should renders correctly 1`] = `
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},
@@ -222,15 +205,8 @@ exports[`LoginForm component should renders correctly 1`] = `
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -238,8 +214,6 @@ exports[`LoginForm component should renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={null}
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <View
           pointerEvents="box-only"
@@ -276,9 +250,6 @@ exports[`LoginForm component should renders correctly 1`] = `
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Array [
                 Object {},
@@ -331,9 +302,6 @@ exports[`LoginForm component should renders correctly 1`] = `
     }
   >
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       onPress={[Function]}
       style={
         Array [

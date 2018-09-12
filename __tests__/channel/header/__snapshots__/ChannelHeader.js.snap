@@ -3,16 +3,8 @@
 exports[`channel header component owner should render correctly 1`] = `
 <View>
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    collapsable={undefined}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
     isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -24,8 +16,6 @@ exports[`channel header component owner should render correctly 1`] = `
         "opacity": 1,
       }
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}
   >
     <Image
       resizeMode="cover"
@@ -38,7 +28,6 @@ exports[`channel header component owner should render correctly 1`] = `
           "uri": "https://cdn.minds.com/fs/v1/banners/1/fat/1523515420",
         }
       }
-      style={undefined}
     />
   </View>
   <View
@@ -57,9 +46,7 @@ exports[`channel header component owner should render correctly 1`] = `
     }
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -89,9 +76,7 @@ exports[`channel header component owner should render correctly 1`] = `
       
     </Text>
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -121,12 +106,8 @@ exports[`channel header component owner should render correctly 1`] = `
       
     </Text>
   </View>
-  <View
-    style={undefined}
-  >
-    <View
-      style={undefined}
-    >
+  <View>
+    <View>
       <TouchableHighlight
         onPress={[Function]}
         style={
@@ -136,50 +117,22 @@ exports[`channel header component owner should render correctly 1`] = `
         }
         underlayColor="transparent"
       >
-        <View
-          style={undefined}
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={undefined}
-          >
+        <View>
+          <Text>
             SUBSCRIBERS
           </Text>
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-            style={undefined}
-          />
+          <Text />
         </View>
       </TouchableHighlight>
-      <View
-        style={undefined}
-      >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={undefined}
-        >
+      <View>
+        <Text>
           VIEWS
         </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={undefined}
-        />
+        <Text />
       </View>
     </View>
-    <View
-      style={undefined}
-    >
-      <View
-        style={undefined}
-      >
+    <View>
+      <View>
         <View
           style={
             Object {
@@ -189,28 +142,18 @@ exports[`channel header component owner should render correctly 1`] = `
           }
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
             ellipsizeMode="tail"
             numberOfLines={1}
-            style={undefined}
           >
             Some User
           </Text>
         </View>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-          style={undefined}
-        >
+        <Text>
           @
           someusermane
         </Text>
       </View>
-      <View
-        style={undefined}
-      >
+      <View>
         <TouchableHighlight
           accessibilityLabel="Subscribe to this channel"
           onPress={[Function]}
@@ -231,9 +174,6 @@ exports[`channel header component owner should render correctly 1`] = `
           underlayColor="transparent"
         >
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#4690D6",
@@ -257,9 +197,7 @@ exports[`channel header component owner should render correctly 1`] = `
           }
         >
           <Text
-            accessible={true}
             allowFontScaling={false}
-            ellipsizeMode="tail"
             onPress={[Function]}
             style={
               Array [
@@ -292,25 +230,13 @@ exports[`channel header component owner should render correctly 1`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         selectable={true}
-        style={undefined}
       />
     </View>
   </View>
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    collapsable={undefined}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
     isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -322,13 +248,8 @@ exports[`channel header component owner should render correctly 1`] = `
         "opacity": 1,
       }
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}
   >
-    <Image
-      source={undefined}
-      style={undefined}
-    />
+    <Image />
   </View>
 </View>
 `;

@@ -403,12 +403,14 @@ describe('blockchain wallet service', () => {
   it('should restore the current wallet from storage', async(done) => {
     const fakeAddress = '0xSomeAddress';
 
-    StorageService.getItem.mockResolvedValueOnce(null);
+    StorageService.getItem.mockReturnValue(null);
 
     // should return undefined if address is not stored
     expect(await blockchainWalletService.restoreCurrentFromStorage()).toBeUndefined();
 
-    StorageService.getItem.mockResolvedValueOnce(fakeAddress);
+
+    StorageService.getItem.mockClear();
+    StorageService.getItem.mockReturnValue(fakeAddress);
     blockchainWalletService.setCurrent = jest.fn().mockResolvedValue(fakeAddress);
 
     await blockchainWalletService.restoreCurrentFromStorage();
@@ -425,7 +427,7 @@ describe('blockchain wallet service', () => {
       return {address: '0x'+(++i), current: false}
     }))
 
-    StorageService.getItem.mockResolvedValueOnce(tooManyFakeWallets);
+    StorageService.getItem.mockReturnValue(tooManyFakeWallets);
 
     // should throw an error if there ara to many wallets (>= 20)
     return expect(blockchainWalletService.create()).rejects.toThrowError('E_TOO_MANY_WALLETS');
@@ -437,7 +439,7 @@ describe('blockchain wallet service', () => {
       return {address: '0x'+(++i), current: false}
     }))
 
-    StorageService.getItem.mockResolvedValueOnce(tooManyFakeWallets);
+    StorageService.getItem.mockReturnValue(tooManyFakeWallets);
     Web3Service.createWallet.mockReturnValueOnce({address: '0xFakeAddress', privateKey: '0xFakePrivate'});
     // should works with one less
     return expect(blockchainWalletService.create()).resolves.toEqual('0xFakeAddress');
@@ -512,7 +514,7 @@ describe('blockchain wallet service', () => {
     // validate the private key
     blockchainWalletService.isValidPrivateKey = jest.fn().mockReturnValue(true);
 
-    StorageService.getItem.mockResolvedValueOnce(tooManyFakeWallets);
+    StorageService.getItem.mockReturnValue(tooManyFakeWallets);
 
     // should throw an error if there ara to many wallets (>= 20)
     return expect(blockchainWalletService.import('0xMyPrivate')).rejects.toThrowError('E_TOO_MANY_WALLETS');
@@ -548,7 +550,7 @@ describe('blockchain wallet service', () => {
     // the private key is valid!
     blockchainWalletService.isValidPrivateKey = jest.fn().mockReturnValue(true);
     Web3Service.getAddressFromPK.mockReturnValue(fakeAddress);
-    StorageService.getItem.mockResolvedValueOnce([]);
+    StorageService.getItem.mockReturnValue([]);
 
     const result = await blockchainWalletService.import(fakePrivate);
 

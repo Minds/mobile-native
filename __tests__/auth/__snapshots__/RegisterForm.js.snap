@@ -5,9 +5,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
   <View>
     <View>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Object {
             "color": "#F00",
@@ -101,16 +98,8 @@ exports[`RegisterForm component should renders correctly 1`] = `
       value=""
     />
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -131,8 +120,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
           "padding": 10,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <View
         style={
@@ -149,9 +136,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
         }
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -168,11 +152,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
 (recommended)
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
-          onLongPress={undefined}
-          onPress={undefined}
           style={
             Array [
               Object {
@@ -193,16 +173,8 @@ exports[`RegisterForm component should renders correctly 1`] = `
       </View>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -223,8 +195,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
           "padding": 10,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <View
         style={
@@ -241,9 +211,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
         }
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "white",
@@ -253,9 +220,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
         >
           I accept the 
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             onPress={[Function]}
             style={
               Object {
@@ -267,11 +231,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
           </Text>
         </Text>
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
-          onLongPress={undefined}
-          onPress={undefined}
           style={
             Array [
               Object {
@@ -327,15 +287,8 @@ exports[`RegisterForm component should renders correctly 1`] = `
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -343,8 +296,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={null}
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -381,9 +332,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},
@@ -444,15 +392,8 @@ exports[`RegisterForm component should renders correctly 1`] = `
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -460,8 +401,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
           style={null}
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <View
             pointerEvents="box-only"
@@ -498,9 +437,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {},

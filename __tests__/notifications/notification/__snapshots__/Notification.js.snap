@@ -17,13 +17,7 @@ exports[`notification component renders correctly for every type 1`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -44,7 +38,6 @@ exports[`notification component renders correctly for every type 1`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -63,29 +56,15 @@ exports[`notification component renders correctly for every type 1`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         100
          points 
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          >
+        <Text>
+          <Text>
             for 
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#444",
@@ -100,9 +79,6 @@ exports[`notification component renders correctly for every type 1`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -133,13 +109,7 @@ exports[`notification component renders correctly for every type 2`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -160,7 +130,6 @@ exports[`notification component renders correctly for every type 2`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -179,31 +148,17 @@ exports[`notification component renders correctly for every type 2`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         100
         /
         100
          views 
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          >
+        <Text>
+          <Text>
             for 
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#444",
@@ -218,9 +173,6 @@ exports[`notification component renders correctly for every type 2`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -251,13 +203,7 @@ exports[`notification component renders correctly for every type 3`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -278,7 +224,6 @@ exports[`notification component renders correctly for every type 3`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -297,31 +242,17 @@ exports[`notification component renders correctly for every type 3`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         someUser
          gifted you 
         100
          views 
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          >
+        <Text>
+          <Text>
             for 
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#444",
@@ -335,9 +266,6 @@ exports[`notification component renders correctly for every type 3`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -368,13 +296,7 @@ exports[`notification component renders correctly for every type 4`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -395,7 +317,6 @@ exports[`notification component renders correctly for every type 4`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -414,15 +335,9 @@ exports[`notification component renders correctly for every type 4`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           onPress={[Function]}
           style={
             Object {
@@ -435,9 +350,6 @@ exports[`notification component renders correctly for every type 4`] = `
         </Text>
          accepted your bid of 
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "fontWeight": "bold",
@@ -449,22 +361,11 @@ exports[`notification component renders correctly for every type 4`] = `
           points
         </Text>
          
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          >
+        <Text>
+          <Text>
             for 
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#444",
@@ -478,9 +379,6 @@ exports[`notification component renders correctly for every type 4`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -511,13 +409,7 @@ exports[`notification component renders correctly for every type 5`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -538,7 +430,6 @@ exports[`notification component renders correctly for every type 5`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -557,15 +448,9 @@ exports[`notification component renders correctly for every type 5`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           onPress={[Function]}
           style={
             Object {
@@ -578,9 +463,6 @@ exports[`notification component renders correctly for every type 5`] = `
         </Text>
          declined your bid of 
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "fontWeight": "bold",
@@ -592,22 +474,11 @@ exports[`notification component renders correctly for every type 5`] = `
           points
         </Text>
          
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          >
+        <Text>
+          <Text>
             for 
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#444",
@@ -622,9 +493,6 @@ exports[`notification component renders correctly for every type 5`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -655,13 +523,7 @@ exports[`notification component renders correctly for every type 6`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -682,7 +544,6 @@ exports[`notification component renders correctly for every type 6`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -701,15 +562,9 @@ exports[`notification component renders correctly for every type 6`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           onPress={[Function]}
           style={
             Object {
@@ -722,9 +577,6 @@ exports[`notification component renders correctly for every type 6`] = `
         </Text>
          is offering 
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "fontWeight": "bold",
@@ -735,22 +587,11 @@ exports[`notification component renders correctly for every type 6`] = `
            
           tokens
            
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          >
-            <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
-            >
+          <Text>
+            <Text>
               for 
             </Text>
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Object {
                   "color": "#444",
@@ -765,9 +606,6 @@ exports[`notification component renders correctly for every type 6`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -798,13 +636,7 @@ exports[`notification component renders correctly for every type 7`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -825,7 +657,6 @@ exports[`notification component renders correctly for every type 7`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -844,30 +675,16 @@ exports[`notification component renders correctly for every type 7`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         Your boost 
         100
          
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          >
+        <Text>
+          <Text>
             for 
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#444",
@@ -880,9 +697,6 @@ exports[`notification component renders correctly for every type 7`] = `
         </Text>
          was rejected for 
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           onPress={[Function]}
           style={
             Object {
@@ -899,9 +713,6 @@ exports[`notification component renders correctly for every type 7`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -932,13 +743,7 @@ exports[`notification component renders correctly for every type 8`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -959,7 +764,6 @@ exports[`notification component renders correctly for every type 8`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -978,30 +782,16 @@ exports[`notification component renders correctly for every type 8`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         Your boost 
         100
          
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          >
+        <Text>
+          <Text>
             for 
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#444",
@@ -1016,9 +806,6 @@ exports[`notification component renders correctly for every type 8`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -1049,13 +836,7 @@ exports[`notification component renders correctly for every type 9`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1076,7 +857,6 @@ exports[`notification component renders correctly for every type 9`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -1095,29 +875,15 @@ exports[`notification component renders correctly for every type 9`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         100
          points 
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          >
+        <Text>
+          <Text>
             for 
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#444",
@@ -1130,9 +896,6 @@ exports[`notification component renders correctly for every type 9`] = `
         </Text>
          is awaiting approval by 
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           onPress={[Function]}
           style={
             Object {
@@ -1146,9 +909,6 @@ exports[`notification component renders correctly for every type 9`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -1179,13 +939,7 @@ exports[`notification component renders correctly for every type 10`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1206,7 +960,6 @@ exports[`notification component renders correctly for every type 10`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -1225,29 +978,15 @@ exports[`notification component renders correctly for every type 10`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         100
          views 
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
-          <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
-          >
+        <Text>
+          <Text>
             for 
           </Text>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#444",
@@ -1262,9 +1001,6 @@ exports[`notification component renders correctly for every type 10`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -1295,13 +1031,7 @@ exports[`notification component renders correctly for every type 11`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1322,7 +1052,6 @@ exports[`notification component renders correctly for every type 11`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -1333,16 +1062,8 @@ exports[`notification component renders correctly for every type 11`] = `
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1354,18 +1075,9 @@ exports[`notification component renders correctly for every type 11`] = `
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -1375,17 +1087,10 @@ exports[`notification component renders correctly for every type 11`] = `
         >
           someUser
         </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
+        <Text>
            commented on 
         </Text>
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -1399,9 +1104,6 @@ exports[`notification component renders correctly for every type 11`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -1432,13 +1134,7 @@ exports[`notification component renders correctly for every type 12`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1459,7 +1155,6 @@ exports[`notification component renders correctly for every type 12`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -1477,18 +1172,11 @@ exports[`notification component renders correctly for every type 12`] = `
         }
       }
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         some message
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -1519,13 +1207,7 @@ exports[`notification component renders correctly for every type 13`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1546,7 +1228,6 @@ exports[`notification component renders correctly for every type 13`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -1557,16 +1238,8 @@ exports[`notification component renders correctly for every type 13`] = `
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1580,18 +1253,9 @@ exports[`notification component renders correctly for every type 13`] = `
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -1605,9 +1269,6 @@ exports[`notification component renders correctly for every type 13`] = `
         down voted
          
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -1620,9 +1281,6 @@ exports[`notification component renders correctly for every type 13`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -1653,13 +1311,7 @@ exports[`notification component renders correctly for every type 14`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1680,7 +1332,6 @@ exports[`notification component renders correctly for every type 14`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -1699,15 +1350,9 @@ exports[`notification component renders correctly for every type 14`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -1721,9 +1366,6 @@ exports[`notification component renders correctly for every type 14`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -1754,13 +1396,7 @@ exports[`notification component renders correctly for every type 15`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1781,7 +1417,6 @@ exports[`notification component renders correctly for every type 15`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -1800,9 +1435,6 @@ exports[`notification component renders correctly for every type 15`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
         style={
           Object {
@@ -1816,9 +1448,6 @@ exports[`notification component renders correctly for every type 15`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -1849,13 +1478,7 @@ exports[`notification component renders correctly for every type 16`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1876,7 +1499,6 @@ exports[`notification component renders correctly for every type 16`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -1887,16 +1509,8 @@ exports[`notification component renders correctly for every type 16`] = `
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1910,18 +1524,9 @@ exports[`notification component renders correctly for every type 16`] = `
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -1931,17 +1536,10 @@ exports[`notification component renders correctly for every type 16`] = `
         >
           someUser
         </Text>
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
+        <Text>
            posted in 
         </Text>
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -1954,9 +1552,6 @@ exports[`notification component renders correctly for every type 16`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -1987,13 +1582,7 @@ exports[`notification component renders correctly for every type 17`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2014,7 +1603,6 @@ exports[`notification component renders correctly for every type 17`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -2033,25 +1621,15 @@ exports[`notification component renders correctly for every type 17`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
          invited you to join 
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
+        <Text>
           someGroup
         </Text>
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -2082,13 +1660,7 @@ exports[`notification component renders correctly for every type 18`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2109,7 +1681,6 @@ exports[`notification component renders correctly for every type 18`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -2128,25 +1699,15 @@ exports[`notification component renders correctly for every type 18`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         You were kicked off from 
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
-        >
+        <Text>
           someGroup
         </Text>
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -2177,13 +1738,7 @@ exports[`notification component renders correctly for every type 19`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2204,7 +1759,6 @@ exports[`notification component renders correctly for every type 19`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -2215,16 +1769,8 @@ exports[`notification component renders correctly for every type 19`] = `
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -2238,18 +1784,9 @@ exports[`notification component renders correctly for every type 19`] = `
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -2263,9 +1800,6 @@ exports[`notification component renders correctly for every type 19`] = `
         voted up
          
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -2278,9 +1812,6 @@ exports[`notification component renders correctly for every type 19`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -2311,13 +1842,7 @@ exports[`notification component renders correctly for every type 20`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2338,7 +1863,6 @@ exports[`notification component renders correctly for every type 20`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -2356,15 +1880,8 @@ exports[`notification component renders correctly for every type 20`] = `
         }
       }
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -2378,9 +1895,6 @@ exports[`notification component renders correctly for every type 20`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -2411,13 +1925,7 @@ exports[`notification component renders correctly for every type 21`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2438,7 +1946,6 @@ exports[`notification component renders correctly for every type 21`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -2457,9 +1964,6 @@ exports[`notification component renders correctly for every type 21`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
         style={
           Object {
@@ -2471,9 +1975,6 @@ exports[`notification component renders correctly for every type 21`] = `
         someUser
          reminded 
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -2486,9 +1987,6 @@ exports[`notification component renders correctly for every type 21`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -2519,13 +2017,7 @@ exports[`notification component renders correctly for every type 22`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2546,7 +2038,6 @@ exports[`notification component renders correctly for every type 22`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -2557,16 +2048,8 @@ exports[`notification component renders correctly for every type 22`] = `
     }
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -2580,14 +2063,8 @@ exports[`notification component renders correctly for every type 22`] = `
           "opacity": 1,
         }
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         someUser
          
         tagged you in a post
@@ -2595,9 +2072,6 @@ exports[`notification component renders correctly for every type 22`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -2628,13 +2102,7 @@ exports[`notification component renders correctly for every type 23`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2655,7 +2123,6 @@ exports[`notification component renders correctly for every type 23`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -2673,18 +2140,11 @@ exports[`notification component renders correctly for every type 23`] = `
         }
       }
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         You can gain more reach by boosting your content. Hit the blue boost icon on your posts.
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -2715,13 +2175,7 @@ exports[`notification component renders correctly for every type 24`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2742,7 +2196,6 @@ exports[`notification component renders correctly for every type 24`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -2760,18 +2213,11 @@ exports[`notification component renders correctly for every type 24`] = `
         }
       }
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         Chat securely with your mutual subscriptions.
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -2802,13 +2248,7 @@ exports[`notification component renders correctly for every type 25`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2829,7 +2269,6 @@ exports[`notification component renders correctly for every type 25`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -2848,15 +2287,9 @@ exports[`notification component renders correctly for every type 25`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -2870,9 +2303,6 @@ exports[`notification component renders correctly for every type 25`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -2903,13 +2333,7 @@ exports[`notification component renders correctly for every type 26`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2930,7 +2354,6 @@ exports[`notification component renders correctly for every type 26`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -2948,16 +2371,9 @@ exports[`notification component renders correctly for every type 26`] = `
         }
       }
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         Welcome to Minds. We have given you 
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={
             Object {
               "color": "#444",
@@ -2971,9 +2387,6 @@ exports[`notification component renders correctly for every type 26`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -3004,13 +2417,7 @@ exports[`notification component renders correctly for every type 27`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -3031,7 +2438,6 @@ exports[`notification component renders correctly for every type 27`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -3049,15 +2455,8 @@ exports[`notification component renders correctly for every type 27`] = `
         }
       }
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
-      >
+      <Text>
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           onPress={[Function]}
           style={
             Object {
@@ -3072,9 +2471,6 @@ exports[`notification component renders correctly for every type 27`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",
@@ -3105,13 +2501,7 @@ exports[`notification component renders correctly for every type 28`] = `
   }
 >
   <Image
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    hitSlop={undefined}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -3132,7 +2522,6 @@ exports[`notification component renders correctly for every type 28`] = `
         "width": 36,
       }
     }
-    testID={undefined}
   />
   <View
     style={
@@ -3151,18 +2540,12 @@ exports[`notification component renders correctly for every type 28`] = `
       }
     >
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         onPress={[Function]}
       >
         You have successfully wired 
         1000
          to 
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           onPress={[Function]}
           style={
             Object {
@@ -3177,9 +2560,6 @@ exports[`notification component renders correctly for every type 28`] = `
       </Text>
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#888",

@@ -10,18 +10,12 @@ exports[`renders correctly for not owner and not subscribed 1`] = `
   }
 >
   <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
     onPress={[Function]}
   >
     You have received a wire of 
     1000
      from 
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       onPress={[Function]}
       style={
         Object {
@@ -47,18 +41,12 @@ exports[`renders correctly for owner and not subscribed 1`] = `
   }
 >
   <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
     onPress={[Function]}
   >
     You have successfully wired 
     1000
      to 
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       onPress={[Function]}
       style={
         Object {
@@ -84,18 +72,12 @@ exports[`renders correctly for owner and subscribed 1`] = `
   }
 >
   <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
     onPress={[Function]}
   >
     You have subscribed to wire 
     1000
     /month to 
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       onPress={[Function]}
       style={
         Object {
@@ -121,18 +103,12 @@ exports[`renders correctly for owner and subscribed 2`] = `
   }
 >
   <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
     onPress={[Function]}
   >
     You have received a wire subscription of 
     1000
     /month from 
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       onPress={[Function]}
       style={
         Object {

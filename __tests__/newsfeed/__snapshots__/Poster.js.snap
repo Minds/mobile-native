@@ -99,10 +99,7 @@ exports[`Newsfeed poster component renders correctly 1`] = `
         }
         underlayColor="transparent"
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <Component
           style={
             Object {
               "color": "#4690D6",
@@ -110,7 +107,7 @@ exports[`Newsfeed poster component renders correctly 1`] = `
           }
         >
            POST 
-        </Text>
+        </Component>
       </TouchableHighlight>
     </Component>
   </Component>

@@ -20,16 +20,8 @@ exports[`cature poster flags component should renders correctly for props false 
     }
   />
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    collapsable={undefined}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
     isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -45,13 +37,9 @@ exports[`cature poster flags component should renders correctly for props false 
         "paddingLeft": 8,
       }
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -71,16 +59,8 @@ exports[`cature poster flags component should renders correctly for props false 
     </Text>
   </View>
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    collapsable={undefined}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
     isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -96,13 +76,9 @@ exports[`cature poster flags component should renders correctly for props false 
         "paddingLeft": 8,
       }
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -122,16 +98,8 @@ exports[`cature poster flags component should renders correctly for props false 
     </Text>
   </View>
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    collapsable={undefined}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
     isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -148,13 +116,9 @@ exports[`cature poster flags component should renders correctly for props false 
         "paddingLeft": 8,
       }
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -176,20 +140,24 @@ exports[`cature poster flags component should renders correctly for props false 
   <Modal
     animationType="none"
     hardwareAccelerated={false}
+    hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
     onRequestClose={[Function]}
+    scrollOffset={0}
+    scrollOffsetMax={0}
+    scrollTo={null}
+    supportedOrientations={
+      Array [
+        "portrait",
+        "landscape",
+      ]
+    }
+    swipeThreshold={100}
     transparent={true}
     visible={false}
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -209,11 +177,8 @@ exports[`cature poster flags component should renders correctly for props false 
           "width": 750,
         }
       }
-      testID={undefined}
     />
     <View
-      enabled={true}
-      keyboardVerticalOffset={0}
       onLayout={[Function]}
       pointerEvents="box-none"
       style={
@@ -243,9 +208,12 @@ exports[`cature poster flags component should renders correctly for props false 
       }
     >
       <View
-        collapsable={undefined}
+        hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
         pointerEvents="box-none"
+        scrollOffset={0}
+        scrollOffsetMax={0}
+        scrollTo={null}
         style={
           Object {
             "flex": 1,
@@ -258,6 +226,13 @@ exports[`cature poster flags component should renders correctly for props false 
             ],
           }
         }
+        supportedOrientations={
+          Array [
+            "portrait",
+            "landscape",
+          ]
+        }
+        swipeThreshold={100}
       >
         <View
           style={
@@ -277,9 +252,6 @@ exports[`cature poster flags component should renders correctly for props false 
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Object {
                   "flexGrow": 1,
@@ -294,9 +266,7 @@ exports[`cature poster flags component should renders correctly for props false 
               SHARE
             </Text>
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               onPress={[Function]}
               style={
                 Array [
@@ -321,16 +291,8 @@ exports[`cature poster flags component should renders correctly for props false 
             </Text>
           </View>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -345,13 +307,9 @@ exports[`cature poster flags component should renders correctly for props false 
                 "padding": 10,
               }
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -370,9 +328,6 @@ exports[`cature poster flags component should renders correctly for props false 
               
             </Text>
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -391,16 +346,8 @@ exports[`cature poster flags component should renders correctly for props false 
             </Text>
           </View>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -415,13 +362,9 @@ exports[`cature poster flags component should renders correctly for props false 
                 "padding": 10,
               }
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -440,9 +383,6 @@ exports[`cature poster flags component should renders correctly for props false 
               
             </Text>
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -467,20 +407,24 @@ exports[`cature poster flags component should renders correctly for props false 
   <Modal
     animationType="none"
     hardwareAccelerated={false}
+    hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
     onRequestClose={[Function]}
+    scrollOffset={0}
+    scrollOffsetMax={0}
+    scrollTo={null}
+    supportedOrientations={
+      Array [
+        "portrait",
+        "landscape",
+      ]
+    }
+    swipeThreshold={100}
     transparent={true}
     visible={false}
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -500,11 +444,8 @@ exports[`cature poster flags component should renders correctly for props false 
           "width": 750,
         }
       }
-      testID={undefined}
     />
     <View
-      enabled={true}
-      keyboardVerticalOffset={0}
       onLayout={[Function]}
       pointerEvents="box-none"
       style={
@@ -534,9 +475,12 @@ exports[`cature poster flags component should renders correctly for props false 
       }
     >
       <View
-        collapsable={undefined}
+        hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
         pointerEvents="box-none"
+        scrollOffset={0}
+        scrollOffsetMax={0}
+        scrollTo={null}
         style={
           Object {
             "flex": 1,
@@ -549,6 +493,13 @@ exports[`cature poster flags component should renders correctly for props false 
             ],
           }
         }
+        supportedOrientations={
+          Array [
+            "portrait",
+            "landscape",
+          ]
+        }
+        swipeThreshold={100}
       >
         <View
           style={
@@ -568,9 +519,6 @@ exports[`cature poster flags component should renders correctly for props false 
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Object {
                   "flexGrow": 1,
@@ -585,9 +533,7 @@ exports[`cature poster flags component should renders correctly for props false 
               LOCK BY WIRE
             </Text>
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               onPress={[Function]}
               style={
                 Array [
@@ -640,12 +586,10 @@ exports[`cature poster flags component should renders correctly for props false 
                     "textAlign": "right",
                   }
                 }
+                underlineColorAndroid="transparent"
                 value="0"
               />
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Object {
                     "color": "#666",
@@ -669,15 +613,8 @@ exports[`cature poster flags component should renders correctly for props false 
               }
             >
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -702,13 +639,8 @@ exports[`cature poster flags component should renders correctly for props false 
                     false,
                   ]
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Array [
                       Object {
@@ -760,16 +692,8 @@ exports[`cature poster flags component should renders correctly for props true 1
     }
   />
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    collapsable={undefined}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
     isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -785,13 +709,9 @@ exports[`cature poster flags component should renders correctly for props true 1
         "paddingLeft": 8,
       }
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -810,9 +730,6 @@ exports[`cature poster flags component should renders correctly for props true 1
       
     </Text>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#f44336",
@@ -827,16 +744,8 @@ exports[`cature poster flags component should renders correctly for props true 1
     </Text>
   </View>
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    collapsable={undefined}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
     isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -852,13 +761,9 @@ exports[`cature poster flags component should renders correctly for props true 1
         "paddingLeft": 8,
       }
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -878,16 +783,8 @@ exports[`cature poster flags component should renders correctly for props true 1
     </Text>
   </View>
   <View
-    accessibilityComponentType={undefined}
-    accessibilityLabel={undefined}
-    accessibilityTraits={undefined}
     accessible={true}
-    collapsable={undefined}
-    hasTVPreferredFocus={undefined}
-    hitSlop={undefined}
     isTVSelectable={true}
-    nativeID={undefined}
-    onLayout={undefined}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -904,13 +801,9 @@ exports[`cature poster flags component should renders correctly for props true 1
         "paddingLeft": 8,
       }
     }
-    testID={undefined}
-    tvParallaxProperties={undefined}
   >
     <Text
-      accessible={true}
       allowFontScaling={false}
-      ellipsizeMode="tail"
       style={
         Array [
           Object {
@@ -932,20 +825,24 @@ exports[`cature poster flags component should renders correctly for props true 1
   <Modal
     animationType="none"
     hardwareAccelerated={false}
+    hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
     onRequestClose={[Function]}
+    scrollOffset={0}
+    scrollOffsetMax={0}
+    scrollTo={null}
+    supportedOrientations={
+      Array [
+        "portrait",
+        "landscape",
+      ]
+    }
+    swipeThreshold={100}
     transparent={true}
     visible={false}
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -965,11 +862,8 @@ exports[`cature poster flags component should renders correctly for props true 1
           "width": 750,
         }
       }
-      testID={undefined}
     />
     <View
-      enabled={true}
-      keyboardVerticalOffset={0}
       onLayout={[Function]}
       pointerEvents="box-none"
       style={
@@ -999,9 +893,12 @@ exports[`cature poster flags component should renders correctly for props true 1
       }
     >
       <View
-        collapsable={undefined}
+        hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
         pointerEvents="box-none"
+        scrollOffset={0}
+        scrollOffsetMax={0}
+        scrollTo={null}
         style={
           Object {
             "flex": 1,
@@ -1014,6 +911,13 @@ exports[`cature poster flags component should renders correctly for props true 1
             ],
           }
         }
+        supportedOrientations={
+          Array [
+            "portrait",
+            "landscape",
+          ]
+        }
+        swipeThreshold={100}
       >
         <View
           style={
@@ -1033,9 +937,6 @@ exports[`cature poster flags component should renders correctly for props true 1
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Object {
                   "flexGrow": 1,
@@ -1050,9 +951,7 @@ exports[`cature poster flags component should renders correctly for props true 1
               SHARE
             </Text>
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               onPress={[Function]}
               style={
                 Array [
@@ -1077,16 +976,8 @@ exports[`cature poster flags component should renders correctly for props true 1
             </Text>
           </View>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1101,13 +992,9 @@ exports[`cature poster flags component should renders correctly for props true 1
                 "padding": 10,
               }
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -1126,9 +1013,6 @@ exports[`cature poster flags component should renders correctly for props true 1
               
             </Text>
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -1147,16 +1031,8 @@ exports[`cature poster flags component should renders correctly for props true 1
             </Text>
           </View>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1171,13 +1047,9 @@ exports[`cature poster flags component should renders correctly for props true 1
                 "padding": 10,
               }
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -1196,9 +1068,6 @@ exports[`cature poster flags component should renders correctly for props true 1
               
             </Text>
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -1223,20 +1092,24 @@ exports[`cature poster flags component should renders correctly for props true 1
   <Modal
     animationType="none"
     hardwareAccelerated={false}
+    hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
     onRequestClose={[Function]}
+    scrollOffset={0}
+    scrollOffsetMax={0}
+    scrollTo={null}
+    supportedOrientations={
+      Array [
+        "portrait",
+        "landscape",
+      ]
+    }
+    swipeThreshold={100}
     transparent={true}
     visible={false}
   >
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      collapsable={undefined}
-      hitSlop={undefined}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1256,11 +1129,8 @@ exports[`cature poster flags component should renders correctly for props true 1
           "width": 750,
         }
       }
-      testID={undefined}
     />
     <View
-      enabled={true}
-      keyboardVerticalOffset={0}
       onLayout={[Function]}
       pointerEvents="box-none"
       style={
@@ -1290,9 +1160,12 @@ exports[`cature poster flags component should renders correctly for props true 1
       }
     >
       <View
-        collapsable={undefined}
+        hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
         pointerEvents="box-none"
+        scrollOffset={0}
+        scrollOffsetMax={0}
+        scrollTo={null}
         style={
           Object {
             "flex": 1,
@@ -1305,6 +1178,13 @@ exports[`cature poster flags component should renders correctly for props true 1
             ],
           }
         }
+        supportedOrientations={
+          Array [
+            "portrait",
+            "landscape",
+          ]
+        }
+        swipeThreshold={100}
       >
         <View
           style={
@@ -1324,9 +1204,6 @@ exports[`cature poster flags component should renders correctly for props true 1
             }
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Object {
                   "flexGrow": 1,
@@ -1341,9 +1218,7 @@ exports[`cature poster flags component should renders correctly for props true 1
               LOCK BY WIRE
             </Text>
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               onPress={[Function]}
               style={
                 Array [
@@ -1396,12 +1271,10 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "textAlign": "right",
                   }
                 }
+                underlineColorAndroid="transparent"
                 value="0"
               />
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Object {
                     "color": "#666",
@@ -1425,15 +1298,8 @@ exports[`cature poster flags component should renders correctly for props true 1
               }
             >
               <View
-                accessibilityComponentType={undefined}
-                accessibilityLabel={undefined}
-                accessibilityTraits={undefined}
                 accessible={true}
-                hasTVPreferredFocus={undefined}
-                hitSlop={undefined}
                 isTVSelectable={true}
-                nativeID={undefined}
-                onLayout={undefined}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -1458,13 +1324,8 @@ exports[`cature poster flags component should renders correctly for props true 1
                     false,
                   ]
                 }
-                testID={undefined}
-                tvParallaxProperties={undefined}
               >
                 <Text
-                  accessible={true}
-                  allowFontScaling={true}
-                  ellipsizeMode="tail"
                   style={
                     Array [
                       Object {

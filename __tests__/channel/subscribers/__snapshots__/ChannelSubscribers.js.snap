@@ -31,15 +31,8 @@ exports[`channel subscribers component should render correctly 1`] = `
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -59,28 +52,16 @@ exports[`channel subscribers component should render correctly 1`] = `
             },
           ]
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={null}
         >
           Subscribers
         </Text>
       </View>
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -98,13 +79,8 @@ exports[`channel subscribers component should render correctly 1`] = `
             },
           ]
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={null}
         >
           Subscriptions
@@ -350,7 +326,6 @@ exports[`channel subscribers component should render correctly 1`] = `
     getItemCount={[Function]}
     horizontal={false}
     initialNumToRender={12}
-    invertStickyHeaders={undefined}
     keyExtractor={[Function]}
     maxToRenderPerBatch={10}
     numColumns={1}
@@ -367,7 +342,6 @@ exports[`channel subscribers component should render correctly 1`] = `
     refreshControl={
       <RefreshControlMock
         onRefresh={[Function]}
-        progressViewOffset={undefined}
         refreshing={false}
       />
     }
@@ -737,6 +711,12 @@ exports[`channel subscribers component should render correctly 1`] = `
                     1,
                   ],
                 ],
+                "results": Array [
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                ],
               },
             }
           }
@@ -1090,6 +1070,12 @@ exports[`channel subscribers component should render correctly 1`] = `
                   Array [
                     1,
                   ],
+                ],
+                "results": Array [
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
                 ],
               },
             }
@@ -1445,6 +1431,12 @@ exports[`channel subscribers component should render correctly 1`] = `
                     1,
                   ],
                 ],
+                "results": Array [
+                  Object {
+                    "isThrow": false,
+                    "value": undefined,
+                  },
+                ],
               },
             }
           }
@@ -1486,15 +1478,8 @@ exports[`channel subscribers component should render correctly without data 1`] 
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -1514,28 +1499,16 @@ exports[`channel subscribers component should render correctly without data 1`] 
             },
           ]
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={null}
         >
           Subscribers
         </Text>
       </View>
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -1553,13 +1526,8 @@ exports[`channel subscribers component should render correctly without data 1`] 
             },
           ]
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
           style={null}
         >
           Subscriptions
@@ -1568,7 +1536,6 @@ exports[`channel subscribers component should render correctly without data 1`] 
     </View>
   </View>
   <View
-    onLayout={undefined}
     style={
       Object {
         "alignItems": "center",

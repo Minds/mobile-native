@@ -23,7 +23,7 @@ describe('Boost action component', () => {
 
     const navigation = { navigate: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
-    screen = shallow(
+    screen = renderer.create(
       <BoostAction entity={activityResponse.activities[0]} navigation={navigation} />
     );
 
@@ -31,21 +31,18 @@ describe('Boost action component', () => {
   });
 
   it('renders correctly', async () => {
-    screen.update();
     expect(screen).toMatchSnapshot();
   });
 
-
   it('should have A boost button', async () => {
-    screen.update();
-    expect(screen.find('Text').dive().text()).toBe('BOOST');
+    expect(screen.root.findByType('Text').props['children']).toBe('BOOST');
   });
 
   it('should navigate to boost on press ', () => {
     let activityResponse = activitiesServiceFaker().load(1);
 
-    const navigation = { 
-      navigate: jest.fn() 
+    const navigation = {
+      navigate: jest.fn()
     };
     let entity = activityResponse.activities[0];
     screen = shallow(

@@ -2,8 +2,6 @@
 
 exports[`LoginScreen component should renders correctly 1`] = `
 <View
-  enabled={true}
-  keyboardVerticalOffset={0}
   onLayout={[Function]}
   style={
     Array [
@@ -31,7 +29,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
     }
   >
     <View
-      collapsable={undefined}
       style={
         Object {
           "opacity": 0,
@@ -44,7 +41,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
       }
     >
       <Image
-        collapsable={undefined}
         resizeMode="contain"
         source={1}
         style={
@@ -58,7 +54,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
       />
     </View>
     <View
-      collapsable={undefined}
       style={
         Object {
           "opacity": 0,

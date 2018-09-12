@@ -421,7 +421,6 @@ exports[`blog list screen component should renders correctly 1`] = `
   getItemLayout={[Function]}
   horizontal={false}
   initialNumToRender={10}
-  invertStickyHeaders={undefined}
   keyExtractor={[Function]}
   maxToRenderPerBatch={10}
   numColumns={1}
@@ -438,7 +437,6 @@ exports[`blog list screen component should renders correctly 1`] = `
   refreshControl={
     <RefreshControlMock
       onRefresh={[Function]}
-      progressViewOffset={undefined}
       refreshing={false}
     />
   }
@@ -500,16 +498,8 @@ exports[`blog list screen component should renders correctly 1`] = `
           }
         >
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -527,13 +517,8 @@ exports[`blog list screen component should renders correctly 1`] = `
                 "padding": 5,
               }
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -554,16 +539,8 @@ exports[`blog list screen component should renders correctly 1`] = `
             </Text>
           </View>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -581,13 +558,8 @@ exports[`blog list screen component should renders correctly 1`] = `
                 "padding": 5,
               }
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -603,16 +575,8 @@ exports[`blog list screen component should renders correctly 1`] = `
             </Text>
           </View>
           <View
-            accessibilityComponentType={undefined}
-            accessibilityLabel={undefined}
-            accessibilityTraits={undefined}
             accessible={true}
-            collapsable={undefined}
-            hasTVPreferredFocus={undefined}
-            hitSlop={undefined}
             isTVSelectable={true}
-            nativeID={undefined}
-            onLayout={undefined}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -630,13 +594,8 @@ exports[`blog list screen component should renders correctly 1`] = `
                 "padding": 5,
               }
             }
-            testID={undefined}
-            tvParallaxProperties={undefined}
           >
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -655,7 +614,6 @@ exports[`blog list screen component should renders correctly 1`] = `
       </View>
     </View>
     <View
-      onLayout={undefined}
       style={null}
     >
       <View
@@ -795,12 +753,10 @@ exports[`blog list screen component should renders correctly 1`] = `
               "wire_threshold": "",
             }
           }
-          navigation={undefined}
         />
       </View>
     </View>
     <View
-      onLayout={undefined}
       style={null}
     >
       <View
@@ -940,12 +896,10 @@ exports[`blog list screen component should renders correctly 1`] = `
               "wire_threshold": "",
             }
           }
-          navigation={undefined}
         />
       </View>
     </View>
     <View
-      onLayout={undefined}
       style={null}
     >
       <View
@@ -1085,7 +1039,6 @@ exports[`blog list screen component should renders correctly 1`] = `
               "wire_threshold": "",
             }
           }
-          navigation={undefined}
         />
       </View>
     </View>

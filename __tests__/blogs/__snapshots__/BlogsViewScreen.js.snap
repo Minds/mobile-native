@@ -22,11 +22,6 @@ exports[`blog view screen component should renders correctly 1`] = `
       }
     >
       <FastImageView
-        onFastImageError={undefined}
-        onFastImageLoad={undefined}
-        onFastImageLoadEnd={undefined}
-        onFastImageLoadStart={undefined}
-        onFastImageProgress={undefined}
         resizeMode="cover"
         source={
           Object {
@@ -49,9 +44,6 @@ exports[`blog view screen component should renders correctly 1`] = `
       />
     </View>
     <Text
-      accessible={true}
-      allowFontScaling={true}
-      ellipsizeMode="tail"
       style={
         Object {
           "color": "#444",
@@ -85,16 +77,8 @@ exports[`blog view screen component should renders correctly 1`] = `
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          collapsable={undefined}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -106,11 +90,8 @@ exports[`blog view screen component should renders correctly 1`] = `
               "opacity": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <Image
-            source={undefined}
             style={
               Object {
                 "borderColor": "#EEE",
@@ -140,16 +121,8 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           >
             <View
-              accessibilityComponentType={undefined}
-              accessibilityLabel={undefined}
-              accessibilityTraits={undefined}
               accessible={true}
-              collapsable={undefined}
-              hasTVPreferredFocus={undefined}
-              hitSlop={undefined}
               isTVSelectable={true}
-              nativeID={undefined}
-              onLayout={undefined}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
@@ -161,13 +134,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "opacity": 1,
                 }
               }
-              testID={undefined}
-              tvParallaxProperties={undefined}
             >
               <Text
-                accessible={true}
-                allowFontScaling={true}
-                ellipsizeMode="tail"
                 style={
                   Object {
                     "color": "#444",
@@ -181,9 +149,6 @@ exports[`blog view screen component should renders correctly 1`] = `
             </View>
           </View>
           <Text
-            accessible={true}
-            allowFontScaling={true}
-            ellipsizeMode="tail"
             style={
               Object {
                 "color": "#888",
@@ -275,6 +240,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                     "getAvatarSource": [MockFunction] {
                       "calls": Array [
                         Array [],
+                      ],
+                      "results": Array [
+                        Object {
+                          "isThrow": false,
+                          "value": undefined,
+                        },
                       ],
                     },
                     "guid": 100,
@@ -410,6 +381,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                     "getAvatarSource": [MockFunction] {
                       "calls": Array [
                         Array [],
+                      ],
+                      "results": Array [
+                        Object {
+                          "isThrow": false,
+                          "value": undefined,
+                        },
                       ],
                     },
                     "guid": 100,
@@ -552,6 +529,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                       "calls": Array [
                         Array [],
                       ],
+                      "results": Array [
+                        Object {
+                          "isThrow": false,
+                          "value": undefined,
+                        },
+                      ],
                     },
                     "guid": 100,
                     "icontime": "1523515420",
@@ -693,6 +676,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                       "calls": Array [
                         Array [],
                       ],
+                      "results": Array [
+                        Object {
+                          "isThrow": false,
+                          "value": undefined,
+                        },
+                      ],
                     },
                     "guid": 100,
                     "icontime": "1523515420",
@@ -803,15 +792,8 @@ exports[`blog view screen component should renders correctly 1`] = `
       }
     >
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -831,13 +813,9 @@ exports[`blog view screen component should renders correctly 1`] = `
             undefined,
           ]
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -862,9 +840,6 @@ exports[`blog view screen component should renders correctly 1`] = `
         </Text>
       </View>
       <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {
@@ -885,15 +860,8 @@ exports[`blog view screen component should renders correctly 1`] = `
         Attribution-NonCommerical CC BY-NC
       </Text>
       <View
-        accessibilityComponentType={undefined}
-        accessibilityLabel={undefined}
-        accessibilityTraits={undefined}
         accessible={true}
-        hasTVPreferredFocus={undefined}
-        hitSlop={undefined}
         isTVSelectable={true}
-        nativeID={undefined}
-        onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -913,13 +881,9 @@ exports[`blog view screen component should renders correctly 1`] = `
             undefined,
           ]
         }
-        testID={undefined}
-        tvParallaxProperties={undefined}
       >
         <Text
-          accessible={true}
           allowFontScaling={false}
-          ellipsizeMode="tail"
           style={
             Array [
               Object {
@@ -945,15 +909,8 @@ exports[`blog view screen component should renders correctly 1`] = `
       </View>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
       accessible={true}
-      hasTVPreferredFocus={undefined}
-      hitSlop={undefined}
       isTVSelectable={true}
-      nativeID={undefined}
-      onLayout={undefined}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -979,13 +936,9 @@ exports[`blog view screen component should renders correctly 1`] = `
           },
         ]
       }
-      testID={undefined}
-      tvParallaxProperties={undefined}
     >
       <Text
-        accessible={true}
         allowFontScaling={false}
-        ellipsizeMode="tail"
         style={
           Array [
             Object {

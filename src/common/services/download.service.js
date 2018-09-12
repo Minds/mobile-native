@@ -3,7 +3,7 @@ import {
   Platform,
 } from 'react-native';
 import session from './session.service';
-import RNFetchBlob from 'react-native-fetch-blob';
+import RNFetchBlob from 'rn-fetch-blob';
 import permissions from './android-permissions.service';
 
 /**

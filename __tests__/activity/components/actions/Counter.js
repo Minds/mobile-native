@@ -1,7 +1,6 @@
 import 'react-native';
 import React from 'react';
 import { Text, TouchableOpacity } from "react-native";
-import { shallow } from 'enzyme';
 
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
 
@@ -14,7 +13,7 @@ describe('Owner component', () => {
   beforeEach(() => {
 
     const navigation = { navigate: jest.fn() };
-    screen = shallow(
+    screen = renderer.create(
       <Counter count={100} />
     );
 
@@ -22,22 +21,18 @@ describe('Owner component', () => {
   });
 
   it('renders correctly', async () => {
-    screen.update();
+
     expect(screen).toMatchSnapshot();
   });
 
 
   it('should have Text', async () => {
-    screen.update();
-    expect(screen.find('Text')).toHaveLength(1);
+    expect(screen.root.findAllByType('Text')).toHaveLength(1);
   });
 
   it('should _navToChannel on press ', () => {
-
-    screen.update();
-    let touchables = screen.find('Text');
-    expect(touchables.at(0).dive().text()).toBe('100');
-
+    let touchables = screen.root.findAllByType('Text');
+    expect(touchables[0].props['children']).toBe(100);
   });
 
 });

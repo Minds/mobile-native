@@ -66,7 +66,7 @@ class PushService {
 
   /**
    * Set app badge
-   * @param {integer} num 
+   * @param {integer} num
    */
   setBadgeCount(num) {
     this.push.setBadgeCount(num);
@@ -74,7 +74,7 @@ class PushService {
 
   /**
    * Set initial notification handler
-   * @param {function} fn 
+   * @param {function} fn
    */
   setOnInitialNotification(fn) {
     this.push.setOnInitialNotification(fn);
@@ -82,7 +82,7 @@ class PushService {
 
   /**
    * Handle the notification that open the app
-   */ 
+   */
   handleInitialNotification() {
     this.push.handleInitialNotification();
   }

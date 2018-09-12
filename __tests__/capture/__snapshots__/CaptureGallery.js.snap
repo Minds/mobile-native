@@ -27,15 +27,8 @@ exports[`cature gallery component should renders correctly 1`] = `
         }
       >
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -55,8 +48,6 @@ exports[`cature gallery component should renders correctly 1`] = `
               "margin": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <View
             style={
@@ -69,9 +60,7 @@ exports[`cature gallery component should renders correctly 1`] = `
             }
           >
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -92,9 +81,6 @@ exports[`cature gallery component should renders correctly 1`] = `
               
             </Text>
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Object {
                   "color": "#444",
@@ -107,15 +93,8 @@ exports[`cature gallery component should renders correctly 1`] = `
           </View>
         </View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -135,8 +114,6 @@ exports[`cature gallery component should renders correctly 1`] = `
               "margin": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <View
             style={
@@ -149,9 +126,7 @@ exports[`cature gallery component should renders correctly 1`] = `
             }
           >
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -172,9 +147,6 @@ exports[`cature gallery component should renders correctly 1`] = `
               
             </Text>
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Object {
                   "color": "#444",
@@ -187,15 +159,8 @@ exports[`cature gallery component should renders correctly 1`] = `
           </View>
         </View>
         <View
-          accessibilityComponentType={undefined}
-          accessibilityLabel={undefined}
-          accessibilityTraits={undefined}
           accessible={true}
-          hasTVPreferredFocus={undefined}
-          hitSlop={undefined}
           isTVSelectable={true}
-          nativeID={undefined}
-          onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -215,8 +180,6 @@ exports[`cature gallery component should renders correctly 1`] = `
               "margin": 1,
             }
           }
-          testID={undefined}
-          tvParallaxProperties={undefined}
         >
           <View
             style={
@@ -229,9 +192,7 @@ exports[`cature gallery component should renders correctly 1`] = `
             }
           >
             <Text
-              accessible={true}
               allowFontScaling={false}
-              ellipsizeMode="tail"
               style={
                 Array [
                   Object {
@@ -252,9 +213,6 @@ exports[`cature gallery component should renders correctly 1`] = `
               
             </Text>
             <Text
-              accessible={true}
-              allowFontScaling={true}
-              ellipsizeMode="tail"
               style={
                 Object {
                   "color": "#444",
@@ -270,7 +228,6 @@ exports[`cature gallery component should renders correctly 1`] = `
     </View>
   </View>
   <View
-    onLayout={undefined}
     style={
       Object {
         "alignItems": "center",

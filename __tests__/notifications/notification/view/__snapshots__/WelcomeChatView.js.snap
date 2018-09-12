@@ -9,11 +9,7 @@ exports[`renders correctly 1`] = `
     }
   }
 >
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-  >
+  <Text>
     Chat securely with your mutual subscriptions.
   </Text>
 </View>

@@ -24,10 +24,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
           }
         }
       >
-        <Text
-          accessible={true}
-          allowFontScaling={true}
-          ellipsizeMode="tail"
+        <Component
           style={
             Object {
               "color": "#444",
@@ -41,7 +38,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
           }
         >
           This feed is empty
-        </Text>
+        </Component>
       </Component>
     </Component>
   }

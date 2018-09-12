@@ -95,7 +95,6 @@ exports[`Activity component renders correctly 1`] = `
               "navigate": [MockFunction],
             }
           }
-          newsfeed={undefined}
           onTranslate={[Function]}
           toggleEdit={[Function]}
         />
@@ -111,10 +110,7 @@ exports[`Activity component renders correctly 1`] = `
         }
       }
     >
-      <Text
-        accessible={true}
-        allowFontScaling={true}
-        ellipsizeMode="tail"
+      <Component
         style={
           Object {
             "color": "#888",
@@ -123,7 +119,7 @@ exports[`Activity component renders correctly 1`] = `
         }
       >
         Invalid date
-      </Text>
+      </Component>
       <ActivityMetrics
         entity={
           ActivityModel {

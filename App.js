@@ -99,6 +99,7 @@ export default class App extends Component {
    * On component will mount
    */
   componentWillMount() {
+    if (!Text.defaultProps) Text.defaultProps = {};
     Text.defaultProps.style = {
       fontFamily: 'Roboto',
       color: '#444',

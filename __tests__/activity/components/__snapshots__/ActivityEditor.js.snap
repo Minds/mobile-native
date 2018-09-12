@@ -19,6 +19,7 @@ exports[`Activity editor component renders correctly 1`] = `
         "width": "100%",
       }
     }
+    underlineColorAndroid="transparent"
     value="Message"
   />
   <Component

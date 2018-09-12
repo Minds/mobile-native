@@ -9,11 +9,7 @@ exports[`renders correctly 1`] = `
     }
   }
 >
-  <Text
-    accessible={true}
-    allowFontScaling={true}
-    ellipsizeMode="tail"
-  >
+  <Text>
     You can gain more reach by boosting your content. Hit the blue boost icon on your posts.
   </Text>
 </View>
