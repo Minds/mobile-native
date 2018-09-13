@@ -4,8 +4,10 @@ import {
 } from 'mobx';
 
 import channelService from './../channel/ChannelService';
+import sessionService from '../common/services/session.service';
 import UserModel from './../channel/UserModel';
 import { MINDS_FEATURES } from '../config/Config';
+import { Alert } from 'react-native';
 
 /**
  * Login Store
@@ -15,7 +17,10 @@ class UserStore {
 
   @action
   setUser(user) {
+    if (!user || !user.guid) 
+      return
     this.me = UserModel.create(user);
+    sessionService.guid = user.guid;
   }
 
   @action
@@ -42,18 +47,23 @@ class UserStore {
   }
 
   @action
-  load() {
+  async load() {
     this.me = {};
-    return channelService.load('me')
-      .then(response => {
-        this.setUser(response.channel);
-        if (this.me.canCrypto) {
-          MINDS_FEATURES.crypto = true;
-        }
-      })
-      .catch(err => {
-        console.log('error', err);
-      });
+
+    try {
+      let response = await channelService.load('me');
+
+      //if (!response.channel) {
+      //  return sessionService.setToken(null);
+      //}
+
+      this.setUser(response.channel);
+      if (this.me.canCrypto) {
+        MINDS_FEATURES.crypto = true;
+      }
+    } catch(err)  {
+      console.log('error', err);
+    }
   }
 
   isAdmin() {

@@ -10,8 +10,8 @@ class ChannelService {
    * Load Channel
    * @param {string} guid
    */
-  load(guid) {
-    return api.get('api/v1/channel/' + guid);
+  async load(guid) {
+    return await api.get('api/v1/channel/' + guid);
   }
 
   upload(guid, type, file, progress) {

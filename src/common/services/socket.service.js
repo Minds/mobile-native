@@ -26,6 +26,7 @@ export class SocketService {
   }
 
   setUp() {
+    return;
     if (this.socket) {
       this.socket.destroy();
     }
@@ -51,6 +52,9 @@ export class SocketService {
   }
 
   setUpDefaultListeners() {
+
+    if (!this.socket.on)
+      return;
 
     // connect
     this.socket.on('connect', () => {
@@ -124,11 +128,15 @@ export class SocketService {
   }
 
   emit(...args) {
+    if (!this.socket)
+      return;
     this.socket.emit.apply(this.socket, args);
     return this;
   }
 
   subscribe(name, callback) {
+    if (!this.socket)
+      return;
     this.socket.on(name, callback);
     return this;
   }

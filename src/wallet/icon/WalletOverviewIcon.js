@@ -34,8 +34,8 @@ export const Icons = {
   },
   'onchain_transactions': {
     'asset': require('../../assets/contributions/onchain-transactions.png'),
-    'title': 'OnChain Transactions',
-    'score': '+4'
+    'title': 'OnChain',
+    'score': '+10 (receiver)'
   },
   'checkins': {
     'asset': require('../../assets/contributions/checkins.png'),
@@ -109,16 +109,17 @@ const styles = StyleSheet.create({
     width: 150,
   },
   textContainer: {
-    paddingLeft: 8,
+    paddingLeft: 16,
     flexDirection: 'column',
     alignItems: 'flex-start',
   },
   image: {
-    width: 50,
-    height: 50,
+    width: 32,
+    height: 32,
   },
   title: {},
   score: {
     color: '#4CAF50',
+    fontWeight: '600',
   }
 });

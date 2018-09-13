@@ -2,7 +2,7 @@ import React, {
   Component
 } from 'react';
 
-import { NavigationActions } from 'react-navigation';
+import { StackActions, NavigationActions } from 'react-navigation';
 import FastImage from 'react-native-fast-image';
 
 import {
@@ -143,7 +143,7 @@ export default class LoginScreen extends Component {
    * @param {string} destination
    */
   _navigate(destination) {
-    const resetAction = NavigationActions.reset({
+    const resetAction = StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({ routeName: destination })

@@ -61,6 +61,7 @@ export default class BaseModel {
    * @param {object} t base model instance
    */
   static createShallowObservables(t) {
+    return ;
     if (!this.observablesShallow.length) return;
     const obs = this.parseObj(this.observablesShallow, t);
     extendShallowObservable(t, obs);
@@ -71,6 +72,7 @@ export default class BaseModel {
    * @param {object} t base model instance
    */
   static createObservables(t) {
+    return;
     if (!this.observables.length) return;
     const obs = this.parseObj(this.observables, t);
     extendObservable(t, obs);

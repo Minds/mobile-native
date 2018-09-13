@@ -18,6 +18,11 @@ class SessionService {
   @observable token = '';
 
   /**
+   * Refresh token
+   */
+  @observable refreshToken = '';
+
+  /**
    * User guid
    */
   guid = null;
@@ -40,14 +45,18 @@ class SessionService {
     this.sessionStorage = sessionStorage;
   }
 
-  init() {
-    return this.sessionStorage.getAccessToken()
-      .then(data => {
-        if (!data) return null;
-        this.guid = data.guid;
-        this.setToken(data.token);
-        return data.token;
-      });
+  async init() {
+    try {
+      let token = await this.sessionStorage.getAccessToken();
+      this.refreshToken = await this.sessionStorage.getRefreshToken();
+      console.log(token, this.refreshToken);
+      this.setToken(token);
+      this.refreshToken = await this.sessionStorage.getRefreshToken();
+      return token;
+    } catch (e) {
+      console.log('error getting tokens', e);
+      return null;
+    }
   }
 
   setInitialScreen(screen) {
@@ -64,16 +73,25 @@ class SessionService {
    * @param {string} token
    * @param {string} guid
    */
-  login(token, guid) {
-    this.guid = guid;
-    this.setToken(token)
-    this.sessionStorage.setAccessToken(token, guid);
+  login(tokens) {
+    //this.guid = guid;
+    this.setToken(tokens.access_token);
+    this.sessionStorage.setAccessToken(tokens.access_token);
+    this.sessionStorage.setRefreshToken(tokens.refresh_token);
+  }
+
+  refresh(tokens) {
+    //this.guid = guid;
+    this.setToken(tokens.access_token);
+    this.sessionStorage.setAccessToken(tokens.access_token);
+    this.sessionStorage.setRefreshToken(tokens.refresh_token);
   }
 
   /**
    * Logout
    */
   logout() {
+    console.log('logout issued');
     this.guid = null;
     this.setToken(null);
     this.sessionStorage.clear();

@@ -183,6 +183,28 @@ class GroupViewStore {
   }
 
   /**
+   * Make given user moderator
+   * @param {object} user
+   */
+  async makeModerator(user) {
+    const result = await groupsService.makeModerator(this.group.guid, user.guid);
+    if (!!result.done) {
+      user['is:moderator'] = true;
+    }
+  }
+
+  /**
+   * Revoke moderator to given user
+   * @param {object} user
+   */
+  async revokeModerator(user) {
+    const result = await groupsService.revokeModerator(this.group.guid, user.guid);
+    if (!!result.done) {
+      user['is:moderator'] = false;
+    }
+  }
+
+  /**
    * Make given user owner
    * @param {object} user
    */

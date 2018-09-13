@@ -34,7 +34,7 @@ import MessengerTabIcon from './MessengerTabIcon';
 /**
  * Messenger Conversarion List Screen
  */
-@inject('messengerList', 'navigatorStore')
+@inject('messengerList')
 @observer
 export default class MessengerScreen extends Component {
   state = {
@@ -58,13 +58,13 @@ export default class MessengerScreen extends Component {
     this.props.messengerList.listen();
 
     // load data on enter
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Messenger', (s) => {
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       this.props.messengerList.loadList(true);
       //this.setState({ active: true });
     });
 
     // hidde on leave
-    // this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Messenger', (s) => {
+    // this.disposeLeave = this.props.navigation.onLeaveScreen('Messenger', (s) => {
     //   this.setState({ active: false });
     // });
   }

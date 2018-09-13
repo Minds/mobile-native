@@ -19,6 +19,7 @@ import {
 } from '../config/Config';
 
 import {
+  StackActions,
   NavigationActions
 } from 'react-navigation';
 
@@ -38,7 +39,7 @@ const ICON_SIZE = 24;
 /**
  * More screen (menu)
  */
-@inject('user', 'navigatorStore')
+@inject('user')
 export default class MoreScreen extends Component {
 
   state = {
@@ -47,35 +48,7 @@ export default class MoreScreen extends Component {
     refreshing: false
   }
 
-  /**
-   * On component will mount
-   */
-  componentWillMount() {
-    // load data on enter
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('More', (s) => {
-      this.setState({ active: true });
-    });
-
-    // clear data on leave
-    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('More', (s) => {
-      this.setState({ active: false });
-    });
-  }
-
-  /**
-   * Dispose reactions of navigation store on unmount
-   */
-  componentWillUnmount() {
-    this.disposeEnter();
-    this.disposeLeave();
-  }
-
   render() {
-    // if tab is not active we return a blank view
-    if (!this.state.active) {
-      return <View style={CommonStyle.flexContainer} />
-    }
-
     const list = [
       {
         name: 'Blogs',
@@ -124,7 +97,7 @@ export default class MoreScreen extends Component {
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
           authService.logout();
-          const loginAction = NavigationActions.reset({
+          const loginAction = StackActions.reset({
             index: 0,
             actions: [
               NavigationActions.navigate({ routeName: 'Login' })

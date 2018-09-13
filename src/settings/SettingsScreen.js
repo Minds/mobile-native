@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import {
+  StackActions,
   NavigationActions
 } from 'react-navigation';
 
@@ -112,7 +113,7 @@ export default class SettingsScreen extends Component {
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
           authService.logout();
-          const loginAction = NavigationActions.reset({
+          const loginAction = StackActions.reset({
             index: 0,
             actions: [
               NavigationActions.navigate({ routeName: 'Login' })

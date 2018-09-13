@@ -33,7 +33,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 /**
  * Groups view screen
  */
-@inject('groupView', 'user', 'navigatorStore')
+@inject('groupView', 'user')
 @observer
 export default class GroupViewScreen extends Component {
 

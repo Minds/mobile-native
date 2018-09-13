@@ -1,3 +1,4 @@
+import { Alert } from 'react-native'; 
 import { observable, action, computed } from 'mobx'
 
 import NewsfeedService, { getFeedTop, getFeed, getBoosts, setViewed } from './NewsfeedService';
@@ -63,11 +64,13 @@ class NewsfeedStore {
     try {
       const feed = await fetchFn(this.list.offset)
 
+      //Alert.alert('got feed with ' + feed.entities.length + ' items');
+
       feed.entities = ActivityModel.createMany(feed.entities);
       this.assignRowKeys(feed);
       store.list.setList(feed, refresh);
       this.loaded = true;
-    } catch (e) {
+    } catch (err) {
       console.log('error', err);
     } finally {
       store.loading = false;

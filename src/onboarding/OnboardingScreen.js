@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import {
+  StackActions,
   NavigationActions
 } from 'react-navigation';
 
@@ -64,7 +65,7 @@ export default class OnboardingScreen extends Component {
   };
 
   goToTabs() {
-    const resetAction = NavigationActions.reset({
+    const resetAction = StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({ routeName: 'Tabs' })

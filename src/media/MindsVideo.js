@@ -34,7 +34,6 @@ import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import en from "../../locales/en";
 
-@inject('navigatorStore')
 @observer
 export default class MindsVideo extends Component {
 
@@ -68,9 +67,9 @@ export default class MindsVideo extends Component {
     }
 
     // if there is a screen change we pause
-    this.onScreenDispose = this.props.navigatorStore.onScreen(() => {
-      this.pause();
-    });
+    //this.onScreenDispose = this.props.navigatorStore.onScreen(() => {
+    //  this.pause();
+    //});
   }
 
   /**

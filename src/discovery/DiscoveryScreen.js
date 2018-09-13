@@ -43,7 +43,7 @@ const isIos = Platform.OS === 'ios';
 /**
  * Discovery screen
  */
-@inject('discovery', 'tabs', 'navigatorStore', 'channel')
+@inject('discovery', 'tabs', 'channel')
 @observer
 export default class DiscoveryScreen extends Component {
 
@@ -71,14 +71,14 @@ export default class DiscoveryScreen extends Component {
     this._loadData();
 
     // load data on enter
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Discovery',(s) => {
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       setTimeout(() => {
         this.setState({active: true});
       }, 50);
     });
 
     // clear data on leave
-    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('Discovery',(s) => {
+    this.disposeLeave = this.props.navigation.addListener('didBlur', (s) => {
       setTimeout(() => {
         this.setState({active: false});
       }, 50);

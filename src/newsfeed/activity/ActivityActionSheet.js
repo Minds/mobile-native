@@ -31,7 +31,7 @@ import { MINDS_URI } from '../../config/Config';
 const title = 'Actions';
 
 @inject("user")
-@inject("newsfeed", "navigatorStore")
+@inject("newsfeed")
 export default class ActivityActions extends Component {
 
   constructor(props) {
@@ -123,7 +123,7 @@ export default class ActivityActions extends Component {
         { cancelable: false }
       )
 
-      if(this.props.navigatorStore.currentScreen == 'Activity' ){
+      if (this.props.navigation.state.routeName == 'Activity'){
         this.props.navigation.goBack();
       }
     });

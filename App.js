@@ -13,9 +13,11 @@ import {
 } from 'mobx-react/native'  // import from mobx-react/native instead of mobx-react fix test
 
 import {
-  addNavigationHelpers,
+  createNavigator,
   NavigationActions
 } from 'react-navigation';
+
+import NavigationService from './src/navigation/NavigationService';
 
 import {
   BackHandler,
@@ -23,11 +25,12 @@ import {
   AppState,
   Linking,
   Text,
+  Alert,
 } from 'react-native';
 
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
-import Stack from './AppScreens';
+import NavigationStack from './src/navigation/NavigationStack';
 import stores from './AppStores';
 import './AppErrors';
 import './src/common/services/socket.service';
@@ -36,7 +39,8 @@ import receiveShare from './src/common/services/receive-share.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import badgeService from './src/common/services/badge.service';
-import appNavigation from './AppNavigation';
+import authService from './src/auth/AuthService';
+import NotificationsService from "./src/notifications/NotificationsService";
 
 // init push service
 pushService.init();
@@ -44,13 +48,15 @@ pushService.init();
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
 
+  //await authService.refreshToken();
+
   // register device token into backend on login
   pushService.registerToken();
 
   // load user
   await stores.user.load();
 
-  stores.navigatorStore.resetNavigate(sessionService.initialScreen);
+  NavigationService.reset(sessionService.initialScreen);
 
   // handle deep link (if the app is opened by one)
   Linking.getInitialURL().then(url => url && deeplinkService.navigate(url));
@@ -110,11 +116,14 @@ export default class App extends Component {
    * On component did mount
    */
   async componentDidMount() {
+
     const token = await sessionService.init();
 
     if (!token) {
-      stores.navigatorStore.resetNavigate('Login');
+      NavigationService.navigate('Login');
     }
+
+    //this.setState({loaded: true});
 
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
     Linking.addEventListener('url', event => this.handleOpenURL(event.url));
@@ -135,10 +144,10 @@ export default class App extends Component {
    */
   onBackPress = () => {
     const { dispatch } = this.props;
-    if (stores.navigatorStore.navigationState.index === 0) {
+    if (this.props.navigation.index === 0) {
       return false;
     }
-    stores.navigatorStore.dispatch(NavigationActions.back());
+    this.props.navigation.dispatch(NavigationActions.back());
     return true;
   };
 
@@ -157,7 +166,13 @@ export default class App extends Component {
   render() {
     const app = (
       <Provider key="app" {...stores}>
-        <Observer>{() => <Stack navigation={appNavigation.buildNavigator()}/>}</Observer>
+        <Observer>{() => 
+          <NavigationStack 
+            ref={navigatorRef => {
+              NavigationService.setTopLevelNavigator(navigatorRef);
+            }}
+            />
+        }</Observer>
       </Provider>
     );
 

@@ -19,7 +19,7 @@ import CaptureFab from '../capture/CaptureFab';
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'tabs', 'user', 'navigatorStore')
+@inject('newsfeed', 'tabs', 'user')
 @observer
 export default class NewsfeedScreen extends Component {
 
@@ -82,7 +82,11 @@ export default class NewsfeedScreen extends Component {
     return (
       <View style={{flex:1}}>
         <CaptureFab navigation={this.props.navigation}/>
-        <NewsfeedList newsfeed={newsfeed} header={header} navigation={this.props.navigation}/>
+        <NewsfeedList 
+          newsfeed={newsfeed}
+          header={header}
+          navigation={this.props.navigation}
+          />
       </View>
     );
   }

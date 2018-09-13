@@ -23,7 +23,6 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 /**
  * Comments Action Component
  */
-@inject('navigatorStore')
 @observer
 export default class CommentsAction extends Component {
 
@@ -46,7 +45,8 @@ export default class CommentsAction extends Component {
    * Open comments screen
    */
   openComments = () => {
-    if(this.props.navigatorStore.currentScreen == 'Activity' ){
+    // TODO: fix
+    if (this.props.navigation.state.routeName == 'Activity' ){
       return;
     }
     this.props.navigation.navigate('Activity', { 

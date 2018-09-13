@@ -2,7 +2,7 @@ import React, {
   Component
 } from 'react';
 
-import { NavigationActions } from 'react-navigation';
+import { StackActions, NavigationActions } from 'react-navigation';
 import FastImage from 'react-native-fast-image';
 import Video from "react-native-video";
 
@@ -67,7 +67,7 @@ export default class Register extends Component {
       navigateAction.action = NavigationActions.navigate(childRouterAction);
     }
 
-    const resetAction = NavigationActions.reset({
+    const resetAction = StackActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate(navigateAction)

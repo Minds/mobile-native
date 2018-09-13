@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
 /**
  * Notification Screen
  */
-@inject('notifications', 'tabs', 'navigatorStore', 'user')
+@inject('notifications', 'tabs', 'user')
 @observer
 export default class NotificationsScreen extends Component {
 
@@ -68,7 +68,7 @@ export default class NotificationsScreen extends Component {
       }
     });
 
-    this.disposeEnter = this.props.navigatorStore.onEnterScreen('Notifications', (s) => {
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       this.props.notifications.loadList(true);
       this.props.notifications.setUnread(0);
     });

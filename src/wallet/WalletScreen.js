@@ -36,7 +36,7 @@ import shareService from "../share/ShareService";
 /**
  * Wallet screen
  */
-@inject('wallet', 'user', 'tabs', 'navigatorStore')
+@inject('wallet', 'user', 'tabs')
 @observer
 export default class WalletScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -68,7 +68,7 @@ export default class WalletScreen extends Component {
     });
 
     if (FeaturesService.has('crypto')) {
-      this.disposeEnter = this.props.navigatorStore.onEnterScreen('Wallet', async () => {
+      this.disposeEnter = this.props.navigation.addListener('didFocus', async () => {
         if ((await this.props.wallet.canShowOnboarding()) && (!this.props.user.hasRewards() || !this.props.user.hasEthWallet())) {
           setImmediate(() => {
             this.props.navigation.navigate('WalletOnboarding');

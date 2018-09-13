@@ -18,17 +18,16 @@ class ApiService {
         'Pragma': 'no-cache'
       };
 
+      if (session.token) {
+        headers.Authorization = 'Bearer ' + session.token;
+      }
+
     return headers;
   }
 
   buildParamsString(params) {
     const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
       accessToken = session.token;
-
-    if (accessToken) {
-      // Send via GET only if basic auth is enabled
-      params['access_token'] = accessToken.toString();
-    }
 
     params['cb'] = Date.now(); //bust the cache every time
 
@@ -49,36 +48,34 @@ class ApiService {
 
   // Legacy (please, refactor!)
 
-  get(url, params={}, signal=null) {
+  async get(url, params={}, signal=null) {
     const paramsString = this.buildParamsString(params);
     const headers = this.buildHeaders();
 
-    return new Promise((resolve, reject) => {
-      fetch(MINDS_URI + url + paramsString, { headers, signal })
-        // throw if response status is not 200
-        .then(resp => {
-          if (!resp.ok) {
-            throw resp;
-          }
-          return resp;
-        })
-        // parse json
-        .then(response => response.json())
-        // verify api call success
-        .then(jsonResp => {
-          if (jsonResp.status != 'success') {
-            return reject(jsonResp);
-          }
-          return resolve(jsonResp)
-        })
-        // catch all errors
-        .catch(err => {
-          if (err.status && err.status == 401) {
-            session.logout();
-          }
-          return reject(err);
-        })
-    });
+      try {
+        let response = await fetch(MINDS_URI + url + paramsString, { headers, signal });
+        
+        // Bad response
+        if (!response.ok) {
+          throw response;
+        }
+  
+        // Convert from JSON
+        const data = response.json();
+
+        // Failed on API side
+        if (data.status != 'success') {
+          throw data;
+        }
+        return data;
+      } catch (err) {
+        // Bad authorization
+        if (err.status && err.status == 401) {
+          console.log('got a logout request');
+         // session.logout();
+        }
+        return err;
+      }
   }
 
  post(url, body={}) {

@@ -31,7 +31,7 @@ export default class OffsetListStore {
    * Constructor
    * @param {string} 'shallow'|'ref'|null
    */
-  constructor(type = null) {
+  /*constructor(type = null) {
     if (type) {
       extendObservable(this, {
         entities: observable[type]([]),
@@ -41,7 +41,7 @@ export default class OffsetListStore {
        entities: observable([])
       });
     }
-  }
+  }*/
 
   @action
   setList(list, replace = false) {

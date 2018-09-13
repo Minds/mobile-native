@@ -119,7 +119,7 @@ export default class BlockchainTransactionModalScreen extends Component {
    * open coinbase in the browser
    */
   linkToCoinbase = () => {
-    Linking.openURL('https://www.coinbase.com');
+    Linking.openURL('https://www.coinbase.com/join/52df5349061ce251f2000066');
   }
 
   /**

@@ -12,10 +12,30 @@ class SessionStorageService {
    */
   async getAccessToken() {
     try {
-      const token = await AsyncStorage.getItem(namespace + 'access_token');
-      return JSON.parse(token);
+      let response = await AsyncStorage.getItem(namespace + 'access_token');
+      return response;
     } catch (err) {
-      this.clear();
+      //this.clear();
+      return null;
+    }
+  }
+
+  /**
+   * Set access token
+   * @param {string} token
+   */
+  setAccessToken(token) {
+    return AsyncStorage.setItem(namespace + 'access_token', token);
+  }
+
+  /**
+   * Get refresh token
+   */
+  async getRefreshToken() {
+    try {
+      return await AsyncStorage.getItem(namespace + 'refresh_token');
+    } catch (err) {
+      //this.clear();
       return null;
     }
   }
@@ -25,8 +45,8 @@ class SessionStorageService {
    * @param {string} token
    * @param {string} guid
    */
-  setAccessToken(token, guid) {
-    return AsyncStorage.setItem(namespace + 'access_token', JSON.stringify({token, guid}));
+  setRefreshToken(token) {
+    return AsyncStorage.setItem(namespace + 'refresh_token', token);
   }
 
   /**
@@ -61,6 +81,7 @@ class SessionStorageService {
    */
   async clear() {
     await AsyncStorage.removeItem(namespace + 'access_token');
+    await AsyncStorage.removeItem(namespace + 'refresh_token');
     await AsyncStorage.removeItem(namespace + 'private_key');
   }
 }

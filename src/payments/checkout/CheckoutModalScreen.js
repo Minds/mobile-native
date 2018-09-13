@@ -23,14 +23,14 @@ import CardList from './CardListComponent';
 import CardInput from './CardInputComponent';
 import { CommonStyle } from '../../styles/Common';
 
-@inject('checkoutModal', 'navigatorStore', 'payments')
+@inject('checkoutModal', 'payments')
 @observer
 export default class CheckoutModalScreen extends Component {
   disposeLeave;
 
   componentWillMount() {
     this.props.payments.load();
-    this.disposeLeave = this.props.navigatorStore.onLeaveScreen('CheckoutModal', () => this.props.checkoutModal.cancel(false));
+    this.disposeLeave = this.props.navigation.addListener('didBlur', () => this.props.checkoutModal.cancel(false));
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
   }
 

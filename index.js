@@ -1,7 +1,12 @@
 import { AppRegistry } from 'react-native';
+/*import App from './App';
 
-import applyDecoratedDescriptor from '@babel/runtime/helpers/es6/applyDecoratedDescriptor';
-import initializerDefineProperty from '@babel/runtime/helpers/es6/initializerDefineProperty';
+AppRegistry.registerComponent('Minds', () => App);*/
+
+
+import applyDecoratedDescriptor from '@babel/runtime/helpers/applyDecoratedDescriptor';
+import initializerDefineProperty from '@babel/runtime/helpers/initializerDefineProperty';
+
 Object.assign(babelHelpers, {
   applyDecoratedDescriptor,
   initializerDefineProperty,
