@@ -74,7 +74,7 @@
     "react-native-tcp": "3.3.0",
     "react-native-udp": "2.3.1",
     "react-native-vector-icons": "5.0.0",
-    "react-native-video": "3.2.1",
+    "react-native-video": "react-native-community/react-native-video#b0c0ac10f437a40b4d7d6184d21cdbbdea2886ed",
     "react-navigation": "2.14.0",
     "react-promise": "^2.0.0",
     "readable-stream": "1.0.33",
