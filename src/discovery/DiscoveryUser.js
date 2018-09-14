@@ -8,7 +8,8 @@ import {
   StyleSheet,
   Keyboard,
   TouchableHighlight,
-  Text
+  Text,
+  View
 } from 'react-native';
 
 import {
@@ -24,6 +25,7 @@ import abbrev from '../common/helpers/abbrev'
 
 import colors from '../styles/Colors'
 import { ComponentsStyle } from '../styles/Components';
+import { CommonStyle } from '../styles/Common';
 
 @inject('user')
 @observer
@@ -84,7 +86,10 @@ export default class DiscoveryUser extends Component {
     return (
       <TouchableOpacity style={styles.row} onPress={this._navToChannel}>
         <Image source={avatarImg} style={styles.avatar} />
-        <Text style={styles.body}>{item.name}</Text>
+        <View style={CommonStyle.flexContainer}>
+          <Text style={styles.body}>{item.name}</Text>
+          <Text style={[styles.body, CommonStyle.fontS, CommonStyle.colorMedium]}>@{item.username}</Text>
+        </View>
         {this.renderRightButton()}
       </TouchableOpacity>
     );
