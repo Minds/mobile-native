@@ -24,8 +24,6 @@ import {
 } from '../config/Config';
 import { Button } from 'react-native-elements';
 import CenteredLoading from '../common/components/CenteredLoading'
-import CapturePoster from './CapturePoster';
-
 import CaptureTabs from './CaptureTabs';
 import androidPermissionsService from '../common/services/android-permissions.service';
 
