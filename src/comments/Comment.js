@@ -21,6 +21,7 @@ import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Clipboard,
   Image,
   View,
   Dimensions
@@ -86,12 +87,12 @@ export default class Comment extends Component {
             {
               this.state.editing ?
                 <CommentEditor setEditing={this.setEditing} comment={comment} store={this.props.store}/> :
-                
+
                 <Text style={styles.message} selectable={true} onPress={this.showActions}>
                   <Text style={styles.username}>@{comment.ownerObj.username} </Text>
                   { comment.description &&
-                    <Tags 
-                      style={comment.mature? styles.mature : {}} 
+                    <Tags
+                      style={comment.mature? styles.mature : {}}
                       navigation={this.props.navigation}
                       >
                       {entities.decodeHTML(comment.description)}
@@ -144,7 +145,7 @@ export default class Comment extends Component {
     } else {
       if (this.props.user.isAdmin()) {
         actions.push( 'Delete' );
-        
+
         if (!this.props.comment.mature) {
           actions.push( 'Set explicit' );
         } else {
@@ -153,9 +154,10 @@ export default class Comment extends Component {
       } else if (this.props.user.me.guid == this.props.entity.owner_guid) {
         actions.push( 'Delete' );
       }
-  
-      actions.push( 'Report' ); 
-      actions.push( 'Reply' ); 
+
+      actions.push( 'Report' );
+      actions.push( 'Reply' );
+      actions.push( 'Copy' );
     }
 
     return actions;
@@ -216,6 +218,9 @@ export default class Comment extends Component {
         break;
       case 'Reply':
         this.props.replyComment(this.props.comment);
+        break;
+      case 'Copy':
+        Clipboard.setString(entities.decodeHTML(this.props.comment.description));
         break;
       default:
         break;
