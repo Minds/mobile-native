@@ -21,7 +21,7 @@ import * as Progress from 'react-native-progress';
 
 import { observer, inject } from 'mobx-react/native';
 
-import { extendObservable } from 'mobx';
+import { observable } from 'mobx';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -367,9 +367,7 @@ export default class ActivityScreen extends Component {
     const comment = row.item;
 
     // add the editing observable property
-    extendObservable(comment, {
-      editing: false
-    });
+    comment.editing = observable.box(false);
 
     return (
       <Comment comment={comment} entity={this.entity.entity} replyComment={this.replyComment} store={this.comments} navigation={this.props.navigation}/>
