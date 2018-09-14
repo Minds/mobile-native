@@ -123,7 +123,7 @@ export default class MediaView extends Component {
    */
   runDownload = async () => {
     try {
-      const result = await download.downloadToGallery(this.props.source.uri);
+      const result = await download.downloadToGallery(this.source.uri);
       Alert.alert('Success', 'Image added to gallery!');
     } catch (e) {
       Alert.alert('Error downloading file');
