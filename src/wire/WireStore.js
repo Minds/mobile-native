@@ -36,7 +36,6 @@ class WireStore {
   loadUser(guid) {
     return wireService.userRewards(guid)
       .then(owner => {
-        console.log(owner)
         this.setOwner(owner);
         return owner;
       });
