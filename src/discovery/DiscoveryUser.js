@@ -53,7 +53,7 @@ export default class DiscoveryUser extends Component {
 
   renderRightButton() {
     const item = this.props.entity.item;
-    if (this.props.user.me.guid === item.guid) {
+    if (this.props.user.me.guid === item.guid || this.props.hideButtons) {
       return;
     }
     if (item.subscribed) {

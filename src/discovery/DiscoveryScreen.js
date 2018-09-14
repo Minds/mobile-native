@@ -370,6 +370,8 @@ export default class DiscoveryScreen extends Component {
    * Refresh feed data
    */
   refresh = () => {
+    if (this.props.discovery.type == 'lastchannels')
+      return;
     this.props.discovery.refresh()
   }
   /**
@@ -388,7 +390,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderUser = (row) => {
     return (
-      <DiscoveryUser store={this.props.discovery.stores['user']} entity={row} navigation={this.props.navigation} />
+      <DiscoveryUser store={this.props.discovery.stores['user']} entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.type == 'lastchannels'} />
     );
   }
   /**
