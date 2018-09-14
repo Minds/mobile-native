@@ -40,6 +40,7 @@ import WelcomeDiscoverView from './view/WelcomeDiscoverView';
 import WelcomePostView from './view/WelcomePostView';
 import WelcomePointsView from './view/WelcomePointsView';
 import WireHappenedView from './view/WireHappenedView';
+import ReportActionedView from './view/ReportActionedView';
 
 import styles from './style';
 
@@ -172,6 +173,9 @@ export default class Notification extends Component {
 
       case "wire_happened":
         return <WireHappenedView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "report_actioned":
+        return <ReportActionedView entity={entity} navigation={this.props.navigation} styles={styles} />
 
 
       default:

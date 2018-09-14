@@ -78,7 +78,7 @@ export default class ActivityScreen extends Component {
 
     this.store = params.store ? params.store : new NewsfeedStore();
 
-    if (params.entity) {
+    if (params.entity && (params.entity.guid || params.entity.entity_guid)) {
       await this.entity.setEntity(ActivityModel.checkOrCreate(params.entity));
 
       let index = this.store.list.entities.findIndex(x => x.guid == this.entity.entity.guid);
@@ -98,7 +98,7 @@ export default class ActivityScreen extends Component {
     const params = this.props.navigation.state.params;
     if (!this.entity.entity || params.hydrate) {
       try {
-        const resp = await getSingle(params.guid || params.entity.guid);
+        const resp = await getSingle(params.guid || params.entity.guid || params.entity.entity_guid);
         await this.entity.setEntity(ActivityModel.checkOrCreate(resp.activity));
       } catch (e) {
         this.setState({error: true});

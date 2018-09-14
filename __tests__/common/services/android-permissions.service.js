@@ -24,11 +24,11 @@ jest.mock('react-native', () => ({
  */
 describe('Push service', () => {
   it('should read external storage', async () => {
-    service.camerareadExternalStorage();
+    service.readExternalStorage();
     expect(PermissionsAndroid.request).toBeCalled();
   });
 
-  
+
   it('should check read external storage', async () => {
     PermissionsAndroid.check.mockResolvedValue({});
     await service.checkReadExternalStorage();
@@ -54,7 +54,7 @@ describe('Push service', () => {
     await service.checkCamera();
     expect(PermissionsAndroid.check).toBeCalled();
   });
-  
+
   it('should check read sms', async () => {
     PermissionsAndroid.check.mockResolvedValue({});
     await service.checkReadSms();

@@ -115,6 +115,7 @@ export default class Activity extends Component {
             autoHeight={ this.props.autoHeight }
             />
           { this.showActions() }
+          { this.props.isLast ? <View style={styles.activitySpacer}></View> : null}
         </View>
     );
   }
@@ -296,4 +297,8 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     fontSize: 11,
   },
+  activitySpacer: {
+    flex:1, 
+    height: 70
+  }
 });

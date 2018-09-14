@@ -95,7 +95,7 @@ export default class BlogsViewScreen extends Component {
           <Text style={[CommonStyle.fontXS, CommonStyle.paddingLeft, CommonStyle.colorMedium, CommonStyle.paddingRight2x]}>{blog.getLicenseText()}</Text>
           <Icon color={colors.primary} size={20} name='share' onPress={this.share} />
         </View>
-        <Icon color="white" containerStyle={styles.header} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
+        <Icon raised color={colors.primary} containerStyle={styles.header} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
       </ScrollView>
     )
   }

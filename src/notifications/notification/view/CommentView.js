@@ -27,7 +27,7 @@ export default class CommentView extends Component {
     const body = this.getBody(entity, user_guid);
 
     return (
-      <TouchableOpacity onPress={this.navToActivity}>
+      <TouchableOpacity onPress={this.navTo}>
         <Text >
           <Text style={styles.link}>{entity.fromObj.name}</Text>
           <Text> commented on </Text>
@@ -38,10 +38,25 @@ export default class CommentView extends Component {
   }
 
   /**
-   * Navigate to activity
+   * Navigate to activity/blog
    */
-  navToActivity = () => {
-    this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj, hydrate: true });
+  navTo = () => {
+    switch (this.props.entity.entityObj.type ) {
+      case 'activity':
+        this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj, hydrate: true });
+        break;
+      case 'object':
+        switch(this.props.entity.entityObj.subtype) {
+          case 'blog':
+            this.props.navigation.navigate('BlogView', { blog: this.props.entity.entityObj, hydrate: true });
+            break;
+          case 'image':
+          case 'video':
+            this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj, hydrate: true });
+            break;
+        }
+        break;
+    }
   }
 
   /**

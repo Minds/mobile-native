@@ -183,6 +183,7 @@ export default class NewsfeedList extends Component {
    * Render activity
    */
   renderActivity = (row) => {
+    let isLast = this.props.newsfeed.list.entities.length == row.index + 1;
     const entity = row.item;
 
     return <Activity
@@ -190,6 +191,7 @@ export default class NewsfeedList extends Component {
       newsfeed={this.props.newsfeed}
       navigation={this.props.navigation}
       autoHeight={false}
+      isLast={isLast}
     />;
   }
 

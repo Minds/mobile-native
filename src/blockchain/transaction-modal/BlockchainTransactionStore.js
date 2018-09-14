@@ -96,14 +96,14 @@ class BlockchainTransactionStore {
     this.weiValue = 0;
   }
 
-  refreshFunds() {
+  @action
+  async refreshFunds() {
     if (!this.baseOptions.from) {
       this.funds = null;
       return;
     }
 
-    BlockchainWalletService.getFunds(this.baseOptions.from)
-      .then(action(funds => this.funds = funds));
+    this.funds = await BlockchainWalletService.getFunds(this.baseOptions.from);
   }
 
   async getGweiPriceCents() {

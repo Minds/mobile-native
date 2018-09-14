@@ -8,7 +8,7 @@ class AndroidPermissionsService {
   /**
    * Request external storage read permission
    */
-  camerareadExternalStorage() {
+  readExternalStorage() {
     return this._request(
       PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
       {

@@ -144,16 +144,18 @@ export default class CapturePosterFlags extends Component {
   }
 
   isLocking() {
-    return parseInt(this.state.min) > 0;
+    return parseFloat(this.state.min) > 0;
   }
 
   setMin = min => {
-    if (min.indexOf('0') === 0) {
-      min = min.replace(/^0+/, '');
-    }
-
     if (min === '') {
       min = '0';
+    } else {
+      const number = parseFloat(min);
+      if (number && min.slice(-1) !== '.') {
+        min = Math.round(number * 1000)/1000;
+        min = min.toString();
+      }
     }
 
     this.setState({ min });
