@@ -1,6 +1,8 @@
 import { 
   extendShallowObservable, 
   extendObservable,
+  decorate,
+  observable,
   action,
   computed,
 } from 'mobx';
@@ -61,10 +63,16 @@ export default class BaseModel {
    * @param {object} t base model instance
    */
   static createShallowObservables(t) {
-    return ;
     if (!this.observablesShallow.length) return;
-    const obs = this.parseObj(this.observablesShallow, t);
-    extendShallowObservable(t, obs);
+
+    const obs = {};
+
+    this.observablesShallow.forEach(prop => {
+      if (t.hasOwnProperty(prop))
+        obs[prop] = observable; // TODO: Make shallow
+    });
+
+    decorate(t, obs);
   }
 
   /**
@@ -72,10 +80,16 @@ export default class BaseModel {
    * @param {object} t base model instance
    */
   static createObservables(t) {
-    return;
     if (!this.observables.length) return;
-    const obs = this.parseObj(this.observables, t);
-    extendObservable(t, obs);
+
+    const obs = {};
+
+    this.observables.forEach(prop => {
+      if (t.hasOwnProperty(prop))
+        obs[prop] = observable;
+    });
+
+    decorate(t, obs);
   }
 
   /**
@@ -86,7 +100,8 @@ export default class BaseModel {
   static parseObj(observables, t) {
     const obs = {}
     observables.forEach(prop => {
-      if (t.hasOwnProperty(prop)) obs[prop] = t[prop];
+      if (t.hasOwnProperty(prop))
+        obs[prop] = observable;
     });
     return obs;
   }
@@ -175,7 +190,7 @@ export default class BaseModel {
     const voted = (direction == 'up') ? this.votedUp : this.votedDown;
     const delta = (voted) ? -1 : 1;
 
-    const guids = this['thumbs:' + direction + ':user_guids'];
+    const guids = this['thumbs:' + direction + ':user_guids'] || [];
 
     if (voted) {
       this['thumbs:' + direction + ':user_guids'] = guids.filter(function (item) {

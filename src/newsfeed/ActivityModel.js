@@ -30,11 +30,11 @@ export default class ActivityModel extends BaseModel {
    * observables
    */
   static observables = [
-    //'thumbs:down:count',
-    //'thumbs:up:count',
-    //'paywall',
-    //'mature',
-    //'edited'
+    'thumbs:down:count',
+    'thumbs:up:count',
+    'paywall',
+    'mature',
+    'edited'
   ]
 
   /**
