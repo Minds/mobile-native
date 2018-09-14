@@ -17,15 +17,15 @@ import session from '../common/services/session.service';
  * Messenger Conversation Store
  */
 class MessengerConversationStore {
-  
+
   /**
    * Messages observable
    */
-  @observable messages = [];
+  @observable.shallow messages = [];
   @observable loading = false;
   @observable moreData = true;
   @observable invited = false;
-  
+
   @observable offset = ''
   socketRoomName = null;
   participants = null;
@@ -40,7 +40,7 @@ class MessengerConversationStore {
   async load() {
     if (this.loading || !this.moreData) return;
     this.loading = true;
-    
+
     try {
       const conversation = await messengerService.getConversationFromRemote(12, this.guid, this.offset)
 
@@ -50,11 +50,11 @@ class MessengerConversationStore {
       this.invitable = conversation.invitable || null;
       // set public keys for encryption
       crypto.setPublicKeys( conversation.publickeys );
-    
+
       // remove repeated message
       if (this.messages.length)
        conversation.messages.pop();
-   
+
       if (!this.offset || !conversation.messages.length) {
         this.moreData = false;
       }
@@ -71,7 +71,7 @@ class MessengerConversationStore {
 
   /**
    * Load more
-   * @param {string} offset 
+   * @param {string} offset
    */
   async loadMore() {
     return await this.load();
@@ -154,7 +154,7 @@ class MessengerConversationStore {
     const publickeys = crypto.getPublicKeys();
 
     if (!Object.keys(publickeys).length) return Promise.reject('No public keys to encrypt')
-    
+
     return new Promise((resolve, reject) => {
       for (let guid in publickeys) {
         crypto.encrypt(message, guid)
@@ -207,7 +207,7 @@ class MessengerConversationStore {
 
     if (!fromSelf) {
 
-      //const index = 
+      //const index =
 
       for (let index in message.messages) {
         try {
@@ -215,7 +215,7 @@ class MessengerConversationStore {
           message.rowKey = Date.now().toString();
           message.decrypted = true;
           // break on correct decryption
-          
+
           if (message.message)
             break;
         } catch (err) {}

@@ -49,12 +49,18 @@ export default class Message extends PureComponent {
 
       // we need to decrypt inside a settimeout to fix blank list until decryption ends
       setTimeout(() => {
-        crypto.decrypt(message.message)
-          .then(msg => {
-              this.setState({ decrypted: true, msg });
-              message.decrypted = true;
-              message.message = msg;
-            });
+        if (message.message) {
+          crypto.decrypt(message.message)
+            .then(msg => {
+                this.setState({ decrypted: true, msg });
+                message.decrypted = true;
+                message.message = msg;
+              });
+        } else {
+          message.decrypted = true;
+          message.message = '';
+          this.setState({ decrypted: true, msg:'' });
+        }
       }, 0);
 
     } else {

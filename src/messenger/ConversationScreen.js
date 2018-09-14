@@ -165,7 +165,7 @@ export default class ConversationScreen extends Component {
       <KeyboardAvoidingView style={styles.container} behavior={Platform.OS == 'ios' ? 'padding' : null} keyboardVerticalOffset={64}>
         <FlatList
           inverted={true}
-          data={messages.slice()}
+          data={messages}
           ref={(c) => {this.list = c}}
           renderItem={this.renderMessage}
           maxToRenderPerBatch={15}

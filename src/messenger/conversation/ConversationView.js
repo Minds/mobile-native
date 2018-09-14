@@ -28,11 +28,6 @@ export default class ConversationView extends Component {
     }
   }
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
-
   render() {
     const item = this.props.item;
     const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + item.participants[0].guid + '/medium/' + item.participants[0].icontime };
