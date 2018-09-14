@@ -8,8 +8,12 @@ import BlockchainWalletService from '../blockchain/wallet/BlockchainWalletServic
  */
 class WireService {
 
+  /**
+   * Unlock an activity
+   * @param {string} guid
+   */
   unlock(guid) {
-    return api.get('api/v1/wire/threshold/' + guid)
+    return api.get(`api/v1/wire/threshold/${guid}`)
       .then((response) => {
         if (response.hasOwnProperty('activity')) {
           return response.activity;
@@ -20,16 +24,28 @@ class WireService {
       });
   }
 
+  /**
+   * Get overview
+   * @param {string} guid
+   */
   overview(guid) {
-    return api.get('api/v1/wire/sums/overview/' + guid + '?merchant=1');
+    return api.get(`api/v1/wire/sums/overview/${guid}?merchant=1`);
   }
 
+  /**
+   * Get user rewards
+   * @param {string} guid
+   */
   userRewards(guid) {
     return api.get(`api/v1/wire/rewards/${guid}/entity`);
   }
 
+  /**
+   * Get rewards
+   * @param {string} guid
+   */
   rewards(guid) {
-    return api.get('api/v1/wire/rewards/' + guid )
+    return api.get(`api/v1/wire/rewards/${guid}`)
       .then(rewards => {
         rewards = (rewards.wire_rewards) ? rewards.wire_rewards.rewards : null
         if (rewards) {
@@ -67,6 +83,10 @@ class WireService {
     });
   }
 
+  /**
+   * Get transaction payloads
+   * @param {object} opts
+   */
   async getTransactionPayloads(opts) {
     const payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Wire.`, { signable: true, offchain: true, buyable: true, confirmTokenExchange: opts.amount });
 
