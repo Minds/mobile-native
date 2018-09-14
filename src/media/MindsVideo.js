@@ -28,14 +28,14 @@ let FORWARD_DURATION = 7;
 import { observer, inject } from 'mobx-react/native';
 import KeepAwake from 'react-native-keep-awake';
 import Icon from 'react-native-vector-icons/Ionicons';
-
+import { withNavigation } from 'react-navigation';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import en from "../../locales/en";
 
 @observer
-export default class MindsVideo extends Component {
+class MindsVideo extends Component {
 
   constructor(props, context, ...args) {
     super(props, context, ...args);
@@ -66,17 +66,19 @@ export default class MindsVideo extends Component {
       this.setState({active: true})
     }
 
-    // if there is a screen change we pause
-    //this.onScreenDispose = this.props.navigatorStore.onScreen(() => {
-    //  this.pause();
-    //});
+    this.onScreenBlur = this.props.navigation.addListener(
+      'didBlur',
+      () => {
+        this.pause();
+      }
+    );
   }
 
   /**
    * On component will unmount
    */
   componentWillUnmount() {
-    this.onScreenDispose();
+    this.onScreenBlur.remove();
   }
 
   onVideoEnd = () => {
@@ -446,3 +448,5 @@ let styles = StyleSheet.create({
     top: 0
   }
 });
+
+export default withNavigation(MindsVideo);
