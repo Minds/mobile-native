@@ -1,3 +1,4 @@
+import { observable } from 'mobx';
 import { MINDS_CDN_URI } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
@@ -7,6 +8,15 @@ import stores from '../../AppStores';
  * User model
  */
 export default class UserModel extends BaseModel {
+
+  /**
+   * @var boolean
+   */
+  @observable blocked;
+  /**
+   * @var boolean
+   */
+  @observable subscribed;
 
   getOwnerIcontime() {
     if (stores.user.me && stores.user.me.guid === this.guid) {
@@ -51,12 +61,4 @@ export default class UserModel extends BaseModel {
   hasBanner() {
     return !!this.carousels;
   }
-
-  /**
-   * observables
-   */
-  static observables = [
-    'blocked',
-    'subscribed',
-  ]
 }

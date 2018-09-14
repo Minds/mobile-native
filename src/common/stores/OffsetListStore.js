@@ -5,12 +5,6 @@ import { revokeBoost, rejectBoost, acceptBoost} from '../../boost/BoostService';
  * Common infinite scroll list
  */
 export default class OffsetListStore {
-
-  /**
-   * list entities
-   */
-  entities = [];
-
   /**
    * list is refreshing
    */
@@ -31,17 +25,21 @@ export default class OffsetListStore {
    * Constructor
    * @param {string} 'shallow'|'ref'|null
    */
-  /*constructor(type = null) {
+  constructor(type = null) {
     if (type) {
-      extendObservable(this, {
-        entities: observable[type]([]),
+      extendObservable(this,{
+        entities: [],
+      },{
+        entities: observable[type],
       });
     } else {
-      extendObservable(this, {
-       entities: observable([])
+      extendObservable(this,{
+        entities: [],
+      }, {
+       entities: observable
       });
     }
-  }*/
+  }
 
   @action
   setList(list, replace = false) {

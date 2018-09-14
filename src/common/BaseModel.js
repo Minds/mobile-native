@@ -1,12 +1,12 @@
-import { 
-  extendShallowObservable, 
+import {
+  extendShallowObservable,
   extendObservable,
   action,
   computed,
 } from 'mobx';
 import _ from 'lodash';
 import sessionService from './services/session.service';
-import { vote } from './services/votes.service'; 
+import { vote } from './services/votes.service';
 
 /**
  * Base model
@@ -21,31 +21,10 @@ export default class BaseModel {
   }
 
   /**
-   * Observable properties
-   */
-  static observables = [];
-
-  /**
-   * Observable by reference properties
-   */
-  static observablesRef = [];
-
-  /**
-   * Shallow observable properties
-   */
-  static observablesShallow = [];
-
-  /**
    * Constructor
    */
   constructor(data) {
     Object.assign(this, data);
-
-    // observables
-    this.constructor.createObservables(this);
-
-    // shallow observables
-    this.constructor.createShallowObservables(this);
 
     // create childs instances
     const childs = this.childModels()
@@ -54,41 +33,6 @@ export default class BaseModel {
         this[prop] = childs[prop].create(this[prop]);
       }
     }
-  }
-
-  /**
-   * Create shallow observables
-   * @param {object} t base model instance
-   */
-  static createShallowObservables(t) {
-    return ;
-    if (!this.observablesShallow.length) return;
-    const obs = this.parseObj(this.observablesShallow, t);
-    extendShallowObservable(t, obs);
-  }
-
-  /**
-   * Create observables
-   * @param {object} t base model instance
-   */
-  static createObservables(t) {
-    return;
-    if (!this.observables.length) return;
-    const obs = this.parseObj(this.observables, t);
-    extendObservable(t, obs);
-  }
-
-  /**
-   * Return the properties that will be converted to observables
-   * @param {array} observables
-   * @param {object} t base model instance
-   */
-  static parseObj(observables, t) {
-    const obs = {}
-    observables.forEach(prop => {
-      if (t.hasOwnProperty(prop)) obs[prop] = t[prop];
-    });
-    return obs;
   }
 
   /**

@@ -1,4 +1,4 @@
-import { computed, action, observable } from 'mobx';
+import { computed, action, observable, decorate } from 'mobx';
 
 import BaseModel from '../common/BaseModel';
 import sessionService from '../common/services/session.service';
@@ -12,7 +12,6 @@ import {
   MINDS_CDN_URI
 } from '../config/Config';
 
-
 /**
  * Activity model
  */
@@ -25,25 +24,6 @@ export default class ActivityModel extends BaseModel {
    * Is visible in flat list
    */
   @observable is_visible = false;
-
-  /**
-   * observables
-   */
-  static observables = [
-    //'thumbs:down:count',
-    //'thumbs:up:count',
-    //'paywall',
-    //'mature',
-    //'edited'
-  ]
-
-  /**
-   * shallow observables
-   */
-  static observablesShallow = [
-    'thumbs:down:user_guids',
-    'thumbs:up:user_guids',
-  ]
 
   /**
    * Child models
@@ -114,3 +94,16 @@ export default class ActivityModel extends BaseModel {
     }
   }
 }
+
+/**
+ * Define model observables
+ */
+decorate(ActivityModel, {
+  'thumbs:down:count': observable,
+  'thumbs:up:count': observable,
+  'paywall': observable,
+  'mature': observable,
+  'edited': observable,
+  'thumbs:down:user_guids': observable,
+  'thumbs:up:user_guids': observable
+});

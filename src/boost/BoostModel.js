@@ -1,3 +1,4 @@
+import { observable } from 'mobx';
 import { MINDS_CDN_URI } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
@@ -8,11 +9,9 @@ import UserModel from '../channel/UserModel';
 export default class BoostModel extends BaseModel {
 
   /**
-   * observables
+   * @var boolean
    */
-  static observables = [
-    'state',
-  ]
+  @observable state;
 
   /**
    * Child models
