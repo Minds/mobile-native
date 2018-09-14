@@ -34,7 +34,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
-
+import stores from '../../AppStores';
 import CaptureFab from '../capture/CaptureFab';
 import { MINDS_CDN_URI } from '../config/Config';
 
@@ -43,7 +43,7 @@ const isIos = Platform.OS === 'ios';
 /**
  * Discovery screen
  */
-@inject('discovery', 'tabs', 'channel')
+@inject('discovery', 'channel')
 @observer
 export default class DiscoveryScreen extends Component {
 
@@ -61,7 +61,15 @@ export default class DiscoveryScreen extends Component {
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <Icon name="search" size={24} color={tintColor} />
-    )
+    ),
+    tabBarOnPress: ({ navigation, defaultHandler }) => {
+      // tab button tapped again?
+      if (navigation.isFocused()) {
+        stores.discovery.refresh();
+        return;
+      }
+      defaultHandler();
+    }
   }
 
   /**
@@ -82,13 +90,6 @@ export default class DiscoveryScreen extends Component {
       setTimeout(() => {
         this.setState({active: false});
       }, 50);
-    });
-
-    this.disposeState = this.props.tabs.onState((state) => {
-      if (!state.previousScene) return;
-      if (state.previousScene.key == "Discovery" && state.previousScene.key == state.scene.route.key) {
-        this.props.discovery.refresh();
-      }
     });
 
     const params = this.props.navigation.state.params;

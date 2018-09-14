@@ -15,18 +15,27 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import BoostsCarousel from './boosts/BoostsCarousel';
 import Topbar from './topbar/Topbar';
 import CaptureFab from '../capture/CaptureFab';
+import stores from '../../AppStores';
 
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'tabs', 'user')
+@inject('newsfeed', 'user')
 @observer
 export default class NewsfeedScreen extends Component {
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <IonIcon name="md-home" size={24} color={tintColor} />
-    )
+    ),
+    tabBarOnPress: ({ navigation, defaultHandler }) => {
+      // tab button tapped again?
+      if (navigation.isFocused()) {
+        stores.newsfeed.refresh();
+        return;
+      }
+      defaultHandler();
+    }
   }
 
   /**
@@ -42,14 +51,6 @@ export default class NewsfeedScreen extends Component {
   componentWillMount() {
     this.props.newsfeed.loadFeed();
     this.props.newsfeed.loadBoosts();
-
-    // on tap news feed again refresh
-    this.disposeState = this.props.tabs.onState((state) => {
-      if (!state.previousScene) return;
-      if (state.previousScene.key == "Newsfeed" && state.previousScene.key == state.scene.route.key) {
-        this.props.newsfeed.refresh();
-      }
-    });
   }
 
   componentDidMount() {
@@ -60,19 +61,12 @@ export default class NewsfeedScreen extends Component {
     }
   }
 
-  /**
-   * Dispose autorun of tabstate
-   */
-  componentWillUnmount() {
-    this.disposeState();
-  }
-
   render() {
     const newsfeed = this.props.newsfeed;
 
     const header = (
       <View>
-        <Topbar />           
+        <Topbar />
         { false ?
           <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation} store={newsfeed} me={this.props.user.me}/>
           : null }
@@ -82,7 +76,7 @@ export default class NewsfeedScreen extends Component {
     return (
       <View style={{flex:1}}>
         <CaptureFab navigation={this.props.navigation}/>
-        <NewsfeedList 
+        <NewsfeedList
           newsfeed={newsfeed}
           header={header}
           navigation={this.props.navigation}

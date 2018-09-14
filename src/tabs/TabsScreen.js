@@ -2,7 +2,8 @@ import React, {
     Component
 } from 'react';
 import {
-  createTabNavigator
+  createBottomTabNavigator,
+  jumpTo
 } from 'react-navigation';
 import {
   Platform,
@@ -55,18 +56,12 @@ if (!featuresService.has('crypto')) {
 }
 
 const Tabs = (
-  createTabNavigator(screens, {
+  createBottomTabNavigator(screens, {
     tabBarPosition: 'bottom',
     animationEnabled: false,
     swipeEnabled: true,
     lazy: false,
     removeClippedSubviews: true,
-    navigationOptions: ({ navigation }) => ({
-      tabBarOnPress: (e) => {
-        e.jumpToIndex(e.scene.index);
-        stores.tabs.setState({previousScene: e.previousScene, scene: e.scene});
-      },
-    }),
     tabBarOptions: {
       showLabel: (Platform.OS == 'ios' && aspectRatio < 1.6)  ? true : false,
       showIcon: true,

@@ -16,7 +16,6 @@ import groups from './src/groups/GroupsStore';
 import groupView from './src/groups/GroupViewStore';
 import channelSubscribersStore from './src/channel/subscribers/ChannelSubscribersStore';
 import keychain from './src/keychain/KeychainStore';
-import tabs from './src/tabs/TabsStore';
 import blockchainTransaction from './src/blockchain/transaction-modal/BlockchainTransactionStore';
 import blockchainWallet from './src/blockchain/wallet/BlockchainWalletStore';
 import blockchainWalletSelector from './src/blockchain/wallet/BlockchainWalletSelectorStore';
@@ -48,7 +47,6 @@ const stores = {
   groups: new groups(),
   groupView: new groupView(),
   keychain: new keychain(),
-  tabs: new tabs(),
   blockchainTransaction: new blockchainTransaction(),
   blockchainWallet: new blockchainWallet(),
   blockchainWalletSelector: new blockchainWalletSelector(),

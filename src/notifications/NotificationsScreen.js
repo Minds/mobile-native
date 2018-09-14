@@ -25,6 +25,7 @@ import NotificationsTopbar from './NotificationsTopbar';
 import CaptureFab from '../capture/CaptureFab';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
+import stores from '../../AppStores';
 
 // style
 const styles = StyleSheet.create({
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
 /**
  * Notification Screen
  */
-@inject('notifications', 'tabs', 'user')
+@inject('notifications', 'user')
 @observer
 export default class NotificationsScreen extends Component {
 
@@ -53,21 +54,22 @@ export default class NotificationsScreen extends Component {
     tabBarIcon: ({ tintColor }) => (
       <NotificationsTabIcon tintColor={tintColor}/>
     ),
-    headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.button} onPress={() => navigation.navigate('NotificationsSettings')} />
+    headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.button} onPress={() => navigation.navigate('NotificationsSettings')} />,
+    tabBarOnPress: ({ navigation, defaultHandler }) => {
+      // tab button tapped again?
+      if (navigation.isFocused()) {
+        stores.notifications.refresh();
+        stores.notifications.setUnread(0);
+        return;
+      }
+      defaultHandler();
+    }
   });
 
   /**
    * On component mount
    */
   componentWillMount() {
-    this.disposeState = this.props.tabs.onState((state) => {
-      if (!state.previousScene) return;
-      if (state.previousScene.key == 'Notifications' && state.previousScene.key == state.scene.route.key) {
-        this.props.notifications.refresh();
-        this.props.notifications.setUnread(0);
-      }
-    });
-
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       this.props.notifications.loadList(true);
       this.props.notifications.setUnread(0);
@@ -80,7 +82,6 @@ export default class NotificationsScreen extends Component {
   componentWillUnmount() {
     // clear data to free memory
     this.props.notifications.list.clearList();
-    this.disposeState();
     this.disposeEnter();
   }
 
