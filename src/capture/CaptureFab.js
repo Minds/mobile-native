@@ -5,7 +5,7 @@ import {
   inject
 } from 'mobx-react/native'
 
-import { 
+import {
   View,
   StyleSheet,
 } from 'react-native';
@@ -31,7 +31,7 @@ export default class CaptureFab extends Component {
         color='#fff'
         size={32}
         containerStyle={styles.container}
-        onPress={() => this.navToCapture()} 
+        onPress={() => this.navToCapture()}
         />
     );
   }

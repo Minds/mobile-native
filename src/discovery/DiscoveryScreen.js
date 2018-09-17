@@ -282,7 +282,6 @@ export default class DiscoveryScreen extends Component {
 
     return (
       <View style={CommonStyle.flexContainer}>
-        <CaptureFab navigation={this.props.navigation} />
         <View style={{ flexDirection: 'row', alignItems: 'stretch', backgroundColor: '#FFF' }}>
           <View style={{ flex: 1 }}>
             <SearchView
@@ -298,6 +297,7 @@ export default class DiscoveryScreen extends Component {
           {!fullSearchBar && navigation}
         </View>
         {body}
+        <CaptureFab navigation={this.props.navigation} />
       </View>
     );
   }

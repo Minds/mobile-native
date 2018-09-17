@@ -75,12 +75,12 @@ export default class NewsfeedScreen extends Component {
 
     return (
       <View style={{flex:1}}>
-        <CaptureFab navigation={this.props.navigation}/>
         <NewsfeedList
           newsfeed={newsfeed}
           header={header}
           navigation={this.props.navigation}
           />
+        <CaptureFab navigation={this.props.navigation}/>
       </View>
     );
   }
