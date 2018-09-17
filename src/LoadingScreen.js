@@ -2,10 +2,6 @@ import React, {
   Component
 } from 'react';
 
-import {
-  NavigationActions
-} from 'react-navigation';
-
 import FastImage from 'react-native-fast-image';
 
 import {

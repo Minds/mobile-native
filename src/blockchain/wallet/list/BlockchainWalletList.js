@@ -10,11 +10,7 @@ import {
 import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import {
-  NavigationActions
-} from 'react-navigation';
-
-import NavigationStoreService from '../../../common/services/navigation.service';
+import NavigationService from '../../../navigation/NavigationService';
 
 import Touchable from '../../../common/components/Touchable';
 
@@ -31,8 +27,7 @@ export default class BlockchainWalletList extends Component {
   }
 
   createWalletAction = () => {
-    NavigationStoreService.get()
-      .dispatch(NavigationActions.navigate({ routeName: 'BlockchainWallet', params: { create: true } }));
+    NavigationService.navigate('BlockchainWallet', { create: true });
   };
 
   ItemPartial = ({ item }) => {

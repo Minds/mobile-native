@@ -16,10 +16,6 @@ import {
   inject
 } from 'mobx-react/native'
 
-import {
-  NavigationActions
-} from 'react-navigation';
-
 import { CommonStyle } from '../../styles/Common';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import token from "../../common/helpers/token";
@@ -29,7 +25,7 @@ import Colors from '../../styles/Colors';
 import MdIcon from 'react-native-vector-icons/MaterialIcons';
 import Touchable from '../../common/components/Touchable';
 import channelAvatarUrl from '../../common/helpers/channel-avatar-url';
-import navigationService from '../../common/services/navigation.service';
+import navigationService from '../../navigation/NavigationService';
 
 /**
  * Rewards view
@@ -168,8 +164,7 @@ export default class TransactionsList extends Component {
   }
 
   navToChannel = guid => {
-    navigationService.get()
-      .dispatch(NavigationActions.navigate({ routeName: 'Channel', params: { guid } }));
+    navigationService.navigate('Channel', { guid });
   }
 
   /**

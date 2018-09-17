@@ -2,10 +2,6 @@ import React, {
   Component
 } from 'react';
 
-import {
-  NavigationActions
-} from 'react-navigation';
-
 import * as Animatable from 'react-native-animatable';
 
 import {

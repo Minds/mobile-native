@@ -11,11 +11,6 @@ import {
   Alert,
 } from 'react-native';
 
-import {
-  NavigationActions
-} from 'react-navigation';
-
-import session from '../../common/services/session.service';
 import { List, ListItem } from 'react-native-elements';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from '../SettingsService';

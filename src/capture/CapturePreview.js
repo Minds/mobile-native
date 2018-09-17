@@ -9,9 +9,6 @@ import { post, remind, uploadAttachment } from '../newsfeed/NewsfeedService';
 import MindsVideo from '../media/MindsVideo';
 import colors from '../styles/Colors';
 
-import {
-  NavigationActions
-} from 'react-navigation';
 /**
  * Capture preview
  */

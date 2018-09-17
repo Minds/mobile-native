@@ -4,9 +4,7 @@ import {
   observe
 } from 'mobx';
 
-import { NavigationActions } from 'react-navigation';
-
-import NavigationStoreService from '../services/navigation.service';
+import NavigationService from '../../navigation/NavigationService';
 
 let dispose;
 
@@ -31,8 +29,7 @@ export default class ModalControllerStore {
     this.opts = opts;
     this.isActive = true;
 
-    NavigationStoreService.get()
-      .dispatch(NavigationActions.navigate({ routeName: this.route }));
+    NavigationService.navigate(this.route);
 
     return await new Promise(resolve => {
       if (dispose) {
@@ -51,8 +48,7 @@ export default class ModalControllerStore {
           resolve(change.newValue);
 
           if (change.newValue !== null) {
-            NavigationStoreService.get()
-              .dispatch(NavigationActions.back());
+            NavigationService.goBack();
           }
         }
       }));
@@ -74,8 +70,7 @@ export default class ModalControllerStore {
     this.payload = null;
 
     if (goBack) {
-      NavigationStoreService.get()
-        .dispatch(NavigationActions.back());
+      NavigationService.goBack();
     }
   }
 }

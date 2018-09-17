@@ -13,10 +13,6 @@ import {
 import { Icon } from 'react-native-elements';
 
 import {
-  NavigationActions
-} from 'react-navigation';
-
-import {
   MINDS_CDN_URI
 } from '../../config/Config';
 

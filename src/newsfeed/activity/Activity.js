@@ -2,10 +2,6 @@ import React, {
   Component
 } from 'react';
 
-import {
-  NavigationActions
-} from 'react-navigation';
-
 import {observer} from "mobx-react/native";
 
 import {
@@ -298,7 +294,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
   },
   activitySpacer: {
-    flex:1, 
+    flex:1,
     height: 70
   }
 });

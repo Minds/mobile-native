@@ -7384,9 +7384,9 @@ react-native-vector-icons@5.0.0:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-react-native-video@3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-3.2.1.tgz#7ba3cbdfc5c747b5b00452811e98193824b16ce3"
+react-native-video@react-native-community/react-native-video#b0c0ac10f437a40b4d7d6184d21cdbbdea2886ed:
+  version "3.2.0"
+  resolved "https://codeload.github.com/react-native-community/react-native-video/tar.gz/b0c0ac10f437a40b4d7d6184d21cdbbdea2886ed"
   dependencies:
     keymirror "0.1.1"
     prop-types "^15.5.10"

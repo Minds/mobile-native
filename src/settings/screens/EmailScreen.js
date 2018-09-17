@@ -9,7 +9,6 @@ import {
   Alert,
 } from 'react-native';
 
-import session from './../../common/services/session.service';
 import { List, ListItem } from 'react-native-elements';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import settingsService from '../SettingsService';

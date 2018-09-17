@@ -2,10 +2,6 @@ import React, {
   Component
 } from 'react';
 
-import {
-  NavigationActions
-} from 'react-navigation';
-
 import BoostActionBar from './BoostActionBar';
 import ChannelCard from '../channel/card/ChannelCard';
 import BlogCard from '../blogs/BlogCard';

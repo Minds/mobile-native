@@ -10,14 +10,9 @@ import {
   Alert,
 } from 'react-native';
 
-import {
-  NavigationActions
-} from 'react-navigation';
-
 import colors from '../../styles/Colors';
 import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
-import session from './../../common/services/session.service';
 import settingsService from '../SettingsService';
 import i18nService from '../../common/services/i18n.service';
 import Touchable from '../../common/components/Touchable';
@@ -33,7 +28,7 @@ export default class PasswordScreen extends Component {
   submit() {
     if (!this.state.currentPassword || !this.state.newPassword || !this.state.confirmNewPassword )
       return;
-    
+
     if (this.state.confirmNewPassword !== this.state.newPassword) {
       Alert.alert('Error', `New passwords must match.`);
     } else {
@@ -53,10 +48,10 @@ export default class PasswordScreen extends Component {
         Alert.alert('Error', err.message);
       });
     }
-  } 
+  }
 
   render() {
-    
+
     return (
       <View style={[ CommonStyle.flexContainer, {backgroundColor: colors.light} ]}>
         <Text style={styles.title}>{i18nService.t('settings.passwordTitle')}:</Text>

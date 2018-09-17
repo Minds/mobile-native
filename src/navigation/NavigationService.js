@@ -7,7 +7,6 @@ function setTopLevelNavigator(navigatorRef) {
 }
 
 function getState() {
-  console.log(_navigator.state.nav);
   return _navigator.state.nav;
 }
 
@@ -18,6 +17,10 @@ function navigate(routeName, params) {
       params,
     })
   );
+}
+
+function goBack() {
+  _navigator.dispatch(NavigationActions.back());
 }
 
 function reset(routeName, params) {
@@ -37,4 +40,5 @@ export default {
   getState,
   reset,
   setTopLevelNavigator,
+  goBack
 };

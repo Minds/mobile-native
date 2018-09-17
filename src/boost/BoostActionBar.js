@@ -5,10 +5,6 @@ import React, {
 import { Icon } from 'react-native-elements'
 
 import {
-  NavigationActions
-} from 'react-navigation';
-
-import {
   Button,
   Text,
   FlatList,
@@ -58,7 +54,7 @@ export default class BoostActionBar extends Component {
   renderTarget() {
     return  this.props.entity.destination ?
               <View style={CommonStyle.flexColumnCentered} key="target">
-                <IonIcon 
+                <IonIcon
                   color='rgb(96, 125, 139)'
                   name='md-person'
                   size={20}
@@ -107,7 +103,7 @@ export default class BoostActionBar extends Component {
               <View style={CommonStyle.flexColumnCentered} key="bid">
                 <Icon
                   type='material-community'
-                  color='rgb(96, 125, 139)' 
+                  color='rgb(96, 125, 139)'
                   name='bank'
                   size={20}
                   style={styles.icon}
@@ -130,7 +126,7 @@ export default class BoostActionBar extends Component {
   renderScheduled() {
     return  this.props.entity.scheduledTs ?
               <View style={CommonStyle.flexColumnCentered} key="schedule">
-                <Icon 
+                <Icon
                   type='material-community'
                   color='rgb(96, 125, 139)'
                   name='alarm'
@@ -140,7 +136,7 @@ export default class BoostActionBar extends Component {
                 <Text style={styles.value}>
                   {formatDate(this.props.entity.scheduledTs)}
                 </Text>
-              </View> : 
+              </View> :
               <View style={CommonStyle.flexColumnCentered} key="schedule">
                 <Icon
                   type='material-community'
@@ -162,7 +158,7 @@ export default class BoostActionBar extends Component {
       buttons.push(
         <View style={CommonStyle.flexColumnCentered} key="revoke">
           <TouchableHighlight
-            onPress={() => { this.props.boost.list.revoke(this.props.entity.guid, this.props.boost.filter)}} 
+            onPress={() => { this.props.boost.list.revoke(this.props.entity.guid, this.props.boost.filter)}}
             underlayColor = 'transparent'
             style = {ComponentsStyle.redbutton}
           >
@@ -171,7 +167,7 @@ export default class BoostActionBar extends Component {
         </View>
       );
     };
-    
+
     if (this.canReject()){
       buttons.push(
         <View style={CommonStyle.flexColumnCentered} key="reject">
@@ -184,8 +180,8 @@ export default class BoostActionBar extends Component {
           </TouchableHighlight>
         </View>
       );
-    } 
-    
+    }
+
     if (this.canAccept()) {
       buttons.push(
         <View style={CommonStyle.flexColumnCentered} key="accept">

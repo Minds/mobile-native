@@ -20,12 +20,10 @@ import QRCode from 'react-native-qrcode';
 import TransparentButton from '../../../common/components/TransparentButton';
 import Touchable from '../../../common/components/Touchable';
 
-import { NavigationActions } from 'react-navigation';
-
 import { observer, inject } from 'mobx-react/native'
 
 import BlockchainWalletService from '../BlockchainWalletService';
-import NavigationStoreService from '../../../common/services/navigation.service';
+import NavigationService from '../../../navigation/NavigationService';
 
 import { CommonStyle } from "../../../styles/Common";
 import number from '../../../common/helpers/number';
@@ -168,7 +166,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
         <View style={styles.itemActions}>
           <Text style={styles.fundsItemValue}>{this.state.tokens !== null ? number(this.state.tokens, 0, 4) : '...'}</Text>
         </View>
-  
+
       </View>
     );
   }
@@ -186,7 +184,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
         <View style={styles.itemActions}>
           <Text style={styles.fundsItemValue}>{this.state.eth !== null ? number(this.state.eth, 0, 4) : '...'}</Text>
         </View>
-  
+
       </View>
     );
   }
@@ -227,7 +225,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
     if (!this._deleted) {
       await this.props.blockchainWallet.save(this.state.address, {
         alias: this.state.alias,
-      });  
+      });
     }
   }
 
@@ -245,7 +243,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
         <View style={styles.itemSpacer}></View>
 
         <View style={styles.itemActions}>
-          <Switch 
+          <Switch
             value={this.state.remote}
             onValueChange={ this.setAsRemote }
             />
@@ -362,14 +360,10 @@ export default class BlockchainWalletDetailsScreen extends Component {
   }
 
   import = () => {
-    NavigationStoreService.get()
-      .dispatch(NavigationActions.navigate({
-        routeName: 'BlockchainWalletImport',
-        params: {
-          address: this.state.address,
-          onSuccess: this.importActionReload
-        }
-      }));
+    NavigationService.navigate('BlockchainWalletImport', {
+      address: this.state.address,
+      onSuccess: this.importActionReload
+    });
   };
 
   importActionReload = () => {

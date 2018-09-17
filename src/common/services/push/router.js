@@ -1,5 +1,5 @@
 
-import navigation from '../navigation.service'
+import navigation from '../../../navigation/NavigationService'
 import session from '../session.service'
 import featuresService from '../features.service';
 
@@ -14,22 +14,22 @@ export default class Router {
    */
   navigate(data) {
     if (data.uri == 'chat') {
-      navigation.get().navigate('Messenger');
+      navigation.navigate('Messenger');
       //TODO: need sender guid on message to go to conversation
-      //navigation.get().navigate('Conversation', { conversation: { guid: data.user_guid + ':' + session.guid } });
+      //navigation.navigate('Conversation', { conversation: { guid: data.user_guid + ':' + session.guid } });
     } else if (data.uri == 'notification') {
       if (!data.json || !data.json.entity_guid) {
-        navigation.get().navigate('Notifications')
+        navigation.navigate('Notifications')
         return;
       }
 
       switch (data.json.type) {
         case 'friends':
-          navigation.get().navigate('Channel', { guid: data.json.entity_guid });
+          navigation.navigate('Channel', { guid: data.json.entity_guid });
           break;
 
         case 'group_invite':
-          navigation.get().navigate('GroupView', { guid: data.json.entity_guid });
+          navigation.navigate('GroupView', { guid: data.json.entity_guid });
           break;
 
         case 'like': // not implemented in engine
@@ -40,13 +40,13 @@ export default class Router {
           let entity_type = data.json.entity_type.split(':');
 
           if (entity_type[0] === 'comment') {
-            navigation.get().navigate('Activity', { guid: data.json.parent_guid });
+            navigation.navigate('Activity', { guid: data.json.parent_guid });
           } else if (entity_type[0] === 'activity') {
-            navigation.get().navigate('Activity', { guid: data.json.entity_guid });
+            navigation.navigate('Activity', { guid: data.json.entity_guid });
           } else if (entity_type[1] === 'blog') {
-            navigation.get().navigate('BlogView', { guid: data.json.entity_guid });
+            navigation.navigate('BlogView', { guid: data.json.entity_guid });
           } else if (entity_type[0] === 'object') {
-            navigation.get().navigate('Activity', { guid: data.json.entity_guid });
+            navigation.navigate('Activity', { guid: data.json.entity_guid });
           } else {
             console.error('Unknown notification:', entity_type, data);
           }
@@ -55,24 +55,24 @@ export default class Router {
 
         case 'remind':
           console.log('remind')
-          navigation.get().navigate('Activity', { guid: data.json.entity_guid });
+          navigation.navigate('Activity', { guid: data.json.entity_guid });
           break;
 
         case 'comment':
-          navigation.get().navigate('Activity', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid });
+          navigation.navigate('Activity', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid });
           break;
-        
+
         case 'rewards_reminder':
         case 'rewards_summary':
           if (featuresService.has('crypto')) {
-            navigation.get().navigate('Wallet', { });
+            navigation.navigate('Wallet', { });
           } else {
-            navigation.get().navigate('Notifications', {});
+            navigation.navigate('Notifications', {});
           }
           break;
 
         default:
-          navigation.get().navigate('Notifications', {});
+          navigation.navigate('Notifications', {});
           console.error('Unknown notification:', data);
           break;
 

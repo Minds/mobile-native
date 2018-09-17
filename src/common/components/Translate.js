@@ -9,10 +9,6 @@ import {
   Alert
 } from 'react-native';
 
-import {
-  NavigationActions
-} from 'react-navigation';
-
 import { observer } from "mobx-react/native";
 
 import entities from 'entities';

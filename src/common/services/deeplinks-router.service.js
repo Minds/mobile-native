@@ -1,5 +1,5 @@
 import { MINDS_DEEPLINK } from '../../config/Config';
-import navigationService from './navigation.service';
+import navigationService from '../../navigation/NavigationService';
 
 /**
  * Deeplinks router
@@ -39,7 +39,7 @@ class DeeplinksRouter {
   navigate(url) {
     const route = this._getUrlRoute(url);
     if (route) {
-      navigationService.get().navigate(route.screen, route.params);
+      navigationService.navigate(route.screen, route.params);
     }
   }
 

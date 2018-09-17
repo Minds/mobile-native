@@ -3,10 +3,6 @@ import React, {
 } from 'react';
 
 import {
-  NavigationActions
-} from 'react-navigation';
-
-import {
   Text,
   View,
   TouchableOpacity,

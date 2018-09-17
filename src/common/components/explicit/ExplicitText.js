@@ -2,10 +2,6 @@ import React, {
   Component
 } from 'react';
 
-import {
-  NavigationActions
-} from 'react-navigation';
-
 import {observer} from "mobx-react/native";
 import entities from 'entities';
 import {
@@ -69,11 +65,11 @@ export default class ExplicitText extends Component {
   render() {
     const entity = this.props.entity;
     let message = entities.decodeHTML(this.props.entity.text).trim();
-    
+
     let body = null;
     let moreLess = null;
     let explicitToggle = null;
-    
+
     if (message != '') {
       const truncated = this.truncate(message);
       // truncate if necessary
@@ -82,7 +78,7 @@ export default class ExplicitText extends Component {
         moreLess = this.getMoreLess();
       }
 
-      body = (entity.mature && !entity.mature_visibility) ? 
+      body = (entity.mature && !entity.mature_visibility) ?
           <Text style={styles.mature}>{message}</Text> :
           <Tags navigation={this.props.navigation} style={this.props.style}>{message}</Tags>
 
@@ -111,7 +107,7 @@ export default class ExplicitText extends Component {
 
   /**
    * Truncate text
-   * @param {string} message 
+   * @param {string} message
    */
   truncate(message) {
     const limit = this.getTextLimit();
@@ -141,7 +137,7 @@ export default class ExplicitText extends Component {
    * Returns more or less button
    */
   getMoreLess() {
-    const msg = (this.state.more) ? 'Show less' : 'Read More'; 
+    const msg = (this.state.more) ? 'Show less' : 'Read More';
     return <Text style={styles.readmore} onPress={this.toggleReadMore}>{msg}</Text>
   }
 

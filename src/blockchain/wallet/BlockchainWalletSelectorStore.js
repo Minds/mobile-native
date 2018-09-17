@@ -4,9 +4,7 @@ import {
   observe
 } from 'mobx'
 
-import { NavigationActions } from 'react-navigation';
-
-import NavigationStoreService from '../../common/services/navigation.service';
+import NavigationService from '../../navigation/NavigationService';
 
 let dispose;
 
@@ -38,7 +36,7 @@ class BlockchainWalletSelectorStore {
     this.opts = opts;
     this.isSelecting = true;
 
-    NavigationStoreService.get().dispatch(NavigationActions.navigate({ routeName: 'BlockchainWalletModal' }));
+    NavigationService.navigate('BlockchainWalletModal');
 
     return await new Promise(resolve => {
       if (dispose) {
@@ -58,7 +56,7 @@ class BlockchainWalletSelectorStore {
 
           resolve(change.newValue);
 
-          NavigationStoreService.get().dispatch(NavigationActions.back());
+          NavigationService.goBack();
         }
       }));
     });

@@ -9,10 +9,6 @@ import {
 } from '../config/Config';
 
 import {
-  NavigationActions
-} from 'react-navigation';
-
-import {
   Alert,
   Button,
   Text,
@@ -53,13 +49,13 @@ export default class ReportScreen extends Component {
     title: 'Report',
     headerRight: (
       <View>
-        { 
-          navigation.state.params.requireNote && 
+        {
+          navigation.state.params.requireNote &&
           <Button
             title="Submit"
-            onPress={navigation.state.params.selectReason ? 
+            onPress={navigation.state.params.selectReason ?
               navigation.state.params.selectReason : () => null}
-          /> 
+          />
         }
       </View>
     ),
@@ -106,7 +102,7 @@ export default class ReportScreen extends Component {
   }
 
   async selectReason(reason) {
-    if (!reason) 
+    if (!reason)
       reason = this.state.reason;
 
     if (reason.value >= 10 && !this.state.note) {
@@ -121,7 +117,7 @@ export default class ReportScreen extends Component {
     await this.setState({
       reason
     });
-    
+
     this.submit();
   }
 

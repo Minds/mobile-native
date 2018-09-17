@@ -9,10 +9,6 @@ import {
 } from '../../../config/Config';
 
 import {
-  NavigationActions
-} from 'react-navigation';
-
-import {
   Button,
   Text,
   TextInput,

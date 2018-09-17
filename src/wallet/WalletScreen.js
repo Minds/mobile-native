@@ -13,10 +13,6 @@ import {
 } from 'react-native';
 
 import {
-  NavigationActions
-} from 'react-navigation';
-
-import {
   inject,
   observer
 } from 'mobx-react';
