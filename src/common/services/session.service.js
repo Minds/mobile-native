@@ -6,6 +6,8 @@ import {
 } from 'mobx'
 
 import sessionStorage from './session.storage.service';
+import AuthService from '../../auth/AuthService';
+import NavigationService from '../../navigation/NavigationService';
 
 /**
  * Session service
@@ -37,6 +39,8 @@ class SessionService {
    */
   initialScreen = 'Tabs';
 
+  refreshingTokens = false;
+
   /**
    * Constructor
    * @param {object} sessionStorage
@@ -47,13 +51,24 @@ class SessionService {
 
   async init() {
     try {
-      let token = await this.sessionStorage.getAccessToken();
-      this.refreshToken = await this.sessionStorage.getRefreshToken();
-      console.log(token, this.refreshToken);
-      this.setToken(token);
-      this.refreshToken = await this.sessionStorage.getRefreshToken();
-      return token;
+      const { access_token, access_token_expires } = await this.sessionStorage.getAccessToken();
+      const { refresh_token, refresh_token_expires }  = await this.sessionStorage.getRefreshToken();
+      console.log(refresh_token);
+      if (
+        access_token_expires < Date.now()
+        && refresh_token
+        && refresh_token_expires > Date.now()
+      ) {
+        console.log('refreshing token');
+        this.refreshToken = refresh_token;
+        return await AuthService.refreshToken();
+      }
+
+      this.setToken(access_token);
+
+      return access_token;
     } catch (e) {
+      this.setToken(null);
       console.log('error getting tokens', e);
       return null;
     }
@@ -73,15 +88,35 @@ class SessionService {
    * @param {string} token
    * @param {string} guid
    */
+  @action
   login(tokens) {
-    //this.guid = guid;
     this.setToken(tokens.access_token);
-    this.sessionStorage.setAccessToken(tokens.access_token);
-    this.sessionStorage.setRefreshToken(tokens.refresh_token);
+    const hour = 60 * 60;
+    const month = 60 * 60 * 24 * 30;
+    this.sessionStorage.setAccessToken(tokens.access_token, Date.now() + hour);
+    this.sessionStorage.setRefreshToken(tokens.refresh_token, Date.now() + month);
+  }
+
+  async badAuthorization() {
+    if (this.refreshingTokens)
+      return;
+    this.refreshingTokens = true;
+    this.setToken(null);
+    try {
+      await AuthService.refreshToken();
+    } catch {
+      this.promptLogin();
+    } finally {
+      this.refreshingTokens = false;
+    }
+  }
+
+  promptLogin() {
+    this.setToken(null);
+    NavigationService.reset('Login');
   }
 
   refresh(tokens) {
-    //this.guid = guid;
     this.setToken(tokens.access_token);
     this.sessionStorage.setAccessToken(tokens.access_token);
     this.sessionStorage.setRefreshToken(tokens.refresh_token);
@@ -91,7 +126,6 @@ class SessionService {
    * Logout
    */
   logout() {
-    console.log('logout issued');
     this.guid = null;
     this.setToken(null);
     this.sessionStorage.clear();
@@ -105,7 +139,7 @@ class SessionService {
    */
   onSession(fn) {
     return reaction(
-      () => [this.token, this.guid],
+      () => [this.token],
       args => fn(...args),
       { fireImmediately: true }
     );
@@ -121,7 +155,7 @@ class SessionService {
       () => this.token,
       token => {
         if (token) {
-          fn(token, this.guid);
+          fn(token);
         }
       },
       { fireImmediately: true }
