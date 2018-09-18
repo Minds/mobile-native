@@ -28,7 +28,7 @@ class AuthService {
 
   async logout() {
     try {
-      await api.post('api/v1/logout', {});
+      //await api.post('api/v1/logout', {});
       session.logout();
       return true;
     } catch (err) {
@@ -38,6 +38,9 @@ class AuthService {
   }
 
   async refreshToken() {
+    if (!session.refreshToken)
+      return;
+
     let params = {
       grant_type: 'refresh_token',
       client_id: 'mobile',
@@ -46,8 +49,8 @@ class AuthService {
     };
     try {
       const data = await api.post('api/v2/oauth/token', params);
-      session.refresh(data);
-      //session.login(data);
+      console.log('refresh token response', data);
+      session.login(data);
       return data;
     } catch (err) {
       console.log('ERROR CLAIMING REFRESH TOKEN', params, err);
@@ -56,7 +59,7 @@ class AuthService {
 
   async twoFactorAuth(token, code) {
     const data = await api.post('api/v1/authenticate/two-factor', { token, code });
-    session.login(data.access_token);
+    //session.login(data.access_token);
     return data;
   }
 

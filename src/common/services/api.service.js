@@ -71,39 +71,37 @@ class ApiService {
       } catch (err) {
         // Bad authorization
         if (err.status && err.status == 401) {
-          console.log('got a logout request');
-         // session.logout();
+          await session.badAuthorization(); //not actually a logout
         }
         return err;
       }
   }
 
- post(url, body={}) {
+ async post(url, body={}) {
     const paramsString = this.buildParamsString({});
     const headers = this.buildHeaders();
 
-    return new Promise((resolve, reject) => {
-      fetch(MINDS_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers })
-        .then(resp => {
-          if (!resp.ok) {
-            throw resp;
-          }
-          return resp;
-        })
-        .then(response => response.json())
-        .then(jsonResp => {
-          if (jsonResp.status === 'error') {
-            return reject(jsonResp);
-          }
-          return resolve(jsonResp)
-        })
-        .catch(err => {
-          if (err.status && err.status == 401) {
-            session.logout();
-          }
-          return reject(err);
-        })
-    });
+    try {
+      let response = await fetch(MINDS_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers });
+      
+      if (!response.ok) {
+        throw response;
+      }
+
+      // Convert from JSON
+      const data = response.json();
+
+      // Failed on API side
+      if (data.status != 'success') {
+        throw data;
+      }
+      return data;
+    } catch(err) {
+      if (err.status && err.status == 401) {
+        await session.badAuthorization();
+      }
+      return err;
+    }
   }
 
   async put(url, body={}) {
@@ -127,7 +125,7 @@ class ApiService {
         })
         .catch(err => {
           if (err.status && err.status == 401) {
-            session.logout();
+            session.badAuthorization();
           }
           return reject(err);
         })
@@ -155,7 +153,7 @@ class ApiService {
         })
         .catch(err => {
           if (err.status && err.status == 401) {
-            session.logout();
+            session.badAuthorization();
           }
           return reject(err);
         })
