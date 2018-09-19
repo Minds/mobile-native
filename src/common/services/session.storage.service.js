@@ -31,6 +31,26 @@ class SessionStorageService {
   }
 
   /**
+   * Set user
+   * @param {object} user
+   */
+  setUser(user) {
+    return AsyncStorage.setItem(namespace + 'logged_in_user', JSON.stringify(user));
+  }
+
+  /**
+   * Get user
+   */
+  async getUser() {
+    try {
+      const user = await AsyncStorage.getItem(namespace + 'logged_in_user');
+      return JSON.parse(user);
+    } catch (err) {
+      return null;
+    }
+  }
+
+  /**
    * Get refresh token
    */
   async getRefreshToken() {
@@ -88,6 +108,7 @@ class SessionStorageService {
     await AsyncStorage.removeItem(namespace + 'access_token');
     await AsyncStorage.removeItem(namespace + 'refresh_token');
     await AsyncStorage.removeItem(namespace + 'private_key');
+    await AsyncStorage.removeItem(namespace + 'logged_in_user');
   }
 }
 

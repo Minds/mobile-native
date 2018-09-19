@@ -48,13 +48,8 @@ pushService.init();
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
 
-  //await authService.refreshToken();
-
   // register device token into backend on login
   pushService.registerToken();
-
-  // load user
-  await stores.user.load();
 
   NavigationService.reset(sessionService.initialScreen);
 
@@ -76,7 +71,7 @@ sessionService.onLogout(() => {
 });
 
 // disable yellow boxes
-//console.disableYellowBox = true;
+console.disableYellowBox = true;
 
 /**
  * App
@@ -123,8 +118,6 @@ export default class App extends Component {
       NavigationService.navigate('Login');
     }
 
-    //this.setState({loaded: true});
-
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
     Linking.addEventListener('url', event => this.handleOpenURL(event.url));
     AppState.addEventListener('change', this.handleAppStateChange);
@@ -166,8 +159,8 @@ export default class App extends Component {
   render() {
     const app = (
       <Provider key="app" {...stores}>
-        <Observer>{() => 
-          <NavigationStack 
+        <Observer>{() =>
+          <NavigationStack
             ref={navigatorRef => {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}

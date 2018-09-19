@@ -8,6 +8,7 @@ import {
 import sessionStorage from './session.storage.service';
 import AuthService from '../../auth/AuthService';
 import NavigationService from '../../navigation/NavigationService';
+import appStores from '../../../AppStores';
 
 /**
  * Session service
@@ -70,6 +71,9 @@ class SessionService {
           return await AuthService.refreshToken();
         }
 
+      // ensure user loaded before activate the session
+      await this.loadUser();
+
       this.setLoggedIn(true);
 
       return access_token;
@@ -78,6 +82,21 @@ class SessionService {
       console.log('error getting tokens', e);
       return null;
     }
+  }
+
+  async loadUser() {
+    let user = await sessionStorage.getUser();
+
+    if (user) {
+      appStores.user.setUser(user);
+      // we update the user without wait
+      appStores.user.load();
+    } else {
+      user = await appStores.user.load();
+      sessionStorage.setUser(user);
+    }
+
+    this.guid = user.guid;
   }
 
   /**
@@ -98,7 +117,7 @@ class SessionService {
     } catch (e) {
       return null;
     }
-  };
+  }
 
   /**
    * Get expiration datetime from token
@@ -136,9 +155,12 @@ class SessionService {
    * @param {string} guid
    */
   @action
-  login(tokens) {
+  async login(tokens) {
     this.setToken(tokens.access_token);
     this.setRefreshToken(tokens.refresh_token);
+
+    // ensure user loaded before activate the session
+    await this.loadUser();
 
     this.setLoggedIn(true);
 

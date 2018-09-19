@@ -15,7 +15,6 @@ export default class AndroidPlatfom extends AbstractPlatform {
       //NotificationsAndroid.localNotification(notification.data);
     });
 
-
     NotificationsAndroid.setRegistrationTokenUpdateListener((deviceToken) => {
       this.token = deviceToken;
       if (this.shouldRegister) {

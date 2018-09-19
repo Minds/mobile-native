@@ -17,10 +17,9 @@ class UserStore {
 
   @action
   setUser(user) {
-    if (!user || !user.guid) 
+    if (!user || !user.guid)
       return
     this.me = UserModel.create(user);
-    sessionService.guid = user.guid;
   }
 
   @action
@@ -61,6 +60,7 @@ class UserStore {
       if (this.me.canCrypto) {
         MINDS_FEATURES.crypto = true;
       }
+      return this.me;
     } catch(err)  {
       console.log('error', err);
     }

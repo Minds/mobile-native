@@ -23,7 +23,6 @@ class AuthService {
     } catch (err) {
       console.log(params, err);
     }
-
   }
 
   async logout() {
