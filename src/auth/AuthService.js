@@ -23,7 +23,7 @@ class AuthService {
     } catch (err) {
       console.log(params, err);
     }
-   
+
   }
 
   async logout() {
@@ -49,7 +49,6 @@ class AuthService {
     };
     try {
       const data = await api.post('api/v2/oauth/token', params);
-      console.log('refresh token response', data);
       session.login(data);
       return data;
     } catch (err) {

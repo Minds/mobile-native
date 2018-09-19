@@ -14,15 +14,17 @@ import NavigationService from '../../navigation/NavigationService';
  */
 class SessionService {
 
+  @observable userLoggedIn = false;
+
   /**
    * Session token
    */
-  @observable token = '';
+  token = '';
 
   /**
    * Refresh token
    */
-  @observable refreshToken = '';
+  refreshToken = '';
 
   /**
    * User guid
@@ -49,22 +51,26 @@ class SessionService {
     this.sessionStorage = sessionStorage;
   }
 
+  /**
+   * Init service
+   */
   async init() {
     try {
       const { access_token, access_token_expires } = await this.sessionStorage.getAccessToken();
-      const { refresh_token, refresh_token_expires }  = await this.sessionStorage.getRefreshToken();
-      console.log(refresh_token);
+      const { refresh_token, refresh_token_expires } = await this.sessionStorage.getRefreshToken();
+
+      this.setRefreshToken(refresh_token);
+      this.setToken(access_token);
+
       if (
         access_token_expires < Date.now()
         && refresh_token
         && refresh_token_expires > Date.now()
-      ) {
-        console.log('refreshing token');
-        this.refreshToken = refresh_token;
-        return await AuthService.refreshToken();
-      }
+        ) {
+          return await AuthService.refreshToken();
+        }
 
-      this.setToken(access_token);
+      this.setLoggedIn(true);
 
       return access_token;
     } catch (e) {
@@ -74,14 +80,55 @@ class SessionService {
     }
   }
 
+  /**
+   * Set initial screen
+   * @param {string} screen
+   */
   setInitialScreen(screen) {
     this.initialScreen = screen;
   }
 
+  /**
+   * Parse jwt
+   * @param {string} token
+   */
+  parseJwt(token) {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (e) {
+      return null;
+    }
+  };
+
+  /**
+   * Get expiration datetime from token
+   * @param {string} token
+   */
+  getTokenExpiration(token) {
+    const parsed = this.parseJwt(token);
+    if (parsed && parsed.exp) return parsed.exp;
+    return null;
+  }
+
   @action
+  setLoggedIn(value) {
+    this.userLoggedIn = value;
+  }
+
+  /**
+   * Set token
+   */
   setToken(token) {
     this.token = token;
   }
+
+  /**
+   * Set refresh token
+   */
+  setRefreshToken(token) {
+    this.refreshToken = token;
+  }
+
 
   /**
    * Login
@@ -91,10 +138,15 @@ class SessionService {
   @action
   login(tokens) {
     this.setToken(tokens.access_token);
-    const hour = 60 * 60;
-    const month = 60 * 60 * 24 * 30;
-    this.sessionStorage.setAccessToken(tokens.access_token, Date.now() + hour);
-    this.sessionStorage.setRefreshToken(tokens.refresh_token, Date.now() + month);
+    this.setRefreshToken(tokens.refresh_token);
+
+    this.setLoggedIn(true);
+
+    const token_expire = this.getTokenExpiration(tokens.access_token);
+    const token_refresh_expire = token_expire + (60 * 60 * 24 * 7);
+
+    this.sessionStorage.setAccessToken(tokens.access_token, token_expire);
+    this.sessionStorage.setRefreshToken(tokens.refresh_token, token_refresh_expire);
   }
 
   async badAuthorization() {
@@ -112,7 +164,7 @@ class SessionService {
   }
 
   promptLogin() {
-    this.setToken(null);
+    this.logout();
     NavigationService.reset('Login');
   }
 
@@ -128,9 +180,9 @@ class SessionService {
   logout() {
     this.guid = null;
     this.setToken(null);
+    this.setLoggedIn(false);
     this.sessionStorage.clear();
   }
-
 
   /**
    * Run on session change
@@ -139,7 +191,7 @@ class SessionService {
    */
   onSession(fn) {
     return reaction(
-      () => [this.token],
+      () => [this.userLoggedIn ? this.token : null],
       args => fn(...args),
       { fireImmediately: true }
     );
@@ -152,7 +204,7 @@ class SessionService {
    */
   onLogin(fn) {
     return reaction(
-      () => this.token,
+      () => this.userLoggedIn ? this.token : null,
       token => {
         if (token) {
           fn(token);
@@ -169,7 +221,7 @@ class SessionService {
    */
   onLogout(fn) {
     return reaction(
-      () => this.token,
+      () => this.userLoggedIn ? this.token : null,
       token => {
         if (!token) {
           fn(token);
