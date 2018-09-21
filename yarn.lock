@@ -7262,9 +7262,9 @@ react-native-modal@^6.2.0, react-native-modal@^6.4.0:
     prop-types "^15.6.1"
     react-native-animatable "^1.2.4"
 
-"react-native-notifications@https://github.com/Minds/react-native-notifications":
+react-native-notifications@Minds/react-native-notifications#357fed9aad65b90e3ad02448fe450ce629f8473e:
   version "1.1.19"
-  resolved "https://github.com/Minds/react-native-notifications#3208a08acb96456d97dd9ab74412b09f8a99c97d"
+  resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/357fed9aad65b90e3ad02448fe450ce629f8473e"
   dependencies:
     core-js "^1.0.0"
     uuid "^2.0.3"
