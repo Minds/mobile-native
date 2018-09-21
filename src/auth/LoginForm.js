@@ -157,25 +157,19 @@ export default class LoginForm extends Component {
         .then(data => {
           this.props.onLogin();
         })
-        .catch(err => {
-          err.json()
-            .then(errJson => {
-              if (errJson.error === 'invalid_grant' || errJson.error === 'invalid_client') {
-                this.setState({ msg: i18n.t('auth.invalidGrant'), inProgress: false });
-                return;
-              }
+        .catch(errJson => {
+          if (errJson.error === 'invalid_grant' || errJson.error === 'invalid_client') {
+            this.setState({ msg: i18n.t('auth.invalidGrant'), inProgress: false });
+            return;
+          }
 
-              //TODO implement on backend and edit
-              if (errJson.error === 'two_factor') {
-                this.setState({ twoFactorToken: errJson.message, inProgress: false });
-                return;
-              }
+          //TODO implement on backend and edit
+          if (errJson.error === 'two_factor') {
+            this.setState({ twoFactorToken: errJson.message, inProgress: false });
+            return;
+          }
 
-              this.setState({ msg: errJson.message || 'Unknown error', inProgress: false });
-            })
-            .catch(err => {
-              this.setState({ msg: 'Unexpected error, please try again.', inProgress: false });
-            });
+          this.setState({ msg: errJson.message || 'Unknown error', inProgress: false });
         });
     }
   }

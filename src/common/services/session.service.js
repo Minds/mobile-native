@@ -90,7 +90,9 @@ class SessionService {
     if (user) {
       appStores.user.setUser(user);
       // we update the user without wait
-      appStores.user.load();
+      appStores.user.load().then(user => {
+        if (user) sessionStorage.setUser(user);
+      });
     } else {
       user = await appStores.user.load();
       sessionStorage.setUser(user);

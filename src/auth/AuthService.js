@@ -16,13 +16,10 @@ class AuthService {
       username,
       password
     };
-    try {
-      const data = await api.post('api/v2/oauth/token', params);
-      session.login(data);
-      return data;
-    } catch (err) {
-      console.log(params, err);
-    }
+
+    const data = await api.post('api/v2/oauth/token', params);
+    session.login(data);
+    return data;
   }
 
   async logout() {

@@ -54,14 +54,14 @@ class ApiService {
 
       try {
         let response = await fetch(MINDS_URI + url + paramsString, { headers, signal });
-        
+
         // Bad response
         if (!response.ok) {
           throw response;
         }
-  
+
         // Convert from JSON
-        const data = response.json();
+        const data = await response.json();
 
         // Failed on API side
         if (data.status != 'success') {
@@ -73,7 +73,7 @@ class ApiService {
         if (err.status && err.status == 401) {
           await session.badAuthorization(); //not actually a logout
         }
-        return err;
+        throw err;
       }
   }
 
@@ -83,13 +83,15 @@ class ApiService {
 
     try {
       let response = await fetch(MINDS_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers });
-      
+
       if (!response.ok) {
         throw response;
       }
 
       // Convert from JSON
-      const data = response.json();
+      const data = await response.json();
+
+      console.log(data);
 
       // Failed on API side
       if (data.status != 'success') {
@@ -100,7 +102,7 @@ class ApiService {
       if (err.status && err.status == 401) {
         await session.badAuthorization();
       }
-      return err;
+      throw err;
     }
   }
 
