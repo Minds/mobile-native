@@ -44,7 +44,7 @@ describe('cature tabs component', () => {
       );
 
       // find TouchableOpacity (rendered images in lists)
-      const tabs = wrapper.dive().find(TouchableHighlight);
+      const tabs = wrapper.find(TouchableHighlight);
 
       // simulate press on first tab (gallery)
       tabs.at(0).simulate('press');
@@ -74,7 +74,7 @@ describe('cature tabs component', () => {
       );
 
       // find TouchableOpacity (rendered images in lists)
-      const tabs = wrapper.dive().find(TouchableHighlight);
+      const tabs = wrapper.find(TouchableHighlight);
 
       // simulate press on second tab (gallery)
       tabs.at(1).simulate('press');
@@ -104,7 +104,7 @@ describe('cature tabs component', () => {
       );
 
       // find TouchableOpacity (rendered images in lists)
-      const tabs = wrapper.dive().find(TouchableHighlight);
+      const tabs = wrapper.find(TouchableHighlight);
 
       // simulate press on third tab (gallery)
       tabs.at(2).simulate('press');

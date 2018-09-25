@@ -13,7 +13,7 @@ describe('auth service login', () => {
 
   it('login calls oauth2/token api and returns token', async () => {
 
-    const response = { access_token: 'a1', user_id: 1000 };
+    const response = { access_token: 'a1', refresh_token: 'a2' };
 
     api.post.mockResolvedValue(response);
 
@@ -24,12 +24,12 @@ describe('auth service login', () => {
     // call api post one time
     expect(api.post.mock.calls.length).toEqual(1);
     // with login url
-    expect(api.post.mock.calls[0][0]).toEqual('oauth2/token');
+    expect(api.post.mock.calls[0][0]).toEqual('api/v2/oauth/token');
   });
 
   it('login create session on success', async () => {
 
-    const response = { access_token: 'a1', user_id: 1000 };
+    const response = { access_token: 'a1', refresh_token: 'a2' };
 
     api.post.mockResolvedValue(response);
 
@@ -40,7 +40,7 @@ describe('auth service login', () => {
     // call session login one time
     expect(session.login.mock.calls.length).toEqual(1);
     // with token and guid
-    expect(session.login.mock.calls[0]).toEqual(['a1', 1000]);
+    expect(session.login.mock.calls[0][0]).toEqual(response);
   });
 
   it('login returns errors', async () => {
@@ -73,9 +73,7 @@ describe('auth service logout', () => {
     //assert on the response
     expect(res).toEqual(true);
     // call api post one time
-    expect(api.post.mock.calls.length).toEqual(1);
-    // with logout url
-    expect(api.post.mock.calls[0][0]).toEqual('api/v1/logout');
+    expect(session.logout).toBeCalled();
   });
 
   it('logout destroy session on success', async () => {

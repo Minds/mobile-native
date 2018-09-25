@@ -36,8 +36,8 @@ describe('Owner component', () => {
   it('should _navToChannel on press ', () => {
     let activityResponse = activitiesServiceFaker().load(1);
 
-    const navigation = { 
-      navigate: jest.fn() 
+    const navigation = {
+      navigate: jest.fn()
     };
     let entity = activityResponse.activities[0];
     entity.containerObj = { guid: 'guidguid' };
@@ -45,8 +45,7 @@ describe('Owner component', () => {
       <OwnerBlock entity={entity} navigation={navigation} rightToolbar={null}/>
     );
     screen.update()
-    let render = screen.dive();
-    let touchables = render.find('TouchableOpacity');
+    let touchables = screen.find('TouchableOpacity');
     touchables.at(0).props().onPress();
     jest.runAllTimers();
 
@@ -61,8 +60,8 @@ describe('Owner component', () => {
   it('should nav to groups on press ', () => {
     let activityResponse = activitiesServiceFaker().load(1);
 
-    const navigation = { 
-      navigate: jest.fn() 
+    const navigation = {
+      navigate: jest.fn()
     };
     let entity = activityResponse.activities[0];
     entity.containerObj = { guid: 'guidguid' };
@@ -70,8 +69,7 @@ describe('Owner component', () => {
       <OwnerBlock entity={entity} navigation={navigation} rightToolbar={null}/>
     );
     screen.update()
-    let render = screen.dive();
-    let touchables = render.find('TouchableOpacity');
+    let touchables = screen.find('TouchableOpacity');
 
 
     expect(screen.find(TouchableOpacity)).toHaveLength(3);

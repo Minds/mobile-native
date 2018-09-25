@@ -12,6 +12,7 @@ import renderer from 'react-test-renderer';
 jest.mock('../../src/channel/ChannelStore');
 jest.mock('../../src/channel/UserModel');
 jest.mock('../../src/common/services/features.service');
+jest.mock('../../AppStores');
 
 /**
  * Tests

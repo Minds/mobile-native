@@ -91,8 +91,6 @@ class ApiService {
       // Convert from JSON
       const data = await response.json();
 
-      console.log(data);
-
       // Failed on API side
       if (data.status != 'success') {
         throw data;

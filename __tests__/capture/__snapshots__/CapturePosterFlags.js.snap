@@ -52,6 +52,7 @@ exports[`cature poster flags component should renders correctly for props false 
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
+          Object {},
         ]
       }
     >
@@ -91,6 +92,7 @@ exports[`cature poster flags component should renders correctly for props false 
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
+          Object {},
         ]
       }
     >
@@ -131,6 +133,7 @@ exports[`cature poster flags component should renders correctly for props false 
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
+          Object {},
         ]
       }
     >
@@ -284,6 +287,7 @@ exports[`cature poster flags component should renders correctly for props false 
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
+                  Object {},
                 ]
               }
             >
@@ -322,6 +326,7 @@ exports[`cature poster flags component should renders correctly for props false 
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
+                  Object {},
                 ]
               }
             >
@@ -377,6 +382,7 @@ exports[`cature poster flags component should renders correctly for props false 
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
+                  Object {},
                 ]
               }
             >
@@ -551,6 +557,7 @@ exports[`cature poster flags component should renders correctly for props false 
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
+                  Object {},
                 ]
               }
             >
@@ -724,6 +731,7 @@ exports[`cature poster flags component should renders correctly for props true 1
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
+          Object {},
         ]
       }
     >
@@ -776,6 +784,7 @@ exports[`cature poster flags component should renders correctly for props true 1
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
+          Object {},
         ]
       }
     >
@@ -816,6 +825,7 @@ exports[`cature poster flags component should renders correctly for props true 1
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
+          Object {},
         ]
       }
     >
@@ -969,6 +979,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
+                  Object {},
                 ]
               }
             >
@@ -1007,6 +1018,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
+                  Object {},
                 ]
               }
             >
@@ -1062,6 +1074,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
+                  Object {},
                 ]
               }
             >
@@ -1236,6 +1249,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "fontStyle": "normal",
                     "fontWeight": "normal",
                   },
+                  Object {},
                 ]
               }
             >

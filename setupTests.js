@@ -8,6 +8,8 @@ global.fetch = fetch
 configure({ adapter: new Adapter() });
 
 jest.mock('mobx-react/native', () => require('mobx-react/custom'));
+
+jest.mock('./AppStores');
 jest.useFakeTimers();
 
 jest.doMock('moment', () => {

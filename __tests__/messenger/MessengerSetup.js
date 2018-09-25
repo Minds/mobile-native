@@ -7,13 +7,11 @@ import { shallow } from 'enzyme';
 import MessengerSetup from '../../src/messenger/MessengerSetup';
 import MessengerListStore from '../../src/messenger/MessengerListStore';
 import UserStore from '../../src/auth/UserStore';
-import appNavigation from '../../AppNavigation';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
 jest.mock('../../src/messenger/MessengerListStore');
 jest.mock('../../src/auth/UserStore');
-jest.mock('../../src/common/stores/NavigationStore');
 jest.mock('../../src/common/components/NavNextButton');
 
 Alert.alert = jest.fn();
@@ -22,15 +20,19 @@ Alert.alert = jest.fn();
  * Tests
  */
 describe('Messenger setup component', () => {
-  let storem, userStore, navigation;
+  let store, userStore, navigation;
 
 
   beforeEach(() => {
     store = new MessengerListStore();
     userStore = new UserStore();
-    navigation = appNavigation.buildNavigator();
-    navigation.state.params = {};
-    navigation.setParams = jest.fn();
+    navigation = {
+      navigate: jest.fn(),
+      setParams: jest.fn(),
+      state: {
+        params: {guid: 1}
+      }
+    };
     Alert.alert.mockClear();
   });
 
@@ -58,8 +60,7 @@ describe('Messenger setup component', () => {
     );
 
     // simulate user input
-    const render = wrapper.dive();
-    render.find('TextInput').forEach(child => {
+    wrapper.find('TextInput').forEach(child => {
       child.simulate('changeText', 'mypass');
     });
 
@@ -76,8 +77,7 @@ describe('Messenger setup component', () => {
     );
 
     // simulate user input
-    const render = wrapper.dive();
-    render.find('TextInput').forEach((child, i) => {
+    wrapper.find('TextInput').forEach((child, i) => {
       child.simulate('changeText', 'mypass'+i);
     });
 
@@ -102,8 +102,7 @@ describe('Messenger setup component', () => {
     store.getCryptoKeys.mockResolvedValue(true);
 
     // simulate user input
-    const render = wrapper.dive();
-    render.find('TextInput').forEach((child) => {
+    wrapper.find('TextInput').forEach((child) => {
       child.simulate('changeText', 'mypass');
     });
 
@@ -128,8 +127,7 @@ describe('Messenger setup component', () => {
     store.doSetup.mockResolvedValue(true);
 
     // simulate user input
-    const render = wrapper.dive();
-    render.find('TextInput').forEach((child) => {
+    wrapper.find('TextInput').forEach((child) => {
       child.simulate('changeText', 'mypass');
     });
 

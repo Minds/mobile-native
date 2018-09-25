@@ -1,9 +1,7 @@
 import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
-import { whenWithTimeout } from 'mobx-utils';
-import { useStrict } from 'mobx';
-
+import { configure } from 'mobx';
 import LicensePicker from '../../src/common/components/LicensePicker';
 import CaptureStore from  '../../src/capture/CaptureStore';
 import CapturePosterFlags from '../../src/capture/CapturePosterFlags';
@@ -20,6 +18,8 @@ defaultState = {
   lock: false
 }
 
+configure({enforceActions: 'never'});
+
 /**
  * Test render with  value
  */
@@ -35,7 +35,7 @@ const testRenderWithValue = (value) => {
   }
 
   const preview = renderer.create(
-    <CapturePosterFlags.wrappedComponent
+    <CapturePosterFlags
         capture={store}
         matureValue={state.mature}
         shareValue={state.share}
@@ -48,8 +48,6 @@ const testRenderWithValue = (value) => {
   expect(preview).toMatchSnapshot();
 }
 
-// turn off mobx strict mode
-useStrict(false);
 
 /**
  * Tests
@@ -91,10 +89,8 @@ describe('cature poster flags component', () => {
 
     const store = new CaptureStore();
 
-    //store.attachment.hasAttachment = true;
-
-    const wrapper = shallow(
-      <CapturePosterFlags.wrappedComponent
+    const capturePosterFlag = renderer.create(
+      <CapturePosterFlags
         capture={store}
         matureValue={defaultState.mature}
         shareValue={defaultState.share}
@@ -106,17 +102,14 @@ describe('cature poster flags component', () => {
     );
     let picker;
     // find License picker
-    picker = wrapper.dive().find(LicensePicker);
+    picker = capturePosterFlag.root.findAllByType('LicensePicker');
 
     // check there is no license picker
     expect(picker.length).toEqual(0);
 
     store.attachment.hasAttachment = true;
 
-    // update the component
-    wrapper.update();
-
-    picker = wrapper.dive().find(LicensePicker);
+    picker = capturePosterFlag.root.findAllByType('LicensePicker');
 
     // check there is 1 license picker
     expect(picker.length).toEqual(1);

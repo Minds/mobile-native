@@ -49,15 +49,12 @@ describe('Boost action component', () => {
       <BoostAction entity={entity} navigation={navigation}/>
     );
     screen.update()
-    let render = screen.dive();
-    let touchables = render.find('PreventDoubleTap');
+    let touchables = screen.find('PreventDoubleTap');
     touchables.at(0).props().onPress();
     jest.runAllTimers();
 
     expect(navigation.navigate).toHaveBeenCalled();
 
     expect(screen.find('PreventDoubleTap')).toHaveLength(1);
-
   });
-
 });

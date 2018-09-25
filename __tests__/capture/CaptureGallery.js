@@ -98,7 +98,7 @@ describe('cature gallery component', () => {
       wrapper.update();
 
       // find TouchableOpacity (rendered images in lists)
-      const images = wrapper.dive().find(TouchableOpacity);
+      const images = wrapper.find(TouchableOpacity);
 
       // simulate press on image
       images.at(1).simulate('press');
@@ -132,7 +132,7 @@ describe('cature gallery component', () => {
       wrapper.update();
 
       // find TouchableOpacity (rendered images in lists)
-      const images = wrapper.dive().find(TouchableOpacity);
+      const images = wrapper.find(TouchableOpacity);
 
       // expect 5 images rendered
       expect(images.length).toEqual(5);

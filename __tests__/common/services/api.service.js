@@ -14,12 +14,14 @@ describe('api service POST', () => {
 
   it('should fetch and return json decoded', async () => {
 
-    const response = { access_token: 'a1', user_id: 1000 };
+    const response = { access_token: 'a1', user_id: 1000, status:'success' };
     const params = {p1: 1, p2: 2};
 
     fetch.mockResponseOnce(JSON.stringify(response));
 
     const res = await api.post('api/path', params);
+
+    console.log(res);
 
     // assert on the response
     expect(res).toEqual(response);

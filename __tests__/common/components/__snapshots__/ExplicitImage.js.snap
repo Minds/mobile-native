@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Explicit image component renders correctly 1`] = `
-<Component
+<ForwardRef(View)
   style={
     Object {
       "alignItems": "center",
@@ -96,5 +96,5 @@ exports[`Explicit image component renders correctly 1`] = `
     }
     viewRef={null}
   />
-</Component>
+</ForwardRef(View)>
 `;

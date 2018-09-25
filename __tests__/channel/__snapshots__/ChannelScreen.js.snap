@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Channel screen component should renders correctly 1`] = `
-<Component
+<ForwardRef(View)
   style={
     Object {
       "flex": 1,
@@ -412,5 +412,5 @@ exports[`Channel screen component should renders correctly 1`] = `
       }
     }
   />
-</Component>
+</ForwardRef(View)>
 `;

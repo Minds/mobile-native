@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Owner component renders correctly 1`] = `
-<Component
+<ForwardRef(View)
   style={
     Object {
       "alignItems": "center",
@@ -15,7 +15,7 @@ exports[`Owner component renders correctly 1`] = `
     activeOpacity={0.2}
     onPress={[Function]}
   >
-    <Image
+    <ForwardRef(Image)
       source={
         Object {
           "source": "http://thisisaurl",
@@ -32,7 +32,7 @@ exports[`Owner component renders correctly 1`] = `
       }
     />
   </TouchableOpacity>
-  <Component
+  <ForwardRef(View)
     style={
       Object {
         "flex": 1,
@@ -42,7 +42,7 @@ exports[`Owner component renders correctly 1`] = `
       }
     }
   >
-    <Component
+    <ForwardRef(View)
       style={
         Object {
           "flexDirection": "row",
@@ -53,7 +53,7 @@ exports[`Owner component renders correctly 1`] = `
         activeOpacity={0.2}
         onPress={[Function]}
       >
-        <Component
+        <ForwardRef(Text)
           style={
             Object {
               "color": "#444",
@@ -63,7 +63,7 @@ exports[`Owner component renders correctly 1`] = `
           }
         />
       </TouchableOpacity>
-    </Component>
-  </Component>
-</Component>
+    </ForwardRef(View)>
+  </ForwardRef(View)>
+</ForwardRef(View)>
 `;

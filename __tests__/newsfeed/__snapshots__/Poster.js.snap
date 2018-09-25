@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Newsfeed poster component renders correctly 1`] = `
-<Component
+<ForwardRef(View)
   style={
     Object {
       "flex": 1,
     }
   }
 >
-  <Component
+  <ForwardRef(View)
     style={
       Object {
         "flex": 1,
@@ -16,7 +16,7 @@ exports[`Newsfeed poster component renders correctly 1`] = `
       }
     }
   >
-    <Component
+    <ForwardRef(View)
       style={
         Object {
           "flex": 7,
@@ -40,8 +40,8 @@ exports[`Newsfeed poster component renders correctly 1`] = `
         underlineColorAndroid="transparent"
         value=""
       />
-    </Component>
-    <Component
+    </ForwardRef(View)>
+    <ForwardRef(View)
       style={
         Object {
           "alignContent": "center",
@@ -57,9 +57,9 @@ exports[`Newsfeed poster component renders correctly 1`] = `
         onPress={[Function]}
         size={24}
       />
-    </Component>
-  </Component>
-  <Component
+    </ForwardRef(View)>
+  </ForwardRef(View)>
+  <ForwardRef(View)
     style={
       Object {
         "flex": 1,
@@ -67,14 +67,14 @@ exports[`Newsfeed poster component renders correctly 1`] = `
       }
     }
   >
-    <Component
+    <ForwardRef(View)
       style={
         Object {
           "flex": 5,
         }
       }
     />
-    <Component
+    <ForwardRef(View)
       style={
         Object {
           "flex": 1,
@@ -99,7 +99,7 @@ exports[`Newsfeed poster component renders correctly 1`] = `
         }
         underlayColor="transparent"
       >
-        <Component
+        <ForwardRef(Text)
           style={
             Object {
               "color": "#4690D6",
@@ -107,11 +107,11 @@ exports[`Newsfeed poster component renders correctly 1`] = `
           }
         >
            POST 
-        </Component>
+        </ForwardRef(Text)>
       </TouchableHighlight>
-    </Component>
-  </Component>
-  <Component
+    </ForwardRef(View)>
+  </ForwardRef(View)>
+  <ForwardRef(View)
     style={
       Object {
         "flex": 5,
@@ -119,8 +119,8 @@ exports[`Newsfeed poster component renders correctly 1`] = `
       }
     }
   >
-    <Component />
-    <Component />
-  </Component>
-</Component>
+    <ForwardRef(View) />
+    <ForwardRef(View) />
+  </ForwardRef(View)>
+</ForwardRef(View)>
 `;

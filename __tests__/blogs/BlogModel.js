@@ -26,18 +26,6 @@ describe('Blog model', () => {
     expect(model[1]).toBeInstanceOf(BlogModel);
   });
 
-  it('should have observable properties', () => {
-    const data = blogFakeFactory(1);
-
-    const observablesProp = BlogModel.observables;
-    const observablesShallowProp = BlogModel.observablesShallow;
-
-    const model = BlogModel.create(data);
-
-    observablesProp.forEach(o => expect(isObservable(model,o)).toBe(true));
-    observablesShallowProp.forEach(o => expect(isObservable(model,o)).toBe(true));
-  });
-
   it('should have an UserModel as ownerObj', () => {
     const data = blogFakeFactory(1);
 

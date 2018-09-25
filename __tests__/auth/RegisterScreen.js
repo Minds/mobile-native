@@ -25,8 +25,7 @@ describe('RegisterScreen component', () => {
     );
 
     // find register form
-    let render = wrapper.dive();
-    const registerForms = render.find('RegisterForm');
+    const registerForms = wrapper.find('RegisterForm');
 
     // should contain 1 login form
     expect(registerForms.length).toBe(1);
@@ -43,8 +42,7 @@ describe('RegisterScreen component', () => {
     );
 
     // find register form
-    let render = wrapper.dive();
-    const registerForms = render.find('RegisterForm');
+    const registerForms = wrapper.find('RegisterForm');
 
     // should contain 1 login form
     expect(registerForms.length).toBe(1);

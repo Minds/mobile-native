@@ -64,7 +64,9 @@ exports[`WithdrawScreen renders correctly 1`] = `
           }
           title={
             <Component
+              animating={true}
               color="#4690D6"
+              hidesWhenStopped={true}
               size="small"
             />
           }
@@ -105,7 +107,6 @@ exports[`WithdrawScreen renders correctly 1`] = `
   <View>
     <View
       onLayout={[Function]}
-      style={null}
     >
       <View
         style={

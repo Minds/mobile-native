@@ -8,13 +8,11 @@ import CapturePoster from '../../src/capture/CapturePoster';
 import CapturePreview from '../../src/capture/CapturePreview';
 import UserStore from '../../src/auth/UserStore';
 import CaptureStore from '../../src/capture/CaptureStore';
-import appNavigation from '../../AppNavigation';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
 jest.mock('../../src/auth/UserStore');
 jest.mock('../../src/capture/CaptureStore');
-jest.mock('../../src/common/stores/NavigationStore');
 jest.mock('../../src/capture/CapturePostButton', () => 'CapturePostButton');
 jest.mock('../../src/capture/CapturePosterFlags', () => 'CapturePosterFlags');
 jest.mock('../../src/capture/CapturePreview', () => 'CapturePreview');
@@ -26,7 +24,8 @@ Alert.alert = jest.fn();
  */
 describe('cature poster component', () => {
 
-  let userStore, capture, navigation;
+  let userStore, capture;
+  const navigation = { navigate: jest.fn(), dispatch: jest.fn(), setParams: jest.fn(), state: {params:{}}};
 
   const paramsVideo = {uri: 'file://video.mp4', type: 'video/mp4'};
 
@@ -35,10 +34,10 @@ describe('cature poster component', () => {
   beforeEach(() => {
     userStore = new UserStore();
     capture = new CaptureStore();
-    navigation = appNavigation.buildNavigator();
-    navigation.setParams = jest.fn();
-    navigation.state.params = {};
     capture.attachment.attachMedia.mockClear();
+    navigation.navigate.mockClear();
+    navigation.dispatch.mockClear();
+    navigation.setParams.mockClear();
   });
 
   it('should renders correctly', () => {
@@ -140,7 +139,7 @@ describe('cature poster component', () => {
       wrapper.update();
 
       // find Capture Preview
-      const preview = wrapper.dive().find(CapturePreview);
+      const preview = wrapper.find(CapturePreview);
 
       expect(preview.length).toBe(1);
 
@@ -170,7 +169,7 @@ describe('cature poster component', () => {
       wrapper.update();
 
       // find Capture Preview
-      const preview = wrapper.dive().find(CapturePreview);
+      const preview = wrapper.find(CapturePreview);
 
       expect(preview.length).toBe(1);
 
@@ -197,7 +196,7 @@ describe('cature poster component', () => {
       );
 
       // find delete icon
-      const icon = wrapper.dive().find(Icon);
+      const icon = wrapper.find(Icon);
 
       expect(icon.length).toBe(1);
 

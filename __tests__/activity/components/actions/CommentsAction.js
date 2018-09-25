@@ -5,13 +5,8 @@ import { shallow } from 'enzyme';
 
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
 
-import renderer from 'react-test-renderer';
 import CommentsAction from '../../../../src/newsfeed/activity/actions/CommentsAction';
-import NavigationStore from '../../../../src/common/stores/NavigationStore';
-import withPreventDoubleTap from '../../../../src/common/components/PreventDoubleTap';
-import featuresService from '../../../../src/common/services/features.service';
 
-jest.mock('../../../../src/common/stores/NavigationStore');
 
 describe('Comment action component', () => {
 
@@ -19,12 +14,10 @@ describe('Comment action component', () => {
   beforeEach(() => {
 
     const TouchableOpacityCustom = <TouchableOpacity onPress={this.onPress} />;
-    navigatorStore = new NavigationStore();
-    navigatorStore.currentScreen = 'Something';
-    navigation = { navigate: jest.fn() };
+    navigation = { navigate: jest.fn(), state: {routeName: 'some'} };
     let activityResponse = activitiesServiceFaker().load(1);
     screen = shallow(
-      <CommentsAction.wrappedComponent entity={activityResponse.activities[0]} navigatorStore={navigatorStore} navigation={navigation} />
+      <CommentsAction entity={activityResponse.activities[0]} navigation={navigation} />
     );
 
     jest.runAllTimers();
@@ -46,7 +39,6 @@ describe('Comment action component', () => {
   it('should navigate a thumb on press ', async () => {
 
     screen.update();
-    let render = screen.dive();
     let touchables = screen.find('PreventDoubleTap');
     touchables.at(0).props().onPress();
     expect(navigation.navigate).toHaveBeenCalled();

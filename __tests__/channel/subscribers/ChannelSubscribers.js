@@ -57,12 +57,10 @@ describe('channel subscribers component', () => {
       <ChannelSubscribers.wrappedComponent channelSubscribersStore={store} navigation={navigation}/>
     );
 
-    const render = wrapper.dive();
-
     // simulate press second tab
-    render.find('TouchableHighlight').at(1).simulate('press');
+    wrapper.find('TouchableHighlight').at(1).simulate('press');
     // simulate press first tab
-    render.find('TouchableHighlight').at(0).simulate('press');
+    wrapper.find('TouchableHighlight').at(0).simulate('press');
 
     expect(store.setFilter).toBeCalledWith('subscriptions');
     expect(store.setFilter).toBeCalledWith('subscribers');

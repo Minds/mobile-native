@@ -1,8 +1,7 @@
 import 'react-native';
 import React from 'react';
 
-import { observable, useStrict } from 'mobx';
-
+import { configure } from 'mobx';
 import WithdrawScreen from '../../../src/wallet/tokens/WithdrawScreen';
 import UserStore from '../../../src/auth/UserStore';
 import WalletStore from '../../../src/wallet/WalletStore';
@@ -18,12 +17,13 @@ import JoinView from '../../../src/wallet/tokens/JoinView';
 jest.mock('../../../src/auth/UserStore');
 jest.mock('../../../src/wallet/WalletStore');
 
+
+configure({enforceActions: 'never'});
+
 describe('WithdrawScreen', () => {
   let user, withdraw, screen;
 
   beforeEach(() => {
-    useStrict(false);
-
     user = new UserStore();
     withdraw = new WalletStore();
 

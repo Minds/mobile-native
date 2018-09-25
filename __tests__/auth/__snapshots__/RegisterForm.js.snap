@@ -165,6 +165,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
                 "fontStyle": "normal",
                 "fontWeight": "normal",
               },
+              Object {},
             ]
           }
         >
@@ -244,6 +245,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
                 "fontStyle": "normal",
                 "fontWeight": "normal",
               },
+              Object {},
             ]
           }
         >

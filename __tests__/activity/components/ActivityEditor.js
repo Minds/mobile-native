@@ -1,17 +1,10 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from "react-native";
+
 import { shallow } from 'enzyme';
 
-import ActionSheet from 'react-native-actionsheet';
-import * as Progress from 'react-native-progress';
-
 import ActivityEditor from '../../../src/newsfeed/activity/ActivityEditor';
-
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
-
-import renderer from 'react-test-renderer';
-
 
 
 describe('Activity editor component', () => {
@@ -55,8 +48,7 @@ describe('Activity editor component', () => {
     let instance = screen.instance();
     expect(instance.state.text).toBe('Message');
     const spy = jest.spyOn(instance.props.newsfeed.list, 'updateActivity');
-    const render = screen.dive();
-    render.find('Button').at(1).props().onPress();
+    screen.find('Button').at(1).props().onPress();
 
     expect(spy).toHaveBeenCalled();
   });
@@ -67,8 +59,7 @@ describe('Activity editor component', () => {
     let instance = screen.instance();
     expect(instance.state.text).toBe('Message');
     const spy = jest.spyOn(instance.props, 'toggleEdit');
-    const render = screen.dive();
-    render.find('Button').at(0).props().onPress();
+    screen.find('Button').at(0).props().onPress();
     expect(spy).toHaveBeenCalled();
   });
 
@@ -85,8 +76,7 @@ describe('Activity editor component', () => {
     });
 
     const spy = jest.spyOn(instance.props, 'toggleEdit');
-    const render = screen.dive();
-    render.find('Button').at(0).props().onPress();
+    screen.find('Button').at(0).props().onPress();
     expect(spy).toHaveBeenCalled();
     expect(instance.state.text).toBe('data');
   });

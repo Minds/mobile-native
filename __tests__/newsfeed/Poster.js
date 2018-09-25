@@ -1,18 +1,14 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from "react-native";
 import { shallow } from 'enzyme';
-
-import imagePicker from '../../src/common/services/image-picker.service';
 import Poster from '../../src/newsfeed/Poster';
 import UserStore from '../../src/auth/UserStore';
 
-import { 
+import {
   FlatList,
-  KeyboardAvoidingView 
+  KeyboardAvoidingView
 } from 'react-native';
 
-import renderer from 'react-test-renderer';
 
 jest.mock('../../src/auth/UserStore');
 
@@ -20,7 +16,7 @@ import * as dependency from '../../src/newsfeed/NewsfeedService';
 
 fdescribe('Newsfeed poster component', () => {
 
-  let user, entity, screen, post;
+  let user, screen;
   beforeEach(() => {
     user = new UserStore();
     screen = shallow(
@@ -31,25 +27,17 @@ fdescribe('Newsfeed poster component', () => {
   });
 
   it('renders correctly', async () => {
-    await screen.instance().componentWillMount();
-    screen.update();
     expect(screen).toMatchSnapshot();
   });
 
   it('should have a TextInput', async () => {
-    await screen.instance().componentWillMount();
-    screen.update();
-    let render = screen.dive();
 
-    expect(render.find('TextInput')).toHaveLength(1);
+    expect(screen.find('TextInput')).toHaveLength(1);
   });
 
   it('should have a poster button', async () => {
-    await screen.instance().componentWillMount();
-    screen.update();
-    
-    let render = screen.dive();
-    expect(render.find('TouchableHighlight')).toHaveLength(1);
+
+    expect(screen.find('TouchableHighlight')).toHaveLength(1);
   });
 
   it('should calls post on posting', async () => {
@@ -57,11 +45,11 @@ fdescribe('Newsfeed poster component', () => {
     const spy = jest.spyOn(dependency, 'post');
 
     const render = screen.dive();
-    render.find('TextInput').forEach(child => {
+    screen.find('TextInput').forEach(child => {
       child.simulate('changeText', 'data');
     });
 
-    await render.find('TouchableHighlight').at(0).simulate('press');
+    await screen.find('TouchableHighlight').at(0).simulate('press');
 
     expect(screen.instance().state.text).toEqual('data');
 
@@ -80,11 +68,11 @@ fdescribe('Newsfeed poster component', () => {
     const spy = jest.spyOn(dependency, 'remind');
 
     const render = screen.dive();
-    render.find('TextInput').forEach(child => {
+    screen.find('TextInput').forEach(child => {
       child.simulate('changeText', 'data');
     });
 
-    await render.find('Icon').at(0).simulate('press');
+    await screen.find('Icon').at(0).simulate('press');
 
     expect(screen.instance().state.text).toEqual('data');
 

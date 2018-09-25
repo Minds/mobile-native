@@ -34,20 +34,19 @@ describe('Remind owner component', () => {
     expect(screen.find(TouchableOpacity)).toHaveLength(2);
   });
 
-  
+
   it('should _navToChannel on press ', () => {
     let activityResponse = activitiesServiceFaker().load(1);
 
-    const navigation = { 
-      navigate: jest.fn() 
+    const navigation = {
+      navigate: jest.fn()
     };
     let entity = activityResponse.activities[0];
     screen = shallow(
       <RemindOwnerBlock entity={entity} navigation={navigation} rightToolbar={null}/>
     );
     screen.update()
-    let render = screen.dive();
-    let touchables = render.find('TouchableOpacity');
+    let touchables = screen.find('TouchableOpacity');
     touchables.at(0).props().onPress();
     jest.runAllTimers();
 

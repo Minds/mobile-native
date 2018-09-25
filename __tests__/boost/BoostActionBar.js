@@ -1,12 +1,11 @@
 import 'react-native';
 import React from 'react';
-import { View, Text, TouchableHighlight } from "react-native";
+import { View, Text } from "react-native";
 import { shallow } from 'enzyme';
 import UserStore from '../../src/auth/UserStore';
 
 import { activitiesServiceFaker } from '../../__mocks__/fake/ActivitiesFaker';
 
-import renderer from 'react-test-renderer';
 import BoostActionBar from '../../src/boost/BoostActionBar';
 // prevent double tap in touchable
 jest.mock('../../src/boost/BoostStore');
@@ -40,14 +39,12 @@ describe('Boost action bar component', () => {
 
   it('renders the expected views', async () => {
     screen.update();
-    let render = screen.dive();
     expect(screen.find(View)).toHaveLength(5);
   });
 
   it('renders the expected text', async () => {
     screen.update();
-    let render = screen.dive();
-    expect(screen.find(Text).at(0).dive().text()).toBe('$1.00');
+    expect(screen.find(Text).at(0).dive().childAt(0).text()).toBe('$1.00');
   });
 
 });

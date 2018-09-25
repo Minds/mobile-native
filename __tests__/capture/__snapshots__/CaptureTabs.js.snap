@@ -74,6 +74,7 @@ exports[`cature tabs component should renders correctly 1`] = `
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
+                Object {},
               ]
             }
           >
@@ -140,6 +141,7 @@ exports[`cature tabs component should renders correctly 1`] = `
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
+                Object {},
               ]
             }
           >
@@ -206,6 +208,7 @@ exports[`cature tabs component should renders correctly 1`] = `
                   "fontStyle": "normal",
                   "fontWeight": "normal",
                 },
+                Object {},
               ]
             }
           >

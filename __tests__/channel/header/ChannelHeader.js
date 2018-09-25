@@ -9,8 +9,10 @@ import UserModel from '../../../src/channel/UserModel';
 import session from '../../../src/common/services/session.service';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import appStores from '../../../AppStores';
 
 jest.mock('../../../src/auth/UserStore');
+jest.mock('../../../AppStores');
 jest.mock('../../../src/channel/ChannelStore');
 
 jest.mock('TouchableHighlight', () => 'TouchableHighlight');
@@ -34,6 +36,7 @@ describe('channel header component owner', () => {
     userStore = new UserStore();
     userStore.me = UserModel.create(userFaker('1'));
     navigation.navigate.mockClear();
+    appStores.user = userStore;
     session.guid = 1;
 
     store.channel = UserModel.create(userFaker('1'));

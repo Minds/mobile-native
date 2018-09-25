@@ -14,6 +14,9 @@ jest.mock('react-native-notifications');
 //mock i18n
 jest.mock('react-native-video');
 
+jest.mock('../src/blockchain/transaction-modal/BlockchainTransactionModalScreen', () => 'BlockchainTransactionModalScreen');
+jest.mock('../src/keychain/KeychainModalScreen', () => 'KeychainModalScreen');
+
 it('renders correctly', () => {
   const tree = renderer.create(
     <App />

@@ -107,12 +107,11 @@ describe('Activity screen component', () => {
     let instance = screen.instance();
     const spy = jest.spyOn(instance, 'postComment');
 
-    const render = screen.dive();
-    render.find('TextInput').forEach(child => {
+    screen.find('TextInput').forEach(child => {
       child.simulate('changeText', 'comment');
     });
     expect(instance.comments.comments.length).toBe(5);
-    await render.find('TouchableOpacity').at(1).simulate('press');
+    await screen.find('TouchableOpacity').at(1).simulate('press');
 
     expect(spy).toHaveBeenCalled();
   });

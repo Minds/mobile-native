@@ -47,6 +47,7 @@ exports[`channel actions component should renders correctly 1`] = `
             "fontStyle": "normal",
             "fontWeight": "normal",
           },
+          Object {},
         ]
       }
     >
@@ -71,6 +72,7 @@ exports[`channel actions component should renders correctly 1`] = `
           "fontStyle": "normal",
           "fontWeight": "normal",
         },
+        Object {},
       ]
     }
   >

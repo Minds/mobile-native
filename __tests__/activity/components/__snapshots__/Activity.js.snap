@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Activity component renders correctly 1`] = `
-<Component
+<ForwardRef(View)
   style={
     Object {
       "borderBottomColor": "#EEE",
@@ -35,11 +35,44 @@ exports[`Activity component renders correctly 1`] = `
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
+        "paywall": undefined,
         "perma_url": false,
         "rowKey": "something0",
         "thumbnail_src": false,
+        "thumbs:down:count": undefined,
+        "thumbs:down:user_guids": undefined,
+        "thumbs:up:count": undefined,
+        "thumbs:up:user_guids": undefined,
         "title": "TITLE",
         "type": "activity",
+        Symbol(mobx did run lazy initializers): true,
+        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+          "defaultEnhancer": [Function],
+          "keysAtom": Atom$$1 {
+            "diffValue": 0,
+            "isBeingObserved": false,
+            "isPendingUnobservation": false,
+            "lastAccessedBy": 0,
+            "lowestObserverState": 2,
+            "name": "ActivityModel@1.keys",
+            "observers": Set {},
+          },
+          "name": "ActivityModel@1",
+          "target": [Circular],
+          "values": Map {
+            "votedUp" => false,
+            "votedDown" => false,
+            "mature_visibility" => false,
+            "is_visible" => false,
+            "thumbs:down:count" => undefined,
+            "thumbs:up:count" => undefined,
+            "paywall" => undefined,
+            "mature" => false,
+            "edited" => "",
+            "thumbs:down:user_guids" => undefined,
+            "thumbs:up:user_guids" => undefined,
+          },
+        },
       }
     }
     navigation={
@@ -83,11 +116,44 @@ exports[`Activity component renders correctly 1`] = `
               },
               "owner_guid": "824853017709780997",
               "parent_guid": "838106762591510528",
+              "paywall": undefined,
               "perma_url": false,
               "rowKey": "something0",
               "thumbnail_src": false,
+              "thumbs:down:count": undefined,
+              "thumbs:down:user_guids": undefined,
+              "thumbs:up:count": undefined,
+              "thumbs:up:user_guids": undefined,
               "title": "TITLE",
               "type": "activity",
+              Symbol(mobx did run lazy initializers): true,
+              Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                "defaultEnhancer": [Function],
+                "keysAtom": Atom$$1 {
+                  "diffValue": 0,
+                  "isBeingObserved": false,
+                  "isPendingUnobservation": false,
+                  "lastAccessedBy": 0,
+                  "lowestObserverState": 2,
+                  "name": "ActivityModel@1.keys",
+                  "observers": Set {},
+                },
+                "name": "ActivityModel@1",
+                "target": [Circular],
+                "values": Map {
+                  "votedUp" => false,
+                  "votedDown" => false,
+                  "mature_visibility" => false,
+                  "is_visible" => false,
+                  "thumbs:down:count" => undefined,
+                  "thumbs:up:count" => undefined,
+                  "paywall" => undefined,
+                  "mature" => false,
+                  "edited" => "",
+                  "thumbs:down:user_guids" => undefined,
+                  "thumbs:up:user_guids" => undefined,
+                },
+              },
             }
           }
           navigation={
@@ -110,7 +176,7 @@ exports[`Activity component renders correctly 1`] = `
         }
       }
     >
-      <Component
+      <ForwardRef(Text)
         style={
           Object {
             "color": "#888",
@@ -119,7 +185,7 @@ exports[`Activity component renders correctly 1`] = `
         }
       >
         Invalid date
-      </Component>
+      </ForwardRef(Text)>
       <ActivityMetrics
         entity={
           ActivityModel {
@@ -145,17 +211,50 @@ exports[`Activity component renders correctly 1`] = `
             },
             "owner_guid": "824853017709780997",
             "parent_guid": "838106762591510528",
+            "paywall": undefined,
             "perma_url": false,
             "rowKey": "something0",
             "thumbnail_src": false,
+            "thumbs:down:count": undefined,
+            "thumbs:down:user_guids": undefined,
+            "thumbs:up:count": undefined,
+            "thumbs:up:user_guids": undefined,
             "title": "TITLE",
             "type": "activity",
+            Symbol(mobx did run lazy initializers): true,
+            Symbol(mobx administration): ObservableObjectAdministration$$1 {
+              "defaultEnhancer": [Function],
+              "keysAtom": Atom$$1 {
+                "diffValue": 0,
+                "isBeingObserved": false,
+                "isPendingUnobservation": false,
+                "lastAccessedBy": 0,
+                "lowestObserverState": 2,
+                "name": "ActivityModel@1.keys",
+                "observers": Set {},
+              },
+              "name": "ActivityModel@1",
+              "target": [Circular],
+              "values": Map {
+                "votedUp" => false,
+                "votedDown" => false,
+                "mature_visibility" => false,
+                "is_visible" => false,
+                "thumbs:down:count" => undefined,
+                "thumbs:up:count" => undefined,
+                "paywall" => undefined,
+                "mature" => false,
+                "edited" => "",
+                "thumbs:down:user_guids" => undefined,
+                "thumbs:up:user_guids" => undefined,
+              },
+            },
           }
         }
       />
     </TouchableOpacity>
   </OwnerBlock>
-  <Component
+  <ForwardRef(View)
     style={
       Object {
         "padding": 8,
@@ -187,11 +286,44 @@ exports[`Activity component renders correctly 1`] = `
           },
           "owner_guid": "824853017709780997",
           "parent_guid": "838106762591510528",
+          "paywall": undefined,
           "perma_url": false,
           "rowKey": "something0",
           "thumbnail_src": false,
+          "thumbs:down:count": undefined,
+          "thumbs:down:user_guids": undefined,
+          "thumbs:up:count": undefined,
+          "thumbs:up:user_guids": undefined,
           "title": "TITLE",
           "type": "activity",
+          Symbol(mobx did run lazy initializers): true,
+          Symbol(mobx administration): ObservableObjectAdministration$$1 {
+            "defaultEnhancer": [Function],
+            "keysAtom": Atom$$1 {
+              "diffValue": 0,
+              "isBeingObserved": false,
+              "isPendingUnobservation": false,
+              "lastAccessedBy": 0,
+              "lowestObserverState": 2,
+              "name": "ActivityModel@1.keys",
+              "observers": Set {},
+            },
+            "name": "ActivityModel@1",
+            "target": [Circular],
+            "values": Map {
+              "votedUp" => false,
+              "votedDown" => false,
+              "mature_visibility" => false,
+              "is_visible" => false,
+              "thumbs:down:count" => undefined,
+              "thumbs:up:count" => undefined,
+              "paywall" => undefined,
+              "mature" => false,
+              "edited" => "",
+              "thumbs:down:user_guids" => undefined,
+              "thumbs:up:user_guids" => undefined,
+            },
+          },
         }
       }
       navigation={
@@ -230,11 +362,44 @@ exports[`Activity component renders correctly 1`] = `
           },
           "owner_guid": "824853017709780997",
           "parent_guid": "838106762591510528",
+          "paywall": undefined,
           "perma_url": false,
           "rowKey": "something0",
           "thumbnail_src": false,
+          "thumbs:down:count": undefined,
+          "thumbs:down:user_guids": undefined,
+          "thumbs:up:count": undefined,
+          "thumbs:up:user_guids": undefined,
           "title": "TITLE",
           "type": "activity",
+          Symbol(mobx did run lazy initializers): true,
+          Symbol(mobx administration): ObservableObjectAdministration$$1 {
+            "defaultEnhancer": [Function],
+            "keysAtom": Atom$$1 {
+              "diffValue": 0,
+              "isBeingObserved": false,
+              "isPendingUnobservation": false,
+              "lastAccessedBy": 0,
+              "lowestObserverState": 2,
+              "name": "ActivityModel@1.keys",
+              "observers": Set {},
+            },
+            "name": "ActivityModel@1",
+            "target": [Circular],
+            "values": Map {
+              "votedUp" => false,
+              "votedDown" => false,
+              "mature_visibility" => false,
+              "is_visible" => false,
+              "thumbs:down:count" => undefined,
+              "thumbs:up:count" => undefined,
+              "paywall" => undefined,
+              "mature" => false,
+              "edited" => "",
+              "thumbs:down:user_guids" => undefined,
+              "thumbs:up:user_guids" => undefined,
+            },
+          },
         }
       }
       style={
@@ -243,7 +408,7 @@ exports[`Activity component renders correctly 1`] = `
         }
       }
     />
-  </Component>
+  </ForwardRef(View)>
   <MediaView
     entity={
       ActivityModel {
@@ -269,11 +434,44 @@ exports[`Activity component renders correctly 1`] = `
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
+        "paywall": undefined,
         "perma_url": false,
         "rowKey": "something0",
         "thumbnail_src": false,
+        "thumbs:down:count": undefined,
+        "thumbs:down:user_guids": undefined,
+        "thumbs:up:count": undefined,
+        "thumbs:up:user_guids": undefined,
         "title": "TITLE",
         "type": "activity",
+        Symbol(mobx did run lazy initializers): true,
+        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+          "defaultEnhancer": [Function],
+          "keysAtom": Atom$$1 {
+            "diffValue": 0,
+            "isBeingObserved": false,
+            "isPendingUnobservation": false,
+            "lastAccessedBy": 0,
+            "lowestObserverState": 2,
+            "name": "ActivityModel@1.keys",
+            "observers": Set {},
+          },
+          "name": "ActivityModel@1",
+          "target": [Circular],
+          "values": Map {
+            "votedUp" => false,
+            "votedDown" => false,
+            "mature_visibility" => false,
+            "is_visible" => false,
+            "thumbs:down:count" => undefined,
+            "thumbs:up:count" => undefined,
+            "paywall" => undefined,
+            "mature" => false,
+            "edited" => "",
+            "thumbs:down:user_guids" => undefined,
+            "thumbs:up:user_guids" => undefined,
+          },
+        },
       }
     }
     navigation={
@@ -309,11 +507,44 @@ exports[`Activity component renders correctly 1`] = `
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
+        "paywall": undefined,
         "perma_url": false,
         "rowKey": "something0",
         "thumbnail_src": false,
+        "thumbs:down:count": undefined,
+        "thumbs:down:user_guids": undefined,
+        "thumbs:up:count": undefined,
+        "thumbs:up:user_guids": undefined,
         "title": "TITLE",
         "type": "activity",
+        Symbol(mobx did run lazy initializers): true,
+        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+          "defaultEnhancer": [Function],
+          "keysAtom": Atom$$1 {
+            "diffValue": 0,
+            "isBeingObserved": false,
+            "isPendingUnobservation": false,
+            "lastAccessedBy": 0,
+            "lowestObserverState": 2,
+            "name": "ActivityModel@1.keys",
+            "observers": Set {},
+          },
+          "name": "ActivityModel@1",
+          "target": [Circular],
+          "values": Map {
+            "votedUp" => false,
+            "votedDown" => false,
+            "mature_visibility" => false,
+            "is_visible" => false,
+            "thumbs:down:count" => undefined,
+            "thumbs:up:count" => undefined,
+            "paywall" => undefined,
+            "mature" => false,
+            "edited" => "",
+            "thumbs:down:user_guids" => undefined,
+            "thumbs:up:user_guids" => undefined,
+          },
+        },
       }
     }
     navigation={
@@ -322,5 +553,5 @@ exports[`Activity component renders correctly 1`] = `
       }
     }
   />
-</Component>
+</ForwardRef(View)>
 `;
