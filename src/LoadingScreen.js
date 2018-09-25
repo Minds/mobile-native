@@ -2,11 +2,10 @@ import React, {
   Component
 } from 'react';
 
-import FastImage from 'react-native-fast-image';
-
 import {
   Button,
   Text,
+  Image,
   TextInput,
   StyleSheet,
   View,
@@ -25,8 +24,8 @@ export default class LoadingScreen extends Component {
   render() {
     return (
       <View style={[{ backgroundColor: '#FFF' } ,CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
-        <FastImage
-          resizeMode={FastImage.resizeMode.contain}
+        <Image
+          resizeMode={"contain"}
           style={ComponentsStyle.logo}
           source={require('./assets/logos/logo.png')}
         />

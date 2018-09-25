@@ -4,12 +4,12 @@ import React, {
 
 import {
   View,
+  Image,
   Text,
   StyleSheet,
   TouchableHighlight,
 } from 'react-native';
 
-import FastImage from 'react-native-fast-image';
 import { observer, inject } from 'mobx-react/native'
 import token from "../../common/helpers/token";
 import number from "../../common/helpers/number";
@@ -48,8 +48,8 @@ export default class WalletBalanceTokens extends Component {
     return (
       <View style={ styles.container }>
         <View style={ styles.view }>
-          <FastImage
-            resizeMode={FastImage.resizeMode.contain}
+          <Image
+            resizeMode={"contain"}
             style={styles.logo}
             source={require('../../assets/logos/bulb.png')}
           />

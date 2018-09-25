@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 
 import {CommonStyle} from '../../styles/Common';
 import FastImage from 'react-native-fast-image';
@@ -82,8 +82,8 @@ export default class WalletOverviewIcon extends Component {
         underlayColor='transparent'
         style={styles.container}
       >
-        <FastImage
-          resizeMode={FastImage.resizeMode.contain}
+        <Image
+          resizeMode={"contain"}
           style={styles.image}
           source={icon.asset}
         />
