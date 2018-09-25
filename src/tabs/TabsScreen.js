@@ -2,7 +2,7 @@ import React, {
     Component
 } from 'react';
 import {
-  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
   jumpTo
 } from 'react-navigation';
 import {
@@ -56,7 +56,7 @@ if (!featuresService.has('crypto')) {
 }
 
 const Tabs = (
-  createBottomTabNavigator(screens, {
+  createMaterialTopTabNavigator(screens, {
     tabBarPosition: 'bottom',
     animationEnabled: false,
     swipeEnabled: true,
