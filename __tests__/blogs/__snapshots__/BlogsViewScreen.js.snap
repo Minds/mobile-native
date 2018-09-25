@@ -13,10 +13,10 @@ exports[`blog view screen component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "height": 200,
+            "overflow": "hidden",
           },
           Object {
-            "overflow": "hidden",
+            "height": 200,
           },
         ]
       }

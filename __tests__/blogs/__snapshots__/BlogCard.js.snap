@@ -23,13 +23,13 @@ exports[`blog card component should renders correctly 1`] = `
     style={
       Array [
         Object {
+          "overflow": "hidden",
+        },
+        Object {
           "alignItems": "stretch",
           "flexDirection": "row",
           "height": 150,
           "width": "100%",
-        },
-        Object {
-          "overflow": "hidden",
         },
       ]
     }
