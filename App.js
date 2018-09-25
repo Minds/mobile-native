@@ -136,11 +136,7 @@ export default class App extends Component {
    * Handle hardware back button
    */
   onBackPress = () => {
-    const { dispatch } = this.props;
-    if (this.props.navigation.index === 0) {
-      return false;
-    }
-    this.props.navigation.dispatch(NavigationActions.back());
+    NavigationService.goBack();
     return true;
   };
 
