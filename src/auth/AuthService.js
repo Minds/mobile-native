@@ -12,7 +12,7 @@ class AuthService {
     let params = {
       grant_type: 'password',
       client_id: 'mobile',
-      client_secret: '6YursnbGM4ztg2TIyoTal+IUjkGb/GrWtxyejczTuQ3HbJ0lBdHdLAceEIk0b9NHq1RI6jpK0eqTq89z1Q1i9TmvmgprGkYGjAJY8uK2reO+s1qWxjkwsC0EydNKv6/uA8/rKQypXX9YcZ9eGiJ9viwbVV0RRTqdVleZ7XAzz6o=',
+      //client_secret: '',
       username,
       password
     };
@@ -24,23 +24,20 @@ class AuthService {
 
   async logout() {
     try {
-      //await api.post('api/v1/logout', {});
+      let resp = await api.delete('api/v2/oauth/token');
       session.logout();
       return true;
     } catch (err) {
-      console.log(err);
+      console.log('logout', err);
       return false;
     }
   }
 
   async refreshToken() {
-    if (!session.refreshToken)
-      return;
-
     let params = {
       grant_type: 'refresh_token',
       client_id: 'mobile',
-      client_secret: '6YursnbGM4ztg2TIyoTal+IUjkGb/GrWtxyejczTuQ3HbJ0lBdHdLAceEIk0b9NHq1RI6jpK0eqTq89z1Q1i9TmvmgprGkYGjAJY8uK2reO+s1qWxjkwsC0EydNKv6/uA8/rKQypXX9YcZ9eGiJ9viwbVV0RRTqdVleZ7XAzz6o=',
+      //client_secret: '',
       refresh_token: session.refreshToken,
     };
     try {
@@ -48,6 +45,7 @@ class AuthService {
       session.login(data);
       return data;
     } catch (err) {
+      throw err;
       console.log('ERROR CLAIMING REFRESH TOKEN', params, err);
     }
   }

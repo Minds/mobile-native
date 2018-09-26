@@ -68,11 +68,13 @@ export default class MessengerSetup extends Component {
     setParams({ headerRight: headerRight });
   }
 
-  unlock = () => {
-    this.props.messengerList.getCryptoKeys(this.password)
-      .then(resp => {
-        this.handleOnDone(resp);
-      });
+  unlock = async () => {
+    try {
+      const response = await this.props.messengerList.getCryptoKeys(this.password)
+      this.handleOnDone(response);
+    } catch (err) {
+      console.log(err)
+    };
   }
 
   setup = () => {

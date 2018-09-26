@@ -6,7 +6,7 @@ import {
 // export const MINDS_URI = 'http://dev.minds.io/';
 
 // remember to update deeplink uri on AndroidManifest.xml !!!
-export const MINDS_URI = 'https://walrus.minds.com/';
+export const MINDS_URI = 'https://mobile.minds.com/';
 
 export const MINDS_URI_SETTINGS = {
   //basicAuth: 'crypto:ohms',

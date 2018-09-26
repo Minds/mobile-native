@@ -42,7 +42,7 @@ class SessionService {
    */
   initialScreen = 'Tabs';
 
-  refreshingTokens = false;
+  @observable refreshingTokens = false;
 
   /**
    * Constructor
@@ -67,9 +67,9 @@ class SessionService {
         access_token_expires < Date.now()
         && refresh_token
         && refresh_token_expires > Date.now()
-        ) {
-          return await AuthService.refreshToken();
-        }
+      ) {
+        return await AuthService.refreshToken();
+      }
 
       // ensure user loaded before activate the session
       await this.loadUser();
@@ -143,6 +143,11 @@ class SessionService {
     this.token = token;
   }
 
+  @action
+  setTokenRefreshing(refreshing) {
+    this.refreshingTokens = refreshing;
+  }
+
   /**
    * Set refresh token
    */
@@ -180,15 +185,21 @@ class SessionService {
     this.setToken(null);
     try {
       await AuthService.refreshToken();
+      this.refreshingTokens = false; // on success
+      // Same session should not need to refresh anyay
     } catch {
       this.promptLogin();
-    } finally {
-      this.refreshingTokens = false;
+      setTimeout(() => {
+        this.refreshingTokens = false;
+      }, 60 * 60 * 72);
     }
   }
 
   promptLogin() {
-    this.logout();
+    //this.logout();
+    this.guid = null;
+    this.setToken(null);
+    this.setLoggedIn(false);
     NavigationService.reset('Login');
   }
 
