@@ -415,7 +415,7 @@ let styles = StyleSheet.create({
     flexDirection: 'row'
   },
   controlTopTexts: {
-    color: 'white'
+    color: 'red'
   },
   progressWrapper: {
     flex:9
