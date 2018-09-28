@@ -183,8 +183,7 @@ class ApiService {
         xhr.upload.addEventListener("progress", progress);
       }
       xhr.open('POST', MINDS_URI + url + paramsString);
-      // fix XSRF
-      // xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
+      xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.onload = () => {
