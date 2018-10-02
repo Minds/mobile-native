@@ -57,6 +57,7 @@ class SessionService {
    */
   async init() {
     try {
+
       const { access_token, access_token_expires } = await this.sessionStorage.getAccessToken();
       const { refresh_token, refresh_token_expires } = await this.sessionStorage.getRefreshToken();
 
@@ -64,10 +65,11 @@ class SessionService {
       this.setToken(access_token);
 
       if (
-        access_token_expires < Date.now()
+        access_token_expires * 1000 < Date.now()
         && refresh_token
-        && refresh_token_expires > Date.now()
+        && refresh_token_expires * 1000 > Date.now()
       ) {
+        console.log('refreshing token');
         return await AuthService.refreshToken();
       }
 
@@ -172,7 +174,7 @@ class SessionService {
     this.setLoggedIn(true);
 
     const token_expire = this.getTokenExpiration(tokens.access_token);
-    const token_refresh_expire = token_expire + (60 * 60 * 24 * 7);
+    const token_refresh_expire = token_expire + (60 * 60 * 24 * 30);
 
     this.sessionStorage.setAccessToken(tokens.access_token, token_expire);
     this.sessionStorage.setRefreshToken(tokens.refresh_token, token_refresh_expire);
