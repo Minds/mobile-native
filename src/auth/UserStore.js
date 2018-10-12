@@ -46,8 +46,8 @@ class UserStore {
   }
 
   @action
-  async load() {
-    this.me = {};
+  async load(refresh = false) {
+    if (!refresh) this.me = {};
 
     try {
       let response = await channelService.load('me');
