@@ -26,7 +26,7 @@ export class SocketService {
   }
 
   setUp() {
-    return;
+
     if (this.socket) {
       this.socket.destroy();
     }
@@ -169,6 +169,7 @@ export class SocketService {
   }
 
   registerWithAccessToken() {
+    console.log(sessionService.guid, sessionService.token);
     this.emit('register', sessionService.guid, sessionService.token);
   }
 
