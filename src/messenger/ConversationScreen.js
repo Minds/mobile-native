@@ -158,7 +158,8 @@ export default class ConversationScreen extends Component {
       return <MessengerInvite navigation={this.props.navigation} messengerConversation={this.store}/>
     }
 
-    const messages = this.store.messages;
+    const messages = this.store.messages.slice();
+
     const conversation = this.props.navigation.state.params.conversation;
     const avatarImg    = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' + this.props.user.me.icontime };
     return (
