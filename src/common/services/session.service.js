@@ -188,12 +188,13 @@ class SessionService {
     try {
       await AuthService.refreshToken();
       this.refreshingTokens = false; // on success
+      return !!this.token;
       // Same session should not need to refresh anyay
     } catch {
       this.promptLogin();
       setTimeout(() => {
         this.refreshingTokens = false;
-      }, 60 * 60 * 72);
+      }, 1500);
     }
   }
 

@@ -71,8 +71,8 @@ class ApiService {
       } catch (err) {
         // Bad authorization
         if (err.status && err.status == 401) {
-          await session.badAuthorization(); //not actually a logout
-          return await this.get(url, params, signal);
+          const refreshed = await session.badAuthorization(); //not actually a logout
+          if (refreshed) return await this.get(url, params, signal);
         }
         throw err;
       }

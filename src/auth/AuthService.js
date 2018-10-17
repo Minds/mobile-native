@@ -45,8 +45,8 @@ class AuthService {
       session.login(data);
       return data;
     } catch (err) {
-      throw err;
       console.log('ERROR CLAIMING REFRESH TOKEN', params, err);
+      throw err;
     }
   }
 
