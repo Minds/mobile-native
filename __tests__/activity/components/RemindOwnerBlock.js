@@ -39,7 +39,8 @@ describe('Remind owner component', () => {
     let activityResponse = activitiesServiceFaker().load(1);
 
     const navigation = {
-      navigate: jest.fn()
+      navigate: jest.fn(),
+      push: jest.fn(),
     };
     let entity = activityResponse.activities[0];
     screen = shallow(
@@ -50,7 +51,7 @@ describe('Remind owner component', () => {
     touchables.at(0).props().onPress();
     jest.runAllTimers();
 
-    expect(navigation.navigate).toHaveBeenCalledWith('Channel', {'entity': entity.ownerObj, 'guid': entity.ownerObj.guid});
+    expect(navigation.push).toHaveBeenCalledWith('Channel', {'entity': entity.ownerObj, 'guid': entity.ownerObj.guid});
 
 
     expect(screen.find(TouchableOpacity)).toHaveLength(2);

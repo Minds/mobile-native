@@ -25,7 +25,7 @@ export default class OwnerBlock extends PureComponent {
   _navToChannel = () => {
     // only active if receive the navigation property
     if (this.props.navigation) {
-      this.props.navigation.navigate('Channel', { guid:this.props.entity.ownerObj.guid, entity: this.props.entity.ownerObj });
+      this.props.navigation.push('Channel', { guid:this.props.entity.ownerObj.guid, entity: this.props.entity.ownerObj });
     }
   }
 
@@ -34,7 +34,7 @@ export default class OwnerBlock extends PureComponent {
    */
  _navToGroup = () => {
     if (this.props.navigation) {
-      this.props.navigation.navigate('GroupView', { group: this.props.entity.containerObj });
+      this.props.navigation.push('GroupView', { group: this.props.entity.containerObj });
     }
   };
 

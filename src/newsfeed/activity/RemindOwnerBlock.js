@@ -27,7 +27,7 @@ export default class RemindOwnerBlock extends PureComponent {
   _navToChannel = () => {
     // only active if NewsfeedList receive the navigation property
     if (this.props.navigation) {
-      this.props.navigation.navigate('Channel', { guid:this.props.entity.ownerObj.guid, entity: this.props.entity.ownerObj });
+      this.props.navigation.push('Channel', { guid:this.props.entity.ownerObj.guid, entity: this.props.entity.ownerObj });
     }
   }
 

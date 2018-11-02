@@ -165,7 +165,7 @@ export default class Comment extends Component {
   _navToChannel = () => {
     // only active if receive the navigation property
     if (this.props.navigation) {
-      this.props.navigation.navigate('Channel', { guid:this.props.comment.ownerObj.guid});
+      this.props.navigation.push('Channel', { guid:this.props.comment.ownerObj.guid});
     }
   }
 

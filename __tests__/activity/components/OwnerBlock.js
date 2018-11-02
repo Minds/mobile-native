@@ -13,7 +13,7 @@ describe('Owner component', () => {
   let screen;
   beforeEach(() => {
 
-    const navigation = { navigate: jest.fn() };
+    const navigation = { navigate: jest.fn(), push: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
     screen = shallow(
       <OwnerBlock entity={activityResponse.activities[0]} navigation={navigation} rightToolbar={null}/>
@@ -37,8 +37,10 @@ describe('Owner component', () => {
     let activityResponse = activitiesServiceFaker().load(1);
 
     const navigation = {
-      navigate: jest.fn()
+      navigate: jest.fn(),
+      push: jest.fn()
     };
+
     let entity = activityResponse.activities[0];
     entity.containerObj = { guid: 'guidguid' };
     screen = shallow(
@@ -49,7 +51,7 @@ describe('Owner component', () => {
     touchables.at(0).props().onPress();
     jest.runAllTimers();
 
-    expect(navigation.navigate).toHaveBeenCalledWith('Channel', {'entity': entity.ownerObj, 'guid': entity.ownerObj.guid});
+    expect(navigation.push).toHaveBeenCalledWith('Channel', {'entity': entity.ownerObj, 'guid': entity.ownerObj.guid});
 
 
     expect(screen.find(TouchableOpacity)).toHaveLength(3);
@@ -61,7 +63,8 @@ describe('Owner component', () => {
     let activityResponse = activitiesServiceFaker().load(1);
 
     const navigation = {
-      navigate: jest.fn()
+      navigate: jest.fn(),
+      push: jest.fn()
     };
     let entity = activityResponse.activities[0];
     entity.containerObj = { guid: 'guidguid' };
@@ -77,7 +80,7 @@ describe('Owner component', () => {
     touchables.at(2).props().onPress();
     jest.runAllTimers();
 
-    expect(navigation.navigate).toHaveBeenCalled();
+    expect(navigation.push).toHaveBeenCalled();
 
   });
 
