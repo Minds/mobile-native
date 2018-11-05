@@ -64,11 +64,17 @@ export default class ConversationScreen extends Component {
 
   componentWillMount() {
     this.store = new MessengerConversationStore();
+    const params = this.props.navigation.state.params;
     let conversation;
-    if(this.props.navigation.state.params.conversation) {
-      conversation = this.props.navigation.state.params.conversation;
+    if(params.conversation) {
+      conversation = params.conversation;
     } else {
-      conversation = this.props.navigation.state.params.target;
+      // open conversation with params.target user (minor guid go first)
+      if (params.target > this.props.user.me.guid) {
+        conversation = {guid: `${this.props.user.me.guid}:${params.target}`};
+      } else {
+        conversation = {guid: `${params.target}:${this.props.user.me.guid}`};
+      }
     }
 
     if (this.props.messengerList.configured) {

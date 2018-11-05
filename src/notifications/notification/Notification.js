@@ -41,6 +41,7 @@ import WelcomePostView from './view/WelcomePostView';
 import WelcomePointsView from './view/WelcomePointsView';
 import WireHappenedView from './view/WireHappenedView';
 import ReportActionedView from './view/ReportActionedView';
+import MessengerInviteView from './view/MessengerInviteView';
 
 import styles from './style';
 
@@ -146,6 +147,9 @@ export default class Notification extends Component {
 
       case "like":
         return <LikeView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "messenger_invite":
+        return <MessengerInviteView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "missed_call":
         return <MissedCallView entity={entity} navigation={this.props.navigation} styles={styles} />
