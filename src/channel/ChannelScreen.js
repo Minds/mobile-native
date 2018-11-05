@@ -90,7 +90,13 @@ export default class ChannelScreen extends Component {
         store.feedStore.setChannel(channel);
       }
     } catch (err) {
-      console.log(err);
+
+      Alert.alert(
+        'Attention',
+        err.message || 'Error loading channel, please try again later.',
+        [{ text: 'OK', onPress: () => this.props.navigation.goBack() }],
+        { cancelable: false }
+      );
       return false;
     }
 
