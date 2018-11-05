@@ -1,14 +1,14 @@
-import { 
+import {
   observable,
   action,
-  computed 
+  computed
 } from 'mobx'
 
-import { 
+import {
   getFeedChannel,
-  toggleComments, 
-  toggleExplicit, 
-  setViewed 
+  toggleComments,
+  toggleExplicit,
+  setViewed
 } from '../newsfeed/NewsfeedService';
 
 import api from '../common/services/api.service';
@@ -144,11 +144,10 @@ export default class ChannelFeedStore {
    * Load channel feed
    */
   async _loadFeed(refresh = false) {
-    if (!this.channel)
+    if (!this.channel || this.list.cantLoadMore())
       return;
 
     this.loading = true;
-    const filter = this.filter;
 
     try {
 
@@ -158,7 +157,7 @@ export default class ChannelFeedStore {
       };
 
       if (
-        this.channel.pinned_posts 
+        this.channel.pinned_posts
         && this.channel.pinned_posts.length
         && !this.offset
       ) {
@@ -171,16 +170,21 @@ export default class ChannelFeedStore {
         entities: [],
         offset: data['load-next'],
       };
-      
+
       if (data.pinned) {
         feed.entities = data.pinned;
       }
-    
-      feed.entities = feed.entities.concat(data.activity);
-    
-      this.assignRowKeys(feed);
-      feed.entities = ActivityModel.createMany(feed.entities);
+
+      if (data.activity) {
+        feed.entities = feed.entities.concat(data.activity);
+      }
+
+      if (feed.entities.length > 0) {
+        feed.entities = ActivityModel.createMany(feed.entities);
+        this.assignRowKeys(feed);
+      }
       this.list.setList(feed, refresh);
+
     } catch (err) {
       console.log(err);
     } finally {
@@ -201,9 +205,9 @@ export default class ChannelFeedStore {
       const feed = await channelService.getImageFeed(this.guid, this.list.offset);
       feed.entities = ActivityModel.createMany(feed.entities);
       this.assignRowKeys(feed);
-      console.log(feed);
       this.list.setList(feed, refresh);
-    } catch (err) { 
+    } catch (err) {
+      console.log(err);
     } finally {
       this.loading = false;
     }
