@@ -23,6 +23,7 @@ import payments from './src/payments/PaymentsStore';
 import checkoutModal from './src/payments/checkout/CheckoutModalStore';
 import capture from './src/capture/CaptureStore';
 import withdraw from './src/wallet/tokens/WithdrawStore';
+import hashtag from './src/common/stores/HashtagStore';
 
 import sessionService from './src/common/services/session.service';
 
@@ -55,6 +56,7 @@ const stores = {
   checkoutModal: new checkoutModal(),
   capture: new capture(),
   withdraw: new withdraw(),
+  hashtag: new hashtag()
 };
 
 /**

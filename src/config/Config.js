@@ -29,6 +29,9 @@ export const MINDS_FEATURES = {
   crypto: Platform.OS === 'ios' ? false : true,
   monetization: true,
   legacy: false,
+  suggested_groups_screen: false,
+  suggested_blogs_screen: false,
+  suggested_discovery_screen: false, // NOT IMPLEMENTED
 };
 
 /**

@@ -42,7 +42,6 @@ export default class CapturePoster extends Component {
   });
 
   state = {
-    text: '',
     postImageUri: '',
     mature: false,
     share: {},
@@ -66,9 +65,11 @@ export default class CapturePoster extends Component {
    */
   componentDidMount() {
     const { params } = this.props.navigation.state;
-    if (params ) {
+
+    if (params) {
+      this.props.capture.reset();
       if (params.text) {
-        this.setState({text: params.text});
+        this.props.capture.setText(params.text);
       } else if (params.image) {
         this.onAttachedMedia({
           type: 'image/jpeg',
@@ -154,6 +155,7 @@ export default class CapturePoster extends Component {
    */
   render() {
     const attachment = this.props.capture.attachment;
+    const text = this.props.capture.text;
     const navigation = this.props.navigation;
 
     return (
@@ -168,7 +170,7 @@ export default class CapturePoster extends Component {
               placeholderTextColor='#ccc'
               underlineColorAndroid='transparent'
               onChangeText={this.setText}
-              value={this.state.text}
+              value={text}
               multiline={true}
               selectTextOnFocus={false}
               onSelectionChange={this.onSelectionChanges}
@@ -203,7 +205,7 @@ export default class CapturePoster extends Component {
           />
         </ScrollView>
         <UserAutocomplete
-          text={this.state.text}
+          text={text}
           selection={this.state.selection}
           onSelect={this.onSelectTag}
         />
@@ -242,6 +244,7 @@ export default class CapturePoster extends Component {
    */
   async submit() {
     const attachment = this.props.capture.attachment;
+    const text = this.props.capture.text;
 
     if (attachment.hasAttachment && attachment.uploading) {
       Alert.alert('Please try again in a moment.');
@@ -250,7 +253,7 @@ export default class CapturePoster extends Component {
 
     if (
       !attachment.hasAttachment &&
-      !this.state.text &&
+      !text &&
       (!this.props.capture.embed.meta || !this.props.capture.embed.meta.perma_url)
     ) {
       Alert.alert('Nothing to post...');
@@ -258,7 +261,7 @@ export default class CapturePoster extends Component {
     }
 
     let newPost = {
-      message: this.state.text,
+      message: text,
       mature: this.state.mature ? 1 : 0,
       wire_threshold: this.state.lock
     };
@@ -282,7 +285,12 @@ export default class CapturePoster extends Component {
       newPost.container_guid = this.props.navigation.state.params.group.guid;
     }
 
+    if (this.props.capture.tags && this.props.capture.tags.length) {
+      newPost.tags = this.props.capture.allTags;
+    }
+
     try {
+      Alert.alert('pre-post');
       let response = await this.props.capture.post(newPost);
 
       if (this.props.reset) {
@@ -293,12 +301,12 @@ export default class CapturePoster extends Component {
       attachment.clear();
 
       this.setState({
-        text: '',
         meta: null,
         mature: false,
         share: {},
         lock: null,
       });
+      this.props.capture.setText('');
 
       this.props.capture.setPosting(false);
 
@@ -318,8 +326,29 @@ export default class CapturePoster extends Component {
   }
 
   setText = (text) => {
+    this.props.capture.setText(text);
     this.setState({ text });
-    this.props.capture.embed.richEmbedCheck(text);
+
+    if (this._RichEmbedFetchTimer) {
+      clearTimeout(this._RichEmbedFetchTimer);
+    }
+
+    setTimeout(this.richEmbedCheck);
+  };
+
+  richEmbedCheck = () => {
+    const matches = Util.urlReSingle.exec(this.props.capture.text);
+
+    if (matches) {
+      const url = (!matches[3] ? 'https://' : '') + matches[0];
+
+      if (
+        !this.state.hasRichEmbed ||
+        (this.state.hasRichEmbed && url.toLowerCase() !== this.state.richEmbedUrl.toLowerCase())
+      ) {
+        this._RichEmbedFetchTimer = setTimeout(() => this.setRichEmbed(url), 750);
+      }
+    }
   };
 
   onMature = () => {

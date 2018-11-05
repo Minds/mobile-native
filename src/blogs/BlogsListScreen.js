@@ -17,6 +17,16 @@ import {
 import BlogCard from './BlogCard';
 import Toolbar from '../common/components/toolbar/Toolbar';
 import CenteredLoading from '../common/components/CenteredLoading';
+import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
+import { CommonStyle } from '../styles/Common';
+import { MINDS_CDN_URI, MINDS_FEATURES } from '../config/Config';
+
+const selectedTextStyle = {color: 'black'};
+const typeOptions = [
+  (MINDS_FEATURES.suggested_blogs_screen ? { text: 'TOP', value: 'suggested', selectedTextStyle} : { text: 'TRENDING', value: 'trending', selectedTextStyle}),
+  { text: 'SUBSCRIPTIONS', value: 'network', selectedTextStyle},
+  { text: 'MY BLOGS', value: 'owner', selectedTextStyle},
+]
 
 /**
  * Blogs List screen
@@ -49,18 +59,18 @@ export default class BlogsListScreen extends Component {
    * Render Tabs
    */
   renderToolbar() {
-    selectedTextStyle={color: 'black'};
-    const typeOptions = [
-      { text: 'TOP', value: 'trending', selectedTextStyle},
-      { text: 'SUBSCRIPTIONS', value: 'network', selectedTextStyle},
-      { text: 'MY BLOGS', value: 'owner', selectedTextStyle},
-    ]
+
     return (
-      <Toolbar
-        options={ typeOptions }
-        initial={ this.props.blogs.filter }
-        onChange={ this.onTabChange }
-      />
+      <View>
+        <Toolbar
+          options={ typeOptions }
+          initial={ this.props.blogs.filter }
+          onChange={ this.onTabChange }
+        />
+        { this.props.blogs.filter == 'suggested' && <View style={[CommonStyle.paddingTop, CommonStyle.paddingBottom, CommonStyle.hairLineBottom]}>
+          <TagsSubBar onChange={this.onTagSelectionChange}/>
+        </View>}
+      </View>
     )
   }
 

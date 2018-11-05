@@ -16,6 +16,7 @@ import {
 
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
+import TagsSubBar from './TagsSubBar';
 
 /**
  * Newsfeed top bar
@@ -24,25 +25,44 @@ import colors from '../../styles/Colors';
 @observer
 export default class Topbar extends Component {
 
+  /**
+   * Selected
+   * @param {string} txt
+   */
   selected(txt) {
     const filter = this.props.newsfeed.filter;
     return filter == txt ? styles.tabSelected : null;
   }
 
+  /**
+   * On tag selection change
+   */
+  onTagSelectionChange = () => {
+    this.props.newsfeed.refresh();
+  }
+
+  /**
+   * Render
+   */
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.topbar}>
-          <TouchableOpacity style={[styles.tab, this.selected('top')]} onPress={() => this.props.newsfeed.setFilter('top')}>
-            <Text style={CommonStyle.fontXS}>TOP</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.tab, this.selected('subscribed')]} onPress={() => this.props.newsfeed.setFilter('subscribed')}>
-            <Text style={CommonStyle.fontXS}>SUBSCRIBED</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.tab, this.selected('boostfeed')]} onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
-            <Text style={CommonStyle.fontXS}>BOOSTFEED</Text>
-          </TouchableOpacity>
+      <View>
+        <View style={styles.container}>
+          <View style={styles.topbar}>
+            <TouchableOpacity style={[styles.tab, this.selected('suggested')]} onPress={() => this.props.newsfeed.setFilter('suggested')}>
+              <Text style={CommonStyle.fontXS}>TOP</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.tab, this.selected('subscribed')]} onPress={() => this.props.newsfeed.setFilter('subscribed')}>
+              <Text style={CommonStyle.fontXS}>SUBSCRIBED</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.tab, this.selected('boostfeed')]} onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
+              <Text style={CommonStyle.fontXS}>BOOSTFEED</Text>
+            </TouchableOpacity>
+          </View>
         </View>
+        { this.props.newsfeed.filter == 'suggested' && <View style={{    flexDirection: 'row'}}>
+          <TagsSubBar onChange={this.onTagSelectionChange}/>
+        </View>}
       </View>
     )
   }

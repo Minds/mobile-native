@@ -3,35 +3,37 @@
 exports[`blog list screen component should renders correctly 1`] = `
 <RCTScrollView
   ListHeaderComponent={
-    <Toolbar
-      initial="trending"
-      onChange={[Function]}
-      options={
-        Array [
-          Object {
-            "selectedTextStyle": Object {
-              "color": "black",
+    <Component>
+      <Toolbar
+        initial="trending"
+        onChange={[Function]}
+        options={
+          Array [
+            Object {
+              "selectedTextStyle": Object {
+                "color": "black",
+              },
+              "text": "TRENDING",
+              "value": "trending",
             },
-            "text": "TOP",
-            "value": "trending",
-          },
-          Object {
-            "selectedTextStyle": Object {
-              "color": "black",
+            Object {
+              "selectedTextStyle": Object {
+                "color": "black",
+              },
+              "text": "SUBSCRIPTIONS",
+              "value": "network",
             },
-            "text": "SUBSCRIPTIONS",
-            "value": "network",
-          },
-          Object {
-            "selectedTextStyle": Object {
-              "color": "black",
+            Object {
+              "selectedTextStyle": Object {
+                "color": "black",
+              },
+              "text": "MY BLOGS",
+              "value": "owner",
             },
-            "text": "MY BLOGS",
-            "value": "owner",
-          },
-        ]
-      }
-    />
+          ]
+        }
+      />
+    </Component>
   }
   data={
     Array [
@@ -10470,152 +10472,154 @@ exports[`blog list screen component should renders correctly 1`] = `
     <View
       onLayout={[Function]}
     >
-      <View
-        style={
-          Array [
-            Object {
-              "backgroundColor": "#FFF",
-              "borderBottomColor": "#EEE",
-              "borderBottomWidth": 0.5,
-              "borderTopColor": "#EEE",
-              "borderTopWidth": 0.5,
-              "display": "flex",
-              "flexDirection": "row",
-              "paddingLeft": 0,
-              "paddingRight": 0,
-              "paddingTop": 0,
-              "shadowColor": "black",
-              "shadowOffset": Object {
-                "height": 0.5,
-              },
-              "shadowOpacity": 0.1,
-              "shadowRadius": 0.5,
-            },
-            Object {},
-          ]
-        }
-      >
+      <View>
         <View
           style={
-            Object {
-              "flex": 1,
-              "flexDirection": "row",
-              "justifyContent": "space-between",
-            }
+            Array [
+              Object {
+                "backgroundColor": "#FFF",
+                "borderBottomColor": "#EEE",
+                "borderBottomWidth": 0.5,
+                "borderTopColor": "#EEE",
+                "borderTopWidth": 0.5,
+                "display": "flex",
+                "flexDirection": "row",
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "paddingTop": 0,
+                "shadowColor": "black",
+                "shadowOffset": Object {
+                  "height": 0.5,
+                },
+                "shadowOpacity": 0.1,
+                "shadowRadius": 0.5,
+              },
+              Object {},
+            ]
           }
         >
           <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
             style={
               Object {
-                "alignItems": "center",
-                "borderBottomColor": "#4690D6",
-                "borderBottomWidth": 2,
                 "flex": 1,
-                "flexDirection": "column",
-                "opacity": 1,
-                "padding": 5,
+                "flexDirection": "row",
+                "justifyContent": "space-between",
               }
             }
           >
-            <Text
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
-                    "color": "#4690D6",
-                    "paddingTop": 5,
-                    "textAlign": "center",
-                  },
-                  Object {
-                    "fontSize": 10,
-                  },
-                  Object {
-                    "color": "black",
-                  },
-                ]
+                Object {
+                  "alignItems": "center",
+                  "borderBottomColor": "#4690D6",
+                  "borderBottomWidth": 2,
+                  "flex": 1,
+                  "flexDirection": "column",
+                  "opacity": 1,
+                  "padding": 5,
+                }
               }
             >
-              TOP
-            </Text>
-          </View>
-          <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "borderBottomColor": "#FFF",
-                "borderBottomWidth": 2,
-                "flex": 1,
-                "flexDirection": "column",
-                "opacity": 1,
-                "padding": 5,
-              }
-            }
-          >
-            <Text
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#4690D6",
+                      "paddingTop": 5,
+                      "textAlign": "center",
+                    },
+                    Object {
+                      "fontSize": 10,
+                    },
+                    Object {
+                      "color": "black",
+                    },
+                  ]
+                }
+              >
+                TRENDING
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
-                    "paddingTop": 5,
-                  },
-                  Object {
-                    "fontSize": 10,
-                  },
-                ]
+                Object {
+                  "alignItems": "center",
+                  "borderBottomColor": "#FFF",
+                  "borderBottomWidth": 2,
+                  "flex": 1,
+                  "flexDirection": "column",
+                  "opacity": 1,
+                  "padding": 5,
+                }
               }
             >
-              SUBSCRIPTIONS
-            </Text>
-          </View>
-          <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "borderBottomColor": "#FFF",
-                "borderBottomWidth": 2,
-                "flex": 1,
-                "flexDirection": "column",
-                "opacity": 1,
-                "padding": 5,
-              }
-            }
-          >
-            <Text
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "paddingTop": 5,
+                    },
+                    Object {
+                      "fontSize": 10,
+                    },
+                  ]
+                }
+              >
+                SUBSCRIPTIONS
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
               style={
-                Array [
-                  Object {
-                    "paddingTop": 5,
-                  },
-                  Object {
-                    "fontSize": 10,
-                  },
-                ]
+                Object {
+                  "alignItems": "center",
+                  "borderBottomColor": "#FFF",
+                  "borderBottomWidth": 2,
+                  "flex": 1,
+                  "flexDirection": "column",
+                  "opacity": 1,
+                  "padding": 5,
+                }
               }
             >
-              MY BLOGS
-            </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "paddingTop": 5,
+                    },
+                    Object {
+                      "fontSize": 10,
+                    },
+                  ]
+                }
+              >
+                MY BLOGS
+              </Text>
+            </View>
           </View>
         </View>
       </View>

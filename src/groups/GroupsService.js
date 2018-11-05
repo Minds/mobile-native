@@ -18,7 +18,7 @@ class GroupsService {
       this.listController.abort();
     }
 
-    let endpoint = (filter === 'trending')? 'api/v1/entities/trending/groups': 'api/v1/groups/' + filter;
+    let endpoint = (filter === 'suggested')? 'api/v2/entities/suggested/groups': 'api/v1/groups/' + filter;
     // abortable call controller
     this.listController = new AbortController();
 
@@ -28,7 +28,7 @@ class GroupsService {
           data.groups.shift();
         }
 
-        let entities = (filter === 'trending')? data.entities: data.groups;
+        let entities = (filter === 'suggested') ? data.entities : data.groups;
         return {
           entities: entities || [],
           offset: data['load-next'] || '',

@@ -3,6 +3,7 @@ import { observable, action } from 'mobx'
 import blogService from './BlogsService';
 import BlogModel from './BlogModel';
 import OffsetListStore from '../common/stores/OffsetListStore';
+import { MINDS_FEATURES } from '../config/Config';
 
 /**
  * Blogs store
@@ -11,7 +12,7 @@ class BlogsStore {
 
   list = new OffsetListStore();
 
-  @observable filter = 'trending';
+  @observable filter = MINDS_FEATURES.suggested_blogs_screen ? 'suggested' : 'trending';
 
   async loadList() {
     try {

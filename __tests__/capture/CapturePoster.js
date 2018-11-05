@@ -52,8 +52,6 @@ describe('cature poster component', () => {
   });
 
   it('should receive text parameters on did mount', () => {
-    const spySetState = jest.spyOn(CapturePoster.wrappedComponent.prototype, 'setState');
-
     navigation.state.params = {text: 'hello'};
 
     const wrapper = shallow(
@@ -65,13 +63,10 @@ describe('cature poster component', () => {
     );
 
     // should be called
-    expect(spySetState).toHaveBeenCalled();
-
-    // should be called only once
-    expect(spySetState.mock.calls.length).toBe(1);
+    expect(capture.setText).toHaveBeenCalled();
 
     // should be called with text hello
-    expect(spySetState.mock.calls[0][0].text).toBe('hello');
+    expect(capture.setText).toHaveBeenCalledWith('hello');
   });
 
   it('should receive image parameters on did mount and attach it', () => {

@@ -5,7 +5,8 @@ import React, {
 import {
   ScrollView,
   StyleSheet,
-  FlatList
+  FlatList,
+  View
 } from 'react-native';
 
 import {
@@ -15,9 +16,20 @@ import {
 
 import { ListItem } from 'react-native-elements';
 import { Avatar } from 'react-native-elements';
-import { MINDS_CDN_URI } from '../config/Config';
+import { MINDS_CDN_URI, MINDS_FEATURES } from '../config/Config';
 import CenteredLoading from '../common/components/CenteredLoading';
 import Toolbar from '../common/components/toolbar/Toolbar';
+import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
+import { CommonStyle } from '../styles/Common';
+
+// define tabs based on enabled features
+const selectedTextStyle = {color: 'black'};
+const typeOptions = [
+  (MINDS_FEATURES.suggested_groups_screen ?
+    { text: 'TOP', value: 'suggested', selectedTextStyle} :
+    { text: 'TOP', value: 'top', selectedTextStyle}),
+  { text: 'MY GROUPS', value: 'member', selectedTextStyle}
+]
 
 /**
  * Groups list screen
@@ -38,20 +50,27 @@ export default class GroupsListScreen extends Component {
   }
 
   /**
+   * On tag selection change
+   */
+  onTagSelectionChange = () => {
+    this.props.groups.refresh();
+  }
+
+  /**
    * Render Tabs
    */
   renderToolbar() {
-    selectedTextStyle={color: 'black'};
-    const typeOptions = [
-      { text: 'TOP', value: 'trending', selectedTextStyle},
-      { text: 'MY GROUPS', value: 'member', selectedTextStyle}
-    ]
     return (
-      <Toolbar
-        options={ typeOptions }
-        initial={ this.props.groups.filter }
-        onChange={ this.onTabChange }
-      />
+      <View>
+        <Toolbar
+          options={ typeOptions }
+          initial={ this.props.groups.filter }
+          onChange={ this.onTabChange }
+        />
+        { this.props.groups.filter == 'suggested' && <View style={[CommonStyle.paddingTop, CommonStyle.paddingBottom, CommonStyle.hairLineBottom]}>
+          <TagsSubBar onChange={this.onTagSelectionChange}/>
+        </View>}
+      </View>
     )
   }
 

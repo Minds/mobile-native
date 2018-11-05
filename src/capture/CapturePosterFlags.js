@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, TextInput, View, StyleSheet } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
+import FaIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import MdIcon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../styles/Colors';
@@ -9,12 +10,16 @@ import Modal from 'react-native-modal';
 import { CheckBox } from 'react-native-elements'
 import TransparentButton from '../common/components/TransparentButton';
 import LicensePicker from '../common/components/LicensePicker';
+import TagInput from '../common/components/TagInput';
+import TagSelect from '../common/components/TagSelect';
 
 @inject('capture')
 @observer
 export default class CapturePosterFlags extends Component {
   state = {
     shareModalVisible: false,
+    hashsModalVisible: false,
+    suggestedHashsModalVisible: false,
     lockingModalVisible: false,
     lock: false,
     min: '0',
@@ -24,6 +29,9 @@ export default class CapturePosterFlags extends Component {
 
   componentWillMount() {
     this.props.capture.loadThirdPartySocialNetworkStatus();
+    this.props.capture.loadSuggestedTags().catch(e => {
+      console.log(e);
+    });
   }
 
   componentWillReceiveProps(props) {
@@ -42,6 +50,20 @@ export default class CapturePosterFlags extends Component {
     this.setState({ shareModalVisible: false });
   }
 
+  // Hash
+  showHashsModal = () => {
+    this.setState({ hashsModalVisible: true });
+  }
+
+  dismissHashsModal = () => {
+    this.setState({ hashsModalVisible: false, suggestedHashsModalVisible: false });
+  }
+
+  // Suggested Hash
+  toogleSuggestedHashs = () => {
+    this.setState({ suggestedHashsModalVisible: !this.state.suggestedHashsModalVisible});
+  }
+
   isSharing() {
     if (!this.props.shareValue) {
       return false;
@@ -53,6 +75,51 @@ export default class CapturePosterFlags extends Component {
     }
 
     return false;
+  }
+
+  hashsModal() {
+    return (
+        <Modal
+          isVisible={this.state.hashsModalVisible}
+          backdropOpacity={0.35}
+          avoidKeyboard={true}
+          animationInTiming={150}
+          onBackButtonPress={this.dismissHashsModal}
+          onBackdropPress={this.dismissHashsModal}
+        >
+          <View style={styles.modalView}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>HASHTAGS</Text>
+              <Text
+                style={[styles.modalTitle, styles.modalTitleButton, this.state.suggestedHashsModalVisible ? styles.modalTitleActiveButton : null]}
+                onPress={this.toogleSuggestedHashs}
+                >SUGGESTED</Text>
+
+              <IonIcon
+                style={styles.modalCloseIcon}
+                size={28}
+                name="ios-close"
+                onPress={this.dismissHashsModal}
+              />
+            </View>
+
+            {this.state.suggestedHashsModalVisible ?
+              <TagSelect
+                onTagDeleted={this.props.capture.deleteTag}
+                onTagAdded={this.props.capture.addTag}
+                tags={this.props.capture.selectedSuggested}
+              /> :
+              <TagInput
+                tags={this.props.capture.allTags}
+                onTagDeleted={this.props.capture.deleteTag}
+                onTagAdded={this.props.capture.addTag}
+                max={5}
+              />
+            }
+
+          </View>
+        </Modal>
+      );
   }
 
   shareModalPartial() {
@@ -283,6 +350,15 @@ export default class CapturePosterFlags extends Component {
           />
         </Touchable>
 
+         <Touchable style={styles.cell} onPress={this.showHashsModal}>
+          <FaIcon
+            name="hashtag"
+            color={this.isSharing() ? Colors.primary : Colors.darkGreyed}
+            size={25}
+          />
+        </Touchable>
+
+
         <Touchable style={[styles.cell, styles.cell__last]} onPress={this.showLockingModal}>
           <IonIcon
             name="ios-flash"
@@ -292,6 +368,7 @@ export default class CapturePosterFlags extends Component {
         </Touchable>
         {this.shareModalPartial()}
         {this.lockingModalPartial()}
+        {this.hashsModal()}
       </View>
     );
   }
@@ -315,7 +392,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 8,
+    paddingLeft: 10,
     //borderRightWidth: 1,
     //borderColor: '#ececec',
   },
@@ -364,6 +441,22 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 1,
     marginLeft: 10,
+  },
+  modalTitleButton: {
+    flexGrow: 0,
+    fontSize: 12,
+    fontWeight: '400',
+    color: Colors.darkGreyed,
+    borderRadius: 10,
+    borderColor: Colors.greyed,
+    textAlign: 'center',
+    borderWidth: 1,
+    padding: 5,
+    marginRight: 10
+  },
+  modalTitleActiveButton: {
+    color: Colors.primary,
+    borderColor: Colors.primary,
   },
   modalCloseIcon: {
     padding: 5,

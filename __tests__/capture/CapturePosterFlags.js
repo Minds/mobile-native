@@ -5,12 +5,16 @@ import { configure } from 'mobx';
 import LicensePicker from '../../src/common/components/LicensePicker';
 import CaptureStore from  '../../src/capture/CaptureStore';
 import CapturePosterFlags from '../../src/capture/CapturePosterFlags';
+import HashtagStore from '../../src/common/stores/HashtagStore';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
+jest.mock('../../src/common/stores/HashtagStore');
 jest.mock('../../src/capture/CaptureStore');
 jest.mock('../../src/common/components/LicensePicker', () => 'LicensePicker');
+jest.mock('../../src/newsfeed/topbar/TagsSubBar', () => 'TagsSubBar');
+
 
 defaultState = {
   mature: false,
@@ -27,6 +31,8 @@ const testRenderWithValue = (value) => {
   fn = () => null;
 
   const store = new CaptureStore();
+  const hashtagStore = new HashtagStore();
+  store.loadSuggestedTags.mockResolvedValue();
 
   state = {
     mature: value,
@@ -37,6 +43,7 @@ const testRenderWithValue = (value) => {
   const preview = renderer.create(
     <CapturePosterFlags
         capture={store}
+        hashtag={hashtagStore}
         matureValue={state.mature}
         shareValue={state.share}
         lockValue={state.lock}
@@ -66,12 +73,15 @@ describe('cature poster flags component', () => {
   it('should load third party social networks status on will mount', () => {
 
     const store = new CaptureStore();
-
+    const hashtagStore = new HashtagStore();
+    store.loadSuggestedTags.mockResolvedValue();
     store.loadThirdPartySocialNetworkStatus.mockClear();
+
 
     const wrapper = shallow(
       <CapturePosterFlags.wrappedComponent
         capture={store}
+        hashtag={hashtagStore}
         matureValue={defaultState.mature}
         shareValue={defaultState.share}
         lockValue={defaultState.lock}
@@ -88,10 +98,13 @@ describe('cature poster flags component', () => {
   it('should show license picker if it has an attachment', () => {
 
     const store = new CaptureStore();
+    const hashtagStore = new HashtagStore();
+    store.loadSuggestedTags.mockResolvedValue();
 
     const capturePosterFlag = renderer.create(
       <CapturePosterFlags
         capture={store}
+        hashtag={hashtagStore}
         matureValue={defaultState.mature}
         shareValue={defaultState.share}
         lockValue={defaultState.lock}

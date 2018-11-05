@@ -1,8 +1,10 @@
 import { observable, action } from 'mobx'
 
 import groupsService from './GroupsService';
-
+import { MINDS_FEATURES } from '../config/Config';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
+
+const defaultFilter = MINDS_FEATURES.suggested_groups_screen ? 'suggested' : 'top';
 
 /**
  * Groups store
@@ -14,7 +16,7 @@ class GroupsStore {
    */
   @observable list = new OffsetFeedListStore('shallow');
 
-  @observable filter = 'trending';
+  @observable filter = defaultFilter;
 
   /**
    * List loading
@@ -73,6 +75,7 @@ class GroupsStore {
   reset() {
     this.list = new OffsetFeedListStore('shallow');
     this.loading = false;
+    this.filter = defaultFilter;
   }
 
 }

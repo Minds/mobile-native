@@ -10,6 +10,7 @@ import renderer from 'react-test-renderer';
 
 jest.mock('../../src/blogs/BlogsStore');
 jest.mock('../../src/blogs/BlogCard', () => 'BlogCard');
+jest.mock('../../src/newsfeed/topbar/TagsSubBar', () => 'TagsSubBar');
 
 /**
  * Tests

@@ -16,11 +16,9 @@ export default class NewsfeedService {
     this.controllers._getFeed = new AbortController();
 
     try {
-      console.log('getting feed ' + endpoint);
       const data = await api.get(endpoint, { offset, limit }, this.controllers._getFeed.signal);
-      console.log('got feed ' + endpoint);
       return {
-        entities: data.activity,
+        entities: data.activity || data.entities,
         offset: data['load-next'],
       }
     } catch (err) {
@@ -38,8 +36,8 @@ export default class NewsfeedService {
    * @param {string} offset
    * @param {int} limit
    */
-  async getFeedTop(offset, limit = 12) {
-    return this._getFeed('api/v1/newsfeed/top', offset, limit);
+  async getFeedSuggested(offset, limit = 12) {
+    return this._getFeed('api/v2/entities/suggested/activities', offset, limit);
   }
 
   /**
@@ -62,7 +60,7 @@ export default class NewsfeedService {
       this.controllers._getFeed.abort();
 
     this.controllers._getFeed = new AbortController();
-    
+
     try {
       const data = await api.get('api/v1/boost/fetch/newsfeed', {
           limit: limit || '',
@@ -70,7 +68,7 @@ export default class NewsfeedService {
           rating: rating || 1,
           platform: Platform.OS === 'ios' ? 'ios' : 'other'
         }, this.controllers._getFeed.signal);
-    
+
         return {
           entities: data.boosts||[],
           offset: data['load-next'],
@@ -92,7 +90,7 @@ function _getFeed(endpoint, offset, limit) {
   return api.get(endpoint, { offset, limit })
     .then((data) => {
       return {
-        entities: data.activity,
+        entities: data.activity || data.entities,
         offset: data['load-next'],
       }
     })
@@ -100,24 +98,6 @@ function _getFeed(endpoint, offset, limit) {
       console.log('error');
       throw "Ooops";
     })
-}
-
-/**
- * Fetch subscribed newsfeed
- * @param {string} offset
- * @param {int} limit
- */
-export function getFeed(offset, limit = 12) {
-  return _getFeed('api/v1/newsfeed/', offset, limit);
-}
-
-/**
- * Fetch top newsfeed
- * @param {string} offset
- * @param {int} limit
- */
-export function getFeedTop(offset, limit = 12) {
-  return _getFeed('api/v1/newsfeed/top', offset, limit);
 }
 
 /**

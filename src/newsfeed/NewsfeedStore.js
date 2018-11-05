@@ -1,7 +1,7 @@
-import { Alert } from 'react-native'; 
+import { Alert } from 'react-native';
 import { observable, action, computed } from 'mobx'
 
-import NewsfeedService, { getFeedTop, getFeed, getBoosts, setViewed } from './NewsfeedService';
+import NewsfeedService, { getBoosts, setViewed } from './NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from './ActivityModel';
 
@@ -37,7 +37,7 @@ class NewsfeedStore {
         list: new OffsetFeedListStore('shallow'),
         loading: false,
       },
-      'top': {
+      'suggested': {
         list: new OffsetFeedListStore('shallow'),
         loading: false,
       },
@@ -131,8 +131,8 @@ class NewsfeedStore {
     switch (this.filter) {
       case 'subscribed':
         return this.service.getFeed.bind(this.service);
-      case 'top':
-        return this.service.getFeedTop.bind(this.service);
+      case 'suggested':
+        return this.service.getFeedSuggested.bind(this.service);
       case 'boostfeed':
         return this.service.getBoosts.bind(this.service);
     }
