@@ -25,11 +25,11 @@ export default class Router {
 
       switch (data.json.type) {
         case 'friends':
-          navigation.navigate('Channel', { guid: data.json.entity_guid });
+          navigation.push('Channel', { guid: data.json.entity_guid });
           break;
 
         case 'group_invite':
-          navigation.navigate('GroupView', { guid: data.json.entity_guid });
+          navigation.push('GroupView', { guid: data.json.entity_guid });
           break;
 
         case 'like': // not implemented in engine
@@ -40,13 +40,13 @@ export default class Router {
           let entity_type = data.json.entity_type.split(':');
 
           if (entity_type[0] === 'comment') {
-            navigation.navigate('Activity', { guid: data.json.parent_guid });
+            navigation.push('Activity', { guid: data.json.parent_guid });
           } else if (entity_type[0] === 'activity') {
-            navigation.navigate('Activity', { guid: data.json.entity_guid });
+            navigation.push('Activity', { guid: data.json.entity_guid });
           } else if (entity_type[1] === 'blog') {
-            navigation.navigate('BlogView', { guid: data.json.entity_guid });
+            navigation.push('BlogView', { guid: data.json.entity_guid });
           } else if (entity_type[0] === 'object') {
-            navigation.navigate('Activity', { guid: data.json.entity_guid });
+            navigation.push('Activity', { guid: data.json.entity_guid });
           } else {
             console.error('Unknown notification:', entity_type, data);
           }
@@ -55,11 +55,11 @@ export default class Router {
 
         case 'remind':
           console.log('remind')
-          navigation.navigate('Activity', { guid: data.json.entity_guid });
+          navigation.push('Activity', { guid: data.json.entity_guid });
           break;
 
         case 'comment':
-          navigation.navigate('Activity', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid });
+          navigation.push('Activity', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid });
           break;
 
         case 'rewards_reminder':

@@ -34,7 +34,7 @@ export default class GroupsListScreen extends Component {
   }
 
   navigateToGroupJoin(group) {
-    this.props.navigation.navigate('GroupView', { group: group})
+    this.props.navigation.push('GroupView', { group: group})
   }
 
   /**

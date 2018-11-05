@@ -16,7 +16,7 @@ export default class RemindView extends Component {
    * Navigate to activity
    */
   navToActivity = () => {
-    this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj, hydrate: true });
+    this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true });
   }
 
   render() {

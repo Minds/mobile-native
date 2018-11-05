@@ -49,15 +49,15 @@ export default class BoostAction extends PureComponent {
    */
   openBoost = () => {
     if (featuresService.isLegacy()) {
-      this.props.navigation.navigate('ComingSoon');
+      this.props.navigation.push('ComingSoon');
       return;
     } else if (!featuresService.has('monetization')) {
-      this.props.navigation.navigate('NotSupported');
+      this.props.navigation.push('NotSupported');
       return;
     }
 
 
-    this.props.navigation.navigate('Boost', { entity: this.props.entity });
+    this.props.navigation.push('Boost', { entity: this.props.entity });
   }
 }
 

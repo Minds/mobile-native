@@ -49,7 +49,7 @@ export default class CommentsAction extends Component {
     if (this.props.navigation.state.routeName == 'Activity' ){
       return;
     }
-    this.props.navigation.navigate('Activity', { 
+    this.props.navigation.push('Activity', {
       entity: this.props.entity,
       scrollToBottom: true,
     });

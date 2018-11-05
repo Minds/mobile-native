@@ -80,7 +80,7 @@ export default class Message extends PureComponent {
   _navToChannel = () => {
     // only active if receive the navigation property
     if (this.props.navigation) {
-      this.props.navigation.navigate('Channel', { guid: this.props.message.owner.guid });
+      this.props.navigation.push('Channel', { guid: this.props.message.owner.guid });
     }
   }
 

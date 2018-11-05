@@ -55,7 +55,7 @@ export default class Activity extends Component {
       navOpts.hydrate = true;
     }
 
-    this.props.navigation.navigate('Activity', navOpts);
+    this.props.navigation.push('Activity', navOpts);
   };
 
   /**
@@ -66,7 +66,7 @@ export default class Activity extends Component {
     if (this.props.entity.perma_url) {
       this.openLink();
     } else {
-      this.props.navigation.navigate('ViewImage', { source: this.source });
+      this.props.navigation.push('ViewImage', { source: this.source });
     }
   }
 

@@ -105,7 +105,7 @@ export default class NotificationsScreen extends Component {
       if (me && me.hasBanned && !me.hasBanner()) { //TODO: check for avatar too
         design = <Text
           style={ComponentsStyle.emptyComponentLink}
-          onPress={() => this.props.navigation.navigate('Channel', { username: 'me' })}
+          onPress={() => this.props.navigation.push('Channel', { username: 'me' })}
           >
           Design your channel
         </Text>

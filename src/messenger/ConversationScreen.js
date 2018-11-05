@@ -102,7 +102,7 @@ export default class ConversationScreen extends Component {
 
       this.props.navigation.setParams({
         headerRight: (
-          <TouchableOpacity style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}  onPress={() => this.props.navigation.navigate('Channel', { guid:participant.guid})}>
+          <TouchableOpacity style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}  onPress={() => this.props.navigation.push('Channel', { guid: participant.guid})}>
             <Image source={avatarImg} style={styles.avatar} />
           </TouchableOpacity>)
       });
@@ -117,7 +117,7 @@ export default class ConversationScreen extends Component {
   _navToChannel = () => {
     // only active if receive the navigation property
     if (this.props.navigation) {
-      this.props.navigation.navigate('Channel', { guid:this.props.comment.ownerObj.guid});
+      this.props.navigation.push('Channel', { guid:this.props.comment.ownerObj.guid});
     }
   }
 

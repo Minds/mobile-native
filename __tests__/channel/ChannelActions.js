@@ -59,7 +59,7 @@ describe('channel actions component', () => {
 
   it('should show run the correct option', () => {
 
-    const navigation = {navigate: jest.fn()};
+    const navigation = {push: jest.fn()};
     const wrapper = shallow(
       <ChannelActions channel={store} navigation={navigation}/>
     );
@@ -74,7 +74,7 @@ describe('channel actions component', () => {
     expect(store.toggleBlock).toBeCalled();
 
     opt = wrapper.instance().makeAction(3);
-    expect(navigation.navigate).toBeCalled();
+    expect(navigation.push).toBeCalled();
   });
 
 });

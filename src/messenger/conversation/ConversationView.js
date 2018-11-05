@@ -24,7 +24,7 @@ export default class ConversationView extends Component {
    */
   _navToConversation = () => {
     if (this.props.navigation) {
-      this.props.navigation.navigate('Conversation', { conversation: this.props.item });
+      this.props.navigation.push('Conversation', { conversation: this.props.item });
     }
   }
 

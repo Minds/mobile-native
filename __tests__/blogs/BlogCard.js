@@ -31,7 +31,7 @@ describe('blog card component', () => {
 
     const blogEntity = BlogModel.create(blogFakeFactory(1));
 
-    const navigation = {navigate: jest.fn()};
+    const navigation = {push: jest.fn()};
 
     try {
       const wrapper = shallow(
@@ -44,7 +44,7 @@ describe('blog card component', () => {
       wrapper.instance().navToBlog();
 
       // expect fn to be called once
-      expect(navigation.navigate).toBeCalledWith('BlogView', {blog:blogEntity});
+      expect(navigation.push).toBeCalledWith('BlogView', {blog:blogEntity});
       done();
     } catch(e) {
       done.fail(e);
@@ -55,7 +55,7 @@ describe('blog card component', () => {
 
     const blogEntity = BlogModel.create(blogFakeFactory(1));
 
-    const navigation = {navigate: jest.fn()};
+    const navigation = {push: jest.fn()};
 
     try {
       const wrapper = shallow(

@@ -16,7 +16,7 @@ export default class GroupKickView extends Component {
    * Navigate to group
    */
   navToGroup = () => {
-    this.props.navigation.navigate('GroupView', { guid: this.props.entity.params.group.guid });
+    this.props.navigation.push('GroupView', { guid: this.props.entity.params.group.guid });
   }
 
   render() {

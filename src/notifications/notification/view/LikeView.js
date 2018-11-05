@@ -44,7 +44,7 @@ export default class LikeView extends Component {
         params.hydrate = true;
         break;
     }
-    this.props.navigation.navigate(screen, params);
+    this.props.navigation.push(screen, params);
   }
 
   /**

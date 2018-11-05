@@ -14,7 +14,7 @@ describe('Comment action component', () => {
   beforeEach(() => {
 
     const TouchableOpacityCustom = <TouchableOpacity onPress={this.onPress} />;
-    navigation = { navigate: jest.fn(), state: {routeName: 'some'} };
+    navigation = { push: jest.fn(), state: {routeName: 'some'} };
     let activityResponse = activitiesServiceFaker().load(1);
     screen = shallow(
       <CommentsAction entity={activityResponse.activities[0]} navigation={navigation} />
@@ -41,7 +41,7 @@ describe('Comment action component', () => {
     screen.update();
     let touchables = screen.find('PreventDoubleTap');
     touchables.at(0).props().onPress();
-    expect(navigation.navigate).toHaveBeenCalled();
+    expect(navigation.push).toHaveBeenCalled();
     expect(screen.find('PreventDoubleTap')).toHaveLength(1);
 
   });

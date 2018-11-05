@@ -429,7 +429,7 @@ export default class DiscoveryScreen extends Component {
   }
 
   navigateToGroup(group) {
-    this.props.navigation.navigate('GroupView', { group: group })
+    this.props.navigation.push('GroupView', { group: group })
   }
 }
 

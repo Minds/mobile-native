@@ -18,14 +18,14 @@ export default class WireHappenedView extends Component {
    * Navigate From channel
    */
   navFromChannel = () => {
-    this.props.navigation.navigate('Channel', { guid: this.props.entity.from.guid });
+    this.props.navigation.push('Channel', { guid: this.props.entity.from.guid });
   }
 
   /**
    * Navigate To channel
    */
   navToChannel = () => {
-    this.props.navigation.navigate('Channel', { guid: this.props.entity.to.guid });
+    this.props.navigation.push('Channel', { guid: this.props.entity.to.guid });
   }
 
   /**

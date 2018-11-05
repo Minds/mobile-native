@@ -23,15 +23,15 @@ export default class TagView extends Component {
       if (this.props.entity.params && this.props.entity.params.parent) {
         entityService.getEntity(this.props.entity.entityObj.parent_guid)
           .then((entity) => {
-            this.props.navigation.navigate('Activity', { entity: entity });
+            this.props.navigation.push('Activity', { entity: entity });
           })
           .catch(err => {
             console.log('error');
             throw "Ooops";
           })
-      } 
+      }
     } else {
-      this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj, hydrate: true });
+      this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true });
     }
   }
 

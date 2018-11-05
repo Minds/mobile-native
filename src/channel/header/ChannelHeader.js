@@ -131,13 +131,13 @@ export default class ChannelHeader extends Component {
    */
   _navToConversation() {
     if (this.props.navigation) {
-      this.props.navigation.navigate('Conversation', { conversation: { guid : this.props.channel.channel.guid + ':' + session.guid } });
+      this.props.navigation.push('Conversation', { conversation: { guid : this.props.channel.channel.guid + ':' + session.guid } });
     }
   }
 
   _navToSubscribers() {
     if (this.props.navigation) {
-      this.props.navigation.navigate('Subscribers', { guid : this.props.channel.channel.guid });
+      this.props.navigation.push('Subscribers', { guid : this.props.channel.channel.guid });
     }
   }
 

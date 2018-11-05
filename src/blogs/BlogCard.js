@@ -36,7 +36,7 @@ export default class BlogCard extends PureComponent {
    */
   navToBlog = () => {
     if (Platform.OS == 'ios') {
-      return this.props.navigation.navigate('BlogView', { blog: this.props.entity });
+      return this.props.navigation.push('BlogView', { blog: this.props.entity });
     }
     Linking.openURL(MINDS_LINK_URI + 'blog/view/' + this.props.entity.guid);
   }

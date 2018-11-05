@@ -31,7 +31,7 @@ describe('Activity component', () => {
   let user, comments, entity, screen;
   beforeEach(() => {
 
-    const navigation = { navigate: jest.fn() };
+    const navigation = { navigate: jest.fn(), push: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
 
     const model = ActivityModel.create(activityResponse.activities[0]);

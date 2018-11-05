@@ -80,13 +80,13 @@ export default class ChannelActions extends Component {
         this.props.channel.toggleBlock();
         break;
       case 'Report':
-        this.props.navigation.navigate('Report', { entity: this.props.channel.channel });
+        this.props.navigation.push('Report', { entity: this.props.channel.channel });
         break;
     }
 
-    
+
   }
-  
+
   /**
    * Render Header
    */

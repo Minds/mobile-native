@@ -32,21 +32,21 @@ export default class BoostGiftView extends Component {
     let params = { hydrate: true };
     params.entity = this.props.entity.entityObj;
 
-    this.props.navigation.navigate('Activity', params);
+    this.props.navigation.push('Activity', params);
   }
 
   /**
    * Nav to boost console
    */
   navToBoostConsole = (params={}) => {
-    this.props.navigation.navigate('BoostConsole', params);
+    this.props.navigation.push('BoostConsole', params);
   }
 
   /**
    * Navigate To channel
    */
   navToChannel = () => {
-    this.props.navigation.navigate('Channel', { guid: this.props.entity.fromObj.guid });
+    this.props.navigation.push('Channel', { guid: this.props.entity.fromObj.guid });
   }
 
   getDescription(entity, pron='your') {

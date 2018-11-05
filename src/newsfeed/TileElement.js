@@ -25,7 +25,7 @@ export default class TileElement extends PureComponent {
    */
   _navToView = () => {
     if (this.props.navigation) {
-      this.props.navigation.navigate('Activity', { entity: this.props.entity , store: this.props.newsfeed });
+      this.props.navigation.push('Activity', { entity: this.props.entity , store: this.props.newsfeed });
     }
   }
 
@@ -35,7 +35,7 @@ export default class TileElement extends PureComponent {
 
     const source = this.props.entity.getThumbSource();
 
-    const image =  Platform.OS === 'android' ? 
+    const image =  Platform.OS === 'android' ?
       <ProgressFastImage
         indicator={ProgressCircle}
         source={source}
@@ -45,7 +45,7 @@ export default class TileElement extends PureComponent {
       <FastImage
         source={source}
         style={style}
-      /> 
+      />
 
     return (
       <TouchableOpacity onPress={this._navToView} style={style}>

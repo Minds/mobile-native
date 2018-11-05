@@ -39,16 +39,16 @@ export default class CommentView extends Component {
   navTo = () => {
     switch (this.props.entity.entityObj.type ) {
       case 'activity':
-        this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj, hydrate: true });
+        this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true });
         break;
       case 'object':
         switch(this.props.entity.entityObj.subtype) {
           case 'blog':
-            this.props.navigation.navigate('BlogView', { blog: this.props.entity.entityObj, hydrate: true });
+            this.props.navigation.push('BlogView', { blog: this.props.entity.entityObj, hydrate: true });
             break;
           case 'image':
           case 'video':
-            this.props.navigation.navigate('Activity', { entity: this.props.entity.entityObj, hydrate: true });
+            this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true });
             break;
         }
         break;

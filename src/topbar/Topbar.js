@@ -38,14 +38,14 @@ export default class Topbar extends Component {
           </TouchableOpacity> }
 
           { !featuresService.has('crypto') && <View style={styles.topbarLeft} />}
-  
+
           <View style={styles.topbarCenter}>
             { this.props.user.me && <Avatar
               rounded
               source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' +  this.props.user.me.icontime}}
               width={36}
               height={36}
-              onPress={() => this.props.navigation.navigate('Channel', { guid: this.props.user.me.guid })}
+              onPress={() => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })}
             /> }
           </View>
 

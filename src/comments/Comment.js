@@ -210,7 +210,7 @@ export default class Comment extends Component {
         });
         break;
       case 'Report':
-        this.props.navigation.navigate('Report', { entity: this.props.comment });
+        this.props.navigation.push('Report', { entity: this.props.comment });
         break;
       case 'Reply':
         this.props.replyComment(this.props.comment);

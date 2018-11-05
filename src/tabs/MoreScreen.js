@@ -68,7 +68,7 @@ export default class MoreScreen extends Component {
         name: 'Help & Support',
         icon: (<Icon name='help-outline' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
-          this.props.navigation.navigate('GroupView', { guid: '100000000000000681'});
+          this.props.navigation.push('GroupView', { guid: '100000000000000681'});
         }
       },
       {

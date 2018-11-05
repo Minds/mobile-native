@@ -64,7 +64,7 @@ export default class NewsfeedList extends Component {
    */
   render() {
     let renderRow,
-    getItemLayout, 
+    getItemLayout,
     design,
     empty = null;
 
@@ -91,27 +91,27 @@ export default class NewsfeedList extends Component {
         empty = this.props.emptyMessage;
       } else if (newsfeed.filter == 'subscribed') {
         if (me && me.hasBanner && !me.hasBanner()) { //TODO: check for avatar too
-          design = <Text 
+          design = <Text
             style={ComponentsStyle.emptyComponentLink}
-            onPress={() => this.props.navigation.navigate('Channel', { username: 'me' })}
+            onPress={() => this.props.navigation.push('Channel', { username: 'me' })}
             >
             Design your channel
           </Text>
         }
-  
+
         empty = (
           <View style={ComponentsStyle.emptyComponentContainer}>
             <View style={ComponentsStyle.emptyComponent}>
               <MIcon name="home" size={72} color='#444' />
               <Text style={ComponentsStyle.emptyComponentMessage}>Your newsfeed is empty</Text>
               {design}
-              <Text 
+              <Text
                 style={ComponentsStyle.emptyComponentLink}
                 onPress={() => this.props.navigation.navigate('Capture')}
                 >
                 Create a post
               </Text>
-              <Text 
+              <Text
                 style={ComponentsStyle.emptyComponentLink}
                 onPress={() => this.props.navigation.navigate('Discovery', { type: 'user' })}
                 >

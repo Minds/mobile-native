@@ -33,7 +33,7 @@ export default class DiscoveryTile extends Component {
    */
   _navToView = () => {
     if (this.props.navigation) {
-      this.props.navigation.navigate('Activity', {
+      this.props.navigation.push('Activity', {
         entity: this.props.entity,
         scrollToBottom: false
       });

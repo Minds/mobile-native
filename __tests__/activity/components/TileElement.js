@@ -10,10 +10,10 @@ import TileElement from '../../../src/newsfeed/TileElement';
 
 describe('Owner component', () => {
 
-  let screen;
+  let screen, navigation;
   beforeEach(() => {
+    navigation = { navigate: jest.fn(), push: jest.fn() };
 
-    const navigation = { navigate: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
     let entity = activityResponse.activities[0];
     entity.getThumbSource = jest.fn();
@@ -36,9 +36,6 @@ describe('Owner component', () => {
   });
 
   it('should _navToChannel on press ', () => {
-    const navigation = { 
-      navigate: jest.fn() 
-    };
     let activityResponse = activitiesServiceFaker().load(1);
     let entity = activityResponse.activities[0];
     entity.getThumbSource = jest.fn();
@@ -50,7 +47,7 @@ describe('Owner component', () => {
     touchables.at(0).props().onPress();
     jest.runAllTimers();
 
-    expect(navigation.navigate).toHaveBeenCalledWith('Activity', {"entity": entity });
+    expect(navigation.push).toHaveBeenCalledWith('Activity', {"entity": entity });
 
   });
 
