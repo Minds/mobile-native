@@ -44,7 +44,7 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import SingleEntityStore from '../common/stores/SingleEntityStore';
 import { getSingle } from './NewsfeedService';
 import UserAutocomplete from '../common/components/UserAutocomplete';
-
+import CaptureMetaPreview from '../capture/CaptureMetaPreview';
 import isIphoneX from '../common/helpers/isIphoneX';
 import FastImage from 'react-native-fast-image';
 //import stores from '../../AppStores';
@@ -222,6 +222,11 @@ export default class ActivityScreen extends Component {
 
             <Icon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.deleteAttachment()} />
           </View>}
+          {(this.comments.embed.meta || this.comments.embed.metaInProgress) && <CaptureMetaPreview
+            meta={this.comments.embed.meta}
+            inProgress={this.comments.embed.metaInProgress}
+            onRemove={this.comments.embed.clearRichEmbedAction}
+          />}
       </View>
     )
   }

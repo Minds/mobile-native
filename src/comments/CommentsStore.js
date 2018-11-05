@@ -15,10 +15,10 @@ import Comment from './Comment';
 import CommentModel from './CommentModel';
 import socket from '../common/services/socket.service';
 import session from '../common/services/session.service';
-
 import AttachmentStore from '../common/stores/AttachmentStore';
-
 import {toggleExplicit} from '../newsfeed/NewsfeedService';
+import RichEmbedStore from '../common/stores/RichEmbedStore';
+
 /**
  * Comments Store
  */
@@ -32,6 +32,7 @@ export default class CommentsStore {
 
   // attachment store
   attachment = new AttachmentStore();
+  embed = new RichEmbedStore();
 
   guid = '';
   reversed = true;
@@ -98,11 +99,20 @@ export default class CommentsStore {
     this.loadComments(this.guid, 1);
   }
 
+  /**
+   * Set comment text
+   * @param {string} text
+   */
   @action
-  setText(txt) {
-    this.text = txt;
+  setText(text) {
+    this.text = text;
+    this.embed.richEmbedCheck(text);
   }
 
+  /**
+   * Set comments array from response
+   * @param {response} response
+   */
   @action
   setComments(response) {
     if (response.comments) {
@@ -119,6 +129,10 @@ export default class CommentsStore {
     this.loadPrevious = response['load-previous'];
   }
 
+  /**
+   * Add a comment
+   * @param {object} comment
+   */
   @action
   setComment(comment) {
     this.comments.push(CommentModel.create(comment));
@@ -138,11 +152,16 @@ export default class CommentsStore {
       comment.attachment_guid = this.attachment.guid;
     }
 
+    if (this.embed.meta) {
+      Object.assign(comment, this.embed.meta);
+    }
+
     return postComment(this.guid, comment)
 
       .then((data) => {
         this.setComment(data.comment);
         this.setText('');
+        this.embed.clearRichEmbedAction();
         this.attachment.clear();
       })
       .finally(action(() => {
@@ -154,6 +173,9 @@ export default class CommentsStore {
       })
   }
 
+  /**
+   * Clear comments
+   */
   @action
   clearComments() {
     this.comments = [];
@@ -166,17 +188,28 @@ export default class CommentsStore {
     this.text = '';
   }
 
+  /**
+   * Refresh
+   */
   @action
   refresh() {
     this.refreshing = true;
     clearComments();
   }
 
+  /**
+   * Refresh done
+   */
   @action
   refreshDone() {
     this.refreshing = false;
   }
 
+  /**
+   * Update comment
+   * @param {objecft} comment
+   * @param {string} description
+   */
   @action
   updateComment(comment, description) {
     this.saving = true;
@@ -189,15 +222,27 @@ export default class CommentsStore {
       });
   }
 
+  /**
+   * Set comment description
+   * @param {object} comment
+   * @param {string} description
+   */
   @action
   setCommentDescription(comment, description) {
     comment.description = description;
   }
 
+  /**
+   * Cant load more
+   * @param {string} guid
+   */
   cantLoadMore(guid) {
     return this.loaded && !(this.loadPrevious) && !this.refreshing && this.guid === guid;
   }
 
+  /**
+   * Reset
+   */
   @action
   reset() {
     this.comments = [];
@@ -211,7 +256,10 @@ export default class CommentsStore {
     this.socketRoomName = '';
   }
 
-
+  /**
+   * Comment toggle explicit
+   * @param {string} guid
+   */
   @action
   commentToggleExplicit(guid) {
     let index = this.comments.findIndex(x => x.guid == guid);
@@ -231,6 +279,10 @@ export default class CommentsStore {
     }
   }
 
+  /**
+   * Delete
+   * @param {string} guid
+   */
   @action
   async delete(guid) {
     let index = this.comments.findIndex(x => x.guid == guid);

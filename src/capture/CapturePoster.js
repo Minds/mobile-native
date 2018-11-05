@@ -23,8 +23,6 @@ import colors from '../styles/Colors';
 import CaptureGallery from './CaptureGallery';
 import CapturePreview from './CapturePreview';
 
-import Util from '../common/helpers/util';
-import RichEmbedService from '../common/services/rich-embed.service';
 import CaptureMetaPreview from './CaptureMetaPreview';
 import CapturePostButton from './CapturePostButton';
 import { CommonStyle } from '../styles/Common';
@@ -46,9 +44,6 @@ export default class CapturePoster extends Component {
   state = {
     text: '',
     postImageUri: '',
-    hasRichEmbed: false,
-    richEmbedUrl: '',
-    meta: null,
     mature: false,
     share: {},
     lock: null,
@@ -57,9 +52,6 @@ export default class CapturePoster extends Component {
       end: 0
     }
   };
-
-
-  _RichEmbedFetchTimer;
 
   /**
    * On component will mount
@@ -95,13 +87,13 @@ export default class CapturePoster extends Component {
    * On component will unmount
    */
   componentWillUnmount() {
-    if (this._RichEmbedFetchTimer) {
-      clearTimeout(this._RichEmbedFetchTimer);
-    }
-
+    this.props.capture.embed.clearRichEmbedAction();
     this.deleteAttachment();
   }
 
+  /**
+   * Show context
+   */
   showContext () {
     let group = this.props.navigation.state.params? this.props.navigation.state.params.group : null;
     return group? <Text style={styles.title}> { '(Posting in ' + group.name + ')'} </Text> :null;
@@ -183,10 +175,10 @@ export default class CapturePoster extends Component {
             />
           </View>
 
-          {(this.state.meta || this.state.metaInProgress) && <CaptureMetaPreview
-            meta={this.state.meta}
-            inProgress={this.state.metaInProgress}
-            onRemove={this.clearRichEmbedAction}
+          {(this.props.capture.embed.meta || this.props.capture.embed.metaInProgress) && <CaptureMetaPreview
+            meta={this.props.capture.embed.meta}
+            inProgress={this.props.capture.embed.metaInProgress}
+            onRemove={this.props.capture.embed.clearRichEmbedAction}
           />}
 
           <CapturePosterFlags
@@ -259,7 +251,7 @@ export default class CapturePoster extends Component {
     if (
       !attachment.hasAttachment &&
       !this.state.text &&
-      (!this.state.meta || !this.state.meta.perma_url)
+      (!this.props.capture.embed.meta || !this.props.capture.embed.meta.perma_url)
     ) {
       Alert.alert('Nothing to post...');
       return false;
@@ -282,8 +274,8 @@ export default class CapturePoster extends Component {
       }
     }
 
-    if (this.state.meta) {
-      newPost = Object.assign(newPost, this.state.meta);
+    if (this.props.capture.embed.meta) {
+      newPost = Object.assign(newPost, this.props.capture.embed.meta);
     }
 
     if (this.props.navigation.state.params && this.props.navigation.state.params.group) {
@@ -327,63 +319,8 @@ export default class CapturePoster extends Component {
 
   setText = (text) => {
     this.setState({ text });
-
-    if (this._RichEmbedFetchTimer) {
-      clearTimeout(this._RichEmbedFetchTimer);
-    }
-
-    setTimeout(this.richEmbedCheck);
+    this.props.capture.embed.richEmbedCheck(text);
   };
-
-  richEmbedCheck = () => {
-    const matches = Util.urlReSingle.exec(this.state.text);
-
-    if (matches) {
-      const url = (!matches[3] ? 'https://' : '') + matches[0];
-
-      if (
-        !this.state.hasRichEmbed ||
-        (this.state.hasRichEmbed && url.toLowerCase() !== this.state.richEmbedUrl.toLowerCase())
-      ) {
-        this._RichEmbedFetchTimer = setTimeout(() => this.setRichEmbed(url), 750);
-      }
-    }
-  };
-
-  clearRichEmbedAction = () => {
-    this.clearRichEmbed();
-
-    if (this._RichEmbedFetchTimer) {
-      clearTimeout(this._RichEmbedFetchTimer);
-    }
-  };
-
-  clearRichEmbed() {
-    this.setState({
-      hasRichEmbed: false,
-      richEmbedUrl: '',
-      meta: null
-    });
-  }
-
-  async setRichEmbed(url) {
-    this.setState({
-      hasRichEmbed: true,
-      richEmbedUrl: url,
-      meta: null,
-      metaInProgress: true
-    });
-
-    try {
-      const meta = await RichEmbedService.getMeta(url);
-
-      this.setState({ meta, metaInProgress: false })
-    } catch (e) {
-      this.setState({ metaInProgress: false });
-      console.error(e);
-    }
-  }
-
 
   onMature = () => {
     const mature = !this.state.mature;

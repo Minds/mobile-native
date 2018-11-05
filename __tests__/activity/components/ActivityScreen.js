@@ -1,14 +1,11 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from "react-native";
 import { shallow } from 'enzyme';
 
-import attachmentService from '../../../src/common/services/attachment.service';
-import sessionStorage from '../../../src/common/services/session.service';
 import ActivityScreen from '../../../src/newsfeed/ActivityScreen';
 import UserStore from '../../../src/auth/UserStore';
-
 import SingleEntityStore from '../../../src/common/stores/SingleEntityStore';
+import RichEmbedStore from '../../../src/common/stores/RichEmbedStore';
 import commentsStoreProvider from '../../../src/comments/CommentsStoreProvider';
 import {
   FlatList,
@@ -57,6 +54,7 @@ describe('Activity screen component', () => {
     let mockResponse = commentsServiceFaker().load(5);
     commentsStoreProvider.get.mockReturnValue({
       comments: mockResponse.comments,
+      embed: new RichEmbedStore(),
       loadNext: mockResponse['load-next'],
       loadPrevious: mockResponse['load-previous'],
       setText: () => {},

@@ -3,6 +3,7 @@ import {
   action
 } from 'mobx'
 import AttachmentStore from '../common/stores/AttachmentStore';
+import RichEmbedStore from '../common/stores/RichEmbedStore';
 import apiService from '../common/services/api.service';
 import { post } from './CaptureService';
 
@@ -11,6 +12,7 @@ import { post } from './CaptureService';
  */
 class CaptureStore {
   attachment = new AttachmentStore();
+  embed = new RichEmbedStore();
 
   @observable isPosting = false;
 
