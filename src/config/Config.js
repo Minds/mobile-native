@@ -6,6 +6,7 @@ import {
 // export const MINDS_URI = 'http://dev.minds.io/';
 
 // remember to update deeplink uri on AndroidManifest.xml !!!
+//export const MINDS_URI = 'http://10.108.100.131/';
 export const MINDS_URI = 'https://mobile.minds.com/';
 
 export const MINDS_URI_SETTINGS = {
@@ -37,4 +38,6 @@ export const MINDS_DEEPLINK = [
   ['groups/profile/:guid', 'GroupView'],
   ['newsfeed/:guid', 'Activity'],
   ['channels/:username', 'Channel'],
+  [':username', 'Channel'],
+  ['wallet/tokens/:section', 'Wallet'],
 ]

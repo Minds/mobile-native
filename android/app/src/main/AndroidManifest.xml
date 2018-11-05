@@ -46,6 +46,8 @@
             <data android:pathPattern="/channels/..*"/>
             <data android:pathPattern="/newsfeed/..*"/>
             <data android:pathPattern="/groups/profile/..*"/>
+            <data android:pathPattern="/wallet/..*"/>
+            <data android:pathPattern="/..*"/>
         </intent-filter>
         <intent-filter>
             <action android:name="android.intent.action.SEND" />

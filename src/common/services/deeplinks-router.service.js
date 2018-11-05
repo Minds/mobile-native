@@ -21,7 +21,7 @@ class DeeplinksRouter {
    * @param {string} screen  name of the screen
    */
   add(url, screen) {
-    const re = /:(\w+)/g
+    const re = /:(\w+)/gi
 
     const params = (url.match(re) || []).map(s => s.substr(1));
 
