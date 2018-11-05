@@ -232,7 +232,9 @@ class MindsVideo extends Component {
   get video() {
     let { video, entity } = this.props;
     let { paused, volume } = this.state;
-    if (this.state.active) {
+    const thumb_uri = entity.get('custom_data.thumbnail_src') || entity.thumbnail_src;
+
+    if (this.state.active || !thumb_uri) {
       return (
         <Video
           ref={(ref) => {
@@ -251,7 +253,7 @@ class MindsVideo extends Component {
         />
       )
     } else {
-      const image = { uri: entity.get('custom_data.thumbnail_src') || entity.thumbnail_src };
+      const image = { uri: thumb_uri };
       return (
         <ExplicitImage
           onLoadEnd={this.onLoadEnd}

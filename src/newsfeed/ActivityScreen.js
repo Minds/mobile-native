@@ -403,7 +403,7 @@ export default class ActivityScreen extends Component {
         {!this.state.error &&
         <KeyboardAvoidingView style={styles.containerContainer} behavior={Platform.OS == 'ios' ? 'padding' : null}
           keyboardVerticalOffset={vPadding}>
-          <View style={{flex: 1}}>
+          <View style={CommonStyle.flexContainer}>
             <FlatList
               ref={ref => this.listRef = ref}
               ListHeaderComponent={this.getHeader()}

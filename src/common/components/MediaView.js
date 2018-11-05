@@ -88,8 +88,10 @@ export default class MediaView extends Component {
     let guid;
     if (this.props.entity.custom_data) {
       guid = this.props.entity.custom_data.guid;
-    } else {
+    } else if (this.props.entity.cinemr_guid){
       guid = this.props.entity.cinemr_guid;
+    } else {
+      guid = this.props.entity.guid;
     }
 
     return (
