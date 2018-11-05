@@ -30,6 +30,9 @@ import colors from '../styles/Colors';
 import NewsfeedList from '../newsfeed/NewsfeedList';
 import CaptureFab from '../capture/CaptureFab';
 import CenteredLoading from '../common/components/CenteredLoading';
+import Tags from '../common/components/Tags';
+import entities from 'entities';
+
 /**
  * Groups view screen
  */
@@ -133,11 +136,12 @@ export default class GroupViewScreen extends Component {
         );
         break;
       case 'desc':
+        const description = entities.decodeHTML(group.group.briefdescription).trim();
         return (
           <ScrollView style={CommonStyle.backgroundLight}>
             {header}
             <View style={CommonStyle.padding2x}>
-              <Text>{group.group.briefdescription}</Text>
+              <Tags>{description}</Tags>
             </View>
           </ScrollView>
         );
