@@ -27,7 +27,7 @@ describe('blog card component', () => {
     expect(blog).toMatchSnapshot();
   });
 
-  it('should nav to blog on ios', async (done) => {
+  it('should nav to blog', async (done) => {
 
     const blogEntity = BlogModel.create(blogFakeFactory(1));
 
@@ -45,30 +45,6 @@ describe('blog card component', () => {
 
       // expect fn to be called once
       expect(navigation.push).toBeCalledWith('BlogView', {blog:blogEntity});
-      done();
-    } catch(e) {
-      done.fail(e);
-    }
-  });
-
-  it('should open browser to blog on android', async (done) => {
-
-    const blogEntity = BlogModel.create(blogFakeFactory(1));
-
-    const navigation = {push: jest.fn()};
-
-    try {
-      const wrapper = shallow(
-        <BlogCard entity={blogEntity} navigation={navigation}/>
-      );
-
-      Platform.OS = 'android';
-
-      // call method
-      wrapper.instance().navToBlog();
-
-      // expect fn to be called once
-      expect(Linking.openURL).toBeCalled();
       done();
     } catch(e) {
       done.fail(e);

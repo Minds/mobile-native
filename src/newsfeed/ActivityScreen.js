@@ -50,7 +50,6 @@ import FastImage from 'react-native-fast-image';
 //import stores from '../../AppStores';
 import NewsfeedStore from "./NewsfeedStore";
 
-
 @inject('user')
 @observer
 export default class ActivityScreen extends Component {
@@ -122,26 +121,29 @@ export default class ActivityScreen extends Component {
     this.comments = null
   }
 
+  /**
+   * Get header
+   */
   getHeader() {
     return <View>
-             { this.entity.entity && <Activity
-              ref={o => this.activity = o}
-              entity={ this.entity.entity }
-              newsfeed={ this.store }
-              navigation={ this.props.navigation }
-              autoHeight={true}
-             /> }
-            { this.comments.loadPrevious && !this.comments.loading ?
-                <TouchableHighlight
-                onPress={() => { this.loadComments()}}
-                underlayColor = 'transparent'
-                style = {styles.loadCommentsContainer}
-              >
-                <Text style={styles.loadCommentsText}> LOAD EARLIER </Text>
-              </TouchableHighlight> : null
-            }
+        { this.entity.entity && <Activity
+        ref={o => this.activity = o}
+        entity={ this.entity.entity }
+        newsfeed={ this.store }
+        navigation={ this.props.navigation }
+        autoHeight={true}
+        /> }
+      { this.comments.loadPrevious && !this.comments.loading ?
+          <TouchableHighlight
+          onPress={() => { this.loadComments()}}
+          underlayColor = 'transparent'
+          style = {styles.loadCommentsContainer}
+        >
+          <Text style={styles.loadCommentsText}> LOAD EARLIER </Text>
+        </TouchableHighlight> : null
+      }
 
-          </View>;
+    </View>;
   }
 
   /**
@@ -220,7 +222,7 @@ export default class ActivityScreen extends Component {
               type={attachment.type}
             />
 
-            <Icon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.deleteAttachment()} />
+            <Icon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.comments.deleteAttachment()} />
           </View>}
           {(this.comments.embed.meta || this.comments.embed.metaInProgress) && <CaptureMetaPreview
             meta={this.comments.embed.meta}
@@ -231,81 +233,20 @@ export default class ActivityScreen extends Component {
     )
   }
 
-  _selectMediaSource = (opt) => {
+  /**
+   * Select media source
+   */
+  selectMediaSource = (opt) => {
     switch (opt) {
       case 1:
-        this.gallery();
+        this.comments.gallery(this.actionSheet);
         break;
       case 2:
-        this.photo();
+        this.comments.photo();
         break;
       case 3:
-        this.video();
+        this.comments.video();
         break;
-    }
-  }
-
-  /**
-   * On media type select
-   */
-  _selectMediaType = async (i) => {
-    try {
-      let response;
-      switch (i) {
-        case 1:
-          response = await attachmentService.gallery('photo');
-          break;
-        case 2:
-          response = await attachmentService.gallery('video');
-          break;
-      }
-
-      if (response) this.onAttachedMedia(response);
-    } catch (e) {
-      alert(e);
-    }
-  }
-
-  /**
-   * Delete attachment
-   */
-  async deleteAttachment() {
-    const attachment = this.comments.attachment;
-    // delete
-    const result = await attachment.delete();
-
-    if (result === false) alert('caught error deleting the file');
-  }
-
-  async video() {
-    try {
-      const response = await attachmentService.video();
-      if (response) this.onAttachedMedia(response);
-    } catch (e) {
-      alert(e);
-    }
-  }
-
-  async photo() {
-    try {
-      const response = await attachmentService.photo();
-      if (response) this.onAttachedMedia(response);
-    } catch (e) {
-      alert(e);
-    }
-  }
-
-  /**
-   * Attach Media
-   */
-  onAttachedMedia = async (response) => {
-    const attachment = this.comments.attachment;
-
-    try {
-      const result = await attachment.attachMedia(response);
-    } catch(err) {
-      console.error(err);
-      alert('caught upload error');
     }
   }
 
@@ -331,6 +272,9 @@ export default class ActivityScreen extends Component {
     }
   }
 
+  /**
+   * Reply comment
+   */
   replyComment = (comment) => {
     this.comments.setText('@' + comment.ownerObj.username + ' ');
     if (this.textInput) {
@@ -338,6 +282,9 @@ export default class ActivityScreen extends Component {
     }
   }
 
+  /**
+   * Set comment text
+   */
   setText = (text) => {
     this.comments.setText(text);
   }
@@ -354,6 +301,9 @@ export default class ActivityScreen extends Component {
     }
   }
 
+  /**
+   * Load comments
+   */
   loadComments = async () => {
     let guid;
     const entity = this.entity.entity;
@@ -368,6 +318,9 @@ export default class ActivityScreen extends Component {
     await this.comments.loadComments(guid);
   }
 
+  /**
+   * Render comments
+   */
   renderComment = (row) => {
     const comment = row.item;
 
@@ -396,7 +349,7 @@ export default class ActivityScreen extends Component {
       actionsheet = <ActionSheet
         ref={o => this.actionSheet = o}
         options={['Cancel', 'Images', 'Videos']}
-        onPress={this._selectMediaType}
+        onPress={this.comments.selectMediaType}
         cancelButtonIndex={0}
       />
     }
@@ -432,7 +385,7 @@ export default class ActivityScreen extends Component {
           <ActionSheet
             ref={o => this.actionAttachmentSheet = o}
             options={['Cancel', 'Gallery', 'Photo', 'Video']}
-            onPress={this._selectMediaSource}
+            onPress={this.selectMediaSource}
             cancelButtonIndex={0}
           />
         </KeyboardAvoidingView>

@@ -3,6 +3,8 @@ import {
   action
 } from 'mobx'
 
+import { Platform } from 'react-native';
+
 import {
   getComments,
   postComment,
@@ -11,11 +13,11 @@ import {
 } from './CommentsService';
 
 import Comment from './Comment';
-
 import CommentModel from './CommentModel';
 import socket from '../common/services/socket.service';
 import session from '../common/services/session.service';
 import AttachmentStore from '../common/stores/AttachmentStore';
+import attachmentService from '../common/services/attachment.service';
 import {toggleExplicit} from '../newsfeed/NewsfeedService';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 
@@ -254,6 +256,103 @@ export default class CommentsStore {
     this.loadNext = '';
     this.loadPrevious = '';
     this.socketRoomName = '';
+  }
+
+  /**
+   * Delete attachment
+   */
+  async deleteAttachment() {
+    const attachment = this.attachment;
+    // delete
+    const result = await attachment.delete();
+
+    if (result === false) alert('caught error deleting the file');
+  }
+
+  /**
+   * Attach a video
+   */
+  async video() {
+    try {
+      const response = await attachmentService.video();
+      if (response) this.onAttachedMedia(response);
+    } catch (e) {
+      console.error(e);
+      alert(e);
+    }
+  }
+
+  /**
+   * Attach a photo
+   */
+  async photo() {
+    try {
+      const response = await attachmentService.photo();
+      if (response) this.onAttachedMedia(response);
+    } catch (e) {
+      console.error(e);
+      alert(e);
+    }
+  }
+
+  /**
+   * On attached media
+   */
+  onAttachedMedia = async (response) => {
+    const attachment = this.attachment;
+
+    try {
+      const result = await attachment.attachMedia(response);
+    } catch(err) {
+      console.error(err);
+      alert('caught upload error');
+    }
+  }
+
+  /**
+   * On media type select
+   */
+  selectMediaType = async (i) => {
+    try {
+      let response;
+      switch (i) {
+        case 1:
+          response = await attachmentService.gallery('photo');
+          break;
+        case 2:
+          response = await attachmentService.gallery('video');
+          break;
+      }
+
+      if (response) this.onAttachedMedia(response);
+    } catch (e) {
+      console.log(e);
+      alert(e);
+    }
+  }
+
+  /**
+   * Open gallery
+   */
+  async gallery(actionSheet) {
+    if (Platform.OS == 'ios') {
+      try {
+        const response = await attachmentService.gallery('mixed');
+
+        // nothing selected
+        if (!response) return;
+
+        const result = await this.attachment.attachMedia(response);
+
+        if (result === false) alert('caught upload error');
+
+      } catch (e) {
+        console.error(e);
+        alert(e);
+      }
+    } else {
+      actionSheet.show()
+    }
   }
 
   /**

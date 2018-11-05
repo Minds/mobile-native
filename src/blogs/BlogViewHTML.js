@@ -2,7 +2,7 @@ import React, {
   Component
 } from 'react';
 
-import { 
+import {
   WebView,
   View,
   Dimensions,
@@ -116,7 +116,7 @@ export default class BlogViewHTML extends Component {
   };
 
   injectedScript = () => {
-    //patch postMessage
+    // patch postMessage
     const postMessage = window.postMessage;
     postMessage.toString = () => String(Object.hasOwnProperty).replace('hasOwnProperty', 'postMessage');
     window.postMessage = postMessage;
@@ -131,16 +131,16 @@ export default class BlogViewHTML extends Component {
   onMessage = (evt) => {
     const height = parseInt(evt.nativeEvent.data);
 
-    if (height > this.state.height) 
+    if (height > this.state.height)
       this.setState({ height });
   }
 
   renderHTML() {
     let width = Math.round(Dimensions.get('window').width);
-    let html = '';
+    let html = this.props.html || '';
     try {
       //Decode to utf8
-      html = decodeURIComponent(escape(this.props.html));
+      html = decodeURIComponent(escape(html.trim()));
     } catch (err) {
       html = this.props.html;
     }
@@ -150,15 +150,12 @@ export default class BlogViewHTML extends Component {
       html = html.replace('</iframe>', '</iframe></div>');
       html = html.replace('src="//', 'src="https://');
     }
-    
-    return `
-      <!DOCTYPE html>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    return `<!DOCTYPE html><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       <html>
         ${style}
         <body class="${this.props.bodyClass}">
           ${html}
-          
         </body>
       </html>`;
   }
@@ -167,11 +164,12 @@ export default class BlogViewHTML extends Component {
   render() {
     return (
       <WebView
+        originWhitelist={['*']}
         ref={(ref) => { this.webview = ref; }}
         scrollEnabled={false}
-        source={{ html: this.renderHTML() }}
+        source={{ html: this.renderHTML(), baseUrl: '' }}
         mixedContentMode='compatibility'
-        style={{ height: this.state.height }}
+        style={{ height: this.state.height}}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
