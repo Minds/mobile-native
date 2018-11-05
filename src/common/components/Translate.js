@@ -66,9 +66,9 @@ export default class Translate extends PureComponent {
    */
   languageSelected = (language) => {
     this.setState({current: language}, async () => {
+      this.hidePicker();
       await this.translate(language);
       this.selectedResolve(language);
-      this.hidePicker();
     })
   }
 

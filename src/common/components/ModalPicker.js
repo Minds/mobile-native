@@ -21,7 +21,8 @@ export default class ModalPicker extends PureComponent {
 
   state = {
     show:false,
-    current: ''
+    current: '',
+    value: null
   }
 
   /**
@@ -30,10 +31,20 @@ export default class ModalPicker extends PureComponent {
    * @param {object} prevState
    */
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.value === nextProps.value) return null;
-    return {
-      current: nextProps.value,
-      value: nextProps.value
+
+    if (prevState.value !== nextProps.value && prevState.current !== nextProps.value) {
+      return {
+        current: nextProps.value,
+        value: nextProps.value
+      }
+    }
+
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.value !== prevProps.value) {
+      this.setState({value: this.props.value});
     }
   }
 
