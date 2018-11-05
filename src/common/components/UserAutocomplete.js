@@ -42,7 +42,8 @@ export default class UserAutocomplete extends PureComponent {
    */
   query = debounce(async query => {
     try {
-      this.setState({ search: false, users: await userTypeaheadService.search(query, 6) });
+      const users = await userTypeaheadService.search(query, 6);
+      this.setState({ search: false, users });
     } catch (e) {
       console.error(e);
       // TODO: Show error
@@ -68,7 +69,7 @@ export default class UserAutocomplete extends PureComponent {
       state.selection = nextProps.selection;
     }
 
-    if (!state.tag && prevState.users.length) {
+    if (state.tag === null && prevState.users.length) {
       state.users = [];
     }
 
@@ -116,8 +117,15 @@ export default class UserAutocomplete extends PureComponent {
    * On full search select
    */
   searchSelect = (user) => {
-    this.setState({isSearchingTag: false});
+    this.close();
     this.selectTag(user);
+  }
+
+  /**
+   * Close selector
+   */
+  close = () => {
+    this.setState({ isSearchingTag: false});
   }
 
   /**
@@ -183,7 +191,7 @@ export default class UserAutocomplete extends PureComponent {
         <UserTypeahead
           isModalVisible={this.state.isSearchingTag}
           onSelect={this.searchSelect}
-          onClose={() => this.setState({ isSearchingTag: false })}
+          onClose={this.close}
           value={ this.state.tag }
         />
         { this.state.tag && <View style={style.searchBar}>
