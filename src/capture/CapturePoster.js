@@ -327,28 +327,7 @@ export default class CapturePoster extends Component {
 
   setText = (text) => {
     this.props.capture.setText(text);
-    this.setState({ text });
-
-    if (this._RichEmbedFetchTimer) {
-      clearTimeout(this._RichEmbedFetchTimer);
-    }
-
-    setTimeout(this.richEmbedCheck);
-  };
-
-  richEmbedCheck = () => {
-    const matches = Util.urlReSingle.exec(this.props.capture.text);
-
-    if (matches) {
-      const url = (!matches[3] ? 'https://' : '') + matches[0];
-
-      if (
-        !this.state.hasRichEmbed ||
-        (this.state.hasRichEmbed && url.toLowerCase() !== this.state.richEmbedUrl.toLowerCase())
-      ) {
-        this._RichEmbedFetchTimer = setTimeout(() => this.setRichEmbed(url), 750);
-      }
-    }
+    this.props.capture.embed.richEmbedCheck(text);
   };
 
   onMature = () => {
