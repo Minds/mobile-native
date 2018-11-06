@@ -6048,9 +6048,9 @@ react-native-exception-handler@^2.6.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.9.0.tgz#d29da023154059416ebf5798b8d2664bfe22941f"
 
-react-native-fast-image@^5.0.10:
-  version "5.0.10"
-  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-5.0.10.tgz#56d229b4a872e4f01bb5ecb7fe465eee34e5238f"
+react-native-fast-image@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-5.1.0.tgz#df48a638fec71b6226ceff2d78e460aaa8008f4b"
 
 react-native-fs@2.11.15:
   version "2.11.15"
