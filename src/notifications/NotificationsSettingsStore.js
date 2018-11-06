@@ -17,6 +17,13 @@ class NotificationsSettingsStore {
 
   @action
   setSetting(name, value) {
+    // in case is not defined
+    if (!this.settings[name]) {
+      this.settings[name] = {
+        name: name.charAt(0).toUpperCase() + name.substr(1).replace('_',' '),
+        value: true
+      };
+    }
     this.settings[name].value = value;
   }
 
@@ -47,19 +54,23 @@ class NotificationsSettingsStore {
   @action
   reset() {
     this.settings = {
+      'daily': { name: 'Daily', value: true },
       'comment': { name: 'Comments', value: true },
       'like': { name: 'Votes', value: true },
       'tag': { name: 'Tags', value: true },
       'friends': { name: 'Subscriptions', value: true },
       'remind': { name: 'Reminds', value: true },
+      'boost_accepted': { name: 'Boosts Acepted', value: true },
+      'boost_revoked': { name: 'Boosts Revoked', value: true },
       'boost_request': { name: 'Boosts Offers', value: true },
       'boost_rejected': { name: 'Boost Rejected', value: true },
       'boost_completed': { name: 'Fulfilled Boosts', value: true },
+      'boost_gift': { name: 'Boost Gift', value: true },
       'rewards_reminder': { name: 'Rewards Reminder', value: true },
       'rewards_summary': { name: 'Rewards Daily Summary', value: true },
       'chat': { name: 'Messenger', value: true },
       'messenger_invite': { name: 'Messenger Invites', value: true },
-      'group_invite': { name: 'Group Invites', value: true }
+      'group_invite': { name: 'Group Invites', value: true },
     };
   }
 
