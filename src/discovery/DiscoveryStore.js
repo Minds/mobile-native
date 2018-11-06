@@ -171,9 +171,12 @@ class DiscoveryStore {
    */
   @action
   setType(type) {
-    const store = this.stores[this.type];
+    const store = this.stores[type];
     this.type = type;
-    this.loadList();
+    if (type == 'user') {
+      store.list.clearList();
+    }
+    this.loadList(type == 'user');
   }
 
   /**
@@ -204,7 +207,6 @@ class DiscoveryStore {
     this.loading = false;
 
     if (text.trim() == '') {
-      console.log('limpiando')
       this.clearList();
     } else if ((text.indexOf('#') === 0) || (text.indexOf(' ') > -1)) {
       this.type = 'activity';
