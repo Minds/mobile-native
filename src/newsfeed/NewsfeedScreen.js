@@ -17,6 +17,7 @@ import Topbar from './topbar/Topbar';
 import CaptureFab from '../capture/CaptureFab';
 import stores from '../../AppStores';
 
+
 /**
  * News Feed Screen
  */
@@ -51,14 +52,22 @@ export default class NewsfeedScreen extends Component {
   componentWillMount() {
     this.props.newsfeed.loadFeed();
     this.props.newsfeed.loadBoosts();
+
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+      const params = this.props.navigation.state.params;
+      if (params && params.prepend) {
+        this.props.newsfeed.prepend(params.prepend);
+        // we clear the parameter to prevent prepend it again on goBack
+        this.props.navigation.setParams({prepend: null});
+      }
+    });
   }
 
-  componentDidMount() {
-    const navParams = this.props.navigation.state.params;
-
-    if (navParams && navParams.prepend) {
-      this.props.newsfeed.prepend(navParams.prepend);
-    }
+  /**
+   * Component will unmount
+   */
+  componentWillUnmount() {
+    this.disposeEnter.remove();
   }
 
   render() {
