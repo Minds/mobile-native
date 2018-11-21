@@ -56,7 +56,6 @@ export default class BoostScreen extends Component {
     type: null,
     payment: 'tokens',
     amount: 1000,
-    priority: false,
     target: null,
     scheduleTs: null,
     postToFacebook: false,
@@ -189,31 +188,11 @@ export default class BoostScreen extends Component {
   };
 
   /**
-   * Calculate charges including priority
+   * Calculate charges
    */
   calcCharges(type) {
     const charges = parseFloat(this.calcBaseCharges(type));
-    return charges + (charges * this.getPriorityRate());
-  }
-
-  /**
-   * Gets the priority rate, only if applicable
-   */
-  getPriorityRate(force = false) {
-    // NOTE: No priority on P2P
-    if (force || (this.state.type != 'p2p' && this.state.priority)) {
-      return this.state.rates.priority;
-    }
-
-    return 0;
-  }
-
-  /**
-   * Calculate priority charges (for its preview)
-   */
-  calcPriorityChargesPreview() {
-    const value = this.calcBaseCharges(this.state.payment) * this.getPriorityRate(true);
-    return currency(!isNaN(value) ? value : 0 , this.state.payment);
+    return charges;
   }
 
   calcBaseCharges(type) {
@@ -234,42 +213,6 @@ export default class BoostScreen extends Component {
     }
 
     throw new Error('Unknown currency');
-  }
-
-  togglePriority = () => {
-    this.setState({priority: !this.state.priority});
-  };
-
-  /**
-   * Get priority
-   */
-  getPriority() {
-    if (this.state.type === 'p2p') {
-      this.state.priority = false;
-      return null;
-    }
-
-    let text = 'SELECT';
-    const style = [CommonStyle.fontM, CommonStyle.marginTop3x];
-
-    if (this.state.priority) {
-      text = 'SELECTED';
-      style.push(CommonStyle.colorPrimary);
-    }
-
-    return (
-      <View>
-        <Divider style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]} />
-
-        <Text style={styles.subtitleText}>PRIORITY</Text>
-
-        <Text style={CommonStyle.fontS}>Priority content goes to the front of the line, but costs at least twice the price of a regular boost.</Text>
-
-        <Text style={style} onPress={this.togglePriority}>
-          {text} +{this.calcPriorityChargesPreview()}
-        </Text>
-      </View>
-    );
   }
 
   selectTarget = target => {
@@ -536,7 +479,6 @@ export default class BoostScreen extends Component {
           guid,
           bidType: this.state.payment,
           impressions: this.state.amount,
-          priority: this.state.priority ? 1 : null,
           paymentMethod: nonce,
           checksum
         });
@@ -657,8 +599,6 @@ export default class BoostScreen extends Component {
       amountTitle = 'WHAT\'S YOUR OFFER ?';
     }
 
-    const PriorityPartial = this.getPriority();
-
     return (
       <ScrollView style={[CommonStyle.flexContainer, CommonStyle.backgroundLight, CommonStyle.padding2x]}>
         <Text style={[styles.subtitleText, CommonStyle.paddingBottom]}>BOOST TYPE</Text>
@@ -684,8 +624,6 @@ export default class BoostScreen extends Component {
 
         <Text style={styles.subtitleText}>COST</Text>
         <PaymentSelector onChange={this.changePayment} value={this.state.payment} type={this.state.type} values={this.getAmountValues()} />
-
-        {PriorityPartial}
 
         {this.TargetPartial()}
 
