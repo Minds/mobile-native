@@ -3,7 +3,7 @@
 exports[`newsfeed list screen component should renders correctly 1`] = `
 <FlatList
   ListEmptyComponent={
-    <Component
+    <View
       style={
         Object {
           "alignItems": "center",
@@ -14,7 +14,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         }
       }
     >
-      <Component
+      <View
         style={
           Object {
             "alignItems": "center",
@@ -24,7 +24,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
           }
         }
       >
-        <Component
+        <Text
           style={
             Object {
               "color": "#444",
@@ -38,9 +38,9 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
           }
         >
           This feed is empty
-        </Component>
-      </Component>
-    </Component>
+        </Text>
+      </View>
+    </View>
   }
   ListFooterComponent={null}
   data={

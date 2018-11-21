@@ -32,7 +32,7 @@ exports[`blog view screen component should renders correctly 1`] = `
       <RCTScrollView
         ListEmptyComponent={<CenteredLoading />}
         ListHeaderComponent={
-          <Component
+          <View
             style={
               Object {
                 "backgroundColor": "#FFF",
@@ -57,7 +57,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 }
               }
             />
-            <Component
+            <Text
               style={
                 Object {
                   "color": "#444",
@@ -72,8 +72,8 @@ exports[`blog view screen component should renders correctly 1`] = `
               }
             >
               Some Title
-            </Component>
-            <Component
+            </Text>
+            <View
               style={
                 Object {
                   "margin": 8,
@@ -279,7 +279,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 }
                 rightToolbar={
-                  <Component
+                  <View
                     style={
                       Array [
                         Object {
@@ -291,7 +291,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       ]
                     }
                   >
-                    <Component
+                    <View
                       style={
                         Object {
                           "alignItems": "center",
@@ -1148,11 +1148,11 @@ exports[`blog view screen component should renders correctly 1`] = `
                         }
                         size={16}
                       />
-                    </Component>
-                  </Component>
+                    </View>
+                  </View>
                 }
               >
-                <Component
+                <Text
                   style={
                     Object {
                       "color": "#888",
@@ -1161,10 +1161,10 @@ exports[`blog view screen component should renders correctly 1`] = `
                   }
                 >
                   Apr 27, 2018, 07:17
-                </Component>
+                </Text>
               </OwnerBlock>
-            </Component>
-            <Component
+            </View>
+            <View
               style={
                 Object {
                   "paddingBottom": 12,
@@ -1176,8 +1176,8 @@ exports[`blog view screen component should renders correctly 1`] = `
               <BlogViewHTML
                 html="Some Blog"
               />
-            </Component>
-            <Component
+            </View>
+            <View
               style={
                 Object {
                   "flexDirection": "row",
@@ -1195,7 +1195,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 size={18}
                 underlayColor="white"
               />
-              <Component
+              <Text
                 style={
                   Array [
                     Object {
@@ -1214,7 +1214,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 }
               >
                 Attribution-NonCommerical CC BY-NC
-              </Component>
+              </Text>
               <Icon
                 color="#4690D6"
                 name="share"
@@ -1225,7 +1225,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 size={20}
                 underlayColor="white"
               />
-            </Component>
+            </View>
             <Icon
               color="#4690D6"
               containerStyle={
@@ -1245,7 +1245,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               size={30}
               underlayColor="white"
             />
-          </Component>
+          </View>
         }
         data={Array []}
         disableVirtualization={false}

@@ -12,7 +12,7 @@ exports[`Channel screen component should renders correctly 1`] = `
     emptyMessage={null}
     guid="activityguid0"
     header={
-      <Component>
+      <View>
         <ChannelHeader
           channel={
             Object {
@@ -321,7 +321,7 @@ exports[`Channel screen component should renders correctly 1`] = `
           size={30}
           underlayColor="white"
         />
-      </Component>
+      </View>
     }
     navigation={
       Object {

@@ -82,7 +82,7 @@ exports[`Activity component renders correctly 1`] = `
       }
     }
     rightToolbar={
-      <Component
+      <View
         style={
           Object {
             "alignSelf": "flex-end",
@@ -166,7 +166,7 @@ exports[`Activity component renders correctly 1`] = `
           onTranslate={[Function]}
           toggleEdit={[Function]}
         />
-      </Component>
+      </View>
     }
   >
     <TouchableOpacity

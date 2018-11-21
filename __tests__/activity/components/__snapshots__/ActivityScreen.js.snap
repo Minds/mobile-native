@@ -29,7 +29,7 @@ exports[`Activity screen component renders correctly 1`] = `
       <FlatList
         ListEmptyComponent={<CenteredLoading />}
         ListHeaderComponent={
-          <Component>
+          <View>
             <TouchableHighlight
               activeOpacity={0.85}
               delayPressOut={100}
@@ -46,7 +46,7 @@ exports[`Activity screen component renders correctly 1`] = `
               }
               underlayColor="transparent"
             >
-              <Component
+              <Text
                 style={
                   Object {
                     "color": "#888",
@@ -55,9 +55,9 @@ exports[`Activity screen component renders correctly 1`] = `
                 }
               >
                  LOAD EARLIER 
-              </Component>
+              </Text>
             </TouchableHighlight>
-          </Component>
+          </View>
         }
         data={
           Array [

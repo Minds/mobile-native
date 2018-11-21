@@ -3,7 +3,7 @@
 exports[`blog list screen component should renders correctly 1`] = `
 <RCTScrollView
   ListHeaderComponent={
-    <Component>
+    <View>
       <Toolbar
         initial="trending"
         onChange={[Function]}
@@ -33,7 +33,7 @@ exports[`blog list screen component should renders correctly 1`] = `
           ]
         }
       />
-    </Component>
+    </View>
   }
   data={
     Array [
