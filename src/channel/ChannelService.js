@@ -18,7 +18,7 @@ class ChannelService {
     return api.upload(`api/v1/channel/${type}`, file, null, progress);
   }
 
-  save(guid, data) {
+  save(data) {
     return api.post(`api/v1/channel/info`, data);
   }
 

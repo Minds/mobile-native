@@ -156,9 +156,15 @@ export default class ChannelStore {
         if (bannerResult.error) return bannerResult.error;
       }
 
-      const result = await channelService.save(this.guid, data);
+      const result = await channelService.save(data);
+      const success = result && result.status === 'success';
 
-      return result && result.status === 'success';
+      if (success) {
+        this.channel.name = data.name;
+        this.channel.briefdescription = data.briefdescription;
+      }
+
+      return success;
     } catch (e) {
       console.error(e);
       return e;

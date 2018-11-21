@@ -16,7 +16,6 @@ import {
   inject
 } from 'mobx-react/native'
 
-import { toJS } from 'mobx'
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import * as Progress from 'react-native-progress';
@@ -65,44 +64,7 @@ export default class ChannelHeader extends Component {
     banner: null
   };
 
-  /**
-   * Component will mount
-   */
-  componentWillMount() {
-    const channel = toJS(this.props.channel.channel);
-    this.loaded = false;
 
-    if (channel) {
-      this.updateEditable(channel);
-      this.loaded = true;
-    }
-  }
-
-  /**
-   * Component will receive props
-   * @param {object} nextProps
-   */
-  componentWillReceiveProps(nextProps) {
-    const channel = toJS(nextProps.channel.channel);
-
-    if (channel && !this.loaded) {
-      this.updateEditable(channel);
-      this.loaded = true;
-    }
-  }
-
-  /**
-   * Update state
-   * @param {object} channel
-   */
-  updateEditable(channel) {
-    this.setState({
-      preview_avatar: null,
-      preview_banner: null,
-      briefdescription: channel.briefdescription,
-      name: channel.name
-    });
-  }
 
   /**
    * Get Channel Banner
@@ -172,7 +134,13 @@ export default class ChannelHeader extends Component {
         this.setState({saving: false});
       }
     } else {
-      this.setState({edit: true});
+      this.setState({
+        edit: true,
+        preview_avatar: null,
+        preview_banner: null,
+        briefdescription: this.props.channel.channel.briefdescription,
+        name: this.props.channel.channel.name
+      });
     }
   }
 
@@ -318,14 +286,14 @@ export default class ChannelHeader extends Component {
                     ellipsizeMode='tail'
                     numberOfLines={1}
                     >
-                    {this.state.name}
+                    {channel.name}
                   </Text>
                 </View>}
               <Text style={styles.username}>@{channel.username}</Text>
             </View>
             <View style={styles.buttonscol}>
-              { !this.props.channel.channel.blocked && this.getActionButton() }
-              { session.guid !== this.props.channel.channel.guid?
+              { !channel.blocked && this.getActionButton() }
+              { session.guid !== channel.guid?
                 <ChannelActions navigation={this.props.navigation} channel={this.props.channel} me={session}></ChannelActions> : <View></View>
               }
             </View>
@@ -343,7 +311,7 @@ export default class ChannelHeader extends Component {
           </View>}
           {!isEditable &&
             <View style={CommonStyle.paddingTop2x}>
-              <Tags navigation={this.props.navigation}>{this.state.briefdescription}</Tags>
+              <Tags navigation={this.props.navigation}>{channel.briefdescription}</Tags>
             </View>
           }
 
