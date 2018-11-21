@@ -159,10 +159,6 @@ export default class GroupHeader extends Component {
               <Text style={styles.countervalue}>{abbrev(group['members:count'], 0)}</Text>
             </View>
             <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
-              <Text style={styles.countertitle}>FEED</Text>
-              <Text style={styles.countervalue}>{abbrev(group['activity:count'], 0)}</Text>
-            </View>
-            <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
               <Text style={styles.countertitle}>COMMENTS</Text>
               <Text style={styles.countervalue}>{abbrev(group['comments:count'], 0)}</Text>
             </View>
