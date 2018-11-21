@@ -25,9 +25,10 @@ export default class AttachmentStore {
   /**
    * Attach media
    * @param {object} media
+   * @param {object} extra
    */
   @action
-  async attachMedia(media) {
+  async attachMedia(media, extra = null) {
 
     // no new media acepted if we are checking for video length
     if (this.checkingVideoLength) return;
@@ -48,7 +49,7 @@ export default class AttachmentStore {
     this.type = media.type;
     this.setHasAttachment(true);
 
-    const uploadPromise = attachmentService.attachMedia(media, (pct) => {
+    const uploadPromise = attachmentService.attachMedia(media, extra, (pct) => {
       this.setProgress(pct);
     });
 

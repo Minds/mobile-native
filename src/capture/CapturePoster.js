@@ -96,7 +96,7 @@ export default class CapturePoster extends Component {
    * Show context
    */
   showContext () {
-    let group = this.props.navigation.state.params? this.props.navigation.state.params.group : null;
+    let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null;
     return group? <Text style={styles.title}> { '(Posting in ' + group.name + ')'} </Text> :null;
   }
 
@@ -218,9 +218,15 @@ export default class CapturePoster extends Component {
    */
   onAttachedMedia = async (response) => {
     const attachment = this.props.capture.attachment;
+    let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null
+    let extra = null;
+
+    if (group) {
+      extra = {container_guid: group.guid};
+    }
 
     try {
-      const result = await attachment.attachMedia(response);
+      const result = await attachment.attachMedia(response, extra);
     } catch(err) {
       console.error(err);
       Alert.alert('caught upload error');

@@ -12,7 +12,7 @@ class AttachmentService {
    * @param {object} media
    * @param {function} onProgress
    */
-  attachMedia(media, onProgress=null) {
+  attachMedia(media, extra, onProgress=null) {
 
     let type = 'image'
 
@@ -23,7 +23,7 @@ class AttachmentService {
       name: media.fileName || 'test'
     };
 
-    return api.upload('api/v1/media/', file, null, (e) => {
+    return api.upload('api/v1/media/', file, extra, (e) => {
       let pct = e.loaded / e.total;
       if (onProgress) onProgress(pct);
     });
