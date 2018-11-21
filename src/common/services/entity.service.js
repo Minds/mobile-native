@@ -11,7 +11,7 @@ class EntitiesService {
         return data.entity;
       })
       .catch(err => {
-        console.log('error');
+        console.log('error', err);
         throw "Ooops";
       });
   }
