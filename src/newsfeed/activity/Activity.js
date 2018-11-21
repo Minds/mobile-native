@@ -33,7 +33,7 @@ import ActivityEditor from './ActivityEditor';
 import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
 import Translate from '../../common/components/Translate';
-
+import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import Lock from '../../wire/lock/Lock';
 
 /**
@@ -96,20 +96,30 @@ export default class Activity extends Component {
         </View>
       );
 
+    const show_overlay = (this.props.entity.mature && !entity.is_parent_mature) && !(this.props.entity.mature && entity.is_parent_mature);
+    const overlay = (show_overlay) ? <ExplicitOverlay
+        entity={this.props.entity}
+        style={styles.absolute}
+      /> : null;
+
+
     return (
         <View style={styles.container} onLayout={this.props.onLayout}>
           { this.showOwner() }
-          { lock }
-          { message }
-          { this.showRemind() }
-          <MediaView
-            ref={o => {this.mediaView = o}}
-            entity={ entity }
-            navigation={this.props.navigation}
-            style={ styles.media }
-            newsfeed={this.props.newsfeed}
-            autoHeight={ this.props.autoHeight }
-            />
+          <View>
+            { lock }
+            { message }
+            { this.showRemind() }
+            <MediaView
+              ref={o => {this.mediaView = o}}
+              entity={ entity }
+              navigation={this.props.navigation}
+              style={ styles.media }
+              newsfeed={this.props.newsfeed}
+              autoHeight={ this.props.autoHeight }
+              />
+            { overlay }
+          </View>
           { this.showActions() }
           { this.props.isLast ? <View style={styles.activitySpacer}></View> : null}
         </View>
@@ -192,22 +202,24 @@ export default class Activity extends Component {
         </OwnerBlock>
       );
     } else {
-      return  <View>
-                <RemindOwnerBlock
-                  entity={this.props.entity}
-                  newsfeed={this.props.newsfeed}
-                  navigation={this.props.navigation}
-                  />
-                <View style={styles.rightToolbar}>
-                  <ActivityActionSheet
-                    newsfeed={this.props.newsfeed}
-                    toggleEdit={this.toggleEdit}
-                    entity={this.props.entity}
-                    navigation={this.props.navigation}
-                    onTranslate={this.showTranslate}
-                  />
-                </View>
-              </View>
+      return  (
+        <View>
+          <RemindOwnerBlock
+            entity={this.props.entity}
+            newsfeed={this.props.newsfeed}
+            navigation={this.props.navigation}
+            />
+          <View style={styles.rightToolbar}>
+            <ActivityActionSheet
+              newsfeed={this.props.newsfeed}
+              toggleEdit={this.toggleEdit}
+              entity={this.props.entity}
+              navigation={this.props.navigation}
+              onTranslate={this.showTranslate}
+            />
+          </View>
+        </View>
+      );
 
     }
   }
@@ -216,14 +228,18 @@ export default class Activity extends Component {
    * Show remind activity
    */
   showRemind() {
-    if (this.props.entity.remind_object) {
+    const remind_object = this.props.entity.remind_object;
+    if (remind_object) {
+      if (this.props.entity.mature) {
+        remind_object.is_parent_mature = true;
+      }
       return (
         <View style={styles.remind}>
           <Activity
             ref={r => this.remind=r}
             hideTabs={true}
             newsfeed={this.props.newsfeed}
-            entity={this.props.entity.remind_object}
+            entity={remind_object}
             navigation={this.props.navigation}
             hydrateOnNav={true}
             />

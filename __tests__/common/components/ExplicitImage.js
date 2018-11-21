@@ -27,22 +27,4 @@ describe('Explicit image component', () => {
     screen.update();
     expect(screen).toMatchSnapshot();
   });
-
-  it('should have a ExplicitOverlay', async () => {
-    screen.update();
-
-    expect(screen.find('ExplicitOverlay')).toHaveLength(1);
-  });
-
-
-  it('sholdnt show overlay if press', async () => {
-    let mockResponse = activitiesServiceFaker().load(1);
-    entity = mockResponse.activities[0];
-    entity.mature = false;
-    screen = shallow(
-      <ExplicitImage entity={entity}/>
-    );
-    screen.update();
-    expect(screen.find('ExplicitOverlay')).toHaveLength(0);
-  });
 });

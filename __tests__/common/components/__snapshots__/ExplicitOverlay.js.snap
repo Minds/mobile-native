@@ -2,8 +2,70 @@
 
 exports[`Explicit overlay component renders correctly 1`] = `
 <TouchableOpacity
-  activeOpacity={0.2}
+  activeOpacity={1}
   onPress={[Function]}
+  style={
+    Array [
+      Object {
+        "bottom": 0,
+        "left": 0,
+        "position": "absolute",
+        "right": 0,
+        "top": 0,
+      },
+      Object {
+        "alignContent": "center",
+        "alignItems": "center",
+        "justifyContent": "center",
+      },
+      Object {
+        "backgroundColor": "#777777",
+      },
+    ]
+  }
+>
+  <Icon
+    allowFontScaling={false}
+    color="white"
+    name="explicit"
+    size={80}
+    style={
+      Object {
+        "elevation": 1,
+        "shadowColor": "black",
+        "shadowOffset": Object {
+          "height": 0.5,
+        },
+        "shadowOpacity": 0.5,
+        "shadowRadius": 0.5,
+      }
+    }
+  />
+  <ForwardRef(Text)
+    style={
+      Array [
+        Object {
+          "color": "white",
+        },
+        Object {
+          "elevation": 1,
+          "shadowColor": "black",
+          "shadowOffset": Object {
+            "height": 0.5,
+          },
+          "shadowOpacity": 0.5,
+          "shadowRadius": 0.5,
+        },
+      ]
+    }
+  >
+    Confirm you are 18+
+  </ForwardRef(Text)>
+</TouchableOpacity>
+`;
+
+exports[`Explicit overlay component should renders the etag 1`] = `
+<ForwardRef(View)
   style={
     Array [
       Object {
@@ -11,6 +73,8 @@ exports[`Explicit overlay component renders correctly 1`] = `
         "right": 0,
         "top": 0,
       },
+      undefined,
+      undefined,
     ]
   }
 >
@@ -18,6 +82,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
     allowFontScaling={false}
     color="red"
     name="explicit"
+    onPress={[Function]}
     size={32}
     style={
       Object {
@@ -31,5 +96,5 @@ exports[`Explicit overlay component renders correctly 1`] = `
       }
     }
   />
-</TouchableOpacity>
+</ForwardRef(View)>
 `;

@@ -10,37 +10,10 @@ exports[`Explicit image component renders correctly 1`] = `
     }
   }
 >
-  <ImageProgress
-    blurRadius={0}
-    errorContainerStyle={
-      Object {
-        "alignItems": "center",
-        "bottom": 0,
-        "justifyContent": "center",
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
-    }
-    indicator={[Function]}
-    indicatorContainerStyle={
-      Object {
-        "alignItems": "center",
-        "bottom": 0,
-        "justifyContent": "center",
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
-    }
-    onError={[Function]}
-    onLoadEnd={[Function]}
+  <ForwardRef(View)
     style={
       Array [
         Object {
-          "backgroundColor": "black",
           "bottom": 0,
           "left": 0,
           "position": "absolute",
@@ -48,53 +21,12 @@ exports[`Explicit image component renders correctly 1`] = `
           "top": 0,
         },
         undefined,
+        Object {
+          "backgroundColor": "black",
+          "zIndex": 1000,
+        },
       ]
     }
-    threshold={150}
-  />
-  <ExplicitOverlay
-    entity={
-      Object {
-        "attachment_guid": false,
-        "blurb": false,
-        "container_guid": "activityguid0",
-        "custom_data": false,
-        "custom_type": false,
-        "description": "Congratulations! ",
-        "edited": "",
-        "getThumbSource": [Function],
-        "guid": "activityguid0",
-        "mature": true,
-        "message": "Message",
-        "ownerObj": Object {
-          "getAvatarSource": [Function],
-          "guid": "824853017709780997",
-          "subtype": false,
-          "time_created": "1522036284",
-          "type": "user",
-        },
-        "owner_guid": "824853017709780997",
-        "parent_guid": "838106762591510528",
-        "perma_url": false,
-        "rowKey": "something0",
-        "thumbnail_src": false,
-        "title": "TITLE",
-        "type": "activity",
-      }
-    }
-    hideText={false}
-    iconSize={80}
-    style={
-      Object {
-        "backgroundColor": "black",
-        "bottom": 0,
-        "left": 0,
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      }
-    }
-    viewRef={null}
   />
 </ForwardRef(View)>
 `;

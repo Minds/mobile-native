@@ -68,6 +68,10 @@ export default class ActivityModel extends BaseModel {
   @action
   toggleMatureVisibility() {
     this.mature_visibility = !this.mature_visibility;
+
+    if (this.get('remind_object.mature')) {
+      this.remind_object.mature_visibility = this.mature_visibility;
+    }
   }
 
   @action

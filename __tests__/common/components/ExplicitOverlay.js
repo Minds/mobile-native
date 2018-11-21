@@ -1,22 +1,19 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from "react-native";
 import { shallow } from 'enzyme';
 import ExplicitOverlay from '../../../src/common/components/explicit/ExplicitOverlay';
-
+import ActivityModel from '../../../src/newsfeed/ActivityModel';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
-
-import renderer from 'react-test-renderer';
+jest.mock('TouchableOpacity', () => 'TouchableOpacity');
 
 describe('Explicit overlay component', () => {
 
-  let user, comments, entity, screen;
+  let entity, screen;
   beforeEach(() => {
 
     let mockResponse = activitiesServiceFaker().load(1);
-    entity = mockResponse.activities[0];
-    
-    entity.mature_visibility = true;
+    entity = ActivityModel.create(mockResponse.activities[0]);
+    entity.mature_visibility = false;
     screen = shallow(
       <ExplicitOverlay entity={entity}/>
     );
@@ -25,29 +22,13 @@ describe('Explicit overlay component', () => {
   });
 
   it('renders correctly', async () => {
-    screen.update();
     expect(screen).toMatchSnapshot();
   });
 
-  it('should have a TouchableOpacity', async () => {
-    screen.update();
-
-    expect(screen.find('TouchableOpacity')).toHaveLength(1);
-  });
-
-
-  it('change visibility', async () => {
-    let mockResponse = activitiesServiceFaker().load(1);
-    entity = mockResponse.activities[0];
+  it('should renders the etag', async () => {
     entity.mature_visibility = true;
-    entity.toggleMatureVisibility = jest.fn();
-    screen = shallow(
-      <ExplicitOverlay entity={entity}/>
-    );
+    await screen.update();
 
-    screen.find('TouchableOpacity').simulate('press');
-    screen.update();
-
-    expect(entity.toggleMatureVisibility).toHaveBeenCalled();
+    expect(screen).toMatchSnapshot();
   });
 });

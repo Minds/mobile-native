@@ -152,6 +152,9 @@ export const CommonStyle = StyleSheet.create({
     borderColor: 'transparent'
   },
   // margin top
+  marginTop4x: {
+    marginTop: 20
+  },
   marginTop3x: {
     marginTop: 15
   },
@@ -321,6 +324,12 @@ export const CommonStyle = StyleSheet.create({
   },
   textCenter: {
     textAlign: 'center'
+  },
+
+  // Overlay∫
+  blackOverlay: {
+    backgroundColor:'black',
+    zIndex: 1000
   },
 
   //position

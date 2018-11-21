@@ -8,7 +8,7 @@ import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker'
 
 import renderer from 'react-test-renderer';
 
-fdescribe('Explicit text component', () => {
+describe('Explicit text component', () => {
 
   let user, comments, entity, screen;
   beforeEach(() => {
@@ -31,22 +31,5 @@ fdescribe('Explicit text component', () => {
   it('renders correctly', async () => {
     screen.update();
     expect(screen).toMatchSnapshot();
-  });
-
-  it('should have a TouchableOpacity', async () => {
-    screen.update();
-
-    expect(screen.find('TouchableOpacity')).toHaveLength(1);
-  });
-
-
-  it('change visibility', async () => {
-
-    screen.update();
-
-    screen.find('TouchableOpacity').simulate('press');
-    screen.update();
-
-    expect(entity.toggleMatureVisibility).toHaveBeenCalled();
   });
 });

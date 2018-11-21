@@ -53,13 +53,6 @@ export default class ExplicitText extends Component {
   }
 
   /**
-   * toggle overlay
-   */
-  toogle = () => {
-    this.props.entity.toggleMatureVisibility();
-  }
-
-  /**
    * Render
    */
   render() {
@@ -81,19 +74,6 @@ export default class ExplicitText extends Component {
       body = (entity.mature && !entity.mature_visibility) ?
           <Text style={styles.mature}>{message}</Text> :
           <Tags navigation={this.props.navigation} style={this.props.style}>{message}</Tags>
-
-      if (entity.mature ) {
-        if (!entity.mature_visibility) {
-          explicitToggle = <TouchableOpacity style={[CommonStyle.positionAbsolute, CommonStyle.centered]} onPress={this.toogle}>
-            <Icon name="explicit" size={18} color={'black'} style={CommonStyle.shadow}/>
-            <Text> Confirm you are 18+</Text>
-          </TouchableOpacity>
-        } else {
-          explicitToggle = <TouchableOpacity style={[CommonStyle.positionAbsoluteTopRight, {marginTop: -15}]} onPress={this.toogle}>
-            <Icon name="explicit" size={18} color={'red'} style={CommonStyle.shadow}/>
-          </TouchableOpacity>
-        }
-      }
     }
 
     return (

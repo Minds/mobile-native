@@ -9,7 +9,6 @@ import com.bitgo.randombytes.RandomBytesPackage;
 import com.peel.react.rnos.RNOSModule;
 import com.minds.crypto.CryptoPackage;
 import com.brentvatne.react.ReactVideoPackage;
-import com.cmcewen.blurview.BlurViewPackage;
 import com.dylanvann.fastimage.FastImageViewPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -51,7 +50,6 @@ public class MainApplication extends Application implements ShareApplication, Re
             new RNOSModule(),
             new CryptoPackage(),
             new ReactVideoPackage(),
-            new BlurViewPackage(),
           new FastImageViewPackage(),
           new ReactNativeExceptionHandlerPackage(),
           new ImagePickerPackage(),

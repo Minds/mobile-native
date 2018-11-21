@@ -16,27 +16,13 @@ import FastImage from 'react-native-fast-image';
 import { createImageProgress } from 'react-native-image-progress';
 import ProgressCircle from 'react-native-progress/Circle';
 import { Icon } from 'react-native-elements';
-
-import ExplicitOverlay from './ExplicitOverlay';
+import { CommonStyle } from '../../../styles/Common';
 
 const ProgressFastImage = createImageProgress(FastImage);
 const ProgressImage = createImageProgress(Image);
 
 @observer
 export default class ExplicitImage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { viewRef: null };
-  }
-
-  imageLoaded = () => {
-    if (this.props.onLoadEnd) {
-      this.props.onLoadEnd();
-    }
-
-    if (!this.props.entity.mature) return;
-    this.setState({ viewRef: findNodeHandle(this.backgroundImage) });
-  }
 
   imageError = (err) => {
     if (this.props.onError) {
@@ -45,53 +31,39 @@ export default class ExplicitImage extends Component {
   }
 
   render() {
-    let image, ImageCmp, ImageProgressCmp, blur = 0, imageLoaded=this.imageLoaded;
+    let image;
     const disableProgress = this.props.disableProgress;
 
-    if (Platform.OS === 'android' && this.props.entity.mature) {
-      ImageCmp = Image;
-      ImageProgressCmp = ProgressImage;
-      imageLoaded = null;
-      if (!this.props.entity.mature_visibility) blur=30;
-    } else {
-      ImageCmp = FastImage;
-      ImageProgressCmp = ProgressFastImage;
-    }
-
-    if(disableProgress) {
+    if ((this.props.entity.mature || this.props.entity.is_parent_mature) && !this.props.entity.mature_visibility) {
       image = (
-        <ImageCmp
+        <View
+          style={[CommonStyle.positionAbsolute, this.props.imageStyle, CommonStyle.blackOverlay]}
+        />
+      );
+    } else if (disableProgress) {
+      image = (
+        <FastImage
           source={this.props.source}
-          onLoadEnd={imageLoaded}
           onError={this.imageError}
-          blurRadius={blur}
-          ref={(img) => { this.backgroundImage = img; }} style={[styles.absolute, this.props.imageStyle]}
-          />
-        )
-      } else {
-        image = (
-          <ImageProgressCmp
+          ref={(img) => { this.backgroundImage = img; }}
+          style={[CommonStyle.positionAbsolute, this.props.imageStyle]}
+        />
+      );
+    } else {
+      image = (
+        <ProgressFastImage
           indicator={ProgressCircle}
           threshold={150}
           source={this.props.source}
-          onLoadEnd={imageLoaded}
-          blurRadius={blur}
           onError={this.imageError}
-          ref={(img) => { this.backgroundImage = img; }} style={[styles.absolute, this.props.imageStyle]}
+          ref={5} style={[CommonStyle.positionAbsolute, this.props.imageStyle]}
         />
-      )
+      );
     }
 
     return (
       <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
         {image}
-        { (this.props.entity.mature) ?
-          <ExplicitOverlay
-            entity={this.props.entity}
-            viewRef={this.state.viewRef}
-            style={styles.absolute}
-          /> : null
-        }
       </View>
     );
   }
