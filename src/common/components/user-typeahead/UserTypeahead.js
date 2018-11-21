@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -25,7 +25,7 @@ import channelAvatarUrl from '../../helpers/channel-avatar-url';
 import colors from '../../../styles/Colors';
 import abbrev from '../../helpers/abbrev';
 
-export default class UserTypeahead extends Component {
+export default class UserTypeahead extends PureComponent {
   textInput = void 0;
 
   state = {
@@ -153,7 +153,7 @@ export default class UserTypeahead extends Component {
           style={this.styles.headerTextInput}
           autoCorrect={false}
           autoCapitalize="none"
-          onChangeText={query => this.setText(query)}
+          onChangeText={this.setText}
           returnKeyType="search"
           ref={textInput => this.textInput = textInput}
           value={this.state.text}
@@ -209,6 +209,7 @@ export default class UserTypeahead extends Component {
   };
 
   render() {
+    const header = this.HeaderPartial();
     return (
       <Modal
         isVisible={this.props.isModalVisible}
@@ -220,7 +221,7 @@ export default class UserTypeahead extends Component {
         <FlatList
           keyboardShouldPersistTaps='always'
           data={this.state.users}
-          ListHeaderComponent={this.HeaderPartial}
+          ListHeaderComponent={header}
           ListEmptyComponent={this.EmptyPartial}
           renderItem={this.ItemPartial}
           keyExtractor={this.keyExtractor}
