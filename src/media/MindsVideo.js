@@ -222,7 +222,7 @@ class MindsVideo extends Component {
     if (this.state.volume == 0) {
       return <Icon onPress={this.toggleVolume} name="md-volume-off" size={20} color={colors.light} />;
     } else {
-      return <Icon onPress={this.toggleVolume} name="md-volume-up" size={20} color={colors.light} />;
+      return <Icon onPress={this.toggleVolume} name="md-volume-high" size={20} color={colors.light} />;
     }
   }
 
@@ -232,7 +232,7 @@ class MindsVideo extends Component {
   get video() {
     let { video, entity } = this.props;
     let { paused, volume } = this.state;
-    const thumb_uri = entity.get('custom_data.thumbnail_src') || entity.thumbnail_src;
+    const thumb_uri = entity ? (entity.get('custom_data.thumbnail_src') || entity.thumbnail_src) : null;
 
     if (this.state.active || !thumb_uri) {
       return (
