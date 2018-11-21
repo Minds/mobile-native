@@ -20,6 +20,7 @@ import {
 } from 'mobx-react/native'
 
 import translationService from '../../common/services/translation.service';
+import { isFollowing } from '../../newsfeed/NewsfeedService';
 import shareService from '../../share/ShareService';
 import { toggleUserBlock } from '../NewsfeedService';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -39,17 +40,20 @@ export default class ActivityActions extends Component {
     this.state = {
       selected: '',
       reportModalVisible: false,
-      userBlocked: false,
-      options: this.getOptions(),
+      userBlocked: false
     }
 
     this.handleSelection = this.handleSelection.bind(this);
   }
 
-  showActionSheet() {
-    this.state = {
-      options: this.getOptions(),
+  async showActionSheet() {
+    if (this.props.entity['is:following'] === undefined) {
+      this.props.entity['is:following'] = await isFollowing(this.props.entity.guid);
     }
+
+    this.setState({
+      options: this.getOptions()
+    });
     this.ActionSheet.show();
   }
 
@@ -97,10 +101,10 @@ export default class ActivityActions extends Component {
 
     options.push( 'Share' );
 
-    if (!this.props.entity['is:muted']) {
-      options.push( 'Mute notifications' );
+    if (!this.props.entity['is:following']) {
+      options.push( 'Follow' );
     } else {
-      options.push( 'Unmute notifications' );
+      options.push( 'Unfollow' );
     }
 
 
@@ -149,12 +153,6 @@ export default class ActivityActions extends Component {
         )
         break;
       case 'Set explicit':
-        this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
-        break;
       case 'Remove explicit':
         this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
           this.setState({
@@ -178,27 +176,15 @@ export default class ActivityActions extends Component {
           });
         });
         break;
-      case 'Mute notifications':
-        this.props.newsfeed.list.newsfeedToggleMute(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
-        break;
-      case 'Unmute notifications':
-        this.props.newsfeed.list.newsfeedToggleMute(this.props.entity.guid).then( (result) => {
+      case 'Follow':
+      case 'Unfollow':
+        this.props.newsfeed.list.newsfeedToogleFollow(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
         });
         break;
       case 'Monetize':
-        this.props.newsfeed.list.toggleMonetization(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
-        break;
       case 'Un-monetize':
         this.props.newsfeed.list.toggleMonetization(this.props.entity.guid).then( (result) => {
           this.setState({

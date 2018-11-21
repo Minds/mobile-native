@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx';
 
-import { getFeed, toggleComments, toggleMuteNotifications , toggleExplicit, toggleFeatured, deleteItem, monetize, update} from '../../newsfeed/NewsfeedService';
+import { getFeed, toggleComments, follow, unfollow , toggleExplicit, toggleFeatured, deleteItem, monetize, update} from '../../newsfeed/NewsfeedService';
 
 import channelService from '../../channel/ChannelService';
 
@@ -68,20 +68,20 @@ export default class OffsetFeedListStore extends OffsetListStore {
   }
 
   @action
-  newsfeedToggleMute(guid) {
+  newsfeedToogleFollow(guid) {
     let index = this.entities.findIndex(x => x.guid == guid);
     if(index >= 0) {
-      let entity = this.entities[index];
-      let value = !entity['is:muted'];
-      return toggleMuteNotifications(guid, value)
+      const entity = this.entities[index];
+      const method = entity['is:following'] ? unfollow : follow;
+      return method(guid)
         .then(action(response => {
-          entity['is:muted'] = value;
+          entity['is:following'] = !entity['is:following'];
           this.entities[index] = entity;
         }))
         .catch(action(err => {
-          entity['is:muted'] = !value;
+          entity['is:following'] = !entity['is:following'];
           this.entities[index] = entity;
-          console.log('error');
+          console.log('error', err);
         }));
     }
   }

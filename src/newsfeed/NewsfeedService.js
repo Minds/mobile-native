@@ -237,12 +237,44 @@ export function toggleMuteNotifications(guid, value) {
   let action = value ? 'mute' : 'unmute'
   return api.post('api/v1/entities/notifications/' + guid + '/' + action)
     .then((data) => {
-      return { data }
+      return data;
     })
     .catch(err => {
       console.log('error');
       throw "Ooops";
     })
+}
+
+export function follow(guid) {
+  return api.put(`api/v2/notifications/follow/${guid}`)
+    .then((data) => {
+      return data;
+    })
+    .catch(err => {
+      console.log('error', err);
+      throw "Ooops";
+    })
+}
+
+export function unfollow(guid) {
+  return api.delete(`api/v2/notifications/follow/${guid}`)
+    .then((data) => {
+      return data;
+    })
+    .catch(err => {
+      console.log('error', err);
+      throw "Ooops";
+    })
+}
+
+export async function isFollowing(guid) {
+  try {
+    const result = await api.get(`api/v2/notifications/follow/${guid}`);
+    return result.postSubscription.following;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 }
 
 export function toggleExplicit(guid, value) {
