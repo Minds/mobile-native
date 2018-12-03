@@ -28,6 +28,7 @@ import com.mybigday.rnmediameta.RNMediaMetaPackage;
 import com.rnfs.RNFSPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.centaurwarchief.smslistener.SmsListenerPackage;
+import com.microsoft.codepush.react.CodePush;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +36,12 @@ import java.util.List;
 public class MainApplication extends Application implements ShareApplication, ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+
+    @Override
+    protected String getJSBundleFile() {
+      return CodePush.getJSBundleFile();
+    }
+    
     @Override
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
@@ -63,7 +70,8 @@ public class MainApplication extends Application implements ShareApplication, Re
           new RNMediaMetaPackage(),
           new RNFSPackage(),
           new RNFetchBlobPackage(),
-          new SmsListenerPackage()
+          new SmsListenerPackage(),
+          new CodePush("_C083_CqL7CmKwASrv6Xrj1wqH7erJMhIBnRQ", MainApplication.this, BuildConfig.DEBUG)
       );
     }
 

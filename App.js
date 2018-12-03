@@ -2,6 +2,7 @@ import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
 import './global';
 import './shim'
 import crypto from "crypto"; // DO NOT REMOVE!
+import codePush from "react-native-code-push"; // For auto updates
 
 import React, {
   Component
@@ -114,6 +115,8 @@ export default class App extends Component {
 
     const token = await sessionService.init();
 
+    this.checkForUpdates();
+
     if (!token) {
       NavigationService.navigate('Login');
     }
@@ -147,6 +150,15 @@ export default class App extends Component {
     setTimeout(() => {
       deeplinkService.navigate(url);
     }, 100);
+  }
+
+  async checkForUpdates() {
+    try {
+      let response = await CodePush.sync({
+        updateDialog: true,
+        installMode:  CodePush.InstallMode.ON_APP_RESUME,
+      });
+    } catch (err) { }
   }
 
   /**

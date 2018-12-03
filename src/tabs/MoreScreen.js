@@ -7,7 +7,9 @@ import {
   StyleSheet,
   Text,
   ScrollView,
-  Linking
+  Linking,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
 
 import {
@@ -22,6 +24,8 @@ import {
   StackActions,
   NavigationActions
 } from 'react-navigation';
+
+import CodePush from 'react-native-code-push';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import authService from './../auth/AuthService';
@@ -130,6 +134,28 @@ export default class MoreScreen extends Component {
         icon: (<Icon name='open-in-new' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           Linking.openURL(MINDS_URI + 'p/privacy');
+        }
+      },
+      {
+        name: 'Check for updates',
+        icon: (<Icon name="cloud-download" size={ICON_SIZE} style={ styles.icon }/>),
+        onPress: async() => {
+          let response = await CodePush.sync({
+            updateDialog: true,
+            installMode:  CodePush.InstallMode.IMMEDIATE,
+          }, (status) => {
+            switch (status) {
+              case CodePush.SyncStatus.UP_TO_DATE:
+                ToastAndroid.show('No updates available', ToastAndroid.LONG);
+                break;
+              case CodePush.SyncStatus.SYNC_IN_PROGRESS:
+                ToastAndroid.show('Updating...', ToastAndroid.LONG);
+                break;
+              case CodePush.SyncStatus.UPDATE_INSTALLED:
+                ToastAndroid.show('Updated', ToastAndroid.LONG);
+                break;
+            }
+          });
         }
       }
     ];
