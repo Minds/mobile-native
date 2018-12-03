@@ -106,7 +106,7 @@ export default class MediaView extends Component {
    */
   download = () => {
     Alert.alert(
-      'Download to galley',
+      'Download to gallery',
       `Do you want to download this image?`,
       [
         { text: 'No', style: 'cancel' },
