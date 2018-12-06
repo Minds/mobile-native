@@ -296,7 +296,6 @@ export default class CapturePoster extends Component {
     }
 
     try {
-      Alert.alert('pre-post');
       let response = await this.props.capture.post(newPost);
 
       if (this.props.reset) {
