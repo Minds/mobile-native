@@ -94,13 +94,10 @@ export default class Message extends PureComponent {
       return (
         <View>
           <View style={[styles.messageContainer, styles.right]}>
-            <View style={CommonStyle.rowJustifyCenter}>
-              <View style={CommonStyle.flexContainer}></View>
-              <View style={[styles.textContainer, CommonStyle.backgroundPrimary]}  >
-                <Text selectable={true} style={[styles.message, CommonStyle.colorWhite]} onPress={() => this.showDate()}>
-                  <Tags color={'#fff'} style={{ color: '#FFF' }} navigation={this.props.navigation}>{this.state.msg}</Tags>
-                </Text>
-              </View>
+            <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, CommonStyle.backgroundPrimary]}>
+              <Text selectable={true} style={[styles.message, CommonStyle.colorWhite]} onLongPress={() => this.showDate()}>
+                <Tags color={'#fff'} style={{ color: '#FFF' }} navigation={this.props.navigation}>{this.state.msg}</Tags>
+              </Text>
             </View>
             <TouchableOpacity onPress={this._navToChannel}>
               <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
@@ -119,13 +116,10 @@ export default class Message extends PureComponent {
           <TouchableOpacity onPress={this._navToChannel}>
             <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
           </TouchableOpacity>
-          <View style={CommonStyle.rowJustifyCenter}>
-            <View style={[ styles.textContainer ]}  >
-              <Text selectable={true} style={[styles.message]} onPress={() => this.showDate()}>
-                <Tags navigation={this.props.navigation}>{this.state.msg}</Tags>
-              </Text>
-            </View>
-            <View style={CommonStyle.flexContainer}></View>
+          <View style={[CommonStyle.rowJustifyCenter, styles.textContainer]}>
+            <Text selectable={true} style={[styles.message]} onLongPress={() => this.showDate()}>
+              <Tags style={[styles.message]} navigation={this.props.navigation}>{this.state.msg}</Tags>
+            </Text>
           </View>
         </View>
         { this.state.showDate ?
