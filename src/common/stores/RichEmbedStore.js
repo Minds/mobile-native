@@ -11,6 +11,7 @@ export default class RichEmbedStore {
   @observable meta = null;
   richEmbedUrl = '';
   _richEmbedFetchTimer = null;
+  setRichEmbedPromise = null; // used for testing
 
   /**
    * Richembed check
@@ -24,13 +25,13 @@ export default class RichEmbedStore {
     }
 
     if (matches) {
-      const url = (!matches[3] ? 'https://' : '') + matches[0];
+      const url = (!matches[0].startsWith('https://') ? 'https://' : '') + matches[0];
 
       if (
         !this.hasRichEmbed ||
         (this.hasRichEmbed && url.toLowerCase() !== this.richEmbedUrl.toLowerCase())
       ) {
-        this._richEmbedFetchTimer = setTimeout(() => this.setRichEmbed(url), 750);
+        this._richEmbedFetchTimer = setTimeout(() => this.setRichEmbedPromise = this.setRichEmbed(url), 750);
       }
     }
   };
