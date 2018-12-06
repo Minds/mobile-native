@@ -76,6 +76,37 @@ describe('rich embed store', () => {
 
   });
 
+  it('it should return metadata from links with protocol http', async (done) => {
+
+    const fakeMeta = {
+        meta: {
+        title: 'Minds with protocol',
+        description: 'The crypto social network',
+        url: 'www.minds.com'
+      }
+    };
+
+    RichEmbedService.getMeta.mockResolvedValue(fakeMeta);
+
+    try {
+      const promise = store.richEmbedCheck('hello http://www.minds.com/somelong/url?withparams=true&or=false');
+
+      jest.runAllTimers();
+
+      await promise;
+
+      await store.setRichEmbedPromise;
+
+      expect(toJS(store.meta)).toEqual(fakeMeta);
+      expect(RichEmbedService.getMeta).toBeCalledWith('http://www.minds.com/somelong/url?withparams=true&or=false');
+      done();
+    } catch (e) {
+      done.fail(e);
+    }
+
+  });
+
+
   it('it should return null if there is no link', async (done) => {
 
     const fakeMeta = null;
