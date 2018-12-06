@@ -121,10 +121,8 @@ class CaptureStore {
    * @param {object} newPost
    */
   @action async post(newPost) {
-    Alert.alert('posting');
     this.setPosting(true);
     const result = await post(newPost);
-    Alert.alert('posted');
     this.setPosting(false);
     return result;
   }
