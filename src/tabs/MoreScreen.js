@@ -76,7 +76,7 @@ export default class MoreScreen extends Component {
         }
       },
       {
-        name: 'Invite',
+        name: 'Refer your friends',
         icon: (<Icon name='share' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           shareService.invite(this.props.user.me.guid);
