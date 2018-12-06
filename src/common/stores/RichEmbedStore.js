@@ -25,7 +25,7 @@ export default class RichEmbedStore {
     }
 
     if (matches) {
-      const url = (!matches[0].startsWith('https://') ? 'https://' : '') + matches[0];
+      const url = (!(matches[0].startsWith('https://') || matches[0].startsWith('http://')) ? 'https://' : '') + matches[0];
 
       if (
         !this.hasRichEmbed ||
