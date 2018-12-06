@@ -176,10 +176,7 @@ export default class MessengerScreen extends Component {
    * Load more rows
    */
   loadMore = () => {
-    // prevent multiple calls before fist load
-    //if (!this.props.messengerList.loaded) return;
-    if (this.state.active)
-      this.props.messengerList.loadList()
+    this.props.messengerList.loadList()
   }
 
   /**
