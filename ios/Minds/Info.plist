@@ -69,6 +69,10 @@
 	<string>$(PRODUCT_NAME) needs access to your Photo Library in order to upload images</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>voip</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

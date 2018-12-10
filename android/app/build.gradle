@@ -73,7 +73,8 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
-    entryFile: "index.js"
+    entryFile: "index.js",
+    bundleAssetName: "app.bundle"
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -159,7 +160,18 @@ configurations.all {
 }
 
 dependencies {
-    compile project(':react-native-code-push')
+    compile project(':react-native-background-timer')
+
+    implementation(project(':react-native-jitsi-meet')) {
+      // solve issues with the packages shared with the jitsi bundle
+      exclude group: 'com.facebook.react', module:'react-native-vector-icons'
+      exclude group: 'com.facebook.react',module:'react-native-fetch-blob'
+      exclude group: 'com.facebook.react',module:'react-native-keep-awake'
+      exclude group: 'com.facebook.react',module:'react-native-fast-image'
+      exclude group: 'com.facebook.react',module:'react-native-background-timer'
+    }
+    implementation project(':react-native-code-push')
+    implementation project(':react-native-background-timer')
     implementation project(':rn-fetch-blob')
     implementation project(':react-native-android-sms-listener')
     implementation project(':react-native-fs')

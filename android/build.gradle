@@ -32,6 +32,10 @@ allprojects {
             // Local Maven repo containing AARs with JSC library built for Android
             url "$rootDir/../node_modules/jsc-android/dist"
         }
+        maven { // <---- Add this block
+            url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
+        }
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -42,7 +46,20 @@ task wrapper(type: Wrapper) {
 }
 
 subprojects {
-  project.configurations.all {
+    // fix missing gradle versions in jcenter
+    if (project.name.contains('react-native-fast-image')
+        || project.name.contains('react-native-image-picker')
+        || project.name.contains('react-native-vector-icons')
+        || project.name.contains('rn-fetch-blob')
+        ) {
+        buildscript {
+            repositories {
+                maven { url = "https://dl.bintray.com/android/android-tools/" }
+            }
+        }
+    }
+
+    project.configurations.all {
       afterEvaluate {project ->
         if (project.hasProperty("android")) {
             android {
@@ -51,11 +68,11 @@ subprojects {
             }
         }
     }
-     resolutionStrategy.eachDependency { details ->
+    resolutionStrategy.eachDependency { details ->
         if (details.requested.group == 'com.android.support'
               && !details.requested.name.contains('multidex') ) {
            details.useVersion "26.0.2"
         }
-     }
+    }
   }
 }

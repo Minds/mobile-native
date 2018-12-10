@@ -15,6 +15,7 @@ import {
 import {debounce} from 'lodash';
 
 import FastImage from 'react-native-fast-image';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
@@ -23,6 +24,8 @@ import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import SearchView from '../../common/components/SearchView';
+import gathering from '../../common/services/gathering.service';
+import colors from '../../styles/Colors';
 
 /**
  * Group Header
@@ -81,6 +84,19 @@ export default class GroupHeader extends Component {
       );
     }
   }
+
+  /**
+   * Get Gathering Button
+   */
+  getGatheringButton() {
+    const group = this.props.store.group;
+
+    if (group['videoChatDisabled'] === 0) {
+      return <Icon name="videocam" size={24} color={colors.primary} style={CommonStyle.paddingRight} onPress={() => { gathering.join(group) }}/>
+    }
+    return null;
+  }
+
 
   setMemberSearch = debounce((q) => {
     this.props.store.setMemberSearch(q);
@@ -168,6 +184,7 @@ export default class GroupHeader extends Component {
               <Text style={styles.name}>{group.name.toUpperCase()}</Text>
             </View>
             <View style={styles.buttonscol}>
+              {this.getGatheringButton()}
               {this.getActionButton()}
             </View>
           </View>

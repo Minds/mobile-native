@@ -4,7 +4,7 @@ import com.facebook.react.ReactActivity;
 
 // image picker imports
 import com.imagepicker.permissions.OnImagePickerPermissionsCallback;
-import com.facebook.react.modules.core.PermissionListener; 
+import com.facebook.react.modules.core.PermissionListener;
 
 public class MainActivity extends ReactActivity implements OnImagePickerPermissionsCallback {
     private PermissionListener listener;
