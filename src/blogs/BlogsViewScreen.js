@@ -19,9 +19,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import ActionSheet from 'react-native-actionsheet';
 import { inject, observer } from 'mobx-react/native';
-import { observable } from 'mobx';
+
 import FastImage from 'react-native-fast-image';
 import { Icon } from 'react-native-elements';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -36,11 +35,9 @@ import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 import RemindAction from '../newsfeed/activity/actions/RemindAction';
 import CommentsAction from '../newsfeed/activity/actions/CommentsAction';
 import shareService from '../share/ShareService';
-import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
-import Comment from '../comments/Comment';
-import CapturePreview from '../capture/CapturePreview';
-import * as Progress from 'react-native-progress';
+import CommentList from '../comments/CommentList';
+import CenteredLoading from '../common/components/CenteredLoading';
 
 /**
  * Blog View Screen
@@ -61,201 +58,37 @@ export default class BlogsViewScreen extends Component {
     shareService.share(blog.title, blog.perma_url);
   }
 
-  /**
-   * Component will mount
-   */
-  async componentWillMount() {
-    const params = this.props.navigation.state.params;
+  state = {
+    error: null
+  };
 
+  /**
+   * Constructor
+   * @param {object} props
+   */
+  constructor(props) {
+    super(props);
+
+    const params = props.navigation.state.params;
     this.comments = commentsStoreProvider.get();
+  }
+
+  /**
+   * Component did mount
+   */
+  async componentDidMount() {
+    const params = this.props.navigation.state.params;
 
     if (params.blog) {
       this.props.blogsView.setBlog(params.blog);
-      this.loadComments();
     } else {
       this.props.blogsView.reset();
-      await this.props.blogsView.loadBlog(params.guid);
-      this.loadComments();
+      try {
+        await this.props.blogsView.loadBlog(params.guid);
+      } catch (e) {
+        this.setState({error: e});
+      }
     }
-  }
-
-  /**
-   * Scroll to bottom
-   */
-  scrollToBottom = () => {
-    setTimeout(() => {
-      this.listRef.scrollToEnd();
-    }, 250); //delay to allow rendering
-  }
-
-  /**
-   * Reply comment
-   */
-  replyComment = (comment) => {
-    this.comments.setText('@' + comment.ownerObj.username + ' ');
-    if (this.textInput) {
-      this.textInput.focus();
-    }
-  }
-
-  /**
-   * Set comment text
-   */
-  setText = (text) => {
-    this.comments.setText(text);
-  }
-
-  /**
-   * Post comment
-   */
-  postComment = () => {
-    const comments = this.comments;
-    Keyboard.dismiss();
-    if (!comments.saving && (comments.text != '' || comments.attachment.hasAttachment)){
-      comments.post();
-      this.scrollToBottom();
-    }
-  }
-
-  /**
-   * Load comments
-   */
-  loadComments = async () => {
-    let guid;
-    if (this.props.blogsView.blog) {
-      guid = this.props.blogsView.blog.guid;
-      await this.comments.loadComments(guid);
-    }
-  }
-
-  /**
-   * Select attachment source
-   */
-  selectMediaSource = (opt) => {
-    switch (opt) {
-      case 1:
-        this.comments.gallery(this.actionSheet);
-        break;
-      case 2:
-        this.comments.photo();
-        break;
-      case 3:
-        this.comments.video();
-        break;
-    }
-  }
-
-  /**
-   * Render poster
-   */
-  renderPoster() {
-    const attachment = this.comments.attachment;
-
-    const avatarImg = this.props.user.me && this.props.user.me.getAvatarSource ? this.props.user.me.getAvatarSource() : {};
-
-    const comments = this.comments;
-
-    return (
-      <View>
-        <View style={styles.messagePoster}>
-          <Image source={avatarImg} style={styles.posterAvatar} />
-          <TextInput
-            style={[CS.flexContainer, styles.input]}
-            editable={true}
-            underlineColorAndroid='transparent'
-            placeholder='Type your comment...'
-            onChangeText={this.setText}
-            onFocus={this.onFocus}
-            multiline={true}
-            autogrow={true}
-            maxHeight={110}
-            value={comments.text}
-            ref={textInput => this.textInput = textInput}
-            onSelectionChange={this.onSelectionChanges}
-          />
-          {attachment.uploading ?
-            <Progress.Pie progress={attachment.progress} size={36} />:
-            (comments.saving || attachment.checkingVideoLength) ?
-              <ActivityIndicator size={'large'} /> :
-              <View style={CS.rowJustifyEnd}>
-                <TouchableOpacity onPress={() => this.actionAttachmentSheet.show()} style={styles.sendicon}><IonIcon name="md-attach" size={24} style={CS.paddingRight2x} /></TouchableOpacity>
-                <TouchableOpacity onPress={() => this.postComment()} style={styles.sendicon}><IonIcon name="md-send" size={24} /></TouchableOpacity>
-              </View>}
-        </View>
-          {attachment.hasAttachment && <View style={styles.preview}>
-            <CapturePreview
-              uri={attachment.uri}
-              type={attachment.type}
-            />
-
-            <IonIcon name="md-close" size={36} style={styles.deleteAttachment} onPress={() => this.comments.deleteAttachment()} />
-          </View>}
-      </View>
-    )
-  }
-
-  /**
-   * Render comment
-   */
-  renderComment = (row) => {
-    const comment = row.item;
-
-    // add the editing observable property
-    comment.editing = observable.box(false);
-
-    return (
-      <Comment comment={comment} entity={this.props.blogsView.blog} replyComment={this.replyComment} store={this.comments} navigation={this.props.navigation}/>
-    );
-  }
-
-  /**
-   * Render
-   */
-  render() {
-    const blog = this.props.blogsView.blog;
-    const attachment = this.comments.attachment;
-
-    if (!blog) return <CenteredLoading/>
-
-    let actionsheet = null;
-
-    if (Platform.OS != 'ios') {
-      actionsheet = <ActionSheet
-        ref={o => this.actionSheet = o}
-        options={['Cancel', 'Images', 'Videos']}
-        onPress={this.comments.selectMediaType}
-        cancelButtonIndex={0}
-      />
-    }
-
-    return (
-      <View style={CS.flexContainer}>
-        <KeyboardAvoidingView style={styles.containerContainer} behavior={Platform.OS == 'ios' ? 'padding' : null}
-        >
-        <View style={CS.flexContainer}>
-          <FlatList
-            ref={ref => this.listRef = ref}
-            ListHeaderComponent={this.getHeader()}
-            data={this.comments.comments.slice()}
-            renderItem={this.renderComment}
-            keyExtractor={item => item.guid}
-            initialNumToRender={25}
-            refreshing={this.comments.refreshing}
-            ListEmptyComponent={this.comments.loaded && !this.comments.refreshing ? <View/> : <CenteredLoading/>}
-            style={[CS.backgroundWhite, CS.flexContainer]}
-          />
-          {this.renderPoster()}
-        </View>
-        {actionsheet}
-        <ActionSheet
-          ref={o => this.actionAttachmentSheet = o}
-          options={['Cancel', 'Gallery', 'Photo', 'Video']}
-          onPress={this.selectMediaSource}
-          cancelButtonIndex={0}
-          />
-        </KeyboardAvoidingView>
-      </View>
-    );
   }
 
   /**
@@ -270,7 +103,6 @@ export default class BlogsViewScreen extends Component {
           <RemindAction entity={blog} size={16} />
           <ThumbUpAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
           <ThumbDownAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
-          <CommentsAction entity={blog} size={16} navigation={this.props.navigation} />
         </View>
       </View>
     )
@@ -304,6 +136,37 @@ export default class BlogsViewScreen extends Component {
         }
       </View>
     )
+  }
+
+  /**
+   * Render
+   */
+  render() {
+
+    if (!this.props.blogsView.blog) return <CenteredLoading />;
+    return (
+      <View style={[CS.flexContainer, CS.backgroundWhite]}>
+        {
+          !this.state.error ?
+            <CommentList
+              header={this.getHeader()}
+              entity={this.props.blogsView.blog}
+              store={this.comments}
+              navigation={this.props.navigation}
+            />
+          :
+            <View style={CS.flexColumnCentered}>
+              <FastImage
+                resizeMode={FastImage.resizeMode.contain}
+                style={ComponentsStyle.logo}
+                source={require('../assets/logos/logo.png')}
+              />
+              <Text style={[CS.fontL, CS.colorDanger]}>SORRY, WE COULDN'T LOAD THE BLOG</Text>
+              <Text style={[CS.fontM]}>PLEASE TRY AGAIN LATER</Text>
+            </View>
+        }
+      </View>
+    );
   }
 }
 

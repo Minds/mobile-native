@@ -8,10 +8,10 @@ import colors from './Colors';
 export const CommonStyle = StyleSheet.create({
   // containers
   flexContainer: {
-    flex:1,
+    flex: 1,
   },
   flexContainerCenter: {
-    flex:1,
+    flex: 1,
     justifyContent: 'center',
   },
   flexColumnCentered: {
@@ -151,6 +151,19 @@ export const CommonStyle = StyleSheet.create({
   borderTransparent: {
     borderColor: 'transparent'
   },
+  // margin
+  margin4x: {
+    margin: 20
+  },
+  margin3x: {
+    margin: 15
+  },
+  margin2x: {
+    margin: 10
+  },
+  margin: {
+    margin: 5
+  },
   // margin top
   marginTop4x: {
     marginTop: 20
@@ -254,6 +267,18 @@ export const CommonStyle = StyleSheet.create({
   },
 
   // borders
+  borderHair: {
+    borderWidth: StyleSheet.hairlineWidth
+  },
+  border: {
+    borderWidth: 1
+  },
+  border2x: {
+    borderWidth: 2
+  },
+  border3x: {
+    borderWidth: 3
+  },
   borderLeft: {
     borderLeftWidth: 1
   },
@@ -290,8 +315,36 @@ export const CommonStyle = StyleSheet.create({
   borderBottom3x: {
     borderBottomWidth: 3
   },
-
-
+  borderRadius: {
+    borderRadius: 2
+  },
+  borderRadius2x: {
+    borderRadius: 4
+  },
+  borderRadius3x: {
+    borderRadius: 6
+  },
+  borderRadius4x: {
+    borderRadius: 8
+  },
+  borderRadius5x: {
+    borderRadius: 10
+  },
+  borderRadius6x: {
+    borderRadius: 12
+  },
+  borderRadius7x: {
+    borderRadius: 14
+  },
+  borderRadius8x: {
+    borderRadius: 16
+  },
+  borderRadius9x: {
+    borderRadius: 18
+  },
+  borderRadius10x: {
+    borderRadius: 20
+  },
   // fonts
   fontXS:{
     fontSize: 10

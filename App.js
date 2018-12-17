@@ -1,3 +1,10 @@
+/**
+ * Minds mobile app
+ * https://www.minds.com
+ *
+ * @format
+ * @flow
+ */
 import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
 import './global';
 import './shim'

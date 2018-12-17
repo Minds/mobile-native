@@ -1,4 +1,4 @@
-import { 
+import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
@@ -121,9 +121,20 @@ export const ComponentsStyle = StyleSheet.create({
     color: 'white',
     paddingRight: 8
   },
-
-
-  emptyComponentContainer: { 
+  preview: {
+    height: 200,
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    position: 'relative',
+  },
+  posterAvatar: {
+    height: 36,
+    width: 36,
+    borderRadius: 18,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#EEE',
+  },
+  emptyComponentContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -136,7 +147,7 @@ export const ComponentsStyle = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  emptyComponentMessage: { 
+  emptyComponentMessage: {
     fontSize: 24,
     fontFamily: 'Roboto',
     fontWeight: '600',
