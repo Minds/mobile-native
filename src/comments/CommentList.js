@@ -124,7 +124,7 @@ export default class CommentList extends React.Component<Props, State> {
     Keyboard.dismiss();
     if (!store.saving && (store.text != '' || store.attachment.hasAttachment)){
       store.post();
-      this.scrollToBottom();
+      if (!this.props.parent) this.scrollToBottom();
     }
   }
 
