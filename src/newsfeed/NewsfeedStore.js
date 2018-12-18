@@ -51,9 +51,10 @@ class NewsfeedStore {
   /**
    * Load feed
    */
-  async loadFeed(refresh = false) {
+  async loadFeed(refresh = false, all = false) {
     const store = this.stores[this.filter];
     const fetchFn = this.fetch;
+    let feed;
 
     if (store.list.cantLoadMore() || store.loading) {
       return Promise.resolve();
@@ -62,9 +63,11 @@ class NewsfeedStore {
     store.loading = true;
 
     try {
-      const feed = await fetchFn(this.list.offset)
-
-      //Alert.alert('got feed with ' + feed.entities.length + ' items');
+      if (this.filter === 'suggested') {
+        feed = await fetchFn(this.list.offset, 12, all);
+      } else {
+        feed = await fetchFn(this.list.offset, 12);
+      }
 
       feed.entities = ActivityModel.createMany(feed.entities);
       this.assignRowKeys(feed);
@@ -170,9 +173,9 @@ class NewsfeedStore {
   }
 
   @action
-  async refresh() {
+  async refresh(all = false) {
     await this.list.refresh();
-    await this.loadFeed(true);
+    await this.loadFeed(true, all);
     this.list.refreshDone();
   }
 

@@ -36,8 +36,8 @@ export default class NewsfeedService {
    * @param {string} offset
    * @param {int} limit
    */
-  async getFeedSuggested(offset, limit = 12) {
-    return this._getFeed('api/v2/entities/suggested/activities', offset, limit);
+  async getFeedSuggested(offset, limit = 12, all = false) {
+    return this._getFeed('api/v2/entities/suggested/activities' + (all ? '/all' : ''), offset, limit);
   }
 
   /**
@@ -70,7 +70,7 @@ export default class NewsfeedService {
         }, this.controllers._getFeed.signal);
 
         return {
-          entities: data.boosts||[],
+          entities: data.boosts || [],
           offset: data['load-next'],
         }
     } catch (err) {
@@ -119,7 +119,7 @@ export function getBoosts(offset, limit = 15, rating) {
   return api.get('api/v1/boost/fetch/newsfeed', {
     limit: limit || '',
     offset: offset || '',
-    rating: rating || '',
+    rating: rating || 1,
     platform: Platform.OS === 'ios' ? 'ios' : 'other'
   })
     .then((data) => {
