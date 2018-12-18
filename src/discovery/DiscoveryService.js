@@ -50,10 +50,10 @@ class DiscoveryService {
     if (type == 'group') {
       endpoint = 'api/v1/entities/trending/groups';
     } else {
-      endpoint = 'api/v1/entities/' + filter + '/' + type;
+      endpoint = `api/v2/entities/${filter}/${type}/all`;
     }
 
-    try { 
+    try {
       const data = await api.get(endpoint, { limit: 12, offset: offset })
       let entities = [];
       entities = data.entities;

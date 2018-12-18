@@ -53,7 +53,6 @@ export default class DiscoveryScreen extends Component {
     active: false,
     searching: false,
     itemHeight: 0,
-    isModalVisible: false,
     currentSearchParam: void 0,
     q: ''
   }
@@ -163,7 +162,7 @@ export default class DiscoveryScreen extends Component {
    * On viewable items change in the list
    */
   onViewableItemsChanged = (change) => {
-    if (this.props.discovery.type == 'object/image' && isIos) {
+    if (this.props.discovery.type == 'images' && isIos) {
       change.changed.forEach(c => {
         if (c.item.gif) {
           c.item.setVisible(c.isViewable);
@@ -189,7 +188,7 @@ export default class DiscoveryScreen extends Component {
         renderRow = this.renderUser;
         this.cols = 1;
         break;
-      case 'group':
+      case 'groups':
         renderRow = this.renderGroup;
         this.cols = 1;
         break;
@@ -197,7 +196,7 @@ export default class DiscoveryScreen extends Component {
         renderRow = this.renderActivity;
         this.cols = 1;
         break;
-      case 'object/blog':
+      case 'blogs':
         renderRow = this.renderBlog;
         this.cols = 1;
         break;
@@ -248,30 +247,30 @@ export default class DiscoveryScreen extends Component {
             size={ 20 }
           />
         </TouchableHighlight>
-        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('object/video') } underlayColor='#fff'>
+        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('videos') } underlayColor='#fff'>
           <Icon
             name="videocam"
-            style={[styles.icon, this.props.discovery.type == 'object/video' ? styles.iconActive : null ]}
+            style={[styles.icon, this.props.discovery.type == 'videos' ? styles.iconActive : null ]}
             size={ 20
             }/>
         </TouchableHighlight>
-        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('object/image') } underlayColor='#fff'>
+        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('images') } underlayColor='#fff'>
           <IonIcon
             name="md-photos"
-            style={[styles.icon, this.props.discovery.type == 'object/image' ? styles.iconActive : null ]}
+            style={[styles.icon, this.props.discovery.type == 'images' ? styles.iconActive : null ]}
             size={ 20 }/>
         </TouchableHighlight>
-        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('object/blog') } underlayColor='#fff'>
+        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('blogs') } underlayColor='#fff'>
           <Icon
             name="subject"
-            style={[styles.icon, this.props.discovery.type == 'object/blog' ? styles.iconActive : null ]}
+            style={[styles.icon, this.props.discovery.type == 'blogs' ? styles.iconActive : null ]}
             size={ 20 }
             />
         </TouchableHighlight>
-        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('group') } underlayColor='#fff'>
+        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('groups') } underlayColor='#fff'>
           <Icon
             name="group-work"
-            style={[styles.icon, this.props.discovery.type == 'group' ? styles.iconActive : null ]}
+            style={[styles.icon, this.props.discovery.type == 'groups' ? styles.iconActive : null ]}
             size={ 20 }
             />
         </TouchableHighlight>
@@ -330,24 +329,6 @@ export default class DiscoveryScreen extends Component {
     Keyboard.dismiss();
   }
 
-  onFilterChange = (val) => {
-    this.props.discovery.setFilter(val);
-  }
-
-  onTypeChange = (val) => {
-    this.props.discovery.setType(val);
-  }
-
-  onPressOptions = () => {
-    this.setState({ isModalVisible: true });
-  }
-
-  hideModal = () => {
-    this.setState({ isModalVisible: false });
-  }
-
-  onModalHide = () => {
-  }
 
   searchDebouncer = _.debounce((text) => {
     this.props.discovery.search(text);

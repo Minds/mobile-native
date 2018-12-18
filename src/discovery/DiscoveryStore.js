@@ -21,8 +21,8 @@ class DiscoveryStore {
   @observable stores;
 
   @observable searchtext = '';
-  @observable filter     = 'trending';
-  @observable type       = 'object/image';
+  @observable filter     = 'suggested';
+  @observable type       = 'images';
   @observable category   = 'all';
 
   constructor() {
@@ -34,15 +34,15 @@ class DiscoveryStore {
    */
   buildListStores() {
     this.stores = {
-      'object/image': {
+      'images': {
         list: new OffsetListStore('shallow'),
         loading: false,
       },
-      'object/video': {
+      'videos': {
         list: new OffsetListStore('shallow'),
         loading: false,
       },
-      'object/blog': {
+      'blogs': {
         list: new OffsetListStore('shallow'),
         loading: false,
       },
@@ -50,7 +50,7 @@ class DiscoveryStore {
         list: new OffsetListStore('shallow'),
         loading: false,
       },
-      'group': {
+      'groups': {
         list: new OffsetListStore('shallow'),
         loading: false,
       },
@@ -132,8 +132,8 @@ class DiscoveryStore {
   createModels(type, feed, preloadImage) {
     switch (type) {
       case 'activity':
-      case 'object/image':
-      case 'object/video':
+      case 'images':
+      case 'videos':
         feed.entities = ActivityModel.createMany(feed.entities);
         if (preloadImage) {
           feed.entities.forEach(entity => {
@@ -141,7 +141,7 @@ class DiscoveryStore {
           });
         }
         break;
-      case 'object/blog':
+      case 'blogs':
         feed.entities = BlogModel.createMany(feed.entities);
         break;
       case 'user':
@@ -192,8 +192,8 @@ class DiscoveryStore {
 
   @action
   clearList() {
-    this.type = 'object/image';
-    this.filter = 'trending';
+    this.type = 'images';
+    this.filter = 'suggested';
   }
 
   /**
@@ -225,8 +225,8 @@ class DiscoveryStore {
     this.buildListStores();
 
     this.searchtext = '';
-    this.filter = 'trending';
-    this.type  = 'object/image';
+    this.filter = 'suggested';
+    this.type  = 'images';
     this.category = 'all';
     this.loading = false;
   }
