@@ -18,7 +18,7 @@ class DiscoveryStore {
   /**
    * Notification list store
    */
-  @observable stores;
+  stores;
 
   @observable searchtext = '';
   @observable filter     = 'trending';
@@ -86,27 +86,29 @@ class DiscoveryStore {
   @action
   async loadList(refresh=false, preloadImage=false) {
     const type = this.type;
-    const store = this.stores[this.type];
+
+    // NOTE: we do not rely on this.list because it could change during the await
+    const store = this.stores[type];
 
     // ignore last visited channels
     if (type == 'lastchannels') return;
 
     // no more data or loading? return
-    if (!refresh && this.list.cantLoadMore() || this.loading) {
+    if (!refresh && store.list.cantLoadMore() || this.stores[type].loading) {
       return;
     }
 
-    this.loading = true;
+    this.stores[type].loading = true;
 
     try {
       const feed = await discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext);
       this.createModels(type, feed, preloadImage);
       this.assignRowKeys(feed);
-      this.list.setList(feed, refresh);
+      store.list.setList(feed, refresh);
     } catch (err) {
       console.log('error', err);
     } finally {
-      this.loading = false;
+      this.stores[type].loading = false;
     }
   }
 
