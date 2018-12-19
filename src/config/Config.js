@@ -39,6 +39,7 @@ export const MINDS_FEATURES = {
  */
 export const MINDS_DEEPLINK = [
   ['groups/profile/:guid', 'GroupView'],
+  ['notifications', 'Notifications'],
   ['groups/:filter', 'GroupsList'],
   ['newsfeed/:guid', 'Activity'],
   ['media/:guid', 'Activity'],
