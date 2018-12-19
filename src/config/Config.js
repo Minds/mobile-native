@@ -46,6 +46,7 @@ export const MINDS_DEEPLINK = [
   ['channels/:username', 'Channel'],
   ['blog/:filter', 'BlogList'],
   ['blog/view/:guid', 'BlogView'],
+  [':user/blog/:slug', 'BlogView'],
   [':username', 'Channel'],
   ['wallet/tokens/:section', 'Wallet'],
 
