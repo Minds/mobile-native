@@ -68,6 +68,15 @@ export default class GroupViewScreen extends Component {
     }
 
     this.comments = commentsStoreProvider.get();
+
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+      const params = this.props.navigation.state.params;
+      if (params && params.prepend) {
+        this.props.groupView.prepend(params.prepend);
+        // we clear the parameter to prevent prepend it again on goBack
+        this.props.navigation.setParams({prepend: null});
+      }
+    });
   }
 
   componentDidMount() {
@@ -83,6 +92,7 @@ export default class GroupViewScreen extends Component {
    */
   componentWillUnmount() {
     this.props.groupView.clear();
+    this.disposeEnter.remove();
   }
 
   /**
