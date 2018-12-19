@@ -71,8 +71,11 @@ export default class NotificationsScreen extends Component {
    */
   componentWillMount() {
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      this.props.notifications.loadList(true);
-      this.props.notifications.setUnread(0);
+      // ignore back navigation
+      if (s.action.type === 'Navigation/NAVIGATE' && s.action.routeName === 'Notifications') {
+        this.props.notifications.loadList(true);
+        this.props.notifications.setUnread(0);
+      }
     });
   }
 
@@ -82,7 +85,7 @@ export default class NotificationsScreen extends Component {
   componentWillUnmount() {
     // clear data to free memory
     this.props.notifications.list.clearList();
-    this.disposeEnter();
+    this.disposeEnter.remove();
   }
 
   /**
