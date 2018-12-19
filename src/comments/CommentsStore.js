@@ -9,7 +9,11 @@ import {
   getComments,
   postComment,
   updateComment,
-  deleteComment
+  deleteComment,
+  getCommentsReply,
+  postReplyComment,
+  updateReplyComment,
+  deleteReplyComment
 } from './CommentsService';
 
 import Comment from './Comment';
@@ -34,6 +38,7 @@ export default class CommentsStore {
 
   // attachment store
   attachment = new AttachmentStore();
+  // embed store
   embed = new RichEmbedStore();
 
   guid = '';
@@ -42,25 +47,34 @@ export default class CommentsStore {
   loadPrevious = '';
   socketRoomName = '';
 
+  // parent for reply
+  parent = null;
+
   /**
    * Load Comments
    */
-  loadComments(guid, limit = 12) {
+  @action
+  async loadComments(guid, limit = 12) {
     if (this.cantLoadMore(guid)) {
       return;
     }
     this.guid = guid;
 
-    return getComments(this.guid, this.reversed, this.loadPrevious, limit)
-    .then(action(response => {
-        response.comments = CommentModel.createMany(response.comments);
-        this.loaded = true;
-        this.setComments(response);
-        this.checkListen(response);
-      }))
-      .catch(err => {
-        console.log('error', err);
-      });
+    let response;
+
+    try {
+      if (this.parent) {
+        response = await getCommentsReply(this.guid, this.parent._guid, this.reversed, this.loadPrevious, limit);
+      } else {
+        response = await getComments(this.guid, this.reversed, this.loadPrevious, limit);
+      }
+      response.comments = CommentModel.createMany(response.comments);
+      this.loaded = true;
+      this.setComments(response);
+      this.checkListen(response);
+    } catch (err) {
+      console.log('error', err);
+    }
   }
 
   /**
@@ -143,7 +157,7 @@ export default class CommentsStore {
   /**
    * Post comment
    */
-  post() {
+  async post() {
     this.saving = true;
 
     const comment = {
@@ -158,21 +172,24 @@ export default class CommentsStore {
       Object.assign(comment, this.embed.meta);
     }
 
-    return postComment(this.guid, comment)
+    let data;
 
-      .then((data) => {
-        this.setComment(data.comment);
-        this.setText('');
-        this.embed.clearRichEmbedAction();
-        this.attachment.clear();
-      })
-      .finally(action(() => {
-        this.saving = false;
-      }))
-      .catch(err => {
-        console.log(err);
-        alert('Error sending comment');
-      })
+    try {
+      if (this.parent) {
+        data = await postReplyComment(this.guid, this.parent._guid, comment);
+      } else {
+        data = await postComment(this.guid, comment);
+      }
+      this.setComment(data.comment);
+      this.setText('');
+      this.embed.clearRichEmbedAction();
+      this.attachment.clear();
+    } catch (err) {
+      console.log(err);
+      alert('Error sending comment');
+    } finally {
+      this.saving = false;
+    }
   }
 
   /**
@@ -213,15 +230,25 @@ export default class CommentsStore {
    * @param {string} description
    */
   @action
-  updateComment(comment, description) {
+  async updateComment(comment, description) {
     this.saving = true;
-    return updateComment(comment.guid, description)
-      .finally(action(() => {
-        this.saving = false;
-      }))
-      .then(() => {
-        this.setCommentDescription(comment, description);
-      });
+
+    try {
+      if (this.parent) {
+        await updateReplyComment(comment.guid, this.parent._guid, description);
+      } else {
+        await updateComment(comment.guid, description);
+      }
+
+      this.setCommentDescription(comment, description);
+    } catch (err) {
+      console.log('error', err);
+    } finally {
+      this.saving = false;
+    }
+
+
+
   }
 
   /**
@@ -248,6 +275,7 @@ export default class CommentsStore {
   @action
   reset() {
     this.comments = [];
+    this.parent = null;
     this.refreshing = false;
     this.loaded = false;
     this.saving = false;
@@ -256,6 +284,14 @@ export default class CommentsStore {
     this.loadNext = '';
     this.loadPrevious = '';
     this.socketRoomName = '';
+  }
+
+  /**
+   * Set parent comment
+   * @param {object} parent
+   */
+  setParent(parent) {
+    this.parent = parent;
   }
 
   /**
@@ -388,7 +424,11 @@ export default class CommentsStore {
     if(index >= 0) {
       let entity = this.comments[index];
 
-      const result = await deleteComment(guid);
+      if (this.parent) {
+        const result = await deleteReplyComment(guid);
+      } else {
+        const result = await deleteComment(guid);
+      }
 
       this.comments.splice(index, 1);
     }

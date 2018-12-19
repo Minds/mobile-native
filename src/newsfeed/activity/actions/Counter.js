@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -15,7 +15,7 @@ import abbrev from '../../../common/helpers/abbrev';
 /**
  * Counters
  */
-export default class Counter extends Component {
+export default class Counter extends PureComponent {
 
   /**
    * Default Props
@@ -52,4 +52,3 @@ const styles = StyleSheet.create({
     fontWeight: '800',
   },
 });
-  

@@ -21,17 +21,17 @@ import { Icon } from 'react-native-elements';
 
 import {truncate} from 'lodash';
 
+import entities from 'entities';
 import GroupUser from './GroupUser';
-import { MINDS_CDN_URI } from '../config/Config';
-import groupsService from './GroupsService';
+import colors from '../styles/Colors';
+import Tags from '../common/components/Tags';
+import CaptureFab from '../capture/CaptureFab';
 import GroupHeader from './header/GroupHeader';
 import { CommonStyle } from '../styles/Common';
-import colors from '../styles/Colors';
+import CommentList from '../comments/CommentList';
 import NewsfeedList from '../newsfeed/NewsfeedList';
-import CaptureFab from '../capture/CaptureFab';
 import CenteredLoading from '../common/components/CenteredLoading';
-import Tags from '../common/components/Tags';
-import entities from 'entities';
+import commentsStoreProvider from '../comments/CommentsStoreProvider';
 
 /**
  * Groups view screen
@@ -66,6 +66,8 @@ export default class GroupViewScreen extends Component {
       this.props.groupView.loadGroup(params.guid);
       this.props.groupView.loadFeed();
     }
+
+    this.comments = commentsStoreProvider.get();
   }
 
   componentDidMount() {
@@ -135,6 +137,15 @@ export default class GroupViewScreen extends Component {
           />
         );
         break;
+      case 'conversation':
+        return (
+          <CommentList
+            header={header}
+            entity={group.group}
+            store={this.comments}
+            navigation={this.props.navigation}
+          />
+        );
       case 'desc':
         const description = entities.decodeHTML(group.group.briefdescription).trim();
         return (

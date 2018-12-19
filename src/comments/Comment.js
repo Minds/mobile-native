@@ -31,14 +31,18 @@ import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import formatDate from '../common/helpers/date';
 import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
+import ReplyAction from './ReplyAction';
 import MediaView from '../common/components/MediaView';
 import Tags from '../common/components/Tags';
 import {
   MINDS_CDN_URI
 } from '../config/Config';
 
+import CommentList from './CommentList';
+import commentsStoreProvider from '../comments/CommentsStoreProvider';
+
 /**
- * Comment
+ * Comment Component
  */
 @inject('user')
 @observer
@@ -63,8 +67,8 @@ export default class Comment extends Component {
       <View style={[CommonStyle.flexContainer ]}>
         <View style={styles.actionsContainer}>
           <Text style={styles.timestamp}>{formatDate(comment.time_created)}</Text>
-          <View style={{ flexGrow: 2 }}></View>
-          <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter ]}>
+          <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter, styles.actionsButtonsContainer ]}>
+            <ReplyAction entity={comment} size={16} toggleExpand={this.toggleExpand}/>
             <ThumbUpAction entity={comment} me={this.props.user.me} size={16}/>
             <ThumbDownAction entity={comment} me={this.props.user.me} size={16} />
           </View>
@@ -82,9 +86,9 @@ export default class Comment extends Component {
           <View style={styles.content}>
             {
               this.state.editing ?
-                <CommentEditor setEditing={this.setEditing} comment={comment} store={this.props.store}/> :
-
-                <Text style={styles.message} selectable={true} onPress={this.showActions}>
+                <CommentEditor setEditing={this.setEditing} comment={comment} store={this.props.store}/>
+              :
+                <Text style={styles.message} selectable={true} onLongPress={this.showActions}>
                   <Text style={styles.username}>@{comment.ownerObj.username} </Text>
                   { comment.description &&
                     <Tags
@@ -97,6 +101,15 @@ export default class Comment extends Component {
                 </Text>
             }
           </View>
+          { actions }
+            { comment.expanded &&
+            <CommentList
+               entity={this.props.entity}
+               parent={comment}
+               store={this.comments}
+               navigation={this.props.navigation}
+             />
+            }
 
           <MediaView
             entity={comment}
@@ -105,7 +118,6 @@ export default class Comment extends Component {
             width={Dimensions.get('window').width - 60}
             />
 
-          { actions }
         </View>
         <ActionSheet
           ref={o => this.ActionSheet = o}
@@ -117,9 +129,24 @@ export default class Comment extends Component {
     );
   }
 
+  /**
+   * Toggle expand
+   */
+  toggleExpand = () => {
+    if (!this.props.comment.expanded && !this.comments) {
+      this.comments = commentsStoreProvider.get();
+      this.comments.setParent(this.props.comment);
+    }
+    this.props.comment.toggleExpanded();
+  }
+
+  /**
+   * Set editing
+   */
   setEditing = (value) => {
     this.setState({editing: value});
   }
+
   /**
    * Show actions
    */
@@ -127,6 +154,9 @@ export default class Comment extends Component {
     this.ActionSheet.show();
   }
 
+  /**
+   * Get actionsheet options
+   */
   getOptions = () => {
     let actions = ['Cancel'];
     if (this.props.user.me.guid == this.props.comment.owner_guid) {
@@ -152,9 +182,9 @@ export default class Comment extends Component {
       }
 
       actions.push( 'Report' );
-      actions.push( 'Reply' );
       actions.push( 'Copy' );
     }
+    actions.push( 'Reply' );
 
     return actions;
   }
@@ -213,7 +243,7 @@ export default class Comment extends Component {
         this.props.navigation.push('Report', { entity: this.props.comment });
         break;
       case 'Reply':
-        this.props.replyComment(this.props.comment);
+        this.toggleExpand();
         break;
       case 'Copy':
         Clipboard.setString(entities.decodeHTML(this.props.comment.description));
@@ -254,7 +284,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'stretch',
-    paddingRight: 8,
+    backgroundColor: '#E8E8E8',
+    borderRadius: 20,
+    marginHorizontal: 5,
+    padding: 5,
+  },
+  actionsButtonsContainer: {
+    width: 35
   },
   actionsContainer: {
     display: 'flex',
@@ -282,6 +318,7 @@ const styles = StyleSheet.create({
     color: '#444',
   },
   timestamp: {
+    flex:1,
     fontSize: 10,
     color: '#888',
   },

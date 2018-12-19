@@ -11,10 +11,7 @@ import renderer from 'react-test-renderer';
 jest.mock('../../src/blogs/BlogsViewStore');
 jest.mock('../../src/auth/UserStore');
 jest.mock('../../src/blogs/BlogViewHTML', () => 'BlogViewHTML');
-jest.mock('../../src/newsfeed/activity/actions/ThumbUpAction', () => 'ThumbUpAction');
-jest.mock('../../src/newsfeed/activity/actions/ThumbDownAction', () => 'ThumbDownAction');
-jest.mock('../../src/newsfeed/activity/actions/RemindAction', () => 'RemindAction');
-jest.mock('../../src/newsfeed/activity/actions/CommentsAction', () => 'CommentsAction');
+jest.mock('../../src/comments/CommentList', () => 'CommentList');
 
 /**
  * Tests
