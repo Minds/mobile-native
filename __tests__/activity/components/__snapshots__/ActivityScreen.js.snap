@@ -48,6 +48,9 @@ exports[`Activity screen component renders correctly 1`] = `
         "thumbs:up:user_guids": undefined,
         "title": "TITLE",
         "type": "activity",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
         Symbol(mobx did run lazy initializers): true,
         Symbol(mobx administration): ObservableObjectAdministration$$1 {
           "defaultEnhancer": [Function],
@@ -115,6 +118,9 @@ exports[`Activity screen component renders correctly 1`] = `
             "thumbs:up:user_guids": undefined,
             "title": "TITLE",
             "type": "activity",
+            "wire_totals": Object {
+              "tokens": 1000000000000000000,
+            },
             Symbol(mobx did run lazy initializers): true,
             Symbol(mobx administration): ObservableObjectAdministration$$1 {
               "defaultEnhancer": [Function],
@@ -176,6 +182,9 @@ exports[`Activity screen component renders correctly 1`] = `
                   "thumbnail_src": false,
                   "title": "TITLE",
                   "type": "activity",
+                  "wire_totals": Object {
+                    "tokens": 1000000000000000000,
+                  },
                 },
               },
               "routeName": "some",
@@ -252,6 +261,9 @@ exports[`Activity screen component renders correctly 1`] = `
                       "thumbs:up:user_guids": undefined,
                       "title": "TITLE",
                       "type": "activity",
+                      "wire_totals": Object {
+                        "tokens": 1000000000000000000,
+                      },
                       Symbol(mobx did run lazy initializers): true,
                       Symbol(mobx administration): ObservableObjectAdministration$$1 {
                         "defaultEnhancer": [Function],
@@ -330,6 +342,9 @@ exports[`Activity screen component renders correctly 1`] = `
                           "thumbs:up:user_guids": undefined,
                           "title": "TITLE",
                           "type": "activity",
+                          "wire_totals": Object {
+                            "tokens": 1000000000000000000,
+                          },
                           Symbol(mobx did run lazy initializers): true,
                           Symbol(mobx administration): ObservableObjectAdministration$$1 {
                             "defaultEnhancer": [Function],
@@ -444,6 +459,9 @@ exports[`Activity screen component renders correctly 1`] = `
               "thumbnail_src": false,
               "title": "TITLE",
               "type": "activity",
+              "wire_totals": Object {
+                "tokens": 1000000000000000000,
+              },
             },
           },
           "routeName": "some",

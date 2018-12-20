@@ -71,6 +71,9 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         "thumbnail_src": false,
         "title": "TITLE",
         "type": "activity",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
       },
       Object {
         "attachment_guid": false,
@@ -98,6 +101,9 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         "thumbnail_src": false,
         "title": "TITLE",
         "type": "activity",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
       },
       Object {
         "attachment_guid": false,
@@ -125,6 +131,9 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         "thumbnail_src": false,
         "title": "TITLE",
         "type": "activity",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
       },
       Object {
         "attachment_guid": false,
@@ -152,6 +161,9 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         "thumbnail_src": false,
         "title": "TITLE",
         "type": "activity",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
       },
       Object {
         "attachment_guid": false,
@@ -179,6 +191,9 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         "thumbnail_src": false,
         "title": "TITLE",
         "type": "activity",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
       },
     ]
   }

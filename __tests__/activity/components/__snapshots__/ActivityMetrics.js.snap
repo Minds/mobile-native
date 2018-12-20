@@ -28,6 +28,7 @@ exports[`Owner component renders correctly 1`] = `
       style={
         Array [
           Object {
+            "alignItems": "center",
             "color": "#777",
             "fontSize": 11,
           },
@@ -39,23 +40,34 @@ exports[`Owner component renders correctly 1`] = `
     <Text
       style={
         Object {
+          "alignItems": "center",
           "color": "#777",
           "fontSize": 11,
         }
       }
     >
       2e-17
-    </Text>
-    <Text
-      style={
-        Object {
-          "color": "#777",
-          "fontSize": 11,
-        }
-      }
-    >
-      TKN
        
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#777",
+              "fontSize": 12,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Ionicons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
     </Text>
   </View>
   <View
@@ -75,6 +87,7 @@ exports[`Owner component renders correctly 1`] = `
       style={
         Array [
           Object {
+            "alignItems": "center",
             "color": "#777",
             "fontSize": 11,
           },
@@ -86,23 +99,34 @@ exports[`Owner component renders correctly 1`] = `
     <Text
       style={
         Object {
+          "alignItems": "center",
           "color": "#777",
           "fontSize": 11,
         }
       }
     >
       20
-    </Text>
-    <Text
-      style={
-        Object {
-          "color": "#777",
-          "fontSize": 11,
-        }
-      }
-    >
-      VIEWS
        
+      <Text
+        allowFontScaling={false}
+        style={
+          Array [
+            Object {
+              "color": "#777",
+              "fontSize": 12,
+            },
+            undefined,
+            Object {
+              "fontFamily": "Material Design Icons",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+            Object {},
+          ]
+        }
+      >
+        
+      </Text>
     </Text>
   </View>
 </View>

@@ -9,15 +9,15 @@ function load(count) {
       container_guid:code,
       custom_data:false,
       custom_type:false,
-      rowKey: 'something' + i, 
+      rowKey: 'something' + i,
       description:"Congratulations! ",
       edited:"",
       guid:code,
       mature:false,
       ownerObj:{
-        guid: "824853017709780997", 
-        type: "user", 
-        subtype: false, 
+        guid: "824853017709780997",
+        type: "user",
+        subtype: false,
         time_created: "1522036284",
         getAvatarSource: () => {
           return {
@@ -32,6 +32,9 @@ function load(count) {
       perma_url:false,
       thumbnail_src:false,
       type:"activity",
+      wire_totals: {
+        tokens: 1000000000000000000
+      },
       getThumbSource: () => {
         return {
           source:'http://thisisaurl'
@@ -45,7 +48,7 @@ function load(count) {
     'load-next': 'aaaaaa',
     'load-previous': 'aaaaaa'
   }
-  
+
 }
 
 /**
@@ -53,6 +56,6 @@ function load(count) {
  * @param {integer} count
  */
 export function activitiesServiceFaker() {
-  return { load: load} 
+  return { load: load}
 }
 

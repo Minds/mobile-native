@@ -66,6 +66,9 @@ exports[`Media view component renders correctly 1`] = `
           "thumbnail_src": false,
           "title": "TITLE",
           "type": "activity",
+          "wire_totals": Object {
+            "tokens": 1000000000000000000,
+          },
         }
       }
       imageStyle={
