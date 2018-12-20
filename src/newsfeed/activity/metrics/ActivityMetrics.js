@@ -13,6 +13,7 @@ import {
   observer
 } from 'mobx-react/native'
 
+import Icon from 'react-native-vector-icons/Ionicons';
 import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { CommonStyle } from '../../../styles/Common';
@@ -31,8 +32,7 @@ export default class ActivityMetrics extends Component {
     return value > 0 ?
       <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
         <Text style={[styles.counter]}> · </Text>
-        <Text style={styles.counter}>{abbrev(value,0)}</Text>
-        <Text style={styles.counter}>{label} </Text>
+        <Text style={styles.counter}>{abbrev(value,0)} {label}</Text>
       </View> : null;
   }
 
@@ -50,13 +50,13 @@ export default class ActivityMetrics extends Component {
 
     const edited = entity.edited ? <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
       <Text style={[styles.counter]}> · </Text>
-      <Text style={styles.counter}>EDITED</Text>
+      <Text style={styles.text}>EDITED</Text>
     </View> : null
 
     return (
       <View style={[CommonStyle.rowJustifyCenter]}>
-        {this.showCounter(token(entity.wire_totals.tokens), 'TKN')}
-        {this.showCounter(entity.impressions, 'VIEWS')}
+        {this.showCounter(token(entity.wire_totals.tokens), <Icon name="ios-flash" color="#777"/>)}
+        {this.showCounter(entity.impressions, <McIcon name="eye" color="#777"/>)}
         {edited}
       </View>
     )
@@ -66,6 +66,10 @@ export default class ActivityMetrics extends Component {
 const styles = StyleSheet.create({
   counter: {
     color: '#777',
+    alignItems: 'center',
     fontSize: 11,
   },
+  text: {
+    fontSize: 10
+  }
 })

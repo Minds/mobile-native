@@ -28,6 +28,7 @@ import RemindOwnerBlock from './RemindOwnerBlock';
 import Actions from './Actions';
 import formatDate from '../../common/helpers/date';
 import domain from '../../common/helpers/domain';
+import token from '../../common/helpers/token';
 import ActivityActionSheet from './ActivityActionSheet';
 import ActivityEditor from './ActivityEditor';
 import ActivityMetrics from './metrics/ActivityMetrics';
@@ -186,15 +187,16 @@ export default class Activity extends Component {
           rightToolbar={this.props.hideTabs ? null : rightToolbar}
           >
           <TouchableOpacity onPress={() => this.navToActivity()} style={{ flexDirection: 'row' }}>
-            <Text style={styles.timestamp}>{formatDate(this.props.entity.time_created)}</Text>
+            <Text style={styles.timestamp}>{
+              formatDate(
+                this.props.entity.time_created,
+                (token(this.props.entity.wire_totals.tokens) && this.props.entity.impressions && this.props.entity.edited && this.props.entity.boosted) ? 'date' : null
+              )
+            }</Text>
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
-                <View style={styles.boostTagColumn}>
-                  <Icon name="md-trending-up" style={styles.boostTagIcon} />
-                </View>
-                <View style={styles.boostTagColumn}>
-                  <Text style={styles.boostTagLabel}>BOOSTED</Text>
-                </View>
+                <Icon name="md-trending-up" style={styles.boostTagIcon}/>
+                <Text style={styles.boostTagLabel}>BOOSTED</Text>
               </View>
             }
             <ActivityMetrics entity={this.props.entity}/>
@@ -294,20 +296,17 @@ const styles = StyleSheet.create({
   },
   boostTagContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
     paddingLeft: 8,
   },
-  boostTagColumn: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
   boostTagIcon: {
-    color: '#aaa',
+    color: '#777',
   },
   boostTagLabel: {
-    color: '#aaa',
-    fontWeight: '800',
+    color: '#777',
+    fontWeight: '200',
     marginLeft: 2,
-    fontSize: 11,
+    fontSize:10,
   },
   activitySpacer: {
     flex:1,
