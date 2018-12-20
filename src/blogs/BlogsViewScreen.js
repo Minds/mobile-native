@@ -83,8 +83,14 @@ export default class BlogsViewScreen extends Component {
       this.props.blogsView.setBlog(params.blog);
     } else {
       this.props.blogsView.reset();
+      let guid;
+      if (params.slug) {
+        guid = params.slug.substr(params.slug.lastIndexOf('-')+1);
+      } else {
+        guid = params.guid;
+      }
       try {
-        await this.props.blogsView.loadBlog(params.guid);
+        await this.props.blogsView.loadBlog(guid);
       } catch (e) {
         this.setState({error: e});
       }
