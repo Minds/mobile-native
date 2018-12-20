@@ -4,7 +4,7 @@ import {
   View,
   Text
 } from 'react-native';
-
+import { observer } from 'mobx-react/native'
 import FastImage from 'react-native-fast-image';
 
 import NewsfeedStore from "./NewsfeedStore";
@@ -21,6 +21,7 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 /**
  * Activity screen
  */
+@observer
 export default class ActivityScreen extends Component {
 
   entityStore = new SingleEntityStore();
