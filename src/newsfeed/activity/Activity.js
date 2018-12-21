@@ -28,7 +28,6 @@ import RemindOwnerBlock from './RemindOwnerBlock';
 import Actions from './Actions';
 import formatDate from '../../common/helpers/date';
 import domain from '../../common/helpers/domain';
-import token from '../../common/helpers/token';
 import ActivityActionSheet from './ActivityActionSheet';
 import ActivityEditor from './ActivityEditor';
 import ActivityMetrics from './metrics/ActivityMetrics';
@@ -36,6 +35,7 @@ import MediaView from '../../common/components/MediaView';
 import Translate from '../../common/components/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import Lock from '../../wire/lock/Lock';
+import { CommonStyle } from '../../styles/Common';
 
 /**
  * Activity
@@ -123,6 +123,7 @@ export default class Activity extends Component {
           </View>
           { this.showActions() }
           { this.props.isLast ? <View style={styles.activitySpacer}></View> : null}
+          { !this.props.hideTabs && <ActivityMetrics entity={this.props.entity}/> }
         </View>
     );
   }
@@ -187,11 +188,8 @@ export default class Activity extends Component {
           rightToolbar={this.props.hideTabs ? null : rightToolbar}
           >
           <TouchableOpacity onPress={() => this.navToActivity()} style={{ flexDirection: 'row' }}>
-            <Text style={styles.timestamp}>{
-              formatDate(
-                this.props.entity.time_created,
-                (token(this.props.entity.wire_totals.tokens) && this.props.entity.impressions && this.props.entity.edited && this.props.entity.boosted) ? 'date' : null
-              )
+            <Text style={[styles.timestamp, CommonStyle.paddingRight]}>{
+              formatDate(this.props.entity.time_created)
             }</Text>
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
@@ -199,7 +197,11 @@ export default class Activity extends Component {
                 <Text style={styles.boostTagLabel}>BOOSTED</Text>
               </View>
             }
-            <ActivityMetrics entity={this.props.entity}/>
+            { !!this.props.entity.edited &&
+              <View style={styles.boostTagContainer}>
+                <Text style={styles.boostTagLabel}>· EDITED</Text>
+              </View>
+            }
           </TouchableOpacity>
         </OwnerBlock>
       );
@@ -297,7 +299,6 @@ const styles = StyleSheet.create({
   boostTagContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 8,
   },
   boostTagIcon: {
     color: '#777',
