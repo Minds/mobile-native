@@ -1,6 +1,7 @@
 import 'react-native';
 import React from 'react';
 import App from '../App';
+import videochat from '../src/common/services/videochat.service';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
@@ -10,6 +11,8 @@ jest.mock('web3');
 
 //mock notifications
 jest.mock('react-native-notifications');
+
+jest.mock('../src/common/services/videochat.service');
 
 //mock i18n
 jest.mock('react-native-video');
