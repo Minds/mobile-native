@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Activity screen component renders correctly 1`] = `
+exports[`Activity screen component renders correctly with an entity as param 1`] = `
 <ForwardRef(View)
   style={
     Array [
@@ -57,10 +57,10 @@ exports[`Activity screen component renders correctly 1`] = `
             "isPendingUnobservation": false,
             "lastAccessedBy": 0,
             "lowestObserverState": 2,
-            "name": "ActivityModel@8.keys",
+            "name": "ActivityModel@7.keys",
             "observers": Set {},
           },
-          "name": "ActivityModel@8",
+          "name": "ActivityModel@7",
           "target": [Circular],
           "values": Map {
             "votedUp" => false,
@@ -124,10 +124,10 @@ exports[`Activity screen component renders correctly 1`] = `
                 "isPendingUnobservation": false,
                 "lastAccessedBy": 0,
                 "lowestObserverState": 2,
-                "name": "ActivityModel@8.keys",
+                "name": "ActivityModel@7.keys",
                 "observers": Set {},
               },
-              "name": "ActivityModel@8",
+              "name": "ActivityModel@7",
               "target": [Circular],
               "values": Map {
                 "votedUp" => false,
@@ -188,9 +188,11 @@ exports[`Activity screen component renders correctly 1`] = `
             "filter": "subscribed",
             "loadingBoost": true,
             "service": NewsfeedService {
-              "controllers": Object {
-                "getFeed": null,
-              },
+              "_getFeed": [MockFunction],
+              "getBoosts": [MockFunction],
+              "getFeed": [MockFunction],
+              "getFeedChannel": [MockFunction],
+              "getFeedSuggested": [MockFunction],
             },
             "stores": Object {
               "boostfeed": Object {
@@ -204,10 +206,10 @@ exports[`Activity screen component renders correctly 1`] = `
                       "isPendingUnobservation": false,
                       "lastAccessedBy": 0,
                       "lowestObserverState": 2,
-                      "name": "OffsetFeedListStore@7.keys",
+                      "name": "OffsetFeedListStore@6.keys",
                       "observers": Set {},
                     },
-                    "name": "OffsetFeedListStore@7",
+                    "name": "OffsetFeedListStore@6",
                     "target": [Circular],
                     "values": Map {
                       "entities" => Array [],
@@ -261,10 +263,10 @@ exports[`Activity screen component renders correctly 1`] = `
                           "isPendingUnobservation": false,
                           "lastAccessedBy": 0,
                           "lowestObserverState": 2,
-                          "name": "ActivityModel@8.keys",
+                          "name": "ActivityModel@7.keys",
                           "observers": Set {},
                         },
-                        "name": "ActivityModel@8",
+                        "name": "ActivityModel@7",
                         "target": [Circular],
                         "values": Map {
                           "votedUp" => false,
@@ -290,10 +292,10 @@ exports[`Activity screen component renders correctly 1`] = `
                       "isPendingUnobservation": false,
                       "lastAccessedBy": 0,
                       "lowestObserverState": 2,
-                      "name": "OffsetFeedListStore@5.keys",
+                      "name": "OffsetFeedListStore@4.keys",
                       "observers": Set {},
                     },
-                    "name": "OffsetFeedListStore@5",
+                    "name": "OffsetFeedListStore@4",
                     "target": [Circular],
                     "values": Map {
                       "entities" => Array [
@@ -339,10 +341,10 @@ exports[`Activity screen component renders correctly 1`] = `
                               "isPendingUnobservation": false,
                               "lastAccessedBy": 0,
                               "lowestObserverState": 2,
-                              "name": "ActivityModel@8.keys",
+                              "name": "ActivityModel@7.keys",
                               "observers": Set {},
                             },
-                            "name": "ActivityModel@8",
+                            "name": "ActivityModel@7",
                             "target": [Circular],
                             "values": Map {
                               "votedUp" => false,
@@ -376,10 +378,10 @@ exports[`Activity screen component renders correctly 1`] = `
                       "isPendingUnobservation": false,
                       "lastAccessedBy": 0,
                       "lowestObserverState": 2,
-                      "name": "OffsetFeedListStore@6.keys",
+                      "name": "OffsetFeedListStore@5.keys",
                       "observers": Set {},
                     },
-                    "name": "OffsetFeedListStore@6",
+                    "name": "OffsetFeedListStore@5",
                     "target": [Circular],
                     "values": Map {
                       "entities" => Array [],
@@ -399,10 +401,10 @@ exports[`Activity screen component renders correctly 1`] = `
                 "isPendingUnobservation": false,
                 "lastAccessedBy": 0,
                 "lowestObserverState": 2,
-                "name": "NewsfeedStore@12.keys",
+                "name": "NewsfeedStore@11.keys",
                 "observers": Set {},
               },
-              "name": "NewsfeedStore@12",
+              "name": "NewsfeedStore@11",
               "target": [Circular],
               "values": Map {
                 "filter" => "subscribed",
@@ -445,6 +447,348 @@ exports[`Activity screen component renders correctly 1`] = `
               "title": "TITLE",
               "type": "activity",
             },
+          },
+          "routeName": "some",
+        },
+      }
+    }
+    onInputFocus={[Function]}
+    store={
+      Object {
+        "attachment": Object {},
+        "comments": Array [
+          Object {
+            "attachment_guid": false,
+            "blurb": false,
+            "container_guid": "guid0",
+            "custom_data": false,
+            "custom_type": false,
+            "description": "Congratulations! ",
+            "edited": "",
+            "guid": "guid0",
+            "mature": false,
+            "ownerObj": Object {
+              "guid": "824853017709780997",
+              "subtype": false,
+              "time_created": "1522036284",
+              "type": "user",
+            },
+            "owner_guid": "824853017709780997",
+            "parent_guid": "838106762591510528",
+            "perma_url": false,
+            "thumbnail_src": false,
+            "type": "comment",
+          },
+          Object {
+            "attachment_guid": false,
+            "blurb": false,
+            "container_guid": "guid1",
+            "custom_data": false,
+            "custom_type": false,
+            "description": "Congratulations! ",
+            "edited": "",
+            "guid": "guid1",
+            "mature": false,
+            "ownerObj": Object {
+              "guid": "824853017709780997",
+              "subtype": false,
+              "time_created": "1522036284",
+              "type": "user",
+            },
+            "owner_guid": "824853017709780997",
+            "parent_guid": "838106762591510528",
+            "perma_url": false,
+            "thumbnail_src": false,
+            "type": "comment",
+          },
+          Object {
+            "attachment_guid": false,
+            "blurb": false,
+            "container_guid": "guid2",
+            "custom_data": false,
+            "custom_type": false,
+            "description": "Congratulations! ",
+            "edited": "",
+            "guid": "guid2",
+            "mature": false,
+            "ownerObj": Object {
+              "guid": "824853017709780997",
+              "subtype": false,
+              "time_created": "1522036284",
+              "type": "user",
+            },
+            "owner_guid": "824853017709780997",
+            "parent_guid": "838106762591510528",
+            "perma_url": false,
+            "thumbnail_src": false,
+            "type": "comment",
+          },
+          Object {
+            "attachment_guid": false,
+            "blurb": false,
+            "container_guid": "guid3",
+            "custom_data": false,
+            "custom_type": false,
+            "description": "Congratulations! ",
+            "edited": "",
+            "guid": "guid3",
+            "mature": false,
+            "ownerObj": Object {
+              "guid": "824853017709780997",
+              "subtype": false,
+              "time_created": "1522036284",
+              "type": "user",
+            },
+            "owner_guid": "824853017709780997",
+            "parent_guid": "838106762591510528",
+            "perma_url": false,
+            "thumbnail_src": false,
+            "type": "comment",
+          },
+          Object {
+            "attachment_guid": false,
+            "blurb": false,
+            "container_guid": "guid4",
+            "custom_data": false,
+            "custom_type": false,
+            "description": "Congratulations! ",
+            "edited": "",
+            "guid": "guid4",
+            "mature": false,
+            "ownerObj": Object {
+              "guid": "824853017709780997",
+              "subtype": false,
+              "time_created": "1522036284",
+              "type": "user",
+            },
+            "owner_guid": "824853017709780997",
+            "parent_guid": "838106762591510528",
+            "perma_url": false,
+            "thumbnail_src": false,
+            "type": "comment",
+          },
+        ],
+        "embed": RichEmbedStore {
+          "_richEmbedFetchTimer": null,
+          "clearRichEmbedAction": [Function],
+          "richEmbedUrl": "",
+          "setRichEmbedPromise": null,
+        },
+        "loadComments": [Function],
+        "loadNext": "aaaaaa",
+        "loadPrevious": "aaaaaa",
+        "post": [Function],
+        "setText": [Function],
+      }
+    }
+  />
+</ForwardRef(View)>
+`;
+
+exports[`Activity screen component should show loader until it loads the activity 1`] = `<CenteredLoading />`;
+
+exports[`Activity screen component should show loader until it loads the activity 2`] = `
+<ForwardRef(View)
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "backgroundColor": "white",
+      },
+    ]
+  }
+>
+  <CommentList
+    entity={
+      ActivityModel {
+        "edited": undefined,
+        "is_visible": false,
+        "mature": undefined,
+        "mature_visibility": false,
+        "paywall": undefined,
+        "thumbs:down:count": undefined,
+        "thumbs:down:user_guids": undefined,
+        "thumbs:up:count": undefined,
+        "thumbs:up:user_guids": undefined,
+        Symbol(mobx did run lazy initializers): true,
+        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+          "defaultEnhancer": [Function],
+          "keysAtom": Atom$$1 {
+            "diffValue": 0,
+            "isBeingObserved": false,
+            "isPendingUnobservation": false,
+            "lastAccessedBy": 0,
+            "lowestObserverState": 2,
+            "name": "ActivityModel@18.keys",
+            "observers": Set {},
+          },
+          "name": "ActivityModel@18",
+          "target": [Circular],
+          "values": Map {
+            "votedUp" => false,
+            "votedDown" => false,
+            "mature_visibility" => false,
+            "is_visible" => false,
+            "thumbs:down:count" => undefined,
+            "thumbs:up:count" => undefined,
+            "paywall" => undefined,
+            "mature" => undefined,
+            "edited" => undefined,
+            "thumbs:down:user_guids" => undefined,
+            "thumbs:up:user_guids" => undefined,
+          },
+        },
+      }
+    }
+    header={
+      <Activity
+        autoHeight={true}
+        entity={
+          ActivityModel {
+            "edited": undefined,
+            "is_visible": false,
+            "mature": undefined,
+            "mature_visibility": false,
+            "paywall": undefined,
+            "thumbs:down:count": undefined,
+            "thumbs:down:user_guids": undefined,
+            "thumbs:up:count": undefined,
+            "thumbs:up:user_guids": undefined,
+            Symbol(mobx did run lazy initializers): true,
+            Symbol(mobx administration): ObservableObjectAdministration$$1 {
+              "defaultEnhancer": [Function],
+              "keysAtom": Atom$$1 {
+                "diffValue": 0,
+                "isBeingObserved": false,
+                "isPendingUnobservation": false,
+                "lastAccessedBy": 0,
+                "lowestObserverState": 2,
+                "name": "ActivityModel@18.keys",
+                "observers": Set {},
+              },
+              "name": "ActivityModel@18",
+              "target": [Circular],
+              "values": Map {
+                "votedUp" => false,
+                "votedDown" => false,
+                "mature_visibility" => false,
+                "is_visible" => false,
+                "thumbs:down:count" => undefined,
+                "thumbs:up:count" => undefined,
+                "paywall" => undefined,
+                "mature" => undefined,
+                "edited" => undefined,
+                "thumbs:down:user_guids" => undefined,
+                "thumbs:up:user_guids" => undefined,
+              },
+            },
+          }
+        }
+        navigation={
+          Object {
+            "push": [MockFunction],
+            "state": Object {
+              "params": Object {
+                "guid": "1",
+              },
+              "routeName": "some",
+            },
+          }
+        }
+        newsfeed={
+          NewsfeedStore {
+            "loadingBoost": true,
+            "service": NewsfeedService {
+              "_getFeed": [MockFunction],
+              "getBoosts": [MockFunction],
+              "getFeed": [MockFunction],
+              "getFeedChannel": [MockFunction],
+              "getFeedSuggested": [MockFunction],
+            },
+            "stores": Object {
+              "boostfeed": Object {
+                "list": OffsetFeedListStore {
+                  "entities": Array [],
+                  Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                    "defaultEnhancer": [Function],
+                    "keysAtom": Atom$$1 {
+                      "diffValue": 0,
+                      "isBeingObserved": false,
+                      "isPendingUnobservation": false,
+                      "lastAccessedBy": 0,
+                      "lowestObserverState": 2,
+                      "name": "OffsetFeedListStore@15.keys",
+                      "observers": Set {},
+                    },
+                    "name": "OffsetFeedListStore@15",
+                    "target": [Circular],
+                    "values": Map {
+                      "entities" => Array [],
+                    },
+                  },
+                },
+                "loading": false,
+              },
+              "subscribed": Object {
+                "list": OffsetFeedListStore {
+                  "entities": Array [],
+                  Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                    "defaultEnhancer": [Function],
+                    "keysAtom": Atom$$1 {
+                      "diffValue": 0,
+                      "isBeingObserved": false,
+                      "isPendingUnobservation": false,
+                      "lastAccessedBy": 0,
+                      "lowestObserverState": 2,
+                      "name": "OffsetFeedListStore@13.keys",
+                      "observers": Set {},
+                    },
+                    "name": "OffsetFeedListStore@13",
+                    "target": [Circular],
+                    "values": Map {
+                      "entities" => Array [],
+                    },
+                  },
+                },
+                "loading": false,
+              },
+              "suggested": Object {
+                "list": OffsetFeedListStore {
+                  "entities": Array [],
+                  Symbol(mobx administration): ObservableObjectAdministration$$1 {
+                    "defaultEnhancer": [Function],
+                    "keysAtom": Atom$$1 {
+                      "diffValue": 0,
+                      "isBeingObserved": false,
+                      "isPendingUnobservation": false,
+                      "lastAccessedBy": 0,
+                      "lowestObserverState": 2,
+                      "name": "OffsetFeedListStore@14.keys",
+                      "observers": Set {},
+                    },
+                    "name": "OffsetFeedListStore@14",
+                    "target": [Circular],
+                    "values": Map {
+                      "entities" => Array [],
+                    },
+                  },
+                },
+                "loading": false,
+              },
+            },
+            "viewed": Array [],
+          }
+        }
+      />
+    }
+    navigation={
+      Object {
+        "push": [MockFunction],
+        "state": Object {
+          "params": Object {
+            "guid": "1",
           },
           "routeName": "some",
         },
