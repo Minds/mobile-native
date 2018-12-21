@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Owner component renders correctly 1`] = `
+exports[`activity metrics component renders correctly 1`] = `
 <View
   style={
     Array [
@@ -16,118 +16,143 @@ exports[`Owner component renders correctly 1`] = `
       Array [
         Object {
           "flexDirection": "row",
-          "justifyContent": "center",
+          "justifyContent": "flex-start",
         },
         Object {
-          "alignItems": "center",
-        },
-      ]
-    }
-  >
-    <Text
-      style={
-        Array [
-          Object {
-            "alignItems": "center",
-            "color": "#777",
-            "fontSize": 11,
-          },
-        ]
-      }
-    >
-       · 
-    </Text>
-    <Text
-      style={
-        Object {
-          "alignItems": "center",
-          "color": "#777",
-          "fontSize": 11,
-        }
-      }
-    >
-      2e-17
-       
-      <Text
-        allowFontScaling={false}
-        style={
-          Array [
-            Object {
-              "color": "#777",
-              "fontSize": 12,
-            },
-            undefined,
-            Object {
-              "fontFamily": "Ionicons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            Object {},
-          ]
-        }
-      >
-        
-      </Text>
-    </Text>
-  </View>
-  <View
-    style={
-      Array [
-        Object {
-          "flexDirection": "row",
-          "justifyContent": "center",
+          "borderRadius": 8,
         },
         Object {
-          "alignItems": "center",
+          "borderWidth": 1,
+        },
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "borderColor": "#cccccc",
+        },
+        Object {
+          "paddingLeft": 5,
+        },
+        Object {
+          "paddingRight": 5,
+        },
+        Object {
+          "backgroundColor": "#f7f7f7",
+        },
+        Object {
+          "borderBottomLeftRadius": 0,
+          "borderBottomRightRadius": 0,
+          "borderBottomWidth": 0,
+          "paddingVertical": 2,
         },
       ]
     }
   >
-    <Text
+    <View
       style={
         Array [
           Object {
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          Object {
             "alignItems": "center",
-            "color": "#777",
-            "fontSize": 11,
           },
         ]
       }
     >
-       · 
-    </Text>
-    <Text
-      style={
-        Object {
-          "alignItems": "center",
-          "color": "#777",
-          "fontSize": 11,
+      <Text
+        style={
+          Object {
+            "alignItems": "center",
+            "color": "#777",
+            "fontSize": 11,
+          }
         }
+      >
+        2e-17
+         
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "#777",
+                "fontSize": 12,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Ionicons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </Text>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          Object {
+            "alignItems": "center",
+          },
+        ]
       }
     >
-      20
-       
       <Text
-        allowFontScaling={false}
         style={
           Array [
             Object {
+              "alignItems": "center",
               "color": "#777",
-              "fontSize": 12,
+              "fontSize": 11,
             },
-            undefined,
-            Object {
-              "fontFamily": "Material Design Icons",
-              "fontStyle": "normal",
-              "fontWeight": "normal",
-            },
-            Object {},
           ]
         }
       >
-        
+         · 
       </Text>
-    </Text>
+      <Text
+        style={
+          Object {
+            "alignItems": "center",
+            "color": "#777",
+            "fontSize": 11,
+          }
+        }
+      >
+        20
+         
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "#777",
+                "fontSize": 12,
+              },
+              undefined,
+              Object {
+                "fontFamily": "Material Design Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </Text>
+    </View>
   </View>
 </View>
 `;
