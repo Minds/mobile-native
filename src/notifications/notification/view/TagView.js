@@ -21,12 +21,14 @@ export default class TagView extends Component {
     const isComment = this.props.entity.entityObj.type == 'comment';
     if (isComment) {
       if (this.props.entity.params && this.props.entity.params.parent) {
-        if (this.props.entity.params.parent.subtype === 'blog') {
-          this.props.navigation.push('BlogView', { guid: this.props.entity.entityObj.parent_guid });
+        if (this.props.entity.params.parent.type === 'group') {
+          this.props.navigation.push('GroupView', { guid: this.props.entity.params.parent.guid });
+        } else if (this.props.entity.params.parent.subtype === 'blog') {
+          this.props.navigation.push('BlogView', { guid: this.props.entity.params.parent.guid });
         } else {
-          entityService.getEntity(this.props.entity.entityObj.parent_guid)
+          entityService.getEntity(this.props.entity.params.parent.guid)
             .then((entity) => {
-              this.props.navigation.push('Activity', { entity: entity });
+              this.props.navigation.push('Activity', { entity });
             })
             .catch(err => {
               console.log('error', err);
@@ -39,6 +41,9 @@ export default class TagView extends Component {
     }
   }
 
+  /**
+   * Render
+   */
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
