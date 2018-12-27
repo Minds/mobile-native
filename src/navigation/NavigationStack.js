@@ -2,6 +2,7 @@ import { createStackNavigator } from 'react-navigation';
 
 import LoadingScreen from '../LoadingScreen';
 import LoginScreen from '../auth/LoginScreen';
+import ForgotScreen from '../auth/ForgotScreen';
 import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
@@ -57,6 +58,9 @@ const Stack = createStackNavigator({
   },
   Login: {
     screen: LoginScreen,
+  },
+  Forgot: {
+    screen: ForgotScreen,
   },
   Register: {
     screen: RegisterScreen,

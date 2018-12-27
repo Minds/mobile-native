@@ -125,7 +125,7 @@ export default class App extends Component {
     this.checkForUpdates();
 
     if (!token) {
-      NavigationService.navigate('Login');
+      NavigationService.reset('Login');
     }
 
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
