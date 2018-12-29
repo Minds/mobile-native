@@ -362,6 +362,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
                     },
                     undefined,
                     undefined,
+                    false,
                   ],
                 ]
               }
@@ -467,6 +468,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
                     },
                     undefined,
                     undefined,
+                    false,
                   ],
                 ]
               }
