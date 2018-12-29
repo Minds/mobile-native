@@ -8,10 +8,12 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
-import colors from '../../../styles/Colors';
 
-import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+import colors from '../../../styles/Colors';
+import { Badge } from 'react-native-elements';
 import { CommonStyle } from '../../../styles/Common';
+import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+
 
 DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -33,6 +35,7 @@ export default class ToolbarItem extends PureComponent {
       onPress,
       iconType,
       iconSize,
+      badge
     } = this.props;
 
     const iconCmp = this.getIcon(icon, iconType, iconSize, selected);
@@ -45,6 +48,7 @@ export default class ToolbarItem extends PureComponent {
         {iconCmp}
         <Text style={textStyle}>{text}</Text>
         {subtext && <Text style={subTextStyle}>{subtext}</Text>}
+        {badge && <Badge value={badge} containerStyle={styles.badgeStyle} wrapperStyle={styles.wrapperStyle} textStyle={styles.badgeText}/>}
       </DebouncedTouchableOpacity>
     );
   }
@@ -124,5 +128,18 @@ const styles = StyleSheet.create({
   },
   buttonSelected: {
     borderBottomColor: colors.primary,
+  },
+  badgeStyle: {
+    backgroundColor:'red',
+    padding: 3,
+  },
+  wrapperStyle: {
+    position:'absolute',
+    top: -8,
+    right: 16,
+  },
+  badgeText: {
+    fontSize: 10,
+    fontWeight: '400'
   }
 });

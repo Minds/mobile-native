@@ -106,11 +106,13 @@ export default class GroupHeader extends Component {
    * Render Tabs
    */
   renderToolbar() {
+    const group = this.props.store.group;
+
     const typeOptions = [
       { text: 'FEED', icon: 'list', value: 'feed' },
       { text: 'DESCRIPTION', icon: 'short-text', value: 'desc' },
-      { text: 'MEMBERS', icon: 'ios-people', iconType: 'ion', value: 'members' },
-      { text: 'CONVERSATION', icon: 'ios-chatboxes', iconType: 'ion', value: 'conversation' },
+      { text: 'MEMBERS', badge: abbrev(group['members:count'], 0), icon: 'ios-people', iconType: 'ion', value: 'members' },
+      { text: 'CONVERSATION', badge: abbrev(group['comments:count'], 0), icon: 'ios-chatboxes', iconType: 'ion', value: 'conversation' },
     ]
 
     const searchBar = this.props.store.tab == 'members' ?
@@ -156,6 +158,17 @@ export default class GroupHeader extends Component {
     this.props.store.setTab(tab);
   }
 
+  renderAvatars = () => {
+    const topMembers = this.props.store.topMembers;
+    const styles = this.props.styles;
+
+    if (topMembers.length) {
+      return topMembers.map(t => <Image source={t.getAvatarSource()} style={styles.userAvatar}/>);
+    } else {
+      return null;
+    }
+  }
+
   /**
    * Render Header
    */
@@ -170,14 +183,9 @@ export default class GroupHeader extends Component {
       <View >
         <FastImage source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
         <View style={styles.headertextcontainer}>
-          <View style={styles.countercontainer}>
-            <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
-              <Text style={styles.countertitle}>MEMBERS</Text>
-              <Text style={styles.countervalue}>{abbrev(group['members:count'], 0)}</Text>
-            </View>
-            <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
-              <Text style={styles.countertitle}>COMMENTS</Text>
-              <Text style={styles.countervalue}>{abbrev(group['comments:count'], 0)}</Text>
+          <View style={styles.avatarContainer}>
+            <View style={[CommonStyle.rowJustifyStart, CommonStyle.flexContainer]}>
+              {this.renderAvatars()}
             </View>
           </View>
           <View style={CommonStyle.rowJustifyCenter}>
