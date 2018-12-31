@@ -14,7 +14,6 @@ import { Badge } from 'react-native-elements';
 import { CommonStyle } from '../../../styles/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 
-
 DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 /**
@@ -130,7 +129,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.primary,
   },
   badgeStyle: {
-    backgroundColor:'red',
+    backgroundColor: colors.explicit,
     padding: 3,
   },
   wrapperStyle: {
