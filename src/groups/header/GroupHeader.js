@@ -111,8 +111,8 @@ export default class GroupHeader extends Component {
     const typeOptions = [
       { text: 'FEED', icon: 'list', value: 'feed' },
       { text: 'DESCRIPTION', icon: 'short-text', value: 'desc' },
-      { text: 'MEMBERS', badge: abbrev(group['members:count'], 0), icon: 'ios-people', iconType: 'ion', value: 'members' },
-      { text: 'CONVERSATION', badge: abbrev(group['comments:count'], 0), icon: 'ios-chatboxes', iconType: 'ion', value: 'conversation' },
+      { text: 'MEMBERS', badge: abbrev(group['members:count'], 0), value: 'members' },
+      { text: 'CONVERSATION', icon: 'ios-chatboxes', iconType: 'ion', value: 'conversation' },
     ]
 
     const searchBar = this.props.store.tab == 'members' ?
