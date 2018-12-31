@@ -139,7 +139,7 @@ export default class CommentList extends React.Component<Props, State> {
    * Scrolls to bottoms if the param is received
    */
   scrollBottomIfNeeded() {
-    if (!this.props.parent && this.props.entity && this.props.navigation.state.params.scrollToBottom) {
+    if (!this.props.parent && this.props.entity) {
       this.scrollToBottom();
     }
   }
@@ -183,6 +183,7 @@ export default class CommentList extends React.Component<Props, State> {
    */
   loadComments = async () => {
     let guid;
+    const scrollToBottom = this.props.navigation.state.params.scrollToBottom;
 
     if (this.props.entity) {
       guid = this.props.entity.guid;
@@ -192,6 +193,10 @@ export default class CommentList extends React.Component<Props, State> {
     }
 
     await this.props.store.loadComments(guid);
+
+    if (scrollToBottom && this.props.store.loaded) {
+      this.scrollBottomIfNeeded();
+    }
   }
 
   /**
