@@ -281,7 +281,7 @@ export default class GroupViewScreen extends Component {
 
     return (
       <View style={{flex:1}}>
-        <CaptureFab navigation={this.props.navigation} group={group} />
+        {this.props.groupView.tab === 'feed' && <CaptureFab navigation={this.props.navigation} group={group} /> }
         {this.getList()}
         {memberActionSheet}
       </View>
