@@ -30,6 +30,7 @@ import GroupHeader from './header/GroupHeader';
 import { CommonStyle } from '../styles/Common';
 import CommentList from '../comments/CommentList';
 import NewsfeedList from '../newsfeed/NewsfeedList';
+import isIphoneX from '../common/helpers/isIphoneX';
 import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 
@@ -39,6 +40,8 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 @inject('groupView', 'user')
 @observer
 export default class GroupViewScreen extends Component {
+
+  gobackstyle = isIphoneX() ? {left: 10, top: 30} : {};
 
   state = {
     memberActions: null,
@@ -66,6 +69,7 @@ export default class GroupViewScreen extends Component {
       this.props.groupView.loadGroup(params.guid);
       this.props.groupView.loadFeed();
     }
+    this.props.groupView.loadTopMembers();
 
     this.comments = commentsStoreProvider.get();
 
@@ -96,7 +100,6 @@ export default class GroupViewScreen extends Component {
   }
 
   /**
-
    * Load subs data
    */
   loadMembers = () => {
@@ -116,7 +119,7 @@ export default class GroupViewScreen extends Component {
     const header = (
       <View>
         <GroupHeader store={this.props.groupView} me={this.props.user.me} styles={styles}/>
-        <Icon color={colors.primary} containerStyle={styles.gobackicon} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} raised />
+        <Icon color={colors.primary} containerStyle={[styles.gobackicon, this.gobackstyle]} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} raised />
       </View>
     )
     switch (group.tab) {
@@ -303,7 +306,6 @@ const styles = StyleSheet.create({
   },
   headertextcontainer: {
     padding: 8,
-    paddingLeft: 15,
     paddingRight: 15,
     alignItems: 'stretch',
     flexDirection: 'column',
@@ -357,18 +359,24 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     fontWeight: 'bold',
   },
-  countercontainer: {
-    paddingLeft: 130,
+  avatarContainer: {
+    paddingLeft: 115,
     height: 60,
     flexDirection: 'row'
   },
   avatar: {
     position: 'absolute',
-    left: 20,
+    left: 15,
     top: 135,
     height: 110,
     width: 110,
     borderRadius: 55
+  },
+  userAvatar: {
+    borderRadius: 15,
+    height: 30,
+    width: 30,
+    margin: 4
   },
   container: {
     flex: 1,

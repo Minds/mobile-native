@@ -14,6 +14,11 @@ import ActivityModel from '../newsfeed/ActivityModel';
 class GroupViewStore {
 
   /**
+   * Top members (used to display avatars on top)
+   */
+  @observable topMembers = [];
+
+  /**
    * List feed store
    */
   @observable list = new OffsetFeedListStore();
@@ -92,6 +97,12 @@ class GroupViewStore {
     this.memberSearch = q;
     this.members.clearList();
     this.loadMembers();
+  }
+
+  @action
+  async loadTopMembers() {
+    const data = await groupsService.loadMembers(this.guid, '', 6);
+    this.topMembers = UserModel.createMany(data.members);
   }
 
   /**

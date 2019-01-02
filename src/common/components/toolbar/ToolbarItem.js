@@ -8,10 +8,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
-import colors from '../../../styles/Colors';
 
-import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+import colors from '../../../styles/Colors';
+import { Badge } from 'react-native-elements';
 import { CommonStyle } from '../../../styles/Common';
+import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 
 DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -27,15 +28,12 @@ export default class ToolbarItem extends PureComponent {
     const {
       text,
       subtext,
-      icon,
       value,
       selected,
       onPress,
-      iconType,
-      iconSize,
     } = this.props;
 
-    const iconCmp = this.getIcon(icon, iconType, iconSize, selected);
+    const iconCmp = this.getIcon(selected);
     const textStyle = this.getTextStyle();
     const subTextStyle = this.getSubTextStyle();
     const buttonStyle = selected ? [styles.button, styles.buttonSelected] : styles.button;
@@ -45,8 +43,16 @@ export default class ToolbarItem extends PureComponent {
         {iconCmp}
         <Text style={textStyle}>{text}</Text>
         {subtext && <Text style={subTextStyle}>{subtext}</Text>}
+        {this.getBadge()}
       </DebouncedTouchableOpacity>
     );
+  }
+
+  getBadge() {
+    const {badge, icon} = this.props;
+    return (badge && icon) ?
+      <Badge value={this.props.badge} containerStyle={styles.badgeStyle} wrapperStyle={styles.wrapperStyle} textStyle={styles.badgeText}/>:
+      null;
   }
 
   getSubTextStyle() {
@@ -81,13 +87,22 @@ export default class ToolbarItem extends PureComponent {
 
   /**
    * Get the icon component
-   * @param {string|undefined} icon
-   * @param {string|undefined} iconType
-   * @param {int|undefined} iconSize
    * @param {boolean} selected
    */
-  getIcon(icon, iconType, iconSize, selected) {
-    if (!icon) return null;
+  getIcon(selected) {
+    const {
+      icon,
+      iconType,
+      iconSize,
+      badge
+    } = this.props;
+
+    if (!icon && !badge) return null;
+
+    if (!icon) {
+      const style = {color: selected ? colors.primary : color};
+      return <Text style={style}>{badge}</Text>
+    }
 
     if (iconType == 'ion') {
       IconType = IonIcon;
@@ -124,5 +139,18 @@ const styles = StyleSheet.create({
   },
   buttonSelected: {
     borderBottomColor: colors.primary,
+  },
+  badgeStyle: {
+    backgroundColor: colors.explicit,
+    padding: 3,
+  },
+  wrapperStyle: {
+    position:'absolute',
+    top: -8,
+    right: 16,
+  },
+  badgeText: {
+    fontSize: 10,
+    fontWeight: '400'
   }
 });

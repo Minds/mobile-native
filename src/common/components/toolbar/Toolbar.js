@@ -15,6 +15,9 @@ export default class Toolbar extends PureComponent {
     selected: null
   }
 
+  /**
+   * Component will mount
+   */
   componentWillMount() {
     const initial = this.props.initial;
 
@@ -59,7 +62,8 @@ export default class Toolbar extends PureComponent {
           subtext={data.subtext}
           selectedTextStyle={data.selectedTextStyle}
           textStyle={data.textStyle}
-          subTextSyle={data.subTextSyle}
+          subTextStyle={data.subTextStyle}
+          badge={data.badge}
           icon={data.icon}
           key={data.value}
           value={data.value}
