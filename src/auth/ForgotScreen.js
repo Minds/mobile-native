@@ -7,18 +7,16 @@ import FastImage from 'react-native-fast-image';
 
 import {
   StyleSheet,
-  ScrollView,
   View,
   KeyboardAvoidingView,
-  Button,
   Keyboard,
   Animated,
   Platform,
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 
-import LoginForm from './LoginForm';
 import VideoBackground from '../common/components/VideoBackground';
+import ForgotPassword from './ForgotPassword';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
@@ -26,9 +24,9 @@ const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
 
 /**
- * Login screen
+ * Forgot screen
  */
-export default class LoginScreen extends Component {
+export default class ForgotScreen extends Component {
 
   /**
    * Disable navigation bar
@@ -85,10 +83,8 @@ export default class LoginScreen extends Component {
             />
           </Animatable.View>
           <Animatable.View animation="fadeInUp">
-            <LoginForm
-              onLogin={() => this.login()}
-              onRegister={this.onPressRegister}
-              onForgot={this.onPressForgot}
+            <ForgotPassword
+              onBack={this.onForgotBack}
             />
           </Animatable.View>
         </View>
@@ -97,24 +93,10 @@ export default class LoginScreen extends Component {
   }
 
   /**
-   * On press forgot
+   * On press back
    */
-  onPressForgot = () => {
-    this.props.navigation.push('Forgot');
-  }
-
-  /**
-   * On press register
-   */
-  onPressRegister = () => {
-    this.props.navigation.push('Register');
-  }
-
-  /**
-   * On login successful
-   */
-  login() {
-    console.log('user logged in');
+  onForgotBack = () => {
+    this.props.navigation.goBack();
   }
 }
 

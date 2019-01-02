@@ -38,8 +38,12 @@ describe('LoginScreen component', () => {
 
   it('should shows forgot password component if the user press the button', async () => {
 
+    const navigation = {
+      push: jest.fn()
+    };
+
     const wrapper = shallow(
-      <LoginScreen />
+      <LoginScreen navigation={navigation}/>
     );
 
     // search login form
@@ -52,13 +56,6 @@ describe('LoginScreen component', () => {
     // simulate forgot password component button press
     loginForms.at(0).props().onForgot();
 
-    // update component
-    wrapper.update();
-    render = wrapper.dive();
-
-    const forgotPasswords = render.find('ForgotPassword');
-
-    // should contain 1 forgot password
-    expect(forgotPasswords.length).toBe(1);
+    expect(navigation.push).toBeCalled();
   });
 });
