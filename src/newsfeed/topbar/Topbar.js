@@ -18,6 +18,7 @@ import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import TagsSubBar from './TagsSubBar';
 
+
 /**
  * Newsfeed top bar
  */
@@ -37,8 +38,8 @@ export default class Topbar extends Component {
   /**
    * On tag selection change
    */
-  onTagSelectionChange = () => {
-    this.props.newsfeed.refresh();
+  onTagSelectionChange = (all) => {
+    this.props.newsfeed.refresh(all);
   }
 
   /**

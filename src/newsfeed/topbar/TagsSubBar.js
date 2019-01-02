@@ -36,7 +36,7 @@ export default class TagsSubBar extends Component {
   }
 
   debouncedOnChange = () => {
-    this.props.onChange && this.props.onChange();
+    this.props.onChange && this.props.onChange(this.props.hashtag.all);
   }
 
   onChange = debounce(this.debouncedOnChange, 700, { leading: false, trailing: true });
@@ -60,8 +60,19 @@ export default class TagsSubBar extends Component {
 
   }
 
+  /**
+   * Show modal
+   */
   showModal = () => {
     this.modal.wrappedInstance.showModal();
+  }
+
+  /**
+   * Toggle all hashtag
+   */
+  toogleAll = () => {
+    this.props.hashtag.toggleAll();
+    this.onChange();
   }
 
   /**
@@ -75,7 +86,10 @@ export default class TagsSubBar extends Component {
       <View style={styles.subbar}>
         <View style={CS.flexContainer}>
           <ScrollView horizontal={true} >
-            {sorted.map((tag, i) => <TouchableOpacity style={styles.tag} key={i} onPress={() => this.toogle(tag)}>
+            <TouchableOpacity style={styles.tag} onPress={this.toogleAll}>
+              <Text style={[CS.fontS, styles.tagText, this.props.hashtag.all ? CS.colorPrimary : null]}>#ALL</Text>
+            </TouchableOpacity>
+            {!this.props.hashtag.all && sorted.map((tag, i) => <TouchableOpacity style={styles.tag} key={i} onPress={() => this.toogle(tag)}>
               <Text style={[CS.fontS, styles.tagText, tag.selected ? CS.colorPrimary : null]}>#{tag.value}</Text>
             </TouchableOpacity>)}
           </ScrollView>

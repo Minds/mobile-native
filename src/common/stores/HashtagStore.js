@@ -11,6 +11,7 @@ import hashtagService from '../services/hashtag.service'
 class HashtagStore {
 
   @observable loading = false;
+  @observable all = false;
   @observable suggested = [];
 
   /**
@@ -21,6 +22,14 @@ class HashtagStore {
     const tags = await hashtagService.getSuggested();
     this.setLoading(false);
     this.setSuggested(tags);
+  }
+
+  /**
+   * Toggle all hashtag
+   */
+  @action
+  toggleAll() {
+    this.all = !this.all;
   }
 
   /**

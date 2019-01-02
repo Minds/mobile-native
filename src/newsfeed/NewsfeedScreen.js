@@ -16,7 +16,7 @@ import BoostsCarousel from './boosts/BoostsCarousel';
 import Topbar from './topbar/Topbar';
 import CaptureFab from '../capture/CaptureFab';
 import stores from '../../AppStores';
-
+import { CommonStyle } from '../styles/Common';
 
 /**
  * News Feed Screen
@@ -83,7 +83,7 @@ export default class NewsfeedScreen extends Component {
     );
 
     return (
-      <View style={{flex:1}}>
+      <View style={CommonStyle.flexContainer}>
         <NewsfeedList
           newsfeed={newsfeed}
           header={header}
