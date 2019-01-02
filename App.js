@@ -146,8 +146,9 @@ export default class App extends Component {
    * Handle hardware back button
    */
   onBackPress = () => {
+    const nav = NavigationService.getState();
     NavigationService.goBack();
-    return true;
+    return nav !== NavigationService.getState();
   };
 
   /**
