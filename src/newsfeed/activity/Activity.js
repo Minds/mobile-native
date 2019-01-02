@@ -35,6 +35,7 @@ import MediaView from '../../common/components/MediaView';
 import Translate from '../../common/components/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import Lock from '../../wire/lock/Lock';
+import { CommonStyle } from '../../styles/Common';
 
 /**
  * Activity
@@ -122,6 +123,7 @@ export default class Activity extends Component {
           </View>
           { this.showActions() }
           { this.props.isLast ? <View style={styles.activitySpacer}></View> : null}
+          { !this.props.hideTabs && <ActivityMetrics entity={this.props.entity}/> }
         </View>
     );
   }
@@ -186,18 +188,20 @@ export default class Activity extends Component {
           rightToolbar={this.props.hideTabs ? null : rightToolbar}
           >
           <TouchableOpacity onPress={() => this.navToActivity()} style={{ flexDirection: 'row' }}>
-            <Text style={styles.timestamp}>{formatDate(this.props.entity.time_created)}</Text>
+            <Text style={[styles.timestamp, CommonStyle.paddingRight]}>{
+              formatDate(this.props.entity.time_created)
+            }</Text>
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
-                <View style={styles.boostTagColumn}>
-                  <Icon name="md-trending-up" style={styles.boostTagIcon} />
-                </View>
-                <View style={styles.boostTagColumn}>
-                  <Text style={styles.boostTagLabel}>BOOSTED</Text>
-                </View>
+                <Icon name="md-trending-up" style={styles.boostTagIcon}/>
+                <Text style={styles.boostTagLabel}>BOOSTED</Text>
               </View>
             }
-            <ActivityMetrics entity={this.props.entity}/>
+            { !!this.props.entity.edited &&
+              <View style={styles.boostTagContainer}>
+                <Text style={styles.boostTagLabel}>· EDITED</Text>
+              </View>
+            }
           </TouchableOpacity>
         </OwnerBlock>
       );
@@ -294,20 +298,16 @@ const styles = StyleSheet.create({
   },
   boostTagContainer: {
     flexDirection: 'row',
-    paddingLeft: 8,
-  },
-  boostTagColumn: {
-    flexDirection: 'column',
-    justifyContent: 'center',
+    alignItems: 'center',
   },
   boostTagIcon: {
-    color: '#aaa',
+    color: '#777',
   },
   boostTagLabel: {
-    color: '#aaa',
-    fontWeight: '800',
+    color: '#777',
+    fontWeight: '200',
     marginLeft: 2,
-    fontSize: 11,
+    fontSize:10,
   },
   activitySpacer: {
     flex:1,

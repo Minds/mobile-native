@@ -45,6 +45,9 @@ exports[`Activity component renders correctly 1`] = `
         "thumbs:up:user_guids": undefined,
         "title": "TITLE",
         "type": "activity",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
         Symbol(mobx did run lazy initializers): true,
         Symbol(mobx administration): ObservableObjectAdministration$$1 {
           "defaultEnhancer": [Function],
@@ -127,6 +130,9 @@ exports[`Activity component renders correctly 1`] = `
               "thumbs:up:user_guids": undefined,
               "title": "TITLE",
               "type": "activity",
+              "wire_totals": Object {
+                "tokens": 1000000000000000000,
+              },
               Symbol(mobx did run lazy initializers): true,
               Symbol(mobx administration): ObservableObjectAdministration$$1 {
                 "defaultEnhancer": [Function],
@@ -180,80 +186,19 @@ exports[`Activity component renders correctly 1`] = `
     >
       <ForwardRef(Text)
         style={
-          Object {
-            "color": "#888",
-            "fontSize": 11,
-          }
+          Array [
+            Object {
+              "color": "#888",
+              "fontSize": 11,
+            },
+            Object {
+              "paddingRight": 5,
+            },
+          ]
         }
       >
         Invalid date
       </ForwardRef(Text)>
-      <ActivityMetrics
-        entity={
-          ActivityModel {
-            "attachment_guid": false,
-            "blurb": false,
-            "container_guid": "activityguid0",
-            "custom_data": false,
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "getThumbSource": [Function],
-            "guid": "activityguid0",
-            "is_visible": false,
-            "mature": false,
-            "mature_visibility": false,
-            "message": "Message",
-            "ownerObj": UserModel {
-              "getAvatarSource": [Function],
-              "guid": "824853017709780997",
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
-            },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "paywall": undefined,
-            "perma_url": false,
-            "rowKey": "something0",
-            "thumbnail_src": false,
-            "thumbs:down:count": undefined,
-            "thumbs:down:user_guids": undefined,
-            "thumbs:up:count": undefined,
-            "thumbs:up:user_guids": undefined,
-            "title": "TITLE",
-            "type": "activity",
-            Symbol(mobx did run lazy initializers): true,
-            Symbol(mobx administration): ObservableObjectAdministration$$1 {
-              "defaultEnhancer": [Function],
-              "keysAtom": Atom$$1 {
-                "diffValue": 0,
-                "isBeingObserved": false,
-                "isPendingUnobservation": false,
-                "lastAccessedBy": 0,
-                "lowestObserverState": 2,
-                "name": "ActivityModel@1.keys",
-                "observers": Set {},
-              },
-              "name": "ActivityModel@1",
-              "target": [Circular],
-              "values": Map {
-                "votedUp" => false,
-                "votedDown" => false,
-                "mature_visibility" => false,
-                "is_visible" => false,
-                "thumbs:down:count" => undefined,
-                "thumbs:up:count" => undefined,
-                "paywall" => undefined,
-                "mature" => false,
-                "edited" => "",
-                "thumbs:down:user_guids" => undefined,
-                "thumbs:up:user_guids" => undefined,
-              },
-            },
-          }
-        }
-      />
     </TouchableOpacity>
   </OwnerBlock>
   <ForwardRef(View)>
@@ -299,6 +244,9 @@ exports[`Activity component renders correctly 1`] = `
             "thumbs:up:user_guids": undefined,
             "title": "TITLE",
             "type": "activity",
+            "wire_totals": Object {
+              "tokens": 1000000000000000000,
+            },
             Symbol(mobx did run lazy initializers): true,
             Symbol(mobx administration): ObservableObjectAdministration$$1 {
               "defaultEnhancer": [Function],
@@ -376,6 +324,9 @@ exports[`Activity component renders correctly 1`] = `
             "thumbs:up:user_guids": undefined,
             "title": "TITLE",
             "type": "activity",
+            "wire_totals": Object {
+              "tokens": 1000000000000000000,
+            },
             Symbol(mobx did run lazy initializers): true,
             Symbol(mobx administration): ObservableObjectAdministration$$1 {
               "defaultEnhancer": [Function],
@@ -448,6 +399,9 @@ exports[`Activity component renders correctly 1`] = `
           "thumbs:up:user_guids": undefined,
           "title": "TITLE",
           "type": "activity",
+          "wire_totals": Object {
+            "tokens": 1000000000000000000,
+          },
           Symbol(mobx did run lazy initializers): true,
           Symbol(mobx administration): ObservableObjectAdministration$$1 {
             "defaultEnhancer": [Function],
@@ -523,6 +477,9 @@ exports[`Activity component renders correctly 1`] = `
         "thumbs:up:user_guids": undefined,
         "title": "TITLE",
         "type": "activity",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
         Symbol(mobx did run lazy initializers): true,
         Symbol(mobx administration): ObservableObjectAdministration$$1 {
           "defaultEnhancer": [Function],
@@ -557,6 +514,75 @@ exports[`Activity component renders correctly 1`] = `
       Object {
         "navigate": [MockFunction],
         "push": [MockFunction],
+      }
+    }
+  />
+  <ActivityMetrics
+    entity={
+      ActivityModel {
+        "attachment_guid": false,
+        "blurb": false,
+        "container_guid": "activityguid0",
+        "custom_data": false,
+        "custom_type": false,
+        "description": "Congratulations! ",
+        "edited": "",
+        "getThumbSource": [Function],
+        "guid": "activityguid0",
+        "is_visible": false,
+        "mature": false,
+        "mature_visibility": false,
+        "message": "Message",
+        "ownerObj": UserModel {
+          "getAvatarSource": [Function],
+          "guid": "824853017709780997",
+          "subtype": false,
+          "time_created": "1522036284",
+          "type": "user",
+        },
+        "owner_guid": "824853017709780997",
+        "parent_guid": "838106762591510528",
+        "paywall": undefined,
+        "perma_url": false,
+        "rowKey": "something0",
+        "thumbnail_src": false,
+        "thumbs:down:count": undefined,
+        "thumbs:down:user_guids": undefined,
+        "thumbs:up:count": undefined,
+        "thumbs:up:user_guids": undefined,
+        "title": "TITLE",
+        "type": "activity",
+        "wire_totals": Object {
+          "tokens": 1000000000000000000,
+        },
+        Symbol(mobx did run lazy initializers): true,
+        Symbol(mobx administration): ObservableObjectAdministration$$1 {
+          "defaultEnhancer": [Function],
+          "keysAtom": Atom$$1 {
+            "diffValue": 0,
+            "isBeingObserved": false,
+            "isPendingUnobservation": false,
+            "lastAccessedBy": 0,
+            "lowestObserverState": 2,
+            "name": "ActivityModel@1.keys",
+            "observers": Set {},
+          },
+          "name": "ActivityModel@1",
+          "target": [Circular],
+          "values": Map {
+            "votedUp" => false,
+            "votedDown" => false,
+            "mature_visibility" => false,
+            "is_visible" => false,
+            "thumbs:down:count" => undefined,
+            "thumbs:up:count" => undefined,
+            "paywall" => undefined,
+            "mature" => false,
+            "edited" => "",
+            "thumbs:down:user_guids" => undefined,
+            "thumbs:up:user_guids" => undefined,
+          },
+        },
       }
     }
   />

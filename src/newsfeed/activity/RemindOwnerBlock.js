@@ -47,12 +47,8 @@ export default class RemindOwnerBlock extends PureComponent {
             </Text>
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
-                <View style={styles.boostTagColumn}>
-                  <Icon name="md-trending-up" type='ionicon' size={13} iconStyle={styles.boostTagIcon} />
-                </View>
-                <View style={styles.boostTagColumn}>
-                  <Text style={styles.boostTagLabel}>BOOSTED</Text>
-                </View>
+                <Icon name="md-trending-up" type='ionicon' size={13} iconStyle={styles.boostTagIcon} />
+                <Text style={styles.boostTagLabel}>BOOSTED</Text>
               </View>
             }
           </TouchableOpacity>
@@ -68,20 +64,17 @@ const styles = StyleSheet.create({
   boostTagContainer: {
     flexDirection: 'row',
     flex:1,
+    alignItems: 'center',
     paddingRight: 32
   },
-  boostTagColumn: {
-    flexDirection: 'column',
-    justifyContent: 'center',
-  },
   boostTagIcon: {
-    color: '#aaa',
+    color: '#777',
   },
   boostTagLabel: {
-    color: '#aaa',
-    fontWeight: '800',
+    color: '#777',
+    fontWeight: '200',
     marginLeft: 2,
-    fontSize: 10,
+    fontSize: 9,
   },
   container: {
     display: 'flex',
