@@ -1,0 +1,17 @@
+image: node:10.10.0
+
+cache:
+  paths:
+  - node_modules/
+  - .jest/cache/
+
+stages:
+  - test
+
+test_spec:
+  stage: test
+  script:
+    - yarn install
+    - yarn test
+  tags:
+    - docker
