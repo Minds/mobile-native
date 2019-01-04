@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -30,6 +31,7 @@
 		2152C4AF5E404BF1BF237205 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61964F7762744EA397023B14 /* libRNRandomBytes.a */; };
 		2502A2037B9448D0B47315AB /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FD9DCCA27267419AA7A17F5C /* Foundation.ttf */; };
 		2809A9033C784A9993A18E75 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB6A68467242402FA309B048 /* MaterialCommunityIcons.ttf */; };
+		2C294E45998E4BA3A6501037 /* libRNBackgroundTimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6575C4DFC2BB4FC19E06A4E7 /* libRNBackgroundTimer.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -96,7 +98,6 @@
 		ECCA792F21B8BB4A001A576B /* libc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ECCA792E21B8BB4A001A576B /* libc.tbd */; };
 		ECCA793121B8BB57001A576B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = ECCA793021B8BB57001A576B /* libsqlite3.tbd */; };
 		ED3896E8C44E4052B0F644E6 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FD29168F5514DE7A39A4014 /* Roboto-Bold.ttf */; };
-		2C294E45998E4BA3A6501037 /* libRNBackgroundTimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6575C4DFC2BB4FC19E06A4E7 /* libRNBackgroundTimer.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -513,6 +514,20 @@
 			remoteGlobalIDString = 014A3B5C1C6CF33500B6D375;
 			remoteInfo = RNJitsiMeet;
 		};
+		ECF0E88521DD0AF4009F5551 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC06D06F02F64F6EBFCE978D /* RNBackgroundTimer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNBackgroundTimer;
+		};
+		ECF0E88721DD0AF4009F5551 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC06D06F02F64F6EBFCE978D /* RNBackgroundTimer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 641926921ECB4257009CF731;
+			remoteInfo = "RNBackgroundTimer-tvOS";
+		};
 		ECF4E5E82100F4840049DC61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
@@ -624,6 +639,7 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		613B3EDA96314750A2963215 /* libRNI18n.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNI18n.a; sourceTree = "<group>"; };
 		61964F7762744EA397023B14 /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
+		6575C4DFC2BB4FC19E06A4E7 /* libRNBackgroundTimer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBackgroundTimer.a; sourceTree = "<group>"; };
 		6B808F67ED574CE19BCDD458 /* Roboto-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Italic.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Italic.ttf"; sourceTree = "<group>"; };
 		6D8F4DF5386B4151A7ED141A /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		6FD29168F5514DE7A39A4014 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Bold.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -674,10 +690,9 @@
 		ECF4E6172100F5AA0049DC61 /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/rn-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		F2CDEEB2C2D9494D9E8F71C4 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		F68E78049FC64AF98E5C4117 /* Roboto-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-BoldItalic.ttf"; path = "../src/assets/fonts/Roboto/Roboto-BoldItalic.ttf"; sourceTree = "<group>"; };
+		FC06D06F02F64F6EBFCE978D /* RNBackgroundTimer.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBackgroundTimer.xcodeproj; path = "../node_modules/react-native-background-timer/ios/RNBackgroundTimer.xcodeproj"; sourceTree = "<group>"; };
 		FD9DCCA27267419AA7A17F5C /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		FDA7910C8BB34AF99919D51E /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Medium.ttf"; sourceTree = "<group>"; };
-		FC06D06F02F64F6EBFCE978D /* RNBackgroundTimer.xcodeproj */ = {isa = PBXFileReference; name = "RNBackgroundTimer.xcodeproj"; path = "../node_modules/react-native-background-timer/ios/RNBackgroundTimer.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		6575C4DFC2BB4FC19E06A4E7 /* libRNBackgroundTimer.a */ = {isa = PBXFileReference; name = "libRNBackgroundTimer.a"; path = "libRNBackgroundTimer.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1081,6 +1096,7 @@
 				001526DE68504AC29B4A872D /* libRNFS.a */,
 				DDC75E614A914226984B4147 /* libRNFetchBlob.a */,
 				993E4274740B4B1396400070 /* libRNJitsiMeet.a */,
+				6575C4DFC2BB4FC19E06A4E7 /* libRNBackgroundTimer.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1210,6 +1226,15 @@
 			isa = PBXGroup;
 			children = (
 				ECCA791221B8B627001A576B /* libRNJitsiMeet.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ECF0E88121DD0AF4009F5551 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ECF0E88621DD0AF4009F5551 /* libRNBackgroundTimer.a */,
+				ECF0E88821DD0AF4009F5551 /* libRNBackgroundTimer.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1441,6 +1466,10 @@
 				{
 					ProductGroup = A548ABC11FFEEC9900ACB8D6 /* Products */;
 					ProjectRef = 74B6BAC3000C4CD0BAF18184 /* ReactNativeExceptionHandler.xcodeproj */;
+				},
+				{
+					ProductGroup = ECF0E88121DD0AF4009F5551 /* Products */;
+					ProjectRef = FC06D06F02F64F6EBFCE978D /* RNBackgroundTimer.xcodeproj */;
 				},
 				{
 					ProductGroup = ECF4E6182100F5AA0049DC61 /* Products */;
@@ -1909,6 +1938,20 @@
 			remoteRef = ECCA791121B8B627001A576B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		ECF0E88621DD0AF4009F5551 /* libRNBackgroundTimer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNBackgroundTimer.a;
+			remoteRef = ECF0E88521DD0AF4009F5551 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		ECF0E88821DD0AF4009F5551 /* libRNBackgroundTimer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNBackgroundTimer.a;
+			remoteRef = ECF0E88721DD0AF4009F5551 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		ECF4E5E92100F4840049DC61 /* libfishhook.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2224,6 +2267,7 @@
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Minds/Minds.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2273,7 +2317,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**";
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2290,6 +2333,7 @@
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Minds/Minds.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -2339,7 +2383,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**";
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

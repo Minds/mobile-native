@@ -6,6 +6,7 @@ buildscript {
         compileSdkVersion = 27
         targetSdkVersion = 26
         supportLibVersion = "27.1.1"
+        glideVersion = "4.7.1"
     }
     repositories {
         jcenter()
@@ -32,8 +33,10 @@ allprojects {
             // Local Maven repo containing AARs with JSC library built for Android
             url "$rootDir/../node_modules/jsc-android/dist"
         }
-        maven { // <---- Add this block
-            url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
+        maven {
+            // url "$rootDir/../../jitsi-maven-repository/releases" // used for local dev of jitsi sdk
+            // url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases" // original
+            url "https://gitlab.com/minds/jitsi-maven-repository/raw/master/releases" // ours custom sdk
         }
         maven { url "https://jitpack.io" }
     }

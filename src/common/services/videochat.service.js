@@ -1,5 +1,5 @@
 import JitsiMeet, { JitsiMeetEvents } from 'react-native-jitsi-meet';
-
+import jwt from 'jwt-simple';
 /**
  * Video chat service (Jitsi)
  */
@@ -31,9 +31,19 @@ class VideoChatService {
    * Start video chat
    * @param {string} url
    */
-  call(url) {
+  call(url, user) {
+    // jitsi sdk replace users name and avatar with the jwt data
+    const jwtParams = jwt.encode({
+      "context": {
+        "user": {
+          "avatar": user.getAvatarSource('large').uri,
+          "name": user.username,
+        }
+      }
+    }, 'any');
+
     setTimeout(() => {
-      JitsiMeet.call(url);
+      JitsiMeet.call(url, jwtParams);
     }, 1000);
   }
 }

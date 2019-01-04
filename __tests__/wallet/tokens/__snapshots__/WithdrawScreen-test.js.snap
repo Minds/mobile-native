@@ -63,7 +63,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
             }
           }
           title={
-            <Component
+            <ActivityIndicator
               animating={true}
               color="#4690D6"
               hidesWhenStopped={true}

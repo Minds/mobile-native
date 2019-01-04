@@ -223,6 +223,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                         },
                         undefined,
                         undefined,
+                        undefined,
                       ],
                     ]
                   }
@@ -326,6 +327,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                           "fontWeight": "600",
                           "letterSpacing": 1.25,
                         },
+                        undefined,
                         undefined,
                         undefined,
                       ],
