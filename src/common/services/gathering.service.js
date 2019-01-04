@@ -2,6 +2,7 @@ import api from './../../common/services/api.service';
 import videochatService from './videochat.service';
 import BackgroundTimer from 'react-native-background-timer';
 import { Platform } from 'react-native';
+import appStores from '../../../AppStores';
 
 /**
  * Gathering service
@@ -31,7 +32,7 @@ class GatheringService {
       this.isActive = true;
 
       setTimeout(() => {
-        videochatService.call(this.roomName);
+        videochatService.call(this.roomName, appStores.user.me);
       }, 1000);
     } catch (e) {
       console.error('Error trying to open video chat.');
