@@ -67,7 +67,7 @@ export default class Comment extends Component {
       <View style={[CommonStyle.flexContainer ]}>
         <View style={styles.actionsContainer}>
           <Text style={styles.timestamp}>{formatDate(comment.time_created)}</Text>
-          <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter, styles.actionsButtonsContainer ]}>
+          <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
             <ReplyAction entity={comment} size={16} toggleExpand={this.toggleExpand}/>
             <ThumbUpAction entity={comment} me={this.props.user.me} size={16}/>
             <ThumbDownAction entity={comment} me={this.props.user.me} size={16} />
@@ -84,22 +84,24 @@ export default class Comment extends Component {
 
         <View style={styles.contentContainer}>
           <View style={styles.content}>
-            {
-              this.state.editing ?
-                <CommentEditor setEditing={this.setEditing} comment={comment} store={this.props.store}/>
-              :
-                <Text style={styles.message} selectable={true} onLongPress={this.showActions}>
-                  <Text style={styles.username}>@{comment.ownerObj.username} </Text>
-                  { comment.description &&
-                    <Tags
-                      style={comment.mature? styles.mature : {}}
-                      navigation={this.props.navigation}
-                      >
-                      {entities.decodeHTML(comment.description)}
-                    </Tags>
-                  }
-                </Text>
-            }
+            <View style={styles.textContainer}>
+              {
+                this.state.editing ?
+                  <CommentEditor setEditing={this.setEditing} comment={comment} store={this.props.store}/>
+                :
+                  <Text style={styles.message} selectable={true} onLongPress={this.showActions}>
+                    <Text style={styles.username}>@{comment.ownerObj.username} </Text>
+                    { comment.description &&
+                      <Tags
+                        style={comment.mature? styles.mature : {}}
+                        navigation={this.props.navigation}
+                        >
+                        {entities.decodeHTML(comment.description)}
+                      </Tags>
+                    }
+                  </Text>
+              }
+            </View>
           </View>
           { actions }
             { comment.expanded &&
@@ -279,22 +281,22 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 20
   },
-  content: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'stretch',
+  textContainer: {
     backgroundColor: '#E8E8E8',
     borderRadius: 20,
     marginHorizontal: 5,
     padding: 5,
   },
-  actionsButtonsContainer: {
-    width: 35
+  content: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'stretch',
   },
   actionsContainer: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
     alignSelf: 'stretch',
     padding: 8
   },
@@ -309,7 +311,7 @@ const styles = StyleSheet.create({
     borderColor: '#EEE',
   },
   message: {
-    paddingLeft: 8,
+    paddingHorizontal: 6,
     fontSize: 14,
   },
   username: {
@@ -318,7 +320,6 @@ const styles = StyleSheet.create({
     color: '#444',
   },
   timestamp: {
-    flex:1,
     fontSize: 10,
     color: '#888',
   },
