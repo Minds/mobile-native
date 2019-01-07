@@ -311,3 +311,17 @@ export function deleteItem(guid) {
 export function getSingle(guid) {
   return api.get('api/v1/newsfeed/single/'+guid);
 }
+
+/**
+ * Set Pinned to post
+ * @param {string} guid
+ * @param {boolean} value
+ */
+export async function setPinPost(guid, value) {
+  const url = `api/v2/newsfeed/pin/${guid}`;
+  if (value) {
+    return await api.post(url);
+  } else {
+    return await api.delete(url);
+  }
+}
