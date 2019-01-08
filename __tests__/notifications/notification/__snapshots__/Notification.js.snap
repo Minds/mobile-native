@@ -1965,14 +1965,17 @@ exports[`notification component renders correctly for every type 21`] = `
     >
       <Text
         onPress={[Function]}
-        style={
-          Object {
-            "color": "#444",
-            "fontWeight": "bold",
-          }
-        }
       >
-        someUser
+        <Text
+          style={
+            Object {
+              "color": "#444",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          someUser
+        </Text>
          reminded 
         <Text
           style={
