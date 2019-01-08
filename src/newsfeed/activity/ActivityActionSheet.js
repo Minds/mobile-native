@@ -74,10 +74,12 @@ export default class ActivityActions extends Component {
       } else {
         options.push( 'Remove explicit' );
       }
-      if (!this.props.entity.pinned) {
-        options.push( 'Pin' );
-      } else {
-        options.push( 'Unpin' );
+      if (!this.props.entity.dontPin) {
+        if (!this.props.entity.pinned) {
+          options.push( 'Pin' );
+        } else {
+          options.push( 'Unpin' );
+        }
       }
 
     } else {
