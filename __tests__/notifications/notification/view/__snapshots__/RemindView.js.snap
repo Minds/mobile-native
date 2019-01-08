@@ -11,14 +11,17 @@ exports[`renders correctly 1`] = `
 >
   <Text
     onPress={[Function]}
-    style={
-      Object {
-        "color": "#444",
-        "fontWeight": "bold",
-      }
-    }
   >
-    someUser
+    <Text
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      someUser
+    </Text>
      reminded 
     <Text
       style={
