@@ -184,7 +184,7 @@ export default class DiscoveryScreen extends Component {
     this.cols = 3;
     switch (discovery.type) {
       case 'lastchannels':
-      case 'user':
+      case 'channels':
         renderRow = this.renderUser;
         this.cols = 1;
         break;
@@ -240,10 +240,10 @@ export default class DiscoveryScreen extends Component {
 
     const navigation = (
       <View style={styles.navigation}>
-        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('user') } underlayColor='#fff'>
+        <TouchableHighlight style={ styles.iconContainer } onPress={ () => this.props.discovery.setType('channels') } underlayColor='#fff'>
           <Icon
             name="people"
-            style={[styles.icon, this.props.discovery.type == 'user' ? styles.iconActive : null ]}
+            style={[styles.icon, this.props.discovery.type == 'channels' ? styles.iconActive : null ]}
             size={ 20 }
           />
         </TouchableHighlight>
@@ -372,7 +372,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderUser = (row) => {
     return (
-      <DiscoveryUser store={this.props.discovery.stores['user']} entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.type == 'lastchannels'} />
+      <DiscoveryUser store={this.props.discovery.stores['channels']} entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.type == 'lastchannels'} />
     );
   }
   /**
