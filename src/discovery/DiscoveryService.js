@@ -17,7 +17,7 @@ class DiscoveryService {
       };
 
     switch (type) {
-      case 'user':
+      case 'channels':
         endpoint = 'api/v2/search/suggest/user';
         params.hydrate = 1;
         break;
@@ -66,7 +66,7 @@ class DiscoveryService {
         offset: data['load-next'],
       }
     } catch(err) {
-      console.log('error');
+      console.log('error', err);
       throw "Ooops";
     }
   }

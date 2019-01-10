@@ -46,7 +46,7 @@ class DiscoveryStore {
         list: new OffsetListStore('shallow'),
         loading: false,
       },
-      'user': {
+      'channels': {
         list: new OffsetListStore('shallow'),
         loading: false,
       },
@@ -146,7 +146,7 @@ class DiscoveryStore {
       case 'blogs':
         feed.entities = BlogModel.createMany(feed.entities);
         break;
-      case 'user':
+      case 'channels':
         feed.entities = UserModel.createMany(feed.entities);
         break;
     }
@@ -175,10 +175,10 @@ class DiscoveryStore {
   setType(type) {
     const store = this.stores[type];
     this.type = type;
-    if (type == 'user') {
+    if (type == 'channels') {
       store.list.clearList();
     }
-    this.loadList(type == 'user');
+    this.loadList(type == 'channels');
   }
 
   /**
@@ -213,7 +213,7 @@ class DiscoveryStore {
     } else if ((text.indexOf('#') === 0) || (text.indexOf(' ') > -1)) {
       this.type = 'activity';
     } else {
-      this.type = 'user';
+      this.type = 'channels';
     }
 
     const list = this.stores[this.type].list;
