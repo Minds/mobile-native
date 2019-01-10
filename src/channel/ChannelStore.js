@@ -47,20 +47,24 @@ export default class ChannelStore {
 
   @action
   setChannel(channel, loaded = false) {
+    channel = UserModel.checkOrCreate(channel);
     this.channel = channel;
+    this.feedStore.setChannel(channel);
     this.active = true;
-    if(loaded)
+    this.guid = channel.guid;
+
+    if (loaded) {
       this.loaded = loaded;
+    }
   }
 
   @action
   async load() {
     const { channel } = await channelService.load(this.guid);
     if (channel) {
-      const model = UserModel.create(channel);
       this.loaded = true;
-      this.setChannel(model);
-      return model;
+      this.setChannel(channel);
+      return channel;
     }
     return false;
   }

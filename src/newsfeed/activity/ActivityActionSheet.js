@@ -33,6 +33,7 @@ const title = 'Actions';
 
 @inject("user")
 @inject("newsfeed")
+@observer
 export default class ActivityActions extends Component {
 
   constructor(props) {
@@ -63,7 +64,7 @@ export default class ActivityActions extends Component {
 
   getOptions() {
     let options = [ 'Cancel' ];
-    if (this.props.user.me.guid == this.props.entity.ownerObj.guid) {
+    if (this.props.entity.isOwner()) {
       options.push( 'Edit' );
 
       options.push( 'Delete' );
@@ -72,6 +73,13 @@ export default class ActivityActions extends Component {
         options.push( 'Set explicit' );
       } else {
         options.push( 'Remove explicit' );
+      }
+      if (!this.props.entity.dontPin) {
+        if (!this.props.entity.pinned) {
+          options.push( 'Pin' );
+        } else {
+          options.push( 'Unpin' );
+        }
       }
 
     } else {
@@ -194,6 +202,10 @@ export default class ActivityActions extends Component {
         break;
       case 'Share':
         shareService.share(this.props.entity.text, MINDS_URI + 'newsfeed/' + this.props.entity.guid);
+        break;
+      case 'Pin':
+      case 'Unpin':
+        this.props.entity.togglePin();
         break;
       case 'Report':
         this.props.navigation.navigate('Report', { entity: this.props.entity });

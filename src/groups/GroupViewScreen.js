@@ -58,15 +58,17 @@ export default class GroupViewScreen extends Component {
   /**
    * On component will mount
    */
-  componentWillMount() {
+  async componentWillMount() {
     const params = this.props.navigation.state.params;
 
     if (params.group) {
       this.props.groupView.setGroup(params.group);
+      // update group
+      await this.props.groupView.loadGroup(params.group.guid);
       this.props.groupView.loadFeed();
     } else {
       this.props.groupView.setGuid(params.guid)
-      this.props.groupView.loadGroup(params.guid);
+      await this.props.groupView.loadGroup(params.guid);
       this.props.groupView.loadFeed();
     }
     this.props.groupView.loadTopMembers();

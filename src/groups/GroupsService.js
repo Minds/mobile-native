@@ -52,8 +52,9 @@ class GroupsService {
    * @param {string} guid
    * @param {string} offset
    * @param {string} filter
+   * @param {string} pinned
    */
-  loadFeed(guid, offset, filter = 'activity') {
+  loadFeed(guid, offset, filter = 'activity', pinned = null) {
     let endpoint;
 
     if (filter == 'review') {
@@ -62,7 +63,13 @@ class GroupsService {
       endpoint = `api/v1/newsfeed/container/${guid}`;
     }
 
-    return api.get(endpoint, { limit: 12, offset })
+    const opts = { limit: 12, offset };
+
+    if (pinned) {
+      opts.pinned = pinned;
+    }
+
+    return api.get(endpoint, opts)
       .then((response) => {
         if (filter !== this.currentFilter) {
           return; // Prevents race condition
@@ -70,11 +77,21 @@ class GroupsService {
 
         this.currentFilter = filter;
 
-        return {
+        const feed = {
           adminqueueCount: response['adminqueue:count'],
-          entities: response.activity || [],
+          entities: [],
           offset: response['load-next'] || ''
+        };
+
+        if (response.pinned) {
+          feed.entities = response.pinned;
         }
+
+        if (response.activity) {
+          feed.entities = feed.entities.concat(response.activity);
+        }
+
+        return feed;
       });
   }
 

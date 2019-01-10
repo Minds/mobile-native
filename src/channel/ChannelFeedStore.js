@@ -25,7 +25,8 @@ export default class ChannelFeedStore {
 
   @observable filter = 'feed';
   @observable showrewards = false;
-  @observable channel;
+
+  channel;
 
   viewed = [];
   @observable stores = {
@@ -164,20 +165,7 @@ export default class ChannelFeedStore {
         opts.pinned = this.channel.pinned_posts.join(',');
       }
 
-      const data = await api.get('api/v1/newsfeed/personal/' + this.channel.guid, opts);
-
-      const feed = {
-        entities: [],
-        offset: data['load-next'],
-      };
-
-      if (data.pinned) {
-        feed.entities = data.pinned;
-      }
-
-      if (data.activity) {
-        feed.entities = feed.entities.concat(data.activity);
-      }
+      const feed = await channelService.getFeed(this.channel.guid, opts);
 
       if (feed.entities.length > 0) {
         feed.entities = ActivityModel.createMany(feed.entities);
@@ -196,8 +184,6 @@ export default class ChannelFeedStore {
    * Load channel images feed
    */
   async _loadImagesFeed(refresh = false) {
-    console.log('refreshing', refresh);
-
     this.loading = true;
     const filter = this.filter;
 

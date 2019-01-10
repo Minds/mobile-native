@@ -1,12 +1,12 @@
 import { computed, action, observable, decorate } from 'mobx';
 
-import BaseModel from '../common/BaseModel';
-import sessionService from '../common/services/session.service';
-import { thumbActivity } from './activity/ActionsService';
-import wireService from '../wire/WireService';
-
-import UserModel from '../channel/UserModel';
 import FastImage from 'react-native-fast-image'
+import BaseModel from '../common/BaseModel';
+import UserModel from '../channel/UserModel';
+import wireService from '../wire/WireService';
+import { thumbActivity } from './activity/ActionsService';
+import sessionService from '../common/services/session.service';
+import { setPinPost } from '../newsfeed/NewsfeedService';
 
 import {
   MINDS_CDN_URI
@@ -97,6 +97,23 @@ export default class ActivityModel extends BaseModel {
       return false;
     }
   }
+
+  @action
+  async togglePin() {
+
+    // allow owners only
+    if (!this.isOwner()) {
+      return;
+    }
+
+    try {
+      this.pinned = !this.pinned;
+      const success = await setPinPost(this.guid, this.pinned);
+    } catch(e) {
+      this.pinned = !this.pinned;
+      alert('Ooops, error setting pinned post');
+    }
+  }
 }
 
 /**
@@ -107,6 +124,7 @@ decorate(ActivityModel, {
   'thumbs:up:count': observable,
   'paywall': observable,
   'mature': observable,
+  'pinned': observable,
   'edited': observable,
   'thumbs:down:user_guids': observable,
   'thumbs:up:user_guids': observable

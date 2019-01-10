@@ -36,6 +36,7 @@ import Translate from '../../common/components/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import Lock from '../../wire/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
+import Pinned from '../../common/components/Pinned';
 
 /**
  * Activity
@@ -106,6 +107,7 @@ export default class Activity extends Component {
 
     return (
         <View style={styles.container} onLayout={this.props.onLayout}>
+          <Pinned entity={this.props.entity}/>
           { this.showOwner() }
           <View>
             { lock }

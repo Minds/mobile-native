@@ -74,9 +74,25 @@ class GroupViewStore {
     }
     this.loading = true;
 
-    return groupsService.loadFeed(this.guid, this.list.offset)
+    let pinned = null;
+
+    if (
+      this.group.pinned_posts
+      && this.group.pinned_posts.length
+      && !this.list.offset
+    ) {
+      pinned = this.group.pinned_posts.join(',');
+    }
+
+    return groupsService.loadFeed(this.guid, this.list.offset, 'activity', pinned)
       .then(data => {
         data.entities = ActivityModel.createMany(data.entities);
+        data.entities = data.entities.map(entity => {
+          if (!(this.group['is:moderator'] || this.group['is:owner'])) {
+            entity.dontPin = true;
+          }
+          return entity;
+        });
         this.assignRowKeys(data);
         this.list.setList(data);
         this.loaded = true;
@@ -156,9 +172,10 @@ class GroupViewStore {
    * @param {string} guid
    */
   loadGroup(guid) {
-    groupsService.loadEntity(guid)
+    return groupsService.loadEntity(guid)
       .then(group => {
         this.setGroup(group);
+        return group;
       });
   }
 

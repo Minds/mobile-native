@@ -23,6 +23,14 @@ class ChannelStores {
     return this.stores[guid];
   }
 
+  async storeByName(name) {
+    const response = await channelService.load(name);
+    const channel = response.channel;
+    const store = this.store(channel.guid);
+    store.setChannel(channel, true);
+    return store;
+  }
+
   @action
   garbageCollect() {
     let count = 0;

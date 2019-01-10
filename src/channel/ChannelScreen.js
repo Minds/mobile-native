@@ -23,7 +23,6 @@ import RewardsCarousel from './carousel/RewardsCarousel';
 import ChannelHeader from './header/ChannelHeader';
 import Toolbar from './toolbar/Toolbar';
 import NewsfeedList from '../newsfeed/NewsfeedList';
-import channelService from './ChannelService';
 import CenteredLoading from '../common/components/CenteredLoading';
 import Button from '../common/components/Button';
 import colors from '../styles/Colors';
@@ -60,6 +59,7 @@ export default class ChannelScreen extends Component {
    */
   componentWillMount() {
     const params = this.props.navigation.state.params;
+
     if (params.entity) {
       //grab stale channel data for quick load
       this.props.channel.store(params.entity.guid)
@@ -87,7 +87,6 @@ export default class ChannelScreen extends Component {
       const channel = await store.load();
       if (channel) {
         this.props.channel.addVisited(channel);
-        store.feedStore.setChannel(channel);
       }
     } catch (err) {
 
@@ -110,15 +109,11 @@ export default class ChannelScreen extends Component {
   //TODO: make a reverse map so we can cache usernames
   async loadByUsername(username) {
     try {
-      let response = await channelService.load(username);
-      const channel = response.channel;
 
-      const store = this.props.channel.store(channel.guid);
-      store.setChannel(UserModel.create(response.channel), true);
-      this.setState({ guid: response.channel.guid });
-
-      //load feed now
-      store.feedStore.setChannel(channel);
+      // get store by name and load channel
+      const store = await this.props.channel.storeByName(username);
+      this.setState({ guid: store.channel.guid });
+      // load feed now
       store.feedStore.loadFeed();
 
     } catch(err) {

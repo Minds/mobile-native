@@ -46,6 +46,30 @@ class ChannelService {
     }
   }
 
+  /**
+   *
+   * @param {string} guid
+   * @param {object} opts
+   */
+  async getFeed(guid, opts={limit: 12}) {
+    const data = await api.get(`api/v1/newsfeed/personal/${guid}`, opts);
+
+    const feed = {
+      entities: [],
+      offset: data['load-next'],
+    };
+
+    if (data.pinned) {
+      feed.entities = data.pinned;
+    }
+
+    if (data.activity) {
+      feed.entities = feed.entities.concat(data.activity);
+    }
+
+    return feed;
+  }
+
   getImageFeed(guid, offset) {
     return api.get('api/v1/entities/owner/image/' + guid, { offset: offset, limit: 12 })
     .then((data) => {
