@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import {
   StyleSheet,
+  View,
   TouchableOpacity,
   Text
 } from 'react-native';
@@ -99,9 +100,16 @@ export default class ToolbarItem extends PureComponent {
 
     if (!icon && !badge) return null;
 
+    const size = iconSize || 18;
+    const iconContainerStyle = {height: size + 4};
+
     if (!icon) {
       const style = {color: selected ? colors.primary : color};
-      return <Text style={style}>{badge}</Text>
+      return (
+        <View style={iconContainerStyle}>
+          <Text style={style}>{badge}</Text>
+        </View>
+      );
     }
 
     if (iconType == 'ion') {
@@ -110,7 +118,11 @@ export default class ToolbarItem extends PureComponent {
       IconType = Icon;
     }
 
-    return <IconType name={icon} size={iconSize || 18} color={selected ? colors.primary : color} />
+    return (
+      <View style={iconContainerStyle}>
+        <IconType name={icon} size={size || 18} color={selected ? colors.primary : color} />
+      </View>
+    )
   }
 }
 
@@ -127,7 +139,7 @@ const styles = StyleSheet.create({
     color: colors.primary
   },
   buttonText: {
-    paddingTop:5,
+    paddingTop:3,
   },
   button: {
     flex: 1,

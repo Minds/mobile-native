@@ -10573,7 +10573,7 @@ exports[`blog list screen component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "paddingTop": 5,
+                      "paddingTop": 3,
                     },
                     Object {
                       "fontSize": 10,
@@ -10609,7 +10609,7 @@ exports[`blog list screen component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "paddingTop": 5,
+                      "paddingTop": 3,
                     },
                     Object {
                       "fontSize": 10,
