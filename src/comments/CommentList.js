@@ -181,7 +181,7 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Load comments
    */
-  loadComments = async () => {
+  loadComments = async (loadingMore = false) => {
     let guid;
     const scrollToBottom = this.props.navigation.state.params.scrollToBottom;
 
@@ -194,7 +194,7 @@ export default class CommentList extends React.Component<Props, State> {
 
     await this.props.store.loadComments(guid);
 
-    if (scrollToBottom && this.props.store.loaded) {
+    if (!loadingMore && scrollToBottom && this.props.store.loaded) {
       this.scrollBottomIfNeeded();
     }
   }
@@ -297,17 +297,28 @@ export default class CommentList extends React.Component<Props, State> {
       <View>
         { header }
         { this.props.store.loadPrevious && !this.props.store.loading ?
-            <TouchableHighlight
-            onPress={() => { this.loadComments()}}
+          <TouchableHighlight
+            onPress={() => { this.loadComments(true)}}
             underlayColor = 'transparent'
             style = {[CS.rowJustifyCenter, CS.padding2x]}
           >
             <Text style={[CS.fontM, CS.colorPrimary]}><IconMC name="update" size={16} /> LOAD EARLIER </Text>
           </TouchableHighlight> : null
         }
+        {this.props.store.loading && this.props.store.loaded && <ActivityIndicator size="small" style={CS.paddingTop2x}/>}
       </View>
     )
   }
+
+  /**
+   * Refresh comments
+   */
+  refresh = async () => {
+    this.props.store.refresh();
+    await this.loadComments();
+    this.props.store.refreshDone();
+  }
+
 
   /**
    * Render
@@ -339,6 +350,7 @@ export default class CommentList extends React.Component<Props, State> {
               renderItem={this.renderComment}
               keyExtractor={item => item.guid}
               initialNumToRender={25}
+              onRefresh={this.refresh}
               refreshing={this.props.store.refreshing}
               ListEmptyComponent={this.props.store.loaded && !this.props.store.refreshing ? <View/> : <CenteredLoading/>}
               style={[CS.flexContainer, CS.backgroundWhite]}

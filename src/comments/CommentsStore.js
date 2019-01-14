@@ -35,6 +35,7 @@ export default class CommentsStore {
   @observable loaded = false;
   @observable saving = false;
   @observable text = '';
+  @observable loading = false;
 
   // attachment store
   attachment = new AttachmentStore();
@@ -60,6 +61,8 @@ export default class CommentsStore {
     }
     this.guid = guid;
 
+    this.loading = true;
+
     let response;
 
     try {
@@ -74,6 +77,8 @@ export default class CommentsStore {
       this.checkListen(response);
     } catch (err) {
       console.log('error', err);
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -198,11 +203,12 @@ export default class CommentsStore {
   @action
   clearComments() {
     this.comments = [];
-    this.reversed = '';
+    this.reversed = true;
     this.loadNext = '';
     this.loadPrevious = '';
     this.socketRoomName = '';
     this.loaded = false;
+    this.loading = false;
     this.saving = false;
     this.text = '';
   }
@@ -211,9 +217,9 @@ export default class CommentsStore {
    * Refresh
    */
   @action
-  refresh() {
+  refresh(guid) {
     this.refreshing = true;
-    clearComments();
+    this.clearComments();
   }
 
   /**
@@ -223,6 +229,7 @@ export default class CommentsStore {
   refreshDone() {
     this.refreshing = false;
   }
+
 
   /**
    * Update comment
