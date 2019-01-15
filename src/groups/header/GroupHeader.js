@@ -46,7 +46,7 @@ export default class GroupHeader extends Component {
    */
   getAvatar() {
     const group = this.props.store.group;
-    return `${MINDS_CDN_URI}fs/v1/avatars/${group.guid}/large`;
+    return `${MINDS_CDN_URI}fs/v1/avatars/${group.guid}/large/${group.icontime}`;
   }
 
   /**
@@ -91,7 +91,8 @@ export default class GroupHeader extends Component {
   getGatheringButton() {
     const group = this.props.store.group;
 
-    if (group['videoChatDisabled'] === 0) {
+    if (true) {
+    // if (group['videoChatDisabled'] === 0) {
       return <Icon name="videocam" size={24} color={colors.primary} style={CommonStyle.paddingRight} onPress={() => { gathering.join(group) }}/>
     }
     return null;
