@@ -8,12 +8,12 @@ import api from './../common/services/api.service';
  * @param {integer} limit
  */
 export function getComments(guid, reversed, offset, limit = 12) {
-  return api.get('api/v1/comments/' + guid , { limit, offset: offset, reversed : true })
+  return api.get('api/v1/comments/' + guid , { limit, token: offset, reversed : true })
     .then((data) => {
       return data;
     })
     .catch(err => {
-      console.log('error');
+      console.log('error', err);
       throw "Ooops";
     })
 }
@@ -55,7 +55,7 @@ export function updateComment(guid, description) {
  * @param {integer} limit
  */
 export function getCommentsReply(guid, commentGuid, reversed, offset, limit = 12) {
-  return api.get(`api/v1/comments/${guid}/${commentGuid}` , { limit, offset: offset, reversed : true })
+  return api.get(`api/v1/comments/${guid}/${commentGuid}` , { limit, token: offset, reversed : true })
     .then((data) => {
       return data;
     })
