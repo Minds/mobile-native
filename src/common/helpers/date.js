@@ -6,8 +6,40 @@ function pad(n, width, z) {
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
+function frendlyTime(date) {
+  const now = moment();
+
+  const diff = moment.duration(now.diff(date));
+
+  if (diff.years() > 0) {
+    return `${diff.years()}y ago`;
+  }
+
+  if (diff.weeks() > 0) {
+    return `${diff.weeks()}w ago`;
+  }
+
+  if (diff.days() > 0) {
+    return `${diff.days()}d ago`;
+  }
+
+  if (diff.hours() > 0) {
+    return `${diff.hours()}h ago`;
+  }
+
+  if (diff.minutes() > 0) {
+    return `${diff.minutes()}m ago`;
+  }
+
+  return `${diff.seconds()}s ago`
+}
+
 export default function formatDate(timestamp, format = 'datetime', timezone='') {
   let options;
+
+  let date = moment(timestamp * 1000);
+
+  if (timezone) date.tz(timezone);
 
   switch (format) {
     case 'date':
@@ -16,13 +48,12 @@ export default function formatDate(timestamp, format = 'datetime', timezone='') 
     case 'time':
       options = 'hh:mm';
       break;
+    case 'friendly':
+      return frendlyTime(date);
     case 'datetime':
     default:
       options = 'MMM DD, YYYY, HH:mm';
   }
-  let date = moment(timestamp * 1000);
-
-  if (timezone) date.tz(timezone);
 
   return date.format(options);
 
