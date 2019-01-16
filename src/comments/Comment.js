@@ -66,7 +66,7 @@ export default class Comment extends Component {
     const actions = (
       <View style={[CommonStyle.flexContainer ]}>
         <View style={styles.actionsContainer}>
-          <Text style={styles.timestamp}>{formatDate(comment.time_created)}</Text>
+          <Text style={styles.timestamp}>{formatDate(comment.time_created, 'friendly')}</Text>
           <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
             <ReplyAction entity={comment} size={16} toggleExpand={this.toggleExpand}/>
             <ThumbUpAction entity={comment} me={this.props.user.me} size={16}/>
