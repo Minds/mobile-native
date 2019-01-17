@@ -181,7 +181,7 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Load comments
    */
-  loadComments = async (loadingMore = false) => {
+  loadComments = async (loadingMore = false, descending = true) => {
     let guid;
     const scrollToBottom = this.props.navigation.state.params.scrollToBottom;
 
@@ -192,7 +192,7 @@ export default class CommentList extends React.Component<Props, State> {
       }
     }
 
-    await this.props.store.loadComments(guid);
+    await this.props.store.loadComments(guid, descending);
 
     if (!loadingMore && scrollToBottom && this.props.store.loaded) {
       this.scrollBottomIfNeeded();

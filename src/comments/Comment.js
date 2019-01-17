@@ -68,7 +68,7 @@ export default class Comment extends Component {
         <View style={styles.actionsContainer}>
           <Text style={styles.timestamp}>{formatDate(comment.time_created, 'friendly')}</Text>
           <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
-            <ReplyAction entity={comment} size={16} toggleExpand={this.toggleExpand}/>
+            {comment.parent_guid_l2 == 0 && <ReplyAction entity={comment} size={16} toggleExpand={this.toggleExpand}/>}
             <ThumbUpAction entity={comment} me={this.props.user.me} size={16}/>
             <ThumbDownAction entity={comment} me={this.props.user.me} size={16} />
           </View>
@@ -186,7 +186,9 @@ export default class Comment extends Component {
       actions.push( 'Report' );
       actions.push( 'Copy' );
     }
-    actions.push( 'Reply' );
+    if (this.props.comment.parent_guid_l2 == 0) {
+      actions.push( 'Reply' );
+    }
 
     return actions;
   }
@@ -212,26 +214,32 @@ export default class Comment extends Component {
         this.setState({editing: true});
         break;
       case 'Delete':
-        this.props.store.delete(this.props.comment.guid).then( (result) => {
-          Alert.alert(
-            'Success',
-            'Comment removed succesfully',
-            [
-              {text: 'OK', onPress: () => {}},
-            ],
-            { cancelable: false }
-          )
-        })
-        .catch(err => {
-          Alert.alert(
-            'Error',
-            'Error removing comment',
-            [
-              {text: 'OK', onPress: () => {}},
-            ],
-            { cancelable: false }
-          )
-        });
+        Alert.alert(
+          'Confirm',
+          `Do you want to delete this comment?\n\nThere\'s no UNDO.`,
+          [
+            { text: 'No', style: 'cancel' },
+            {
+              text: 'Yes',
+              onPress: () => {
+                this.props.store.delete(this.props.comment.guid).then(result => {
+                  Alert.alert(
+                    'Success',
+                    'Comment removed succesfully'
+                  );
+                })
+                .catch(err => {
+                  Alert.alert(
+                    'Error',
+                    'Error removing comment'
+                  );
+                });
+              }
+            },
+          ],
+          { cancelable: false }
+        );
+
         break;
       case 'Set explicit':
         this.props.store.commentToggleExplicit(this.props.comment.guid).then( (result) => {
