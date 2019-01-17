@@ -3,13 +3,14 @@ import videochatService from './videochat.service';
 import BackgroundTimer from 'react-native-background-timer';
 import { Platform } from 'react-native';
 import appStores from '../../../AppStores';
+import { observable, action } from 'mobx';
 
 /**
  * Gathering service
  */
 class GatheringService {
   initialized = false;
-  isActive = false;
+  @observable isActive = false;
   keepAliveInterval;
   roomName = '';
 
@@ -17,6 +18,7 @@ class GatheringService {
    * Join group gathering
    * @param {object} entity Group entity
    */
+  @action
   async join(entity) {
     if (this.isActive) {
       return;
@@ -95,6 +97,7 @@ class GatheringService {
   /**
    * close
    */
+  @action
   close() {
     this.stopKeepAlive();
     this.isActive = false;
