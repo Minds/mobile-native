@@ -42,6 +42,7 @@ import WalletOnboardingScreen from "../wallet/onboarding/WalletOnboardingScreen"
 import ComingSoonScreen from '../static-views/ComingSoonScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import OnboardingScreen from '../onboarding/OnboardingScreen';
+import IssueReportScreen from '../issues/IssueReportScreen';
 
 /**
  * Main stack navigator
@@ -188,6 +189,9 @@ const Stack = createStackNavigator({
   OnboardingScreen: {
     screen: OnboardingScreen,
   },
+  IssueReport: {
+    screen: IssueReportScreen
+  }
 });
 
 export default Stack;

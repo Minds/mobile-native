@@ -428,7 +428,28 @@ export const CommonStyle = StyleSheet.create({
   },
 
   bold: {
+    fontWeight: '700'
+  },
+  extraBold: {
     fontWeight: '800'
+  },
+  fontThin: {
+    fontWeight: '200'
+  },
+  fontHairline: {
+    fontWeight: '100'
+  },
+  fontLight: {
+    fontWeight: '300'
+  },
+  fontNormal: {
+    fontWeight: '400'
+  },
+  fontMedium: {
+    fontWeight: '500'
+  },
+  fontSemibold: {
+    fontWeight: '600'
   },
 
   // Generic screens
