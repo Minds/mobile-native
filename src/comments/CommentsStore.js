@@ -25,6 +25,8 @@ import attachmentService from '../common/services/attachment.service';
 import {toggleExplicit} from '../newsfeed/NewsfeedService';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 
+const COMMENTS_PAGE_SIZE = 6;
+
 /**
  * Comments Store
  */
@@ -51,11 +53,15 @@ export default class CommentsStore {
   // parent for reply
   parent = null;
 
+  getParentPath() {
+    return (this.parent && this.parent.child_path) ? this.parent.child_path : '0:0:0';
+  }
+
   /**
    * Load Comments
    */
   @action
-  async loadComments(guid, limit = 12) {
+  async loadComments(guid, descending = true) {
     if (this.cantLoadMore(guid)) {
       return;
     }
@@ -63,17 +69,16 @@ export default class CommentsStore {
 
     this.loading = true;
 
-    let response;
+    this.include_offset = '';
+    const parent_path = this.getParentPath();
 
     try {
-      if (this.parent) {
-        response = await getCommentsReply(this.guid, this.parent._guid, this.reversed, this.loadPrevious, limit);
-      } else {
-        response = await getComments(this.guid, this.reversed, this.loadPrevious, limit);
-      }
+
+      const response = await getComments(this.guid, parent_path, descending, this.loadPrevious, this.include_offset, COMMENTS_PAGE_SIZE);
+
       response.comments = CommentModel.createMany(response.comments);
       this.loaded = true;
-      this.setComments(response);
+      this.setComments(response, descending);
       this.checkListen(response);
     } catch (err) {
       console.log('error', err);
@@ -135,19 +140,22 @@ export default class CommentsStore {
    * @param {response} response
    */
   @action
-  setComments(response) {
+  setComments(response, descending) {
     if (response.comments) {
       let comments = this.comments;
       this.comments = [];
       this.comments = response.comments.concat(CommentModel.createMany(comments));
 
-      if (response.comments.length < 11) { //nothing more to load
+      if (response.comments.length < COMMENTS_PAGE_SIZE) { //nothing more to load
         response['load-previous'] = '';
       }
     }
     this.reversed = response.reversed;
-    this.loadNext = response['load-next'];
-    this.loadPrevious = response['load-previous'];
+    if (descending) {
+      this.loadPrevious = response['load-previous'];
+    } else {
+      this.loadNext = response['load-previous'];
+    }
   }
 
   /**
@@ -166,7 +174,8 @@ export default class CommentsStore {
     this.saving = true;
 
     const comment = {
-      comment: this.text
+      comment: this.text,
+      parent_path: this.getParentPath()
     }
 
     if (this.attachment.guid) {
@@ -177,14 +186,10 @@ export default class CommentsStore {
       Object.assign(comment, this.embed.meta);
     }
 
-    let data;
-
     try {
-      if (this.parent) {
-        data = await postReplyComment(this.guid, this.parent._guid, comment);
-      } else {
-        data = await postComment(this.guid, comment);
-      }
+
+      const data = await postComment(this.guid, comment);
+
       this.setComment(data.comment);
       this.setText('');
       this.embed.clearRichEmbedAction();
@@ -241,15 +246,11 @@ export default class CommentsStore {
     this.saving = true;
 
     try {
-      if (this.parent) {
-        await updateReplyComment(comment.guid, this.parent._guid, description);
-      } else {
-        await updateComment(comment.guid, description);
-      }
-
+      await updateComment(comment.guid, description);
       this.setCommentDescription(comment, description);
     } catch (err) {
       console.log('error', err);
+      alert('Oops there was an error updating the comment\nPlease try again.');
     } finally {
       this.saving = false;
     }
@@ -431,11 +432,7 @@ export default class CommentsStore {
     if(index >= 0) {
       let entity = this.comments[index];
 
-      if (this.parent) {
-        const result = await deleteReplyComment(guid);
-      } else {
-        const result = await deleteComment(guid);
-      }
+      const result = await deleteComment(guid);
 
       this.comments.splice(index, 1);
     }
