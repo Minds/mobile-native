@@ -191,9 +191,8 @@ export default class CommentsStore {
   @action
   setComments(response, descending) {
     if (response.comments) {
-      let comments = this.comments;
-      this.comments = [];
-      this.comments = CommentModel.createMany(response.comments).concat(comments);
+      const comments = CommentModel.createMany(response.comments)
+      comments.reverse().forEach(c => this.comments.unshift(c));
 
       if (response.comments.length < COMMENTS_PAGE_SIZE) { //nothing more to load
         response['load-previous'] = '';
