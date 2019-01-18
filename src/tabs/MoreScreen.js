@@ -136,13 +136,13 @@ export default class MoreScreen extends Component {
           Linking.openURL(MINDS_URI + 'p/privacy');
         }
       },
-      {
-        name: 'Report a bug',
-        icon: (<Icon name='bug-report' size={ICON_SIZE} style={ styles.icon } />),
-        onPress: () => {
-          this.props.navigation.navigate('IssueReport');
-        }
-      },
+      // {
+      //   name: 'Report a bug',
+      //   icon: (<Icon name='bug-report' size={ICON_SIZE} style={ styles.icon } />),
+      //   onPress: () => {
+      //     this.props.navigation.navigate('IssueReport');
+      //   }
+      // },
       {
         name: 'Check for updates',
         icon: (<Icon name="cloud-download" size={ICON_SIZE} style={ styles.icon }/>),
