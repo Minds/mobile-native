@@ -1181,7 +1181,6 @@ exports[`blog view screen component should renders correctly 1`] = `
           "guid": "",
           "tempIosVideo": "",
         },
-        "comment": [Function],
         "embed": RichEmbedStore {
           "_richEmbedFetchTimer": null,
           "clearRichEmbedAction": [Function],

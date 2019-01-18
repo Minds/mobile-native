@@ -15,9 +15,8 @@ export class SocketService {
   rooms = [];
 
   constructor(){
-    sessionService.onSession((token, guid) => {
-      // console.log('session', guid, token);
-      if (guid) {
+    sessionService.onSession((token) => {
+      if (token) {
         this.setUp();
       } else if(this.socket){
         this.deregister();

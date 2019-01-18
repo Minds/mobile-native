@@ -61,7 +61,7 @@ export default class CommentsStore {
    * Load Comments
    */
   @action
-  async loadComments(guid, descending = true) {
+  async loadComments(guid, descending = true, comment_guid = 0) {
     if (this.cantLoadMore(guid)) {
       return;
     }
@@ -74,9 +74,9 @@ export default class CommentsStore {
 
     try {
 
-      const response = await getComments(this.guid, parent_path, descending, this.loadPrevious, this.include_offset, COMMENTS_PAGE_SIZE);
+      const response = await getComments(this.guid, parent_path, descending, this.loadPrevious, this.include_offset, COMMENTS_PAGE_SIZE, comment_guid);
 
-      response.comments = CommentModel.createMany(response.comments);
+      // response.comments = CommentModel.createMany(response.comments);
       this.loaded = true;
       this.setComments(response, descending);
       this.checkListen(response);
@@ -103,26 +103,75 @@ export default class CommentsStore {
    */
   listen() {
     socket.join(this.socketRoomName);
-    socket.subscribe('comment', this.comment);
+    socket.subscribe('comment', this.commentSocket);
+    socket.subscribe('reply', this.replySocket);
+    socket.subscribe('vote', this.voteSocket);
+    socket.subscribe('vote:cancel', this.voteCancelSocket);
   }
+
+  @action
+  replySocket = (guid) => {
+    for (let i = 0; i < this.comments.length; i++) {
+      if (this.comments[i]._guid == guid) {
+        this.comments[i].replies_count++;
+      }
+    }
+  }
+
+  @action
+  voteSocket = (guid, owner_guid, direction) => {
+    if (owner_guid === session.guid) {
+      return;
+    }
+    let key = 'thumbs:' + direction + ':count';
+    for (let i = 0; i < this.comments.length; i++) {
+       if (this.comments[i]._guid == guid) {
+         this.comments[i][key]++;
+       }
+     }
+   };
+
+   @action
+   voteCancelSocket = (guid, owner_guid, direction) => {
+    if (owner_guid === session.guid) {
+      return;
+    }
+    let key = 'thumbs:' + direction + ':count';
+    for (let i = 0; i < this.comments.length; i++) {
+      if (this.comments[i]._guid == guid) {
+        this.comments[i][key]--;
+      }
+    }
+   };
+
   /**
    * Stop listen for socket
    */
   unlisten() {
     socket.leave(this.socketRoomName);
-    socket.unsubscribe('comment', this.comment);
+    socket.unsubscribe('comment', this.commentSocket);
+    socket.unsubscribe('reply', this.replySocket);
+    socket.unsubscribe('vote', this.voteSocket);
+    socket.unsubscribe('vote:cancel', this.voteCancelSocket);
   }
 
   /**
    * socket comment message
    */
-  comment = (parent_guid, owner_guid, guid, more) => {
+  @action
+  commentSocket = async(parent_guid, owner_guid, guid) => {
     if (owner_guid === session.guid) {
       return;
     }
 
-    this.loadNext = guid;
-    this.loadComments(this.guid, 1);
+    try {
+      const response = await getComments(this.guid, this.getParentPath(), true, null, false, 1, guid);
+      if (response.comments && response.comments[0]) {
+        this.comments.push(CommentModel.create(response.comments[0]));
+      }
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   /**
@@ -144,7 +193,7 @@ export default class CommentsStore {
     if (response.comments) {
       let comments = this.comments;
       this.comments = [];
-      this.comments = response.comments.concat(CommentModel.createMany(comments));
+      this.comments = CommentModel.createMany(response.comments).concat(comments);
 
       if (response.comments.length < COMMENTS_PAGE_SIZE) { //nothing more to load
         response['load-previous'] = '';
