@@ -63,12 +63,14 @@ export default class Comment extends Component {
   render() {
     const comment = this.props.comment;
     const avatarSrc = comment.ownerObj.getAvatarSource();
+    const canReply = comment.can_reply && comment.parent_guid_l2 == 0;
+
     const actions = (
       <View style={[CommonStyle.flexContainer ]}>
         <View style={styles.actionsContainer}>
           <Text style={styles.timestamp}>{formatDate(comment.time_created, 'friendly')}</Text>
           <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
-            {comment.parent_guid_l2 == 0 && <ReplyAction entity={comment} size={16} toggleExpand={this.toggleExpand}/>}
+            {canReply && <ReplyAction entity={comment} size={16} toggleExpand={this.toggleExpand}/>}
             <ThumbUpAction entity={comment} me={this.props.user.me} size={16}/>
             <ThumbDownAction entity={comment} me={this.props.user.me} size={16} />
           </View>
