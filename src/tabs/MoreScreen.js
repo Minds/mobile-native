@@ -9,6 +9,7 @@ import {
   ScrollView,
   Linking,
   Alert,
+  Platform,
   ToastAndroid,
 } from 'react-native';
 
@@ -148,7 +149,7 @@ export default class MoreScreen extends Component {
         icon: (<Icon name="cloud-download" size={ICON_SIZE} style={ styles.icon }/>),
         onPress: async() => {
           let response = await CodePush.sync({
-            updateDialog: true,
+            updateDialog: Platform.OS !== 'ios',
             installMode:  CodePush.InstallMode.IMMEDIATE,
           }, (status) => {
             switch (status) {

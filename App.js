@@ -163,7 +163,7 @@ export default class App extends Component {
   async checkForUpdates() {
     try {
       let response = await CodePush.sync({
-        updateDialog: true,
+        updateDialog: Platform.OS !== 'ios',
         installMode:  CodePush.InstallMode.ON_APP_RESUME,
       });
     } catch (err) { }
