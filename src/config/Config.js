@@ -24,8 +24,6 @@ export const BLOCKCHAIN_URI = 'https://www.minds.com/api/v2/blockchain/proxy/';
 // export const BLOCKCHAIN_URI = 'http://localhost:9545';
 export const MINDS_LINK_URI = 'https://www.minds.com/';
 
-export const MINDS_GITLAB_ID = '';
-export const MINDS_GITLAB_TOKEN = '';
 
 export const MINDS_FEATURES = {
   crypto: Platform.OS === 'ios' ? false : true,
