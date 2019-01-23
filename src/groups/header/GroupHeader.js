@@ -95,8 +95,7 @@ export default class GroupHeader extends Component {
       return <ActivityIndicator style={CommonStyle.paddingRight} size="large"/>
     }
 
-    if (true) {
-    // if (group['videoChatDisabled'] === 0) {
+    if (this.props.store.group['videoChatDisabled'] === 0) {
       return <Icon name="videocam" size={32} color={colors.primary} style={CommonStyle.paddingRight} onPress={this.joinGathering}/>
     }
     return null;
