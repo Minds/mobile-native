@@ -44,10 +44,13 @@ export default class ReplyAction extends Component {
    */
   render() {
     const entity = this.props.entity;
+    const color = entity.replies_count ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)';
+    const textStyle = {color};
 
     return (
       <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.centered, CommonStyle.paddingRight2x, this.props.orientation == 'column' ? CommonStyle.columnAlignCenter : CommonStyle.rowJustifyCenter ]} onPress={this.toggleExpand}>
-        <Icon color={entity.replies_count ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={this.iconName} size={this.props.size} />
+        <Icon color={color} name={this.iconName} size={this.props.size} />
+        <Text style={textStyle}>Reply</Text>
         <Counter size={this.props.size * 0.75} count={entity.replies_count} orientation={this.props.orientation}/>
       </TouchableOpacityCustom>
     );

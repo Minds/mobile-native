@@ -70,9 +70,9 @@ export default class Comment extends Component {
         <View style={styles.actionsContainer}>
           <Text style={styles.timestamp}>{formatDate(comment.time_created, 'friendly')}</Text>
           <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
-            {canReply && <ReplyAction entity={comment} size={16} toggleExpand={this.toggleExpand}/>}
             <ThumbUpAction entity={comment} me={this.props.user.me} size={16}/>
             <ThumbDownAction entity={comment} me={this.props.user.me} size={16} />
+            {canReply && <ReplyAction entity={comment} size={16} toggleExpand={this.toggleExpand}/>}
           </View>
         </View>
       </View>
