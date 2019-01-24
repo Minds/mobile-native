@@ -47,6 +47,10 @@ const ICON_SIZE = 24;
 @inject('user')
 export default class MoreScreen extends Component {
 
+  static navigationOptions = {
+    title: 'Minds',
+  };
+
   state = {
     active: false,
     activities: [],

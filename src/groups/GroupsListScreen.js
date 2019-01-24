@@ -37,6 +37,11 @@ const typeOptions = [
 @inject('groups')
 @observer
 export default class GroupsListScreen extends Component {
+
+  static navigationOptions = {
+    title: 'Groups',
+  };
+
   componentWillMount() {
     this.props.groups.loadList()
   }
