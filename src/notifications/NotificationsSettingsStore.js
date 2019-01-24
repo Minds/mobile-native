@@ -45,7 +45,6 @@ class NotificationsSettingsStore {
     const settings = await getSettings();
 
     Object.keys(settings.toggles).forEach(key => {
-      console.log(key)
       const toggle = settings.toggles[key];
       this.setSetting(key, toggle);
     });
@@ -68,7 +67,7 @@ class NotificationsSettingsStore {
       'boost_gift': { name: 'Boost Gift', value: true },
       'rewards_reminder': { name: 'Rewards Reminder', value: true },
       'rewards_summary': { name: 'Rewards Daily Summary', value: true },
-      'chat': { name: 'Messages', value: true },
+      'message': { name: 'Messages', value: true },
       'messenger_invite': { name: 'Messenger Invites', value: true },
       'group_invite': { name: 'Group Invites', value: true },
     };
