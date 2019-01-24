@@ -166,6 +166,7 @@ configurations.all {
 }
 
 dependencies {
+    compile project(':react-native-exit-app')
     compile project(':react-native-background-timer')
 
     implementation(project(':react-native-jitsi-meet')) {

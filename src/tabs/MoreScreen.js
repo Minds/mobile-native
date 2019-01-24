@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Text,
   ScrollView,
+  BackHandler,
   Linking,
   Alert,
   Platform,
@@ -16,6 +17,8 @@ import {
 import {
   inject
 } from 'mobx-react/native'
+
+import RNExitApp from 'react-native-exit-app';
 
 import {
   MINDS_URI
@@ -168,6 +171,13 @@ export default class MoreScreen extends Component {
                 break;
             }
           });
+        }
+      },
+      {
+        name: 'Exit',
+        icon: (<Icon name='close' size={ICON_SIZE} style={ styles.icon } />),
+        onPress: () => {
+          RNExitApp.exitApp();
         }
       }
     ];
