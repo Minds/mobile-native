@@ -119,11 +119,12 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Post comment
    */
-  postComment = () => {
+  postComment = async() => {
     const store = this.props.store;
+    if (store.text.trim() == '' && !store.attachment.hasAttachment) return;
     Keyboard.dismiss();
-    if (!store.saving && (store.text != '' || store.attachment.hasAttachment)){
-      store.post();
+    if (!store.saving){
+      await store.post();
       if (!this.props.parent) this.scrollToBottom();
     }
   }
@@ -248,7 +249,7 @@ export default class CommentList extends React.Component<Props, State> {
               <ActivityIndicator size={'large'} /> :
               <View style={CS.rowJustifyEnd}>
                 <TouchableOpacity onPress={() => this.actionAttachmentSheet.show()} style={CS.paddingRight2x}><Icon name="md-attach" size={24} style={CS.paddingRight2x} /></TouchableOpacity>
-                <TouchableOpacity onPress={() => this.postComment()} style={CS.paddingRight2x}><Icon name="md-send" size={24} /></TouchableOpacity>
+                <TouchableOpacity onPress={this.postComment} style={CS.paddingRight2x}><Icon name="md-send" size={24} /></TouchableOpacity>
               </View>}
         </View>
           {attachment.hasAttachment && <View style={CmpStyle.preview}>
