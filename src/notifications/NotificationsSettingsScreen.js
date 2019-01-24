@@ -19,6 +19,10 @@ import {
 @observer
 export default class NotificationsSettingsScreen extends Component {
 
+  static navigationOptions = {
+    title: 'Notifications',
+  };
+
   /**
    * On component will mount
    */
@@ -54,7 +58,7 @@ export default class NotificationsSettingsScreen extends Component {
 const styles = StyleSheet.create({
   title: {
     height:35,
-    fontSize: 9,
+    fontSize: 12,
     padding: 10,
     backgroundColor: '#DDD',
   },

@@ -10,6 +10,7 @@ import {
 import { observer, inject } from 'mobx-react/native';
 import * as Progress from 'react-native-progress';
 import colors from '../styles/Colors';
+import { CommonStyle as CS } from '../styles/Common';
 
 @inject('capture')
 @observer
@@ -30,7 +31,7 @@ export default class CapturePostButton extends Component {
               :
               <TouchableOpacity
                 onPress={this.props.onPress}
-                style={styles.button}
+                style={[styles.button, CS.borderRadius10x, CS.borderPrimary, CS.border]}
               >
                 <Text style={styles.buttonText}>POST</Text>
               </TouchableOpacity>
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 4,
-    padding: 8,
+    padding: 6,
     paddingLeft: 16,
     paddingRight: 16,
     alignItems: 'center',

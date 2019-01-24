@@ -24,6 +24,12 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 @observer
 export default class ActivityScreen extends Component {
 
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: navigation.getParam('entity', {ownerObj:{name:''}}).ownerObj.name
+    };
+  };
+
   entityStore = new SingleEntityStore();
 
   state = {
