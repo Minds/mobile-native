@@ -28,7 +28,8 @@ export default class IssueReportScreen extends Component {
   state = {
     titleRequired: false,
     descriptionRequired: false,
-    stepsRequired: false
+    stepsRequired: false,
+    sending: false
   }
 
   title = '';
@@ -68,11 +69,14 @@ export default class IssueReportScreen extends Component {
     } else {
       const description = `### Summary:\n\n${this.description}\n\n### Steps to reproduce:\n\n${this.steps}\n\n### App version\n\n${this.getApp()}\n\n${this.getPlatform()}`;
       try {
+        this.setState({sending: true});
         const data = await gitlab.postIssue(this.title, description);
-        Alert.alert(`Issue #${data.idd} submitted successfully.`);
+        Alert.alert(`Issue #${data.iid} submitted successfully.`);
         this.props.navigation.goBack()
       } catch (error) {
         Alert.alert('Oops there was an error submiting the issue. Please try again.');
+      } finally {
+        this.setState({sending: false});
       }
     }
   }
@@ -138,7 +142,7 @@ export default class IssueReportScreen extends Component {
           <Text style={[CS.fontM, CS.fontThin]}>This bug report is anonymous</Text>
         </View>
         <View style={[CS.paddingTop2x, CS.centered]}>
-          <Button text="Submit" textStyle={CS.fontXL} onPress={this.onSubmit} inverted/>
+          <Button text="Submit" textStyle={CS.fontXL} onPress={this.onSubmit} loading={this.state.sending} inverted/>
         </View>
       </ScrollView>
     );

@@ -61,7 +61,7 @@ export default class Button extends Component {
     }
 
     const body = this.props.loading ?
-      <ActivityIndicator/> :
+      <ActivityIndicator color={mainColor}/> :
       <Text style={[{ color: textColor || mainColor }, textStyle]} > {this.props.text} </Text>;
 
     const onButtonPress = this.props.loading ? null : onPress;
