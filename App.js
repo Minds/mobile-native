@@ -43,6 +43,7 @@ import stores from './AppStores';
 import './AppErrors';
 import './src/common/services/socket.service';
 import pushService from './src/common/services/push.service';
+import mindsService from './src/common/services/minds.service';
 import receiveShare from './src/common/services/receive-share.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
@@ -55,6 +56,8 @@ pushService.init();
 
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
+
+  mindsService.getSettings();
 
   // register device token into backend on login
   pushService.registerToken();
