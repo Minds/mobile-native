@@ -84,6 +84,7 @@ console.disableYellowBox = true;
 /**
  * App
  */
+@codePush
 export default class App extends Component {
 
   constructor(props) {
