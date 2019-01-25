@@ -73,6 +73,7 @@ class ApiService {
         if (err.status && err.status == 401) {
           const refreshed = await session.badAuthorization(); //not actually a logout
           if (refreshed) return await this.get(url, params, signal);
+          session.logout();
         }
         throw err;
       }

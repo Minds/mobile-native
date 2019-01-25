@@ -126,15 +126,16 @@ export default class App extends Component {
 
     const token = await sessionService.init();
 
-    this.checkForUpdates();
-
     if (!token) {
       NavigationService.reset('Login');
     }
 
+
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
     Linking.addEventListener('url', event => this.handleOpenURL(event.url));
     AppState.addEventListener('change', this.handleAppStateChange);
+
+    this.checkForUpdates();
   }
 
   /**
