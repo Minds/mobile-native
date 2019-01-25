@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: '#EEE',
     borderRadius: 15,
+    padding: 12,
     marginLeft: 8,
     marginRight: 8,
   },
@@ -178,7 +179,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   message: {
-    padding: 16,
     maxWidth: 272,
   },
   messagedate: {
