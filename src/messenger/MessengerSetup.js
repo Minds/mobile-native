@@ -77,15 +77,18 @@ export default class MessengerSetup extends Component {
     };
   }
 
-  setup = () => {
+  setup = async() => {
     if (this.password !== this.confirm) {
       Alert.alert('password and confirmation do not match!');
       return;
     }
-    this.props.messengerList.doSetup(this.password)
-      .then(resp => {
-        this.handleOnDone(resp);
-      });
+    try {
+      const response = await this.props.messengerList.doSetup(this.password);
+      this.handleOnDone(response);
+    } catch (err) {
+      console.log(err);
+      alert('Oops something went wrong');
+    }
   }
 
   handleOnDone(resp) {
