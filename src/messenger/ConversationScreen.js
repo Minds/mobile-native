@@ -88,7 +88,7 @@ export default class ConversationScreen extends Component {
         // we send the conversation to update the topbar (in case we only receive the guid)
         this.props.navigation.setParams({ conversation });
       });
-    this.store.load(); //iOS needs to be preloaded
+    //this.store.load(); //iOS needs to be preloaded
   }
 
   /**
@@ -141,6 +141,11 @@ export default class ConversationScreen extends Component {
     this.updateTopAvatar(conversation);
   }
 
+  onDoneSetup = async () => {
+    const conversation = await this.store.load(true);
+    this.updateTopAvatar(conversation);
+  }
+
   /**
    * Render component
    */
@@ -153,7 +158,7 @@ export default class ConversationScreen extends Component {
 
     // show setup !configured yet
     if (shouldSetup) {
-      return <MessengerSetup navigation={this.props.navigation} />
+      return <MessengerSetup navigation={this.props.navigation} onDone={this.onDoneSetup} />
     }
 
     if (this.store.loading) {
