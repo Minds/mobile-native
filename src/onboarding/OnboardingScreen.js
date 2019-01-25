@@ -22,8 +22,10 @@ import {
 
 import WalletOnboardingJoinRewardsScreen from '../wallet/onboarding/screens/WalletOnboardingJoinRewardsScreen';
 import MessengerOnboardingScreen from '../messenger/MessengerOnboardingScreen';
-
+import isIphoneX from '../common/helpers/isIphoneX';
 import stylesheet from './stylesheet';
+
+const headerStyle = isIphoneX() ? {paddingTop: 40} : {};
 
 @inject('user', 'wallet')
 @observer
@@ -31,7 +33,7 @@ export default class OnboardingScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
     header: (
-      <View style={style.header}>
+      <View style={[style.header, headerStyle]}>
         <View></View>
 
         <View>
