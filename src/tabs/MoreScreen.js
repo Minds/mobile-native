@@ -40,6 +40,7 @@ import { ComponentsStyle } from '../styles/Components';
 import { CommonStyle } from '../styles/Common';
 import shareService from '../share/ShareService';
 import { Version } from '../config/Version';
+import mindsService from '../common/services/minds.service';
 
 
 const ICON_SIZE = 24;
@@ -145,13 +146,6 @@ export default class MoreScreen extends Component {
         }
       },
       {
-        name: 'Report a bug',
-        icon: (<Icon name='bug-report' size={ICON_SIZE} style={ styles.icon } />),
-        onPress: () => {
-          this.props.navigation.navigate('IssueReport');
-        }
-      },
-      {
         name: 'Check for updates',
         icon: (<Icon name="cloud-download" size={ICON_SIZE} style={ styles.icon }/>),
         onPress: async() => {
@@ -172,15 +166,27 @@ export default class MoreScreen extends Component {
             }
           });
         }
-      },
-      {
-        name: 'Exit',
-        icon: (<Icon name='close' size={ICON_SIZE} style={ styles.icon } />),
-        onPress: () => {
-          RNExitApp.exitApp();
-        }
       }
     ];
+
+    // if it is enabled
+    if (mindsService.settings && mindsService.settings.features.mobile_bug_report) {
+      list.push({
+        name: 'Report a bug',
+        icon: (<Icon name='bug-report' size={ICON_SIZE} style={ styles.icon } />),
+        onPress: () => {
+          this.props.navigation.navigate('IssueReport');
+        }
+      });
+    }
+
+    list.push({
+      name: 'Exit',
+      icon: (<Icon name='close' size={ICON_SIZE} style={ styles.icon } />),
+      onPress: () => {
+        RNExitApp.exitApp();
+      }
+    });
 
     return (
       <ScrollView style={styles.scrollView}>
