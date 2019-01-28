@@ -43,6 +43,7 @@ import stores from './AppStores';
 import './AppErrors';
 import './src/common/services/socket.service';
 import pushService from './src/common/services/push.service';
+import mindsService from './src/common/services/minds.service';
 import receiveShare from './src/common/services/receive-share.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
@@ -55,6 +56,8 @@ pushService.init();
 
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
+
+  mindsService.getSettings();
 
   // register device token into backend on login
   pushService.registerToken();
@@ -84,6 +87,7 @@ console.disableYellowBox = true;
 /**
  * App
  */
+@codePush
 export default class App extends Component {
 
   constructor(props) {
@@ -122,15 +126,16 @@ export default class App extends Component {
 
     const token = await sessionService.init();
 
-    this.checkForUpdates();
-
     if (!token) {
       NavigationService.reset('Login');
     }
 
+
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
     Linking.addEventListener('url', event => this.handleOpenURL(event.url));
     AppState.addEventListener('change', this.handleAppStateChange);
+
+    this.checkForUpdates();
   }
 
   /**
@@ -163,7 +168,7 @@ export default class App extends Component {
   async checkForUpdates() {
     try {
       let response = await CodePush.sync({
-        updateDialog: true,
+        updateDialog: Platform.OS !== 'ios',
         installMode:  CodePush.InstallMode.ON_APP_RESUME,
       });
     } catch (err) { }

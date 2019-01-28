@@ -48,12 +48,21 @@ export default class Button extends Component {
       accessibilityLabel,
       textStyle,
       disabled,
-      loading
+      loading,
+      inverted
     } = this.props;
 
+    let background = 'white';
+    let mainColor = color;
+
+    if (inverted !== undefined) {
+      background = color;
+      mainColor = 'white';
+    }
+
     const body = this.props.loading ?
-      <ActivityIndicator/> :
-      <Text style={[{ color: textColor || color }, textStyle]} > {this.props.text} </Text>;
+      <ActivityIndicator color={mainColor}/> :
+      <Text style={[{ color: textColor || mainColor }, textStyle]} > {this.props.text} </Text>;
 
     const onButtonPress = this.props.loading ? null : onPress;
 
@@ -63,7 +72,7 @@ export default class Button extends Component {
         disabled={disabled}
         underlayColor='transparent'
         accessibilityLabel={accessibilityLabel}
-        style={[ComponentsStyle.commonButton, {borderColor: color}, containerStyle]}
+        style={[ComponentsStyle.commonButton, {borderColor: mainColor, backgroundColor: background}, containerStyle]}
       >
         {children}
         {body}

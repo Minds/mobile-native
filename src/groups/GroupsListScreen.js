@@ -37,6 +37,11 @@ const typeOptions = [
 @inject('groups')
 @observer
 export default class GroupsListScreen extends Component {
+
+  static navigationOptions = {
+    title: 'Groups',
+  };
+
   componentWillMount() {
     this.props.groups.loadList()
   }
@@ -85,7 +90,7 @@ export default class GroupsListScreen extends Component {
         containerStyle={{ borderBottomWidth: 0 }}
         title={item.name}
         keyExtractor={item => item.rowKey}
-        avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_CDN_URI + 'fs/v1/avatars/' + item.guid + '/small' }} />}
+        avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_CDN_URI + 'fs/v1/avatars/' + item.guid + '/small/' + item.icontime }} />}
         subtitle={'Members ' + item['members:count']}
         hideChevron={true}
         onPress={() => this.navigateToGroupJoin(item)}

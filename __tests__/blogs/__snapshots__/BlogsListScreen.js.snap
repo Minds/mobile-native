@@ -13,8 +13,8 @@ exports[`blog list screen component should renders correctly 1`] = `
               "selectedTextStyle": Object {
                 "color": "black",
               },
-              "text": "TRENDING",
-              "value": "trending",
+              "text": "TOP",
+              "value": "suggested",
             },
             Object {
               "selectedTextStyle": Object {
@@ -10519,7 +10519,7 @@ exports[`blog list screen component should renders correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "borderBottomColor": "#4690D6",
+                  "borderBottomColor": "#FFF",
                   "borderBottomWidth": 2,
                   "flex": 1,
                   "flexDirection": "column",
@@ -10532,20 +10532,15 @@ exports[`blog list screen component should renders correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": "#4690D6",
-                      "paddingTop": 5,
-                      "textAlign": "center",
+                      "paddingTop": 3,
                     },
                     Object {
                       "fontSize": 10,
                     },
-                    Object {
-                      "color": "black",
-                    },
                   ]
                 }
               >
-                TRENDING
+                TOP
               </Text>
             </View>
             <View

@@ -20,6 +20,7 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
+    minHeight:100,
     flex: 1
   }
 }

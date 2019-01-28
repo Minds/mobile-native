@@ -7,6 +7,7 @@ import {
   Image,
   View,
   TouchableHighlight,
+  ActivityIndicator,
 } from 'react-native';
 
 import {
@@ -46,7 +47,7 @@ export default class GroupHeader extends Component {
    */
   getAvatar() {
     const group = this.props.store.group;
-    return `${MINDS_CDN_URI}fs/v1/avatars/${group.guid}/large`;
+    return `${MINDS_CDN_URI}fs/v1/avatars/${group.guid}/large/${group.icontime}`;
   }
 
   /**
@@ -89,12 +90,20 @@ export default class GroupHeader extends Component {
    * Get Gathering Button
    */
   getGatheringButton() {
-    const group = this.props.store.group;
 
-    if (group['videoChatDisabled'] === 0) {
-      return <Icon name="videocam" size={24} color={colors.primary} style={CommonStyle.paddingRight} onPress={() => { gathering.join(group) }}/>
+    if (gathering.isActive) {
+      return <ActivityIndicator style={CommonStyle.paddingRight} size="large"/>
+    }
+
+    if (this.props.store.group['videoChatDisabled'] === 0) {
+      return <Icon name="videocam" size={32} color={colors.primary} style={CommonStyle.paddingRight} onPress={this.joinGathering}/>
     }
     return null;
+  }
+
+  joinGathering = () => {
+    const group = this.props.store.group;
+    gathering.join(group);
   }
 
 

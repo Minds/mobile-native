@@ -7,14 +7,18 @@ import {
   StyleSheet,
   Text,
   ScrollView,
+  BackHandler,
   Linking,
   Alert,
+  Platform,
   ToastAndroid,
 } from 'react-native';
 
 import {
   inject
 } from 'mobx-react/native'
+
+import RNExitApp from 'react-native-exit-app';
 
 import {
   MINDS_URI
@@ -36,6 +40,7 @@ import { ComponentsStyle } from '../styles/Components';
 import { CommonStyle } from '../styles/Common';
 import shareService from '../share/ShareService';
 import { Version } from '../config/Version';
+import mindsService from '../common/services/minds.service';
 
 
 const ICON_SIZE = 24;
@@ -45,6 +50,10 @@ const ICON_SIZE = 24;
  */
 @inject('user')
 export default class MoreScreen extends Component {
+
+  static navigationOptions = {
+    title: 'Minds',
+  };
 
   state = {
     active: false,
@@ -141,7 +150,7 @@ export default class MoreScreen extends Component {
         icon: (<Icon name="cloud-download" size={ICON_SIZE} style={ styles.icon }/>),
         onPress: async() => {
           let response = await CodePush.sync({
-            updateDialog: true,
+            updateDialog: Platform.OS !== 'ios',
             installMode:  CodePush.InstallMode.IMMEDIATE,
           }, (status) => {
             switch (status) {
@@ -159,6 +168,25 @@ export default class MoreScreen extends Component {
         }
       }
     ];
+
+    // if it is enabled
+    if (mindsService.settings && mindsService.settings.features.mobile_bug_report) {
+      list.push({
+        name: 'Report a bug',
+        icon: (<Icon name='bug-report' size={ICON_SIZE} style={ styles.icon } />),
+        onPress: () => {
+          this.props.navigation.navigate('IssueReport');
+        }
+      });
+    }
+
+    list.push({
+      name: 'Exit',
+      icon: (<Icon name='close' size={ICON_SIZE} style={ styles.icon } />),
+      onPress: () => {
+        RNExitApp.exitApp();
+      }
+    });
 
     return (
       <ScrollView style={styles.scrollView}>

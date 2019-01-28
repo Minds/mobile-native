@@ -25,6 +25,8 @@ import attachmentService from '../common/services/attachment.service';
 import {toggleExplicit} from '../newsfeed/NewsfeedService';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 
+const COMMENTS_PAGE_SIZE = 6;
+
 /**
  * Comments Store
  */
@@ -35,6 +37,7 @@ export default class CommentsStore {
   @observable loaded = false;
   @observable saving = false;
   @observable text = '';
+  @observable loading = false;
 
   // attachment store
   attachment = new AttachmentStore();
@@ -50,30 +53,37 @@ export default class CommentsStore {
   // parent for reply
   parent = null;
 
+  getParentPath() {
+    return (this.parent && this.parent.child_path) ? this.parent.child_path : '0:0:0';
+  }
+
   /**
    * Load Comments
    */
   @action
-  async loadComments(guid, limit = 12) {
+  async loadComments(guid, descending = true, comment_guid = 0) {
     if (this.cantLoadMore(guid)) {
       return;
     }
     this.guid = guid;
 
-    let response;
+    this.loading = true;
+
+    this.include_offset = '';
+    const parent_path = this.getParentPath();
 
     try {
-      if (this.parent) {
-        response = await getCommentsReply(this.guid, this.parent._guid, this.reversed, this.loadPrevious, limit);
-      } else {
-        response = await getComments(this.guid, this.reversed, this.loadPrevious, limit);
-      }
-      response.comments = CommentModel.createMany(response.comments);
+
+      const response = await getComments(this.guid, parent_path, descending, this.loadPrevious, this.include_offset, COMMENTS_PAGE_SIZE, comment_guid);
+
+      // response.comments = CommentModel.createMany(response.comments);
       this.loaded = true;
-      this.setComments(response);
+      this.setComments(response, descending);
       this.checkListen(response);
     } catch (err) {
       console.log('error', err);
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -93,26 +103,75 @@ export default class CommentsStore {
    */
   listen() {
     socket.join(this.socketRoomName);
-    socket.subscribe('comment', this.comment);
+    socket.subscribe('comment', this.commentSocket);
+    socket.subscribe('reply', this.replySocket);
+    socket.subscribe('vote', this.voteSocket);
+    socket.subscribe('vote:cancel', this.voteCancelSocket);
   }
+
+  @action
+  replySocket = (guid) => {
+    for (let i = 0; i < this.comments.length; i++) {
+      if (this.comments[i]._guid == guid) {
+        this.comments[i].replies_count++;
+      }
+    }
+  }
+
+  @action
+  voteSocket = (guid, owner_guid, direction) => {
+    if (owner_guid === session.guid) {
+      return;
+    }
+    let key = 'thumbs:' + direction + ':count';
+    for (let i = 0; i < this.comments.length; i++) {
+       if (this.comments[i]._guid == guid) {
+         this.comments[i][key]++;
+       }
+     }
+   };
+
+   @action
+   voteCancelSocket = (guid, owner_guid, direction) => {
+    if (owner_guid === session.guid) {
+      return;
+    }
+    let key = 'thumbs:' + direction + ':count';
+    for (let i = 0; i < this.comments.length; i++) {
+      if (this.comments[i]._guid == guid) {
+        this.comments[i][key]--;
+      }
+    }
+   };
+
   /**
    * Stop listen for socket
    */
   unlisten() {
     socket.leave(this.socketRoomName);
-    socket.unsubscribe('comment', this.comment);
+    socket.unsubscribe('comment', this.commentSocket);
+    socket.unsubscribe('reply', this.replySocket);
+    socket.unsubscribe('vote', this.voteSocket);
+    socket.unsubscribe('vote:cancel', this.voteCancelSocket);
   }
 
   /**
    * socket comment message
    */
-  comment = (parent_guid, owner_guid, guid, more) => {
+  @action
+  commentSocket = async(parent_guid, owner_guid, guid) => {
     if (owner_guid === session.guid) {
       return;
     }
 
-    this.loadNext = guid;
-    this.loadComments(this.guid, 1);
+    try {
+      const response = await getComments(this.guid, this.getParentPath(), true, null, false, 1, guid);
+      if (response.comments && response.comments[0]) {
+        this.comments.push(CommentModel.create(response.comments[0]));
+      }
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   /**
@@ -130,19 +189,21 @@ export default class CommentsStore {
    * @param {response} response
    */
   @action
-  setComments(response) {
+  setComments(response, descending) {
     if (response.comments) {
-      let comments = this.comments;
-      this.comments = [];
-      this.comments = response.comments.concat(CommentModel.createMany(comments));
+      const comments = CommentModel.createMany(response.comments)
+      comments.reverse().forEach(c => this.comments.unshift(c));
 
-      if (response.comments.length < 11) { //nothing more to load
+      if (response.comments.length < COMMENTS_PAGE_SIZE) { //nothing more to load
         response['load-previous'] = '';
       }
     }
     this.reversed = response.reversed;
-    this.loadNext = response['load-next'];
-    this.loadPrevious = response['load-previous'];
+    if (descending) {
+      this.loadPrevious = response['load-previous'];
+    } else {
+      this.loadNext = response['load-previous'];
+    }
   }
 
   /**
@@ -161,7 +222,8 @@ export default class CommentsStore {
     this.saving = true;
 
     const comment = {
-      comment: this.text
+      comment: this.text,
+      parent_path: this.getParentPath()
     }
 
     if (this.attachment.guid) {
@@ -172,14 +234,10 @@ export default class CommentsStore {
       Object.assign(comment, this.embed.meta);
     }
 
-    let data;
-
     try {
-      if (this.parent) {
-        data = await postReplyComment(this.guid, this.parent._guid, comment);
-      } else {
-        data = await postComment(this.guid, comment);
-      }
+
+      const data = await postComment(this.guid, comment);
+
       this.setComment(data.comment);
       this.setText('');
       this.embed.clearRichEmbedAction();
@@ -198,11 +256,12 @@ export default class CommentsStore {
   @action
   clearComments() {
     this.comments = [];
-    this.reversed = '';
+    this.reversed = true;
     this.loadNext = '';
     this.loadPrevious = '';
     this.socketRoomName = '';
     this.loaded = false;
+    this.loading = false;
     this.saving = false;
     this.text = '';
   }
@@ -211,9 +270,9 @@ export default class CommentsStore {
    * Refresh
    */
   @action
-  refresh() {
+  refresh(guid) {
     this.refreshing = true;
-    clearComments();
+    this.clearComments();
   }
 
   /**
@@ -223,6 +282,7 @@ export default class CommentsStore {
   refreshDone() {
     this.refreshing = false;
   }
+
 
   /**
    * Update comment
@@ -234,15 +294,11 @@ export default class CommentsStore {
     this.saving = true;
 
     try {
-      if (this.parent) {
-        await updateReplyComment(comment.guid, this.parent._guid, description);
-      } else {
-        await updateComment(comment.guid, description);
-      }
-
+      await updateComment(comment.guid, description);
       this.setCommentDescription(comment, description);
     } catch (err) {
       console.log('error', err);
+      alert('Oops there was an error updating the comment\nPlease try again.');
     } finally {
       this.saving = false;
     }
@@ -424,11 +480,7 @@ export default class CommentsStore {
     if(index >= 0) {
       let entity = this.comments[index];
 
-      if (this.parent) {
-        const result = await deleteReplyComment(guid);
-      } else {
-        const result = await deleteComment(guid);
-      }
+      const result = await deleteComment(guid);
 
       this.comments.splice(index, 1);
     }

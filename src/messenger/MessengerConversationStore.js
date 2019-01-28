@@ -34,11 +34,11 @@ class MessengerConversationStore {
 
   /**
    * Initial load
-   * @param {string} offset
+   * @param {bool} refresh
    */
   @action
-  async load() {
-    if (this.loading || !this.moreData) return;
+  async load(refresh = false) {
+    if (!refresh && (this.loading || !this.moreData)) return;
     this.loading = true;
 
     try {

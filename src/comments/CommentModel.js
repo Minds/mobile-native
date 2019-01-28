@@ -1,4 +1,4 @@
-import { computed, action, observable } from 'mobx';
+import { computed, action, observable, decorate } from 'mobx';
 
 import ActivityModel from '../newsfeed/ActivityModel';
 
@@ -14,3 +14,10 @@ export default class CommentModel extends ActivityModel {
     this.expanded = !this.expanded;
   }
 }
+
+/**
+ * Define model observables
+ */
+decorate(CommentModel, {
+  'replies_count': observable,
+});

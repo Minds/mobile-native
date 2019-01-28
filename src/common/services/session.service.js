@@ -64,6 +64,8 @@ class SessionService {
       this.setRefreshToken(refresh_token);
       this.setToken(access_token);
 
+      if (!access_token) return null;
+
       if (
         access_token_expires * 1000 < Date.now()
         && refresh_token

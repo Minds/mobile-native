@@ -6224,9 +6224,9 @@ react-native-background-timer@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/react-native-background-timer/-/react-native-background-timer-2.1.1.tgz#9a2489681ab2f8033c213c73272e9d4c47572cd5"
 
-react-native-code-push@^5.4.2:
-  version "5.4.2"
-  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-5.4.2.tgz#a43f976f983b9866005aac50fe7c1e915ab23943"
+react-native-code-push@^5.5.2:
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-5.5.2.tgz#b394e8f92f8bc4d184d73ff8d066406def24c1e8"
   dependencies:
     code-push "2.0.6"
     glob "^5.0.15"
@@ -6277,6 +6277,11 @@ react-native-elements@^0.19.1:
 react-native-exception-handler@^2.6.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.9.0.tgz#d29da023154059416ebf5798b8d2664bfe22941f"
+
+react-native-exit-app@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-exit-app/-/react-native-exit-app-1.0.0.tgz#a2fbb121d902e6967cd8a365fe8453e5c4bc3172"
+  integrity sha512-2d8RlzfjA4fTJaXD3xObTt0hv+7i41bDyWDB9+zOI0zS1nGvY4mtENKhte8ceRih/3eZWQLpwkkHFP1Y8AG/5w==
 
 react-native-fast-image@^5.1.0:
   version "5.1.0"

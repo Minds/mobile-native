@@ -7,7 +7,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import { Button } from 'react-native-elements';
+import Button from '../common/components/Button';
 
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
@@ -65,8 +65,8 @@ export default class CommentEditor extends Component {
           value={this.state.text}
         />
         <View style={CommonStyle.rowJustifyEnd}>
-          <Button title="Cancel" onPress={this.cancel} />
-          <Button title="Save" backgroundColor={colors.primary} onPress={this.update} disabled={this.props.store.saving}/>
+          <Button text="Cancel" onPress={this.cancel} color={colors.primary} />
+          <Button text="Save" color={colors.primary} onPress={this.update} loading={this.props.store.saving} inverted/>
         </View>
       </View>
     )

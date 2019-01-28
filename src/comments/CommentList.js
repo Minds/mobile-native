@@ -119,11 +119,12 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Post comment
    */
-  postComment = () => {
+  postComment = async() => {
     const store = this.props.store;
+    if (store.text.trim() == '' && !store.attachment.hasAttachment) return;
     Keyboard.dismiss();
-    if (!store.saving && (store.text != '' || store.attachment.hasAttachment)){
-      store.post();
+    if (!store.saving){
+      await store.post();
       if (!this.props.parent) this.scrollToBottom();
     }
   }
@@ -181,7 +182,7 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Load comments
    */
-  loadComments = async () => {
+  loadComments = async (loadingMore = false, descending = true) => {
     let guid;
     const scrollToBottom = this.props.navigation.state.params.scrollToBottom;
 
@@ -192,9 +193,9 @@ export default class CommentList extends React.Component<Props, State> {
       }
     }
 
-    await this.props.store.loadComments(guid);
+    await this.props.store.loadComments(guid, descending);
 
-    if (scrollToBottom && this.props.store.loaded) {
+    if (!loadingMore && scrollToBottom && this.props.store.loaded) {
       this.scrollBottomIfNeeded();
     }
   }
@@ -248,7 +249,7 @@ export default class CommentList extends React.Component<Props, State> {
               <ActivityIndicator size={'large'} /> :
               <View style={CS.rowJustifyEnd}>
                 <TouchableOpacity onPress={() => this.actionAttachmentSheet.show()} style={CS.paddingRight2x}><Icon name="md-attach" size={24} style={CS.paddingRight2x} /></TouchableOpacity>
-                <TouchableOpacity onPress={() => this.postComment()} style={CS.paddingRight2x}><Icon name="md-send" size={24} /></TouchableOpacity>
+                <TouchableOpacity onPress={this.postComment} style={CS.paddingRight2x}><Icon name="md-send" size={24} /></TouchableOpacity>
               </View>}
         </View>
           {attachment.hasAttachment && <View style={CmpStyle.preview}>
@@ -297,17 +298,28 @@ export default class CommentList extends React.Component<Props, State> {
       <View>
         { header }
         { this.props.store.loadPrevious && !this.props.store.loading ?
-            <TouchableHighlight
-            onPress={() => { this.loadComments()}}
+          <TouchableHighlight
+            onPress={() => { this.loadComments(true)}}
             underlayColor = 'transparent'
             style = {[CS.rowJustifyCenter, CS.padding2x]}
           >
             <Text style={[CS.fontM, CS.colorPrimary]}><IconMC name="update" size={16} /> LOAD EARLIER </Text>
           </TouchableHighlight> : null
         }
+        {this.props.store.loading && this.props.store.loaded && <ActivityIndicator size="small" style={CS.paddingTop2x}/>}
       </View>
     )
   }
+
+  /**
+   * Refresh comments
+   */
+  refresh = async () => {
+    this.props.store.refresh();
+    await this.loadComments();
+    this.props.store.refreshDone();
+  }
+
 
   /**
    * Render
@@ -339,6 +351,7 @@ export default class CommentList extends React.Component<Props, State> {
               renderItem={this.renderComment}
               keyExtractor={item => item.guid}
               initialNumToRender={25}
+              onRefresh={this.refresh}
               refreshing={this.props.store.refreshing}
               ListEmptyComponent={this.props.store.loaded && !this.props.store.refreshing ? <View/> : <CenteredLoading/>}
               style={[CS.flexContainer, CS.backgroundWhite]}

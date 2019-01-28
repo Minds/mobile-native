@@ -35,6 +35,10 @@ const typeOptions = [
 @observer
 export default class BlogsListScreen extends Component {
 
+  static navigationOptions = {
+    title: 'Blogs',
+  };
+
   /**
    * Load data on mount
    */

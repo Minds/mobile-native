@@ -20,14 +20,17 @@ import WalletOnboardingJoinRewardsScreen from './screens/WalletOnboardingJoinRew
 import WalletOnboardingOnChainSetupScreen from './screens/WalletOnboardingOnChainSetupScreen';
 import WalletOnboardingFinishedScreen from './screens/WalletOnboardingFinishedScreen';
 
+import isIphoneX from '../../common/helpers/isIphoneX';
 import stylesheet from '../../onboarding/stylesheet';
+
+const headerStyle = isIphoneX() ? {paddingTop: 40} : {};
 
 @inject('user', 'wallet')
 @observer
 export default class WalletOnboardingScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     header: (
-      <View style={style.header}>
+      <View style={[style.header, headerStyle]}>
         <Icon size={28} name="ios-close" onPress={() => navigation.goBack()} />
 
         <View>

@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.0.1803</string>
+	<string>3.1.2000</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -36,7 +36,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>201901100003</string>
+	<string>201901250001</string>
+	<key>CodePushDeploymentKey</key>
+	<string>_C083_CqL7CmKwASrv6Xrj1wqH7erJMhIBnRQ</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>

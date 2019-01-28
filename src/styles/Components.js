@@ -65,8 +65,7 @@ export const ComponentsStyle = StyleSheet.create({
     margin: 4,
     padding: 4,
     alignItems: 'center',
-    borderRadius: 3,
-    backgroundColor: 'white',
+    borderRadius: 15,
     borderWidth: 1,
   },
   bluebutton: {

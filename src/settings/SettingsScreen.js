@@ -29,6 +29,11 @@ import appStores from '../../AppStores';
 const ICON_SIZE = 24;
 
 export default class SettingsScreen extends Component {
+
+  static navigationOptions = {
+    title: 'Settings',
+  };
+
   state = {
     categories: [],
   }

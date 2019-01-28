@@ -150,6 +150,7 @@ class MessengerListStore {
           session.sessionStorage.setPrivateKey(privateKey);
           this.setPrivateKey(privateKey);
         }
+        return privateKey;
       })
       .catch((e) => {
         Alert.alert(
@@ -172,26 +173,21 @@ class MessengerListStore {
    */
   async doSetup(password) {
     this.setUnlocking(true);
-    return messengerService.doSetup(password)
-      .then(privateKey => {
-        if (privateKey) {
-          session.sessionStorage.setPrivateKey(privateKey);
-          this.setPrivateKey(privateKey);
-        }
-      })
-      .finally(() => {
-        this.setUnlocking(false);
-      })
-      .catch(() => {
-        Alert.alert(
-          'Sorry!',
-          'Error creating the encryptions keys',
-          [
-            { text: 'Try again'},
-          ],
-          { cancelable: false }
-        )
-      });
+    try {
+      const success = await messengerService.doSetup(password);
+      return await this.getCryptoKeys(password);
+    } catch (error) {
+      Alert.alert(
+        'Sorry!',
+        'Error creating the encryptions keys',
+        [
+          { text: 'Try again'},
+        ],
+        { cancelable: false }
+      )
+    } finally {
+      this.setUnlocking(false);
+    }
   }
 
   @action
@@ -206,8 +202,9 @@ class MessengerListStore {
 
   @action
   setPrivateKey(privateKey) {
-    crypto.setPrivateKey(privateKey);
+    console.log('SET PRIVATE')
     this.configured = true;
+    crypto.setPrivateKey(privateKey);
   }
 
   @action
