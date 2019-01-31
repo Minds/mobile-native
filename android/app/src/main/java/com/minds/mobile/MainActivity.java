@@ -25,6 +25,12 @@ public class MainActivity extends ReactActivity implements OnImagePickerPermissi
     }
 
     @Override
+    public void invokeDefaultOnBackPressed() {
+        moveTaskToBack(true);
+    }
+
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
         if (listener != null)
