@@ -16,7 +16,6 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import { OptimizedFlatList } from 'react-native-optimized-flatlist';
 
 import NotificationsTabIcon from './NotificationsTabIcon';
 import CenteredLoading from '../common/components/CenteredLoading';
@@ -77,6 +76,8 @@ export default class NotificationsScreen extends Component {
         this.props.notifications.setUnread(0);
       }
     });
+
+    this.props.notifications.loadList();
   }
 
   /**

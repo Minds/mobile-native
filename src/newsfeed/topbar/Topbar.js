@@ -38,8 +38,8 @@ export default class Topbar extends Component {
   /**
    * On tag selection change
    */
-  onTagSelectionChange = (all) => {
-    this.props.newsfeed.refresh(all);
+  onTagSelectionChange = () => {
+    this.props.newsfeed.refresh();
   }
 
   /**

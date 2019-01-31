@@ -5,7 +5,6 @@
  * @format
  * @flow
  */
-import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
 import './global';
 import './shim'
 import crypto from "crypto"; // DO NOT REMOVE!

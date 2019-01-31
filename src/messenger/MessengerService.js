@@ -9,32 +9,26 @@ class MessengerService {
    * Get Crypto Keys from server
    * @param {string} password
    */
-  getCryptoKeys(password) {
-    return api.get('api/v2/messenger/keys', {
+  async getCryptoKeys(password) {
+    const response = await api.get('api/v2/messenger/keys', {
       password: password
-    }).then((response) => {
-      if (response.key) {
-        return response.key;
-      }
-      return null;
     });
+    if (response.key) {
+      return response.key;
+    }
+    return null;
   }
 
   /**
    * Setup messenger keys
    * @param {string} password
    */
-  doSetup(password) {
-    return api.post('api/v2/messenger/keys/setup', { password: password, download: false })
-    .then(resp => {
-      if (resp.password) {
-        return resp.password;
-      }
-      return null;
-    })
-    .catch(err => {
-      console.log('error');
-    });
+  async doSetup(password) {
+    const response = await api.post('api/v2/messenger/keys/setup', { password: password, download: false })
+    if (response.password) {
+      return response.password;
+    }
+    return null;
   }
 
   /**
@@ -42,20 +36,19 @@ class MessengerService {
    * @param {number} limit
    * @param {string} offset
    */
-  getConversations(limit, offset = "", refresh=false, signal) {
+  async getConversations(limit, offset = "", refresh=false, tag) {
 
     const params = { limit: limit, offset: offset };
     if ( refresh ) {
       params.refresh = true
     }
 
-    return api.get('api/v2/messenger/conversations', params, signal)
-      .then((data) => {
-        return {
-          entities: data.conversations || [],
-          offset:   data['load-next']  || '',
-        };
-      });
+    const data = await api.get('api/v2/messenger/conversations', params, tag)
+
+    return {
+      entities: data.conversations || [],
+      offset:   data['load-next']  || '',
+    };
   }
 
   /**
@@ -63,14 +56,13 @@ class MessengerService {
    * @param {number} limit
    * @param {string} offset
    */
-  searchConversations(q, limit, signal) {
-    return api.get('api/v2/messenger/search', {q: q, limit: limit, offset: ''}, signal)
-      .then((data) => {
-        return {
-          entities: data.conversations || [],
-          offset:   data['load-next']  || '',
-        };
-      });
+  async searchConversations(q, limit, tag) {
+    const data = await api.get('api/v2/messenger/search', {q: q, limit: limit, offset: ''}, tag)
+
+    return {
+      entities: data.conversations || [],
+      offset:   data['load-next']  || '',
+    };
   }
 
   /**
@@ -79,16 +71,14 @@ class MessengerService {
    * @param {string} guid
    * @param {string} offset
    */
-  getConversationFromRemote(limit, guid, offset = "") {
-    return api.get('api/v2/messenger/conversations/' + guid, {
+  async getConversationFromRemote(limit, guid, offset = "") {
+    const conversation = await api.get('api/v2/messenger/conversations/' + guid, {
       limit: 8,
       offset: offset,
       finish: '',
-    })
-      .then(conversation => {
-        conversation.messages = conversation.messages || [];
-        return conversation;
-      });
+    });
+    conversation.messages = conversation.messages || [];
+    return conversation;
   }
 
   /**

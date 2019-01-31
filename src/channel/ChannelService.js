@@ -1,5 +1,5 @@
 import api from './../common/services/api.service';
-
+import { abort } from '../common/helpers/abortableFetch';
 
 /**
  * Channel Service
@@ -51,8 +51,12 @@ class ChannelService {
    * @param {string} guid
    * @param {object} opts
    */
-  async getFeed(guid, opts={limit: 12}) {
-    const data = await api.get(`api/v1/newsfeed/personal/${guid}`, opts);
+  async getFeed(guid, opts = {limit: 12}) {
+    const tag = `channel:feed:${guid}`;
+    // abort previous call
+    abort(tag);
+
+    const data = await api.get(`api/v1/newsfeed/personal/${guid}`, opts, tag);
 
     const feed = {
       entities: [],
@@ -71,7 +75,11 @@ class ChannelService {
   }
 
   getImageFeed(guid, offset) {
-    return api.get('api/v1/entities/owner/image/' + guid, { offset: offset, limit: 12 })
+    const tag = `channel:images:${guid}`;
+    // abort previous call
+    abort(tag);
+
+    return api.get('api/v1/entities/owner/image/' + guid, { offset: offset, limit: 12 }, tag)
     .then((data) => {
       return {
         entities: data.entities,
@@ -85,7 +93,11 @@ class ChannelService {
   }
 
   getVideoFeed(guid, offset) {
-    return api.get('api/v1/entities/owner/video/' + guid, { offset: offset, limit: 12 })
+    const tag = `channel:images:${guid}`;
+    // abort previous call
+    abort(tag);
+
+    return api.get('api/v1/entities/owner/video/' + guid, { offset: offset, limit: 12 }, tag)
     .then((data) => {
       return {
         entities: data.entities,
@@ -99,7 +111,11 @@ class ChannelService {
   }
 
   getBlogFeed(guid, offset) {
-    return api.get('api/v1/blog/owner/' + guid, { offset: offset, limit: 12 })
+    const tag = `channel:blog:${guid}`;
+    // abort previous call
+    abort(tag);
+
+    return api.get('api/v1/blog/owner/' + guid, { offset: offset, limit: 12 }, tag)
     .then((data) => {
       return {
         entities: data.entities,
@@ -112,8 +128,12 @@ class ChannelService {
       })
   }
 
-  getSubscribers(guid, filter, offset, signal) {
-    return api.get('api/v1/subscribe/' + filter + '/' + guid, { offset: offset, limit: 12 }, signal)
+  getSubscribers(guid, filter, offset) {
+    const tag = `channel:subscribers:${guid}`;
+    // abort previous call
+    abort(tag);
+
+    return api.get('api/v1/subscribe/' + filter + '/' + guid, { offset: offset, limit: 12 }, tag)
     .then((data) => {
       return {
         entities: data.users,

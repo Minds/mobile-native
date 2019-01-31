@@ -325,8 +325,7 @@ export default class CapturePoster extends Component {
 
       return response;
     } catch (e) {
-      console.log('error', e);
-      Alert.alert('Oooppppss. Looks like there was an error.');
+      Alert.alert('Oops', "There was an error.\nPlease try again.");
     }
   }
 

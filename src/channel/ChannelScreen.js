@@ -149,16 +149,17 @@ export default class ChannelScreen extends Component {
    * Render
    */
   render() {
+    const store = this.props.channel.store(this.guid);
 
-    if (!this.guid || !this.props.channel.store(this.guid).channel.guid) {
+    if (!this.guid || !store.channel.guid) {
       return (
         <CenteredLoading />
       );
     }
 
-    const feed    = this.props.channel.store(this.guid).feedStore;
-    const channel = this.props.channel.store(this.guid).channel;
-    const rewards = this.props.channel.store(this.guid).rewards;
+    const feed    = store.feedStore;
+    const channel = store.channel;
+    const rewards = store.rewards;
     const guid    = this.guid;
     const isOwner = guid == session.guid;
 
@@ -179,7 +180,7 @@ export default class ChannelScreen extends Component {
       <View>
         <ChannelHeader
           styles={styles}
-          channel={this.props.channel.store(this.guid)}
+          channel={store}
           navigation={this.props.navigation}
         />
 

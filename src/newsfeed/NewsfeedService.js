@@ -1,30 +1,22 @@
 import { Platform } from 'react-native';
 
 import api from './../common/services/api.service';
+import { abort } from '../common/helpers/abortableFetch';
+import stores from '../../AppStores';
 
 
 export default class NewsfeedService {
 
-  controllers = {
-    getFeed: null
-  };
-
   async _getFeed(endpoint, offset, limit) {
-    if (this.controllers._getFeed)
-      this.controllers._getFeed.abort();
 
-    this.controllers._getFeed = new AbortController();
+    // abort previous fetchs
+    abort(this);
 
-    try {
-      const data = await api.get(endpoint, { offset, limit }, this.controllers._getFeed.signal);
-      return {
-        entities: data.activity || data.entities,
-        offset: data['load-next'],
-      }
-    } catch (err) {
-      console.log('error');
-      throw "Ooops";
-    }
+    const data = await api.get(endpoint, { offset, limit }, this);
+    return {
+      entities: data.activity || data.entities,
+      offset: data['load-next'],
+    };
   }
 
   async getFeed(offset, limit = 12) {
@@ -36,8 +28,8 @@ export default class NewsfeedService {
    * @param {string} offset
    * @param {int} limit
    */
-  async getFeedSuggested(offset, limit = 12, all = false) {
-    return this._getFeed('api/v2/entities/suggested/activities' + (all ? '/all' : ''), offset, limit);
+  async getFeedSuggested(offset, limit = 12) {
+    return this._getFeed('api/v2/entities/suggested/activities' + (stores.hashtag.all ? '/all' : ''), offset, limit);
   }
 
   /**
@@ -56,28 +48,21 @@ export default class NewsfeedService {
    * @param {int} limit
   */
   async getBoosts(offset, limit = 15, rating) {
-    if (this.controllers._getFeed)
-      this.controllers._getFeed.abort();
 
-    this.controllers._getFeed = new AbortController();
+    abort(this);
 
-    try {
-      const data = await api.get('api/v1/boost/fetch/newsfeed', {
-          limit: limit || '',
-          offset: offset || '',
-          rating: rating || 1,
-          platform: Platform.OS === 'ios' ? 'ios' : 'other'
-        }, this.controllers._getFeed.signal);
+    const data = await api.get('api/v1/boost/fetch/newsfeed', {
+      limit: limit || '',
+      offset: offset || '',
+      rating: rating || 1,
+      platform: Platform.OS === 'ios' ? 'ios' : 'other'
+    }, this);
 
-        return {
-          entities: data.boosts || [],
-          offset: data['load-next'],
-        }
-    } catch (err) {
-
+    return {
+      entities: data.boosts || [],
+      offset: data['load-next'],
     }
   }
-
 }
 
 /**

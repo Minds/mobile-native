@@ -1,7 +1,8 @@
 import {
   observable,
   action,
-  computed
+  computed,
+  extendObservable
 } from 'mobx'
 
 import {
@@ -12,12 +13,11 @@ import {
 } from '../newsfeed/NewsfeedService';
 
 import api from '../common/services/api.service';
-
 import channelService from './ChannelService';
-
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
+
 /**
  * Channel Feed store
  */
@@ -29,27 +29,6 @@ export default class ChannelFeedStore {
   channel;
 
   viewed = [];
-  @observable stores = {
-    feed: {
-      list: new OffsetFeedListStore('shallow'),
-      loading: false,
-    },
-    images: {
-      list: new OffsetFeedListStore('shallow'),
-      loading: false,
-      isTiled: true,
-    },
-    videos: {
-      list: new OffsetFeedListStore('shallow'),
-      loading: false,
-      isTiled: true,
-    },
-    blogs: {
-      list: new OffsetFeedListStore('shallow'),
-      loading: false,
-      isTiled: false,
-    },
-  };
 
   /**
    * Channel guid
@@ -58,11 +37,48 @@ export default class ChannelFeedStore {
 
   constructor(guid) {
     this.guid = guid;
+    this.buildStores();
+  }
+
+  buildStores() {
+    this.stores = {
+      feed: {
+        list: new OffsetFeedListStore('shallow'),
+      },
+      images: {
+        list: new OffsetFeedListStore('shallow'),
+        isTiled: true,
+      },
+      videos: {
+        list: new OffsetFeedListStore('shallow'),
+        isTiled: true,
+      },
+      blogs: {
+        list: new OffsetFeedListStore('shallow'),
+        isTiled: false,
+      },
+    };
+    extendObservable(this.stores.feed,{
+      loading: false
+    });
+    extendObservable(this.stores.images,{
+      loading: false
+    });
+    extendObservable(this.stores.videos,{
+      loading: false
+    });
+    extendObservable(this.stores.blogs,{
+      loading: false
+    });
   }
 
   @action
   setChannel(channel) {
     this.channel = channel;
+  }
+
+  get store() {
+    return this.stores[this.filter]
   }
 
   get list() {
@@ -73,16 +89,10 @@ export default class ChannelFeedStore {
     this.stores[this.filter] = value;
   }
 
-  @computed
   get loading() {
     return this.stores[this.filter].loading;
   }
 
-  set loading(value) {
-    this.stores[this.filter].loading = value;
-  }
-
-  @computed
   get isTiled() {
     return this.stores[this.filter].isTiled;
   }
@@ -121,6 +131,10 @@ export default class ChannelFeedStore {
     }
   }
 
+  /**
+   * Load selected feed
+   * @param {boolean} refresh
+   */
   async loadFeed(refresh = false) {
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
@@ -145,22 +159,27 @@ export default class ChannelFeedStore {
    * Load channel feed
    */
   async _loadFeed(refresh = false) {
-    if (!this.channel || this.list.cantLoadMore())
-      return;
+    // reference the store because it may change after the await
+    const store = this.store;
 
-    this.loading = true;
+    if (!this.channel || store.list.cantLoadMore()) {
+      return;
+    }
+
+    store.loading = true;
+    store.list.setErrorLoading(false);
 
     try {
 
       let opts = {
-        offset: this.list.offset,
+        offset: store.list.offset,
         limit: 12,
       };
 
       if (
         this.channel.pinned_posts
         && this.channel.pinned_posts.length
-        && !this.offset
+        && !store.list.offset
       ) {
         opts.pinned = this.channel.pinned_posts.join(',');
       }
@@ -174,9 +193,10 @@ export default class ChannelFeedStore {
       this.list.setList(feed, refresh);
 
     } catch (err) {
+      store.list.setErrorLoading(true);
       console.log(err);
     } finally {
-      this.loading = false;
+      store.loading = false;
     }
   }
 
@@ -184,18 +204,22 @@ export default class ChannelFeedStore {
    * Load channel images feed
    */
   async _loadImagesFeed(refresh = false) {
-    this.loading = true;
-    const filter = this.filter;
+    // reference the store because it may change after the await
+    const store = this.store;
+
+    store.loading = true;
+    store.list.setErrorLoading(false);
 
     try {
       const feed = await channelService.getImageFeed(this.guid, this.list.offset);
       feed.entities = ActivityModel.createMany(feed.entities);
-      this.assignRowKeys(feed);
-      this.list.setList(feed, refresh);
+      this.assignRowKeys(feed, store);
+      store.list.setList(feed, refresh);
     } catch (err) {
+      store.list.setErrorLoading(true);
       console.log(err);
     } finally {
-      this.loading = false;
+      store.loading = false;
     }
   }
 
@@ -203,40 +227,49 @@ export default class ChannelFeedStore {
    * Load channel videos feed
    */
   async _loadVideosFeed(refresh = false) {
-    this.loading = true;
-    const filter = this.filter;
+    // reference the store because it may change after the await
+    const store = this.store;
 
-    const feed = await channelService.getVideoFeed(this.guid, this.list.offset);
+    store.loading = true;
+    store.list.setErrorLoading(false);
 
-    if (this.filter == 'videos') {
-      this.loading = false;
+    try {
+      const feed = await channelService.getVideoFeed(this.guid, this.list.offset);
       feed.entities = ActivityModel.createMany(feed.entities);
-      this.assignRowKeys(feed);
-      this.list.setList(feed, refresh);
+      this.assignRowKeys(feed, store);
+      store.list.setList(feed, refresh);
+    } catch (error) {
+      console.log(error);
+      store.list.setErrorLoading(true);
+    } finally {
+      store.loading = false;
     }
-
-    this.stores[filter].loading = false;
   }
 
   /**
    * Load channel videos feed
    */
   async _loadBlogsFeed(refresh) {
-    this.loading = true;
-    const filter = this.filter;
+    // reference the store because it may change after the await
+    const store = this.store;
 
-    const feed = await channelService.getBlogFeed(this.guid, this.list.offset);
+    store.loading = true;
+    store.list.setErrorLoading(false);
 
-    if (this.filter == 'blogs') {
-      if (this.list.offset) {
+    try {
+      const feed = await channelService.getBlogFeed(this.guid, this.list.offset);
+      if (store.list.offset) {
         feed.entities.shift();
       }
       feed.entities = BlogModel.createMany(feed.entities);
-      this.assignRowKeys(feed);
-      this.list.setList(feed, refresh);
+      this.assignRowKeys(feed, store);
+      store.list.setList(feed, refresh);
+    } catch (err) {
+      store.list.setErrorLoading(true);
+      console.log(err);
+    } finally {
+      store.loading = false;
     }
-
-    this.stores[filter].loading = false;
   }
 
   @action
@@ -253,18 +286,18 @@ export default class ChannelFeedStore {
     if (this.filter == 'rewards') {
       return;
     }
+    // reference because it could change after the await
+    const list  = this.list;
     //this.list.refresh();
-    await this.list.clearList();
+    list.clearList();
     await this.loadFeed(true);
     this.viewed = [];
-    this.list.refreshDone();
+    list.refreshDone();
   }
 
   @action
   setFilter(filter) {
     this.filter = filter;
-
     this.refresh();
   }
-
 }

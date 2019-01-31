@@ -122,8 +122,13 @@ class CaptureStore {
    */
   @action async post(newPost) {
     this.setPosting(true);
-    const result = await post(newPost);
-    this.setPosting(false);
+    try {
+      const result = await post(newPost);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      this.setPosting(false);
+    }
     return result;
   }
 

@@ -1,6 +1,7 @@
 import { observable, action, extendObservable } from 'mobx'
 import channelService from '../../channel/ChannelService';
 import { revokeBoost, rejectBoost, acceptBoost} from '../../boost/BoostService';
+
 /**
  * Common infinite scroll list
  */
@@ -14,6 +15,11 @@ export default class OffsetListStore {
    * list loaded
    */
   @observable loaded = false;
+
+  /**
+   * list load error
+   */
+  @observable errorLoading = false;
 
   /**
    * list next offset
@@ -58,6 +64,11 @@ export default class OffsetListStore {
   }
 
   @action
+  setErrorLoading(value) {
+    this.errorLoading = value;
+  }
+
+  @action
   prepend(entity) {
     this.entities.unshift(entity);
   }
@@ -66,6 +77,7 @@ export default class OffsetListStore {
   async clearList(updateLoaded=true) {
     this.entities = [];
     this.offset   = '';
+    this.errorLoading = false;
     if (updateLoaded) {
       this.loaded = false;
     }
@@ -75,6 +87,7 @@ export default class OffsetListStore {
   @action
   async refresh() {
     this.refreshing = true;
+    this.errorLoading = false;
     this.entities = [];
     this.offset = '';
     this.loaded = false;

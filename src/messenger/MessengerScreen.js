@@ -30,6 +30,7 @@ import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import Colors from '../styles/Colors';
 import MessengerTabIcon from './MessengerTabIcon';
+import ErrorLoading from '../common/components/ErrorLoading';
 
 /**
  * Messenger Conversarion List Screen
@@ -132,6 +133,7 @@ export default class MessengerScreen extends Component {
     }
 
     const iconRight = messengerList.configured ? 'md-unlock': null;
+    const footer = this.getFooter();
 
     return (
       <View style={styles.container}>
@@ -149,12 +151,28 @@ export default class MessengerScreen extends Component {
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
           onEndThreshold={0.01}
+          ListFooterComponent={footer}
           refreshing={messengerList.refreshing}
           style={styles.listView}
           ListEmptyComponent={empty}
         />
       </View>
     );
+  }
+
+  /**
+   * Get list footer
+   */
+  getFooter() {
+    const messengerList = this.props.messengerList;
+
+    if (!messengerList.errorLoading) return null;
+
+    const message = messengerList.conversations.length ?
+      "Can't load more" :
+      "Can't conversations";
+
+    return <ErrorLoading message={message} tryAgain={this.loadMore}/>
   }
 
   /**

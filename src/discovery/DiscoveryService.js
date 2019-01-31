@@ -1,11 +1,10 @@
 import api from './../common/services/api.service';
+import { abort } from '../common/helpers/abortableFetch';
 
 /**
  * Discovery Service
  */
 class DiscoveryService {
-
-  controller = null
 
   async search({ offset, type, filter, q }) {
 
@@ -36,10 +35,9 @@ class DiscoveryService {
   }
 
   async getFeed(offset, type, filter, q) {
-    if (this.controller)
-      this.controller.abort();
 
-    this.controller = new AbortController();
+    // abort previous call
+    abort(this);
 
     let endpoint;
     // is search
@@ -54,7 +52,7 @@ class DiscoveryService {
     }
 
     try {
-      const data = await api.get(endpoint, { limit: 12, offset: offset })
+      const data = await api.get(endpoint, { limit: 12, offset: offset }, this);
       let entities = [];
       entities = data.entities;
 

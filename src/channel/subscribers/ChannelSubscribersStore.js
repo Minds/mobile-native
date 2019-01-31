@@ -5,6 +5,7 @@ import {
 
 import OffsetListStore from '../../common/stores/OffsetListStore';
 import channelService from '../ChannelService';
+
 /**
  * Subscribers Store
  */
@@ -12,7 +13,6 @@ class ChannelSubscribersStore {
   list = new OffsetListStore();
   @observable filter = 'subscribers';
   guid = '';
-  controller = null;
 
   loading = false;
 
@@ -21,27 +21,22 @@ class ChannelSubscribersStore {
     this.guid = guid;
     this.loadList(reload);
   }
+
   /**
    * Load boost list
    */
   loadList(reload = false) {
-    
+
     if (this.list.cantLoadMore()) {
       return Promise.resolve();
     }
 
-    if(reload) 
+    if(reload)
       this.list.clearList();
-
-    if (this.controller) {
-      this.controller.abort();
-    }
-
-    this.controller = new AbortController();
 
     this.loading = true;
 
-    return channelService.getSubscribers(this.guid, this.filter, this.list.offset, this.controller.signal)
+    return channelService.getSubscribers(this.guid, this.filter, this.list.offset)
       .then( feed => {
         this.list.setList(feed);
       })

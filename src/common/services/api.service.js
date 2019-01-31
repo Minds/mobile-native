@@ -4,6 +4,7 @@ import session from './session.service';
 import { MINDS_URI, MINDS_URI_SETTINGS } from '../../config/Config';
 import { btoa } from 'abab';
 
+import abortableFetch from '../helpers/abortableFetch';
 
 /**
  * Api service
@@ -46,45 +47,52 @@ class ApiService {
     }).join('&');
   }
 
-  // Legacy (please, refactor!)
-
-  async get(url, params={}, signal=null) {
+  /**
+   * Api get with abort support
+   * @param {string} url
+   * @param {object} params
+   * @param {mixed} tag
+   */
+  async get(url, params = {}, tag) {
     const paramsString = this.buildParamsString(params);
     const headers = this.buildHeaders();
 
-      try {
-        let response = await fetch(MINDS_URI + url + paramsString, { headers, signal });
+    try {
+      const response = await abortableFetch(MINDS_URI + url + paramsString, { headers },  tag);
 
-        // Bad response
-        if (!response.ok) {
-          throw response;
-        }
-
-        // Convert from JSON
-        const data = await response.json();
-
-        // Failed on API side
-        if (data.status != 'success') {
-          throw data;
-        }
-        return data;
-      } catch (err) {
-        // Bad authorization
-        if (err.status && err.status == 401) {
-          const refreshed = await session.badAuthorization(); //not actually a logout
-          if (refreshed) return await this.get(url, params, signal);
-          session.logout();
-        }
-        throw err;
+      // Bad response
+      if (!response.ok) {
+        console.log('not ok', response)
+        throw response;
       }
+
+      // Convert from JSON
+      const data = await response.json();
+
+      console.log(data)
+
+      // Failed on API side
+      if (data.status != 'success') {
+        throw data;
+      }
+      return data;
+    } catch (err) {
+      // Bad authorization
+      if (err.status && err.status == 401) {
+        const refreshed = await session.badAuthorization(); //not actually a logout
+        if (refreshed) return await this.get(url, params, tag);
+        session.logout();
+      }
+      throw err;
+    }
   }
 
- async post(url, body={}) {
+  async post(url, body={}) {
     const paramsString = this.buildParamsString({});
     const headers = this.buildHeaders();
 
     try {
-      let response = await fetch(MINDS_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers });
+      let response = await abortableFetch(MINDS_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers });
 
       if (!response.ok) {
         throw response;
@@ -111,7 +119,7 @@ class ApiService {
     const headers = this.buildHeaders();
 
     return await new Promise((resolve, reject) => {
-      fetch(MINDS_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers })
+      abortableFetch(MINDS_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers })
         .then(resp => {
           if (!resp.ok) {
             throw resp;
@@ -139,7 +147,7 @@ class ApiService {
     const headers = this.buildHeaders();
 
     return await new Promise((resolve, reject) => {
-      fetch(MINDS_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers })
+      abortableFetch(MINDS_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers })
         .then(resp => {
           if (!resp.ok) {
             throw resp;
@@ -180,6 +188,14 @@ class ApiService {
         cb();
       });
 
+      // manual implementation of timeout
+      setTimeout(() => {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
+            reject(new TypeError('Network request failed'));
+            xhr.abort();
+        }
+      }, 5000);
+
       if (progress) {
         xhr.upload.addEventListener("progress", progress);
       }
@@ -198,6 +214,9 @@ class ApiService {
           reject('Ooops: upload error');
         }
       };
+      xhr.onerror = function() {
+        reject(new TypeError('Network request failed'));
+      }
 
       xhr.send(formData);
     })

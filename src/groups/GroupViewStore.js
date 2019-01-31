@@ -2,7 +2,7 @@ import { observable, action } from 'mobx'
 
 import groupsService from './GroupsService';
 
-import { getFeedChannel, toggleComments , toggleExplicit, setViewed } from '../newsfeed/NewsfeedService';
+import { setViewed } from '../newsfeed/NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import UserModel from '../channel/UserModel';
@@ -46,6 +46,11 @@ class GroupViewStore {
   @observable saving = false;
 
   /**
+   * is loading
+   */
+  @observable loading = false;
+
+  /**
    * member search
    */
   memberSearch = '';
@@ -54,7 +59,6 @@ class GroupViewStore {
    * List loading
    */
   viewed = [];
-  loading = false;
   guid = '';
 
   /**
@@ -65,14 +69,20 @@ class GroupViewStore {
     this.guid = guid;
   }
 
+  @action
+  setLoading(value) {
+    this.loading = value;
+  }
+
   /**
    * Load feed
    */
-  loadFeed() {
+  async loadFeed() {
     if (this.list.cantLoadMore() || this.loading) {
-      return Promise.resolve();
+      return;
     }
-    this.loading = true;
+
+    this.setLoading(true);
 
     let pinned = null;
 
@@ -84,25 +94,25 @@ class GroupViewStore {
       pinned = this.group.pinned_posts.join(',');
     }
 
-    return groupsService.loadFeed(this.guid, this.list.offset, 'activity', pinned)
-      .then(data => {
-        data.entities = ActivityModel.createMany(data.entities);
-        data.entities = data.entities.map(entity => {
-          if (!(this.group['is:moderator'] || this.group['is:owner'])) {
-            entity.dontPin = true;
-          }
-          return entity;
-        });
-        this.assignRowKeys(data);
-        this.list.setList(data);
-        this.loaded = true;
-      })
-      .finally(() => {
-        this.loading = false;
-      })
-      .catch(err => {
-        console.log('error', err);
+    this.list.setErrorLoading(false);
+
+    try {
+      const data = await groupsService.loadFeed(this.guid, this.list.offset, pinned);
+      data.entities = ActivityModel.createMany(data.entities);
+      data.entities = data.entities.map(entity => {
+        if (!(this.group['is:moderator'] || this.group['is:owner'])) {
+          entity.dontPin = true;
+        }
+        return entity;
       });
+      this.assignRowKeys(data);
+      this.list.setList(data);
+    } catch (error) {
+      console.log('error', error);
+      this.list.setErrorLoading(true);
+    } finally {
+      this.setLoading(false);
+    }
   }
 
   /**
@@ -124,31 +134,29 @@ class GroupViewStore {
   /**
    * Load Members
    */
-  loadMembers() {
+  async loadMembers() {
 
     if (this.members.cantLoadMore() || this.loading) {
-      return Promise.resolve();
+      return;
     }
-    this.loading = true;
+
+    this.setLoading(true);
 
     const serviceFetch = this.memberSearch ?
       groupsService.searchMembers(this.guid, this.members.offset, 21, this.memberSearch) :
       groupsService.loadMembers(this.guid, this.members.offset);
 
-    return serviceFetch
-      .then(data => {
-        data.entities = UserModel.createMany(data.members);
-        data.offset = data['load-next'];
-        this.members.setList(data);
-        this.assignRowKeys(data);
-        this.loaded = true;
-      })
-      .finally(() => {
-        this.loading = false;
-      })
-      .catch(err => {
-        console.log('error', err);
-      });
+    try {
+      const data = await serviceFetch;
+      data.entities = UserModel.createMany(data.members);
+      data.offset = data['load-next'];
+      this.members.setList(data);
+      this.assignRowKeys(data);
+    } catch (error) {
+
+    } finally {
+      this.setLoading(false);
+    }
   }
 
 

@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
-import { observable, action, computed } from 'mobx'
+import { observable, action, computed, extendObservable } from 'mobx'
 
 import NewsfeedService, { getBoosts, setViewed } from './NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
@@ -35,24 +35,33 @@ class NewsfeedStore {
     this.stores = {
       'subscribed': {
         list: new OffsetFeedListStore('shallow'),
-        loading: false,
       },
       'suggested': {
         list: new OffsetFeedListStore('shallow'),
-        loading: false,
       },
       'boostfeed': {
         list: new OffsetFeedListStore('shallow'),
-        loading: false,
       },
     };
+
+    extendObservable(this.stores.subscribed,{
+      loading: false
+    });
+    extendObservable(this.stores.suggested,{
+      loading: false
+    });
+    extendObservable(this.stores.boostfeed,{
+      loading: false
+    });
   }
 
   /**
    * Load feed
    */
-  async loadFeed(refresh = false, all = false) {
-    const store = this.stores[this.filter];
+  @action
+  async loadFeed(refresh = false) {
+    // reference the store because it may change after the await
+    const store = this.store;
     const fetchFn = this.fetch;
     let feed;
 
@@ -60,21 +69,20 @@ class NewsfeedStore {
       return Promise.resolve();
     }
 
+    store.list.setErrorLoading(false);
+
     store.loading = true;
 
     try {
-      if (this.filter === 'suggested') {
-        feed = await fetchFn(this.list.offset, 12, all);
-      } else {
-        feed = await fetchFn(this.list.offset, 12);
-      }
+      feed = await fetchFn(store.list.offset, 12);
 
       feed.entities = ActivityModel.createMany(feed.entities);
-      this.assignRowKeys(feed);
+      this.assignRowKeys(feed, store);
       store.list.setList(feed, refresh);
       this.loaded = true;
     } catch (err) {
       console.log('error', err);
+      store.list.setErrorLoading(true);
     } finally {
       store.loading = false;
     }
@@ -83,11 +91,16 @@ class NewsfeedStore {
   /**
    * Generate a unique Id for use with list views
    * @param {object} feed
+   * @param {object} store
    */
-  assignRowKeys(feed) {
+  assignRowKeys(feed, store) {
     feed.entities.forEach((entity, index) => {
-      entity.rowKey = `${entity.guid}:${index}:${this.filter}:${this.list.entities.length}`;
+      entity.rowKey = `${entity.guid}:${index}:${store.list.entities.length}`;
     });
+  }
+
+  get store() {
+    return this.stores[this.filter]
   }
 
   get list() {
@@ -109,7 +122,8 @@ class NewsfeedStore {
   @action
   setFilter(filter) {
     this.filter = filter;
-    this.refresh();
+    this.list.clearList();
+    this.loadFeed(true, false);
   }
 
   @action
@@ -173,9 +187,9 @@ class NewsfeedStore {
   }
 
   @action
-  async refresh(all = false) {
+  async refresh() {
     await this.list.refresh();
-    await this.loadFeed(true, all);
+    await this.loadFeed(true);
     this.list.refreshDone();
   }
 
@@ -186,7 +200,7 @@ class NewsfeedStore {
     this.boosts = [];
     this.viewed = [];
     this.loading = false;
-    this.loadingBoost = true;
+    this.loadingBoost = false;
   }
 
 }

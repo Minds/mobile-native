@@ -11,8 +11,9 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Activity from './activity/Activity';
 import TileElement from './TileElement';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
+import ErrorLoading from '../common/components/ErrorLoading';
 
 /**
  * News feed list component
@@ -79,12 +80,6 @@ export default class NewsfeedList extends Component {
       getItemLayout  = null;
     }
 
-    const footer = (newsfeed.loading && !newsfeed.list.refreshing) ?  (
-      <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
-        <ActivityIndicator size={'large'} />
-      </View>
-    ) : null;
-
     // empty view
     if (newsfeed.list.loaded && !newsfeed.list.refreshing) {
       if (this.props.emptyMessage) {
@@ -129,6 +124,8 @@ export default class NewsfeedList extends Component {
       }
     }
 
+    const footer = this.getFooter();
+
     return (
       <FlatList
         key={(newsfeed.isTiled ? 't' : 'f')}
@@ -155,6 +152,30 @@ export default class NewsfeedList extends Component {
     );
   }
 
+  getFooter() {
+
+    if (this.props.newsfeed.loading && !this.props.newsfeed.list.refreshing){
+      return (
+        <View style={[CS.centered, CS.padding3x]}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      );
+    }
+    if (this.props.newsfeed.list.errorLoading) {
+      return this.getErrorLoading();
+    }
+    return null;
+  }
+
+  getErrorLoading()
+  {
+    const message = this.props.newsfeed.list.entities.length ?
+      "Can't load more" :
+      "Can't load the feed";
+
+    return <ErrorLoading message={message} tryAgain={this.loadFeedForce}/>
+  }
+
   onViewableItemsChanged = ({viewableItems}) => {
     viewableItems.forEach((item) => {
       const { isViewable, key } = item;
@@ -168,6 +189,11 @@ export default class NewsfeedList extends Component {
    * Load feed data
    */
   loadFeed = () => {
+    if (this.props.newsfeed.list.errorLoading) return;
+    this.props.newsfeed.loadFeed();
+  }
+
+  loadFeedForce = () => {
     this.props.newsfeed.loadFeed();
   }
 

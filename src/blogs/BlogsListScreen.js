@@ -60,6 +60,13 @@ export default class BlogsListScreen extends Component {
   }
 
   /**
+   * On tag selection change
+   */
+  onTagSelectionChange = () => {
+    this.props.blogs.refresh();
+  }
+
+  /**
    * Render Tabs
    */
   renderToolbar() {
