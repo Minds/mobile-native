@@ -6,7 +6,7 @@ import {
 import AttachmentStore from '../common/stores/AttachmentStore';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import apiService from '../common/services/api.service';
-import { post } from './CaptureService';
+import { post, remind } from './CaptureService';
 import hashtagService from '../common/services/hashtag.service';
 import { Alert } from 'react-native';
 
@@ -121,15 +121,30 @@ class CaptureStore {
    * @param {object} newPost
    */
   @action async post(newPost) {
-    this.setPosting(true);
     try {
+      this.setPosting(true);
       const result = await post(newPost);
     } catch (err) {
-      console.log(err);
+      throw(err);
     } finally {
       this.setPosting(false);
     }
     return result;
+  }
+
+  /**
+   * Remind
+   */
+  async remind(guid, newPost) {
+    try {
+      this.setPosting(true);
+      const result = await remind(guid ,newPost);
+      return result;
+    } catch (err) {
+      throw(err);
+    } finally {
+      this.setPosting(false);
+    }
   }
 
   /**

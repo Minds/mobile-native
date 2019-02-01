@@ -9,10 +9,10 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { Icon } from 'react-native-elements';
-import Remind from '../remind/Remind';
 import { CommonStyle } from '../../../styles/Common';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
@@ -23,7 +23,7 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 /**
  * Remind Action Component
  */
-export default class RemindAction extends PureComponent {
+class RemindAction extends PureComponent {
 
   static defaultProps = {
     size: 20,
@@ -41,36 +41,20 @@ export default class RemindAction extends PureComponent {
       <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.remind}>
         <Icon color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={this.props.size} />
         <Counter count={this.props.entity['reminds']} size={this.props.size * 0.75} />
-        <View style={styles.modalContainer}>
-          <Modal animationType={"slide"} transparent={false}
-            visible={this.state.remindModalVisible}
-            onRequestClose={this.closeRemind}>
-            <View style={styles.modal}>
-              <View style={styles.modalHeader}>
-                <IonIcon onPress={this.closeRemind} color='gray' size={30} name='md-close' />
-              </View>
-              <Remind entity={this.props.entity} onClose={this.closeRemind} />
-            </View>
-          </Modal>
-        </View>
       </TouchableOpacityCustom>
     )
   }
 
   /**
-   * Close remind modal
-   */
-  closeRemind = () => {
-    this.setState({ remindModalVisible: false });
-  }
-
-  /**
-   * Open remind modal
+   * Open remind
    */
   remind = () => {
-    this.setState({ remindModalVisible: true });
+    this.props.navigation.push('Capture', {isRemind: true, entity: this.props.entity});
   }
 }
+
+// add navigation
+export default withNavigation(RemindAction);
 
 const styles = StyleSheet.create({
   modal: {

@@ -19,6 +19,7 @@ export default class CapturePostButton extends Component {
   render() {
     const attachment = this.props.capture.attachment;
     const isPosting = this.props.capture.isPosting;
+    const text = this.props.text || 'POST';
 
     return (
       <View style={styles.posterActions}>
@@ -33,7 +34,7 @@ export default class CapturePostButton extends Component {
                 onPress={this.props.onPress}
                 style={[styles.button, CS.borderRadius10x, CS.borderPrimary, CS.border]}
               >
-                <Text style={styles.buttonText}>POST</Text>
+                <Text style={styles.buttonText}>{text}</Text>
               </TouchableOpacity>
         }
       </View>

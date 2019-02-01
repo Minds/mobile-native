@@ -115,19 +115,6 @@ export function getBoosts(offset, limit = 15, rating) {
     });
 }
 
-export function post(post) {
-  return api.post('api/v1/newsfeed', post)
-    .then((data) => {
-      return {
-        entity: data.activity,
-      }
-    })
-    .catch(err => {
-      console.log('error');
-      throw "Ooops";
-    })
-}
-
 export function update(post) {
   return api.post('api/v1/newsfeed/' + post.guid, post)
     .then((data) => {
@@ -141,18 +128,6 @@ export function update(post) {
     })
 }
 
-export function remind(guid, post) {
-  return api.post('api/v1/newsfeed/remind/' + guid , post)
-    .then((data) => {
-      return {
-        guid: data.guid,
-      }
-    })
-    .catch(err => {
-      console.log('error');
-      throw "Ooops";
-    })
-}
 
 export async function uploadAttachment(url, file, progress) {
   try {

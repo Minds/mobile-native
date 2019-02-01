@@ -79,7 +79,7 @@ export class SocketService {
 
     // error
     this.socket.on('error', (e) => {
-      console.error('[ws]::error', e);
+      console.log('[ws]::error', e);
     });
 
     // rooms

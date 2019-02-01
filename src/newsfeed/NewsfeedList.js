@@ -14,6 +14,7 @@ import TileElement from './TileElement';
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import ErrorLoading from '../common/components/ErrorLoading';
+import ErrorBoundary from '../common/components/ErrorBoundary';
 
 /**
  * News feed list component
@@ -212,13 +213,17 @@ export default class NewsfeedList extends Component {
     let isLast = this.props.newsfeed.list.entities.length == row.index + 1;
     const entity = row.item;
 
-    return <Activity
-      entity={entity}
-      newsfeed={this.props.newsfeed}
-      navigation={this.props.navigation}
-      autoHeight={false}
-      isLast={isLast}
-    />;
+    return (
+      <ErrorBoundary message="Can't show this activity">
+        <Activity
+          entity={entity}
+          newsfeed={this.props.newsfeed}
+          navigation={this.props.navigation}
+          autoHeight={false}
+          isLast={isLast}
+        />
+      </ErrorBoundary>
+    )
   }
 
   /**

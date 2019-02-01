@@ -17,6 +17,7 @@ import {
   Dimensions,
   Linking
 } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -42,7 +43,7 @@ import Pinned from '../../common/components/Pinned';
  * Activity
  */
 @observer
-export default class Activity extends Component {
+class Activity extends Component {
 
   state = {
     editing: false
@@ -216,13 +217,13 @@ export default class Activity extends Component {
             navigation={this.props.navigation}
             />
           <View style={styles.rightToolbar}>
-            <ActivityActionSheet
+            {!this.props.hideTabs && <ActivityActionSheet
               newsfeed={this.props.newsfeed}
               toggleEdit={this.toggleEdit}
               entity={this.props.entity}
               navigation={this.props.navigation}
               onTranslate={this.showTranslate}
-            />
+            />}
           </View>
         </View>
       );
@@ -266,6 +267,9 @@ export default class Activity extends Component {
     }
   }
 }
+
+// add navigation
+export default withNavigation(Activity);
 
 const styles = StyleSheet.create({
   container: {

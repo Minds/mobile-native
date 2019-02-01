@@ -25,6 +25,7 @@ import {
 import { MINDS_CDN_URI, MINDS_LINK_URI } from '../config/Config';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../common/helpers/date';
+import { withNavigation } from 'react-navigation';
 
 /**
  * Blog Card
@@ -35,6 +36,7 @@ export default class BlogCard extends PureComponent {
    * Navigate to blog
    */
   navToBlog = () => {
+    if (!this.props.navigation) return;
     return this.props.navigation.push('BlogView', { blog: this.props.entity });
   }
 
@@ -70,7 +72,6 @@ export default class BlogCard extends PureComponent {
     )
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {

@@ -62,14 +62,11 @@ class ApiService {
 
       // Bad response
       if (!response.ok) {
-        console.log('not ok', response)
         throw response;
       }
 
       // Convert from JSON
       const data = await response.json();
-
-      console.log(data)
 
       // Failed on API side
       if (data.status != 'success') {
@@ -187,14 +184,6 @@ class ApiService {
         xhr.abort();
         cb();
       });
-
-      // manual implementation of timeout
-      setTimeout(() => {
-        if (xhr.readyState !== XMLHttpRequest.DONE) {
-            reject(new TypeError('Network request failed'));
-            xhr.abort();
-        }
-      }, 5000);
 
       if (progress) {
         xhr.upload.addEventListener("progress", progress);

@@ -15,6 +15,7 @@ import Button from './Button';
 // types
 type Props = {
   message: any,
+  inverted?: boolean,
   tryAgain: Function
 };
 
@@ -28,7 +29,7 @@ export default class ErrorLoading extends PureComponent<Props> {
    */
   render() {
     return (
-      <View style={[CS.padding3x, CS.flexColumnCentered, CS.marginTop2x, styles.errorLoading]}>
+      <View style={[CS.padding3x, CS.flexColumnCentered, CS.marginTop2x, this.props.inverted ? styles.errorLoadingInverted : styles.errorLoading]}>
         <Text style={[CS.fontM, CS.colorDarkGreyed, CS.marginBottom]}><Text style={CS.fontSemibold}>Oops!</Text> {this.props.message}</Text>
         <Button onPress={this.props.tryAgain} text="Try Again"/>
       </View>
@@ -39,5 +40,8 @@ export default class ErrorLoading extends PureComponent<Props> {
 const styles = StyleSheet.create({
   errorLoading: {
     marginBottom: 120
+  },
+  errorLoadingInverted: {
+    marginTop: 120
   }
 });

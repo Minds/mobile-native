@@ -4,9 +4,5 @@ export function thumbActivity(guid, direction) {
   return api.put('api/v1/votes/' + guid + '/' + direction)
     .then((data) => {
       return { data }
-    })
-    .catch(err => {
-      console.log('error', err);
-      throw "Ooops";
-    })
+    });
 }

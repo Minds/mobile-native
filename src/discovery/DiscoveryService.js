@@ -26,7 +26,9 @@ class DiscoveryService {
         break;
     }
 
-    const response = (await api.get(endpoint, params, this.controller.signal)) || {};
+    abort('discovery:search');
+
+    const response = (await api.get(endpoint, params, 'discovery:search')) || {};
 
     return {
       entities: response.entities || [],
@@ -51,21 +53,16 @@ class DiscoveryService {
       endpoint = `api/v2/entities/${filter}/${type}/all`;
     }
 
-    try {
-      const data = await api.get(endpoint, { limit: 12, offset: offset }, this);
-      let entities = [];
-      entities = data.entities;
+    const data = await api.get(endpoint, { limit: 12, offset: offset }, this);
+    let entities = [];
+    entities = data.entities;
 
-      if (type == 'group' && offset && entities) {
-        entities.shift();
-      }
-      return {
-        entities: entities,
-        offset: data['load-next'],
-      }
-    } catch(err) {
-      console.log('error', err);
-      throw "Ooops";
+    if (type == 'group' && offset && entities) {
+      entities.shift();
+    }
+    return {
+      entities: entities,
+      offset: data['load-next'],
     }
   }
 

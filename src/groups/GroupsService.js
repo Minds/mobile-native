@@ -20,13 +20,14 @@ class GroupsService {
     // abort previous call
     abort('groups:list');
 
-    const data = await api.get(endpoint, { limit: 12, offset: offset }, 'groups:list')
-
-    if (offset && data.groups) {
-      data.groups.shift();
-    }
+    const data = await api.get(endpoint, { limit: 12, offset }, 'groups:list')
 
     let entities = (filter === 'suggested') ? data.entities : data.groups;
+
+    if (offset && entities) {
+      entities.shift();
+    }
+
     return {
       entities: entities || [],
       offset: data['load-next'] || '',

@@ -37,6 +37,7 @@ import BlogCard from '../blogs/BlogCard';
 import stores from '../../AppStores';
 import CaptureFab from '../capture/CaptureFab';
 import { MINDS_CDN_URI } from '../config/Config';
+import ErrorLoading from '../common/components/ErrorLoading';
 
 const isIos = Platform.OS === 'ios';
 
@@ -207,11 +208,7 @@ export default class DiscoveryScreen extends Component {
         break;
     }
 
-    const footer = (discovery.loading && !list.refreshing) ?  (
-      <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
-        <ActivityIndicator size={'large'} />
-      </View>
-    ) : null;
+    const footer = this.getFooter();
 
     body = (
       <FlatList
@@ -301,6 +298,37 @@ export default class DiscoveryScreen extends Component {
     );
   }
 
+  /**
+   * Get list footer
+   */
+  getFooter() {
+    const discovery = this.props.discovery;
+
+    if (discovery.loading && !discovery.list.refreshing) {
+      return (
+        <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      );
+    }
+
+    if (!discovery.list.errorLoading) return null;
+
+    const message = discovery.list.entities.length ?
+      "Can't load more" :
+      "Can't connect";
+
+    return <ErrorLoading message={message} tryAgain={this.tryAgain}/>
+  }
+
+  tryAgain = () => {
+    if (this.state.searching) {
+      this.props.discovery.search(this.props.discovery.searchtext);
+    } else {
+      this.loadFeed(null, true);
+    }
+  }
+
   searchFocus = async () => {
     this.setState({ searching: true });
 
@@ -342,9 +370,13 @@ export default class DiscoveryScreen extends Component {
   /**
    * Load feed data
    */
-  loadFeed = () => {
-    if (this.props.discovery.type == 'lastchannels')
+  loadFeed = (e, force = false) => {
+    if (
+      this.props.discovery.type == 'lastchannels' ||
+      (this.props.discovery.list.errorLoading && !force)
+    ) {
       return;
+    }
     this.props.discovery.loadList();
   }
 

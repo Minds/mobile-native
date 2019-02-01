@@ -44,13 +44,13 @@ class NewsfeedStore {
       },
     };
 
-    extendObservable(this.stores.subscribed,{
+    extendObservable(this.stores.subscribed, {
       loading: false
     });
-    extendObservable(this.stores.suggested,{
+    extendObservable(this.stores.suggested, {
       loading: false
     });
-    extendObservable(this.stores.boostfeed,{
+    extendObservable(this.stores.boostfeed, {
       loading: false
     });
   }

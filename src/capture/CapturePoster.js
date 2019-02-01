@@ -25,10 +25,12 @@ import CapturePreview from './CapturePreview';
 
 import CaptureMetaPreview from './CaptureMetaPreview';
 import CapturePostButton from './CapturePostButton';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import Colors from '../styles/Colors';
 import CapturePosterFlags from './CapturePosterFlags';
 import UserAutocomplete from '../common/components/UserAutocomplete';
+import Activity from '../newsfeed/activity/Activity';
+import BlogCard from '../blogs/BlogCard';
 
 @inject('user', 'capture')
 @observer
@@ -57,7 +59,13 @@ export default class CapturePoster extends Component {
    */
   componentWillMount() {
     const { setParams } = this.props.navigation;
-    setParams({ headerRight: <CapturePostButton onPress={() => this.submit()} /> });
+    const { params } = this.props.navigation.state;
+    setParams({
+      headerRight: <CapturePostButton
+        onPress={() => !params.isRemind ? this.submit() : this.remind()}
+        text={params.isRemind ? 'REMIND' : 'POST'}
+      />
+    });
   }
 
   /**
@@ -154,12 +162,11 @@ export default class CapturePoster extends Component {
    * Render
    */
   render() {
-    const attachment = this.props.capture.attachment;
     const text = this.props.capture.text;
     const navigation = this.props.navigation;
 
     return (
-      <View style={{flex:1}}>
+      <View style={CS.flexContainer}>
         <ScrollView style={styles.posterAndPreviewWrapper}>
           {this.showContext()}
           <View style={styles.posterWrapper} pointerEvents="box-none">
@@ -176,33 +183,7 @@ export default class CapturePoster extends Component {
               onSelectionChange={this.onSelectionChanges}
             />
           </View>
-
-          {(this.props.capture.embed.meta || this.props.capture.embed.metaInProgress) && <CaptureMetaPreview
-            meta={this.props.capture.embed.meta}
-            inProgress={this.props.capture.embed.metaInProgress}
-            onRemove={this.props.capture.embed.clearRichEmbedAction}
-          />}
-
-          <CapturePosterFlags
-            matureValue={this.state.mature}
-            shareValue={this.state.share}
-            lockValue={this.state.lock}
-            onMature={this.onMature}
-            onShare={this.onShare}
-            onLocking={this.onLocking}
-          />
-
-          {attachment.hasAttachment && <View style={styles.preview}>
-            <CapturePreview
-              uri={attachment.uri}
-              type={attachment.type}
-            />
-            <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
-          </View>}
-
-          <CaptureGallery
-            onSelected={this.onAttachedMedia}
-          />
+          {!navigation.state.params.isRemind ? this.getAttachFeature() : this.getRemind()}
         </ScrollView>
         <UserAutocomplete
           text={text}
@@ -210,6 +191,52 @@ export default class CapturePoster extends Component {
           onSelect={this.onSelectTag}
         />
       </View>
+    );
+  }
+
+  /**
+   * Get remind card
+   */
+  getRemind() {
+    const { params } = this.props.navigation.state;
+    const ShowComponent = params.entity.subtype == 'blog' ? BlogCard : Activity;
+    return <ShowComponent hideTabs={true} entity={params.entity} />
+  }
+
+  /**
+   * Get attachment feature
+   */
+  getAttachFeature() {
+    const attachment = this.props.capture.attachment;
+    return (
+      <React.Fragment>
+        {(this.props.capture.embed.meta || this.props.capture.embed.metaInProgress) && <CaptureMetaPreview
+          meta={this.props.capture.embed.meta}
+          inProgress={this.props.capture.embed.metaInProgress}
+          onRemove={this.props.capture.embed.clearRichEmbedAction}
+        />}
+
+        <CapturePosterFlags
+          matureValue={this.state.mature}
+          shareValue={this.state.share}
+          lockValue={this.state.lock}
+          onMature={this.onMature}
+          onShare={this.onShare}
+          onLocking={this.onLocking}
+        />
+
+        {attachment.hasAttachment && <View style={styles.preview}>
+          <CapturePreview
+            uri={attachment.uri}
+            type={attachment.type}
+          />
+          <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
+        </View>}
+
+        <CaptureGallery
+          onSelected={this.onAttachedMedia}
+        />
+      </React.Fragment>
     );
   }
 
@@ -242,6 +269,19 @@ export default class CapturePoster extends Component {
     if (attachment.hasAttachment) {
       const result = await attachment.delete();
       if (result === false) Alert.alert('caught error deleting the file');
+    }
+  }
+
+  async remind() {
+    const { params } = this.props.navigation.state;
+    const message = this.props.capture.text;
+    const post = {message};
+    try {
+      const response = await this.props.capture.remind(params.entity.guid, post);
+      console.log(response)
+      this.navToNewsfeed(response.entity);
+    } catch (e) {
+      Alert.alert('Oops', "There was an error.\nPlease try again.");
     }
   }
 
@@ -313,8 +353,6 @@ export default class CapturePoster extends Component {
       });
       this.props.capture.setText('');
 
-      this.props.capture.setPosting(false);
-
       if (this.props.onComplete) {
         this.props.onComplete(response.entity);
       } else if (this.props.navigation.state.params && this.props.navigation.state.params.group) {
@@ -376,21 +414,12 @@ const styles = StyleSheet.create({
     paddingTop: 24,
     flex: 1,
   },
-  posterButton: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignContent: 'center',
-  },
   preview: {
     flex: 1,
     minHeight: 200,
     flexDirection: 'row',
     alignItems: 'stretch',
     position: 'relative',
-  },
-  avatar: {
-    flex: 1,
   },
   gallery: {
     flex: 1,
