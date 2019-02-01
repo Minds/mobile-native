@@ -39,7 +39,7 @@ export default function(input, init, tag) {
     const xhr = new XMLHttpRequest();
 
     // manual implementation of timeout
-    setTimeout(() => {
+    xhr.timer = setTimeout(() => {
       if (xhr.readyState !== XMLHttpRequest.DONE) {
           reject(new TypeError('Network request failed'))
           xhr.abort();
@@ -72,6 +72,8 @@ export default function(input, init, tag) {
         return
       }
 
+      clearTimeout(xhr.timer);
+
       const options = {
         status: status,
         statusText: xhr.statusText,
@@ -85,6 +87,7 @@ export default function(input, init, tag) {
 
     xhr.onerror = function() {
       remove(xhr);
+      clearTimeout(xhr.timer);
       reject(new TypeError('Network request failed'));
     }
 
@@ -111,8 +114,9 @@ export const abort = function(tag) {
   for (var i = _xhrs.length - 1; i > -1; i--) {
     var xhr = _xhrs[i]
     if (xhr.tag === tag) {
-      _xhrs.splice(i, 1)
-      xhr.abort()
+      _xhrs.splice(i, 1);
+      clearTimeout(xhr.timer);
+      xhr.abort();
     }
   }
 }
