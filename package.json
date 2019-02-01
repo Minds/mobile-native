@@ -134,10 +134,7 @@
     },
     "snapshotSerializers": [
       "./node_modules/enzyme-to-json/serializer"
-    ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/jest-preprocessor.js"
-    }
+    ]
   },
   "react-native": {
     "crypto": "react-native-crypto",
