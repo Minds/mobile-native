@@ -29,7 +29,7 @@ exports[`Channel screen component should renders correctly 1`] = `
                 ],
                 "results": Array [
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                 ],
@@ -75,7 +75,7 @@ exports[`Channel screen component should renders correctly 1`] = `
                 ],
                 "results": Array [
                   Object {
-                    "isThrow": false,
+                    "type": "return",
                     "value": undefined,
                   },
                 ],

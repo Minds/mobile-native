@@ -115,27 +115,6 @@ exports[`blog view screen component should renders correctly 1`] = `
               "points": Array [],
             },
           },
-          Symbol(mobx did run lazy initializers): true,
-          Symbol(mobx administration): ObservableObjectAdministration$$1 {
-            "defaultEnhancer": [Function],
-            "keysAtom": Atom$$1 {
-              "diffValue": 0,
-              "isBeingObserved": false,
-              "isPendingUnobservation": false,
-              "lastAccessedBy": 0,
-              "lowestObserverState": 2,
-              "name": "UserModel@9.keys",
-              "observers": Set {},
-            },
-            "name": "UserModel@9",
-            "target": [Circular],
-            "values": Map {
-              "votedUp" => false,
-              "votedDown" => false,
-              "blocked" => undefined,
-              "subscribed" => false,
-            },
-          },
         },
         "owner_guid": "1",
         "paywall": false,
@@ -162,34 +141,6 @@ exports[`blog view screen component should renders correctly 1`] = `
         "title": "Some Title",
         "type": "object",
         "wire_threshold": "",
-        Symbol(mobx did run lazy initializers): true,
-        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-          "defaultEnhancer": [Function],
-          "keysAtom": Atom$$1 {
-            "diffValue": 0,
-            "isBeingObserved": false,
-            "isPendingUnobservation": false,
-            "lastAccessedBy": 0,
-            "lowestObserverState": 2,
-            "name": "BlogModel@6.keys",
-            "observers": Set {},
-          },
-          "name": "BlogModel@6",
-          "target": [Circular],
-          "values": Map {
-            "votedUp" => false,
-            "votedDown" => false,
-            "thumbs:down:count" => 1,
-            "thumbs:up:count" => 2,
-            "thumbs:down:user_guids" => Array [
-              "3",
-            ],
-            "thumbs:up:user_guids" => Array [
-              "1",
-              "2",
-            ],
-          },
-        },
       }
     }
     header={
@@ -343,27 +294,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                       "points": Array [],
                     },
                   },
-                  Symbol(mobx did run lazy initializers): true,
-                  Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                    "defaultEnhancer": [Function],
-                    "keysAtom": Atom$$1 {
-                      "diffValue": 0,
-                      "isBeingObserved": false,
-                      "isPendingUnobservation": false,
-                      "lastAccessedBy": 0,
-                      "lowestObserverState": 2,
-                      "name": "UserModel@9.keys",
-                      "observers": Set {},
-                    },
-                    "name": "UserModel@9",
-                    "target": [Circular],
-                    "values": Map {
-                      "votedUp" => false,
-                      "votedDown" => false,
-                      "blocked" => undefined,
-                      "subscribed" => false,
-                    },
-                  },
                 },
                 "owner_guid": "1",
                 "paywall": false,
@@ -390,34 +320,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "title": "Some Title",
                 "type": "object",
                 "wire_threshold": "",
-                Symbol(mobx did run lazy initializers): true,
-                Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                  "defaultEnhancer": [Function],
-                  "keysAtom": Atom$$1 {
-                    "diffValue": 0,
-                    "isBeingObserved": false,
-                    "isPendingUnobservation": false,
-                    "lastAccessedBy": 0,
-                    "lowestObserverState": 2,
-                    "name": "BlogModel@6.keys",
-                    "observers": Set {},
-                  },
-                  "name": "BlogModel@6",
-                  "target": [Circular],
-                  "values": Map {
-                    "votedUp" => false,
-                    "votedDown" => false,
-                    "thumbs:down:count" => 1,
-                    "thumbs:up:count" => 2,
-                    "thumbs:down:user_guids" => Array [
-                      "3",
-                    ],
-                    "thumbs:up:user_guids" => Array [
-                      "1",
-                      "2",
-                    ],
-                  },
-                },
               }
             }
             navigation={
@@ -452,7 +354,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                     }
                   }
                 >
-                  <RemindAction
+                  <withNavigation(RemindAction)
                     entity={
                       BlogModel {
                         "access_id": "2",
@@ -554,27 +456,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                               "points": Array [],
                             },
                           },
-                          Symbol(mobx did run lazy initializers): true,
-                          Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                            "defaultEnhancer": [Function],
-                            "keysAtom": Atom$$1 {
-                              "diffValue": 0,
-                              "isBeingObserved": false,
-                              "isPendingUnobservation": false,
-                              "lastAccessedBy": 0,
-                              "lowestObserverState": 2,
-                              "name": "UserModel@9.keys",
-                              "observers": Set {},
-                            },
-                            "name": "UserModel@9",
-                            "target": [Circular],
-                            "values": Map {
-                              "votedUp" => false,
-                              "votedDown" => false,
-                              "blocked" => undefined,
-                              "subscribed" => false,
-                            },
-                          },
                         },
                         "owner_guid": "1",
                         "paywall": false,
@@ -601,34 +482,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "title": "Some Title",
                         "type": "object",
                         "wire_threshold": "",
-                        Symbol(mobx did run lazy initializers): true,
-                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                          "defaultEnhancer": [Function],
-                          "keysAtom": Atom$$1 {
-                            "diffValue": 0,
-                            "isBeingObserved": false,
-                            "isPendingUnobservation": false,
-                            "lastAccessedBy": 0,
-                            "lowestObserverState": 2,
-                            "name": "BlogModel@6.keys",
-                            "observers": Set {},
-                          },
-                          "name": "BlogModel@6",
-                          "target": [Circular],
-                          "values": Map {
-                            "votedUp" => false,
-                            "votedDown" => false,
-                            "thumbs:down:count" => 1,
-                            "thumbs:up:count" => 2,
-                            "thumbs:down:user_guids" => Array [
-                              "3",
-                            ],
-                            "thumbs:up:user_guids" => Array [
-                              "1",
-                              "2",
-                            ],
-                          },
-                        },
                       }
                     }
                     size={16}
@@ -735,27 +588,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                               "points": Array [],
                             },
                           },
-                          Symbol(mobx did run lazy initializers): true,
-                          Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                            "defaultEnhancer": [Function],
-                            "keysAtom": Atom$$1 {
-                              "diffValue": 0,
-                              "isBeingObserved": false,
-                              "isPendingUnobservation": false,
-                              "lastAccessedBy": 0,
-                              "lowestObserverState": 2,
-                              "name": "UserModel@9.keys",
-                              "observers": Set {},
-                            },
-                            "name": "UserModel@9",
-                            "target": [Circular],
-                            "values": Map {
-                              "votedUp" => false,
-                              "votedDown" => false,
-                              "blocked" => undefined,
-                              "subscribed" => false,
-                            },
-                          },
                         },
                         "owner_guid": "1",
                         "paywall": false,
@@ -782,69 +614,11 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "title": "Some Title",
                         "type": "object",
                         "wire_threshold": "",
-                        Symbol(mobx did run lazy initializers): true,
-                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                          "defaultEnhancer": [Function],
-                          "keysAtom": Atom$$1 {
-                            "diffValue": 0,
-                            "isBeingObserved": false,
-                            "isPendingUnobservation": false,
-                            "lastAccessedBy": 0,
-                            "lowestObserverState": 2,
-                            "name": "BlogModel@6.keys",
-                            "observers": Set {},
-                          },
-                          "name": "BlogModel@6",
-                          "target": [Circular],
-                          "values": Map {
-                            "votedUp" => false,
-                            "votedDown" => false,
-                            "thumbs:down:count" => 1,
-                            "thumbs:up:count" => 2,
-                            "thumbs:down:user_guids" => Array [
-                              "3",
-                            ],
-                            "thumbs:up:user_guids" => Array [
-                              "1",
-                              "2",
-                            ],
-                          },
-                        },
                       }
                     }
                     me={
                       Object {
                         "guid": "guidguid",
-                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                          "defaultEnhancer": [Function],
-                          "keysAtom": Atom$$1 {
-                            "diffValue": 0,
-                            "isBeingObserved": false,
-                            "isPendingUnobservation": false,
-                            "lastAccessedBy": 0,
-                            "lowestObserverState": 2,
-                            "name": "ObservableObject@5.me.keys",
-                            "observers": Set {},
-                          },
-                          "name": "ObservableObject@5.me",
-                          "pendingKeys": Map {
-                            "cheerio" => false,
-                            "$$typeof" => false,
-                            "nodeType" => false,
-                            "@@__IMMUTABLE_ITERABLE__@@" => false,
-                            "@@__IMMUTABLE_RECORD__@@" => false,
-                            "_isMockFunction" => false,
-                            "toJSON" => false,
-                          },
-                          "proxy": [Circular],
-                          "target": Object {
-                            "guid": "guidguid",
-                            Symbol(mobx administration): [Circular],
-                          },
-                          "values": Map {
-                            "guid" => "guidguid",
-                          },
-                        },
                       }
                     }
                     orientation="column"
@@ -952,27 +726,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                               "points": Array [],
                             },
                           },
-                          Symbol(mobx did run lazy initializers): true,
-                          Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                            "defaultEnhancer": [Function],
-                            "keysAtom": Atom$$1 {
-                              "diffValue": 0,
-                              "isBeingObserved": false,
-                              "isPendingUnobservation": false,
-                              "lastAccessedBy": 0,
-                              "lowestObserverState": 2,
-                              "name": "UserModel@9.keys",
-                              "observers": Set {},
-                            },
-                            "name": "UserModel@9",
-                            "target": [Circular],
-                            "values": Map {
-                              "votedUp" => false,
-                              "votedDown" => false,
-                              "blocked" => undefined,
-                              "subscribed" => false,
-                            },
-                          },
                         },
                         "owner_guid": "1",
                         "paywall": false,
@@ -999,69 +752,11 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "title": "Some Title",
                         "type": "object",
                         "wire_threshold": "",
-                        Symbol(mobx did run lazy initializers): true,
-                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                          "defaultEnhancer": [Function],
-                          "keysAtom": Atom$$1 {
-                            "diffValue": 0,
-                            "isBeingObserved": false,
-                            "isPendingUnobservation": false,
-                            "lastAccessedBy": 0,
-                            "lowestObserverState": 2,
-                            "name": "BlogModel@6.keys",
-                            "observers": Set {},
-                          },
-                          "name": "BlogModel@6",
-                          "target": [Circular],
-                          "values": Map {
-                            "votedUp" => false,
-                            "votedDown" => false,
-                            "thumbs:down:count" => 1,
-                            "thumbs:up:count" => 2,
-                            "thumbs:down:user_guids" => Array [
-                              "3",
-                            ],
-                            "thumbs:up:user_guids" => Array [
-                              "1",
-                              "2",
-                            ],
-                          },
-                        },
                       }
                     }
                     me={
                       Object {
                         "guid": "guidguid",
-                        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                          "defaultEnhancer": [Function],
-                          "keysAtom": Atom$$1 {
-                            "diffValue": 0,
-                            "isBeingObserved": false,
-                            "isPendingUnobservation": false,
-                            "lastAccessedBy": 0,
-                            "lowestObserverState": 2,
-                            "name": "ObservableObject@5.me.keys",
-                            "observers": Set {},
-                          },
-                          "name": "ObservableObject@5.me",
-                          "pendingKeys": Map {
-                            "cheerio" => false,
-                            "$$typeof" => false,
-                            "nodeType" => false,
-                            "@@__IMMUTABLE_ITERABLE__@@" => false,
-                            "@@__IMMUTABLE_RECORD__@@" => false,
-                            "_isMockFunction" => false,
-                            "toJSON" => false,
-                          },
-                          "proxy": [Circular],
-                          "target": Object {
-                            "guid": "guidguid",
-                            Symbol(mobx administration): [Circular],
-                          },
-                          "values": Map {
-                            "guid" => "guidguid",
-                          },
-                        },
                       }
                     }
                     orientation="column"
