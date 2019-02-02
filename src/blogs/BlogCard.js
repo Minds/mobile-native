@@ -25,7 +25,6 @@ import {
 import { MINDS_CDN_URI, MINDS_LINK_URI } from '../config/Config';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../common/helpers/date';
-import { withNavigation } from 'react-navigation';
 
 /**
  * Blog Card

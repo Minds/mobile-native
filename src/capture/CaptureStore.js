@@ -124,12 +124,12 @@ class CaptureStore {
     try {
       this.setPosting(true);
       const result = await post(newPost);
+      return result;
     } catch (err) {
       throw(err);
     } finally {
       this.setPosting(false);
     }
-    return result;
   }
 
   /**

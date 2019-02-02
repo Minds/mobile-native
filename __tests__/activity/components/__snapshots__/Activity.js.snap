@@ -49,35 +49,6 @@ exports[`Activity component renders correctly 1`] = `
         "wire_totals": Object {
           "tokens": 1000000000000000000,
         },
-        Symbol(mobx did run lazy initializers): true,
-        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-          "defaultEnhancer": [Function],
-          "keysAtom": Atom$$1 {
-            "diffValue": 0,
-            "isBeingObserved": false,
-            "isPendingUnobservation": false,
-            "lastAccessedBy": 0,
-            "lowestObserverState": 2,
-            "name": "ActivityModel@1.keys",
-            "observers": Set {},
-          },
-          "name": "ActivityModel@1",
-          "target": [Circular],
-          "values": Map {
-            "votedUp" => false,
-            "votedDown" => false,
-            "mature_visibility" => false,
-            "is_visible" => false,
-            "thumbs:down:count" => undefined,
-            "thumbs:up:count" => undefined,
-            "paywall" => undefined,
-            "mature" => false,
-            "pinned" => undefined,
-            "edited" => "",
-            "thumbs:down:user_guids" => undefined,
-            "thumbs:up:user_guids" => undefined,
-          },
-        },
       }
     }
   />
@@ -119,35 +90,6 @@ exports[`Activity component renders correctly 1`] = `
         "type": "activity",
         "wire_totals": Object {
           "tokens": 1000000000000000000,
-        },
-        Symbol(mobx did run lazy initializers): true,
-        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-          "defaultEnhancer": [Function],
-          "keysAtom": Atom$$1 {
-            "diffValue": 0,
-            "isBeingObserved": false,
-            "isPendingUnobservation": false,
-            "lastAccessedBy": 0,
-            "lowestObserverState": 2,
-            "name": "ActivityModel@1.keys",
-            "observers": Set {},
-          },
-          "name": "ActivityModel@1",
-          "target": [Circular],
-          "values": Map {
-            "votedUp" => false,
-            "votedDown" => false,
-            "mature_visibility" => false,
-            "is_visible" => false,
-            "thumbs:down:count" => undefined,
-            "thumbs:up:count" => undefined,
-            "paywall" => undefined,
-            "mature" => false,
-            "pinned" => undefined,
-            "edited" => "",
-            "thumbs:down:user_guids" => undefined,
-            "thumbs:up:user_guids" => undefined,
-          },
         },
       }
     }
@@ -206,35 +148,6 @@ exports[`Activity component renders correctly 1`] = `
               "type": "activity",
               "wire_totals": Object {
                 "tokens": 1000000000000000000,
-              },
-              Symbol(mobx did run lazy initializers): true,
-              Symbol(mobx administration): ObservableObjectAdministration$$1 {
-                "defaultEnhancer": [Function],
-                "keysAtom": Atom$$1 {
-                  "diffValue": 0,
-                  "isBeingObserved": false,
-                  "isPendingUnobservation": false,
-                  "lastAccessedBy": 0,
-                  "lowestObserverState": 2,
-                  "name": "ActivityModel@1.keys",
-                  "observers": Set {},
-                },
-                "name": "ActivityModel@1",
-                "target": [Circular],
-                "values": Map {
-                  "votedUp" => false,
-                  "votedDown" => false,
-                  "mature_visibility" => false,
-                  "is_visible" => false,
-                  "thumbs:down:count" => undefined,
-                  "thumbs:up:count" => undefined,
-                  "paywall" => undefined,
-                  "mature" => false,
-                  "pinned" => undefined,
-                  "edited" => "",
-                  "thumbs:down:user_guids" => undefined,
-                  "thumbs:up:user_guids" => undefined,
-                },
               },
             }
           }
@@ -323,35 +236,6 @@ exports[`Activity component renders correctly 1`] = `
             "wire_totals": Object {
               "tokens": 1000000000000000000,
             },
-            Symbol(mobx did run lazy initializers): true,
-            Symbol(mobx administration): ObservableObjectAdministration$$1 {
-              "defaultEnhancer": [Function],
-              "keysAtom": Atom$$1 {
-                "diffValue": 0,
-                "isBeingObserved": false,
-                "isPendingUnobservation": false,
-                "lastAccessedBy": 0,
-                "lowestObserverState": 2,
-                "name": "ActivityModel@1.keys",
-                "observers": Set {},
-              },
-              "name": "ActivityModel@1",
-              "target": [Circular],
-              "values": Map {
-                "votedUp" => false,
-                "votedDown" => false,
-                "mature_visibility" => false,
-                "is_visible" => false,
-                "thumbs:down:count" => undefined,
-                "thumbs:up:count" => undefined,
-                "paywall" => undefined,
-                "mature" => false,
-                "pinned" => undefined,
-                "edited" => "",
-                "thumbs:down:user_guids" => undefined,
-                "thumbs:up:user_guids" => undefined,
-              },
-            },
           }
         }
         navigation={
@@ -405,35 +289,6 @@ exports[`Activity component renders correctly 1`] = `
             "wire_totals": Object {
               "tokens": 1000000000000000000,
             },
-            Symbol(mobx did run lazy initializers): true,
-            Symbol(mobx administration): ObservableObjectAdministration$$1 {
-              "defaultEnhancer": [Function],
-              "keysAtom": Atom$$1 {
-                "diffValue": 0,
-                "isBeingObserved": false,
-                "isPendingUnobservation": false,
-                "lastAccessedBy": 0,
-                "lowestObserverState": 2,
-                "name": "ActivityModel@1.keys",
-                "observers": Set {},
-              },
-              "name": "ActivityModel@1",
-              "target": [Circular],
-              "values": Map {
-                "votedUp" => false,
-                "votedDown" => false,
-                "mature_visibility" => false,
-                "is_visible" => false,
-                "thumbs:down:count" => undefined,
-                "thumbs:up:count" => undefined,
-                "paywall" => undefined,
-                "mature" => false,
-                "pinned" => undefined,
-                "edited" => "",
-                "thumbs:down:user_guids" => undefined,
-                "thumbs:up:user_guids" => undefined,
-              },
-            },
           }
         }
         style={
@@ -481,35 +336,6 @@ exports[`Activity component renders correctly 1`] = `
           "type": "activity",
           "wire_totals": Object {
             "tokens": 1000000000000000000,
-          },
-          Symbol(mobx did run lazy initializers): true,
-          Symbol(mobx administration): ObservableObjectAdministration$$1 {
-            "defaultEnhancer": [Function],
-            "keysAtom": Atom$$1 {
-              "diffValue": 0,
-              "isBeingObserved": false,
-              "isPendingUnobservation": false,
-              "lastAccessedBy": 0,
-              "lowestObserverState": 2,
-              "name": "ActivityModel@1.keys",
-              "observers": Set {},
-            },
-            "name": "ActivityModel@1",
-            "target": [Circular],
-            "values": Map {
-              "votedUp" => false,
-              "votedDown" => false,
-              "mature_visibility" => false,
-              "is_visible" => false,
-              "thumbs:down:count" => undefined,
-              "thumbs:up:count" => undefined,
-              "paywall" => undefined,
-              "mature" => false,
-              "pinned" => undefined,
-              "edited" => "",
-              "thumbs:down:user_guids" => undefined,
-              "thumbs:up:user_guids" => undefined,
-            },
           },
         }
       }
@@ -562,35 +388,6 @@ exports[`Activity component renders correctly 1`] = `
         "wire_totals": Object {
           "tokens": 1000000000000000000,
         },
-        Symbol(mobx did run lazy initializers): true,
-        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-          "defaultEnhancer": [Function],
-          "keysAtom": Atom$$1 {
-            "diffValue": 0,
-            "isBeingObserved": false,
-            "isPendingUnobservation": false,
-            "lastAccessedBy": 0,
-            "lowestObserverState": 2,
-            "name": "ActivityModel@1.keys",
-            "observers": Set {},
-          },
-          "name": "ActivityModel@1",
-          "target": [Circular],
-          "values": Map {
-            "votedUp" => false,
-            "votedDown" => false,
-            "mature_visibility" => false,
-            "is_visible" => false,
-            "thumbs:down:count" => undefined,
-            "thumbs:up:count" => undefined,
-            "paywall" => undefined,
-            "mature" => false,
-            "pinned" => undefined,
-            "edited" => "",
-            "thumbs:down:user_guids" => undefined,
-            "thumbs:up:user_guids" => undefined,
-          },
-        },
       }
     }
     navigation={
@@ -638,35 +435,6 @@ exports[`Activity component renders correctly 1`] = `
         "type": "activity",
         "wire_totals": Object {
           "tokens": 1000000000000000000,
-        },
-        Symbol(mobx did run lazy initializers): true,
-        Symbol(mobx administration): ObservableObjectAdministration$$1 {
-          "defaultEnhancer": [Function],
-          "keysAtom": Atom$$1 {
-            "diffValue": 0,
-            "isBeingObserved": false,
-            "isPendingUnobservation": false,
-            "lastAccessedBy": 0,
-            "lowestObserverState": 2,
-            "name": "ActivityModel@1.keys",
-            "observers": Set {},
-          },
-          "name": "ActivityModel@1",
-          "target": [Circular],
-          "values": Map {
-            "votedUp" => false,
-            "votedDown" => false,
-            "mature_visibility" => false,
-            "is_visible" => false,
-            "thumbs:down:count" => undefined,
-            "thumbs:up:count" => undefined,
-            "paywall" => undefined,
-            "mature" => false,
-            "pinned" => undefined,
-            "edited" => "",
-            "thumbs:down:user_guids" => undefined,
-            "thumbs:up:user_guids" => undefined,
-          },
         },
       }
     }

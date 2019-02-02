@@ -16,6 +16,7 @@ jest.mock('../../src/capture/CaptureStore');
 jest.mock('../../src/capture/CapturePostButton', () => 'CapturePostButton');
 jest.mock('../../src/capture/CapturePosterFlags', () => 'CapturePosterFlags');
 jest.mock('../../src/capture/CapturePreview', () => 'CapturePreview');
+jest.mock('../../src/common/services/translation.service');
 
 Alert.alert = jest.fn();
 

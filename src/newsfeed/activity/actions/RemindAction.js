@@ -9,7 +9,6 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { Icon } from 'react-native-elements';
@@ -23,7 +22,7 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 /**
  * Remind Action Component
  */
-class RemindAction extends PureComponent {
+export default class RemindAction extends PureComponent {
 
   static defaultProps = {
     size: 20,
@@ -52,9 +51,6 @@ class RemindAction extends PureComponent {
     this.props.navigation.push('Capture', {isRemind: true, entity: this.props.entity});
   }
 }
-
-// add navigation
-export default withNavigation(RemindAction);
 
 const styles = StyleSheet.create({
   modal: {

@@ -354,7 +354,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                     }
                   }
                 >
-                  <withNavigation(RemindAction)
+                  <RemindAction
                     entity={
                       BlogModel {
                         "access_id": "2",
@@ -482,6 +482,15 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "title": "Some Title",
                         "type": "object",
                         "wire_threshold": "",
+                      }
+                    }
+                    navigation={
+                      Object {
+                        "state": Object {
+                          "params": Object {
+                            "guid": 1,
+                          },
+                        },
                       }
                     }
                     size={16}

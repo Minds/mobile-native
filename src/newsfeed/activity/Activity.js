@@ -17,7 +17,6 @@ import {
   Dimensions,
   Linking
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -43,7 +42,7 @@ import Pinned from '../../common/components/Pinned';
  * Activity
  */
 @observer
-class Activity extends Component {
+export default class Activity extends Component {
 
   state = {
     editing: false
@@ -267,9 +266,6 @@ class Activity extends Component {
     }
   }
 }
-
-// add navigation
-export default withNavigation(Activity);
 
 const styles = StyleSheet.create({
   container: {

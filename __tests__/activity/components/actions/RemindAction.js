@@ -19,7 +19,7 @@ describe('Thumb action component', () => {
 
     const TouchableOpacityCustom = <TouchableOpacity onPress={this.onPress} />;
 
-    const navigation = { navigate: jest.fn() };
+    const navigation = { push: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
     screen = shallow(
       <RemindAction entity={activityResponse.activities[0]} navigation={navigation} />
@@ -42,8 +42,8 @@ describe('Thumb action component', () => {
   it('should navigate a thumb on press ', () => {
     let activityResponse = activitiesServiceFaker().load(1);
 
-    const navigation = { 
-      navigate: jest.fn() 
+    const navigation = {
+      push: jest.fn()
     };
     let entity = activityResponse.activities[0];
     entity.toggleVote = jest.fn();
@@ -56,7 +56,7 @@ describe('Thumb action component', () => {
     touchables.at(0).props().onPress();
     jest.runAllTimers();
 
-    expect(screen.instance().state.remindModalVisible).toBeTruthy();
+    expect(navigation.push).toBeCalled();
 
   });
 

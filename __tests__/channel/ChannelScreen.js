@@ -25,6 +25,7 @@ import Touchable from '../../src/common/components/Touchable';
 import session from '../../src/common/services/session.service';
 import ChannelStore from '../../src/channel/ChannelStore';
 
+jest.mock('../../src/common/helpers/abortableFetch');
 jest.mock('../../src/channel/UserModel');
 jest.mock('../../src/newsfeed/ActivityModel');
 jest.mock('../../src/channel/carousel/RewardsCarousel', () => 'RewardsCarousel');
@@ -71,7 +72,7 @@ describe('Channel screen component', () => {
       },
       load: jest.fn(),
     };
-    
+
     user = new UserStore();
     channel = { store: jest.fn() };
 
@@ -115,7 +116,7 @@ describe('Channel screen component', () => {
       },
       load: jest.fn(),
     };
-    
+
     user = new UserStore();
     channel = { store: jest.fn() };
 
