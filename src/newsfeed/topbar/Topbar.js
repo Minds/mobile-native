@@ -48,7 +48,7 @@ export default class Topbar extends Component {
   render() {
     return (
       <View>
-        <View style={styles.container}>
+        <View style={[styles.container, CommonStyle.shadow]}>
           <View style={styles.topbar}>
             <TouchableOpacity style={[styles.tab, this.selected('suggested')]} onPress={() => this.props.newsfeed.setFilter('suggested')}>
               <Text style={CommonStyle.fontXS}>TOP</Text>
@@ -79,13 +79,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
     backgroundColor: '#FFF',
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    shadowRadius: StyleSheet.hairlineWidth,
-    shadowOffset: {
-      height: StyleSheet.hairlineWidth,
-    },
-    elevation: 4
   },
   topbar: {
     flex: 1,
