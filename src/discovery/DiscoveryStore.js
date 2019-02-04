@@ -198,16 +198,14 @@ class DiscoveryStore {
     if (type == 'channels') {
       store.list.clearList();
     }
-    this.loadList(type == 'channels');
+    this.loadList();
   }
 
   /**
-   * Set filter and refresh list
-   * @param {string} filter
+   * Reload tje list
    */
   @action
-  setFilter(filter) {
-    this.filter = filter;
+  reload() {
     this.list.clearList();
     this.loadList(true);
   }
@@ -229,12 +227,13 @@ class DiscoveryStore {
     this.loading = false;
 
     if (text.trim() == '') {
-      this.clearList();
-    } else if ((text.indexOf('#') === 0) || (text.indexOf(' ') > -1)) {
-      this.type = 'activity';
-    } else {
-      this.type = 'channels';
+      // show again hashtag
     }
+    // else if ((text.indexOf('#') === 0) || (text.indexOf(' ') > -1)) {
+    //   this.type = 'activity';
+    // } else {
+    //   this.type = 'channels';
+    // }
 
     const list = this.list;
     list.clearList();
