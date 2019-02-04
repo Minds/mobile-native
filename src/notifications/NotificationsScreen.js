@@ -139,8 +139,10 @@ export default class NotificationsScreen extends Component {
         onRefresh={this.refresh}
         onEndReached={this.loadMore}
         ListEmptyComponent={empty}
+        ListHeaderComponent={<NotificationsTopbar/>}
         onEndThreshold={0.05}
         initialNumToRender={12}
+        stickyHeaderIndices={[0]}
         windowSize={8}
         refreshing={list.refreshing}
         style={styles.listView}
@@ -149,7 +151,6 @@ export default class NotificationsScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <NotificationsTopbar  />
         {body}
         <CaptureFab navigation={this.props.navigation} />
       </View>
