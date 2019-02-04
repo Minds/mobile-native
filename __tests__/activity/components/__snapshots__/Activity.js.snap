@@ -3,11 +3,15 @@
 exports[`Activity component renders correctly 1`] = `
 <ForwardRef(View)
   style={
-    Object {
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
-      "overflow": "visible",
-    }
+    Array [
+      Object {
+        "overflow": "visible",
+      },
+      Object {
+        "borderBottomColor": "#CCC",
+        "borderBottomWidth": 0.5,
+      },
+    ]
   }
 >
   <Pinned

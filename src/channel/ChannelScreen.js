@@ -34,8 +34,6 @@ import Touchable from '../common/components/Touchable';
 import session from '../common/services/session.service';
 import isIphoneX from '../common/helpers/isIphoneX';
 
-import gitlab from '../common/services/gitlab.service';
-
 /**
  * Channel Screen
  */
@@ -74,8 +72,6 @@ export default class ChannelScreen extends Component {
     } else if (params.guid) {
       this.loadChannel(params.guid);
     }
-
-    gitlab.postIssue('Mobile created issue', 'wow it works!').then(r => console.log(r));
   }
 
   componentWillUnmount() {
