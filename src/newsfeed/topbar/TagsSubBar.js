@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   StyleSheet,
+  Platform,
   ScrollView,
   View
 } from 'react-native';
@@ -87,10 +88,10 @@ export default class TagsSubBar extends Component {
         <View style={CS.flexContainer}>
           <ScrollView horizontal={true} >
             <TouchableOpacity style={styles.tag} onPress={this.toogleAll}>
-              <Text style={[CS.fontS, styles.tagText, this.props.hashtag.all ? CS.colorPrimary : null]}>#ALL</Text>
+              <Text style={[CS.fontM, CS.fontHairline, styles.tagText, this.props.hashtag.all ? CS.colorPrimary : null]}>#ALL</Text>
             </TouchableOpacity>
             {!this.props.hashtag.all && sorted.map((tag, i) => <TouchableOpacity style={styles.tag} key={i} onPress={() => this.toogle(tag)}>
-              <Text style={[CS.fontS, styles.tagText, tag.selected ? CS.colorPrimary : null]}>#{tag.value}</Text>
+              <Text style={[CS.fontM, CS.fontHairline, styles.tagText, tag.selected ? CS.colorPrimary : null]}>#{tag.value}</Text>
             </TouchableOpacity>)}
           </ScrollView>
         </View>
@@ -109,8 +110,9 @@ const styles = StyleSheet.create({
   subbar: {
     flex: 1,
     flexDirection: 'row',
-    height:29,
-    marginTop: 2
+    height:35,
+    justifyContent:'center',
+    marginTop: 3
   },
   moreButton: {
     width: 55,
@@ -132,6 +134,11 @@ const styles = StyleSheet.create({
     paddingVertical: 5
   },
   tagText: {
-    paddingRight: 5
+    paddingRight: 5,
+    ...Platform.select({
+      ios: {
+        marginTop: 2,
+      },
+    }),
   }
 });
