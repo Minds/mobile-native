@@ -106,7 +106,7 @@ export default class Activity extends Component {
 
 
     return (
-        <View style={styles.container} onLayout={this.props.onLayout}>
+        <View style={[styles.container, this.props.isReminded ? null : CommonStyle.hairLineBottom]} onLayout={this.props.onLayout}>
           <Pinned entity={this.props.entity}/>
           { this.showOwner() }
           <View>
@@ -247,6 +247,7 @@ export default class Activity extends Component {
             newsfeed={this.props.newsfeed}
             entity={remind_object}
             navigation={this.props.navigation}
+            isReminded={true}
             hydrateOnNav={true}
             />
         </View>
@@ -269,8 +270,6 @@ export default class Activity extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomColor: '#EEE',
-    borderBottomWidth: StyleSheet.hairlineWidth,
     overflow: 'visible',
   },
   messageContainer: {
