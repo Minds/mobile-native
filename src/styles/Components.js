@@ -149,8 +149,8 @@ export const ComponentsStyle = StyleSheet.create({
   emptyComponentMessage: {
     fontSize: 24,
     fontFamily: 'Roboto',
-    fontWeight: '600',
-    color: '#444',
+    fontWeight: '200',
+    color: '#888',
     textAlign: 'center',
     marginTop: 8,
     marginBottom: 8,

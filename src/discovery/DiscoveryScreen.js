@@ -33,6 +33,7 @@ import Activity from '../newsfeed/activity/Activity';
 import SearchView from '../common/components/SearchView';
 import CenteredLoading from '../common/components/CenteredLoading';
 import { CommonStyle as CS } from '../styles/Common';
+import { ComponentsStyle } from '../styles/Components';
 import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
 import stores from '../../AppStores';
@@ -56,7 +57,6 @@ export default class DiscoveryScreen extends Component {
 
   state = {
     active: false,
-    searching: false,
     itemHeight: 0,
     currentSearchParam: void 0,
     q: ''
@@ -231,6 +231,7 @@ export default class DiscoveryScreen extends Component {
         renderItem={renderRow}
         ListFooterComponent={footer}
         ListHeaderComponent={this.getHeaders()}
+        ListEmptyComponent={this.getEmptyList()}
         stickyHeaderIndices={[0]}
         keyExtractor={item => item.rowKey}
         onRefresh={this.refresh}
@@ -304,41 +305,55 @@ export default class DiscoveryScreen extends Component {
   handleViewRef = ref => this.headerView = ref;
 
   /**
+   * Get empty list
+   */
+  getEmptyList() {
+    if (this.props.discovery.loading || this.props.discovery.list.errorLoading) return null;
+    return (
+      <View style={ComponentsStyle.emptyComponentContainer}>
+        <View style={ComponentsStyle.emptyComponent}>
+          <Text style={ComponentsStyle.emptyComponentMessage}>Nothing to show</Text>
+        </View>
+      </View>
+    );
+  }
+
+  /**
    * Get header
    */
   getHeaders() {
     const discovery = this.props.discovery;
     const navigation = (
-      <View style={styles.navigation}>
+      <View style={[styles.navigation]}>
 
-        <TouchableHighlight style={ styles.iconContainer } onPress={ () => discovery.setType('channels') } underlayColor='#fff'>
+        <TouchableHighlight style={[ styles.iconContainer, discovery.type == 'channels' ? [CS.borderBottom2x, CS.borderPrimary] : null ]} onPress={ () => discovery.setType('channels') } underlayColor='#fff'>
           <Icon
             name="people"
             style={[styles.icon, discovery.type == 'channels' ? styles.iconActive : null ]}
             size={ this.iconSize }
           />
         </TouchableHighlight>
-        <TouchableHighlight style={ styles.iconContainer } onPress={ () => discovery.setType('videos') } underlayColor='#fff'>
+        <TouchableHighlight style={[ styles.iconContainer, discovery.type == 'videos' ? [CS.borderBottom2x, CS.borderPrimary] : null ]} onPress={ () => discovery.setType('videos') } underlayColor='#fff'>
           <Icon
             name="videocam"
             style={[styles.icon, discovery.type == 'videos' ? styles.iconActive : null ]}
             size={ this.iconSize
             }/>
         </TouchableHighlight>
-        <TouchableHighlight style={ styles.iconContainer } onPress={ () => discovery.setType('images') } underlayColor='#fff'>
+        <TouchableHighlight style={[ styles.iconContainer, discovery.type == 'images' ? [CS.borderBottom2x, CS.borderPrimary] : null ]} onPress={ () => discovery.setType('images') } underlayColor='#fff'>
           <IonIcon
             name="md-photos"
             style={[styles.icon, discovery.type == 'images' ? styles.iconActive : null ]}
             size={ this.iconSize }/>
         </TouchableHighlight>
-        <TouchableHighlight style={ styles.iconContainer } onPress={ () => discovery.setType('blogs') } underlayColor='#fff'>
+        <TouchableHighlight style={[ styles.iconContainer, discovery.type == 'blogs' ? [CS.borderBottom2x, CS.borderPrimary] : null ]} onPress={ () => discovery.setType('blogs') } underlayColor='#fff'>
           <Icon
             name="subject"
             style={[styles.icon, discovery.type == 'blogs' ? styles.iconActive : null ]}
             size={ this.iconSize }
             />
         </TouchableHighlight>
-        <TouchableHighlight style={ styles.iconContainer } onPress={ () => discovery.setType('groups') } underlayColor='#fff'>
+        <TouchableHighlight style={[ styles.iconContainer, discovery.type == 'groups' ? [CS.borderBottom2x, CS.borderPrimary] : null ]} onPress={ () => discovery.setType('groups') } underlayColor='#fff'>
           <Icon
             name="group-work"
             style={[styles.icon, discovery.type == 'groups' ? styles.iconActive : null ]}
@@ -356,22 +371,21 @@ export default class DiscoveryScreen extends Component {
 
 
     const headerBody = discovery.type != 'lastchannels' ?
-      <Fragment>
+      <View style={CS.marginBottom}>
         <SearchView
           placeholder={`Search ${discovery.type}...`}
-          onFocus={this.searchFocus}
-          onBlur={this.searchBlur}
           onChangeText={this.setQ}
           value={this.state.q}
+          containerStyle={[CS.marginTop, CS.marginBottom]}
           iconRight={ iconRight }
           iconRightOnPress={this.clearSearch}
         />
         {!discovery.searchtext && <TagsSubBar onChange={this.onTagSelectionChange}/>}
-      </Fragment> :
+      </View> :
       <Text style={[CS.fontM, CS.backgroundPrimary, CS.colorWhite, CS.textCenter, CS.padding]}>Recently visited</Text>;
 
     return (
-      <Animatable.View ref={this.handleViewRef} style={[CS.shadow, CS.backgroundWhite, CS.paddingBottom]} useNativeDriver={true}>
+      <Animatable.View ref={this.handleViewRef} style={[CS.shadow, CS.backgroundWhite]} useNativeDriver={true}>
         {navigation}
         {headerBody}
       </Animatable.View>
@@ -406,15 +420,11 @@ export default class DiscoveryScreen extends Component {
   }
 
   tryAgain = () => {
-    if (this.state.searching) {
+    if (this.props.discovery.searchtext) {
       this.props.discovery.search(this.props.discovery.searchtext);
     } else {
       this.loadFeed(null, true);
     }
-  }
-
-  searchFocus = async () => {
-    this.setState({ searching: true });
   }
 
   /**
@@ -429,20 +439,10 @@ export default class DiscoveryScreen extends Component {
     this.props.discovery.list.setList({entities: list});
   }
 
-  searchBlur = () => {
-    if (!this.props.discovery.searchtext) {
-      this.setState({ searching: false });
-    }
-  }
-
   /**
    * ClearSearch
    */
   clearSearch = () => {
-    this.setState({
-      q: '',
-      searching: false,
-    });
     this.setQ('');
     Keyboard.dismiss();
   }
@@ -561,11 +561,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     backgroundColor: '#FFF',
     flex: 1,
-
     ...Platform.select({
       android: {
-        paddingTop: 5,
-        paddingBottom: 5,
+        paddingTop: 2,
+        paddingBottom: 2,
       },
     }),
   },
