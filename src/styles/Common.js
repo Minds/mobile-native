@@ -78,6 +78,9 @@ export const CommonStyle = StyleSheet.create({
   colorSecondary: {
     color: colors.secondary
   },
+  colorTerciary: {
+    color: colors.terciary
+  },
   colorPrimary: {
     color: colors.primary
   },
@@ -124,6 +127,9 @@ export const CommonStyle = StyleSheet.create({
   backgroundTransparent: {
     backgroundColor: 'transparent'
   },
+  backgroundTerciary: {
+    backgroundColor: colors.terciary
+  },
   // borders
   borderWhite: {
     borderColor: 'white'
@@ -136,6 +142,9 @@ export const CommonStyle = StyleSheet.create({
   },
   borderSecondary: {
     borderColor: colors.secondary
+  },
+  borderTerciary: {
+    borderColor: colors.terciary
   },
   borderPrimary: {
     borderColor: colors.primary
@@ -283,6 +292,9 @@ export const CommonStyle = StyleSheet.create({
   border3x: {
     borderWidth: 3
   },
+  borderLeftHair: {
+    borderLeftWidth: StyleSheet.hairlineWidth
+  },
   borderLeft: {
     borderLeftWidth: 1
   },
@@ -291,6 +303,9 @@ export const CommonStyle = StyleSheet.create({
   },
   borderLeft3x: {
     borderLeftWidth: 3
+  },
+  borderRightHair: {
+    borderRightWidth: StyleSheet.hairlineWidth
   },
   borderRight: {
     borderRightWidth: 1
@@ -301,6 +316,9 @@ export const CommonStyle = StyleSheet.create({
   borderRight3x: {
     borderRightWidth: 3
   },
+  borderTopHair: {
+    borderTopWidth: StyleSheet.hairlineWidth
+  },
   borderTop: {
     borderTopWidth: 1
   },
@@ -309,6 +327,9 @@ export const CommonStyle = StyleSheet.create({
   },
   borderTop3x: {
     borderTopWidth: 3
+  },
+  borderBottomHair: {
+    borderBottomWidth: StyleSheet.hairlineWidth
   },
   borderBottom: {
     borderBottomWidth: 1

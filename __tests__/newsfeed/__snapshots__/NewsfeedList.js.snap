@@ -27,10 +27,10 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         <Text
           style={
             Object {
-              "color": "#444",
+              "color": "#888",
               "fontFamily": "Roboto",
               "fontSize": 24,
-              "fontWeight": "600",
+              "fontWeight": "200",
               "marginBottom": 8,
               "marginTop": 8,
               "textAlign": "center",

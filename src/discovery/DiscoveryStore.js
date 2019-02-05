@@ -195,9 +195,7 @@ class DiscoveryStore {
   setType(type) {
     const store = this.stores[type];
     this.type = type;
-    if (type == 'channels') {
-      store.list.clearList();
-    }
+    store.list.clearList();
     this.loadList();
   }
 
