@@ -25,6 +25,7 @@ class MessengerConversationStore {
   @observable loading = false;
   @observable moreData = true;
   @observable invited = false;
+  @observable errorLoading = false;
 
   @observable offset = ''
   socketRoomName = null;
@@ -36,10 +37,10 @@ class MessengerConversationStore {
    * Initial load
    * @param {bool} refresh
    */
-  @action
   async load(refresh = false) {
     if (!refresh && (this.loading || !this.moreData)) return;
-    this.loading = true;
+    this.setLoading(true);
+    this.setErrorLoading(false);
 
     try {
       const conversation = await messengerService.getConversationFromRemote(12, this.guid, this.offset)
@@ -64,17 +65,21 @@ class MessengerConversationStore {
       this.checkListen(conversation);
       return conversation;
     } catch (err) {
+      console.log(err);
+      this.setErrorLoading(true);
     } finally {
-      this.loading = false;
+      this.setLoading(false);
     }
   }
 
-  /**
-   * Load more
-   * @param {string} offset
-   */
-  async loadMore() {
-    return await this.load();
+  @action
+  setErrorLoading(value) {
+    this.errorLoading = value;
+  }
+
+  @action
+  setLoading(value) {
+    this.loading = value;
   }
 
   /**

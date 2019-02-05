@@ -38,6 +38,7 @@ export default class CommentsStore {
   @observable saving = false;
   @observable text = '';
   @observable loading = false;
+  @observable errorLoading = false;
 
   // attachment store
   attachment = new AttachmentStore();
@@ -68,6 +69,7 @@ export default class CommentsStore {
     this.guid = guid;
 
     this.loading = true;
+    this.setErrorLoading(false);
 
     this.include_offset = '';
     const parent_path = this.getParentPath();
@@ -76,15 +78,20 @@ export default class CommentsStore {
 
       const response = await getComments(this.guid, parent_path, descending, this.loadPrevious, this.include_offset, COMMENTS_PAGE_SIZE, comment_guid);
 
-      // response.comments = CommentModel.createMany(response.comments);
       this.loaded = true;
       this.setComments(response, descending);
       this.checkListen(response);
     } catch (err) {
+      this.setErrorLoading(true);
       console.log('error', err);
     } finally {
       this.loading = false;
     }
+  }
+
+  @action
+  setErrorLoading(value) {
+    this.errorLoading = value;
   }
 
   /**
@@ -262,6 +269,7 @@ export default class CommentsStore {
     this.socketRoomName = '';
     this.loaded = false;
     this.loading = false;
+    this.errorLoading = false;
     this.saving = false;
     this.text = '';
   }
@@ -302,9 +310,6 @@ export default class CommentsStore {
     } finally {
       this.saving = false;
     }
-
-
-
   }
 
   /**
@@ -330,16 +335,11 @@ export default class CommentsStore {
    */
   @action
   reset() {
-    this.comments = [];
+    this.clearComments();
     this.parent = null;
     this.refreshing = false;
-    this.loaded = false;
-    this.saving = false;
     this.guid = '';
     this.reversed = true;
-    this.loadNext = '';
-    this.loadPrevious = '';
-    this.socketRoomName = '';
   }
 
   /**
@@ -438,9 +438,9 @@ export default class CommentsStore {
 
         if (result === false) alert('caught upload error');
 
-      } catch (e) {
-        console.error(e);
-        alert(e);
+      } catch (err) {
+        console.error(err);
+        alert(err);
       }
     } else {
       actionSheet.show()
@@ -465,7 +465,7 @@ export default class CommentsStore {
         .catch(action(err => {
           comment.mature = !value;
           this.comments[index] = comment;
-          console.log('error');
+          console.log('error', err);
         }));
     }
   }

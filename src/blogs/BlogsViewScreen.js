@@ -106,7 +106,7 @@ export default class BlogsViewScreen extends Component {
     const actions = (
       <View style={[CS.flexContainer, CS.paddingLeft2x]}>
         <View style={styles.actionsContainer}>
-          <RemindAction entity={blog} size={16} />
+          <RemindAction entity={blog} size={16} navigation={this.props.navigation}/>
           <ThumbUpAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
           <ThumbDownAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
         </View>

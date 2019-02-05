@@ -40,7 +40,7 @@ export default class SearchView extends PureComponent {
 
     return (
       <View style={[styles.container, containerStyle]}>
-        <Icon size={16} style={styles.icon} name={'md-search'} color={'#444'} />
+        <Icon size={22} style={styles.icon} name={'md-search'} color={'#444'} />
         <TextInput
           onFocus={ this.props.onFocus }
           onBlur={ this.props.onBlur }
@@ -62,15 +62,18 @@ export default class SearchView extends PureComponent {
    */
   getRightIcon(iconRight, iconRightOnPress) {
     if (iconRight) {
-      if (iconRightOnPress) {
-        return (
-          <TouchableOpacity style={[styles.icon, styles.iconRight]} onPress={iconRightOnPress}>
-            <Icon size={16} name={iconRight} color={'#444'} />
-          </TouchableOpacity>
-        )
-      } else {
-        return <Icon size={16} style={[styles.icon, styles.iconRight]} name={iconRight} color={'#444'} />
+      if (typeof iconRight === 'string' || iconRight instanceof String) {
+        if (iconRightOnPress) {
+          return (
+            <TouchableOpacity style={[styles.icon, styles.iconRight]} onPress={iconRightOnPress}>
+              <Icon size={18} name={iconRight} color={'#444'} />
+            </TouchableOpacity>
+          )
+        } else {
+          return <Icon size={18} style={[styles.icon, styles.iconRight]} name={iconRight} color={'#444'} />
+        }
       }
+      return iconRight;
     }
     return null;
   }
@@ -81,23 +84,22 @@ const styles = StyleSheet.create({
     borderBottomColor: '#000',
     borderTopColor: '#000',
     backgroundColor: '#FFF',
-    //height:50,
-    padding: 8,
+    justifyContent:'center',
+    backgroundColor: '#f2f2f2',
+    borderRadius: 50,
+    height:45,
+    padding: 6,
+    marginHorizontal: 5
   },
   iconRight: {
     right:0,
-    paddingRight: 10,
+    paddingRight: 12,
   },
   icon: {
     backgroundColor: 'transparent',
     position: 'absolute',
     paddingLeft: 10,
-    top: 15.5,
-    ...Platform.select({
-      android: {
-        top: 20,
-      },
-    }),
+    top: 12
   },
   input: {
     paddingLeft: 30,
@@ -107,10 +109,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     fontSize: 14,
     color: '#444',
-    height: 40,
+    height: 42,
     ...Platform.select({
       ios: {
-        height: 30,
+        height: 38,
       },
       android: {
         borderWidth: 0,

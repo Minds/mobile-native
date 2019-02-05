@@ -1,4 +1,5 @@
 import api from './../common/services/api.service';
+import { abort } from '../common/helpers/abortableFetch';
 
 export default class BoostService {
 
@@ -7,21 +8,19 @@ export default class BoostService {
   };
 
   async getBoosts(offset, filter, peer_filter) {
-    if (this.controllers._getBoosts) {
-      this.controllers._getBoosts.abort();
-    }
 
-    this.controllers._getBoosts = new AbortController();
+    // abort previous call
+    abort(this);
 
     try {
-      const data = await api.get('api/v2/boost/' + filter + '/' + peer_filter, 
-        { 
-          offset: offset, 
-          limit: 15 
+      const data = await api.get('api/v2/boost/' + filter + '/' + peer_filter,
+        {
+          offset: offset,
+          limit: 15
         },
         this.controllers._getBoosts.signal
       );
-    
+
       return {
         entities: data.boosts,
         offset: data['load-next'],

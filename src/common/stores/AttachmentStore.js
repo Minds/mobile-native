@@ -39,33 +39,38 @@ export default class AttachmentStore {
 
     if (this.uploading) {
       // abort current upload
-     this.cancelCurrentUpload();
+      this.cancelCurrentUpload();
     } else if (this.hasAttachment) {
       // delete uploaded media
-      attachmentService.deleteMedia(this.guid);
+      try {
+        await attachmentService.deleteMedia(this.guid);
+      } catch (error) {
+        // we ignore delete error for now
+        console.log(error);
+      }
     }
 
     this.uri  = media.uri;
     this.type = media.type;
     this.setHasAttachment(true);
 
-    const uploadPromise = attachmentService.attachMedia(media, extra, (pct) => {
-      this.setProgress(pct);
-    });
-
-    // we need to defer the set because a cenceled promise could set it to false
-    setTimeout(() => this.setUploading(true), 0);
-
-    this.uploadPromise = uploadPromise;
-
     try {
+      const uploadPromise = attachmentService.attachMedia(media, extra, (pct) => {
+        this.setProgress(pct);
+      });
+
+      // we need to defer the set because a cenceled promise could set it to false
+      setTimeout(() => this.setUploading(true), 0);
+
+      this.uploadPromise = uploadPromise;
+
       const result = await uploadPromise;
       // ignore canceled
       if (uploadPromise.isCanceled() || !result) return;
       this.guid = result.guid;
     } catch (err) {
       this.clear();
-      throw err;
+      Alert.alert('Upload failed', 'Please try again');
     } finally {
       this.setUploading(false);
     }

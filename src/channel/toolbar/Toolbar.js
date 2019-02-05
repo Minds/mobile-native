@@ -16,6 +16,8 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import colors from '../../styles/Colors';
 
+const ICON_SIZE = 22;
+
 @observer
 export default class Toolbar extends Component {
 
@@ -49,7 +51,7 @@ export default class Toolbar extends Component {
     if (this.props.hasRewards) {
       rewards = (
         <TouchableOpacity style={styles.button} onPress={this.filterRewards}>
-          <IonIcon name="ios-flash" size={18} color={filter == 'rewards' ? colors.primary : color} />
+          <IonIcon name="ios-flash" size={ICON_SIZE} color={filter == 'rewards' ? colors.primary : color} />
           <Text style={styles.buttontext}>REWARDS</Text>
         </TouchableOpacity>
       )
@@ -59,19 +61,19 @@ export default class Toolbar extends Component {
       <View style={styles.container}>
         <View style={styles.topbar}>
           <TouchableOpacity style={styles.button} onPress={this.filterFeed}>
-            <Icon name="list" size={18} color={filter == 'feed' ? colors.primary : color} />
+            <Icon name="list" size={ICON_SIZE} color={filter == 'feed' ? colors.primary : color} />
             <Text style={styles.buttontext}>FEED</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={this.filterImages} >
-            <IonIcon name="md-image" size={18} color={filter == 'images' ? colors.primary : color} />
+            <IonIcon name="md-image" size={ICON_SIZE} color={filter == 'images' ? colors.primary : color} />
             <Text style={styles.buttontext}>IMAGES</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={this.filterVideos} >
-            <IonIcon name="md-videocam" size={18} color={filter == 'videos' ? colors.primary : color} />
+            <IonIcon name="md-videocam" size={ICON_SIZE} color={filter == 'videos' ? colors.primary : color} />
             <Text style={styles.buttontext}>VIDEOS</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={this.filterBlogs}>
-              <Icon name="subject" size={18} color={filter == 'blogs' ? colors.primary : color} />
+              <Icon name="subject" size={ICON_SIZE} color={filter == 'blogs' ? colors.primary : color} />
               <Text style={styles.buttontext}>BLOGS</Text>
           </TouchableOpacity>
           {rewards}

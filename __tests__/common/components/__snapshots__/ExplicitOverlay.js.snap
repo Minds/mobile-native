@@ -31,13 +31,14 @@ exports[`Explicit overlay component renders correctly 1`] = `
     size={80}
     style={
       Object {
-        "elevation": 1,
+        "elevation": 4,
         "shadowColor": "black",
         "shadowOffset": Object {
-          "height": 0.5,
+          "height": 2,
+          "width": 0,
         },
-        "shadowOpacity": 0.5,
-        "shadowRadius": 0.5,
+        "shadowOpacity": 0.1,
+        "shadowRadius": 2,
       }
     }
   />
@@ -48,13 +49,14 @@ exports[`Explicit overlay component renders correctly 1`] = `
           "color": "white",
         },
         Object {
-          "elevation": 1,
+          "elevation": 4,
           "shadowColor": "black",
           "shadowOffset": Object {
-            "height": 0.5,
+            "height": 2,
+            "width": 0,
           },
-          "shadowOpacity": 0.5,
-          "shadowRadius": 0.5,
+          "shadowOpacity": 0.1,
+          "shadowRadius": 2,
         },
       ]
     }
@@ -86,13 +88,14 @@ exports[`Explicit overlay component should renders the etag 1`] = `
     size={32}
     style={
       Object {
-        "elevation": 1,
+        "elevation": 4,
         "shadowColor": "black",
         "shadowOffset": Object {
-          "height": 0.5,
+          "height": 2,
+          "width": 0,
         },
-        "shadowOpacity": 0.5,
-        "shadowRadius": 0.5,
+        "shadowOpacity": 0.1,
+        "shadowRadius": 2,
       }
     }
   />

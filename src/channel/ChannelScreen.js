@@ -34,8 +34,6 @@ import Touchable from '../common/components/Touchable';
 import session from '../common/services/session.service';
 import isIphoneX from '../common/helpers/isIphoneX';
 
-import gitlab from '../common/services/gitlab.service';
-
 /**
  * Channel Screen
  */
@@ -74,8 +72,6 @@ export default class ChannelScreen extends Component {
     } else if (params.guid) {
       this.loadChannel(params.guid);
     }
-
-    gitlab.postIssue('Mobile created issue', 'wow it works!').then(r => console.log(r));
   }
 
   componentWillUnmount() {
@@ -149,16 +145,17 @@ export default class ChannelScreen extends Component {
    * Render
    */
   render() {
+    const store = this.props.channel.store(this.guid);
 
-    if (!this.guid || !this.props.channel.store(this.guid).channel.guid) {
+    if (!this.guid || !store.channel.guid) {
       return (
         <CenteredLoading />
       );
     }
 
-    const feed    = this.props.channel.store(this.guid).feedStore;
-    const channel = this.props.channel.store(this.guid).channel;
-    const rewards = this.props.channel.store(this.guid).rewards;
+    const feed    = store.feedStore;
+    const channel = store.channel;
+    const rewards = store.rewards;
     const guid    = this.guid;
     const isOwner = guid == session.guid;
 
@@ -179,7 +176,7 @@ export default class ChannelScreen extends Component {
       <View>
         <ChannelHeader
           styles={styles}
-          channel={this.props.channel.store(this.guid)}
+          channel={store}
           navigation={this.props.navigation}
         />
 

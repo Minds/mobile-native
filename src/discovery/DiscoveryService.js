@@ -1,11 +1,11 @@
 import api from './../common/services/api.service';
+import { abort } from '../common/helpers/abortableFetch';
+import appStores from '../../AppStores';
 
 /**
  * Discovery Service
  */
 class DiscoveryService {
-
-  controller = null
 
   async search({ offset, type, filter, q }) {
 
@@ -17,6 +17,19 @@ class DiscoveryService {
       };
 
     switch (type) {
+      case 'images':
+        params.taxonomies = 'object:image';
+        break;
+      case 'videos':
+        params.taxonomies = 'object:video';
+        break;
+      case 'blogs':
+        params.taxonomies = 'object:blog';
+        params.rating=2;
+        break;
+      case 'groups':
+        params.taxonomies = 'group';
+        break;
       case 'channels':
         endpoint = 'api/v2/search/suggest/user';
         params.hydrate = 1;
@@ -27,7 +40,9 @@ class DiscoveryService {
         break;
     }
 
-    const response = (await api.get(endpoint, params, this.controller.signal)) || {};
+    abort('discovery:search');
+
+    const response = (await api.get(endpoint, params, 'discovery:search')) || {};
 
     return {
       entities: response.entities || [],
@@ -36,38 +51,29 @@ class DiscoveryService {
   }
 
   async getFeed(offset, type, filter, q) {
-    if (this.controller)
-      this.controller.abort();
 
-    this.controller = new AbortController();
+    // abort previous call
+    abort(this);
 
-    let endpoint;
     // is search
     if (q) {
       return this.search({ offset, type, filter, q });
     }
 
-    if (type == 'group') {
-      endpoint = 'api/v1/entities/trending/groups';
-    } else {
-      endpoint = `api/v2/entities/${filter}/${type}/all`;
+    const all = appStores.hashtag.all ? '/all' : '';
+
+    const endpoint = `api/v2/entities/suggested/${type}${all}`;
+
+    const data = await api.get(endpoint, { limit: 12, offset: offset }, this);
+    let entities = [];
+    entities = data.entities;
+
+    if (type == 'group' && offset && entities) {
+      entities.shift();
     }
-
-    try {
-      const data = await api.get(endpoint, { limit: 12, offset: offset })
-      let entities = [];
-      entities = data.entities;
-
-      if (type == 'group' && offset && entities) {
-        entities.shift();
-      }
-      return {
-        entities: entities,
-        offset: data['load-next'],
-      }
-    } catch(err) {
-      console.log('error', err);
-      throw "Ooops";
+    return {
+      entities: entities,
+      offset: data['load-next'],
     }
   }
 

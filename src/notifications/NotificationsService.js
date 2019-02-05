@@ -1,20 +1,15 @@
 import api from './../common/services/api.service';
-import { AbortController } from 'abortcontroller-polyfill/dist/cjs-ponyfill';
+import { abort } from '../common/helpers/abortableFetch';
 
 export default class NotificationsService {
 
-  controllers = {
-    getFeed: null
-  };
-
   async getFeed(offset, filter) {
-    if (this.controllers.getFeed)
-      this.controllers.getFeed.abort();
 
-    this.controllers.getFeed = new AbortController();
+    // abort previous call
+    abort(this);
 
     try {
-      const data = await api.get('api/v1/notifications/' + filter, { offset: offset, limit: 15 }, this.controllers.getFeed.signal);
+      const data = await api.get('api/v1/notifications/' + filter, { offset: offset, limit: 15 }, this);
       return {
         entities: data.notifications,
         offset: data['load-next'],

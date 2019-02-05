@@ -16,7 +16,6 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import { OptimizedFlatList } from 'react-native-optimized-flatlist';
 
 import NotificationsTabIcon from './NotificationsTabIcon';
 import CenteredLoading from '../common/components/CenteredLoading';
@@ -77,6 +76,8 @@ export default class NotificationsScreen extends Component {
         this.props.notifications.setUnread(0);
       }
     });
+
+    this.props.notifications.loadList();
   }
 
   /**
@@ -138,8 +139,10 @@ export default class NotificationsScreen extends Component {
         onRefresh={this.refresh}
         onEndReached={this.loadMore}
         ListEmptyComponent={empty}
+        ListHeaderComponent={<NotificationsTopbar/>}
         onEndThreshold={0.05}
         initialNumToRender={12}
+        stickyHeaderIndices={[0]}
         windowSize={8}
         refreshing={list.refreshing}
         style={styles.listView}
@@ -148,7 +151,6 @@ export default class NotificationsScreen extends Component {
 
     return (
       <View style={styles.container}>
-        <NotificationsTopbar  />
         {body}
         <CaptureFab navigation={this.props.navigation} />
       </View>

@@ -41,7 +41,7 @@ exports[`Media view component renders correctly 1`] = `
             ],
             "results": Array [
               Object {
-                "isThrow": false,
+                "type": "return",
                 "value": Object {
                   "uri": "www.something.com",
                 },

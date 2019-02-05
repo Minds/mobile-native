@@ -11,10 +11,17 @@ import { MINDS_FEATURES } from '../config/Config';
 class BlogsStore {
 
   list = new OffsetListStore();
+  @observable loading = false;
+  @observable filter = 'suggested';
 
-  @observable filter = MINDS_FEATURES.suggested_blogs_screen ? 'suggested' : 'trending';
-
+  /**
+   * Load list
+   */
   async loadList() {
+
+    this.setLoading(true);
+    this.list.setErrorLoading(false);
+
     try {
       const response = await blogService.loadList(this.filter, this.list.offset)
 
@@ -28,8 +35,19 @@ class BlogsStore {
 
       return response;
     } catch (err) {
-      console.error('error', err);
+      console.log('error', err);
+      this.list.setErrorLoading(true);
+    } finally {
+      this.setLoading(false);
     }
+  }
+
+  /**
+   * Reload list
+   */
+  async reload() {
+    this.list.clearList();
+    this.loadList();
   }
 
   @action
@@ -39,15 +57,29 @@ class BlogsStore {
     this.list.refreshDone();
   }
 
+  /**
+   * Set filter
+   * @param {string} filter
+   */
   @action
   setFilter(filter) {
     this.filter = filter;
   }
 
+  /**
+   * Set loading
+   * @param {boolean} value
+   */
+  @action
+  setLoading(value) {
+    this.loading = value;
+  }
+
   @action
   reset() {
+    this.loading = false;
     this.list.clearList();
-    this.filter = 'trending';
+    this.filter = 'suggested';
   }
 }
 

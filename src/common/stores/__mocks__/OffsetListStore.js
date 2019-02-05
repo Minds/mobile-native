@@ -3,6 +3,7 @@ import { extendObservable } from 'mobx'
 const mock = jest.fn().mockImplementation(() => {
   return extendObservable({
     setList: jest.fn(),
+    setErrorLoading: jest.fn(),
     prepend: jest.fn(),
     clearList: jest.fn(),
     refresh: jest.fn(),

@@ -35,6 +35,7 @@ export default class BlogCard extends PureComponent {
    * Navigate to blog
    */
   navToBlog = () => {
+    if (!this.props.navigation) return;
     return this.props.navigation.push('BlogView', { blog: this.props.entity });
   }
 
@@ -70,7 +71,6 @@ export default class BlogCard extends PureComponent {
     )
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {

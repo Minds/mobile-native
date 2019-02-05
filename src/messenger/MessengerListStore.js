@@ -13,32 +13,55 @@ import session from './../common/services/session.service';
 import crypto from './../common/services/crypto.service';
 import socket from '../common/services/socket.service';
 import badge from '../common/services/badge.service';
+import { abort } from '../common/helpers/abortableFetch';
 
 /**
  * Messenger Conversation List Store
  */
 class MessengerListStore {
 
+  /**
+   * @var {array} conversations
+   */
   @observable conversations = [];
-  @observable refreshing = false;
-  @observable loading    = false;
 
   /**
-   * Search string
+   * @var {bool} refreshing
+   */
+  @observable refreshing = false;
+
+  /**
+   * @var {bool} loading
+   */
+  @observable loading = false;
+
+  /**
+   * @var {bool} errorLoading
+   */
+  @observable errorLoading = false;
+
+  /**
+   * @var {bool} loaded
+   */
+  @observable loaded = false;
+
+  /**
+   * @var {string} search
    */
   @observable search = '';
 
   /**
-   * key configured?
+   * @var {bool} configured
    */
   @observable configured = false;
-  @observable unlocking  = false;
+
+  /**
+   * @var {bool} unlocking
+   */
+  @observable unlocking = false;
 
   offset     = '';
   newsearch  = true;
-  @observable loaded     = false;
-
-  controller = null;
 
   @computed get unread() {
     const count = this.conversations.filter(conv => conv.unread).length;
@@ -96,45 +119,41 @@ class MessengerListStore {
   /**
    * Load conversations list
    */
-  async loadList(reload=false) {
+  async loadList(reload = false) {
 
     const rows = 24;
 
     // abort if we have a previous call
-    if (this.controller) {
-      this.controller.abort();
-    }
-    // abortable call controller
-    this.controller = new AbortController();
+    abort(this);
 
     this.setLoading(true);
+    this.setErrorLoading(false);
+
+    let response;
 
     try {
       // is a search?
       if (this.search && this.newsearch) {
         this.newsearch = false;
-        response = await messengerService.searchConversations(this.search, rows, this.controller.signal);
+        response = await messengerService.searchConversations(this.search, rows, this);
       } else {
 
         if (this.loaded && !this.offset && !reload) {
-          this.setLoading(false);
           return;
         }
         if (reload) this.offset = '';
-        response = await messengerService.getConversations(rows, this.offset, this.newsearch, this.controller.signal);
+        response = await messengerService.getConversations(rows, this.offset, this.newsearch, this);
       }
       if (reload) this.clearConversations();
-      this.loaded = true;
       this.offset = response.offset;
       this.pushConversations(response.entities);
-      this.setLoading(false);
+      this.setLoaded(true);
       this.setRefreshing(false);
     } catch (err) {
-      if (err.name != 'AbortError') {
-        console.log('error', err);
-        this.setLoading(false);
-        this.setRefreshing(false);
-      }
+      this.setErrorLoading(true);
+      console.log(err);
+    } finally {
+      this.setLoading(false);
     }
   }
 
@@ -191,13 +210,23 @@ class MessengerListStore {
   }
 
   @action
-  setUnlocking(val) {
-    this.unlocking = val;
+  setErrorLoading(value) {
+    this.errorLoading = value;
   }
 
   @action
-  setLoading(val) {
-    this.loading = val;
+  setUnlocking(value) {
+    this.unlocking = value;
+  }
+
+  @action
+  setLoading(value) {
+    this.loading = value;
+  }
+
+  @action
+  setLoaded(value) {
+    this.loaded = value;
   }
 
   @action
@@ -261,6 +290,7 @@ class MessengerListStore {
     this.newsearch = true;
     this.loaded = false;
     this.loading = false;
+    this.errorLoading = false;
   }
 
 }

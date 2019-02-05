@@ -2,6 +2,7 @@ import {
   observable,
   action,
   computed,
+  extendObservable
 } from 'mobx';
 
 import discoveryService from './DiscoveryService';
@@ -20,10 +21,10 @@ class DiscoveryStore {
    */
   stores;
 
-  @observable searchtext = '';
-  @observable filter     = 'suggested';
-  @observable type       = 'images';
-  @observable category   = 'all';
+  @observable searchtext   = '';
+  @observable filter       = 'suggested';
+  @observable type         = 'images';
+  @observable category     = 'all';
 
   constructor() {
     this.buildListStores();
@@ -36,33 +37,47 @@ class DiscoveryStore {
     this.stores = {
       'images': {
         list: new OffsetListStore('shallow'),
-        loading: false,
       },
       'videos': {
         list: new OffsetListStore('shallow'),
-        loading: false,
       },
       'blogs': {
         list: new OffsetListStore('shallow'),
-        loading: false,
       },
       'channels': {
         list: new OffsetListStore('shallow'),
-        loading: false,
       },
       'groups': {
         list: new OffsetListStore('shallow'),
-        loading: false,
       },
       'lastchannels': {
         list: new OffsetListStore('shallow'),
-        loading: false,
       },
       'activity': {
         list: new OffsetListStore('shallow'),
-        loading: false,
       }
     };
+    extendObservable(this.stores.images, {
+      loading: false
+    });
+    extendObservable(this.stores.videos, {
+      loading: false
+    });
+    extendObservable(this.stores.blogs, {
+      loading: false
+    });
+    extendObservable(this.stores.channels, {
+      loading: false
+    });
+    extendObservable(this.stores.groups, {
+      loading: false
+    });
+    extendObservable(this.stores.lastchannels, {
+      loading: false
+    });
+    extendObservable(this.stores.activity, {
+      loading: false
+    });
   }
 
   /**
@@ -84,7 +99,7 @@ class DiscoveryStore {
    * Load feed
    */
   @action
-  async loadList(refresh=false, preloadImage=false) {
+  async loadList(refresh = false, preloadImage = false) {
     const type = this.type;
 
     // NOTE: we do not rely on this.list because it could change during the await
@@ -94,11 +109,13 @@ class DiscoveryStore {
     if (type == 'lastchannels') return;
 
     // no more data or loading? return
-    if (!refresh && store.list.cantLoadMore() || this.stores[type].loading) {
+    if (!refresh && store.list.cantLoadMore() || store.loading) {
       return;
     }
 
-    this.stores[type].loading = true;
+    store.list.setErrorLoading(false);
+
+    store.loading = true;
 
     try {
       const feed = await discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext);
@@ -107,8 +124,9 @@ class DiscoveryStore {
       store.list.setList(feed, refresh);
     } catch (err) {
       console.log('error', err);
+      store.list.setErrorLoading(true);
     } finally {
-      this.stores[type].loading = false;
+      store.loading = false;
     }
   }
 
@@ -161,10 +179,12 @@ class DiscoveryStore {
     if (this.list.refreshing || this.loading) {
       return;
     }
+    // NOTE: we do not rely on this.list because it could change during the await
+    const store = this.stores[this.type];
 
-    await this.list.refresh();
+    await store.list.refresh();
     await this.loadList(true);
-    this.list.refreshDone();
+    store.list.refreshDone();
   }
 
   /**
@@ -178,16 +198,14 @@ class DiscoveryStore {
     if (type == 'channels') {
       store.list.clearList();
     }
-    this.loadList(type == 'channels');
+    this.loadList();
   }
 
   /**
-   * Set filter and refresh list
-   * @param {string} filter
+   * Reload tje list
    */
   @action
-  setFilter(filter) {
-    this.filter = filter;
+  reload() {
     this.list.clearList();
     this.loadList(true);
   }
@@ -209,14 +227,15 @@ class DiscoveryStore {
     this.loading = false;
 
     if (text.trim() == '') {
-      this.clearList();
-    } else if ((text.indexOf('#') === 0) || (text.indexOf(' ') > -1)) {
-      this.type = 'activity';
-    } else {
-      this.type = 'channels';
+      // show again hashtag
     }
+    // else if ((text.indexOf('#') === 0) || (text.indexOf(' ') > -1)) {
+    //   this.type = 'activity';
+    // } else {
+    //   this.type = 'channels';
+    // }
 
-    const list = this.stores[this.type].list;
+    const list = this.list;
     list.clearList();
 
     return this.loadList(true);
@@ -225,7 +244,6 @@ class DiscoveryStore {
   @action
   reset() {
     this.buildListStores();
-
     this.searchtext = '';
     this.filter = 'suggested';
     this.type  = 'images';

@@ -26,10 +26,11 @@ import isIphoneX from '../common/helpers/isIphoneX';
 import CapturePreview from '../capture/CapturePreview';
 import CenteredLoading from '../common/components/CenteredLoading';
 import UserAutocomplete from '../common/components/UserAutocomplete';
+import ErrorLoading from '../common/components/ErrorLoading';
 import CaptureMetaPreview from '../capture/CaptureMetaPreview';
 
 import { CommonStyle as CS } from '../styles/Common';
-import {ComponentsStyle as CmpStyle} from '../styles/Components';
+import { ComponentsStyle as CmpStyle } from '../styles/Components';
 
 // types
 type Props = {
@@ -307,6 +308,7 @@ export default class CommentList extends React.Component<Props, State> {
           </TouchableHighlight> : null
         }
         {this.props.store.loading && this.props.store.loaded && <ActivityIndicator size="small" style={CS.paddingTop2x}/>}
+        {this.getErrorLoading()}
       </View>
     )
   }
@@ -320,6 +322,16 @@ export default class CommentList extends React.Component<Props, State> {
     this.props.store.refreshDone();
   }
 
+  getErrorLoading() {
+    if (this.props.store.errorLoading) {
+      const message = this.props.store.comments.length ?
+        "Can't load more\nTry again" :
+        "Can't load the comments\nTry again";
+
+      return <Text onPress={() => this.loadComments(true)} style={[CS.fontM, CS.colorDarkGreyed, CS.marginBottom, CS.textCenter]}><Text style={CS.fontSemibold}>Oops!</Text> {message}</Text>
+    }
+    return null;
+  }
 
   /**
    * Render

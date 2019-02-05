@@ -79,7 +79,7 @@
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
       <activity android:name="com.reactnativejitsimeet.JitsiMeetNavigatorActivity" />
-      <meta-data android:name="com.wix.reactnativenotifications.gcmSenderId" android:value="81109256529\0"/>
+      <meta-data android:name="com.wix.reactnativenotifications.gcmSenderId" android:value="@string/gcm_sender_id"/>
       <meta-data android:name="com.google.firebase.messaging.default_notification_icon" android:resource="@drawable/ic_stat_name" />
       <provider
         android:name="android.support.v4.content.FileProvider"

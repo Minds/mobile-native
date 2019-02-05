@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import colors from '../styles/Colors';
+import { CommonStyle } from '../styles/Common';
 
 @inject('notifications')
 @observer
@@ -27,7 +28,7 @@ export default class NotificacionsTopbar extends Component {
     const filter = this.props.notifications.filter;
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, CommonStyle.shadow]}>
         <View style={styles.topbar}>
           <View style={[styles.tab, this.selected('all')]}>
             <Icon name="bell" size={22} color={filter=='all' ? colors.primary : color} onPress={()=> this.props.notifications.setFilter('all')} style={styles.button} />
@@ -61,13 +62,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
     backgroundColor: '#FFF',
-    shadowColor: 'black',
-    shadowOpacity: 0.1,
-    shadowRadius: StyleSheet.hairlineWidth,
-    shadowOffset: {
-      height: StyleSheet.hairlineWidth,
-    },
-    elevation: 4
   },
   topbar: {
     flex: 1,

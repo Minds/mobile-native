@@ -20,6 +20,9 @@ jest.mock('react-native-video');
 jest.mock('../src/blockchain/transaction-modal/BlockchainTransactionModalScreen', () => 'BlockchainTransactionModalScreen');
 jest.mock('../src/keychain/KeychainModalScreen', () => 'KeychainModalScreen');
 
+jest.mock('../src/common/services/translation.service');
+jest.mock('../src/common/helpers/abortableFetch');
+
 it('renders correctly', () => {
   const tree = renderer.create(
     <App />

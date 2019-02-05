@@ -17,11 +17,7 @@ class GroupsStore {
   @observable list = new OffsetFeedListStore('shallow');
 
   @observable filter = defaultFilter;
-
-  /**
-   * List loading
-   */
-  loading = false;
+  @observable loading = false;
 
   @action
   setFilter(value) {
@@ -29,27 +25,33 @@ class GroupsStore {
     this.refresh();
   }
 
+  @action
+  setLoading(value) {
+    this.loading = value;
+  }
+
   /**
    * Load list
    */
-  loadList() {
+  async loadList() {
     if (this.list.cantLoadMore()) {
-      return Promise.resolve();
+      return;
     }
-    //this.loading = true;
 
-    return groupsService.loadList(this.filter, this.list.offset)
-      .then(data => {
-        this.list.setList(data);
-        this.assignRowKeys(data);
-        this.loaded = true;
-      })
-      .finally(() => {
-        this.loading = false;
-      })
-      .catch(err => {
-        console.log('error', err);
-      });
+    this.setLoading(true);
+    this.list.setErrorLoading(false);
+
+    try {
+      const data = await groupsService.loadList(this.filter, this.list.offset);
+      this.list.setList(data);
+      this.assignRowKeys(data);
+      this.loaded = true;
+    } catch (error) {
+      this.list.setErrorLoading(true);
+      console.log('error', error);
+    } finally {
+      this.setLoading(false);
+    }
   }
 
   /**

@@ -32,6 +32,7 @@ import MessengerInvite from './MessengerInvite';
 import { CommonStyle } from '../styles/Common';
 import UserModel from '../channel/UserModel';
 import MessengerConversationStore from './MessengerConversationStore';
+import ErrorLoading from '../common/components/ErrorLoading';
 
 /**
  * Messenger Conversation Screen
@@ -66,7 +67,7 @@ export default class ConversationScreen extends Component {
     this.store = new MessengerConversationStore();
     const params = this.props.navigation.state.params;
     let conversation;
-    if(params.conversation) {
+    if (params.conversation) {
       conversation = params.conversation;
     } else {
       // open conversation with params.target user (minor guid go first)
@@ -86,9 +87,8 @@ export default class ConversationScreen extends Component {
     this.store.load()
       .then(conversation => {
         // we send the conversation to update the topbar (in case we only receive the guid)
-        this.props.navigation.setParams({ conversation });
+        conversation && this.props.navigation.setParams({ conversation });
       });
-    //this.store.load(); //iOS needs to be preloaded
   }
 
   /**
@@ -134,11 +134,20 @@ export default class ConversationScreen extends Component {
   /**
    * Load more
    */
-  loadMore = async () => {
+  loadMore = async (e, force = false) => {
+    if (this.store.errorLoading && !force) return;
+
     const conversation = await this.store.load();
 
     // update top avatar if it is not set
     this.updateTopAvatar(conversation);
+  }
+
+  /**
+   * Load more
+   */
+  loadMoreForce = async () => {
+    return this.loadMore(null, true);
   }
 
   onDoneSetup = async () => {
@@ -154,23 +163,18 @@ export default class ConversationScreen extends Component {
     const messengerList = this.props.messengerList;
     const shouldSetup = !messengerList.configured;
     const shouldInvite = this.store.invitable;
-    let footer = null;
 
     // show setup !configured yet
     if (shouldSetup) {
       return <MessengerSetup navigation={this.props.navigation} onDone={this.onDoneSetup} />
     }
 
-    if (this.store.loading) {
-      footer = <ActivityIndicator animating size="large" />
-    }
-
     if (shouldInvite) {
       return <MessengerInvite navigation={this.props.navigation} messengerConversation={this.store}/>
     }
 
+    const footer = this.getFooter();
     const messages = this.store.messages.slice();
-
     const conversation = this.props.navigation.state.params.conversation;
     const avatarImg    = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' + this.props.user.me.icontime };
     return (
@@ -205,6 +209,22 @@ export default class ConversationScreen extends Component {
         </View>
       </KeyboardAvoidingView>
     );
+  }
+
+  /**
+   * Get list header
+   */
+  getFooter() {
+    if (this.store.loading) {
+      return <ActivityIndicator animating size="large" />
+    }
+    if (!this.store.errorLoading) return null;
+
+    const message = this.store.messages.length ?
+      "Can't load more" :
+      "Can't load conversation";
+
+    return <ErrorLoading message={message} tryAgain={this.loadMoreForce} inverted={true}/>
   }
 
   /**

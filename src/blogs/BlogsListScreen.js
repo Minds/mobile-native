@@ -16,17 +16,17 @@ import {
 
 import BlogCard from './BlogCard';
 import Toolbar from '../common/components/toolbar/Toolbar';
-import CenteredLoading from '../common/components/CenteredLoading';
 import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import { MINDS_CDN_URI, MINDS_FEATURES } from '../config/Config';
+import ErrorLoading from '../common/components/ErrorLoading';
 
 const selectedTextStyle = {color: 'black'};
 const typeOptions = [
-  (MINDS_FEATURES.suggested_blogs_screen ? { text: 'TOP', value: 'suggested', selectedTextStyle} : { text: 'TRENDING', value: 'trending', selectedTextStyle}),
+  { text: 'TOP', value: 'suggested', selectedTextStyle},
   { text: 'SUBSCRIPTIONS', value: 'network', selectedTextStyle},
   { text: 'MY BLOGS', value: 'owner', selectedTextStyle},
-]
+];
 
 /**
  * Blogs List screen
@@ -55,8 +55,26 @@ export default class BlogsListScreen extends Component {
     );
   }
 
+  /**
+   * Load data
+   */
   loadMore = () => {
+    if (this.props.blogs.list.errorLoading) return;
     this.props.blogs.loadList();
+  }
+
+  /**
+   * Load more forced
+   */
+  loadMoreForce = () => {
+    this.props.blogs.loadList();
+  }
+
+  /**
+   * On tag selection change
+   */
+  onTagSelectionChange = () => {
+    this.props.blogs.refresh();
   }
 
   /**
@@ -71,30 +89,35 @@ export default class BlogsListScreen extends Component {
           initial={ this.props.blogs.filter }
           onChange={ this.onTabChange }
         />
-        { this.props.blogs.filter == 'suggested' && <View style={[CommonStyle.paddingTop, CommonStyle.paddingBottom, CommonStyle.hairLineBottom]}>
+        { this.props.blogs.filter == 'suggested' && <View style={[CS.paddingTop, CS.paddingBottom, CS.hairLineBottom]}>
           <TagsSubBar onChange={this.onTagSelectionChange}/>
         </View>}
       </View>
     )
   }
 
+  /**
+   * On tab change
+   */
   onTabChange = (value) => {
     this.props.blogs.setFilter(value);
-    this.props.blogs.refresh();
+    this.props.blogs.reload();
   }
 
+  /**
+   * Refresh
+   */
   refresh = () => {
     this.props.blogs.refresh();
   }
 
+  /**
+   * Render
+   */
   render() {
     const store = this.props.blogs;
-    if (!store.list.loaded && !store.list.refreshing) {
-      return (
-        <CenteredLoading />
-      );
-    }
 
+    const footer = this.getFooter()
 
     return (
       <FlatList
@@ -108,11 +131,32 @@ export default class BlogsListScreen extends Component {
         keyExtractor={item => item.guid}
         style={styles.list}
         ListHeaderComponent={this.renderToolbar()}
+        ListFooterComponent={footer}
         getItemLayout={(data, index) => (
           { length: 300, offset: 308 * index, index }
         )}
       />
     );
+  }
+
+  /**
+   * Get list's footer
+   */
+  getFooter() {
+    if (this.props.blogs.loading && !this.props.blogs.list.refreshing){
+      return (
+        <View style={[CS.centered, CS.padding3x]}>
+          <ActivityIndicator size={'large'} />
+        </View>
+      );
+    }
+    if (!this.props.blogs.list.errorLoading) return null;
+
+    const message = this.props.blogs.list.entities.length ?
+      "Can't load more" :
+      "Can't load blogs";
+
+    return <ErrorLoading message={message} tryAgain={this.loadMoreForce}/>
   }
 }
 

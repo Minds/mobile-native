@@ -379,10 +379,5 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     margin: 4
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#FFF'
-  },
+  }
 });

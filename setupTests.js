@@ -1,14 +1,18 @@
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import fetch from 'jest-fetch-mock'
 import moment from 'moment-timezone';
 
-global.fetch = fetch
+const XMLHttpRequest = {
+  open: jest.fn(),
+  abort: jest.fn(),
+  onerror: jest.fn(),
+}
+global.XMLHttpRequest = XMLHttpRequest;
+
 
 configure({ adapter: new Adapter() });
 
 jest.mock('mobx-react/native', () => require('mobx-react/custom'));
-
 jest.mock('./AppStores');
 jest.useFakeTimers();
 

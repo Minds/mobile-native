@@ -154,7 +154,6 @@ export default class GroupHeader extends Component {
         // clear list without mark loaded flag
         this.props.store.refresh(group.guid);
       case 'desc':
-        // clear list without mark loaded flag
         this.props.store.list.clearList(false);
         break;
       case 'members':

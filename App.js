@@ -3,9 +3,9 @@
  * https://www.minds.com
  *
  * @format
+ * @lint-ignore-every XPLATJSCOPYRIGHT1
  * @flow
  */
-import 'abortcontroller-polyfill/dist/polyfill-patch-fetch'
 import './global';
 import './shim'
 import crypto from "crypto"; // DO NOT REMOVE!

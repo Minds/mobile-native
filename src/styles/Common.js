@@ -38,6 +38,10 @@ export const CommonStyle = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-end',
   },
+  columnStretch: {
+    flexDirection: 'column',
+    alignItems: 'stretch',
+  },
   rowJustifyEnd: {
     flexDirection: 'row',
     justifyContent: 'flex-end'
@@ -259,11 +263,11 @@ export const CommonStyle = StyleSheet.create({
   },
   hairLineBottom: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#EEE',
+    borderBottomColor: '#CCC',
   },
   hairLineTop: {
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#EEE',
+    borderTopColor: '#CCC',
   },
 
   // borders
@@ -418,13 +422,11 @@ export const CommonStyle = StyleSheet.create({
 
   //shadow
   shadow: {
-    elevation: 1,
-    shadowColor: 'black',
-    shadowOpacity: 0.5,
-    shadowRadius: StyleSheet.hairlineWidth,
-    shadowOffset: {
-      height: StyleSheet.hairlineWidth,
-    },
+    elevation: 4,
+    shadowOffset: { width: 0, height: 2 },
+    shadowColor: "black",
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
   },
 
   bold: {
