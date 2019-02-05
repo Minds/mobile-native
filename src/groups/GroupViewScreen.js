@@ -55,6 +55,11 @@ export default class GroupViewScreen extends Component {
     header: null
   }
 
+  constructor(props) {
+    super(props);
+    this.comments = commentsStoreProvider.get();
+  }
+
   /**
    * On component will mount
    */
@@ -73,8 +78,6 @@ export default class GroupViewScreen extends Component {
     }
     this.props.groupView.loadTopMembers();
 
-    this.comments = commentsStoreProvider.get();
-
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       const params = this.props.navigation.state.params;
       if (params && params.prepend) {
@@ -90,6 +93,10 @@ export default class GroupViewScreen extends Component {
 
     if (navParams && navParams.prepend) {
       this.props.groupView.prepend(navParams.prepend);
+    }
+
+    if (navParams.tab) {
+      this.headerRef.onTabChange(navParams.tab)
     }
   }
 
@@ -115,12 +122,14 @@ export default class GroupViewScreen extends Component {
     this.props.groupView.memberRefresh();
   }
 
+  headerRefHandler = ref => this.headerRef = ref;
+
   getList() {
     const group = this.props.groupView;
 
     const header = (
       <View>
-        <GroupHeader store={this.props.groupView} me={this.props.user.me} styles={styles}/>
+        <GroupHeader store={this.props.groupView} me={this.props.user.me} styles={styles} ref={this.headerRefHandler}/>
         <Icon color={colors.primary} containerStyle={[styles.gobackicon, this.gobackstyle]} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} raised />
       </View>
     )
