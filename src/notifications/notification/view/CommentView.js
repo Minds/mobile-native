@@ -22,11 +22,13 @@ export default class CommentView extends Component {
 
     const body = this.getBody(entity, user_guid);
 
+    const is_reply = entity.params && entity.params.is_reply;
+
     return (
       <TouchableOpacity onPress={this.navTo}>
         <Text >
           <Text style={styles.link}>{entity.fromObj.name}</Text>
-          <Text> commented on </Text>
+          <Text> {is_reply ? 'replied to your comment on': 'commented on'} </Text>
           { body }
         </Text>
       </TouchableOpacity>
@@ -51,6 +53,8 @@ export default class CommentView extends Component {
             this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true });
             break;
         }
+      case 'group':
+        this.props.navigation.push('GroupView', { group: this.props.entity.entityObj, hydrate: true, tab: 'conversation' });
         break;
     }
   }
@@ -62,7 +66,9 @@ export default class CommentView extends Component {
   getBody(entity, user_guid) {
     const styles = this.props.styles;
 
-    const title = entity.entityObj.title ? _.truncate(entity.entityObj.title, {
+    const tempTitle = entity.entityObj.title ? entity.entityObj.title :entity.entityObj.name;
+
+    const title = tempTitle ? _.truncate(tempTitle, {
       'length': 30,
       'separator': ' ',
       'omission': '...'
@@ -83,6 +89,9 @@ export default class CommentView extends Component {
         } else {
           return <Text style={styles.link}>{entity.entityObj.ownerObj.name}'s {entity.entityObj.subtype}</Text>
         }
+      case "group": {
+        return <Text style={styles.link}>Group {title}</Text>
+      }
       default:
         return <Text>... oops.</Text>
     }

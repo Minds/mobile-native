@@ -28,7 +28,9 @@ exports[`renders correctly 1`] = `
       someUser
     </Text>
     <Text>
-       commented on 
+       
+      commented on
+       
     </Text>
     <Text
       style={
