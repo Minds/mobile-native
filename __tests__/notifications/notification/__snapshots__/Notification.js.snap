@@ -1088,7 +1088,9 @@ exports[`notification component renders correctly for every type 11`] = `
           someUser
         </Text>
         <Text>
-           commented on 
+           
+          commented on
+           
         </Text>
         <Text
           style={
