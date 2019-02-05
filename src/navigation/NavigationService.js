@@ -19,6 +19,15 @@ function navigate(routeName, params) {
   );
 }
 
+function push(routeName, params) {
+  _navigator.dispatch(
+    StackActions.push({
+      routeName,
+      params,
+    })
+  );
+}
+
 function goBack() {
   _navigator.dispatch(NavigationActions.back());
 }
@@ -39,6 +48,7 @@ export default {
   navigate,
   getState,
   reset,
+  push,
   setTopLevelNavigator,
   goBack
 };
