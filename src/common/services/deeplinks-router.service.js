@@ -37,10 +37,15 @@ class DeeplinksRouter {
    * @param {string} url
    */
   navigate(url) {
+    if (!url) return;
     const route = this._getUrlRoute(url);
     if (route) {
       navigationService.navigate(route.screen, route.params);
     }
+  }
+
+  cleanUrl(url) {
+    return url.replace(/^(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+\//, '');
   }
 
   /**
@@ -49,7 +54,7 @@ class DeeplinksRouter {
    */
   _getUrlRoute(url) {
 
-    const surl = url.replace(/^(http(s)?(:\/\/))?(www\.)?[a-zA-Z0-9-_\.]+\//, '');
+    const surl = this.cleanUrl(url);
 
     for (var i = 0; i < this.routes.length; i++) {
       const route = this.routes[i];

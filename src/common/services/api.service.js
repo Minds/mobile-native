@@ -56,7 +56,6 @@ class ApiService {
   async get(url, params = {}, tag) {
     const paramsString = this.buildParamsString(params);
     const headers = this.buildHeaders();
-
     try {
       const response = await abortableFetch(MINDS_URI + url + paramsString, { headers },  tag);
 
@@ -105,66 +104,70 @@ class ApiService {
       return data;
     } catch(err) {
       if (err.status && err.status == 401) {
-        await session.badAuthorization();
+        const refreshed = await session.badAuthorization(); //not actually a logout
+        if (refreshed) return await this.post(url, body);
+        session.logout();
       }
       throw err;
     }
   }
 
   async put(url, body={}) {
-    const paramsString = await this.buildParamsString({});
+    const paramsString = this.buildParamsString({});
     const headers = this.buildHeaders();
 
-    return await new Promise((resolve, reject) => {
-      abortableFetch(MINDS_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers })
-        .then(resp => {
-          if (!resp.ok) {
-            throw resp;
-          }
-          return resp;
-        })
-        .then(response => response.json())
-        .then(jsonResp => {
-          if (jsonResp.status === 'error') {
-            return reject(jsonResp);
-          }
-          return resolve(jsonResp)
-        })
-        .catch(err => {
-          if (err.status && err.status == 401) {
-            session.badAuthorization();
-          }
-          return reject(err);
-        })
-    });
+    try {
+      let response = await abortableFetch(MINDS_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers });
+
+      if (!response.ok) {
+        throw response;
+      }
+
+      // Convert from JSON
+      const data = await response.json();
+
+      // Failed on API side
+      if (data.status === 'error') {
+        throw data;
+      }
+      return data;
+    } catch(err) {
+      if (err.status && err.status == 401) {
+        const refreshed = await session.badAuthorization(); //not actually a logout
+        if (refreshed) return await this.post(url, body);
+        session.logout();
+      }
+      throw err;
+    }
   }
 
   async delete(url, body={}) {
-    const paramsString = await this.buildParamsString({});
+    const paramsString = this.buildParamsString({});
     const headers = this.buildHeaders();
 
-    return await new Promise((resolve, reject) => {
-      abortableFetch(MINDS_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers })
-        .then(resp => {
-          if (!resp.ok) {
-            throw resp;
-          }
-          return resp;
-        })
-        .then(response => response.json())
-        .then(jsonResp => {
-          if (jsonResp.status === 'error') {
-            return reject(jsonResp);
-          }
-          return resolve(jsonResp)
-        })
-        .catch(err => {
-          if (err.status && err.status == 401) {
-            session.badAuthorization();
-          }
-          return reject(err);
-        })
-    });
+    try {
+      let response = await abortableFetch(MINDS_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers });
+
+      if (!response.ok) {
+        throw response;
+      }
+
+      // Convert from JSON
+      const data = await response.json();
+
+      // Failed on API side
+      if (data.status === 'error') {
+        throw data;
+      }
+      return data;
+    } catch(err) {
+      if (err.status && err.status == 401) {
+        const refreshed = await session.badAuthorization(); //not actually a logout
+        if (refreshed) return await this.post(url, body);
+        session.logout();
+      }
+      throw err;
+    }
   }
 
   upload(url, file, data=null, progress) {

@@ -49,21 +49,18 @@ class UserStore {
   async load(refresh = false) {
     if (!refresh) this.me = {};
 
-    try {
-      let response = await channelService.load('me');
+    let response = await channelService.load('me');
 
-      //if (!response.channel) {
-      //  return sessionService.setToken(null);
-      //}
+    //if (!response.channel) {
+    //  return sessionService.setToken(null);
+    //}
 
-      this.setUser(response.channel);
-      if (this.me.canCrypto) {
-        MINDS_FEATURES.crypto = true;
-      }
-      return this.me;
-    } catch(err)  {
-      console.log('error', err);
+    this.setUser(response.channel);
+    if (this.me.canCrypto) {
+      MINDS_FEATURES.crypto = true;
     }
+    return this.me;
+
   }
 
   isAdmin() {

@@ -50,6 +50,9 @@ import deeplinkService from './src/common/services/deeplinks-router.service';
 import badgeService from './src/common/services/badge.service';
 import authService from './src/auth/AuthService';
 import NotificationsService from "./src/notifications/NotificationsService";
+import getMaches from './src/common/helpers/getMatches';
+
+let deepLinkUrl = '';
 
 // init push service
 pushService.init();
@@ -65,7 +68,7 @@ sessionService.onLogin(async () => {
   NavigationService.reset(sessionService.initialScreen);
 
   // handle deep link (if the app is opened by one)
-  Linking.getInitialURL().then(url => url && deeplinkService.navigate(url));
+  if(deepLinkUrl) deeplinkService.navigate(deepLinkUrl);
 
   // handle initial notifications (if the app is opened by tap on one)
   pushService.handleInitialNotification();
@@ -123,19 +126,38 @@ export default class App extends Component {
    * On component did mount
    */
   async componentDidMount() {
-
-    const token = await sessionService.init();
-
-    if (!token) {
-      NavigationService.reset('Login');
-    }
-
-
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
     Linking.addEventListener('url', event => this.handleOpenURL(event.url));
     AppState.addEventListener('change', this.handleAppStateChange);
 
+    deepLinkUrl = await Linking.getInitialURL();
+
+    if (!this.handlePasswordResetDeepLink()) {
+      const token = await sessionService.init();
+
+      if (!token) {
+        NavigationService.reset('Login');
+      }
+    }
+
     this.checkForUpdates();
+  }
+
+  /**
+   * Handle pre login deep links
+   */
+  handlePasswordResetDeepLink() {
+    if (deepLinkUrl && deeplinkService.cleanUrl(deepLinkUrl).startsWith('forgot-password')) {
+      const regex = /;username=(.*);code=(.*)/g;
+
+      const params = getMaches(deepLinkUrl.replace(/%3B/g, ';'), regex);
+
+      //sessionService.logout();
+      NavigationService.navigate('Forgot', {username: params[1], code: params[2]});
+      deepLinkUrl = '';
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -160,9 +182,13 @@ export default class App extends Component {
    * Handle deeplink urls
    */
   handleOpenURL = (url) => {
-    setTimeout(() => {
-      deeplinkService.navigate(url);
-    }, 100);
+    deepLinkUrl = url;
+    if (url) this.handlePasswordResetDeepLink();
+    if (deepLinkUrl) {
+      setTimeout(() => {
+        deeplinkService.navigate(deepLinkUrl);
+      }, 100);
+    }
   }
 
   async checkForUpdates() {
