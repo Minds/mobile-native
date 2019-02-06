@@ -107,7 +107,7 @@
     "enzyme-to-json": "^3.3.4",
     "eslint-plugin-flowtype": "^2.50.0",
     "flow-bin": "^0.78.0",
-    "jest": "24.0.0",
+    "jest": "24.1.0",
     "jest-serializer-enzyme": "^1.0.0",
     "metro-react-native-babel-preset": "0.51.1",
     "react-addons-test-utils": "^15.6.2",
