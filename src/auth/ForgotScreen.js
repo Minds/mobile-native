@@ -17,6 +17,7 @@ import * as Animatable from 'react-native-animatable';
 
 import VideoBackground from '../common/components/VideoBackground';
 import ForgotPassword from './ForgotPassword';
+import ResetPassword from './ResetPassword';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
@@ -70,7 +71,8 @@ export default class ForgotScreen extends Component {
    */
   render() {
     const resizeMode = 'center';
-
+    const code = this.props.navigation.state.params && this.props.navigation.state.params.code;
+    console.log(this.props.navigation.state)
     return (
       <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
         <VideoBackground />
@@ -83,9 +85,12 @@ export default class ForgotScreen extends Component {
             />
           </Animatable.View>
           <Animatable.View animation="fadeInUp">
+            {code ? <ResetPassword
+              onBack={this.onForgotBack}
+            /> :
             <ForgotPassword
               onBack={this.onForgotBack}
-            />
+            />}
           </Animatable.View>
         </View>
       </KeyboardAvoidingView>

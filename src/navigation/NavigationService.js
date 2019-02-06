@@ -10,6 +10,10 @@ function getState() {
   return _navigator.state.nav;
 }
 
+function getCurrentState() {
+  return _navigator.state.nav.routes[_navigator.state.nav.index];
+}
+
 function navigate(routeName, params) {
   _navigator.dispatch(
     NavigationActions.navigate({
@@ -35,10 +39,10 @@ function goBack() {
 function reset(routeName, params) {
   const resetAction = StackActions.reset({
     index: 0,
-      actions: [
-          NavigationActions.navigate({ routeName: routeName })
-      ]
-    })
+    actions: [
+        NavigationActions.navigate({ routeName: routeName })
+    ]
+  });
   _navigator.dispatch(resetAction);
 }
 
@@ -48,6 +52,7 @@ export default {
   navigate,
   getState,
   reset,
+  getCurrentState,
   push,
   setTopLevelNavigator,
   goBack

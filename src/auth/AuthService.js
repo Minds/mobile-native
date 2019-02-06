@@ -64,6 +64,10 @@ class AuthService {
     return api.post('api/v1/forgotpassword/request', { username });
   }
 
+  reset(username, password, code) {
+    return api.post('api/v1/forgotpassword/reset', { username, code, password });
+  }
+
   validatePassword(password) {
     return api.post('api/v2/settings/password/validate', { password });
   }

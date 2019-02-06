@@ -23,6 +23,9 @@ import i18n from '../common/services/i18n.service';
  */
 export default class ForgotPassword extends PureComponent {
 
+  /**
+   * Component will mount
+   */
   componentWillMount() {
     this.setState({
       username: '',
@@ -64,6 +67,8 @@ export default class ForgotPassword extends PureComponent {
             backgroundColor="rgba(0,0,0, 0.5)"
             hidde={this.state.sent}
             borderRadius={4}
+            loading={this.state.sending}
+            loadingRight={true}
             disable={this.state.sending}
             containerViewStyle={ComponentsStyle.loginButton}
             textStyle={ComponentsStyle.loginButtonText}
@@ -83,20 +88,20 @@ export default class ForgotPassword extends PureComponent {
   /**
    * On continue press
    */
-  onContinuePress() {
+  async onContinuePress() {
 
     if (!this.state.sent ) {
       this.setState({sending: true});
-      authService.forgot(this.state.username)
-        .then(data => {
-            this.setState({ sent: true, msg: i18n.t('auth.requestNewPasswordSuccess') });
-        })
-        .finally(() => {
-          this.setState({ sending: false });
-        })
-        .catch(err => {
-          alert(JSON.stringify(err));
-        });
+
+      try {
+        const data = await authService.forgot(this.state.username);
+        this.setState({ sent: true, msg: i18n.t('auth.requestNewPasswordSuccess') });
+      } catch (err) {
+        alert('Oops. Please try again.');
+        console.log(err);
+      } finally {
+        this.setState({ sending: false });
+      }
     }
   }
 }

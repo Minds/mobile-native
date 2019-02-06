@@ -36,7 +36,7 @@ exports[`Boost action component renders correctly 1`] = `
           "alignItems": "center",
           "backgroundColor": "white",
           "borderColor": "#4690D6",
-          "borderRadius": 3,
+          "borderRadius": 20,
           "borderWidth": 1,
           "margin": 4,
           "padding": 4,

@@ -170,6 +170,7 @@ configurations.all {
 }
 
 dependencies {
+    implementation project(':react-native-cookies')
     compile project(':react-native-exit-app')
     compile project(':react-native-background-timer')
 

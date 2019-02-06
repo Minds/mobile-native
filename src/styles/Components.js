@@ -38,7 +38,6 @@ export const ComponentsStyle = StyleSheet.create({
     borderRadius: 4,
   },
   loginButton: {
-    borderRadius: 3,
     marginRight: 0,
     marginLeft: 10,
     backgroundColor: 'transparent',
@@ -75,6 +74,7 @@ export const ComponentsStyle = StyleSheet.create({
     borderRadius: 3,
     backgroundColor:'white',
     borderWidth:1,
+    borderRadius: 20,
     borderColor: colors.primary
   },
   redbutton: {

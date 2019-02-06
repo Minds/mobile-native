@@ -88,13 +88,12 @@ exports[`LoginForm component should renders correctly 1`] = `
           Object {
             "backgroundColor": "transparent",
             "borderColor": "#FFF",
-            "borderRadius": 3,
             "borderWidth": 1,
             "marginLeft": 10,
             "marginRight": 0,
           },
           Object {
-            "borderRadius": 3,
+            "borderRadius": 30,
           },
         ]
       }
@@ -130,7 +129,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "backgroundColor": "transparent",
               },
               Object {
-                "borderRadius": 3,
+                "borderRadius": 30,
               },
               Object {
                 "padding": 12,
@@ -194,13 +193,12 @@ exports[`LoginForm component should renders correctly 1`] = `
           Object {
             "backgroundColor": "transparent",
             "borderColor": "#FFF",
-            "borderRadius": 3,
             "borderWidth": 1,
             "marginLeft": 10,
             "marginRight": 0,
           },
           Object {
-            "borderRadius": 3,
+            "borderRadius": 30,
           },
         ]
       }
@@ -236,7 +234,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "backgroundColor": "transparent",
               },
               Object {
-                "borderRadius": 3,
+                "borderRadius": 30,
               },
               Object {
                 "padding": 12,
