@@ -14,8 +14,9 @@ import renderer from 'react-test-renderer';
 describe('ForgotScreen component', () => {
 
   it('should renders correctly', () => {
+    const navigation = {state: {params:{}}};
     const forgotScreen = renderer.create(
-      <ForgotScreen />
+      <ForgotScreen navigation={navigation}/>
     ).toJSON();
     expect(forgotScreen).toMatchSnapshot();
   });

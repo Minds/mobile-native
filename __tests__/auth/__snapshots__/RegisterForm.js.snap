@@ -277,7 +277,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
             Object {
               "backgroundColor": "transparent",
               "borderColor": "#FFF",
-              "borderRadius": 3,
               "borderWidth": 1,
               "marginLeft": 10,
               "marginRight": 0,
@@ -383,7 +382,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
             Object {
               "backgroundColor": "transparent",
               "borderColor": "#FFF",
-              "borderRadius": 3,
               "borderWidth": 1,
               "marginLeft": 10,
               "marginRight": 0,
