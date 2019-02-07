@@ -65,15 +65,15 @@ export default function(input, init, tag) {
     }
 
     xhr.onload = function() {
+      // clear timeout
+      clearTimeout(xhr.timer);
+
       const status = (xhr.status === 1223) ? 204 : xhr.status
       if (status < 100 || status > 599) {
         remove(xhr)
         reject(new TypeError('Network request failed'))
         return
       }
-
-      clearTimeout(xhr.timer);
-
       const options = {
         status: status,
         statusText: xhr.statusText,
@@ -86,8 +86,8 @@ export default function(input, init, tag) {
     }
 
     xhr.onerror = function() {
-      remove(xhr);
       clearTimeout(xhr.timer);
+      remove(xhr);
       reject(new TypeError('Network request failed'));
     }
 
