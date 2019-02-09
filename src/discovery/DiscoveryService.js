@@ -57,7 +57,7 @@ class DiscoveryService {
 
     // is search
     if (q) {
-      return this.search({ offset, type, filter, q });
+      return await this.search({ offset, type, filter, q });
     }
 
     const all = appStores.hashtag.all ? '/all' : '';

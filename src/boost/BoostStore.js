@@ -48,6 +48,8 @@ class BoostStore {
       feed.entities = BoostModel.createMany(feed.entities);
       this.list.setList(feed, refresh);
     } catch(err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
       console.log('error', err);
     } finally {
       this.loading = false;

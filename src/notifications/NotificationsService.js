@@ -15,6 +15,8 @@ export default class NotificationsService {
         offset: data['load-next'],
       }
     } catch(err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
       console.log('error', err);
       throw "Ooops";
     }

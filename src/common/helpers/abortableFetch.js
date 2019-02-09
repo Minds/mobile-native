@@ -2,6 +2,14 @@
  * Abortable fetch
  * based on https://github.com/apentle/react-native-cancelable-fetch/blob/master/index.js
  */
+
+class Abort extends Error {
+  constructor(...args) {
+      super(...args)
+      this.code = 'Abort'
+  }
+}
+
 const _xhrs = [];
 
 function remove(xhr) {
@@ -92,6 +100,11 @@ export default function(input, init, tag) {
     }
 
     xhr.open(request.method, request.url, true);
+
+    xhr.onabort = () => {
+      console.log('aborting')
+      reject(new Abort());
+    };
 
     if (request.credentials === 'include') {
       xhr.withCredentials = true;

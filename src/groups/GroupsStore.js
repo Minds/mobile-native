@@ -46,9 +46,11 @@ class GroupsStore {
       this.list.setList(data);
       this.assignRowKeys(data);
       this.loaded = true;
-    } catch (error) {
+    } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
       this.list.setErrorLoading(true);
-      console.log('error', error);
+      console.log('error', err);
     } finally {
       this.setLoading(false);
     }
