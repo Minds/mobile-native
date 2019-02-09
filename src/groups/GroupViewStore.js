@@ -107,8 +107,10 @@ class GroupViewStore {
       });
       this.assignRowKeys(data);
       this.list.setList(data);
-    } catch (error) {
-      console.log('error', error);
+    } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
+      console.log('error', err);
       this.list.setErrorLoading(true);
     } finally {
       this.setLoading(false);

@@ -150,6 +150,8 @@ class MessengerListStore {
       this.setLoaded(true);
       this.setRefreshing(false);
     } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
       this.setErrorLoading(true);
       console.log(err);
     } finally {

@@ -44,6 +44,8 @@ class ChannelSubscribersStore {
         this.loading = false;
       })
       .catch(err => {
+        // ignore aborts
+        if (err.code === 'Abort') return;
         console.log('error', err);
       })
   }

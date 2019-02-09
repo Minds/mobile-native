@@ -193,6 +193,8 @@ export default class ChannelFeedStore {
       this.list.setList(feed, refresh);
 
     } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
       store.list.setErrorLoading(true);
       console.log(err);
     } finally {
@@ -216,6 +218,8 @@ export default class ChannelFeedStore {
       this.assignRowKeys(feed, store);
       store.list.setList(feed, refresh);
     } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
       store.list.setErrorLoading(true);
       console.log(err);
     } finally {
@@ -239,6 +243,8 @@ export default class ChannelFeedStore {
       this.assignRowKeys(feed, store);
       store.list.setList(feed, refresh);
     } catch (error) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
       console.log(error);
       store.list.setErrorLoading(true);
     } finally {

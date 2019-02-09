@@ -81,6 +81,8 @@ class NewsfeedStore {
       store.list.setList(feed, refresh);
       this.loaded = true;
     } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
       console.log('error', err);
       store.list.setErrorLoading(true);
     } finally {

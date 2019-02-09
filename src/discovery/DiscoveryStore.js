@@ -80,6 +80,11 @@ class DiscoveryStore {
     });
   }
 
+  @action
+  setLoading(store, value) {
+    store.loading = value;
+  }
+
   /**
    * get current list
    */
@@ -109,24 +114,27 @@ class DiscoveryStore {
     if (type == 'lastchannels') return;
 
     // no more data or loading? return
-    if (!refresh && store.list.cantLoadMore() || store.loading) {
+    if ((!refresh && store.list.cantLoadMore()) || store.loading) {
       return;
     }
 
     store.list.setErrorLoading(false);
 
-    store.loading = true;
+    this.setLoading(store, true);
 
     try {
       const feed = await discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext);
+      console.log('RESULTS '+type);
       this.createModels(type, feed, preloadImage);
       this.assignRowKeys(feed);
       store.list.setList(feed, refresh);
     } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
       console.log('error', err);
       store.list.setErrorLoading(true);
     } finally {
-      store.loading = false;
+      this.setLoading(store, false);
     }
   }
 
@@ -224,17 +232,7 @@ class DiscoveryStore {
     this.filter = 'search';
     this.loading = false;
 
-    if (text.trim() == '') {
-      // show again hashtag
-    }
-    // else if ((text.indexOf('#') === 0) || (text.indexOf(' ') > -1)) {
-    //   this.type = 'activity';
-    // } else {
-    //   this.type = 'channels';
-    // }
-
-    const list = this.list;
-    list.clearList();
+    this.list.clearList();;
 
     return this.loadList(true);
   }
