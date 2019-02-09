@@ -12,6 +12,8 @@ import {
   Alert,
 } from 'react-native';
 
+import CookieManager from 'react-native-cookies';
+
 import authService from '../auth/AuthService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
@@ -201,6 +203,7 @@ export default class RegisterForm extends Component {
       };
       await authService.register(params);
       sessionService.setInitialScreen('OnboardingScreen');
+      CookieManager.clearAll();
       await authService.login(this.state.username ,this.state.password);
     } catch (err) {
       Alert.alert(
