@@ -90,7 +90,7 @@ export const ComponentsStyle = StyleSheet.create({
   button: {
     borderWidth: 1,
     borderColor: '#ececec',
-    borderRadius: 3,
+    borderRadius: 30,
     padding: 8,
   },
 
