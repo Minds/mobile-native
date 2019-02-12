@@ -51,6 +51,7 @@ import badgeService from './src/common/services/badge.service';
 import authService from './src/auth/AuthService';
 import NotificationsService from "./src/notifications/NotificationsService";
 import getMaches from './src/common/helpers/getMatches';
+import {CODE_PUSH_TOKEN} from './src/config/Config';
 
 let deepLinkUrl = '';
 
@@ -193,10 +194,14 @@ export default class App extends Component {
 
   async checkForUpdates() {
     try {
-      let response = await CodePush.sync({
+      const params = {
         updateDialog: Platform.OS !== 'ios',
         installMode:  CodePush.InstallMode.ON_APP_RESUME,
-      });
+      };
+
+      if (CODE_PUSH_TOKEN) params.deploymentKey = CODE_PUSH_TOKEN;
+
+      let response = await CodePush.sync(params);
     } catch (err) { }
   }
 
