@@ -672,7 +672,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   Array [
                     Object {
                       "borderColor": "#ececec",
-                      "borderRadius": 3,
+                      "borderRadius": 30,
                       "borderWidth": 1,
                       "padding": 8,
                     },
@@ -1631,7 +1631,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   Array [
                     Object {
                       "borderColor": "#ececec",
-                      "borderRadius": 3,
+                      "borderRadius": 30,
                       "borderWidth": 1,
                       "padding": 8,
                     },

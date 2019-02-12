@@ -3,9 +3,14 @@
 exports[`Activity editor component renders correctly 1`] = `
 <ForwardRef(View)
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "padding": 5,
+      },
+    ]
   }
 >
   <TextInput
@@ -14,10 +19,21 @@ exports[`Activity editor component renders correctly 1`] = `
     numberOfLines={4}
     onChangeText={[Function]}
     style={
-      Object {
-        "borderColor": "gray",
-        "width": "100%",
-      }
+      Array [
+        Object {
+          "borderColor": "gray",
+          "width": "100%",
+        },
+        Object {
+          "borderWidth": 0.5,
+        },
+        Object {
+          "padding": 5,
+        },
+        Object {
+          "borderRadius": 4,
+        },
+      ]
     }
     underlineColorAndroid="transparent"
     value="Message"
@@ -30,19 +46,23 @@ exports[`Activity editor component renders correctly 1`] = `
           "justifyContent": "flex-end",
         },
         Object {
-          "padding": 8,
+          "paddingTop": 5,
         },
       ]
     }
   >
     <Button
+      color="#4690D6"
+      loading={false}
       onPress={[Function]}
-      title="Cancel"
+      text="Cancel"
     />
     <Button
-      backgroundColor="#4690D6"
+      color="#4690D6"
+      inverted={true}
+      loading={false}
       onPress={[Function]}
-      title="Save"
+      text="Save"
     />
   </ForwardRef(View)>
 </ForwardRef(View)>
