@@ -163,7 +163,7 @@ exports[`channel header component owner should render correctly 1`] = `
             Array [
               Object {
                 "borderColor": "#ececec",
-                "borderRadius": 3,
+                "borderRadius": 30,
                 "borderWidth": 1,
                 "padding": 8,
               },

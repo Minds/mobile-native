@@ -12,7 +12,7 @@ import {
   inject
 } from 'mobx-react/native';
 
-import { Button } from 'react-native-elements';
+import Button from '../../common/components/Button';
 
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
@@ -47,17 +47,17 @@ export default class ActivityEditor extends Component {
    */
   render() {
     return (
-      <View style={CommonStyle.flexContainer}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.padding]}>
         <TextInput
-          style={{ width: '100%', borderColor: 'gray'}}
+          style={[{ width: '100%', borderColor: 'gray'}, CommonStyle.borderHair, CommonStyle.padding, CommonStyle.borderRadius2x]}
           multiline={true}
           numberOfLines={4}
           onChangeText={(text) => this.setState({ text })}
           value={this.state.text}
         />
-        <View style={[CommonStyle.rowJustifyEnd, {padding:8}]}>
-          <Button title="Cancel" onPress={this.cancel} />
-          <Button title="Save" backgroundColor={colors.primary} onPress={this.update} disabled={this.props.newsfeed.list.saving}/>
+        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop]}>
+          <Button text="Cancel" onPress={this.cancel} />
+          <Button text="Save" color={colors.primary} inverted={true} onPress={this.update} disabled={this.props.newsfeed.list.saving}/>
         </View>
       </View>
     )

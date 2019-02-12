@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     width: 55,
     backgroundColor: colors.primary,
     textAlign: 'center',
-    borderRadius: 8,
+    borderRadius: 20,
     fontWeight: '500',
     margin: 2
   },
