@@ -149,10 +149,14 @@ export default class MoreScreen extends Component {
         name: 'Check for updates',
         icon: (<Icon name="cloud-download" size={ICON_SIZE} style={ styles.icon }/>),
         onPress: async() => {
-          let response = await CodePush.sync({
+          const params = {
             updateDialog: Platform.OS !== 'ios',
             installMode:  CodePush.InstallMode.IMMEDIATE,
-          }, (status) => {
+          };
+
+          if (CODE_PUSH_TOKEN) params.deploymentKey = CODE_PUSH_TOKEN;
+
+          let response = await CodePush.sync(params, (status) => {
             switch (status) {
               case CodePush.SyncStatus.UP_TO_DATE:
                 ToastAndroid.show('No updates available', ToastAndroid.LONG);
