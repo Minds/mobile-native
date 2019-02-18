@@ -53,6 +53,7 @@ export default class CommentView extends Component {
             this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true });
             break;
         }
+        break;
       case 'group':
         this.props.navigation.push('GroupView', { group: this.props.entity.entityObj, hydrate: true, tab: 'conversation' });
         break;
