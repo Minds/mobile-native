@@ -102,7 +102,6 @@ export default function(input, init, tag) {
     xhr.open(request.method, request.url, true);
 
     xhr.onabort = () => {
-      console.log('aborting')
       reject(new Abort());
     };
 

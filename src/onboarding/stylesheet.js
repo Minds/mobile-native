@@ -80,7 +80,6 @@ export default {
     color: '#444',
     fontSize: 16,
     letterSpacing: 0.35,
-    marginLeft: 8,
     marginBottom: 10,
   },
   b: {

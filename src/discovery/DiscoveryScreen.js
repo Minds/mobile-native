@@ -41,6 +41,7 @@ import CaptureFab from '../capture/CaptureFab';
 import { MINDS_CDN_URI } from '../config/Config';
 import ErrorLoading from '../common/components/ErrorLoading';
 import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
+import GroupsListItem from '../groups/GroupsListItem'
 
 const isIos = Platform.OS === 'ios';
 
@@ -528,14 +529,7 @@ export default class DiscoveryScreen extends Component {
   renderGroup = (row) => {
     const item = row.item;
     return (
-      <ListItem
-        containerStyle={{ borderBottomWidth: 0 }}
-        title={item.name}
-        avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_CDN_URI + 'fs/v1/avatars/' + item.guid + '/small' }} />}
-        subtitle={'Members ' + item['members:count']}
-        hideChevron={true}
-        onPress={() => this.navigateToGroup(item)}
-      />
+      <GroupsListItem group={row.item} onPress={() => this.navigateToGroup(row.item)}/>
     )
   }
 

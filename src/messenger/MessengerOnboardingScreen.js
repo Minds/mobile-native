@@ -30,7 +30,7 @@ import { ComponentsStyle } from '../styles/Components';
 import stylesheet from '../onboarding/stylesheet';
 
 @inject('messengerList')
-@observer  
+@observer
 export default class MessengerOnboardingScreen extends Component {
 
   state = {
@@ -72,7 +72,7 @@ export default class MessengerOnboardingScreen extends Component {
   };
 
   didChange() {
-    this.props.onSetNavNext(this.getNextButton());
+    // this.props.onSetNavNext(this.getNextButton());
   }
 
   async setup() {
@@ -103,7 +103,7 @@ export default class MessengerOnboardingScreen extends Component {
         <Text style={style.h1}>Messenger</Text>
 
         <Text style={style.p}>
-          An additional password is required for messenger in order to ensure that your messages 
+          An additional password is required for messenger in order to ensure that your messages
           are private and fully encrypted.
         </Text>
 

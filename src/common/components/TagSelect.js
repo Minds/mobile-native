@@ -36,20 +36,29 @@ export default class TagSelect extends Component {
    * Render
    */
   render() {
-    const tags = this.props.tags.slice().sort((a, b) => !a.selected && b.selected ? 1 : -1);
+    let tags = this.props.tags;
+    if (!this.props.disableSort) {
+      tags = tags.slice().sort((a, b) => !a.selected && b.selected ? 1 : -1);
+    }
+    const {
+      containerStyle,
+      tagStyle,
+      tagSelectedStyle,
+      textStyle,
+      textSelectedStyle
+    } = this.props;
 
     return (
       <ScrollView>
-        <View style={styles.tagContainer}>
-          {tags.map((tag,i) => <TouchableOpacity style={styles.tag} key={i} onPress={() => this.toogle(tag)}>
-            <Text style={[styles.tagText, tag.selected ? CommonStyle.colorPrimary : null]}>#{tag.value}</Text>
+        <View style={[styles.tagContainer, containerStyle]}>
+          {tags.map((tag,i) => <TouchableOpacity style={[styles.tag, tagStyle, tag.selected ? tagSelectedStyle : null]} key={i} onPress={() => this.toogle(tag)}>
+            <Text style={[styles.tagText, textStyle, tag.selected ? [CommonStyle.colorPrimary, textSelectedStyle] : null]}>#{tag.value}</Text>
           </TouchableOpacity>)}
         </View>
       </ScrollView>
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   error: {

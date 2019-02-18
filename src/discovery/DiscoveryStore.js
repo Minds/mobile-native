@@ -10,6 +10,7 @@ import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import UserModel from '../channel/UserModel';
+import GroupModel from '../groups/GroupModel';
 
 /**
  * Discovery Store
@@ -124,7 +125,7 @@ class DiscoveryStore {
 
     try {
       const feed = await discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext);
-      console.log('RESULTS '+type);
+
       this.createModels(type, feed, preloadImage);
       this.assignRowKeys(feed);
       store.list.setList(feed, refresh);
@@ -174,6 +175,9 @@ class DiscoveryStore {
         break;
       case 'channels':
         feed.entities = UserModel.createMany(feed.entities);
+        break;
+      case 'groups':
+        feed.entities = GroupModel.createMany(feed.entities);
         break;
     }
   }

@@ -17,6 +17,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
     </View>
     <TextInput
       allowFontScaling={true}
+      autoCapitalize="none"
       editable={true}
       onChangeText={[Function]}
       placeholder="Username"
@@ -44,6 +45,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
     />
     <TextInput
       allowFontScaling={true}
+      autoCapitalize="none"
       editable={true}
       onChangeText={[Function]}
       placeholder="Email"
@@ -71,6 +73,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
     />
     <TextInput
       allowFontScaling={true}
+      autoCapitalize="none"
       editable={true}
       onChangeText={[Function]}
       placeholder="Password"
@@ -282,7 +285,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
               "marginRight": 0,
             },
             Object {
-              "borderRadius": 4,
+              "borderRadius": 30,
             },
           ]
         }
@@ -318,7 +321,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
                   "backgroundColor": "transparent",
                 },
                 Object {
-                  "borderRadius": 4,
+                  "borderRadius": 30,
                 },
                 Object {
                   "padding": 12,
@@ -387,7 +390,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
               "marginRight": 0,
             },
             Object {
-              "borderRadius": 4,
+              "borderRadius": 30,
             },
           ]
         }
@@ -423,7 +426,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
                   "backgroundColor": "transparent",
                 },
                 Object {
-                  "borderRadius": 4,
+                  "borderRadius": 30,
                 },
                 Object {
                   "padding": 12,

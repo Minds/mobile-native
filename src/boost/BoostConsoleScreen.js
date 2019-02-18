@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { 
+import {
   FlatList,
   StyleSheet,
   View,
   TouchableHighlight,
-  Text 
+  Text
 } from 'react-native';
 import { observer, inject } from 'mobx-react/native';
 
@@ -24,6 +24,10 @@ import BoostTabBar from './BoostTabBar';
 @observer
 export default class BoostConsoleScreen extends Component {
 
+  static navigationOptions = {
+    title: 'Boost Console',
+  };
+
   state = {
     screen: 'gallery'
   }
@@ -41,7 +45,7 @@ export default class BoostConsoleScreen extends Component {
     this.props.boost.loadList(this.props.guid);
   }
 
- 
+
   createPost() {
     this.props.navigation.navigate('Capture');
   }
@@ -61,7 +65,7 @@ export default class BoostConsoleScreen extends Component {
           <View style={ComponentsStyle.emptyComponent}>
             <Icon name="trending-up" size={72} color='#444' />
             <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any boosts</Text>
-            <Text 
+            <Text
               style={ComponentsStyle.emptyComponentLink}
               onPress={() => this.props.navigation.navigate('Capture')}
               >
@@ -128,6 +132,6 @@ const styles = StyleSheet.create({
     borderColor: 'yellow'
   },
   buttonBar: {
-    height:35 
+    height:35
   }
 });

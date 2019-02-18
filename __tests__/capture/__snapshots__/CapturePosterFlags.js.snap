@@ -924,6 +924,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 onChangeText={[Function]}
                 onEndEditing={[Function]}
                 onSubmitEditing={[Function]}
+                placeholder="eg. science"
                 returnKeyType="next"
                 style={
                   Object {
@@ -1883,6 +1884,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 onChangeText={[Function]}
                 onEndEditing={[Function]}
                 onSubmitEditing={[Function]}
+                placeholder="eg. science"
                 returnKeyType="next"
                 style={
                   Object {

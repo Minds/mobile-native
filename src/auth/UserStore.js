@@ -40,6 +40,10 @@ class UserStore {
     return !!(this.me && this.me.eth_wallet);
   }
 
+  hasAvatar() {
+    return this.me.icontime !== this.me.time_created;
+  }
+
   @action
   clearUser() {
     this.me = {};

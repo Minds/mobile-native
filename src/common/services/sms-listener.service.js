@@ -1,6 +1,7 @@
 import SmsListener from 'react-native-android-sms-listener'
 import permissions from './android-permissions.service';
 import KeepAwake from 'react-native-keep-awake';
+import { Platform } from 'react-native';
 
 /**
  * Sms listener service
@@ -13,6 +14,11 @@ class SmsListenerService {
    * @param {integer} timeout
    */
   async listen(regex, timeout=5000) {
+
+    // sms listener doesn't support ios
+    if (Platform.OS === 'ios') {
+      return -1;
+    }
 
     let allowed = await permissions.checkReadSms();
 

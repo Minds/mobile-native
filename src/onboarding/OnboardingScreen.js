@@ -5,13 +5,12 @@ import React, {
 import {
   View,
   ScrollView,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
   StyleSheet,
+  Alert,
 } from 'react-native';
-
-import {
-  StackActions,
-  NavigationActions
-} from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -20,80 +19,80 @@ import {
   observer
 } from 'mobx-react/native'
 
-import WalletOnboardingJoinRewardsScreen from '../wallet/onboarding/screens/WalletOnboardingJoinRewardsScreen';
-import MessengerOnboardingScreen from '../messenger/MessengerOnboardingScreen';
+// import WalletOnboardingJoinRewardsScreen from '../wallet/onboarding/screens/WalletOnboardingJoinRewardsScreen';
 import isIphoneX from '../common/helpers/isIphoneX';
-import stylesheet from './stylesheet';
+import Wizard from '../common/components/Wizard';
+import HashtagsStep from './steps/HashtagsStep';
+import SuggestedChannelsStep from './steps/SuggestedChannelsStep';
+import SuggestedGroupsStep from './steps/SuggestedGroupsStep';
+import ChannelSetupStep from './steps/ChannelSetupStep';
+import RewardsStep from './steps/RewardsStep';
+import WelcomeStep from './steps/WelcomeStep';
+import { CommonStyle as CS } from '../styles/Common';
+import navigationService from '../navigation/NavigationService';
 
 const headerStyle = isIphoneX() ? {paddingTop: 40} : {};
 
-@inject('user', 'wallet')
 @observer
+@inject('onboarding', 'hashtag')
 export default class OnboardingScreen extends Component {
 
-  static navigationOptions = ({ navigation }) => ({
-    header: (
-      <View style={[style.header, headerStyle]}>
-        <View></View>
-
-        <View>
-          {(navigation.state.params && navigation.state.params.nextButton) && navigation.state.params.nextButton}
-        </View>
-      </View>
-    ),
-    transitionConfig: {
-      isModal: true
-    },
-  });
-
-  state = {
-    step: 1
+  /**
+   * Disable navigation bar
+   */
+  static navigationOptions = {
+    header: null
   }
 
-  setNavNext = next => {
-    this.props.navigation.setParams({ nextButton: next })
-  }
-
-  nextStepAction = async () => {
-    switch (this.state.step) {
-      case 1:
-        this.setState({ step: 2 });
-        break;
-      case 2:
-        this.goToTabs();
+  onFinish = async () => {
+    try {
+      await this.props.onboarding.setShown(true);
+      await this.props.onboarding.getProgress();
+      this.props.hashtag.setAll(false);
+      navigationService.reset('Tabs');
+    } catch (err) {
+      Alert.alert('Error', 'Oops! There was an error.\nPlease try again.')
     }
+  }
 
-    this.setNavNext(null);
-  };
-
-  goToTabs() {
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate({ routeName: 'Tabs' })
-      ]
-    })
-
-    this.props.navigation.dispatch(resetAction);
+  handleWizarRef = (ref) => {
+    this.wizard = ref;
   }
 
   render() {
+    const steps = [];
+    const completed_items = this.props.onboarding.progress.completed_items;
+
+    if (!completed_items.some(r => r == 'creator_frequency')) {
+      steps.push({component: <WelcomeStep onNext={() => this.wizard.next()}/>, ready: () => false});
+    }
+    if (!completed_items.some(r => r == 'suggested_hashtags')) {
+      steps.push({component: <HashtagsStep/>});
+    }
+    if (!completed_items.some(r => r == 'suggested_channels')) {
+      steps.push({component: <SuggestedChannelsStep/>});
+    }
+    if (!completed_items.some(r => r == 'suggested_groups')) {
+      // steps.push({component: <SuggestedGroupsStep/>});
+    }
+
+    steps.push({
+      component: <ChannelSetupStep ref={r => this.channelSetup = r}/>,
+      onNext: async() => {
+        return await this.channelSetup.wrappedInstance.save();
+      }
+    });
+
+    if (!completed_items.some(r => r == 'tokens_verification')) {
+      steps.push({component: <RewardsStep onJoin={() => this.wizard.next()}/>});
+    }
+
     return (
-      <ScrollView style={style.view} keyboardShouldPersistTaps='always'>
-
-        {this.state.step === 1 && <WalletOnboardingJoinRewardsScreen
-          onNext={this.nextStepAction}
-          onSetNavNext={this.setNavNext}
-        />}
-
-        {this.state.step === 2 && <MessengerOnboardingScreen
-          onNext={this.nextStepAction}
-          onSetNavNext={this.setNavNext}
-        />}
-
-      </ScrollView>
+      <KeyboardAvoidingView style={[headerStyle, CS.flexContainer, CS.backgroundWhite]} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
+        <Wizard steps={steps} onFinish={this.onFinish} ref={this.handleWizarRef}></Wizard>
+      </KeyboardAvoidingView>
     );
   }
 }
 
-const style = StyleSheet.create(stylesheet);
+// const style = StyleSheet.create(stylesheet);
