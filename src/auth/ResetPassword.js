@@ -20,6 +20,7 @@ import { Button } from 'react-native-elements'
 
 import i18n from '../common/services/i18n.service';
 import navigation from '../navigation/NavigationService';
+import delay from '../common/helpers/delay';
 
 /**
  * Reset Password Form
@@ -120,8 +121,10 @@ export default class ResetPassword extends PureComponent {
         const data = await authService.reset(state.params.username, this.state.password, state.params.code);
         // clear the cookies (fix future issues with calls)
         await CookieManager.clearAll();
+
         if (data.status === 'success') {
-          const result = await authService.login(state.params.username, this.state.password);
+          await delay(100);
+          authService.login(state.params.username, this.state.password);
         } else {
           throw data;
         }
