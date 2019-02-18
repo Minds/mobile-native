@@ -2,7 +2,8 @@ import {
   observable,
   computed,
   action
-} from 'mobx'
+} from 'mobx';
+
 import moment from 'moment';
 import walletService from './WalletService';
 import abbrev from "../common/helpers/abbrev";

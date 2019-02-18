@@ -50,6 +50,10 @@ export const CommonStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center'
   },
+  rowJustifySpaceEvenly: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
   rowJustifyStart: {
     flexDirection: 'row',
     justifyContent: 'flex-start'
@@ -61,6 +65,9 @@ export const CommonStyle = StyleSheet.create({
   alignJustifyCenter: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  alignSpaceAround: {
+    alignContent: 'space-around'
   },
   // color
   colorWhite: {
@@ -96,9 +103,15 @@ export const CommonStyle = StyleSheet.create({
   colorDark: {
     color: colors.dark
   },
+  colorLightGreyed: {
+    color: colors.lightGreyed
+  },
   // backgrounds
   backgroundWhite: {
     backgroundColor: 'white'
+  },
+  backgroundLightGreyed: {
+    backgroundColor: colors.lightGreyed
   },
   backgroundBlack: {
     backgroundColor: 'black'
@@ -221,6 +234,9 @@ export const CommonStyle = StyleSheet.create({
     marginBottom: 5
   },
   // padding
+  padding4x: {
+    padding: 20
+  },
   padding3x: {
     padding: 15
   },
@@ -280,6 +296,9 @@ export const CommonStyle = StyleSheet.create({
   },
 
   // borders
+  noBorder: {
+    borderWidth: 0
+  },
   borderHair: {
     borderWidth: StyleSheet.hairlineWidth
   },
@@ -295,6 +314,9 @@ export const CommonStyle = StyleSheet.create({
   borderLeftHair: {
     borderLeftWidth: StyleSheet.hairlineWidth
   },
+  noBorderLeft: {
+    borderLeftWidth: 0
+  },
   borderLeft: {
     borderLeftWidth: 1
   },
@@ -306,6 +328,9 @@ export const CommonStyle = StyleSheet.create({
   },
   borderRightHair: {
     borderRightWidth: StyleSheet.hairlineWidth
+  },
+  noBorderRight: {
+    borderRightWidth: 0
   },
   borderRight: {
     borderRightWidth: 1
@@ -319,6 +344,9 @@ export const CommonStyle = StyleSheet.create({
   borderTopHair: {
     borderTopWidth: StyleSheet.hairlineWidth
   },
+  noBorderTop: {
+    borderTopWidth: 0
+  },
   borderTop: {
     borderTopWidth: 1
   },
@@ -330,6 +358,9 @@ export const CommonStyle = StyleSheet.create({
   },
   borderBottomHair: {
     borderBottomWidth: StyleSheet.hairlineWidth
+  },
+  noBorderBottom: {
+    borderBottomWidth: 0
   },
   borderBottom: {
     borderBottomWidth: 1

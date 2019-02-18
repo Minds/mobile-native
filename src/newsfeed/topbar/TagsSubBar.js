@@ -112,7 +112,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height:35,
     justifyContent:'center',
-    marginTop: 3
+    marginTop: 3,
+    marginHorizontal: 5
   },
   moreButton: {
     width: 55,
