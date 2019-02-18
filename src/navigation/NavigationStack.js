@@ -43,6 +43,7 @@ import ComingSoonScreen from '../static-views/ComingSoonScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import OnboardingScreen from '../onboarding/OnboardingScreen';
 import IssueReportScreen from '../issues/IssueReportScreen';
+import Wizard from '../common/components/Wizard';
 
 /**
  * Main stack navigator
@@ -191,6 +192,9 @@ const Stack = createStackNavigator({
   },
   IssueReport: {
     screen: IssueReportScreen
+  },
+  Wizard: {
+    screen: Wizard
   }
 });
 

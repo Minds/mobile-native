@@ -2,6 +2,8 @@ import { Alert } from 'react-native';
 import { MINDS_URI } from '../config/Config';
 import api from './../common/services/api.service';
 import session from './../common/services/session.service';
+import delay from '../common/helpers/delay';
+import CookieManager from 'react-native-cookies';
 
 /**
  * Auth Services
@@ -18,6 +20,8 @@ class AuthService {
     };
 
     const data = await api.post('api/v2/oauth/token', params);
+    await CookieManager.clearAll();
+    await delay(100);
     session.login(data);
     return data;
   }

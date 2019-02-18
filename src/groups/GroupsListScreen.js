@@ -15,14 +15,15 @@ import {
   inject
 } from 'mobx-react/native'
 
-import { ListItem } from 'react-native-elements';
+
 import { Avatar } from 'react-native-elements';
 import { MINDS_CDN_URI, MINDS_FEATURES } from '../config/Config';
+import { CommonStyle as CS } from '../styles/Common';
 import CenteredLoading from '../common/components/CenteredLoading';
 import Toolbar from '../common/components/toolbar/Toolbar';
 import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
-import { CommonStyle as CS } from '../styles/Common';
 import ErrorLoading from '../common/components/ErrorLoading';
+import GroupsListItem from './GroupsListItem';
 
 // define tabs based on enabled features
 const selectedTextStyle = {color: 'black'};
@@ -97,18 +98,7 @@ export default class GroupsListScreen extends Component {
   }
 
   renderItem = (row) => {
-    const item = row.item;
-    return (
-      <ListItem
-        containerStyle={{ borderBottomWidth: 0 }}
-        title={item.name}
-        keyExtractor={item => item.rowKey}
-        avatar={<Avatar width={40} height={40} rounded source={{ uri: MINDS_CDN_URI + 'fs/v1/avatars/' + item.guid + '/small/' + item.icontime }} />}
-        subtitle={'Members ' + item['members:count']}
-        hideChevron={true}
-        onPress={() => this.navigateToGroup(item)}
-      />
-    )
+    return <GroupsListItem group={row.item} onPress={() => this.navigateToGroup(row.item)}/>
   }
 
   /**

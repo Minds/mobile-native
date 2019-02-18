@@ -36,6 +36,8 @@ import {
   Alert,
 } from 'react-native';
 
+import CookieManager from 'react-native-cookies';
+
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
 import NavigationStack from './src/navigation/NavigationStack';
@@ -58,6 +60,8 @@ let deepLinkUrl = '';
 // init push service
 pushService.init();
 
+CookieManager.clearAll();
+
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
 
@@ -65,6 +69,12 @@ sessionService.onLogin(async () => {
 
   // register device token into backend on login
   pushService.registerToken();
+
+  const onboarding = await stores.onboarding.getProgress();
+
+  if (onboarding && onboarding.show_onboarding) {
+    sessionService.setInitialScreen('OnboardingScreen');
+  }
 
   NavigationService.reset(sessionService.initialScreen);
 

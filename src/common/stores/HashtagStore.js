@@ -33,6 +33,14 @@ class HashtagStore {
   }
 
   /**
+   * set all hashtag
+   */
+  @action
+  setAll(value) {
+    this.all = value;
+  }
+
+  /**
    * Set loading
    * @param {boolean} value
    */
@@ -74,7 +82,7 @@ class HashtagStore {
   @action
   create = async (tag) => {
     await this.select(tag);
-    this.suggested.push(tag);
+    this.suggested.unshift(tag);
   }
 
   /**

@@ -168,7 +168,6 @@ export class SocketService {
   }
 
   registerWithAccessToken() {
-    console.log(sessionService.guid, sessionService.token);
     this.emit('register', sessionService.guid, sessionService.token);
   }
 

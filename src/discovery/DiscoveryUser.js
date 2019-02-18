@@ -63,7 +63,7 @@ export default class DiscoveryUser extends Component {
           style={[ComponentsStyle.button ]}
           accessibilityLabel="Subscribe to this channel"
         >
-          <Text style={{ color: '#888' }} > UNSUBSCRIBE </Text>
+          <Text style={{ color: '#888' }} > Subscribed </Text>
         </TouchableHighlight>;
     } else {
       return <TouchableHighlight
@@ -72,7 +72,7 @@ export default class DiscoveryUser extends Component {
           style={[ComponentsStyle.button, ComponentsStyle.buttonAction]}
           accessibilityLabel="Unsubscribe to this channel"
         >
-          <Text style={{ color: colors.primary }} > SUBSCRIBE </Text>
+          <Text style={{ color: colors.primary }} > Subscribe </Text>
         </TouchableHighlight>;
     }
   }
@@ -86,8 +86,8 @@ export default class DiscoveryUser extends Component {
     return (
       <TouchableOpacity style={styles.row} onPress={this._navToChannel}>
         <Image source={avatarImg} style={styles.avatar} />
-        <View style={CommonStyle.flexContainer}>
-          <Text style={styles.body}>{item.name}</Text>
+        <View style={[CommonStyle.flexContainerCenter]}>
+          <Text style={[styles.body, CommonStyle.fontXL]}>{item.name}</Text>
           <Text style={[styles.body, CommonStyle.fontS, CommonStyle.colorMedium]}>@{item.username}</Text>
         </View>
         {this.renderRightButton()}
@@ -101,21 +101,22 @@ const styles = {
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
-    paddingTop: 16,
-    paddingLeft: 8,
-    paddingBottom: 16,
-    paddingRight: 8,
+    paddingTop: 10,
+    paddingLeft: 12,
+    paddingBottom: 10,
+    paddingRight: 12,
     borderBottomColor: '#EEE',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   body: {
     marginLeft: 8,
-    flex: 1,
+    height: 22,
+    // flex: 1,
   },
   avatar: {
-    height: 36,
-    width: 36,
-    borderRadius: 18,
+    height: 58,
+    width: 58,
+    borderRadius: 29,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
   }

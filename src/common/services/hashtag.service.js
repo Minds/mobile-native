@@ -10,7 +10,7 @@ class HashtagService {
    * Get suggested hastags
    */
   async getSuggested() {
-    const response = await api.get('api/v2/hashtags/suggested');
+    const response = await api.get('api/v2/hashtags/suggested', {limit: 24});
     return response.tags;
   }
 

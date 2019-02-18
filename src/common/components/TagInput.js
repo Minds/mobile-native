@@ -62,6 +62,7 @@ export default class TagInput extends Component {
    */
   render() {
     let tags = null;
+    const autoFocus = this.props.noAutofocus ? false : true;
     if (!this.props.hideTags) {
       tags = <View style={styles.tagContainer}>
         {this.props.tags.map((t,i) => <View style={styles.tag} key={i} >
@@ -76,12 +77,13 @@ export default class TagInput extends Component {
         {this.state.error ? <Text style={styles.error}>{this.state.error}</Text> : null}
         <TextInput
           autoCapitalize="none"
-          autoFocus={true}
+          autoFocus={autoFocus}
           style={{height: 35, width: '100%', borderColor: '#ccc', borderBottomWidth: 1, padding: 10}}
           ref={r => this.inputRef = r}
           value={this.state.text}
           blurOnSubmit={false}
           onChangeText={this.onChangeText}
+          placeholder="eg. science"
           returnKeyType="next"
           keyboardType="default"
           onSubmitEditing={this.addTag}

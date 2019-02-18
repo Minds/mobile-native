@@ -109,7 +109,7 @@ export default class NewsfeedList extends Component {
               </Text>
               <Text
                 style={ComponentsStyle.emptyComponentLink}
-                onPress={() => this.props.navigation.navigate('Discovery', { type: 'user' })}
+                onPress={() => this.props.navigation.navigate('Discovery', { type: 'channels' })}
                 >
                 Find channels
               </Text>

@@ -27,7 +27,7 @@ import {
 
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
-import { ADDRGETNETWORKPARAMS } from 'dns';
+import delay from '../common/helpers/delay';
 
 /**
  * Register Form
@@ -79,6 +79,7 @@ export default class RegisterForm extends Component {
           placeholder={i18n.t('auth.username')}
           placeholderTextColor="#444"
           returnKeyType={'done'}
+          autoCapitalize={'none'}
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ username: value })}
           value={this.state.username}
@@ -88,6 +89,7 @@ export default class RegisterForm extends Component {
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.email')}
           returnKeyType={'done'}
+          autoCapitalize={'none'}
           placeholderTextColor="#444"
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ email: value })}
@@ -98,6 +100,7 @@ export default class RegisterForm extends Component {
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.password')}
           secureTextEntry={true}
+          autoCapitalize={'none'}
           returnKeyType={'done'}
           placeholderTextColor="#444"
           underlineColorAndroid='transparent'
@@ -110,6 +113,7 @@ export default class RegisterForm extends Component {
             style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
             placeholder={i18n.t('auth.confirmpassword')}
             secureTextEntry={true}
+            autoCapitalize={'none'}
             returnKeyType={'done'}
             placeholderTextColor="#444"
             underlineColorAndroid='transparent'
@@ -141,7 +145,7 @@ export default class RegisterForm extends Component {
             <Button
               onPress={() => this.onPressBack()}
               title={i18n.t('goback')}
-              borderRadius={4}
+              borderRadius={30}
               backgroundColor="transparent"
               containerViewStyle={ComponentsStyle.loginButton}
               textStyle={ComponentsStyle.loginButtonText}
@@ -152,7 +156,7 @@ export default class RegisterForm extends Component {
               onPress={() => this.onPressRegister()}
               title={i18n.t('auth.create')}
               backgroundColor="transparent"
-              borderRadius={4}
+              borderRadius={30}
               containerViewStyle={ComponentsStyle.loginButton}
               textStyle={ComponentsStyle.loginButtonText}
               loading={this.state.inProgress}
@@ -203,7 +207,8 @@ export default class RegisterForm extends Component {
       };
       await authService.register(params);
       sessionService.setInitialScreen('OnboardingScreen');
-      CookieManager.clearAll();
+      await CookieManager.clearAll();
+      await delay(100);
       await authService.login(this.state.username ,this.state.password);
     } catch (err) {
       Alert.alert(

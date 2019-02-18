@@ -18,7 +18,7 @@ export default class BoostService {
           offset: offset,
           limit: 15
         },
-        this.controllers._getBoosts.signal
+        this
       );
 
       return {

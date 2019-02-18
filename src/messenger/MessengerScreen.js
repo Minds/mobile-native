@@ -124,7 +124,7 @@ export default class MessengerScreen extends Component {
           <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any messages</Text>
           <Text
             style={ComponentsStyle.emptyComponentLink}
-            onPress={() => this.props.navigation.navigate('Discovery', { type: 'user' })}
+            onPress={() => this.props.navigation.navigate('Discovery', { type: 'channels' })}
             >
             Find channels
           </Text>

@@ -59,7 +59,8 @@ export default class CapturePoster extends Component {
    */
   componentWillMount() {
     const { setParams } = this.props.navigation;
-    const { params } = this.props.navigation.state;
+    let { params } = this.props.navigation.state;
+    if (!params) params = {};
     setParams({
       headerRight: <CapturePostButton
         onPress={() => !params.isRemind ? this.submit() : this.remind()}
@@ -165,6 +166,8 @@ export default class CapturePoster extends Component {
     const text = this.props.capture.text;
     const navigation = this.props.navigation;
 
+    const params = navigation.state.params || {};
+
     return (
       <View style={CS.flexContainer}>
         <ScrollView style={styles.posterAndPreviewWrapper}>
@@ -183,7 +186,7 @@ export default class CapturePoster extends Component {
               onSelectionChange={this.onSelectionChanges}
             />
           </View>
-          {!navigation.state.params.isRemind ? this.getAttachFeature() : this.getRemind()}
+          {!params.isRemind ? this.getAttachFeature() : this.getRemind()}
         </ScrollView>
         <UserAutocomplete
           text={text}

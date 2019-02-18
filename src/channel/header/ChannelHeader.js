@@ -34,6 +34,7 @@ import { CommonStyle } from '../../styles/Common';
 import imagePicker from '../../common/services/image-picker.service';
 import Button from '../../common/components/Button';
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
+import CompleteProfile from './CompleteProfile';
 
 // prevent accidental double tap in touchables
 const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
@@ -43,7 +44,7 @@ const ButtonCustom = withPreventDoubleTap(Button);
 /**
  * Channel Header
  */
-@inject('user')
+@inject('user', 'onboarding')
 @observer
 export default class ChannelHeader extends Component {
 
@@ -63,8 +64,6 @@ export default class ChannelHeader extends Component {
     avatar: null,
     banner: null
   };
-
-
 
   /**
    * Get Channel Banner
@@ -101,6 +100,11 @@ export default class ChannelHeader extends Component {
     if (this.props.navigation) {
       this.props.navigation.push('Subscribers', { guid : this.props.channel.channel.guid });
     }
+  }
+
+  componentDidMount() {
+    const isOwner = session.guid === this.props.channel.channel.guid;
+    if(isOwner) this.props.onboarding.getProgress();
   }
 
   onEditAction = async () => {
@@ -234,7 +238,7 @@ export default class ChannelHeader extends Component {
    * Render Header
    */
   render() {
-
+    const isOwner = session.guid === this.props.channel.channel.guid;
     const channel = this.props.channel.channel;
     const styles  = this.props.styles;
     const avatar  = this.getAvatar();
@@ -298,7 +302,6 @@ export default class ChannelHeader extends Component {
               }
             </View>
           </View>
-
           {isEditable && <View style={styles.briefdescriptionTextInputView}>
             <TextInput
               placeholder="Brief description about you..."
@@ -314,7 +317,6 @@ export default class ChannelHeader extends Component {
               <Tags navigation={this.props.navigation}>{channel.briefdescription}</Tags>
             </View>
           }
-
         </View>
 
         <TouchableCustom onPress={this.changeAvatarAction} style={styles.avatar} disabled={!isEditable}>
@@ -327,7 +329,7 @@ export default class ChannelHeader extends Component {
             <Progress.Pie progress={this.props.channel.avatarProgress} size={36} />
           </View>: null}
         </TouchableCustom>
-
+        {isOwner && this.props.onboarding.percentage < 1 ? <CompleteProfile progress={this.props.onboarding.percentage}/>: null}
       </View>
     )
   }

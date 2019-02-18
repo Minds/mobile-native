@@ -3,6 +3,7 @@ import { observable, action } from 'mobx'
 import groupsService from './GroupsService';
 import { MINDS_FEATURES } from '../config/Config';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
+import GroupModel from './GroupModel';
 
 const defaultFilter = MINDS_FEATURES.suggested_groups_screen ? 'suggested' : 'top';
 
@@ -43,6 +44,7 @@ class GroupsStore {
 
     try {
       const data = await groupsService.loadList(this.filter, this.list.offset);
+      data.entities = GroupModel.createMany(data.entities);
       this.list.setList(data);
       this.assignRowKeys(data);
       this.loaded = true;
