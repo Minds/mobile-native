@@ -33,9 +33,9 @@ export default class Topbar extends Component {
 
           { featuresService.has('crypto') && <TouchableOpacity onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} >
             <View style={styles.topbarLeft}>
-              <Icon name="trending-up" size={18} color='#444' style={ styles.button }/>
+              <Icon name="trending-up" size={22} color='#444' style={ styles.button }/>
             </View>
-          </TouchableOpacity> }
+          </TouchableOpacity>}
 
           { !featuresService.has('crypto') && <View style={styles.topbarLeft} />}
 
@@ -51,7 +51,7 @@ export default class Topbar extends Component {
 
           <TouchableOpacity onPress={() => this.props.navigation.navigate('More', { navigation: this.props.navigation })} >
             <View style={styles.topbarRight}>
-              <Icon name="more-vert" size={18} color='#444' style={ styles.button }/>
+              <Icon name="menu" size={22} color='#444' style={ styles.button }/>
             </View>
           </TouchableOpacity>
 
