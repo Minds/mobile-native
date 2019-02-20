@@ -57,7 +57,7 @@ export default class ChannelScreen extends Component {
   /**
    * Load data on mount
    */
-  componentWillMount() {
+  async componentWillMount() {
     const params = this.props.navigation.state.params;
 
     if (params.entity) {
@@ -68,13 +68,24 @@ export default class ChannelScreen extends Component {
       this.loadChannel(params.entity.guid);
 
     } else if (params.username) {
-      this.loadByUsername(params.username);
+      await this.loadByUsername(params.username);
     } else if (params.guid) {
-      this.loadChannel(params.guid);
+      await this.loadChannel(params.guid);
     }
+
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+      const params = this.props.navigation.state.params;
+      const store = this.props.channel.store(this.guid);
+      if (params && params.prepend) {
+        store.feedStore.stores.feed.list.prepend(params.prepend);
+        // we clear the parameter to prevent prepend it again on goBack
+        this.props.navigation.setParams({prepend: null});
+      }
+    });
   }
 
   componentWillUnmount() {
+    this.disposeEnter.remove();
     this.props.channel.garbageCollect();
     this.props.channel.store(this.guid).markInactive();
   }
