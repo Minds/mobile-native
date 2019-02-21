@@ -26,7 +26,7 @@ Alert.alert = jest.fn();
 describe('cature poster component', () => {
 
   let userStore, capture;
-  const navigation = { navigate: jest.fn(), dispatch: jest.fn(), setParams: jest.fn(), state: {params:{}}};
+  const navigation = { navigate: jest.fn(), dispatch: jest.fn(), setParams: jest.fn(), state: {params:{}}, goBack: jest.fn()};
 
   const paramsVideo = {uri: 'file://video.mp4', type: 'video/mp4'};
 
@@ -39,6 +39,7 @@ describe('cature poster component', () => {
     navigation.navigate.mockClear();
     navigation.dispatch.mockClear();
     navigation.setParams.mockClear();
+    capture.post.mockClear();
   });
 
   it('should renders correctly', () => {

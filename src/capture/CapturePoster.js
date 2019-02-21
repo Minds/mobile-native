@@ -31,6 +31,7 @@ import CapturePosterFlags from './CapturePosterFlags';
 import UserAutocomplete from '../common/components/UserAutocomplete';
 import Activity from '../newsfeed/activity/Activity';
 import BlogCard from '../blogs/BlogCard';
+import ActivityModel from '../newsfeed/ActivityModel';
 
 @inject('user', 'capture')
 @observer
@@ -109,32 +110,19 @@ export default class CapturePoster extends Component {
     return group? <Text style={styles.title}> { '(Posting in ' + group.name + ')'} </Text> :null;
   }
 
-  /**
-   * Nav to newsfeed
-   * @param {object} entity
-   */
-  navToNewsfeed(entity) {
-    const dispatch = NavigationActions.navigate({
-      routeName: 'Newsfeed',
-      params: {
-        prepend: entity,
-      },
-    });
-
-    this.props.navigation.dispatch(dispatch);
-  }
 
   /**
    * Nav to group
    */
-  navToGroup(group, entity) {
+  navToPrevious(entity, group) {
 
     const {state, dispatch, goBack} = this.props.navigation;
 
     const params = {
-      group: group,
-      prepend: entity,
+      prepend: ActivityModel.checkOrCreate(entity),
     };
+
+    if (group) params.group = group;
 
     dispatch(NavigationActions.setParams({
       params,
@@ -279,12 +267,13 @@ export default class CapturePoster extends Component {
     const { params } = this.props.navigation.state;
     const message = this.props.capture.text;
     const post = {message};
+    let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null
     try {
       const response = await this.props.capture.remind(params.entity.guid, post);
-      console.log(response)
-      this.navToNewsfeed(response.entity);
-    } catch (e) {
+      this.navToPrevious(response.entity, group);
+    } catch (err) {
       Alert.alert('Oops', "There was an error.\nPlease try again.");
+      console.log(err)
     }
   }
 
@@ -359,13 +348,14 @@ export default class CapturePoster extends Component {
       if (this.props.onComplete) {
         this.props.onComplete(response.entity);
       } else if (this.props.navigation.state.params && this.props.navigation.state.params.group) {
-        this.navToGroup(this.props.navigation.state.params.group, response.entity);
+        this.navToPrevious(response.entity, this.props.navigation.state.params.group);
       } else {
-        this.navToNewsfeed(response.entity);
+        this.navToPrevious(response.entity);
       }
 
       return response;
-    } catch (e) {
+    } catch (err) {
+      console.log(err);
       Alert.alert('Oops', "There was an error.\nPlease try again.");
     }
   }
