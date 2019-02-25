@@ -68,7 +68,11 @@ sessionService.onLogin(async () => {
   mindsService.getSettings();
 
   // register device token into backend on login
-  pushService.registerToken();
+  try {
+    pushService.registerToken();
+  } catch (err) {
+    console.log('Error registering the push notification token', err);
+  }
 
   const onboarding = await stores.onboarding.getProgress();
 
@@ -78,14 +82,21 @@ sessionService.onLogin(async () => {
 
   NavigationService.reset(sessionService.initialScreen);
 
-  // handle deep link (if the app is opened by one)
-  if(deepLinkUrl) deeplinkService.navigate(deepLinkUrl);
+  try {
+    // handle deep link (if the app is opened by one)
+    if(deepLinkUrl) {
+      deeplinkService.navigate(deepLinkUrl);
+      deepLinkUrl = '';
+    }
 
-  // handle initial notifications (if the app is opened by tap on one)
-  pushService.handleInitialNotification();
+    // handle initial notifications (if the app is opened by tap on one)
+    pushService.handleInitialNotification();
 
-  // handle shared
-  receiveShare.handle();
+    // handle shared
+    receiveShare.handle();
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 //on app logout
@@ -137,11 +148,11 @@ export default class App extends Component {
    * On component did mount
    */
   async componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-    Linking.addEventListener('url', event => this.handleOpenURL(event.url));
-    AppState.addEventListener('change', this.handleAppStateChange);
-
     deepLinkUrl = await Linking.getInitialURL();
+
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    Linking.addEventListener('url', event => this.handleOpenURL(event));
+    AppState.addEventListener('change', this.handleAppStateChange);
 
     if (!this.handlePasswordResetDeepLink()) {
       const token = await sessionService.init();
@@ -192,12 +203,13 @@ export default class App extends Component {
   /**
    * Handle deeplink urls
    */
-  handleOpenURL = (url) => {
-    deepLinkUrl = url;
+  handleOpenURL = (event) => {
+    deepLinkUrl = event.url;
     if (url) this.handlePasswordResetDeepLink();
     if (deepLinkUrl) {
       setTimeout(() => {
         deeplinkService.navigate(deepLinkUrl);
+        deepLinkUrl = '';
       }, 100);
     }
   }

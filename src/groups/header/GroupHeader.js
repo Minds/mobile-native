@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import {
-  observer
+  observer, inject
 } from 'mobx-react/native'
 import {debounce} from 'lodash';
 
@@ -31,8 +31,14 @@ import colors from '../../styles/Colors';
 /**
  * Group Header
  */
+@inject('groupsBar')
 @observer
 export default class GroupHeader extends Component {
+
+  componentDidMount() {
+    const group = this.props.store.group;
+    this.props.groupsBar.markAsRead(group, 'activity');
+  }
 
   /**
    * Get Group Banner
@@ -153,11 +159,15 @@ export default class GroupHeader extends Component {
       case 'feed':
         // clear list without mark loaded flag
         this.props.store.refresh(group.guid);
+        this.props.groupsBar.markAsRead(group, 'activity');
       case 'desc':
         this.props.store.list.clearList(false);
         break;
       case 'members':
         this.props.store.loadMembers();
+        break;
+      case 'conversation':
+        this.props.groupsBar.markAsRead(group, 'conversation');
         break;
       default:
         break;
