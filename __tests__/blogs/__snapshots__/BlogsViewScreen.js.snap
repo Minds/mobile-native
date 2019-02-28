@@ -152,7 +152,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           }
         }
       >
-        <FastImage
+        <ForwardRef
           resizeMode="cover"
           source={
             Object {
