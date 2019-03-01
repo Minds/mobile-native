@@ -205,7 +205,7 @@ export default class App extends Component {
    */
   handleOpenURL = (event) => {
     deepLinkUrl = event.url;
-    if (url) this.handlePasswordResetDeepLink();
+    if (deepLinkUrl) this.handlePasswordResetDeepLink();
     if (deepLinkUrl) {
       setTimeout(() => {
         deeplinkService.navigate(deepLinkUrl);
