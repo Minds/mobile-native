@@ -11,7 +11,7 @@ exports[`Owner component renders correctly 1`] = `
     }
   }
 >
-  <FastImage
+  <ForwardRef
     resizeMode="cover"
     style={
       Object {
