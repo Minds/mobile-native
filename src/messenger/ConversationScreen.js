@@ -50,15 +50,14 @@ export default class ConversationScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
     const conversation = navigation.state.params.conversation;
+    let title = '';
 
-    if (!conversation || !conversation.name) {
-      return {
-        title: ''
-      };
+    if (conversation) {
+      title = conversation.name ? conversation.name : conversation.username;
     }
 
     return {
-      title: conversation.name,
+      title,
       headerRight: navigation.state.params && navigation.state.params.headerRight,
     }
   };
@@ -96,6 +95,9 @@ export default class ConversationScreen extends Component {
    * @param {object} conversation
    */
   updateTopAvatar(conversation) {
+    // do not update the avatar if it is not configured yet
+    if (!this.props.messengerList.configured) return;
+
     if (conversation && conversation.participants && !this.topAvatar) {
       const participant = UserModel.checkOrCreate(conversation.participants[0]);
       const avatarImg = participant.getAvatarSource();
