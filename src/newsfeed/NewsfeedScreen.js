@@ -17,6 +17,7 @@ import Topbar from './topbar/Topbar';
 import CaptureFab from '../capture/CaptureFab';
 import stores from '../../AppStores';
 import { CommonStyle } from '../styles/Common';
+import GroupsBar from '../groups/GroupsBar';
 
 /**
  * News Feed Screen
@@ -76,6 +77,7 @@ export default class NewsfeedScreen extends Component {
     const header = (
       <View>
         <Topbar />
+        <GroupsBar/>
         { false ?
           <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation} store={newsfeed} me={this.props.user.me}/>
           : null }

@@ -79,6 +79,36 @@ class GroupsService {
     return feed;
   }
 
+  async loadMyGroups() {
+    const data = await api.get('api/v1/groups/member');
+
+    return {
+      entities: data.entities || [],
+      offset: data['load-next'] || ''
+    };
+  }
+
+  async loadGroupMarkers() {
+    const result = await api.get('api/v2/notifications/markers', {
+      type: 'group',
+    });
+
+    return result.markers || [];
+  }
+
+  async markAsRead(opts) {
+    if (!opts.entity_guid)
+      throw "entity guid must be set";
+    if (!opts.entity_type)
+      throw "entity type must be set";
+    if (!opts.marker)
+      throw "marker must be set";
+
+    console.log('MARK AS READ', opts);
+
+    return api.post('api/v2/notifications/markers/read', opts)
+  }
+
   /**
    * Load the members of the group
    * @param {string} guid
