@@ -40,6 +40,7 @@ export const MINDS_FEATURES = {
  * Deeplink to screen/params maping
  */
 export const MINDS_DEEPLINK = [
+  ['groups/profile/:guid/feed', 'GroupView'],
   ['groups/profile/:guid', 'GroupView'],
   ['notifications', 'Notifications'],
   ['groups/:filter', 'GroupsList'],
@@ -51,5 +52,4 @@ export const MINDS_DEEPLINK = [
   [':user/blog/:slug', 'BlogView'],
   [':username', 'Channel'],
   ['wallet/tokens/:section', 'Wallet'],
-
 ]

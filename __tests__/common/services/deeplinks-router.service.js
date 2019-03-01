@@ -16,10 +16,10 @@ describe('Deeplinks router service', () => {
   });
 
   it('should add route', async () => {
-    expect(service.routes.length).toBe(11)
+    expect(service.routes.length).toBe(12)
     service.add('crypto/:someparam', 'screen1');
     service.add('myurl/:someparam1', 'screen2');
-    expect(service.routes.length).toBe(13);
+    expect(service.routes.length).toBe(14);
     service.navigate('http://www.minds.com/crypto/somevalue');
     expect(navigationService.navigate).toHaveBeenCalledWith('screen1', {someparam: 'somevalue'});
     service.navigate('http://www.minds.com/myurl/somevalue');
