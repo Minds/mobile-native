@@ -5,6 +5,7 @@ import MediaMeta from 'react-native-media-meta';
 
 import attachmentService from '../services/attachment.service';
 import {MINDS_MAX_VIDEO_LENGTH} from '../../config/Config';
+import mindsService from '../services/minds.service';
 
 /**
  * Attachment Store
@@ -100,6 +101,9 @@ export default class AttachmentStore {
    */
   @action
   async validate(media) {
+
+    const settings = await mindsService.getSettings();
+
     let videoPath = null;
     switch (media.type) {
       case 'video/mp4':
@@ -122,10 +126,10 @@ export default class AttachmentStore {
       this.checkingVideoLength = false;
 
       // check video length
-      if (meta.duration && meta.duration > (MINDS_MAX_VIDEO_LENGTH * 60000) ) {
+      if (meta.duration && meta.duration > (settings.max_video_length * 1000) ) {
         Alert.alert(
           'Sorry',
-          'Video duration must be less than '+MINDS_MAX_VIDEO_LENGTH+' minutes');
+          'Video duration must be less than ' + (settings.max_video_length / 60) + ' minutes');
         return false;
       }
     }
