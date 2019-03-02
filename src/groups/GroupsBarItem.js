@@ -80,10 +80,10 @@ export default class GroupsBarItem extends Component {
       )
     }
     return (
-      <View style={[CS.columnAlignCenter, CS.marginRight2x]}>
+      <View style={[CS.columnAlignCenter, styles.container, CS.marginRight2x, CS.backgroundTransparent]}>
         <TouchableOpacity onPress={this.navToGroup} activeOpacity={.5}>
           <FastImage source={{uri: this.getAvatar(group)}} style={[styles.avatar]}/>
-          {group.marker_activity ? <View style={styles.acitivity}/> : null}
+          {group.marker_activity ? <View style={[styles.acitivity]}/> : null}
         </TouchableOpacity>
         <Text style={[CS.fontXS, CS.marginTop, CS.fontMedium]}>{excerpt(group.name, 11)}</Text>
         {group.marker_conversation ? <FAIcon name="circle" size={12} color='rgba(70, 144, 223, 1)' style={styles.unread} /> : null}
@@ -93,6 +93,9 @@ export default class GroupsBarItem extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    padding:3
+  },
   acitivity: {
     zIndex: 9990,
     top: -3,
@@ -113,7 +116,7 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: Platform.OS == 'ios' ? -4 : 8,
-    left: Platform.OS == 'ios' ? 4 : 15
+    top: Platform.OS == 'ios' ? -4 : -6,
+    left: Platform.OS == 'ios' ? 4 : 2
   },
 })
