@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: Platform.OS == 'ios' ? -4 : -6,
+    top: Platform.OS == 'ios' ? -2 : 0,
     left: Platform.OS == 'ios' ? 4 : 2
   },
 })
