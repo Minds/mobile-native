@@ -38,6 +38,9 @@ import shareService from '../share/ShareService';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
+import isIphoneX from '../common/helpers/isIphoneX';
+
+gobackstyle = isIphoneX() ? {left: 10, top: 30} : {};
 
 /**
  * Blog View Screen
@@ -130,7 +133,7 @@ export default class BlogsViewScreen extends Component {
           <Text style={[CS.fontXS, CS.paddingLeft, CS.colorMedium, CS.paddingRight2x]}>{blog.getLicenseText()}</Text>
           <Icon color={colors.primary} size={20} name='share' onPress={this.share} />
         </View>
-        <Icon raised color={colors.primary} containerStyle={styles.header} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
+        <Icon raised color={colors.primary} containerStyle={[styles.header, gobackstyle]} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
         { this.comments.loadPrevious && !this.comments.loading ?
             <TouchableHighlight
             onPress={() => { this.loadComments()}}

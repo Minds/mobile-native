@@ -5,6 +5,7 @@ import React, {
 import {
   WebView,
   View,
+  Text,
   Dimensions,
   Linking,
   ActivityIndicator,
