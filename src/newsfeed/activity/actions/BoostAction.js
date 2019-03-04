@@ -11,7 +11,6 @@ import {
 
 import { CommonStyle } from '../../../styles/Common';
 import { ComponentsStyle } from '../../../styles/Components';
-import featuresService from '../../../common/services/features.service';
 
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 
@@ -48,14 +47,6 @@ export default class BoostAction extends PureComponent {
    * Open boost screen
    */
   openBoost = () => {
-    if (featuresService.isLegacy()) {
-      this.props.navigation.push('ComingSoon');
-      return;
-    } else if (!featuresService.has('monetization')) {
-      this.props.navigation.push('NotSupported');
-      return;
-    }
-
 
     this.props.navigation.push('Boost', { entity: this.props.entity });
   }

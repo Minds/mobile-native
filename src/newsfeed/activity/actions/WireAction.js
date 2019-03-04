@@ -22,6 +22,10 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
  * Wire Action Component
  */
 export default class WireAction extends PureComponent {
+
+  /**
+   * Render
+   */
   render() {
     return (
       <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.centered]} onPress={this.openWire}>
@@ -31,14 +35,6 @@ export default class WireAction extends PureComponent {
   }
 
   openWire = () => {
-    if (featuresService.isLegacy()) {
-      this.props.navigation.navigate('ComingSoon');
-      return;
-    } else if (!featuresService.has('monetization')) {
-      this.props.navigation.navigate('NotSupported');
-      return;
-    }
-
     this.props.navigation.navigate('WireFab', { owner: this.props.owner });
   }
 }

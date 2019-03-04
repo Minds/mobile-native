@@ -27,11 +27,6 @@ import featuresService from '../common/services/features.service';
 
 let platformWalletScreen = WalletScreen;
 
-if (featuresService.isLegacy()) {
-  platformWalletScreen = ComingSoonScreen;
-} else if (!featuresService.has('monetization')) {
-  platformWalletScreen = NotSupportedScreen;
-}
 
 const screens = {
   Wallet: {

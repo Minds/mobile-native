@@ -26,14 +26,11 @@ export const BLOCKCHAIN_URI = 'https://www.minds.com/api/v2/blockchain/proxy/';
 export const MINDS_LINK_URI = 'https://www.minds.com/';
 export const CODE_PUSH_TOKEN = '';
 
-
+/**
+ * Plataform dependant or fixed features
+ */
 export const MINDS_FEATURES = {
   crypto: Platform.OS === 'ios' ? false : true,
-  monetization: true,
-  legacy: false,
-  suggested_groups_screen: true,
-  suggested_blogs_screen: true,
-  suggested_discovery_screen: false, // NOT IMPLEMENTED
 };
 
 /**

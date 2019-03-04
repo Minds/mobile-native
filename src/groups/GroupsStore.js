@@ -5,7 +5,7 @@ import { MINDS_FEATURES } from '../config/Config';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import GroupModel from './GroupModel';
 
-const defaultFilter = MINDS_FEATURES.suggested_groups_screen ? 'suggested' : 'top';
+const defaultFilter = 'suggested';
 
 /**
  * Groups store

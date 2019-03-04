@@ -46,6 +46,7 @@ import './AppErrors';
 import './src/common/services/socket.service';
 import pushService from './src/common/services/push.service';
 import mindsService from './src/common/services/minds.service';
+import featureService from './src/common/services/features.service';
 import receiveShare from './src/common/services/receive-share.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
@@ -65,7 +66,11 @@ CookieManager.clearAll();
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
 
-  mindsService.getSettings();
+  // load minds settings on login
+  await mindsService.getSettings();
+
+  // reload fatures on login
+  await featureService.updateFeatures();
 
   // register device token into backend on login
   try {
@@ -104,6 +109,9 @@ sessionService.onLogout(() => {
   // clear app badge
   badgeService.setUnreadConversations(0);
   badgeService.setUnreadNotifications(0);
+
+  // clear minds settings
+  mindsService.clear();
 });
 
 // disable yellow boxes

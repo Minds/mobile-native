@@ -7,10 +7,8 @@ import { MINDS_FEATURES } from '../../../src/config/Config';
 describe('Feature service', () => {
 
   it('should return features', async () => {
-    let features = {"crypto": false, "legacy": false, "monetization": true, "suggested_blogs_screen": true, "suggested_discovery_screen": false, "suggested_groups_screen": true}
-
+    let features = {"crypto": false}
     expect(service.features).toEqual(features);
     expect(service.has('crypto')).toEqual(false);
-    expect(service.isLegacy()).toEqual(false);
   });
 });
