@@ -61,7 +61,7 @@ export default class GroupsBarItem extends Component {
     const group = this.props.group;
     if (group['marker_gathering-heartbeat']) {
       return (
-        <View style={[CS.columnAlignCenter, CS.marginRight2x]}>
+        <View style={[CS.columnAlignCenter, styles.container, CS.backgroundTransparent, CS.centered]}>
           <View>
             <PulseAnimAvatar
               avatar={this.getAvatar(group)}
@@ -80,7 +80,7 @@ export default class GroupsBarItem extends Component {
       )
     }
     return (
-      <View style={[CS.columnAlignCenter, styles.container, CS.marginRight2x, CS.backgroundTransparent]}>
+      <View style={[CS.columnAlignCenter, styles.container, CS.backgroundTransparent, CS.centered]}>
         <TouchableOpacity onPress={this.navToGroup} activeOpacity={.5}>
           <FastImage source={{uri: this.getAvatar(group)}} style={[styles.avatar]}/>
           {group.marker_activity ? <View style={[styles.acitivity]}/> : null}
@@ -94,7 +94,9 @@ export default class GroupsBarItem extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding:3
+    padding:10,
+
+    overflow: 'visible'
   },
   acitivity: {
     zIndex: 9990,
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: Platform.OS == 'ios' ? -2 : 0,
-    left: Platform.OS == 'ios' ? 4 : 2
+    top: Platform.OS == 'ios' ? 8 : 6,
+    left: Platform.OS == 'ios' ? 8 : 6
   },
 })
