@@ -40,7 +40,7 @@ export default class GroupsBar extends Component {
    */
   render() {
     return (
-      <ScrollView contentContainerStyle={[CS.rowJustifyStart, CS.paddingTop2x, CS.paddingBottom2x, CS.marginLeft]} horizontal={true}>
+      <ScrollView contentContainerStyle={[CS.rowJustifyStart, CS.backgroundTransparent]} horizontal={true}>
         {this.props.groupsBar.groups.slice().map((group, i) => <GrousBarItem group={group} key={i}/>)}
       </ScrollView>
     )
