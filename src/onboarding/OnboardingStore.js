@@ -16,7 +16,7 @@ class OnboardingStore {
 
   @computed
   get percentage() {
-    if (!this.progress == null) return 0;
+    if (!this.progress) return 0;
 
     return number(this.progress.completed_items.length / this.progress.all_items.length, 0, 2);
   }
