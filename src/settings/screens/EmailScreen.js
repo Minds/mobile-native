@@ -31,17 +31,15 @@ export default class EmailScreen extends Component {
   state = {
     email: null,
     saving: false,
-    isVisible: false
+    isVisible: false,
+    loaded: false
   }
 
-  /**
-   * On component will mount
-   */
-  componentWillMount() {
-    settingsService.getSettings()
-      .then(({ channel }) => {
-        this.setState({email: channel.email});
-      });
+  constructor(){
+    super();
+    settingsService.getSettings().then(({ channel }) => {
+      this.setState({email: channel.email, loaded: true});
+    });
   }
 
   /**
@@ -81,7 +79,7 @@ export default class EmailScreen extends Component {
    * Render
    */
   render() {
-    if (!this.state.email) {
+    if (this.state.saving || !this.state.loaded) {
       return <CenteredLoading/>
     }
 
