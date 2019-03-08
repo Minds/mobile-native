@@ -78,7 +78,7 @@ export default class Activity extends Component {
   render() {
     const entity = this.props.entity;
     const hasText = !!entity.text;
-    const lock = entity.paywall ? <Lock entity={entity} navigation={this.props.navigation}/> : null;
+    const lock = (entity.paywall && entity.paywall !== '0')? <Lock entity={entity} navigation={this.props.navigation}/> : null;
 
     const message = this.state.editing ?
       (
