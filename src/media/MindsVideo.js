@@ -19,10 +19,6 @@ import _ from 'lodash';
 
 import ProgressBar from './ProgressBar';
 
-import {
-  MINDS_URI
-} from '../config/Config';
-
 let FORWARD_DURATION = 7;
 
 import { observer, inject } from 'mobx-react/native';

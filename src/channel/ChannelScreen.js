@@ -17,7 +17,6 @@ import {
 } from 'mobx-react/native'
 
 import { Icon } from 'react-native-elements'
-import { MINDS_URI } from '../config/Config';
 
 import RewardsCarousel from './carousel/RewardsCarousel';
 import ChannelHeader from './header/ChannelHeader';

@@ -7,7 +7,7 @@ import React, {
 import {observer} from "mobx-react/native";
 
 import {
-  MINDS_URI,
+  MINDS_API_URI,
   MINDS_CDN_URI
 } from '../../config/Config';
 
@@ -83,7 +83,7 @@ export default class MediaView extends Component {
     return null;
   }
 
-  /* URL is -> MINDS_URI + 'api/v1/media/' + this.props.entity.custom_data.guid + '/play'*/
+  /* URL is -> MINDS_API_URI + 'api/v1/media/' + this.props.entity.custom_data.guid + '/play'*/
   getVideo() {
     let guid;
     if (this.props.entity.custom_data) {
@@ -96,7 +96,7 @@ export default class MediaView extends Component {
 
     return (
       <View style={styles.videoContainer}>
-        <MindsVideo video={{'uri': MINDS_URI + 'api/v1/media/' + guid + '/play'}} entity={this.props.entity} ref={o => {this.videoPlayer = o}}/>
+        <MindsVideo video={{'uri': MINDS_API_URI + 'api/v1/media/' + guid + '/play'}} entity={this.props.entity} ref={o => {this.videoPlayer = o}}/>
       </View>
     );
   }
@@ -121,7 +121,7 @@ export default class MediaView extends Component {
    */
   runDownload = async () => {
     try {
-      const result = await download.downloadToGallery(this.source.uri);
+      const result = await download.downloadToGallery(this.source.uri, this.props.entity);
       Alert.alert('Success', 'Image added to gallery!');
     } catch (e) {
       Alert.alert('Error downloading file');

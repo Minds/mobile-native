@@ -1,5 +1,4 @@
 import { Alert } from 'react-native';
-import { MINDS_URI } from '../config/Config';
 import api from './../common/services/api.service';
 import session from './../common/services/session.service';
 import delay from '../common/helpers/delay';

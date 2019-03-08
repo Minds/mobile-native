@@ -19,9 +19,6 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {
-  MINDS_URI
-} from '../config/Config';
 import { Button } from 'react-native-elements';
 import CenteredLoading from '../common/components/CenteredLoading'
 import CaptureTabs from './CaptureTabs';

@@ -1,10 +1,11 @@
 import Cancelable from 'promise-cancelable';
 
 import session from './session.service';
-import { MINDS_URI, MINDS_URI_SETTINGS } from '../../config/Config';
+import { MINDS_API_URI, MINDS_URI_SETTINGS } from '../../config/Config';
 import { btoa } from 'abab';
 
 import abortableFetch from '../helpers/abortableFetch';
+import { Version } from '../../config/Version';
 
 /**
  * Api service
@@ -16,7 +17,8 @@ class ApiService {
       accessToken = session.token,
       headers = {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache'
+        'Pragma': 'no-cache',
+        'App-Version': Version.version
       };
 
       if (session.token) {
@@ -57,7 +59,7 @@ class ApiService {
     const paramsString = this.buildParamsString(params);
     const headers = this.buildHeaders();
     try {
-      const response = await abortableFetch(MINDS_URI + url + paramsString, { headers },  tag);
+      const response = await abortableFetch(MINDS_API_URI + url + paramsString, { headers },  tag);
 
       // Bad response
       if (!response.ok) {
@@ -88,7 +90,7 @@ class ApiService {
     const headers = this.buildHeaders();
 
     try {
-      let response = await abortableFetch(MINDS_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers });
+      let response = await abortableFetch(MINDS_API_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers });
 
       if (!response.ok) {
         throw response;
@@ -117,7 +119,7 @@ class ApiService {
     const headers = this.buildHeaders();
 
     try {
-      let response = await abortableFetch(MINDS_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers });
+      let response = await abortableFetch(MINDS_API_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers });
 
       if (!response.ok) {
         throw response;
@@ -146,7 +148,7 @@ class ApiService {
     const headers = this.buildHeaders();
 
     try {
-      let response = await abortableFetch(MINDS_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers });
+      let response = await abortableFetch(MINDS_API_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers });
 
       if (!response.ok) {
         throw response;
@@ -191,7 +193,7 @@ class ApiService {
       if (progress) {
         xhr.upload.addEventListener("progress", progress);
       }
-      xhr.open('POST', MINDS_URI + url + paramsString);
+      xhr.open('POST', MINDS_API_URI + url + paramsString);
       xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');

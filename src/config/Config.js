@@ -7,7 +7,8 @@ import {
 
 // remember to update deeplink uri on AndroidManifest.xml !!!
 // export const MINDS_URI = 'http://172.16.2.61:8080/';
-export const MINDS_URI = 'https://mobile320.minds.com/';
+export const MINDS_URI = 'https://www.minds.com/';
+export const MINDS_API_URI = 'https://mobile320.minds.com/';
 
 export const MINDS_URI_SETTINGS = {
   //basicAuth: 'crypto:ohms',
