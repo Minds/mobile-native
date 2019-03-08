@@ -185,6 +185,8 @@ exports[`cature poster flags component should renders correctly for props false 
     hardwareAccelerated={false}
     hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
+    onModalWillHide={[Function]}
+    onModalWillShow={[Function]}
     onRequestClose={[Function]}
     scrollOffset={0}
     scrollOffsetMax={0}
@@ -253,6 +255,8 @@ exports[`cature poster flags component should renders correctly for props false 
       <View
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
+        onModalWillHide={[Function]}
+        onModalWillShow={[Function]}
         pointerEvents="box-none"
         scrollOffset={0}
         scrollOffsetMax={0}
@@ -455,6 +459,8 @@ exports[`cature poster flags component should renders correctly for props false 
     hardwareAccelerated={false}
     hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
+    onModalWillHide={[Function]}
+    onModalWillShow={[Function]}
     onRequestClose={[Function]}
     scrollOffset={0}
     scrollOffsetMax={0}
@@ -523,6 +529,8 @@ exports[`cature poster flags component should renders correctly for props false 
       <View
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
+        onModalWillHide={[Function]}
+        onModalWillShow={[Function]}
         pointerEvents="box-none"
         scrollOffset={0}
         scrollOffsetMax={0}
@@ -721,6 +729,8 @@ exports[`cature poster flags component should renders correctly for props false 
     hardwareAccelerated={false}
     hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
+    onModalWillHide={[Function]}
+    onModalWillShow={[Function]}
     onRequestClose={[Function]}
     scrollOffset={0}
     scrollOffsetMax={0}
@@ -789,6 +799,8 @@ exports[`cature poster flags component should renders correctly for props false 
       <View
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
+        onModalWillHide={[Function]}
+        onModalWillShow={[Function]}
         pointerEvents="box-none"
         scrollOffset={0}
         scrollOffsetMax={0}
@@ -1145,6 +1157,8 @@ exports[`cature poster flags component should renders correctly for props true 1
     hardwareAccelerated={false}
     hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
+    onModalWillHide={[Function]}
+    onModalWillShow={[Function]}
     onRequestClose={[Function]}
     scrollOffset={0}
     scrollOffsetMax={0}
@@ -1213,6 +1227,8 @@ exports[`cature poster flags component should renders correctly for props true 1
       <View
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
+        onModalWillHide={[Function]}
+        onModalWillShow={[Function]}
         pointerEvents="box-none"
         scrollOffset={0}
         scrollOffsetMax={0}
@@ -1415,6 +1431,8 @@ exports[`cature poster flags component should renders correctly for props true 1
     hardwareAccelerated={false}
     hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
+    onModalWillHide={[Function]}
+    onModalWillShow={[Function]}
     onRequestClose={[Function]}
     scrollOffset={0}
     scrollOffsetMax={0}
@@ -1483,6 +1501,8 @@ exports[`cature poster flags component should renders correctly for props true 1
       <View
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
+        onModalWillHide={[Function]}
+        onModalWillShow={[Function]}
         pointerEvents="box-none"
         scrollOffset={0}
         scrollOffsetMax={0}
@@ -1681,6 +1701,8 @@ exports[`cature poster flags component should renders correctly for props true 1
     hardwareAccelerated={false}
     hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
+    onModalWillHide={[Function]}
+    onModalWillShow={[Function]}
     onRequestClose={[Function]}
     scrollOffset={0}
     scrollOffsetMax={0}
@@ -1749,6 +1771,8 @@ exports[`cature poster flags component should renders correctly for props true 1
       <View
         hideModalContentWhileAnimating={false}
         onModalHide={[Function]}
+        onModalWillHide={[Function]}
+        onModalWillShow={[Function]}
         pointerEvents="box-none"
         scrollOffset={0}
         scrollOffsetMax={0}

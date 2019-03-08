@@ -179,6 +179,7 @@ configurations.all {
 }
 
 dependencies {
+    implementation project(':react-native-apk')
     implementation project(':react-native-cookies')
     compile project(':react-native-exit-app')
     compile project(':react-native-background-timer')
@@ -195,7 +196,6 @@ dependencies {
     }
     implementation project(':react-native-code-push')
     implementation project(':react-native-background-timer')
-    implementation project(':rn-fetch-blob')
     implementation project(':react-native-android-sms-listener')
     implementation project(':react-native-fs')
     implementation project(':react-native-media-meta')

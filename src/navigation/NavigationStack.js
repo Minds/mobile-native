@@ -44,6 +44,7 @@ import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import OnboardingScreen from '../onboarding/OnboardingScreen';
 import IssueReportScreen from '../issues/IssueReportScreen';
 import Wizard from '../common/components/Wizard';
+import UpdatingScreen from '../update/UpdateScreen';
 
 /**
  * Main stack navigator
@@ -51,6 +52,9 @@ import Wizard from '../common/components/Wizard';
 const Stack = createStackNavigator({
   Loading: {
     screen: LoadingScreen,
+  },
+  Update: {
+    screen: UpdatingScreen
   },
   Boost: {
     screen: BoostScreen,
