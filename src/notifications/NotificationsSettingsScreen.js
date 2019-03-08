@@ -7,13 +7,14 @@ import {
   Text,
   ScrollView,
   View,
-  Switch
 } from 'react-native';
 
 import {
   observer,
   inject
 } from 'mobx-react/native'
+
+import Switch from 'react-native-switch-pro'
 
 @inject('notificationsSettings')
 @observer
@@ -45,7 +46,7 @@ export default class NotificationsSettingsScreen extends Component {
           return (
             <View style={styles.row} key={toggle.id}>
               <Text>{toggle.name}</Text>
-              <Switch value={toggle.value} onValueChange={(val) => notificationsSettings.saveSetting(key, val)}></Switch>
+              <Switch value={toggle.value} onSyncPress={(val) => notificationsSettings.saveSetting(key, val)}></Switch>
             </View>
           )
         })}
