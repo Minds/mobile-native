@@ -55,6 +55,7 @@ import authService from './src/auth/AuthService';
 import NotificationsService from "./src/notifications/NotificationsService";
 import getMaches from './src/common/helpers/getMatches';
 import {CODE_PUSH_TOKEN} from './src/config/Config';
+import updateService from './src/common/services/update.service';
 
 let deepLinkUrl = '';
 
@@ -87,9 +88,16 @@ sessionService.onLogin(async () => {
 
   NavigationService.reset(sessionService.initialScreen);
 
+  // check update
+  if (Platform.OS !== 'ios') {
+    setTimeout(async () => {
+      updateService.checkUpdate();
+    }, 5000);
+  }
+
   try {
     // handle deep link (if the app is opened by one)
-    if(deepLinkUrl) {
+    if (deepLinkUrl) {
       deeplinkService.navigate(deepLinkUrl);
       deepLinkUrl = '';
     }

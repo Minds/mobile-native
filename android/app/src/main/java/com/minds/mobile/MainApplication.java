@@ -3,6 +3,7 @@ package com.minds.mobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import be.skyzohlabs.rnapk.ReactNativeAPKPackage;
 import com.psykar.cookiemanager.CookieManagerPackage;
 import com.github.wumke.RNExitApp.RNExitAppPackage;
 import com.peel.react.TcpSocketsModule;
@@ -27,7 +28,6 @@ import cl.json.ShareApplication;
 import com.meedan.ShareMenuPackage;
 import com.mybigday.rnmediameta.RNMediaMetaPackage;
 import com.rnfs.RNFSPackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
 import com.centaurwarchief.smslistener.SmsListenerPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.reactnativejitsimeet.JitsiMeetPackage;
@@ -55,6 +55,7 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeAPKPackage(),
             new CookieManagerPackage(),
             new RNExitAppPackage(),
             new TcpSocketsModule(),
@@ -74,7 +75,6 @@ public class MainApplication extends Application implements ShareApplication, Re
           new ShareMenuPackage(),
           new RNMediaMetaPackage(),
           new RNFSPackage(),
-          new RNFetchBlobPackage(),
           new SmsListenerPackage(),
           new CodePush("_C083_CqL7CmKwASrv6Xrj1wqH7erJMhIBnRQ", MainApplication.this, BuildConfig.DEBUG),
           new JitsiMeetPackage(),
