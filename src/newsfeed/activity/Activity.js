@@ -5,11 +5,6 @@ import React, {
 import {observer} from "mobx-react/native";
 
 import {
-  MINDS_URI,
-  MINDS_CDN_URI
-} from '../../config/Config';
-
-import {
   Text,
   StyleSheet,
   TouchableOpacity,
@@ -19,8 +14,6 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-
-import AutoHeightFastImage from '../../common/components/AutoHeightFastImage';
 
 import ExplicitText from '../../common/components/explicit/ExplicitText'
 import OwnerBlock from './OwnerBlock';

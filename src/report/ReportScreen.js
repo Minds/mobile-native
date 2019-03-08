@@ -5,10 +5,6 @@ import React, {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
-  MINDS_URI
-} from '../config/Config';
-
-import {
   Alert,
   Button,
   Text,

@@ -28,10 +28,6 @@ import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import token from '../common/helpers/token';
 
-import {
-  MINDS_URI
-} from '../config/Config';
-
 @inject('user', 'boost')
 @observer
 export default class BoostActionBar extends Component {

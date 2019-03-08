@@ -18,7 +18,6 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import channelService from './ChannelService';
-import { MINDS_URI } from '../config/Config';
 import ActionSheet from 'react-native-actionsheet';
 import WireAction from '../newsfeed/activity/actions/WireAction';
 import featuresService from '../common/services/features.service';

@@ -1,7 +1,7 @@
 import api from '../../../src/common/services/api.service';
 import session from '../../../src/common/services/session.service';
 import abortableFetch, {abort} from '../../../src/common/helpers/abortableFetch';
-import { MINDS_URI } from '../../../src/config/Config';
+import { MINDS_API_URI } from '../../../src/config/Config';
 jest.mock('../../../src/common/services/session.service');
 jest.mock('../../../src/common/helpers/abortableFetch');
 
@@ -29,7 +29,7 @@ describe('api service POST', () => {
     expect(res).toEqual(respBody);
     // call fetch post one time
     expect(abortableFetch.mock.calls.length).toEqual(1)
-    expect(abortableFetch.mock.calls[0][0]).toContain(MINDS_URI+'api/path')
+    expect(abortableFetch.mock.calls[0][0]).toContain(MINDS_API_URI+'api/path')
     expect(abortableFetch.mock.calls[0][1].method).toEqual('POST');
     expect(abortableFetch.mock.calls[0][1].body).toEqual(JSON.stringify(params));
   });
@@ -90,7 +90,7 @@ describe('api service GET', () => {
     expect(res).toEqual(respBody);
     // call fetch get one time
     expect(abortableFetch.mock.calls.length).toEqual(1)
-    expect(abortableFetch.mock.calls[0][0]).toContain(MINDS_URI+'api/path?p1=1&p2=2');
+    expect(abortableFetch.mock.calls[0][0]).toContain(MINDS_API_URI+'api/path?p1=1&p2=2');
   });
 
   it('should return servers error', async () => {
@@ -150,7 +150,7 @@ describe('api service DELETE', () => {
     expect(res).toEqual(respBody);
     // call fetch delete one time
     expect(abortableFetch.mock.calls.length).toEqual(1)
-    expect(abortableFetch.mock.calls[0][0]).toContain(MINDS_URI+'api/path')
+    expect(abortableFetch.mock.calls[0][0]).toContain(MINDS_API_URI+'api/path')
     expect(abortableFetch.mock.calls[0][1].method).toEqual('DELETE');
     expect(abortableFetch.mock.calls[0][1].body).toEqual(JSON.stringify(params));
   });
@@ -212,7 +212,7 @@ describe('api service PUT', () => {
     expect(res).toEqual(respBody);
     // call fetch put one time
     expect(abortableFetch.mock.calls.length).toEqual(1)
-    expect(abortableFetch.mock.calls[0][0]).toContain(MINDS_URI+'api/path')
+    expect(abortableFetch.mock.calls[0][0]).toContain(MINDS_API_URI+'api/path')
     expect(abortableFetch.mock.calls[0][1].method).toEqual('PUT');
     expect(abortableFetch.mock.calls[0][1].body).toEqual(JSON.stringify(params));
   });

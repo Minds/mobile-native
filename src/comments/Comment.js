@@ -4,9 +4,6 @@ import React, {
 
 import { Icon } from 'react-native-elements'
 
-import {
-  MINDS_URI
-} from '../config/Config';
 
 import { observer, inject } from 'mobx-react/native';
 import entities from 'entities';

@@ -17,7 +17,6 @@ import currency from '../../common/helpers/currency';
 import Button from '../../common/components/Button';
 
 import {
-  MINDS_URI,
   MINDS_ASSETS_CDN_URI,
   MINDS_CDN_URI
 } from '../../config/Config';
