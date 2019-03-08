@@ -56,9 +56,9 @@ export default class CommentEditor extends Component {
    */
   render() {
     return (
-      <View style={CommonStyle.flexContainer}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.columnStretch]}>
         <TextInput
-          style={{ width: '100%', borderColor: 'gray'}}
+          style={[CommonStyle.flexContainer, CommonStyle.borderGreyed]}
           multiline={true}
           numberOfLines={4}
           onChangeText={(text) => this.setState({ text })}
