@@ -110,6 +110,7 @@ export default class OffsetListStore {
     if(index >= 0) {
       let entity = this.entities[index];
       let value = !entity.subscribed;
+      entity.subscribed = value;
       return channelService.toggleSubscription(entity.guid, value)
         .then(action(response => {
           entity.subscribed = value;

@@ -270,11 +270,15 @@ class GroupViewStore {
    */
   join(guid) {
     this.setSaving(true);
+    this.group['is:member'] = true
     return groupsService.join(guid)
-      .then(action(() => {
-        this.group['is:member'] = true
+      .then(() => {
         this.setSaving(false);
-      }));
+      })
+      .catch(action( e => {
+        this.group['is:member'] = false
+        this.setSaving(false);
+      }))
   }
 
   /**
@@ -283,11 +287,15 @@ class GroupViewStore {
    */
   leave(guid) {
     this.setSaving(true);
+    this.group['is:member'] = false
     return groupsService.leave(guid)
-      .then(action(() => {
-        this.group['is:member'] = false
+      .then(() => {
         this.setSaving(false);
-      }));
+      })
+      .catch(action( e => {
+        this.group['is:member'] = true
+        this.setSaving(false);
+      }))
   }
 
   /**

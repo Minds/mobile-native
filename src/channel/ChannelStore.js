@@ -72,6 +72,7 @@ export default class ChannelStore {
   @action
   subscribe() {
     let value = !this.channel.subscribed;
+    this.channel.subscribed = value;
     return channelService.toggleSubscription(this.channel.guid, value)
       .then(response => {
         this.channel.subscribed = value;
