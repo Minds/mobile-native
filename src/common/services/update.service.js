@@ -26,7 +26,7 @@ class UpdateService {
 
     if (last) {
       try {
-        if (this.compareVersions(Version.VERSION, '<', last.version)) {
+        if (this.needUpdate(Version.VERSION, last.version)) {
           Alert.alert(
             'Update available v'+last.version,
             `Do you want to update the app?`,
@@ -48,6 +48,38 @@ class UpdateService {
         console.log('Error checking for updates');
       }
     }
+  }
+
+  /**
+   * Check for release candidates
+   * @param {string} v1
+   * @param {string} v2
+   */
+  checkReleaseCandidates(v1, v2) {
+    const regex = /-rc([0-9][0-9]?)/gm;
+    const r1 = regex.exec(v1);
+    const r2 = regex.exec(v2);
+    if (r1) {
+      if (r2) {
+        return parseInt(r1[1]) < parseInt(r2[1]);
+      }
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Check if the app needs an update
+   * @param {string} v1
+   * @param {string} v2
+   */
+  needUpdate(v1, v2) {
+    const needUpdate = this.compareVersions(v1, '<', v2);
+    if (!needUpdate) {
+      if (!this.compareVersions(v1, '=', v2)) return false;
+      return this.checkReleaseCandidates(v1, v2);
+    }
+    return needUpdate;
   }
 
   /**
@@ -154,7 +186,7 @@ class UpdateService {
             cmp = -1;
     }
     return eval('0' + comparator + cmp);
-}
+  }
 }
 
 export default new UpdateService();
