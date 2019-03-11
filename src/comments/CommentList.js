@@ -95,6 +95,7 @@ export default class CommentList extends React.Component<Props, State> {
    */
   componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.props.store.setEntity(this.props.entity);
     this.loadComments();
   }
 

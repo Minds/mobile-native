@@ -80,6 +80,22 @@ export default class ActivityModel extends BaseModel {
   }
 
   /**
+   * Increment the comments counter
+   */
+  @action
+  incrementCommentsCounter() {
+    this['comments:count']++;
+  }
+
+  /**
+   * Decrement the comments counter
+   */
+  @action
+  decrementCommentsCounter() {
+    this['comments:count']--;
+  }
+
+  /**
    * Unlock the activity and update data on success
    */
   @action
@@ -122,6 +138,7 @@ export default class ActivityModel extends BaseModel {
 decorate(ActivityModel, {
   'thumbs:down:count': observable,
   'thumbs:up:count': observable,
+  'comments:count': observable,
   'paywall': observable,
   'mature': observable,
   'pinned': observable,

@@ -1,4 +1,4 @@
-import { decorate, observable } from 'mobx';
+import { decorate, observable, action } from 'mobx';
 import { MINDS_ASSETS_CDN_URI } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
@@ -38,6 +38,22 @@ export default class BlogModel extends BaseModel {
     const lic =  LICENSES.find(license => this.license == license.value);
     if (!lic) return;
     return lic.text;
+  }
+
+  /**
+   * Increment the comments counter
+   */
+  @action
+  incrementCommentsCounter() {
+    this['comments:count']++;
+  }
+
+  /**
+   * Decrement the comments counter
+   */
+  @action
+  decrementCommentsCounter() {
+    this['comments:count']--;
   }
 }
 
