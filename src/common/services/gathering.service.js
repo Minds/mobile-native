@@ -31,11 +31,9 @@ class GatheringService {
       // start keep alive
       this.startKeepAlive();
 
-      this.isActive = true;
-
       setTimeout(() => {
         videochatService.call(this.roomName, appStores.user.me);
-      }, 1000);
+      }, 100);
     } catch (e) {
       console.error('Error trying to open video chat.');
       console.error(e);
@@ -50,18 +48,15 @@ class GatheringService {
      videochatService.initialize();
      if (!this.initialized) {
        videochatService.on('CONFERENCE_LEFT', (data) => {
-         console.log('CONFERENCE_LEFT');
          this.close();
        });
        videochatService.on('CONFERENCE_JOINED', (data) => {
-         console.log('CONFERENCE_JOINED');
+         this.isActive = true;
        });
        videochatService.on('CONFERENCE_FAILED', (data) => {
-         console.log('CONFERENCE_FAILED');
          this.close();
        });
        videochatService.on('LOAD_CONFIG_ERROR', (data) => {
-         console.log('LOAD_CONFIG_ERROR');
          this.close();
        });
        this.initialized = true;
