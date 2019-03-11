@@ -54,12 +54,15 @@ export default class Router {
           break;
 
         case 'remind':
-          console.log('remind')
           navigation.push('Activity', { guid: data.json.entity_guid });
           break;
 
         case 'comment':
-          navigation.push('Activity', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid });
+          if (data.json.entity_type == 'group') {
+            navigation.push('GroupView', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid, tab: 'conversation'});
+          } else {
+            navigation.push('Activity', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid});
+          }
           break;
 
         case 'rewards_reminder':
