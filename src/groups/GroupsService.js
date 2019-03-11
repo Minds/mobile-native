@@ -104,8 +104,6 @@ class GroupsService {
     if (!opts.marker)
       throw "marker must be set";
 
-    console.log('MARK AS READ', opts);
-
     return api.post('api/v2/notifications/markers/read', opts)
   }
 

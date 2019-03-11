@@ -43,6 +43,19 @@ export default class GroupViewScreen extends Component {
 
   gobackstyle = isIphoneX() ? {left: 10, top: 30} : {};
 
+  /**
+   * Indicate if the screen should change to a tab after the first render
+   */
+  moveToTab = '';
+
+  /**
+   * Header reference
+   */
+  headerRef = null;
+
+  /**
+   * State
+   */
   state = {
     memberActions: null,
     member: null,
@@ -55,6 +68,10 @@ export default class GroupViewScreen extends Component {
     header: null
   }
 
+  /**
+   * Constructor
+   * @param {object} props
+   */
   constructor(props) {
     super(props);
     this.comments = commentsStoreProvider.get();
@@ -70,10 +87,16 @@ export default class GroupViewScreen extends Component {
       this.props.groupView.setGroup(params.group);
       // update group
       await this.props.groupView.loadGroup(params.group.guid);
+      // load feed
       this.props.groupView.loadFeed();
     } else {
-      this.props.groupView.setGuid(params.guid)
+      this.props.groupView.setGuid(params.guid);
+
+      // should move to tab after load?
+      this.moveToTab = params.tab || '';
+      // load group
       await this.props.groupView.loadGroup(params.guid);
+      // load feed
       this.props.groupView.loadFeed();
     }
     this.props.groupView.loadTopMembers();
@@ -95,8 +118,16 @@ export default class GroupViewScreen extends Component {
       this.props.groupView.prepend(navParams.prepend);
     }
 
-    if (navParams.tab) {
-      this.headerRef.onTabChange(navParams.tab)
+    if (navParams.tab && this.headerRef) {
+      console.log(this.headerRef)
+      this.headerRef.wrappedInstance.onTabChange(navParams.tab)
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.moveToTab && this.headerRef) {
+      this.headerRef.wrappedInstance.onTabChange(this.moveToTab);
+      this.moveToTab = '';
     }
   }
 

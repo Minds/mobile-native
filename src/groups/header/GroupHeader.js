@@ -181,7 +181,7 @@ export default class GroupHeader extends Component {
     const styles = this.props.styles;
 
     if (topMembers.length) {
-      return topMembers.map(t => <Image source={t.getAvatarSource()} style={styles.userAvatar}/>);
+      return topMembers.map(t => <Image source={t.getAvatarSource()} key={t.guid} style={styles.userAvatar}/>);
     } else {
       return null;
     }
