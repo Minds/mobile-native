@@ -45,6 +45,7 @@ export default class CommentsStore {
   // embed store
   embed = new RichEmbedStore();
 
+  entity = null;
   guid = '';
   reversed = true;
   loadNext = '';
@@ -56,6 +57,14 @@ export default class CommentsStore {
 
   getParentPath() {
     return (this.parent && this.parent.child_path) ? this.parent.child_path : '0:0:0';
+  }
+
+  /**
+   * Set the entity
+   * @param {object} entity
+   */
+  setEntity(entity) {
+    this.entity = entity;
   }
 
   /**
@@ -249,6 +258,10 @@ export default class CommentsStore {
       this.setText('');
       this.embed.clearRichEmbedAction();
       this.attachment.clear();
+
+      if (this.entity.incrementCommentsCounter) {
+        this.entity.incrementCommentsCounter();
+      }
     } catch (err) {
       console.log(err);
       alert('Error sending comment');
@@ -481,6 +494,10 @@ export default class CommentsStore {
       let entity = this.comments[index];
 
       const result = await deleteComment(guid);
+
+      if (this.entity.decrementCommentsCounter) {
+        this.entity.decrementCommentsCounter();
+      }
 
       this.comments.splice(index, 1);
     }

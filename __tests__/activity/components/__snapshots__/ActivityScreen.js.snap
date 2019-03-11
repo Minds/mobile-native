@@ -18,6 +18,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
       ActivityModel {
         "attachment_guid": false,
         "blurb": false,
+        "comments:count": undefined,
         "container_guid": "activityguid0",
         "custom_data": false,
         "custom_type": false,
@@ -61,6 +62,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
           ActivityModel {
             "attachment_guid": false,
             "blurb": false,
+            "comments:count": undefined,
             "container_guid": "activityguid0",
             "custom_data": false,
             "custom_type": false,
@@ -167,6 +169,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
                     ActivityModel {
                       "attachment_guid": false,
                       "blurb": false,
+                      "comments:count": undefined,
                       "container_guid": "activityguid0",
                       "custom_data": false,
                       "custom_type": false,
@@ -419,6 +422,7 @@ exports[`Activity screen component should show loader until it loads the activit
   <CommentList
     entity={
       ActivityModel {
+        "comments:count": undefined,
         "edited": undefined,
         "is_visible": false,
         "mature": undefined,
@@ -436,6 +440,7 @@ exports[`Activity screen component should show loader until it loads the activit
         autoHeight={true}
         entity={
           ActivityModel {
+            "comments:count": undefined,
             "edited": undefined,
             "is_visible": false,
             "mature": undefined,

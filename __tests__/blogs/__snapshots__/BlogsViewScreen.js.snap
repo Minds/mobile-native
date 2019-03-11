@@ -895,6 +895,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           "richEmbedUrl": "",
           "setRichEmbedPromise": null,
         },
+        "entity": null,
         "guid": "",
         "loadNext": "",
         "loadPrevious": "",
