@@ -35,6 +35,10 @@ import colors from '../../styles/Colors';
 @observer
 export default class GroupHeader extends Component {
 
+  state = {
+    openingGathering: false
+  }
+
   componentDidMount() {
     const group = this.props.store.group;
     this.props.groupsBar.markAsRead(group, 'activity');
@@ -97,7 +101,7 @@ export default class GroupHeader extends Component {
    */
   getGatheringButton() {
 
-    if (gathering.isActive) {
+    if (this.state.openingGathering) {
       return <ActivityIndicator style={CommonStyle.paddingRight} size="large"/>
     }
 
@@ -109,6 +113,8 @@ export default class GroupHeader extends Component {
 
   joinGathering = () => {
     const group = this.props.store.group;
+    this.setState({openingGathering: true});
+    setTimeout(() => this.setState({openingGathering: false}), 1500);
     gathering.join(group);
   }
 
