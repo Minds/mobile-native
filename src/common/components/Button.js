@@ -14,7 +14,6 @@ import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import colors from '../../styles/Colors';
 
-
 /**
  * Custom Button component
  */
