@@ -25,7 +25,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
         "edited": "",
         "getThumbSource": [Function],
         "guid": "activityguid0",
-        "is_visible": false,
+        "is_visible": true,
         "mature": false,
         "mature_visibility": false,
         "message": "Message",
@@ -68,7 +68,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
             "edited": "",
             "getThumbSource": [Function],
             "guid": "activityguid0",
-            "is_visible": false,
+            "is_visible": true,
             "mature": false,
             "mature_visibility": false,
             "message": "Message",
@@ -174,7 +174,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
                       "edited": "",
                       "getThumbSource": [Function],
                       "guid": "activityguid0",
-                      "is_visible": false,
+                      "is_visible": true,
                       "mature": false,
                       "mature_visibility": false,
                       "message": "Message",
@@ -420,7 +420,7 @@ exports[`Activity screen component should show loader until it loads the activit
     entity={
       ActivityModel {
         "edited": undefined,
-        "is_visible": false,
+        "is_visible": true,
         "mature": undefined,
         "mature_visibility": false,
         "paywall": undefined,
@@ -437,7 +437,7 @@ exports[`Activity screen component should show loader until it loads the activit
         entity={
           ActivityModel {
             "edited": undefined,
-            "is_visible": false,
+            "is_visible": true,
             "mature": undefined,
             "mature_visibility": false,
             "paywall": undefined,
