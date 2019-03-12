@@ -24,7 +24,7 @@ class BoostStore {
   /**
    * Boosts list filter
    */
-  @observable filter = 'newsfeed';
+  @observable filter = 'peer';
   @observable peer_filter = 'inbox';
 
   /**

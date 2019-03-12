@@ -33,14 +33,14 @@ import React, {
       return (
         <View style={styles.container}>
           <View style={styles.topbar}>
+            <TouchableOpacity style={[styles.tab, this.selected('peer')]} onPress={() => this.props.boost.setFilter('peer')}>
+              <Text style={CommonStyle.fontXS}>OFFERS</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={[styles.tab, this.selected('newsfeed')]} onPress={() => this.props.boost.setFilter('newsfeed')}>
               <Text style={CommonStyle.fontXS}>NEWSFEED</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.tab, this.selected('content')]} onPress={() => this.props.boost.setFilter('content')}>
               <Text style={CommonStyle.fontXS}>SIDEBAR</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.tab, this.selected('peer')]} onPress={() => this.props.boost.setFilter('peer')}>
-              <Text style={CommonStyle.fontXS}>OFFERS</Text>
             </TouchableOpacity>
           </View>
         </View>
