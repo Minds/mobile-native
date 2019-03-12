@@ -24,6 +24,7 @@ import Toolbar from '../common/components/toolbar/Toolbar';
 import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
 import ErrorLoading from '../common/components/ErrorLoading';
 import GroupsListItem from './GroupsListItem';
+import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 
 // define tabs based on enabled features
 const selectedTextStyle = {color: 'black'};
@@ -31,6 +32,8 @@ const typeOptions = [
   { text: 'TOP', value: 'suggested', selectedTextStyle},
   { text: 'MY GROUPS', value: 'member', selectedTextStyle}
 ];
+
+DebouncedGroupsListItem = withPreventDoubleTap(GroupsListItem);
 
 /**
  * Groups list screen
@@ -98,7 +101,7 @@ export default class GroupsListScreen extends Component {
   }
 
   renderItem = (row) => {
-    return <GroupsListItem group={row.item} onPress={() => this.navigateToGroup(row.item)}/>
+    return <DebouncedGroupsListItem group={row.item} onPress={() => this.navigateToGroup(row.item)}/>
   }
 
   /**
