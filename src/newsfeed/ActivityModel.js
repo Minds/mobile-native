@@ -23,7 +23,7 @@ export default class ActivityModel extends BaseModel {
   /**
    * Is visible in flat list
    */
-  @observable is_visible = false;
+  @observable is_visible = true;
 
   /**
    * Child models

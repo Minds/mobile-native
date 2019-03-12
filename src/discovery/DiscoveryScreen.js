@@ -248,7 +248,7 @@ export default class DiscoveryScreen extends Component {
         getItemLayout={getItemLayout}
         columnWrapperStyle={columnWrapperStyle}
         keyboardShouldPersistTaps={'handled'}
-        onViewableItemsChanged={this.onViewableItemsChanged}
+        // onViewableItemsChanged={this.onViewableItemsChanged} Fix gifs desappear near the top when the header is hidden
         onScroll={ this.animateHeader }
         scrollEventThrottle={25}
       />
