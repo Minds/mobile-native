@@ -109,34 +109,34 @@ render() {
     //     this.props.navigation.navigate('NotificationsSettings');
     //   }
     // },
-    {
-      name: 'Check for updates',
-      hideChevron: true,
-      icon: (<Icon name="cloud-download" size={ICON_SIZE} style={ styles.icon }/>),
-      onPress: async() => {
+    // {
+    //   name: 'Check for updates',
+    //   hideChevron: true,
+    //   icon: (<Icon name="cloud-download" size={ICON_SIZE} style={ styles.icon }/>),
+    //   onPress: async() => {
 
-        const params = {
-          updateDialog: Platform.OS !== 'ios',
-          installMode:  CodePush.InstallMode.IMMEDIATE,
-        };
+    //     const params = {
+    //       updateDialog: Platform.OS !== 'ios',
+    //       installMode:  CodePush.InstallMode.IMMEDIATE,
+    //     };
 
-        if (CODE_PUSH_TOKEN) params.deploymentKey = CODE_PUSH_TOKEN;
+    //     if (CODE_PUSH_TOKEN) params.deploymentKey = CODE_PUSH_TOKEN;
 
-        let response = await CodePush.sync(params, (status) => {
-          switch (status) {
-            case CodePush.SyncStatus.UP_TO_DATE:
-              ToastAndroid.show('No updates available', ToastAndroid.LONG);
-              break;
-            case CodePush.SyncStatus.SYNC_IN_PROGRESS:
-              ToastAndroid.show('Updating...', ToastAndroid.LONG);
-              break;
-            case CodePush.SyncStatus.UPDATE_INSTALLED:
-              ToastAndroid.show('Updated', ToastAndroid.LONG);
-              break;
-          }
-        });
-      }
-    },
+    //     let response = await CodePush.sync(params, (status) => {
+    //       switch (status) {
+    //         case CodePush.SyncStatus.UP_TO_DATE:
+    //           ToastAndroid.show('No updates available', ToastAndroid.LONG);
+    //           break;
+    //         case CodePush.SyncStatus.SYNC_IN_PROGRESS:
+    //           ToastAndroid.show('Updating...', ToastAndroid.LONG);
+    //           break;
+    //         case CodePush.SyncStatus.UPDATE_INSTALLED:
+    //           ToastAndroid.show('Updated', ToastAndroid.LONG);
+    //           break;
+    //       }
+    //     });
+    //   }
+    // },
     {
       name: 'Logout',
       hideChevron: true,
