@@ -76,6 +76,7 @@ exports[`Media view component renders correctly 1`] = `
           "backgroundColor": "transparent",
         }
       }
+      loadingIndicator="placeholder"
       onError={[Function]}
       source={
         Object {

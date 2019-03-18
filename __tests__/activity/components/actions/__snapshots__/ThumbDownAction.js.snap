@@ -11,6 +11,7 @@ exports[`Thumb action component renders correctly 1`] = `
       Object {
         "alignContent": "center",
         "alignItems": "center",
+        "alignSelf": "center",
         "justifyContent": "center",
       },
       Object {
