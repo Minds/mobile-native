@@ -86,7 +86,7 @@ export default class BoostConsoleScreen extends Component {
               onRefresh={this.refresh}
               refreshing={this.props.boost.list.refreshing}
               onEndReached={this.loadFeed}
-              onEndThreshold={0}
+              onEndReachedThreshold={0}
               style={styles.listView}
             />
   }

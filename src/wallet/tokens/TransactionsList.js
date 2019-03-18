@@ -80,7 +80,7 @@ export default class TransactionsList extends Component {
         onRefresh={this.refresh}
         refreshing={wallet.ledger.list.refreshing}
         onEndReached={this.loadMore}
-        onEndThreshold={0}
+        // onEndReachedThreshold={0}
         ListEmptyComponent={!wallet.ledger.list.loaded && !wallet.ledger.list.refreshing? <CenteredLoading /> : null}
         //ListHeaderComponent={header}
         style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}

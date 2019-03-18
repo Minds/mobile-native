@@ -150,7 +150,7 @@ export default class MessengerScreen extends Component {
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
-          onEndThreshold={0.01}
+          // onEndReachedThreshold={0.01}
           ListFooterComponent={footer}
           refreshing={messengerList.refreshing}
           style={styles.listView}
