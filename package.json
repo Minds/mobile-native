@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "postinstall": "echo 'Fixing web3 require() issue…' && replace '\\\"c\\\" . \\\"rypto\\\"' '\"crypto\"' node_modules -r --include='bytes.js' && rn-nodeify --install --hack"
+    "postinstall": "echo \"Fixing web3 require() issue…\" && replace \"c. . .rypto\" \"crypto\" node_modules -r --include=\"bytes.js\" && rn-nodeify --install --hack"
   },
   "dependencies": {
     "@types/react": "^16.4.14",
