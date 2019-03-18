@@ -5,6 +5,7 @@ import React, {
 import {
   Text,
   TouchableOpacity,
+  StyleSheet,
   View,
 } from 'react-native';
 
@@ -51,10 +52,16 @@ export default class ExplicitOverlay extends Component {
     }
 
     return (
-      <TouchableOpacity activeOpacity={1} style={[CS.positionAbsolute, CS.centered, CS.backgroundDarkGreyed]} onPress={this.toogle}>
+      <TouchableOpacity activeOpacity={1} style={[CS.positionAbsolute, CS.centered, CS.backgroundDarkGreyed, styles.onTop]} onPress={this.toogle}>
         <Icon name="explicit" size={iconSize} color={'white'} style={CS.shadow}/>
         {!hideText && <Text style={[CS.colorWhite, CS.shadow]}>Confirm you are 18+</Text>}
       </TouchableOpacity>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  onTop: {
+    zIndex: 99999
+  }
+})

@@ -257,7 +257,7 @@ class MindsVideo extends Component {
           source={image}
           entity={entity}
           style={[CommonStyle.positionAbsolute]}
-          disableProgress={true}
+          loadingIndicator="placeholder"
         />
       )
     }

@@ -7,6 +7,7 @@ import messengerList from './src/messenger/MessengerListStore';
 import channel from './src/channel/ChannelStores';
 import user from './src/auth/UserStore';
 import discovery from './src/discovery/DiscoveryStore';
+import discoveryLegacy from './src/discovery/DiscoveryLegacyStore';
 import blogs from './src/blogs/BlogsStore';
 import blogsView from './src/blogs/BlogsViewStore';
 import wallet from './src/wallet/WalletStore';
@@ -41,6 +42,7 @@ const stores = {
   channel: new channel(),
   user: new user(),
   discovery: new discovery(),
+  discoveryLegacy: new discoveryLegacy(),
   blogs: new blogs(),
   blogsView: new blogsView(),
   wallet: new wallet(),

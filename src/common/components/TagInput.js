@@ -29,6 +29,13 @@ export default class TagInput extends Component {
     error:'',
   }
 
+  /**
+   * On change
+   */
+  onChange() {
+    this.props.onChange && this.props.onChange();
+  }
+
   onChangeText = (text) => {
     text = text.replace(/[^\w]/gim,'');
     this.setState({text, error:''});
@@ -47,6 +54,7 @@ export default class TagInput extends Component {
     }
     this.props.onTagAdded({value: this.state.text});
     this.setState({text:''},() => this.inputRef.focus());
+    this.onChange();
   }
 
   /**
@@ -55,6 +63,7 @@ export default class TagInput extends Component {
    */
   delete(tag) {
     this.props.onTagDeleted({value: tag});
+    this.onChange();
   }
 
   /**

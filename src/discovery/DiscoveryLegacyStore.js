@@ -11,43 +11,30 @@ import BlogModel from '../blogs/BlogModel';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import UserModel from '../channel/UserModel';
 import GroupModel from '../groups/GroupModel';
-import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';
 
 /**
  * Discovery Store
  */
-class DiscoveryStore {
+class DiscoveryLegacyStore {
 
   /**
-   * Lists stores
+   * Notification list store
    */
   stores;
 
-  /**
-   * Filter change reaction disposer
-   */
-  onFilterChangeDisposer;
-
-  /**
-   * Search change reaction disposer
-   */
-  onSearchChangeDisposer;
+  @observable searchtext   = '';
+  @observable filter       = 'suggested';
+  @observable type         = 'images';
+  @observable category     = 'all';
 
   constructor() {
     this.buildListStores();
-    // react to filter changes
-    this.onFilterChangeDisposer = this.filters.onFilterChange(this.onFilterChange);
-    // react to search changes
-    this.onSearchChangeDisposer = this.filters.onSearchChange(this.onSearchChange);
   }
 
   /**
    * Build lists stores
    */
   buildListStores() {
-
-    this.filters = new NewsfeedFilterStore('hot', 'images', '12h');
-
     this.stores = {
       'images': {
         list: new OffsetListStore('shallow'),
@@ -67,7 +54,7 @@ class DiscoveryStore {
       'lastchannels': {
         list: new OffsetListStore('shallow'),
       },
-      'activities': {
+      'activity': {
         list: new OffsetListStore('shallow'),
       }
     };
@@ -89,7 +76,7 @@ class DiscoveryStore {
     extendObservable(this.stores.lastchannels, {
       loading: false
     });
-    extendObservable(this.stores.activities, {
+    extendObservable(this.stores.activity, {
       loading: false
     });
   }
@@ -104,23 +91,22 @@ class DiscoveryStore {
    */
   @computed
   get list() {
-    return this.stores[this.filters.type].list;
+    return this.stores[this.type].list;
   }
 
   /**
    * set current list
    */
   set list(list) {
-    this.stores[this.filters.type].list = list
+    this.stores[this.type].list = list
   }
 
   /**
    * Load feed
    */
   @action
-  async loadList(refresh = false, preloadImage = false, limit = 12) {
-    const type = this.filters.type;
-    const filter = this.filters.filter;
+  async loadList(refresh = false, preloadImage = false) {
+    const type = this.type;
 
     // NOTE: we do not rely on this.list because it could change during the await
     const store = this.stores[type];
@@ -129,7 +115,7 @@ class DiscoveryStore {
     if (type == 'lastchannels') return;
 
     // no more data or loading? return
-    if (!refresh && (store.list.cantLoadMore() || store.loading)) {
+    if ((!refresh && store.list.cantLoadMore()) || store.loading) {
       return;
     }
 
@@ -138,19 +124,14 @@ class DiscoveryStore {
     this.setLoading(store, true);
 
     try {
-      const feed = await discoveryService.getTopFeed(store.list.offset, this.filters.type, this.filters.filter, this.filters.period, this.filters.searchtext, limit);
+      const feed = await discoveryService.getFeed(store.list.offset, this.type, this.filter, this.searchtext);
 
-      // if the filter has changed during the call we ignore the results
-      if (filter === this.filters.filter) {
-        this.createModels(type, feed, preloadImage);
-        this.assignRowKeys(feed);
-        store.list.setList(feed, refresh);
-      }
+      this.createModels(type, feed, preloadImage);
+      this.assignRowKeys(feed);
+      store.list.setList(feed, refresh);
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') {
-        return;
-      }
+      if (err.code === 'Abort') return;
       console.log('error', err);
       store.list.setErrorLoading(true);
     } finally {
@@ -170,16 +151,16 @@ class DiscoveryStore {
 
   @computed
   get loading() {
-    return this.stores[this.filters.type].loading;
+    return this.stores[this.type].loading;
   }
 
   set loading(val) {
-    return this.stores[this.filters.type].loading = val;
+    return this.stores[this.type].loading = val;
   }
 
   createModels(type, feed, preloadImage) {
     switch (type) {
-      case 'activities':
+      case 'activity':
       case 'images':
       case 'videos':
         feed.entities = ActivityModel.createMany(feed.entities);
@@ -211,7 +192,7 @@ class DiscoveryStore {
       return;
     }
     // NOTE: we do not rely on this.list because it could change during the await
-    const store = this.stores[this.filters.type];
+    const store = this.stores[this.type];
 
     await store.list.refresh();
     await this.loadList(true);
@@ -219,25 +200,15 @@ class DiscoveryStore {
   }
 
   /**
-   * On filter changes
-   * @param {string} filter
+   * Set type and refresh list
    * @param {string} type
-   * @param {string} period
-   * @param {string} searchtext
    */
-  onFilterChange = (filter, type, period) => {
+  @action
+  setType(type) {
     const store = this.stores[type];
+    this.type = type;
     store.list.clearList();
-    this.loadList(true);
-  }
-
-  /**
-   * On search change
-   */
-  onSearchChange = (searchtext) => {
-    const store = this.stores[this.filters.type];
-    store.list.clearList();
-    this.loadList(true);
+    this.loadList();
   }
 
   /**
@@ -251,30 +222,34 @@ class DiscoveryStore {
 
   @action
   clearList() {
-    this.filters.type = 'images';
-    this.filters.filter = 'hot';
+    this.type = 'images';
+    this.filter = 'suggested';
+  }
+
+  /**
+   * search
+   * @param {string} text
+   */
+  @action
+  search(text) {
+    this.searchtext = text.trim();
+    this.filter = 'search';
+    this.loading = false;
+
+    this.list.clearList();;
+
+    return this.loadList(true);
   }
 
   @action
   reset() {
-    this.onFilterChangeDisposer && this.onFilterChangeDisposer();
-    this.onSearchChangeDisposer && this.onSearchChangeDisposer();
-    this.filters.clear();
-    this.stores.images.list.clearList();
-    this.stores.videos.list.clearList();
-    this.stores.blogs.list.clearList();
-    this.stores.channels.list.clearList();
-    this.stores.groups.list.clearList();
-    this.stores.lastchannels.list.clearList();
-    this.stores.activities.list.clearList();
-    this.stores.images.loading = false;
-    this.stores.videos.loading = false;
-    this.stores.blogs.loading = false;
-    this.stores.channels.loading = false;
-    this.stores.groups.loading = false;
-    this.stores.lastchannels.loading = false;
-    this.stores.activities.loading = false;
+    this.buildListStores();
+    this.searchtext = '';
+    this.filter = 'suggested';
+    this.type  = 'images';
+    this.category = 'all';
+    this.loading = false;
   }
 }
 
-export default DiscoveryStore;
+export default DiscoveryLegacyStore;

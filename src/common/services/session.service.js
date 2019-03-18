@@ -106,6 +106,13 @@ class SessionService {
   }
 
   /**
+   * Return current user
+   */
+  getUser() {
+    return appStores.user.me;
+  }
+
+  /**
    * Set initial screen
    * @param {string} screen
    */

@@ -5,7 +5,9 @@ import React, {
 import {
   Platform,
   Text,
-  TouchableOpacity
+  View,
+  TouchableOpacity,
+  StyleSheet
 } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
@@ -17,16 +19,20 @@ import {
 import {
   observer
 } from 'mobx-react/native'
+import Placeholder from 'rn-placeholder';
 
-import { createImageProgress } from 'react-native-image-progress';
-//import ProgressCircle from 'react-native-progress/Circle';
-
-const ProgressFastImage = createImageProgress(FastImage);
+import ExplicitImage from '../common/components/explicit/ExplicitImage';
+import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
+import { CommonStyle as CS } from '../styles/Common';
 
 const isAndroid = Platform.OS === 'android';
 
 @observer
 export default class DiscoveryTile extends Component {
+
+  state = {
+    error: false
+  }
 
   /**
    * Navigate to view
@@ -38,46 +44,63 @@ export default class DiscoveryTile extends Component {
         scrollToBottom: false
       });
     }
+    if (this.props.onPress) this.props.onPress();
   }
 
   errorRender = (err) => {
-    return <Text>Image Error</Text>
+    return <Text styles={[CS.colorWhite, CS.fontS, CS.textCenter]}>Error loading media</Text>
+  }
+
+  setError = (err) => {
+    this.setState({error: true});
+  }
+
+  setActive = () => {
+    this.setState({ready: true});
+    // bubble event up
+    this.props.onLoadEnd && this.props.onLoadEnd();
   }
 
   render() {
-    if ( !isAndroid && this.props.entity.gif && this.props.entity.is_visible == false) {
-      return null;
-    }
-    const url = this.props.entity.getThumbSource();
+    if (this.state.error) return this.errorRender();
+
+    const entity = this.props.entity;
+
+    const url = entity.getThumbSource();
 
     const style = { width: this.props.size, height: this.props.size };
 
+    const show_overlay = (entity.mature && !entity.is_parent_mature) && !(entity.mature && entity.is_parent_mature);
+
+    const overlay = (show_overlay) ?
+      <ExplicitOverlay
+        entity={entity}
+        iconSize={45}
+        hideText={true}
+      /> :
+      null;
+
     return (
       <TouchableOpacity onPress={this._navToView} style={[ style, styles.tile ]}>
-        { isAndroid ?
-          <ProgressFastImage
-            indicator={null}
-            source={ url }
-            style={{ width: this.props.size -2, height: this.props.size -2}}
-            threshold={150}
-            renderError={this.errorRender}
-          />
-          :
+        <View style={ [CS.flexContainer, CS.backgroundGreyed] }>
           <FastImage
             source={ url }
-            style={{ width: this.props.size -2, height: this.props.size -2}}
+            style={ CS.positionAbsolute }
+            onLoadEnd={this.setActive}
+            onError={this.setError}
           />
-      }
+          {overlay}
+        </View>
       </TouchableOpacity>
     );
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   tile: {
     paddingTop: 1,
     paddingBottom: 1,
     paddingRight: 1,
     paddingLeft: 1,
   }
-}
+});

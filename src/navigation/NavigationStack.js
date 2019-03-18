@@ -11,7 +11,6 @@ import ChannelScreen from '../channel/ChannelScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
 import CapturePoster from '../capture/CapturePoster';
 import RegisterScreen from '../auth/RegisterScreen';
-import DiscoveryViewScreen from '../discovery/DiscoveryViewScreen';
 import ConversationScreen from '../messenger/ConversationScreen';
 import SettingsScreen from '../settings/SettingsScreen';
 import PasswordScreen from '../settings/screens/PasswordScreen';
@@ -90,9 +89,6 @@ const Stack = createStackNavigator({
   Activity: {
     screen: ActivityScreen,
     path: 'activity/:guid',
-  },
-  DiscoveryView: {
-    screen: DiscoveryViewScreen
   },
   Conversation: {
     screen: ConversationScreen
