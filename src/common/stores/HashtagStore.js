@@ -12,6 +12,7 @@ class HashtagStore {
 
   @observable loading = false;
   @observable all = false;
+  @observable hashtag = '';
   @observable suggested = [];
 
   /**
@@ -22,6 +23,11 @@ class HashtagStore {
     const tags = await hashtagService.getSuggested();
     this.setLoading(false);
     this.setSuggested(tags);
+  }
+
+  @action
+  setHashtag(hashtag) {
+    this.hashtag = hashtag;
   }
 
   /**

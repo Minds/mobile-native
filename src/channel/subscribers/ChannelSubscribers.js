@@ -78,7 +78,7 @@ export default class ChannelSubscribers extends Component {
           onRefresh={this.refresh}
           refreshing={channels.list.refreshing}
           onEndReached={this.loadFeed}
-          onEndThreshold={0}
+          // onEndReachedThreshold={0}
           initialNumToRender={12}
           style={styles.listView}
           removeClippedSubviews={false}

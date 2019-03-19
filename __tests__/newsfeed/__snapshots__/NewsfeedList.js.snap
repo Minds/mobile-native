@@ -207,7 +207,6 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
   numColumns={1}
   onEndReached={[Function]}
   onEndReachedThreshold={2}
-  onEndThreshold={0}
   onLayout={[Function]}
   onRefresh={[Function]}
   onViewableItemsChanged={[Function]}

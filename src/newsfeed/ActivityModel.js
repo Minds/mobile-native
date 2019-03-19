@@ -41,7 +41,7 @@ export default class ActivityModel extends BaseModel {
    * @param {string} size
    */
   getThumbSource(size = 'medium') {
-    return { uri: MINDS_CDN_URI + 'api/v1/archive/thumbnails/' + this.guid + '/' + size };
+    return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.guid + '/' + size };
   }
 
   /**

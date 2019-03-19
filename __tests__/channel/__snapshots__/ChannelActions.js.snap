@@ -27,6 +27,7 @@ exports[`channel actions component should renders correctly 1`] = `
       Object {
         "alignContent": "center",
         "alignItems": "center",
+        "alignSelf": "center",
         "flex": 1,
         "justifyContent": "center",
         "opacity": 1,

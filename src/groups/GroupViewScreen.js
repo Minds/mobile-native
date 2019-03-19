@@ -185,7 +185,7 @@ export default class GroupViewScreen extends Component {
             onRefresh={this.refresh}
             refreshing={group.members.refreshing}
             onEndReached={this.loadMembers}
-            onEndThreshold={0}
+            // onEndReachedThreshold={0}
             initialNumToRender={12}
             style={styles.listView}
             removeClippedSubviews={false}

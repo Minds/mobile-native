@@ -430,7 +430,6 @@ exports[`blog list screen component should renders correctly 1`] = `
   onContentSizeChange={[Function]}
   onEndReached={[Function]}
   onEndReachedThreshold={2}
-  onEndThreshold={0.09}
   onLayout={[Function]}
   onMomentumScrollEnd={[Function]}
   onRefresh={[Function]}

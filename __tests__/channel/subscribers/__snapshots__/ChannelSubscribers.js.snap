@@ -332,7 +332,6 @@ exports[`channel subscribers component should render correctly 1`] = `
     onContentSizeChange={[Function]}
     onEndReached={[Function]}
     onEndReachedThreshold={2}
-    onEndThreshold={0}
     onLayout={[Function]}
     onMomentumScrollEnd={[Function]}
     onRefresh={[Function]}

@@ -16,10 +16,14 @@ exports[`Explicit overlay component renders correctly 1`] = `
       Object {
         "alignContent": "center",
         "alignItems": "center",
+        "alignSelf": "center",
         "justifyContent": "center",
       },
       Object {
         "backgroundColor": "#777777",
+      },
+      Object {
+        "zIndex": 99999,
       },
     ]
   }

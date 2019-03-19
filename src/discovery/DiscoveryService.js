@@ -7,6 +7,10 @@ import appStores from '../../AppStores';
  */
 class DiscoveryService {
 
+  cancelRequest() {
+    abort(this);
+  }
+
   async search({ offset, type, filter, q }) {
 
     let endpoint = 'api/v2/search',
@@ -40,9 +44,9 @@ class DiscoveryService {
         break;
     }
 
-    abort('discovery:search');
+    abort(this);
 
-    const response = (await api.get(endpoint, params, 'discovery:search')) || {};
+    const response = (await api.get(endpoint, params, this)) || {};
 
     return {
       entities: response.entities || [],
@@ -50,7 +54,7 @@ class DiscoveryService {
     };
   }
 
-  async getFeed(offset, type, filter, q) {
+  async getFeed(offset, type, filter, q, limit = 12) {
 
     // abort previous call
     abort(this);
@@ -64,7 +68,7 @@ class DiscoveryService {
 
     const endpoint = `api/v2/entities/suggested/${type}${all}`;
 
-    const data = await api.get(endpoint, { limit: 12, offset: offset }, this);
+    const data = await api.get(endpoint, { limit, offset }, this);
     let entities = [];
     entities = data.entities;
 
@@ -74,6 +78,43 @@ class DiscoveryService {
     return {
       entities: entities,
       offset: data['load-next'],
+    }
+  }
+
+  async getTopFeed(offset, type, filter, period, query, limit = 12) {
+
+    // abort previous call
+    abort(this);
+
+    const all = appStores.hashtag.all ? '1' : '';
+
+    const params = {
+      limit,
+      offset,
+      all,
+      period
+    };
+
+    // is search
+    if (query) {
+      params.query = query;
+    }
+
+    if (appStores.hashtag.hashtag) {
+      params.hashtag = appStores.hashtag.hashtag;
+    }
+
+    const endpoint = `api/v2/feeds/global/${filter}/${type}`;
+
+    const data = await api.get(endpoint, params, this);
+    let entities = data.entities;
+
+    if (type == 'group' && offset && entities) {
+      entities.shift();
+    }
+    return {
+      entities: entities,
+      offset: entities.length ? data['load-next'] : '',
     }
   }
 

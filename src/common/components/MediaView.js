@@ -187,7 +187,7 @@ export default class MediaView extends Component {
             source={source}
             entity={this.props.entity}
             style={[styles.image, { height }]}
-            disableProgress={this.props.disableProgress}
+            loadingIndicator="placeholder"
             onError={this.imageError}
             imageStyle={styles.innerImage}
             />
@@ -218,7 +218,7 @@ export default class MediaView extends Component {
           source={source}
           entity={this.props.entity}
           style={styles.image}
-          disableProgress={this.props.disableProgress}
+          loadingIndicator="placeholder"
           onError={this.imageError}
           imageStyle={styles.innerImage}
         />

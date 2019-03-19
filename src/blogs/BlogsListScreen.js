@@ -126,7 +126,7 @@ export default class BlogsListScreen extends Component {
         onRefresh={this.refresh}
         refreshing={store.list.refreshing}
         onEndReached={this.loadMore}
-        onEndThreshold={0.09}
+        // onEndReachedThreshold={0.09}
         renderItem={this.renderRow}
         keyExtractor={item => item.guid}
         style={styles.list}

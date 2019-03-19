@@ -25,6 +25,7 @@ export const CommonStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center',
+    alignSelf: 'center'
   },
   columnAlignCenter: {
     flexDirection: 'column',

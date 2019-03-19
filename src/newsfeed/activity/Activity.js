@@ -91,10 +91,9 @@ export default class Activity extends Component {
         </View>
       );
 
-    const show_overlay = (this.props.entity.mature && !entity.is_parent_mature) && !(this.props.entity.mature && entity.is_parent_mature);
+    const show_overlay = (entity.mature && !entity.is_parent_mature) && !(entity.mature && entity.is_parent_mature);
     const overlay = (show_overlay) ? <ExplicitOverlay
         entity={this.props.entity}
-        style={styles.absolute}
       /> : null;
 
 
