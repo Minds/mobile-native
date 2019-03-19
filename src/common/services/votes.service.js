@@ -7,6 +7,6 @@ export function vote(guid, direction) {
     })
     .catch(err => {
       console.log('error', err);
-      throw "Ooops";
+      throw "Oops, an error has occurred whilst voting.";
     })
 }

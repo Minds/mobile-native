@@ -81,7 +81,7 @@ function _getFeed(endpoint, offset, limit) {
     })
     .catch(err => {
       console.log('error');
-      throw "Ooops";
+      throw "Oops, an error has occured updating your newsfeed";
     })
 }
 
@@ -124,7 +124,7 @@ export function update(post) {
     })
     .catch(err => {
       console.log('error');
-      throw "Ooops";
+      throw "Oops, an error has occurred updating your newsfeed";
     })
 }
 
@@ -139,7 +139,7 @@ export async function uploadAttachment(url, file, progress) {
         url: url,
         file: file
       };
-      throw "Ooops";
+      throw "Oops, an error has occurred uploading your attachment";
   }
 }
 
@@ -201,7 +201,7 @@ export function toggleMuteNotifications(guid, value) {
     })
     .catch(err => {
       console.log('error');
-      throw "Ooops";
+      throw "Oops, an error occurred muting notifications.";
     })
 }
 
@@ -223,7 +223,7 @@ export function unfollow(guid) {
     })
     .catch(err => {
       console.log('error', err);
-      throw "Ooops";
+      throw "Oops, an error has occurred whilst unfollowing.";
     })
 }
 
@@ -244,7 +244,7 @@ export function toggleExplicit(guid, value) {
     })
     .catch(err => {
       console.log('error');
-      throw "Ooops";
+      throw "Oops, an error has occurred toggling explicit content";
     })
 }
 
