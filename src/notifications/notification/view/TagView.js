@@ -32,7 +32,7 @@ export default class TagView extends Component {
             })
             .catch(err => {
               console.log('error', err);
-              throw "Ooops";
+              throw "Oops, an error has occurred navigating.";
             });
         }
       }

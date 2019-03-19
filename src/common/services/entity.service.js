@@ -12,7 +12,7 @@ class EntitiesService {
       })
       .catch(err => {
         console.log('error', err);
-        throw "Ooops";
+        throw "Oops, an error has occured getting this entity";
       });
   }
 

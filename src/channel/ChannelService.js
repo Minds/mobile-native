@@ -88,7 +88,7 @@ class ChannelService {
       })
       .catch(err => {
         console.log('error');
-        throw "Ooops";
+        throw "Oops, an error has occurred getting this image feed";
       })
   }
 
@@ -106,7 +106,7 @@ class ChannelService {
       })
       .catch(err => {
         console.log('error');
-        throw "Ooops";
+        throw "Oops, an error has occurred getting this video feed";
       })
   }
 
@@ -124,7 +124,7 @@ class ChannelService {
       })
       .catch(err => {
         console.log('error');
-        throw "Ooops";
+        throw "Oops, an error has occurred getting this blog feed.";
       })
   }
 
@@ -142,7 +142,7 @@ class ChannelService {
       })
       .catch(err => {
         console.log('error');
-        throw "Ooops";
+        throw "Oops, an error has occurred getting subscribers";
       })
   }
 }

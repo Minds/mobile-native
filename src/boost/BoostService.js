@@ -28,7 +28,7 @@ export default class BoostService {
 
     } catch (err) {
       console.log('error', err);
-      throw "Ooops";
+      throw "Ooops, failed to get boosts";
     }
   }
 
