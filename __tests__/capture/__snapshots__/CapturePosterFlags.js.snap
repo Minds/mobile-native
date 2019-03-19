@@ -60,6 +60,537 @@ exports[`cature poster flags component should renders correctly for props false 
     </Text>
   </View>
   <View
+    collapsable={false}
+  >
+    <View
+      onLayout={[Function]}
+    />
+    <Modal
+      hardwareAccelerated={false}
+      onDismiss={[Function]}
+      onRequestClose={[Function]}
+      supportedOrientations={
+        Array [
+          "portrait",
+          "portrait-upside-down",
+          "landscape",
+          "landscape-left",
+          "landscape-right",
+        ]
+      }
+      transparent={true}
+      visible={false}
+    >
+      <View
+        accessible={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          onLayout={[Function]}
+          style={
+            Object {
+              "backgroundColor": "white",
+              "borderRadius": 4,
+              "left": 0,
+              "marginTop": 20,
+              "opacity": 0,
+              "position": "absolute",
+              "shadowColor": "black",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.14,
+              "shadowRadius": 2,
+              "top": 0,
+              "transform": Array [],
+              "width": 180,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "overflow": "hidden",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Nudity
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Pornography
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Profanity
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Violence and Gore
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Race and Religion
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Other
+                </Text>
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  </View>
+  <View
     accessible={true}
     isTVSelectable={true}
     onResponderGrant={[Function]}
@@ -1002,7 +1533,7 @@ exports[`cature poster flags component should renders correctly for props true 1
       style={
         Array [
           Object {
-            "color": "#f44336",
+            "color": "#777777",
             "fontSize": 25,
           },
           undefined,
@@ -1017,19 +1548,537 @@ exports[`cature poster flags component should renders correctly for props true 1
     >
       
     </Text>
-    <Text
-      style={
-        Object {
-          "color": "#f44336",
-          "fontFamily": "Roboto",
-          "fontSize": 12,
-          "fontWeight": "600",
-          "marginLeft": 3,
-        }
+  </View>
+  <View
+    collapsable={false}
+  >
+    <View
+      onLayout={[Function]}
+    />
+    <Modal
+      hardwareAccelerated={false}
+      onDismiss={[Function]}
+      onRequestClose={[Function]}
+      supportedOrientations={
+        Array [
+          "portrait",
+          "portrait-upside-down",
+          "landscape",
+          "landscape-left",
+          "landscape-right",
+        ]
       }
+      transparent={true}
+      visible={false}
     >
-      MATURE
-    </Text>
+      <View
+        accessible={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      >
+        <View
+          onLayout={[Function]}
+          style={
+            Object {
+              "backgroundColor": "white",
+              "borderRadius": 4,
+              "left": 0,
+              "marginTop": 20,
+              "opacity": 0,
+              "position": "absolute",
+              "shadowColor": "black",
+              "shadowOffset": Object {
+                "height": 2,
+                "width": 0,
+              },
+              "shadowOpacity": 0.14,
+              "shadowRadius": 2,
+              "top": 0,
+              "transform": Array [],
+              "width": 180,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "overflow": "hidden",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Nudity
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Pornography
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Profanity
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Violence and Gore
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Race and Religion
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              isTVSelectable={true}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Array [
+                  Object {
+                    "height": 48,
+                    "justifyContent": "center",
+                    "maxWidth": 248,
+                    "minWidth": 124,
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <Text
+                ellipsizeMode="clip"
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 14,
+                      "fontWeight": "400",
+                      "paddingHorizontal": 16,
+                    },
+                    false,
+                    undefined,
+                  ]
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": undefined,
+                        "fontSize": 12,
+                      },
+                      Array [
+                        Object {
+                          "color": "transparent",
+                        },
+                        false,
+                      ],
+                      Object {
+                        "fontFamily": "Material Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  
+                </Text>
+                 
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ]
+                  }
+                >
+                  Other
+                </Text>
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    </Modal>
   </View>
   <View
     accessible={true}
