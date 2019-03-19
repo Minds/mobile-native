@@ -50,8 +50,10 @@ exports[`cature poster component should renders correctly 1`] = `
       <CapturePosterFlags
         lockValue={null}
         matureValue={false}
+        nsfwValue={Array []}
         onLocking={[Function]}
         onMature={[Function]}
+        onNsfw={[Function]}
         onShare={[Function]}
         shareValue={Object {}}
       />
