@@ -11,8 +11,7 @@ exports[`Owner component renders correctly 1`] = `
     }
   }
 >
-  <TouchableOpacity
-    activeOpacity={0.2}
+  <PreventDoubleTap
     onPress={[Function]}
   >
     <ForwardRef(Image)
@@ -31,7 +30,7 @@ exports[`Owner component renders correctly 1`] = `
         }
       }
     />
-  </TouchableOpacity>
+  </PreventDoubleTap>
   <ForwardRef(View)
     style={
       Object {
@@ -49,8 +48,7 @@ exports[`Owner component renders correctly 1`] = `
         }
       }
     >
-      <TouchableOpacity
-        activeOpacity={0.2}
+      <PreventDoubleTap
         onPress={[Function]}
       >
         <ForwardRef(Text)
@@ -62,7 +60,7 @@ exports[`Owner component renders correctly 1`] = `
             }
           }
         />
-      </TouchableOpacity>
+      </PreventDoubleTap>
     </ForwardRef(View)>
   </ForwardRef(View)>
 </ForwardRef(View)>

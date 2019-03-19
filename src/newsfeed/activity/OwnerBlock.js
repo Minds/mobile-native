@@ -14,6 +14,9 @@ import {
   MINDS_CDN_URI
 } from '../../config/Config';
 
+import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
+const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
+
 /**
  * Owner Block Component
  */
@@ -32,9 +35,16 @@ export default class OwnerBlock extends PureComponent {
   /**
    * Navigate To group
    */
- _navToGroup = () => {
-    if (this.props.navigation) {
-      this.props.navigation.push('GroupView', { group: this.props.entity.containerObj });
+  _navToGroup = () => {
+    let currentGroup;
+    try{
+      currentGroup = this.props.navigation.state.params.group; //get the current group - if this is a group.
+    } catch(e) {
+      currentGroup = false;
+    } finally {
+      if (this.props.navigation && !currentGroup && currentGroup.name !== this.props.entity.containerObj){ //&& check the group to be navigated to is not the one already in view. 
+        this.props.navigation.push('GroupView', { group: this.props.entity.containerObj });
+      }
     }
   };
 
@@ -43,11 +53,11 @@ export default class OwnerBlock extends PureComponent {
       return null;
 
     return (
-      <TouchableOpacity onPress={this._navToGroup} style={styles.groupContainer}>
+      <DebouncedTouchableOpacity onPress={this._navToGroup} style={styles.groupContainer}>
         <Text style={styles.groupName} lineBreakMode='tail' numberOfLines={1}>
           > { this.props.entity.containerObj.name }
         </Text>
-      </TouchableOpacity>
+      </DebouncedTouchableOpacity>
     );
   }
 
@@ -62,16 +72,16 @@ export default class OwnerBlock extends PureComponent {
 
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this._navToChannel}>
+        <DebouncedTouchableOpacity onPress={this._navToChannel}>
           <Image source={avatarSrc} style={styles.avatar}/>
-        </TouchableOpacity>
+        </DebouncedTouchableOpacity>
         <View style={styles.body}>
           <View style={styles.nameContainer}>
-            <TouchableOpacity onPress={this._navToChannel}>
+            <DebouncedTouchableOpacity onPress={this._navToChannel}>
               <Text style={styles.username}>
                 { channel.username }
               </Text>
-            </TouchableOpacity>
+            </DebouncedTouchableOpacity>
             { this.group }
           </View>
           {this.props.children}
