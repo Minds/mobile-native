@@ -5,6 +5,7 @@ import React, {
 import {
   View,
   TextInput,
+  StyleSheet,
 } from 'react-native';
 
 import {
@@ -16,6 +17,10 @@ import Button from '../../common/components/Button';
 
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
+import NsfwToggle from '../../common/components/nsfw/NsfwToggle';
+import autobind from '../../common/helpers/autobind';
+import featuresService from '../../common/services/features.service';
+import Colors from '../../styles/Colors';
 
 export default class ActivityEditor extends Component {
 
@@ -25,12 +30,21 @@ export default class ActivityEditor extends Component {
 
   componentWillMount() {
     this.setState({
-      text: this.props.entity.message
+      text: this.props.entity.message,
+      nsfw: this.props.entity.nsfw || [],
     });
   }
 
   update = () => {
-    this.props.newsfeed.list.updateActivity(this.props.entity, this.state.text)
+    const data = {
+      message: this.state.text,
+    };
+
+    if (featuresService.has('top-feeds')) {
+      data.nsfw = [...this.state.nsfw];
+    }
+
+    this.props.newsfeed.list.updateActivity(this.props.entity, data)
       .catch((err) => {
         console.log('error updating the post');
       })
@@ -42,6 +56,31 @@ export default class ActivityEditor extends Component {
   cancel = () => {
     this.props.toggleEdit(false);
   }
+
+  @autobind
+  onNsfwChange(nsfw) {
+    this.setState({
+      nsfw,
+    });
+  }
+
+  renderNsfwView() {
+    if (!featuresService.has('top-feeds')) {
+      return null;
+    }
+
+    return (
+      <View style={[CommonStyle.rowJustifyStart, CommonStyle.paddingTop]}>
+        <NsfwToggle
+          value={this.state.nsfw}
+          onChange={this.onNsfwChange}
+          containerStyle={styles.nsfw}
+          labelStyle={styles.nsfwLabel}
+        />
+      </View>
+    );
+  }
+
   /**
    * Render
    */
@@ -55,11 +94,33 @@ export default class ActivityEditor extends Component {
           onChangeText={(text) => this.setState({ text })}
           value={this.state.text}
         />
-        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop]}>
-          <Button text="Cancel" onPress={this.cancel} />
-          <Button text="Save" color={colors.primary} inverted={true} onPress={this.update} disabled={this.props.newsfeed.list.saving}/>
+        <View style={styles.buttonBar}>
+          {this.renderNsfwView()}
+
+          <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop]}>
+            <Button text="Cancel" onPress={this.cancel} />
+            <Button text="Save" color={colors.primary} inverted={true} onPress={this.update} disabled={this.props.newsfeed.list.saving}/>
+          </View>
         </View>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  buttonBar: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  nsfw: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  nsfwLabel: {
+    color: Colors.explicit,
+    fontWeight: '700',
+  },
+});

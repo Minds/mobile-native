@@ -46,7 +46,10 @@ exports[`cature poster flags component should renders correctly for props false 
             "color": "#777777",
             "fontSize": 25,
           },
-          undefined,
+          Array [
+            undefined,
+            false,
+          ],
           Object {
             "fontFamily": "Material Icons",
             "fontStyle": "normal",
@@ -1536,7 +1539,10 @@ exports[`cature poster flags component should renders correctly for props true 1
             "color": "#777777",
             "fontSize": 25,
           },
-          undefined,
+          Array [
+            undefined,
+            false,
+          ],
           Object {
             "fontFamily": "Material Icons",
             "fontStyle": "normal",
