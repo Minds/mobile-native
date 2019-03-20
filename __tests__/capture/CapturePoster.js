@@ -319,7 +319,7 @@ describe('cature poster component', () => {
       // should be called only once
       expect(capture.post.mock.calls.length).toBe(1);
 
-      expect(capture.post.mock.calls[0][0]).toEqual({mature: 0, message: "some awesome post", wire_threshold: null});
+      expect(capture.post.mock.calls[0][0]).toEqual({ nsfw: [], message: "some awesome post", wire_threshold: null});
 
       expect(result).toEqual(response)
 
@@ -389,7 +389,7 @@ describe('cature poster component', () => {
       expect(capture.post.mock.calls.length).toBe(1);
 
       expect(capture.post.mock.calls[0][0]).toEqual({
-        mature: 0,
+        nsfw: [],
         message: "some awesome post",
         wire_threshold: null,
         facebook: 1,
@@ -436,7 +436,7 @@ describe('cature poster component', () => {
 
       // should send the attachment data
       expect(capture.post.mock.calls[0][0]).toEqual({
-        mature: 0,
+        nsfw: [],
         message: "some awesome post",
         wire_threshold: null,
         attachment_guid: 1000,

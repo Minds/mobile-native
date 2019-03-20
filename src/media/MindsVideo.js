@@ -29,6 +29,7 @@ import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import en from "../../locales/en";
+import isNsfw from '../common/helpers/isNsfw';
 
 @observer
 class MindsVideo extends Component {
@@ -269,7 +270,7 @@ class MindsVideo extends Component {
   renderOverlay() {
     const entity = this.props.entity;
     let {currentTime, duration, paused} = this.state;
-    const mustShow = (this.state.showOverlay || this.state.paused) && (!entity || !entity.mature || entity.mature_visibility);
+    const mustShow = (this.state.showOverlay || this.state.paused) && (!entity || !isNsfw(entity) || entity.mature_visibility);
 
     if (mustShow) {
       const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;

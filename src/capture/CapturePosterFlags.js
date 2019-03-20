@@ -12,6 +12,8 @@ import TransparentButton from '../common/components/TransparentButton';
 import LicensePicker from '../common/components/LicensePicker';
 import TagInput from '../common/components/TagInput';
 import TagSelect from '../common/components/TagSelect';
+import featuresService from '../common/services/features.service';
+import NsfwToggle from '../common/components/nsfw/NsfwToggle';
 
 @inject('capture')
 @observer
@@ -316,6 +318,33 @@ export default class CapturePosterFlags extends Component {
     );
   }
 
+  renderNsfwOrExplicit() {
+    if (featuresService.has('top-feeds')) {
+      return (
+        <NsfwToggle
+          containerStyle={styles.cell}
+          labelStyle={styles.matureLabel}
+          value={this.props.nsfwValue}
+          onChange={this.props.onNsfw}
+        />
+      );
+    } else {
+      return (
+        <Touchable style={styles.cell} onPress={this.props.onMature}>
+          <MdIcon
+            name="explicit"
+            color={this.props.matureValue ? Colors.explicit : Colors.darkGreyed}
+            size={25}
+          />
+
+          {this.props.matureValue && <Text style={styles.matureLabel}>
+            MATURE
+          </Text>}
+        </Touchable>
+      );
+    }
+  }
+
   // Main
 
   render() {
@@ -330,17 +359,8 @@ export default class CapturePosterFlags extends Component {
             iconColor={attachment.license ? Colors.primary : Colors.darkGreyed}
           />
         </View>}
-        <Touchable style={styles.cell} onPress={this.props.onMature}>
-          <MdIcon
-            name="explicit"
-            color={this.props.matureValue ? Colors.explicit : Colors.darkGreyed}
-            size={25}
-          />
 
-          {this.props.matureValue && <Text style={styles.matureLabel}>
-            MATURE
-          </Text>}
-        </Touchable>
+        {this.renderNsfwOrExplicit()}
 
         <Touchable style={styles.cell} onPress={this.showShareModal}>
           <MdIcon

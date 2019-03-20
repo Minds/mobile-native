@@ -30,6 +30,7 @@ import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import Lock from '../../wire/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
+import { isEntityNsfw } from '../../common/helpers/isNsfw';
 
 /**
  * Activity
@@ -91,7 +92,7 @@ export default class Activity extends Component {
         </View>
       );
 
-    const show_overlay = (entity.mature && !entity.is_parent_mature) && !(entity.mature && entity.is_parent_mature);
+    const show_overlay = (isEntityNsfw(entity) && !entity.is_parent_mature) && !(isEntityNsfw(entity) && entity.is_parent_mature);
     const overlay = (show_overlay) ? <ExplicitOverlay
         entity={this.props.entity}
       /> : null;
@@ -228,7 +229,7 @@ export default class Activity extends Component {
   showRemind() {
     const remind_object = this.props.entity.remind_object;
     if (remind_object) {
-      if (this.props.entity.mature) {
+      if (isEntityNsfw(this.props.entity)) {
         remind_object.is_parent_mature = true;
       }
       return (

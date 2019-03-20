@@ -28,6 +28,7 @@ import domain from '../helpers/domain';
 import MindsVideo from '../../media/MindsVideo';
 import mediaProxyUrl from '../helpers/media-proxy-url';
 import download from '../services/download.service';
+import { isEntityNsfw } from '../helpers/isNsfw';
 
 /**
  * Activity
@@ -259,7 +260,7 @@ export default class MediaView extends Component {
   navToImage = () => {
 
     // if is explicit then should toggle
-    if (this.props.entity.mature) {
+    if (isEntityNsfw(this.props.entity)) {
       this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid);
       return;
     }
