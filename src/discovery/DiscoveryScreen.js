@@ -506,13 +506,17 @@ export default class DiscoveryScreen extends Component {
    * Load feed data
    */
   loadFeed = (e, force = false) => {
+    const type = this.props.discovery.filters.type;
     if (
       this.props.discovery.filters.type == 'lastchannels' ||
       (this.props.discovery.list.errorLoading && !force)
     ) {
       return;
     }
-    this.props.discovery.loadList();
+
+    const limit = this.state.showFeed ? 12 : (type == 'images' || type == 'videos' ? 24 : 12);
+
+    this.props.discovery.loadList(false, false, limit);
   }
 
   /**
@@ -528,9 +532,9 @@ export default class DiscoveryScreen extends Component {
    * Render a tile
    */
   renderTile = (row) => {
-    if (!this.state.active && row.item.gif) {
-      return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight, backgroundColor: colors.dark }}/>;
-    }
+    // if (!this.state.active && row.item.isGif()) {
+    //   return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight, backgroundColor: colors.greyed }}/>;
+    // }
     return (
       <DiscoveryTile entity={row.item} size={this.state.itemHeight} onPress={() => this.setState({'showFeed': row.index})}/>
     );

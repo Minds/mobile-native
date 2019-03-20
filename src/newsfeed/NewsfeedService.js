@@ -268,8 +268,15 @@ export function deleteItem(guid) {
   return api.delete('api/v1/newsfeed/' + guid);
 }
 
-export function getSingle(guid) {
-  return api.get('api/v1/newsfeed/single/'+guid);
+export async function getSingle(guid) {
+  const result = await api.get('api/v2/entities',{
+    urns: `urn:entity:${guid}`,
+    as_activities: 1,
+  });
+
+  if (!result || !result.entities || !result.entities.length) throw 'Not found';
+
+  return {activity: result.entities[0]};
 }
 
 /**
