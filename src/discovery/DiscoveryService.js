@@ -1,6 +1,7 @@
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import appStores from '../../AppStores';
+import feedService from '../common/services/feed.service';
 
 /**
  * Discovery Service
@@ -82,6 +83,40 @@ class DiscoveryService {
   }
 
   async getTopFeed(offset, type, filter, period, query, limit = 12) {
+    if (true /* featuresService.has('sync-feeds') */) {
+      return await this.getTopFeedFromSync(offset, type, filter, period, query, limit);
+    } else {
+      return await this.getTopFeedLegacy(offset, type, filter, period, query, limit);
+    }
+  }
+
+  async getTopFeedFromSync(offset, type, filter, period, query, limit) {
+    const params = {
+      filter: 'global',
+      algorithm: filter,
+      customType: type,
+      limit,
+      offset: offset,
+      period: period,
+      all: Boolean(appStores.hashtag.all),
+      query: query || '',
+      // nsfw: this.newsfeedService.nsfw,
+      // forceSync: forceSync,
+    };
+
+    if (appStores.hashtag.hashtag) {
+      params.hashtag = appStores.hashtag.hashtag;
+    }
+
+    const { entities, next } = await feedService.get(params);
+
+    return {
+      entities,
+      offset: next || 0,
+    }
+  }
+
+  async getTopFeedLegacy(offset, type, filter, period, query, limit) {
 
     // abort previous call
     abort(this);

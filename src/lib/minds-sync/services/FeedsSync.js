@@ -116,6 +116,7 @@ export default class FeedsSync {
     if (!futureOffset) {
       return false;
     }
+    await this.db.ready()
 
     const key = await this.buildKey(opts);
 

@@ -14,11 +14,16 @@ export default class SqliteStorageAdapter {
    * @param {Object} schema
    */
   schema(versionNumber, schema) {
-    for (const tableName of Object.keys(schema)) {
+    this.schemaDefinition = schema;
+    this.versionNumber = versionNumber;
+  }
+
+  async buildSchema() {
+    for (const tableName of Object.keys(this.schemaDefinition)) {
       const table = schema[tableName];
       const primaryKey = table.primaryKey || '';
       const indexes = table.indexes || [];
-      this.createTable(tableName, primaryKey, indexes, versionNumber);
+      await this.createTable(tableName, primaryKey, indexes, versionNumber);
     }
   }
 
@@ -61,6 +66,7 @@ export default class SqliteStorageAdapter {
   async ready() {
     if (!this.isReady) {
       await this.db.init();
+      await this.buildSchema();
       this.isReady = true;
     }
 
@@ -92,7 +98,7 @@ export default class SqliteStorageAdapter {
    * @returns {Promise<void>}
    */
   async truncate(table) {
-    return await this.db.executeSql(`TRUNCATE TABLE \`${table}\`;`);
+    return await this.db.executeSql(this.schemas[table].deleteSql + ' true');
   }
 
   /**
@@ -101,18 +107,30 @@ export default class SqliteStorageAdapter {
    * @returns {Promise<any>}
    */
   async bulkInsert(table, rows) {
-    // return await this.db.transaction((tx) => {
-    //   rows.forEach(data => {
-    //     const params = this.schemas[table].fields.map(f => data[f]);
-    //     params.push(JSON.stringify(data));
-    //     tx.executeSql(this.schemas[table].insertSql, params)
-    //   });
-    // });
-    return rows.forEach(async data => {
-      const params = this.schemas[table].fields.map(f => data[f]);
-      params.push(JSON.stringify(data));
-      await this.db.executeSql(this.schemas[table].insertSql, params)
+    return await this.db.transaction((tx) => {
+      rows.forEach(data => {
+        const params = this.schemas[table].fields.map(f => data[f]);
+        params.push(JSON.stringify(data));
+        tx.executeSql(this.schemas[table].insertSql, params)
+      });
     });
+
+    // const insertOperations = [];
+
+    // for (const data of rows) {
+    //   const params = this.schemas[table].fields.map(f => data[f]);
+    //   params.push(JSON.stringify(data));
+    //   insertOperations.push(this.db.executeSql(this.schemas[table].insertSql, params));
+    // }
+
+    // await Promise.all(insertOperations);
+    // return true;
+
+    // return rows.forEach(async data => {
+    //   const params = this.schemas[table].fields.map(f => data[f]);
+    //   params.push(JSON.stringify(data));
+    //   await this.db.executeSql(this.schemas[table].insertSql, params)
+    // });
   }
 
   /**
