@@ -32,7 +32,7 @@ import com.centaurwarchief.smslistener.SmsListenerPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.reactnativejitsimeet.JitsiMeetPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
-
+import org.pgsqlite.SQLitePluginPackage;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -78,6 +78,7 @@ public class MainApplication extends Application implements ShareApplication, Re
           new SmsListenerPackage(),
           new CodePush("_C083_CqL7CmKwASrv6Xrj1wqH7erJMhIBnRQ", MainApplication.this, BuildConfig.DEBUG),
           new JitsiMeetPackage(),
+          new SQLitePluginPackage(),
           new BackgroundTimerPackage()
       );
     }

@@ -1,4 +1,7 @@
 rootProject.name = 'Minds'
+
+include ':react-native-sqlite-storage'
+project(':react-native-sqlite-storage').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sqlite-storage/src/android')
 include ':react-native-apk'
 project(':react-native-apk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-apk/android')
 include ':react-native-cookies'
