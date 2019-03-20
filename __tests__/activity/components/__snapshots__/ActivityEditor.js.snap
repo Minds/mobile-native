@@ -40,30 +40,72 @@ exports[`Activity editor component renders correctly 1`] = `
   />
   <ForwardRef(View)
     style={
-      Array [
-        Object {
-          "flexDirection": "row",
-          "justifyContent": "flex-end",
-        },
-        Object {
-          "paddingTop": 5,
-        },
-      ]
+      Object {
+        "alignItems": "center",
+        "display": "flex",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
     }
   >
-    <Button
-      color="#4690D6"
-      loading={false}
-      onPress={[Function]}
-      text="Cancel"
-    />
-    <Button
-      color="#4690D6"
-      inverted={true}
-      loading={false}
-      onPress={[Function]}
-      text="Save"
-    />
+    <ForwardRef(View)
+      style={
+        Array [
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "flex-start",
+          },
+          Object {
+            "paddingTop": 5,
+          },
+        ]
+      }
+    >
+      <NsfwToggle
+        containerStyle={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+            "flexDirection": "row",
+          }
+        }
+        labelStyle={
+          Object {
+            "color": "#f44336",
+            "fontWeight": "700",
+          }
+        }
+        onChange={[Function]}
+        value={Array []}
+      />
+    </ForwardRef(View)>
+    <ForwardRef(View)
+      style={
+        Array [
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+          },
+          Object {
+            "paddingTop": 5,
+          },
+        ]
+      }
+    >
+      <Button
+        color="#4690D6"
+        loading={false}
+        onPress={[Function]}
+        text="Cancel"
+      />
+      <Button
+        color="#4690D6"
+        inverted={true}
+        loading={false}
+        onPress={[Function]}
+        text="Save"
+      />
+    </ForwardRef(View)>
   </ForwardRef(View)>
 </ForwardRef(View)>
 `;

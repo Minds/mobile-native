@@ -141,9 +141,15 @@ export default class OffsetFeedListStore extends OffsetListStore {
   }
 
   @action
-  updateActivity(activity, message) {
+  updateActivity(activity, data = {}) {
     this.saving = true;
-    activity.message = message;
+
+    if (data) {
+      for (const field in data) {
+        activity[field] = data[field];
+      }
+    }
+
     return update(activity)
       .finally(action(() => {
         this.saving = false;

@@ -63,7 +63,7 @@ export default class NsfwToggle extends Component {
             name="explicit"
             color={isActive ? Colors.explicit : Colors.darkGreyed}
             size={25}
-            style={this.props.iconStyle}
+            style={[this.props.iconStyle, isActive && this.props.iconActiveStyle]}
           />
 
           {isActive && <Text style={this.props.labelStyle}>
