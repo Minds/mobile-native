@@ -6,12 +6,11 @@ import SqliteStorageAdapter from "../../lib/minds-sync/adapters/SqliteStorageAda
  */
 class SqliteStorageProviderService {
   constructor() {
-    const mindsDb = new SqliteService('minds1.db');
-    this.adapter = new SqliteStorageAdapter(mindsDb);
+    this.dbService = new SqliteService('minds1.db');
   }
 
   get() {
-    return this.adapter;
+    return new SqliteStorageAdapter(this.dbService);
   }
 }
 

@@ -20,10 +20,10 @@ export default class SqliteStorageAdapter {
 
   async buildSchema() {
     for (const tableName of Object.keys(this.schemaDefinition)) {
-      const table = schema[tableName];
+      const table = this.schemaDefinition[tableName];
       const primaryKey = table.primaryKey || '';
       const indexes = table.indexes || [];
-      await this.createTable(tableName, primaryKey, indexes, versionNumber);
+      await this.createTable(tableName, primaryKey, indexes, this.versionNumber);
     }
   }
 
@@ -231,7 +231,7 @@ export default class SqliteStorageAdapter {
    * @returns {Promise<*[]>}
    */
   async anyOf(table, index, values) {
-    let sql = this.schemas[table].selectSql + `WHERE \`${table}\`.\`${field}\` IN ('${values.join("','")}')`;
+    let sql = this.schemas[table].selectSql + `WHERE \`${table}\`.\`${index}\` IN ('${values.join("','")}')`;
 
     const [result] = await this.db.executeSql(sql, []);
 

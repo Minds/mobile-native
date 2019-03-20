@@ -17,7 +17,9 @@ export default class SqliteService {
    * Init db
    */
   async init() {
-    this.db = await SQLite.openDatabase({name: this.dbname, location: 'default'});
+    if (!this.db) {
+      this.db = await SQLite.openDatabase({name: this.dbname, location: 'default'});
+    }
   }
 
   /**
