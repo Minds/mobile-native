@@ -67,6 +67,9 @@ export default class SqliteStorageAdapter {
     if (!this.isReady) {
       await this.db.init();
       await this.buildSchema();
+
+      console.log('Database is ready');
+
       this.isReady = true;
     }
 
@@ -98,7 +101,7 @@ export default class SqliteStorageAdapter {
    * @returns {Promise<void>}
    */
   async truncate(table) {
-    return await this.db.executeSql(this.schemas[table].deleteSql + ' true');
+    return await this.db.executeSql(this.schemas[table].deleteSql + ' 1=1');
   }
 
   /**

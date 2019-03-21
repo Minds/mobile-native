@@ -1,5 +1,6 @@
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
+import blockListService from '../common/services/block-list.service';
 
 /**
  * Channel Service
@@ -39,11 +40,17 @@ class ChannelService {
    * @param {string} guid
    */
   toggleBlock(guid, value) {
+    let result;
+
     if (value) {
-      return api.put('api/v1/block/' + guid);
+      result = api.put('api/v1/block/' + guid);
+      blockListService.add(guid);
     } else {
-      return api.delete('api/v1/block/' + guid);
+      result = api.delete('api/v1/block/' + guid);
+      blockListService.remove(guid);
     }
+
+    return result;
   }
 
   /**
