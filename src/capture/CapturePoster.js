@@ -33,6 +33,7 @@ import Activity from '../newsfeed/activity/Activity';
 import BlogCard from '../blogs/BlogCard';
 import ActivityModel from '../newsfeed/ActivityModel';
 import featuresService from '../common/services/features.service';
+import { creatorNsfwService } from '../common/services/nsfw.service';
 
 @inject('user', 'capture')
 @observer
@@ -94,6 +95,14 @@ export default class CapturePoster extends Component {
         });
       }
     }
+
+    this.loadNsfwFromPersistentStorage();
+  }
+
+  async loadNsfwFromPersistentStorage() {
+    this.setState({
+      nsfw: await creatorNsfwService.get(),
+    });
   }
 
   /**
@@ -383,6 +392,8 @@ export default class CapturePoster extends Component {
   onNsfw = values => {
     const nsfw = [...values];
     this.setState({ nsfw });
+
+    creatorNsfwService.set(nsfw);
   }
 
   onShare = network => {

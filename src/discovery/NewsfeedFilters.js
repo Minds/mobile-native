@@ -22,6 +22,8 @@ import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 
 import { CommonStyle as CS } from '../styles/Common';
 import TagOptinDrawer from '../common/components/TagOptinDrawer';
+import NsfwToggle from '../common/components/nsfw/NsfwToggle';
+import autobind from '../common/helpers/autobind';
 
 /**
  * Newsfeed filters
@@ -72,6 +74,11 @@ export default class NewsfeedFilters extends Component {
 
   showDrawer = () => {
     this._drawer.showModal(this.sizeY);
+  }
+
+  @autobind
+  setNsfw(value) {
+    this.props.store.setNsfw(value);
   }
 
   /**
@@ -156,6 +163,13 @@ export default class NewsfeedFilters extends Component {
               <Text style={[CS.fontL, store.filter == 'latest' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>Latest</Text>
             </View>
           </TouchableHighlight>
+        </View>
+        <View style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x]}>
+          <NsfwToggle
+            hideLabel={true}
+            value={store.nsfw}
+            onChange={this.setNsfw}
+          />
         </View>
         <TagOptinDrawer ref={this.setTagDrawerRef} onChange={this.props.onTagsChange} onSelectOne={this.props.onSelectOne}/>
       </View>
