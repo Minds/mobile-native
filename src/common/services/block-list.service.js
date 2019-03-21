@@ -1,6 +1,7 @@
 import BlockListSync from "../../lib/minds-sync/services/BlockListSync";
 import apiService from "./api.service";
 import sqliteStorageProviderService from "./sqlite-storage-provider.service";
+import sessionService from "./session.service";
 
 class BlockListService {
   constructor() {
@@ -9,10 +10,16 @@ class BlockListService {
 
     this.sync.setUp();
 
-    // TODO: Setup session listener
+    sessionService.onSession(token => {
+      if (token) {
+        this.doSync();
+      } else {
+        this.prune();
+      }
+    });
   }
 
-  async sync() {
+  async doSync() {
     return await this.sync.sync();
   }
 
@@ -26,6 +33,10 @@ class BlockListService {
 
   async remove(guid: string) {
     return await this.sync.remove(guid);
+  }
+
+  async prune() {
+    return await this.sync.prune();
   }
 }
 

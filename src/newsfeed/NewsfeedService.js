@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import stores from '../../AppStores';
+import blockListService from '../common/services/block-list.service';
 
 
 export default class NewsfeedService {
@@ -180,11 +181,17 @@ export async function setViewed(entity) {
  * @param {boolean} value
  */
 export function toggleUserBlock(guid, value) {
+  let result;
+
   if (value) {
-    return api.put('api/v1/block/' + guid);
+    result = api.put('api/v1/block/' + guid);
+    blockListService.add(guid);
   } else {
-    return api.delete('api/v1/block/' + guid);
+    result = api.delete('api/v1/block/' + guid);
+    blockListService.remove(guid);
   }
+
+  return result;
 }
 
 /**
