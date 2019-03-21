@@ -70,6 +70,7 @@ export default class ActivityScreen extends Component {
         await this.entityStore.setEntity(ActivityModel.checkOrCreate(resp.activity));
       } catch (e) {
         this.setState({error: true});
+        console.log('error',e);
         //console.error('Cannot hydrate activity', e);
       }
     }
@@ -85,7 +86,7 @@ export default class ActivityScreen extends Component {
         entity={ this.entityStore.entity }
         newsfeed={ this.store }
         navigation={ this.props.navigation }
-        autoHeight={true}
+        autoHeight={false}
       /> : null;
   }
 
@@ -100,7 +101,7 @@ export default class ActivityScreen extends Component {
    * Render
    */
   render() {
-    if (!this.entityStore.entity) return <CenteredLoading />;
+    if (!this.entityStore.entity && !this.state.error) return <CenteredLoading />;
     return (
       <View style={[CS.flexContainer, CS.backgroundWhite]}>
         {

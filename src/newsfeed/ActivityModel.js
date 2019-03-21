@@ -41,7 +41,14 @@ export default class ActivityModel extends BaseModel {
    * @param {string} size
    */
   getThumbSource(size = 'medium') {
+    // for gif use always the same size to take adventage of the cache (they are not resized)
+    if (this.isGif()) size = 'medium';
     return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.guid + '/' + size };
+  }
+
+  isGif() {
+    if (this.custom_data && this.custom_data[0] && this.custom_data[0].gif) return true;
+    return false;
   }
 
   /**

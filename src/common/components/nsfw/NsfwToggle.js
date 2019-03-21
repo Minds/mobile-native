@@ -66,7 +66,7 @@ export default class NsfwToggle extends Component {
             style={[this.props.iconStyle, isActive && this.props.iconActiveStyle]}
           />
 
-          {isActive && <Text style={this.props.labelStyle}>
+          {isActive && !this.props.hideLabel && <Text style={this.props.labelStyle}>
             NSFW
           </Text>}
         </Touchable>

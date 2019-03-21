@@ -1294,11 +1294,23 @@ boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
 
+bplist-creator@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/bplist-creator/-/bplist-creator-0.0.4.tgz#4ac0496782e127a85c1d2026a4f5eb22a7aff991"
+  integrity sha1-SsBJZ4LhJ6hcHSAmpPXrIqev+ZE=
+  dependencies:
+    stream-buffers "~0.2.3"
+
 bplist-creator@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/bplist-creator/-/bplist-creator-0.0.7.tgz#37df1536092824b87c42f957b01344117372ae45"
   dependencies:
     stream-buffers "~2.2.0"
+
+bplist-parser@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/bplist-parser/-/bplist-parser-0.0.6.tgz#38da3471817df9d44ab3892e27707bbbd75a11b9"
+  integrity sha1-ONo0cYF9+dRKs4kuJ3B7u9daEbk=
 
 bplist-parser@0.1.1:
   version "0.1.1"
@@ -4691,6 +4703,11 @@ lodash.times@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/lodash.times/-/lodash.times-4.3.2.tgz#3e1f2565c431754d54ab57f2ed1741939285ca1d"
 
+lodash@^3.5.0:
+  version "3.10.1"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+  integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
+
 lodash@^4.0.0, lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
@@ -5402,6 +5419,11 @@ node-pre-gyp@^0.10.0:
     semver "^5.3.0"
     tar "^4"
 
+node-uuid@1.4.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/node-uuid/-/node-uuid-1.4.7.tgz#6da5a17668c4b3dd59623bda11cf7fa4c1f60a6f"
+  integrity sha1-baWhdmjEs91ZYjvaEc9/pMH2Cm8=
+
 nomnom@1.6.x, nomnom@~1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/nomnom/-/nomnom-1.6.2.tgz#84a66a260174408fc5b77a18f888eccc44fb6971"
@@ -5953,6 +5975,11 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+pegjs@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/pegjs/-/pegjs-0.9.0.tgz#f6aefa2e3ce56169208e52179dfe41f89141a369"
+  integrity sha1-9q76LjzlYWkgjlIXnf5B+JFBo2k=
+
 pegjs@^0.10.0:
   version "0.10.0"
   resolved "https://registry.yarnpkg.com/pegjs/-/pegjs-0.10.0.tgz#cf8bafae6eddff4b5a7efb185269eaaf4610ddbd"
@@ -6001,6 +6028,16 @@ pkg-dir@^3.0.0:
   integrity sha512-/E57AYkoeQ25qkxMj5PBOVgF8Kiu/h7cYS30Z5+R7WaiCCBfLq58ZI/dSeaEKb9WVJV5n/03QwrN3IeWIFllvw==
   dependencies:
     find-up "^3.0.0"
+
+plist@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/plist/-/plist-1.2.0.tgz#084b5093ddc92506e259f874b8d9b1afb8c79593"
+  integrity sha1-CEtQk93JJQbiWfh0uNmxr7jHlZM=
+  dependencies:
+    base64-js "0.0.8"
+    util-deprecate "1.0.2"
+    xmlbuilder "4.0.0"
+    xmldom "0.1.x"
 
 plist@2.0.1:
   version "2.0.1"
@@ -6609,6 +6646,13 @@ react-native-snap-carousel@^3.5.0:
   dependencies:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
+
+react-native-sqlite-storage@^3.3.10:
+  version "3.3.10"
+  resolved "https://registry.yarnpkg.com/react-native-sqlite-storage/-/react-native-sqlite-storage-3.3.10.tgz#b331de4ba61ec1f6223d28da4baff533bf4004cf"
+  integrity sha512-t9NYXtiNz4C42og+gtJwTh+9K26Fl3qsUiLGresMxZrqvX5UR+M8nbnN69akTYW7KaSmOrebGI7npPKQ2WimJQ==
+  dependencies:
+    xcode "0.8.9"
 
 react-native-switch-pro@^1.0.2-beta:
   version "1.0.2-beta"
@@ -7413,6 +7457,15 @@ simple-get@^2.7.0:
     once "^1.3.1"
     simple-concat "^1.0.0"
 
+simple-plist@0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/simple-plist/-/simple-plist-0.1.4.tgz#10eb51b47e33c556eb8ec46d5ee64d64e717db5d"
+  integrity sha1-EOtRtH4zxVbrjsRtXuZNZOcX210=
+  dependencies:
+    bplist-creator "0.0.4"
+    bplist-parser "0.0.6"
+    plist "1.2.0"
+
 simple-plist@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/simple-plist/-/simple-plist-0.2.1.tgz#71766db352326928cf3a807242ba762322636723"
@@ -7667,6 +7720,11 @@ stream-browserify@^2.0.1:
   dependencies:
     inherits "~2.0.1"
     readable-stream "^2.0.2"
+
+stream-buffers@~0.2.3:
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/stream-buffers/-/stream-buffers-0.2.6.tgz#181c08d5bb3690045f69401b9ae6a7a0cf3313fc"
+  integrity sha1-GBwI1bs2kARfaUAbmuanoM8zE/w=
 
 stream-buffers@~2.2.0:
   version "2.2.0"
@@ -8190,7 +8248,7 @@ utf8@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/utf8/-/utf8-2.1.2.tgz#1fa0d9270e9be850d9b05027f63519bf46457d96"
 
-util-deprecate@~1.0.1:
+util-deprecate@1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
 
@@ -8592,6 +8650,15 @@ wtf-8@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wtf-8/-/wtf-8-1.0.0.tgz#392d8ba2d0f1c34d1ee2d630f15d0efb68e1048a"
 
+xcode@0.8.9:
+  version "0.8.9"
+  resolved "https://registry.yarnpkg.com/xcode/-/xcode-0.8.9.tgz#ec6765f70e9dccccc9f6e9a5b9b4e7e814b4cf35"
+  integrity sha1-7Gdl9w6dzMzJ9umlubTn6BS0zzU=
+  dependencies:
+    node-uuid "1.4.7"
+    pegjs "0.9.0"
+    simple-plist "0.1.4"
+
 xcode@1.0.0, xcode@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/xcode/-/xcode-1.0.0.tgz#e1f5b1443245ded38c180796df1a10fdeda084ec"
@@ -8634,6 +8701,13 @@ xhr@^2.0.4, xhr@^2.3.3:
 xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
+
+xmlbuilder@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-4.0.0.tgz#98b8f651ca30aa624036f127d11cc66dc7b907a3"
+  integrity sha1-mLj2UcowqmJANvEn0RzGbce5B6M=
+  dependencies:
+    lodash "^3.5.0"
 
 xmlbuilder@8.2.2:
   version "8.2.2"

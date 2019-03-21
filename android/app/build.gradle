@@ -194,6 +194,7 @@ dependencies {
     //   exclude group: 'com.facebook.react',module:'react-native-google-signin'
     //   exclude group: 'com.google.android.gms', module: 'play-services-base'
     }
+    implementation project(':react-native-sqlite-storage')
     implementation project(':react-native-code-push')
     implementation project(':react-native-background-timer')
     implementation project(':react-native-android-sms-listener')

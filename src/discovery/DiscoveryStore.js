@@ -46,7 +46,7 @@ class DiscoveryStore {
    */
   buildListStores() {
 
-    this.filters = new NewsfeedFilterStore('hot', 'images', '12h');
+    this.filters = new NewsfeedFilterStore('hot', 'images', '12h', []);
 
     this.stores = {
       'images': {
@@ -138,7 +138,15 @@ class DiscoveryStore {
     this.setLoading(store, true);
 
     try {
-      const feed = await discoveryService.getTopFeed(store.list.offset, this.filters.type, this.filters.filter, this.filters.period, this.filters.searchtext, limit);
+      const feed = await discoveryService.getTopFeed(
+        store.list.offset,
+        this.filters.type,
+        this.filters.filter,
+        this.filters.period,
+        this.filters.nsfw.concat([]),
+        this.filters.searchtext,
+        limit
+      );
 
       // if the filter has changed during the call we ignore the results
       if (filter === this.filters.filter) {
@@ -225,7 +233,7 @@ class DiscoveryStore {
    * @param {string} period
    * @param {string} searchtext
    */
-  onFilterChange = (filter, type, period) => {
+  onFilterChange = (filter, type, period, nsfw) => {
     const store = this.stores[type];
     store.list.clearList();
     this.loadList(true);

@@ -3,6 +3,7 @@ import {
   action,
   reaction
 } from 'mobx';
+import { consumerNsfwService } from '../services/nsfw.service';
 
 /**
  * Newsfeed Filter Store
@@ -12,20 +13,25 @@ export default class NewsfeedFilterStore {
   @observable filter     = 'hot';
   @observable type       = 'images';
   @observable period     = '12h';
+  @observable nsfw       = [];
 
   defaultFilter;
   defaultType;
   defaultPeriod;
+  defaultNsfw;
 
   /**
    * Constructor
    * @param {string} defaultType
    */
-  constructor(defaultFilter, defaultType, defaultPeriod) {
+  constructor(defaultFilter, defaultType, defaultPeriod, defaultNsfw) {
     this.defaultFilter = defaultFilter;
     this.defaultType = defaultType;
     this.defaultPeriod = defaultPeriod;
+    this.defaultNsfw = defaultNsfw;
     this.clear();
+
+    this.loadNsfwFromPersistentStorage();
   }
 
   /**
@@ -36,6 +42,15 @@ export default class NewsfeedFilterStore {
     this.filter = this.defaultFilter;
     this.type   = this.defaultType;
     this.period = this.defaultPeriod;
+    this.nsfw   = this.defaultNsfw;
+  }
+  
+  @action
+  async loadNsfwFromPersistentStorage() {
+    const newDefaultNsfw = await consumerNsfwService.get();
+    
+    this.nsfw = newDefaultNsfw;
+    this.defaultNsfw = newDefaultNsfw;
   }
 
   /**
@@ -67,6 +82,15 @@ export default class NewsfeedFilterStore {
   }
 
   /**
+   * 
+   * @param {number[]} nsfw 
+   */
+  setNsfw(nsfw) {
+    this.nsfw = nsfw;
+    consumerNsfwService.set(nsfw);
+  }
+
+  /**
    * search
    * @param {string} text
    */
@@ -82,7 +106,7 @@ export default class NewsfeedFilterStore {
    */
   onFilterChange(fn) {
     return reaction(
-      () => [this.filter, this.type, this.period],
+      () => [this.filter, this.type, this.period, this.nsfw],
       args => fn(...args),
       { fireImmediately: false }
     );

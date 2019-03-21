@@ -76,6 +76,7 @@
     "react-native-share-menu": "Minds/react-native-share-menu",
     "react-native-simple-radio-button": "^2.7.1",
     "react-native-snap-carousel": "^3.5.0",
+    "react-native-sqlite-storage": "^3.3.10",
     "react-native-switch-pro": "^1.0.2-beta",
     "react-native-tcp": "3.3.0",
     "react-native-udp": "^2.3.1",

@@ -49,7 +49,11 @@ export default class DiscoveryTile extends Component {
   }
 
   errorRender = (err) => {
-    return <Text styles={[CS.colorWhite, CS.fontS, CS.textCenter]}>Error loading media</Text>
+    return (
+      <View style={CS.centered}>
+        <Text styles={[CS.colorWhite, CS.fontS, CS.textCenter]}>Error loading media</Text>
+      </View>
+    )
   }
 
   setError = (err) => {
@@ -68,6 +72,11 @@ export default class DiscoveryTile extends Component {
     const entity = this.props.entity;
 
     const url = entity.getThumbSource();
+
+    // load gif with lower priority
+    if (entity.isGif()) {
+      url.priority = FastImage.priority.low;
+    }
 
     const style = { width: this.props.size, height: this.props.size };
 
