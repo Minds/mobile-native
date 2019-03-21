@@ -36,15 +36,14 @@ export default class OwnerBlock extends PureComponent {
    * Navigate To group
    */
   _navToGroup = () => {
-    let currentGroup;
-    try{
-      currentGroup = this.props.navigation.state.params.group; //get the current group - if this is a group.
-    } catch(e) {
-      currentGroup = false;
-    } finally {
-      if (this.props.navigation && !currentGroup && currentGroup.name !== this.props.entity.containerObj){ //&& check the group to be navigated to is not the one already in view. 
-        this.props.navigation.push('GroupView', { group: this.props.entity.containerObj });
-      }
+    if (this.props.navigation) {
+      let groupGuid;
+      try {
+        groupGuid = this.props.navigation.state.params.group ? this.props.navigation.state.params.group.guid : this.props.navigation.state.params.guid;
+      } catch {}
+      if (groupGuid == this.props.entity.containerObj.guid) return;
+
+      this.props.navigation.push('GroupView', { group: this.props.entity.containerObj });
     }
   };
 
