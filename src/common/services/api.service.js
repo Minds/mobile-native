@@ -199,7 +199,12 @@ class ApiService {
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.onload = () => {
         if (xhr.status == 200) {
-          let data = JSON.parse(xhr.responseText);
+          let data = {'status': null}
+          try {
+            data = JSON.parse(xhr.responseText);
+          } catch(e) {
+            data.status = 'error'
+          }
           if (data.status == 'error')
             return reject(data);
 
