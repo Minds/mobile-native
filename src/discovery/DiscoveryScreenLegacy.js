@@ -245,7 +245,7 @@ export default class DiscoveryScreen extends Component {
         horizontal={false}
         windowSize={9}
         removeClippedSubviews={false}
-        getItemLayout={getItemLayout}
+        // getItemLayout={getItemLayout} // commented to fix scrolling issues
         columnWrapperStyle={columnWrapperStyle}
         keyboardShouldPersistTaps={'handled'}
         // onViewableItemsChanged={this.onViewableItemsChanged}
