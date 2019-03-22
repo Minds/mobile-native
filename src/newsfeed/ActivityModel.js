@@ -43,6 +43,9 @@ export default class ActivityModel extends BaseModel {
   getThumbSource(size = 'medium') {
     // for gif use always the same size to take adventage of the cache (they are not resized)
     if (this.isGif()) size = 'medium';
+    if (this.custom_type == 'batch') {
+      return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.entity_guid + '/' + size };
+    }
     return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.guid + '/' + size };
   }
 

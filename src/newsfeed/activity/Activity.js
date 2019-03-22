@@ -55,18 +55,6 @@ export default class Activity extends Component {
   };
 
   /**
-   * Nav to full image with zoom
-   */
-  navToImage = () => {
-    // if is a rich embed should load link
-    if (this.props.entity.perma_url) {
-      this.openLink();
-    } else {
-      this.props.navigation.push('ViewImage', { source: this.source });
-    }
-  }
-
-  /**
    * Open a link
    */
   openLink = () => {
