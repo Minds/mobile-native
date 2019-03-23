@@ -17,7 +17,11 @@ class MindsService {
         settings = await api.get('api/v1/minds/config');
         AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
       } catch (err) {
-        settings = await AsyncStorage.getItem('@MindsSettings');
+        try {
+          settings = JSON.parse(await AsyncStorage.getItem('@MindsSettings'));
+        } catch {
+          settings = null;
+        }
       }
 
       if (settings) {
