@@ -79,8 +79,8 @@ class GroupsService {
     return feed;
   }
 
-  async loadMyGroups() {
-    const data = await api.get('api/v1/groups/member');
+  async loadMyGroups(offset) {
+    const data = await api.get('api/v1/groups/member',{offset});
 
     return {
       entities: data.entities || [],
