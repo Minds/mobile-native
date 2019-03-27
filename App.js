@@ -80,6 +80,10 @@ sessionService.onLogin(async () => {
     console.log('Error registering the push notification token', err);
   }
 
+  // load nsfw from storage
+  await stores.discovery.filters.init();
+
+  // get onboarding progress
   const onboarding = await stores.onboarding.getProgress();
 
   if (onboarding && onboarding.show_onboarding) {

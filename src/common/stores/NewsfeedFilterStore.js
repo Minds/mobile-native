@@ -30,8 +30,13 @@ export default class NewsfeedFilterStore {
     this.defaultPeriod = defaultPeriod;
     this.defaultNsfw = defaultNsfw;
     this.clear();
+  }
 
-    this.loadNsfwFromPersistentStorage();
+  /**
+   * Initialize the store
+   */
+  async init() {
+    await this.loadNsfwFromPersistentStorage();
   }
 
   /**
@@ -44,11 +49,11 @@ export default class NewsfeedFilterStore {
     this.period = this.defaultPeriod;
     this.nsfw   = this.defaultNsfw;
   }
-  
+
   @action
   async loadNsfwFromPersistentStorage() {
     const newDefaultNsfw = await consumerNsfwService.get();
-    
+
     this.nsfw = newDefaultNsfw;
     this.defaultNsfw = newDefaultNsfw;
   }
@@ -82,8 +87,8 @@ export default class NewsfeedFilterStore {
   }
 
   /**
-   * 
-   * @param {number[]} nsfw 
+   *
+   * @param {number[]} nsfw
    */
   setNsfw(nsfw) {
     this.nsfw = nsfw;
