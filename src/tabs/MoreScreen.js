@@ -167,7 +167,7 @@ render() {
       icon: (<Icon name='open-in-new' size={16} style={ styles.icon }/>),
       hideChevron: true,
       onPress: () => {
-        Linking.openURL('https://github.com/Minds');
+        Linking.openURL('https://gitlab.com/Minds');
       }
     }
   ];
