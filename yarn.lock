@@ -8397,10 +8397,9 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-vargs@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/vargs/-/vargs-0.1.0.tgz#6b6184da6520cc3204ce1b407cac26d92609ebff"
-  integrity sha1-a2GE2mUgzDIEzhtAfKwm2SYJ6/8=
+vargs@0.1.0, vargs@Minds/vargs#0f6d9b9578abacb0a68f75a7b886f14719f563de:
+  version "0.0.0"
+  resolved "https://codeload.github.com/Minds/vargs/tar.gz/0f6d9b9578abacb0a68f75a7b886f14719f563de"
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"

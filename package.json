@@ -122,6 +122,9 @@
     "reactotron-react-native": "^1.14.0",
     "wd": "^1.11.1"
   },
+  "resolutions": {
+    "vargs": "Minds/vargs#0f6d9b9578abacb0a68f75a7b886f14719f563de"
+  },
   "react-native": {
     "crypto": "react-native-crypto",
     "zlib": "browserify-zlib",
