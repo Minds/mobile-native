@@ -5,12 +5,11 @@ import React, {
 
 import {
   PanResponder,
-  Modal,
   StyleSheet,
   ActivityIndicator,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
+  Platform,
   View,
 } from 'react-native';
 
@@ -25,11 +24,13 @@ import { observer, inject } from 'mobx-react/native';
 import KeepAwake from 'react-native-keep-awake';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { withNavigation } from 'react-navigation';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import en from "../../locales/en";
 import isNsfw from '../common/helpers/isNsfw';
+
+const isIOS = Platform.OS === 'ios';
 
 @observer
 class MindsVideo extends Component {
@@ -103,7 +104,8 @@ class MindsVideo extends Component {
     this.setState({ error: false, inProgress: true, });
   };
 
-  onError = () => {
+  onError = (err) => {
+    console.log(err)
     this.setState({ error: true, inProgress: false, });
   };
 
@@ -151,8 +153,8 @@ class MindsVideo extends Component {
     this.player.seek(newTime);
   }
 
-  toggleFullscreen() {
-    this.setState({fullScreen: !this.state.fullScreen, changedModeTime: this.state.currentTime});
+  toggleFullscreen = () => {
+    this.setState({fullScreen: !this.state.fullScreen});
   }
 
   play = () => {
@@ -215,11 +217,15 @@ class MindsVideo extends Component {
     }
   }, 4000)
 
+  get fullScreen() {
+    return <Icon onPress={this.toggleFullscreen} name="md-resize" size={23} color={colors.light} style={CS.paddingLeft}/>;
+  }
+
   get volumeIcon() {
     if (this.state.volume == 0) {
-      return <Icon onPress={this.toggleVolume} name="md-volume-off" size={20} color={colors.light} />;
+      return <Icon onPress={this.toggleVolume} name="ios-volume-off" size={23} color={colors.light} />;
     } else {
-      return <Icon onPress={this.toggleVolume} name="md-volume-high" size={20} color={colors.light} />;
+      return <Icon onPress={this.toggleVolume} name="ios-volume-high" size={23} color={colors.light} />;
     }
   }
 
@@ -237,16 +243,19 @@ class MindsVideo extends Component {
           ref={(ref) => {
             this.player = ref
           }}
+          volume={parseFloat(this.state.volume)}
+          onEnd={this.onVideoEnd}
           onLoadStart={this.onLoadStart}
           onLoad={this.onVideoLoad}
-          onEnd={this.onVideoEnd}
+          onProgress = {this.onProgress}
           onError={this.onError}
-          onProgress={this.onProgress}
+          ignoreSilentSwitch={'obey'}
           source={{ uri: video.uri.replace('file://',''), type: 'mp4' }}
           paused={paused}
-          volume={parseFloat(this.state.volume)}
+          fullscreen={this.state.fullScreen}
           resizeMode={"contain"}
-          style={styles.video}
+          controls={isIOS}
+          style={CS.flexContainer}
         />
       )
     } else {
@@ -257,7 +266,7 @@ class MindsVideo extends Component {
           onError={this.onError}
           source={image}
           entity={entity}
-          style={[CommonStyle.positionAbsolute]}
+          style={[CS.positionAbsolute]}
           loadingIndicator="placeholder"
         />
       )
@@ -268,9 +277,14 @@ class MindsVideo extends Component {
    * Render overlay
    */
   renderOverlay() {
+
+    // no overlay on full screen
+    if (this.state.fullScreen) return null;
+
     const entity = this.props.entity;
     let {currentTime, duration, paused} = this.state;
-    const mustShow = (this.state.showOverlay || this.state.paused) && (!entity || !isNsfw(entity) || entity.mature_visibility);
+
+    const mustShow = ((this.state.showOverlay && !isIOS) || this.state.paused) && (!entity ||!isNsfw(entity) || entity.mature_visibility);
 
     if (mustShow) {
       const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
@@ -290,12 +304,12 @@ class MindsVideo extends Component {
         onPress={this.openControlOverlay}
         >
           <View style={styles.controlOverlayContainer}>
-            <View style={[styles.controlPlayButtonContainer, CommonStyle.marginTop2x]}>
+            <View style={[CS.positionAbsolute, CS.centered, CS.marginTop2x]}>
               {this.play_button}
             </View>
-            { this.player && <View style={styles.controlBarContainer}>
+            { (this.player && !isIOS) && <View style={styles.controlBarContainer}>
               { progressBar }
-              <View style={{ padding: 8}}>
+              <View style={[CS.padding, CS.rowJustifySpaceEvenly]}>
                 {this.volumeIcon}
               </View>
             </View> }
@@ -308,11 +322,13 @@ class MindsVideo extends Component {
   }
 
   renderErrorOverlay() {
-    return (<View style={[styles.controlOverlayContainer]}>
-      <Text
-        style={[styles.errorText]}
-      >There was an error displaying this media.</Text>
-    </View>);
+    return (
+      <View style={styles.controlOverlayContainer}>
+        <Text
+          style={styles.errorText}
+        >There was an error displaying this media.</Text>
+      </View>
+    );
   }
 
   renderInProgressOverlay() {
@@ -325,15 +341,13 @@ class MindsVideo extends Component {
    * Render
    */
   render() {
-    const { video, volume, entity } = this.props;
     const { error, inProgress } = this.state;
 
     const overlay = this.renderOverlay();
-
     return (
-      <View style={styles.container} >
+      <View style={[CS.flexContainer, CS.backgroundBlack]} >
         <TouchableWithoutFeedback
-          style={styles.videoContainer}
+          style={CS.flexContainer}
           onPress={this.openControlOverlay}
           >
           { this.video }
@@ -347,21 +361,12 @@ class MindsVideo extends Component {
 }
 
 let styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  videoContainer: {
-    flex: 1,
-  },
-  video: {
-    flex: 1,
-  },
   controlOverlayContainer: {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
+    right:0,
+    bottom:0,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -376,64 +381,27 @@ let styles = StyleSheet.create({
     alignItems: 'center',
   },
   errorText: {
-    color: 'white',
+    color: colors.darkGreyed,
   },
   controlBarContainer: {
     flexDirection: 'row',
+    position: 'absolute',
+    bottom:0,
+    left:0,
+    right:0,
     alignItems: 'stretch',
     margin: 8,
     paddingLeft: 8,
     paddingRight: 8,
     borderRadius: 3,
-    backgroundColor: 'rgba(0,0,0,0.4)'
+    backgroundColor: 'rgba(48,48,48,0.7)'
   },
   progressBarContainer: {
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
   },
-
-
-
-  playerButtonWrapper: {
-    flex:1,
-    alignSelf:'center'
-  },
-  controlWrapper: {
-    bottom:0,
-    position:'absolute',
-    width:'100%',
-    zIndex:200,
-    flexDirection: 'row'
-  },
-  controlTopWrapper: {
-    top:0,
-    position:'absolute',
-    width:'100%',
-    zIndex:200,
-    flexDirection: 'row'
-  },
-  controlTopTexts: {
-    color: 'red'
-  },
-  progressWrapper: {
-    flex:9
-  },
   fullScreen: {backgroundColor: "black"},
-  barWrapper: {
-    zIndex:200,
-    position: 'relative',
-    bottom:0,
-    height: 30,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  controllerButton: {height: 20, width: 20},
-  videoView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
   progressBar: {
     alignSelf: "stretch",
     margin: 20

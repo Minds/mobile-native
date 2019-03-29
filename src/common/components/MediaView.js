@@ -28,6 +28,7 @@ import domain from '../helpers/domain';
 import MindsVideo from '../../media/MindsVideo';
 import mediaProxyUrl from '../helpers/media-proxy-url';
 import download from '../services/download.service';
+import mindsService from '../services/minds.service';
 import { isEntityNsfw } from '../helpers/isNsfw';
 
 /**
@@ -80,7 +81,6 @@ export default class MediaView extends Component {
     return null;
   }
 
-  /* URL is -> MINDS_API_URI + 'api/v1/media/' + this.props.entity.custom_data.guid + '/play'*/
   getVideo() {
     let guid;
     if (this.props.entity.custom_data) {
@@ -91,9 +91,11 @@ export default class MediaView extends Component {
       guid = this.props.entity.guid;
     }
 
+    const source = {uri: `${mindsService.settings.cinemr_url}${guid}/360.mp4`};
+
     return (
       <View style={styles.videoContainer}>
-        <MindsVideo video={{'uri': MINDS_API_URI + 'api/v1/media/' + guid + '/play'}} entity={this.props.entity} ref={o => {this.videoPlayer = o}}/>
+        <MindsVideo video={source} entity={this.props.entity} ref={o => {this.videoPlayer = o}}/>
       </View>
     );
   }

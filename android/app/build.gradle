@@ -210,7 +210,7 @@ dependencies {
     implementation project(':react-native-os')
     implementation project(':react-native-minds-encryption')
     implementation project(':react-native-i18n')
-    implementation project(':react-native-video')
+    implementation project(':react-native-video-exoplayer')
     implementation project(':react-native-photo-view')
     implementation project(':react-native-fast-image')
     implementation project(':react-native-exception-handler')
