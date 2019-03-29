@@ -1,4 +1,4 @@
 export const Version = {
-  VERSION: '3.3.0-rc2',
-  BUILD: '20190313'
+  VERSION: '3.4.0-rc1',
+  BUILD: '20190323'
 };

@@ -30,7 +30,7 @@ export default class WalletHistoryScreen extends Component {
    * Render screen
    */
   render() {
-    
+
     return (
       <View style={styles.container}>
         <FlatList
@@ -39,7 +39,7 @@ export default class WalletHistoryScreen extends Component {
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
-          onEndThreshold={0.05}
+          // onEndReachedThreshold={0.05}
           refreshing={this.props.walletHistory.list.refreshing}
           style={styles.listView}
         />
@@ -71,9 +71,9 @@ export default class WalletHistoryScreen extends Component {
       <View style={{flex:1}}>
         <View style={{flex:1}}>
           <Text style={{
-            color: entity.points > 0 ? 'green': 'red', 
-            fontWeight:'bold', 
-            fontSize: 28, 
+            color: entity.points > 0 ? 'green': 'red',
+            fontWeight:'bold',
+            fontSize: 28,
             padding: 10
           }}>
             {entity.points > 0 ? '+':''}{entity.points}
@@ -98,14 +98,14 @@ const styles = StyleSheet.create({
     flex:1
   },
   walletHistoryItem: {
-    flex:1, 
-    padding: 10, 
-    flexDirection: 'row', 
+    flex:1,
+    padding: 10,
+    flexDirection: 'row',
     justifyContent: 'flex-end'
   },
   walletItemDetails: {
-    flex:1, 
-    flexDirection: 'row', 
+    flex:1,
+    flexDirection: 'row',
     justifyContent: 'flex-end'
   },
   listView: {

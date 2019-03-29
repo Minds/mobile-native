@@ -1,18 +1,19 @@
 import React, {
-    Component,
-    Fragment
+  Component,
+  Fragment
 } from 'react';
 
 import {
-    StyleSheet,
-    Platform,
-    Text,
-    FlatList,
-    Animated,
-    View,
-    TouchableHighlight,
-    Keyboard,
-    ActivityIndicator,
+  StyleSheet,
+  Platform,
+  Text,
+  FlatList,
+  Dimensions,
+  Animated,
+  View,
+  TouchableHighlight,
+  Keyboard,
+  ActivityIndicator,
 } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
@@ -42,6 +43,7 @@ import { MINDS_CDN_URI } from '../config/Config';
 import ErrorLoading from '../common/components/ErrorLoading';
 import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
 import GroupsListItem from '../groups/GroupsListItem'
+import DiscoveryFilters from './NewsfeedFilters';
 
 const isIos = Platform.OS === 'ios';
 
@@ -52,14 +54,14 @@ const isIos = Platform.OS === 'ios';
 @observer
 export default class DiscoveryScreen extends Component {
 
-  col = 3;
-  iconSize = 26;
+  cols = 3;
+  iconSize = 28;
   headerIsShown = true;
 
   state = {
     active: false,
+    showFeed: false,
     itemHeight: 0,
-    currentSearchParam: void 0,
     q: ''
   }
 
@@ -90,7 +92,7 @@ export default class DiscoveryScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
-    this._loadData();
+    this._loadData(false, 24);
 
     // load data on enter
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
@@ -108,29 +110,13 @@ export default class DiscoveryScreen extends Component {
 
     const params = this.props.navigation.state.params;
     if (params && params.type)
-      this.props.discovery.setType(params.type);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps && nextProps.navigation) {
-      const params = nextProps.navigation.state.params,
-        q = params && params.q;
-
-      if (this.state.currentSearchParam !== q) {
-        this.setState({ currentSearchParam: q });
-        setTimeout(() => this._loadData());
-      }
-    }
-
-    const params = nextProps.navigation.state.params;
-    if (params && params.type)
-      this.props.discovery.setType(params.type);
+      this.props.discovery.filters.setType(params.type);
   }
 
   /**
    * Load data
    */
-  _loadData(preload = false) {
+  _loadData(preload = false, limit = 12) {
     const params = this.props.navigation.state.params,
       q = params && params.q;
 
@@ -139,7 +125,7 @@ export default class DiscoveryScreen extends Component {
 
       return this.props.discovery.search(q);
     } else {
-      return this.props.discovery.loadList(false, true);
+      return this.props.discovery.loadList(false, false, limit);
     }
   }
 
@@ -155,14 +141,13 @@ export default class DiscoveryScreen extends Component {
    * Adjust tiles to 1/cols size
    */
   onLayout = e => {
-    const width = e.nativeEvent.layout.width;
-    this.setState({
-      itemHeight: width / this.cols,
-    });
-  }
-
-  closeOptionsModal = () => {
-    console.log('close');
+    // calculate the itemHeight for 3 cols only
+    if (this.cols === 3) {
+      const width = Dimensions.get('window').width
+      this.setState({
+        itemHeight: width / this.cols,
+      });
+    }
   }
 
   /**
@@ -177,7 +162,7 @@ export default class DiscoveryScreen extends Component {
    * On viewable items change in the list
    */
   onViewableItemsChanged = (change) => {
-    if (this.props.discovery.type == 'images' && isIos) {
+    if (this.props.discovery.filters.type == 'images' && isIos) {
       change.changed.forEach(c => {
         if (c.item.gif) {
           c.item.setVisible(c.isViewable);
@@ -195,9 +180,9 @@ export default class DiscoveryScreen extends Component {
     const discovery = this.props.discovery;
     const list = discovery.list;
 
-    let renderRow, columnWrapperStyle = null, getItemLayout=null;
+    let renderRow, columnWrapperStyle = null;
     this.cols = 3;
-    switch (discovery.type) {
+    switch (discovery.filters.type) {
       case 'lastchannels':
       case 'channels':
         renderRow = this.renderUser;
@@ -207,7 +192,7 @@ export default class DiscoveryScreen extends Component {
         renderRow = this.renderGroup;
         this.cols = 1;
         break;
-      case 'activity':
+      case 'activities':
         renderRow = this.renderActivity;
         this.cols = 1;
         break;
@@ -216,9 +201,13 @@ export default class DiscoveryScreen extends Component {
         this.cols = 1;
         break;
       default:
-        renderRow = this.renderTile;
-        columnWrapperStyle = { height: this.state.itemHeight };
-        getItemLayout = this.getItemLayout;
+        if (this.state.showFeed === false) {
+          renderRow = this.renderTile;
+          columnWrapperStyle = { height: this.state.itemHeight };
+        } else {
+          renderRow = this.renderActivity;
+          this.cols = 1;
+        }
         break;
     }
 
@@ -228,7 +217,7 @@ export default class DiscoveryScreen extends Component {
       <FlatList
         onLayout={this.onLayout}
         key={'discofl' + this.cols} // we need to force component redering if we change cols
-        data={list.entities.slice()}
+        data={list.entities.slice(this.state.showFeed)}
         renderItem={renderRow}
         ListFooterComponent={footer}
         ListHeaderComponent={this.getHeaders()}
@@ -238,14 +227,12 @@ export default class DiscoveryScreen extends Component {
         onRefresh={this.refresh}
         refreshing={list.refreshing}
         onEndReached={this.loadFeed}
-        onEndThreshold={0}
-        initialNumToRender={12}
+        initialNumToRender={this.cols == 3 ? 12 : 3}
         style={styles.listView}
         numColumns={this.cols}
         horizontal={false}
         windowSize={9}
         removeClippedSubviews={false}
-        getItemLayout={getItemLayout}
         columnWrapperStyle={columnWrapperStyle}
         keyboardShouldPersistTaps={'handled'}
         // onViewableItemsChanged={this.onViewableItemsChanged} Fix gifs desappear near the top when the header is hidden
@@ -309,7 +296,7 @@ export default class DiscoveryScreen extends Component {
    * Get empty list
    */
   getEmptyList() {
-    if (this.props.discovery.loading || this.props.discovery.list.errorLoading) return null;
+    if (!this.props.discovery.list.loaded || this.props.discovery.loading || this.props.discovery.list.errorLoading) return null;
     return (
       <View style={ComponentsStyle.emptyComponentContainer}>
         <View style={ComponentsStyle.emptyComponent}>
@@ -319,69 +306,113 @@ export default class DiscoveryScreen extends Component {
     );
   }
 
+  setTypeActivities = () => this.props.discovery.filters.setType('activities');
+  setTypeChannels   = () => this.props.discovery.filters.setType('channels');
+  setTypeBlogs      = () => this.props.discovery.filters.setType('blogs');
+  setTypeGroups     = () => this.props.discovery.filters.setType('groups');
+  setTypeVideos = () => {
+    if (this.state.showFeed !== false && this.props.discovery.filters.type === 'videos') {
+      return this.setState({showFeed: false});
+    }
+    this.props.discovery.filters.setType('videos');
+  }
+  setTypeImages = () => {
+    if (this.state.showFeed !== false && this.props.discovery.filters.type === 'images') {
+      return this.setState({showFeed: false});
+    }
+    this.props.discovery.filters.setType('images');
+  }
+
   /**
    * Get header
    */
   getHeaders() {
-    const discovery = this.props.discovery;
+    const filtersStore = this.props.discovery.filters;
     const navigation = (
       <View style={[styles.navigation]}>
 
-        <TouchableHighlight style={[ styles.iconContainer, discovery.type == 'channels' ? [CS.borderBottom2x, CS.borderPrimary] : null ]} onPress={ () => discovery.setType('channels') } underlayColor='#fff'>
-          <Icon
-            name="people"
-            style={[styles.icon, discovery.type == 'channels' ? styles.iconActive : null ]}
-            size={ this.iconSize }
-          />
-        </TouchableHighlight>
-        <TouchableHighlight style={[ styles.iconContainer, discovery.type == 'videos' ? [CS.borderBottom2x, CS.borderPrimary] : null ]} onPress={ () => discovery.setType('videos') } underlayColor='#fff'>
-          <Icon
-            name="videocam"
-            style={[styles.icon, discovery.type == 'videos' ? styles.iconActive : null ]}
-            size={ this.iconSize
-            }/>
-        </TouchableHighlight>
-        <TouchableHighlight style={[ styles.iconContainer, discovery.type == 'images' ? [CS.borderBottom2x, CS.borderPrimary] : null ]} onPress={ () => discovery.setType('images') } underlayColor='#fff'>
-          <IonIcon
-            name="md-photos"
-            style={[styles.icon, discovery.type == 'images' ? styles.iconActive : null ]}
-            size={ this.iconSize }/>
-        </TouchableHighlight>
-        <TouchableHighlight style={[ styles.iconContainer, discovery.type == 'blogs' ? [CS.borderBottom2x, CS.borderPrimary] : null ]} onPress={ () => discovery.setType('blogs') } underlayColor='#fff'>
-          <Icon
-            name="subject"
-            style={[styles.icon, discovery.type == 'blogs' ? styles.iconActive : null ]}
-            size={ this.iconSize }
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeActivities } underlayColor='#fff'>
+          <View style={CS.columnAlignCenter}>
+            <IonIcon
+              name="ios-infinite"
+              style={[styles.icon, filtersStore.type == 'activities' ? styles.iconActive : null ]}
+              size={ this.iconSize }
             />
+            <Text style={[CS.fontS, filtersStore.type == 'activities' ? CS.colorPrimary : CS.colorDark]}>All</Text>
+          </View>
         </TouchableHighlight>
-        <TouchableHighlight style={[ styles.iconContainer, discovery.type == 'groups' ? [CS.borderBottom2x, CS.borderPrimary] : null ]} onPress={ () => discovery.setType('groups') } underlayColor='#fff'>
-          <Icon
-            name="group-work"
-            style={[styles.icon, discovery.type == 'groups' ? styles.iconActive : null ]}
-            size={ this.iconSize }
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeChannels } underlayColor='#fff'>
+          <View style={CS.columnAlignCenter}>
+            <Icon
+              name="people"
+              style={[styles.icon, filtersStore.type == 'channels' ? styles.iconActive : null ]}
+              size={ this.iconSize }
             />
+            <Text style={[CS.fontS, filtersStore.type == 'channels' ? CS.colorPrimary : CS.colorDark]}>Channels</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeVideos } underlayColor='#fff'>
+          <View style={CS.columnAlignCenter}>
+            <IonIcon
+              name={this.state.showFeed !== false &&  filtersStore.type == 'videos' ? 'md-apps' : 'md-videocam'}
+              style={[styles.icon, filtersStore.type == 'videos' ? styles.iconActive : null ]}
+              size={this.iconSize}
+            />
+            <Text style={[CS.fontS, filtersStore.type == 'videos' ? CS.colorPrimary : CS.colorDark]}>Videos</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeImages } underlayColor='#fff'>
+          <View style={CS.columnAlignCenter}>
+            <IonIcon
+              name={this.state.showFeed !== false &&  filtersStore.type == 'images' ? 'md-apps' : 'md-photos'}
+              style={[styles.icon, filtersStore.type == 'images' ? styles.iconActive : null ]}
+              size={ this.iconSize }
+            />
+            <Text style={[CS.fontS, filtersStore.type == 'images' ? CS.colorPrimary : CS.colorDark]}>Images</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeBlogs } underlayColor='#fff'>
+          <View style={CS.columnAlignCenter}>
+            <Icon
+              name="subject"
+              style={[styles.icon, filtersStore.type == 'blogs' ? styles.iconActive : null ]}
+              size={ this.iconSize }
+            />
+            <Text style={[CS.fontS, filtersStore.type == 'blogs' ? CS.colorPrimary : CS.colorDark]}>Blogs</Text>
+          </View>
+        </TouchableHighlight>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeGroups } underlayColor='#fff'>
+          <View style={CS.columnAlignCenter}>
+            <Icon
+              name="group-work"
+              style={[styles.icon, filtersStore.type == 'groups' ? styles.iconActive : null ]}
+              size={ this.iconSize }
+            />
+            <Text style={[CS.fontS, filtersStore.type == 'groups' ? CS.colorPrimary : CS.colorDark]}>Groups</Text>
+          </View>
         </TouchableHighlight>
       </View>
     );
 
-    const iconRight = discovery.searchtext ?
+    const iconRight = filtersStore.searchtext ?
       'md-close-circle' :
-      (discovery.type == 'channels') ?
+      (filtersStore.type == 'channels') ?
         <Text style={styles.lastVisited} onPress={this.showLastChannels}>Visited</Text> :
         null;
 
 
-    const headerBody = discovery.type != 'lastchannels' ?
+    const headerBody = filtersStore.type != 'lastchannels' ?
       <View style={CS.marginBottom}>
         <SearchView
-          placeholder={`Search ${discovery.type}...`}
+          placeholder={`Search ${filtersStore.type}...`}
           onChangeText={this.setQ}
           value={this.state.q}
           containerStyle={[CS.marginTop, CS.marginBottom]}
           iconRight={ iconRight }
           iconRightOnPress={this.clearSearch}
         />
-        {!discovery.searchtext && <TagsSubBar onChange={this.onTagSelectionChange}/>}
+        <DiscoveryFilters store={this.props.discovery.filters} onTagsChange={this.onTagSelectionChange} onSelectOne={this.onSelectOne}/>
+        {/* {!discovery.searchtext && <TagsSubBar onChange={this.onTagSelectionChange}/>} */}
       </View> :
       <Text style={[CS.fontM, CS.backgroundPrimary, CS.colorWhite, CS.textCenter, CS.padding]}>Recently visited</Text>;
 
@@ -394,6 +425,14 @@ export default class DiscoveryScreen extends Component {
   }
 
   onTagSelectionChange = () => {
+    if (this.state.showFeed) {
+      this.setState({showFeed: 0});
+    }
+    this.props.discovery.reload();
+  }
+
+
+  onSelectOne = (tag) => {
     this.props.discovery.reload();
   }
 
@@ -435,7 +474,7 @@ export default class DiscoveryScreen extends Component {
     const list = await this.props.channel.lastVisited.first(10)
 
     // if (!list.length) return;
-    this.props.discovery.setType('lastchannels');
+    this.props.discovery.filters.setType('lastchannels');
     this.props.discovery.list.clearList();
     this.props.discovery.list.setList({entities: list});
   }
@@ -452,14 +491,14 @@ export default class DiscoveryScreen extends Component {
    * Search debouncer
    */
   searchDebouncer = _.debounce((text) => {
-    this.props.discovery.search(text);
+    this.props.discovery.filters.search(text);
   }, 350);
 
   /**
    * Set search query
    */
   setQ = q => {
-    this.setState({ q, currentSearchParam: q });
+    this.setState({ q });
     this.searchDebouncer(q);
   };
 
@@ -467,20 +506,24 @@ export default class DiscoveryScreen extends Component {
    * Load feed data
    */
   loadFeed = (e, force = false) => {
+    const type = this.props.discovery.filters.type;
     if (
-      this.props.discovery.type == 'lastchannels' ||
+      this.props.discovery.filters.type == 'lastchannels' ||
       (this.props.discovery.list.errorLoading && !force)
     ) {
       return;
     }
-    this.props.discovery.loadList();
+
+    const limit = this.state.showFeed ? 12 : (type == 'images' || type == 'videos' ? 24 : 12);
+
+    this.props.discovery.loadList(false, false, limit);
   }
 
   /**
    * Refresh feed data
    */
   refresh = async() => {
-    if (this.props.discovery.type == 'lastchannels')
+    if (this.props.discovery.filters.type == 'lastchannels')
       return;
     await this.props.discovery.refresh();
   }
@@ -489,11 +532,11 @@ export default class DiscoveryScreen extends Component {
    * Render a tile
    */
   renderTile = (row) => {
-    if (!this.state.active && row.item.gif) {
-      return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight, backgroundColor: colors.dark }}/>;
-    }
+    // if (!this.state.active && row.item.isGif()) {
+    //   return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight, backgroundColor: colors.greyed }}/>;
+    // }
     return (
-      <DiscoveryTile entity={row.item} size={this.state.itemHeight} navigation={this.props.navigation}/>
+      <DiscoveryTile entity={row.item} size={this.state.itemHeight} onPress={() => this.setState({'showFeed': row.index})}/>
     );
   }
 
@@ -502,7 +545,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderUser = (row) => {
     return (
-      <DiscoveryUser store={this.props.discovery.stores['channels']} entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.type == 'lastchannels'} />
+      <DiscoveryUser store={this.props.discovery.stores['channels']} entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
     );
   }
 
@@ -511,7 +554,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderActivity = (row) => {
     return (
-      <Activity entity={row.item} navigation={this.props.navigation} />
+      <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false}/>
     );
   }
 
@@ -571,11 +614,13 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flex: 1,
-    padding: 8,
+    padding: 5,
+    height: 50
   },
   icon: {
     alignSelf: 'center',
-    color: '#444'
+    color: '#444',
+    height: 28
   },
   iconActive: {
     color: colors.primary,

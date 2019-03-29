@@ -29,6 +29,7 @@ import MindsVideo from '../../media/MindsVideo';
 import mediaProxyUrl from '../helpers/media-proxy-url';
 import download from '../services/download.service';
 import mindsService from '../services/minds.service';
+import { isEntityNsfw } from '../helpers/isNsfw';
 
 /**
  * Activity
@@ -55,12 +56,8 @@ export default class MediaView extends Component {
     const type = this.props.entity.custom_type||this.props.entity.subtype;
     switch (type) {
       case 'image':
-        source = this.props.entity.getThumbSource('xlarge');
-        return this.getImage(source);
       case 'batch':
-        source = {
-          uri: this.props.entity.custom_data[0].src
-        }
+        source = this.props.entity.getThumbSource('large');
         return this.getImage(source);
       case 'video':
         return this.getVideo();
@@ -189,7 +186,7 @@ export default class MediaView extends Component {
             source={source}
             entity={this.props.entity}
             style={[styles.image, { height }]}
-            disableProgress={this.props.disableProgress}
+            loadingIndicator="placeholder"
             onError={this.imageError}
             imageStyle={styles.innerImage}
             />
@@ -220,7 +217,7 @@ export default class MediaView extends Component {
           source={source}
           entity={this.props.entity}
           style={styles.image}
-          disableProgress={this.props.disableProgress}
+          loadingIndicator="placeholder"
           onError={this.imageError}
           imageStyle={styles.innerImage}
         />
@@ -261,7 +258,7 @@ export default class MediaView extends Component {
   navToImage = () => {
 
     // if is explicit then should toggle
-    if (this.props.entity.mature) {
+    if (isEntityNsfw(this.props.entity)) {
       this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid);
       return;
     }
@@ -270,7 +267,8 @@ export default class MediaView extends Component {
     if (this.props.entity.perma_url) {
       this.openLink();
     } else {
-      this.props.navigation.push('ViewImage', { source: this.source });
+      const source = this.props.entity.getThumbSource('xlarge');
+      this.props.navigation.push('ViewImage', { source });
     }
   }
 

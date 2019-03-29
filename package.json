@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "postinstall": "echo 'Fixing web3 require() issue…' && replace '\\\"c\\\" . \\\"rypto\\\"' '\"crypto\"' node_modules -r --include='bytes.js' && rn-nodeify --install --hack"
+    "postinstall": "echo \"Fixing web3 require() issue…\" && replace \"c. . .rypto\" \"crypto\" node_modules -r --include=\"bytes.js\" && rn-nodeify --install --hack"
   },
   "dependencies": {
     "@types/react": "^16.4.14",
@@ -76,6 +76,7 @@
     "react-native-share-menu": "Minds/react-native-share-menu",
     "react-native-simple-radio-button": "^2.7.1",
     "react-native-snap-carousel": "^3.5.0",
+    "react-native-sqlite-storage": "^3.3.10",
     "react-native-switch-pro": "^1.0.2-beta",
     "react-native-tcp": "3.3.0",
     "react-native-udp": "^2.3.1",
@@ -86,6 +87,7 @@
     "readable-stream": "1.0.33",
     "replace": "^0.3.0",
     "rn-nodeify": "^8.2.0",
+    "rn-placeholder": "^1.3.3",
     "socket.io-client": "^2.0.4",
     "stream-browserify": "^1.0.0",
     "string_decoder": "^0.10.31",

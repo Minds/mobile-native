@@ -144,7 +144,7 @@ export default class GroupsListScreen extends Component {
         onRefresh={this.refresh}
         refreshing={list.refreshing}
         onEndReached={this.loadMore}
-        onEndThreshold={0}
+        // onEndReachedThreshold={0}
         style={styles.list}
         initialNumToRender={12}
         removeClippedSubviews={true}

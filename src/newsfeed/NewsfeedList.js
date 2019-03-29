@@ -139,7 +139,7 @@ export default class NewsfeedList extends Component {
         onRefresh={this.refresh}
         refreshing={newsfeed.list.refreshing}
         onEndReached={this.loadFeed}
-        onEndThreshold={0}
+        // onEndReachedThreshold={0}
         numColumns={newsfeed.isTiled ? 3 : 1}
         style={styles.listView}
         initialNumToRender={6}

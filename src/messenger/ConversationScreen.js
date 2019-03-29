@@ -192,7 +192,7 @@ export default class ConversationScreen extends Component {
           ListFooterComponent={footer}
           windowSize={3}
           onEndReached={this.loadMore}
-          onEndThreshold={0}
+          // onEndReachedThreshold={0}
         />
         <View style={styles.messagePoster} >
           <Image source={avatarImg} style={styles.avatar} />

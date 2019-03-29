@@ -117,7 +117,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
 
   setPin = pin => {
     const error = this.validatePin(pin) ? '' : 'Password must be at least 6 characters, which can be either alphanumeric or symbols';
-    this.setState({ pin, err });
+    this.setState({ pin, error });
   }
 
   getPin() {

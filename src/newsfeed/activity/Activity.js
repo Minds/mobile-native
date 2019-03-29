@@ -30,6 +30,7 @@ import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import Lock from '../../wire/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
+import { isEntityNsfw } from '../../common/helpers/isNsfw';
 
 /**
  * Activity
@@ -52,18 +53,6 @@ export default class Activity extends Component {
 
     this.props.navigation.push('Activity', navOpts);
   };
-
-  /**
-   * Nav to full image with zoom
-   */
-  navToImage = () => {
-    // if is a rich embed should load link
-    if (this.props.entity.perma_url) {
-      this.openLink();
-    } else {
-      this.props.navigation.push('ViewImage', { source: this.source });
-    }
-  }
 
   /**
    * Open a link
@@ -91,10 +80,9 @@ export default class Activity extends Component {
         </View>
       );
 
-    const show_overlay = (this.props.entity.mature && !entity.is_parent_mature) && !(this.props.entity.mature && entity.is_parent_mature);
+    const show_overlay = (isEntityNsfw(entity) && !entity.is_parent_mature) && !(isEntityNsfw(entity) && entity.is_parent_mature);
     const overlay = (show_overlay) ? <ExplicitOverlay
         entity={this.props.entity}
-        style={styles.absolute}
       /> : null;
 
 
@@ -229,7 +217,7 @@ export default class Activity extends Component {
   showRemind() {
     const remind_object = this.props.entity.remind_object;
     if (remind_object) {
-      if (this.props.entity.mature) {
+      if (isEntityNsfw(this.props.entity)) {
         remind_object.is_parent_mature = true;
       }
       return (

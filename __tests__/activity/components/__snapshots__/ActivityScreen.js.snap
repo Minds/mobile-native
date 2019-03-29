@@ -57,7 +57,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
     }
     header={
       <Activity
-        autoHeight={true}
+        autoHeight={false}
         entity={
           ActivityModel {
             "attachment_guid": false,
@@ -437,7 +437,7 @@ exports[`Activity screen component should show loader until it loads the activit
     }
     header={
       <Activity
-        autoHeight={true}
+        autoHeight={false}
         entity={
           ActivityModel {
             "comments:count": undefined,

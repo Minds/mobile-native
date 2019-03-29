@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
 import { CommonStyle } from '../../../styles/Common';
+import isNsfw from '../../helpers/isNsfw';
 
 @observer
 export default class ExplicitText extends Component {
@@ -71,7 +72,7 @@ export default class ExplicitText extends Component {
         moreLess = this.getMoreLess();
       }
 
-      body = (entity.mature && !entity.mature_visibility) ?
+      body = (isNsfw(entity) && !entity.mature_visibility) ?
           <Text style={styles.mature}>{message}</Text> :
           <Tags navigation={this.props.navigation} style={this.props.style}>{message}</Tags>
     }

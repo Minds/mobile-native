@@ -28,6 +28,7 @@ import { CommonStyle as CS } from '../styles/Common';
 import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import en from "../../locales/en";
+import isNsfw from '../common/helpers/isNsfw';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -266,7 +267,7 @@ class MindsVideo extends Component {
           source={image}
           entity={entity}
           style={[CS.positionAbsolute]}
-          disableProgress={true}
+          loadingIndicator="placeholder"
         />
       )
     }
@@ -283,7 +284,7 @@ class MindsVideo extends Component {
     const entity = this.props.entity;
     let {currentTime, duration, paused} = this.state;
 
-    const mustShow = ((this.state.showOverlay && !isIOS) || this.state.paused) && (!entity || !entity.mature || entity.mature_visibility);
+    const mustShow = ((this.state.showOverlay && !isIOS) || this.state.paused) && (!entity ||!isNsfw(entity) || entity.mature_visibility);
 
     if (mustShow) {
       const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;

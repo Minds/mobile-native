@@ -1,7 +1,7 @@
 import React, {
   Component
 } from 'react';
-import { observer } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react/native';
 import {
   TouchableOpacity,
   Text,
@@ -12,11 +12,12 @@ import {
 
 import _ from 'lodash';
 
-import { CommonStyle } from '../../styles/Common';
+import { CommonStyle as CS } from '../../styles/Common';
 
 /**
  * Tag Select Component
  */
+@inject('hashtag')
 @observer
 export default class TagSelect extends Component {
 
@@ -24,12 +25,25 @@ export default class TagSelect extends Component {
    * Remove tag
    * @param {string} tag
    */
-  toogle(tag) {
+  async toogle(tag) {
     if (tag.selected) {
-      this.props.onTagDeleted(tag)
+      await this.props.onTagDeleted(tag)
     } else {
-      this.props.onTagAdded(tag)
+      await this.props.onTagAdded(tag)
     }
+    this.onChange();
+  }
+
+  /**
+   * On change
+   */
+  onChange() {
+    this.props.onChange && this.props.onChange();
+  }
+
+  toogleOne = (tag) => {
+    const hashstore = this.props.hashtag;
+    this.props.onSelectOne && this.props.onSelectOne(hashstore.hashtag !== tag.value ? tag.value : '');
   }
 
   /**
@@ -51,8 +65,18 @@ export default class TagSelect extends Component {
     return (
       <ScrollView>
         <View style={[styles.tagContainer, containerStyle]}>
-          {tags.map((tag,i) => <TouchableOpacity style={[styles.tag, tagStyle, tag.selected ? tagSelectedStyle : null]} key={i} onPress={() => this.toogle(tag)}>
-            <Text style={[styles.tagText, textStyle, tag.selected ? [CommonStyle.colorPrimary, textSelectedStyle] : null]}>#{tag.value}</Text>
+          {tags.map((tag,i) => <TouchableOpacity
+              style={[
+                styles.tag,
+                tagStyle,
+                tag.selected ? tagSelectedStyle : null,
+                (tag.value === this.props.hashtag.hashtag) ? [CS.borderPrimary, CS.border] : null
+              ]}
+              key={i}
+              onPress={() => this.toogle(tag)}
+              onLongPress={() => this.toogleOne(tag)}
+            >
+            <Text style={[styles.tagText, textStyle, tag.selected ? [CS.colorPrimary, textSelectedStyle] : null]}>#{tag.value}</Text>
           </TouchableOpacity>)}
         </View>
       </ScrollView>

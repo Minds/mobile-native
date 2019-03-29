@@ -140,7 +140,7 @@ export default class NotificationsScreen extends Component {
         onEndReached={this.loadMore}
         ListEmptyComponent={empty}
         ListHeaderComponent={<NotificationsTopbar/>}
-        onEndThreshold={0.05}
+        // onEndReachedThreshold={0.05}
         initialNumToRender={12}
         stickyHeaderIndices={[0]}
         windowSize={8}

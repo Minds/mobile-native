@@ -32,6 +32,8 @@ import UserAutocomplete from '../common/components/UserAutocomplete';
 import Activity from '../newsfeed/activity/Activity';
 import BlogCard from '../blogs/BlogCard';
 import ActivityModel from '../newsfeed/ActivityModel';
+import featuresService from '../common/services/features.service';
+import { creatorNsfwService } from '../common/services/nsfw.service';
 
 @inject('user', 'capture')
 @observer
@@ -46,7 +48,8 @@ export default class CapturePoster extends Component {
 
   state = {
     postImageUri: '',
-    mature: false,
+    mature: false, // @deprecated
+    nsfw: [],
     share: {},
     lock: null,
     selection: {
@@ -92,6 +95,14 @@ export default class CapturePoster extends Component {
         });
       }
     }
+
+    this.loadNsfwFromPersistentStorage();
+  }
+
+  async loadNsfwFromPersistentStorage() {
+    this.setState({
+      nsfw: await creatorNsfwService.get(),
+    });
   }
 
   /**
@@ -211,7 +222,9 @@ export default class CapturePoster extends Component {
           matureValue={this.state.mature}
           shareValue={this.state.share}
           lockValue={this.state.lock}
+          nsfwValue={this.state.nsfw}
           onMature={this.onMature}
+          onNsfw={this.onNsfw}
           onShare={this.onShare}
           onLocking={this.onLocking}
         />
@@ -300,9 +313,14 @@ export default class CapturePoster extends Component {
 
     let newPost = {
       message: text,
-      mature: this.state.mature ? 1 : 0,
       wire_threshold: this.state.lock
     };
+
+    if (featuresService.has('top-feeds')) {
+      newPost.nsfw = this.state.nsfw || [];
+    } else {
+      newPost.mature = this.state.mature ? 1 : 0;
+    }
 
     if (attachment.guid) {
       newPost.attachment_guid = attachment.guid;
@@ -340,6 +358,7 @@ export default class CapturePoster extends Component {
       this.setState({
         meta: null,
         mature: false,
+        nsfw: [],
         share: {},
         lock: null,
       });
@@ -368,6 +387,13 @@ export default class CapturePoster extends Component {
   onMature = () => {
     const mature = !this.state.mature;
     this.setState({ mature });
+  }
+
+  onNsfw = values => {
+    const nsfw = [...values];
+    this.setState({ nsfw });
+
+    creatorNsfwService.set(nsfw);
   }
 
   onShare = network => {

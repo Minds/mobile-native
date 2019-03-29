@@ -7,16 +7,19 @@ import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker'
 
 import renderer from 'react-test-renderer';
 import OwnerBlock from '../../../src/newsfeed/activity/OwnerBlock';
+import withPreventDoubleTap from '../../../src/common/components/PreventDoubleTap';
 
+// const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 describe('Owner component', () => {
-
+  
   let screen;
   beforeEach(() => {
+    const TouchableOpacityCustom = <TouchableOpacity onPress={this.onPress} />;
 
     const navigation = { navigate: jest.fn(), push: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
     screen = shallow(
-      <OwnerBlock entity={activityResponse.activities[0]} navigation={navigation} rightToolbar={null}/>
+      <OwnerBlock entity ={activityResponse.activities[0]} navigation={navigation} rightToolbar={null}/>
     );
 
     jest.runAllTimers();
@@ -28,9 +31,9 @@ describe('Owner component', () => {
   });
 
 
-  it('should have Touchableopacity', async () => {
+  it('should have PreventDoubleTap', async () => {
     screen.update();
-    expect(screen.find(TouchableOpacity)).toHaveLength(2);
+    expect(screen.find('PreventDoubleTap')).toHaveLength(2);
   });
 
   it('should _navToChannel on press ', () => {
@@ -47,14 +50,14 @@ describe('Owner component', () => {
       <OwnerBlock entity={entity} navigation={navigation} rightToolbar={null}/>
     );
     screen.update()
-    let touchables = screen.find('TouchableOpacity');
+    let touchables = screen.find('PreventDoubleTap');
     touchables.at(0).props().onPress();
     jest.runAllTimers();
 
     expect(navigation.push).toHaveBeenCalledWith('Channel', {'entity': entity.ownerObj, 'guid': entity.ownerObj.guid});
 
 
-    expect(screen.find(TouchableOpacity)).toHaveLength(3);
+    expect(screen.find('PreventDoubleTap')).toHaveLength(3);
 
   });
 
@@ -72,10 +75,9 @@ describe('Owner component', () => {
       <OwnerBlock entity={entity} navigation={navigation} rightToolbar={null}/>
     );
     screen.update()
-    let touchables = screen.find('TouchableOpacity');
+    let touchables = screen.find('PreventDoubleTap');
 
-
-    expect(screen.find(TouchableOpacity)).toHaveLength(3);
+    expect(screen.find('PreventDoubleTap')).toHaveLength(3);
     //group touchable
     touchables.at(2).props().onPress();
     jest.runAllTimers();

@@ -106,6 +106,13 @@ class SessionService {
   }
 
   /**
+   * Return current user
+   */
+  getUser() {
+    return appStores.user.me;
+  }
+
+  /**
    * Set initial screen
    * @param {string} screen
    */
@@ -183,7 +190,7 @@ class SessionService {
   }
 
   async badAuthorization() {
-    if (this.refreshingTokens)
+    if (this.refreshingTokens || !this.token || !this.refreshToken)
       return;
     this.refreshingTokens = true;
     this.setToken(null);
@@ -220,6 +227,7 @@ class SessionService {
   logout() {
     this.guid = null;
     this.setToken(null);
+    this.setRefreshToken(null);
     this.setLoggedIn(false);
     this.sessionStorage.clear();
   }

@@ -77,7 +77,7 @@ export default class ContributionsView extends Component {
         onRefresh={this.refresh}
         refreshing={wallet.ledger.list.refreshing}
         onEndReached={this.loadMore}
-        onEndThreshold={0}
+        // onEndReachedThreshold={0}
         ListHeaderComponent={header}
         ListEmptyComponent={(!wallet.ledger.list.loaded || !this.state.to) ? empty : <View />}
         style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}

@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import stores from '../../AppStores';
+import blockListService from '../common/services/block-list.service';
 
 
 export default class NewsfeedService {
@@ -81,7 +82,7 @@ function _getFeed(endpoint, offset, limit) {
     })
     .catch(err => {
       console.log('error');
-      throw "Ooops";
+      throw "Oops, an error has occured updating your newsfeed";
     })
 }
 
@@ -124,7 +125,7 @@ export function update(post) {
     })
     .catch(err => {
       console.log('error');
-      throw "Ooops";
+      throw "Oops, an error has occurred updating your newsfeed";
     })
 }
 
@@ -139,7 +140,7 @@ export async function uploadAttachment(url, file, progress) {
         url: url,
         file: file
       };
-      throw "Ooops";
+      throw "Oops, an error has occurred uploading your attachment";
   }
 }
 
@@ -180,11 +181,17 @@ export async function setViewed(entity) {
  * @param {boolean} value
  */
 export function toggleUserBlock(guid, value) {
+  let result;
+
   if (value) {
-    return api.put('api/v1/block/' + guid);
+    result = api.put('api/v1/block/' + guid);
+    blockListService.add(guid);
   } else {
-    return api.delete('api/v1/block/' + guid);
+    result = api.delete('api/v1/block/' + guid);
+    blockListService.remove(guid);
   }
+
+  return result;
 }
 
 /**
@@ -201,7 +208,7 @@ export function toggleMuteNotifications(guid, value) {
     })
     .catch(err => {
       console.log('error');
-      throw "Ooops";
+      throw "Oops, an error occurred muting notifications.";
     })
 }
 
@@ -223,7 +230,7 @@ export function unfollow(guid) {
     })
     .catch(err => {
       console.log('error', err);
-      throw "Ooops";
+      throw "Oops, an error has occurred whilst unfollowing.";
     })
 }
 
@@ -244,7 +251,7 @@ export function toggleExplicit(guid, value) {
     })
     .catch(err => {
       console.log('error');
-      throw "Ooops";
+      throw "Oops, an error has occurred toggling explicit content";
     })
 }
 
@@ -268,8 +275,15 @@ export function deleteItem(guid) {
   return api.delete('api/v1/newsfeed/' + guid);
 }
 
-export function getSingle(guid) {
-  return api.get('api/v1/newsfeed/single/'+guid);
+export async function getSingle(guid) {
+  const result = await api.get('api/v2/entities',{
+    urns: `urn:entity:${guid}`,
+    as_activities: 1,
+  });
+
+  if (!result || !result.entities || !result.entities.length) throw 'Not found';
+
+  return {activity: result.entities[0]};
 }
 
 /**

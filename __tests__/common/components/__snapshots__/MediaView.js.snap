@@ -36,7 +36,7 @@ exports[`Media view component renders correctly 1`] = `
           "getThumbSource": [MockFunction] {
             "calls": Array [
               Array [
-                "xlarge",
+                "large",
               ],
             ],
             "results": Array [
@@ -76,6 +76,7 @@ exports[`Media view component renders correctly 1`] = `
           "backgroundColor": "transparent",
         }
       }
+      loadingIndicator="placeholder"
       onError={[Function]}
       source={
         Object {
