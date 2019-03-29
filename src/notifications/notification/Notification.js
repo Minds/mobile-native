@@ -30,6 +30,9 @@ import FriendsView from './view/FriendsView';
 import GroupActivityView from './view/GroupActivityView';
 import GroupInviteView from './view/GroupInviteView';
 import GroupKickView from './view/GroupKickView';
+import GroupQueueAddView from './view/GroupQueueAddView';
+import GroupQueueApproveView from './view/GroupQueueApproveView';
+import GroupQueueRejectView from './view/GroupQueueRejectView';
 import LikeView from './view/LikeView';
 import MissedCallView from './view/MissedCallView';
 import RemindView from './view/RemindView';
@@ -144,6 +147,15 @@ export default class Notification extends Component {
 
       case "group_kick":
         return <GroupKickView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "group_queue_add":
+        return <GroupQueueAddView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "group_queue_approve":
+        return <GroupQueueApproveView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "group_queue_reject":
+        return <GroupQueueRejectView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "like":
         return <LikeView entity={entity} navigation={this.props.navigation} styles={styles} />
