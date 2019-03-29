@@ -25,26 +25,11 @@ import {CommonStyle as CS} from '../styles/Common';
 import FastImage from 'react-native-fast-image';
 import PulseAnimAvatar from '../common/components/PulseAnimAvatar';
 import excerpt from '../common/helpers/excerpt';
-import socketService from '../common/services/socket.service';
 import navigationService from '../navigation/NavigationService';
 
 @inject('groupsBar')
 @observer
 export default class GroupsBarItem extends Component {
-
-  componentDidMount() {
-    socketService.join(`marker:${this.props.group.guid}`);
-    socketService.subscribe(`marker:${this.props.group.guid}`, this.handleMessage);
-  }
-
-  componentWillUnmount() {
-    socketService.unsubscribe(`marker:${this.props.group.guid}`, this.handleMessage)
-    socketService.leave(`marker:${this.props.group.guid}`);
-  }
-
-  handleMessage = (marker) => {
-    this.props.groupsBar.handleMarker(JSON.parse(marker))
-  }
 
   /**
    * Get Group Avatar

@@ -57,7 +57,7 @@ export class SocketService {
 
     // connect
     this.socket.on('connect', () => {
-      console.log(`[ws]::connected to ${SOCKET_URI}`);
+      //console.log(`[ws]::connected to ${SOCKET_URI}`);
       this.registerWithAccessToken();
       this.join(`${this.LIVE_ROOM_NAME}:${sessionService.guid}`);
 
@@ -65,7 +65,7 @@ export class SocketService {
 
     // disconnect
     this.socket.on('disconnect', () => {
-      console.log(`[ws]::disconnected from ${SOCKET_URI}`);
+      //console.log(`[ws]::disconnected from ${SOCKET_URI}`);
       this.registered = false;
 
     });
@@ -79,7 +79,7 @@ export class SocketService {
 
     // error
     this.socket.on('error', (e) => {
-      console.log('[ws]::error', e);
+      //console.log('[ws]::error', e);
     });
 
     // rooms
@@ -88,27 +88,27 @@ export class SocketService {
         return;
       }
 
-      console.log(`[ws]::rcvd rooms status`, rooms);
+      //console.log(`[ws]::rcvd rooms status`, rooms);
       this.rooms = rooms;
     });
 
     // joined
     this.socket.on('joined', (room, rooms) => {
-      console.log(`[ws]::joined`, room, rooms);
+      //console.log(`[ws]::joined`, room, rooms);
       this.rooms = rooms;
 
     });
 
     // left
     this.socket.on('left', (room, rooms) => {
-      console.log(`[ws]::left`, room, rooms);
+      //console.log(`[ws]::left`, room, rooms);
       this.rooms = rooms;
 
     });
   }
 
   reconnect() {
-    console.log('[ws]::reconnect');
+    //console.log('[ws]::reconnect');
     this.registered = false;
 
     this.socket.disconnect();
@@ -118,7 +118,7 @@ export class SocketService {
   }
 
   disconnect() {
-    console.log('[ws]::disconnect');
+    //console.log('[ws]::disconnect');
     this.registered = false;
 
     this.socket.disconnect();

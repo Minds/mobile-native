@@ -8,7 +8,7 @@ import {
 } from 'mobx-react/native'
 
 import {
-  ScrollView,
+  FlatList,
 } from 'react-native'
 
 import {CommonStyle as CS} from '../styles/Common';
@@ -18,21 +18,22 @@ import GrousBarItem from './GroupsBarItem';
 @observer
 export default class GroupsBar extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   async componentDidMount() {
     await this.props.groupsBar.loadGroups();
     this.props.groupsBar.loadMarkers();
   }
 
   /**
-   * on group select
-   * @param {object} group
+   * Render group items
+   * @param {object} row
+   * @param {number} i
    */
-  onGroupSelect(group) {
-    console.log(group);
+  renderItem = (row, i) => {
+    return <GrousBarItem group={row.item} key={i}/>
+  }
+
+  loadMore = () => {
+    this.props.groupsBar.loadGroups();
   }
 
   /**
@@ -40,9 +41,13 @@ export default class GroupsBar extends Component {
    */
   render() {
     return (
-      <ScrollView contentContainerStyle={[CS.rowJustifyStart, CS.backgroundTransparent]} horizontal={true}>
-        {this.props.groupsBar.groups.slice().map((group, i) => <GrousBarItem group={group} key={i}/>)}
-      </ScrollView>
+      <FlatList
+        contentContainerStyle={[CS.rowJustifyStart, CS.backgroundTransparent]}
+        horizontal={true}
+        renderItem={this.renderItem}
+        data={this.props.groupsBar.groups.slice()}
+        onEndReached={this.loadMore}
+      />
     )
   }
 }
