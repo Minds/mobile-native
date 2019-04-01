@@ -30,6 +30,7 @@ import mediaProxyUrl from '../helpers/media-proxy-url';
 import download from '../services/download.service';
 import mindsService from '../services/minds.service';
 import { isEntityNsfw } from '../helpers/isNsfw';
+import openUrlService from '../services/open-url.service';
 
 /**
  * Activity
@@ -276,7 +277,7 @@ export default class MediaView extends Component {
    * Open a link
    */
   openLink = () => {
-    Linking.openURL(this.props.entity.perma_url);
+    openUrlService.open(this.props.entity.perma_url)
   }
 
 }

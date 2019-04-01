@@ -22,7 +22,6 @@ import {
   Avatar,
 } from 'react-native-elements';
 
-import { MINDS_CDN_URI, MINDS_LINK_URI } from '../config/Config';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../common/helpers/date';
 

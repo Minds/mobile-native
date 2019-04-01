@@ -55,13 +55,6 @@ export default class Activity extends Component {
   };
 
   /**
-   * Open a link
-   */
-  openLink = () => {
-    Linking.openURL(this.props.entity.perma_url);
-  }
-
-  /**
    * Render
    */
   render() {
