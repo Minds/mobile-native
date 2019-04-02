@@ -44,6 +44,8 @@ type Props = {
 };
 
 type State = {
+  focused: boolean,
+  hideInput: boolean,
   selection: {
     start: number,
     end: number
@@ -57,9 +59,10 @@ type CommentType = {
   editing: any,
 };
 
-// iphoneX fixes
+const isIOS = Platform.OS === 'ios';
 const vPadding = isIphoneX() ? 88 : 66;
 const paddingBottom = isIphoneX() ? { paddingBottom: 12 } : null;
+const inputStyle = isIOS ? { height:25 } : { height:40 };
 
 // helper method
 function getEntityGuid(entity) {
@@ -81,8 +84,13 @@ export default class CommentList extends React.Component<Props, State> {
   actionAttachmentSheet: ?ActionSheet;
   actionSheet: ?ActionSheet;
   keyboardDidShowListener: any;
+  focusedChild: number = -1;
+  focusedOffset: number = 0;
+  height: number = 0;
 
   state = {
+    focused: false,
+    hideInput: false,
     guid: null,
     selection: {
       start:0,
@@ -95,6 +103,7 @@ export default class CommentList extends React.Component<Props, State> {
    */
   componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     this.props.store.setEntity(this.props.entity);
     this.loadComments();
   }
@@ -104,18 +113,9 @@ export default class CommentList extends React.Component<Props, State> {
    */
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
     this.props.store.unlisten();
     this.props.store.clearComments();
-  }
-
-  /**
-   * Reply comment
-   */
-  replyComment = (comment: CommentType) => {
-    this.props.store.setText('@' + comment.ownerObj.username + ' ');
-    if (this.textInput) {
-      this.textInput.focus();
-    }
   }
 
   /**
@@ -134,8 +134,38 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * On keyboard show
    */
-  _keyboardDidShow = () => {
-    this.scrollBottomIfNeeded();
+  _keyboardDidShow = (e) => {
+    if (!this.props.parent) {
+      if (isIOS) {
+        if (this.focusedChild !== -1) {
+          setTimeout(() => {
+            this.listRef.scrollToIndex({
+              index: this.focusedChild,
+              viewOffset: this.focusedOffset ? -(this.focusedOffset - (this.height - e.endCoordinates.height - 70)) : -e.endCoordinates.height + 70,
+              viewPosition: this.focusedOffset ? 0 : 1
+            });
+          }, 200);
+        }
+      } else {
+        if (!this.state.focused) this.setState({hideInput: true});
+      }
+    }
+    // this.scrollBottomIfNeeded();
+  }
+
+  /**
+   * On keyboard  hide
+   */
+  _keyboardDidHide = (e) => {
+    if (!this.props.parent && !isIOS) {
+      this.setState({hideInput: false});
+    }
+  }
+
+  onLayout = (e) => {
+    if (!this.props.parent) {
+      this.height = e.nativeEvent.layout.height;
+    }
   }
 
   /**
@@ -168,10 +198,33 @@ export default class CommentList extends React.Component<Props, State> {
    */
   onFocus = () => {
     if (!this.props.parent) this.scrollToBottom();
-
+    this.focusedChild = -1;
+    this.setState({focused: true});
     if (this.props.onInputFocus) {
       this.props.onInputFocus();
     }
+  }
+
+  onChildFocus = (item, offset) => {
+    if (!offset) offset = 0;
+
+    if (!this.props.parent) {
+      this.focusedChild = this.props.store.comments.findIndex(c => item === c);
+      this.focusedOffset = offset;
+    } else {
+      const index = this.props.store.comments.findIndex(c => item === c);
+      const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+      if (this.props.onInputFocus) {
+        this.props.onInputFocus(item, offset + frame.offset + frame.length);
+      }
+    }
+  }
+
+  /**
+   * On comment input focus
+   */
+  onBlur = () => {
+    this.setState({focused: false});
   }
 
   /**
@@ -223,6 +276,8 @@ export default class CommentList extends React.Component<Props, State> {
    * Render poster
    */
   renderPoster() {
+    if (this.state.hideInput) return null;
+
     const attachment = this.props.store.attachment;
 
     const avatarImg = this.props.user.me && this.props.user.me.getAvatarSource ? this.props.user.me.getAvatarSource() : {};
@@ -231,15 +286,16 @@ export default class CommentList extends React.Component<Props, State> {
 
     return (
       <View>
-        <View style={[CS.rowJustifyCenter, CS.centered, CS.margin, CS.padding, CS.backgroundWhite, CS.borderRadius10x, CS.borderGreyed, CS.borderHair]}>
+        <View style={[CS.rowJustifyCenter, CS.centered, CS.margin, CS.padding, CS.backgroundWhite, CS.borderRadius12x, CS.borderGreyed, CS.borderHair]}>
           <Image source={avatarImg} style={CmpStyle.posterAvatar} />
           <TextInput
-            style={[CS.flexContainer, CS.marginLeft]}
+            style={[CS.flexContainer, CS.marginLeft, inputStyle]}
             editable={true}
             underlineColorAndroid='transparent'
             placeholder='Type your comment...'
             onChangeText={this.setText}
             onFocus={this.onFocus}
+            onBlur={this.onBlur}
             multiline={true}
             value={comments.text}
             ref={textInput => this.textInput = textInput}
@@ -284,8 +340,8 @@ export default class CommentList extends React.Component<Props, State> {
       <Comment
         comment={comment}
         entity={this.props.entity}
-        replyComment={this.replyComment}
         store={this.props.store}
+        onTextInputfocus={this.onChildFocus}
         navigation={this.props.navigation}
       />
     );
@@ -353,14 +409,15 @@ export default class CommentList extends React.Component<Props, State> {
     }
 
     return (
-      <View style={[CS.flexContainer, CS.backgroundWhite, paddingBottom]}>
+      <View style={[CS.flexContainer, CS.backgroundWhite, paddingBottom]} onLayout={this.onLayout}>
         <KeyboardAvoidingView style={[CS.flexContainer]} behavior={Platform.OS == 'ios' ? 'padding' : null}
-          keyboardVerticalOffset={vPadding}>
+          keyboardVerticalOffset={vPadding} enabled={this.state.focused && !this.props.parent}>
           <View style={CS.flexContainer}>
             <FlatList
               ref={ref => this.listRef = ref}
               ListHeaderComponent={header}
               data={this.props.store.comments.slice()}
+              keyboardShouldPersistTaps={'handled'}
               renderItem={this.renderComment}
               keyExtractor={item => item.guid}
               initialNumToRender={25}

@@ -402,6 +402,12 @@ export const CommonStyle = StyleSheet.create({
   borderRadius10x: {
     borderRadius: 20
   },
+  borderRadius11x: {
+    borderRadius: 22
+  },
+  borderRadius12x: {
+    borderRadius: 24
+  },
   // fonts
   fontXS:{
     fontSize: 10
