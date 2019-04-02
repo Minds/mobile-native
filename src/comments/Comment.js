@@ -55,7 +55,7 @@ export default class Comment extends Component {
   }
 
   onInputFocus = (comment, offset) => {
-    this.props.onTextInputfocus = this.props.onTextInputfocus(this.props.comment, offset);
+    this.props.onTextInputfocus && this.props.onTextInputfocus(this.props.comment, offset);
   }
 
   /**
