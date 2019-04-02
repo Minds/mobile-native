@@ -137,7 +137,7 @@ export default class MediaView extends Component {
     this.videoPlayer && this.videoPlayer.wrappedInstance && this.videoPlayer.wrappedInstance.pause();
   }
 
-  imageError = () => {
+  imageError = (err) => {
     this.setState({ imageLoadFailed: true });
   }
 
@@ -242,7 +242,7 @@ export default class MediaView extends Component {
     return (
       <View style={this.props.style}>
         {  media }
-        { !!this.props.entity.license && 
+        { !!this.props.entity.license &&
           this.getLicense()
         }
       </View>
@@ -250,11 +250,12 @@ export default class MediaView extends Component {
   }
 
   /**
-   * License text with icon. 
+   * License text with icon.
    * Does not check whether or not the license exists, that is left up to the implementation to decide.
    * @returns a license with icon for the given media
    */
   getLicense() {
+
     const license = this.props.entity.license
                         .replace(/-/g, ' ')
                         .toUpperCase();
@@ -278,7 +279,7 @@ export default class MediaView extends Component {
     )
   }
 
-  /** 
+  /**
    * Nav to activity full screen
    */
   navToActivity = () => {

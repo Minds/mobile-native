@@ -31,7 +31,7 @@ export default class ExplicitImage extends Component {
 
   imageError = (err) => {
     // bubble event up
-    this.props.onError && this.props.onError();
+    this.props.onError && this.props.onError(err);
   }
 
   setActive = () => {
