@@ -5,6 +5,7 @@ import React, {
 } from 'react';
 
 import {observer} from "mobx-react/native";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
   MINDS_API_URI,
@@ -241,12 +242,43 @@ export default class MediaView extends Component {
     return (
       <View style={this.props.style}>
         {  media }
+        { !!this.props.entity.license && 
+          this.getLicense()
+        }
       </View>
     );
   }
 
-
   /**
+   * License text with icon. 
+   * Does not check whether or not the license exists, that is left up to the implementation to decide.
+   * @returns a license with icon for the given media
+   */
+  getLicense() {
+    const license = this.props.entity.license
+                        .replace(/-/g, ' ')
+                        .toUpperCase();
+    return (
+      <View style={styles.licenseContainer}>
+        <Icon
+          style={styles.licenseIcon}
+          color="#b0bec5"
+          name="public"
+          onPress={[Function]}
+          raised={false}
+          reverse={false}
+          reverseColor="white"
+          size={18}
+          underlayColor="white"
+        />
+        <Text style={styles.licenseText}>
+          {license}
+        </Text>
+      </View>
+    )
+  }
+
+  /** 
    * Nav to activity full screen
    */
   navToActivity = () => {
@@ -329,5 +361,21 @@ const styles = StyleSheet.create({
   },
   imageLoadErrorTextDomain: {
     fontWeight: '600',
+  },
+  licenseContainer:{
+    marginTop: 8,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  licenseText: {
+    color:'#888',
+    fontWeight:'bold',
+    fontFamily:'Roboto',
+    fontSize: 10,
+  },
+  licenseIcon: {
+    paddingRight: 2
   }
 });
