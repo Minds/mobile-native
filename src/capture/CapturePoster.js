@@ -19,6 +19,7 @@ import {
 } from 'react-navigation';
 
 import colors from '../styles/Colors';
+import HashtagService from '../common/services/hashtag.service'
 
 import CaptureGallery from './CaptureGallery';
 import CapturePreview from './CapturePreview';
@@ -281,6 +282,12 @@ export default class CapturePoster extends Component {
     const message = this.props.capture.text;
     const post = {message};
     let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null
+
+    if(HashtagService.slice(message).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
+      Alert.alert(`Sorry, your post cannot contain more than ${HashtagService.maxHashtags} hashtags.`);
+      return false;
+    }
+
     try {
       const response = await this.props.capture.remind(params.entity.guid, post);
       this.navToPrevious(response.entity, group);
@@ -308,6 +315,11 @@ export default class CapturePoster extends Component {
       (!this.props.capture.embed.meta || !this.props.capture.embed.meta.perma_url)
     ) {
       Alert.alert('Nothing to post...');
+      return false;
+    }
+
+    if(HashtagService.slice(text).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
+      Alert.alert(`Sorry, your post cannot contain more than ${HashtagService.maxHashtags} hashtags.`);
       return false;
     }
 

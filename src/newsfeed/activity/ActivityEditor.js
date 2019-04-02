@@ -6,6 +6,7 @@ import {
   View,
   TextInput,
   StyleSheet,
+  Alert,
 } from 'react-native';
 
 import {
@@ -17,6 +18,7 @@ import Button from '../../common/components/Button';
 
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
+import HashtagService from '../../common/services/hashtag.service';
 import NsfwToggle from '../../common/components/nsfw/NsfwToggle';
 import autobind from '../../common/helpers/autobind';
 import featuresService from '../../common/services/features.service';
@@ -36,6 +38,12 @@ export default class ActivityEditor extends Component {
   }
 
   update = () => {
+  
+    if(HashtagService.slice(this.state.text).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
+      Alert.alert(`Sorry, your post cannot contain more than ${HashtagService.maxHashtags} hashtags.`);
+      return false;
+    } 
+
     const data = {
       message: this.state.text,
     };
