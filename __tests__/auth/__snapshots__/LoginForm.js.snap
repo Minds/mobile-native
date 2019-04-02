@@ -33,6 +33,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         },
       ]
     }
+    testID="username input"
     underlineColorAndroid="transparent"
     value=""
   />
@@ -61,6 +62,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         },
       ]
     }
+    testID="password input"
     underlineColorAndroid="transparent"
     value=""
   />
@@ -213,6 +215,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={null}
+        testID="login button"
       >
         <View
           pointerEvents="box-only"

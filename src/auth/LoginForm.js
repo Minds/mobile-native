@@ -19,6 +19,7 @@ import { ComponentsStyle } from '../styles/Components';
 import { Button } from 'react-native-elements'
 
 import i18n from '../common/services/i18n.service';
+import testID from '../common/helpers/testID';
 
 /**
  * Login Form
@@ -38,7 +39,8 @@ export default class LoginForm extends Component {
    * Render
    */
   render() {
-    const msg = (this.state.msg) ? <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]}>{this.state.msg}</Animatable.Text>:null;
+
+    const msg = (this.state.msg) ? <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]} {...testID('loginMsg')}>{this.state.msg}</Animatable.Text>:null;
 
     const inputs = this.getInputs();
     const buttons = this.getButtons();
@@ -71,6 +73,7 @@ export default class LoginForm extends Component {
         loadingRight={true}
         disabled={this.state.inProgress}
         disabledStyle={CommonStyle.backgroundTransparent}
+        {...testID('login button')}
       />
     ]
 
@@ -117,6 +120,7 @@ export default class LoginForm extends Component {
           autoCapitalize={'none'}
           value={this.state.username}
           key={1}
+          {...testID('username input')}
         />,
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
@@ -129,6 +133,7 @@ export default class LoginForm extends Component {
           onChangeText={(value) => this.setState({ password: value })}
           value={this.state.password}
           key={2}
+          {...testID('password input')}
         />
       ];
     }
