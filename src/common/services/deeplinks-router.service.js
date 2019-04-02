@@ -42,6 +42,7 @@ class DeeplinksRouter {
     if (route) {
       navigationService.navigate(route.screen, route.params);
     }
+    return !!route;
   }
 
   cleanUrl(url) {

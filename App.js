@@ -168,10 +168,14 @@ export default class App extends Component {
    * On component did mount
    */
   async componentDidMount() {
-    deepLinkUrl = await Linking.getInitialURL();
+    try {
+      deepLinkUrl = await Linking.getInitialURL();
+    } catch (err) {
+      console.log('Error getting initial deep link');
+    }
 
     BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-    Linking.addEventListener('url', event => this.handleOpenURL(event));
+    Linking.addEventListener('url', this.handleOpenURL);
     AppState.addEventListener('change', this.handleAppStateChange);
 
     if (!this.handlePasswordResetDeepLink()) {

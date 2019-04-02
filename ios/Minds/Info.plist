@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleGetInfoString</key>
-	<string/>
+	<string></string>
 	<key>CFBundleIdentifier</key>
 	<string>com.minds.mobile</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -42,7 +42,7 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
-	<string/>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -66,7 +66,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs access to use your camera in order to upload images or videos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>$(PRODUCT_NAME) needs access to your microphone in order to record videos </string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
