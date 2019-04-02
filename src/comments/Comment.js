@@ -54,6 +54,10 @@ export default class Comment extends Component {
     }
   }
 
+  onInputFocus = (comment, offset) => {
+    this.props.onTextInputfocus = this.props.onTextInputfocus(this.props.comment, offset);
+  }
+
   /**
    * Render
    */
@@ -105,10 +109,11 @@ export default class Comment extends Component {
           { actions }
             { comment.expanded &&
             <CommentList
-               entity={this.props.entity}
-               parent={comment}
-               store={this.comments}
-               navigation={this.props.navigation}
+              entity={this.props.entity}
+              parent={comment}
+              store={this.comments}
+              onInputFocus={this.onInputFocus}
+              navigation={this.props.navigation}
              />
             }
 
@@ -308,7 +313,7 @@ const styles = StyleSheet.create({
     padding: 8
   },
   avatarContainer: {
-
+    height:34
   },
   avatar: {
     height: 32,
