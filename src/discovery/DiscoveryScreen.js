@@ -338,7 +338,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'activities' ? styles.iconActive : null ]}
               size={ this.iconSize }
             />
-            <Text style={[CS.fontS, filtersStore.type == 'activities' ? CS.colorPrimary : CS.colorDark]}>All</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'activities' ? CS.colorPrimary : CS.colorDark]}>All</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeChannels } underlayColor='#fff'>
@@ -348,7 +348,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'channels' ? styles.iconActive : null ]}
               size={ this.iconSize }
             />
-            <Text style={[CS.fontS, filtersStore.type == 'channels' ? CS.colorPrimary : CS.colorDark]}>Channels</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'channels' ? CS.colorPrimary : CS.colorDark]}>Channels</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeVideos } underlayColor='#fff'>
@@ -358,7 +358,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'videos' ? styles.iconActive : null ]}
               size={this.iconSize}
             />
-            <Text style={[CS.fontS, filtersStore.type == 'videos' ? CS.colorPrimary : CS.colorDark]}>Videos</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'videos' ? CS.colorPrimary : CS.colorDark]}>Videos</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeImages } underlayColor='#fff'>
@@ -368,7 +368,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'images' ? styles.iconActive : null ]}
               size={ this.iconSize }
             />
-            <Text style={[CS.fontS, filtersStore.type == 'images' ? CS.colorPrimary : CS.colorDark]}>Images</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'images' ? CS.colorPrimary : CS.colorDark]}>Images</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeBlogs } underlayColor='#fff'>
@@ -378,7 +378,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'blogs' ? styles.iconActive : null ]}
               size={ this.iconSize }
             />
-            <Text style={[CS.fontS, filtersStore.type == 'blogs' ? CS.colorPrimary : CS.colorDark]}>Blogs</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'blogs' ? CS.colorPrimary : CS.colorDark]}>Blogs</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeGroups } underlayColor='#fff'>
@@ -388,7 +388,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'groups' ? styles.iconActive : null ]}
               size={ this.iconSize }
             />
-            <Text style={[CS.fontS, filtersStore.type == 'groups' ? CS.colorPrimary : CS.colorDark]}>Groups</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'groups' ? CS.colorPrimary : CS.colorDark]}>Groups</Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -397,7 +397,7 @@ export default class DiscoveryScreen extends Component {
     const iconRight = filtersStore.searchtext ?
       'md-close-circle' :
       (filtersStore.type == 'channels') ?
-        <Text style={styles.lastVisited} onPress={this.showLastChannels}>Visited</Text> :
+        <Text numberOfLines={1} style={styles.lastVisited} onPress={this.showLastChannels}>Visited</Text> :
         null;
 
 
@@ -614,7 +614,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     flex: 1,
-    padding: 5,
+    paddingVertical: 5,
     height: 50
   },
   icon: {
