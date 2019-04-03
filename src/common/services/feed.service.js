@@ -22,7 +22,9 @@ class FeedsService {
 
     this.sync.setUp();
 
-    // TODO: Setup GC timers
+    setTimeout(() => {
+      this.gc();
+    }, 60000);
   }
 
   async get(opts) {

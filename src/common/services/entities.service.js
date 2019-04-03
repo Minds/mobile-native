@@ -1,6 +1,7 @@
 import EntitiesSync from "../../lib/minds-sync/services/EntitiesSync";
 import apiService from "./api.service";
 import sqliteStorageProviderService from "./sqlite-storage-provider.service";
+import { Alert } from "react-native";
 
 class EntitiesService {
   constructor() {
@@ -9,7 +10,9 @@ class EntitiesService {
 
     this.sync.setUp();
 
-    // TODO: Setup GC timers
+    setTimeout(() => {
+      this.sync.gc();
+    }, 60000);
   }
 
   async single(guid) {
