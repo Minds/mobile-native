@@ -6,7 +6,13 @@ import videochat from '../src/common/services/videochat.service';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
-// fix react navigation v3 errors
+import {
+  BackHandler,
+} from 'react-native';
+
+// mock backhandler
+BackHandler.addEventListener = jest.fn();
+
 jest.mock('react-native-gesture-handler', () => {});
 jest.mock('react-navigation-stack', () => { Header: {} });
 jest.mock('react-navigation', () => {
