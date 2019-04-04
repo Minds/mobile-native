@@ -59,7 +59,7 @@
     "react-native-i18n": "^2.0.10",
     "react-native-image-picker": "react-community/react-native-image-picker#60169dc5dfcea47094703fe4adf54be262540b6b",
     "react-native-image-progress": "^1.0.1",
-    "react-native-jitsi-meet": "Minds/react-native-jitsi-meet#23465b24ba35056a25be3f81d36d219f5663c66c",
+    "react-native-jitsi-meet": "Minds/react-native-jitsi-meet#e0671aeb2a83a37ca95d8a81434425773cc3f7c9",
     "react-native-keep-awake": "^2.0.6",
     "react-native-level-fs": "^3.0.0",
     "react-native-material-menu": "^0.4.2",
