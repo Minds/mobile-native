@@ -179,6 +179,7 @@ configurations.all {
 }
 
 dependencies {
+    implementation project(':react-native-gesture-handler')
     implementation project(':react-native-apk')
     implementation project(':react-native-cookies')
     compile project(':react-native-exit-app')

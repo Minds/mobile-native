@@ -20,11 +20,6 @@ import {
   Provider,
 } from 'mobx-react/native'  // import from mobx-react/native instead of mobx-react fix test
 
-import {
-  createNavigator,
-  NavigationActions
-} from 'react-navigation';
-
 import NavigationService from './src/navigation/NavigationService';
 
 import {

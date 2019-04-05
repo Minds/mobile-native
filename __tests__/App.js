@@ -6,6 +6,32 @@ import videochat from '../src/common/services/videochat.service';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
+import {
+  BackHandler,
+} from 'react-native';
+
+// mock backhandler
+BackHandler.addEventListener = jest.fn();
+
+jest.mock('react-native-gesture-handler', () => {});
+jest.mock('react-navigation-stack', () => { Header: {} });
+jest.mock('react-navigation', () => {
+  return {
+      createAppContainer: jest.fn().mockReturnValue(function NavigationContainer(props) {return null;}),
+      createDrawerNavigator: jest.fn(),
+      createMaterialTopTabNavigator: jest.fn().mockImplementation(x => ({router: 'router'})),
+      createStackNavigator: jest.fn(),
+      withNavigation: jest.fn(),
+      StackActions: {
+          push: jest.fn().mockImplementation(x => ({...x,  "type": "Navigation/PUSH"})),
+          replace: jest.fn().mockImplementation(x => ({...x,  "type": "Navigation/REPLACE"})),
+      },
+      NavigationActions: {
+          navigate: jest.fn().mockImplementation(x => x),
+      }
+  }
+});
+
 // use the web3 mock to prevent sintax error from node_tar
 jest.mock('web3');
 

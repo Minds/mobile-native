@@ -3,6 +3,7 @@ package com.minds.mobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import be.skyzohlabs.rnapk.ReactNativeAPKPackage;
 import com.psykar.cookiemanager.CookieManagerPackage;
 import com.github.wumke.RNExitApp.RNExitAppPackage;
@@ -55,6 +56,7 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNGestureHandlerPackage(),
             new ReactNativeAPKPackage(),
             new CookieManagerPackage(),
             new RNExitAppPackage(),

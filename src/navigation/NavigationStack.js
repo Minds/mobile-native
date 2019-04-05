@@ -1,4 +1,4 @@
-import { createStackNavigator } from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import LoadingScreen from '../LoadingScreen';
 import LoginScreen from '../auth/LoginScreen';
@@ -198,4 +198,4 @@ const Stack = createStackNavigator({
   }
 });
 
-export default Stack;
+export default createAppContainer(Stack);
