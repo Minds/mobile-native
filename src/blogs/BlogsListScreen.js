@@ -20,6 +20,7 @@ import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
 import { CommonStyle as CS } from '../styles/Common';
 import { MINDS_CDN_URI, MINDS_FEATURES } from '../config/Config';
 import ErrorLoading from '../common/components/ErrorLoading';
+import { withErrorBoundary } from '../common/components/ErrorBoundary';
 
 const selectedTextStyle = {color: 'black'};
 const typeOptions = [
@@ -27,6 +28,8 @@ const typeOptions = [
   { text: 'SUBSCRIPTIONS', value: 'network', selectedTextStyle},
   { text: 'MY BLOGS', value: 'owner', selectedTextStyle},
 ];
+
+const BlogCardWithErrorBoundary = withErrorBoundary(BlogCard);
 
 /**
  * Blogs List screen
@@ -50,7 +53,7 @@ export default class BlogsListScreen extends Component {
     const blog = row.item;
     return (
       <View style={styles.cardContainer}>
-        <BlogCard entity={blog} navigation={this.props.navigation} />
+        <BlogCardWithErrorBoundary entity={blog} navigation={this.props.navigation} />
       </View>
     );
   }

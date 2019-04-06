@@ -9,6 +9,7 @@ import {
   Image,
   View,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 
 import {
@@ -31,7 +32,6 @@ import { CommonStyle } from '../styles/Common';
 import UserModel from './UserModel';
 import Touchable from '../common/components/Touchable';
 import session from '../common/services/session.service';
-import isIphoneX from '../common/helpers/isIphoneX';
 
 /**
  * Channel Screen
@@ -39,8 +39,6 @@ import isIphoneX from '../common/helpers/isIphoneX';
 @inject('channel')
 @observer
 export default class ChannelScreen extends Component {
-
-  gobackstyle = isIphoneX() ? {left: 10, top: 30} : {};
 
   state = {
     guid: null
@@ -192,7 +190,9 @@ export default class ChannelScreen extends Component {
 
         {!channel.blocked && <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>}
         {carousel}
-        <Icon raised color={colors.primary} containerStyle={[styles.gobackicon, this.gobackstyle]} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} />
+        <SafeAreaView style={styles.gobackicon}>
+          <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
+        </SafeAreaView>
 
         {!!channel.blocked && <View style={styles.blockView}>
           <Text style={styles.blockText}>You have blocked @{channel.username}</Text>
@@ -257,9 +257,7 @@ const styles = StyleSheet.create({
   gobackicon: {
     position: 'absolute',
     left: 0,
-    top: 16,
-    height: 40,
-    width: 40,
+    top: 16
   },
   headertextcontainer: {
     padding: 8,

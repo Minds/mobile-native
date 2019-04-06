@@ -214,7 +214,7 @@ export default class NewsfeedList extends Component {
     const entity = row.item;
 
     return (
-      <ErrorBoundary message="Can't show this activity">
+      <ErrorBoundary message="Can't show this activity" containerStyle={CS.hairLineBottom}>
         <Activity
           entity={entity}
           newsfeed={this.props.newsfeed}

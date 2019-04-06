@@ -17,6 +17,7 @@ import {
   Platform,
   KeyboardAvoidingView,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 
 import { inject, observer } from 'mobx-react/native';
@@ -38,9 +39,6 @@ import shareService from '../share/ShareService';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
-import isIphoneX from '../common/helpers/isIphoneX';
-
-gobackstyle = isIphoneX() ? {left: 10, top: 30} : {};
 
 /**
  * Blog View Screen
@@ -133,7 +131,9 @@ export default class BlogsViewScreen extends Component {
           <Text style={[CS.fontXS, CS.paddingLeft, CS.colorMedium, CS.paddingRight2x]}>{blog.getLicenseText()}</Text>
           <Icon color={colors.primary} size={20} name='share' onPress={this.share} />
         </View>
-        <Icon raised color={colors.primary} containerStyle={[styles.header, gobackstyle]} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
+        <SafeAreaView style={styles.header}>
+          <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
+        </SafeAreaView>
         { this.comments.loadPrevious && !this.comments.loading ?
             <TouchableHighlight
             onPress={() => { this.loadComments()}}
@@ -197,9 +197,7 @@ const styles = StyleSheet.create({
   header: {
     position: 'absolute',
     left: 0,
-    top: 0,
-    height: 40,
-    width: 40,
+    top: 0
   },
   actionsContainer: {
     display: 'flex',

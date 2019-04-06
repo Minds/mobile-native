@@ -51,6 +51,8 @@ import NotificationsService from "./src/notifications/NotificationsService";
 import getMaches from './src/common/helpers/getMatches';
 import {CODE_PUSH_TOKEN} from './src/config/Config';
 import updateService from './src/common/services/update.service';
+import ErrorBoundary from './src/common/components/ErrorBoundary';
+import { CommonStyle as CS } from './src/styles/Common';
 
 let deepLinkUrl = '';
 
@@ -252,14 +254,14 @@ export default class App extends Component {
   render() {
     const app = (
       <Provider key="app" {...stores}>
-        <Observer>{() =>
-          <NavigationStack
-            ref={navigatorRef => {
-              NavigationService.setTopLevelNavigator(navigatorRef);
-            }}
+          <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
+            <NavigationStack
+              ref={navigatorRef => {
+                NavigationService.setTopLevelNavigator(navigatorRef);
+              }}
             />
-        }</Observer>
-      </Provider>
+          </ErrorBoundary>
+        </Provider>
     );
 
     const keychainModal = (

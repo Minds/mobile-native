@@ -25,6 +25,7 @@ import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
 import ErrorLoading from '../common/components/ErrorLoading';
 import GroupsListItem from './GroupsListItem';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
+import { withErrorBoundary } from '../common/components/ErrorBoundary';
 
 // define tabs based on enabled features
 const selectedTextStyle = {color: 'black'};
@@ -33,7 +34,7 @@ const typeOptions = [
   { text: 'MY GROUPS', value: 'member', selectedTextStyle}
 ];
 
-DebouncedGroupsListItem = withPreventDoubleTap(GroupsListItem);
+DebouncedGroupsListItem = withErrorBoundary(withPreventDoubleTap(GroupsListItem, "Can't show this group"));
 
 /**
  * Groups list screen

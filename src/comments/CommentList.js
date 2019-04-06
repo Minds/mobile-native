@@ -60,8 +60,8 @@ type CommentType = {
 };
 
 const isIOS = Platform.OS === 'ios';
-const vPadding = isIphoneX() ? 88 : 66;
-const paddingBottom = isIphoneX() ? { paddingBottom: 12 } : null;
+const vPadding = isIphoneX ? 88 : 66;
+const paddingBottom = isIphoneX ? { paddingBottom: 12 } : null;
 const inputStyle = isIOS ? { height:25 } : { height:40 };
 
 // helper method

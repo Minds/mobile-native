@@ -10,6 +10,7 @@ import {
   Platform,
   StyleSheet,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,8 +20,6 @@ import {
   observer
 } from 'mobx-react/native'
 
-// import WalletOnboardingJoinRewardsScreen from '../wallet/onboarding/screens/WalletOnboardingJoinRewardsScreen';
-import isIphoneX from '../common/helpers/isIphoneX';
 import Wizard from '../common/components/Wizard';
 import HashtagsStep from './steps/HashtagsStep';
 import SuggestedChannelsStep from './steps/SuggestedChannelsStep';
@@ -30,8 +29,6 @@ import RewardsStep from './steps/RewardsStep';
 import WelcomeStep from './steps/WelcomeStep';
 import { CommonStyle as CS } from '../styles/Common';
 import navigationService from '../navigation/NavigationService';
-
-const headerStyle = isIphoneX() ? {paddingTop: 40} : {};
 
 @observer
 @inject('onboarding', 'hashtag')
@@ -88,9 +85,11 @@ export default class OnboardingScreen extends Component {
     }
 
     return (
-      <KeyboardAvoidingView style={[headerStyle, CS.flexContainer, CS.backgroundWhite]} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
-        <Wizard steps={steps} onFinish={this.onFinish} ref={this.handleWizarRef}></Wizard>
-      </KeyboardAvoidingView>
+      <SafeAreaView style={[CS.flexContainer, CS.backgroundWhite]}>
+        <KeyboardAvoidingView style={[CS.flexContainer]} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
+          <Wizard steps={steps} onFinish={this.onFinish} ref={this.handleWizarRef}></Wizard>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 }
