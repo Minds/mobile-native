@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 
 import {
-  StyleSheet,
   Text,
   View,
   FlatList,
@@ -17,30 +16,16 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
-import NotificationsTabIcon from './NotificationsTabIcon';
-import CenteredLoading from '../common/components/CenteredLoading';
+import stores from '../../AppStores';
+import CaptureFab from '../capture/CaptureFab';
+import { CommonStyle as CS } from '../styles/Common';
+import { ComponentsStyle } from '../styles/Components';
 import Notification from './notification/Notification';
 import NotificationsTopbar from './NotificationsTopbar';
-import CaptureFab from '../capture/CaptureFab';
-import { CommonStyle } from '../styles/Common';
-import { ComponentsStyle } from '../styles/Components';
-import stores from '../../AppStores';
+import NotificationsTabIcon from './NotificationsTabIcon';
+import ErrorBoundary from '../common/components/ErrorBoundary';
+import CenteredLoading from '../common/components/CenteredLoading';
 
-// style
-const styles = StyleSheet.create({
-  listView: {
-    backgroundColor: '#FFF',
-  },
-  button: {
-    padding: 8,
-  },
-  container: {
-    flex: 1,
-  },
-  row: {
-    padding: 16,
-  },
-});
 
 /**
  * Notification Screen
@@ -53,7 +38,7 @@ export default class NotificationsScreen extends Component {
     tabBarIcon: ({ tintColor }) => (
       <NotificationsTabIcon tintColor={tintColor}/>
     ),
-    headerRight: <Icon name="ios-options" size={18} color='#444' style={styles.button} onPress={() => navigation.navigate('NotificationsSettings')} />,
+    headerRight: <Icon name="ios-options" size={18} color='#444' style={CS.padding2x} onPress={() => navigation.navigate('NotificationsSettings')} />,
     tabBarOnPress: ({ navigation, defaultHandler }) => {
       // tab button tapped again?
       if (navigation.isFocused()) {
@@ -145,12 +130,12 @@ export default class NotificationsScreen extends Component {
         stickyHeaderIndices={[0]}
         windowSize={8}
         refreshing={list.refreshing}
-        style={styles.listView}
+        style={CS.backgroundWhite}
       />
     );
 
     return (
-      <View style={styles.container}>
+      <View style={CS.flexContainer}>
         {body}
         <CaptureFab navigation={this.props.navigation} />
       </View>
@@ -178,7 +163,9 @@ export default class NotificationsScreen extends Component {
   renderRow = (row) => {
     const entity = row.item;
     return (
-      <Notification entity={entity} navigation={this.props.navigation}/>
+      <ErrorBoundary message="Can't show this notification" containerStyle={CS.hairLineBottom}>
+        <Notification entity={entity} navigation={this.props.navigation}/>
+      </ErrorBoundary>
     );
   }
 }

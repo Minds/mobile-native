@@ -219,11 +219,9 @@ exports[`Channel screen component should renders correctly 1`] = `
                 "paddingTop": 5,
               },
               "gobackicon": Object {
-                "height": 40,
                 "left": 0,
                 "position": "absolute",
                 "top": 16,
-                "width": 40,
               },
               "headercontainer": Object {
                 "flex": 1,
@@ -299,28 +297,26 @@ exports[`Channel screen component should renders correctly 1`] = `
           }
           hasRewards={0}
         />
-        <Icon
-          color="#4690D6"
-          containerStyle={
-            Array [
-              Object {
-                "height": 40,
-                "left": 0,
-                "position": "absolute",
-                "top": 16,
-                "width": 40,
-              },
-              Object {},
-            ]
+        <SafeAreaView
+          style={
+            Object {
+              "left": 0,
+              "position": "absolute",
+              "top": 16,
+            }
           }
-          name="arrow-back"
-          onPress={[Function]}
-          raised={true}
-          reverse={false}
-          reverseColor="white"
-          size={30}
-          underlayColor="white"
-        />
+        >
+          <Icon
+            color="#4690D6"
+            name="arrow-back"
+            onPress={[Function]}
+            raised={true}
+            reverse={false}
+            reverseColor="white"
+            size={22}
+            underlayColor="white"
+          />
+        </SafeAreaView>
       </View>
     }
     navigation={

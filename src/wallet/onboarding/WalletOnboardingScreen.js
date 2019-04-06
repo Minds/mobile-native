@@ -6,6 +6,7 @@ import {
   View,
   ScrollView,
   StyleSheet,
+  SafeAreaView,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,23 +21,21 @@ import WalletOnboardingJoinRewardsScreen from './screens/WalletOnboardingJoinRew
 import WalletOnboardingOnChainSetupScreen from './screens/WalletOnboardingOnChainSetupScreen';
 import WalletOnboardingFinishedScreen from './screens/WalletOnboardingFinishedScreen';
 
-import isIphoneX from '../../common/helpers/isIphoneX';
 import stylesheet from '../../onboarding/stylesheet';
-
-const headerStyle = isIphoneX() ? {paddingTop: 40} : {};
+import { CommonStyle as CS } from '../../styles/Common';
 
 @inject('user', 'wallet')
 @observer
 export default class WalletOnboardingScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     header: (
-      <View style={[style.header, headerStyle]}>
-        <Icon size={28} name="ios-close" onPress={() => navigation.goBack()} />
+      <SafeAreaView style={[style.header]}>
+        <Icon size={40} name="ios-close" style={CS.padding2x} onPress={() => navigation.goBack()} />
 
         <View>
           {(navigation.state.params && navigation.state.params.nextButton) && navigation.state.params.nextButton}
         </View>
-      </View>
+      </SafeAreaView>
     ),
     transitionConfig: {
       isModal: true

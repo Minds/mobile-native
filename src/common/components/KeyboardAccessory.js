@@ -65,7 +65,7 @@ export default class KeyboardAccessory extends PureComponent {
     if (Platform.OS === 'android') {
       bottom = 0;
     } else {
-      bottom = isIphoneX() ? (e.endCoordinates.height - SAFE_AREA_BOTTOM_HEIGHT) : e.endCoordinates.height;
+      bottom = isIphoneX ? (e.endCoordinates.height - SAFE_AREA_BOTTOM_HEIGHT) : e.endCoordinates.height;
     }
 
     if (this.state.bottom != bottom) {

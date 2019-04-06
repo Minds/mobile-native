@@ -3,7 +3,8 @@ import React, {
 } from 'react';
 import {
   createMaterialTopTabNavigator,
-  jumpTo
+  jumpTo,
+  SafeAreaView
 } from 'react-navigation';
 import {
   Platform,
@@ -26,6 +27,8 @@ import MoreScreen from './MoreScreen';
 import stores from '../../AppStores';
 import featuresService from '../common/services/features.service';
 import FeatureFlagSelect from '../common/components/FeatureFlagSelect';
+import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
+import isIphoneX from '../common/helpers/isIphoneX';
 
 let platformWalletScreen = WalletScreen;
 
@@ -36,19 +39,19 @@ DiscoveryScreenComponent.navigationOptions = DiscoveryScreen.navigationOptions;
 
 const screens = {
   Wallet: {
-    screen: platformWalletScreen,
+    screen: withErrorBoundaryScreen(platformWalletScreen),
   },
   Discovery: {
-    screen: DiscoveryScreenComponent,
+    screen: withErrorBoundaryScreen(DiscoveryScreenComponent),
   },
   Newsfeed: {
-    screen: NewsfeedScreen,
+    screen: withErrorBoundaryScreen(NewsfeedScreen),
   },
   Messenger: {
-    screen: MessengerScreen
+    screen: withErrorBoundaryScreen(MessengerScreen),
   },
   Notifications: {
-    screen: NotificationsScreen,
+    screen: withErrorBoundaryScreen(NotificationsScreen),
   }
 };
 
@@ -64,16 +67,22 @@ const Tabs = (
     lazy: false,
     removeClippedSubviews: true,
     tabBarOptions: {
-      showLabel: (Platform.OS == 'ios' && aspectRatio < 1.6)  ? true : false,
+      showLabel: false,
       showIcon: true,
       activeTintColor: '#FFF',
       style: {
         backgroundColor: '#222',
+        paddingBottom: isIphoneX ? 20 : null
+      },
+      indicatorStyle: {
+        marginBottom: isIphoneX ? 20 : null
       }
     },
     initialRouteName: 'Newsfeed',
   })
 );
+
+const inset = { bottom: 'always', top: 'never' };
 
 export default class TabsScreen extends Component {
   // link router between tab and main stack navigator

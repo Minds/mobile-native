@@ -44,157 +44,158 @@ import OnboardingScreen from '../onboarding/OnboardingScreen';
 import IssueReportScreen from '../issues/IssueReportScreen';
 import Wizard from '../common/components/Wizard';
 import UpdatingScreen from '../update/UpdateScreen';
+import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 
 /**
  * Main stack navigator
  */
 const Stack = createStackNavigator({
   Loading: {
-    screen: LoadingScreen,
+    screen: withErrorBoundaryScreen(LoadingScreen),
   },
   Update: {
-    screen: UpdatingScreen
+    screen: withErrorBoundaryScreen(UpdatingScreen)
   },
   Boost: {
-    screen: BoostScreen,
+    screen: withErrorBoundaryScreen(BoostScreen),
     navigationOptions: {
       gesturesEnabled: false
     },
   },
   Login: {
-    screen: LoginScreen,
+    screen: withErrorBoundaryScreen(LoginScreen),
   },
   Forgot: {
-    screen: ForgotScreen,
+    screen: withErrorBoundaryScreen(ForgotScreen),
   },
   Register: {
-    screen: RegisterScreen,
+    screen: withErrorBoundaryScreen(RegisterScreen),
   },
   Tabs: {
-    screen: TabsScreen,
+    screen: withErrorBoundaryScreen(TabsScreen),
   },
   Notifications: {
-    screen: NotificationsScreen,
+    screen: withErrorBoundaryScreen(NotificationsScreen),
   },
   NotificationsSettings: {
-    screen: NotificationsSettingsScreen
+    screen: withErrorBoundaryScreen(NotificationsSettingsScreen)
   },
   Channel: {
-    screen: ChannelScreen,
+    screen: withErrorBoundaryScreen(ChannelScreen),
     path: 'channel/:guid',
   },
   Capture: {
-    screen: CapturePoster
+    screen: withErrorBoundaryScreen(CapturePoster)
   },
   Activity: {
-    screen: ActivityScreen,
+    screen: withErrorBoundaryScreen(ActivityScreen),
     path: 'activity/:guid',
   },
   Conversation: {
-    screen: ConversationScreen
+    screen: withErrorBoundaryScreen(ConversationScreen)
   },
   Subscribers: {
-    screen: ChannelSubscribers
+    screen: withErrorBoundaryScreen(ChannelSubscribers)
   },
   Settings: {
-    screen: SettingsScreen
+    screen: withErrorBoundaryScreen(SettingsScreen)
   },
   SettingsEmail: {
-    screen: EmailScreen
+    screen: withErrorBoundaryScreen(EmailScreen)
   },
   SettingsRekey: {
-    screen: RekeyScreen
+    screen: withErrorBoundaryScreen(RekeyScreen)
   },
   SettingsPassword: {
-    screen: PasswordScreen
+    screen: withErrorBoundaryScreen(PasswordScreen)
   },
   SettingsBilling: {
-    screen: BillingScreen
+    screen: withErrorBoundaryScreen(BillingScreen)
   },
   GroupsList: {
-    screen: GroupsListScreen
+    screen: withErrorBoundaryScreen(GroupsListScreen)
   },
   GroupView: {
-    screen: GroupViewScreen
+    screen: withErrorBoundaryScreen(GroupViewScreen)
   },
   Wallet: {
-    screen: WalletScreen
+    screen: withErrorBoundaryScreen(WalletScreen)
   },
   BlogList: {
-    screen: BlogsListScreen
+    screen: withErrorBoundaryScreen(BlogsListScreen)
   },
   BoostConsole: {
-    screen: BoostConsoleScreen
+    screen: withErrorBoundaryScreen(BoostConsoleScreen)
   },
   BlogView: {
-    screen: BlogsViewScreen,
+    screen: withErrorBoundaryScreen(BlogsViewScreen),
     path: 'blog/view/:guid',
   },
   WireFab: {
-    screen: FabScreen,
+    screen: withErrorBoundaryScreen(FabScreen),
     navigationOptions: {
       gesturesEnabled: false
     },
   },
   WalletHistory: {
-    screen: WalletHistoryScreen
+    screen: withErrorBoundaryScreen(WalletHistoryScreen)
   },
   ViewImage: {
-    screen: ViewImageScreen
+    screen: withErrorBoundaryScreen(ViewImageScreen)
   },
   BlockchainWallet: {
-    screen: BlockchainWalletScreen
+    screen: withErrorBoundaryScreen(BlockchainWalletScreen)
   },
   Contributions: {
-    screen: ContributionsScreen,
+    screen: withErrorBoundaryScreen(ContributionsScreen),
   },
   Transactions: {
-    screen: TransactionsScreen
+    screen: withErrorBoundaryScreen(TransactionsScreen)
   },
   BlockchainWalletModal: {
-    screen: BlockchainWalletModalScreen,
+    screen: withErrorBoundaryScreen(BlockchainWalletModalScreen),
     navigationOptions: {
       gesturesEnabled: false
     },
   },
   BlockchainWalletImport: {
-    screen: BlockchainWalletImportScreen
+    screen: withErrorBoundaryScreen(BlockchainWalletImportScreen)
   },
   BlockchainWalletDetails: {
-    screen: BlockchainWalletDetailsScreen
+    screen: withErrorBoundaryScreen(BlockchainWalletDetailsScreen)
   },
   Report: {
-    screen: ReportScreen,
+    screen: withErrorBoundaryScreen(ReportScreen),
   },
   More: {
-    screen: MoreScreen
+    screen: withErrorBoundaryScreen(MoreScreen)
   },
   CheckoutModal: {
-    screen: CheckoutModalScreen,
+    screen: withErrorBoundaryScreen(CheckoutModalScreen),
     navigationOptions: {
       gesturesEnabled: false
     },
   },
   Withdraw: {
-    screen: WithdrawScreen
+    screen: withErrorBoundaryScreen(WithdrawScreen)
   },
   WalletOnboarding: {
-    screen: WalletOnboardingScreen
+    screen: withErrorBoundaryScreen(WalletOnboardingScreen)
   },
   ComingSoon: {
-    screen: ComingSoonScreen
+    screen: withErrorBoundaryScreen(ComingSoonScreen)
   },
   NotSupported: {
-    screen: NotSupportedScreen
+    screen: withErrorBoundaryScreen(NotSupportedScreen)
   },
   OnboardingScreen: {
-    screen: OnboardingScreen,
+    screen: withErrorBoundaryScreen(OnboardingScreen),
   },
   IssueReport: {
-    screen: IssueReportScreen
+    screen: withErrorBoundaryScreen(IssueReportScreen)
   },
   Wizard: {
-    screen: Wizard
+    screen: withErrorBoundaryScreen(Wizard)
   }
 });
 

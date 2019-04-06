@@ -23,9 +23,9 @@ if (!__DEV__) {
         }]
       );
 
-      console.log(e, 'Minds Uncaught (fatal)');
+      console.log('Minds Uncaught (fatal)', e);
     } else if (e) {
-      console.log(e, 'Minds Uncaught (non-fatal)'); // So that we can see it in the ADB logs in case of Android if needed
+      console.log('Minds Uncaught (non-fatal)', e); // So that we can see it in the ADB logs in case of Android if need, eed
     }
   };
 

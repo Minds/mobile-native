@@ -8,7 +8,8 @@ import {
   Text,
   FlatList,
   ScrollView,
-  Alert
+  Alert,
+  SafeAreaView
 } from 'react-native';
 
 import {
@@ -30,7 +31,6 @@ import GroupHeader from './header/GroupHeader';
 import { CommonStyle } from '../styles/Common';
 import CommentList from '../comments/CommentList';
 import NewsfeedList from '../newsfeed/NewsfeedList';
-import isIphoneX from '../common/helpers/isIphoneX';
 import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 
@@ -40,8 +40,6 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 @inject('groupView', 'user')
 @observer
 export default class GroupViewScreen extends Component {
-
-  gobackstyle = isIphoneX() ? {left: 10, top: 30} : {};
 
   /**
    * Indicate if the screen should change to a tab after the first render
@@ -161,7 +159,9 @@ export default class GroupViewScreen extends Component {
     const header = (
       <View>
         <GroupHeader store={this.props.groupView} me={this.props.user.me} styles={styles} ref={this.headerRefHandler}/>
-        <Icon color={colors.primary} containerStyle={[styles.gobackicon, this.gobackstyle]} size={30} name='arrow-back' onPress={() => this.props.navigation.goBack()} raised />
+        <SafeAreaView style={styles.gobackicon}>
+          <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
+        </SafeAreaView>
       </View>
     )
     switch (group.tab) {

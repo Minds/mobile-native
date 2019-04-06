@@ -16,6 +16,10 @@ import { Avatar } from 'react-native-elements';
 
 import { MINDS_CDN_URI } from '../config/Config';
 import featuresService from '../common/services/features.service';
+import { SafeAreaView } from 'react-navigation';
+import isIphoneX from '../common/helpers/isIphoneX';
+
+const forceInset = isIphoneX ? {top: 32} : null
 
 @inject('user')
 @inject('wallet')
@@ -28,7 +32,7 @@ export default class Topbar extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container} forceInset={forceInset}>
         <View style={styles.topbar}>
 
           { featuresService.has('crypto') && <TouchableOpacity onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} >
@@ -56,23 +60,16 @@ export default class Topbar extends Component {
           </TouchableOpacity>
 
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
 
 let topbarHeight = 56;
-let topbarPadding = 0;
+let topMargin = 0;
 
 if (Platform.OS == 'ios') {
-  topbarHeight = 65;
-  topbarPadding = 16;
-}
-
-const d = Dimensions.get('window');
-if (d.height == 812 || d.width == 812) {
-  topbarHeight = 76;
-  topbarPadding = 32;
+  topbarHeight = 45;
 }
 
 const styles = StyleSheet.create({
@@ -80,7 +77,6 @@ const styles = StyleSheet.create({
     height: topbarHeight,
     display: 'flex',
     flexDirection: 'row',
-    paddingTop: topbarPadding,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
     backgroundColor: '#FFFFFF',
@@ -109,6 +105,6 @@ const styles = StyleSheet.create({
     paddingRight: 4
   },
   button: {
-    padding: 8,
+    paddingHorizontal: 8,
   }
 });
