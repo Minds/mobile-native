@@ -18,7 +18,7 @@ class ApiService {
       headers = {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
-        'App-Version': Version.version
+        'App-Version': Version.VERSION
       };
 
       if (session.token) {
