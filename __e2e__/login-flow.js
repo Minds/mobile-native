@@ -9,6 +9,7 @@ const customCapabilities = {
 };
 
 const [driver, capabilities] = factory('browserStack', customCapabilities);
+// const [driver, capabilities] = factory('androidLocal', {});
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 
 const data = {sessiondID: null};

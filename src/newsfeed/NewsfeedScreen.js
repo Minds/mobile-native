@@ -76,7 +76,7 @@ export default class NewsfeedScreen extends Component {
     const newsfeed = this.props.newsfeed;
 
     const header = (
-      <View {...testID('Newsfeed Screen')}>
+      <View>
         <Topbar />
         <GroupsBar/>
         { false ?
@@ -86,7 +86,7 @@ export default class NewsfeedScreen extends Component {
     );
 
     return (
-      <View style={CommonStyle.flexContainer}>
+      <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>
         <NewsfeedList
           newsfeed={newsfeed}
           header={header}

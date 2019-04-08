@@ -11,6 +11,7 @@ import { observer, inject } from 'mobx-react/native';
 import * as Progress from 'react-native-progress';
 import colors from '../styles/Colors';
 import { CommonStyle as CS } from '../styles/Common';
+import testID from '../common/helpers/testID';
 
 @inject('capture')
 @observer
@@ -22,7 +23,7 @@ export default class CapturePostButton extends Component {
     const text = this.props.text || 'POST';
 
     return (
-      <View style={styles.posterActions}>
+      <View style={styles.posterActions} {...testID('Capture Post Button')}>
         {
           attachment.uploading ?
             <Progress.Pie progress={attachment.progress} size={36} />

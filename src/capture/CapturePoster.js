@@ -35,6 +35,7 @@ import BlogCard from '../blogs/BlogCard';
 import ActivityModel from '../newsfeed/ActivityModel';
 import featuresService from '../common/services/features.service';
 import { creatorNsfwService } from '../common/services/nsfw.service';
+import testID from '../common/helpers/testID';
 
 @inject('user', 'capture')
 @observer
@@ -184,6 +185,7 @@ export default class CapturePoster extends Component {
               multiline={true}
               selectTextOnFocus={false}
               onSelectionChange={this.onSelectionChanges}
+              {...testID('PostInput')}
             />
           </View>
           {!params.isRemind ? this.getAttachFeature() : this.getRemind()}
