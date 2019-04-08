@@ -18,6 +18,7 @@ import CaptureFab from '../capture/CaptureFab';
 import stores from '../../AppStores';
 import { CommonStyle } from '../styles/Common';
 import GroupsBar from '../groups/GroupsBar';
+import testID from '../common/helpers/testID';
 
 /**
  * News Feed Screen
@@ -75,7 +76,7 @@ export default class NewsfeedScreen extends Component {
     const newsfeed = this.props.newsfeed;
 
     const header = (
-      <View>
+      <View {...testID('Newsfeed Screen')}>
         <Topbar />
         <GroupsBar/>
         { false ?

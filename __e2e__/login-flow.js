@@ -26,7 +26,7 @@ describe('login tests', () => {
     await driver.quit();
   });
 
-  it('should shows login error on wrong credentials', async () => {
+  it('should shows login error on wrong credentials and go to newsfeed on success', async () => {
     expect(await driver.hasElementByAccessibilityId('username input')).toBe(true);
     expect(await driver.hasElementByAccessibilityId('password input')).toBe(true);
 
@@ -45,5 +45,13 @@ describe('login tests', () => {
 
     const textElement = await driver.elementByAccessibilityId('loginMsg');
     expect(await textElement.text()).toBe('The user credentials were incorrect.');
+
+    // try successfull login
+    await username.type(process.env.loginUser);
+    await password.type(process.env.loginPass);
+    await loginButton.click();
+
+    // should open the newsfeed
+    await driver.waitForElementByAccessibilityId('Newsfeed Screen', wd.asserters.isDisplayed, 5000);
   });
 });
