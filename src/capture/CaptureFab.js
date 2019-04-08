@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import { Icon } from 'react-native-elements'
+import testID from '../common/helpers/testID';
 
 export default class CaptureFab extends Component {
 
@@ -32,6 +33,7 @@ export default class CaptureFab extends Component {
         size={32}
         containerStyle={styles.container}
         onPress={() => this.navToCapture()}
+        {...testID('CaptureButton')}
         />
     );
   }

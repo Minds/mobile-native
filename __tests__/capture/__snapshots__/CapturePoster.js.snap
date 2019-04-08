@@ -43,6 +43,7 @@ exports[`cature poster component should renders correctly 1`] = `
               "paddingTop": 24,
             }
           }
+          testID="PostInput"
           underlineColorAndroid="transparent"
           value=""
         />
