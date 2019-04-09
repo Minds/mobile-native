@@ -23,7 +23,7 @@ export default class CapturePostButton extends Component {
     const text = this.props.text || 'POST';
 
     return (
-      <View style={styles.posterActions} {...testID('Capture Post Button')}>
+      <View style={styles.posterActions} >
         {
           attachment.uploading ?
             <Progress.Pie progress={attachment.progress} size={36} />
@@ -34,6 +34,7 @@ export default class CapturePostButton extends Component {
               <TouchableOpacity
                 onPress={this.props.onPress}
                 style={[styles.button, CS.borderRadius10x, CS.borderPrimary, CS.border]}
+                {...testID('Capture Post Button')}
               >
                 <Text style={styles.buttonText}>{text}</Text>
               </TouchableOpacity>

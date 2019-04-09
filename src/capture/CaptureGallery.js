@@ -23,6 +23,7 @@ import { Button } from 'react-native-elements';
 import CenteredLoading from '../common/components/CenteredLoading'
 import CaptureTabs from './CaptureTabs';
 import androidPermissionsService from '../common/services/android-permissions.service';
+import testID from '../common/helpers/testID';
 
 /**
  * Gallery View
@@ -126,6 +127,7 @@ export default class CaptureGallery extends PureComponent {
             })
           }
         }
+        {...testID(`Gallery Image ${index}`)}
         >
         <Image
           source={{ uri : node.image.uri }}

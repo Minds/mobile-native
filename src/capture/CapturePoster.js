@@ -237,7 +237,7 @@ export default class CapturePoster extends Component {
             uri={attachment.uri}
             type={attachment.type}
           />
-          <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()}/>
+          <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()} {...testID('Attachment Delete Button')} />
         </View>}
 
         <CaptureGallery
