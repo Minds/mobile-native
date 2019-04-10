@@ -16,9 +16,7 @@ export default (Wrapped, delay = 300) => {
 
     handleOnPress = () => {
       const now = Date.now();
-      console.log('tap')
       if (this.lastTap && (now - this.lastTap) < delay) {
-        console.log('doubletap')
         this.props.onDoubleTap();
         clearTimeout(this.interval);
       } else {

@@ -41,6 +41,9 @@ allprojects {
 
         maven { url "https://jitpack.io" }
     }
+    configurations.all {
+        resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
+    }
 }
 
 
@@ -66,15 +69,15 @@ subprojects {
         afterEvaluate {project ->
             if (project.hasProperty("android")) {
                 android {
-                    compileSdkVersion 26
-                    buildToolsVersion '27.0.2'
+                    compileSdkVersion rootProject.ext.compileSdkVersion
+                    buildToolsVersion rootProject.ext.supportLibVersion
                 }
             }
         }
         resolutionStrategy.eachDependency { details ->
             if (details.requested.group == 'com.android.support'
                 && !details.requested.name.contains('multidex') ) {
-                details.useVersion "26.0.2"
+                details.useVersion rootProject.ext.supportLibVersion
             }
         }
     }
