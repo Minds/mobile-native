@@ -37,6 +37,9 @@ import {
 
 import CommentList from './CommentList';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
+import DoubleTap from '../common/components/DoubleTap';
+
+const DoubleTapText = DoubleTap(Text);
 
 /**
  * Comment Component
@@ -92,7 +95,7 @@ export default class Comment extends Component {
                 this.state.editing ?
                   <CommentEditor setEditing={this.setEditing} comment={comment} store={this.props.store}/>
                 :
-                  <Text style={styles.message} selectable={true} onLongPress={this.showActions}>
+                  <DoubleTapText style={styles.message} selectable={true} onDoubleTap={this.showActions} selectable={false} onLongPress={this.showActions}>
                     <Text style={styles.username}>@{comment.ownerObj.username} </Text>
                     { comment.description &&
                       <Tags
@@ -102,7 +105,7 @@ export default class Comment extends Component {
                         {entities.decodeHTML(comment.description)}
                       </Tags>
                     }
-                  </Text>
+                  </DoubleTapText>
               }
             </View>
           </View>
