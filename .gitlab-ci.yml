@@ -20,6 +20,7 @@ build:
   image: reactnativecommunity/react-native-android
   stage: build
   cache:
+    key: ${CI_COMMIT_REF_SLUG}
     paths:
       - .gradle/wrapper
       - .gradle/caches
@@ -30,11 +31,12 @@ build:
     - echo 999999 > /proc/sys/fs/inotify/max_queued_events
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - echo $ANDROID_KEYSTORE | base64 --decode > android/app/minds.keystore
+    - base64 -i android/app/minds.keystore
   script:
     - yarn install
     - cd android && chmod +x gradlew
     - ./gradlew assembleRelease -PMYAPP_RELEASE_STORE_PASSWORD=$KEYSTORE_PASSWORD -PMYAPP_RELEASE_KEY_PASSWORD=$KEYSTORE_PASSWORD
-    - cp android/app/build/outputs/apk/app-release.apk Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG.apk
+    - cp app/build/outputs/apk/app-release.apk ../Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG.apk
   artifacts:
     name: "Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG"
     paths:
