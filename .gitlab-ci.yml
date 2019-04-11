@@ -25,6 +25,9 @@ build:
       - .gradle/caches
       - node_modules/
   before_script:
+    - echo 999999 > /proc/sys/fs/inotify/max_user_instances
+    - echo 999999 > /proc/sys/fs/inotify/max_user_watches
+    - echo 999999 > /proc/sys/fs/inotify/max_queued_events
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - echo $ANDROID_KEYSTORE | base64 --decode > android/app/minds.keystore
   script:
