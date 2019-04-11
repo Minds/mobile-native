@@ -37,4 +37,4 @@ build:
     paths:
       - Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG.apk
     expire_in: 7 days
-    when: manual
+    when: on_success
