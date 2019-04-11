@@ -1,17 +1,40 @@
-image: node:10.10.0
-
-cache:
-  paths:
-  - node_modules/
-  - .jest/cache/
 
 stages:
   - test
+  - build
 
 test_spec:
+  image: node:10.10.0
   stage: test
+  cache:
+    paths:
+      - node_modules/
+      - .jest/cache/
   script:
     - yarn install
     - yarn test
   tags:
     - docker
+
+build:
+  image: reactnativecommunity/react-native-android
+  stage: build
+  cache:
+    paths:
+      - .gradle/wrapper
+      - .gradle/caches
+      - node_modules/
+  before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+    - echo $ANDROID_KEYSTORE | base64 --decode > android/app/minds.keystore
+  script:
+    - yarn install
+    - cd android && chmod +x gradlew
+    - ./gradlew assembleRelease -PMYAPP_RELEASE_STORE_PASSWORD=$KEYSTORE_PASSWORD -PMYAPP_RELEASE_KEY_PASSWORD=$KEYSTORE_PASSWORD
+    - cp android/app/build/outputs/apk/app-release.apk Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG.apk
+  artifacts:
+    name: "Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG"
+    paths:
+      - Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG.apk
+    expire_in: 7 days
+	  when: manual
