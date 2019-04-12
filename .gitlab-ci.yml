@@ -1,23 +1,24 @@
 
 stages:
-  # - test
+  - test
   - build
+  - test_e2e
 
 variables:
   GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle
 
-# test_spec:
-#   image: node:10.10.0
-#   stage: test
-#   cache:
-#     paths:
-#       - node_modules/
-#       - .jest/cache/
-#   script:
-#     - yarn install
-#     - yarn test
-#   tags:
-#     - docker
+test_spec:
+  image: node:10.10.0
+  stage: test
+  cache:
+    paths:
+      - node_modules/
+      - .jest/cache/
+  script:
+    - yarn install
+    - yarn test
+  tags:
+    - docker
 
 build:
   image: reactnativecommunity/react-native-android
@@ -47,3 +48,19 @@ build:
       - Minds.apk
     expire_in: 7 days
     when: on_success
+
+test_e2e:
+  image: node:10.10.0
+  stage: test_e2e
+  cache:
+    paths:
+      - node_modules/
+      - .jest/cache/
+  script:
+    - yarn install
+    - export bsAPP=`curl -u "${bsUSER}:${bsKEY}" -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@./Minds.apk"| grep -o 'bs\:\/\/.*"' | sed 's/.$//'`
+    - yarn e2e
+  tags:
+    - docker
+  dependencies:
+    - build
