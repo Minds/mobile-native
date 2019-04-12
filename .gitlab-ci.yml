@@ -1,23 +1,23 @@
 
 stages:
-  - test
+  # - test
   - build
 
 variables:
   GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle
 
-test_spec:
-  image: node:10.10.0
-  stage: test
-  cache:
-    paths:
-      - node_modules/
-      - .jest/cache/
-  script:
-    - yarn install
-    - yarn test
-  tags:
-    - docker
+# test_spec:
+#   image: node:10.10.0
+#   stage: test
+#   cache:
+#     paths:
+#       - node_modules/
+#       - .jest/cache/
+#   script:
+#     - yarn install
+#     - yarn test
+#   tags:
+#     - docker
 
 build:
   image: reactnativecommunity/react-native-android
@@ -33,8 +33,10 @@ build:
     - echo 999999 > /proc/sys/fs/inotify/max_user_watches
     - echo 999999 > /proc/sys/fs/inotify/max_queued_events
     - echo $ANDROID_KEYSTORE | base64 --decode > android/app/minds.keystore
-    - echo "MYAPP_RELEASE_STORE_PASSWORD=${KEYSTORE_PASSWORD}" >> android/gradle.properties
-    - echo "MYAPP_RELEASE_KEY_PASSWORD=${KEYSTORE_PASSWORD}" >> android/gradle.properties
+    - echo "MYAPP_RELEASE_STORE_PASSWORD=${KEYSTORE_PASSWORD}" >> ./android/gradle.properties
+    - echo "MYAPP_RELEASE_KEY_PASSWORD=${KEYSTORE_PASSWORD}" >> ./android/gradle.properties
+    - echo `pwd`
+    - cat ./android/gradle.properties
   script:
     - yarn install
     - cd android && chmod +x gradlew
