@@ -35,8 +35,6 @@ build:
     - echo $ANDROID_KEYSTORE | base64 --decode > android/app/minds.keystore
     - echo "MYAPP_RELEASE_STORE_PASSWORD=${KEYSTORE_PASSWORD}" >> ./android/gradle.properties
     - echo "MYAPP_RELEASE_KEY_PASSWORD=${KEYSTORE_PASSWORD}" >> ./android/gradle.properties
-    - echo `pwd`
-    - cat ./android/gradle.properties
 
   script:
     - yarn install
