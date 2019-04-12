@@ -37,6 +37,7 @@ build:
     - echo "MYAPP_RELEASE_KEY_PASSWORD=${KEYSTORE_PASSWORD}" >> ./android/gradle.properties
     - echo `pwd`
     - cat ./android/gradle.properties
+
   script:
     - yarn install
     - cd android && chmod +x gradlew
