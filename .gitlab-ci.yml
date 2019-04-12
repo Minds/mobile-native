@@ -33,10 +33,12 @@ build:
     - echo 999999 > /proc/sys/fs/inotify/max_user_watches
     - echo 999999 > /proc/sys/fs/inotify/max_queued_events
     - echo $ANDROID_KEYSTORE | base64 --decode > android/app/minds.keystore
+    - echo "MYAPP_RELEASE_STORE_PASSWORD=${KEYSTORE_PASSWORD}" >> android/gradle.properties
+    - echo "MYAPP_RELEASE_KEY_PASSWORD=${KEYSTORE_PASSWORD}" >> android/gradle.properties
   script:
     - yarn install
     - cd android && chmod +x gradlew
-    - ./gradlew assembleRelease -PMYAPP_RELEASE_STORE_PASSWORD=$KEYSTORE_PASSWORD -PMYAPP_RELEASE_KEY_PASSWORD=$KEYSTORE_PASSWORD
+    - ./gradlew assembleRelease
     - cp app/build/outputs/apk/app-release.apk ../Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG.apk
   artifacts:
     name: "Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG"
