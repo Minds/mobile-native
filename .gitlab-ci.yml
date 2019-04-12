@@ -40,10 +40,10 @@ build:
     - yarn install
     - cd android && chmod +x gradlew
     - ./gradlew assembleRelease
-    - cp app/build/outputs/apk/app-release.apk ../Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG.apk
+    - cp app/build/outputs/apk/release/app-release.apk ../Minds.apk
   artifacts:
-    name: "Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG"
+    name: "Minds APK"
     paths:
-      - Minds-$CI_COMMIT_REF_NAME-$CI_COMMIT_TAG.apk
+      - Minds.apk
     expire_in: 7 days
     when: on_success
