@@ -19,10 +19,10 @@ class UpdateService {
   /**
    * Check and update
    */
-  async checkUpdate() {
+  async checkUpdate(stable = true) {
     if (this.downloading) return;
 
-    const last = await this.getLastVersion();
+    const last = await this.getLastVersion(stable);
 
     if (last) {
       try {
