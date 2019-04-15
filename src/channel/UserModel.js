@@ -1,4 +1,4 @@
-import { observable, decorate } from 'mobx';
+import { observable, decorate, action } from 'mobx';
 import { MINDS_CDN_URI } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
@@ -17,6 +17,10 @@ export default class UserModel extends BaseModel {
    * @var boolean
    */
   @observable subscribed;
+  /**
+   * @var boolean
+   */
+  @observable mature_visibility = false;
 
   getOwnerIcontime() {
     if (stores.user.me && stores.user.me.guid === this.guid) {
@@ -24,6 +28,11 @@ export default class UserModel extends BaseModel {
     } else {
       return this.icontime;
     }
+  }
+
+  @action
+  toggleMatureVisibility() {
+    this.mature_visibility = !this.mature_visibility;
   }
 
   /**
