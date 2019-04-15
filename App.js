@@ -92,7 +92,8 @@ sessionService.onLogin(async () => {
   // check update
   if (Platform.OS !== 'ios') {
     setTimeout(async () => {
-      updateService.checkUpdate();
+      const user = sessionService.getUser();
+      updateService.checkUpdate(!user.canary);
     }, 5000);
   }
 
