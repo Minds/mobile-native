@@ -15,6 +15,7 @@ test_spec:
       - node_modules/
       - .jest/cache/
   script:
+    - echo $CI_PROJECT_NAMESPACE
     - yarn install
     - yarn test
   tags:
@@ -50,7 +51,7 @@ build:
     when: on_success
   only:
     variables:
-      - $CI_PROJECT_NAMESPACE == "Minds"
+      - $CI_PROJECT_NAMESPACE == "minds"
 
 
 test_e2e:
@@ -70,4 +71,4 @@ test_e2e:
     - build
   only:
     variables:
-      - $CI_PROJECT_NAMESPACE == "Minds"
+      - $CI_PROJECT_NAMESPACE == "minds"
