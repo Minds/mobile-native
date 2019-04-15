@@ -1,17 +1,73 @@
-image: node:10.10.0
-
-cache:
-  paths:
-  - node_modules/
-  - .jest/cache/
 
 stages:
   - test
+  - build
+  - test_e2e
+
+variables:
+  GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle
 
 test_spec:
+  image: node:10.10.0
   stage: test
+  cache:
+    paths:
+      - node_modules/
+      - .jest/cache/
   script:
     - yarn install
     - yarn test
   tags:
     - docker
+
+build:
+  image: reactnativecommunity/react-native-android
+  stage: build
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .gradle/wrapper
+      - .gradle/caches
+      - node_modules/
+  before_script:
+    - echo 999999 > /proc/sys/fs/inotify/max_user_instances
+    - echo 999999 > /proc/sys/fs/inotify/max_user_watches
+    - echo 999999 > /proc/sys/fs/inotify/max_queued_events
+    - echo $ANDROID_KEYSTORE | base64 --decode > android/app/minds.keystore
+    - echo "MYAPP_RELEASE_STORE_PASSWORD=${KEYSTORE_PASSWORD}" >> ./android/gradle.properties
+    - echo "MYAPP_RELEASE_KEY_PASSWORD=${KEYSTORE_PASSWORD}" >> ./android/gradle.properties
+
+  script:
+    - yarn install
+    - cd android && chmod +x gradlew
+    - ./gradlew assembleRelease
+    - cp app/build/outputs/apk/release/app-release.apk ../Minds.apk
+  artifacts:
+    name: "Minds APK"
+    paths:
+      - Minds.apk
+    expire_in: 7 days
+    when: on_success
+  only:
+    variables:
+      - $CI_PROJECT_NAMESPACE == "Minds"
+
+
+test_e2e:
+  image: node:10.10.0
+  stage: test_e2e
+  cache:
+    paths:
+      - node_modules/
+      - .jest/cache/
+  script:
+    - yarn install
+    - export bsAPP=`curl -u "${bsUSER}:${bsKEY}" -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@./Minds.apk"| grep -o 'bs\:\/\/.*"' | sed 's/.$//'`
+    - yarn e2e
+  tags:
+    - docker
+  dependencies:
+    - build
+  only:
+    variables:
+      - $CI_PROJECT_NAMESPACE == "Minds"
