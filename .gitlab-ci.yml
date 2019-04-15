@@ -48,6 +48,10 @@ build:
       - Minds.apk
     expire_in: 7 days
     when: on_success
+  only:
+    variables:
+      - $CI_PROJECT_NAMESPACE == "Minds"
+
 
 test_e2e:
   image: node:10.10.0
@@ -64,3 +68,6 @@ test_e2e:
     - docker
   dependencies:
     - build
+  only:
+    variables:
+      - $CI_PROJECT_NAMESPACE == "Minds"
