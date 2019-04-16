@@ -83,6 +83,7 @@ class SessionService {
       return access_token;
     } catch (e) {
       this.setToken(null);
+      this.setRefreshToken(null);
       console.log('error getting tokens', e);
       return null;
     }

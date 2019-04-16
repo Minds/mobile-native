@@ -46,7 +46,7 @@ class AuthService {
     try {
       const data = await api.post('api/v2/oauth/token', params);
       session.login(data);
-      return data;
+      return data.access_token;
     } catch (err) {
       console.log('ERROR CLAIMING REFRESH TOKEN', params, err);
       throw err;

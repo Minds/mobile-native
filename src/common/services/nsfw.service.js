@@ -13,13 +13,16 @@ class NsfwService {
    * @returns {Promise<number[]>}
    */
   async get() {
-    const value = await AsyncStorage.getItem(this._getStorageKey());
-
-    return value ? JSON.parse(value) || [] : [];
+    try {
+      const value = await AsyncStorage.getItem(this._getStorageKey());
+      return value ? JSON.parse(value) : [];
+    } catch (err) {
+      return [];
+    }
   }
 
   /**
-   * @param {number[]} value 
+   * @param {number[]} value
    * @returns {Promise<void>}
    */
   async set(value) {
