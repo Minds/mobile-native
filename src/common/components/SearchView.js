@@ -44,6 +44,7 @@ export default class SearchView extends PureComponent {
         <TextInput
           onFocus={ this.props.onFocus }
           onBlur={ this.props.onBlur }
+          selectTextOnFocus={true}
           {...attributes}
           underlineColorAndroid={
             'transparent'
