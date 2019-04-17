@@ -179,6 +179,27 @@ export default class ChannelScreen extends Component {
       );
     }*/
 
+    if (channel.is_mature && !channel.mature_visibility) {
+      return (
+        <View style={[CommonStyle.flexColumnCentered]}>
+          <Text style={[CommonStyle.centered, CommonStyle.colorDarkGreyed, CommonStyle.fontXL]}>
+            This channel contains mature content
+          </Text>
+          <View style={[CommonStyle.rowJustifyCenter, CommonStyle.paddingTop2x]}>
+            <Button
+              text="GO BACK"
+              onPress={() => this.props.navigation.goBack()}
+            />
+            <Button
+              inverted={true}
+              text="VIEW"
+              onPress={() => channel.toggleMatureVisibility()}
+            />
+          </View>
+        </View>
+      );
+    }
+
     // channel header
     const header = (
       <View>
