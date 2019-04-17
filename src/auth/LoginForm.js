@@ -118,7 +118,7 @@ export default class LoginForm extends Component {
           underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ username: value })}
           autoCapitalize={'none'}
-          value={this.state.username}
+          value={this.state.username.trim()}
           key={1}
           {...testID('username input')}
         />,
