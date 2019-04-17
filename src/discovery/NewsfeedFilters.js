@@ -102,9 +102,9 @@ export default class NewsfeedFilters extends Component {
             <IconMC
               name="pound"
               style={[CS.centered, hashActive ? CS.colorWhite : CS.colorGreyed, {paddingTop:2}]}
-              size={ 22 }
+              size={ 20 }
             />
-            {this.props.hashtag.hashtag ? <Text style={[CS.colorWhite, CS.fontL]}>{this.props.hashtag.hashtag}</Text> : null}
+            {this.props.hashtag.hashtag ? <Text style={[CS.colorWhite, CS.fontM]}>{this.props.hashtag.hashtag}</Text> : null}
           </View>
         </TouchableHighlight>
         <View style={[CS.rowJustifySpaceEvenly, CS.flexContainer]}>
@@ -115,7 +115,7 @@ export default class NewsfeedFilters extends Component {
                 style={[CS.centered, store.filter == 'hot' ? CS.colorPrimary : null, {paddingTop:2}  ]}
                 size={ 22 }
               />
-              <Text style={[CS.fontL, store.filter == 'hot' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>Hot</Text>
+              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'hot' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>Hot</Text> : null}
             </View>
           </TouchableHighlight>
           <View style={CS.rowJustifyCenter}>
@@ -126,7 +126,7 @@ export default class NewsfeedFilters extends Component {
                   style={[CS.centered, store.filter == 'top' ? CS.colorPrimary : null, {paddingTop:2}  ]}
                   size={ 22 }
                 />
-                <Text style={[CS.fontL, store.filter == 'top' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>Top</Text>
+                {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'top' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>Top</Text> : null}
               </View>
             </TouchableHighlight>
             {store.filter == 'top' &&
@@ -135,7 +135,7 @@ export default class NewsfeedFilters extends Component {
                 button={
                   <TouchableHighlight style={[CS.padding]} onPress={this.showMenu} >
                     <View style={[CS.rowJustifyCenter, CS.centered]}>
-                      <Text style={[CS.fontL, store.filter == 'top' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft, CS.paddingRight]}>{store.period}</Text>
+                      <Text style={[CS.fontM, store.filter == 'top' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft, CS.paddingRight]}>{store.period}</Text>
                       <IonIcon
                         name="ios-arrow-down"
                         style={[CS.centered, store.filter == 'top' ? CS.colorPrimary : null, {paddingTop:2}  ]}
@@ -160,7 +160,7 @@ export default class NewsfeedFilters extends Component {
                 style={[CS.centered, store.filter == 'latest' ? CS.colorPrimary : null, {paddingTop:2} ]}
                 size={ 22 }
               />
-              <Text style={[CS.fontL, store.filter == 'latest' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>Latest</Text>
+              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'latest' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>Latest</Text> : null}
             </View>
           </TouchableHighlight>
         </View>
