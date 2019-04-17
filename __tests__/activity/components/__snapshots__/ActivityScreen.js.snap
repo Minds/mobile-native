@@ -214,17 +214,6 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
                 },
                 "loading": false,
               },
-              "suggested": Object {
-                "list": OffsetFeedListStore {
-                  "entities": Array [],
-                  "errorLoading": false,
-                  "loaded": false,
-                  "offset": "",
-                  "refreshing": false,
-                  "saving": false,
-                },
-                "loading": false,
-              },
             },
             "viewed": Array [],
           }
@@ -487,17 +476,6 @@ exports[`Activity screen component should show loader until it loads the activit
                 "loading": false,
               },
               "subscribed": Object {
-                "list": OffsetFeedListStore {
-                  "entities": Array [],
-                  "errorLoading": false,
-                  "loaded": false,
-                  "offset": "",
-                  "refreshing": false,
-                  "saving": false,
-                },
-                "loading": false,
-              },
-              "suggested": Object {
                 "list": OffsetFeedListStore {
                   "entities": Array [],
                   "errorLoading": false,

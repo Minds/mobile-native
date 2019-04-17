@@ -16,8 +16,6 @@ import {
 
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
-import TagsSubBar from './TagsSubBar';
-
 
 /**
  * Newsfeed top bar
@@ -36,13 +34,6 @@ export default class Topbar extends Component {
   }
 
   /**
-   * On tag selection change
-   */
-  onTagSelectionChange = () => {
-    this.props.newsfeed.refresh();
-  }
-
-  /**
    * Render
    */
   render() {
@@ -50,9 +41,6 @@ export default class Topbar extends Component {
       <View>
         <View style={[styles.container, CommonStyle.shadow]}>
           <View style={styles.topbar}>
-            <TouchableOpacity style={[styles.tab, this.selected('suggested')]} onPress={() => this.props.newsfeed.setFilter('suggested')}>
-              <Text style={CommonStyle.fontXS}>TOP</Text>
-            </TouchableOpacity>
             <TouchableOpacity style={[styles.tab, this.selected('subscribed')]} onPress={() => this.props.newsfeed.setFilter('subscribed')}>
               <Text style={CommonStyle.fontXS}>SUBSCRIBED</Text>
             </TouchableOpacity>
@@ -61,9 +49,6 @@ export default class Topbar extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        { this.props.newsfeed.filter == 'suggested' && <View style={{    flexDirection: 'row'}}>
-          <TagsSubBar onChange={this.onTagSelectionChange}/>
-        </View>}
       </View>
     )
   }
