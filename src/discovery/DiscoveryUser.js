@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Alert,
   Keyboard,
   TouchableHighlight,
   Text,
@@ -42,6 +43,18 @@ export default class DiscoveryUser extends Component {
   }
 
   toggleSubscribe = () => {
+    if (this.props.entity.item.subscribed) {
+      Alert.alert(
+        'Attention',
+        'Are you sure you want to unsubscribe from this channel?',
+        [{ text: 'Yes', onPress: () => this._toggleSusbcribed() }, { text: 'No'}]
+      );
+    } else {
+      this._toggleSusbcribed();
+    }
+  }
+
+  _toggleSusbcribed() {
     const item = this.props.entity.item;
     if (this.props.store.members){
       this.props.store.members.toggleSubscription(item.guid);
