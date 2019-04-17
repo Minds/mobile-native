@@ -191,15 +191,19 @@ export default class App extends Component {
    * Handle pre login deep links
    */
   handlePasswordResetDeepLink() {
-    if (deepLinkUrl && deeplinkService.cleanUrl(deepLinkUrl).startsWith('forgot-password')) {
-      const regex = /;username=(.*);code=(.*)/g;
+    try {
+      if (deepLinkUrl && deeplinkService.cleanUrl(deepLinkUrl).startsWith('forgot-password')) {
+        const regex = /;username=(.*);code=(.*)/g;
 
-      const params = getMaches(deepLinkUrl.replace(/%3B/g, ';'), regex);
+        const params = getMaches(deepLinkUrl.replace(/%3B/g, ';'), regex);
 
-      //sessionService.logout();
-      NavigationService.navigate('Forgot', {username: params[1], code: params[2]});
-      deepLinkUrl = '';
-      return true;
+        //sessionService.logout();
+        NavigationService.navigate('Forgot', {username: params[1], code: params[2]});
+        deepLinkUrl = '';
+        return true;
+      }
+    } catch(err) {
+      console.log('Error checking for password reset deep link', err);
     }
     return false;
   }
@@ -240,13 +244,15 @@ export default class App extends Component {
     try {
       const params = {
         updateDialog: Platform.OS !== 'ios',
-        installMode:  CodePush.InstallMode.ON_APP_RESUME,
+        installMode:  codePush.InstallMode.ON_APP_RESUME,
       };
 
       if (CODE_PUSH_TOKEN) params.deploymentKey = CODE_PUSH_TOKEN;
 
-      let response = await CodePush.sync(params);
-    } catch (err) { }
+      let response = await codePush.sync(params);
+    } catch (err) {
+      console.log('Error checking for code push updated', err);
+    }
   }
 
   /**

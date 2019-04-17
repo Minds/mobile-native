@@ -47,7 +47,11 @@ class PushService {
    * Init
    */
   init() {
-    this.push.init();
+    try {
+      this.push.init();
+    } catch(err) {
+      console.log('Error on push notification initialization', err);
+    }
   }
 
   /**

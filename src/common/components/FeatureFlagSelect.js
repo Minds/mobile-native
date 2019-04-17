@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import featuresService from '../services/features.service';
 import {
   observer
@@ -13,7 +13,7 @@ import {
 export default (Wrapped, Fallback, flag) => {
 
   @observer
-  class FeatureFlagSelect extends PureComponent {
+  class FeatureFlagSelect extends Component {
     /**
      * Render
      */

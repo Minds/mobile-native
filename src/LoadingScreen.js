@@ -3,27 +3,22 @@ import React, {
 } from 'react';
 
 import {
-  Button,
-  Text,
   Image,
-  TextInput,
-  StyleSheet,
   View,
 } from 'react-native';
 
 import { ComponentsStyle } from './styles/Components';
 import { CommonStyle } from './styles/Common';
 
-
 export default class LoadingScreen extends Component {
 
   static navigationOptions = {
-    header: props => <View style={ { backgroundColor: '#FFF' }} />,
+    header: null
   }
 
   render() {
     return (
-      <View style={[{ backgroundColor: '#FFF' } ,CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
+      <View style={[CommonStyle.backgroundWhite ,CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
         <Image
           resizeMode={"contain"}
           style={ComponentsStyle.logo}
@@ -33,7 +28,3 @@ export default class LoadingScreen extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-});
