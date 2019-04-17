@@ -35,6 +35,13 @@ class DiscoveryStore {
 
   constructor() {
     this.buildListStores();
+    this.listenChanges();
+  }
+
+  /**
+   * Listen for filter changes
+   */
+  listenChanges() {
     // react to filter changes
     this.onFilterChangeDisposer = this.filters.onFilterChange(this.onFilterChange);
     // react to search changes
@@ -268,6 +275,7 @@ class DiscoveryStore {
     this.onFilterChangeDisposer && this.onFilterChangeDisposer();
     this.onSearchChangeDisposer && this.onSearchChangeDisposer();
     this.filters.clear();
+    this.listenChanges();
     this.stores.images.list.clearList();
     this.stores.videos.list.clearList();
     this.stores.blogs.list.clearList();
