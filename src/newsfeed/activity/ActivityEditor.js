@@ -38,19 +38,17 @@ export default class ActivityEditor extends Component {
   }
 
   update = () => {
-  
+
     if(HashtagService.slice(this.state.text).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
       Alert.alert(`Sorry, your post cannot contain more than ${HashtagService.maxHashtags} hashtags.`);
       return false;
-    } 
+    }
 
     const data = {
       message: this.state.text,
     };
 
-    if (featuresService.has('top-feeds')) {
-      data.nsfw = [...this.state.nsfw];
-    }
+    data.nsfw = [...this.state.nsfw];
 
     this.props.newsfeed.list.updateActivity(this.props.entity, data)
       .catch((err) => {
@@ -73,10 +71,6 @@ export default class ActivityEditor extends Component {
   }
 
   renderNsfwView() {
-    if (!featuresService.has('top-feeds')) {
-      return null;
-    }
-
     return (
       <View style={[CommonStyle.rowJustifyStart, CommonStyle.paddingTop]}>
         <NsfwToggle
