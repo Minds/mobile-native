@@ -330,11 +330,8 @@ export default class CapturePoster extends Component {
       wire_threshold: this.state.lock
     };
 
-    if (featuresService.has('top-feeds')) {
-      newPost.nsfw = this.state.nsfw || [];
-    } else {
-      newPost.mature = this.state.mature ? 1 : 0;
-    }
+
+    newPost.nsfw = this.state.nsfw || [];
 
     if (attachment.guid) {
       newPost.attachment_guid = attachment.guid;

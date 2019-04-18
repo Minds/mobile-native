@@ -18,7 +18,6 @@ import Topbar from '../topbar/Topbar';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import DiscoveryScreen from '../discovery/DiscoveryScreen';
-import DiscoveryScreenLegacy from '../discovery/DiscoveryScreenLegacy';
 import MessengerScreen from '../messenger/MessengerScreen';
 import WalletScreen from '../wallet/WalletScreen';
 import ComingSoonScreen from '../static-views/ComingSoonScreen';
@@ -26,23 +25,17 @@ import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import MoreScreen from './MoreScreen';
 import stores from '../../AppStores';
 import featuresService from '../common/services/features.service';
-import FeatureFlagSelect from '../common/components/FeatureFlagSelect';
 import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 import isIphoneX from '../common/helpers/isIphoneX';
 
 let platformWalletScreen = WalletScreen;
-
-// Feature top-feeds
-const DiscoveryScreenComponent = FeatureFlagSelect(DiscoveryScreen, DiscoveryScreenLegacy, 'top-feeds');
-// static otptions for the tab
-DiscoveryScreenComponent.navigationOptions = DiscoveryScreen.navigationOptions;
 
 const screens = {
   Wallet: {
     screen: withErrorBoundaryScreen(platformWalletScreen),
   },
   Discovery: {
-    screen: withErrorBoundaryScreen(DiscoveryScreenComponent),
+    screen: withErrorBoundaryScreen(DiscoveryScreen),
   },
   Newsfeed: {
     screen: withErrorBoundaryScreen(NewsfeedScreen),

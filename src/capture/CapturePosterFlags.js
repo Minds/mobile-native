@@ -318,35 +318,20 @@ export default class CapturePosterFlags extends Component {
     );
   }
 
-  renderNsfwOrExplicit() {
-    if (featuresService.has('top-feeds')) {
-      return (
-        <NsfwToggle
-          containerStyle={styles.cell}
-          labelStyle={styles.matureLabel}
-          value={this.props.nsfwValue}
-          onChange={this.props.onNsfw}
-        />
-      );
-    } else {
-      return (
-        <Touchable style={styles.cell} onPress={this.props.onMature}>
-          <MdIcon
-            name="explicit"
-            color={this.props.matureValue ? Colors.explicit : Colors.darkGreyed}
-            size={25}
-          />
-
-          {this.props.matureValue && <Text style={styles.matureLabel}>
-            MATURE
-          </Text>}
-        </Touchable>
-      );
-    }
+  renderNsfw() {
+    return (
+      <NsfwToggle
+        containerStyle={styles.cell}
+        labelStyle={styles.matureLabel}
+        value={this.props.nsfwValue}
+        onChange={this.props.onNsfw}
+      />
+    );
   }
 
-  // Main
-
+  /**
+   * Render
+   */
   render() {
     const attachment = this.props.capture.attachment;
     return (
@@ -360,7 +345,7 @@ export default class CapturePosterFlags extends Component {
           />
         </View>}
 
-        {this.renderNsfwOrExplicit()}
+        {this.renderNsfw()}
 
         <Touchable style={styles.cell} onPress={this.showShareModal}>
           <MdIcon
