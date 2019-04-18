@@ -99,6 +99,13 @@ export default class BlogsViewScreen extends Component {
   }
 
   /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    this.props.blogsView.reset();
+  }
+
+  /**
    * Render blog
    */
   getHeader() {
