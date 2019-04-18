@@ -108,6 +108,7 @@ class ApiService {
       if (err.status && err.status == 401) {
         const refreshed = await session.badAuthorization(); //not actually a logout
         if (refreshed) return await this.post(url, body);
+        console.log('[ApiService] Token refresh failed: logout');
         session.logout();
       }
       throw err;
@@ -137,6 +138,7 @@ class ApiService {
       if (err.status && err.status == 401) {
         const refreshed = await session.badAuthorization(); //not actually a logout
         if (refreshed) return await this.post(url, body);
+        console.log('[ApiService] Token refresh failed: logout');
         session.logout();
       }
       throw err;
@@ -166,6 +168,7 @@ class ApiService {
       if (err.status && err.status == 401) {
         const refreshed = await session.badAuthorization(); //not actually a logout
         if (refreshed) return await this.post(url, body);
+        console.log('[ApiService] Token refresh failed: logout');
         session.logout();
       }
       throw err;
