@@ -6,7 +6,7 @@ import i18n from '../../../src/common/services/i18n.service';
 import androidPermissions from '../../../src/common/services/android-permissions.service';
 
 jest.mock('../../../src/common/services/android-permissions.service');
-jest.mock('../../../src/common/services/i18n.service', () => ({ 
+jest.mock('../../../src/common/services/i18n.service', () => ({
     t: jest.fn(),
     p: jest.fn(),
     l: jest.fn(),
@@ -17,7 +17,7 @@ jest.mock('../../../src/common/services/i18n.service', () => ({
 
 
 jest.mock('react-native', () => ({
-  Alert: { 
+  Alert: {
     alert: jest.fn()
   },
   Platform: {
@@ -106,9 +106,9 @@ describe('Session storage service', () => {
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.launchCamera.mockResolvedValue({})
+    ImagePicker.launchCamera.mockImplementation((opt, callback) => callback({}));
 
-    service.launchCamera('photo');
+    await service.launchCamera('photo');
 
     expect(ImagePicker.launchCamera).toHaveBeenCalled();
   });
@@ -120,9 +120,9 @@ describe('Session storage service', () => {
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.launchImageLibrary.mockResolvedValue({})
+    ImagePicker.launchImageLibrary.mockImplementation((opt, callback) => callback({}));
 
-    service.launchImageLibrary();
+    await service.launchImageLibrary();
 
     expect(ImagePicker.launchImageLibrary).toHaveBeenCalled();
   });
@@ -134,9 +134,9 @@ describe('Session storage service', () => {
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.showImagePicker.mockResolvedValue({})
+    ImagePicker.showImagePicker.mockImplementation((opt, callback) => callback({}));
 
-    service.show();
+    await service.show();
 
     expect(ImagePicker.showImagePicker).toHaveBeenCalled();
   });
