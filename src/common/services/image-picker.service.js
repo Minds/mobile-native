@@ -23,7 +23,7 @@ class ImagePickerService {
    */
   async checkGalleryPermissions() {
     let allowed = true;
-    
+
     if (Platform.OS != 'ios') {
       allowed = await androidPermissions.checkReadExternalStorage();
 
@@ -34,16 +34,16 @@ class ImagePickerService {
         allowed = await androidPermissions.readExternalStorage();
       }
     }
-    
+
     return allowed;
   }
-  
+
   /**
    * Check if we have permission or ask the user
    */
   async checkCameraPermissions() {
     let allowed = true;
-    
+
     if (Platform.OS != 'ios') {
       allowed = await androidPermissions.checkCamera();
 
@@ -67,12 +67,12 @@ class ImagePickerService {
 
   /**
    * Launch Camera
-   * 
-   * @param {string} type photo or video 
+   *
+   * @param {string} type photo or video
    */
   async launchCamera(type = 'photo') {
     // check or ask for permissions
-    const allowed = this.checkPermissions();
+    const allowed = await this.checkPermissions();
 
     if (!allowed) return false;
 
@@ -95,12 +95,12 @@ class ImagePickerService {
 
   /**
    * Launch image gallery
-   * 
-   * @param {string} type photo or video 
+   *
+   * @param {string} type photo or video
    */
   async launchImageLibrary(type = 'photo') {
     // check or ask for permissions
-    const allowed = this.checkPermissions();
+    const allowed = await this.checkPermissions();
 
     if (!allowed) return false;
 
@@ -123,8 +123,8 @@ class ImagePickerService {
 
   /**
    * Show image picker selector
-   * 
-   * @param {string} title 
+   *
+   * @param {string} title
    * @param {string} type   photo or video
    */
   async show(title, type='photo') {
@@ -152,8 +152,8 @@ class ImagePickerService {
 
   /**
    * Build the options with i18n translated texts
-   * @param {string} title 
-   * @param {string} type 
+   * @param {string} title
+   * @param {string} type
    */
   buildOptions(title, type) {
     return {

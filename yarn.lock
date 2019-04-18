@@ -5310,10 +5310,10 @@ mobx-utils@3.2.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/mobx-utils/-/mobx-utils-3.2.2.tgz#1979fe85a27df496d4f17af288813ac4fd356fd5"
 
-mobx@^5.9.0:
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.9.0.tgz#a08edd7132787f771409c9c33788a5df66ff7ce7"
-  integrity sha512-D3mY1uM3H9BP5duk5tTanrOq92yqetYKsprPJWvkKDrbs+fro59xrpWX+vtr10YoLgJIFz+a4A8lI+4YtqmCUQ==
+mobx@^5.9.4:
+  version "5.9.4"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.9.4.tgz#1dee92aba33f67b7baeeb679e3bd376a12e55812"
+  integrity sha512-L9JjTX2rtQUAhCIgnHokfntNOsF14uioT9LqStf6Mya+16j56ZBe21E8Y9V59tfr2aH2kLQPD10qtCJXBuTAxw==
 
 mock-fs@^4.1.0:
   version "4.7.0"
@@ -6608,9 +6608,10 @@ react-native-i18n@^2.0.10:
   dependencies:
     i18n-js "3.0.11"
 
-react-native-image-picker@react-community/react-native-image-picker#60169dc5dfcea47094703fe4adf54be262540b6b:
-  version "0.26.7"
-  resolved "https://codeload.github.com/react-community/react-native-image-picker/tar.gz/60169dc5dfcea47094703fe4adf54be262540b6b"
+react-native-image-picker@^0.28.1:
+  version "0.28.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.28.1.tgz#1127460522e0c9741fc62f3d040271d298fb6a6e"
+  integrity sha512-CW2dm+cjsdW2fjBW2WD/cSufNG0x0UpljwGHrjSzyB0TckoW+tjYv44UWtckCWxr1JtCg+QrYDO/MzlRyFcjwQ==
 
 react-native-image-progress@^1.0.1:
   version "1.1.1"
