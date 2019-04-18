@@ -36,18 +36,12 @@ class NewsfeedStore {
       'subscribed': {
         list: new OffsetFeedListStore('shallow'),
       },
-      'suggested': {
-        list: new OffsetFeedListStore('shallow'),
-      },
       'boostfeed': {
         list: new OffsetFeedListStore('shallow'),
       },
     };
 
     extendObservable(this.stores.subscribed, {
-      loading: false
-    });
-    extendObservable(this.stores.suggested, {
       loading: false
     });
     extendObservable(this.stores.boostfeed, {
@@ -150,8 +144,6 @@ class NewsfeedStore {
     switch (this.filter) {
       case 'subscribed':
         return this.service.getFeed.bind(this.service);
-      case 'suggested':
-        return this.service.getFeedSuggested.bind(this.service);
       case 'boostfeed':
         return this.service.getBoosts.bind(this.service);
     }
