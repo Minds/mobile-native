@@ -15,7 +15,7 @@ export default class ModelStorageList {
    * @param {string} storageName List name
    * @param {integer} limit 0 for unlimeted list
    */
-  constructor(storageName, limit=0) {
+  constructor(storageName, limit = 0) {
     this.storageName = 'model:'+ storageName;
     this.limit = limit;
     this.loadIndex();

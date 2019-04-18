@@ -13,7 +13,7 @@ import ModelStorageList from '../common/ModelStorageList';
  */
 class ChannelStores {
 
-  lastVisited = new ModelStorageList('lastchannels', 10);
+  lastVisited = new ModelStorageList('lastchannels', 30);
   stores = {};
 
   store(guid) {

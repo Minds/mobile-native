@@ -472,7 +472,7 @@ export default class DiscoveryScreen extends Component {
    * Show recently visited channel
    */
   showLastChannels = async() => {
-    const list = await this.props.channel.lastVisited.first(10)
+    const list = await this.props.channel.lastVisited.first(30)
 
     // if (!list.length) return;
     this.props.discovery.filters.setType('lastchannels');
