@@ -31,12 +31,13 @@ class AuthService {
       session.logout();
       return true;
     } catch (err) {
-      console.log('logout', err);
+      console.log('[AuthService] logout', err);
       return false;
     }
   }
 
   async refreshToken() {
+    console.log('[AuthService] Refreshing token');
     let params = {
       grant_type: 'refresh_token',
       client_id: 'mobile',
@@ -48,7 +49,7 @@ class AuthService {
       session.login(data);
       return data.access_token;
     } catch (err) {
-      console.log('ERROR CLAIMING REFRESH TOKEN', params, err);
+      console.log('[AuthService] ERROR CLAIMING REFRESH TOKEN', params, err);
       throw err;
     }
   }
