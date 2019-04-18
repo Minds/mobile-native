@@ -56,9 +56,11 @@ class UpdateService {
    * @param {string} v2
    */
   checkReleaseCandidates(v1, v2) {
-    const regex = /-rc([0-9][0-9]?)/gm;
-    const r1 = regex.exec(v1);
-    const r2 = regex.exec(v2);
+    const regex1 = /-rc([0-9][0-9]?)/gm;
+    const regex2 = /-rc([0-9][0-9]?)/gm;
+    const r1 = regex1.exec(v1);
+    const r2 = regex2.exec(v2);
+
     if (r1) {
       if (r2) {
         return parseInt(r1[1]) < parseInt(r2[1]);
