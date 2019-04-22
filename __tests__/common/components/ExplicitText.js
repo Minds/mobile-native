@@ -20,6 +20,7 @@ describe('Explicit text component', () => {
     entity.decodeHTML = jest.fn();
     entity.toggleMatureVisibility = jest.fn();
     entity.decodeHTML.mockReturnValue('string');
+    entity.shouldBeBlured.mockReturnValue(false);
 
     screen = shallow(
       <ExplicitText entity={entity}/>

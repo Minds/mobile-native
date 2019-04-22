@@ -72,7 +72,7 @@ export default class ExplicitText extends Component {
         moreLess = this.getMoreLess();
       }
 
-      body = (isNsfw(entity) && !entity.mature_visibility) ?
+      body = (entity.shouldBeBlured() && !entity.mature_visibility) ?
           <Text style={styles.mature}>{message}</Text> :
           <Tags navigation={this.props.navigation} style={this.props.style}>{message}</Tags>
     }
