@@ -12,7 +12,7 @@ class BlogsStore {
 
   list = new OffsetListStore();
   @observable loading = false;
-  @observable filter = 'suggested';
+  @observable filter = 'network';
 
   /**
    * Load list
@@ -79,7 +79,7 @@ class BlogsStore {
   reset() {
     this.loading = false;
     this.list.clearList();
-    this.filter = 'suggested';
+    this.filter = 'network';
   }
 }
 

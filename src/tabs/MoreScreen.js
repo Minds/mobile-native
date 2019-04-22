@@ -223,7 +223,7 @@ render() {
               style={[CS.borderRadius5x, CS.shadow, CS.backgroundPrimary, CS.padding2x, styles.button]}
               onPress={() => {this.props.navigation.navigate('GroupsList')}}>
               <Icon name='group-work' size={35} style={ [CS.colorWhite, CS.textCenter] }/>
-              <Text style={[CS.colorWhite, CS.textCenter]}>Groups</Text>
+              <Text style={[CS.colorWhite, CS.textCenter]}>My Groups</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -27,13 +27,6 @@ import GroupsListItem from './GroupsListItem';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 
-// define tabs based on enabled features
-const selectedTextStyle = {color: 'black'};
-const typeOptions = [
-  { text: 'TOP', value: 'suggested', selectedTextStyle},
-  { text: 'MY GROUPS', value: 'member', selectedTextStyle}
-];
-
 DebouncedGroupsListItem = withErrorBoundary(withPreventDoubleTap(GroupsListItem, "Can't show this group"));
 
 /**
@@ -44,7 +37,7 @@ DebouncedGroupsListItem = withErrorBoundary(withPreventDoubleTap(GroupsListItem,
 export default class GroupsListScreen extends Component {
 
   static navigationOptions = {
-    title: 'Groups',
+    title: 'My Groups',
   };
 
   /**
@@ -67,38 +60,6 @@ export default class GroupsListScreen extends Component {
    */
   navigateToGroup(group) {
     this.props.navigation.push('GroupView', { group: group, scrollToBottom: true })
-  }
-
-  /**
-   * On tag selection change
-   */
-  onTagSelectionChange = () => {
-    this.props.groups.refresh();
-  }
-
-  /**
-   * Render Tabs
-   */
-  renderToolbar() {
-    return (
-      <View>
-        <Toolbar
-          options={ typeOptions }
-          initial={ this.props.groups.filter }
-          onChange={ this.onTabChange }
-        />
-        { this.props.groups.filter == 'suggested' && <View style={[CS.paddingTop, CS.paddingBottom, CS.hairLineBottom]}>
-          <TagsSubBar onChange={this.onTagSelectionChange}/>
-        </View>}
-      </View>
-    )
-  }
-
-  /**
-   * On tab change
-   */
-  onTabChange = (value) => {
-    this.props.groups.setFilter(value);
   }
 
   renderItem = (row) => {
@@ -139,7 +100,6 @@ export default class GroupsListScreen extends Component {
       <FlatList
         data={list.entities.slice()}
         renderItem={this.renderItem}
-        ListHeaderComponent={this.renderToolbar()}
         ListFooterComponent={footer}
         keyExtractor={item => item.rowKey}
         onRefresh={this.refresh}

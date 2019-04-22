@@ -86,6 +86,6 @@ describe('blogs store', () => {
 
     // should be cleared to defaults
     expect(store.list.clearList).toBeCalled();
-    expect(store.filter).toEqual('suggested');
+    expect(store.filter).toEqual('network');
   });
 });
