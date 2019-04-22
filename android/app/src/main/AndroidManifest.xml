@@ -55,7 +55,7 @@
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https"
-                android:host="www.minds.com" android:path="/"/>
+                android:host="mobile.minds.com" android:path="/"/>
             <data android:pathPattern="/channels/..*"/>
             <data android:pathPattern="/newsfeed/..*"/>
             <data android:pathPattern="/groups/profile/..*"/>
