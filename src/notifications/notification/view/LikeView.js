@@ -36,8 +36,31 @@ export default class LikeView extends Component {
     let screen = 'Activity';
     switch (this.props.entity.entityObj.type) {
       case "comment":
-        params.guid = this.props.entity.entity.entity_guid;
-        screen = 'Activity';
+        if (this.props.entity.params.parent && this.props.entity.params.parent.type === 'group') {
+          screen = 'GroupView';
+          params.group = this.props.entity.params.parent;
+          params.hydrate = true;
+          params.tab = 'conversation';
+        } else {
+          params.guid = this.props.entity.entity.entity_guid;
+          screen = 'Activity';
+        }
+
+        break;
+      case 'object':
+        switch(this.props.entity.entityObj.subtype) {
+          case 'blog':
+            screen = 'BlogView';
+            params.blog = this.props.entity.entityObj;
+            params.hydrate = true;
+            break;
+          case 'image':
+          case 'video':
+            screen = 'Activity';
+            params.entity = this.props.entity.entityObj;
+            params.hydrate = true;
+            break;
+        }
         break;
       default:
         params.entity = this.props.entity.entityObj;
