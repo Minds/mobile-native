@@ -9,14 +9,12 @@ import {
   Text,
   FlatList,
   Dimensions,
-  Animated,
   View,
   TouchableHighlight,
   Keyboard,
   ActivityIndicator,
 } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
-import * as Animatable from 'react-native-animatable';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Modal from 'react-native-modal'
@@ -27,6 +25,8 @@ import {
 } from 'mobx-react/native'
 
 import _ from 'lodash';
+
+import { CollapsibleHeaderFlatList } from 'react-native-collapsible-header-views';
 
 import DiscoveryTile from './DiscoveryTile';
 import DiscoveryUser from './DiscoveryUser';
@@ -57,7 +57,6 @@ export default class DiscoveryScreen extends Component {
 
   cols = 3;
   iconSize = 28;
-  headerIsShown = true;
 
   state = {
     active: false,
@@ -77,15 +76,6 @@ export default class DiscoveryScreen extends Component {
         return;
       }
       defaultHandler();
-    }
-  }
-
-  /**
-   * On component react
-   */
-  componentWillReact() {
-    if (!this.headerIsShown && this.props.discovery.list.refreshing) {
-      this.showHeader();
     }
   }
 
@@ -215,15 +205,15 @@ export default class DiscoveryScreen extends Component {
     const footer = this.getFooter();
 
     body = (
-      <FlatList
+      <CollapsibleHeaderFlatList
         onLayout={this.onLayout}
         key={'discofl' + this.cols} // we need to force component redering if we change cols
         data={list.entities.slice(this.state.showFeed)}
         renderItem={renderRow}
         ListFooterComponent={footer}
-        ListHeaderComponent={this.getHeaders()}
+        CollapsibleHeaderComponent={this.getHeaders()}
+        headerHeight={146}
         ListEmptyComponent={this.getEmptyList()}
-        stickyHeaderIndices={[0]}
         keyExtractor={item => item.rowKey}
         onRefresh={this.refresh}
         refreshing={list.refreshing}
@@ -237,8 +227,6 @@ export default class DiscoveryScreen extends Component {
         columnWrapperStyle={columnWrapperStyle}
         keyboardShouldPersistTaps={'handled'}
         // onViewableItemsChanged={this.onViewableItemsChanged} Fix gifs desappear near the top when the header is hidden
-        onScroll={ this.animateHeader }
-        scrollEventThrottle={25}
       />
     )
 
@@ -249,49 +237,6 @@ export default class DiscoveryScreen extends Component {
       </View>
     );
   }
-
-  /**
-   * Handle scroll to hidde/show header
-   */
-  animateHeader = (e) => {
-    if (e.nativeEvent.contentOffset.y < 100) return this.showHeader();
-    const currentOffset = e.nativeEvent.contentOffset.y;
-    const dif = currentOffset - (this.offset);
-
-    this.offset = currentOffset;
-
-    if (Math.abs(dif) < 3) {
-      return;
-    } else if (dif < 0) {
-      this.showHeader();
-    } else {
-      this.hideHeader();
-    }
-  }
-
-  /**
-   * Show header
-   */
-  showHeader() {
-    if (this.headerIsShown) return;
-    this.headerView.slideInDown(400);
-    this.headerIsShown = true;
-  }
-
-  /**
-   * Hide header
-   */
-  hideHeader() {
-    if (!this.headerIsShown) return;
-    this.headerView.slideOutUp(1000);
-    this.headerIsShown = false;
-    Keyboard.dismiss();
-  }
-
-  /**
-   * Header view ref handler
-   */
-  handleViewRef = ref => this.headerView = ref;
 
   /**
    * Get empty list
@@ -418,10 +363,10 @@ export default class DiscoveryScreen extends Component {
       <Text style={[CS.fontM, CS.backgroundPrimary, CS.colorWhite, CS.textCenter, CS.padding]}>Recently visited</Text>;
 
     return (
-      <Animatable.View ref={this.handleViewRef} style={[CS.shadow, CS.backgroundWhite]} useNativeDriver={true}>
+      <View style={[CS.shadow, CS.backgroundWhite]}>
         {navigation}
         {headerBody}
-      </Animatable.View>
+      </View>
     )
   }
 
@@ -610,9 +555,7 @@ const styles = StyleSheet.create({
   },
   navigation: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
     backgroundColor: '#FFF',
-    flex: 1,
     ...Platform.select({
       android: {
         paddingTop: 2,
