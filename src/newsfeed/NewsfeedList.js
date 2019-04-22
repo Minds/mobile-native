@@ -70,26 +70,37 @@ export default class NewsfeedList extends Component {
     design,
     empty = null;
 
-    const newsfeed = this.props.newsfeed;
-    const me = this.props.user.me;
+    const {
+      newsfeed,
+      me,
+      renderTileActivity,
+      renderActivity,
+      emptyMessage,
+      navigation,
+      header,
+      listComponent,
+      ...passThroughProps
+    } = this.props;
+
+    const ListComponent = listComponent || FlatList;
 
     if (newsfeed.isTiled) {
-      renderRow = this.props.renderTileActivity || this.renderTileActivity;
+      renderRow = renderTileActivity || this.renderTileActivity;
       getItemLayout  = this.getItemLayout;
     } else {
-      renderRow = this.props.renderActivity || this.renderActivity;
+      renderRow = renderActivity || this.renderActivity;
       getItemLayout  = null;
     }
 
     // empty view
     if (newsfeed.list.loaded && !newsfeed.list.refreshing) {
-      if (this.props.emptyMessage) {
-        empty = this.props.emptyMessage;
+      if (emptyMessage) {
+        empty = emptyMessage;
       } else if (newsfeed.filter == 'subscribed') {
         if (me && me.hasBanner && !me.hasBanner()) { //TODO: check for avatar too
           design = <Text
             style={ComponentsStyle.emptyComponentLink}
-            onPress={() => this.props.navigation.push('Channel', { username: 'me' })}
+            onPress={() => navigation.push('Channel', { username: 'me' })}
             >
             Design your channel
           </Text>
@@ -103,13 +114,13 @@ export default class NewsfeedList extends Component {
               {design}
               <Text
                 style={ComponentsStyle.emptyComponentLink}
-                onPress={() => this.props.navigation.navigate('Capture')}
+                onPress={() => navigation.navigate('Capture')}
                 >
                 Create a post
               </Text>
               <Text
                 style={ComponentsStyle.emptyComponentLink}
-                onPress={() => this.props.navigation.navigate('Discovery', { type: 'channels' })}
+                onPress={() => navigation.navigate('Discovery', { type: 'channels' })}
                 >
                 Find channels
               </Text>
@@ -128,10 +139,10 @@ export default class NewsfeedList extends Component {
     const footer = this.getFooter();
 
     return (
-      <FlatList
+      <ListComponent
         key={(newsfeed.isTiled ? 't' : 'f')}
         onLayout={this.onLayout}
-        ListHeaderComponent={this.props.header}
+        ListHeaderComponent={header}
         ListFooterComponent={footer}
         data={newsfeed.list.entities.slice()}
         renderItem={renderRow}
@@ -145,10 +156,11 @@ export default class NewsfeedList extends Component {
         initialNumToRender={6}
         windowSize={11}
         getItemLayout={getItemLayout}
-        removeClippedSubviews={true}
+        // removeClippedSubviews={true}
         ListEmptyComponent={empty}
         viewabilityConfig={this.viewOpts}
         onViewableItemsChanged={this.onViewableItemsChanged}
+        {...passThroughProps}
       />
     );
   }

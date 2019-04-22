@@ -48,6 +48,7 @@
     "react-native-apk": "^0.2.7",
     "react-native-background-timer": "^2.1.1",
     "react-native-code-push": "^5.5.2",
+    "react-native-collapsible-header-views": "^1.0.0",
     "react-native-cookies": "^3.3.0",
     "react-native-crypto": "^2.1.0",
     "react-native-elements": "^0.19.1",
