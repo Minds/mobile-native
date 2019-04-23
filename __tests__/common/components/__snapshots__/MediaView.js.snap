@@ -62,6 +62,7 @@ exports[`Media view component renders correctly 1`] = `
           "parent_guid": "838106762591510528",
           "perma_url": false,
           "rowKey": "something0",
+          "shouldBeBlured": [MockFunction],
           "subtype": "image",
           "thumbnail_src": false,
           "title": "TITLE",

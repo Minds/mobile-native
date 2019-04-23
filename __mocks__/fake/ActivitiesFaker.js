@@ -25,6 +25,7 @@ function load(count) {
           }
         }
       },
+      shouldBeBlured: jest.fn(),
       message:"Message",
       title:'TITLE',
       owner_guid:"824853017709780997",

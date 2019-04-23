@@ -44,6 +44,17 @@ exports[`Activity component renders correctly 1`] = `
         "perma_url": false,
         "pinned": undefined,
         "rowKey": "something0",
+        "shouldBeBlured": [MockFunction] {
+          "calls": Array [
+            Array [],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
         "thumbnail_src": false,
         "thumbs:down:count": undefined,
         "thumbs:down:user_guids": undefined,
@@ -87,6 +98,17 @@ exports[`Activity component renders correctly 1`] = `
         "perma_url": false,
         "pinned": undefined,
         "rowKey": "something0",
+        "shouldBeBlured": [MockFunction] {
+          "calls": Array [
+            Array [],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
         "thumbnail_src": false,
         "thumbs:down:count": undefined,
         "thumbs:down:user_guids": undefined,
@@ -146,6 +168,17 @@ exports[`Activity component renders correctly 1`] = `
               "perma_url": false,
               "pinned": undefined,
               "rowKey": "something0",
+              "shouldBeBlured": [MockFunction] {
+                "calls": Array [
+                  Array [],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                ],
+              },
               "thumbnail_src": false,
               "thumbs:down:count": undefined,
               "thumbs:down:user_guids": undefined,
@@ -234,6 +267,17 @@ exports[`Activity component renders correctly 1`] = `
             "perma_url": false,
             "pinned": undefined,
             "rowKey": "something0",
+            "shouldBeBlured": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
             "thumbnail_src": false,
             "thumbs:down:count": undefined,
             "thumbs:down:user_guids": undefined,
@@ -288,6 +332,17 @@ exports[`Activity component renders correctly 1`] = `
             "perma_url": false,
             "pinned": undefined,
             "rowKey": "something0",
+            "shouldBeBlured": [MockFunction] {
+              "calls": Array [
+                Array [],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": undefined,
+                },
+              ],
+            },
             "thumbnail_src": false,
             "thumbs:down:count": undefined,
             "thumbs:down:user_guids": undefined,
@@ -337,6 +392,17 @@ exports[`Activity component renders correctly 1`] = `
           "perma_url": false,
           "pinned": undefined,
           "rowKey": "something0",
+          "shouldBeBlured": [MockFunction] {
+            "calls": Array [
+              Array [],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          },
           "thumbnail_src": false,
           "thumbs:down:count": undefined,
           "thumbs:down:user_guids": undefined,
@@ -389,6 +455,17 @@ exports[`Activity component renders correctly 1`] = `
         "perma_url": false,
         "pinned": undefined,
         "rowKey": "something0",
+        "shouldBeBlured": [MockFunction] {
+          "calls": Array [
+            Array [],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
         "thumbnail_src": false,
         "thumbs:down:count": undefined,
         "thumbs:down:user_guids": undefined,
@@ -438,6 +515,17 @@ exports[`Activity component renders correctly 1`] = `
         "perma_url": false,
         "pinned": undefined,
         "rowKey": "something0",
+        "shouldBeBlured": [MockFunction] {
+          "calls": Array [
+            Array [],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": undefined,
+            },
+          ],
+        },
         "thumbnail_src": false,
         "thumbs:down:count": undefined,
         "thumbs:down:user_guids": undefined,

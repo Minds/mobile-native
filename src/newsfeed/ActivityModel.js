@@ -68,6 +68,36 @@ export default class ActivityModel extends BaseModel {
     return sessionService.guid == this.ownerObj.guid;
   }
 
+  shouldBeBlured() {
+
+    const user = sessionService.getUser();
+
+    if (user && user.mature) return false;
+
+    if (typeof this.nsfw !== 'undefined') {
+      let res = [ 1, 2, 4 ].filter(nsfw => this.nsfw.indexOf(nsfw) > -1).length;
+      if (res) return true;
+    }
+
+    if (typeof this.flags !== 'undefined') {
+      return !!this.flags.mature;
+    }
+
+    if (typeof this.mature !== 'undefined') {
+      return !!this.mature;
+    }
+
+    if (typeof this.custom_data !== 'undefined' && typeof this.custom_data[0] !== 'undefined') {
+      return !!this.custom_data[0].mature;
+    }
+
+    if (typeof this.custom_data !== 'undefined') {
+      return !!this.custom_data.mature;
+    }
+
+    return false;
+  }
+
   /**
    * Get activity text
    */

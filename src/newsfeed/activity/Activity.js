@@ -73,7 +73,7 @@ export default class Activity extends Component {
         </View>
       );
 
-    const show_overlay = (isEntityNsfw(entity) && !entity.is_parent_mature) && !(isEntityNsfw(entity) && entity.is_parent_mature);
+    const show_overlay = (entity.shouldBeBlured() && !entity.is_parent_mature) && !(entity.shouldBeBlured() && entity.is_parent_mature);
     const overlay = (show_overlay) ? <ExplicitOverlay
         entity={this.props.entity}
       /> : null;
