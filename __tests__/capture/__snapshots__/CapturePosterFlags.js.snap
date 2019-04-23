@@ -164,7 +164,12 @@ exports[`cature poster flags component should renders correctly for props false 
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -176,12 +181,7 @@ exports[`cature poster flags component should renders correctly for props false 
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -194,18 +194,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Nudity
-                </Text>
+                Nudity
               </Text>
             </View>
             <View
@@ -240,7 +229,12 @@ exports[`cature poster flags component should renders correctly for props false 
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -252,12 +246,7 @@ exports[`cature poster flags component should renders correctly for props false 
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -270,18 +259,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Pornography
-                </Text>
+                Pornography
               </Text>
             </View>
             <View
@@ -316,7 +294,12 @@ exports[`cature poster flags component should renders correctly for props false 
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -328,12 +311,7 @@ exports[`cature poster flags component should renders correctly for props false 
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -346,18 +324,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Profanity
-                </Text>
+                Profanity
               </Text>
             </View>
             <View
@@ -392,7 +359,12 @@ exports[`cature poster flags component should renders correctly for props false 
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -404,12 +376,7 @@ exports[`cature poster flags component should renders correctly for props false 
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -422,18 +389,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Violence and Gore
-                </Text>
+                Violence and Gore
               </Text>
             </View>
             <View
@@ -468,7 +424,12 @@ exports[`cature poster flags component should renders correctly for props false 
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -480,12 +441,7 @@ exports[`cature poster flags component should renders correctly for props false 
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -498,18 +454,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Race and Religion
-                </Text>
+                Race and Religion
               </Text>
             </View>
             <View
@@ -544,7 +489,12 @@ exports[`cature poster flags component should renders correctly for props false 
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -556,12 +506,7 @@ exports[`cature poster flags component should renders correctly for props false 
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -574,18 +519,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Other
-                </Text>
+                Other
               </Text>
             </View>
           </View>
@@ -1657,7 +1591,12 @@ exports[`cature poster flags component should renders correctly for props true 1
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -1669,12 +1608,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -1687,18 +1621,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Nudity
-                </Text>
+                Nudity
               </Text>
             </View>
             <View
@@ -1733,7 +1656,12 @@ exports[`cature poster flags component should renders correctly for props true 1
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -1745,12 +1673,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -1763,18 +1686,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Pornography
-                </Text>
+                Pornography
               </Text>
             </View>
             <View
@@ -1809,7 +1721,12 @@ exports[`cature poster flags component should renders correctly for props true 1
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -1821,12 +1738,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -1839,18 +1751,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Profanity
-                </Text>
+                Profanity
               </Text>
             </View>
             <View
@@ -1885,7 +1786,12 @@ exports[`cature poster flags component should renders correctly for props true 1
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -1897,12 +1803,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -1915,18 +1816,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Violence and Gore
-                </Text>
+                Violence and Gore
               </Text>
             </View>
             <View
@@ -1961,7 +1851,12 @@ exports[`cature poster flags component should renders correctly for props true 1
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -1973,12 +1868,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -1991,18 +1881,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Race and Religion
-                </Text>
+                Race and Religion
               </Text>
             </View>
             <View
@@ -2037,7 +1916,12 @@ exports[`cature poster flags component should renders correctly for props true 1
                       "paddingHorizontal": 16,
                     },
                     false,
-                    undefined,
+                    Array [
+                      Object {
+                        "color": "#777777",
+                      },
+                      false,
+                    ],
                   ]
                 }
               >
@@ -2049,12 +1933,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                         "color": undefined,
                         "fontSize": 12,
                       },
-                      Array [
-                        Object {
-                          "color": "transparent",
-                        },
-                        false,
-                      ],
+                      undefined,
                       Object {
                         "fontFamily": "Material Icons",
                         "fontStyle": "normal",
@@ -2067,18 +1946,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   
                 </Text>
                  
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#777777",
-                      },
-                      false,
-                    ]
-                  }
-                >
-                  Other
-                </Text>
+                Other
               </Text>
             </View>
           </View>
