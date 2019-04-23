@@ -73,11 +73,10 @@ export default class NsfwToggle extends Component {
 
         <Menu ref={this.menuRef} style={styles.menu}>
           {this.reasons.map(reason => (
-            <MenuItem onPress={() => this.toggleDropdownOption(reason)}>
-              <MdIcon style={[styles.menuItemIcon, this.isReasonActive(reason) && styles.menuItemIconActive]} name="check" />
-              {'\u0020'}
-              <Text style={[styles.menuItemText, this.isReasonActive(reason) && styles.menuItemTextActive]}>{reason.label}</Text>
-            </MenuItem>
+            <MenuItem
+              onPress={() => this.toggleDropdownOption(reason)}
+              textStyle={[styles.menuItemText, this.isReasonActive(reason) && styles.menuItemTextActive]}
+            ><MdIcon name="check" /> {reason.label}</MenuItem>
           ))}
         </Menu>
       </React.Fragment>
