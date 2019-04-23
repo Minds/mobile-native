@@ -24,7 +24,6 @@ import { withErrorBoundary } from '../common/components/ErrorBoundary';
 
 const selectedTextStyle = {color: 'black'};
 const typeOptions = [
-  { text: 'TOP', value: 'suggested', selectedTextStyle},
   { text: 'SUBSCRIPTIONS', value: 'network', selectedTextStyle},
   { text: 'MY BLOGS', value: 'owner', selectedTextStyle},
 ];

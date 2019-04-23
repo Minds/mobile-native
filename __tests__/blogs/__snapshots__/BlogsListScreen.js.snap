@@ -14,13 +14,6 @@ exports[`blog list screen component should renders correctly 1`] = `
               "selectedTextStyle": Object {
                 "color": "black",
               },
-              "text": "TOP",
-              "value": "suggested",
-            },
-            Object {
-              "selectedTextStyle": Object {
-                "color": "black",
-              },
               "text": "SUBSCRIPTIONS",
               "value": "network",
             },
@@ -499,42 +492,6 @@ exports[`blog list screen component should renders correctly 1`] = `
               }
             }
           >
-            <View
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "borderBottomColor": "#FFF",
-                  "borderBottomWidth": 2,
-                  "flex": 1,
-                  "flexDirection": "column",
-                  "opacity": 1,
-                  "padding": 5,
-                }
-              }
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "paddingTop": 3,
-                    },
-                    Object {
-                      "fontSize": 10,
-                    },
-                  ]
-                }
-              >
-                TOP
-              </Text>
-            </View>
             <View
               accessible={true}
               isTVSelectable={true}

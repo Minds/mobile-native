@@ -5,8 +5,6 @@ import { MINDS_FEATURES } from '../config/Config';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import GroupModel from './GroupModel';
 
-const defaultFilter = 'suggested';
-
 /**
  * Groups store
  */
@@ -17,14 +15,8 @@ class GroupsStore {
    */
   @observable list = new OffsetFeedListStore('shallow');
 
-  @observable filter = defaultFilter;
+  @observable filter = 'member';
   @observable loading = false;
-
-  @action
-  setFilter(value) {
-    this.filter = value;
-    this.refresh();
-  }
 
   @action
   setLoading(value) {
@@ -81,7 +73,7 @@ class GroupsStore {
   reset() {
     this.list = new OffsetFeedListStore('shallow');
     this.loading = false;
-    this.filter = defaultFilter;
+    this.filter = 'member';
   }
 
 }
