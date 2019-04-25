@@ -2,6 +2,7 @@ import storage from './storage.service';
 import api from './api.service';
 import { lang } from 'moment';
 import en from '../../../locales/en';
+import logService from './log.service';
 
 const storageNamespace = 'translation';
 
@@ -42,7 +43,7 @@ class TranslationService {
           await storage.setItem(`${storageNamespace}:userDefault`, response.userDefault);
           return response.languages;
         } catch (e) {
-          console.log('Error loading languages', e);
+          logService.exception('[TranslationService]', e);
         }
       }
     }

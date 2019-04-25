@@ -106,7 +106,7 @@ export default class RewardsStep extends Component {
     } catch (e) {
       const error = (e && e.message) || 'Unknown server error';
       this.setState({ error });
-      console.log(e);
+      logService.exception(e);
     } finally {
       this.setState({ inProgress: false });
     }

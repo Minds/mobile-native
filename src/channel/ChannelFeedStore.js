@@ -17,6 +17,7 @@ import channelService from './ChannelService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
+import logService from '../common/services/log.service';
 
 /**
  * Channel Feed store
@@ -196,7 +197,9 @@ export default class ChannelFeedStore {
       // ignore aborts
       if (err.code === 'Abort') return;
       store.list.setErrorLoading(true);
-      console.log(err);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[ChannelFeedStore] _loadFeed', err);
+      }
     } finally {
       store.loading = false;
     }
@@ -221,7 +224,9 @@ export default class ChannelFeedStore {
       // ignore aborts
       if (err.code === 'Abort') return;
       store.list.setErrorLoading(true);
-      console.log(err);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[ChannelFeedStore] _loadImagesFeed', err);
+      }
     } finally {
       store.loading = false;
     }
@@ -245,7 +250,9 @@ export default class ChannelFeedStore {
     } catch (error) {
       // ignore aborts
       if (err.code === 'Abort') return;
-      console.log(error);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[ChannelFeedStore] _loadVideosFeed', err);
+      }
       store.list.setErrorLoading(true);
     } finally {
       store.loading = false;
@@ -272,7 +279,9 @@ export default class ChannelFeedStore {
       store.list.setList(feed, refresh);
     } catch (err) {
       store.list.setErrorLoading(true);
-      console.log(err);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[ChannelFeedStore] _loadBlogsFeed', err);
+      }
     } finally {
       store.loading = false;
     }

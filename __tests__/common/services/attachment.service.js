@@ -1,4 +1,3 @@
-import { uploadAttachment } from '../../../src/capture/CaptureService';
 import api from '../../../src/common/services/api.service';
 import imagePicker from '../../../src/common/services/image-picker.service';
 import service from '../../../src/common/services/attachment.service';
@@ -32,7 +31,7 @@ describe('Attachment service', () => {
     // call api upload one time
     expect(api.upload.mock.calls.length).toEqual(1);
     expect(api.upload.mock.calls[0][0]).toEqual('api/v1/media/');
-    
+
   });
 
 
@@ -53,7 +52,7 @@ describe('Attachment service', () => {
     media.name = 'test';
     expect(api.upload.mock.calls[0][1]).toEqual(media);
     expect(api.upload.mock.calls[0][0]).toEqual('api/v1/media/');
-    
+
   });
 
   it('should call launchCamera', async () => {
@@ -64,14 +63,14 @@ describe('Attachment service', () => {
     // call tested method
     const res = await service.video();
 
-    
+
     expect(res).toEqual({
         uri: 'aaaa',
         path: 'path metheny',
         type: 'video/mp4',
         fileName: 'image.mp4'
     });
-    
+
   });
 
   it('should call launchCamera with null response and return', async () => {
@@ -81,7 +80,7 @@ describe('Attachment service', () => {
     // call tested method
     const res = await service.video();
     expect(res).toEqual(null);
-    
+
   });
 
 
@@ -93,14 +92,14 @@ describe('Attachment service', () => {
     // call tested method
     const res = await service.photo();
 
-    
+
     expect(res).toEqual({
         uri: 'aaaa',
         path: 'path metheny',
         type: 'image/jpeg',
         fileName: 'image.jpg'
     });
-    
+
   });
 
   it('should call launchCamera with null response and return', async () => {
@@ -110,7 +109,7 @@ describe('Attachment service', () => {
     // call tested method
     const res = await service.photo();
     expect(res).toEqual(null);
-    
+
   });
 
 
@@ -124,7 +123,7 @@ describe('Attachment service', () => {
 
     expect(api.delete.mock.calls.length).toEqual(1);
     expect(api.delete.mock.calls[0][0]).toEqual('api/v1/media/1111');
-    
+
   });
 
   it('should call launchImageLibrary', async () => {
@@ -135,13 +134,13 @@ describe('Attachment service', () => {
     // call tested method
     const res = await service.gallery();
 
-    
+
     expect(res).toEqual({
         uri: 'aaaa',
         path: 'path metheny',
         width: 100
     });
-    
+
   });
 
   it('should call launchImageLibrary', async () => {
@@ -152,13 +151,13 @@ describe('Attachment service', () => {
     // call tested method
     const res = await service.gallery();
 
-    
+
     expect(res).toEqual({
         uri: 'aaaa',
         path: 'path metheny',
         type: 'video/mp4'
     });
-    
+
   });
 
   it('should call launchImageLibrary with null response and return', async () => {
@@ -168,7 +167,7 @@ describe('Attachment service', () => {
     // call tested method
     const res = await service.gallery();
     expect(res).toEqual(null);
-    
+
   });
 
 });

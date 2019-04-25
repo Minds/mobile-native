@@ -29,6 +29,7 @@ import {
   Linking,
   Text,
   Alert,
+  Clipboard,
 } from 'react-native';
 
 import CookieManager from 'react-native-cookies';
@@ -53,6 +54,7 @@ import {CODE_PUSH_TOKEN} from './src/config/Config';
 import updateService from './src/common/services/update.service';
 import ErrorBoundary from './src/common/components/ErrorBoundary';
 import { CommonStyle as CS } from './src/styles/Common';
+import logService from './src/common/services/log.service';
 
 let deepLinkUrl = '';
 
@@ -64,9 +66,11 @@ CookieManager.clearAll();
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
 
+  logService.info('[App] Getting minds settings');
   // load minds settings on login
   await mindsService.getSettings();
 
+  logService.info('[App] updatting features');
   // reload fatures on login
   await featureService.updateFeatures();
 
@@ -74,19 +78,22 @@ sessionService.onLogin(async () => {
   try {
     pushService.registerToken();
   } catch (err) {
-    console.log('Error registering the push notification token', err);
+    logService.exception('[App] Error registering the push notification token', err);
   }
 
   // load nsfw from storage
+  logService.info('[App] loading nsfw settings');
   await stores.discovery.filters.init();
 
   // get onboarding progress
+  logService.info('[App] getting onboarding progress');
   const onboarding = await stores.onboarding.getProgress();
 
   if (onboarding && onboarding.show_onboarding) {
     sessionService.setInitialScreen('OnboardingScreen');
   }
 
+  logService.info('[App] navigating to initial screen', sessionService.initialScreen);
   NavigationService.reset(sessionService.initialScreen);
 
   // check update
@@ -110,7 +117,7 @@ sessionService.onLogin(async () => {
     // handle shared
     receiveShare.handle();
   } catch (err) {
-    console.log(err);
+    logService.exception(err);
   }
 });
 
@@ -167,24 +174,36 @@ export default class App extends Component {
    */
   async componentDidMount() {
     try {
+      await logService.init();
+
       deepLinkUrl = await Linking.getInitialURL();
-    } catch (err) {
-      console.log('Error getting initial deep link');
-    }
 
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
-    Linking.addEventListener('url', this.handleOpenURL);
-    AppState.addEventListener('change', this.handleAppStateChange);
+      BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+      Linking.addEventListener('url', this.handleOpenURL);
+      AppState.addEventListener('change', this.handleAppStateChange);
 
-    if (!this.handlePasswordResetDeepLink()) {
-      const token = await sessionService.init();
+      if (!this.handlePasswordResetDeepLink()) {
+        logService.info('[App] initializing session');
+        const token = await sessionService.init();
 
-      if (!token) {
-        NavigationService.reset('Login');
+        if (!token) {
+          logService.info('[App] there is no active session');
+          NavigationService.reset('Login');
+        } else {
+          logService.info('[App] session initialized');
+        }
       }
-    }
 
-    this.checkForUpdates();
+      await this.checkForUpdates();
+    } catch(err) {
+      logService.exception('[App] Error initializing the app', err);
+      Alert.alert(
+        'Error',
+        'There was an error initializing the app.\n Do you want to copy the stack trace.',
+        [{ text: 'Yes', onPress: () => Clipboard.setString(err.stack)}, { text: 'No'}],
+        { cancelable: false }
+      );
+    }
   }
 
   /**
@@ -203,7 +222,7 @@ export default class App extends Component {
         return true;
       }
     } catch(err) {
-      console.log('Error checking for password reset deep link', err);
+      logService.exception('[App] Error checking for password reset deep link', err);
     }
     return false;
   }
@@ -251,7 +270,7 @@ export default class App extends Component {
 
       let response = await codePush.sync(params);
     } catch (err) {
-      console.log('Error checking for code push updated', err);
+      logService.exception('[App] Error checking for code push updated', err);
     }
   }
 
@@ -261,14 +280,14 @@ export default class App extends Component {
   render() {
     const app = (
       <Provider key="app" {...stores}>
-          <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
-            <NavigationStack
-              ref={navigatorRef => {
-                NavigationService.setTopLevelNavigator(navigatorRef);
-              }}
-            />
-          </ErrorBoundary>
-        </Provider>
+        <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
+          <NavigationStack
+            ref={navigatorRef => {
+              NavigationService.setTopLevelNavigator(navigatorRef);
+            }}
+          />
+        </ErrorBoundary>
+      </Provider>
     );
 
     const keychainModal = (

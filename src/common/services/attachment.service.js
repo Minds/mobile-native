@@ -1,4 +1,3 @@
-import { uploadAttachment } from '../../capture/CaptureService';
 import api from './api.service';
 import imagePicker from './image-picker.service';
 

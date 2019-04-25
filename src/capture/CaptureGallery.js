@@ -24,6 +24,7 @@ import CenteredLoading from '../common/components/CenteredLoading'
 import CaptureTabs from './CaptureTabs';
 import androidPermissionsService from '../common/services/android-permissions.service';
 import testID from '../common/helpers/testID';
+import logService from '../common/services/log.service';
 
 /**
  * Gallery View
@@ -76,7 +77,7 @@ export default class CaptureGallery extends PureComponent {
         });
       })
       .catch((err) => {
-        console.log('Error loading images', err)
+        logService.exception('[CaptureGallery] loadPhotos', err)
         //Error Loading Images
       });
   }
@@ -135,10 +136,6 @@ export default class CaptureGallery extends PureComponent {
         />
       </TouchableOpacity>
     );
-  }
-
-  onSelectedTile(row) {
-    console.log(row);
   }
 
   onSelected = (response) => {

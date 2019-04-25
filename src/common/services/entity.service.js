@@ -1,4 +1,5 @@
 import api from './api.service';
+import logService from './log.service';
 
 class EntitiesService {
   /**
@@ -11,7 +12,7 @@ class EntitiesService {
         return data.entity;
       })
       .catch(err => {
-        console.log('error', err);
+        logService.exception('[EntitiesService]', err);
         throw "Oops, an error has occured getting this entity";
       });
   }

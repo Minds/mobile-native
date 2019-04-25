@@ -1,4 +1,5 @@
 import api from './../../common/services/api.service';
+import logService from './log.service';
 
 export function vote(guid, direction) {
   return api.put('api/v1/votes/' + guid + '/' + direction)
@@ -6,7 +7,7 @@ export function vote(guid, direction) {
       return { data }
     })
     .catch(err => {
-      console.log('error', err);
+      logService.exception('[VotesService]', err);
       throw "Oops, an error has occurred whilst voting.";
     })
 }

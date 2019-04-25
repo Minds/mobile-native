@@ -36,7 +36,6 @@ export default class ModalConfirmPassword extends Component {
       await authService.validatePassword(this.state.password);
       this.props.onSuccess();
     } catch (err) {
-      console.log(err);
       this.setState({
         error: true
       });
@@ -50,7 +49,7 @@ export default class ModalConfirmPassword extends Component {
         isVisible={ this.props.isVisible }
         backdropColor="white"
         backdropOpacity={ 1 }
-      > 
+      >
         <View style={ [ CommonStyle.flexContainer, CommonStyle.modalScreen ]} >
           <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={Platform.OS == 'ios' ? 'padding' : null} >
             {msg}
@@ -77,7 +76,7 @@ export default class ModalConfirmPassword extends Component {
               key={1}
             />
           </KeyboardAvoidingView>
-        </View> 
+        </View>
 
       </Modal>
     );

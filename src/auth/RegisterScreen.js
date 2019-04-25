@@ -21,6 +21,7 @@ import RegisterForm from './RegisterForm';
 import VideoBackground from '../common/components/VideoBackground';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
+import logService from '../common/services/log.service';
 
 export default class Register extends Component {
 
@@ -52,7 +53,7 @@ export default class Register extends Component {
   }
 
   onRegister = guid => {
-    console.log('registered', guid);
+    logService.info('[Register] new user registered '+guid);
   }
 
   /**

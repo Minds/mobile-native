@@ -21,6 +21,7 @@ import { Button } from 'react-native-elements'
 import i18n from '../common/services/i18n.service';
 import navigation from '../navigation/NavigationService';
 import delay from '../common/helpers/delay';
+import logService from '../common/services/log.service';
 
 /**
  * Reset Password Form
@@ -134,7 +135,7 @@ export default class ResetPassword extends PureComponent {
         } else {
           alert('Oops. Please try again.');
         }
-        console.log(err);
+        logService.exception('[ResetPassword]', err);
       } finally {
         this.setState({ sending: false });
       }

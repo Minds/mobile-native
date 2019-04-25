@@ -1,8 +1,6 @@
 import {
   observable,
-  action,
-  reaction,
-  computed
+  action
 } from 'mobx';
 
 /**
@@ -16,7 +14,7 @@ class SingleEntityStore {
   setEntity(entity) {
     this.entity = entity;
   }
-  
+
   @action
   clear() {
     this.entity = null;

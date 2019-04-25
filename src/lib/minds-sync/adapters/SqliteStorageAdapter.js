@@ -1,3 +1,4 @@
+import logService from "../../../common/services/log.service";
 
 export default class SqliteStorageAdapter {
   /**
@@ -68,7 +69,7 @@ export default class SqliteStorageAdapter {
       await this.db.init();
       await this.buildSchema();
 
-      console.log('Database is ready');
+      logService.log('Database is ready');
 
       this.isReady = true;
     }

@@ -8,19 +8,34 @@ import {
 } from 'mobx-react/native'
 
 import {
-  FlatList,
+  FlatList, View,
 } from 'react-native'
 
 import {CommonStyle as CS} from '../styles/Common';
 import GrousBarItem from './GroupsBarItem';
+import { Text } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 @inject('groupsBar')
 @observer
 export default class GroupsBar extends Component {
 
-  async componentDidMount() {
-    await this.props.groupsBar.loadGroups();
-    this.props.groupsBar.loadMarkers();
+  state = {
+    errorLoading: false,
+  }
+
+  componentDidMount() {
+    this.load();
+  }
+
+  load = async() => {
+    if (this.state.errorLoading) this.setState({errorLoading: false});
+    try {
+      await this.props.groupsBar.loadGroups();
+      await this.props.groupsBar.loadMarkers();
+    } catch (error) {
+      this.setState({errorLoading: true});
+    }
   }
 
   /**
@@ -36,12 +51,24 @@ export default class GroupsBar extends Component {
     this.props.groupsBar.loadGroups();
   }
 
+  renderError() {
+    return (
+      <TouchableOpacity onPress={this.load}>
+        <View style={[CS.columnAlignCenter, CS.centered, CS.padding2x]}>
+          <Text style={[CS.fontXS, CS.colorDanger, CS.marginBottom]}>Error Loading Groups</Text>
+          <Text style={[CS.fontS, CS.colorPrimary, CS.borderPrimary, CS.border, CS.borderRadius7x, CS.padding]}>Try again</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
   /**
    * Render
    */
   render() {
     return (
       <FlatList
+        ListFooterComponent={this.state.errorLoading ? this.renderError() : undefined}
         contentContainerStyle={[CS.rowJustifyStart, CS.backgroundTransparent]}
         horizontal={true}
         renderItem={this.renderItem}

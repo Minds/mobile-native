@@ -23,6 +23,7 @@ import NsfwToggle from '../../common/components/nsfw/NsfwToggle';
 import autobind from '../../common/helpers/autobind';
 import featuresService from '../../common/services/features.service';
 import Colors from '../../styles/Colors';
+import logService from '../../common/services/log.service';
 
 export default class ActivityEditor extends Component {
 
@@ -39,7 +40,7 @@ export default class ActivityEditor extends Component {
 
   update = () => {
 
-    if(HashtagService.slice(this.state.text).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
+    if (HashtagService.slice(this.state.text).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
       Alert.alert(`Sorry, your post cannot contain more than ${HashtagService.maxHashtags} hashtags.`);
       return false;
     }
@@ -52,7 +53,7 @@ export default class ActivityEditor extends Component {
 
     this.props.newsfeed.list.updateActivity(this.props.entity, data)
       .catch((err) => {
-        console.log('error updating the post');
+        logService.exception('[ActivityEditor] update', err);
       })
       .finally(() => {
         this.props.toggleEdit(false);

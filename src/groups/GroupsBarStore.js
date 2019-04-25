@@ -1,6 +1,7 @@
 import { observable, action } from "mobx";
 import groupsService from "./GroupsService";
 import socketService from '../common/services/socket.service';
+import logService from "../common/services/log.service";
 
 /**
  * Groups bar store
@@ -148,7 +149,9 @@ class GroupsBarStore {
       this.offset = groups.offset;
       return groups;
     } catch (err) {
-      console.log('Error loading groups', err);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[GroupsBarStore]', err);
+      }
     } finally {
       this.setLoading(false);
     }

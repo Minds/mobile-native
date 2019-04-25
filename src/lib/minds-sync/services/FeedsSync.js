@@ -1,3 +1,5 @@
+import logService from "../../../common/services/log.service";
+
 const E_NO_RESOLVER = function () {
   throw new Error('Resolver not set')
 };
@@ -102,7 +104,7 @@ export default class FeedsSync {
         next,
       }
     } catch (e) {
-      console.error('FeedsSync.get', e);
+      logService.exception('[FeedsSync.get]', e);
       throw e;
     }
   }

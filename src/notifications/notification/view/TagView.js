@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import entityService from '../../../common/services/entity.service';
+import logService from '../../../common/services/log.service';
 
 /**
  * Tag Notification Component
@@ -31,7 +32,7 @@ export default class TagView extends Component {
               this.props.navigation.push('Activity', { entity });
             })
             .catch(err => {
-              console.log('error', err);
+              logService.exception('[TagView]', err);
               throw "Oops, an error has occurred navigating.";
             });
         }

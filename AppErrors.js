@@ -7,21 +7,31 @@ import {
   setJSExceptionHandler
 } from 'react-native-exception-handler';
 
+import { onError } from "mobx-react";
+import logService from './src/common/services/log.service';
+
+onError(error => {
+  console.log(error);
+  logService.exception(error);
+})
+
 if (!__DEV__) {
   /**
    * Globar error handlers
    */
   const jsErrorHandler = (e, isFatal) => {
     if (isFatal) {
-      Alert.alert(
-        'Unexpected error occurred',
-        `
-        Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
-      `,
-        [{
-          text: 'Ok',
-        }]
-      );
+      if (e) {
+        Alert.alert(
+          'Unexpected error occurred',
+          `
+          Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
+        `,
+          [{
+            text: 'Ok',
+          }]
+        );
+      }
 
       console.log('Minds Uncaught (fatal)', e);
     } else if (e) {
@@ -39,5 +49,6 @@ if (!__DEV__) {
    */
   setNativeExceptionHandler((exceptionString) => {
     console.log(exceptionString);
+    logService.exception(exceptionString);
   });
 }

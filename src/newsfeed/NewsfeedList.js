@@ -39,7 +39,7 @@ export default class NewsfeedList extends Component {
   /**
    * On list mount
    */
-  onComponentWillMount() {
+  componentWillMount() {
     this.nextBoostedId = 1;
   }
 

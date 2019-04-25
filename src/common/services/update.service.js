@@ -7,6 +7,7 @@ import api from "./api.service";
 import { Version } from "../../config/Version";
 import { action, observable } from "mobx";
 import navigationService from "../../navigation/NavigationService";
+import logService from "./log.service";
 
 /**
  * Update service
@@ -21,6 +22,8 @@ class UpdateService {
    */
   async checkUpdate(stable = true) {
     if (this.downloading) return;
+
+    logService.info('[UpdateService] Checking for updates...');
 
     const last = await this.getLastVersion(stable);
 
@@ -45,7 +48,7 @@ class UpdateService {
 
         }
       } catch (e) {
-        console.log('Error checking for updates');
+        logService.exception('[UpdateService]', e);
       }
     }
   }
@@ -102,7 +105,7 @@ class UpdateService {
       data = await response.json();
 
     } catch (e) {
-      console.log('Error getting the last app versions', e);
+      logService.exception('[UpdateService]', e);
       return false;
     }
 
@@ -151,13 +154,13 @@ class UpdateService {
         if (result.statusCode == 200) {
           ReactNativeAPK.installApp(filePath);
         } else {
-          console.log("download failed");
+          logService.info('[UpdateService] Download failes');
         }
         this.setProgress(0);
         this.setDownloading(false);
       })
       .catch(e => {
-        console.log("failed down", e);
+        logService.exception("[UpdateService]", e);
         this.setProgress(0);
         this.setDownloading(false);
         navigationService.reset('Tabs');

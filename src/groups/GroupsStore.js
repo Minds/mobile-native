@@ -4,6 +4,7 @@ import groupsService from './GroupsService';
 import { MINDS_FEATURES } from '../config/Config';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import GroupModel from './GroupModel';
+import logService from '../common/services/log.service';
 
 /**
  * Groups store
@@ -44,7 +45,9 @@ class GroupsStore {
       // ignore aborts
       if (err.code === 'Abort') return;
       this.list.setErrorLoading(true);
-      console.log('error', err);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[GroupsStore]', err);
+      }
     } finally {
       this.setLoading(false);
     }

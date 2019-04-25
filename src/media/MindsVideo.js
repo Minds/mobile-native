@@ -29,6 +29,7 @@ import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import en from "../../locales/en";
 import isNsfw from '../common/helpers/isNsfw';
+import logService from '../common/services/log.service';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -105,7 +106,7 @@ class MindsVideo extends Component {
   };
 
   onError = (err) => {
-    console.log(err)
+    logService.exception('[MindsVideo]', err)
     this.setState({ error: true, inProgress: false, });
   };
 

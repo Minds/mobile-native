@@ -1,5 +1,6 @@
 import NotificationsIOS from 'react-native-notifications';
 import AbstractPlatform from './abstract-platform';
+import logService from '../log.service';
 
 /**
  * Ios Platform
@@ -81,6 +82,6 @@ export default class IosPlatfom extends AbstractPlatform {
     //   code: 3010,
     //   localizedDescription: 'remote notifications are not supported in the simulator'
     // }
-    console.error(error);
+    logService.exception(error);
   }
 }

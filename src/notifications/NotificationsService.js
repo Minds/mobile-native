@@ -17,7 +17,9 @@ export default class NotificationsService {
     } catch(err) {
       // ignore aborts
       if (err.code === 'Abort') return;
-      console.log('error', err);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[NotificationsService]', err);
+      }
       throw "Ooops";
     }
   }

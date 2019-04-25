@@ -2,6 +2,7 @@
 import navigation from '../../../navigation/NavigationService'
 import session from '../session.service'
 import featuresService from '../features.service';
+import logService from '../log.service';
 
 /**
  * Push Router
@@ -48,7 +49,7 @@ export default class Router {
           } else if (entity_type[0] === 'object') {
             navigation.push('Activity', { guid: data.json.entity_guid });
           } else {
-            console.error('Unknown notification:', entity_type, data);
+            logService.exception('[DeepLinkRouter] Unknown notification:', entity_type, data);
           }
 
           break;
@@ -76,7 +77,7 @@ export default class Router {
 
         default:
           navigation.navigate('Notifications', {});
-          console.error('Unknown notification:', data);
+          logService.exception('[DeepLinkRouter] Unknown notification:', data);
           break;
 
       }

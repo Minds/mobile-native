@@ -17,6 +17,7 @@ import { ComponentsStyle } from '../styles/Components';
 import SingleEntityStore from '../common/stores/SingleEntityStore';
 import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
+import logService from '../common/services/log.service';
 
 /**
  * Activity screen
@@ -70,7 +71,7 @@ export default class ActivityScreen extends Component {
         await this.entityStore.setEntity(ActivityModel.checkOrCreate(resp.activity));
       } catch (e) {
         this.setState({error: true});
-        console.log('error',e);
+        logService.exception('[ActivityScreen]',e);
         //console.error('Cannot hydrate activity', e);
       }
     }

@@ -55,28 +55,30 @@ export default class NsfwToggle extends Component {
 
   render() {
     const isActive = Boolean(this.props.value && this.props.value.length);
+    const button = (
+      <Touchable style={this.props.containerStyle} onPress={this.showDropdown}>
+        <MdIcon
+          name="explicit"
+          color={isActive ? Colors.explicit : Colors.darkGreyed}
+          size={25}
+          style={[this.props.iconStyle, isActive && this.props.iconActiveStyle]}
+        />
+
+        {isActive && !this.props.hideLabel && <Text style={this.props.labelStyle}>
+          NSFW
+        </Text>}
+      </Touchable>
+    );
 
     return (
       <React.Fragment>
-        <Touchable style={this.props.containerStyle} onPress={this.showDropdown}>
-          <MdIcon
-            name="explicit"
-            color={isActive ? Colors.explicit : Colors.darkGreyed}
-            size={25}
-            style={[this.props.iconStyle, isActive && this.props.iconActiveStyle]}
-          />
-
-          {isActive && !this.props.hideLabel && <Text style={this.props.labelStyle}>
-            NSFW
-          </Text>}
-        </Touchable>
-
-        <Menu ref={this.menuRef} style={styles.menu}>
-          {this.reasons.map(reason => (
+        <Menu ref={this.menuRef} style={styles.menu} button={button}>
+          {this.reasons.map((reason, i) => (
             <MenuItem
+              key={i}
               onPress={() => this.toggleDropdownOption(reason)}
               textStyle={[styles.menuItemText, this.isReasonActive(reason) && styles.menuItemTextActive]}
-            ><MdIcon name="check" /> {reason.label}</MenuItem>
+            >{this.isReasonActive(reason) && <MdIcon name="check" />} {reason.label}</MenuItem>
           ))}
         </Menu>
       </React.Fragment>

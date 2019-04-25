@@ -22,6 +22,7 @@ import { ComponentsStyle } from '../styles/Components';
 import Colors from '../styles/Colors';
 import Button from '../common/components/Button';
 import NavNextButton from '../common/components/NavNextButton';
+import logService from '../common/services/log.service';
 
 /**
  * Messenger setup
@@ -73,7 +74,7 @@ export default class MessengerSetup extends Component {
       const response = await this.props.messengerList.getCryptoKeys(this.password)
       this.handleOnDone(response);
     } catch (err) {
-      console.log(err)
+      logService.exception('[MessengerSetup]', err)
     };
   }
 
@@ -86,7 +87,7 @@ export default class MessengerSetup extends Component {
       const response = await this.props.messengerList.doSetup(this.password);
       this.handleOnDone(response);
     } catch (err) {
-      console.log(err);
+      logService.exception('[MessengerSetup]', err);
       alert('Oops something went wrong');
     }
   }

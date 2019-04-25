@@ -9,6 +9,7 @@ import NotificationsService, { getFeed, getCount } from './NotificationsService'
 import OffsetListStore from '../common/stores/OffsetListStore';
 import session from '../common/services/session.service';
 import badge from '../common/services/badge.service';
+import logService from '../common/services/log.service';
 
 /**
  * Notifications Store
@@ -88,8 +89,6 @@ class NotificationsStore {
         this.assignRowKeys(feed);
         this.list.setList(feed, refresh);
       }
-    } catch (err) {
-      console.log('error', err);
     } finally {
       this.loading = false;
     }
@@ -121,7 +120,7 @@ class NotificationsStore {
     getCount().then(data => {
       this.setUnread(data.count);
     }).catch(err => {
-      console.log('error', err);
+      logService.exception('[NotificationStore]', err);
     });
   }
 

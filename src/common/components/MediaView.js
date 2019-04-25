@@ -32,6 +32,7 @@ import download from '../services/download.service';
 import mindsService from '../services/minds.service';
 import { isEntityNsfw } from '../helpers/isNsfw';
 import openUrlService from '../services/open-url.service';
+import logService from '../services/log.service';
 
 /**
  * Activity
@@ -126,7 +127,7 @@ export default class MediaView extends Component {
       Alert.alert('Success', 'Image added to gallery!');
     } catch (e) {
       Alert.alert('Error downloading file');
-      console.log(e);
+      logService.exception('[MediaView] runDownload', e);
     }
   }
 

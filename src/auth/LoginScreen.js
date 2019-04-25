@@ -21,6 +21,7 @@ import LoginForm from './LoginForm';
 import VideoBackground from '../common/components/VideoBackground';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
+import logService from '../common/services/log.service';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -114,7 +115,7 @@ export default class LoginScreen extends Component {
    * On login successful
    */
   login() {
-    console.log('user logged in');
+    logService.info('user logged in');
   }
 }
 

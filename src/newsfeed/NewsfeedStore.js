@@ -4,6 +4,7 @@ import { observable, action, computed, extendObservable } from 'mobx'
 import NewsfeedService, { getBoosts, setViewed } from './NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from './ActivityModel';
+import logService from '../common/services/log.service';
 
 /**
  * News feed store
@@ -77,8 +78,12 @@ class NewsfeedStore {
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
-      console.log('error', err);
+
       store.list.setErrorLoading(true);
+
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[NewsfeedStore]', err);
+      }
     } finally {
       store.loading = false;
     }

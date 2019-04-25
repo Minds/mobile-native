@@ -14,6 +14,7 @@ import {
 
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import Actions from '../newsfeed/activity/Actions';
+import logService from '../common/services/log.service';
 
 /**
  * Discovery View screen
@@ -56,7 +57,7 @@ export default class DiscoveryViewScreen extends Component {
     Image.getSize(entity.thumbnail_src, (width, height) => {
       this.setState({height})
     }, (error) => {
-      console.error(`Couldn't get the image size: ${error.message}`);
+      logService.exception(`Couldn't get the image size: ${error.message}`);
     });
 
     switch (entity.subtype) {
@@ -64,7 +65,7 @@ export default class DiscoveryViewScreen extends Component {
         const imguri = { uri: entity.thumbnail_src };
         return  <Image
                   source={imguri}
-                  style={{ height: this.state.height }} 
+                  style={{ height: this.state.height }}
                   resizeMode="contain"
                 />;
 

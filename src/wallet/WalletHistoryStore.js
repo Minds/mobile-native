@@ -5,6 +5,7 @@ import {
 
 import OffsetListStore from '../common/stores/OffsetListStore';
 import walletService from './WalletService';
+import logService from '../common/services/log.service';
 
 /**
  * WalletHistory Store
@@ -37,7 +38,7 @@ class WalletHistoryStore {
         this.loading = false;
       })
       .catch(err => {
-        console.log('error', err);
+        logService.exception('[WalletHistoryStore]', err);
       })
   }
 

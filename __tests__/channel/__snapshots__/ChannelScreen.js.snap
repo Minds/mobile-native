@@ -23,64 +23,11 @@ exports[`Channel screen component should renders correctly 1`] = `
               "feedStore": Object {
                 "setChannel": [MockFunction],
               },
-              "load": [MockFunction] {
-                "calls": Array [
-                  Array [],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              },
+              "load": [MockFunction],
               "rewards": Object {
                 "merged": Array [],
               },
-              "setChannel": [MockFunction] {
-                "calls": Array [
-                  Array [
-                    Object {
-                      "attachment_guid": false,
-                      "blurb": false,
-                      "container_guid": "activityguid0",
-                      "custom_data": false,
-                      "custom_type": false,
-                      "description": "Congratulations! ",
-                      "edited": "",
-                      "getThumbSource": [Function],
-                      "guid": "activityguid0",
-                      "impressions": 20,
-                      "mature": false,
-                      "message": "Message",
-                      "ownerObj": Object {
-                        "getAvatarSource": [Function],
-                        "guid": "824853017709780997",
-                        "subtype": false,
-                        "time_created": "1522036284",
-                        "type": "user",
-                      },
-                      "owner_guid": "824853017709780997",
-                      "parent_guid": "838106762591510528",
-                      "perma_url": false,
-                      "rowKey": "something0",
-                      "shouldBeBlured": [MockFunction],
-                      "thumbnail_src": false,
-                      "title": "TITLE",
-                      "type": "activity",
-                      "wire_totals": Object {
-                        "tokens": 20,
-                      },
-                    },
-                  ],
-                ],
-                "results": Array [
-                  Object {
-                    "type": "return",
-                    "value": undefined,
-                  },
-                ],
-              },
+              "setChannel": [MockFunction],
             }
           }
           navigation={

@@ -24,6 +24,7 @@ import debounce from '../../helpers/debounce';
 import channelAvatarUrl from '../../helpers/channel-avatar-url';
 import colors from '../../../styles/Colors';
 import abbrev from '../../helpers/abbrev';
+import logService from '../../services/log.service';
 
 export default class UserTypeahead extends PureComponent {
   textInput = void 0;
@@ -116,7 +117,7 @@ export default class UserTypeahead extends PureComponent {
     try {
       this.setState({ query, users: await UserTypeaheadService.search(query) });
     } catch (e) {
-      console.error(e);
+      logService.exception(e);
       // TODO: Show error
     }
   }

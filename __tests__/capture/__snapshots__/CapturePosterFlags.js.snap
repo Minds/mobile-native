@@ -20,54 +20,55 @@ exports[`cature poster flags component should renders correctly for props false 
     }
   />
   <View
-    accessible={true}
-    isTVSelectable={true}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-        "opacity": 1,
-        "paddingLeft": 10,
-      }
-    }
-  >
-    <Text
-      allowFontScaling={false}
-      style={
-        Array [
-          Object {
-            "color": "#777777",
-            "fontSize": 25,
-          },
-          Array [
-            undefined,
-            false,
-          ],
-          Object {
-            "fontFamily": "Material Icons",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
-          Object {},
-        ]
-      }
-    >
-      
-    </Text>
-  </View>
-  <View
     collapsable={false}
   >
     <View
       onLayout={[Function]}
-    />
+    >
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "opacity": 1,
+            "paddingLeft": 10,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "#777777",
+                "fontSize": 25,
+              },
+              Array [
+                undefined,
+                false,
+              ],
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+    </View>
     <Modal
       hardwareAccelerated={false}
       onDismiss={[Function]}
@@ -173,26 +174,6 @@ exports[`cature poster flags component should renders correctly for props false 
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Nudity
               </Text>
@@ -238,26 +219,6 @@ exports[`cature poster flags component should renders correctly for props false 
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Pornography
               </Text>
@@ -303,26 +264,6 @@ exports[`cature poster flags component should renders correctly for props false 
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Profanity
               </Text>
@@ -368,26 +309,6 @@ exports[`cature poster flags component should renders correctly for props false 
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Violence and Gore
               </Text>
@@ -433,26 +354,6 @@ exports[`cature poster flags component should renders correctly for props false 
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Race and Religion
               </Text>
@@ -498,26 +399,6 @@ exports[`cature poster flags component should renders correctly for props false 
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Other
               </Text>
@@ -1447,54 +1328,55 @@ exports[`cature poster flags component should renders correctly for props true 1
     }
   />
   <View
-    accessible={true}
-    isTVSelectable={true}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "flexDirection": "row",
-        "justifyContent": "center",
-        "opacity": 1,
-        "paddingLeft": 10,
-      }
-    }
-  >
-    <Text
-      allowFontScaling={false}
-      style={
-        Array [
-          Object {
-            "color": "#777777",
-            "fontSize": 25,
-          },
-          Array [
-            undefined,
-            false,
-          ],
-          Object {
-            "fontFamily": "Material Icons",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          },
-          Object {},
-        ]
-      }
-    >
-      
-    </Text>
-  </View>
-  <View
     collapsable={false}
   >
     <View
       onLayout={[Function]}
-    />
+    >
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+            "opacity": 1,
+            "paddingLeft": 10,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "#777777",
+                "fontSize": 25,
+              },
+              Array [
+                undefined,
+                false,
+              ],
+              Object {
+                "fontFamily": "Material Icons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+      </View>
+    </View>
     <Modal
       hardwareAccelerated={false}
       onDismiss={[Function]}
@@ -1600,26 +1482,6 @@ exports[`cature poster flags component should renders correctly for props true 1
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Nudity
               </Text>
@@ -1665,26 +1527,6 @@ exports[`cature poster flags component should renders correctly for props true 1
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Pornography
               </Text>
@@ -1730,26 +1572,6 @@ exports[`cature poster flags component should renders correctly for props true 1
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Profanity
               </Text>
@@ -1795,26 +1617,6 @@ exports[`cature poster flags component should renders correctly for props true 1
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Violence and Gore
               </Text>
@@ -1860,26 +1662,6 @@ exports[`cature poster flags component should renders correctly for props true 1
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Race and Religion
               </Text>
@@ -1925,26 +1707,6 @@ exports[`cature poster flags component should renders correctly for props true 1
                   ]
                 }
               >
-                <Text
-                  allowFontScaling={false}
-                  style={
-                    Array [
-                      Object {
-                        "color": undefined,
-                        "fontSize": 12,
-                      },
-                      undefined,
-                      Object {
-                        "fontFamily": "Material Icons",
-                        "fontStyle": "normal",
-                        "fontWeight": "normal",
-                      },
-                      Object {},
-                    ]
-                  }
-                >
-                  
-                </Text>
                  
                 Other
               </Text>

@@ -6,6 +6,7 @@ import {
 
 import walletService from '../WalletService';
 import OffsetListStore from '../../common/stores/OffsetListStore';
+import logService from '../../common/services/log.service';
 
 export default class TokensStore {
   list = new OffsetListStore('shallow');
@@ -42,7 +43,7 @@ export default class TokensStore {
         this.loading = false;
       })
       .catch(err => {
-        console.log('error', err);
+        logService.exception('[TokensStore]', err);
       });
   }
 

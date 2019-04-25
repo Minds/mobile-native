@@ -1,4 +1,5 @@
 import api from '../../services/api.service';
+import logService from '../../services/log.service';
 
 class UserTypeaheadService {
   async search(query, limit=8) {
@@ -19,7 +20,7 @@ class UserTypeaheadService {
 
       return result.entities || [];
     } catch (e) {
-      console.error('UserTypeaheadService', e);
+      logService.exception('UserTypeaheadService', e);
       return [];
     }
   }

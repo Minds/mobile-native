@@ -9,6 +9,7 @@ import BlockchainApiService from '../BlockchainApiService';
 import StorageService from '../../common/services/storage.service';
 
 import appStores from '../../../AppStores';
+import logService from '../../common/services/log.service';
 
 const sign = require('ethjs-signer').sign;
 
@@ -97,7 +98,7 @@ class Web3Service {
         value: value,
       });
     } catch (e) {
-      console.log(e);
+      logService.exception('[Web3Service]', e);
     }
 
     const sendOptions = await appStores.blockchainTransaction.waitForApproval(method, message, baseOptions, Math.ceil(estimatedGas * 1.5), value);

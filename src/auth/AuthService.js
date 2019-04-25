@@ -3,6 +3,7 @@ import api from './../common/services/api.service';
 import session from './../common/services/session.service';
 import delay from '../common/helpers/delay';
 import CookieManager from 'react-native-cookies';
+import logService from '../common/services/log.service';
 
 /**
  * Auth Services
@@ -31,13 +32,13 @@ class AuthService {
       session.logout();
       return true;
     } catch (err) {
-      console.log('[AuthService] logout', err);
+      logService.exception('[AuthService] logout', err);
       return false;
     }
   }
 
   async refreshToken() {
-    console.log('[AuthService] Refreshing token');
+    logService.info('[AuthService] Refreshing token');
     let params = {
       grant_type: 'refresh_token',
       client_id: 'mobile',
@@ -49,7 +50,7 @@ class AuthService {
       session.login(data);
       return data.access_token;
     } catch (err) {
-      console.log('[AuthService] ERROR CLAIMING REFRESH TOKEN', params, err);
+      logService.exception('[AuthService] error claiming refresh token', err);
       throw err;
     }
   }

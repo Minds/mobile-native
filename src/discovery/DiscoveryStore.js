@@ -166,7 +166,9 @@ class DiscoveryStore {
       if (err.code === 'Abort') {
         return;
       }
-      console.log('error', err);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[DiscoveryStore]', err);
+      }
       store.list.setErrorLoading(true);
     } finally {
       this.setLoading(store, false);

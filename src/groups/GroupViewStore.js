@@ -110,8 +110,12 @@ class GroupViewStore {
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
-      console.log('error', err);
+
       this.list.setErrorLoading(true);
+
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[GroupsViewStore]', err);
+      }
     } finally {
       this.setLoading(false);
     }

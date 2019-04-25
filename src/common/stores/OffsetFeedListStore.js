@@ -5,6 +5,7 @@ import { getFeed, toggleComments, follow, unfollow , toggleExplicit, toggleFeatu
 import channelService from '../../channel/ChannelService';
 
 import OffsetListStore from './OffsetListStore';
+import logService from '../services/log.service';
 /**
  * Common infinite scroll list
  */
@@ -26,7 +27,7 @@ export default class OffsetFeedListStore extends OffsetListStore {
         .catch(action(err => {
           entity.comments_disabled = !value;
           this.entities[index] = entity;
-          console.log('error');
+          logService.exception('[OffsetFeedListStore]', err);
         }));
     }
   }
@@ -43,7 +44,7 @@ export default class OffsetFeedListStore extends OffsetListStore {
   //         this.entities[index] = entity;
   //       }))
   //       .catch(action(err => {
-  //         console.log('error');
+  //         logService.exception('[OffsetFeedListStore]', err);
   //       }));
   //   }
   // }
@@ -62,7 +63,7 @@ export default class OffsetFeedListStore extends OffsetListStore {
         .catch(action(err => {
           entity.mature = !value;
           this.entities[index] = entity;
-          console.log('error');
+          logService.exception('[OffsetFeedListStore]', err);
         }));
     }
   }
@@ -81,7 +82,7 @@ export default class OffsetFeedListStore extends OffsetListStore {
         .catch(action(err => {
           entity['is:following'] = !entity['is:following'];
           this.entities[index] = entity;
-          console.log('error', err);
+          logService.exception('[OffsetFeedListStore]', err);
         }));
     }
   }
@@ -100,7 +101,7 @@ export default class OffsetFeedListStore extends OffsetListStore {
         .catch(action(err => {
           entity.monetized = !value;
           this.entities[index] = entity;
-          console.log('error');
+          logService.exception('[OffsetFeedListStore]', err);
         }));
     }
   }
@@ -120,7 +121,7 @@ export default class OffsetFeedListStore extends OffsetListStore {
         .catch(action(err => {
           entity.ownerObj.subscribed = !value;
           this.entities[index] = entity;
-          console.log('error');
+          logService.exception('[OffsetFeedListStore]', err);
         }));
     }
   }
@@ -135,7 +136,7 @@ export default class OffsetFeedListStore extends OffsetListStore {
           this.entities.splice(index, 1);
         }))
         .catch(action(err => {
-          console.log('error');
+          logService.exception('[OffsetFeedListStore]', err);
         }));
     }
   }

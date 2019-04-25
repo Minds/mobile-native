@@ -5,6 +5,7 @@ import BlockchainTokenService from '../services/BlockchainTokenService';
 import KeychainService from '../../common/services/keychain.service';
 import api from '../../common/services/api.service';
 import noExponents from '../../common/helpers/no-exponents';
+import logService from '../../common/services/log.service';
 
 // Helper functions
 
@@ -323,7 +324,7 @@ export class BlockchainWalletService {
         timestamp: Date.now()
       }
     } catch (e) {
-      console.error(e);
+      logService.exception(e);
 
       return {
         tokens: 'N/A',
