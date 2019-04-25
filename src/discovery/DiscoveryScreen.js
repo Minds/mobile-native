@@ -506,7 +506,7 @@ export default class DiscoveryScreen extends Component {
   renderActivity = (row) => {
     return (
       <ErrorBoundary message="Can't show this post" containerStyle={CS.hairLineBottom}>
-        <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false}/>
+        <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false} newsfeed={this.props.discovery}/>
       </ErrorBoundary>
     );
   }
