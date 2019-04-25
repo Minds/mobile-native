@@ -32,6 +32,7 @@ import { CommonStyle } from '../styles/Common';
 import UserModel from './UserModel';
 import Touchable from '../common/components/Touchable';
 import session from '../common/services/session.service';
+import logService from '../common/services/log.service';
 
 /**
  * Channel Screen
@@ -55,6 +56,24 @@ export default class ChannelScreen extends Component {
    * Load data on mount
    */
   async componentWillMount() {
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+      const params = this.props.navigation.state.params;
+      const store = this.props.channel.store(this.guid);
+      if (params && params.prepend) {
+        store.feedStore.stores.feed.list.prepend(params.prepend);
+        // we clear the parameter to prevent prepend it again on goBack
+        this.props.navigation.setParams({prepend: null});
+      }
+    });
+
+    try {
+      await this.initialLoad();
+    } catch (e) {
+      logService.exception(e);
+    }
+  }
+
+  async initialLoad() {
     const params = this.props.navigation.state.params;
 
     if (params.entity) {
@@ -69,16 +88,6 @@ export default class ChannelScreen extends Component {
     } else if (params.guid) {
       await this.loadChannel(params.guid);
     }
-
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      const params = this.props.navigation.state.params;
-      const store = this.props.channel.store(this.guid);
-      if (params && params.prepend) {
-        store.feedStore.stores.feed.list.prepend(params.prepend);
-        // we clear the parameter to prevent prepend it again on goBack
-        this.props.navigation.setParams({prepend: null});
-      }
-    });
   }
 
   componentWillUnmount() {

@@ -4,6 +4,7 @@ import blogService from './BlogsService';
 import BlogModel from './BlogModel';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import { MINDS_FEATURES } from '../config/Config';
+import logService from '../common/services/log.service';
 
 /**
  * Blogs store
@@ -35,7 +36,10 @@ class BlogsStore {
 
       return response;
     } catch (err) {
-      console.log('error', err);
+
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[BlogStore] loadList', err);
+      }
       this.list.setErrorLoading(true);
     } finally {
       this.setLoading(false);

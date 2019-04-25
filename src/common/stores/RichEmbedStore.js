@@ -1,6 +1,7 @@
 import { observable, action, extendObservable } from 'mobx'
 import RichEmbedService from '../services/rich-embed.service';
 import Util from '../helpers/util';
+import logService from '../services/log.service';
 
 /**
  * Rich embed store
@@ -74,7 +75,7 @@ export default class RichEmbedStore {
       this.metaInProgress = false;
     } catch (e) {
       this.metaInProgress = false;
-      console.error(e);
+      logService.exception('[RichEmbedStore]', e);
     }
   }
 

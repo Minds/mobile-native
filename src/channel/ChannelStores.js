@@ -7,6 +7,7 @@ import channelService from './ChannelService';
 import ChannelStore from './ChannelStore';
 import wireService from '../wire/WireService';
 import ModelStorageList from '../common/ModelStorageList';
+import logService from '../common/services/log.service';
 
 /**
  * Channel Stores
@@ -39,7 +40,7 @@ class ChannelStores {
       //and more than 5 stores are open
       if (this.stores[guid] && !this.stores[guid].active && count++ > 5) {
         this.stores[guid] = null;
-        console.log(`[GARBAGE COLLECTED]: ${guid}`);
+        logService.log(`[ChannelStores] GARBAGE COLLECTED: ${guid}`);
       }
     }
   }

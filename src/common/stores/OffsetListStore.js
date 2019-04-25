@@ -1,6 +1,7 @@
 import { observable, action, extendObservable } from 'mobx'
 import channelService from '../../channel/ChannelService';
 import { revokeBoost, rejectBoost, acceptBoost} from '../../boost/BoostService';
+import logService from '../services/log.service';
 
 /**
  * Common infinite scroll list
@@ -119,7 +120,7 @@ export default class OffsetListStore {
         .catch(action(err => {
           entity.subscribed = !value;
           this.entities[index] = entity;
-          console.log('error');
+          logService.exception('[OffsetListStore]', err);
         }));
     }
   }
@@ -135,7 +136,7 @@ export default class OffsetListStore {
           this.entities[index] = entity;
         }))
         .catch(action(err => {
-          console.log(err);
+          logService.exception('[OffsetListStore]', err);
         }));
     }
   }
@@ -151,7 +152,7 @@ export default class OffsetListStore {
           this.entities[index] = entity;
         }))
         .catch(action(err => {
-          console.log('error');
+          logService.exception('[OffsetListStore]', err);
         }));
     }
   }
@@ -167,7 +168,7 @@ export default class OffsetListStore {
           this.entities[index] = entity;
         }))
         .catch(action(err => {
-          console.log(err);
+          logService.exception('[OffsetListStore]', err);
         }));
     }
   }

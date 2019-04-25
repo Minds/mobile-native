@@ -33,6 +33,7 @@ import { CommonStyle } from '../styles/Common';
 import UserModel from '../channel/UserModel';
 import MessengerConversationStore from './MessengerConversationStore';
 import ErrorLoading from '../common/components/ErrorLoading';
+import logService from '../common/services/log.service';
 
 /**
  * Messenger Conversation Screen
@@ -240,7 +241,7 @@ export default class ConversationScreen extends Component {
     try {
       const result = await this.store.send(myGuid, msg);
     } catch(err) {
-      console.log('error', err);
+      logService.exception('[ConversationScreen]', err);
     }
     this.setState({text: ''})
     setTimeout(() => {

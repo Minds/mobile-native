@@ -27,6 +27,7 @@ const settings = {
   "browserStack": {
     'browserstack.user' : process.env.bsUSER,
     'browserstack.key' : process.env.bsKEY,
+    'browserstack.networkLogs': true,
     'build' : 'v3.4.0',
     'name': 'single_test',
     'app' : process.env.bsAPP,

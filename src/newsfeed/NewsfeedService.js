@@ -81,7 +81,9 @@ function _getFeed(endpoint, offset, limit) {
       }
     })
     .catch(err => {
-      console.log('error');
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[NewsfeedService]', err);
+      }
       throw "Oops, an error has occured updating your newsfeed";
     })
 }
@@ -124,24 +126,9 @@ export function update(post) {
       }
     })
     .catch(err => {
-      console.log('error');
+      logService.exception('[NewsfeedService]', err);
       throw "Oops, an error has occurred updating your newsfeed";
     })
-}
-
-
-export async function uploadAttachment(url, file, progress) {
-  try {
-    let data = await api.upload(url, file, null, progress);
-    return data;
-  } catch (e) {
-      throw {
-        error: e,
-        url: url,
-        file: file
-      };
-      throw "Oops, an error has occurred uploading your attachment";
-  }
 }
 
 /**
@@ -207,7 +194,7 @@ export function toggleMuteNotifications(guid, value) {
       return data;
     })
     .catch(err => {
-      console.log('error');
+      logService.exception('[NewsfeedService]', err);
       throw "Oops, an error occurred muting notifications.";
     })
 }
@@ -218,7 +205,7 @@ export function follow(guid) {
       return data;
     })
     .catch(err => {
-      console.log('error', err);
+      logService.exception('[NewsfeedService]', err);
       throw "Ooops";
     })
 }
@@ -229,7 +216,7 @@ export function unfollow(guid) {
       return data;
     })
     .catch(err => {
-      console.log('error', err);
+      logService.exception('[NewsfeedService]', err);
       throw "Oops, an error has occurred whilst unfollowing.";
     })
 }
@@ -239,7 +226,7 @@ export async function isFollowing(guid) {
     const result = await api.get(`api/v2/notifications/follow/${guid}`);
     return result.postSubscription.following;
   } catch (e) {
-    console.log(e);
+    logService.exception('[NewsfeedService]', err);
     return false;
   }
 }
@@ -250,7 +237,7 @@ export function toggleExplicit(guid, value) {
       return { data }
     })
     .catch(err => {
-      console.log('error');
+      logService.exception('[NewsfeedService]', err);
       throw "Oops, an error has occurred toggling explicit content";
     })
 }

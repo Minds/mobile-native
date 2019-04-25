@@ -12,6 +12,7 @@ import messengerService from './MessengerService';
 import crypto from './../common/services/crypto.service';
 import socket from '../common/services/socket.service';
 import session from '../common/services/session.service';
+import logService from '../common/services/log.service';
 
 /**
  * Messenger Conversation Store
@@ -65,7 +66,7 @@ class MessengerConversationStore {
       this.checkListen(conversation);
       return conversation;
     } catch (err) {
-      console.log(err);
+      logService.exception(err);
       this.setErrorLoading(true);
     } finally {
       this.setLoading(false);

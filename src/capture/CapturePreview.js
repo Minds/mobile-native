@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import api from './../common/services/api.service';
 
-import { post, remind, uploadAttachment } from '../newsfeed/NewsfeedService';
+import { post, remind } from '../newsfeed/NewsfeedService';
 
 import MindsVideo from '../media/MindsVideo';
 import colors from '../styles/Colors';

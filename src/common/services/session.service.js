@@ -9,6 +9,7 @@ import sessionStorage from './session.storage.service';
 import AuthService from '../../auth/AuthService';
 import NavigationService from '../../navigation/NavigationService';
 import appStores from '../../../AppStores';
+import logService from './log.service';
 
 /**
  * Session service
@@ -71,7 +72,7 @@ class SessionService {
         && refresh_token
         && refresh_token_expires * 1000 > Date.now()
       ) {
-        console.log('refreshing token');
+        logService.info('[SessionService] refreshing token');
         return await AuthService.refreshToken();
       }
 
@@ -84,7 +85,7 @@ class SessionService {
     } catch (e) {
       this.setToken(null);
       this.setRefreshToken(null);
-      console.log('error getting tokens', e);
+      logService.exception('[SessionService] error getting tokens', e);
       return null;
     }
   }
@@ -241,7 +242,13 @@ class SessionService {
   onSession(fn) {
     return reaction(
       () => [this.userLoggedIn ? this.token : null],
-      args => fn(...args),
+      async args => {
+        try {
+          await fn(...args);
+        } catch (error) {
+          logService.exception('[SessionService]', error);
+        }
+      },
       { fireImmediately: true }
     );
   }
@@ -254,9 +261,13 @@ class SessionService {
   onLogin(fn) {
     return reaction(
       () => this.userLoggedIn ? this.token : null,
-      token => {
+      async token => {
         if (token) {
-          fn(token);
+          try {
+            await fn(token);
+          } catch (error) {
+            logService.exception('[SessionService]', error);
+          }
         }
       },
       { fireImmediately: true }
@@ -271,9 +282,13 @@ class SessionService {
   onLogout(fn) {
     return reaction(
       () => this.userLoggedIn ? this.token : null,
-      token => {
+      async token => {
         if (!token) {
-          fn(token);
+          try {
+            await fn(token);
+          } catch (error) {
+            logService.exception('[SessionService]', error);
+          }
         }
       },
       { fireImmediately: false }

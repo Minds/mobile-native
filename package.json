@@ -51,6 +51,7 @@
     "react-native-collapsible-header-views": "^1.0.0",
     "react-native-cookies": "^3.3.0",
     "react-native-crypto": "^2.1.0",
+    "react-native-device-log": "Minds/react-native-device-log#74f06b09c6656aa228a9a3a474c714d82abf509e",
     "react-native-elements": "^0.19.1",
     "react-native-exception-handler": "^2.10.7",
     "react-native-exit-app": "^1.0.0",

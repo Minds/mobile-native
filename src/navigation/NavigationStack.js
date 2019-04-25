@@ -45,6 +45,7 @@ import IssueReportScreen from '../issues/IssueReportScreen';
 import Wizard from '../common/components/Wizard';
 import UpdatingScreen from '../update/UpdateScreen';
 import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
+import LogsScreen from '../logs/LogsScreen';
 
 /**
  * Main stack navigator
@@ -52,6 +53,9 @@ import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 const Stack = createStackNavigator({
   Loading: {
     screen: withErrorBoundaryScreen(LoadingScreen),
+  },
+  Logs: {
+    screen: LogsScreen
   },
   Update: {
     screen: withErrorBoundaryScreen(UpdatingScreen)

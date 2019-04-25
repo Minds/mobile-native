@@ -72,7 +72,6 @@ export default class ForgotScreen extends Component {
   render() {
     const resizeMode = 'center';
     const code = this.props.navigation.state.params && this.props.navigation.state.params.code;
-    console.log(this.props.navigation.state)
     return (
       <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
         <VideoBackground />

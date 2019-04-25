@@ -1,11 +1,8 @@
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
+import logService from '../common/services/log.service';
 
 export default class BoostService {
-
-  controllers = {
-    getBoosts: null
-  };
 
   async getBoosts(offset, filter, peer_filter) {
 
@@ -27,7 +24,9 @@ export default class BoostService {
       }
 
     } catch (err) {
-      console.log('error', err);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[BoostService]', err);
+      }
       throw "Ooops, failed to get boosts";
     }
   }

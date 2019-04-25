@@ -14,6 +14,7 @@ import TagInput from '../common/components/TagInput';
 import TagSelect from '../common/components/TagSelect';
 import featuresService from '../common/services/features.service';
 import NsfwToggle from '../common/components/nsfw/NsfwToggle';
+import logService from '../common/services/log.service';
 
 @inject('capture')
 @observer
@@ -32,7 +33,7 @@ export default class CapturePosterFlags extends Component {
   componentWillMount() {
     this.props.capture.loadThirdPartySocialNetworkStatus();
     this.props.capture.loadSuggestedTags().catch(e => {
-      console.log(e);
+      logService.exception('[CapturePosterFlags] loadSuggestedTags', e);
     });
   }
 

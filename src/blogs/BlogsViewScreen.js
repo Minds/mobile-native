@@ -18,6 +18,7 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 
 import { inject, observer } from 'mobx-react/native';
@@ -39,6 +40,7 @@ import shareService from '../share/ShareService';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
+import logService from '../common/services/log.service';
 
 /**
  * Blog View Screen
@@ -80,21 +82,28 @@ export default class BlogsViewScreen extends Component {
   async componentDidMount() {
     const params = this.props.navigation.state.params;
 
-    if (params.blog) {
-      this.props.blogsView.setBlog(params.blog);
-    } else {
-      this.props.blogsView.reset();
-      let guid;
-      if (params.slug) {
-        guid = params.slug.substr(params.slug.lastIndexOf('-')+1);
+    try {
+      if (params.blog) {
+        this.props.blogsView.setBlog(params.blog);
       } else {
-        guid = params.guid;
-      }
-      try {
+        this.props.blogsView.reset();
+        let guid;
+        if (params.slug) {
+          guid = params.slug.substr(params.slug.lastIndexOf('-')+1);
+        } else {
+          guid = params.guid;
+        }
+
         await this.props.blogsView.loadBlog(guid);
-      } catch (e) {
-        this.setState({error: e});
       }
+    } catch (error) {
+      logService.exception(error);
+      Alert.alert(
+        'Error',
+        error.message || 'There was an error loading this blog.',
+        [{ text: 'OK', onPress: () => this.props.navigation.goBack() }],
+        { cancelable: false }
+      );
     }
   }
 

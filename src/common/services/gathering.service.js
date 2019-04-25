@@ -4,6 +4,7 @@ import BackgroundTimer from 'react-native-background-timer';
 import { Platform } from 'react-native';
 import appStores from '../../../AppStores';
 import { observable, action } from 'mobx';
+import logService from './log.service';
 
 /**
  * Gathering service
@@ -35,8 +36,7 @@ class GatheringService {
         videochatService.call(this.roomName, appStores.user.me);
       }, 100);
     } catch (e) {
-      console.error('Error trying to open video chat.');
-      console.error(e);
+      logService.exception('[GatheringService]', e);
     }
   }
 

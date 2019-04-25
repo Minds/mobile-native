@@ -9,6 +9,7 @@ import { observer, inject } from 'mobx-react';
 import { CommonStyle as CS } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import { ListItem } from 'react-native-elements';
+import logService from '../../common/services/log.service';
 
 @inject('hashtag', 'onboarding')
 @observer
@@ -20,7 +21,7 @@ export default class WelcomeStep extends Component {
   componentWillMount() {
     this.props.hashtag.setAll(true);
     this.props.hashtag.loadSuggested().catch(e => {
-      console.log(e);
+      logService.exception(e);
     });
   }
 

@@ -1,5 +1,6 @@
 import { NotificationsAndroid, PendingNotifications } from 'react-native-notifications';
 import AbstractPlatform from './abstract-platform';
+import logService from '../log.service';
 
 /**
  * Android Platform
@@ -11,7 +12,7 @@ export default class AndroidPlatfom extends AbstractPlatform {
    */
   init() {
     NotificationsAndroid.setNotificationReceivedListener((notification) => {
-      console.log("Notification received", notification);
+      logService.log("Notification received", notification);
       //NotificationsAndroid.localNotification(notification.data);
     });
 
@@ -53,7 +54,7 @@ export default class AndroidPlatfom extends AbstractPlatform {
 
           if (notification && this.onInitialNotification) this.onInitialNotification(notification);
       })
-      .catch((err) => console.error("getInitialNotifiation() failed", err));
+      .catch((err) => logService.exception("[PushService]", err));
   }
   /**
    * Stop push notification service

@@ -17,6 +17,7 @@ import { ComponentsStyle } from '../styles/Components';
 import { Button } from 'react-native-elements'
 
 import i18n from '../common/services/i18n.service';
+import logService from '../common/services/log.service';
 
 /**
  * Forgot Password Form
@@ -98,7 +99,7 @@ export default class ForgotPassword extends PureComponent {
         this.setState({ sent: true, msg: i18n.t('auth.requestNewPasswordSuccess') });
       } catch (err) {
         alert('Oops. Please try again.');
-        console.log(err);
+        logService.exception('[ForgotPassword]', err);
       } finally {
         this.setState({ sending: false });
       }

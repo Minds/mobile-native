@@ -117,7 +117,6 @@ export default class GroupViewScreen extends Component {
     }
 
     if (navParams.tab && this.headerRef) {
-      console.log(this.headerRef)
       this.headerRef.wrappedInstance.onTabChange(navParams.tab)
     }
   }

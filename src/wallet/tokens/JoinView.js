@@ -73,7 +73,6 @@ export default class JoinView extends Component {
       })
       .catch(e => {
         this.setState({error: e.message});
-        console.log(e);
       });
   }
 
@@ -87,7 +86,6 @@ export default class JoinView extends Component {
       })
       .catch(e => {
         this.setState({ error: e.message });
-        console.log(e);
       })
   }
 
@@ -150,7 +148,7 @@ export default class JoinView extends Component {
               underlineColorAndroid="transparent"
               value={this.state.confirmation}
               placeholder="Please enter your code..."
-              keyboardType="numeric" 
+              keyboardType="numeric"
             />
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'stretch', marginTop: 8 }}>
@@ -159,18 +157,18 @@ export default class JoinView extends Component {
             </View>
 
             <View style={[CommonStyle.rowJustifyStart]}>
-              <TouchableHighlight 
-                underlayColor='transparent' 
-                onPress={ this.cancel } 
+              <TouchableHighlight
+                underlayColor='transparent'
+                onPress={ this.cancel }
                 style={[
                   ComponentsStyle.button,
                   { backgroundColor: 'transparent', marginRight: 4 },
                 ]}>
                 <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>Cancel</Text>
               </TouchableHighlight>
-              <TouchableHighlight 
-                underlayColor='transparent' 
-                onPress={ this.confirm } 
+              <TouchableHighlight
+                underlayColor='transparent'
+                onPress={ this.confirm }
                 style={[
                   ComponentsStyle.button,
                   ComponentsStyle.buttonAction,
@@ -197,9 +195,9 @@ export default class JoinView extends Component {
               <Text style={[CommonStyle.fontXS, { color: '#444' }]}>Please enter your phone number in order to join the rewards program</Text>
             </View>
             <View>
-              <TouchableHighlight 
-                underlayColor='transparent' 
-                onPress={ this.join } 
+              <TouchableHighlight
+                underlayColor='transparent'
+                onPress={ this.join }
                 style={[
                   ComponentsStyle.button,
                   ComponentsStyle.buttonAction,

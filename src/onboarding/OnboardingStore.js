@@ -2,6 +2,7 @@ import { observable, action, computed, extendObservable } from 'mobx'
 import onboardingService from './OnboardingService';
 import number from '../common/helpers/number';
 import OffsetListStore from '../common/stores/OffsetListStore';
+import logService from '../common/services/log.service';
 
 /**
  * Onboarding store
@@ -35,7 +36,7 @@ class OnboardingStore {
       this.setProgress(progress);
       return progress;
     } catch (err) {
-      console.log(err)
+      logService.exception(err);
       return false;
     }
   }

@@ -24,6 +24,7 @@ import AttachmentStore from '../common/stores/AttachmentStore';
 import attachmentService from '../common/services/attachment.service';
 import {toggleExplicit} from '../newsfeed/NewsfeedService';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
+import logService from '../common/services/log.service';
 
 const COMMENTS_PAGE_SIZE = 6;
 
@@ -92,7 +93,9 @@ export default class CommentsStore {
       this.checkListen(response);
     } catch (err) {
       this.setErrorLoading(true);
-      console.log('error', err);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[CommentsStore] loadComments', err);
+      }
     } finally {
       this.loading = false;
     }
@@ -186,7 +189,7 @@ export default class CommentsStore {
         this.comments.push(CommentModel.create(response.comments[0]));
       }
     } catch(err) {
-      console.log(err)
+      logService.exception('[CommentsStore] commentSocket', err);
     }
   }
 
@@ -263,7 +266,7 @@ export default class CommentsStore {
         this.entity.incrementCommentsCounter();
       }
     } catch (err) {
-      console.log(err);
+      logService.exception('[CommentsStore] post', err);
       alert('Error sending comment');
     } finally {
       this.saving = false;
@@ -318,7 +321,7 @@ export default class CommentsStore {
       await updateComment(comment.guid, description);
       this.setCommentDescription(comment, description);
     } catch (err) {
-      console.log('error', err);
+      logService.exception('[CommentsStore] updateComment', err);
       alert('Oops there was an error updating the comment\nPlease try again.');
     } finally {
       this.saving = false;
@@ -382,8 +385,8 @@ export default class CommentsStore {
       const response = await attachmentService.video();
       if (response) this.onAttachedMedia(response);
     } catch (e) {
-      console.error(e);
-      alert(e);
+      logService.exception(e);
+      alert(e.message);
     }
   }
 
@@ -395,8 +398,8 @@ export default class CommentsStore {
       const response = await attachmentService.photo();
       if (response) this.onAttachedMedia(response);
     } catch (e) {
-      console.error(e);
-      alert(e);
+      logService.exception(e);
+      alert(e.message);
     }
   }
 
@@ -409,8 +412,8 @@ export default class CommentsStore {
     try {
       const result = await attachment.attachMedia(response);
     } catch(err) {
-      console.error(err);
-      alert('caught upload error');
+      logService.exception('[CommentsStore] onAttachedMedia', err);
+      alert('Oops caught upload error.');
     }
   }
 
@@ -430,9 +433,9 @@ export default class CommentsStore {
       }
 
       if (response) this.onAttachedMedia(response);
-    } catch (e) {
-      console.log(e);
-      alert(e);
+    } catch (err) {
+      logService.exception('[CommentsStore] selectMediaType', err);
+      alert('Oops there was an error selecting the media.');
     }
   }
 
@@ -452,8 +455,8 @@ export default class CommentsStore {
         if (result === false) alert('caught upload error');
 
       } catch (err) {
-        console.error(err);
-        alert(err);
+        logService.exception('[CommentsStore] gallery', err);
+        alert('Caught a gallery error');
       }
     } else {
       actionSheet.show()
@@ -478,7 +481,7 @@ export default class CommentsStore {
         .catch(action(err => {
           comment.mature = !value;
           this.comments[index] = comment;
-          console.log('error', err);
+          logService.exception('[CommentsStore] commentToggleExplicit', err);
         }));
     }
   }

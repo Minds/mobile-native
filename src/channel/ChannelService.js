@@ -1,6 +1,7 @@
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import blockListService from '../common/services/block-list.service';
+import logService from '../common/services/log.service';
 
 /**
  * Channel Service
@@ -94,7 +95,7 @@ class ChannelService {
         }
       })
       .catch(err => {
-        console.log('error');
+        logService.exception('[ChannelService]', err);
         throw "Oops, an error has occurred getting this image feed";
       })
   }
@@ -112,7 +113,7 @@ class ChannelService {
         }
       })
       .catch(err => {
-        console.log('error');
+        logService.exception('[ChannelService]', err);
         throw "Oops, an error has occurred getting this video feed";
       })
   }
@@ -130,7 +131,7 @@ class ChannelService {
         }
       })
       .catch(err => {
-        console.log('error');
+        logService.exception('[ChannelService]', err);
         throw "Oops, an error has occurred getting this blog feed.";
       })
   }
@@ -148,7 +149,7 @@ class ChannelService {
         }
       })
       .catch(err => {
-        console.log('error');
+        logService.exception('[ChannelService]', err);
         throw "Oops, an error has occurred getting subscribers";
       })
   }

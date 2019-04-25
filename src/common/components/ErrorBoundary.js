@@ -11,6 +11,7 @@ import {
   View
 } from 'react-native';
 import { CommonStyle as CS } from '../../styles/Common';
+import logService from '../services/log.service';
 
 /**
  * Error boundary
@@ -27,7 +28,7 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, info) {
-    console.log(error, info);
+    logService.exception(error);
     this.error = error;
     this.info = info;
   }

@@ -17,8 +17,8 @@ export default class HashtagsStep extends Component {
 
   componentWillMount() {
     this.props.hashtag.setAll(true);
-    this.props.hashtag.loadSuggested().catch(e => {
-      console.log(e);
+    this.props.hashtag.loadSuggested().catch(err => {
+      logService.exception(err);
     });
   }
 

@@ -25,6 +25,7 @@ import settingsService from './SettingsService';
 
 import i18nService from '../common/services/i18n.service';
 import appStores from '../../AppStores';
+import logService from '../common/services/log.service';
 
 const ICON_SIZE = 24;
 
@@ -36,6 +37,7 @@ export default class SettingsScreen extends Component {
 
   state = {
     categories: [],
+    logActiveInitial: false
   }
 
   componentWillMount() {
@@ -45,7 +47,14 @@ export default class SettingsScreen extends Component {
           categories: categories,
           language: i18nService.getCurrentLocale()
         });
-      })
+      });
+
+    this.setState({logActiveInitial: logService.active});
+  }
+
+  appLogActivate = () => {
+    logService.setActive(!logService.active);
+    this.setState({logActiveInitial: !logService.active});
   }
 
   wipeEthereumKeychainAction = () => {
@@ -140,6 +149,21 @@ export default class SettingsScreen extends Component {
         icon: (<Icon name='warning' size={ICON_SIZE} style={ styles.icon } />),
         onPress: this.wipeEthereumKeychainAction
       },
+      {
+        name: 'Logs',
+        icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
+        onPress: () => {
+          this.props.navigation.push('Logs');
+        }
+      },
+      {
+        name: 'Log only errors',
+        icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
+        switchButton: true,
+        hideChevron: true,
+        switched: !this.state.logActiveInitial,
+        onSwitch: this.appLogActivate
+      },
     ];
 
     return (
@@ -153,14 +177,20 @@ export default class SettingsScreen extends Component {
                   title={l.name}
                   titleStyle={styles.listTitle}
                   containerStyle={styles.listItem}
+                  subtitle={l.subtitle}
                   switchButton={l.switchButton}
                   hideChevron ={l.hideChevron}
+                  onSwitch={l.onSwitch}
+                  switched={l.switched}
                   leftIcon={l.icon}
                   onPress= {l.onPress}
                   noBorder
                 />
               ))
             }
+          </List>
+          <List containerStyle={styles.container}>
+
           </List>
         </View>
       </ScrollView>

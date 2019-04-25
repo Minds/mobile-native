@@ -1,6 +1,7 @@
 
 import { AsyncStorage } from 'react-native';
 import _ from 'lodash';
+import logService from './services/log.service';
 
 /**
  * Model storage list
@@ -31,7 +32,7 @@ export default class ModelStorageList {
         this.index = [];
       }
     } catch (err) {
-      console.log('Error loading index for '+ this.storageName, err);
+      logService.exception('[ModelStorageList] loadIndex:'+ this.storageName, err);
     }
   }
 

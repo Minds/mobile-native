@@ -18,6 +18,7 @@ import colors from '../../styles/Colors';
 import debounce from '../helpers/debounce';
 import UserTypeahead from './user-typeahead/UserTypeahead';
 import userTypeaheadService from './user-typeahead/UserTypeaheadService';
+import logService from '../services/log.service';
 
 
 /**
@@ -45,7 +46,7 @@ export default class UserAutocomplete extends PureComponent {
       const users = await userTypeaheadService.search(query, 6);
       this.setState({ search: false, users });
     } catch (e) {
-      console.error(e);
+      logService.exception(e);
       // TODO: Show error
     }
   }, 300);

@@ -4,6 +4,7 @@ import {
 import { platform } from 'os';
 
 import Router from './push/router';
+import logService from './log.service';
 
 /**
  * Push Service
@@ -50,7 +51,7 @@ class PushService {
     try {
       this.push.init();
     } catch(err) {
-      console.log('Error on push notification initialization', err);
+      logService.exception('Error on push notification initialization', err);
     }
   }
 

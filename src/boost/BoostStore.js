@@ -4,10 +4,11 @@ import {
 } from 'mobx'
 
 import OffsetListStore from '../common/stores/OffsetListStore';
-import { getBoosts, revokeBoost, rejectBoost, acceptBoost} from './BoostService';
+import {revokeBoost, rejectBoost, acceptBoost} from './BoostService';
 
 import BoostModel from './BoostModel';
 import BoostService from './BoostService';
+import logService from '../common/services/log.service';
 
 /**
  * Boosts Store
@@ -50,7 +51,9 @@ class BoostStore {
     } catch(err) {
       // ignore aborts
       if (err.code === 'Abort') return;
-      console.log('error', err);
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[BoostStore]', err);
+      }
     } finally {
       this.loading = false;
     }

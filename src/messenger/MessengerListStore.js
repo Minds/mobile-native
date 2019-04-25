@@ -152,8 +152,12 @@ class MessengerListStore {
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
+
       this.setErrorLoading(true);
-      console.log(err);
+
+      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+        logService.exception('[MessengerListStore]', err);
+      }
     } finally {
       this.setLoading(false);
     }
@@ -233,7 +237,6 @@ class MessengerListStore {
 
   @action
   setPrivateKey(privateKey) {
-    console.log('SET PRIVATE')
     this.configured = true;
     crypto.setPrivateKey(privateKey);
   }

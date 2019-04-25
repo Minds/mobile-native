@@ -11,6 +11,7 @@ import Button from '../common/components/Button';
 
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
+import logService from '../common/services/log.service';
 
 
 /**
@@ -44,7 +45,7 @@ export default class CommentEditor extends Component {
   update = () => {
     this.props.store.updateComment(this.props.comment, this.state.text)
       .catch((err) => {
-        console.log('error updating comment');
+        logService.exception('error updating comment', err);
       })
       .finally(() => {
         this.props.setEditing(false);

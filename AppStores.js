@@ -28,6 +28,7 @@ import onboarding from './src/onboarding/OnboardingStore';
 import groupsBar from './src/groups/GroupsBarStore';
 
 import sessionService from './src/common/services/session.service';
+import logService from './src/common/services/log.service';
 
 /**
  * App stores
@@ -69,7 +70,7 @@ const stores = {
 sessionService.onLogout(() => {
   for (id in stores) {
     if (stores[id].reset) {
-      console.log(`Reseting store ${id}`);
+      logService.info(`Reseting store ${id}`);
       stores[id].reset();
     }
   }

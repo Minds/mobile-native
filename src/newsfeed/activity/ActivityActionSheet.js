@@ -154,7 +154,7 @@ export default class ActivityActions extends Component {
           'Delete',
           "Are you sure? There's no UNDO",
           [
-            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'Cancel', style: 'cancel'},
             {text: 'OK', onPress: () => this.deleteEntity()},
           ],
           { cancelable: false }

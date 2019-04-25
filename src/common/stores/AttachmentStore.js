@@ -6,6 +6,7 @@ import MediaMeta from 'react-native-media-meta';
 import attachmentService from '../services/attachment.service';
 import {MINDS_MAX_VIDEO_LENGTH} from '../../config/Config';
 import mindsService from '../services/minds.service';
+import logService from '../services/log.service';
 
 /**
  * Attachment Store
@@ -47,7 +48,7 @@ export default class AttachmentStore {
         await attachmentService.deleteMedia(this.guid);
       } catch (error) {
         // we ignore delete error for now
-        console.log(error);
+        logService.info('Error deleting the uploaded media '+this.guid);
       }
     }
 

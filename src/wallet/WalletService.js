@@ -90,7 +90,6 @@ class WalletService {
         offset: offset
       })
       .then((data) => {
-        console.log(data)
         return {
           entities: data.contributions || [],
           offset: data['load-next'],

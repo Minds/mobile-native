@@ -7,6 +7,7 @@ import channelService from './ChannelService';
 import wireService from '../wire/WireService';
 import ChannelFeedStore from './ChannelFeedStore';
 import UserModel from './UserModel';
+import logService from '../common/services/log.service';
 
 /**
  * Channel Store
@@ -79,7 +80,7 @@ export default class ChannelStore {
       })
       .catch(err => {
         this.channel.subscribed = !value;
-        console.log('error');
+        logService.exception('[ChannelStore] subscribe', err);
       });
   }
 
@@ -93,7 +94,7 @@ export default class ChannelStore {
       })
       .catch(err => {
         this.channel.blocked = !value;
-        console.log('error');
+        logService.exception('[ChannelStore] toggleBlock', err);
       });
   }
 
@@ -111,7 +112,7 @@ export default class ChannelStore {
 
       }))
       .catch(err => {
-        console.log('error', err);
+        logService.exception('[ChannelStore] loadrewards', err);
       });
   }
 
@@ -182,7 +183,7 @@ export default class ChannelStore {
 
       return success;
     } catch (e) {
-      console.error(e);
+      logService.exception(e);
       return e;
     } finally {
       this.isUploading = false;

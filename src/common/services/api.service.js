@@ -6,6 +6,7 @@ import { btoa } from 'abab';
 
 import abortableFetch from '../helpers/abortableFetch';
 import { Version } from '../../config/Version';
+import logService from './log.service';
 
 /**
  * Api service
@@ -108,7 +109,7 @@ class ApiService {
       if (err.status && err.status == 401) {
         const refreshed = await session.badAuthorization(); //not actually a logout
         if (refreshed) return await this.post(url, body);
-        console.log('[ApiService] Token refresh failed: logout');
+        logService.log('[ApiService] Token refresh failed: logout');
         session.logout();
       }
       throw err;
@@ -138,7 +139,7 @@ class ApiService {
       if (err.status && err.status == 401) {
         const refreshed = await session.badAuthorization(); //not actually a logout
         if (refreshed) return await this.post(url, body);
-        console.log('[ApiService] Token refresh failed: logout');
+        logService.log('[ApiService] Token refresh failed: logout');
         session.logout();
       }
       throw err;
@@ -168,7 +169,7 @@ class ApiService {
       if (err.status && err.status == 401) {
         const refreshed = await session.badAuthorization(); //not actually a logout
         if (refreshed) return await this.post(url, body);
-        console.log('[ApiService] Token refresh failed: logout');
+        logService.log('[ApiService] Token refresh failed: logout');
         session.logout();
       }
       throw err;
@@ -223,8 +224,8 @@ class ApiService {
       xhr.send(formData);
     })
     .catch( error => {
-      console.log(error)
       if (error.name !== 'CancelationError') {
+        logService.exception('[ApiService] upload', error);
         throw error;
       }
     });

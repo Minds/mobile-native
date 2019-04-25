@@ -20,6 +20,7 @@ import { Button } from 'react-native-elements'
 
 import i18n from '../common/services/i18n.service';
 import testID from '../common/helpers/testID';
+import logService from '../common/services/log.service';
 
 /**
  * Login Form
@@ -155,7 +156,7 @@ export default class LoginForm extends Component {
           this.props.onLogin();
         })
         .catch(err => {
-          console.log(err);
+          logService.exception('[LoginForm]', err);
         });
     } else {
       authService.login(this.state.username, this.state.password)

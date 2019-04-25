@@ -36,6 +36,7 @@ import ActivityModel from '../newsfeed/ActivityModel';
 import featuresService from '../common/services/features.service';
 import { creatorNsfwService } from '../common/services/nsfw.service';
 import testID from '../common/helpers/testID';
+import logService from '../common/services/log.service';
 
 @inject('user', 'capture')
 @observer
@@ -262,7 +263,7 @@ export default class CapturePoster extends Component {
     try {
       const result = await attachment.attachMedia(response, extra);
     } catch(err) {
-      console.error(err);
+      logService.exception(err);
       Alert.alert('caught upload error');
     }
   }
@@ -294,8 +295,8 @@ export default class CapturePoster extends Component {
       const response = await this.props.capture.remind(params.entity.guid, post);
       this.navToPrevious(response.entity, group);
     } catch (err) {
+      logService.exception('[CapturePoster]', err);
       Alert.alert('Oops', "There was an error.\nPlease try again.");
-      console.log(err)
     }
   }
 
@@ -385,7 +386,7 @@ export default class CapturePoster extends Component {
 
       return response;
     } catch (err) {
-      console.log(err);
+      logService.exception('[CapturePoster]', err);
       Alert.alert('Oops', "There was an error.\nPlease try again.");
     }
   }

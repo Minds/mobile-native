@@ -21,6 +21,7 @@ import { debounce } from 'lodash';
 import { CommonStyle as CS } from '../../styles/Common';
 import TagOptinModal from '../../common/components/TagOptinModal';
 import colors from '../../styles/Colors';
+import logService from '../../common/services/log.service';
 
 /**
  * Tags Sub Bar Component
@@ -56,7 +57,7 @@ export default class TagsSubBar extends Component {
       this.onChange();
 
     } catch(e) {
-      console.log(e);
+      logService.exception(e);
     }
 
   }
