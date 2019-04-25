@@ -1,6 +1,8 @@
 import wd from 'wd';
 import path from 'path';
 
+import { Version } from "../src/config/Version";
+
 const settings = {
   // install the current debug build
   "androidLocal": {
@@ -27,7 +29,7 @@ const settings = {
   "browserStack": {
     'browserstack.user' : process.env.bsUSER,
     'browserstack.key' : process.env.bsKEY,
-    'build' : 'v3.4.0',
+    'build' : Version.VERSION,
     'name': 'single_test',
     'app' : process.env.bsAPP,
     'browserstack.debug' : true
