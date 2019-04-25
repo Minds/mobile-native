@@ -8,7 +8,7 @@ import {
 import discoveryService from './DiscoveryService';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
-import OffsetListStore from '../common/stores/OffsetListStore';
+import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import UserModel from '../channel/UserModel';
 import GroupModel from '../groups/GroupModel';
 import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';
@@ -57,25 +57,25 @@ class DiscoveryStore {
 
     this.stores = {
       'images': {
-        list: new OffsetListStore('shallow'),
+        list: new OffsetFeedListStore('shallow'),
       },
       'videos': {
-        list: new OffsetListStore('shallow'),
+        list: new OffsetFeedListStore('shallow'),
       },
       'blogs': {
-        list: new OffsetListStore('shallow'),
+        list: new OffsetFeedListStore('shallow'),
       },
       'channels': {
-        list: new OffsetListStore('shallow'),
+        list: new OffsetFeedListStore('shallow'),
       },
       'groups': {
-        list: new OffsetListStore('shallow'),
+        list: new OffsetFeedListStore('shallow'),
       },
       'lastchannels': {
-        list: new OffsetListStore('shallow'),
+        list: new OffsetFeedListStore('shallow'),
       },
       'activities': {
-        list: new OffsetListStore('shallow'),
+        list: new OffsetFeedListStore('shallow'),
       }
     };
     extendObservable(this.stores.images, {
