@@ -293,7 +293,7 @@ export default class MediaView extends Component {
   navToImage = () => {
 
     // if is explicit then should toggle
-    if (isEntityNsfw(this.props.entity)) {
+    if (this.props.newsfeed && isEntityNsfw(this.props.entity)) {
       this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid);
       return;
     }
