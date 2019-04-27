@@ -172,7 +172,7 @@ export default class CapturePoster extends Component {
 
     return (
       <View style={CS.flexContainer}>
-        <ScrollView style={styles.posterAndPreviewWrapper}>
+        <ScrollView style={styles.posterAndPreviewWrapper} keyboardShouldPersistTaps={'always'}>
           {this.showContext()}
           <View style={styles.posterWrapper} pointerEvents="box-none">
             <TextInput
