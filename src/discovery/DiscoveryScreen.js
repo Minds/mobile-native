@@ -478,9 +478,9 @@ export default class DiscoveryScreen extends Component {
    * Render a tile
    */
   renderTile = (row) => {
-    // if (!this.state.active && row.item.isGif()) {
-    //   return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight, backgroundColor: colors.greyed }}/>;
-    // }
+    if (!this.state.active && row.item.isGif()) {
+      return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight, backgroundColor: colors.greyed }}/>;
+    }
     return (
       <ErrorBoundary message="Render error" containerStyle={[CS.centered, {width: this.state.itemHeight, height:this.state.itemHeight}]} textSmall={true}>
         <DiscoveryTile entity={row.item} size={this.state.itemHeight} onPress={() => this.setState({'showFeed': row.index})}/>
