@@ -46,6 +46,7 @@ import Wizard from '../common/components/Wizard';
 import UpdatingScreen from '../update/UpdateScreen';
 import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 import LogsScreen from '../logs/LogsScreen';
+import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 
 /**
  * Main stack navigator
@@ -65,6 +66,9 @@ const Stack = createStackNavigator({
     navigationOptions: {
       gesturesEnabled: false
     },
+  },
+  DeleteChannel: {
+    screen: withErrorBoundaryScreen(DeleteChannelScreen)
   },
   Login: {
     screen: withErrorBoundaryScreen(LoginScreen),

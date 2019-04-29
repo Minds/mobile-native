@@ -1,5 +1,7 @@
 import api from './../common/services/api.service';
-
+import { Alert } from 'react-native';
+import sessionService from '../common/services/session.service';
+import navigationService from '../navigation/NavigationService';
 
 /**
  * Settings Service
@@ -43,6 +45,33 @@ class SettingsService {
       .then((result) => {
         return result;
       });
+  }
+
+  /**
+   * Disable channel
+   */
+  async disable() {
+    try {
+      await api.delete('api/v1/channel');
+      await sessionService.logout();
+      navigationService.reset('Login');
+    } catch (e) {
+      Alert.alert('Error disabling the channel');
+    }
+  }
+
+  /**
+   * Delete channel
+   */
+  async delete(password) {
+    console.log(password)
+    try {
+      await api.post('api/v2/settings/delete', { password });
+      await sessionService.logout();
+      navigationService.reset('Login');
+    } catch (e) {
+      Alert.alert('Error deleting the channel');
+    }
   }
 }
 
