@@ -35,6 +35,7 @@ exports[`Activity editor component renders correctly 1`] = `
         },
       ]
     }
+    testID="Post editor input"
     underlineColorAndroid="transparent"
     value="Message"
   />
@@ -96,6 +97,7 @@ exports[`Activity editor component renders correctly 1`] = `
         color="#4690D6"
         loading={false}
         onPress={[Function]}
+        testID="Post editor cancel button"
         text="Cancel"
       />
       <Button
@@ -103,6 +105,7 @@ exports[`Activity editor component renders correctly 1`] = `
         inverted={true}
         loading={false}
         onPress={[Function]}
+        testID="Post editor save button"
         text="Save"
       />
     </ForwardRef(View)>

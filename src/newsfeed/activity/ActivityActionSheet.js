@@ -26,6 +26,7 @@ import { toggleUserBlock } from '../NewsfeedService';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 import { MINDS_URI } from '../../config/Config';
+import testID from '../../common/helpers/testID';
 /**
  * Activity Actions
  */
@@ -235,6 +236,7 @@ export default class ActivityActions extends Component {
           onPress={() => this.showActionSheet()}
           size={26}
           style={styles.icon}
+          {...testID('Activity Menu button')}
           />
         <ActionSheet
           ref={o => this.ActionSheet = o}

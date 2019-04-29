@@ -1,19 +1,10 @@
 
 import wd from 'wd';
-import factory from '../tests-helpers/e2e-driver.factory';
 import reporterFactory from '../tests-helpers/browserstack-reporter.factory';
+import { driver, capabilities} from './config';
 
-const customCapabilities = {
-  'device' : 'Samsung Galaxy S9',
-  'os_version' : '8.0'
-};
-
-const [driver, capabilities] = factory('browserStack', customCapabilities);
-// const [driver, capabilities] = factory('androidLocal', {});
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
-
 const data = {sessiondID: null};
-
 jasmine.getEnv().addReporter(reporterFactory(data));
 
 describe('login tests', () => {

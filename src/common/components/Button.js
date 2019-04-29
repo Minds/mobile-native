@@ -48,7 +48,8 @@ export default class Button extends Component {
       textStyle,
       disabled,
       loading,
-      inverted
+      inverted,
+      ...extraProps
     } = this.props;
 
     let background = 'white';
@@ -72,6 +73,7 @@ export default class Button extends Component {
         underlayColor='transparent'
         accessibilityLabel={accessibilityLabel}
         style={[ComponentsStyle.commonButton, {borderColor: mainColor, backgroundColor: background}, containerStyle]}
+        {...extraProps}
       >
         {children}
         {body}

@@ -1,25 +1,15 @@
 
 import wd from 'wd';
-import factory from '../tests-helpers/e2e-driver.factory';
 import reporterFactory from '../tests-helpers/browserstack-reporter.factory';
-import { login } from '../tests-helpers/e2e-utility';
+import post from './actions/post';
+import login from './actions/login';
+import { driver, capabilities} from './config';
+import sleep from '../src/common/helpers/sleep';
 
-
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
-
-const customCapabilities = {
-  'device' : 'Samsung Galaxy S9',
-  'os_version' : '8.0'
-};
-
-const [driver, capabilities] = factory('browserStack', customCapabilities);
-// const [driver, capabilities] = factory('androidLocal', {});
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
-
 const data = {sessiondID: null};
 
 jasmine.getEnv().addReporter(reporterFactory(data));
-
 //TODO: add support for ios to this test (xpath)
 
 describe('post flow tests', () => {
@@ -36,23 +26,10 @@ describe('post flow tests', () => {
   });
 
   it('should post a text and see it in the newsfeed', async () => {
-    // tap the post button
-    const button = await driver.waitForElementByAccessibilityId('CaptureButton', wd.asserters.isDisplayed, 10000);
-    button.click();
+    const str = 'My e2e post #mye2epost';
 
-    // should ask for permissions
-    const permmision = await driver.waitForElementById('com.android.packageinstaller:id/permission_allow_button', wd.asserters.isDisplayed, 10000)
-
-    // we accept
-    permmision.click();
-
-    // post screen must be shown
-    const postInput = await driver.waitForElementByAccessibilityId('PostInput', wd.asserters.isDisplayed, 5000);
-    await postInput.type('My e2e post');
-
-    // we press post button
-    const postButton = await driver.elementByAccessibilityId('Capture Post Button');
-    postButton.click();
+    // make the post
+    await post(driver, str);
 
     // should post and return to the newsfeed
     await driver.waitForElementByAccessibilityId('Newsfeed Screen', wd.asserters.isDisplayed, 10000);
@@ -60,26 +37,14 @@ describe('post flow tests', () => {
     // the first element of the list should be the post
     const textElement = await driver.waitForElementByXPath('//android.view.ViewGroup[@content-desc="Newsfeed Screen"]/android.view.ViewGroup[1]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView[2]');
 
-    expect(await textElement.text()).toBe('My e2e post');
+    expect(await textElement.text()).toBe(str);
   });
 
   it('should post an image and see it in the newsfeed', async () => {
-    // tap the post button
-    const button = await driver.waitForElementByAccessibilityId('CaptureButton', wd.asserters.isDisplayed, 10000);
-    button.click();
+    const str = 'My e2e post image #mye2epostimage';
 
-    // post screen must be shown
-    const postInput = await driver.waitForElementByAccessibilityId('PostInput', wd.asserters.isDisplayed, 5000);
-    await postInput.type('My e2e image post');
-
-    const firstImage = await driver.waitForElementByAccessibilityId('Gallery Image 0', wd.asserters.isDisplayed, 5000);
-    await firstImage.click();
-
-    await sleep(5000);
-
-    // we press post button
-    const postButton = await driver.elementByAccessibilityId('Capture Post Button');
-    await postButton.click();
+    // make the post with image and no permissions wait
+    await post(driver, str, true, false);
 
     // should post and return to the newsfeed
     await driver.waitForElementByAccessibilityId('Newsfeed Screen', wd.asserters.isDisplayed, 10000);
@@ -87,7 +52,7 @@ describe('post flow tests', () => {
     // the first element of the list should be the post
     const textElement = await driver.waitForElementByXPath('//android.view.ViewGroup[@content-desc="Newsfeed Screen"]/android.view.ViewGroup[1]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView[2]');
 
-    expect(await textElement.text()).toBe('My e2e image post');
+    expect(await textElement.text()).toBe(str);
   });
 
   it('should upload an image and cancel it', async () => {
