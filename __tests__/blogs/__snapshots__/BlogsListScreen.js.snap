@@ -514,6 +514,7 @@ exports[`blog list screen component should renders correctly 1`] = `
               }
             >
               <Text
+                numberOfLines={1}
                 style={
                   Array [
                     Object {
@@ -550,6 +551,7 @@ exports[`blog list screen component should renders correctly 1`] = `
               }
             >
               <Text
+                numberOfLines={1}
                 style={
                   Array [
                     Object {
