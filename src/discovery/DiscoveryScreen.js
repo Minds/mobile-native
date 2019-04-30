@@ -45,6 +45,7 @@ import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
 import GroupsListItem from '../groups/GroupsListItem'
 import DiscoveryFilters from './NewsfeedFilters';
 import ErrorBoundary from '../common/components/ErrorBoundary';
+import testID from '../common/helpers/testID';
 
 const isIos = Platform.OS === 'ios';
 
@@ -277,7 +278,7 @@ export default class DiscoveryScreen extends Component {
     const navigation = (
       <View style={[styles.navigation]}>
 
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeActivities } underlayColor='#fff'>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeActivities } underlayColor='#fff' {...testID('Discovery All')}>
           <View style={CS.columnAlignCenter}>
             <IonIcon
               name="ios-infinite"
@@ -287,7 +288,7 @@ export default class DiscoveryScreen extends Component {
             <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'activities' ? CS.colorPrimary : CS.colorDark]}>All</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeChannels } underlayColor='#fff'>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeChannels } underlayColor='#fff' {...testID('Discovery Channels')}>
           <View style={CS.columnAlignCenter}>
             <Icon
               name="people"
@@ -297,7 +298,7 @@ export default class DiscoveryScreen extends Component {
             <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'channels' ? CS.colorPrimary : CS.colorDark]}>Channels</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeVideos } underlayColor='#fff'>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeVideos } underlayColor='#fff' {...testID('Discovery Videos')}>
           <View style={CS.columnAlignCenter}>
             <IonIcon
               name={this.state.showFeed !== false &&  filtersStore.type == 'videos' ? 'md-apps' : 'md-videocam'}
@@ -307,7 +308,7 @@ export default class DiscoveryScreen extends Component {
             <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'videos' ? CS.colorPrimary : CS.colorDark]}>Videos</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeImages } underlayColor='#fff'>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeImages } underlayColor='#fff' {...testID('Discovery Images')}>
           <View style={CS.columnAlignCenter}>
             <IonIcon
               name={this.state.showFeed !== false &&  filtersStore.type == 'images' ? 'md-apps' : 'md-photos'}
@@ -317,7 +318,7 @@ export default class DiscoveryScreen extends Component {
             <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'images' ? CS.colorPrimary : CS.colorDark]}>Images</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeBlogs } underlayColor='#fff'>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeBlogs } underlayColor='#fff' {...testID('Discovery Blogs')}>
           <View style={CS.columnAlignCenter}>
             <Icon
               name="subject"
@@ -327,7 +328,7 @@ export default class DiscoveryScreen extends Component {
             <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'blogs' ? CS.colorPrimary : CS.colorDark]}>Blogs</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeGroups } underlayColor='#fff'>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeGroups } underlayColor='#fff' {...testID('Discovery Groups')}>
           <View style={CS.columnAlignCenter}>
             <Icon
               name="group-work"
@@ -356,6 +357,7 @@ export default class DiscoveryScreen extends Component {
           containerStyle={[CS.marginTop, CS.marginBottom]}
           iconRight={ iconRight }
           iconRightOnPress={this.clearSearch}
+          {...testID('Discovery Search Input')}
         />
         <DiscoveryFilters store={this.props.discovery.filters} onTagsChange={this.onTagSelectionChange} onSelectOne={this.onSelectOne}/>
         {/* {!discovery.searchtext && <TagsSubBar onChange={this.onTagSelectionChange}/>} */}

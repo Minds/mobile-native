@@ -6,6 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "e2e": "jest -c jest.e2e.config.js",
+    "e2e-local": "e2elocal=1 jest -c jest.e2e.config.js",
     "postinstall": "echo \"Fixing web3 require() issue…\" && replace \"c. . .rypto\" \"crypto\" node_modules -r --include=\"bytes.js\" && rn-nodeify --install --hack"
   },
   "dependencies": {
