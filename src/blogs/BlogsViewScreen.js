@@ -85,6 +85,9 @@ export default class BlogsViewScreen extends Component {
     try {
       if (params.blog) {
         this.props.blogsView.setBlog(params.blog);
+        if (!params.blog.description) {
+          await this.props.blogsView.loadBlog(params.blog.guid);
+        }
       } else {
         this.props.blogsView.reset();
         let guid;
@@ -140,7 +143,9 @@ export default class BlogsViewScreen extends Component {
           </OwnerBlock>
         </View>
         <View style={styles.description}>
-          <BlogViewHTML html={blog.description} />
+          {blog.description ?
+            <BlogViewHTML html={blog.description} /> :
+            <CenteredLoading/>}
         </View>
         <View style={styles.moreInformation}>
           <Icon color={colors.medium} size={18} name='public' onPress={() => this.props.navigation.goBack()} />
