@@ -25,6 +25,8 @@ import TagOptinDrawer from '../common/components/TagOptinDrawer';
 import NsfwToggle from '../common/components/nsfw/NsfwToggle';
 import autobind from '../common/helpers/autobind';
 
+import { GOOGLE_PLAY_STORE } from '../config/Config';
+
 /**
  * Newsfeed filters
  */
@@ -164,13 +166,13 @@ export default class NewsfeedFilters extends Component {
             </View>
           </TouchableHighlight>
         </View>
-        <View style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x]}>
+        {!GOOGLE_PLAY_STORE && <View style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x]}>
           <NsfwToggle
             hideLabel={true}
             value={store.nsfw}
             onChange={this.setNsfw}
           />
-        </View>
+        </View>}
         <TagOptinDrawer ref={this.setTagDrawerRef} onChange={this.props.onTagsChange} onSelectOne={this.props.onSelectOne}/>
       </View>
     );
