@@ -141,7 +141,7 @@ export default class SettingsScreen extends Component {
         name: 'Deactivate',
         icon: (<Icon name='warning' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
-          alert('Please deactivate your account on the desktop');
+          this.props.navigation.push('DeleteChannel');
         }
       },
       {
