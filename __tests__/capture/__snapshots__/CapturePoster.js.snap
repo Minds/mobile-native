@@ -9,6 +9,7 @@ exports[`cature poster component should renders correctly 1`] = `
   }
 >
   <RCTScrollView
+    keyboardShouldPersistTaps="always"
     style={
       Object {
         "backgroundColor": "white",
