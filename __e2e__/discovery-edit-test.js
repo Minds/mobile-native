@@ -5,6 +5,7 @@ import post from './actions/post';
 import login from './actions/login';
 import sleep from '../src/common/helpers/sleep';
 import pressCapture from './actions/pressCapture';
+import acceptPermissions from './actions/acceptPermissions';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 const data = {sessiondID: null};
@@ -27,6 +28,8 @@ describe('Discovery post edit tests', () => {
     const str = 'My e2e post #mye2epost';
 
     await pressCapture(driver);
+
+    await acceptPermissions(driver);
 
     // make the post
     await post(driver, str);
@@ -54,7 +57,7 @@ describe('Discovery post edit tests', () => {
     const search = await driver.waitForElementByAccessibilityId('Discovery Search Input', wd.asserters.isDisplayed, 10000);
     await search.type('mye2epost');
 
-    await sleep(3000);
+    await sleep(4000);
 
     // activity menu button
     const activityMenu = await driver.waitForElementByAccessibilityId('Activity Menu button', wd.asserters.isDisplayed, 5000);
