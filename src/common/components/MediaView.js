@@ -139,6 +139,7 @@ export default class MediaView extends Component {
   }
 
   imageError = (err) => {
+    logService.error('[MediaView] Image error: ' + this.source.uri);
     this.setState({ imageLoadFailed: true });
   }
 
