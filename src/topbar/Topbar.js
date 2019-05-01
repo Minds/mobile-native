@@ -18,6 +18,7 @@ import { MINDS_CDN_URI } from '../config/Config';
 import featuresService from '../common/services/features.service';
 import { SafeAreaView } from 'react-navigation';
 import isIphoneX from '../common/helpers/isIphoneX';
+import testID from '../common/helpers/testID';
 
 const forceInset = isIphoneX ? {top: 32} : null
 
@@ -53,7 +54,7 @@ export default class Topbar extends Component {
             /> }
           </View>
 
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('More', { navigation: this.props.navigation })} >
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('More', { navigation: this.props.navigation })} {...testID('Main menu button')}>
             <View style={styles.topbarRight}>
               <Icon name="menu" size={22} color='#444' style={ styles.button }/>
             </View>
