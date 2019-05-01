@@ -56,8 +56,6 @@ describe('post flow tests', () => {
     // press capture button
     await pressCapture(driver);
 
-    await acceptPermissions(driver);
-
     // select nsfw
     await selectNsfw(driver, ['Nudity', 'Pornography']);
 
