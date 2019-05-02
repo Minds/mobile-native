@@ -9,6 +9,7 @@ import pressCapture from './actions/pressCapture';
 import acceptPermissions from './actions/acceptPermissions';
 import attachPostGalleryImage from './actions/attachPostGalleryImage';
 import selectNsfw from './actions/selectNsfw';
+import lockPost from './actions/lockPost';
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 const data = {sessiondID: null};
@@ -89,6 +90,24 @@ describe('Post flow tests', () => {
     const textElement = await driver.waitForElementByXPath('//android.view.ViewGroup[@content-desc="Newsfeed Screen"]/android.view.ViewGroup[1]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView[2]');
 
     expect(await textElement.text()).toBe(str);
+  });
+
+  it('should post paywalled content', async () => {
+    // press capture button
+    await pressCapture(driver);
+
+    const str = 'pay me something';
+
+    await lockPost(driver, '1');
+
+    // make the post with image and no permissions wait
+    await post(driver, str);
+
+    await sleep(1000);
+
+    const textElement = await driver.waitForElementByXPath('//android.view.ViewGroup[@content-desc="Newsfeed Screen"]/android.view.ViewGroup[1]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView[3]');
+
+    expect(await textElement.text()).toBe('Locked');
   });
 
   it('should post an image and see it in the newsfeed', async () => {

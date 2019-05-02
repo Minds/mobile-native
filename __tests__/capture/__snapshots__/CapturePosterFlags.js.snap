@@ -532,6 +532,7 @@ exports[`cature poster flags component should renders correctly for props false 
           Object {},
         ]
       }
+      testID="Post lock button"
     >
       
     </Text>
@@ -997,6 +998,7 @@ exports[`cature poster flags component should renders correctly for props false 
                     "textAlign": "right",
                   }
                 }
+                testID="Poster lock amount input"
                 underlineColorAndroid="transparent"
                 value="0"
               />
@@ -1050,6 +1052,7 @@ exports[`cature poster flags component should renders correctly for props false 
                     false,
                   ]
                 }
+                testID="Poster lock done button"
               >
                 <Text
                   style={
@@ -1847,6 +1850,7 @@ exports[`cature poster flags component should renders correctly for props true 1
           Object {},
         ]
       }
+      testID="Post lock button"
     >
       
     </Text>
@@ -2312,6 +2316,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "textAlign": "right",
                   }
                 }
+                testID="Poster lock amount input"
                 underlineColorAndroid="transparent"
                 value="0"
               />
@@ -2365,6 +2370,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                     false,
                   ]
                 }
+                testID="Poster lock done button"
               >
                 <Text
                   style={
