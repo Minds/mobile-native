@@ -103,6 +103,8 @@ export default function(input, init, tag) {
 
     xhr.onabort = () => {
       reject(new Abort());
+      // clear timeout
+      clearTimeout(xhr.timer);
     };
 
     if (request.credentials === 'include') {

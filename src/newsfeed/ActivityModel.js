@@ -1,4 +1,4 @@
-import { computed, action, observable, decorate } from 'mobx';
+import { runInAction, action, observable, decorate } from 'mobx';
 
 import FastImage from 'react-native-fast-image'
 import BaseModel from '../common/BaseModel';
@@ -7,9 +7,11 @@ import wireService from '../wire/WireService';
 import { thumbActivity } from './activity/ActionsService';
 import sessionService from '../common/services/session.service';
 import { setPinPost } from '../newsfeed/NewsfeedService';
+import api from '../common/services/api.service';
 
 import {
-  MINDS_CDN_URI
+  MINDS_CDN_URI,
+  MINDS_URI
 } from '../config/Config';
 
 /**
@@ -43,10 +45,13 @@ export default class ActivityModel extends BaseModel {
   getThumbSource(size = 'medium') {
     // for gif use always the same size to take adventage of the cache (they are not resized)
     if (this.isGif()) size = 'medium';
-    if (this.custom_type == 'batch') {
-      return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.entity_guid + '/' + size };
+    if (this.paywall || this.paywall_unlocked) {
+      return { uri: MINDS_URI + 'fs/v1/thumbnail/' + this.entity_guid, headers: api.buildHeaders() };
     }
-    return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.guid + '/' + size };
+    if (this.custom_type == 'batch') {
+      return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.entity_guid + '/' + size, headers: api.buildHeaders() };
+    }
+    return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.guid + '/' + size, headers: api.buildHeaders() };
   }
 
   isGif() {
@@ -143,9 +148,12 @@ export default class ActivityModel extends BaseModel {
     try {
       result = await wireService.unlock(this.guid);
       if (result) {
-        // create a new model because we need the child models
-        const model = ActivityModel.create(result);
-        Object.assign(this, model);
+        // all changes should be atomic (trigger render only once)
+        runInAction(() => {
+          // create a new model because we need the child models
+          const model = ActivityModel.create(result);
+          Object.assign(this, model);
+        });
       }
       return result;
     } catch(err) {
