@@ -15,7 +15,7 @@ export function post(post) {
 }
 
 export async function remind(guid, post) {
-  const data = await api.post('api/v1/newsfeed/remind/' + guid , post)
+  const data = await api.post('api/v2/newsfeed/remind/' + guid , post)
 
   let resp = {activity: null};
   if (data.guid) {

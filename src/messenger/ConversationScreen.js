@@ -171,11 +171,11 @@ export default class ConversationScreen extends Component {
     if (shouldSetup) {
       return <MessengerSetup navigation={this.props.navigation} onDone={this.onDoneSetup} />
     }
-
+    
     if (shouldInvite) {
       return <MessengerInvite navigation={this.props.navigation} messengerConversation={this.store}/>
     }
-
+    
     const footer = this.getFooter();
     const messages = this.store.messages.slice();
     const conversation = this.props.navigation.state.params.conversation;
@@ -195,6 +195,7 @@ export default class ConversationScreen extends Component {
           onEndReached={this.loadMore}
           // onEndReachedThreshold={0}
         />
+        <Text style={styles.characterCounter}>{ this.state.text.length } / 180</Text>
         <View style={styles.messagePoster} >
           <Image source={avatarImg} style={styles.avatar} />
           <TextInput
@@ -202,7 +203,7 @@ export default class ConversationScreen extends Component {
             editable={true}
             underlineColorAndroid='transparent'
             placeholder='Type your message...'
-            onChangeText={(text) => this.setState({ text })}
+            onChangeText={(text) => this.textChanged(text)}
             multiline={true}
             autogrow={true}
             maxHeight={110}
@@ -213,6 +214,22 @@ export default class ConversationScreen extends Component {
       </KeyboardAvoidingView>
     );
   }
+
+  /**
+   * Checks whether a message contains more than 180 characters, 
+   * if it does not, sets the text state to the string passed in.
+   * 
+   * @param { string } text - the text to be checked 
+   */
+  textChanged(text) {
+    if(text.length > 180){
+      return;
+    }
+    this.setState({ text: text })
+  }
+
+  
+
 
   /**
    * Get list header
@@ -303,4 +320,10 @@ const styles = StyleSheet.create({
   sendicon: {
     width:25
   },
+  characterCounter: {
+    color: "#ccc",
+    textAlign: 'right',
+    marginRight: 4,
+    marginBottom: 4
+  }
 });

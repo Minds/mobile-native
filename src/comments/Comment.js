@@ -38,6 +38,7 @@ import {
 import CommentList from './CommentList';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import DoubleTap from '../common/components/DoubleTap';
+import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 
 const DoubleTapText = DoubleTap(Text);
 
@@ -99,7 +100,6 @@ export default class Comment extends Component {
                     <Text style={styles.username}>@{comment.ownerObj.username} </Text>
                     { comment.description &&
                       <Tags
-                        style={comment.mature? styles.mature : {}}
                         navigation={this.props.navigation}
                         >
                         {entities.decodeHTML(comment.description)}
@@ -110,22 +110,31 @@ export default class Comment extends Component {
             </View>
           </View>
           { actions }
-            { comment.expanded &&
+          { comment.expanded &&
             <CommentList
               entity={this.props.entity}
               parent={comment}
               store={this.comments}
               onInputFocus={this.onInputFocus}
               navigation={this.props.navigation}
-             />
-            }
+            />
+          }
+
+          { comment.mature ? <ExplicitOverlay
+            entity={comment}
+            iconSize={35}
+            fontStyle={{fontSize:12}}
+            iconPosition="left"
+            closeContainerStyle={styles.matureCloseContainer}
+            containerStyle={[styles.matureContainer, CommonStyle.marginLeft, CommonStyle.marginRight, CommonStyle.borderRadius5x]}
+          /> : null }
 
           <MediaView
             entity={comment}
             style={styles.media}
             navigation={this.props.navigation}
             width={Dimensions.get('window').width - 60}
-            />
+          />
 
         </View>
         <ActionSheet
@@ -272,6 +281,12 @@ export default class Comment extends Component {
 }
 
 const styles = StyleSheet.create({
+  matureCloseContainer: {
+    marginLeft: -29, marginTop:40
+  },
+  matureContainer: {
+    backgroundColor:'#9A9A9A'
+  },
   container: {
     borderBottomColor: '#EEE',
     borderBottomWidth: StyleSheet.hairlineWidth,

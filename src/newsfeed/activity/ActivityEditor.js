@@ -24,6 +24,7 @@ import autobind from '../../common/helpers/autobind';
 import featuresService from '../../common/services/features.service';
 import Colors from '../../styles/Colors';
 import logService from '../../common/services/log.service';
+import testID from '../../common/helpers/testID';
 
 export default class ActivityEditor extends Component {
 
@@ -96,13 +97,14 @@ export default class ActivityEditor extends Component {
           numberOfLines={4}
           onChangeText={(text) => this.setState({ text })}
           value={this.state.text}
+          {...testID('Post editor input')}
         />
         <View style={styles.buttonBar}>
           {this.renderNsfwView()}
 
           <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop]}>
-            <Button text="Cancel" onPress={this.cancel} />
-            <Button text="Save" color={colors.primary} inverted={true} onPress={this.update} disabled={this.props.newsfeed.list.saving}/>
+            <Button text="Cancel" onPress={this.cancel} {...testID('Post editor cancel button')}/>
+            <Button text="Save" color={colors.primary} inverted={true} onPress={this.update} disabled={this.props.newsfeed.list.saving} {...testID('Post editor save button')}/>
           </View>
         </View>
       </View>

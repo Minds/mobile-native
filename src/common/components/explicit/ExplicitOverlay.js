@@ -24,7 +24,8 @@ export default class ExplicitOverlay extends Component {
    */
   static defaultProps = {
     iconSize: 80,
-    hideText: false
+    hideText: false,
+    iconPosition: 'right'
   };
 
   /**
@@ -41,20 +42,28 @@ export default class ExplicitOverlay extends Component {
     const {
       iconSize,
       hideText,
+      fontStyle,
+      containerStyle,
+      closeContainerStyle,
+      iconPosition
     } = this.props;
 
     if (this.props.entity.mature_visibility) {
+      const size = Math.max(iconSize/2.5, 25);
+      const styles = iconPosition == 'right' ?
+        [ CS.positionAbsoluteTopRight, CS.paddingRight4x, CS.marginRight4x] :
+        [ CS.positionAbsoluteTop, CS.paddingLeft4x, CS.marginLeft4x]
       return (
-        <View style={[CS.positionAbsoluteTopRight, CS.paddingRight4x, CS.marginRight4x]}>
-          <Icon name="explicit" size={iconSize/2.5} color={'red'} style={CS.shadow} onPress={this.toogle}/>
+        <View style={[styles, closeContainerStyle]}>
+          <Icon name="explicit" size={size} color={'red'} style={CS.shadow} onPress={this.toogle}/>
         </View>
       )
     }
 
     return (
-      <TouchableOpacity activeOpacity={1} style={[CS.positionAbsolute, CS.centered, CS.backgroundDarkGreyed, styles.onTop]} onPress={this.toogle}>
+      <TouchableOpacity activeOpacity={1} style={[CS.positionAbsolute, CS.centered, CS.backgroundDarkGreyed, styles.onTop, containerStyle]} onPress={this.toogle}>
         <Icon name="explicit" size={iconSize} color={'white'} style={CS.shadow}/>
-        {!hideText && <Text style={[CS.colorWhite, CS.shadow]}>Confirm you are 18+</Text>}
+        {!hideText && <Text style={[CS.colorWhite, CS.shadow, fontStyle]}>Confirm you are 18+</Text>}
       </TouchableOpacity>
     )
   }

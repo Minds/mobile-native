@@ -42,7 +42,7 @@ export default class ToolbarItem extends PureComponent {
     return (
       <DebouncedTouchableOpacity style={buttonStyle} onPress={() => onPress(value)}>
         {iconCmp}
-        <Text style={textStyle}>{text}</Text>
+        <Text style={textStyle} numberOfLines={1}>{text}</Text>
         {subtext && <Text style={subTextStyle}>{subtext}</Text>}
         {this.getBadge()}
       </DebouncedTouchableOpacity>

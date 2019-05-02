@@ -1,22 +1,16 @@
 
 import wd from 'wd';
-import factory from '../tests-helpers/e2e-driver.factory';
 import reporterFactory from '../tests-helpers/browserstack-reporter.factory';
+import { driver, capabilities} from './config';
 
-const customCapabilities = {
-  'device' : 'Samsung Galaxy S9',
-  'os_version' : '8.0'
-};
-
-const [driver, capabilities] = factory('browserStack', customCapabilities);
-// const [driver, capabilities] = factory('androidLocal', {});
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
-
 const data = {sessiondID: null};
-
 jasmine.getEnv().addReporter(reporterFactory(data));
 
-describe('login tests', () => {
+describe('Login flow', () => {
+
+  let username, password, loginButton;
+
   beforeAll(async () => {
     await driver.init(capabilities);
     data.sessiondID = await driver.getSessionId();
@@ -27,18 +21,18 @@ describe('login tests', () => {
     await driver.quit();
   });
 
-  it('should shows login error on wrong credentials and go to newsfeed on success', async () => {
+  it('should shows login error on wrong credentials', async () => {
     expect(await driver.hasElementByAccessibilityId('username input')).toBe(true);
     expect(await driver.hasElementByAccessibilityId('password input')).toBe(true);
 
-    const username = await driver.elementByAccessibilityId('username input');
+    username = await driver.elementByAccessibilityId('username input');
 
     await username.type('myuser');
 
-    const password = await driver.elementByAccessibilityId('password input');
+    password = await driver.elementByAccessibilityId('password input');
     await password.type('mypass');
 
-    const loginButton = await driver.elementByAccessibilityId('login button');
+    loginButton = await driver.elementByAccessibilityId('login button');
     await loginButton.click();
 
     // message should appear
@@ -47,6 +41,9 @@ describe('login tests', () => {
     const textElement = await driver.elementByAccessibilityId('loginMsg');
     expect(await textElement.text()).toBe('The user credentials were incorrect.');
 
+  });
+
+  it('should go to newsfeed on successful login', async () => {
     // try successfull login
     await username.type(process.env.loginUser);
     await password.type(process.env.loginPass);
@@ -55,4 +52,17 @@ describe('login tests', () => {
     // should open the newsfeed
     await driver.waitForElementByAccessibilityId('Newsfeed Screen', wd.asserters.isDisplayed, 5000);
   });
+
+  it('should go to login after logout', async () => {
+
+    const menu = await driver.elementByAccessibilityId('Main menu button');
+    // tap menu button
+    await menu.click();
+
+    const logout = await driver.waitForElementByAccessibilityId('Logout', wd.asserters.isDisplayed, 5000);
+    // tap logout
+    logout.click();
+
+    await driver.waitForElementByAccessibilityId('username input', wd.asserters.isDisplayed, 5000);
+  })
 });

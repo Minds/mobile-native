@@ -33,18 +33,38 @@ let platformWalletScreen = WalletScreen;
 const screens = {
   Wallet: {
     screen: withErrorBoundaryScreen(platformWalletScreen),
+    navigationOptions: {
+      tabBarTestID:'Wallet tab button',
+      tabBarAccessibilityLabel: 'Wallet tab button',
+    },
   },
   Discovery: {
     screen: withErrorBoundaryScreen(DiscoveryScreen),
+    navigationOptions: {
+      tabBarTestID:'Discovery tab button',
+      tabBarAccessibilityLabel: 'Discovery tab button',
+    },
   },
   Newsfeed: {
     screen: withErrorBoundaryScreen(NewsfeedScreen),
+    navigationOptions: {
+      tabBarTestID:'Newsfeed tab button',
+      tabBarAccessibilityLabel: 'Newsfeed tab button',
+    },
   },
   Messenger: {
     screen: withErrorBoundaryScreen(MessengerScreen),
+    navigationOptions: {
+      tabBarTestID:'Messenger tab button',
+      tabBarAccessibilityLabel: 'Messenger tab button',
+    },
   },
   Notifications: {
     screen: withErrorBoundaryScreen(NotificationsScreen),
+    navigationOptions: {
+      tabBarTestID:'Notifications tab button',
+      tabBarAccessibilityLabel: 'Notifications tab button',
+    },
   }
 };
 

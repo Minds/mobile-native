@@ -24,6 +24,7 @@ import { CommonStyle as CS } from '../styles/Common';
 import TagOptinDrawer from '../common/components/TagOptinDrawer';
 import NsfwToggle from '../common/components/nsfw/NsfwToggle';
 import autobind from '../common/helpers/autobind';
+import testID from '../common/helpers/testID';
 
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 
@@ -99,7 +100,12 @@ export default class NewsfeedFilters extends Component {
     const hashActive = !this.props.hashtag.all || this.props.hashtag.hashtag;
     return (
       <View style={CS.rowJustifyStart}>
-        <TouchableHighlight style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x, hashActive ? CS.backgroundPrimary : CS.backgroundLight, {borderBottomRightRadius:25, borderTopRightRadius:25}]} onPress={this.showDrawer} underlayColor='#fff'>
+        <TouchableHighlight
+          style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x, hashActive ? CS.backgroundPrimary : CS.backgroundLight, {borderBottomRightRadius:25, borderTopRightRadius:25}]}
+          onPress={this.showDrawer}
+          underlayColor='#fff'
+          {...testID('Filter hashtags selector button')}
+        >
           <View style={[CS.rowJustifyStart, CS.centered]}>
             <IconMC
               name="pound"
@@ -110,7 +116,7 @@ export default class NewsfeedFilters extends Component {
           </View>
         </TouchableHighlight>
         <View style={[CS.rowJustifySpaceEvenly, CS.flexContainer]}>
-          <TouchableHighlight style={[CS.padding]} onPress={ () => store.setFilter('hot') } underlayColor='#fff'>
+          <TouchableHighlight style={[CS.padding]} onPress={ () => store.setFilter('hot') } underlayColor='#fff' {...testID('Filter hot button')}>
             <View style={[CS.rowJustifyCenter, CS.centered]}>
               <Icon
                 name="whatshot"
@@ -121,7 +127,7 @@ export default class NewsfeedFilters extends Component {
             </View>
           </TouchableHighlight>
           <View style={CS.rowJustifyCenter}>
-            <TouchableHighlight style={[CS.padding]} onPress={ () => store.setFilter('top') } underlayColor='#fff'>
+            <TouchableHighlight style={[CS.padding]} onPress={ () => store.setFilter('top') } underlayColor='#fff' {...testID('Filter top button')}>
               <View style={[CS.rowJustifyCenter, CS.centered]}>
                 <Icon
                   name="trending-up"
@@ -155,7 +161,7 @@ export default class NewsfeedFilters extends Component {
               </Menu>
             }
           </View>
-          <TouchableHighlight style={[CS.padding]} onPress={ () => store.setFilter('latest') } underlayColor='#fff'>
+          <TouchableHighlight style={[CS.padding]} onPress={ () => store.setFilter('latest') } underlayColor='#fff' {...testID('Filter latest button')}>
             <View style={[CS.rowJustifyCenter, CS.centered]}>
               <Icon
                 name="timelapse"

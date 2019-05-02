@@ -1,7 +1,7 @@
 const config = {
   "automock": false,
   "cacheDirectory": ".jest/cache",
-  "testRegex": "./__e2e__/.*.js$",
+  "testRegex": "./__e2e__/.*-test.js$",
   "preset": "react-native",
   "testPathIgnorePatterns": [
     "/node_modules/"

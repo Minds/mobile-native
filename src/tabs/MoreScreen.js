@@ -46,6 +46,7 @@ import { Version } from '../config/Version';
 import mindsService from '../common/services/minds.service';
 import colors from '../styles/Colors';
 import logService from '../common/services/log.service';
+import testID from '../common/helpers/testID';
 
 
 const ICON_SIZE = 24;
@@ -267,6 +268,7 @@ export default class MoreScreen extends Component {
               leftIcon={l.icon}
               onPress= {l.onPress}
               noBorder
+              {...testID(l.name)}
             />
           ))
         }

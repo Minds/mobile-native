@@ -19,7 +19,7 @@ describe('Thumb action component', () => {
 
     const TouchableOpacityCustom = <TouchableOpacity onPress={this.onPress} />;
 
-    const navigation = { push: jest.fn() };
+    const navigation = { push: jest.fn(), state: {key:1} };
     let activityResponse = activitiesServiceFaker().load(1);
     screen = shallow(
       <RemindAction entity={activityResponse.activities[0]} navigation={navigation} />
@@ -43,7 +43,8 @@ describe('Thumb action component', () => {
     let activityResponse = activitiesServiceFaker().load(1);
 
     const navigation = {
-      push: jest.fn()
+      push: jest.fn(),
+      state: {key:1}
     };
     let entity = activityResponse.activities[0];
     entity.toggleVote = jest.fn();

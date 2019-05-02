@@ -25,6 +25,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
       Object {
         "zIndex": 99999,
       },
+      undefined,
     ]
   }
 >
@@ -62,6 +63,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
           "shadowOpacity": 0.1,
           "shadowRadius": 2,
         },
+        undefined,
       ]
     }
   >
@@ -74,12 +76,15 @@ exports[`Explicit overlay component should renders the etag 1`] = `
 <ForwardRef(View)
   style={
     Array [
-      Object {
-        "position": "absolute",
-        "right": 0,
-        "top": 0,
-      },
-      undefined,
+      Array [
+        Object {
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+        undefined,
+        undefined,
+      ],
       undefined,
     ]
   }

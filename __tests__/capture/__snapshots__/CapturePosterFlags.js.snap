@@ -43,6 +43,7 @@ exports[`cature poster flags component should renders correctly for props false 
             "paddingLeft": 10,
           }
         }
+        testID="NSFW button"
       >
         <Text
           allowFontScaling={false}
@@ -153,6 +154,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
+              testID="NSFW Nudity"
             >
               <Text
                 ellipsizeMode="clip"
@@ -198,6 +200,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
+              testID="NSFW Pornography"
             >
               <Text
                 ellipsizeMode="clip"
@@ -243,6 +246,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
+              testID="NSFW Profanity"
             >
               <Text
                 ellipsizeMode="clip"
@@ -288,6 +292,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
+              testID="NSFW Violence and Gore"
             >
               <Text
                 ellipsizeMode="clip"
@@ -333,6 +338,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
+              testID="NSFW Race and Religion"
             >
               <Text
                 ellipsizeMode="clip"
@@ -378,6 +384,7 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
+              testID="NSFW Other"
             >
               <Text
                 ellipsizeMode="clip"
@@ -525,6 +532,7 @@ exports[`cature poster flags component should renders correctly for props false 
           Object {},
         ]
       }
+      testID="Post lock button"
     >
       
     </Text>
@@ -990,6 +998,7 @@ exports[`cature poster flags component should renders correctly for props false 
                     "textAlign": "right",
                   }
                 }
+                testID="Poster lock amount input"
                 underlineColorAndroid="transparent"
                 value="0"
               />
@@ -1043,6 +1052,7 @@ exports[`cature poster flags component should renders correctly for props false 
                     false,
                   ]
                 }
+                testID="Poster lock done button"
               >
                 <Text
                   style={
@@ -1351,6 +1361,7 @@ exports[`cature poster flags component should renders correctly for props true 1
             "paddingLeft": 10,
           }
         }
+        testID="NSFW button"
       >
         <Text
           allowFontScaling={false}
@@ -1461,6 +1472,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
+              testID="NSFW Nudity"
             >
               <Text
                 ellipsizeMode="clip"
@@ -1506,6 +1518,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
+              testID="NSFW Pornography"
             >
               <Text
                 ellipsizeMode="clip"
@@ -1551,6 +1564,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
+              testID="NSFW Profanity"
             >
               <Text
                 ellipsizeMode="clip"
@@ -1596,6 +1610,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
+              testID="NSFW Violence and Gore"
             >
               <Text
                 ellipsizeMode="clip"
@@ -1641,6 +1656,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
+              testID="NSFW Race and Religion"
             >
               <Text
                 ellipsizeMode="clip"
@@ -1686,6 +1702,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
+              testID="NSFW Other"
             >
               <Text
                 ellipsizeMode="clip"
@@ -1833,6 +1850,7 @@ exports[`cature poster flags component should renders correctly for props true 1
           Object {},
         ]
       }
+      testID="Post lock button"
     >
       
     </Text>
@@ -2298,6 +2316,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "textAlign": "right",
                   }
                 }
+                testID="Poster lock amount input"
                 underlineColorAndroid="transparent"
                 value="0"
               />
@@ -2351,6 +2370,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                     false,
                   ]
                 }
+                testID="Poster lock done button"
               >
                 <Text
                   style={

@@ -16,6 +16,7 @@ import featuresService from '../common/services/features.service';
 import NsfwToggle from '../common/components/nsfw/NsfwToggle';
 import logService from '../common/services/log.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
+import testID from '../common/helpers/testID';
 
 @inject('capture')
 @observer
@@ -298,6 +299,7 @@ export default class CapturePosterFlags extends Component {
                 keyboardType="numeric"
                 value={this.state.min}
                 onChangeText={this.setMin}
+                {...testID('Poster lock amount input')}
               />
 
               <Text
@@ -312,6 +314,7 @@ export default class CapturePosterFlags extends Component {
                 color={colors.primary}
                 onPress={this.setLock}
                 title="Done"
+                {...testID('Poster lock done button')}
               />
             </View>
           </View>
@@ -372,6 +375,7 @@ export default class CapturePosterFlags extends Component {
             name="ios-flash"
             color={this.isLocking() ? Colors.primary : Colors.darkGreyed}
             size={30}
+            {...testID('Post lock button')}
           />
         </Touchable>
         {this.shareModalPartial()}
