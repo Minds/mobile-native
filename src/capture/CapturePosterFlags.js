@@ -15,6 +15,7 @@ import TagSelect from '../common/components/TagSelect';
 import featuresService from '../common/services/features.service';
 import NsfwToggle from '../common/components/nsfw/NsfwToggle';
 import logService from '../common/services/log.service';
+import { GOOGLE_PLAY_STORE } from '../config/Config';
 import testID from '../common/helpers/testID';
 
 @inject('capture')
@@ -323,6 +324,7 @@ export default class CapturePosterFlags extends Component {
   }
 
   renderNsfw() {
+    if (GOOGLE_PLAY_STORE) return null;
     return (
       <NsfwToggle
         containerStyle={styles.cell}

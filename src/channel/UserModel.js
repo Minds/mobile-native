@@ -1,5 +1,5 @@
 import { observable, decorate, action } from 'mobx';
-import { MINDS_CDN_URI } from '../config/Config';
+import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
 import stores from '../../AppStores';
@@ -32,6 +32,7 @@ export default class UserModel extends BaseModel {
 
   @action
   toggleMatureVisibility() {
+    if (GOOGLE_PLAY_STORE) return;
     this.mature_visibility = !this.mature_visibility;
   }
 

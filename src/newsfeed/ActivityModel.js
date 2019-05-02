@@ -10,6 +10,7 @@ import { setPinPost } from '../newsfeed/NewsfeedService';
 import api from '../common/services/api.service';
 
 import {
+  GOOGLE_PLAY_STORE,
   MINDS_CDN_URI,
   MINDS_URI
 } from '../config/Config';
@@ -112,6 +113,7 @@ export default class ActivityModel extends BaseModel {
 
   @action
   toggleMatureVisibility() {
+    if (GOOGLE_PLAY_STORE) return;
     this.mature_visibility = !this.mature_visibility;
 
     if (this.get('remind_object.mature')) {

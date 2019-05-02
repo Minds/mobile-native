@@ -39,7 +39,7 @@ import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
 import stores from '../../AppStores';
 import CaptureFab from '../capture/CaptureFab';
-import { MINDS_CDN_URI } from '../config/Config';
+import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
 import ErrorLoading from '../common/components/ErrorLoading';
 import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
 import GroupsListItem from '../groups/GroupsListItem'
@@ -213,7 +213,7 @@ export default class DiscoveryScreen extends Component {
         renderItem={renderRow}
         ListFooterComponent={footer}
         CollapsibleHeaderComponent={this.getHeaders()}
-        headerHeight={146}
+        headerHeight={(GOOGLE_PLAY_STORE && discovery.filters.type === 'channels') ? 94 : 146}
         ListEmptyComponent={this.getEmptyList()}
         keyExtractor={item => item.rowKey}
         onRefresh={this.refresh}
@@ -253,21 +253,41 @@ export default class DiscoveryScreen extends Component {
     );
   }
 
-  setTypeActivities = () => this.props.discovery.filters.setType('activities');
-  setTypeChannels   = () => this.props.discovery.filters.setType('channels');
-  setTypeBlogs      = () => this.props.discovery.filters.setType('blogs');
-  setTypeGroups     = () => this.props.discovery.filters.setType('groups');
+  setTypeActivities = () => {
+    this.props.discovery.filters.setType('activities');
+    this.checkSearchForGooglePlay();
+  }
+  setTypeChannels = () => {
+    this.props.discovery.filters.setType('channels');
+    this.checkSearchForGooglePlay();
+  }
+  setTypeBlogs = () => {
+    this.props.discovery.filters.setType('blogs');
+    this.checkSearchForGooglePlay();
+  }
+  setTypeGroups = () => {
+    this.props.discovery.filters.setType('groups');
+    this.checkSearchForGooglePlay();
+  }
   setTypeVideos = () => {
     if (this.state.showFeed !== false && this.props.discovery.filters.type === 'videos') {
       return this.setState({showFeed: false});
     }
     this.props.discovery.filters.setType('videos');
+    this.checkSearchForGooglePlay();
   }
   setTypeImages = () => {
     if (this.state.showFeed !== false && this.props.discovery.filters.type === 'images') {
       return this.setState({showFeed: false});
     }
     this.props.discovery.filters.setType('images');
+    this.checkSearchForGooglePlay();
+  }
+
+  checkSearchForGooglePlay() {
+    if (GOOGLE_PLAY_STORE && this.props.discovery.filters.type !== 'channels') {
+      this.clearSearch();
+    }
   }
 
   /**
@@ -350,7 +370,7 @@ export default class DiscoveryScreen extends Component {
 
     const headerBody = filtersStore.type != 'lastchannels' ?
       <View style={CS.marginBottom}>
-        <SearchView
+        {(filtersStore.type === 'channels' || !GOOGLE_PLAY_STORE) && <SearchView
           placeholder={`Search ${filtersStore.type}...`}
           onChangeText={this.setQ}
           value={this.state.q}
@@ -358,8 +378,8 @@ export default class DiscoveryScreen extends Component {
           iconRight={ iconRight }
           iconRightOnPress={this.clearSearch}
           {...testID('Discovery Search Input')}
-        />
-        <DiscoveryFilters store={this.props.discovery.filters} onTagsChange={this.onTagSelectionChange} onSelectOne={this.onSelectOne}/>
+        />}
+        <DiscoveryFilters store={filtersStore} onTagsChange={this.onTagSelectionChange} onSelectOne={this.onSelectOne}/>
         {/* {!discovery.searchtext && <TagsSubBar onChange={this.onTagSelectionChange}/>} */}
       </View> :
       <Text style={[CS.fontM, CS.backgroundPrimary, CS.colorWhite, CS.textCenter, CS.padding]}>Recently visited</Text>;

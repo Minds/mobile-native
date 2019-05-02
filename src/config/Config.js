@@ -50,4 +50,7 @@ export const MINDS_DEEPLINK = [
   [':user/blog/:slug', 'BlogView'],
   [':username', 'Channel'],
   ['wallet/tokens/:section', 'Wallet'],
-]
+];
+
+
+export const GOOGLE_PLAY_STORE = false;

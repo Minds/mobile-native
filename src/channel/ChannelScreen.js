@@ -33,6 +33,7 @@ import UserModel from './UserModel';
 import Touchable from '../common/components/Touchable';
 import session from '../common/services/session.service';
 import logService from '../common/services/log.service';
+import { GOOGLE_PLAY_STORE } from '../config/Config';
 
 /**
  * Channel Screen
@@ -199,11 +200,11 @@ export default class ChannelScreen extends Component {
               text="GO BACK"
               onPress={() => this.props.navigation.goBack()}
             />
-            <Button
+            {!GOOGLE_PLAY_STORE && <Button
               inverted={true}
               text="VIEW"
               onPress={() => channel.toggleMatureVisibility()}
-            />
+            />}
           </View>
         </View>
       );

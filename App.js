@@ -50,7 +50,7 @@ import badgeService from './src/common/services/badge.service';
 import authService from './src/auth/AuthService';
 import NotificationsService from "./src/notifications/NotificationsService";
 import getMaches from './src/common/helpers/getMatches';
-import {CODE_PUSH_TOKEN} from './src/config/Config';
+import {CODE_PUSH_TOKEN, GOOGLE_PLAY_STORE} from './src/config/Config';
 import updateService from './src/common/services/update.service';
 import ErrorBoundary from './src/common/components/ErrorBoundary';
 import { CommonStyle as CS } from './src/styles/Common';
@@ -97,7 +97,7 @@ sessionService.onLogin(async () => {
   NavigationService.reset(sessionService.initialScreen);
 
   // check update
-  if (Platform.OS !== 'ios') {
+  if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
     setTimeout(async () => {
       const user = sessionService.getUser();
       updateService.checkUpdate(!user.canary);

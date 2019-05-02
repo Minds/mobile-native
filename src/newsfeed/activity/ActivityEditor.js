@@ -25,6 +25,7 @@ import featuresService from '../../common/services/features.service';
 import Colors from '../../styles/Colors';
 import logService from '../../common/services/log.service';
 import testID from '../../common/helpers/testID';
+import { GOOGLE_PLAY_STORE } from '../../config/Config';
 
 export default class ActivityEditor extends Component {
 
@@ -75,12 +76,12 @@ export default class ActivityEditor extends Component {
   renderNsfwView() {
     return (
       <View style={[CommonStyle.rowJustifyStart, CommonStyle.paddingTop]}>
-        <NsfwToggle
+        {!GOOGLE_PLAY_STORE && <NsfwToggle
           value={this.state.nsfw}
           onChange={this.onNsfwChange}
           containerStyle={styles.nsfw}
           labelStyle={styles.nsfwLabel}
-        />
+        />}
       </View>
     );
   }
