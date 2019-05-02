@@ -8,5 +8,5 @@ export default async(driver, text) => {
 
   // we press post button
   const postButton = await driver.elementByAccessibilityId('Capture Post Button');
-  postButton.click();
+  await postButton.click();
 }

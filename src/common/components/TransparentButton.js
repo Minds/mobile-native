@@ -18,34 +18,48 @@ export default class TransparentButton extends Component {
   };
 
   render() {
+    const {
+      textStyle,
+      disabled,
+      title,
+      style,
+      borderColor,
+      color,
+      disabledBorderColor,
+      disabledColor,
+      ...otherProps
+    } = this.props;
+
     let submitContent;
-    if (typeof this.props.title === 'string') {
+    if (typeof title === 'string') {
       submitContent = (<Text
         style={[
           CommonStyle.paddingLeft,
           CommonStyle.paddingRight,
-          style.buttonText,
-          this.props.textStyle,
-          { color: this.props.color || '#000' },
-          !!this.props.disabled && { color: this.props.disabledColor || '#aaa' }
+          styles.buttonText,
+          textStyle,
+          { color: color || '#000' },
+          !!disabled && { color: disabledColor || '#aaa' }
         ]}
-      >{this.props.title}</Text>);
+      >{title}</Text>);
     } else {
-      submitContent = this.props.title;
+      submitContent = title;
     }
+
 
     return (
       <TouchableHighlight
-        activeOpacity={this.props.disabled ? 1 : 0.7}
+        activeOpacity={disabled ? 1 : 0.7}
         underlayColor="transparent"
         onPress={this.onPressAction}
         style={[
           ComponentsStyle.button,
-          style.button,
-          this.props.style,
-          { borderColor: this.props.borderColor || this.props.color || '#000' },
-          !!this.props.disabled && { borderColor: this.props.disabledBorderColor || this.props.disabledColor || '#aaa' }
+          styles.button,
+          style,
+          { borderColor: borderColor || color || '#000' },
+          !!disabled && { borderColor: disabledBorderColor || disabledColor || '#aaa' }
         ]}
+        {...otherProps}
       >
         {submitContent}
       </TouchableHighlight>
@@ -53,7 +67,7 @@ export default class TransparentButton extends Component {
   }
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   button: {
     backgroundColor: 'transparent',
   },
