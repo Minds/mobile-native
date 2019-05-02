@@ -50,6 +50,26 @@ describe('post flow tests', () => {
     expect(await textElement.text()).toBe(str);
   });
 
+  it('should remind the previuos post and see it in the newsfeed', async () => {
+    const str = 'Reminding my own post';
+
+    const remindButton = await driver.waitForElementByAccessibilityId('Remind activity button', 5000);
+
+    // tap remind
+    await remindButton.click();
+
+    // make the post
+    await post(driver, str);
+
+    // should post and return to the newsfeed
+    await driver.waitForElementByAccessibilityId('Newsfeed Screen', wd.asserters.isDisplayed, 10000);
+
+    // the first element of the list should be the post
+    const textElement = await driver.waitForElementByXPath('//android.view.ViewGroup[@content-desc="Newsfeed Screen"]/android.view.ViewGroup[1]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView[1]');
+
+    expect(await textElement.text()).toBe(str);
+  });
+
   it('should post a nsfw and see it in the newsfeed', async () => {
     const str = 'My e2e post #mye2epost';
 
