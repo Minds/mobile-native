@@ -213,7 +213,7 @@ export default class DiscoveryScreen extends Component {
         renderItem={renderRow}
         ListFooterComponent={footer}
         CollapsibleHeaderComponent={this.getHeaders()}
-        headerHeight={(GOOGLE_PLAY_STORE && discovery.filters.type === 'channels') ? 94 : 146}
+        headerHeight={(GOOGLE_PLAY_STORE && discovery.filters.type !== 'channels') ? 94 : 146}
         ListEmptyComponent={this.getEmptyList()}
         keyExtractor={item => item.rowKey}
         onRefresh={this.refresh}
