@@ -7,7 +7,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 const data = {sessiondID: null};
 jasmine.getEnv().addReporter(reporterFactory(data));
 
-describe('login tests', () => {
+describe('Login flow', () => {
 
   let username, password, loginButton;
 

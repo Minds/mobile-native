@@ -20,6 +20,7 @@ exports[`Thumb action component renders correctly 1`] = `
       },
     ]
   }
+  testID="Thumb up activity button"
 >
   <Icon
     color="rgb(96, 125, 139)"
@@ -32,6 +33,7 @@ exports[`Thumb action component renders correctly 1`] = `
   />
   <Counter
     size={15}
+    testID="Thumb up count"
   />
 </PreventDoubleTap>
 `;

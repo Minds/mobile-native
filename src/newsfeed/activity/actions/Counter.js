@@ -28,12 +28,21 @@ export default class Counter extends PureComponent {
    * Render
    */
   render() {
+
+    const {
+      orientation,
+      size,
+      count,
+      ...otherProps
+    } = this.props;
+
     return (
       <View style={styles.counterContainer}>
         <Text
-          style={[ this.props.orientation != 'column' ? { paddingLeft: 4 } : { paddingLeft: 0}, styles.counter, { fontSize: Math.round(this.props.size * 0.75)}]}
-          >
-          {this.props.count > 0 ? abbrev(this.props.count,0) : ''}
+          style={[ orientation != 'column' ? { paddingLeft: 4 } : { paddingLeft: 0}, styles.counter, { fontSize: Math.round(size * 0.75)}]}
+          {...otherProps}
+        >
+          {count > 0 ? abbrev(count,0) : ''}
         </Text>
       </View>
     )

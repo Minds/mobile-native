@@ -11,7 +11,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
 const data = {sessiondID: null};
 jasmine.getEnv().addReporter(reporterFactory(data));
 
-describe('Discovery post edit tests', () => {
+describe('Discovery post edit flow', () => {
   beforeAll(async () => {
     await driver.init(capabilities);
     data.sessiondID = await driver.getSessionId();

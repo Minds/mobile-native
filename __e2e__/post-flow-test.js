@@ -16,7 +16,7 @@ const data = {sessiondID: null};
 jasmine.getEnv().addReporter(reporterFactory(data));
 //TODO: add support for ios to this test (xpath)
 
-describe('post flow tests', () => {
+describe('Post flow tests', () => {
   beforeAll(async () => {
     await driver.init(capabilities);
     data.sessiondID = await driver.getSessionId();
