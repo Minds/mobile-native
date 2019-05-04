@@ -134,17 +134,22 @@ sessionService.onLogout(() => {
 // disable yellow boxes
 console.disableYellowBox = true;
 
+type State = {
+  appState: string
+}
+
+type Props = {
+
+}
+
 /**
  * App
  */
 @codePush
-export default class App extends Component {
+export default class App extends Component<Props, State> {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      appState: AppState.currentState
-    };
+  state = {
+    appState: AppState.currentState || ''
   }
 
   /**
