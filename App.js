@@ -152,7 +152,7 @@ export default class App extends Component {
    */
   handleAppStateChange = (nextState) => {
     // if the app turns active we check for shared
-    if (this.state.appState.match(/inactive|background/) && nextState === 'active') {
+    if (this.state.appState && this.state.appState.match(/inactive|background/) && nextState === 'active') {
       receiveShare.handle();
     }
     this.setState({appState: nextState})
