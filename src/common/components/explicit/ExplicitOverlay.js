@@ -12,6 +12,7 @@ import {
 import { observer } from 'mobx-react/native';
 import { CommonStyle as CS } from '../../../styles/Common';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { GOOGLE_PLAY_STORE } from '../../../config/Config';
 
 /**
  * Explicit overlay
@@ -60,10 +61,12 @@ export default class ExplicitOverlay extends Component {
       )
     }
 
+    const text = GOOGLE_PLAY_STORE ? 'This post cannot be shown' : 'Confirm you are 18+';
+
     return (
       <TouchableOpacity activeOpacity={1} style={[CS.positionAbsolute, CS.centered, CS.backgroundDarkGreyed, styles.onTop, containerStyle]} onPress={this.toogle}>
         <Icon name="explicit" size={iconSize} color={'white'} style={CS.shadow}/>
-        {!hideText && <Text style={[CS.colorWhite, CS.shadow, fontStyle]}>Confirm you are 18+</Text>}
+        {!hideText && <Text style={[CS.colorWhite, CS.shadow, fontStyle]}>{text}</Text>}
       </TouchableOpacity>
     )
   }
