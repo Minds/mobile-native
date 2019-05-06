@@ -19,13 +19,13 @@ import Button from '../../common/components/Button';
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import HashtagService from '../../common/services/hashtag.service';
-import NsfwToggle from '../../common/components/nsfw/NsfwToggle';
 import autobind from '../../common/helpers/autobind';
 import featuresService from '../../common/services/features.service';
 import Colors from '../../styles/Colors';
 import logService from '../../common/services/log.service';
 import testID from '../../common/helpers/testID';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
+import CapturePosterFlags from '../../capture/CapturePosterFlags';
 
 export default class ActivityEditor extends Component {
 
@@ -36,6 +36,7 @@ export default class ActivityEditor extends Component {
   componentWillMount() {
     this.setState({
       text: this.props.entity.message,
+      wire_threshold: this.props.entity.wire_threshold || null,
       nsfw: this.props.entity.nsfw || [],
     });
   }
@@ -52,6 +53,13 @@ export default class ActivityEditor extends Component {
     };
 
     data.nsfw = [...this.state.nsfw];
+
+    data.wire_threshold = this.state.wire_threshold;
+    if (data.wire_threshold) {
+      data.paywall = data.wire_threshold.min > 0;
+    } else {
+      data.paywall = false;
+    }
 
     this.props.newsfeed.list.updateActivity(this.props.entity, data)
       .catch((err) => {
@@ -73,15 +81,22 @@ export default class ActivityEditor extends Component {
     });
   }
 
-  renderNsfwView() {
+ @autobind
+ onLocking(wire_threshold) {
+   this.setState({wire_threshold})
+ }
+
+  renderFlagsView() {
     return (
       <View style={[CommonStyle.rowJustifyStart, CommonStyle.paddingTop]}>
-        {!GOOGLE_PLAY_STORE && <NsfwToggle
-          value={this.state.nsfw}
-          onChange={this.onNsfwChange}
-          containerStyle={styles.nsfw}
-          labelStyle={styles.nsfwLabel}
-        />}
+        <CapturePosterFlags
+          hideShare={true}
+          hideHash={true}
+          lockValue={this.state.wire_threshold}
+          nsfwValue={this.state.nsfw}
+          onNsfw={this.onNsfwChange}
+          onLocking={this.onLocking}
+        />
       </View>
     );
   }
@@ -101,7 +116,7 @@ export default class ActivityEditor extends Component {
           {...testID('Post editor input')}
         />
         <View style={styles.buttonBar}>
-          {this.renderNsfwView()}
+          {this.renderFlagsView()}
 
           <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop]}>
             <Button text="Cancel" onPress={this.cancel} {...testID('Post editor cancel button')}/>
