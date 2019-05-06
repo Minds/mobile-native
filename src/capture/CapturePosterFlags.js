@@ -33,15 +33,13 @@ export default class CapturePosterFlags extends Component {
   // Lifecycle
 
   componentWillMount() {
-    this.props.capture.loadThirdPartySocialNetworkStatus();
-    this.props.capture.loadSuggestedTags().catch(e => {
-      logService.exception('[CapturePosterFlags] loadSuggestedTags', e);
-    });
-  }
+    // this.props.capture.loadThirdPartySocialNetworkStatus();
+    // this.props.capture.loadSuggestedTags().catch(e => {
+    //   logService.exception('[CapturePosterFlags] loadSuggestedTags', e);
+    // });
 
-  componentWillReceiveProps(props) {
-    if (typeof props.lockValue !== 'undefined') {
-      this.updateLockFromProps(props.lockValue);
+    if (typeof this.props.lockValue !== 'undefined') {
+      this.updateLockFromProps(this.props.lockValue);
     }
   }
 
@@ -83,6 +81,7 @@ export default class CapturePosterFlags extends Component {
   }
 
   hashsModal() {
+    if (this.props.hideHash) return null;
     return (
         <Modal
           isVisible={this.state.hashsModalVisible}
@@ -128,6 +127,8 @@ export default class CapturePosterFlags extends Component {
   }
 
   shareModalPartial() {
+    if (this.props.hideShare) return null;
+
     const networks = [
       { key: 'facebook', icon: 'logo-facebook', color: '#3b5998', label: 'Facebook' },
       { key: 'twitter', icon: 'logo-twitter', color: '#1da1f2', label: 'Twitter' },
@@ -270,6 +271,7 @@ export default class CapturePosterFlags extends Component {
   }
 
   lockingModalPartial() {
+    if (this.props.hideLock) return null;
     return (
       <Modal
         isVisible={this.state.lockingModalVisible}
@@ -341,8 +343,7 @@ export default class CapturePosterFlags extends Component {
   render() {
     const attachment = this.props.capture.attachment;
     return (
-      <View style={styles.view}>
-        <View style={{ flex: 1}} />
+      <View style={[styles.view, this.props.containerStyle]}>
         {attachment.hasAttachment && <View style={styles.cell}>
           <LicensePicker
             onLicenseSelected={(v) => attachment.setLicense(v)}
@@ -353,31 +354,31 @@ export default class CapturePosterFlags extends Component {
 
         {this.renderNsfw()}
 
-        <Touchable style={styles.cell} onPress={this.showShareModal}>
+        {!this.props.hideShare && <Touchable style={styles.cell} onPress={this.showShareModal}>
           <MdIcon
             name="share"
             color={this.isSharing() ? Colors.primary : Colors.darkGreyed}
             size={25}
           />
-        </Touchable>
+        </Touchable>}
 
-         <Touchable style={styles.cell} onPress={this.showHashsModal}>
+        {!this.props.hideHash && <Touchable style={styles.cell} onPress={this.showHashsModal}>
           <FaIcon
             name="hashtag"
             color={this.isSharing() ? Colors.primary : Colors.darkGreyed}
             size={25}
           />
-        </Touchable>
+        </Touchable>}
 
 
-        <Touchable style={[styles.cell, styles.cell__last]} onPress={this.showLockingModal}>
+        {!this.props.hideLock && <Touchable style={[styles.cell, styles.cell__last]} onPress={this.showLockingModal}>
           <IonIcon
             name="ios-flash"
             color={this.isLocking() ? Colors.primary : Colors.darkGreyed}
             size={30}
             {...testID('Post lock button')}
           />
-        </Touchable>
+        </Touchable>}
         {this.shareModalPartial()}
         {this.lockingModalPartial()}
         {this.hashsModal()}

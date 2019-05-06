@@ -3,22 +3,18 @@
 exports[`cature poster flags component should renders correctly for props false 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "borderRadius": 5,
-      "flexDirection": "row",
-      "marginBottom": 5,
-      "marginRight": 8,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "borderRadius": 5,
+        "flexDirection": "row",
+        "marginBottom": 5,
+        "marginRight": 8,
+      },
+      undefined,
+    ]
   }
 >
-  <View
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-  />
   <View
     collapsable={false}
   >
@@ -1000,7 +996,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 }
                 testID="Poster lock amount input"
                 underlineColorAndroid="transparent"
-                value="0"
+                value="undefined"
               />
               <Text
                 style={
@@ -1321,22 +1317,18 @@ exports[`cature poster flags component should renders correctly for props false 
 exports[`cature poster flags component should renders correctly for props true 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "borderRadius": 5,
-      "flexDirection": "row",
-      "marginBottom": 5,
-      "marginRight": 8,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "borderRadius": 5,
+        "flexDirection": "row",
+        "marginBottom": 5,
+        "marginRight": 8,
+      },
+      undefined,
+    ]
   }
 >
-  <View
-    style={
-      Object {
-        "flex": 1,
-      }
-    }
-  />
   <View
     collapsable={false}
   >
@@ -2318,7 +2310,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 }
                 testID="Poster lock amount input"
                 underlineColorAndroid="transparent"
-                value="0"
+                value="undefined"
               />
               <Text
                 style={

@@ -223,7 +223,9 @@ export default class CapturePoster extends Component {
         />}
 
         <CapturePosterFlags
+          containerStyle={[CS.rowJustifyEnd]}
           matureValue={this.state.mature}
+          hideShare={true}
           shareValue={this.state.share}
           lockValue={this.state.lock}
           nsfwValue={this.state.nsfw}

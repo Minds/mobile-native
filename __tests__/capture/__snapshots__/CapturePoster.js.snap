@@ -50,6 +50,15 @@ exports[`cature poster component should renders correctly 1`] = `
         />
       </View>
       <CapturePosterFlags
+        containerStyle={
+          Array [
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "flex-end",
+            },
+          ]
+        }
+        hideShare={true}
         lockValue={null}
         matureValue={false}
         nsfwValue={Array []}
