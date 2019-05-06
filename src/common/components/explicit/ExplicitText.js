@@ -17,7 +17,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
 import { CommonStyle } from '../../../styles/Common';
-import isNsfw from '../../helpers/isNsfw';
 
 @observer
 export default class ExplicitText extends Component {
