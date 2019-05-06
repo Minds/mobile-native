@@ -293,12 +293,6 @@ export default class MediaView extends Component {
    */
   navToImage = () => {
 
-    // if is explicit then should toggle
-    if (this.props.newsfeed && isEntityNsfw(this.props.entity)) {
-      this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid);
-      return;
-    }
-
     // if is a rich embed should load link
     if (this.props.entity.perma_url) {
       this.openLink();

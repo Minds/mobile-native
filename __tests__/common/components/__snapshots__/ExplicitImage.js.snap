@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Explicit image component renders correctly 1`] = `
-<ForwardRef(View)
+<ForwardRef
+  onError={[Function]}
+  onLoadEnd={[Function]}
+  resizeMode="cover"
   style={
     Array [
       Object {
@@ -12,10 +15,6 @@ exports[`Explicit image component renders correctly 1`] = `
         "top": 0,
       },
       undefined,
-      Object {
-        "backgroundColor": "black",
-        "zIndex": 1000,
-      },
     ]
   }
 />

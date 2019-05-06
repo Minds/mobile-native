@@ -28,7 +28,6 @@ import { CommonStyle as CS } from '../styles/Common';
 import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import en from "../../locales/en";
-import isNsfw from '../common/helpers/isNsfw';
 import logService from '../common/services/log.service';
 
 const isIOS = Platform.OS === 'ios';
@@ -285,7 +284,7 @@ class MindsVideo extends Component {
     const entity = this.props.entity;
     let {currentTime, duration, paused} = this.state;
 
-    const mustShow = ((this.state.showOverlay && !isIOS) || this.state.paused) && (!entity ||!isNsfw(entity) || entity.mature_visibility);
+    const mustShow = (this.state.showOverlay && !isIOS) || this.state.paused;
 
     if (mustShow) {
       const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;

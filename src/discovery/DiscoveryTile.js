@@ -24,7 +24,6 @@ import Placeholder from 'rn-placeholder';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import { CommonStyle as CS } from '../styles/Common';
-import { isEntityNsfw } from '../common/helpers/isNsfw';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -80,7 +79,7 @@ export default class DiscoveryTile extends Component {
 
     const style = { width: this.props.size, height: this.props.size };
 
-    const show_overlay = (isEntityNsfw(entity) && !entity.is_parent_mature) && !(isEntityNsfw(entity) && entity.is_parent_mature);
+    const show_overlay = (entity.shouldBeBlured() && !entity.is_parent_mature) && !(entity.shouldBeBlured() && entity.is_parent_mature);
 
     const overlay = (show_overlay) ?
       <ExplicitOverlay

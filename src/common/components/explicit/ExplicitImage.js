@@ -17,7 +17,6 @@ import { createImageProgress } from 'react-native-image-progress';
 import ProgressCircle from 'react-native-progress/Circle';
 import { Icon } from 'react-native-elements';
 import { CommonStyle } from '../../../styles/Common';
-import isNsfw from '../../helpers/isNsfw';
 
 const ProgressFastImage = createImageProgress(FastImage);
 const ProgressImage = createImageProgress(Image);
@@ -44,7 +43,7 @@ export default class ExplicitImage extends Component {
     const loadingIndicator = this.props.loadingIndicator;
 
     // do not show image if it is mature
-    if (isNsfw(this.props.entity) && !this.props.entity.mature_visibility) {
+    if (this.props.entity.shouldBeBlured() && !this.props.entity.mature_visibility) {
       return (
         <View
           style={[CommonStyle.positionAbsolute, this.props.imageStyle, CommonStyle.blackOverlay]}
