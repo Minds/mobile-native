@@ -33,6 +33,7 @@ import mindsService from '../services/minds.service';
 import { isEntityNsfw } from '../helpers/isNsfw';
 import openUrlService from '../services/open-url.service';
 import logService from '../services/log.service';
+import testID from '../helpers/testID';
 
 /**
  * Activity
@@ -185,7 +186,13 @@ export default class MediaView extends Component {
       let ratio = custom_data[0].height / custom_data[0].width;
       let height = this.props.width * ratio;
       return (
-        <TouchableOpacity onPress={this.navToImage} onLongPress={this.download} style={[styles.imageContainer, { height }]} activeOpacity={1}>
+        <TouchableOpacity
+          onPress={this.navToImage}
+          onLongPress={this.download}
+          style={[styles.imageContainer, { height }]}
+          activeOpacity={1}
+          {...testID('Posted Image')}
+        >
           <ExplicitImage
             source={source}
             entity={this.props.entity}
