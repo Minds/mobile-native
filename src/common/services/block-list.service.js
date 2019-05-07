@@ -28,9 +28,8 @@ class BlockListService {
       }
     });
 
-    this._emitter.on('change', async () => {
-      this._cached = await this.getList();
-    });
+    // Update cache on changes
+    this._emitter.on('change', () => this.getList());
   }
 
   async doSync() {
