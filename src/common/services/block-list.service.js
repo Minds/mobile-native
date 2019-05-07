@@ -6,10 +6,19 @@ import { EventEmitter } from "events";
 
 class BlockListService {
   constructor() {
-    const storageAdapter = sqliteStorageProviderService.get();
-    this.sync = new BlockListSync(apiService, storageAdapter);
+    // Properties
+
+    this.sync = new BlockListSync(apiService, sqliteStorageProviderService.get());
+
+    this._emitter = new EventEmitter();
+
+    this._cached = [];
+
+    // Initialization
 
     this.sync.setUp();
+
+    // Events / Reactiveness
 
     sessionService.onSession(token => {
       if (token) {
@@ -19,15 +28,27 @@ class BlockListService {
       }
     });
 
-    this._emitter = new EventEmitter();
+    this._emitter.on('change', async () => {
+      this._cached = await this.getList();
+    });
   }
 
   async doSync() {
-    return await this.sync.sync();
+    await this.sync.sync();
+    await this.getList();
   }
 
   async getList() {
-    return await this.sync.getList();
+    const list = (await this.sync.getList()) || [];
+    this._cached = list;
+    return [...list];
+  }
+
+  /**
+   * @returns {String[]}
+   */
+  getCachedList() {
+    return [...this._cached];
   }
 
   async add(guid: string) {
