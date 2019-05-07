@@ -73,6 +73,7 @@ class ChannelService {
       offset: next,
     }
   }
+
   async getFeed(guid, opts = { limit: 12 }) {
     if (featuresService.has('es-feeds')) {
       const pinned = [];
