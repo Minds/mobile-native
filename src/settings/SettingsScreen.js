@@ -54,7 +54,7 @@ export default class SettingsScreen extends Component {
 
     this.setState({
       logActiveInitial: logService.active,
-      leftHandedInitial: await storageService.getItem('LeftHandedActive')
+      leftHandedInitial: await settingsService.getLocal('LeftHandedActive')
     });
   }
 
@@ -63,8 +63,8 @@ export default class SettingsScreen extends Component {
     this.setState({logActiveInitial: !logService.active});
   }
   
-  leftHandedActivate = async() => {
-    await storageService.setItem('LeftHandedActive', !this.state.leftHandedInitial);
+  leftHandedActivate = () => {
+    settingsService.setLocal('LeftHandedActive', !this.state.leftHandedInitial);
     this.setState({leftHandedInitial: !this.state.leftHandedInitial});
   }
 

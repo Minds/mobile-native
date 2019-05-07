@@ -3,6 +3,7 @@ import * as stacktraceParser from "stacktrace-parser";
 
 import { AsyncStorage } from 'react-native';
 import storageService from './storage.service';
+import settingsService from '../../settings/SettingsService'
 
 const parseErrorStack = error => {
   if (!error || !error.stack) {
@@ -23,7 +24,7 @@ class LogService {
    * Init service
    */
   init = async() => {
-    this.active = await storageService.getItem('AppLogActive');
+    this.active = await settingsService.getLocal('AppLogActive');
     this._init();
   }
 
@@ -32,7 +33,7 @@ class LogService {
    * @param {boolean} value
    */
   async setActive(value) {
-    await storageService.setItem('AppLogActive', !!value);
+    await settingsService.setLocal('AppLogActive', !!value);
     this.active = value;
     this._init();
   }

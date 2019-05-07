@@ -2,11 +2,27 @@ import api from './../common/services/api.service';
 import { Alert } from 'react-native';
 import sessionService from '../common/services/session.service';
 import navigationService from '../navigation/NavigationService';
+import storageService from '../common/services/storage.service';
 
 /**
  * Settings Service
  */
 class SettingsService {
+
+  /**
+   * Returns value from local storage.
+   * @param {string} key - the key of the entry to get.
+  *  @returns {string} - the value from local storage.
+   */
+  getLocal = async (key) => await storageService.getItem(key);
+
+  /**
+   * Sets a value in local storage.
+   * @param {string} key - the key to be set.
+   * @param {string} value - the value to be set. 
+   */
+  setLocal = async (key, value) => await storageService.setItem(key, !!value);
+  
 
   /**
    * Load Categories
