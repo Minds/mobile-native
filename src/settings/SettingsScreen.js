@@ -17,6 +17,7 @@ import {
 } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import authService from './../auth/AuthService';
 import { List, ListItem } from 'react-native-elements';
@@ -26,6 +27,7 @@ import settingsService from './SettingsService';
 import i18nService from '../common/services/i18n.service';
 import appStores from '../../AppStores';
 import logService from '../common/services/log.service';
+import storageService from '../common/services/storage.service';
 
 const ICON_SIZE = 24;
 
@@ -37,10 +39,11 @@ export default class SettingsScreen extends Component {
 
   state = {
     categories: [],
-    logActiveInitial: false
+    logActiveInitial: false,
+    leftHandedInitial: false
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     settingsService.loadCategories()
       .then(categories => {
         this.setState({
@@ -49,12 +52,20 @@ export default class SettingsScreen extends Component {
         });
       });
 
-    this.setState({logActiveInitial: logService.active});
+    this.setState({
+      logActiveInitial: logService.active,
+      leftHandedInitial: await storageService.getItem('LeftHandedActive')
+    });
   }
 
   appLogActivate = () => {
     logService.setActive(!logService.active);
     this.setState({logActiveInitial: !logService.active});
+  }
+  
+  leftHandedActivate = async() => {
+    await storageService.setItem('LeftHandedActive', !this.state.leftHandedInitial);
+    this.setState({leftHandedInitial: !this.state.leftHandedInitial});
   }
 
   wipeEthereumKeychainAction = () => {
@@ -133,7 +144,7 @@ export default class SettingsScreen extends Component {
               NavigationActions.navigate({ routeName: 'Login' })
             ]
           })
-
+          
           this.props.navigation.dispatch(loginAction);
         }
       },
@@ -164,8 +175,16 @@ export default class SettingsScreen extends Component {
         switched: !this.state.logActiveInitial,
         onSwitch: this.appLogActivate
       },
+      {
+        name: 'Left Handed Mode',
+        icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={ styles.icon }/>),
+        switchButton: true,
+        hideChevron: true,
+        switched: !this.state.leftHandedInitial,
+        onSwitch: this.leftHandedActivate
+      },
     ];
-
+    
     return (
       <ScrollView style={styles.scrollView}>
         <View style={styles.scrollViewContainer}>
