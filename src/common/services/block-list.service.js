@@ -2,6 +2,7 @@ import BlockListSync from "../../lib/minds-sync/services/BlockListSync";
 import apiService from "./api.service";
 import sqliteStorageProviderService from "./sqlite-storage-provider.service";
 import sessionService from "./session.service";
+import { EventEmitter } from "events";
 
 class BlockListService {
   constructor() {
@@ -17,6 +18,8 @@ class BlockListService {
         this.prune();
       }
     });
+
+    this._emitter = new EventEmitter();
   }
 
   async doSync() {
@@ -28,15 +31,28 @@ class BlockListService {
   }
 
   async add(guid: string) {
-    return await this.sync.add(guid);
+    const result = await this.sync.add(guid);
+    this._emitter.emit('change');
+    return result;
   }
 
   async remove(guid: string) {
-    return await this.sync.remove(guid);
+    const result = await this.sync.remove(guid);
+    this._emitter.emit('change');
+    return result;
   }
 
   async prune() {
-    return await this.sync.prune();
+    const result = await this.sync.prune();
+    this._emitter.emit('change');
+    return result;
+  }
+
+  /**
+   * @returns {module:events.internal.EventEmitter}
+   */
+  get events() {
+    return this._emitter;
   }
 }
 

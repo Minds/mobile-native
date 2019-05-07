@@ -32,6 +32,9 @@ import CaptureMetaPreview from '../capture/CaptureMetaPreview';
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle as CmpStyle } from '../styles/Components';
 
+import blockListService from '../common/services/block-list.service';
+import autobind from "../common/helpers/autobind";
+
 // types
 type Props = {
   header?: any,
@@ -92,6 +95,7 @@ export default class CommentList extends React.Component<Props, State> {
     focused: false,
     hideInput: false,
     guid: null,
+    blockedChannels: [],
     selection: {
       start:0,
       end: 0
@@ -106,16 +110,25 @@ export default class CommentList extends React.Component<Props, State> {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     this.props.store.setEntity(this.props.entity);
     this.loadComments();
+
+    blockListService.events.on('change', this._onBlockListChange);
   }
 
   /**
    * Component will unmount
    */
   componentWillUnmount() {
+    blockListService.events.removeListener('change', this._onBlockListChange);
+
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
     this.props.store.unlisten();
     this.props.store.clearComments();
+  }
+
+  @autobind
+  _onBlockListChange() {
+    this.loadBlockedChannels();
   }
 
   /**
@@ -208,11 +221,13 @@ export default class CommentList extends React.Component<Props, State> {
   onChildFocus = (item, offset) => {
     if (!offset) offset = 0;
 
+    const comments = this.getComments();
+
     if (!this.props.parent) {
-      this.focusedChild = this.props.store.comments.findIndex(c => item === c);
+      this.focusedChild = comments.findIndex(c => item === c);
       this.focusedOffset = offset;
     } else {
-      const index = this.props.store.comments.findIndex(c => item === c);
+      const index = comments.findIndex(c => item === c);
       const frame = this.listRef._listRef._getFrameMetricsApprox(index);
       if (this.props.onInputFocus) {
         this.props.onInputFocus(item, offset + frame.offset + frame.length);
@@ -238,6 +253,8 @@ export default class CommentList extends React.Component<Props, State> {
    * Load comments
    */
   loadComments = async (loadingMore = false, descending = true) => {
+    await this.loadBlockedChannels();
+
     let guid;
     const scrollToBottom = this.props.navigation.state.params.scrollToBottom;
 
@@ -253,6 +270,14 @@ export default class CommentList extends React.Component<Props, State> {
     if (!loadingMore && scrollToBottom && this.props.store.loaded) {
       this.scrollBottomIfNeeded();
     }
+  }
+
+
+  @autobind
+  async loadBlockedChannels() {
+    this.setState({
+      blockedChannels: (await blockListService.getList()) || [],
+    });
   }
 
   /**
@@ -390,6 +415,21 @@ export default class CommentList extends React.Component<Props, State> {
     return null;
   }
 
+  getComments() {
+    if (!this.props.store.comments) {
+      return [];
+    }
+
+    return this.props.store.comments
+      .filter(comment => Boolean(comment))
+      .filter(comment => this.state.blockedChannels.indexOf(comment.owner_guid) === -1);
+  }
+
+  isWholeThreadBlocked() {
+    return this.props.store.comments.length > 0 &&
+      this.props.store.comments.length !== this.getComments().length;
+  }
+
   /**
    * Render
    */
@@ -408,6 +448,14 @@ export default class CommentList extends React.Component<Props, State> {
       />
     }
 
+    const comments = this.getComments();
+
+    const emptyThread = (<View style={[CS.textCenter]}>
+      {this.isWholeThreadBlocked() && <Text style={[CS.textCenter, CS.marginBottom2x, CS.marginTop2x, CS.fontLight]}>
+        This thread contains replies from blocked channels.
+      </Text>}
+    </View>);
+
     return (
       <View style={[CS.flexContainer, CS.backgroundWhite, paddingBottom]} onLayout={this.onLayout}>
         <KeyboardAvoidingView style={[CS.flexContainer]} behavior={Platform.OS == 'ios' ? 'padding' : null}
@@ -416,14 +464,14 @@ export default class CommentList extends React.Component<Props, State> {
             <FlatList
               ref={ref => this.listRef = ref}
               ListHeaderComponent={header}
-              data={this.props.store.comments.slice()}
+              data={comments}
               keyboardShouldPersistTaps={'handled'}
               renderItem={this.renderComment}
               keyExtractor={item => item.guid}
               initialNumToRender={25}
               onRefresh={this.refresh}
               refreshing={this.props.store.refreshing}
-              ListEmptyComponent={this.props.store.loaded && !this.props.store.refreshing ? <View/> : <CenteredLoading/>}
+              ListEmptyComponent={this.props.store.loaded && !this.props.store.refreshing ? emptyThread : <CenteredLoading/>}
               style={[CS.flexContainer, CS.backgroundWhite]}
             />
             {this.renderPoster()}
