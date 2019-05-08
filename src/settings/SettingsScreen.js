@@ -23,27 +23,29 @@ import authService from './../auth/AuthService';
 import { List, ListItem } from 'react-native-elements';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from './SettingsService';
+import settingsStore from './SettingsStore';
 
 import i18nService from '../common/services/i18n.service';
 import appStores from '../../AppStores';
 import logService from '../common/services/log.service';
 import storageService from '../common/services/storage.service';
+import { observer } from 'mobx-react/native';
 
 const ICON_SIZE = 24;
 
+@observer
 export default class SettingsScreen extends Component {
 
   static navigationOptions = {
     title: 'Settings',
+    leftHandedInitial: false,
   };
 
   state = {
     categories: [],
-    logActiveInitial: false,
-    leftHandedInitial: false
   }
 
-  async componentWillMount() {
+  componentWillMount() {
     settingsService.loadCategories()
       .then(categories => {
         this.setState({
@@ -51,21 +53,15 @@ export default class SettingsScreen extends Component {
           language: i18nService.getCurrentLocale()
         });
       });
-
-    this.setState({
-      logActiveInitial: logService.active,
-      leftHandedInitial: await settingsService.getLocal('LeftHandedActive')
-    });
-  }
+      settingsStore.init();
+    }
 
   appLogActivate = () => {
-    logService.setActive(!logService.active);
-    this.setState({logActiveInitial: !logService.active});
+    settingsStore.appLogActive = !settingsStore.appLogActive
   }
   
   leftHandedActivate = () => {
-    settingsService.setLocal('LeftHandedActive', !this.state.leftHandedInitial);
-    this.setState({leftHandedInitial: !this.state.leftHandedInitial});
+    settingsStore.leftHandedActive = !settingsStore.leftHandedActive
   }
 
   wipeEthereumKeychainAction = () => {
@@ -172,7 +168,7 @@ export default class SettingsScreen extends Component {
         icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
         switchButton: true,
         hideChevron: true,
-        switched: !this.state.logActiveInitial,
+        switched: !settingsStore.appLogActive,
         onSwitch: this.appLogActivate
       },
       {
@@ -180,7 +176,7 @@ export default class SettingsScreen extends Component {
         icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={ styles.icon }/>),
         switchButton: true,
         hideChevron: true,
-        switched: !this.state.leftHandedInitial,
+        switched: settingsStore.leftHandedActive,
         onSwitch: this.leftHandedActivate
       },
     ];
