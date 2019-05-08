@@ -134,17 +134,22 @@ sessionService.onLogout(() => {
 // disable yellow boxes
 console.disableYellowBox = true;
 
+type State = {
+  appState: string
+}
+
+type Props = {
+
+}
+
 /**
  * App
  */
 @codePush
-export default class App extends Component {
+export default class App extends Component<Props, State> {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      appState: AppState.currentState
-    };
+  state = {
+    appState: AppState.currentState || ''
   }
 
   /**
@@ -152,7 +157,7 @@ export default class App extends Component {
    */
   handleAppStateChange = (nextState) => {
     // if the app turns active we check for shared
-    if (this.state.appState.match(/inactive|background/) && nextState === 'active') {
+    if (this.state.appState && this.state.appState.match(/inactive|background/) && nextState === 'active') {
       receiveShare.handle();
     }
     this.setState({appState: nextState})

@@ -220,7 +220,7 @@ export default class DiscoveryScreen extends Component {
         refreshing={list.refreshing}
         onEndReached={this.loadFeed}
         initialNumToRender={this.cols == 3 ? 12 : 3}
-        style={styles.listView}
+        style={[CS.backgroundWhite, CS.flexContainer]}
         numColumns={this.cols}
         horizontal={false}
         windowSize={9}
@@ -505,7 +505,14 @@ export default class DiscoveryScreen extends Component {
     }
     return (
       <ErrorBoundary message="Render error" containerStyle={[CS.centered, {width: this.state.itemHeight, height:this.state.itemHeight}]} textSmall={true}>
-        <DiscoveryTile entity={row.item} size={this.state.itemHeight} onPress={() => this.setState({'showFeed': row.index})}/>
+        <DiscoveryTile
+          entity={row.item}
+          size={this.state.itemHeight}
+          onPress={() => this.props.navigation.push('DiscoveryFeed', {
+            'showFeed': row.index,
+            title: _.capitalize(this.props.discovery.filters.filter) + ' ' + _.capitalize(this.props.discovery.filters.type)
+          })}
+        />
       </ErrorBoundary>
     );
   }
@@ -568,12 +575,6 @@ const styles = StyleSheet.create({
     padding: 17,
     width: 50
     //backgroundColor: '#EEE'
-  },
-	listView: {
-    backgroundColor: '#FFF',
-    flex: 1,
-    // marginLeft: -1,
-    // marginRight: -1,
   },
   navigation: {
     flexDirection: 'row',

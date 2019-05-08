@@ -17,6 +17,7 @@ exports[`Media view component renders correctly 1`] = `
         },
       ]
     }
+    testID="Posted Image"
   >
     <ExplicitImage
       entity={

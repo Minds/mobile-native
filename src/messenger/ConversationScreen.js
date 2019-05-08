@@ -171,11 +171,11 @@ export default class ConversationScreen extends Component {
     if (shouldSetup) {
       return <MessengerSetup navigation={this.props.navigation} onDone={this.onDoneSetup} />
     }
-    
+
     if (shouldInvite) {
       return <MessengerInvite navigation={this.props.navigation} messengerConversation={this.store}/>
     }
-    
+
     const footer = this.getFooter();
     const messages = this.store.messages.slice();
     const conversation = this.props.navigation.state.params.conversation;
@@ -216,10 +216,10 @@ export default class ConversationScreen extends Component {
   }
 
   /**
-   * Checks whether a message contains more than 180 characters, 
+   * Checks whether a message contains more than 180 characters,
    * if it does not, sets the text state to the string passed in.
-   * 
-   * @param { string } text - the text to be checked 
+   *
+   * @param { string } text - the text to be checked
    */
   textChanged(text) {
     if(text.length > 180){
@@ -228,7 +228,7 @@ export default class ConversationScreen extends Component {
     this.setState({ text: text })
   }
 
-  
+
 
 
   /**

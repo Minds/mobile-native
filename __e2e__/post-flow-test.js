@@ -96,6 +96,9 @@ describe('Post flow tests', () => {
     // press capture button
     await pressCapture(driver);
 
+    // deselect nsfw
+    await selectNsfw(driver, ['Nudity', 'Pornography']);
+
     const str = 'pay me something';
 
     await lockPost(driver, '1');
@@ -129,6 +132,16 @@ describe('Post flow tests', () => {
     const textElement = await driver.waitForElementByXPath('//android.view.ViewGroup[@content-desc="Newsfeed Screen"]/android.view.ViewGroup[1]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView[2]');
 
     expect(await textElement.text()).toBe(str);
+  });
+
+  it('should open the images in full screen after tap', async () => {
+    // get the Image touchable
+    const imageButton = await driver.waitForElementByAccessibilityId('Posted Image', wd.asserters.isDisplayed, 10000);
+    await imageButton.click();
+    const image = await driver.waitForElementByXPath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.ImageView');
+
+    const goBack = await driver.waitForElementByAccessibilityId('Go back button', wd.asserters.isDisplayed, 10000);
+    await goBack.click();
   });
 
   it('should upload an image and cancel it', async () => {

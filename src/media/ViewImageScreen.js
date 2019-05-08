@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import PhotoView from 'react-native-photo-view';
 
 import { CommonStyle } from '../styles/Common';
+import testID from '../common/helpers/testID';
 
 /**
  * Full screen image viewer
@@ -25,7 +26,13 @@ export default class ViewImageScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     header: (
       <View style={styles.header}>
-        <Icon size={36} name="ios-close" onPress={() => navigation.goBack()} style={styles.iconclose}/>
+        <Icon
+          size={36}
+          name="ios-close"
+          onPress={() => navigation.goBack()}
+          style={styles.iconclose}
+          {...testID('Go back button')}
+        />
       </View>
     ),
     transitionConfig: {

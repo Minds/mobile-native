@@ -33,6 +33,7 @@ import mindsService from '../services/minds.service';
 import { isEntityNsfw } from '../helpers/isNsfw';
 import openUrlService from '../services/open-url.service';
 import logService from '../services/log.service';
+import testID from '../helpers/testID';
 
 /**
  * Activity
@@ -185,7 +186,13 @@ export default class MediaView extends Component {
       let ratio = custom_data[0].height / custom_data[0].width;
       let height = this.props.width * ratio;
       return (
-        <TouchableOpacity onPress={this.navToImage} onLongPress={this.download} style={[styles.imageContainer, { height }]} activeOpacity={1}>
+        <TouchableOpacity
+          onPress={this.navToImage}
+          onLongPress={this.download}
+          style={[styles.imageContainer, { height }]}
+          activeOpacity={1}
+          {...testID('Posted Image')}
+        >
           <ExplicitImage
             source={source}
             entity={this.props.entity}
@@ -292,12 +299,6 @@ export default class MediaView extends Component {
    * Nav to full image with zoom
    */
   navToImage = () => {
-
-    // if is explicit then should toggle
-    if (this.props.newsfeed && isEntityNsfw(this.props.entity)) {
-      this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid);
-      return;
-    }
 
     // if is a rich embed should load link
     if (this.props.entity.perma_url) {

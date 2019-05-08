@@ -30,7 +30,6 @@ import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import Lock from '../../wire/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
-import { isEntityNsfw } from '../../common/helpers/isNsfw';
 import blockListService from '../../common/services/block-list.service';
 
 /**
@@ -222,7 +221,7 @@ export default class Activity extends Component {
         );
       }
 
-      if (isEntityNsfw(this.props.entity)) {
+      if (this.props.entity.shouldBeBlured()) {
         remind_object.is_parent_mature = true;
       }
 

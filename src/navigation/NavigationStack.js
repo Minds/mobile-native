@@ -48,6 +48,7 @@ import UpdatingScreen from '../update/UpdateScreen';
 import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 import LogsScreen from '../logs/LogsScreen';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
+import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 
 /**
  * Main stack navigator
@@ -102,6 +103,9 @@ const Stack = createStackNavigator({
   },
   Conversation: {
     screen: withErrorBoundaryScreen(ConversationScreen)
+  },
+  DiscoveryFeed: {
+    screen: withErrorBoundaryScreen(DiscoveryFeedScreen)
   },
   Subscribers: {
     screen: withErrorBoundaryScreen(ChannelSubscribers)

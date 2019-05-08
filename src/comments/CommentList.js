@@ -65,7 +65,7 @@ type CommentType = {
 const isIOS = Platform.OS === 'ios';
 const vPadding = isIphoneX ? 88 : 66;
 const paddingBottom = isIphoneX ? { paddingBottom: 12 } : null;
-const inputStyle = isIOS ? { height:25 } : { height:40 };
+const inputStyle = isIOS ? { marginTop:3 } : { marginTop:2 };
 
 // helper method
 function getEntityGuid(entity) {
@@ -212,7 +212,10 @@ export default class CommentList extends React.Component<Props, State> {
   onFocus = () => {
     if (!this.props.parent) this.scrollToBottom();
     this.focusedChild = -1;
-    this.setState({focused: true});
+
+    if (!this.state.focused) {
+      this.setState({focused: true});
+    }
     if (this.props.onInputFocus) {
       this.props.onInputFocus();
     }
@@ -311,10 +314,10 @@ export default class CommentList extends React.Component<Props, State> {
 
     return (
       <View>
-        <View style={[CS.rowJustifyCenter, CS.centered, CS.margin, CS.padding, CS.backgroundWhite, CS.borderRadius12x, CS.borderGreyed, CS.borderHair]}>
+        <View style={[CS.rowJustifyCenter, CS.margin, CS.padding, CS.backgroundWhite, CS.borderRadius12x, CS.borderGreyed, CS.borderHair]}>
           <Image source={avatarImg} style={CmpStyle.posterAvatar} />
           <TextInput
-            style={[CS.flexContainer, CS.marginLeft, inputStyle]}
+            style={[CS.flexContainer, CS.marginLeft, inputStyle, {paddingVertical: 2}]}
             editable={true}
             underlineColorAndroid='transparent'
             placeholder='Type your comment...'
@@ -322,6 +325,8 @@ export default class CommentList extends React.Component<Props, State> {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             multiline={true}
+            autogrow={true}
+            maxHeight={110}
             value={comments.text}
             ref={textInput => this.textInput = textInput}
             onSelectionChange={this.onSelectionChanges}
@@ -330,7 +335,7 @@ export default class CommentList extends React.Component<Props, State> {
             <Progress.Pie progress={attachment.progress} size={36} />:
             (comments.saving || attachment.checkingVideoLength) ?
               <ActivityIndicator size={'large'} /> :
-              <View style={CS.rowJustifyEnd}>
+              <View style={[CS.rowJustifyEnd, CS.centered]}>
                 <TouchableOpacity onPress={() => this.actionAttachmentSheet.show()} style={CS.paddingRight2x}><Icon name="md-attach" size={24} style={CS.paddingRight2x} /></TouchableOpacity>
                 <TouchableOpacity onPress={this.postComment} style={CS.paddingRight2x}><Icon name="md-send" size={24} /></TouchableOpacity>
               </View>}
