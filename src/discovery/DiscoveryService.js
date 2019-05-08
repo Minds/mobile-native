@@ -120,8 +120,8 @@ class DiscoveryService {
     });
 
     return {
-      entities,
-      offset: next || 0,
+      entities: entities || [],
+      offset: next || '',
     }
   }
 

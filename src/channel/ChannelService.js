@@ -69,8 +69,8 @@ class ChannelService {
     });
 
     return {
-      entities,
-      offset: next,
+      entities: entities || [],
+      offset: entities && entities.length ? next : '',
     }
   }
 
@@ -95,7 +95,7 @@ class ChannelService {
       }
 
       return  {
-        entities: [...pinned, ...entities],
+        entities: [...pinned, ...(entities || [])],
         offset,
       };
     } else {

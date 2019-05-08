@@ -39,8 +39,8 @@ export default class NewsfeedService {
     });
 
     return {
-      entities,
-      offset: next,
+      entities: entities || [],
+      offset: entities && entities.length ? next : '',
     }
   }
 

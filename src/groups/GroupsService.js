@@ -85,8 +85,8 @@ class GroupsService {
 
       return  {
         adminqueueCount: 0, // TODO: Implement this again
-        entities: [...pinned, ...entities],
-        offset: entities.length ? next : '',
+        entities: [...pinned, ...(entities || [])],
+        offset: entities && entities.length ? next : '',
       };
     } else {
       return await this.loadFeedLegacy(guid, offset, pinnedGuids);
