@@ -84,7 +84,6 @@ class GroupsService {
       }
 
       return  {
-        adminqueueCount: 0, // TODO: Implement this again
         entities: [...pinned, ...(entities || [])],
         offset: entities && entities.length ? next : '',
       };
