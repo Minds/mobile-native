@@ -18,6 +18,7 @@ exports[`Activity editor component renders correctly 1`] = `
     multiline={true}
     numberOfLines={4}
     onChangeText={[Function]}
+    rejectResponderTermination={true}
     style={
       Array [
         Object {

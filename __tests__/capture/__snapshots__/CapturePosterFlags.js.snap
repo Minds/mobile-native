@@ -981,6 +981,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 allowFontScaling={true}
                 keyboardType="numeric"
                 onChangeText={[Function]}
+                rejectResponderTermination={true}
                 style={
                   Object {
                     "backgroundColor": "#eee",
@@ -1292,6 +1293,7 @@ exports[`cature poster flags component should renders correctly for props false 
                 onEndEditing={[Function]}
                 onSubmitEditing={[Function]}
                 placeholder="eg. science"
+                rejectResponderTermination={true}
                 returnKeyType="next"
                 style={
                   Object {
@@ -2295,6 +2297,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 allowFontScaling={true}
                 keyboardType="numeric"
                 onChangeText={[Function]}
+                rejectResponderTermination={true}
                 style={
                   Object {
                     "backgroundColor": "#eee",
@@ -2606,6 +2609,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                 onEndEditing={[Function]}
                 onSubmitEditing={[Function]}
                 placeholder="eg. science"
+                rejectResponderTermination={true}
                 returnKeyType="next"
                 style={
                   Object {

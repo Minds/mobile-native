@@ -22,6 +22,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
       onChangeText={[Function]}
       placeholder="Username"
       placeholderTextColor="#444"
+      rejectResponderTermination={true}
       returnKeyType="done"
       style={
         Array [
@@ -50,6 +51,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
       onChangeText={[Function]}
       placeholder="Email"
       placeholderTextColor="#444"
+      rejectResponderTermination={true}
       returnKeyType="done"
       style={
         Array [
@@ -78,6 +80,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
       onChangeText={[Function]}
       placeholder="Password"
       placeholderTextColor="#444"
+      rejectResponderTermination={true}
       returnKeyType="done"
       secureTextEntry={true}
       style={

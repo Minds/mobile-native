@@ -112,18 +112,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode Integer.parseInt(project.versionCode)
         versionName project.versionName
-        ndk {
-            abiFilters "armeabi-v7a", "x86"
-        }
-        packagingOptions {
-            // The project react-native does not provide 64-bit binaries at the
-            // time of this writing. Unfortunately, packaging any 64-bit
-            // binaries into the .apk will crash the app at runtime on 64-bit
-            // platforms.
-            exclude '/lib/mips64/**'
-            exclude '/lib/arm64-v8a/**'
-            exclude '/lib/x86_64/**'
-        }
         renderscriptTargetApi 21
         renderscriptSupportModeEnabled true
     }
@@ -137,12 +125,12 @@ android {
             }
         }
     }
-    splits {
+  splits {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include "armeabi-v7a", "x86"
+            include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
     buildTypes {
@@ -158,23 +146,18 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a": 3, "x86_64": 4]
             def abi = output.getFilter(OutputFile.ABI)
-            if (abi != null) {  // null for the universal-debug, universal-release variants
-                //output.versionCodeOverride =
-                //        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
-            }
+            // if (abi != null) {  // null for the universal-debug, universal-release variants
+            //     output.versionCodeOverride =
+            //             versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+            // }
         }
     }
 
     packagingOptions {
         pickFirst '**/libjsc.so'
-    }
-}
-
-configurations.all {
-    resolutionStrategy {
-        force 'org.webkit:android-jsc:r236355'
+        pickFirst '**/libc++_shared.so'
     }
 }
 
@@ -193,7 +176,7 @@ dependencies {
       exclude group: 'com.facebook.react',module:'react-native-fast-image'
       exclude group: 'com.facebook.react',module:'react-native-background-timer'
     //   exclude group: 'com.facebook.react',module:'react-native-google-signin'
-    //   exclude group: 'com.google.android.gms', module: 'play-services-base'
+      exclude group: 'com.google.android.gms', module: 'play-services-base'
     }
     implementation project(':react-native-sqlite-storage')
     implementation project(':react-native-code-push')
@@ -219,7 +202,7 @@ dependencies {
     implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.facebook.react:react-native:0.58.5"  // From node_modules
+    implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.10.0'
     implementation 'com.facebook.fresco:animated-gif:1.10.0'
