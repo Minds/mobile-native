@@ -67,7 +67,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
       ]
     }
   >
-    This post cannot be shown
+    Confirm you are 18+
   </ForwardRef(Text)>
 </TouchableOpacity>
 `;
