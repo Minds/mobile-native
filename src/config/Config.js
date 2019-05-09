@@ -53,4 +53,4 @@ export const MINDS_DEEPLINK = [
 ];
 
 
-export const GOOGLE_PLAY_STORE = false;
+export const GOOGLE_PLAY_STORE = true;
