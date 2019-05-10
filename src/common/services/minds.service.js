@@ -1,5 +1,6 @@
 import api from './api.service';
-import { AsyncStorage, Alert } from 'react-native';
+import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 /**
  * Minds Service

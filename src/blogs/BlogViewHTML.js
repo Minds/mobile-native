@@ -3,13 +3,14 @@ import React, {
 } from 'react';
 
 import {
-  WebView,
   View,
   Text,
   Dimensions,
   Linking,
   ActivityIndicator,
 } from "react-native";
+
+import { WebView } from 'react-native-webview';
 
 const style = `
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,800'>

@@ -1,7 +1,7 @@
 import deviceLog, {LogView, InMemoryAdapter} from 'react-native-device-log';
 import * as stacktraceParser from "stacktrace-parser";
 
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import storageService from './storage.service';
 
 const parseErrorStack = error => {
