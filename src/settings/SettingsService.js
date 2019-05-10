@@ -2,6 +2,7 @@ import api from './../common/services/api.service';
 import { Alert } from 'react-native';
 import sessionService from '../common/services/session.service';
 import navigationService from '../navigation/NavigationService';
+import storageService from '../common/services/storage.service';
 
 /**
  * Settings Service

@@ -17,27 +17,32 @@ import {
 } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import authService from './../auth/AuthService';
 import { List, ListItem } from 'react-native-elements';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from './SettingsService';
+import settingsStore from './SettingsStore';
 
 import i18nService from '../common/services/i18n.service';
 import appStores from '../../AppStores';
 import logService from '../common/services/log.service';
+import storageService from '../common/services/storage.service';
+import { observer } from 'mobx-react/native';
 
 const ICON_SIZE = 24;
 
+@observer
 export default class SettingsScreen extends Component {
 
   static navigationOptions = {
     title: 'Settings',
+    leftHandedInitial: false,
   };
 
   state = {
     categories: [],
-    logActiveInitial: false
   }
 
   componentWillMount() {
@@ -48,13 +53,14 @@ export default class SettingsScreen extends Component {
           language: i18nService.getCurrentLocale()
         });
       });
-
-    this.setState({logActiveInitial: logService.active});
-  }
+    }
 
   appLogActivate = () => {
-    logService.setActive(!logService.active);
-    this.setState({logActiveInitial: !logService.active});
+    settingsStore.setAppLog(!settingsStore.appLog);
+  }
+
+  leftHandedActivate = () => {
+    settingsStore.setLeftHanded(!settingsStore.leftHanded);
   }
 
   wipeEthereumKeychainAction = () => {
@@ -161,8 +167,16 @@ export default class SettingsScreen extends Component {
         icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
         switchButton: true,
         hideChevron: true,
-        switched: !this.state.logActiveInitial,
+        switched: !settingsStore.appLog,
         onSwitch: this.appLogActivate
+      },
+      {
+        name: 'Left Handed Mode',
+        icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={ styles.icon }/>),
+        switchButton: true,
+        hideChevron: true,
+        switched: settingsStore.leftHanded,
+        onSwitch: this.leftHandedActivate
       },
     ];
 

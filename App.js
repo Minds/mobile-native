@@ -55,6 +55,7 @@ import updateService from './src/common/services/update.service';
 import ErrorBoundary from './src/common/components/ErrorBoundary';
 import { CommonStyle as CS } from './src/styles/Common';
 import logService from './src/common/services/log.service';
+import settingsStore from './src/settings/SettingsStore';
 
 let deepLinkUrl = '';
 
@@ -179,7 +180,8 @@ export default class App extends Component<Props, State> {
    */
   async componentDidMount() {
     try {
-      await logService.init();
+      // load app setting before start
+      await settingsStore.init();
 
       deepLinkUrl = await Linking.getInitialURL();
 
