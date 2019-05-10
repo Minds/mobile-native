@@ -16,21 +16,13 @@ import settingsStore from '../settings/SettingsStore'
 
 @observer
 export default class CaptureFab extends Component {
-  
+
   /**
    * Nav to activity full screen
    */
   navToCapture = () => {
     const { state } = this.props.navigation
     this.props.navigation.navigate('Capture', {group: this.props.group, parentKey: state.key});
-  }
-  
-  constructor(props){
-    super(props);
-  }
-
-  componentDidMount(){
-    settingsStore.init();
   }
 
   render() {
@@ -41,11 +33,11 @@ export default class CaptureFab extends Component {
         type='ionicon'
         color='#fff'
         size={32}
-        containerStyle={ settingsStore.leftHandedActive ? styles.leftSide : styles.rightSide }
+        containerStyle={ settingsStore.leftHanded ? styles.leftSide : styles.rightSide }
         onPress={() => this.navToCapture()}
         {...testID('CaptureButton')}
         />
-      
+
     );
   }
 }

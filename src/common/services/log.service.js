@@ -4,6 +4,7 @@ import * as stacktraceParser from "stacktrace-parser";
 import { AsyncStorage } from 'react-native';
 import storageService from './storage.service';
 import settingsService from '../../settings/SettingsService'
+import settingsStore from '../../settings/SettingsStore';
 
 const parseErrorStack = error => {
   if (!error || !error.stack) {
@@ -18,50 +19,38 @@ const parseErrorStack = error => {
  * Log service
  */
 class LogService {
-  active = false;
 
   /**
    * Init service
    */
   init = async() => {
-    this.active = await settingsService.getLocal('AppLogActive');
-    this._init();
-  }
-
-  /**
-   * Activate/Deactivate the app logs
-   * @param {boolean} value
-   */
-  async setActive(value) {
-    await settingsService.setLocal('AppLogActive', !!value);
-    this.active = value;
     this._init();
   }
 
   _init = () => {
-    console.log('[LogService] init',this.active);
+    console.log('[LogService] init', settingsStore.appLog);
     deviceLog.init(AsyncStorage, {
       logToConsole : __DEV__,
       logRNErrors : true,
-      logAppState: this.active,
-      logConnection: this.active,
+      logAppState: settingsStore.appLog,
+      logConnection: settingsStore.appLog,
       maxNumberToRender : 500, // 0 or undefined == unlimited
       maxNumberToPersist : 500 // 0 or undefined == unlimited
     });
   }
 
   log(...args) {
-    if (!this.active) return;
+    if (!settingsStore.appLog) return;
     deviceLog.log(...args);
   }
 
   info(...args) {
-    if (!this.active) return;
+    if (!settingsStore.appLog) return;
     deviceLog.info(...args);
   }
 
   warn(...args) {
-    if (!this.active) return;
+    if (!settingsStore.appLog) return;
     deviceLog.warn(...args);
   }
 

@@ -53,15 +53,14 @@ export default class SettingsScreen extends Component {
           language: i18nService.getCurrentLocale()
         });
       });
-      settingsStore.init();
     }
 
   appLogActivate = () => {
-    settingsStore.appLogActive = !settingsStore.appLogActive
+    settingsStore.setAppLog(!settingsStore.appLog);
   }
-  
+
   leftHandedActivate = () => {
-    settingsStore.leftHandedActive = !settingsStore.leftHandedActive
+    settingsStore.setLeftHanded(!settingsStore.leftHanded);
   }
 
   wipeEthereumKeychainAction = () => {
@@ -140,7 +139,7 @@ export default class SettingsScreen extends Component {
               NavigationActions.navigate({ routeName: 'Login' })
             ]
           })
-          
+
           this.props.navigation.dispatch(loginAction);
         }
       },
@@ -168,7 +167,7 @@ export default class SettingsScreen extends Component {
         icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
         switchButton: true,
         hideChevron: true,
-        switched: !settingsStore.appLogActive,
+        switched: !settingsStore.appLog,
         onSwitch: this.appLogActivate
       },
       {
@@ -176,11 +175,11 @@ export default class SettingsScreen extends Component {
         icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={ styles.icon }/>),
         switchButton: true,
         hideChevron: true,
-        switched: settingsStore.leftHandedActive,
+        switched: settingsStore.leftHanded,
         onSwitch: this.leftHandedActivate
       },
     ];
-    
+
     return (
       <ScrollView style={styles.scrollView}>
         <View style={styles.scrollViewContainer}>
