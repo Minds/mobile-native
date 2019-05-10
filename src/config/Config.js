@@ -52,5 +52,5 @@ export const MINDS_DEEPLINK = [
   ['wallet/tokens/:section', 'Wallet'],
 ];
 
-
+// IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
 export const GOOGLE_PLAY_STORE = false;

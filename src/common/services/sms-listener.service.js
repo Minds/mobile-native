@@ -2,6 +2,7 @@ import SmsListener from 'react-native-android-sms-listener'
 import permissions from './android-permissions.service';
 import KeepAwake from 'react-native-keep-awake';
 import { Platform } from 'react-native';
+import { GOOGLE_PLAY_STORE } from '../../config/Config';
 
 /**
  * Sms listener service
@@ -15,8 +16,8 @@ class SmsListenerService {
    */
   async listen(regex, timeout=5000) {
 
-    // sms listener doesn't support ios
-    if (Platform.OS === 'ios') {
+    // sms listener doesn't support ios and should be disabled for play store
+    if (Platform.OS === 'ios' || GOOGLE_PLAY_STORE) {
       return -1;
     }
 

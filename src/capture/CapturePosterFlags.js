@@ -34,9 +34,9 @@ export default class CapturePosterFlags extends Component {
 
   componentWillMount() {
     // this.props.capture.loadThirdPartySocialNetworkStatus();
-    // this.props.capture.loadSuggestedTags().catch(e => {
-    //   logService.exception('[CapturePosterFlags] loadSuggestedTags', e);
-    // });
+    this.props.capture.loadSuggestedTags().catch(e => {
+      logService.exception('[CapturePosterFlags] loadSuggestedTags', e);
+    });
 
     if (typeof this.props.lockValue !== 'undefined') {
       this.updateLockFromProps(this.props.lockValue);
