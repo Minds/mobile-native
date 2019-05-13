@@ -2,17 +2,19 @@ import 'react-native';
 import React from 'react';
 import App from '../App';
 import videochat from '../src/common/services/videochat.service';
-
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
-
+import logservice from '../src/common/services/log.service';
 import {
   BackHandler,
 } from 'react-native';
 
+// Note: test renderer must be required after react-native.
+import renderer from 'react-test-renderer';
+
+
 // mock backhandler
 BackHandler.addEventListener = jest.fn();
 
+jest.mock('../src/common/services/log.service', () => {});
 jest.mock('react-native-gesture-handler', () => {});
 jest.mock('react-navigation-stack', () => { Header: {} });
 jest.mock('react-navigation', () => {
