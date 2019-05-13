@@ -216,6 +216,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
   onRefresh={[Function]}
   onViewableItemsChanged={[Function]}
   refreshing={false}
+  removeClippedSubviews={false}
   renderItem={[Function]}
   scrollEventThrottle={50}
   style={

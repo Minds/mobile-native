@@ -15,6 +15,7 @@ exports[`LoginForm component should renders correctly 1`] = `
     onChangeText={[Function]}
     placeholder="Username"
     placeholderTextColor="#444"
+    rejectResponderTermination={true}
     returnKeyType="done"
     style={
       Array [
@@ -43,6 +44,7 @@ exports[`LoginForm component should renders correctly 1`] = `
     onChangeText={[Function]}
     placeholder="Password"
     placeholderTextColor="#444"
+    rejectResponderTermination={true}
     returnKeyType="done"
     secureTextEntry={true}
     style={

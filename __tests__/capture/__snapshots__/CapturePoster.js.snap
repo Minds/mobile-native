@@ -36,6 +36,7 @@ exports[`cature poster component should renders correctly 1`] = `
           onSelectionChange={[Function]}
           placeholder="Speak your mind..."
           placeholderTextColor="#ccc"
+          rejectResponderTermination={true}
           selectTextOnFocus={false}
           style={
             Object {

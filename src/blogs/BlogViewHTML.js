@@ -3,13 +3,14 @@ import React, {
 } from 'react';
 
 import {
-  WebView,
   View,
   Text,
   Dimensions,
   Linking,
   ActivityIndicator,
 } from "react-native";
+
+import { WebView } from 'react-native-webview';
 
 const style = `
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,800'>
@@ -109,16 +110,9 @@ const style = `
   </style>
 `;
 
-
-export default class BlogViewHTML extends Component {
-
-  state = {
-    height: Dimensions.get('window').height,
-  };
-
-  injectedScript = () => {
-    // patch postMessage
-    const postMessage = window.postMessage;
+const injectedJavaScript = `
+  setTimeout(() => {
+    const postMessage = window.ReactNativeWebView.postMessage;
     postMessage.toString = () => String(Object.hasOwnProperty).replace('hasOwnProperty', 'postMessage');
     window.postMessage = postMessage;
 
@@ -127,7 +121,15 @@ export default class BlogViewHTML extends Component {
     setTimeout(() => {
       window.postMessage(document.body.offsetHeight + 20);
     }, 1000);
-  }
+  },100);
+
+`;
+
+export default class BlogViewHTML extends Component {
+
+  state = {
+    height: Dimensions.get('window').height,
+  };
 
   onMessage = (evt) => {
     const height = parseInt(evt.nativeEvent.data);
@@ -175,7 +177,7 @@ export default class BlogViewHTML extends Component {
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
         startInLoadingState={false}
-        injectedJavaScript={`(${String(this.injectedScript)})()`}
+        injectedJavaScript={injectedJavaScript}
         onMessage={this.onMessage}
         renderLoading={() => <ActivityIndicator size={'small'} />}
         renderError={() => (<Text>Sorry, failed to load. please try again</Text>)}

@@ -1,14 +1,14 @@
 
 import service from '../../../src/common/services/session.storage.service';
 
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 jest.mock('react-native', () => ({
-  AsyncStorage: {        
+  AsyncStorage: {
 
       setItem: jest.fn((item, value) => {
-          return new Promise((resolve, reject) => {        
+          return new Promise((resolve, reject) => {
               resolve(value);
           });
       }),
@@ -40,14 +40,14 @@ jest.mock('react-native', () => ({
     }
   })
 );
-  
+
 /**
  * Tests
  */
 describe('Session storage service', () => {
-  
+
   it('should set and get initial values', async () => {
-    
+
     await service.setAccessToken('token', '1111');
 
     expect(AsyncStorage.setItem).toHaveBeenCalled();

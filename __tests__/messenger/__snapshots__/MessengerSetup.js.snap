@@ -29,6 +29,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
       editable={true}
       onChangeText={[Function]}
       placeholder="password..."
+      rejectResponderTermination={true}
       secureTextEntry={true}
       style={
         Object {
@@ -46,6 +47,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
       editable={true}
       onChangeText={[Function]}
       placeholder="confirm password..."
+      rejectResponderTermination={true}
       secureTextEntry={true}
       style={
         Array [
@@ -114,6 +116,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
       editable={true}
       onChangeText={[Function]}
       placeholder="password..."
+      rejectResponderTermination={true}
       secureTextEntry={true}
       style={
         Object {

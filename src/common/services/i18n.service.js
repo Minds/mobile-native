@@ -1,7 +1,7 @@
 import I18n, {
   getLanguages
 } from 'react-native-i18n';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // languages
 import en from '../../../locales/en';

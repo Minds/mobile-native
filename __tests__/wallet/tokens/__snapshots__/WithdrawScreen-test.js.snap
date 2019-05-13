@@ -36,6 +36,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
           keyboardType="numeric"
           onChangeText={[Function]}
           placeholder="Amount"
+          rejectResponderTermination={true}
           returnKeyType="go"
           style={
             Object {
@@ -90,6 +91,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
   onScroll={[Function]}
   onScrollBeginDrag={[Function]}
   onScrollEndDrag={[Function]}
+  removeClippedSubviews={false}
   renderItem={[Function]}
   scrollEventThrottle={50}
   stickyHeaderIndices={Array []}
@@ -141,6 +143,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
             keyboardType="numeric"
             onChangeText={[Function]}
             placeholder="Amount"
+            rejectResponderTermination={true}
             returnKeyType="go"
             style={
               Object {

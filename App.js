@@ -3,7 +3,6 @@
  * https://www.minds.com
  *
  * @format
- * @lint-ignore-every XPLATJSCOPYRIGHT1
  * @flow
  */
 import './global';
