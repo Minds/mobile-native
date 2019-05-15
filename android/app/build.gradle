@@ -162,6 +162,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-localize')
     implementation project(':react-native-webview')
     implementation project(':@react-native-community_async-storage')
     implementation project(':react-native-gesture-handler')
@@ -195,7 +196,6 @@ dependencies {
     implementation project(':react-native-randombytes')
     implementation project(':react-native-os')
     implementation project(':react-native-minds-encryption')
-    implementation project(':react-native-i18n')
     implementation project(':react-native-video-exoplayer')
     implementation project(':react-native-photo-view')
     implementation project(':react-native-fast-image')

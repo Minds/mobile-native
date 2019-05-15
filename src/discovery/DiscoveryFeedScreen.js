@@ -30,6 +30,7 @@ import BlogCard from '../blogs/BlogCard';
 import ErrorLoading from '../common/components/ErrorLoading';
 import GroupsListItem from '../groups/GroupsListItem'
 import ErrorBoundary from '../common/components/ErrorBoundary';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Discovery Feed Screen
@@ -99,7 +100,7 @@ export default class DiscoveryFeedScreen extends Component {
     return (
       <View style={ComponentsStyle.emptyComponentContainer}>
         <View style={ComponentsStyle.emptyComponent}>
-          <Text style={ComponentsStyle.emptyComponentMessage}>Nothing to show</Text>
+          <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('discovery.nothingToShow')}</Text>
         </View>
       </View>
     );
@@ -122,8 +123,8 @@ export default class DiscoveryFeedScreen extends Component {
     if (!discovery.list.errorLoading) return null;
 
     const message = discovery.list.entities.length ?
-      "Can't load more" :
-      "Can't connect";
+      i18n.t('cantLoadMore') :
+      i18n.t('cantLoad');
 
     return <ErrorLoading message={message} tryAgain={this.tryAgain}/>
   }
@@ -157,26 +158,12 @@ export default class DiscoveryFeedScreen extends Component {
   }
 
   /**
-   * Render a tile
-   */
-  renderTile = (row) => {
-    if (!this.state.active && row.item.isGif()) {
-      return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight, backgroundColor: colors.greyed }}/>;
-    }
-    return (
-      <ErrorBoundary message="Render error" containerStyle={[CS.centered, {width: this.state.itemHeight, height:this.state.itemHeight}]} textSmall={true}>
-        <DiscoveryTile entity={row.item} size={this.state.itemHeight} onPress={() => this.setState({'showFeed': row.index})}/>
-      </ErrorBoundary>
-    );
-  }
-
-  /**
    * Render user row
    */
   renderUser = (row) => {
     return (
 
-      <ErrorBoundary message="Can't show this user" containerStyle={CS.hairLineBottom}>
+      <ErrorBoundary containerStyle={CS.hairLineBottom}>
         <DiscoveryUser store={this.props.discovery.stores['channels']} entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
       </ErrorBoundary>
     );
@@ -187,7 +174,7 @@ export default class DiscoveryFeedScreen extends Component {
    */
   renderActivity = (row) => {
     return (
-      <ErrorBoundary message="Can't show this post" containerStyle={CS.hairLineBottom}>
+      <ErrorBoundary containerStyle={CS.hairLineBottom}>
         <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false} newsfeed={this.props.discovery}/>
       </ErrorBoundary>
     );
@@ -199,7 +186,7 @@ export default class DiscoveryFeedScreen extends Component {
   renderBlog = (row) => {
     return (
       <View style={styles.blogCardContainer}>
-        <ErrorBoundary message="Can't show this blog" containerStyle={CS.hairLineBottom}>
+        <ErrorBoundary containerStyle={CS.hairLineBottom}>
           <BlogCard entity={row.item} navigation={this.props.navigation} />
         </ErrorBoundary>
       </View>
@@ -212,7 +199,7 @@ export default class DiscoveryFeedScreen extends Component {
   renderGroup = (row) => {
     const item = row.item;
     return (
-      <ErrorBoundary message="Can't show this group" containerStyle={CS.hairLineBottom}>
+      <ErrorBoundary containerStyle={CS.hairLineBottom}>
         <GroupsListItem group={row.item} onPress={() => this.navigateToGroup(row.item)}/>
       </ErrorBoundary>
     )

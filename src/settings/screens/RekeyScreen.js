@@ -4,6 +4,7 @@ import React, {
 import {Alert} from 'react-native';
 
 import MessengerSetup from '../../messenger/MessengerSetup';
+import i18n from '../../common/services/i18n.service';
 
 /**
  * Messenger re key screen
@@ -20,7 +21,7 @@ export default class RekeyScreen extends Component {
    * On done
    */
   onDone = () => {
-    Alert.alert('Keys regenerated successfully!');
+    Alert.alert(i18n.t('settings.keyGenerated'));
     this.props.navigation.goBack();
   }
 

@@ -46,6 +46,7 @@ import GroupsListItem from '../groups/GroupsListItem'
 import DiscoveryFilters from './NewsfeedFilters';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import testID from '../common/helpers/testID';
+import i18n from '../common/services/i18n.service';
 
 const isIos = Platform.OS === 'ios';
 
@@ -101,8 +102,11 @@ export default class DiscoveryScreen extends Component {
     });
 
     const params = this.props.navigation.state.params;
-    if (params && params.type)
+    if (params && params.type) {
       this.props.discovery.filters.setType(params.type);
+    }
+
+    this.tileError = i18n.t('error');
   }
 
   /**
@@ -247,7 +251,7 @@ export default class DiscoveryScreen extends Component {
     return (
       <View style={ComponentsStyle.emptyComponentContainer}>
         <View style={ComponentsStyle.emptyComponent}>
-          <Text style={ComponentsStyle.emptyComponentMessage}>Nothing to show</Text>
+          <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('discovery.nothingToShow')}</Text>
         </View>
       </View>
     );
@@ -305,7 +309,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'activities' ? styles.iconActive : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'activities' ? CS.colorPrimary : CS.colorDark]}>All</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'activities' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.all')}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeChannels } underlayColor='#fff' {...testID('Discovery Channels')}>
@@ -315,7 +319,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'channels' ? styles.iconActive : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'channels' ? CS.colorPrimary : CS.colorDark]}>Channels</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'channels' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.channels')}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeVideos } underlayColor='#fff' {...testID('Discovery Videos')}>
@@ -325,7 +329,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'videos' ? styles.iconActive : null ]}
               size={this.iconSize}
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'videos' ? CS.colorPrimary : CS.colorDark]}>Videos</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'videos' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.videos')}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeImages } underlayColor='#fff' {...testID('Discovery Images')}>
@@ -335,7 +339,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'images' ? styles.iconActive : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'images' ? CS.colorPrimary : CS.colorDark]}>Images</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'images' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.images')}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeBlogs } underlayColor='#fff' {...testID('Discovery Blogs')}>
@@ -345,7 +349,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'blogs' ? styles.iconActive : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'blogs' ? CS.colorPrimary : CS.colorDark]}>Blogs</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'blogs' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.blogs')}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeGroups } underlayColor='#fff' {...testID('Discovery Groups')}>
@@ -355,7 +359,7 @@ export default class DiscoveryScreen extends Component {
               style={[styles.icon, filtersStore.type == 'groups' ? styles.iconActive : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'groups' ? CS.colorPrimary : CS.colorDark]}>Groups</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'groups' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.groups')}</Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -364,14 +368,14 @@ export default class DiscoveryScreen extends Component {
     const iconRight = filtersStore.searchtext ?
       'md-close-circle' :
       (filtersStore.type == 'channels') ?
-        <Text numberOfLines={1} style={styles.lastVisited} onPress={this.showLastChannels}>Visited</Text> :
+        <Text numberOfLines={1} style={styles.lastVisited} onPress={this.showLastChannels}>{i18n.t('discovery.visited')}</Text> :
         null;
 
 
     const headerBody = filtersStore.type != 'lastchannels' ?
       <View style={CS.marginBottom}>
         {(filtersStore.type === 'channels' || !GOOGLE_PLAY_STORE) && <SearchView
-          placeholder={`Search ${filtersStore.type}...`}
+          placeholder={i18n.t('discovery.search')}
           onChangeText={this.setQ}
           value={this.state.q}
           containerStyle={[CS.marginTop, CS.marginBottom]}
@@ -382,7 +386,7 @@ export default class DiscoveryScreen extends Component {
         <DiscoveryFilters store={filtersStore} onTagsChange={this.onTagSelectionChange} onSelectOne={this.onSelectOne}/>
         {/* {!discovery.searchtext && <TagsSubBar onChange={this.onTagSelectionChange}/>} */}
       </View> :
-      <Text style={[CS.fontM, CS.backgroundPrimary, CS.colorWhite, CS.textCenter, CS.padding]}>Recently visited</Text>;
+      <Text style={[CS.fontM, CS.backgroundPrimary, CS.colorWhite, CS.textCenter, CS.padding]}>{i18n.t('discovery.recentlyVisited')}</Text>;
 
     return (
       <View style={[CS.shadow, CS.backgroundWhite]}>
@@ -421,8 +425,8 @@ export default class DiscoveryScreen extends Component {
     if (!discovery.list.errorLoading) return null;
 
     const message = discovery.list.entities.length ?
-      "Can't load more" :
-      "Can't connect";
+      i18n.t('cantLoadMore') :
+      i18n.t('cantLoad');
 
     return <ErrorLoading message={message} tryAgain={this.tryAgain}/>
   }
@@ -504,7 +508,7 @@ export default class DiscoveryScreen extends Component {
       return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight, backgroundColor: colors.greyed }}/>;
     }
     return (
-      <ErrorBoundary message="Render error" containerStyle={[CS.centered, {width: this.state.itemHeight, height:this.state.itemHeight}]} textSmall={true}>
+      <ErrorBoundary message={this.tileError} containerStyle={[CS.centered, {width: this.state.itemHeight, height:this.state.itemHeight}]} textSmall={true}>
         <DiscoveryTile
           entity={row.item}
           size={this.state.itemHeight}
@@ -523,7 +527,7 @@ export default class DiscoveryScreen extends Component {
   renderUser = (row) => {
     return (
 
-      <ErrorBoundary message="Can't show this user" containerStyle={CS.hairLineBottom}>
+      <ErrorBoundary containerStyle={CS.hairLineBottom}>
         <DiscoveryUser store={this.props.discovery.stores['channels']} entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
       </ErrorBoundary>
     );
@@ -534,7 +538,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderActivity = (row) => {
     return (
-      <ErrorBoundary message="Can't show this post" containerStyle={CS.hairLineBottom}>
+      <ErrorBoundary containerStyle={CS.hairLineBottom}>
         <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false} newsfeed={this.props.discovery}/>
       </ErrorBoundary>
     );
@@ -546,7 +550,7 @@ export default class DiscoveryScreen extends Component {
   renderBlog = (row) => {
     return (
       <View style={styles.blogCardContainer}>
-        <ErrorBoundary message="Can't show this blog" containerStyle={CS.hairLineBottom}>
+        <ErrorBoundary containerStyle={CS.hairLineBottom}>
           <BlogCard entity={row.item} navigation={this.props.navigation} />
         </ErrorBoundary>
       </View>
@@ -559,7 +563,7 @@ export default class DiscoveryScreen extends Component {
   renderGroup = (row) => {
     const item = row.item;
     return (
-      <ErrorBoundary message="Can't show this group" containerStyle={CS.hairLineBottom}>
+      <ErrorBoundary containerStyle={CS.hairLineBottom}>
         <GroupsListItem group={row.item} onPress={() => this.navigateToGroup(row.item)}/>
       </ErrorBoundary>
     )

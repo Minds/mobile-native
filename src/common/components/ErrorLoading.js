@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import Button from './Button';
+import i18n from '../services/i18n.service';
 
 // types
 type Props = {
@@ -30,8 +31,8 @@ export default class ErrorLoading extends PureComponent<Props> {
   render() {
     return (
       <View style={[CS.padding3x, CS.flexColumnCentered, CS.marginTop2x, this.props.inverted ? styles.errorLoadingInverted : styles.errorLoading]}>
-        <Text style={[CS.fontM, CS.colorDarkGreyed, CS.marginBottom]}><Text style={CS.fontSemibold}>Oops!</Text> {this.props.message}</Text>
-        <Button onPress={this.props.tryAgain} text="Try Again"/>
+        <Text style={[CS.fontM, CS.colorDarkGreyed, CS.marginBottom]}><Text style={CS.fontSemibold}>{i18n.t('ops')}</Text> {this.props.message}</Text>
+        <Button onPress={this.props.tryAgain} text={i18n.t('tryAgain')}/>
       </View>
     )
   }

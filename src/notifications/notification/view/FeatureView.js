@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -7,10 +7,12 @@ import {
   View
 } from 'react-native';
 
+import i18n from '../../../common/services/i18n.service';
+
 /**
  * Feature Notification Component
  */
-export default class FeatureView extends Component {
+export default class FeatureView extends PureComponent {
 
   /**
    * Navigate to activity
@@ -25,7 +27,7 @@ export default class FeatureView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToActivity}><Text style={styles.link}>{entity.entityObj.title}</Text>was featured</Text>
+        <Text onPress={this.navToActivity}><Text style={styles.link}>{entity.entityObj.title}</Text> {i18n.t('notification.featured')}</Text>
       </View>
     )
   }

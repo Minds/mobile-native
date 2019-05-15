@@ -1,4 +1,5 @@
 import { PermissionsAndroid } from 'react-native';
+import i18nService from './i18n.service';
 
 /**
  * Android permissions service
@@ -13,8 +14,7 @@ class AndroidPermissionsService {
       PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
       {
         'title': 'Minds',
-        'message': 'Minds needs access to your external storage ' +
-        'so you can upload awesome pictures.'
+        'message': i18nService.t('permissions.externalStorage')
       }
     );
   }
@@ -42,8 +42,7 @@ class AndroidPermissionsService {
       PermissionsAndroid.PERMISSIONS.READ_SMS,
       {
         'title': 'Minds',
-        'message': 'Minds needs access to read sms ' +
-        'to auto-detect the validation code.'
+        'message': i18nService.t('permissions.sms')
       }
     );
   }
@@ -71,8 +70,7 @@ class AndroidPermissionsService {
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
       {
         'title': 'Minds',
-        'message': 'Minds needs access to your external storage ' +
-        'so you can download awesome pictures.'
+        'message': i18nService.t('permissions.writeExternalStorage')
       }
     );
   }
@@ -99,8 +97,7 @@ class AndroidPermissionsService {
     return this._request(PermissionsAndroid.PERMISSIONS.CAMERA,
       {
         'title': 'Minds',
-        'message': 'Minds needs access to your external camera ' +
-          'so you can upload awesome pictures.'
+        'message': i18nService.t('permissions.camera')
       }
     );
   }

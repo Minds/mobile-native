@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -8,12 +8,19 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import i18n from '../../../common/services/i18n.service';
+
 /**
  * Like Notification Component
  */
-export default class LikeView extends Component {
+export default class LikeView extends PureComponent {
 
-  message = 'voted up';
+  static message = 'notification.votedUp';
+
+  constructor(props) {
+    super(props);
+    this.translatedMessage = i18n.t(this.constructor.message);
+  }
 
   render() {
     const entity = this.props.entity;
@@ -79,33 +86,33 @@ export default class LikeView extends Component {
 
     if (!entity.entityObj) {
       return (
-        <Text>This post was deleted</Text>
+        <Text>{i18n.t('notification.deleted')}</Text>
       )
     }
 
     switch (entity.entityObj.type) {
       case "comment":
         return (
-          <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}> your comment </Text></Text>
+          <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.translatedMessage} <Text style={styles.link}> {i18n.t('notification.yourComment')} </Text></Text>
         )
       case "activity":
         if (entity.entityObj.title) {
           return (
-            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
+            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.translatedMessage} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
           )
         } else {
           return (
-            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>your activity</Text></Text>
+            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.translatedMessage} <Text style={styles.link}>{i18n.t('notification.yourActivity')}</Text></Text>
           )
         }
       case "object":
         if (entity.entityObj.title) {
           return (
-            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
+            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.translatedMessage} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
           )
         } else {
           return (
-            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.message} <Text style={styles.link}>your {entity.entityObj.subtype}</Text></Text>
+            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.translatedMessage} <Text style={styles.link}>{i18n.t('your')} {i18n.t('subtype.'+entity.entityObj.subtype)}</Text></Text>
           )
         }
       default:

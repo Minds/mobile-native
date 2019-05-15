@@ -1,5 +1,6 @@
 import api from './api.service';
 import logService from './log.service';
+import i18n from './i18n.service';
 
 class EntitiesService {
   /**
@@ -13,7 +14,7 @@ class EntitiesService {
       })
       .catch(err => {
         logService.exception('[EntitiesService]', err);
-        throw "Oops, an error has occured getting this entity";
+        throw new Error(i18n.t('errorMessage'));
       });
   }
 

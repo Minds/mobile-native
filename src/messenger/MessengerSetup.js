@@ -23,6 +23,7 @@ import Colors from '../styles/Colors';
 import Button from '../common/components/Button';
 import NavNextButton from '../common/components/NavNextButton';
 import logService from '../common/services/log.service';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Messenger setup
@@ -46,7 +47,7 @@ export default class MessengerSetup extends Component {
       button = (
         <NavNextButton
           onPress={this.unlock}
-          title="UNLOCK"
+          title={i18n.t('unlock').toUpperCase()}
           color={Colors.primary}
         />
       );
@@ -54,7 +55,7 @@ export default class MessengerSetup extends Component {
       button = (
         <NavNextButton
           onPress={this.setup}
-          title="SETUP"
+          title={i18n.t('setup').toUpperCase()}
           color={Colors.primary}
         />
       );
@@ -80,7 +81,7 @@ export default class MessengerSetup extends Component {
 
   setup = async() => {
     if (this.password !== this.confirm) {
-      Alert.alert('password and confirmation do not match!');
+      Alert.alert(i18n.t('auth.confirmPasswordError'));
       return;
     }
     try {
@@ -88,7 +89,7 @@ export default class MessengerSetup extends Component {
       this.handleOnDone(response);
     } catch (err) {
       logService.exception('[MessengerSetup]', err);
-      alert('Oops something went wrong');
+      alert(i18n.t('errorMessage'));
     }
   }
 
@@ -108,17 +109,16 @@ export default class MessengerSetup extends Component {
             style={ComponentsStyle.passwordinput}
             editable={true}
             underlineColorAndroid='transparent'
-            placeholder='password...'
+            placeholder={i18n.t('passwordPlaceholder')}
             secureTextEntry={true}
             onChangeText={(password) => this.password = password}
           />
         </View>
 
         <View style={{ paddingTop: 32 }}>
-          <Text style={styles.infoText}>· You only need to enter this encryption password once as long as you stay signed in.</Text>
-          <Text style={styles.infoText}>· It is important so that no one other than you and the people you are communicating with can access the content of your messages.</Text>
-          <Text style={styles.infoText}>· By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.</Text>
-          <Text style={styles.infoText}>· By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.</Text>
+          <Text style={styles.infoText}>· {i18n.t('messenger.setupMessage1')}</Text>
+          <Text style={styles.infoText}>· {i18n.t('messenger.setupMessage2')}</Text>
+          <Text style={styles.infoText}>· {i18n.t('messenger.setupMessage3')}</Text>
         </View>
       </View>
     )
@@ -127,8 +127,8 @@ export default class MessengerSetup extends Component {
   renderOnboarding() {
     const unlocking = this.props.messengerList.unlocking;
 
-    const text = this.props.user.me.chat ? 'Changing your encryption password will cause your previous messages to be unreadable':
-      'Hey @'+this.props.user.me.name+'! It looks like you haven\'t setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.'
+    const text = this.props.user.me.chat ? i18n.t('messenger.changeKeyMessage') :
+      i18n.t('messenger.notEncryptedMessage', {user: this.props.user.me.name});
 
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>
@@ -137,7 +137,7 @@ export default class MessengerSetup extends Component {
             style={ComponentsStyle.passwordinput}
             editable={true}
             underlineColorAndroid='transparent'
-            placeholder='password...'
+            placeholder={i18n.t('passwordPlaceholder')}
             secureTextEntry={true}
             onChangeText={(password) => this.password = password}
           />
@@ -145,7 +145,7 @@ export default class MessengerSetup extends Component {
             style={[ComponentsStyle.passwordinput, CommonStyle.marginTop2x]}
             editable={true}
             underlineColorAndroid='transparent'
-            placeholder='confirm password...'
+            placeholder={i18n.t('passwordConmfirmPlaceholder')}
             secureTextEntry={true}
             onChangeText={(password) => this.confirm = password}
           />

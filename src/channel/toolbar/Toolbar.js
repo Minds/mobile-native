@@ -14,6 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
+import i18n from '../../common/services/i18n.service';
 import colors from '../../styles/Colors';
 
 const ICON_SIZE = 22;
@@ -52,7 +53,7 @@ export default class Toolbar extends Component {
       rewards = (
         <TouchableOpacity style={styles.button} onPress={this.filterRewards}>
           <IonIcon name="ios-flash" size={ICON_SIZE} color={filter == 'rewards' ? colors.primary : color} />
-          <Text style={styles.buttontext}>REWARDS</Text>
+          <Text style={styles.buttontext}>{i18n.t('rewards').toUpperCase()}</Text>
         </TouchableOpacity>
       )
     }
@@ -62,19 +63,19 @@ export default class Toolbar extends Component {
         <View style={styles.topbar}>
           <TouchableOpacity style={styles.button} onPress={this.filterFeed}>
             <Icon name="list" size={ICON_SIZE} color={filter == 'feed' ? colors.primary : color} />
-            <Text style={styles.buttontext}>FEED</Text>
+            <Text style={styles.buttontext}>{i18n.t('feed').toUpperCase()}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={this.filterImages} >
             <IonIcon name="md-image" size={ICON_SIZE} color={filter == 'images' ? colors.primary : color} />
-            <Text style={styles.buttontext}>IMAGES</Text>
+            <Text style={styles.buttontext}>{i18n.t('images').toUpperCase()}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={this.filterVideos} >
             <IonIcon name="md-videocam" size={ICON_SIZE} color={filter == 'videos' ? colors.primary : color} />
-            <Text style={styles.buttontext}>VIDEOS</Text>
+            <Text style={styles.buttontext}>{i18n.t('videos').toUpperCase()}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={this.filterBlogs}>
               <Icon name="subject" size={ICON_SIZE} color={filter == 'blogs' ? colors.primary : color} />
-              <Text style={styles.buttontext}>BLOGS</Text>
+              <Text style={styles.buttontext}>{i18n.t('blogs.blogs').toUpperCase()}</Text>
           </TouchableOpacity>
           {rewards}
         </View>

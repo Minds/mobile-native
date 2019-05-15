@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { CommonStyle as CS } from '../../styles/Common';
 import logService from '../services/log.service';
+import i18n from '../services/i18n.service';
 
 /**
  * Error boundary
@@ -46,8 +47,8 @@ export default class ErrorBoundary extends Component {
 
     return (
       <View style={[CS.columnAlignCenter, containerStyle]}>
-        <Text style={[textSmall ? CS.fontS : CS.fontM, CS.textCenter, CS.marginTop2x, CS.fontHairline, CS.colorDanger]} onPress={this.copy}>{this.props.message || 'Error displaying the content'}</Text>
-        <Text style={[textSmall ? CS.fontXS : CS.fontS, CS.textCenter, CS.marginTop2x, CS.marginBottom2x, CS.fontHairline]} onPress={this.copy}>Tap to copy the error</Text>
+        <Text style={[textSmall ? CS.fontS : CS.fontM, CS.textCenter, CS.marginTop2x, CS.fontHairline, CS.colorDanger]} onPress={this.copy}>{this.props.message || i18n.t('errorDisplaying')}</Text>
+        <Text style={[textSmall ? CS.fontXS : CS.fontS, CS.textCenter, CS.marginTop2x, CS.marginBottom2x, CS.fontHairline]} onPress={this.copy}>{i18n.t('tapCopyError')}</Text>
       </View>
     );
   }
@@ -72,8 +73,9 @@ export default class ErrorBoundary extends Component {
  * @param {string} message
  * @param {boolean} small
  */
-export const withErrorBoundary = (WrappedComponent, message = 'Error displaying the content', small = false) => (
+export const withErrorBoundary = (WrappedComponent, message = null, small = false) => (
   (props) => {
+    if (!message) message = i18n.t('errorDisplaying');
     return (
       <ErrorBoundary message={message} small={small}>
         <WrappedComponent {...props} />
@@ -91,11 +93,12 @@ export const withErrorBoundary = (WrappedComponent, message = 'Error displaying 
  * @param {string} message
  * @param {boolean} small
  */
-export const withErrorBoundaryScreen = (WrappedComponent, message = 'Error displaying the content', small = false) => {
+export const withErrorBoundaryScreen = (WrappedComponent, message = null, small = false) => {
 
   class hoc extends React.Component {
 
     render() {
+      if (!message) message = i18n.t('errorDisplaying');
       return (
         <ErrorBoundary message={message} small={small}>
           <WrappedComponent {...this.props} />

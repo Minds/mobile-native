@@ -16,6 +16,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import BoostTabBar from './BoostTabBar';
+import i18n from '../common/services/i18n.service';
 
 /**
  * News feed list component
@@ -64,12 +65,12 @@ export default class BoostConsoleScreen extends Component {
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
             <Icon name="trending-up" size={72} color='#444' />
-            <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any boosts</Text>
+            <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('boosts.youDontHaveBoosts')}</Text>
             <Text
               style={ComponentsStyle.emptyComponentLink}
               onPress={() => this.props.navigation.navigate('Capture')}
-              >
-              Create a post
+            >
+              {i18n.t('createAPost')}
             </Text>
           </View>
         </View>);

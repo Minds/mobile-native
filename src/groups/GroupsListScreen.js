@@ -26,6 +26,7 @@ import ErrorLoading from '../common/components/ErrorLoading';
 import GroupsListItem from './GroupsListItem';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
+import i18n from '../common/services/i18n.service';
 
 DebouncedGroupsListItem = withErrorBoundary(withPreventDoubleTap(GroupsListItem, "Can't show this group"));
 
@@ -36,8 +37,8 @@ DebouncedGroupsListItem = withErrorBoundary(withPreventDoubleTap(GroupsListItem,
 @observer
 export default class GroupsListScreen extends Component {
 
-  static navigationOptions = {
-    title: 'My Groups',
+  static navigationOptions = ({ navigation }) => {
+    return {title: i18n.t('groups.myGroups')}
   };
 
   /**
@@ -127,8 +128,8 @@ export default class GroupsListScreen extends Component {
     if (!this.props.groups.list.errorLoading) return null;
 
     const message = this.props.groups.list.entities.length ?
-      "Can't load more" :
-      "Can't load groups";
+      i18n.t('cantLoadMore') :
+      i18n.t('cantLoad');
 
     return <ErrorLoading message={message} tryAgain={this.loadMoreForce}/>
   }

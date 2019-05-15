@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -7,10 +7,12 @@ import {
   View
 } from 'react-native';
 
+import i18n from '../../../common/services/i18n.service';
+
 /**
  * Remind Notification Component
  */
-export default class RemindView extends Component {
+export default class RemindView extends PureComponent {
 
   /**
    * Navigate to activity
@@ -38,20 +40,17 @@ export default class RemindView extends Component {
    */
   getBody(entity) {
     const styles = this.props.styles;
-    const title = entity.entityObj.title;
+    const entityTitle = entity.entityObj.title;
+    let title;
 
     switch (entity.entityObj.type) {
       case "activity":
-        return (
-          <Text onPress={this.navToActivity}>
-            <Text style={styles.link}>{entity.fromObj.name}</Text> reminded <Text style={styles.link}>{ title ? title : 'your activity' }</Text>
-          </Text>)
+        title = entityTitle ? entityTitle : i18n.t('notification.yourActivity');
+        return <Text onPress={this.navToActivity} style={styles.link}>{i18n.t('notification.remind', {name: entity.fromObj.name, title})}</Text>
 
       case "object":
-        return (
-          <Text onPress={this.navToActivity}>
-            <Text style={styles.link}>{entity.fromObj.name}</Text> reminded <Text style={styles.link}>{title ? title : `your ${entity.subtype}`}</Text>
-          </Text>)
+        title = entityTitle ? entityTitle : ( i18n.t('your')+' '+i18n.t('subtype.'+entity.entityObj.subtype) );
+        return <Text onPress={this.navToActivity} style={styles.link}>{i18n.t('notification.remind', {name: entity.fromObj.name, title})}</Text>
 
       default:
         return <Text>... oops.</Text>

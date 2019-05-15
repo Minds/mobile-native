@@ -18,6 +18,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import channelService from './ChannelService';
+import i18n from '../common/services/i18n.service';
 import ActionSheet from 'react-native-actionsheet';
 import WireAction from '../newsfeed/activity/actions/WireAction';
 import featuresService from '../common/services/features.service';
@@ -47,19 +48,19 @@ export default class ChannelActions extends Component {
   }
 
   getOptions() {
-    let options = [ 'Cancel' ];
+    let options = [ i18n.t('cancel') ];
 
     if(this.props.channel.channel.subscribed){
-      options.push( 'Unsubscribe' );
+      options.push( i18n.t('channel.unsubscribe') );
     }
 
     if (!this.props.channel.channel.blocked) {
-      options.push( 'Block' );
+      options.push( i18n.t('channel.block') );
     } else {
-      options.push( 'Un-Block' );
+      options.push( i18n.t('channel.unblock') );
     }
 
-    options.push( 'Report' );
+    options.push( i18n.t('channel.report') );
 
     return options;
 
@@ -69,21 +70,19 @@ export default class ChannelActions extends Component {
     let options = this.getOptions();
     let selected = options[option];
     switch (selected) {
-      case 'Unsubscribe':
+      case i18n.t('channel.unsubscribe'):
         this.props.channel.subscribe();
         break;
-      case 'Block':
+      case i18n.t('channel.block'):
         this.props.channel.toggleBlock();
         break;
-      case 'Un-Block':
+      case i18n.t('channel.unblock'):
         this.props.channel.toggleBlock();
         break;
-      case 'Report':
+      case i18n.t('channel.report'):
         this.props.navigation.push('Report', { entity: this.props.channel.channel });
         break;
     }
-
-
   }
 
   /**

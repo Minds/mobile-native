@@ -33,6 +33,7 @@ import CommentList from '../comments/CommentList';
 import NewsfeedList from '../newsfeed/NewsfeedList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Groups view screen
@@ -219,24 +220,24 @@ export default class GroupViewScreen extends Component {
    */
   memberMenuPress = (member) => {
 
-    const memberActions = ['Cancel'];
+    const memberActions = [ i18n.t('cancel') ];
     const imOwner = this.props.groupView.group['is:owner'];
     const imModerator = this.props.groupView.group['is:moderator'];
 
     if (imOwner) {
       if (member['is:owner']) {
-        memberActions.push('Remove as Owner');
+        memberActions.push( i18n.t('groups.removeOwner') );
       } else if (!member['is:moderator']) {
-        memberActions.push('Make Owner');
-        memberActions.push('Make Moderator');
+        memberActions.push( i18n.t('groups.makeOwner') );
+        memberActions.push( i18n.t('groups.makeModerator') );
       } else {
-        memberActions.push('Remove as Moderator');
+        memberActions.push( i18n.t('groups.removeModerator') );
       }
     }
 
     if ((imOwner || imModerator) && !member['is:owner'] && !member['is:moderator']) {
-      memberActions.push('Kick');
-      memberActions.push('Ban');
+      memberActions.push( i18n.t('groups.kick') );
+      memberActions.push( i18n.t('groups.ban') );
     }
 
     this.setState({
@@ -267,7 +268,7 @@ export default class GroupViewScreen extends Component {
     let selected = this.state.memberActions[option];
 
     switch (selected) {
-      case 'Ban':
+      case i18n.t('groups.ban'):
         Alert.alert(
           'Confirm',
           `Are you sure? You want to ban this user?`,
@@ -277,27 +278,27 @@ export default class GroupViewScreen extends Component {
           ]
         );
         break;
-      case 'Kick':
+      case i18n.t('groups.kick'):
         Alert.alert(
-          'Confirm',
-          `Are you sure? You want to kick this user?`,
+          i18n.t('confirm'),
+          i18n.t('groups.confirmKick'),
           [
-            { text: 'No', style: 'cancel' },
-            { text: 'Yes!', onPress: () => this.props.groupView.kick(this.state.member) }
+            { text: i18n.t('no'), style: 'cancel' },
+            { text: i18n.t('yes'), onPress: () => this.props.groupView.kick(this.state.member) }
           ]
         );
 
         break;
-      case 'Make Owner':
+      case i18n.t('groups.makeOwner'):
         this.props.groupView.makeOwner(this.state.member);
         break;
-      case 'Remove as Owner':
+      case i18n.t('groups.removeOwner'):
         this.props.groupView.revokeOwner(this.state.member);
         break;
-        case 'Make Moderator':
+      case i18n.t('groups.makeModerator'):
         this.props.groupView.makeModerator(this.state.member);
         break;
-      case 'Remove as Moderator':
+      case i18n.t('groups.removeModerator'):
         this.props.groupView.revokeModerator(this.state.member);
         break;
     }

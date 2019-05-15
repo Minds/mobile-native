@@ -9,7 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import BlockchainWalletService from '../BlockchainWalletService';
-
+import i18n from '../../../common/services/i18n.service';
 import number from '../../../common/helpers/number';
 import abbrev from '../../../common/helpers/abbrev';
 
@@ -112,23 +112,23 @@ export default class BlockchainWalletListItem extends Component {
               {aliasOrAddressExcerpt(this.props.item).toUpperCase()}
             </Text>
 
-            { this.props.item.remote ? 
-              <Text style={[styles.tag, styles.tagPrimary]}>RECEIVER</Text>
+            { this.props.item.remote ?
+              <Text style={[styles.tag, styles.tagPrimary]}>{i18n.t('blockchain.receiver').toUpperCase()}</Text>
               : null }
 
-            { this.props.item.offchain ? 
-              <Text style={[styles.tag, styles.tagPrimary]}>OFFCHAIN</Text>
+            { this.props.item.offchain ?
+              <Text style={[styles.tag, styles.tagPrimary]}>{i18n.t('blockchain.offchain').toUpperCase()}</Text>
               : null }
           </View>
 
           <View style={styles.subContainer}>
-            { !this.props.item.privateKey && !this.props.item.offchain && !this.props.item.creditcard ? 
-              <Text style={[styles.tag, { marginRight: 8, marginLeft: 0}]}>RECEIVE ONLY</Text>
+            { !this.props.item.privateKey && !this.props.item.offchain && !this.props.item.creditcard ?
+              <Text style={[styles.tag, { marginRight: 8, marginLeft: 0}]}>{i18n.t('blockchain.receivaOnly')}</Text>
               : null }
 
             { !this.props.item.creditcard && <Text style={styles.listAddress}>{addressExcerpt(this.props.item.address, 5)}</Text>}
 
-            { this.props.item.creditcard && <Text style={styles.listAddress}>No tokens? No problem!</Text> }
+            { this.props.item.creditcard && <Text style={styles.listAddress}>{i18n.t('blockchain.noTokensNoProblem')}</Text> }
           </View>
 
         </View>

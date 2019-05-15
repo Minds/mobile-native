@@ -20,6 +20,7 @@ import Tags from '../../common/components/Tags';
 import ModalPicker from './ModalPicker';
 import ViewImageScreen from '../../media/ViewImageScreen';
 import CenterLoading from '../../common/components/CenteredLoading';
+import i18n from '../services/i18n.service';
 
 /**
  * Translate component
@@ -153,7 +154,7 @@ export default class Translate extends PureComponent {
   }
 
   showError() {
-    Alert.alert('Ooops', 'There was an error on translation.\n Plase try again.')
+    Alert.alert(i18n.t('ops'), i18n.t('translate.error'));
   }
 
   /**
@@ -175,11 +176,11 @@ export default class Translate extends PureComponent {
         </View>
         <View style={[CommonStyle.rowJustifyStart, CommonStyle.alignCenter, CommonStyle.marginTop]}>
           <Icon name="md-globe" type='ionicon' size={14} iconStyle={{marginTop:2}}/>
-          <Text style={[CommonStyle.paddingLeft, CommonStyle.colorDarkGreyed]}>translated from <Text style={CommonStyle.bold}>{this.translatedFrom}</Text></Text>
+          <Text style={[CommonStyle.paddingLeft, CommonStyle.colorDarkGreyed]}>{i18n.t('translate.from')} <Text style={CommonStyle.bold}>{this.translatedFrom}</Text></Text>
         </View>
         <View style={[CommonStyle.rowJustifyStart, CommonStyle.alignCenter, CommonStyle.marginTop]}>
-          <Text style={[CommonStyle.bold, CommonStyle.colorPrimary]} onPress={this.hide}>Hide</Text>
-          <Text style={[CommonStyle.bold, CommonStyle.colorPrimary, CommonStyle.paddingLeft2x]} onPress={this.showPicker}>Change Language</Text>
+          <Text style={[CommonStyle.bold, CommonStyle.colorPrimary]} onPress={this.hide}>{i18n.t('hide')}</Text>
+          <Text style={[CommonStyle.bold, CommonStyle.colorPrimary, CommonStyle.paddingLeft2x]} onPress={this.showPicker}>{i18n.t('translate.changeLanguage')}</Text>
         </View>
       </View>
     );

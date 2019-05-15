@@ -15,6 +15,7 @@ import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import ErrorLoading from '../common/components/ErrorLoading';
 import ErrorBoundary from '../common/components/ErrorBoundary';
+import i18n from '../common/services/i18n.service';
 
 /**
  * News feed list component
@@ -102,7 +103,7 @@ export default class NewsfeedList extends Component {
             style={ComponentsStyle.emptyComponentLink}
             onPress={() => navigation.push('Channel', { username: 'me' })}
             >
-            Design your channel
+           {i18n.t('newsfeed.designYourChannel')}
           </Text>
         }
 
@@ -110,19 +111,19 @@ export default class NewsfeedList extends Component {
           <View style={ComponentsStyle.emptyComponentContainer}>
             <View style={ComponentsStyle.emptyComponent}>
               <MIcon name="home" size={72} color='#444' />
-              <Text style={ComponentsStyle.emptyComponentMessage}>Your newsfeed is empty</Text>
+              <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('newsfeed.empty')}</Text>
               {design}
               <Text
                 style={ComponentsStyle.emptyComponentLink}
                 onPress={() => navigation.navigate('Capture')}
-                >
-                Create a post
+              >
+                {i18n.t('createAPost')}
               </Text>
               <Text
                 style={ComponentsStyle.emptyComponentLink}
                 onPress={() => navigation.navigate('Discovery', { type: 'channels' })}
-                >
-                Find channels
+              >
+                {i18n.t('findChannels')}
               </Text>
             </View>
           </View>);
@@ -130,7 +131,7 @@ export default class NewsfeedList extends Component {
         empty = (
           <View style={ComponentsStyle.emptyComponentContainer}>
             <View style={ComponentsStyle.emptyComponent}>
-              <Text style={ComponentsStyle.emptyComponentMessage}>This feed is empty</Text>
+              <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('newsfeed.empty')}</Text>
             </View>
           </View>);
       }
@@ -183,8 +184,8 @@ export default class NewsfeedList extends Component {
   getErrorLoading()
   {
     const message = this.props.newsfeed.list.entities.length ?
-      "Can't load more" :
-      "Can't load the feed";
+    i18n.t('cantLoadMore') :
+    i18n.t('cantLoad');
 
     return <ErrorLoading message={message} tryAgain={this.loadFeedForce}/>
   }

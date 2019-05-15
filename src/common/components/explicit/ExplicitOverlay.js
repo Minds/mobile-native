@@ -13,6 +13,7 @@ import { observer } from 'mobx-react/native';
 import { CommonStyle as CS } from '../../../styles/Common';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GOOGLE_PLAY_STORE } from '../../../config/Config';
+import i18n from '../../services/i18n.service';
 
 /**
  * Explicit overlay
@@ -61,7 +62,7 @@ export default class ExplicitOverlay extends Component {
       )
     }
 
-    const text = GOOGLE_PLAY_STORE ? 'This post cannot be shown' : 'Confirm you are 18+';
+    const text = GOOGLE_PLAY_STORE ? i18n.t('postCantBeShown') : i18n.t('confirm18');
 
     return (
       <TouchableOpacity activeOpacity={1} style={[CS.positionAbsolute, CS.centered, CS.backgroundDarkGreyed, styles.onTop, containerStyle]} onPress={this.toogle}>

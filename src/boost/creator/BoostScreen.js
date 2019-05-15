@@ -33,6 +33,7 @@ import Web3Service from '../../blockchain/services/Web3Service';
 import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
 import FeaturesService from '../../common/services/features.service';
 import readableError from '../../common/helpers/readable-error';
+import i18n from '../../common/services/i18n.service';
 
 class VisibleError extends Error {
   visible = true;
@@ -83,7 +84,7 @@ export default class BoostScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     header: (
       <View style={[CommonStyle.backgroundLight, CommonStyle.rowJustifyStart, { paddingTop: 16 }]}>
-        <Text style={[styles.titleText, CommonStyle.flexContainer, CommonStyle.padding2x]}>Boost</Text>
+        <Text style={[styles.titleText, CommonStyle.flexContainer, CommonStyle.padding2x]}>{i18n.t('boost')}</Text>
         <Icon size={36} name="ios-close" onPress={() => navigation.goBack()} style={CommonStyle.padding2x} />
       </View>
     ),
@@ -98,10 +99,7 @@ export default class BoostScreen extends Component {
   componentWillMount() {
 
     if (!FeaturesService.has('crypto')) {
-      Alert.alert(
-        'Oooopppss',
-        'This feature is currently unavailable on your platform',
-      );
+      FeaturesService.showAlert();
       return this.props.navigation.goBack();
     }
 
@@ -218,8 +216,8 @@ export default class BoostScreen extends Component {
   selectTarget = target => {
     if(target.guid == this.props.user.me.guid) {
       Alert.alert(
-        'Error',
-        'You cant select yourself to make a p2p boost',
+        i18n.t('error'),
+        i18n.t('boosts.youCantSelectYourself'),
         [
           {text: 'OK', onPress: () => {}},
         ],
@@ -242,14 +240,14 @@ export default class BoostScreen extends Component {
       <View>
         <Divider style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]} />
 
-        <Text style={styles.subtitleText}>TARGET</Text>
-        <Text style={CommonStyle.fontS}>Search for the channel you want to boost to.</Text>
+        <Text style={styles.subtitleText}>{i18n.t('boosts.target')}</Text>
+        <Text style={CommonStyle.fontS}>{i18n.t('boosts.targetDescription')}</Text>
 
         <Touchable style={styles.targetView} onPress={() => this.openTargetModal()}>
           { !!this.state.target && <Text style={styles.target}>@{this.state.target.username}</Text> }
 
-          { !!this.state.target && <Text style={styles.changeTarget}>TAP TO CHANGE CHANNEL</Text> }
-          { !this.state.target && <Text style={styles.newTarget}>TAP TO SEARCH A CHANNEL</Text> }
+          { !!this.state.target && <Text style={styles.changeTarget}>{i18n.t('boosts.tapToChangeChannel')}</Text> }
+          { !this.state.target && <Text style={styles.newTarget}>{i18n.t('boosts.tapToSearchChannel')}</Text> }
         </Touchable>
 
         <UserTypeahead
@@ -314,21 +312,21 @@ export default class BoostScreen extends Component {
 
   validate() {
     if (this.state.amount <= 0) {
-      throw new Error('Amount should be greater than 0.');
+      throw new Error(i18n.t('boosts.errorAmountSholdbePositive'));
     }
 
     if (!this.state.type) {
-      throw new Error('You should select a type.');
+      throw new Error(i18n.t('boosts.errorShouldSelectType'));
     }
 
     if (!this.state.payment) {
-      throw new Error('You should select a payment method.');
+      throw new Error(i18n.t('boosts.errorShouldSelectMethod'));
     }
 
     switch (this.state.payment) {
       case 'usd':
         if (this.calcCharges(this.state.payment) < this.state.rates.minUsd) {
-          throw new VisibleError(`You must spend at least ${currency(this.state.rates.minUsd, 'usd')}.`);
+          throw new VisibleError(i18n.t('boosts.errorShouldSpendAtLeast', {amount:currency(this.state.rates.minUsd, 'usd')}));
         }
 
         break;
@@ -336,15 +334,15 @@ export default class BoostScreen extends Component {
 
     if (this.state.type === 'p2p') {
       if (!this.state.target) {
-        throw new Error('You should select a target.')
+        throw new Error(i18n.t('boosts.errorShouldSelectTarget'))
       }
 
       if (!this.state.target.guid == this.props.user.me.guid) {
-        throw new VisibleError('Target cant be self.')
+        throw new VisibleError(i18n.t('boosts.errorTargetSelf'))
       }
     } else /* non-P2P */ {
       if (this.state.amount < this.state.rates.min || this.state.amount > this.state.rates.cap) {
-        throw new VisibleError(`You must boost between ${this.state.rates.min} and ${this.state.rates.cap} views.`);
+        throw new VisibleError(i18n.t('boosts.errorBetween', {min: this.state.rates.min, max: this.state.rates.cap}));
       }
     }
   }
@@ -384,15 +382,18 @@ export default class BoostScreen extends Component {
     }
 
     Alert.alert(
-      'Are you sure?',
+      i18n.t('confirmMessage'),
       (
         this.state.type !== 'p2p' ?
-          `You're about to boost ${number(this.state.amount)} views for your content.` :
-          `You're about to send ${currency(this.state.amount, this.state.payment)} to @${this.state.target.username} for reminding your content.`
+        i18n.t('boosts.boostConfirm', {amount: number(this.state.amount)}) :
+        i18n.t('boosts.boostConfirmP2p', {
+          amount: currency(this.state.amount, this.state.payment),
+          username: this.state.target.username
+        })
       ),
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'OK', onPress: () => this._submitBoost() },
+        { text: i18n.t('cancel'), style: 'cancel' },
+        { text: i18n.t('ok'), onPress: () => this._submitBoost() },
       ],
       { cancelable: false }
     );
@@ -417,7 +418,7 @@ export default class BoostScreen extends Component {
       if (this.state.type !== 'p2p') {
         switch (this.state.payment) {
           case 'tokens':
-            let payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Network Boost.`, { signable: true, offchain: true, buyable: true });
+            let payload = await BlockchainWalletService.selectCurrent(i18n.t('boosts.selectWalletNetworkMessage'), { signable: true, offchain: true, buyable: true });
 
             if (!payload || payload.cancelled) {
               return;
@@ -430,7 +431,7 @@ export default class BoostScreen extends Component {
               case 'onchain':
 
 		            if (this.state.target && !this.state.target.eth_wallet) {
-                  throw new VisibleError('User cannot receive OnChain tokens because they haven\'t setup an OnChain address. Please retry OffChain.');
+                  throw new VisibleError(i18n.t('boosts.errorCantReceiveTokens'));
                 }
 
                 nonce = {
@@ -487,7 +488,7 @@ export default class BoostScreen extends Component {
 
         switch (this.state.payment) {
           case 'tokens':
-            let payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Channel Boost.`, { signable: true, offchain: true, buyable: true });
+            let payload = await BlockchainWalletService.selectCurrent(i18n.t('boosts.selectWalletChannelMessage'), { signable: true, offchain: true, buyable: true });
 
             if (!payload || payload.cancelled) {
               return;
@@ -498,7 +499,7 @@ export default class BoostScreen extends Component {
             switch (payload.type) {
               case 'onchain':
                 if (!this.state.target.eth_wallet) {
-                  throw new VisibleError('Boost target should have a Receiver Address.');
+                  throw new VisibleError(i18n.t('boosts.errorShouldHaveReceiverAddress'));
                 }
 
                 nonce = {
@@ -510,7 +511,7 @@ export default class BoostScreen extends Component {
 
               case 'offchain':
                 if (!this.state.target.rewards) {
-                  throw new VisibleError('Boost target should participate in the Rewards program.');
+                  throw new VisibleError(i18n.t('boosts.errorShouldParticipateRewards'));
                 }
 
                 nonce = {
@@ -521,7 +522,7 @@ export default class BoostScreen extends Component {
 
               case 'creditcard':
                 if (!this.state.target.rewards) {
-                  throw new VisibleError('Boost target should participate in the Rewards program.');
+                  throw new VisibleError(i18n.t('boosts.errorShouldParticipateRewards'));
                 }
 
                 nonce = {
@@ -559,9 +560,9 @@ export default class BoostScreen extends Component {
         let error;
 
         if (e && e.stage === 'transaction') {
-          error = 'Sorry, your payment failed. Please, try again, use another card or wallet';
+          error = i18n.t('boosts.errorPayment');
         } else {
-          error = (e && e.message) || 'Sorry, something went wrong';
+          error = (e && e.message) || i18n.t('errorMessage');
         }
 
         this.setState({ error: readableError(error) });
@@ -577,7 +578,7 @@ export default class BoostScreen extends Component {
       (await api.get(`api/v2/boost/prepare/${entityGuid}`)) || {};
 
     if (!guid) {
-      throw new Error('Cannot generate GUID');
+      throw new Error(i18n.t('boosts.errorCanNotGenerate'));
     }
 
     return { guid, checksum };
@@ -593,15 +594,15 @@ export default class BoostScreen extends Component {
       return <CenteredLoading/>
     }
 
-    let amountTitle = 'HOW MANY VIEWS DO YOU WANT?';
+    let amountTitle = i18n.t('boosts.howManyViewsDoYouWant');
 
     if (this.state.type === 'p2p') {
-      amountTitle = 'WHAT\'S YOUR OFFER ?';
+      amountTitle = i18n.t('boosts.whatIsYourOffer');
     }
 
     return (
       <ScrollView style={[CommonStyle.flexContainer, CommonStyle.backgroundLight, CommonStyle.padding2x]}>
-        <Text style={[styles.subtitleText, CommonStyle.paddingBottom]}>BOOST TYPE</Text>
+        <Text style={[styles.subtitleText, CommonStyle.paddingBottom]}>{i18n.t('boosts.boostType')}</Text>
         <TypeSelector onChange={this.changeType} value={this.state.type} allowedTypes={this.state.allowedTypes} />
 
         <Divider style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]}/>
@@ -617,12 +618,12 @@ export default class BoostScreen extends Component {
             value={this.parsedAmount()}
             keyboardType="numeric"
             />
-          { this.state.type !== 'p2p' && <Text style={[CommonStyle.fontXXL, CommonStyle.paddingLeft2x]}>Views</Text> }
+          { this.state.type !== 'p2p' && <Text style={[CommonStyle.fontXXL, CommonStyle.paddingLeft2x]}>{i18n.t('views')}</Text> }
         </View>
 
         <Divider style={[CommonStyle.marginTop3x, CommonStyle.marginBottom3x]} />
 
-        <Text style={styles.subtitleText}>COST</Text>
+        <Text style={styles.subtitleText}>{i18n.t('boosts.cost')}</Text>
         <PaymentSelector onChange={this.changePayment} value={this.state.payment} type={this.state.type} values={this.getAmountValues()} />
 
         {this.TargetPartial()}
@@ -637,7 +638,7 @@ export default class BoostScreen extends Component {
           <Touchable style={[ComponentsStyle.button, ComponentsStyle.buttonAction, { backgroundColor: 'transparent' }, CommonStyle.marginTop2x, CommonStyle.marginBottom3x]}
             onPress={() => this.submit()}
           >
-            <Text style={CommonStyle.colorPrimary}>BOOST</Text>
+            <Text style={CommonStyle.colorPrimary}>{i18n.t('boost').toUpperCase()}</Text>
           </Touchable>
           <View style={{ flex: 1 }}></View>
         </View>

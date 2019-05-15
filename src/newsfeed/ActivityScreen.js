@@ -18,6 +18,7 @@ import SingleEntityStore from '../common/stores/SingleEntityStore';
 import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import logService from '../common/services/log.service';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Activity screen
@@ -121,8 +122,8 @@ export default class ActivityScreen extends Component {
                 style={ComponentsStyle.logo}
                 source={require('../assets/logos/logo.png')}
               />
-              <Text style={[CS.fontL, CS.colorDanger]}>SORRY, WE COULDN'T LOAD THE ACTIVITY</Text>
-              <Text style={[CS.fontM]}>PLEASE TRY AGAIN LATER</Text>
+              <Text style={[CS.fontL, CS.colorDanger]}>{i18n.t('activity.error')}</Text>
+              <Text style={[CS.fontM]}>{i18n.t('activity.tryAgain')}</Text>
             </View>
         }
       </View>

@@ -37,6 +37,7 @@ import featuresService from '../common/services/features.service';
 import { creatorNsfwService } from '../common/services/nsfw.service';
 import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
+import i18n from '../common/services/i18n.service';
 
 @inject('user', 'capture')
 @observer
@@ -71,7 +72,7 @@ export default class CapturePoster extends Component {
     setParams({
       headerRight: <CapturePostButton
         onPress={() => !params.isRemind ? this.submit() : this.remind()}
-        text={params.isRemind ? 'REMIND' : 'POST'}
+        text={params.isRemind ? i18n.t('capture.remind').toUpperCase() : i18n.t('capture.post').toUpperCase()}
       />
     });
   }
@@ -121,7 +122,7 @@ export default class CapturePoster extends Component {
    */
   showContext () {
     let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null;
-    return group? <Text style={styles.title}> { '(Posting in ' + group.name + ')'} </Text> :null;
+    return group? <Text style={styles.title}> {i18n.t('capture.postingIn', {group: group.name})} </Text> :null;
   }
 
 
@@ -178,7 +179,7 @@ export default class CapturePoster extends Component {
             <TextInput
               style={styles.poster}
               editable={true}
-              placeholder='Speak your mind...'
+              placeholder={i18n.t('capture.placeholder')}
               placeholderTextColor='#ccc'
               underlineColorAndroid='transparent'
               onChangeText={this.setText}
@@ -266,7 +267,7 @@ export default class CapturePoster extends Component {
       const result = await attachment.attachMedia(response, extra);
     } catch(err) {
       logService.exception(err);
-      Alert.alert('caught upload error');
+      Alert.alert(i18n.t('capture.uploadError'));
     }
   }
 
@@ -278,7 +279,7 @@ export default class CapturePoster extends Component {
     // delete only if it has an attachment
     if (attachment.hasAttachment) {
       const result = await attachment.delete();
-      if (result === false) Alert.alert('caught error deleting the file');
+      if (result === false) Alert.alert(i18n.t('capture.errorDeleting'));
     }
   }
 
@@ -289,7 +290,7 @@ export default class CapturePoster extends Component {
     let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null
 
     if(HashtagService.slice(message).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
-      Alert.alert(`Sorry, your post cannot contain more than ${HashtagService.maxHashtags} hashtags.`);
+      Alert.alert(i18n.t('capture.maxHashtags', {maxHashtags: HashtagService.maxHashtags}));
       return false;
     }
 
@@ -298,7 +299,7 @@ export default class CapturePoster extends Component {
       this.navToPrevious(response.entity, group);
     } catch (err) {
       logService.exception('[CapturePoster]', err);
-      Alert.alert('Oops', "There was an error.\nPlease try again.");
+      Alert.alert(i18n.t('ops'), i18n.t('errorMessage'));
     }
   }
 
@@ -310,7 +311,7 @@ export default class CapturePoster extends Component {
     const text = this.props.capture.text;
 
     if (attachment.hasAttachment && attachment.uploading) {
-      Alert.alert('Please try again in a moment.');
+      Alert.alert(i18n.t('capture.pleaseTryAgain'));
       return false;
     }
 
@@ -319,12 +320,12 @@ export default class CapturePoster extends Component {
       !text &&
       (!this.props.capture.embed.meta || !this.props.capture.embed.meta.perma_url)
     ) {
-      Alert.alert('Nothing to post...');
+      Alert.alert(i18n.t('capture.nothingToPosts'));
       return false;
     }
 
-    if(HashtagService.slice(text).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
-      Alert.alert(`Sorry, your post cannot contain more than ${HashtagService.maxHashtags} hashtags.`);
+    if (HashtagService.slice(text).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
+      Alert.alert(i18n.t('capture.maxHashtags', {maxHashtags: HashtagService.maxHashtags}));
       return false;
     }
 
@@ -389,7 +390,7 @@ export default class CapturePoster extends Component {
       return response;
     } catch (err) {
       logService.exception('[CapturePoster]', err);
-      Alert.alert('Oops', "There was an error.\nPlease try again.");
+      Alert.alert(i18n.t('ops'), i18n.t('errorMessage'));
     }
   }
 

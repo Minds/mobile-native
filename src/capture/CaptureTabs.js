@@ -1,4 +1,4 @@
-import React, {
+  import React, {
     Component,
 } from 'react';
 
@@ -23,6 +23,7 @@ import Topbar from '../topbar/Topbar';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import attachmentService from '../common/services/attachment.service';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Capture tab
@@ -51,7 +52,7 @@ export default class CaptureTab extends Component {
     if (Platform.OS != 'ios') {
       actionsheet = <ActionSheet
         ref={o => this.actionSheet = o}
-        options={['Cancel', 'Images', 'Videos']}
+        options={[i18n.t('cancel'), i18n.t('images'), i18n.t('videos')]}
         onPress={this._selectMediaType}
         cancelButtonIndex={0}
       />
@@ -66,19 +67,19 @@ export default class CaptureTab extends Component {
               <TouchableHighlight underlayColor='#FFF' onPress={ this.gallery } style={ styles.buttons}>
                 <View style={ styles.buttonsWrapper }>
                   <Icon name="md-photos" size={36} style={ styles.icons }/>
-                  <Text style={ styles.labels }>Gallery</Text>
+                  <Text style={ styles.labels }>{i18n.t('capture.gallery')}</Text>
                 </View>
               </TouchableHighlight>
               <TouchableHighlight underlayColor='#FFF' onPress={ this.photo } style={ styles.buttons }>
                 <View style={ styles.buttonsWrapper }>
                   <Icon name="md-camera" size={36} style={ styles.icons }/>
-                  <Text style={ styles.labels }>Photo</Text>
+                  <Text style={ styles.labels }>{i18n.t('capture.photo')}</Text>
                 </View>
               </TouchableHighlight>
               <TouchableHighlight underlayColor='#FFF' onPress={ this.video } style={ styles.buttons }>
                 <View style={ styles.buttonsWrapper }>
                   <Icon name="md-videocam" size={36} style={ styles.icons }/>
-                  <Text style={ styles.labels }>Video</Text>
+                  <Text style={ styles.labels }>{i18n.t('capture.video')}</Text>
                 </View>
               </TouchableHighlight>
             </View>

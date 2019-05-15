@@ -16,6 +16,7 @@ import {
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import Button from '../common/components/Button';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Messenger Invite
@@ -39,7 +40,7 @@ export default class MessengerInvite extends Component {
     const invitable = this.props.messengerConversation.invitable;
     const invited = this.props.messengerConversation.invited;
 
-    btnText = invited ? 'Invited!' : 'Invite'
+    btnText = invited ? i18n.t('messenger.invited') : i18n.t('messenger.invite');
 
     const button = <Button onPress={ this.invite } text={btnText}/>
 
@@ -47,7 +48,7 @@ export default class MessengerInvite extends Component {
       <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>
 
         <View style={[CommonStyle.paddingBottom3x, CommonStyle.padding3x]}>
-          <Text style={[CommonStyle.fontXL, CommonStyle.textCenter]}>Looks like <Text style={CommonStyle.flexContainerCenter}>@{ invitable[0].username }</Text> isn't using Minds Messenger yet.</Text>
+          <Text style={[CommonStyle.fontXL, CommonStyle.textCenter]}>{i18n.t('messenger.looksLike')} <Text style={CommonStyle.flexContainerCenter}>@{ invitable[0].username }</Text> {i18n.t('messenger.isntUsingMessenger')}.</Text>
         </View>
         <View style={[CommonStyle.centered]}>
           {button}

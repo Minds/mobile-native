@@ -11,6 +11,7 @@ import moment from 'moment';
 import { observer, inject } from 'mobx-react/native'
 import token from "../common/helpers/token";
 import number from "../common/helpers/number";
+import i18n from '../common/services/i18n.service';
 
 @inject('wallet')
 @observer
@@ -27,27 +28,27 @@ export default class WalletOverviewView extends Component {
       <View style={styles.container}>
         <View style={ styles.view }>
           <View style={ styles.cell }>
-            <Text style={ styles.titles }>Next Payout</Text>
+            <Text style={ styles.titles }>{i18n.t('wallet.nextPayout')}</Text>
             <Text style={ styles.amount }>{ timer }</Text>
           </View>
 
           <View style={ styles.cell }>
-            <Text style={ styles.titles }>Estimated Reward</Text>
+            <Text style={ styles.titles }>{i18n.t('wallet.estimatedReward')}</Text>
             <Text style={ styles.amount }>{ token(this.props.wallet.overview.currentReward || 0, 18) }</Text>
           </View>
 
           <View style={ styles.cell }>
-            <Text style={ styles.titles }>Your Share</Text>
+            <Text style={ styles.titles }>{i18n.t('wallet.yourShare')}</Text>
             <Text style={ styles.amount }>{  number((this.props.wallet.overview.yourShare || 0) * 100 ,2,4) }%</Text>
           </View>
 
           <View style={ styles.cell }>
-            <Text style={ styles.titles }>Your Score</Text>
+            <Text style={ styles.titles }>{i18n.t('wallet.yourScore')}</Text>
             <Text style={ styles.amount }>{ number(this.props.wallet.overview.yourContribution || 0) }</Text>
           </View>
 
           <View style={ styles.cell }>
-            <Text style={ styles.titles }>Network Score</Text>
+            <Text style={ styles.titles }>{i18n.t('wallet.networkScore')}</Text>
             <Text style={ styles.amount }>{ number(this.props.wallet.overview.totalNetworkContribution || 0) }</Text>
           </View>
 

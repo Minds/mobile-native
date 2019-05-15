@@ -34,6 +34,8 @@ import UserModel from '../channel/UserModel';
 import MessengerConversationStore from './MessengerConversationStore';
 import ErrorLoading from '../common/components/ErrorLoading';
 import logService from '../common/services/log.service';
+import i18n from '../common/services/i18n.service';
+
 
 /**
  * Messenger Conversation Screen
@@ -202,7 +204,7 @@ export default class ConversationScreen extends Component {
             style={styles.input}
             editable={true}
             underlineColorAndroid='transparent'
-            placeholder='Type your message...'
+            placeholder={i18n.t('messenger.typeYourMessage')}
             onChangeText={(text) => this.textChanged(text)}
             multiline={true}
             autogrow={true}
@@ -241,8 +243,8 @@ export default class ConversationScreen extends Component {
     if (!this.store.errorLoading) return null;
 
     const message = this.store.messages.length ?
-      "Can't load more" :
-      "Can't load conversation";
+      i18n.t('cantLoadMore') :
+      i18n.t('cantLoad');
 
     return <ErrorLoading message={message} tryAgain={this.loadMoreForce} inverted={true}/>
   }

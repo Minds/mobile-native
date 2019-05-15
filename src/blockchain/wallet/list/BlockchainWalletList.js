@@ -15,6 +15,7 @@ import NavigationService from '../../../navigation/NavigationService';
 import Touchable from '../../../common/components/Touchable';
 
 import BlockchainWalletListItem from './BlockchainWalletListItem';
+import i18n from '../../../common/services/i18n.service';
 
 // Class
 
@@ -45,10 +46,10 @@ export default class BlockchainWalletList extends Component {
   EmptyPartial = () => {
     return (
       <View style={style.emptyView}>
-        <Text style={style.emptyViewText}>No wallets available.</Text>
+        <Text style={style.emptyViewText}>{i18n.t('blockchain.noWalletsAvailable')}</Text>
 
         {!this.props.disableCreation && <Touchable onPress={this.createWalletAction}>
-          <Text style={style.emptyViewTappableText}>Tap here to create a new one.</Text>
+          <Text style={style.emptyViewTappableText}>{i18n.t('blockchain.tapToCreate')}</Text>
         </Touchable>}
       </View>
     );

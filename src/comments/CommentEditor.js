@@ -12,6 +12,7 @@ import Button from '../common/components/Button';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import logService from '../common/services/log.service';
+import i18n from '../common/services/i18n.service';
 
 
 /**
@@ -66,8 +67,8 @@ export default class CommentEditor extends Component {
           value={this.state.text}
         />
         <View style={CommonStyle.rowJustifyEnd}>
-          <Button text="Cancel" onPress={this.cancel} color={colors.primary} />
-          <Button text="Save" color={colors.primary} onPress={this.update} loading={this.props.store.saving} inverted/>
+          <Button text={i18n.t('cancel')} onPress={this.cancel} color={colors.primary} />
+          <Button text={i18n.t('save')} color={colors.primary} onPress={this.update} loading={this.props.store.saving} inverted/>
         </View>
       </View>
     )

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import BoostGiftView from './BoostGiftView';
-import { rejectionReasons } from '../../../boost/RejectionReasons';
+import i18n from '../../../common/services/i18n.service';
 
 /**
  * Boost Rejected Notification Component
@@ -16,9 +16,7 @@ import { rejectionReasons } from '../../../boost/RejectionReasons';
 export default class BoostRejectedView extends BoostGiftView {
 
   findReason(code) {
-    return rejectionReasons.find((item) => {
-      return item.code == code;
-    });
+    return i18n.t(`boosts.rejectionReasons.${code}`);
   }
 
   render() {
@@ -29,12 +27,12 @@ export default class BoostRejectedView extends BoostGiftView {
     let reason = '';
 
     if (entity.params.reason && entity.params.reason !== -1) {
-      reason = this.findReason(entity.params.reason).label;
+      reason = this.findReason(entity.params.reason);
     }
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToBoostConsole}>Your boost {entity.params.points} {description} was rejected for <Text style={styles.link} onPress={this.navToChannel}>{entity.params.channel}</Text> {reason}. Your points have been credited back to your wallet.</Text>
+        <Text onPress={this.navToBoostConsole}>{i18n.to('notification.boostRejected', {reason}, {description})}</Text>
       </View>
     )
   }

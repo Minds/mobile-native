@@ -12,6 +12,7 @@ import * as Progress from 'react-native-progress';
 import colors from '../styles/Colors';
 import { CommonStyle as CS } from '../styles/Common';
 import testID from '../common/helpers/testID';
+import i18n from '../common/services/i18n.service';
 
 @inject('capture')
 @observer
@@ -20,7 +21,7 @@ export default class CapturePostButton extends Component {
   render() {
     const attachment = this.props.capture.attachment;
     const isPosting = this.props.capture.isPosting;
-    const text = this.props.text || 'POST';
+    const text = this.props.text || i18n.t('capture.post');
 
     return (
       <View style={styles.posterActions} >

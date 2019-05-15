@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import i18n from '../../../common/services/i18n.service';
+
 /**
  * Group Activity Notification Component
  */
-export default class GroupActivityView extends Component {
+export default class GroupActivityView extends PureComponent {
 
   /**
    * Navigate to group
@@ -28,7 +30,7 @@ export default class GroupActivityView extends Component {
       <TouchableOpacity style={styles.bodyContents} onPress={this.navToGroup}>
         <Text>
           <Text style={styles.link}>{entity.fromObj.name}</Text>
-          <Text> posted in </Text>
+          <Text> {i18n.t('notification.postedIn')} </Text>
           <Text style={styles.link}>{entity.params.group.name}</Text>
         </Text>
       </TouchableOpacity>

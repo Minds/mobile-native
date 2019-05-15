@@ -13,6 +13,7 @@ import {
 import { observer, inject } from 'mobx-react/native'
 import token from "../../common/helpers/token";
 import number from "../../common/helpers/number";
+import i18n from '../../common/services/i18n.service';
 
 @inject('wallet')
 @observer
@@ -32,7 +33,7 @@ export default class WalletBalanceTokens extends Component {
           { this.props.wallet.addresses.map((address, i) => {
             return (<View style={styles.addressesRow} key={i}>
               <View style={ styles.addressColumn }>
-                <Text style={ styles.addressesLabel }>{ address.label } Address</Text>
+                <Text style={ styles.addressesLabel }>{ address.label } {i18n.t('wallet.address')}</Text>
                 <Text style={ styles.addressesAddress } ellipsizeMode='tail' numberOfLines={1} selectable>{ address.address }</Text>
               </View>
               <View style={ styles.addressColumn }>
@@ -54,7 +55,7 @@ export default class WalletBalanceTokens extends Component {
             source={require('../../assets/logos/bulb.png')}
           />
           <Text style={ styles.amount }>{ this.props.wallet.formattedBalance }</Text>
-          <Text style={ styles.currency }>Tokens</Text>
+          <Text style={ styles.currency }>{i18n.t('tokens')}</Text>
           <View style={{ flex: 1 }}></View>
 
         </View>

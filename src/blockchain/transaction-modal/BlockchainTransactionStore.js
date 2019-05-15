@@ -6,6 +6,7 @@ import {
 import BlockchainWalletService from '../wallet/BlockchainWalletService';
 import BlockchainApiService from '../BlockchainApiService';
 import Web3Service from '../services/Web3Service';
+import i18n from '../../common/services/i18n.service';
 
 let approvalDispose;
 
@@ -25,7 +26,7 @@ class BlockchainTransactionStore {
 
   @action async waitForApproval(method, approvalMessage, baseOptions = {}, estimatedGas = 0, weiValue = 0) {
     if (this.isApproving) {
-      throw new Error('Already approving a transaction');
+      throw new Error(i18n.t('blockchain.alreadyApproving'));
     }
 
     this.approvalMessage = approvalMessage;

@@ -1,21 +1,22 @@
 import Web3Service from './Web3Service';
+import i18n from '../../common/services/i18n.service';
 
 class BlockchainTokenService {
   async getContract() {
     return await Web3Service.getContract('token');
   }
 
-  async increaseApproval(address, amount, message = '') {
+  async increaseApproval(address, tokensAmount, message = '') {
     const token = await this.getContract();
 
     const tokenApprove = await token.methods.approve(
       address,
-      Web3Service.web3.utils.toWei(amount.toString(), 'ether')
+      Web3Service.web3.utils.toWei(tokensAmount.toString(), 'ether')
     );
 
     const result = await Web3Service.sendSignedContractMethod(
       tokenApprove,
-      `Approve ${address} to spend ${amount} tokens in the future. ${message}`.trim()
+      i18n.t('blockchain.tokenApprove',{address, tokensAmount, message}).trim()
     );
 
     return result.transactionHash;

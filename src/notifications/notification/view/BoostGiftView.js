@@ -6,6 +6,7 @@ import {
   Text,
   View
 } from 'react-native';
+import i18n from '../../../common/services/i18n.service';
 
 /**
  * Boost Gift Notification Component
@@ -18,9 +19,16 @@ export default class BoostGiftView extends Component {
 
     const description = this.getDescription(entity);
 
+    const text = i18n.to('notification.boostGiftView', {
+      name: entity.fromObj.name,
+      impressions: entity.params.impressions,
+    },{
+      description
+    });
+
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToBoostConsole}>{entity.fromObj.name} gifted you {entity.params.impressions} views {description}</Text>
+        <Text onPress={this.navToBoostConsole}>{text}</Text>
       </View>
     )
   }
@@ -54,13 +62,12 @@ export default class BoostGiftView extends Component {
 
     if (!entity.entityObj) return '';
 
-    let desc = (entity.entityObj.title || entity.entityObj.name || (entity.entityObj.type !== 'user' ? `${pron} post` : `${pron} channel`));
+    pron = i18n.t(pron);
+
+    let desc = (entity.entityObj.title || entity.entityObj.name || (entity.entityObj.type !== 'user' ? `${pron} ` + i18n.t('notification.post') : `${pron} ` + i18n.t('notification.channel')));
 
     return (
-      <Text>
-        <Text>for </Text>
-        <Text style={styles.link}>{desc}</Text>
-      </Text>
+      <Text>{i18n.t('for')} <Text style={styles.link}>{desc}</Text></Text>
     );
   }
 }

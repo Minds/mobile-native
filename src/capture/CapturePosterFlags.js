@@ -17,6 +17,8 @@ import NsfwToggle from '../common/components/nsfw/NsfwToggle';
 import logService from '../common/services/log.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import testID from '../common/helpers/testID';
+import i18n from '../common/services/i18n.service';
+
 
 @inject('capture')
 @observer
@@ -183,7 +185,7 @@ export default class CapturePosterFlags extends Component {
       >
         <View style={styles.modalView}>
           <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>SHARE</Text>
+            <Text style={styles.modalTitle}>{i18n.t('capture.share')}</Text>
 
             <IonIcon
               style={styles.modalCloseIcon}
@@ -283,7 +285,7 @@ export default class CapturePosterFlags extends Component {
       >
         <View style={styles.modalView}>
           <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>LOCK BY WIRE</Text>
+            <Text style={styles.modalTitle}>{i18n.t('capture.lock')}</Text>
 
             <IonIcon
               style={styles.modalCloseIcon}
@@ -307,7 +309,7 @@ export default class CapturePosterFlags extends Component {
               <Text
                 style={styles.lockModalInputLabel}
               >
-                TOKENS
+                {i18n.t('capture.tokens')}
               </Text>
             </View>
 
@@ -315,7 +317,7 @@ export default class CapturePosterFlags extends Component {
               <TransparentButton
                 color={colors.primary}
                 onPress={this.setLock}
-                title="Done"
+                title={i18n.t('done')}
                 {...testID('Poster lock done button')}
               />
             </View>

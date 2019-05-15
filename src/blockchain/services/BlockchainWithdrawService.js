@@ -1,13 +1,14 @@
 import Web3Service from './Web3Service';
+import i18n from '../../common/services/i18n.service';
 
 class BlockchainWithdrawService {
   async getContract() {
     return await Web3Service.getContract('withdraw');
   }
 
-  async request(guid, amount, message = '') {
+  async request(guid, tokensAmount, message = '') {
     const withdraw = await this.getContract(),
-      weiAmount = Web3Service.web3.utils.toWei(`${amount}`, 'ether'),
+      weiAmount = Web3Service.web3.utils.toWei(`${tokensAmount}`, 'ether'),
       gasLimit = 167839, //TODO: make this dynamic
       gasPrice = Web3Service.web3.utils.toWei(`1`, 'Gwei'),
       gas = gasPrice * gasLimit, // TODO: make this dynamic
@@ -21,7 +22,7 @@ class BlockchainWithdrawService {
     const result = await Web3Service.sendSignedContractMethodWithValue(
       withdrawRequest,
       gas,
-      `Request a withdrawal of ${amount} Minds Tokens. ${gasEther.toString()} ETH will be transferred to cover the gas fee. If you send a low amount of gas fee, your withdrawal may fail. ${message}`.trim()
+      i18n.t('blockchain.withdraw',{tokensAmount, 'gasEther': gasEther.toString(), message}).trim()
     );
 
     return {

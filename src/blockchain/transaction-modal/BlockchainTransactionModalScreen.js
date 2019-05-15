@@ -21,6 +21,7 @@ import Web3Service from '../services/Web3Service';
 import number from '../../common/helpers/number';
 import currency from '../../common/helpers/currency';
 import Colors from '../../styles/Colors';
+import i18n from '../../common/services/i18n.service';
 
 const defaults = {
   gasPrice: 1, // TODO: Read from Minds settings
@@ -41,11 +42,11 @@ export default class BlockchainTransactionModalScreen extends Component {
    */
   approve = () => {
     Alert.alert(
-      'Approve Transaction',
-      `Are you sure? There's no UNDO.`,
+      i18n.t('blockchain.approveTransaction'),
+      i18n.t('confirmNoUndo'),
       [
-        { text: 'No', style: 'cancel' },
-        { text: 'Yes, approve!', onPress: () => this._confirmApprove() }
+        { text: i18n.t('no'), style: 'cancel' },
+        { text: i18n.t('blockchain.yesApprove'), onPress: () => this._confirmApprove() }
       ]
     );
   }
@@ -139,13 +140,13 @@ export default class BlockchainTransactionModalScreen extends Component {
         { this.props.blockchainTransaction.isApproving && <View style={ [ CommonStyle.flexContainer, CommonStyle.modalScreen ] }>
           <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={Platform.OS == 'ios' ? 'padding' : null} >
             <ScrollView style={CommonStyle.flexContainer}>
-              <Text style={ CommonStyle.modalTitle }>Approve transaction</Text>
+              <Text style={ CommonStyle.modalTitle }>{i18n.t('blockchain.approveTransaction')}</Text>
               <Text style={ CommonStyle.modalNote }>{ this.props.blockchainTransaction.approvalMessage }</Text>
               <View style={ CommonStyle.field }>
-                <Text style={ CommonStyle.fieldLabel }>GAS PRICE (GWEI):</Text>
+                <Text style={ CommonStyle.fieldLabel }>{i18n.t('blockchain.gasPrice').toUpperCase()} (GWEI):</Text>
                 <TextInput
                   style={ CommonStyle.fieldTextInput }
-                  placeholder={ `Gas price (default: ${ defaults.gasPrice })` }
+                  placeholder={ i18n.t('blockchain.gasPriceDefault',{gasPrice: defaults.gasPrice}) }
                   returnKeyType={ 'next' }
                   onChangeText={ gasPrice => this.setState({ gasPrice }) }
                   value={ `${this.state.gasPrice}` }
@@ -153,11 +154,11 @@ export default class BlockchainTransactionModalScreen extends Component {
               </View>
 
               <View style={ CommonStyle.field }>
-                <Text style={ CommonStyle.fieldLabel }>GAS LIMIT:</Text>
+                <Text style={ CommonStyle.fieldLabel }>{i18n.t('blockchain.gasLimit').toUpperCase()}:</Text>
 
                 <TextInput
                   style={ CommonStyle.fieldTextInput }
-                  placeholder={ `Gas limit (default: ${ this.props.blockchainTransaction.estimateGasLimit || defaults.gasLimit })` }
+                  placeholder={ i18n.t('blockchain.gasLimitDefault', {gasLimit: this.props.blockchainTransaction.estimateGasLimit || defaults.gasLimit }) }
                   returnKeyType={ 'done' }
                   onChangeText={ gasLimit => this.setState({ gasLimit }) }
                   value={ `${this.state.gasLimit}` }
@@ -165,7 +166,7 @@ export default class BlockchainTransactionModalScreen extends Component {
               </View>
 
               {!!this.props.blockchainTransaction.weiValue && <View style={CommonStyle.field}>
-                <Text style={CommonStyle.fieldLabel}>ETH TO BE TRANSFERRED:</Text>
+                <Text style={CommonStyle.fieldLabel}>{i18n.t('blockchain.ethToTransfer')}:</Text>
 
                 <TextInput
                   editable={false}
@@ -175,28 +176,26 @@ export default class BlockchainTransactionModalScreen extends Component {
               </View>}
 
               {!!gasFeeUsd && <Text style={styles.gasFee}>
-                MAX. GAS FEE: {currency(gasFeeUsd, 'usd')}
+                {i18n.t('blockchain.maxGasFee')}: {currency(gasFeeUsd, 'usd')}
               </Text>}
 
               { (gasFee == 0 && this.props.blockchainTransaction.funds && this.props.blockchainTransaction.funds.eth > 0) && <Text style={[styles.error]}>
-                The gas fee must be bigger than 0.
+                {i18n.t('blockchain.gasMustBeBigger')}
               </Text>}
 
               { this.props.blockchainTransaction.funds && this.props.blockchainTransaction.funds.eth === '0' && <Text style={[styles.error]}>
-                You do not have enough gas (ETH) to cover this transaction. <Text style={styles.link} onPress={this.linkToCoinbase}>BUY ETHER</Text>
+                {i18n.t('blockchain.notEnoughGas')} <Text style={styles.link} onPress={this.linkToCoinbase}>{i18n.t('blockchain.buyEther')}</Text>
               </Text>}
 
               {this.getGasLimit() < this.props.blockchainTransaction.estimateGasLimit && <Text style={[styles.warning]}>
-                If the gas limit is too low, the transaction may not be executed.
+                {i18n.t('blockchain.gasLimitTooLow')}
               </Text>}
 
               {!canAfford && <View>
                 <Text
                   style={[styles.error]}
                 >
-                  You currently have {number(this.props.blockchainTransaction.funds.eth, 0, 4)} ETH. This amount
-                  might be insufficient to cover the Ethereum network gas fee for the transaction. Try lowering the gas
-                  price.
+                  {i18n.t('blockchain.canAffordMessage',{amount: number(this.props.blockchainTransaction.funds.eth, 0, 4)})}
                 </Text>
               </View>}
 
@@ -209,7 +208,7 @@ export default class BlockchainTransactionModalScreen extends Component {
                     ComponentsStyle.button,
                     { backgroundColor: 'transparent', marginRight: 4 },
                   ]}>
-                  <Text style={[ CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>Reject</Text>
+                  <Text style={[ CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>{i18n.t('reject')}</Text>
                 </TouchableHighlight>
                 <TouchableHighlight
                   underlayColor='transparent'
@@ -220,7 +219,7 @@ export default class BlockchainTransactionModalScreen extends Component {
                     ComponentsStyle.buttonAction,
                     { backgroundColor: 'transparent' },
                   ]}>
-                  <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, (gasFee != 0 && canAfford) ? CommonStyle.colorPrimary : null]}>Approve</Text>
+                  <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, (gasFee != 0 && canAfford) ? CommonStyle.colorPrimary : null]}>{i18n.t('approve')}</Text>
                 </TouchableHighlight>
               </View>
             </ScrollView>

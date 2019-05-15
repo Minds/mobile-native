@@ -14,6 +14,7 @@ import TransparentButton from '../../../common/components/TransparentButton';
 import { CommonStyle } from "../../../styles/Common";
 import Web3Service from '../../services/Web3Service';
 import { ComponentsStyle } from '../../../styles/Components';
+import i18n from '../../../common/services/i18n.service';
 
 function addressExcerpt(address) {
   return `0×${address.substr(2, 5)}...${address.substr(-5)}`;
@@ -50,10 +51,10 @@ export default class BlockchainWalletImportScreen extends Component {
       address.toLowerCase() !== this.state.remoteAddress.toLowerCase()
     ) {
       Alert.alert(
-        'Import',
-        `Private Key doesn't belong to ${addressExcerpt(this.state.remoteAddress)}.`,
+        i18n.t('import'),
+        i18n.t('blockchain.privateNotBelongToAddress',{address: addressExcerpt(this.state.remoteAddress)}),
         [
-          { text: 'OK' },
+          {text: i18n.t('ok')},
         ],
         { cancelable: false }
       );
@@ -62,11 +63,11 @@ export default class BlockchainWalletImportScreen extends Component {
     }
 
     Alert.alert(
-      'Import',
-      `Import wallet ${addressExcerpt(address)} onto Minds using your Private Key?`,
+      i18n.t('import'),
+      i18n.t('blockchain.importUsingPrivate',{address:addressExcerpt(address)}),
       [
-        { text: 'No', style: 'cancel' },
-        { text: 'Yes', onPress: () => this.import() },
+        { text: i18n.t('no'), style: 'cancel' },
+        { text: i18n.t('yes'), onPress: () => this.import() },
       ],
       { cancelable: false }
     );
@@ -91,11 +92,11 @@ export default class BlockchainWalletImportScreen extends Component {
   render() {
     return (
       <View style={[ CommonStyle.flexContainer, CommonStyle.screen, CommonStyle.backgroundWhite ]}>
-        {this.state.importingRemote && <Text style={CommonStyle.modalTitle}>Import wallet for {addressExcerpt(this.state.remoteAddress)}</Text>}
-        {!this.state.importingRemote && <Text style={CommonStyle.modalTitle}>Import wallet</Text>}
+        {this.state.importingRemote && <Text style={CommonStyle.modalTitle}>{i18n.t('blockchain.importWalletFor', {address: addressExcerpt(this.state.remoteAddress)})}</Text>}
+        {!this.state.importingRemote && <Text style={CommonStyle.modalTitle}>{i18n.t('blockchain.importWallet')}</Text>}
 
         <Text style={styles.note}>
-          Enter your private key for your wallet below to import.
+          {i18n.t('blockchain.enterPrivateBelow')}
         </Text>
 
         <View style={CommonStyle.field}>
@@ -114,7 +115,7 @@ export default class BlockchainWalletImportScreen extends Component {
             style={styles.actionButton}
             color={colors.darkGreyed}
             onPress={this.cancelAction}
-            title="Cancel"
+            title={i18n.t('cancel')}
           />
 
           <TransparentButton
@@ -122,7 +123,7 @@ export default class BlockchainWalletImportScreen extends Component {
             style={styles.actionButton}
             color={colors.primary}
             onPress={this.importAction}
-            title="Import"
+            title={i18n.t('import')}
           />
         </View>
       </View>

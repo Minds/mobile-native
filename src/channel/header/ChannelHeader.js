@@ -27,6 +27,7 @@ import { ComponentsStyle } from '../../styles/Components';
 import colors from '../../styles/Colors'
 import Tags from '../../common/components/Tags';
 import api from '../../common/services/api.service';
+import i18n from '../../common/services/i18n.service';
 import session from '../../common/services/session.service';
 import Touchable from '../../common/components/Touchable';
 import ChannelBadges from '../badges/ChannelBadges';
@@ -131,7 +132,7 @@ export default class ChannelHeader extends Component {
           banner: null
         };
       } else if (response === false) {
-        alert('Error saving channel');
+        alert(i18n.t('channel.errorSaving'));
         this.setState({saving: false});
       } else {
         alert(response)
@@ -159,8 +160,8 @@ export default class ChannelHeader extends Component {
       return (
         <ButtonCustom
           onPress={this.onEditAction}
-          accessibilityLabel={this.state.edit ? 'Save your changes' : 'Edit your channel settings'}
-          text={this.state.edit ? 'SAVE' : 'EDIT'}
+          accessibilityLabel={this.state.edit ? i18n.t('channel.saveChanges') : i18n.t('channel.editChannel')}
+          text={this.state.edit ? i18n.t('save').toUpperCase() : i18n.t('edit').toUpperCase()}
           loading={this.state.saving}
         />
       );
@@ -170,9 +171,9 @@ export default class ChannelHeader extends Component {
           onPress={() => { this._navToConversation() }}
           underlayColor='transparent'
           style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
-          accessibilityLabel="Send a message to this channel"
+          accessibilityLabel={i18n.t('channel.sendMessage')}
         >
-          <Text style={{ color: colors.primary }} > MESSAGE </Text>
+          <Text style={{ color: colors.primary }} > {i18n.t('channel.message')}  </Text>
         </TouchableHighlightCustom>
       );
     } else if (session.guid !== this.props.channel.channel.guid) {
@@ -181,9 +182,9 @@ export default class ChannelHeader extends Component {
           onPress={() => { this.subscribe() }}
           underlayColor='transparent'
           style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
-          accessibilityLabel="Subscribe to this channel"
+          accessibilityLabel={i18n.t('channel.subscribeMessage')}
         >
-          <Text style={{ color: colors.primary }} > SUBSCRIBE </Text>
+          <Text style={{ color: colors.primary }} > {i18n.t('channel.subscribe').toUpperCase()} </Text>
         </TouchableHighlightCustom>
       );
     } else if (this.props.channel.isUploading) {
@@ -199,7 +200,7 @@ export default class ChannelHeader extends Component {
   }
 
   changeBannerAction = async () => {
-    imagePicker.show('Select banner', 'photo')
+    imagePicker.show(i18n.t('channel.selectBanner'), 'photo')
       .then(response => {
         if (response) {
           this.selectMedia('banner', response);
@@ -212,7 +213,7 @@ export default class ChannelHeader extends Component {
 
   changeAvatarAction = async () => {
     if (!this.state.edit) return;
-    imagePicker.show('Select avatar', 'photo')
+    imagePicker.show(i18n.t('channel.selectAvatar'), 'photo')
       .then(response => {
         if (response) {
           this.selectMedia('avatar', response);
@@ -265,12 +266,12 @@ export default class ChannelHeader extends Component {
           <View style={styles.countercontainer}>
             <TouchableHighlightCustom underlayColor="transparent" style={[styles.counter]} onPress={() => { this._navToSubscribers() }}>
               <View style={styles.counter}>
-                <Text style={styles.countertitle}>SUBSCRIBERS</Text>
+                <Text style={styles.countertitle}>{i18n.t('subscribers').toUpperCase()}</Text>
                 <Text style={styles.countervalue}>{abbrev(channel.subscribers_count, 0)}</Text>
               </View>
             </TouchableHighlightCustom>
             <View style={styles.counter}>
-              <Text style={styles.countertitle}>VIEWS</Text>
+              <Text style={styles.countertitle}>{i18n.t('views').toUpperCase()}</Text>
               <Text style={styles.countervalue}>{abbrev(channel.impressions, 0)}</Text>
             </View>
           </View>
@@ -304,7 +305,7 @@ export default class ChannelHeader extends Component {
           </View>
           {isEditable && <View style={styles.briefdescriptionTextInputView}>
             <TextInput
-              placeholder="Brief description about you..."
+              placeholder={i18n.t('channel.briefDescription')}
               multiline={true}
               underlineColorAndroid='transparent'
               style={styles.briefdescriptionTextInput}

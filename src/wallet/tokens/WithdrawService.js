@@ -1,5 +1,6 @@
 import apiService from "../../common/services/api.service";
 import BlockchainWithdrawService from "../../blockchain/services/BlockchainWithdrawService";
+import i18n from "../../common/services/i18n.service";
 
 class WithdrawService {
   async getBalance() {
@@ -11,7 +12,7 @@ class WithdrawService {
         available: response.addresses[1].available / Math.pow(10, 18)
       }
     } else {
-      throw new Error('Error reading balances');
+      throw new Error(i18n.t('wallet.withdraw.errorReadingBalances'));
     }
   }
 
@@ -26,11 +27,11 @@ class WithdrawService {
     }
 
     if (!amount || amount < 0) {
-      throw new Error('Amount should be a positive number');
+      throw new Error(i18n.t('wallet.withdraw.errorAmountNegative'));
     }
 
     if (!(await this.canWithdraw())) {
-      throw new Error('You can only withdraw once a day');
+      throw new Error(i18n.t('wallet.withdraw.errorOnlyOnceDay'));
     }
 
     const txResponse = await BlockchainWithdrawService.request(guid, amount),

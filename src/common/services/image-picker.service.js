@@ -28,7 +28,7 @@ class ImagePickerService {
       allowed = await androidPermissions.checkReadExternalStorage();
 
       if (allowed === -1) {
-        this.showMessage('You have denied permissions to external storage for Minds');
+        this.showMessage(i18n.t('imagePicker.deniedExternal'));
       } else if (!allowed) {
         // request user permission
         allowed = await androidPermissions.readExternalStorage();
@@ -48,7 +48,7 @@ class ImagePickerService {
       allowed = await androidPermissions.checkCamera();
 
       if (allowed === -1) {
-        this.showMessage('You have denied permissions to camera for Minds');
+        this.showMessage(i18n.t('imagePicker.deniedCamera'));
       } else if (!allowed) {
         // request user permission
         allowed = await androidPermissions.camera();

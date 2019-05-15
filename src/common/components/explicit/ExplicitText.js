@@ -17,6 +17,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
 import { CommonStyle } from '../../../styles/Common';
+import i18n from '../../services/i18n.service';
 
 @observer
 export default class ExplicitText extends Component {
@@ -117,7 +118,7 @@ export default class ExplicitText extends Component {
    * Returns more or less button
    */
   getMoreLess() {
-    const msg = (this.state.more) ? 'Show less' : 'Read More';
+    const msg = (this.state.more) ? i18n.t('showLess') : i18n.t('readMore');
     return <Text style={styles.readmore} onPress={this.toggleReadMore}>{msg}</Text>
   }
 

@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import BoostGiftView from './BoostGiftView';
+import i18n from '../../../common/services/i18n.service';
 
 /**
  * Boost Completed Notification Component
@@ -20,9 +21,15 @@ export default class BoostCompletedView extends BoostGiftView {
 
     const description = this.getDescription(entity);
 
+    const text = i18n.to('notification.boostCompleted', {
+      impressions: entity.params.impressions,
+    },{
+      description
+    });
+
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToBoostConsole}>{entity.params.impressions}/{entity.params.impressions} views {description} have been met.</Text>
+        <Text onPress={this.navToBoostConsole}>{text}</Text>
       </View>
     )
   }

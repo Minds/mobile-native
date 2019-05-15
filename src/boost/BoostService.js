@@ -1,6 +1,7 @@
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import logService from '../common/services/log.service';
+import i18n from '../common/services/i18n.service';
 
 export default class BoostService {
 
@@ -27,7 +28,7 @@ export default class BoostService {
       if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
         logService.exception('[BoostService]', err);
       }
-      throw "Ooops, failed to get boosts";
+      throw new Error(i18n.t('boosts.errorGet'));
     }
   }
 

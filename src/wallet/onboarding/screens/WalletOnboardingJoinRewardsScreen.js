@@ -25,6 +25,7 @@ import NavNextButton from '../../../common/components/NavNextButton';
 import Colors from '../../../styles/Colors';
 import stylesheet from '../../../onboarding/stylesheet';
 import { CommonStyle } from '../../../styles/Common';
+import i18n from '../../../common/services/i18n.service';
 
 @inject('user', 'wallet')
 @observer
@@ -135,7 +136,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
   //
 
   getInputNumberPartial() {
-    let joinButtonContent = 'JOIN';
+    let joinButtonContent = i18n.t('join').toUpperCase();;
 
     if (this.state.inProgress) {
       joinButtonContent = <ActivityIndicator size="small" color={Colors.primary} />;
@@ -144,8 +145,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
     return (
       <View>
         <Text style={style.p}>
-          To start earning rewards, you will need to enter a unique phone
-          number.
+          {i18n.t('wallet.onboarding.startEarning')}
         </Text>
 
         <View style={[style.cols, style.form]}>
@@ -156,7 +156,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
             value={this.state.phone}
             onChangePhoneNumber={this.setPhone}
             ref="phoneInput"
-            placeholder="Phone Number"
+            placeholder={i18n.t('wallet.onboarding.phoneNumber')}
           />
 
           <TransparentButton
@@ -172,23 +172,22 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
   }
 
   getConfirmNumberPartial() {
-    let confirmButtonContent = 'CONFIRM';
+    let confirmButtonContent = i18n.t('confirm').toUpperCase();
 
     if (this.state.inProgress) {
       confirmButtonContent = <ActivityIndicator size="small" color={Colors.primary} />;
     }
 
     const body = this.state.confirmFailed ?
-      <Text style={[CommonStyle.fontXL, CommonStyle.textCenter]}>Sms was not received <Text style={CommonStyle.colorPrimary} onPress={this.rejoinAction}>Try again</Text></Text>:
+      <Text style={[CommonStyle.fontXL, CommonStyle.textCenter]}>{i18n.t('wallet.onboarding.smsNotReceived')} <Text style={CommonStyle.colorPrimary} onPress={this.rejoinAction}>{i18n.t('tryAgain')}</Text></Text>:
       this.state.smsAllowed ?
-        <Text style={[CommonStyle.colorPrimary, CommonStyle.fontXL, CommonStyle.textCenter]}> Keep the app visible and we will detect it automatically: {this.state.wait}</Text>:
+        <Text style={[CommonStyle.colorPrimary, CommonStyle.fontXL, CommonStyle.textCenter]}> {i18n.t('wallet.onboarding.waitSms')}: {this.state.wait}</Text>:
         null;
 
     return (
       <View>
         <Text style={style.p}>
-          We just sent the code to {this.state.phone} in
-          order to verify that your number is correct.
+          {i18n.t('wallet.onboarding.weJustSentCode', {phone: this.state.phone})}
         </Text>
         {body}
 
@@ -197,7 +196,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
             style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
             value={this.state.code}
             onChangeText={this.setCode}
-            placeholder="Confirmation Code"
+            placeholder={i18n.t('wallet.onboarding.confirmationCode')}
             keyboardType="numeric"
           />
 
@@ -233,12 +232,10 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
   render() {
     return (
       <View>
-        <Text style={style.h1}>Rewards</Text>
+        <Text style={style.h1}>{i18n.t('rewards')}</Text>
 
         <Text style={style.p}>
-          You can earn tokens for your contributions to the Minds network.
-          The more interactions on your content, the greater your share of
-          the daily token reward pool to your OffChain address.
+          {i18n.t('wallet.onboarding.rewardsDescription')}
         </Text>
 
         <View>
@@ -250,8 +247,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
         </View>}
 
         <Text style={[style.p, style.note]}>
-          Note: Minds does not store the phone numbers you provide. The numbers
-          are hashed using SHA-256 and combined with a salt key for privacy purposes.
+          {i18n.t('wallet.onboarding.rewardsNote')}
         </Text>
       </View>
     );

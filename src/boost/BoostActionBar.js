@@ -27,6 +27,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import token from '../common/helpers/token';
+import i18n from '../common/services/i18n.service';
 
 @inject('user', 'boost')
 @observer
@@ -158,7 +159,7 @@ export default class BoostActionBar extends Component {
             underlayColor = 'transparent'
             style = {ComponentsStyle.redbutton}
           >
-            <Text style={{color: colors.danger}} > REVOKE </Text>
+            <Text style={{color: colors.danger}} > {i18n.t('revoke').toUpperCase()} </Text>
           </TouchableHighlight>
         </View>
       );
@@ -172,7 +173,7 @@ export default class BoostActionBar extends Component {
             underlayColor = 'transparent'
             style = {ComponentsStyle.redbutton}
           >
-            <Text style={{color: colors.danger}} > REJECT </Text>
+            <Text style={{color: colors.danger}} > {i18n.t('reject').toUpperCase()} </Text>
           </TouchableHighlight>
         </View>
       );
@@ -186,7 +187,7 @@ export default class BoostActionBar extends Component {
             underlayColor = 'transparent'
             style = {ComponentsStyle.bluebutton}
           >
-            <Text style={{color: colors.primary}} > ACCEPT </Text>
+            <Text style={{color: colors.primary}} > {i18n.t('accept').toUpperCase()}  </Text>
           </TouchableHighlight>
         </View>
       );

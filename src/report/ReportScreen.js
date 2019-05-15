@@ -25,30 +25,31 @@ import ModalTopbar from '../topbar/ModalTopbar';
 import colors from '../styles/Colors';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
+import i18n from '../common/services/i18n.service';
 
 const REASONS = [
-  { value: 1 , label: 'Illegal' },
-  { value: 2, label: 'Should be marked as explicit' },
-  { value: 3, label: 'Encourages or incites violence' },
-  { value: 4, label: 'Threatens, harasses, bullies or encourages others to do so' },
-  { value: 5, label: 'Personal and confidential information' },
-  { value: 6, label: 'Maliciously targets users (@name, links, images or videos)' },
-  { value: 7, label: 'Impersonates someone in a misleading or deceptive manner' },
-  { value: 8, label: 'Spam' },
-  { value: 10, label: 'This infringes my copyright' },
-  { value: 11, label: 'Another reason' }
+  { value: 1  },
+  { value: 2 },
+  { value: 3 },
+  { value: 4 },
+  { value: 5 },
+  { value: 6 },
+  { value: 7 },
+  { value: 8 },
+  { value: 10 },
+  { value: 11 },
 ];
 
 export default class ReportScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
-    title: 'Report',
+    title: i81n.t('report'),
     headerRight: (
       <View>
         {
           navigation.state.params.requireNote &&
           <Button
-            title="Submit"
+            title={i18n.t('settings.submit')}
             onPress={navigation.state.params.selectReason ?
               navigation.state.params.selectReason : () => null}
           />
@@ -65,6 +66,14 @@ export default class ReportScreen extends Component {
     reason: null,
   };
 
+  constructor(props) {
+    super(props);
+
+    REASONS.forEach(r => {
+      r.label = i18n.t('reports.reasons.'+r.value);
+    });
+  }
+
   componentDidMount() {
     this.setState({
       entity: this.props.navigation.state.params.entity,
@@ -78,19 +87,19 @@ export default class ReportScreen extends Component {
       this.props.navigation.goBack();
 
       Alert.alert(
-        'Thanks',
-        "We've got your report and will check it out soon",
+        i18n.t('thanks'),
+        i18n.t('reports.weHaveGotYourReport'),
         [
-          {text: 'Dismiss', onPress: () => null},
+          {text: i18n.t('ok'), onPress: () => null},
         ],
         { cancelable: false }
       )
     } catch (e) {
       Alert.alert(
-        'Ooopppsss',
-        'There was a problem submitting your report',
+        i18n.t('error'),
+        i18n.t('reports.errorSubmitting'),
         [
-          {text: 'Try again', onPress: () => null},
+          {text: i18n.t('tryAgain'), onPress: () => null},
         ],
         { cancelable: true }
       )
@@ -137,7 +146,7 @@ export default class ReportScreen extends Component {
         multiline = {true}
         numberOfLines = {4}
         style={{ backgroundColor: '#FFF', padding: 16, paddingTop: 24, borderWidth: 1, borderColor: '#ececec', minHeight: 100 }}
-        placeholder="Please explain why you wish to report this content in a few brief sentences."
+        placeholder={i18n.t('reports.explain')}
         returnKeyType="done"
         placeholderTextColor="gray"
         underlineColorAndroid='transparent'

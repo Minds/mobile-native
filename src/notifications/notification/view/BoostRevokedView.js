@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import BoostGiftView from './BoostGiftView';
+import i18n from '../../../common/services/i18n.service';
 
 /**
  * Boost Revoked Notification Component
@@ -22,7 +23,7 @@ export default class BoostRevokedView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToBoostConsole}>Your boost {entity.params.points} {description} was revoked</Text>
+        <Text onPress={this.navToBoostConsole}>{i18n.to('notification.boostRevoked', null, {description})}</Text>
       </View>
     )
   }
