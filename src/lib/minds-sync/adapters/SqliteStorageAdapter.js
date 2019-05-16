@@ -24,7 +24,8 @@ export default class SqliteStorageAdapter {
       const table = this.schemaDefinition[tableName];
       const primaryKey = table.primaryKey || '';
       const indexes = table.indexes || [];
-      await this.createTable(tableName, primaryKey, indexes, this.versionNumber);
+      const nonIndexFields = table.fields || [];
+      await this.createTable(tableName, primaryKey, indexes, nonIndexFields, this.versionNumber);
     }
   }
 
@@ -32,11 +33,12 @@ export default class SqliteStorageAdapter {
    * @param {string} tableName
    * @param {string} primaryKey
    * @param {array} indexes
+   * @param {array} nonIndexFields
    * @param {number} versionNumber
    */
-  async createTable(tableName, primaryKey, indexes, versionNumber) {
+  async createTable(tableName, primaryKey, indexes, nonIndexFields, versionNumber) {
 
-    const fields = indexes.slice();
+    const fields = [...indexes, ...nonIndexFields];
 
     if (primaryKey) fields.push(primaryKey);
 
@@ -90,6 +92,34 @@ export default class SqliteStorageAdapter {
 
   /**
    * @param {string} table
+   * @param {string} id
+   * @param {Object} changes
+   * @returns {Promise<number>}
+   */
+  async update(table, id, changes) {
+    return this.upsert(table, id, changes, {});
+  }
+
+  /**
+   * @param {string} table
+   * @param {string} id
+   * @param {Object} data
+   * @param {Object} initialData
+   * @returns {Promise<boolean>}
+   */
+  async upsert(table, id, data, initialData = {}) {
+    return this.insert(
+      table,
+      Object.assign(
+        (await this.get(table, id)) || {},
+        initialData,
+        data,
+      )
+    );
+  }
+
+  /**
+   * @param {string} table
    * @param {string} key
    * @returns {Promise<void>}
    */
@@ -108,7 +138,7 @@ export default class SqliteStorageAdapter {
   /**
    * @param {String} table
    * @param {*[]} rows
-   * @returns {Promise<any>}
+   * @returns {Promise<*>}
    */
   async bulkInsert(table, rows) {
     return await this.db.transaction((tx) => {
@@ -141,9 +171,9 @@ export default class SqliteStorageAdapter {
    * @param {String} table
    * @param {String} field
    * @param {number} value
-   * @returns {Dexie.Promise<number>}
+   * @returns {Promise<number>}
    */
-  async deleteLesserThan(table, field, value) {
+  async deleteLessThan(table, field, value) {
     return await this.db.executeSql(this.schemas[table].deleteSql + `\`${table}\`.\`${field}\`<?`, [value]);
   }
 
@@ -155,6 +185,17 @@ export default class SqliteStorageAdapter {
    */
   async deleteEquals(table, field, value) {
     return await this.db.executeSql(this.schemas[table].deleteSql + `\`${table}\`.\`${field}\`=?`, [value]);
+  }
+
+  /**
+   * @param {String} table
+   * @param {String} index
+   * @param {*[]} values
+   * @returns {Promise<number>}
+   */
+  async deleteAnyOf(table, index, values) {
+    const wildcards = values.map(() => '?').join(', ');
+    return await this.db.executeSql(this.schemas[table].deleteSql + `\`${table}\`.\`${index}\` IN (${wildcards})`, [...values]);
   }
 
   /**
@@ -176,7 +217,7 @@ export default class SqliteStorageAdapter {
    * @param {String} field
    * @param {String|Number} value
    * @param {Object} opts
-   * @returns {Promise<Array<any>>}
+   * @returns {Promise<Array<*>>}
    */
   async getAllSliced(table, field, value, opts) {
     let sql = this.schemas[table].selectSql + `WHERE \`${table}\`.\`${field}\`=?`;
@@ -192,7 +233,8 @@ export default class SqliteStorageAdapter {
     const raw = result.rows.raw();
     if (raw.length > 0) {
       return raw.map(v => JSON.parse(v.jsonData));
-    };
+    }
+
     return [];
   }
 
@@ -200,31 +242,46 @@ export default class SqliteStorageAdapter {
    * @param {String} table
    * @param {String} field
    * @param {String|Number} value
-   * @returns {Promise<Array<any>>}
+   * @param {{ sortBy }} opts
+   * @returns {Promise<Array<*>>}
    */
-  async getAllLesserThan(table, field, value) {
+  async getAllLessThan(table, field, value, opts = {}) {
     let sql = this.schemas[table].selectSql + `WHERE \`${table}\`.\`${field}\`<?`;
+    const params = [value];
 
-    const [result] = await this.db.executeSql(sql, [value]);
+    if (opts.sortBy) {
+      sql += ` ORDER BY \`${table}\`.\`${opts.sortBy}\` ASC`;
+    }
+
+    const [result] = await this.db.executeSql(sql, params);
 
     const raw = result.rows.raw();
     if (raw.length > 0) {
       return raw.map(v => JSON.parse(v.jsonData));
-    };
+    }
+
     return [];
   }
 
   /**
    * @param {string} table
+   * @param {{ sortBy }} opts
    * @returns {Promise<*[]>}
    */
-  async all(table) {
-    const [result] = await this.db.executeSql(this.schemas[table].selectSql, []);
+  async all(table, opts = {}) {
+    let sql = this.schemas[table].selectSql;
+    const values = [];
+
+    if (opts.sortBy) {
+      sql += ` ORDER BY \`${table}\`.\`${opts.sortBy}\` ASC`;
+    }
+
+    const [result] = await this.db.executeSql(sql, values);
 
     const raw = result.rows.raw();
     if (raw.length > 0) {
       return raw.map(v => JSON.parse(v.jsonData));
-    };
+    }
     return [];
   }
 
@@ -235,9 +292,10 @@ export default class SqliteStorageAdapter {
    * @returns {Promise<*[]>}
    */
   async anyOf(table, index, values) {
-    let sql = this.schemas[table].selectSql + `WHERE \`${table}\`.\`${index}\` IN ('${values.join("','")}')`;
+    const wildcards = values.map(() => '?').join(', ');
+    let sql = this.schemas[table].selectSql + `WHERE \`${table}\`.\`${index}\` IN (${wildcards})`;
 
-    const [result] = await this.db.executeSql(sql, []);
+    const [result] = await this.db.executeSql(sql, [...values]);
 
     const raw = result.rows.raw();
     if (raw.length > 0) {

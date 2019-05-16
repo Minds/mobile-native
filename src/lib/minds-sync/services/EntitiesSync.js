@@ -1,7 +1,9 @@
+import normalizeUrn from "../../../common/helpers/normalize-urn";
+
 export default class EntitiesSync {
   /**
    * @param {MindsClientHttpAdapter|MindsMobileClientHttpAdapter} http
-   * @param {DexieStorageAdapter|SqliteStorageAdapter} db
+   * @param {DexieStorageAdapter|InMemoryStorageAdapter|SqliteStorageAdapter} db
    * @param {Number} stale_after
    */
   constructor(http, db, stale_after) {
@@ -17,7 +19,7 @@ export default class EntitiesSync {
     this.db.schema(1, {
       entities: {
         primaryKey: 'urn',
-        indexes: [ '_syncAt' ]
+        indexes: ['_syncAt']
       },
     });
 
@@ -88,12 +90,15 @@ export default class EntitiesSync {
         throw new Error('Invalid server response');
       }
 
-      const entities = response.entities.map(entity => ({
-        urn: `urn:entity:${entity.guid}`,
-        _syncAt: Date.now(),
-        ...entity,
-      }));
-
+      const entities = response.entities.map(entity => {
+        let obj =
+          {
+            urn: normalizeUrn(entity.urn || entity.guid),
+            _syncAt: Date.now(),
+          };
+        obj = Object.assign(obj, entity);
+        return obj;
+      });
       await this.db.bulkInsert('entities', entities);
     } catch (e) {
       console.warn('EntitiesService.fetch', e);
@@ -108,6 +113,6 @@ export default class EntitiesSync {
    */
   async gc() {
     await this.db.ready();
-    return await this.db.deleteLesserThan('entities', '_syncAt', Date.now() - this.stale_after_ms);
+    return await this.db.deleteLessThan('entities', '_syncAt', Date.now() - this.stale_after_ms);
   }
 }

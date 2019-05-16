@@ -10,14 +10,13 @@ class FeedsService {
 
   constructor() {
     const storageAdapter = sqliteStorageProviderService.get();
-    this.sync = new FeedsSync(apiService, storageAdapter, 15, 600);
+    this.sync = new FeedsSync(apiService, storageAdapter, 15);
 
     this.sync.setResolvers({
       stringHash: value => hashCode(value),
       currentUser: () => sessionService.guid,
       blockedUserGuids: async () => await blockListService.getList(),
       fetchEntities: async guids => await entitiesService.fetch(guids),
-      prefetchEntities: async guids => await entitiesService.prefetch(guids),
     });
 
     this.sync.setUp();

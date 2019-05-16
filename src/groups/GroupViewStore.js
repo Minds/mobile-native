@@ -7,6 +7,7 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import UserModel from '../channel/UserModel';
 import ActivityModel from '../newsfeed/ActivityModel';
+import logService from '../common/services/log.service';
 
 /**
  * Groups store

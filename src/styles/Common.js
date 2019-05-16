@@ -70,6 +70,10 @@ export const CommonStyle = StyleSheet.create({
   alignSpaceAround: {
     alignContent: 'space-around'
   },
+  //
+  fillFlex: {
+    flexGrow: 1,
+  },
   // color
   colorWhite: {
     color: 'white'

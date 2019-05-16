@@ -115,7 +115,15 @@ export default class SettingsScreen extends Component {
         onPress: () => {
           this.props.navigation.navigate('NotificationsSettings');
         }
-      }, {
+      },
+      {
+        name: 'Blocked Channels',
+        icon: (<Icon name='block' size={ICON_SIZE} style={ styles.icon }/>),
+        onPress: () => {
+          this.props.navigation.navigate('SettingsBlockedChannels');
+        }
+      },
+      {
         name: 'Regenerate messenger keys',
         icon: (<Icon name='vpn-key' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
