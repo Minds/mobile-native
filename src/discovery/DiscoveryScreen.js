@@ -209,13 +209,13 @@ export default class DiscoveryScreen extends Component {
       <CollapsibleHeaderFlatList
         onLayout={this.onLayout}
         key={'discofl' + this.cols} // we need to force component redering if we change cols
-        data={list.entities.slice(this.state.showFeed)}
+        data={list.entities}
         renderItem={renderRow}
         ListFooterComponent={footer}
         CollapsibleHeaderComponent={this.getHeaders()}
         headerHeight={(GOOGLE_PLAY_STORE && discovery.filters.type !== 'channels') ? 94 : 146}
         ListEmptyComponent={this.getEmptyList()}
-        keyExtractor={item => item.rowKey}
+        keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
         refreshing={list.refreshing}
         onEndReached={this.loadFeed}
@@ -229,7 +229,7 @@ export default class DiscoveryScreen extends Component {
         keyboardShouldPersistTaps={'handled'}
         onViewableItemsChanged={this.onViewableItemsChanged}
       />
-    )
+    );
 
     return (
       <View style={[CS.flexContainer, CS.backgroundWhite]}>
@@ -238,6 +238,8 @@ export default class DiscoveryScreen extends Component {
       </View>
     );
   }
+
+  keyExtractor = item => item.rowKey;
 
   /**
    * Get empty list
@@ -428,11 +430,7 @@ export default class DiscoveryScreen extends Component {
   }
 
   tryAgain = () => {
-    if (this.props.discovery.searchtext) {
-      this.props.discovery.search(this.props.discovery.searchtext);
-    } else {
-      this.loadFeed(null, true);
-    }
+    this.loadFeed(null, true);
   }
 
   /**
@@ -497,6 +495,20 @@ export default class DiscoveryScreen extends Component {
   }
 
   /**
+   * Navigate to feed screen
+   * @param {int} index
+   */
+  navigateToFeed = (index) => {
+
+    this.props.discovery.feedStore.setFeed(this.props.discovery.list.entities.slice(index), this.props.discovery.list.offset);
+
+    this.props.navigation.push('DiscoveryFeed', {
+      'showFeed': index,
+      title: _.capitalize(this.props.discovery.filters.filter) + ' ' + _.capitalize(this.props.discovery.filters.type)
+    })
+  }
+
+  /**
    * Render a tile
    */
   renderTile = (row) => {
@@ -508,10 +520,7 @@ export default class DiscoveryScreen extends Component {
         <DiscoveryTile
           entity={row.item}
           size={this.state.itemHeight}
-          onPress={() => this.props.navigation.push('DiscoveryFeed', {
-            'showFeed': row.index,
-            title: _.capitalize(this.props.discovery.filters.filter) + ' ' + _.capitalize(this.props.discovery.filters.type)
-          })}
+          onPress={() => this.navigateToFeed(row.index)}
         />
       </ErrorBoundary>
     );

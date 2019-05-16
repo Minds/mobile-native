@@ -12,11 +12,17 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import UserModel from '../channel/UserModel';
 import GroupModel from '../groups/GroupModel';
 import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';
+import DiscoveryFeedStore from './DiscoveryFeedStore';
 
 /**
  * Discovery Store
  */
 class DiscoveryStore {
+
+  /**
+   * FeedStore
+   */
+  feedStore;
 
   /**
    * Lists stores
@@ -36,6 +42,7 @@ class DiscoveryStore {
   constructor() {
     this.buildListStores();
     this.listenChanges();
+    this.feedStore = new DiscoveryFeedStore(this.filters);
   }
 
   /**
@@ -277,6 +284,7 @@ class DiscoveryStore {
     this.onFilterChangeDisposer && this.onFilterChangeDisposer();
     this.onSearchChangeDisposer && this.onSearchChangeDisposer();
     this.filters.clear();
+    this.feedStore.reset();
     this.listenChanges();
     this.stores.images.list.clearList();
     this.stores.videos.list.clearList();
