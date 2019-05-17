@@ -22,7 +22,7 @@ exports[`channel header component owner should render correctly 1`] = `
       source={
         Object {
           "headers": Object {
-            "App-Version": "3.5.0",
+            "App-Version": "3.6.0",
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Pragma": "no-cache",
           },
