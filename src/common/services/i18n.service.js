@@ -3,6 +3,7 @@ import * as RNLocalize from "react-native-localize";
 import i18n from "i18n-js";
 import { memoize } from "lodash";
 import { I18nManager } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
 
 const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
@@ -17,11 +18,13 @@ const translate = memoize(
 
 const namespace = '@Minds:Locale'
 
+i18n.fallbacks = true;
+i18n.defaultLocale = 'en';
+
 class I18nService {
 
   constructor() {
     this.init();
-    RNLocalize.addEventListener("change", this.handleLocalizationChange);
   }
 
   init() {
@@ -32,14 +35,7 @@ class I18nService {
       RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
       fallback;
 
-    // clear translation cache
-    translate.cache.clear();
-    // update layout direction
-    I18nManager.forceRTL(isRTL);
-
-    // set i18n-js config
-    i18n.translations = { [languageTag]: translationGetters[languageTag]() };
-    i18n.locale = languageTag;
+    this.setLocale(languageTag)
   }
 
   handleLocalizationChange = () => {
@@ -91,7 +87,7 @@ class I18nService {
    * Get current locale
    */
   getCurrentLocale() {
-    return I18n.currentLocale();
+    return i18n.currentLocale();
   }
 
   /**
@@ -100,7 +96,14 @@ class I18nService {
    */
   setLocale(locale) {
     AsyncStorage.setItem(namespace, locale);
-    I18n.locale = locale;
+    // clear translation cache
+    translate.cache.clear();
+    // update layout direction
+    I18nManager.forceRTL(false);
+
+    // set i18n-js config
+    i18n.translations = { [locale]: translationGetters[locale]() };
+    i18n.locale = locale;
   }
 
   /**
