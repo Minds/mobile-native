@@ -92,28 +92,36 @@ class DiscoveryService {
   }
 
   async getTopFeedFromSync(offset, type, filter, period, nsfw, query, limit) {
-    const params = {
-      filter: 'global',
-      algorithm: filter,
-      customType: type,
+    const hashtags = appStores.hashtag.hashtag ? encodeURIComponent(appStores.hashtag.hashtag) : '';
+    const all = appStores.hashtag.all ? '1' : '';
+
+    // const params = {
+    //   filter: 'global',
+    //   algorithm: filter,
+    //   customType: type,
+    //   limit,
+    //   offset: offset,
+    //   period: period,
+    //   all: Boolean(appStores.hashtag.all),
+    //   query: query || '',
+    //   nsfw,
+    //   // forceSync: forceSync,
+    // };
+    //
+    // if (appStores.hashtag.hashtag) {
+    //   params.hashtags = appStores.hashtag.hashtag;
+    // }
+
+    const { entities, next } = await feedService.get({
+      endpoint: `api/v2/feeds/global/${filter}/${type}?hashtags=${hashtags}&period=${period}&all=${all}&query=${query}&nsfw=${nsfw}`,
+      timebased: false,
       limit,
-      offset: offset,
-      period: period,
-      all: Boolean(appStores.hashtag.all),
-      query: query || '',
-      nsfw,
-      // forceSync: forceSync,
-    };
-
-    if (appStores.hashtag.hashtag) {
-      params.hashtags = appStores.hashtag.hashtag;
-    }
-
-    const { entities, next } = await feedService.get(params);
+      offset,
+    });
 
     return {
-      entities,
-      offset: next || 0,
+      entities: entities || [],
+      offset: next || '',
     }
   }
 

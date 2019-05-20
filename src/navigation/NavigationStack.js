@@ -15,6 +15,7 @@ import ConversationScreen from '../messenger/ConversationScreen';
 import SettingsScreen from '../settings/SettingsScreen';
 import PasswordScreen from '../settings/screens/PasswordScreen';
 import EmailScreen from '../settings/screens/EmailScreen';
+import BlockedChannelsScreen from '../settings/screens/BlockedChannelsScreen';
 import BillingScreen from '../settings/screens/BillingScreen';
 import RekeyScreen from '../settings/screens/RekeyScreen';
 import GroupsListScreen from '../groups/GroupsListScreen';
@@ -111,6 +112,9 @@ const Stack = createStackNavigator({
   },
   Settings: {
     screen: withErrorBoundaryScreen(SettingsScreen)
+  },
+  SettingsBlockedChannels: {
+    screen: withErrorBoundaryScreen(BlockedChannelsScreen)
   },
   SettingsEmail: {
     screen: withErrorBoundaryScreen(EmailScreen)

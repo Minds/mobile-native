@@ -2,6 +2,9 @@ import { InteractionManagerStatic } from 'react-native';
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import stores from '../../AppStores';
+import feedService from '../common/services/feed.service';
+import featuresService from '../common/services/features.service';
+import entitiesService from '../common/services/entities.service';
 
 /**
  * Groups Service
@@ -43,14 +46,59 @@ class GroupsService {
     return response.group;
   }
 
+  async getFeedFromService(guid, type, opts = { limit: 12 }) {
+    const limit = opts.limit || 12;
+
+    const { entities, next } = await feedService.get({
+      endpoint: `api/v2/feeds/container/${guid}/${type}`,
+      timebased: true,
+      limit,
+      offset: opts.offset || 0,
+      syncPageSize: limit * 20,
+    });
+
+    return {
+      entities,
+      next,
+    }
+  }
+
+  async loadFeed(guid, offset, pinnedGuids = null) {
+    if (featuresService.has('es-feeds')) {
+      const pinned = [];
+
+      const { entities, next } = await this.getFeedFromService(guid, 'activities', {
+        limit: 12,
+        offset,
+      });
+
+      if (pinnedGuids) {
+        const pinnedEntities = (await entitiesService.fetch(pinnedGuids.split(',')))
+          .filter(entity => Boolean(entity))
+          .filter(entity => ({
+            ...entity,
+            pinned: true,
+          }));
+
+        pinned.push(...pinnedEntities);
+      }
+
+      return  {
+        entities: [...pinned, ...(entities || [])],
+        offset: entities && entities.length ? next : '',
+      };
+    } else {
+      return await this.loadFeedLegacy(guid, offset, pinnedGuids);
+    }
+  }
+
   /**
    * Load the group feed
    * @param {string} guid
    * @param {string} offset
    * @param {string} pinned
    */
-  async loadFeed(guid, offset, pinned = null) {
-
+  async loadFeedLegacy(guid, offset, pinned = null) {
     const endpoint = `api/v1/newsfeed/container/${guid}`;
     const opts = { limit: 12, offset };
 

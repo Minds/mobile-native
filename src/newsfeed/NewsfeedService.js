@@ -4,7 +4,8 @@ import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import stores from '../../AppStores';
 import blockListService from '../common/services/block-list.service';
-
+import feedsService from '../common/services/feed.service'
+import featuresService from '../common/services/features.service';
 
 export default class NewsfeedService {
 
@@ -21,6 +22,29 @@ export default class NewsfeedService {
   }
 
   async getFeed(offset, limit = 12) {
+    if (featuresService.has('es-feeds')) {
+      return await this.getFeedFromService(offset, limit);
+    } else {
+      return await this.getFeedLegacy(offset, limit);
+    }
+  }
+
+  async getFeedFromService(offset, limit = 12) {
+    const { entities, next } = await feedsService.get({
+      endpoint: `api/v2/feeds/subscribed/activities`,
+      timebased: true,
+      limit,
+      offset,
+      syncPageSize: limit * 20,
+    });
+
+    return {
+      entities: entities || [],
+      offset: entities && entities.length ? next : '',
+    }
+  }
+
+  async getFeedLegacy(offset, limit = 12) {
     return this._getFeed('api/v1/newsfeed/', offset, limit);
   }
 

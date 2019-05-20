@@ -29,19 +29,17 @@ class ApiService {
     return headers;
   }
 
-  buildParamsString(params) {
-    const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
-      accessToken = session.token;
+  buildUrl(url, params = {}) {
+    if (!params) {
+      params = {};
+    }
 
     params['cb'] = Date.now(); //bust the cache every time
 
     const paramsString = this.getParamsString(params);
+    const sep = url.indexOf('?') > -1 ? '&' : '?';
 
-    if (paramsString) {
-      return `?${paramsString}`;
-    }
-
-    return '';
+    return `${url}${sep}${paramsString}`
   }
 
   getParamsString(params) {
@@ -57,10 +55,9 @@ class ApiService {
    * @param {mixed} tag
    */
   async get(url, params = {}, tag) {
-    const paramsString = this.buildParamsString(params);
     const headers = this.buildHeaders();
     try {
-      const response = await abortableFetch(MINDS_API_URI + url + paramsString, { headers },  tag);
+      const response = await abortableFetch(MINDS_API_URI + this.buildUrl(url, params), { headers },  tag);
 
       // Bad response
       if (!response.ok) {
@@ -87,11 +84,10 @@ class ApiService {
   }
 
   async post(url, body={}) {
-    const paramsString = this.buildParamsString({});
     const headers = this.buildHeaders();
 
     try {
-      let response = await abortableFetch(MINDS_API_URI + url + paramsString, { method: 'POST', body: JSON.stringify(body), headers });
+      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'POST', body: JSON.stringify(body), headers });
 
       if (!response.ok) {
         throw response;
@@ -117,11 +113,10 @@ class ApiService {
   }
 
   async put(url, body={}) {
-    const paramsString = this.buildParamsString({});
     const headers = this.buildHeaders();
 
     try {
-      let response = await abortableFetch(MINDS_API_URI + url + paramsString, { method: 'PUT', body: JSON.stringify(body), headers });
+      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'PUT', body: JSON.stringify(body), headers });
 
       if (!response.ok) {
         throw response;
@@ -147,11 +142,10 @@ class ApiService {
   }
 
   async delete(url, body={}) {
-    const paramsString = this.buildParamsString({});
     const headers = this.buildHeaders();
 
     try {
-      let response = await abortableFetch(MINDS_API_URI + url + paramsString, { method: 'DELETE', body: JSON.stringify(body), headers });
+      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'DELETE', body: JSON.stringify(body), headers });
 
       if (!response.ok) {
         throw response;
@@ -177,7 +171,6 @@ class ApiService {
   }
 
   upload(url, file, data=null, progress) {
-    const paramsString = this.buildParamsString({});
     var formData = new FormData();
     formData.append('file', file);
     for (var key in data) {
@@ -197,7 +190,7 @@ class ApiService {
       if (progress) {
         xhr.upload.addEventListener("progress", progress);
       }
-      xhr.open('POST', MINDS_API_URI + url + paramsString);
+      xhr.open('POST', MINDS_API_URI + this.buildUrl(url));
       xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');

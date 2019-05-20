@@ -3,6 +3,9 @@ import { abort } from '../common/helpers/abortableFetch';
 import blockListService from '../common/services/block-list.service';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
+import feedService from '../common/services/feed.service';
+import featuresService from '../common/services/features.service';
+import entitiesService from '../common/services/entities.service';
 
 /**
  * Channel Service
@@ -55,12 +58,58 @@ class ChannelService {
     return result;
   }
 
+  async getFeedFromService(guid, type, opts = { limit: 12 }) {
+    const limit = opts.limit || 12;
+
+    const { entities, next } = await feedService.get({
+      endpoint: `api/v2/feeds/container/${guid}/${type}`,
+      timebased: true,
+      limit,
+      offset: opts.offset || 0,
+      syncPageSize: limit * 20,
+    });
+
+    return {
+      entities: entities || [],
+      offset: entities && entities.length ? next : '',
+    }
+  }
+
+  async getFeed(guid, opts = { limit: 12 }) {
+    if (featuresService.has('es-feeds')) {
+      const pinned = [];
+
+      const { entities, offset } = await this.getFeedFromService(guid, 'activities', {
+        limit: opts.limit,
+        offset: opts.offset,
+      });
+
+      if (opts.pinned) {
+        const pinnedEntities = (await entitiesService.fetch(opts.pinned.split(',')))
+          .filter(entity => Boolean(entity))
+          .filter(entity => ({
+            ...entity,
+            pinned: true,
+          }));
+
+        pinned.push(...pinnedEntities);
+      }
+
+      return  {
+        entities: [...pinned, ...(entities || [])],
+        offset,
+      };
+    } else {
+      return await this.getFeedLegacy(guid, opts);
+    }
+  }
+
   /**
    *
    * @param {string} guid
    * @param {object} opts
    */
-  async getFeed(guid, opts = {limit: 12}) {
+  async getFeedLegacy(guid, opts = {limit: 12}) {
     const tag = `channel:feed:${guid}`;
     // abort previous call
     abort(tag);
@@ -83,7 +132,18 @@ class ChannelService {
     return feed;
   }
 
-  getImageFeed(guid, offset) {
+  async getImageFeed(guid, offset) {
+    if (featuresService.has('es-feeds')) {
+      return await this.getFeedFromService(guid, 'images', {
+        limit: 12,
+        offset,
+      });
+    } else {
+      return await this.getImageFeedLegacy(guid, offset);
+    }
+  }
+
+  getImageFeedLegacy(guid, offset) {
     const tag = `channel:images:${guid}`;
     // abort previous call
     abort(tag);
@@ -101,7 +161,18 @@ class ChannelService {
       })
   }
 
-  getVideoFeed(guid, offset) {
+  async getVideoFeed(guid, offset) {
+    if (featuresService.has('es-feeds')) {
+      return await this.getFeedFromService(guid, 'videos', {
+        limit: 12,
+        offset,
+      });
+    } else {
+      return await this.getVideoFeedLegacy(guid, offset);
+    }
+  }
+
+  getVideoFeedLegacy(guid, offset) {
     const tag = `channel:images:${guid}`;
     // abort previous call
     abort(tag);
@@ -119,7 +190,18 @@ class ChannelService {
       })
   }
 
-  getBlogFeed(guid, offset) {
+  async getBlogFeed(guid, offset) {
+    if (featuresService.has('es-feeds')) {
+      return await this.getFeedFromService(guid, 'blogs', {
+        limit: 12,
+        offset,
+      });
+    } else {
+      return await this.getBlogFeedLegacy(guid, offset);
+    }
+  }
+
+  getBlogFeedLegacy(guid, offset) {
     const tag = `channel:blog:${guid}`;
     // abort previous call
     abort(tag);

@@ -35,7 +35,7 @@ import i18n from '../common/services/i18n.service';
 /**
  * Discovery Feed Screen
  */
-@inject('discovery', 'channel')
+@inject('discovery')
 @observer
 export default class DiscoveryFeedScreen extends Component {
 
@@ -49,43 +49,20 @@ export default class DiscoveryFeedScreen extends Component {
    * Render
    */
   render() {
-    const discovery = this.props.discovery;
-    const list = discovery.list;
-
-    let renderRow;
-    switch (discovery.filters.type) {
-      case 'lastchannels':
-      case 'channels':
-        renderRow = this.renderUser;
-        break;
-      case 'groups':
-        renderRow = this.renderGroup;
-        break;
-      case 'blogs':
-        renderRow = this.renderBlog;
-        break;
-      case 'activities':
-      default:
-        renderRow = this.renderActivity;
-        break;
-    }
-
-    const footer = this.getFooter();
-
-    const showFeed = this.props.navigation.state.params.showFeed;
+    const list = this.props.discovery.feedStore.list;
 
     return (
       <FlatList
-        data={list.entities.slice(showFeed)}
-        renderItem={renderRow}
-        ListFooterComponent={footer}
-        ListEmptyComponent={this.getEmptyList()}
-        keyExtractor={item => item.rowKey}
+        data={list.entities}
+        renderItem={this.renderActivity}
+        ListFooterComponent={this.getFooter}
+        keyExtractor={this.keyExtractor}
         onEndReached={this.loadFeed}
         initialNumToRender={3}
         style={[CS.backgroundWhite, CS.flexContainer]}
         horizontal={false}
-        windowSize={9}
+        maxToRenderPerBatch={3}
+        windowSize={3}
         removeClippedSubviews={false}
         keyboardShouldPersistTaps={'handled'}
       />
@@ -107,20 +84,25 @@ export default class DiscoveryFeedScreen extends Component {
   }
 
   /**
+   * Key extractor
+   */
+  keyExtractor = item => item.rowKey;
+
+  /**
    * Get list footer
    */
-  getFooter() {
-    const discovery = this.props.discovery;
+  getFooter = () => {
+    const store = this.props.discovery.feedStore;
 
-    if (discovery.loading && !discovery.list.refreshing) {
+    if (store.loading && !store.list.refreshing) {
       return (
-        <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+        <View style={[CS.flexContainer, CS.centered, CS.padding3x]}>
           <ActivityIndicator size={'large'} />
         </View>
       );
     }
 
-    if (!discovery.list.errorLoading) return null;
+    if (!store.list.errorLoading) return null;
 
     const message = discovery.list.entities.length ?
       i18n.t('cantLoadMore') :
@@ -133,40 +115,18 @@ export default class DiscoveryFeedScreen extends Component {
    * Try Again
    */
   tryAgain = () => {
-    if (this.props.discovery.searchtext) {
-      this.props.discovery.search(this.props.discovery.searchtext);
-    } else {
-      this.loadFeed(null, true);
-    }
+    this.loadFeed(null, true);
   }
 
   /**
    * Load feed data
    */
   loadFeed = (e, force = false) => {
-    const type = this.props.discovery.filters.type;
-    if (
-      this.props.discovery.filters.type == 'lastchannels' ||
-      (this.props.discovery.list.errorLoading && !force)
-    ) {
+    if (this.props.discovery.feedStore.list.errorLoading && !force) {
       return;
     }
 
-    const limit = this.state.showFeed ? 12 : (type == 'images' || type == 'videos' ? 24 : 12);
-
-    this.props.discovery.loadList(false, false, limit);
-  }
-
-  /**
-   * Render user row
-   */
-  renderUser = (row) => {
-    return (
-
-      <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <DiscoveryUser store={this.props.discovery.stores['channels']} entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
-      </ErrorBoundary>
-    );
+    this.props.discovery.feedStore.loadList(false, false, 12);
   }
 
   /**
@@ -178,39 +138,6 @@ export default class DiscoveryFeedScreen extends Component {
         <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false} newsfeed={this.props.discovery}/>
       </ErrorBoundary>
     );
-  }
-
-  /**
-   * Render blog item
-   */
-  renderBlog = (row) => {
-    return (
-      <View style={styles.blogCardContainer}>
-        <ErrorBoundary containerStyle={CS.hairLineBottom}>
-          <BlogCard entity={row.item} navigation={this.props.navigation} />
-        </ErrorBoundary>
-      </View>
-    );
-  }
-
-  /**
-   * Render group item
-   */
-  renderGroup = (row) => {
-    const item = row.item;
-    return (
-      <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <GroupsListItem group={row.item} onPress={() => this.navigateToGroup(row.item)}/>
-      </ErrorBoundary>
-    )
-  }
-
-  /**
-   * Navigate to group
-   * @param {GroupModel} group
-   */
-  navigateToGroup(group) {
-    this.props.navigation.push('GroupView', { group: group })
   }
 }
 
