@@ -152,6 +152,8 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
               "getBoosts": [MockFunction],
               "getFeed": [MockFunction],
               "getFeedChannel": [MockFunction],
+              "getFeedFromService": [MockFunction],
+              "getFeedLegacy": [MockFunction],
               "getFeedSuggested": [MockFunction],
             },
             "stores": Object {
@@ -466,6 +468,8 @@ exports[`Activity screen component should show loader until it loads the activit
               "getBoosts": [MockFunction],
               "getFeed": [MockFunction],
               "getFeedChannel": [MockFunction],
+              "getFeedFromService": [MockFunction],
+              "getFeedLegacy": [MockFunction],
               "getFeedSuggested": [MockFunction],
             },
             "stores": Object {

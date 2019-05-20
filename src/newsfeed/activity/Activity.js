@@ -30,6 +30,7 @@ import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import Lock from '../../wire/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
+import blockListService from '../../common/services/block-list.service';
 
 /**
  * Activity
@@ -209,9 +210,21 @@ export default class Activity extends Component {
   showRemind() {
     const remind_object = this.props.entity.remind_object;
     if (remind_object) {
+      const blockedUsers = blockListService.getCachedList();
+
+      if (blockedUsers.indexOf(remind_object.owner_guid) > -1) {
+        return (
+          <View style={[styles.blockedNoticeView, CommonStyle.margin2x, CommonStyle.borderRadius2x, CommonStyle.padding2x]}>
+            <Text style={[CommonStyle.textCenter, CommonStyle.marginBottom]}>This content is unavailable.</Text>
+            <Text style={[CommonStyle.textCenter, styles.blockedNoticeDesc]}>You have blocked the author of this activity.</Text>
+          </View>
+        );
+      }
+
       if (this.props.entity.shouldBeBlured()) {
         remind_object.is_parent_mature = true;
       }
+
       return (
         <View style={styles.remind}>
           <Activity
@@ -286,5 +299,11 @@ const styles = StyleSheet.create({
   activitySpacer: {
     flex:1,
     height: 70
+  },
+  blockedNoticeView: {
+    backgroundColor: '#eee',
+  },
+  blockedNoticeDesc: {
+    opacity: 0.7,
   }
 });

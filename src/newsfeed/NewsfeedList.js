@@ -146,7 +146,7 @@ export default class NewsfeedList extends Component {
         ListFooterComponent={footer}
         data={newsfeed.list.entities.slice()}
         renderItem={renderRow}
-        keyExtractor={item => item.rowKey}
+        keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
         refreshing={newsfeed.list.refreshing}
         onEndReached={this.loadFeed}
@@ -164,6 +164,8 @@ export default class NewsfeedList extends Component {
       />
     );
   }
+
+  keyExtractor = item => item.rowKey;
 
   getFooter() {
 
@@ -248,7 +250,7 @@ export default class NewsfeedList extends Component {
       newsfeed={this.props.newsfeed}
       entity={entity}
       navigation={this.props.navigation}
-      />;
+    />;
   }
 }
 
