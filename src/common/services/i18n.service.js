@@ -27,15 +27,18 @@ class I18nService {
     this.init();
   }
 
-  init() {
-    // fallback if no available language fits
-    const fallback = { languageTag: "en", isRTL: false };
+  async init() {
 
-    const { languageTag, isRTL } =
-      RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
-      fallback;
+    let language = await AsyncStorage.getItem(namespace);
 
-    this.setLocale(languageTag)
+    if (!language) {
+      // fallback if no available language fits
+      const fallback = {languageTag: 'en'};
+      let { languageTag } = RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) || fallback;
+      language = languageTag;
+    }
+
+    this.setLocale(language, false)
   }
 
   handleLocalizationChange = () => {
@@ -94,15 +97,19 @@ class I18nService {
    * Set locale
    * @param {string} locale
    */
-  setLocale(locale) {
-    AsyncStorage.setItem(namespace, locale);
+  setLocale(locale, store = true) {
+    if (store) AsyncStorage.setItem(namespace, locale);
     // clear translation cache
     translate.cache.clear();
     // update layout direction
     I18nManager.forceRTL(false);
 
     // set i18n-js config
-    i18n.translations = { [locale]: translationGetters[locale]() };
+    if (locale === 'en') {
+      i18n.translations = { [locale]: translationGetters[locale]() };
+    } else {
+      i18n.translations = { [locale]: translationGetters[locale](), en: translationGetters.en() };
+    }
     i18n.locale = locale;
   }
 
