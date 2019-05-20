@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { observable, action, computed, extendObservable } from 'mobx'
 
-import NewsfeedService, { getBoosts, setViewed } from './NewsfeedService';
+import NewsfeedService, { setViewed } from './NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from './ActivityModel';
 import logService from '../common/services/log.service';
@@ -160,7 +160,7 @@ class NewsfeedStore {
   loadBoosts(rating) {
     // get first 15 boosts
     this.loadingBoost = true;
-    getBoosts('', 15, rating)
+    this.service.getBoosts('', 15, rating)
       .then(boosts => {
         this.loadingBoost = false;
         this.boosts = boosts.entities;

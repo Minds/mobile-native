@@ -85,7 +85,7 @@ export default class KeychainModalScreen extends Component {
             value={this.state.secretConfirmation || ''}
           />
           { (this.state.secret !== this.state.secretConfirmation) && <Text style={[ styles.note, styles.error ]}>
-            The password and confirmation must match!
+            {i18n.t('auth.confirmPasswordError')}
           </Text>}
         </View>
       )

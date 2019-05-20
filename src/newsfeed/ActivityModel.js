@@ -14,6 +14,7 @@ import {
   MINDS_CDN_URI,
   MINDS_URI
 } from '../config/Config';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Activity model
@@ -177,7 +178,7 @@ export default class ActivityModel extends BaseModel {
       const success = await setPinPost(this.guid, this.pinned);
     } catch(e) {
       this.pinned = !this.pinned;
-      alert('Ooops, error setting pinned post');
+      alert(i18n.t('errorPinnedPost'));
     }
   }
 }

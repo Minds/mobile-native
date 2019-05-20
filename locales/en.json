@@ -218,6 +218,8 @@
   "groups":{
     "subscribeMessage":"Subscribe to this group",
     "leaveMessage":"Leave from this group",
+    "banConfirm":"Are you sure? You want to ban this user?",
+    "errorLoading":"Error Loading Groups",
     "confirmKick":"Are you sure? You want to kick this user?",
     "myGroups":"My Groups",
     "ban":"Ban",
@@ -323,7 +325,7 @@
     "boost_completed": "Fulfilled Boosts",
     "rewards_reminder": "Rewards Reminder",
     "rewards_summary": "Rewards Daily Summary",
-    "chat": "Messenger",
+    "message": "Messenger",
     "messenger_invite": "Messenger Invites",
     "daily":"Daily",
     "group_invite": "Group Invites",
@@ -342,26 +344,80 @@
   },
   "reports":{
     "reasons":{
-        "1":"Illegal",
-        "2":"Should be marked as explicit",
-        "3":"Encourages or incites violence",
-        "4":"Threatens, harasses, bullies or encourages others to do so",
-        "5":"Personal and confidential information",
-        "6":"Maliciously targets users (@name, links, images or videos",
-        "7":"Impersonates someone in a misleading or deceptive manner",
-        "8":"Spam",
-        "10":"This infringes my copyright",
-        "11":"Another reason"
+      "1": {
+        "label":"Illegal",
+        "reasons": {
+          "1": {"label":"Terrorism" },
+          "2": {"label":"Paedophilia" },
+          "3": {"label":"Extortion" },
+          "4": {"label":"Fraud" },
+          "5": {"label":"Revenge Porn" },
+          "6": {"label":"Sex trafficking" }
+        }
+
+      },
+      "2": {
+        "label": "NSFW (not safe for work)",
+        "reasons": {
+          "1": {"label": "Nudity" },
+          "2": {"label": "Pornography" },
+          "3": {"label": "Profanity" },
+          "4": {"label": "Violence and Gore" },
+          "5": {"label": "Race, Religion, Gender" }
+        }
+      },
+      "3": {
+        "label": "Encourages or incites violence"
+      },
+      "4":{
+        "label": "Harassment"
+      },
+      "5":{
+        "label": "Personal and confidential information"
+      },
+      "7":{
+        "label": "Impersonates"
+      },
+      "8": {
+        "label": "Spam"
+      },
+      "10":{
+        "label": "Infringes my copyright"
+      },
+      "12":{
+        "label": "Incorrect use of hashtags"
+      },
+      "13":{
+        "label": "Malware"
+      },
+      "15":{
+        "label": "Trademark infringement"
+      },
+      "16":{
+        "label": "Token manipulation"
+      },
+      "11":{
+        "label": "Another reason"
+      }
     },
+    "DMCA":"Please submit a DMCA notice to copyright@minds.com.",
     "explain":"Please explain why you wish to report this content in a few brief sentences.",
     "weHaveGotYourReport":"We've got your report and will check it out soon",
-    "errorSubmitting":"There was a problem submitting your report"
+    "errorSubmitting":"There was a problem submitting your report",
+    "reportAs":"Do you want to report this post as:"
   },
   "settings":{
     "submit":"Submit",
     "passwordTitle":"Change your password",
+    "blockedChannels":"Blocked Channels",
     "currentPassword":"Current Password",
+    "disableChannelConfirm":"Your account will be disabled. Are you sure you want to proceed?",
+    "deleteChannelConfirm":"Your account and all data related to it will be deleted permanently. Are you sure you want to proceed?",
     "newPassword":"New Password",
+    "disableChannel":"Disable Channel",
+    "deleteChannel":"Delete Channel",
+    "disableDescription":"Disabling your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.",
+    "deleteDescription":"Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable. Your username will be released back to the public.",
     "confirmNewPassword":"Confirm New Password",
     "currentEmail":"Current Email",
     "paymentMethods":"Payment Methods",
@@ -393,6 +449,54 @@
     "notSupported":"This feature is not supported by your platform.",
     "moreInformation":"More information at\n"
   },
+  "attachment":{
+    "tooLong":"Video duration must be less than {{minutes}} minutes"
+  },
+  "onboarding":{
+    "welcome":"Welcome to Minds!",
+    "welcome1":"Before you get started, there are a few things we need to provide you with the best experience.",
+    "welcome2":"First off, how often do you post to social media?",
+    "chooseAvatar":"Choose an avatar",
+    "chooseName":"Choose your display name",
+    "describeChannel":"Briefly describe your channel",
+    "hashtagSelect":"What topics are you interested in?",
+    "waitSms":" Keep the app visible and we will detect it automatically",
+    "earnTokens":"Earn tokens for your activity",
+    "weDontStorePhone":"We do not store your phone number on our servers.",
+    "smsNotReceived":"Sms was not received",
+    "suggestedChannels":"Suggested channels",
+    "suggestedChannelsDescription":"Subscribe to some popular channels below based on your interests",
+    "suggestedGroups":"Suggested groups",
+    "suggestedGroupsDescription":"Join some popular groups below based on your interests",
+    "tokensCanBeUsed":"Tokens can be used to support other channels or boost your content for additional views (1 token = 1,000 views). In order to earn tokens, we will need a phone number to verify that your channel is unique.",
+    "yourAreReady":"You're all setup and ready to go!",
+    "readyDescription1":"Great, you have successfully configured your wallet to receive rewards and OnChain & OffChain payments.",
+    "readyDescription2":"To learn more about tokens and crypto, visit the &{tokens}& section below at any time where you can find tutorials, videos and a FAQ.",
+    "moreOnRewards":"MORE ON REWARDS",
+    "moreAboutWire":"LEARN ABOUT WIRE",
+    "moreAboutBoost":"LEARN ABOUT BOOST",
+    "startEarning":"To start earning rewards, you will need to enter a unique phone number.",
+    "phoneNumber":"Phone Number",
+    "weJustSentCode":"We just sent the code to {{phone}} in order to verify that your number is correct.",
+    "confirmationCode":"Confirmation Code",
+    "rewardsDescription":"You can earn tokens for your contributions to the Minds network. \nThe more interactions on your content, the greater your share of the daily token reward pool to your OffChain address.",
+    "rewardsNote":"Note: Minds does not store the phone numbers you provide. The numbers are hashed using SHA-256 and combined with a salt key for privacy purposes.",
+    "ensureYouExportKey":"Ensure you EXPORT and back-up your key before uninstalling or wiping the app data, or you will lose your funds.\n Exporting can be done from the Address detail screen.",
+    "6digitDescription":"To create a new wallet address, please enter a keychain password\nthat will be used to encrypt your private key onto this device.",
+    "6digitConfirm":"Please confirm once more your keychain password. Once confirmed your wallet will be created on this device and attached to your account.",
+    "6digitAlreadySetup":"Your keychain password is already setup, you just need to confirm the wallet creation. Once confirmed your wallet will be created on this device and attached to your account.",
+    "passwordInvalid":"Password must be at least 6 characters, which can be either alphanumeric or symbols",
+    "pinAlreadySetup":"KEYCHAIN ALREADY SETUP",
+    "skip":"SKIP, I'M NOT INTERESTED",
+    "setupOnchianAddress":"Setup your OnChain address",
+    "onchainDescription1":"To receive OnChain payments from other channels (eg, from a Wire or a Boost), you will need to let us know which address to direct these tokens to.",
+    "onchainDescription2":"This address will be listed in your wallet as your Receiver Address and can be changed at any time.",
+    "onchainDescription3":"OnChain addresses, and their private keys, are saved locally in an encrypted storage space. They will be available to any channel that is currently logged in onto this device.",
+    "welcomToWallet":"Welcome to your wallet",
+    "tokensDescription":"Tokens are the cryptocurrency used on Minds. Your total balance of tokens will be stored in two different types of addresses.",
+    "onchainDescription":"OnChain payments will be published to the public blockchain and require a small ETH gas fee. You can setup your own private keys or create new wallets.",
+    "offchainDescription":"OffChain payments will not be published to the blockchain and have spending limits. You will receive rewards into this address."
+  },
   "wallet": {
     "inviteFriend":"Invite a Friend",
     "inviteFriendDescription":"Invite a friend and earn rewards",
@@ -410,37 +514,6 @@
     "contributionsDescription":"Check your rewards and daily contribution scores",
     "addressesTitle":"Addresses",
     "addressesDescription":"Configure your crypto addresses and other token related settings",
-    "onboarding":{
-      "waitSms":" Keep the app visible and we will detect it automatically",
-      "smsNotReceived":"Sms was not received",
-      "yourAreReady":"You're all setup and ready to go!",
-      "readyDescription1":"Great, you have successfully configured your wallet to receive rewards and OnChain & OffChain payments.",
-      "readyDescription2":"To learn more about tokens and crypto, visit the &{tokens}& section below at any time where you can find tutorials, videos and a FAQ.",
-      "moreOnRewards":"MORE ON REWARDS",
-      "moreAboutWire":"LEARN ABOUT WIRE",
-      "moreAboutBoost":"LEARN ABOUT BOOST",
-      "startEarning":"To start earning rewards, you will need to enter a unique phone number.",
-      "phoneNumber":"Phone Number",
-      "weJustSentCode":"We just sent the code to {{phone}} in order to verify that your number is correct.",
-      "confirmationCode":"Confirmation Code",
-      "rewardsDescription":"You can earn tokens for your contributions to the Minds network. \nThe more interactions on your content, the greater your share of the daily token reward pool to your OffChain address.",
-      "rewardsNote":"Note: Minds does not store the phone numbers you provide. The numbers are hashed using SHA-256 and combined with a salt key for privacy purposes.",
-      "ensureYouExportKey":"Ensure you EXPORT and back-up your key before uninstalling or wiping the app data, or you will lose your funds.\n Exporting can be done from the Address detail screen.",
-      "6digitDescription":"To create a new wallet address, please enter a keychain password\nthat will be used to encrypt your private key onto this device.",
-      "6digitConfirm":"Please confirm once more your keychain password. Once confirmed your wallet will be created on this device and attached to your account.",
-      "6digitAlreadySetup":"Your keychain password is already setup, you just need to confirm the wallet creation. Once confirmed your wallet will be created on this device and attached to your account.",
-      "passwordInvalid":"Password must be at least 6 characters, which can be either alphanumeric or symbols",
-      "pinAlreadySetup":"KEYCHAIN ALREADY SETUP",
-      "skip":"SKIP, I'M NOT INTERESTED",
-      "setupOnchianAddress":"Setup your OnChain address",
-      "onchainDescription1":"To receive OnChain payments from other channels (eg, from a Wire or a Boost), you will need to let us know which address to direct these tokens to.",
-      "onchainDescription2":"This address will be listed in your wallet as your Receiver Address and can be changed at any time.",
-      "onchainDescription3":"OnChain addresses, and their private keys, are saved locally in an encrypted storage space. They will be available to any channel that is currently logged in onto this device.",
-      "welcomToWallet":"Welcome to your wallet",
-      "tokensDescription":"Tokens are the cryptocurrency used on Minds. Your total balance of tokens will be stored in two different types of addresses.",
-      "onchainDescription":"OnChain payments will be published to the public blockchain and require a small ETH gas fee. You can setup your own private keys or create new wallets.",
-      "offchainDescription":"OffChain payments will not be published to the blockchain and have spending limits. You will receive rewards into this address."
-    },
     "contributions":{
       "date":"Date",
       "score":"Score",
@@ -526,6 +599,21 @@
     "5":"Race and Religion",
     "6":"Other"
   },
+  "newsfeedFilters": {
+    "hot":"Hot",
+    "top":"Top",
+    "latest":"Latest",
+    "topPeriod12":"12 hours",
+    "topPeriod24":"24 hours",
+    "topPeriod7":"7 days",
+    "topPeriod30":"30 days",
+    "topPeriod1":"1 year"
+  },
+  "update": {
+    "title":"Update",
+    "version": "New v{{version}} available!"
+  },
+  "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
   "postCantBeShown":"This post cannot be shown",
   "readMore":"Read More",
@@ -610,6 +698,7 @@
   "onchain":"OnChain",
   "completed":"Completed",
   "pending":"Pending",
+
   "hide":"Hide",
   "ops":"Ooops",
   "pin":"Pin",
@@ -618,5 +707,9 @@
   "wantToDownloadImage":"Do you want to download this image?",
   "imageAdded":"Image added to gallery!",
   "errorDownloading":"Error downloading file",
-  "errorMedia":"The media could not be loaded."
+  "errorMedia":"The media could not be loaded.",
+  "errorMediaDisplay":"There was an error displaying this media",
+  "stacktraceCopied":"Stack trace copied to the clipboard.",
+  "errorPinnedPost":"Ooops, error setting pinned post",
+  "errorShowActivity":"Can't show this activity"
 }

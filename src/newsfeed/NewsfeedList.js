@@ -42,6 +42,7 @@ export default class NewsfeedList extends Component {
    */
   componentWillMount() {
     this.nextBoostedId = 1;
+    this.cantShowActivity = i18n.t('errorShowActivity');
   }
 
   /**
@@ -229,7 +230,7 @@ export default class NewsfeedList extends Component {
     const entity = row.item;
 
     return (
-      <ErrorBoundary message="Can't show this activity" containerStyle={CS.hairLineBottom}>
+      <ErrorBoundary message={this.cantShowActivity} containerStyle={CS.hairLineBottom}>
         <Activity
           entity={entity}
           newsfeed={this.props.newsfeed}

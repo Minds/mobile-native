@@ -53,7 +53,7 @@ export default class NewsfeedScreen extends Component {
    */
   componentWillMount() {
     this.props.newsfeed.loadFeed();
-    this.props.newsfeed.loadBoosts();
+    // this.props.newsfeed.loadBoosts();
 
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       const params = this.props.navigation.state.params;

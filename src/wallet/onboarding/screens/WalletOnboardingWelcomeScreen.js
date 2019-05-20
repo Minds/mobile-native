@@ -36,10 +36,10 @@ export default class WalletOnboardingWelcomeScreen extends Component {
   render() {
     return (
       <View>
-        <Text style={style.h1}>{i18n.t('wallet.onboarding.welcomToWallet')}</Text>
+        <Text style={style.h1}>{i18n.t('onboarding.welcomToWallet')}</Text>
 
         <Text style={style.p}>
-          {i18n.t('wallet.onboarding.tokensDescription')}
+          {i18n.t('onboarding.tokensDescription')}
         </Text>
 
         <View style={style.rows}>
@@ -48,7 +48,7 @@ export default class WalletOnboardingWelcomeScreen extends Component {
             <Text style={style.h2}>{i18n.t('onchain')}</Text>
 
             <Text style={style.legend}>
-              {i18n.t('wallet.onboarding.onchainDescription')}
+              {i18n.t('onboarding.onchainDescription')}
             </Text>
           </View>
 
@@ -57,7 +57,7 @@ export default class WalletOnboardingWelcomeScreen extends Component {
             <Text style={style.h2}>{i18n.t('blockchain.offchain')}</Text>
 
             <Text style={style.legend}>
-              {i18n.t('wallet.onboarding.offchainDescription')}
+              {i18n.t('onboarding.offchainDescription')}
             </Text>
           </View>
         </View>

@@ -10,6 +10,7 @@ import { CommonStyle as CS } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import { ListItem } from 'react-native-elements';
 import logService from '../../common/services/log.service';
+import i18nService from '../../common/services/i18n.service';
 
 @inject('hashtag', 'onboarding')
 @observer
@@ -36,9 +37,9 @@ export default class WelcomeStep extends Component {
   render() {
     return (
       <View style={[CS.padding4x]}>
-        <Text style={[CS.fontXXXL, CS.colorDark, CS.fontMedium, CS.marginBottom3x]}>Welcome to Minds!</Text>
-        <Text style={[CS.fontL, CS.colorDark, CS.fontMedium, CS.marginBottom3x, CS.fontLight]}>Before you get started, there are a few things we need to provide you with the best experience.</Text>
-        <Text style={[CS.fontL, CS.colorDark, CS.fontMedium, CS.marginBottom3x, CS.fontLight]}>First off, how often do you post to social media?</Text>
+        <Text style={[CS.fontXXXL, CS.colorDark, CS.fontMedium, CS.marginBottom3x]}>{i18nService.t('onboarding.welcome')}</Text>
+        <Text style={[CS.fontL, CS.colorDark, CS.fontMedium, CS.marginBottom3x, CS.fontLight]}>{i18nService.t('onboarding.welcome1')}</Text>
+        <Text style={[CS.fontL, CS.colorDark, CS.fontMedium, CS.marginBottom3x, CS.fontLight]}>{i18nService.t('onboarding.welcome2')}</Text>
 
         <View>
           <ListItem

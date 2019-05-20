@@ -128,7 +128,7 @@ export default class SettingsScreen extends Component {
         }
       },
       {
-        name: 'Blocked Channels',
+        name: i18n.t('settings.blockedChannels'),
         icon: (<Icon name='block' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('SettingsBlockedChannels');

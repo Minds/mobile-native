@@ -36,7 +36,7 @@ export default class ErrorBoundary extends Component {
 
   copy = () => {
     Clipboard.setString((this.error.message || this.error) + '\nSTACK:\n'+ this.info.componentStack);
-    Alert.alert('Stack trace copied to the clipboard');
+    Alert.alert(i18n.t('stacktraceCopied'));
   }
 
   getErrorMessage() {

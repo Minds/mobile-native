@@ -57,7 +57,6 @@ class NotificationsSettingsStore {
       'boost_completed': true,
       'rewards_reminder': true,
       'rewards_summary': true,
-      'chat': true,
       'messenger_invite': true,
       'message': true,
       'group_invite': true,

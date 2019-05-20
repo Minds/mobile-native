@@ -29,6 +29,7 @@ import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import en from "../../locales/en";
 import logService from '../common/services/log.service';
+import i18n from '../common/services/i18n.service';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -326,7 +327,7 @@ class MindsVideo extends Component {
       <View style={styles.controlOverlayContainer}>
         <Text
           style={styles.errorText}
-        >There was an error displaying this media.</Text>
+        >{i18n.t('errorMediaDisplay')}</Text>
       </View>
     );
   }

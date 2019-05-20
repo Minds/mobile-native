@@ -145,7 +145,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
     return (
       <View>
         <Text style={style.p}>
-          {i18n.t('wallet.onboarding.startEarning')}
+          {i18n.t('onboarding.startEarning')}
         </Text>
 
         <View style={[style.cols, style.form]}>
@@ -156,7 +156,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
             value={this.state.phone}
             onChangePhoneNumber={this.setPhone}
             ref="phoneInput"
-            placeholder={i18n.t('wallet.onboarding.phoneNumber')}
+            placeholder={i18n.t('onboarding.phoneNumber')}
           />
 
           <TransparentButton
@@ -179,15 +179,15 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
     }
 
     const body = this.state.confirmFailed ?
-      <Text style={[CommonStyle.fontXL, CommonStyle.textCenter]}>{i18n.t('wallet.onboarding.smsNotReceived')} <Text style={CommonStyle.colorPrimary} onPress={this.rejoinAction}>{i18n.t('tryAgain')}</Text></Text>:
+      <Text style={[CommonStyle.fontXL, CommonStyle.textCenter]}>{i18n.t('onboarding.smsNotReceived')} <Text style={CommonStyle.colorPrimary} onPress={this.rejoinAction}>{i18n.t('tryAgain')}</Text></Text>:
       this.state.smsAllowed ?
-        <Text style={[CommonStyle.colorPrimary, CommonStyle.fontXL, CommonStyle.textCenter]}> {i18n.t('wallet.onboarding.waitSms')}: {this.state.wait}</Text>:
+        <Text style={[CommonStyle.colorPrimary, CommonStyle.fontXL, CommonStyle.textCenter]}> {i18n.t('onboarding.waitSms')}: {this.state.wait}</Text>:
         null;
 
     return (
       <View>
         <Text style={style.p}>
-          {i18n.t('wallet.onboarding.weJustSentCode', {phone: this.state.phone})}
+          {i18n.t('onboarding.weJustSentCode', {phone: this.state.phone})}
         </Text>
         {body}
 
@@ -196,7 +196,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
             style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
             value={this.state.code}
             onChangeText={this.setCode}
-            placeholder={i18n.t('wallet.onboarding.confirmationCode')}
+            placeholder={i18n.t('onboarding.confirmationCode')}
             keyboardType="numeric"
           />
 
@@ -235,7 +235,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
         <Text style={style.h1}>{i18n.t('rewards')}</Text>
 
         <Text style={style.p}>
-          {i18n.t('wallet.onboarding.rewardsDescription')}
+          {i18n.t('onboarding.rewardsDescription')}
         </Text>
 
         <View>
@@ -247,7 +247,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
         </View>}
 
         <Text style={[style.p, style.note]}>
-          {i18n.t('wallet.onboarding.rewardsNote')}
+          {i18n.t('onboarding.rewardsNote')}
         </Text>
       </View>
     );

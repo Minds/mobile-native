@@ -31,6 +31,7 @@ import Lock from '../../wire/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
+import i18n from '../../common/services/i18n.service';
 
 /**
  * Activity

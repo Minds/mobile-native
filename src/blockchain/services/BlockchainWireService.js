@@ -1,5 +1,6 @@
 import Web3Service from './Web3Service';
 import BlockchainTokenService from './BlockchainTokenService';
+import i18n from '../../common/services/i18n.service';
 
 class BlockchainWireService {
   async getContract() {

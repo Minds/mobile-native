@@ -270,11 +270,11 @@ export default class GroupViewScreen extends Component {
     switch (selected) {
       case i18n.t('groups.ban'):
         Alert.alert(
-          'Confirm',
-          `Are you sure? You want to ban this user?`,
+          i18n.t('confirm'),
+          i18n.t('groups.banConfirm'),
           [
-            { text: 'No', style: 'cancel' },
-            { text: 'Yes!', onPress: () => this.props.groupView.ban(this.state.member) }
+            { text: i18n.t('no'), style: 'cancel' },
+            { text: i18n.t('yes'), onPress: () => this.props.groupView.ban(this.state.member) }
           ]
         );
         break;
