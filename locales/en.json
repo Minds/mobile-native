@@ -152,7 +152,7 @@
     "from":"translated from",
     "translate":"Translate",
     "changeLanguage":"Change Language",
-    "error":"'There was an error on translation.\n Plase try again.'"
+    "error":"There was an error on translation.\n Plase try again."
   },
   "hashtags":{
     "exists":"Tag already exists",
