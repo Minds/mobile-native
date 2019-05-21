@@ -72,7 +72,9 @@ function req(uri, method = 'get', data = null, extraOptions = {}) {
  * Upload a locale to poeditor
  * @param {string} locale
  */
-const uploadLocale = (locale, overwrite=0) => {
+const uploadLocale = (locale, overwrite = 0) => {
+
+  overwrite = overwrite ? 1 : 0;
 
   const source = join(__dirname, '..', 'locales', `${locale}.json`);
 
@@ -182,6 +184,7 @@ const downloadAllLocales = async () => {
 // MAIN
 const run = async() => {
   try {
+    console.log(argv['overwrite'])
     if (!argv['poeditor-key']) {
       throw new Error('Please specify a poeditor.com API key (--poeditor-key)');
     }
@@ -209,7 +212,7 @@ const run = async() => {
         downloadAllLocales();
         break;
       case 'upload': {
-        const response = await uploadLocale('en');
+        const response = await uploadLocale('en', argv['overwrite']);
         console.log('Terms:',response.terms);
         console.log('Translations:',response.translations);
       }
