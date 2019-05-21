@@ -171,6 +171,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   },
                   undefined,
                   Object {
+                    "fontSize": 16,
                     "fontWeight": "600",
                     "letterSpacing": 1.25,
                   },
@@ -277,6 +278,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   },
                   undefined,
                   Object {
+                    "fontSize": 16,
                     "fontWeight": "600",
                     "letterSpacing": 1.25,
                   },

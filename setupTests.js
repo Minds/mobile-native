@@ -1,6 +1,7 @@
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import moment from 'moment-timezone';
+import i18n from './src/common/services/i18n.service';
 
 const XMLHttpRequest = {
   open: jest.fn(),
@@ -12,6 +13,7 @@ global.XMLHttpRequest = XMLHttpRequest;
 
 configure({ adapter: new Adapter() });
 
+jest.mock('react-native-localize');
 jest.mock('mobx-react/native', () => require('mobx-react/custom'));
 jest.mock('./AppStores');
 jest.useFakeTimers();
@@ -25,3 +27,5 @@ jest.doMock('moment-timezone', () => {
   moment.tz.setDefault('America/Los_Angeles');
   return moment;
 });
+
+i18n.setLocale('en');

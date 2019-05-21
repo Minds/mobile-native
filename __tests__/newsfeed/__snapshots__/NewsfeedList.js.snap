@@ -37,7 +37,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
             }
           }
         >
-          This feed is empty
+          Your newsfeed is empty
         </Text>
       </View>
     </View>

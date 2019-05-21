@@ -12,9 +12,8 @@ exports[`renders correctly for not owner and not subscribed 1`] = `
   <Text
     onPress={[Function]}
   >
-    You have received a wire of 
-    1000
-     from 
+    You have received a wire of 1000 from
+     
     <Text
       onPress={[Function]}
       style={
@@ -43,9 +42,8 @@ exports[`renders correctly for owner and not subscribed 1`] = `
   <Text
     onPress={[Function]}
   >
-    You have successfully wired 
-    1000
-     to 
+    You have successfully wired 1000 to
+     
     <Text
       onPress={[Function]}
       style={
@@ -74,9 +72,8 @@ exports[`renders correctly for owner and subscribed 1`] = `
   <Text
     onPress={[Function]}
   >
-    You have subscribed to wire 
-    1000
-    /month to 
+    [missing "en.notification.wiredSubscribedYou" translation]
+     
     <Text
       onPress={[Function]}
       style={
@@ -105,9 +102,8 @@ exports[`renders correctly for owner and subscribed 2`] = `
   <Text
     onPress={[Function]}
   >
-    You have received a wire subscription of 
-    1000
-    /month from 
+    You have received a wire subscription of 1000/month from
+     
     <Text
       onPress={[Function]}
       style={

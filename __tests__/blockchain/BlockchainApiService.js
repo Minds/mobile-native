@@ -24,9 +24,7 @@ describe('blockchain api service', () => {
 
   it('should return an error message', async (done) => {
 
-    api.get.mockImplementationOnce(() => {
-      throw new Error('error')
-    });
+    api.get.mockRejectedValueOnce(new Error('Async error'));
 
     try {
       await BlockchainApiService.getWallet(true);

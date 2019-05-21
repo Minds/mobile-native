@@ -20,7 +20,8 @@ exports[`renders correctly 1`] = `
     >
       someUser
     </Text>
-     tried to call you.
+     
+    tried to call you.
   </Text>
 </View>
 `;

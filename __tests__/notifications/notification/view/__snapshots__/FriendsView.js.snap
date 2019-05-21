@@ -18,8 +18,7 @@ exports[`renders correctly 1`] = `
       }
     }
   >
-    someUser
-     subscribed to you
+    someUser subscribed to you
   </Text>
 </View>
 `;

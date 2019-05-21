@@ -106,7 +106,7 @@ describe('RegisterForm component', () => {
     expect(Alert.alert).toBeCalled();
 
     // with error message
-    expect(Alert.alert.mock.calls[0][1]).toEqual('Please accept the Terms & Conditions');
+    expect(Alert.alert.mock.calls[0][1]).toEqual('You should accept the terms and conditions');
   });
 
   it('should warn the user if the terms and conditions are not accepted', async () => {
@@ -144,6 +144,6 @@ describe('RegisterForm component', () => {
     expect(Alert.alert).toBeCalled();
 
     // with error message
-    expect(Alert.alert.mock.calls[0][1]).toEqual('Please accept the Terms & Conditions');
+    expect(Alert.alert.mock.calls[0][1]).toEqual('You should accept the terms and conditions');
   });
 });
