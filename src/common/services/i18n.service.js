@@ -24,11 +24,12 @@ i18n.defaultLocale = 'en';
 class I18nService {
 
   constructor() {
-    this.init();
+    if(process.env.JEST_WORKER_ID === undefined) {
+      this.init();
+    }
   }
 
   async init() {
-
     let language = await AsyncStorage.getItem(namespace);
 
     if (!language) {
@@ -56,21 +57,21 @@ class I18nService {
    * Localize
    */
   l(scope, value, options) {
-    return I18n.l(scope, value, options);
+    return i18n.l(scope, value, options);
   }
 
   /**
    * Pluralize
    */
   p(count, scope, options){
-    return I18n.p(count, scope, options);
+    return i18n.p(count, scope, options);
   }
 
   /**
    * Translate string and interpolate objects
    */
   to(scope, opt, values) {
-    let translation = I18n.t(scope, opt);
+    let translation = i18n.t(scope, opt);
     const keys = Object.keys(values);
     const placeHolders = {};
     keys.forEach((key) => placeHolders[key] = `{{${key}}}`);
@@ -84,6 +85,7 @@ class I18nService {
         result.push(React.cloneElement(values[str], { key: idx }))
       }
     });
+    return result;
   }
 
   /**

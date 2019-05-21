@@ -77,7 +77,7 @@ export default class DiscoveryUser extends Component {
           style={[ComponentsStyle.button ]}
           accessibilityLabel={i18n.t('channel.subscribeMessage')}
         >
-          <Text style={{ color: '#888' }} > {i18n.t('channel.unsubscribe').toUpperCase()} </Text>
+          <Text style={{ color: '#888' }} > {i18n.t('channel.subscribed')} </Text>
         </TouchableHighlight>;
     } else {
       return <TouchableHighlight

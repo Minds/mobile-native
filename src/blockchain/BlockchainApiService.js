@@ -19,7 +19,7 @@ class BlockchainApiService {
         return response.wallet.address;
       }
     } catch (e) {
-      throw new Error(i18n.t('blochain.errorSavingWallet'));
+      throw new Error(i18n.t('blockchain.errorSavingWallet'));
     }
   }
 
