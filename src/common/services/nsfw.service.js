@@ -1,4 +1,4 @@
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Platform } from "react-native";
 
 class NsfwService {
   constructor(target) {
@@ -13,6 +13,7 @@ class NsfwService {
    * @returns {Promise<number[]>}
    */
   async get() {
+    if (Platform.OS === 'ios') return [];
     try {
       const value = await AsyncStorage.getItem(this._getStorageKey());
       return value ? JSON.parse(value) : [];
