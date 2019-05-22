@@ -9,6 +9,7 @@ import {
   LayoutAnimation,
   TouchableHighlight,
   StyleSheet,
+  Platform,
 } from 'react-native';
 
 import {
@@ -172,7 +173,7 @@ export default class NewsfeedFilters extends Component {
             </View>
           </TouchableHighlight>
         </View>
-        {!GOOGLE_PLAY_STORE && <View style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x]}>
+        {(!GOOGLE_PLAY_STORE && Platform.OS !== 'ios') && <View style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x]}>
           <NsfwToggle
             hideLabel={true}
             value={store.nsfw}
