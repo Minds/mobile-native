@@ -9,6 +9,7 @@ import HashtagStore from '../../src/common/stores/HashtagStore';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import { Platform } from 'react-native';
 
 jest.mock('../../src/common/stores/HashtagStore');
 jest.mock('../../src/capture/CaptureStore');
@@ -21,6 +22,8 @@ defaultState = {
   share: false,
   lock: false
 }
+
+Platform.OS = 'android';
 
 configure({enforceActions: 'never'});
 
