@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, View, StyleSheet } from 'react-native';
+import { Text, TextInput, View, StyleSheet, Platform } from 'react-native';
 import { inject, observer } from 'mobx-react/native';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -326,7 +326,7 @@ export default class CapturePosterFlags extends Component {
   }
 
   renderNsfw() {
-    if (GOOGLE_PLAY_STORE) return null;
+    if (GOOGLE_PLAY_STORE || Platform.OS === 'ios') return null;
     return (
       <NsfwToggle
         containerStyle={styles.cell}
