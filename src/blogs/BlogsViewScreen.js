@@ -72,7 +72,6 @@ export default class BlogsViewScreen extends Component {
   constructor(props) {
     super(props);
 
-    const params = props.navigation.state.params;
     this.comments = commentsStoreProvider.get();
   }
 
