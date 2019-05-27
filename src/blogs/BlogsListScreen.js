@@ -156,8 +156,8 @@ export default class BlogsListScreen extends Component {
     if (!this.props.blogs.list.errorLoading) return null;
 
     const message = this.props.blogs.list.entities.length ?
-      "Can't load more" :
-      "Can't load blogs";
+      i18n.t('cantLoadMore') :
+      i18n.t('cantLoad');
 
     return <ErrorLoading message={message} tryAgain={this.loadMoreForce}/>
   }
