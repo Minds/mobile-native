@@ -36,7 +36,10 @@ export default class Topbar extends Component {
       <SafeAreaView style={styles.container} forceInset={forceInset}>
         <View style={styles.topbar}>
 
-          { featuresService.has('crypto') && <TouchableOpacity onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} >
+          { featuresService.has('crypto') && 
+            <TouchableOpacity 
+              onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} 
+              {...testID('boost-console button')} >
             <View style={styles.topbarLeft}>
               <Icon name="trending-up" size={22} color='#444' style={ styles.button }/>
             </View>
@@ -51,6 +54,7 @@ export default class Topbar extends Component {
               width={38}
               height={38}
               onPress={() => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })}
+              {...testID('topbar avatar button')} 
             /> }
           </View>
 

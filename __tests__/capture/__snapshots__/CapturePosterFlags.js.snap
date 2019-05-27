@@ -22,6 +22,7 @@ exports[`cature poster flags component should renders correctly for props false 
       onLayout={[Function]}
     >
       <View
+        accessibilityLabel="NSFW button"
         accessible={true}
         isTVSelectable={true}
         onResponderGrant={[Function]}
@@ -39,7 +40,6 @@ exports[`cature poster flags component should renders correctly for props false 
             "paddingLeft": 10,
           }
         }
-        testID="NSFW button"
       >
         <Text
           allowFontScaling={false}
@@ -131,6 +131,7 @@ exports[`cature poster flags component should renders correctly for props false 
             }
           >
             <View
+              accessibilityLabel="NSFW Nudity"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -150,10 +151,9 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
-              testID="NSFW Nudity"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -177,6 +177,7 @@ exports[`cature poster flags component should renders correctly for props false 
               </Text>
             </View>
             <View
+              accessibilityLabel="NSFW Pornography"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -196,10 +197,9 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
-              testID="NSFW Pornography"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -223,6 +223,7 @@ exports[`cature poster flags component should renders correctly for props false 
               </Text>
             </View>
             <View
+              accessibilityLabel="NSFW Profanity"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -242,10 +243,9 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
-              testID="NSFW Profanity"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -269,6 +269,7 @@ exports[`cature poster flags component should renders correctly for props false 
               </Text>
             </View>
             <View
+              accessibilityLabel="NSFW Violence and Gore"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -288,10 +289,9 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
-              testID="NSFW Violence and Gore"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -315,6 +315,7 @@ exports[`cature poster flags component should renders correctly for props false 
               </Text>
             </View>
             <View
+              accessibilityLabel="NSFW Race and Religion"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -334,10 +335,9 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
-              testID="NSFW Race and Religion"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -361,6 +361,7 @@ exports[`cature poster flags component should renders correctly for props false 
               </Text>
             </View>
             <View
+              accessibilityLabel="NSFW Other"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -380,10 +381,9 @@ exports[`cature poster flags component should renders correctly for props false 
                   undefined,
                 ]
               }
-              testID="NSFW Other"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -512,6 +512,7 @@ exports[`cature poster flags component should renders correctly for props false 
     }
   >
     <Text
+      accessibilityLabel="Post lock button"
       allowFontScaling={false}
       style={
         Array [
@@ -528,7 +529,6 @@ exports[`cature poster flags component should renders correctly for props false 
           Object {},
         ]
       }
-      testID="Post lock button"
     >
       
     </Text>
@@ -581,26 +581,21 @@ exports[`cature poster flags component should renders correctly for props false 
       pointerEvents="box-none"
       style={
         Array [
-          Array [
-            Object {
-              "margin": 37.5,
-              "transform": Array [
-                Object {
-                  "translateY": 0,
-                },
-              ],
-            },
-            Object {
-              "flex": 1,
-              "justifyContent": "center",
-            },
-            undefined,
-            Object {
-              "margin": 0,
-            },
-          ],
           Object {
-            "paddingBottom": 0,
+            "margin": 37.5,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+          Object {
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          undefined,
+          Object {
+            "margin": 0,
           },
         ]
       }
@@ -855,26 +850,21 @@ exports[`cature poster flags component should renders correctly for props false 
       pointerEvents="box-none"
       style={
         Array [
-          Array [
-            Object {
-              "margin": 37.5,
-              "transform": Array [
-                Object {
-                  "translateY": 0,
-                },
-              ],
-            },
-            Object {
-              "flex": 1,
-              "justifyContent": "center",
-            },
-            undefined,
-            Object {
-              "margin": 0,
-            },
-          ],
           Object {
-            "paddingBottom": 0,
+            "margin": 37.5,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+          Object {
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          undefined,
+          Object {
+            "margin": 0,
           },
         ]
       }
@@ -978,6 +968,7 @@ exports[`cature poster flags component should renders correctly for props false 
               }
             >
               <TextInput
+                accessibilityLabel="Poster lock amount input"
                 allowFontScaling={true}
                 keyboardType="numeric"
                 onChangeText={[Function]}
@@ -995,7 +986,6 @@ exports[`cature poster flags component should renders correctly for props false 
                     "textAlign": "right",
                   }
                 }
-                testID="Poster lock amount input"
                 underlineColorAndroid="transparent"
                 value="undefined"
               />
@@ -1023,6 +1013,7 @@ exports[`cature poster flags component should renders correctly for props false 
               }
             >
               <View
+                accessibilityLabel="Poster lock done button"
                 accessible={true}
                 isTVSelectable={true}
                 onResponderGrant={[Function]}
@@ -1049,7 +1040,6 @@ exports[`cature poster flags component should renders correctly for props false 
                     false,
                   ]
                 }
-                testID="Poster lock done button"
               >
                 <Text
                   style={
@@ -1128,26 +1118,21 @@ exports[`cature poster flags component should renders correctly for props false 
       pointerEvents="box-none"
       style={
         Array [
-          Array [
-            Object {
-              "margin": 37.5,
-              "transform": Array [
-                Object {
-                  "translateY": 0,
-                },
-              ],
-            },
-            Object {
-              "flex": 1,
-              "justifyContent": "center",
-            },
-            undefined,
-            Object {
-              "margin": 0,
-            },
-          ],
           Object {
-            "paddingBottom": 0,
+            "margin": 37.5,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+          Object {
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          undefined,
+          Object {
+            "margin": 0,
           },
         ]
       }
@@ -1338,6 +1323,7 @@ exports[`cature poster flags component should renders correctly for props true 1
       onLayout={[Function]}
     >
       <View
+        accessibilityLabel="NSFW button"
         accessible={true}
         isTVSelectable={true}
         onResponderGrant={[Function]}
@@ -1355,7 +1341,6 @@ exports[`cature poster flags component should renders correctly for props true 1
             "paddingLeft": 10,
           }
         }
-        testID="NSFW button"
       >
         <Text
           allowFontScaling={false}
@@ -1447,6 +1432,7 @@ exports[`cature poster flags component should renders correctly for props true 1
             }
           >
             <View
+              accessibilityLabel="NSFW Nudity"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -1466,10 +1452,9 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
-              testID="NSFW Nudity"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -1493,6 +1478,7 @@ exports[`cature poster flags component should renders correctly for props true 1
               </Text>
             </View>
             <View
+              accessibilityLabel="NSFW Pornography"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -1512,10 +1498,9 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
-              testID="NSFW Pornography"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -1539,6 +1524,7 @@ exports[`cature poster flags component should renders correctly for props true 1
               </Text>
             </View>
             <View
+              accessibilityLabel="NSFW Profanity"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -1558,10 +1544,9 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
-              testID="NSFW Profanity"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -1585,6 +1570,7 @@ exports[`cature poster flags component should renders correctly for props true 1
               </Text>
             </View>
             <View
+              accessibilityLabel="NSFW Violence and Gore"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -1604,10 +1590,9 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
-              testID="NSFW Violence and Gore"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -1631,6 +1616,7 @@ exports[`cature poster flags component should renders correctly for props true 1
               </Text>
             </View>
             <View
+              accessibilityLabel="NSFW Race and Religion"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -1650,10 +1636,9 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
-              testID="NSFW Race and Religion"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -1677,6 +1662,7 @@ exports[`cature poster flags component should renders correctly for props true 1
               </Text>
             </View>
             <View
+              accessibilityLabel="NSFW Other"
               accessible={true}
               isTVSelectable={true}
               onResponderGrant={[Function]}
@@ -1696,10 +1682,9 @@ exports[`cature poster flags component should renders correctly for props true 1
                   undefined,
                 ]
               }
-              testID="NSFW Other"
             >
               <Text
-                ellipsizeMode="clip"
+                ellipsizeMode="tail"
                 numberOfLines={1}
                 style={
                   Array [
@@ -1828,6 +1813,7 @@ exports[`cature poster flags component should renders correctly for props true 1
     }
   >
     <Text
+      accessibilityLabel="Post lock button"
       allowFontScaling={false}
       style={
         Array [
@@ -1844,7 +1830,6 @@ exports[`cature poster flags component should renders correctly for props true 1
           Object {},
         ]
       }
-      testID="Post lock button"
     >
       
     </Text>
@@ -1897,26 +1882,21 @@ exports[`cature poster flags component should renders correctly for props true 1
       pointerEvents="box-none"
       style={
         Array [
-          Array [
-            Object {
-              "margin": 37.5,
-              "transform": Array [
-                Object {
-                  "translateY": 0,
-                },
-              ],
-            },
-            Object {
-              "flex": 1,
-              "justifyContent": "center",
-            },
-            undefined,
-            Object {
-              "margin": 0,
-            },
-          ],
           Object {
-            "paddingBottom": 0,
+            "margin": 37.5,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+          Object {
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          undefined,
+          Object {
+            "margin": 0,
           },
         ]
       }
@@ -2171,26 +2151,21 @@ exports[`cature poster flags component should renders correctly for props true 1
       pointerEvents="box-none"
       style={
         Array [
-          Array [
-            Object {
-              "margin": 37.5,
-              "transform": Array [
-                Object {
-                  "translateY": 0,
-                },
-              ],
-            },
-            Object {
-              "flex": 1,
-              "justifyContent": "center",
-            },
-            undefined,
-            Object {
-              "margin": 0,
-            },
-          ],
           Object {
-            "paddingBottom": 0,
+            "margin": 37.5,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+          Object {
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          undefined,
+          Object {
+            "margin": 0,
           },
         ]
       }
@@ -2294,6 +2269,7 @@ exports[`cature poster flags component should renders correctly for props true 1
               }
             >
               <TextInput
+                accessibilityLabel="Poster lock amount input"
                 allowFontScaling={true}
                 keyboardType="numeric"
                 onChangeText={[Function]}
@@ -2311,7 +2287,6 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "textAlign": "right",
                   }
                 }
-                testID="Poster lock amount input"
                 underlineColorAndroid="transparent"
                 value="undefined"
               />
@@ -2339,6 +2314,7 @@ exports[`cature poster flags component should renders correctly for props true 1
               }
             >
               <View
+                accessibilityLabel="Poster lock done button"
                 accessible={true}
                 isTVSelectable={true}
                 onResponderGrant={[Function]}
@@ -2365,7 +2341,6 @@ exports[`cature poster flags component should renders correctly for props true 1
                     false,
                   ]
                 }
-                testID="Poster lock done button"
               >
                 <Text
                   style={
@@ -2444,26 +2419,21 @@ exports[`cature poster flags component should renders correctly for props true 1
       pointerEvents="box-none"
       style={
         Array [
-          Array [
-            Object {
-              "margin": 37.5,
-              "transform": Array [
-                Object {
-                  "translateY": 0,
-                },
-              ],
-            },
-            Object {
-              "flex": 1,
-              "justifyContent": "center",
-            },
-            undefined,
-            Object {
-              "margin": 0,
-            },
-          ],
           Object {
-            "paddingBottom": 0,
+            "margin": 37.5,
+            "transform": Array [
+              Object {
+                "translateY": 0,
+              },
+            ],
+          },
+          Object {
+            "flex": 1,
+            "justifyContent": "center",
+          },
+          undefined,
+          Object {
+            "margin": 0,
           },
         ]
       }

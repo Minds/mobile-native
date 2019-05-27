@@ -73,7 +73,6 @@ export default class BlogsViewScreen extends Component {
   constructor(props) {
     super(props);
 
-    const params = props.navigation.state.params;
     this.comments = commentsStoreProvider.get();
   }
 
@@ -156,15 +155,6 @@ export default class BlogsViewScreen extends Component {
         <SafeAreaView style={styles.header}>
           <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
         </SafeAreaView>
-        { this.comments.loadPrevious && !this.comments.loading ?
-            <TouchableHighlight
-            onPress={() => { this.loadComments()}}
-            underlayColor = 'transparent'
-            style = {styles.loadCommentsContainer}
-          >
-            <Text style={styles.loadCommentsText}> {i18n.t('activity.loadEarlier')} </Text>
-          </TouchableHighlight> : null
-        }
       </View>
     )
   }

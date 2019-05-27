@@ -1,5 +1,6 @@
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
+import logService from '../common/services/log.service';
 
 export default class NotificationsService {
 

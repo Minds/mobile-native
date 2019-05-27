@@ -21,10 +21,8 @@ import {
 } from 'react-native';
 
 import ActionSheet from 'react-native-actionsheet';
-import { thumbActivity } from '../newsfeed/activity/ActionsService';
 import CommentEditor from './CommentEditor';
 import { CommonStyle } from '../styles/Common';
-import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import formatDate from '../common/helpers/date';
 import ThumbUpAction from '../newsfeed/activity/actions/ThumbUpAction';
 import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
@@ -38,9 +36,9 @@ import {
 } from '../config/Config';
 
 import CommentList from './CommentList';
-import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import DoubleTap from '../common/components/DoubleTap';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
+import colors from '../styles/Colors';
 
 const DoubleTapText = DoubleTap(Text);
 
@@ -86,7 +84,7 @@ export default class Comment extends Component {
     )
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, comment.focused ? styles.focused : null]}>
         <TouchableOpacity onPress={this._navToChannel} style={styles.avatarContainer}>
           <Image source={avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
@@ -116,7 +114,7 @@ export default class Comment extends Component {
             <CommentList
               entity={this.props.entity}
               parent={comment}
-              store={this.comments}
+              store={comment.comments}
               onInputFocus={this.onInputFocus}
               navigation={this.props.navigation}
             />
@@ -153,10 +151,6 @@ export default class Comment extends Component {
    * Toggle expand
    */
   toggleExpand = () => {
-    if (!this.props.comment.expanded && !this.comments) {
-      this.comments = commentsStoreProvider.get();
-      this.comments.setParent(this.props.comment);
-    }
     this.props.comment.toggleExpanded();
   }
 
@@ -297,6 +291,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'stretch',
+  },
+  focused: {
+    borderLeftColor: colors.primary,
+    borderLeftWidth: 4
   },
   media: {
     flex: 1,
