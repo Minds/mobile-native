@@ -41,21 +41,21 @@ export default class CommentView extends Component {
   navTo = () => {
     switch (this.props.entity.entityObj.type ) {
       case 'activity':
-        this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true });
+        this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true, focusedUrn: this.props.entity.params.focusedCommentUrn });
         break;
       case 'object':
         switch(this.props.entity.entityObj.subtype) {
           case 'blog':
-            this.props.navigation.push('BlogView', { blog: this.props.entity.entityObj, hydrate: true });
+            this.props.navigation.push('BlogView', { blog: this.props.entity.entityObj, hydrate: true, focusedUrn: this.props.entity.params.focusedCommentUrn });
             break;
           case 'image':
           case 'video':
-            this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true });
+            this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true, focusedUrn: this.props.entity.params.focusedCommentUrn });
             break;
         }
         break;
       case 'group':
-        this.props.navigation.push('GroupView', { group: this.props.entity.entityObj, hydrate: true, tab: 'conversation' });
+        this.props.navigation.push('GroupView', { group: this.props.entity.entityObj, hydrate: true, tab: 'conversation', focusedUrn: this.props.entity.params.focusedCommentUrn  });
         break;
     }
   }

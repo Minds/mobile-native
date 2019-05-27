@@ -177,7 +177,7 @@ export default class CommentList extends React.Component<Props, State> {
 
   onLayout = (e) => {
     if (!this.props.parent) {
-      this.height = e.nativeEvent.layout.height;
+      this.height = e.nativeEvent.layout.height || 0;
     }
   }
 
@@ -385,7 +385,7 @@ export default class CommentList extends React.Component<Props, State> {
     return (
       <View>
         { header }
-        { this.props.store.loadPrevious && !this.props.store.loading ?
+        { this.props.store.loadPrevious && !this.props.store.loadingPrevious ?
           <TouchableHighlight
             onPress={() => { this.loadComments(true)}}
             underlayColor = 'transparent'
@@ -394,8 +394,8 @@ export default class CommentList extends React.Component<Props, State> {
             <Text style={[CS.fontM, CS.colorPrimary]}><IconMC name="update" size={16} /> LOAD EARLIER </Text>
           </TouchableHighlight> : null
         }
-        {this.props.store.loading && this.props.store.loaded && <ActivityIndicator size="small" style={CS.paddingTop2x}/>}
-        {this.getErrorLoading()}
+        {this.props.store.loadingPrevious && this.props.store.loaded && <ActivityIndicator size="small" style={CS.paddingTop2x}/>}
+        {this.getErrorLoading(this.props.store.errorLoadingPrevious, true)}
       </View>
     )
   }
@@ -409,8 +409,8 @@ export default class CommentList extends React.Component<Props, State> {
     this.props.store.refreshDone();
   }
 
-  getErrorLoading() {
-    if (this.props.store.errorLoading) {
+  getErrorLoading(errorLoading, descending) {
+    if (errorLoading) {
       const message = this.props.store.comments.length ?
         "Can't load more\nTry again" :
         "Can't load the comments\nTry again";
@@ -419,6 +419,28 @@ export default class CommentList extends React.Component<Props, State> {
     }
     return null;
   }
+
+  /**
+   * Get list footer
+   */
+  getFooter() {
+    return (
+      <View>
+        { this.props.store.loadNext && !this.props.store.loadingNext ?
+          <TouchableHighlight
+            onPress={() => this.loadComments(true, false)}
+            underlayColor = 'transparent'
+            style = {[CS.rowJustifyCenter, CS.padding2x]}
+          >
+            <Text style={[CS.fontM, CS.colorPrimary]}><IconMC name="update" size={16} /> LOAD LATER </Text>
+          </TouchableHighlight> : null
+        }
+        {this.props.store.loadingNext && this.props.store.loaded && <ActivityIndicator size="small" style={CS.paddingTop2x}/>}
+        {this.getErrorLoading(this.props.store.errorLoadingNext, false)}
+      </View>
+    )
+  }
+
 
   getComments() {
     if (!this.props.store.comments) {
@@ -436,9 +458,35 @@ export default class CommentList extends React.Component<Props, State> {
   }
 
   /**
+   * @param {object} ref
+   */
+  setListRef = ref => this.listRef = ref;
+
+  /**
+   * @param {object} ref
+   */
+  setActionSheetRef = o => this.actionAttachmentSheet = o;
+
+
+  componentWillReact(){
+    if (this.props.store.getLevel() == 1)  console.log('will react',
+                                                      {comments : this.props.store.comments.length,
+                                                      refreshing : this.props.store.refreshing,
+                                                      loaded : this.props.store.loaded,
+                                                      saving : this.props.store.saving,
+                                                      text : this.props.store.text,
+                                                      loadingPrevious : this.props.store.loadingPrevious,
+                                                      loadingNext : this.props.store.loadingNext})
+  }
+
+  /**
    * Render
    */
   render() {
+
+
+
+    if (this.props.store.getLevel() == 1) console.log('RENDERING');
 
     const header = this.getHeader();
 
@@ -454,6 +502,7 @@ export default class CommentList extends React.Component<Props, State> {
     }
 
     const comments = this.getComments();
+    const footer = this.getFooter();
 
     const emptyThread = (<View style={[CS.textCenter]}>
       {this.isWholeThreadBlocked() && <Text style={[CS.textCenter, CS.marginBottom2x, CS.marginTop2x, CS.fontLight]}>
@@ -467,8 +516,9 @@ export default class CommentList extends React.Component<Props, State> {
           keyboardVerticalOffset={vPadding} enabled={this.state.focused && !this.props.parent}>
           <View style={CS.flexContainer}>
             <FlatList
-              ref={ref => this.listRef = ref}
+              ref={this.setListRef}
               ListHeaderComponent={header}
+              ListFooterComponent={footer}
               data={comments}
               keyboardShouldPersistTaps={'handled'}
               renderItem={this.renderComment}
@@ -489,7 +539,7 @@ export default class CommentList extends React.Component<Props, State> {
           </View>
           {actionsheet}
           <ActionSheet
-            ref={o => this.actionAttachmentSheet = o}
+            ref={this.setActionSheetRef}
             options={['Cancel', 'Gallery', 'Photo', 'Video']}
             onPress={this.selectMediaSource}
             cancelButtonIndex={0}

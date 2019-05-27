@@ -1,6 +1,7 @@
 import { computed, action, observable, decorate } from 'mobx';
 
 import ActivityModel from '../newsfeed/ActivityModel';
+import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import {
   MINDS_CDN_URI
 } from '../config/Config';
@@ -12,9 +13,29 @@ export default class CommentModel extends ActivityModel {
 
   @observable expanded = false;
 
+  /**
+   * Store for child comments
+   */
+  comments = null;
+
+  /**
+   * The parent comment
+   */
+  parent = null;
+
   @action
   toggleExpanded() {
     this.expanded = !this.expanded;
+    this.buildCommentsStore();
+  }
+
+  buildCommentsStore(parent) {
+    if (this.expanded && !this.comments) {
+      console.log('BUILD STORE FOR '+this.description)
+      this.comments = commentsStoreProvider.get();
+      this.comments.setParent(this);
+      this.parent = parent;
+    }
   }
 
   /**
