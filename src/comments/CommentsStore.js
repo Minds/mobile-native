@@ -1,6 +1,7 @@
 import {
   observable,
-  action
+  action,
+  runInAction
 } from 'mobx'
 
 import { Platform } from 'react-native';
@@ -9,11 +10,7 @@ import {
   getComments,
   postComment,
   updateComment,
-  deleteComment,
-  getCommentsReply,
-  postReplyComment,
-  updateReplyComment,
-  deleteReplyComment
+  deleteComment
 } from './CommentsService';
 
 import Comment from './Comment';
@@ -25,8 +22,9 @@ import attachmentService from '../common/services/attachment.service';
 import {toggleExplicit} from '../newsfeed/NewsfeedService';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import logService from '../common/services/log.service';
+import NavigationService from '../navigation/NavigationService';
 
-const COMMENTS_PAGE_SIZE = 6;
+const COMMENTS_PAGE_SIZE = 3;
 
 /**
  * Comments Store
@@ -38,8 +36,14 @@ export default class CommentsStore {
   @observable loaded = false;
   @observable saving = false;
   @observable text = '';
-  @observable loading = false;
-  @observable errorLoading = false;
+  @observable loadingPrevious = false;
+  @observable loadingNext = false;
+
+  @observable errorLoadingPrevious = false;
+  @observable errorLoadingNext = false;
+
+  level = 0;
+  focusedUrn = null;
 
   // attachment store
   attachment = new AttachmentStore();
@@ -56,6 +60,10 @@ export default class CommentsStore {
   // parent for reply
   parent = null;
 
+  constructor() {
+    this.focusedUrn = this.getFocuedUrn();
+  }
+
   getParentPath() {
     return (this.parent && this.parent.child_path) ? this.parent.child_path : '0:0:0';
   }
@@ -69,41 +77,109 @@ export default class CommentsStore {
   }
 
   /**
+   * Set focused urn
+   * @param {String|null} value
+   */
+  setFocusedUrn(value) {
+    this.focusedUrn = value;
+  }
+
+  /**
+   * Get level
+   */
+  getLevel() {
+    if (this.parent) {
+      if (this.parent.parent) {
+        return 2;
+      }
+      return 1;
+    }
+    return 0
+  }
+
+  /**
+   * Get focused urn
+   */
+  getFocuedUrn() {
+    const params = NavigationService.getCurrentState().params;
+
+    let value = null;
+
+    if (params && params.focusedUrn) value = params.focusedUrn;
+
+    return value;
+  }
+
+  /**
    * Load Comments
    */
   @action
-  async loadComments(guid, descending = true, comment_guid = 0) {
-    if (this.cantLoadMore(guid)) {
+  async loadComments(guid, descending = true) {
+    if (this.cantLoadMore(guid, descending)) {
       return;
     }
     this.guid = guid;
 
-    this.loading = true;
-    this.setErrorLoading(false);
+    if (descending) {
+      this.setErrorLoadingPrevious(false);
+      this.loadingPrevious = true;
+    } else {
+      this.setErrorLoadingNext(false);
+      this.loadingNext = true;
+    }
 
     this.include_offset = '';
     const parent_path = this.getParentPath();
 
     try {
 
-      const response = await getComments(this.guid, parent_path, descending, this.loadPrevious, this.include_offset, COMMENTS_PAGE_SIZE, comment_guid);
+      const response = await getComments(
+        this.focusedUrn,
+        this.guid,
+        parent_path,
+        this.getLevel(),
+        COMMENTS_PAGE_SIZE,
+        descending ? null : this.loadNext,
+        descending ? this.loadPrevious : null,
+        descending,
+      );
 
-      this.loaded = true;
-      this.setComments(response, descending);
+      runInAction(() => {
+        this.loaded = true;
+        this.setComments(response, descending);
+      });
+
       this.checkListen(response);
     } catch (err) {
-      this.setErrorLoading(true);
+      if (descending) {
+        this.setErrorLoadingPrevious(true);
+      } else {
+        this.setErrorLoadingNext(true);
+      }
       if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
         logService.exception('[CommentsStore] loadComments', err);
       }
     } finally {
-      this.loading = false;
+      runInAction(() => {
+        if (descending) {
+          this.loadingPrevious = false;
+        } else {
+          this.loadingNext = false;
+        }
+      })
+      // use only once
+      this.focusedUrn = null;
     }
   }
 
   @action
-  setErrorLoading(value) {
-    this.errorLoading = value;
+  setErrorLoadingNext(value) {
+    this.errorLoadingNext = value;
+  }
+
+  @action
+  setErrorLoadingPrevious(value) {
+    this.errorLoadingPrevious = value;
   }
 
   /**
@@ -209,20 +285,31 @@ export default class CommentsStore {
    */
   @action
   setComments(response, descending) {
+
+    if (this.comments.length) {
+      if (descending) {
+        this.loadPrevious = response['load-previous'];
+      } else {
+        this.loadNext = response['load-next'];
+      }
+    } else {
+      this.loadPrevious = response['load-previous'];
+      this.loadNext = response['load-next'];
+    }
+
     if (response.comments) {
       const comments = CommentModel.createMany(response.comments)
-      comments.reverse().forEach(c => this.comments.unshift(c));
 
-      if (response.comments.length < COMMENTS_PAGE_SIZE) { //nothing more to load
-        response['load-previous'] = '';
+      // check and build child comments store if necessary
+      comments.forEach(c => c.buildCommentsStore(this.parent))
+
+      if (descending) {
+        comments.reverse().forEach(c => this.comments.unshift(c));
+      } else {
+        comments.forEach(c => this.comments.push(c));
       }
     }
     this.reversed = response.reversed;
-    if (descending) {
-      this.loadPrevious = response['load-previous'];
-    } else {
-      this.loadNext = response['load-previous'];
-    }
   }
 
   /**
@@ -341,9 +428,10 @@ export default class CommentsStore {
   /**
    * Cant load more
    * @param {string} guid
+   * @param {boolean} descending
    */
-  cantLoadMore(guid) {
-    return this.loaded && !(this.loadPrevious) && !this.refreshing && this.guid === guid;
+  cantLoadMore(guid, descending) {
+    return this.loaded && !(descending ? this.loadPrevious : this.loadNext) && !this.refreshing && this.guid === guid;
   }
 
   /**
@@ -505,5 +593,4 @@ export default class CommentsStore {
       this.comments.splice(index, 1);
     }
   }
-
 }

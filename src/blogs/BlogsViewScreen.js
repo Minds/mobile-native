@@ -155,15 +155,6 @@ export default class BlogsViewScreen extends Component {
         <SafeAreaView style={styles.header}>
           <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
         </SafeAreaView>
-        { this.comments.loadPrevious && !this.comments.loading ?
-            <TouchableHighlight
-            onPress={() => { this.loadComments()}}
-            underlayColor = 'transparent'
-            style = {styles.loadCommentsContainer}
-          >
-            <Text style={styles.loadCommentsText}> LOAD EARLIER </Text>
-          </TouchableHighlight> : null
-        }
       </View>
     )
   }
