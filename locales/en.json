@@ -12,6 +12,7 @@
   },
   "activity": {
     "loadEarlier":"LOAD EARLIER",
+    "loadLater":"LOAD LATER",
     "typeComment":"Type your comment...",
     "error":"SORRY, WE COULDN'T LOAD THE ACTIVITY",
     "tryAgain":"PLEASE TRY AGAIN LATER"
