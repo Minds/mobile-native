@@ -75,7 +75,6 @@ public class MainApplication extends Application implements ShareApplication, Re
           new ImagePickerPackage(),
           new VectorIconsPackage(),
           new PhotoViewPackage(),
-          new RNI18nPackage(),
           new KCKeepAwakePackage(),
           new RNNotificationsPackage(MainApplication.this),
           new RNSharePackage(),
