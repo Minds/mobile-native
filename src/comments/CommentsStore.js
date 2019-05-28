@@ -24,7 +24,7 @@ import RichEmbedStore from '../common/stores/RichEmbedStore';
 import logService from '../common/services/log.service';
 import NavigationService from '../navigation/NavigationService';
 
-const COMMENTS_PAGE_SIZE = 3;
+const COMMENTS_PAGE_SIZE = 6;
 
 /**
  * Comments Store
