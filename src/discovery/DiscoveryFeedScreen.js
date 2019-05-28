@@ -4,7 +4,6 @@ import React, {
 } from 'react';
 
 import {
-  StyleSheet,
   Platform,
   Text,
   FlatList,
@@ -34,8 +33,8 @@ import ErrorBoundary from '../common/components/ErrorBoundary';
 /**
  * Discovery Feed Screen
  */
-@inject('discovery')
 @observer
+@inject('discovery')
 export default class DiscoveryFeedScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -52,7 +51,7 @@ export default class DiscoveryFeedScreen extends Component {
 
     return (
       <FlatList
-        data={list.entities}
+        data={list.entities.slice()}
         renderItem={this.renderActivity}
         ListFooterComponent={this.getFooter}
         keyExtractor={this.keyExtractor}
@@ -61,7 +60,7 @@ export default class DiscoveryFeedScreen extends Component {
         style={[CS.backgroundWhite, CS.flexContainer]}
         horizontal={false}
         maxToRenderPerBatch={3}
-        windowSize={3}
+        windowSize={11}
         removeClippedSubviews={false}
         keyboardShouldPersistTaps={'handled'}
       />
@@ -123,9 +122,3 @@ export default class DiscoveryFeedScreen extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  blogCardContainer: {
-    backgroundColor: '#ececec',
-    paddingBottom: 8,
-  },
-});
