@@ -146,7 +146,9 @@
       "5":"Maliciously targets users (@name, links, images or videos)",
       "6":"Impersonates someone in a misleading or deceptive manner",
       "7":"Spam",
-      "8":"Appeals on Boost decision"
+      "8":"Appeals on Boost decision",
+      "12":"Onchain payment failed",
+      "13":"Original post removed"
     }
   },
   "translate": {
@@ -700,7 +702,6 @@
   "onchain":"OnChain",
   "completed":"Completed",
   "pending":"Pending",
-
   "hide":"Hide",
   "ops":"Ooops",
   "pin":"Pin",
