@@ -85,6 +85,7 @@ const uploadLocale = (locale, overwrite = 0) => {
       file: createReadStream(source),
       api_token: argv['poeditor-key'],
       id: argv['poeditor-id'] || PROJECT_ID,
+      sync_terms:1,
       updating: 'terms_translations',
       language:locale,
       overwrite
