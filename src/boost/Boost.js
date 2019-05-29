@@ -22,12 +22,14 @@ import BlogModel from '../blogs/BlogModel';
 import UserModel from '../channel/UserModel';
 import GroupCard from '../groups/card/GroupCard';
 
+/**
+ * Boost console item
+ */
 export default class Boost extends Component {
 
-  state = {
-
-  };
-
+  /**
+   * Render
+   */
   render() {
 
     return (

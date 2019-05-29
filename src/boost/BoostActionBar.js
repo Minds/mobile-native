@@ -24,16 +24,13 @@ import { observer, inject } from 'mobx-react/native';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import token from '../common/helpers/token';
 
 @inject('user', 'boost')
 @observer
 export default class BoostActionBar extends Component {
-
-  state = {
-  };
 
   render() {
     return (
@@ -49,14 +46,14 @@ export default class BoostActionBar extends Component {
 
   renderTarget() {
     return  this.props.entity.destination ?
-              <View style={CommonStyle.flexColumnCentered} key="target">
+              <View style={CS.flexColumnCentered} key="target">
                 <IonIcon
                   color='rgb(96, 125, 139)'
                   name='md-person'
                   size={20}
                   style={styles.icon}
                   />
-                <Text style={styles.value}>
+                <Text style={styles.value} numberOfLines={1}>
                   { '@' + this.props.entity.destination.username}
                 </Text>
               </View> : <View></View>;
@@ -64,7 +61,7 @@ export default class BoostActionBar extends Component {
 
   renderViews() {
     return  this.props.entity.impressions ?
-              <View style={CommonStyle.flexColumnCentered} key="views">
+              <View style={CS.flexColumnCentered} key="views">
                 <Icon
                   color='rgb(96, 125, 139)'
                   type="material-community"
@@ -80,7 +77,7 @@ export default class BoostActionBar extends Component {
 
   renderStatus() {
     return  this.props.entity.state ?
-              <View style={CommonStyle.flexColumnCentered} key="status">
+              <View style={CS.flexColumnCentered} key="status">
                 <Icon
                   type='material-community'
                   color='rgb(96, 125, 139)'
@@ -96,7 +93,7 @@ export default class BoostActionBar extends Component {
 
   renderBid() {
     return this.props.entity.bid ?
-              <View style={CommonStyle.flexColumnCentered} key="bid">
+              <View style={CS.flexColumnCentered} key="bid">
                 <Icon
                   type='material-community'
                   color='rgb(96, 125, 139)'
@@ -121,7 +118,7 @@ export default class BoostActionBar extends Component {
 
   renderScheduled() {
     return  this.props.entity.scheduledTs ?
-              <View style={CommonStyle.flexColumnCentered} key="schedule">
+              <View style={CS.flexColumnCentered} key="schedule">
                 <Icon
                   type='material-community'
                   color='rgb(96, 125, 139)'
@@ -133,7 +130,7 @@ export default class BoostActionBar extends Component {
                   {formatDate(this.props.entity.scheduledTs)}
                 </Text>
               </View> :
-              <View style={CommonStyle.flexColumnCentered} key="schedule">
+              <View style={CS.flexColumnCentered} key="schedule">
                 <Icon
                   type='material-community'
                   color='rgb(96, 125, 139)'
@@ -152,7 +149,7 @@ export default class BoostActionBar extends Component {
     let buttons = []
     if(this.canRevoke()){
       buttons.push(
-        <View style={CommonStyle.flexColumnCentered} key="revoke">
+        <View style={CS.flexColumnCentered} key="revoke">
           <TouchableHighlight
             onPress={() => { this.props.boost.list.revoke(this.props.entity.guid, this.props.boost.filter)}}
             underlayColor = 'transparent'
@@ -166,13 +163,13 @@ export default class BoostActionBar extends Component {
 
     if (this.canReject()){
       buttons.push(
-        <View style={CommonStyle.flexColumnCentered} key="reject">
+        <View style={CS.flexColumnCentered} key="reject">
           <TouchableHighlight
             onPress={() => { this.props.boost.list.reject(this.props.entity.guid)}}
             underlayColor = 'transparent'
             style = {ComponentsStyle.redbutton}
           >
-            <Text style={{color: colors.danger}} > REJECT </Text>
+            <Text style={{color: colors.danger}} adjustsFontSizeToFit numberOfLines={1}> REJECT </Text>
           </TouchableHighlight>
         </View>
       );
@@ -180,13 +177,13 @@ export default class BoostActionBar extends Component {
 
     if (this.canAccept()) {
       buttons.push(
-        <View style={CommonStyle.flexColumnCentered} key="accept">
+        <View style={CS.flexColumnCentered} key="accept">
           <TouchableHighlight
             onPress={() => { this.props.boost.list.accept(this.props.entity.guid)}}
             underlayColor = 'transparent'
             style = {ComponentsStyle.bluebutton}
           >
-            <Text style={{color: colors.primary}} > ACCEPT </Text>
+            <Text style={{color: colors.primary}} adjustsFontSizeToFit numberOfLines={1}> ACCEPT </Text>
           </TouchableHighlight>
         </View>
       );
