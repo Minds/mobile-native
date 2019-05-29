@@ -111,9 +111,7 @@ export default class BoostConsoleScreen extends Component {
   renderBoost = (row) => {
     const boost = row.item;
     return (
-      <View>
-        <Boost boost={boost} navigation={this.props.navigation} />
-      </View>
+      <Boost boost={boost} navigation={this.props.navigation} />
     );
   }
 }
