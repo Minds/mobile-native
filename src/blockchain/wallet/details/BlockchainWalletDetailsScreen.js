@@ -28,6 +28,7 @@ import NavigationService from '../../../navigation/NavigationService';
 import { CommonStyle } from "../../../styles/Common";
 import number from '../../../common/helpers/number';
 import BlockchainApiService from '../../BlockchainApiService';
+import i18n from '../../../common/services/i18n.service';
 
 // Helpers
 
@@ -158,7 +159,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
       <View style={styles.itemContainer}>
 
         <View style={styles.itemBody}>
-          <Text style={styles.label}>Balance</Text>
+          <Text style={styles.label}>{i18n.t('blockchain.balance')}</Text>
         </View>
 
         <View style={styles.itemSpacer}></View>
@@ -176,7 +177,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
       <View style={styles.itemContainer}>
 
         <View style={styles.itemBody}>
-          <Text style={styles.label}>Gas (ETH)</Text>
+          <Text style={styles.label}>{i18n.t('blockchain.gasEth')}</Text>
         </View>
 
         <View style={styles.itemSpacer}></View>
@@ -194,9 +195,9 @@ export default class BlockchainWalletDetailsScreen extends Component {
       <View style={styles.itemContainer}>
 
         <View style={styles.itemBody}>
-          <Text style={styles.label}>Name</Text>
+          <Text style={styles.label}>{i18n.t('name')}</Text>
           <View style={styles.supportingTextContainer}>
-            <Text style={[styles.supportingText, { minWidth: 200 }]}>eg. Mobile Spending</Text>
+            <Text style={[styles.supportingText, { minWidth: 200 }]}>{i18n.t('blockchain.walletNameExample')}</Text>
           </View>
         </View>
 
@@ -234,9 +235,9 @@ export default class BlockchainWalletDetailsScreen extends Component {
       <View style={styles.itemContainer}>
 
         <View style={styles.itemBody}>
-          <Text style={styles.label}>Recieve Address</Text>
+          <Text style={styles.label}>{i18n.t('blockchain.receiverAddress')}</Text>
           <View style={styles.supportingTextContainer}>
-            <Text style={[styles.supportingText, { minWidth: 200 }]}>Should this address be your receiver address for Wire & Boost?</Text>
+            <Text style={[styles.supportingText, { minWidth: 200 }]}>{i18n.t('blockchain.shouldBeReceiver')}</Text>
           </View>
         </View>
 
@@ -275,9 +276,9 @@ export default class BlockchainWalletDetailsScreen extends Component {
     return (
       <View style={styles.itemContainer}>
         <View style={styles.itemBody}>
-          <Text style={styles.label}>Export</Text>
+          <Text style={styles.label}>{i18n.t('export')}</Text>
           <View style={styles.supportingTextContainer}>
-            <Text style={[styles.supportingText, { minWidth: 200 }]}>Download the private key of this wallet</Text>
+            <Text style={[styles.supportingText, { minWidth: 200 }]}>{i18n.t('blockchain.downloadPrivate')}</Text>
           </View>
         </View>
 
@@ -321,9 +322,9 @@ export default class BlockchainWalletDetailsScreen extends Component {
     return (
       <View style={styles.itemContainer}>
         <View style={styles.itemBody}>
-          <Text style={styles.label}>Delete</Text>
+          <Text style={styles.label}>{i18n.t('delete')}</Text>
           <View style={styles.supportingTextContainer}>
-            <Text style={[styles.supportingText, { minWidth: 200 }]}>WARNING: this is irreversable and all tokens will be lost</Text>
+            <Text style={[styles.supportingText, { minWidth: 200 }]}>{i18n.t('blockchain.deleteWarning')}</Text>
           </View>
         </View>
 
@@ -334,7 +335,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
             style={styles.actionButton}
             color={colors.danger}
             onPress={this.deleteAction}
-            title="DELETE"
+            title={i18n.t('delete').toUpperCase()}
           />}
         </View>
       </View>
@@ -343,11 +344,11 @@ export default class BlockchainWalletDetailsScreen extends Component {
 
   deleteAction = () => {
     Alert.alert(
-      'Are you sure?',
-      `This is an IRREVERSIBLE action. If you haven't backed up your private key, you may lose all your funds.`,
+      i18n.t('confirmMessage'),
+      i18n.t('blockchain.deleteConfirmWarning'),
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: `Yes, I'm sure`, onPress: () => this.delete() },
+        { text: i18n.t('cancel'), style: 'cancel' },
+        { text: i18n.t('yesImSure'), onPress: () => this.delete() },
       ],
       { cancelable: false }
     );
@@ -379,10 +380,10 @@ export default class BlockchainWalletDetailsScreen extends Component {
     return(
       <View style={styles.itemContainer}>
         <View style={styles.itemBody}>
-          <Text style={styles.label}>Import</Text>
+          <Text style={styles.label}>{i18n.t('import')}</Text>
           <View style={styles.supportingTextContainer}>
             <Text style={[styles.supportingText, { minWidth: 200 }]}>
-              The private key for this wallet does not exist.
+              {i18n.t('blockchain.importKeyNotExist')}
             </Text>
           </View>
         </View>
@@ -394,7 +395,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
             style={styles.actionButton}
             color={colors.primary}
             onPress={this.import}
-            title="IMPORT"
+            title={i18n.t('import').toUpperCase()}
           />}
         </View>
       </View>

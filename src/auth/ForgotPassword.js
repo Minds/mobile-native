@@ -64,7 +64,7 @@ export default class ForgotPassword extends PureComponent {
           />
           {!this.state.sent && <Button
             onPress={() => this.onContinuePress()}
-            title={i18n.t('continue')}
+            title={i18n.t('continue').toUpperCase()}
             backgroundColor="rgba(0,0,0, 0.5)"
             hidde={this.state.sent}
             borderRadius={4}

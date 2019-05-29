@@ -41,6 +41,7 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import logService from '../common/services/log.service';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Blog View Screen
@@ -102,8 +103,8 @@ export default class BlogsViewScreen extends Component {
       logService.exception(error);
       Alert.alert(
         'Error',
-        error.message || 'There was an error loading this blog.',
-        [{ text: 'OK', onPress: () => this.props.navigation.goBack() }],
+        error.message || i18n.t('blogs.errorLoading'),
+        [{ text: i18n.t('ok'), onPress: () => this.props.navigation.goBack() }],
         { cancelable: false }
       );
     }
@@ -181,8 +182,8 @@ export default class BlogsViewScreen extends Component {
                 style={ComponentsStyle.logo}
                 source={require('../assets/logos/logo.png')}
               />
-              <Text style={[CS.fontL, CS.colorDanger]}>SORRY, WE COULDN'T LOAD THE BLOG</Text>
-              <Text style={[CS.fontM]}>PLEASE TRY AGAIN LATER</Text>
+              <Text style={[CS.fontL, CS.colorDanger]}>{i18n.t('blogs.error')}</Text>
+              <Text style={[CS.fontM]}>{i18n.t('activity.tryAgain')}</Text>
             </View>
         }
       </View>

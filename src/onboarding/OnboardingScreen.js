@@ -29,6 +29,7 @@ import RewardsStep from './steps/RewardsStep';
 import WelcomeStep from './steps/WelcomeStep';
 import { CommonStyle as CS } from '../styles/Common';
 import navigationService from '../navigation/NavigationService';
+import i18nService from '../common/services/i18n.service';
 
 @observer
 @inject('onboarding', 'hashtag')
@@ -48,7 +49,7 @@ export default class OnboardingScreen extends Component {
       this.props.hashtag.setAll(false);
       navigationService.reset('Tabs');
     } catch (err) {
-      Alert.alert('Error', 'Oops! There was an error.\nPlease try again.')
+      Alert.alert(i18nService.t('error'), i18n.t('errorMessage') + '\n' + i18n.t('tryAgain'))
     }
   }
 

@@ -29,6 +29,7 @@ import BlogCard from '../blogs/BlogCard';
 import ErrorLoading from '../common/components/ErrorLoading';
 import GroupsListItem from '../groups/GroupsListItem'
 import ErrorBoundary from '../common/components/ErrorBoundary';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Discovery Feed Screen
@@ -67,6 +68,23 @@ export default class DiscoveryFeedScreen extends Component {
     )
   }
 
+  /**
+   * Get empty list
+   */
+  getEmptyList() {
+    if (!this.props.discovery.list.loaded || this.props.discovery.loading || this.props.discovery.list.errorLoading) return null;
+    return (
+      <View style={ComponentsStyle.emptyComponentContainer}>
+        <View style={ComponentsStyle.emptyComponent}>
+          <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('discovery.nothingToShow')}</Text>
+        </View>
+      </View>
+    );
+  }
+
+  /**
+   * Key extractor
+   */
   keyExtractor = item => item.rowKey;
 
   /**
@@ -85,9 +103,9 @@ export default class DiscoveryFeedScreen extends Component {
 
     if (!store.list.errorLoading) return null;
 
-    const message = store.list.entities.length ?
-      "Can't load more" :
-      "Can't connect";
+    const message = discovery.list.entities.length ?
+      i18n.t('cantLoadMore') :
+      i18n.t('cantLoad');
 
     return <ErrorLoading message={message} tryAgain={this.tryAgain}/>
   }
@@ -115,7 +133,7 @@ export default class DiscoveryFeedScreen extends Component {
    */
   renderActivity = (row) => {
     return (
-      <ErrorBoundary message="Can't show this post" containerStyle={CS.hairLineBottom}>
+      <ErrorBoundary containerStyle={CS.hairLineBottom}>
         <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false} newsfeed={this.props.discovery}/>
       </ErrorBoundary>
     );

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import { CommonStyle } from '../../styles/Common';
+import i18n from '../../common/services/i18n.service';
 
 /**
  * Type Selector
@@ -51,10 +52,10 @@ export default class TypeSelector extends PureComponent {
    * Render
    */
   render() {
-    const selected = <Text style={[CommonStyle.fontS, CommonStyle.colorPrimary]}>SELECTED</Text>,
-      NewsfeedPartial = this.getOption('newsfeed', 'Feeds', 'Your content will appear on newsfeeds across the site.', selected),
-      P2pPartial = this.getOption('p2p', 'Offers', 'Your content will be shared to a specific channel in exchange for USD or tokens or rewards.', selected),
-      ContentPartial = this.getOption('content', 'Sidebars', 'Your content will display on the sidebars throughout the site.', selected),
+    const selected = <Text style={[CommonStyle.fontS, CommonStyle.colorPrimary]}>{i18n.t('boosts.selected')}</Text>,
+      NewsfeedPartial = this.getOption('newsfeed', i18n.t('boosts.feeds'), i18n.t('boosts.feedsDescription'), selected),
+      P2pPartial = this.getOption('p2p', i18n.t('boosts.offers'), i18n.t('boosts.offersDescription'), selected),
+      ContentPartial = this.getOption('content',  i18n.t('boosts.sidebars'), i18n.t('boosts.sidebarsDescription'), selected),
       allowedTypes = this.props.allowedTypes;
 
     return (

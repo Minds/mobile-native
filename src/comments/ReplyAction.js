@@ -17,6 +17,7 @@ import { Icon } from 'react-native-elements';
 import { CommonStyle } from '../styles/Common';
 import Counter from '../newsfeed/activity/actions/Counter';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
+import i18n from '../common/services/i18n.service';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -50,7 +51,7 @@ export default class ReplyAction extends Component {
     return (
       <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.centered, CommonStyle.paddingRight2x, this.props.orientation == 'column' ? CommonStyle.columnAlignCenter : CommonStyle.rowJustifyCenter ]} onPress={this.toggleExpand}>
         <Icon color={color} name={this.iconName} size={this.props.size} />
-        <Text style={textStyle}>Reply</Text>
+        <Text style={textStyle}>{i18n.t('reply')}</Text>
         <Counter size={this.props.size * 0.75} count={entity.replies_count} orientation={this.props.orientation}/>
       </TouchableOpacityCustom>
     );

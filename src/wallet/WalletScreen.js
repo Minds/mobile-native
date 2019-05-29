@@ -28,6 +28,7 @@ import WalletScoresView from './WalletScoresView';
 import { CommonStyle } from '../styles/Common';
 import FeaturesService from '../common/services/features.service';
 import shareService from "../share/ShareService";
+import i18n from '../common/services/i18n.service';
 
 /**
  * Wallet screen
@@ -83,8 +84,8 @@ export default class WalletScreen extends Component {
                 <Icon name="history" size={24} style={ styles.icon } />
               </View>
               <View style={styles.item}>
-                <Text style={styles.title}>Transactions</Text>
-                <Text style={styles.subtitle}>A list of transactions you have made with your addresses</Text>
+                <Text style={styles.title}>{i18n.t('wallet.transactionsTitle')}</Text>
+                <Text style={styles.subtitle}>{i18n.t('wallet.transactionsDescription')}</Text>
               </View>
             </TouchableOpacity>
 
@@ -93,8 +94,8 @@ export default class WalletScreen extends Component {
                 <Icon name="local-atm" size={24} style={ styles.icon } />
               </View>
               <View style={styles.item}>
-                <Text style={styles.title}>Withdraw</Text>
-                <Text style={styles.subtitle}>Request a withdrawal of your token rewards to your OnChain address.</Text>
+                <Text style={styles.title}>{i18n.t('wallet.withdrawTitle')}</Text>
+                <Text style={styles.subtitle}>{i18n.t('wallet.withdrawDescription')}</Text>
               </View>
             </TouchableOpacity> }
 
@@ -103,8 +104,8 @@ export default class WalletScreen extends Component {
                 <Icon name="stars" size={24} style={ styles.icon } />
               </View>
               <View style={styles.item}>
-                <Text style={styles.title}>Contributions</Text>
-                <Text style={styles.subtitle}>Check your rewards and daily contribution scores</Text>
+                <Text style={styles.title}>{i18n.t('wallet.contributionsTitle')}</Text>
+                <Text style={styles.subtitle}>{i18n.t('wallet.contributionsDescription')}</Text>
               </View>
             </TouchableOpacity>
 
@@ -113,8 +114,8 @@ export default class WalletScreen extends Component {
                 <Icon name="settings" size={24} style={ styles.icon } />
               </View>
               <View style={styles.item}>
-                <Text style={styles.title}>Addresses</Text>
-                <Text style={styles.subtitle}>Configure your crypto addresses and other token related settings</Text>
+                <Text style={styles.title}>{i18n.t('wallet.addressesTitle')}</Text>
+                <Text style={styles.subtitle}>{i18n.t('wallet.addressesDescription')}</Text>
               </View>
             </TouchableOpacity>}
 
@@ -123,8 +124,8 @@ export default class WalletScreen extends Component {
                 <Icon name="share" size={24} style={ styles.icon } />
               </View>
               <View style={styles.item}>
-                <Text style={styles.title}>Invite a Friend</Text>
-                <Text style={styles.subtitle}>Invite a friend and earn rewards</Text>
+                <Text style={styles.title}>{i18n.t('wallet.inviteFriend')}</Text>
+                <Text style={styles.subtitle}>{i18n.t('wallet.inviteFriendDescription')}</Text>
               </View>
             </TouchableOpacity>
           </View>

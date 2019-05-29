@@ -1,53 +1,54 @@
 import React, {
     Component
   } from 'react';
-  
+
   import {
     inject,
     observer
   } from "mobx-react/native";
-  
+
   import {
     Text,
     TouchableOpacity,
     StyleSheet,
     View
   } from 'react-native';
-  
+
   import { CommonStyle } from '../styles/Common';
   import colors from '../styles/Colors';
-  
+  import i18n from '../common/services/i18n.service';
+
   /**
    * Newsfeed top bar
    */
   @inject('boost')
   @observer
   export default class BoostTabBar extends Component {
-  
+
     selected(txt) {
       const filter = this.props.boost.filter;
       return filter == txt ? styles.tabSelected : null;
     }
-  
+
     render() {
       return (
         <View style={styles.container}>
           <View style={styles.topbar}>
             <TouchableOpacity style={[styles.tab, this.selected('peer')]} onPress={() => this.props.boost.setFilter('peer')}>
-              <Text style={CommonStyle.fontXS}>OFFERS</Text>
+              <Text style={CommonStyle.fontXS}>{i18n.t('boosts.tabOffers')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.tab, this.selected('newsfeed')]} onPress={() => this.props.boost.setFilter('newsfeed')}>
-              <Text style={CommonStyle.fontXS}>NEWSFEED</Text>
+              <Text style={CommonStyle.fontXS}>{i18n.t('boosts.tabNewsfeed')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.tab, this.selected('content')]} onPress={() => this.props.boost.setFilter('content')}>
-              <Text style={CommonStyle.fontXS}>SIDEBAR</Text>
+              <Text style={CommonStyle.fontXS}>{i18n.t('boosts.tabSidebar')}</Text>
             </TouchableOpacity>
           </View>
         </View>
       )
     }
   }
-  
+
   //TODO: move to common style
   const styles = StyleSheet.create({
     container: {

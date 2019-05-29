@@ -81,7 +81,7 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
         }
       }
     >
-      Hey @undefined! It looks like you haven't setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.
+      Hey @[missing {{user}} value]! It looks like you haven't setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.
     </Text>
   </View>
 </View>
@@ -145,7 +145,8 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
         }
       }
     >
-      · You only need to enter this encryption password once as long as you stay signed in.
+      · 
+      You only need to enter this encryption password once as long as you stay signed in.
     </Text>
     <Text
       style={
@@ -155,7 +156,8 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
         }
       }
     >
-      · It is important so that no one other than you and the people you are communicating with can access the content of your messages.
+      · 
+      It is important so that no one other than you and the people you are communicating with can access the content of your messages.
     </Text>
     <Text
       style={
@@ -165,17 +167,8 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
         }
       }
     >
-      · By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.
-    </Text>
-    <Text
-      style={
-        Object {
-          "color": "#BBB",
-          "marginBottom": 16,
-        }
-      }
-    >
-      · By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.
+      · 
+      By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked.
     </Text>
   </View>
 </View>

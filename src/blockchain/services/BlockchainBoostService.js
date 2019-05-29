@@ -1,6 +1,7 @@
 import Web3Service from './Web3Service';
 import BlockchainTokenService from './BlockchainTokenService';
 import MindsService from '../../common/services/minds.service';
+import i18n from '../../common/services/i18n.service';
 
 class BlockchainBoostService {
   async getContract() {
@@ -23,7 +24,7 @@ class BlockchainBoostService {
 
     const result = await Web3Service.sendSignedContractMethod(
       tokenApproveAndCallBoost,
-      `Network Boost for ${tokensAmount} Minds Tokens. ${message}`.trim()
+      i18n.t('blockchain.boostCreate',{tokensAmount, message}).trim()
     );
 
     return result.transactionHash;
@@ -42,7 +43,7 @@ class BlockchainBoostService {
 
     const result = await Web3Service.sendSignedContractMethod(
       tokenApproveAndCallBoost,
-      `Channel Boost for ${tokensAmount} Minds Tokens to ${receiver}. ${message}`.trim()
+      i18n.t('blockchain.boostPeerCreate',{tokensAmount, message, receiver}).trim()
     );
 
     return result.transactionHash;

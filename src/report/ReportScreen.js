@@ -26,13 +26,15 @@ import ModalTopbar from '../topbar/ModalTopbar';
 import colors from '../styles/Colors';
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
+import i18n from '../common/services/i18n.service';
+
 import mindsService from '../common/services/minds.service';
 import CenteredLoading from '../common/components/CenteredLoading';
 
 export default class ReportScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
-    title: 'Report',
+    title: i18n.t('report'),
     headerLeft: () => {
       return <Icon name="chevron-left" size={38} color={colors.primary} onPress={
         () => {
@@ -46,7 +48,7 @@ export default class ReportScreen extends Component {
         {
           navigation.state.params.requireNote &&
           <Button
-            title="Submit"
+            title={i18n.t('settings.submit')}
             onPress={navigation.state.params.confirmAndSubmit ?
               navigation.state.params.confirmAndSubmit : () => null}
           />
@@ -81,6 +83,17 @@ export default class ReportScreen extends Component {
    */
   async loadReasons() {
     const settings = await mindsService.getSettings();
+
+    // reasons in current language with fallback in english translation, in case that both fails the origial label is shown
+    settings.report_reasons.forEach(r => {
+      r.label = i18n.t(`reports.reasons.${r.value}.label`, {defaultValue: r.label});
+      if (r.reasons && r.reasons.length) {
+        r.reasons.forEach(r2 => {
+          r2.label = i18n.t(`reports.reasons.${r.value}.reasons.${r2.value}.label`, {defaultValue: r2.label});
+        });
+      }
+    });
+
     this.setState({reasons: settings.report_reasons});
   }
 
@@ -94,19 +107,19 @@ export default class ReportScreen extends Component {
       this.props.navigation.goBack();
 
       Alert.alert(
-        'Thanks',
-        "We've got your report and will check it out soon",
+        i18n.t('thanks'),
+        i18n.t('reports.weHaveGotYourReport'),
         [
-          {text: 'Dismiss', onPress: () => null},
+          {text: i18n.t('ok'), onPress: () => null},
         ],
         { cancelable: false }
       )
     } catch (e) {
       Alert.alert(
-        'Ooopppsss',
-        'There was a problem submitting your report',
+        i18n.t('error'),
+        i18n.t('reports.errorSubmitting'),
         [
-          {text: 'Try again', onPress: () => this.submit()},
+          {text: i18n.t('tryAgain'), onPress: () => this.submit()},
           {text: 'Cancel'},
         ],
         { cancelable: true }
@@ -168,11 +181,11 @@ export default class ReportScreen extends Component {
    */
   confirmAndSubmit() {
     Alert.alert(
-      'Confirm',
-      `Do you want to report this post as:\n${this.state.reason.label}\n` + (this.state.subreason ? this.state.subreason.label : ''),
+      i18n.t('confirm'),
+      `${i18n.t('reports.reportAs')}\n${this.state.reason.label}\n` + (this.state.subreason ? this.state.subreason.label : ''),
       [
-        {text: 'No'},
-        {text: 'Yes', onPress: () => this.submit()},
+        {text: i18n.t('no')},
+        {text: i18n.t('yes'), onPress: () => this.submit()},
       ],
       { cancelable: false }
     );
@@ -191,7 +204,7 @@ export default class ReportScreen extends Component {
   renderReasons() {
 
     if (this.state.reason && this.state.reason.value == 10) {
-      return <Text style={[CS.fontL, CS.padding2x, CS.textCenter]} onPress={this.mailToCopyright}>Please submit a DMCA notice to copyright@minds.com.</Text>
+      return <Text style={[CS.fontL, CS.padding2x, CS.textCenter]} onPress={this.mailToCopyright}>{i18n.t('reports.DMCA')}</Text>
     }
 
     const reasons = (this.state.reason && this.state.reason.hasMore) ? this.state.reason.reasons : this.state.reasons;
@@ -229,7 +242,7 @@ export default class ReportScreen extends Component {
         multiline = {true}
         numberOfLines = {4}
         style={[CS.padding2x, CS.margin, CS.borderBottom, CS.borderGreyed]}
-        placeholder="Please explain why you wish to report this content in a few brief sentences."
+        placeholder={i18n.t('reports.explain')}
         returnKeyType="done"
         autoFocus={true}
         placeholderTextColor="gray"

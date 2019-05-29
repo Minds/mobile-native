@@ -12,14 +12,10 @@ exports[`renders correctly 1`] = `
   <Text
     onPress={[Function]}
   >
-    someUser
-     gifted you 
-    100
-     views 
+    someUser gifted you 100 views 
     <Text>
-      <Text>
-        for 
-      </Text>
+      for
+       
       <Text
         style={
           Object {
@@ -31,6 +27,7 @@ exports[`renders correctly 1`] = `
         some title
       </Text>
     </Text>
+    
   </Text>
 </View>
 `;

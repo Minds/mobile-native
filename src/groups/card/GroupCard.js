@@ -15,6 +15,7 @@ import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 import FastImage from 'react-native-fast-image';
 import { CommonStyle } from '../../styles/Common';
+import i18n from '../../common/services/i18n.service';
 
 /**
  * Group Card
@@ -52,15 +53,15 @@ export default class GroupCard extends Component {
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
             <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
-              <Text style={styles.countertitle}>MEMBERS</Text>
+              <Text style={styles.countertitle}>{i18n.t('members').toUpperCase()}</Text>
               <Text style={styles.countervalue}>{abbrev(group['members:count'], 0)}</Text>
             </View>
             <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
-              <Text style={styles.countertitle}>FEED</Text>
+              <Text style={styles.countertitle}>{i18n.t('feed').toUpperCase()}</Text>
               <Text style={styles.countervalue}>{abbrev(group['activity:count'], 0)}</Text>
             </View>
             <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
-              <Text style={styles.countertitle}>COMMENTS</Text>
+              <Text style={styles.countertitle}>{i18n.t('comments').toUpperCase()}</Text>
               <Text style={styles.countervalue}>{abbrev(group['comments:count'], 0)}</Text>
             </View>
           </View>

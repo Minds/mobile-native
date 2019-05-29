@@ -17,6 +17,7 @@ import {
 
 import {Icon} from 'react-native-elements';
 import { CommonStyle } from '../../styles/Common';
+import i18nService from '../services/i18n.service';
 
 /**
  * Tag Input Component
@@ -45,7 +46,7 @@ export default class TagInput extends Component {
     const inTags = this.props.tags.some((t) => this.state.text === t);
     if (this.state.text === '') return;
     if (inTags) {
-      this.setState({error: 'Tag already exists'});
+      this.setState({error: i18nService.t('hashtags.exists')});
       return;
     }
     if (this.props.max && this.props.max < this.props.tags.length) {

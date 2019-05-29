@@ -90,57 +90,57 @@ export default class NewsfeedService {
   }
 }
 
-/**
- * Common function to fetch feeds
- * @param {string} endpoint
- * @param {string} offset
- * @param {int} limit
- */
-function _getFeed(endpoint, offset, limit) {
-  return api.get(endpoint, { offset, limit })
-    .then((data) => {
-      return {
-        entities: data.activity || data.entities,
-        offset: data['load-next'],
-      }
-    })
-    .catch(err => {
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
-        logService.exception('[NewsfeedService]', err);
-      }
-      throw "Oops, an error has occured updating your newsfeed";
-    })
-}
+// /**
+//  * Common function to fetch feeds
+//  * @param {string} endpoint
+//  * @param {string} offset
+//  * @param {int} limit
+//  */
+// function _getFeed(endpoint, offset, limit) {
+//   return api.get(endpoint, { offset, limit })
+//     .then((data) => {
+//       return {
+//         entities: data.activity || data.entities,
+//         offset: data['load-next'],
+//       }
+//     })
+//     .catch(err => {
+//       if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+//         logService.exception('[NewsfeedService]', err);
+//       }
+//       throw "Oops, an error has occured updating your newsfeed";
+//     })
+// }
 
-/**
- * Fetch channel feed
- * @param {string} guid
- * @param {string} offset
- * @param {int} limit
- */
-export function getFeedChannel(guid, offset, limit = 12) {
-  return _getFeed('api/v1/newsfeed/personal/' + guid, offset, limit);
-}
+// /**
+//  * Fetch channel feed
+//  * @param {string} guid
+//  * @param {string} offset
+//  * @param {int} limit
+//  */
+// export function getFeedChannel(guid, offset, limit = 12) {
+//   return _getFeed('api/v1/newsfeed/personal/' + guid, offset, limit);
+// }
 
-/**
- * Fetch boosted content
- * @param {string} offset
- * @param {int} limit
- */
-export function getBoosts(offset, limit = 15, rating) {
-  return api.get('api/v1/boost/fetch/newsfeed', {
-    limit: limit || '',
-    offset: offset || '',
-    rating: rating || 1,
-    platform: Platform.OS === 'ios' ? 'ios' : 'other'
-  })
-    .then((data) => {
-      return {
-        entities: data.boosts||[],
-        offset: data['load-next'],
-      }
-    });
-}
+// /**
+//  * Fetch boosted content
+//  * @param {string} offset
+//  * @param {int} limit
+//  */
+// export function getBoosts(offset, limit = 15, rating) {
+//   return api.get('api/v1/boost/fetch/newsfeed', {
+//     limit: limit || '',
+//     offset: offset || '',
+//     rating: rating || 1,
+//     platform: Platform.OS === 'ios' ? 'ios' : 'other'
+//   })
+//     .then((data) => {
+//       return {
+//         entities: data.boosts||[],
+//         offset: data['load-next'],
+//       }
+//     });
+// }
 
 export function update(post) {
   return api.post('api/v1/newsfeed/' + post.guid, post)

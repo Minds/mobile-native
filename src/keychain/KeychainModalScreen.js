@@ -13,6 +13,7 @@ import Modal from 'react-native-modal';
 import { observer, inject } from 'mobx-react/native'
 import { ComponentsStyle } from '../styles/Components';
 import { CommonStyle } from '../styles/Common';
+import i18n from '../common/services/i18n.service';
 
 @inject('keychain')
 @observer
@@ -49,7 +50,7 @@ export default class KeychainModalScreen extends Component {
       return (
         <View>
           <Text style={CommonStyle.modalTitle}>
-            Unlock {this.props.keychain.unlockingKeychain} keychain
+            {i18n.t('keychain.unlockMessage', {keychain: this.props.keychain.unlockingKeychain})}
           </Text>
           <TextInput
             style={ComponentsStyle.input}
@@ -64,28 +65,27 @@ export default class KeychainModalScreen extends Component {
       return (
         <View>
           <Text style={CommonStyle.modalTitle}>
-            Setup {this.props.keychain.unlockingKeychain} keychain
+            {i18n.t('keychain.setupMessage', {keychain: this.props.keychain.unlockingKeychain})}
           </Text>
           <Text style={styles.note}>
-            Enter a password that will encrypt the {this.props.keychain.unlockingKeychain} keychain.
-            Remember the password or you will be unable to read/write from it.
+            {i18n.t('keychain.encryptMessage', {keychain: this.props.keychain.unlockingKeychain})}
           </Text>
           <TextInput
             style={ComponentsStyle.input}
-            placeholder='Password'
+            placeholder={i18n.t('auth.password')}
             secureTextEntry={true}
             onChangeText={secret => this.setState({ secret })}
             value={this.state.secret || ''}
           />
           <TextInput
             style={[ComponentsStyle.input, styles.confirmField]}
-            placeholder='Confirm Password'
+            placeholder={i18n.t('auth.confirmpassword')}
             secureTextEntry={true}
             onChangeText={secretConfirmation => this.setState({ secretConfirmation })}
             value={this.state.secretConfirmation || ''}
           />
           { (this.state.secret !== this.state.secretConfirmation) && <Text style={[ styles.note, styles.error ]}>
-            The password and confirmation must match!
+            {i18n.t('auth.confirmPasswordError')}
           </Text>}
         </View>
       )
@@ -105,11 +105,11 @@ export default class KeychainModalScreen extends Component {
         {this.props.keychain.isUnlocking && <View style={[ CommonStyle.flexContainer, CommonStyle.modalScreen ]}>
           {body}
           {this.props.keychain.unlockingAttempts > 0 && <Text style={[ styles.note, styles.error ]}>
-            The password you entered is invalid.
+            {i18n.t('auth.invalidPassword')}
           </Text>}
 
           <View style={[CommonStyle.rowJustifyStart, { marginTop: 8 }]}>
-            <View style={{ flex: 1 }}></View>
+            <View style={CommonStyle.flexContainer}></View>
             <TouchableHighlight
               underlayColor='transparent'
               onPress={ this.cancel }
@@ -117,7 +117,7 @@ export default class KeychainModalScreen extends Component {
                 ComponentsStyle.button,
                 { backgroundColor: 'transparent', marginRight: 4 },
               ]}>
-              <Text style={[ CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>Cancel</Text>
+              <Text style={[ CommonStyle.paddingLeft, CommonStyle.paddingRight ]}>{i18n.t('cancel')}</Text>
             </TouchableHighlight>
             <TouchableHighlight
               underlayColor='transparent'
@@ -127,7 +127,7 @@ export default class KeychainModalScreen extends Component {
                 ComponentsStyle.buttonAction,
                 { backgroundColor: 'transparent' },
               ]}>
-              <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>Confirm</Text>
+              <Text style={[CommonStyle.paddingLeft, CommonStyle.paddingRight, CommonStyle.colorPrimary]}>{i18n.t('confirm')}</Text>
             </TouchableHighlight>
           </View>
         </View>}

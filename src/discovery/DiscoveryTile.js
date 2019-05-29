@@ -24,6 +24,7 @@ import Placeholder from 'rn-placeholder';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import { CommonStyle as CS } from '../styles/Common';
+import i18n from '../common/services/i18n.service';
 
 const isAndroid = Platform.OS === 'android';
 
@@ -50,7 +51,7 @@ export default class DiscoveryTile extends Component {
   errorRender = (err) => {
     return (
       <View style={CS.centered}>
-        <Text styles={[CS.colorWhite, CS.fontS, CS.textCenter]}>Error loading media</Text>
+        <Text styles={[CS.colorWhite, CS.fontS, CS.textCenter]}>{i18n.t('discovery.imageError')}</Text>
       </View>
     )
   }

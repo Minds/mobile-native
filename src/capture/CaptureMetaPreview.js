@@ -18,6 +18,7 @@ import colors from '../styles/Colors';
 import Touchable from '../common/components/Touchable';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import domain from '../common/helpers/domain';
+import i18n from '../common/services/i18n.service';
 
 const ProgressFastImage = createImageProgress(FastImage);
 
@@ -51,7 +52,7 @@ export default class CaptureMetaPreview extends Component {
         <View style={style.imageLoadError}>
           <Text
             style={style.imageLoadErrorText}
-          >The media from <Text style={style.imageLoadErrorTextDomain}>{domain(this.props.meta.url)}</Text> could not be loaded.</Text>
+          >{i18n.t('capture.couldNotLoad',{domain: domain(this.props.meta.url)})}</Text>
         </View>
       );
     }

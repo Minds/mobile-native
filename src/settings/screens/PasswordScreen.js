@@ -14,7 +14,7 @@ import colors from '../../styles/Colors';
 import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import settingsService from '../SettingsService';
-import i18nService from '../../common/services/i18n.service';
+import i18n from '../../common/services/i18n.service';
 import Touchable from '../../common/components/Touchable';
 
 export default class PasswordScreen extends Component {
@@ -30,7 +30,7 @@ export default class PasswordScreen extends Component {
       return;
 
     if (this.state.confirmNewPassword !== this.state.newPassword) {
-      Alert.alert('Error', `New passwords must match.`);
+      Alert.alert(i18n.t('error'), i18n.t('auth.confirmPasswordError'));
     } else {
       let params = {
         password: this.state.currentPassword,
@@ -38,7 +38,7 @@ export default class PasswordScreen extends Component {
       }
 
       settingsService.submitSettings(params).then( (data) => {
-        Alert.alert('Success', `Password changed succesfully.`);
+        Alert.alert(i18n.t('success'), i18n.t('settings.passwordChanged'));
         this.setState({
           currentPassword: '',
           confirmNewPassword: '',
@@ -54,10 +54,10 @@ export default class PasswordScreen extends Component {
 
     return (
       <View style={[ CommonStyle.flexContainer, {backgroundColor: colors.light} ]}>
-        <Text style={styles.title}>{i18nService.t('settings.passwordTitle')}:</Text>
+        <Text style={styles.title}>{i18n.t('settings.passwordTitle')}:</Text>
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder={i18nService.t('settings.currentPassword')}
+          placeholder={i18n.t('settings.currentPassword')}
           returnKeyType={'done'}
           placeholderTextColor="#444"
           underlineColorAndroid='transparent'
@@ -69,7 +69,7 @@ export default class PasswordScreen extends Component {
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder={i18nService.t('settings.newPassword')}
+          placeholder={i18n.t('settings.newPassword')}
           returnKeyType={'done'}
           placeholderTextColor="#444"
           underlineColorAndroid='transparent'
@@ -81,7 +81,7 @@ export default class PasswordScreen extends Component {
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder={i18nService.t('settings.confirmNewPassword')}
+          placeholder={i18n.t('settings.confirmNewPassword')}
           returnKeyType={'done'}
           placeholderTextColor="#444"
           underlineColorAndroid='transparent'
@@ -92,7 +92,7 @@ export default class PasswordScreen extends Component {
           key={3}
         />
         <Touchable style = {[ComponentsStyle.bluebutton, CommonStyle.alignJustifyCenter, styles.button]} onPress={() => this.submit()}>
-          <Text style={{color: colors.primary}} >{i18nService.t('settings.submit')}</Text>
+          <Text style={{color: colors.primary}} >{i18n.t('settings.submit')}</Text>
         </Touchable>
       </View>
     );

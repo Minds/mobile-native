@@ -9,19 +9,16 @@ exports[`renders correctly 1`] = `
     }
   }
 >
-  <Text>
-    <Text
-      onPress={[Function]}
-      style={
-        Object {
-          "color": "#444",
-          "fontWeight": "bold",
-        }
+  <Text
+    onPress={[Function]}
+    style={
+      Object {
+        "color": "#444",
+        "fontWeight": "bold",
       }
-    >
-      Tap here
-    </Text>
-     to create a post.
+    }
+  >
+    Tap here to create a post.
   </Text>
 </View>
 `;

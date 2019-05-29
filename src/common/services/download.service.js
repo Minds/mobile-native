@@ -5,6 +5,7 @@ import {
 import session from './session.service';
 import RNFS from 'react-native-fs';
 import permissions from './android-permissions.service';
+import i18nService from './i18n.service';
 
 /**
  * Download Service
@@ -38,7 +39,7 @@ class DownloadService {
             if (result.statusCode == 200) {
               return CameraRoll.saveToCameraRoll(filePath);
             } else {
-              alert("download failed");
+              alert(i18nService.t('errorDownloading'));
             }
           });
       }

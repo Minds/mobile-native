@@ -3,6 +3,7 @@ package com.minds.mobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactcommunity.rnlocalize.RNLocalizePackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -23,7 +24,6 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnative.photoview.PhotoViewPackage;
-import com.AlexanderZaytsev.RNI18n.RNI18nPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
 import com.wix.reactnativenotifications.RNNotificationsPackage;
 import cl.json.RNSharePackage;
@@ -58,6 +58,7 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNLocalizePackage(),
             new RNCWebViewPackage(),
             new AsyncStoragePackage(),
             new RNGestureHandlerPackage(),
@@ -74,7 +75,6 @@ public class MainApplication extends Application implements ShareApplication, Re
           new ImagePickerPackage(),
           new VectorIconsPackage(),
           new PhotoViewPackage(),
-          new RNI18nPackage(),
           new KCKeepAwakePackage(),
           new RNNotificationsPackage(MainApplication.this),
           new RNSharePackage(),

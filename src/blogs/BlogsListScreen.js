@@ -21,11 +21,12 @@ import { CommonStyle as CS } from '../styles/Common';
 import { MINDS_CDN_URI, MINDS_FEATURES } from '../config/Config';
 import ErrorLoading from '../common/components/ErrorLoading';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
+import i18n from '../common/services/i18n.service';
 
 const selectedTextStyle = {color: 'black'};
 const typeOptions = [
-  { text: 'SUBSCRIPTIONS', value: 'network', selectedTextStyle},
-  { text: 'MY BLOGS', value: 'owner', selectedTextStyle},
+  { text: i18n.t('blogs.tabSubscriptions'), value: 'network', selectedTextStyle},
+  { text: i18n.t('blogs.tabMyBlogs'), value: 'owner', selectedTextStyle},
 ];
 
 const BlogCardWithErrorBoundary = withErrorBoundary(BlogCard);
@@ -155,8 +156,8 @@ export default class BlogsListScreen extends Component {
     if (!this.props.blogs.list.errorLoading) return null;
 
     const message = this.props.blogs.list.entities.length ?
-      "Can't load more" :
-      "Can't load blogs";
+      i18n.t('cantLoadMore') :
+      i18n.t('cantLoad');
 
     return <ErrorLoading message={message} tryAgain={this.loadMoreForce}/>
   }

@@ -14,6 +14,7 @@ import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import stylesheet from './stylesheet';
 import Touchable from '../common/components/Touchable';
+import i18n from '../common/services/i18n.service';
 
 export default class ComingSoonScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -40,10 +41,10 @@ export default class ComingSoonScreen extends Component {
     return (
       <View style={style.view}>
         <Text style={style.text}>This feature is not available yet.</Text>
-        
+
         <Touchable onPress={this.moreInfoAction}>
           <Text style={[style.text, style.smaller, style.link]}>
-            Try the testnet app at{"\n"}
+            {i18n.t('comingSoon.try')}
             {this.moreInfoUrl}
           </Text>
         </Touchable>

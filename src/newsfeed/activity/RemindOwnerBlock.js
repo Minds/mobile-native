@@ -17,9 +17,12 @@ import {
 } from '../../config/Config';
 
 import { CommonStyle } from '../../styles/Common';
+import i18n from '../../common/services/i18n.service';
 
+/**
+ * Remind Owner Block
+ */
 export default class RemindOwnerBlock extends PureComponent {
-
 
   /**
    * Navigate To channel
@@ -48,7 +51,7 @@ export default class RemindOwnerBlock extends PureComponent {
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
                 <Icon name="md-trending-up" type='ionicon' size={13} iconStyle={styles.boostTagIcon} />
-                <Text style={styles.boostTagLabel}>BOOSTED</Text>
+                <Text style={styles.boostTagLabel}>{i18n.t('boosted')}</Text>
               </View>
             }
           </TouchableOpacity>

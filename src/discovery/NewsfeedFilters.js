@@ -28,6 +28,7 @@ import autobind from '../common/helpers/autobind';
 import testID from '../common/helpers/testID';
 
 import { GOOGLE_PLAY_STORE } from '../config/Config';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Newsfeed filters
@@ -124,7 +125,7 @@ export default class NewsfeedFilters extends Component {
                 style={[CS.centered, store.filter == 'hot' ? CS.colorPrimary : null, {paddingTop:2}  ]}
                 size={ 22 }
               />
-              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'hot' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>Hot</Text> : null}
+              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'hot' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>{i18n.t('newsfeedFilters.hot')}</Text> : null}
             </View>
           </TouchableHighlight>
           <View style={CS.rowJustifyCenter}>
@@ -135,7 +136,7 @@ export default class NewsfeedFilters extends Component {
                   style={[CS.centered, store.filter == 'top' ? CS.colorPrimary : null, {paddingTop:2}  ]}
                   size={ 22 }
                 />
-                {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'top' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>Top</Text> : null}
+                {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'top' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>{i18n.t('newsfeedFilters.top')}</Text> : null}
               </View>
             </TouchableHighlight>
             {store.filter == 'top' &&
@@ -154,11 +155,11 @@ export default class NewsfeedFilters extends Component {
                   </TouchableHighlight>
                 }
               >
-                <MenuItem onPress={this.setPeriod12}>12 hours</MenuItem>
-                <MenuItem onPress={this.setPeriod24}>24 hours</MenuItem>
-                <MenuItem onPress={this.setPeriod7}>7 days</MenuItem>
-                <MenuItem onPress={this.setPeriod30}>30 days</MenuItem>
-                <MenuItem onPress={this.setPeriod1}>1 year</MenuItem>
+                <MenuItem onPress={this.setPeriod12}>{i18n.t('newsfeedFilters.topPeriod12')}</MenuItem>
+                <MenuItem onPress={this.setPeriod24}>{i18n.t('newsfeedFilters.topPeriod24')}</MenuItem>
+                <MenuItem onPress={this.setPeriod7}>{i18n.t('newsfeedFilters.topPeriod7')}</MenuItem>
+                <MenuItem onPress={this.setPeriod30}>{i18n.t('newsfeedFilters.topPeriod30')}</MenuItem>
+                <MenuItem onPress={this.setPeriod1}>{i18n.t('newsfeedFilters.topPeriod1')}</MenuItem>
               </Menu>
             }
           </View>
@@ -169,7 +170,7 @@ export default class NewsfeedFilters extends Component {
                 style={[CS.centered, store.filter == 'latest' ? CS.colorPrimary : null, {paddingTop:2} ]}
                 size={ 22 }
               />
-              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'latest' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>Latest</Text> : null}
+              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'latest' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>{i18n.t('newsfeedFilters.latest')}</Text> : null}
             </View>
           </TouchableHighlight>
         </View>

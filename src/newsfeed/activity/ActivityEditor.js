@@ -26,6 +26,7 @@ import logService from '../../common/services/log.service';
 import testID from '../../common/helpers/testID';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import CapturePosterFlags from '../../capture/CapturePosterFlags';
+import i18n from '../../common/services/i18n.service';
 
 export default class ActivityEditor extends Component {
 
@@ -44,7 +45,7 @@ export default class ActivityEditor extends Component {
   update = () => {
 
     if (HashtagService.slice(this.state.text).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
-      Alert.alert(`Sorry, your post cannot contain more than ${HashtagService.maxHashtags} hashtags.`);
+      Alert.alert(i18n.t('capture.maxHashtags', {maxHashtags: HashtagService.maxHashtags}));
       return false;
     }
 
@@ -119,8 +120,8 @@ export default class ActivityEditor extends Component {
           {this.renderFlagsView()}
 
           <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop]}>
-            <Button text="Cancel" onPress={this.cancel} {...testID('Post editor cancel button')}/>
-            <Button text="Save" color={colors.primary} inverted={true} onPress={this.update} disabled={this.props.newsfeed.list.saving} {...testID('Post editor save button')}/>
+            <Button text={i18n.t('cancel')} onPress={this.cancel} {...testID('Post editor cancel button')}/>
+            <Button text={i18n.t('save')} color={colors.primary} inverted={true} onPress={this.update} disabled={this.props.newsfeed.list.saving} {...testID('Post editor save button')}/>
           </View>
         </View>
       </View>

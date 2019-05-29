@@ -7,18 +7,19 @@ import Touchable from '../Touchable';
 import Colors from '../../../styles/Colors';
 import autobind from '../../helpers/autobind';
 import testID from '../../helpers/testID';
+import i18n from '../../services/i18n.service';
 
 export default class NsfwToggle extends Component {
   constructor(props) {
     super(props);
 
     this.reasons = [
-      { value: 1, label: 'Nudity' },
-      { value: 2, label: 'Pornography' },
-      { value: 3, label: 'Profanity' },
-      { value: 4, label: 'Violence and Gore' },
-      { value: 5, label: 'Race and Religion' },
-      { value: 6, label: 'Other' },
+      { value: 1, label: i18n.t('nsfw.1')},
+      { value: 2, label: i18n.t('nsfw.2')},
+      { value: 3, label: i18n.t('nsfw.3')},
+      { value: 4, label: i18n.t('nsfw.4')},
+      { value: 5, label: i18n.t('nsfw.5')},
+      { value: 6, label: i18n.t('nsfw.6')},
     ];
 
     this.menuRef = React.createRef();
@@ -66,7 +67,7 @@ export default class NsfwToggle extends Component {
         />
 
         {isActive && !this.props.hideLabel && <Text style={this.props.labelStyle}>
-          NSFW
+          {i18n.t('nsfw.button')}
         </Text>}
       </Touchable>
     );

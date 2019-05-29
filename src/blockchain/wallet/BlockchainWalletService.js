@@ -6,6 +6,7 @@ import KeychainService from '../../common/services/keychain.service';
 import api from '../../common/services/api.service';
 import noExponents from '../../common/helpers/no-exponents';
 import logService from '../../common/services/log.service';
+import i18n from '../../common/services/i18n.service';
 
 // Helper functions
 
@@ -166,7 +167,7 @@ export class BlockchainWalletService {
 
   async getCurrent(onlyWithPrivateKey = false) {
     if (!this.current || (!this.current.privateKey && onlyWithPrivateKey)) {
-      const payload = await this.selectCurrent('Select the wallet you would like to use', { signable: onlyWithPrivateKey, offchain: false, buyable: false });
+      const payload = await this.selectCurrent(i18n.t('blockchain.selectTheWallet'), { signable: onlyWithPrivateKey, offchain: false, buyable: false });
 
       if (payload && payload.type === 'onchain') {
         this.current = payload.wallet;
@@ -180,7 +181,7 @@ export class BlockchainWalletService {
 
   async unlock(address) {
     if (!address) {
-      throw new Error('Missing wallet address');
+      throw new Error(i18n.t('blockchain.missingWallet'));
     }
 
     const privateKey = await fetchPrivateKeyFromStorage(address);

@@ -7,25 +7,27 @@ import {
   View
 } from 'react-native';
 
-import BoostGiftView from './BoostGiftView';
+import BoostPeerAcceptedView from './BoostPeerAcceptedView';
+import i18n from '../../../common/services/i18n.service';
 
 /**
  * Boost Peer Rejected Notification Component
  */
-export default class BoostPeerRejectedView extends BoostGiftView {
+export default class BoostPeerRejectedView extends BoostPeerAcceptedView {
 
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
 
     const description = this.getDescription(entity);
-    const type = (entity.params.type == 'pro') ? 'USD' : 'points';
+    const type = this.getType();
+    const amount = this.getAmount();
 
     return (
       <View style={styles.bodyContents}>
         <Text onPress={() => this.navToBoostConsole({filter:'peer'})}>
-          <Text style={styles.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> declined your bid of <Text style={styles.bold}>{entity.params.bid} {type}</Text> {description}
-          You have not been charged.
+          <Text style={styles.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> {i18n.t('notification.boostPeerRejected')} <Text style={styles.bold}>{amount} {type}</Text> {description}
+          {i18n.t('notification.notCharged')}
         </Text>
       </View>
     )

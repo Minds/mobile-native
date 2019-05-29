@@ -1,16 +1,17 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
   Text,
   View
 } from 'react-native';
+import i18n from '../../../common/services/i18n.service';
 
 /**
  * Missed Call Notification Component
  */
-export default class MissedCallView extends Component {
+export default class MissedCallView extends PureComponent {
 
 
   render() {
@@ -19,7 +20,7 @@ export default class MissedCallView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text><Text style={styles.link}>{ entity.fromObj.name }</Text> tried to call you.</Text>
+        <Text><Text style={styles.link}>{ entity.fromObj.name }</Text> {i18n.t('notification.missedCall')}</Text>
       </View>
     )
   }

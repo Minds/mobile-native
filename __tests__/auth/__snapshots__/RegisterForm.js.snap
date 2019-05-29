@@ -225,7 +225,8 @@ exports[`RegisterForm component should renders correctly 1`] = `
             }
           }
         >
-          I accept the 
+          I accept the
+           
           <Text
             onPress={[Function]}
             style={
@@ -362,6 +363,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
                     },
                     undefined,
                     Object {
+                      "fontSize": 16,
                       "fontWeight": "600",
                       "letterSpacing": 1.25,
                     },
@@ -467,6 +469,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
                     },
                     undefined,
                     Object {
+                      "fontSize": 16,
                       "fontWeight": "600",
                       "letterSpacing": 1.25,
                     },

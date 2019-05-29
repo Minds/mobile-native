@@ -31,6 +31,7 @@ import { ComponentsStyle } from '../styles/Components';
 import Colors from '../styles/Colors';
 import MessengerTabIcon from './MessengerTabIcon';
 import ErrorLoading from '../common/components/ErrorLoading';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Messenger Conversarion List Screen
@@ -88,11 +89,11 @@ export default class MessengerScreen extends Component {
    */
   onLogoutPress = () => {
     Alert.alert(
-      'Confirm',
-      `Do you want to logout from messenger?`.trim(),
+      i18n.t('confirm'),
+      i18n.t('messenger.logoutMessage'),
       [
-        { text: 'No', style: 'cancel' },
-        { text: 'Yes', onPress: () => this.props.messengerList.logout() }
+        { text: i18n.t('no'), style: 'cancel' },
+        { text: i18n.t('yes'), onPress: () => this.props.messengerList.logout() }
       ]
     );
   }
@@ -121,12 +122,12 @@ export default class MessengerScreen extends Component {
       <View style={ComponentsStyle.emptyComponentContainer}>
         <View style={ComponentsStyle.emptyComponent}>
           <Icon name="person-add" size={72} color='#444' />
-          <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any messages</Text>
+          <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('messenger.noMessages')}</Text>
           <Text
             style={ComponentsStyle.emptyComponentLink}
             onPress={() => this.props.navigation.navigate('Discovery', { type: 'channels' })}
-            >
-            Find channels
+          >
+            {i18n.t('findChannels')}
           </Text>
         </View>
       </View>);
@@ -138,7 +139,7 @@ export default class MessengerScreen extends Component {
     return (
       <View style={styles.container}>
         <SearchView
-          placeholder='Search...'
+          placeholder={i18n.t('discovery.search')}
           onChangeText={this.searchChange}
           iconRight={iconRight}
           iconRightOnPress={this.onLogoutPress}
@@ -169,8 +170,8 @@ export default class MessengerScreen extends Component {
     if (!messengerList.errorLoading) return null;
 
     const message = messengerList.conversations.length ?
-      "Can't load more" :
-      "Can't conversations";
+    i18n.t('cantLoadMore') :
+    i18n.t('cantLoad');
 
     return <ErrorLoading message={message} tryAgain={this.loadMore}/>
   }

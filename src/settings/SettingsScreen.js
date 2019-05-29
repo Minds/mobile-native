@@ -25,11 +25,12 @@ import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from './SettingsService';
 import settingsStore from './SettingsStore';
 
-import i18nService from '../common/services/i18n.service';
+import i18n from '../common/services/i18n.service';
 import appStores from '../../AppStores';
 import logService from '../common/services/log.service';
 import storageService from '../common/services/storage.service';
 import { observer } from 'mobx-react/native';
+import ModalPicker from '../common/components/ModalPicker';
 
 const ICON_SIZE = 24;
 
@@ -42,18 +43,15 @@ export default class SettingsScreen extends Component {
   };
 
   state = {
-    categories: [],
+    showLanguages: false,
   }
 
   componentWillMount() {
-    settingsService.loadCategories()
-      .then(categories => {
-        this.setState({
-          categories: categories,
-          language: i18nService.getCurrentLocale()
-        });
-      });
-    }
+
+    this.setState({
+      language: i18n.getCurrentLocale()
+    });
+  }
 
   appLogActivate = () => {
     settingsStore.setAppLog(!settingsStore.appLog);
@@ -69,75 +67,82 @@ export default class SettingsScreen extends Component {
 
       await appStores.blockchainWallet._DANGEROUS_wipe(confirmation);
 
-      Alert.alert('Wiped', `Your Ethereum keychain was completely removed.`);
+      Alert.alert(i18n.t('attention'), i18n.t('settings.keychainRemoved'));
     };
 
     const _confirm2 = async () => {
       await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
 
       Alert.alert(
-        'Are you 100% sure?',
-        `Please, confirm once again that you REALLY want to delete your keychain from this phone. There's no UNDO!`,
+        i18n.t('settings.confirmMessage'),
+        i18n.t('settings.confirmDeleteKeychain2'),
         [
-          { text: 'No', style: 'cancel' },
-          { text: `Yes, I'm 100% sure`, onPress: () => _confirm3(true) },
+          { text: i18n.t('no'), style: 'cancel' },
+          { text: i18n.t('yesImSure'), onPress: () => _confirm3(true) },
         ],
         { cancelable: false }
       );
     };
 
     Alert.alert(
-      'Are you sure?',
-      `This will delete your Ethereum keychain from this phone. Ensure you backed up the private keys. If you didn't you can lose access to all your funds. There's NO UNDO!`,
+      i18n.t('settings.confirmMessage'),
+      i18n.t('settings.confirmDeleteKeychain1'),
       [
-        { text: 'No', style: 'cancel' },
-        { text: `Yes, I'm sure`, onPress: () => _confirm2() },
+        { text: i18n.t('no'), style: 'cancel' },
+        { text: i18n.t('yesImSure'), onPress: () => _confirm2() }
       ],
       { cancelable: false }
     );
   };
 
   render() {
-    const languages = i18nService.getSupportedLocales();
+    const languages = i18n.getSupportedLocales();
 
     const list = [
       {
-        name: 'Password',
+        name: i18n.t('language')+` (${i18n.getCurrentLocale()})`,
+        icon: (<Icon name='flag' size={ICON_SIZE} style={ styles.icon }/>),
+        onPress: () => {
+          this.showLanguages();
+        }
+      },
+      {
+        name: i18n.t('auth.password'),
         icon: (<Icon name='security' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('SettingsPassword');
         }
       },
       {
-        name: 'Email',
+        name: i18n.t('auth.email'),
         icon: (<Icon name='email' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('SettingsEmail');
         }
       },
       {
-        name: 'Push Notifications',
+        name: i18n.t('settings.pushNotification'),
         icon: (<Icon name='notifications' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('NotificationsSettings');
         }
       },
       {
-        name: 'Blocked Channels',
+        name: i18n.t('settings.blockedChannels'),
         icon: (<Icon name='block' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('SettingsBlockedChannels');
         }
       },
       {
-        name: 'Regenerate messenger keys',
+        name: i18n.t('settings.regenerateKey'),
         icon: (<Icon name='vpn-key' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.navigate('SettingsRekey');
         }
       },
       {
-        name: 'Logout',
+        name: i18n.t('settings.logout'),
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
           authService.logout();
@@ -152,26 +157,26 @@ export default class SettingsScreen extends Component {
         }
       },
       {
-        name: 'Deactivate',
+        name: i18n.t('settings.deactivate'),
         icon: (<Icon name='warning' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
           this.props.navigation.push('DeleteChannel');
         }
       },
       {
-        name: 'Delete blockchain keychain',
+        name: i18n.t('settings.deleteBlockchain'),
         icon: (<Icon name='warning' size={ICON_SIZE} style={ styles.icon } />),
         onPress: this.wipeEthereumKeychainAction
       },
       {
-        name: 'Logs',
+        name: i18n.t('settings.logs'),
         icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
         onPress: () => {
           this.props.navigation.push('Logs');
         }
       },
       {
-        name: 'Log only errors',
+        name: i18n.t('settings.logOnlyErrors'),
         icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
         switchButton: true,
         hideChevron: true,
@@ -179,7 +184,7 @@ export default class SettingsScreen extends Component {
         onSwitch: this.appLogActivate
       },
       {
-        name: 'Left Handed Mode',
+        name: i18n.t('settings.leftHandedMode'),
         icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={ styles.icon }/>),
         switchButton: true,
         hideChevron: true,
@@ -190,6 +195,16 @@ export default class SettingsScreen extends Component {
 
     return (
       <ScrollView style={styles.scrollView}>
+        <ModalPicker
+          onSelect={this.languageSelected}
+          onCancel={this.cancel}
+          show={this.state.showLanguages}
+          title={i18n.t('language')}
+          valueField="value"
+          labelField="name"
+          value={this.state.language}
+          items={languages}
+        />
         <View style={styles.scrollViewContainer}>
           <List containerStyle={styles.container}>
             {
@@ -211,12 +226,25 @@ export default class SettingsScreen extends Component {
               ))
             }
           </List>
-          <List containerStyle={styles.container}>
-
-          </List>
         </View>
       </ScrollView>
     );
+  }
+
+  showLanguages = () => {
+    this.setState({showLanguages: true});
+  }
+
+  /**
+   * Language selected
+   */
+  languageSelected = (language) => {
+    this.setState({language, showLanguages: false});
+    i18n.setLocale(language);
+  }
+
+  cancel = () => {
+    this.setState({showLanguages: false});
   }
 }
 

@@ -100,9 +100,9 @@ export default class ContributionsView extends Component {
     return (
       <View style={styles.header}>
         <View style={[CommonStyle.rowJustifyStart, styles.row]}>
-          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>Date</Text>
-          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>Score</Text>
-          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>Share</Text>
+          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>{i18n.t('wallet.contributions.date')}</Text>
+          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>{i18n.t('wallet.contributions.score')}</Text>
+          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>{i18n.t('wallet.contributions.share')}</Text>
         </View>
       </View>
     );

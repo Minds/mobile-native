@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -7,17 +7,19 @@ import {
   View
 } from 'react-native';
 
+import i18n from '../../../common/services/i18n.service';
+
 /**
  * Welcome Boost Notification Component
  */
-export default class WelcomeBoostView extends Component {
+export default class WelcomeBoostView extends PureComponent {
 
   render() {
     const styles = this.props.styles;
 
     return (
       <View style={styles.bodyContents}>
-        <Text>You can gain more reach by boosting your content. Hit the blue boost icon on your posts.</Text>
+        <Text>{i18n.t('notification.welcomeBoost')}</Text>
       </View>
     )
   }

@@ -67,7 +67,7 @@ export default class EmailScreen extends Component {
         this.setState({saving: false});
       })
       .catch(() => {
-        Alert.alert('Error', i18n.t('settings.errorSaving'));
+        Alert.alert(i18n.t('error'), i18n.t('settings.errorSaving'));
       });
   }
 
@@ -95,7 +95,7 @@ export default class EmailScreen extends Component {
         <FormInput onChangeText={this.setEmail} value={email} inputStyle={CommonStyle.fieldTextInput}/>
         {message}
         <Button
-          text={i18n.t('save')}
+          text={i18n.t('save').toUpperCase()}
           loading={this.state.saving}
           containerStyle={[CommonStyle.marginTop3x, {alignSelf: 'center'}]}
           onPress={this.confirmPassword}

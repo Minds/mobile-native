@@ -29,6 +29,8 @@ import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 import ReplyAction from './ReplyAction';
 import MediaView from '../common/components/MediaView';
 import Tags from '../common/components/Tags';
+import i18n from '../common/services/i18n.service';
+
 import {
   MINDS_CDN_URI
 } from '../config/Config';
@@ -170,34 +172,34 @@ export default class Comment extends Component {
    * Get actionsheet options
    */
   getOptions = () => {
-    let actions = ['Cancel'];
+    let actions = [i18n.t('cancel')];
     if (this.props.user.me.guid == this.props.comment.owner_guid) {
-      actions.push('Edit');
-      actions.push( 'Delete' );
+      actions.push( i18n.t('edit') );
+      actions.push( i18n.t('delete') );
 
       if (!this.props.comment.mature) {
-        actions.push( 'Set explicit' );
+        actions.push( i18n.t('setExplicit') );
       } else {
-        actions.push( 'Remove explicit' );
+        actions.push( i18n.t('removeExplicit') );
       }
     } else {
       if (this.props.user.isAdmin()) {
-        actions.push( 'Delete' );
+        actions.push( i18n.t('delete') );
 
         if (!this.props.comment.mature) {
-          actions.push( 'Set explicit' );
+          actions.push( i18n.t('setExplicit') );
         } else {
-          actions.push( 'Remove explicit' );
+          actions.push( i18n.t('removeExplicit') )
         }
       } else if (this.props.user.me.guid == this.props.entity.owner_guid) {
-        actions.push( 'Delete' );
+        actions.push( i18n.t('delete') );
       }
 
-      actions.push( 'Report' );
-      actions.push( 'Copy' );
+      actions.push( i18n.t('report') );
+      actions.push( i18n.t('copy') );
     }
     if (this.props.comment.parent_guid_l2 == 0) {
-      actions.push( 'Reply' );
+      actions.push( i18n.t('reply') );
     }
 
     return actions;
@@ -220,28 +222,28 @@ export default class Comment extends Component {
     const action = this.state.options[i];
 
     switch (action) {
-      case 'Edit':
+      case i18n.t('edit'):
         this.setState({editing: true});
         break;
-      case 'Delete':
+      case i18n.t('delete'):
         Alert.alert(
-          'Confirm',
-          `Do you want to delete this comment?\n\nThere\'s no UNDO.`,
+          i18n.t('confirm'),
+          i18n.t('comments.deleteConfirm'),
           [
-            { text: 'No', style: 'cancel' },
+            { text: i18n.t('no'), style: 'cancel' },
             {
-              text: 'Yes',
+              text: i18n.t('yesImSure'),
               onPress: () => {
                 this.props.store.delete(this.props.comment.guid).then(result => {
                   Alert.alert(
-                    'Success',
-                    'Comment removed succesfully'
+                    i18n.t('success'),
+                    i18n.t('comments.successRemoving')
                   );
                 })
                 .catch(err => {
                   Alert.alert(
-                    'Error',
-                    'Error removing comment'
+                    i18n.t('error'),
+                    i18n.t('comments.errorRemoving')
                   );
                 });
               }
@@ -251,21 +253,21 @@ export default class Comment extends Component {
         );
 
         break;
-      case 'Set explicit':
+      case i18n.t('setExplicit') :
         this.props.store.commentToggleExplicit(this.props.comment.guid).then( (result) => {
         });
         break;
-      case 'Remove explicit':
+      case i18n.t('removeExplicit'):
         this.props.store.commentToggleExplicit(this.props.comment.guid).then( (result) => {
         });
         break;
-      case 'Report':
+      case i18n.t('report'):
         this.props.navigation.push('Report', { entity: this.props.comment });
         break;
-      case 'Reply':
+      case i18n.t('reply'):
         this.toggleExpand();
         break;
-      case 'Copy':
+      case i18n.t('copy'):
         Clipboard.setString(entities.decodeHTML(this.props.comment.description));
         break;
       default:

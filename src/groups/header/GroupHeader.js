@@ -27,6 +27,7 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import SearchView from '../../common/components/SearchView';
 import gathering from '../../common/services/gathering.service';
 import colors from '../../styles/Colors';
+import i18n from '../../common/services/i18n.service';
 
 /**
  * Group Header
@@ -75,10 +76,10 @@ export default class GroupHeader extends Component {
           onPress={() => { store.join(group.guid) }}
           underlayColor='transparent'
           style={ComponentsStyle.bluebutton}
-          accessibilityLabel="Subscribe to this group"
+          accessibilityLabel={i18n.t('group.subscribeMessage')}
           disabled={store.saving}
         >
-          <Text style={CommonStyle.colorPrimary} ref="btntext"> JOIN </Text>
+          <Text style={CommonStyle.colorPrimary} ref="btntext"> {i18n.t('join').toUpperCase()} </Text>
         </TouchableHighlight>
       );
     } else {
@@ -87,10 +88,10 @@ export default class GroupHeader extends Component {
           onPress={() => { store.leave(group.guid)  }}
           underlayColor='transparent'
           style={ComponentsStyle.bluebutton}
-          accessibilityLabel="Subscribe to this group"
+          accessibilityLabel={i18n.t('group.leaveMessage')}
           disabled={store.saving}
         >
-          <Text style={CommonStyle.colorPrimary} ref="btntext"> LEAVE </Text>
+          <Text style={CommonStyle.colorPrimary} ref="btntext"> {i18n.t('leave').toUpperCase()} </Text>
         </TouchableHighlight>
       );
     }
@@ -130,16 +131,16 @@ export default class GroupHeader extends Component {
     const group = this.props.store.group;
 
     const typeOptions = [
-      { text: 'FEED', icon: 'list', value: 'feed' },
-      { text: 'DESCRIPTION', icon: 'short-text', value: 'desc' },
-      { text: 'MEMBERS', badge: abbrev(group['members:count'], 0), value: 'members' },
-      { text: 'CONVERSATION', icon: 'ios-chatboxes', iconType: 'ion', value: 'conversation' },
+      { text: i18n.t('feed').toUpperCase(), icon: 'list', value: 'feed' },
+      { text: i18n.t('description').toUpperCase(), icon: 'short-text', value: 'desc' },
+      { text: i18n.t('members').toUpperCase(), badge: abbrev(group['members:count'], 0), value: 'members' },
+      { text: i18n.t('conversation').toUpperCase(), icon: 'ios-chatboxes', iconType: 'ion', value: 'conversation' },
     ]
 
     const searchBar = this.props.store.tab == 'members' ?
       <SearchView
         containerStyle={[CommonStyle.flexContainer, CommonStyle.hairLineBottom]}
-        placeholder='Search...'
+        placeholder={ i18n.t('discovery.search') }
         onChangeText={this.setMemberSearch}
       /> : null;
 

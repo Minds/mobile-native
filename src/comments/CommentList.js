@@ -31,6 +31,7 @@ import CaptureMetaPreview from '../capture/CaptureMetaPreview';
 
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle as CmpStyle } from '../styles/Components';
+import i18n from '../common/services/i18n.service';
 
 import blockListService from '../common/services/block-list.service';
 import autobind from "../common/helpers/autobind";
@@ -320,7 +321,7 @@ export default class CommentList extends React.Component<Props, State> {
             style={[CS.flexContainer, CS.marginLeft, inputStyle, {paddingVertical: 2}]}
             editable={true}
             underlineColorAndroid='transparent'
-            placeholder='Type your comment...'
+            placeholder={i18n.t('activity.typeComment')}
             onChangeText={this.setText}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
@@ -391,7 +392,7 @@ export default class CommentList extends React.Component<Props, State> {
             underlayColor = 'transparent'
             style = {[CS.rowJustifyCenter, CS.padding2x]}
           >
-            <Text style={[CS.fontM, CS.colorPrimary]}><IconMC name="update" size={16} /> LOAD EARLIER </Text>
+            <Text style={[CS.fontM, CS.colorPrimary]}><IconMC name="update" size={16} /> {i18n.t('activity.loadEarlier')} </Text>
           </TouchableHighlight> : null
         }
         {this.props.store.loadingPrevious && this.props.store.loaded && <ActivityIndicator size="small" style={CS.paddingTop2x}/>}
@@ -412,10 +413,10 @@ export default class CommentList extends React.Component<Props, State> {
   getErrorLoading(errorLoading, descending) {
     if (errorLoading) {
       const message = this.props.store.comments.length ?
-        "Can't load more\nTry again" :
-        "Can't load the comments\nTry again";
+        (i18n.t('cantLoadMore') + '\n' + i18n.t('tryAgain')) :
+        (i18n.t('cantLoad') + '\n' + i18n.t('tryAgain'));
 
-      return <Text onPress={() => this.loadComments(true)} style={[CS.fontM, CS.colorDarkGreyed, CS.marginBottom, CS.textCenter]}><Text style={CS.fontSemibold}>Oops!</Text> {message}</Text>
+      return <Text onPress={() => this.loadComments(true)} style={[CS.fontM, CS.colorDarkGreyed, CS.marginBottom, CS.textCenter]}><Text style={CS.fontSemibold}>{i18n.t('ops')}</Text> {message}</Text>
     }
     return null;
   }
@@ -432,7 +433,7 @@ export default class CommentList extends React.Component<Props, State> {
             underlayColor = 'transparent'
             style = {[CS.rowJustifyCenter, CS.padding2x]}
           >
-            <Text style={[CS.fontM, CS.colorPrimary]}><IconMC name="update" size={16} /> LOAD LATER </Text>
+            <Text style={[CS.fontM, CS.colorPrimary]}><IconMC name="update" size={16} />{i18n.t('activity.loadLater')} </Text>
           </TouchableHighlight> : null
         }
         {this.props.store.loadingNext && this.props.store.loaded && <ActivityIndicator size="small" style={CS.paddingTop2x}/>}
@@ -467,26 +468,10 @@ export default class CommentList extends React.Component<Props, State> {
    */
   setActionSheetRef = o => this.actionAttachmentSheet = o;
 
-
-  componentWillReact(){
-    if (this.props.store.getLevel() == 1)  console.log('will react',
-                                                      {comments : this.props.store.comments.length,
-                                                      refreshing : this.props.store.refreshing,
-                                                      loaded : this.props.store.loaded,
-                                                      saving : this.props.store.saving,
-                                                      text : this.props.store.text,
-                                                      loadingPrevious : this.props.store.loadingPrevious,
-                                                      loadingNext : this.props.store.loadingNext})
-  }
-
   /**
    * Render
    */
   render() {
-
-
-
-    if (this.props.store.getLevel() == 1) console.log('RENDERING');
 
     const header = this.getHeader();
 
@@ -495,7 +480,7 @@ export default class CommentList extends React.Component<Props, State> {
     if (Platform.OS != 'ios') {
       actionsheet = <ActionSheet
         ref={o => this.actionSheet = o}
-        options={['Cancel', 'Images', 'Videos']}
+        options={[i18n.t('cancel'), i18n.t('images'), i18n.t('videos')]}
         onPress={this.props.store.selectMediaType}
         cancelButtonIndex={0}
       />
@@ -540,7 +525,7 @@ export default class CommentList extends React.Component<Props, State> {
           {actionsheet}
           <ActionSheet
             ref={this.setActionSheetRef}
-            options={['Cancel', 'Gallery', 'Photo', 'Video']}
+            options={[i18n.t('cancel'), i18n.t('capture.gallery'), i18n.t('capture.photo'), i18n.t('capture.video')]}
             onPress={this.selectMediaSource}
             cancelButtonIndex={0}
           />

@@ -14,6 +14,7 @@ import crypto from './../common/services/crypto.service';
 import socket from '../common/services/socket.service';
 import badge from '../common/services/badge.service';
 import { abort } from '../common/helpers/abortableFetch';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Messenger Conversation List Store
@@ -179,10 +180,10 @@ class MessengerListStore {
       })
       .catch((e) => {
         Alert.alert(
-          'Sorry!',
-          'Please check your credentials',
+          i18n.t('sorry'),
+          i18n.t('messenger.checkCredentials'),
           [
-            { text: 'Try again'},
+            { text: i18n.t('tryAgain')},
           ],
           { cancelable: false }
         )
@@ -203,10 +204,10 @@ class MessengerListStore {
       return await this.getCryptoKeys(password);
     } catch (error) {
       Alert.alert(
-        'Sorry!',
-        'Error creating the encryptions keys',
+        i18n.t('sorry'),
+        i18n.t('messenger.errorCreatingKeys'),
         [
-          { text: 'Try again'},
+          { text: i18n.t('tryAgain')},
         ],
         { cancelable: false }
       )

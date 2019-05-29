@@ -25,7 +25,7 @@ import NotificationsTopbar from './NotificationsTopbar';
 import NotificationsTabIcon from './NotificationsTabIcon';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import CenteredLoading from '../common/components/CenteredLoading';
-
+import i18n from '../common/services/i18n.service';
 
 /**
  * Notification Screen
@@ -96,7 +96,7 @@ export default class NotificationsScreen extends Component {
           style={ComponentsStyle.emptyComponentLink}
           onPress={() => this.props.navigation.push('Channel', { username: 'me' })}
           >
-          Design your channel
+          {i18n.t('newsfeed.designYourChannel')}
         </Text>
       }
 
@@ -104,13 +104,13 @@ export default class NotificationsScreen extends Component {
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
             <MIcon name="notifications" size={72} color='#444' />
-            <Text style={ComponentsStyle.emptyComponentMessage}>You don't have any {filter} notifications</Text>
+            <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('notification.dontHave')}</Text>
             {design}
             <Text
               style={ComponentsStyle.emptyComponentLink}
               onPress={() => this.props.navigation.navigate('Capture')}
               >
-              Create a post
+              {i18n.t('createAPost')}
             </Text>
           </View>
         </View>);

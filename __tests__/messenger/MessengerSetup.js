@@ -86,7 +86,7 @@ describe('Messenger setup component', () => {
 
     wrapper.instance().setup();
 
-    expect(Alert.alert).toBeCalledWith('password and confirmation do not match!');
+    expect(Alert.alert).toBeCalledWith('Passwords should match');
   });
 
   it('should call the method getCrytoKeys of the store with password', async () => {

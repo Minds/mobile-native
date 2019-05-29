@@ -34,6 +34,7 @@ import Touchable from '../common/components/Touchable';
 import session from '../common/services/session.service';
 import logService from '../common/services/log.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Channel Screen
@@ -138,9 +139,9 @@ export default class ChannelScreen extends Component {
 
     } catch(err) {
       Alert.alert(
-        'Attention',
-        'Channel not found',
-        [{ text: 'OK', onPress: () => this.props.navigation.goBack() }],
+        i18n.t('Attention'),
+        i18n.t('channel.notFound'),
+        [{ text: i18n.t('ok'), onPress: () => this.props.navigation.goBack() }],
         { cancelable: false }
       );
     };
@@ -195,16 +196,16 @@ export default class ChannelScreen extends Component {
       return (
         <View style={[CommonStyle.flexColumnCentered]}>
           <Text style={[CommonStyle.centered, CommonStyle.colorDarkGreyed, CommonStyle.fontXL]}>
-            This channel contains mature content
+            {i18n.t('channel.mature')}
           </Text>
           <View style={[CommonStyle.rowJustifyCenter, CommonStyle.paddingTop2x]}>
             <Button
-              text="GO BACK"
+              text={i18n.t('goback')}
               onPress={() => this.props.navigation.goBack()}
             />
             {!GOOGLE_PLAY_STORE && <Button
               inverted={true}
-              text="VIEW"
+              text={i18n.t('view')}
               onPress={() => channel.toggleMatureVisibility()}
             />}
           </View>
@@ -228,10 +229,10 @@ export default class ChannelScreen extends Component {
         </SafeAreaView>
 
         {!!channel.blocked && <View style={styles.blockView}>
-          <Text style={styles.blockText}>You have blocked @{channel.username}</Text>
+          <Text style={styles.blockText}>{i18n.t('channel.blocked',{username: channel.username})}</Text>
 
           <Touchable onPress={() => this.props.channel.store(this.guid).toggleBlock()}>
-            <Text style={styles.blockTextLink}>Tap to unblock</Text>
+            <Text style={styles.blockTextLink}>{i18n.t('channel.tapUnblock')}</Text>
           </Touchable>
         </View>}
       </View>
@@ -251,9 +252,9 @@ export default class ChannelScreen extends Component {
       emptyMessage = (
         <View style={CommonStyle.centered}>
           <Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>
-            Create your first post
+           {i18n.t('channel.createFirstPost')}
           </Text>
-          <Button text="Create" onPress={this.createPost} />
+          <Button text={i18n.t('create')} onPress={this.createPost} />
         </View>
       );
     }

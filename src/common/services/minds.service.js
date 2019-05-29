@@ -1,6 +1,7 @@
 import api from './api.service';
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import i18n from './i18n.service';
 
 /**
  * Minds Service
@@ -30,10 +31,10 @@ class MindsService {
       } else {
         return await new Promise(resolve => {
           Alert.alert(
-            'Connectivity Issue',
-            `Oops there was an error loading the settings from the server\n Please try again.`,
+            i18n.t('error'),
+            i18n.t('mindsSettings.error'),
             [
-              { text: 'Retry!', onPress: async () => resolve(await this.getSettings()) }
+              { text: i18n.t('retry'), onPress: async () => resolve(await this.getSettings()) }
             ]
           );
         });

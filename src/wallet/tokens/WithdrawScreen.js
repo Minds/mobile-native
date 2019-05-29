@@ -27,6 +27,7 @@ import number from '../../common/helpers/number';
 import formatDate from '../../common/helpers/date';
 import token from '../../common/helpers/token';
 import readableError from '../../common/helpers/readable-error';
+import i18n from '../../common/services/i18n.service';
 
 @inject('user', 'withdraw')
 @observer
@@ -61,7 +62,7 @@ export default class WithdrawScreen extends Component {
         this.getBalance()
       ]);
     } catch (e) {
-      const error = (e && e.message) || 'Error reading withdrawal status';
+      const error = (e && e.message) || i18n.t('wallet.withdraw.errorReadingStatus');
       this.setState({ error });
     } finally {
       this.setState({ inProgress: false });
@@ -78,7 +79,7 @@ export default class WithdrawScreen extends Component {
     this.setState({ hasWithdrawnToday });
 
     if (hasWithdrawnToday) {
-      throw new Error('You can only withdraw once a day');
+      throw new Error(i18n.t('wallet.withdraw.errorOnlyOnceDay'));
     }
   }
 
@@ -110,7 +111,7 @@ export default class WithdrawScreen extends Component {
       this.setState({ amount: '0' });
     } catch (e) {
       if (!e || e.message !== 'E_CANCELLED') {
-        const error = (e && e.message) || 'Error withdrawing tokens';
+        const error = (e && e.message) || i18n.t('wallet.withdraw.errorWithdrawing');
         this.setState({ error: readableError(error) });
       }
     } finally {
@@ -161,12 +162,10 @@ export default class WithdrawScreen extends Component {
     return (
       <View style={style.formWrapperView}>
         <Text style={style.legendText}>
-          You can request to withdraw your OffChain token rewards to your OnChain address below. 
-          Note: a small amount of ETH will be charged to cover the transaction fee. 
-          Withdrawals may take up to a few hours to complete.
-         {
+          {i18n.t('wallet.withdraw.youCanRequest')}
+          {
             !!this.state.withholding ?
-            `${number(this.state.withholding, 0, 4)} tokens are unavailable due to credit card payment. They will be released after 30 days the payment occurred.` : ''
+            i18n.t('wallet.withdraw.holdingMessage',{amount: number(this.state.withholding, 0, 4)})  : ''
           }
         </Text>
 
@@ -174,7 +173,7 @@ export default class WithdrawScreen extends Component {
           <TextInput
             editable={!this.state.inProgress}
             style={style.amountTextInput}
-            placeholder="Amount"
+            placeholder={i18n.t('wallet.withdraw.amount')}
             keyboardType="numeric"
             returnKeyType="go"
             onChangeText={this.setAmount}
@@ -203,7 +202,7 @@ export default class WithdrawScreen extends Component {
       <View style={style.ledgerItem}>
         <View style={style.ledgerItemMeta}>
           <Text style={style.ledgerItemDate}>{formatDate(item.timestamp, 'date')}</Text>
-          <Text style={style.ledgerItemStatus}>{item.completed ? 'COMPLETED' : 'PENDING'}</Text>
+          <Text style={style.ledgerItemStatus}>{item.completed ? i18n.t('completed').toUpperCase() : i18n.t('pending').toUpperCase()}</Text>
         </View>
 
         <Text style={style.ledgerItemAmount}>

@@ -31,6 +31,7 @@ import Lock from '../../wire/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
+import i18n from '../../common/services/i18n.service';
 
 /**
  * Activity
@@ -170,12 +171,12 @@ export default class Activity extends Component {
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
                 <Icon name="md-trending-up" style={styles.boostTagIcon}/>
-                <Text style={styles.boostTagLabel}>BOOSTED</Text>
+                <Text style={styles.boostTagLabel}>{i18n.t('boosted').toUpperCase()}</Text>
               </View>
             }
             { !!this.props.entity.edited &&
               <View style={styles.boostTagContainer}>
-                <Text style={styles.boostTagLabel}>· EDITED</Text>
+                <Text style={styles.boostTagLabel}>· {i18n.t('edited').toUpperCase()}</Text>
               </View>
             }
           </TouchableOpacity>

@@ -22,6 +22,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Modal from 'react-native-modal'
 
+import i18n from '../../common/services/i18n.service';
 import DiscoveryUser from '../../discovery/DiscoveryUser';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import { CommonStyle } from '../../styles/Common';
@@ -91,10 +92,10 @@ export default class ChannelSubscribers extends Component {
         <View style={styles.topbar}>
           <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
             <TouchableHighlight underlayColor='transparent' onPress={() => channels.setFilter('subscribers')} style={channels.filter == 'subscribers'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
-              <Text>Subscribers</Text>
+              <Text>{i18n.t('subscribers')}</Text>
             </TouchableHighlight>
             <TouchableHighlight underlayColor='transparent' onPress={() => channels.setFilter('subscriptions')} style={channels.filter == 'subscriptions'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter ]}>
-              <Text>Subscriptions</Text>
+              <Text>{i18n.t('subscriptions')}</Text>
             </TouchableHighlight>
           </View>
         </View>

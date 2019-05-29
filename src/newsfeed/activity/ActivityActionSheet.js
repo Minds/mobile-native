@@ -27,6 +27,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 import { MINDS_URI } from '../../config/Config';
 import testID from '../../common/helpers/testID';
+import i18n from '../../common/services/i18n.service';
+
 /**
  * Activity Actions
  */
@@ -64,56 +66,56 @@ export default class ActivityActions extends Component {
   }
 
   getOptions() {
-    let options = [ 'Cancel' ];
+    let options = [ i18n.t('cancel') ];
     if (this.props.entity.isOwner()) {
-      options.push( 'Edit' );
+      options.push( i18n.t('edit') );
 
-      options.push( 'Delete' );
+      options.push( i18n.t('delete') );
 
       if (!this.props.entity.mature) {
-        options.push( 'Set explicit' );
+        options.push( i18n.t('setExplicit') );
       } else {
-        options.push( 'Remove explicit' );
+        options.push( i18n.t('removeExplicit') );
       }
       if (!this.props.entity.dontPin) {
         if (!this.props.entity.pinned) {
-          options.push( 'Pin' );
+          options.push( i18n.t('pin') );
         } else {
-          options.push( 'Unpin' );
+          options.push( i18n.t('unpin') );
         }
       }
 
     } else {
 
       if (this.props.user.isAdmin()) {
-        options.push( 'Delete' );
+        options.push( i18n.t('delete') );
 
         if (!this.props.entity.mature) {
-          options.push( 'Set explicit' );
+          options.push( i18n.t('setExplicit') );
         } else {
-          options.push( 'Remove explicit' );
+          options.push( i18n.t('removeExplicit') );
         }
       }
 
       if (this.state && this.state.userBlocked) {
-        options.push( 'Unblock user' );
+        options.push( i18n.t('channel.unblock') );
       } else {
-        options.push( 'Block user' );
+        options.push( i18n.t('channel.block') );
       }
 
       if (translationService.isTranslatable(this.props.entity)) {
-        options.push( 'Translate' );
+        options.push( i18n.t('translate.translate') );
       }
 
-      options.push( 'Report' );
+      options.push( i18n.t('report') );
     }
 
-    options.push( 'Share' );
+    options.push( i18n.t('share') );
 
     if (!this.props.entity['is:following']) {
-      options.push( 'Follow' );
+      options.push( i18n.t('follow') );
     } else {
-      options.push( 'Unfollow' );
+      options.push( i18n.t('unfollow') );
     }
 
 
@@ -128,10 +130,10 @@ export default class ActivityActions extends Component {
       });
 
       Alert.alert(
-        'Success',
-        'Entity removed succesfully',
+        i18n.t('success'),
+        i18n.t('newsfeed.successRemoving'),
         [
-          {text: 'OK', onPress: () => {}},
+          {text: i18n.t('ok'), onPress: () => {}},
         ],
         { cancelable: false }
       )
@@ -144,32 +146,32 @@ export default class ActivityActions extends Component {
 
   makeAction(option) {
     switch (option) {
-      case 'Translate':
+      case i18n.t('translate.translate'):
         if (this.props.onTranslate) this.props.onTranslate();
         break;
-      case 'Edit':
+      case i18n.t('edit'):
         this.props.toggleEdit(true);
         break;
-      case 'Delete':
+      case i18n.t('delete'):
         Alert.alert(
-          'Delete',
-          "Are you sure? There's no UNDO",
+          i18n.t('delete'),
+          i18n.t('confirmNoUndo'),
           [
-            {text: 'Cancel', style: 'cancel'},
-            {text: 'OK', onPress: () => this.deleteEntity()},
+            {text: i18n.t('cancel'), style: 'cancel'},
+            {text: i18n.t('ok'), onPress: () => this.deleteEntity()},
           ],
           { cancelable: false }
         )
         break;
-      case 'Set explicit':
-      case 'Remove explicit':
+      case i18n.t('setExplicit'):
+      case i18n.t('removeExplicit'):
         this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
         });
         break;
-      case 'Block user':
+      case i18n.t('channel.block'):
         toggleUserBlock(this.props.entity.ownerObj.guid, !this.state.userBlocked).then( (result) => {
           this.setState({
             userBlocked:true,
@@ -177,7 +179,7 @@ export default class ActivityActions extends Component {
           });
         });
         break;
-      case 'Unblock user':
+      case i18n.t('channel.unblock'):
         toggleUserBlock(this.props.entity.ownerObj.guid, !this.state.userBlocked).then( (result) => {
           this.setState({
             userBlocked:false,
@@ -185,30 +187,30 @@ export default class ActivityActions extends Component {
           });
         });
         break;
-      case 'Follow':
-      case 'Unfollow':
+      case i18n.t('follow'):
+      case i18n.t('unfollow'):
         this.props.newsfeed.list.newsfeedToogleFollow(this.props.entity.guid).then( (result) => {
           this.setState({
             options: this.getOptions(),
           });
         });
         break;
-      case 'Monetize':
-      case 'Un-monetize':
-        this.props.newsfeed.list.toggleMonetization(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
-        break;
-      case 'Share':
+      // case 'Monetize':
+      // case 'Un-monetize':
+      //   this.props.newsfeed.list.toggleMonetization(this.props.entity.guid).then( (result) => {
+      //     this.setState({
+      //       options: this.getOptions(),
+      //     });
+      //   });
+      //   break;
+      case i18n.t('share'):
         shareService.share(this.props.entity.text, MINDS_URI + 'newsfeed/' + this.props.entity.guid);
         break;
-      case 'Pin':
-      case 'Unpin':
+      case i18n.t('pin'):
+      case i18n.t('unpin'):
         this.props.entity.togglePin();
         break;
-      case 'Report':
+      case i18n.t('report'):
         this.props.navigation.navigate('Report', { entity: this.props.entity });
         break;
     }

@@ -49,7 +49,7 @@ export default class RegisterForm extends Component {
   validatePassword(value) {
     let error = this.state.error;
     if (this.state.password !== value) {
-      error.confirmPasswordError = 'Passwords should match';
+      error.confirmPasswordError = i18n.t('auth.confirmPasswordError');
     } else {
       error.confirmPasswordError = '';
     }
@@ -59,7 +59,7 @@ export default class RegisterForm extends Component {
   validateTerms(value) {
     let error = this.state.error;
     if(!this.state.termsAccepted && this.state.username.length > 4){
-      error.termsAcceptedError = 'You should accept the terms and conditions';
+      error.termsAcceptedError = i18n.t('auth.termsAcceptedError');
     } else {
       error.termsAcceptedError = '';
     }
@@ -135,7 +135,7 @@ export default class RegisterForm extends Component {
           right
           iconRight
           containerStyle={ComponentsStyle.registerCheckbox}
-          title={<Text style={ComponentsStyle.terms}>I accept the <Text style={ComponentsStyle.link} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>terms and conditions</Text></Text>}
+          title={<Text style={ComponentsStyle.terms}>{i18n.t('auth.accept')} <Text style={ComponentsStyle.link} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>{i18n.t('auth.termsAndConditions')}</Text></Text>}
           checked={this.state.termsAccepted}
           textStyle={ComponentsStyle.registerCheckboxText}
           onPress={() => { this.setState({ termsAccepted: !this.state.termsAccepted }) }}
@@ -184,15 +184,15 @@ export default class RegisterForm extends Component {
 
     if (!this.state.termsAccepted) {
       return Alert.alert(
-        'Oooopps',
-        'Please accept the Terms & Conditions'
+        i18n.t('ops'),
+        i18n.t('auth.termsAcceptedError')
       );
     }
 
     if (this.state.error.confirmPasswordError) {
       return Alert.alert(
-        'Oooopps',
-        'Please ensure your passwords match'
+        i18n.t('ops'),
+        i18n.t('auth.confirmPasswordError')
       );
     }
 
@@ -212,7 +212,7 @@ export default class RegisterForm extends Component {
       await authService.login(this.state.username ,this.state.password);
     } catch (err) {
       Alert.alert(
-        'Oooopps',
+        i18n.t('ops'),
         err.message
       );
     }

@@ -16,6 +16,7 @@ import NavNextButton from '../../../common/components/NavNextButton';
 import Colors from '../../../styles/Colors';
 
 import stylesheet from '../../../onboarding/stylesheet';
+import i18n from '../../../common/services/i18n.service';
 
 export default class WalletOnboardingWelcomeScreen extends Component {
   componentDidMount() {
@@ -35,35 +36,28 @@ export default class WalletOnboardingWelcomeScreen extends Component {
   render() {
     return (
       <View>
-        <Text style={style.h1}>Welcome to your wallet</Text>
+        <Text style={style.h1}>{i18n.t('onboarding.welcomToWallet')}</Text>
 
         <Text style={style.p}>
-          Tokens are the cryptocurrency used on Minds. Your total balance
-          of tokens will be stored in two different types of addresses.
+          {i18n.t('onboarding.tokensDescription')}
         </Text>
 
         <View style={style.rows}>
           <View style={[style.row, style.rowFirst]}>
             <Icon style={style.loneIcon} name="check-circle" size={40} />
-            <Text style={style.h2}>OnChain</Text>
+            <Text style={style.h2}>{i18n.t('onchain')}</Text>
 
             <Text style={style.legend}>
-              OnChain payments will be published to
-              the public blockchain and require a small
-              ETH gas fee. You can setup your own
-              private keys or create new wallets.
+              {i18n.t('onboarding.onchainDescription')}
             </Text>
           </View>
 
           <View style={style.row}>
             <Icon style={style.loneIcon} name="donut-large" size={40} />
-            <Text style={style.h2}>OffChain</Text>
+            <Text style={style.h2}>{i18n.t('blockchain.offchain')}</Text>
 
             <Text style={style.legend}>
-              OffChain payments will not be published
-              to the blockchain and have spending
-              limits. You will receive rewards into this
-              address.
+              {i18n.t('onboarding.offchainDescription')}
             </Text>
           </View>
         </View>

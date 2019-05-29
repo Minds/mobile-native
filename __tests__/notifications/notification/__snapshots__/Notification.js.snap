@@ -58,12 +58,10 @@ exports[`notification component renders correctly for every type 1`] = `
       <Text
         onPress={[Function]}
       >
-        100
-         points 
+        100 tokens 
         <Text>
-          <Text>
-            for 
-          </Text>
+          for
+           
           <Text
             style={
               Object {
@@ -150,14 +148,10 @@ exports[`notification component renders correctly for every type 2`] = `
       <Text
         onPress={[Function]}
       >
-        100
-        /
-        100
-         views 
+        100/100 views 
         <Text>
-          <Text>
-            for 
-          </Text>
+          for
+           
           <Text
             style={
               Object {
@@ -244,14 +238,10 @@ exports[`notification component renders correctly for every type 3`] = `
       <Text
         onPress={[Function]}
       >
-        someUser
-         gifted you 
-        100
-         views 
+        someUser gifted you 100 views 
         <Text>
-          <Text>
-            for 
-          </Text>
+          for
+           
           <Text
             style={
               Object {
@@ -263,6 +253,7 @@ exports[`notification component renders correctly for every type 3`] = `
             some title
           </Text>
         </Text>
+        
       </Text>
     </View>
     <Text
@@ -348,7 +339,9 @@ exports[`notification component renders correctly for every type 4`] = `
           @
           someUser
         </Text>
-         accepted your bid of 
+         
+        accepted your bid of
+         
         <Text
           style={
             Object {
@@ -356,15 +349,14 @@ exports[`notification component renders correctly for every type 4`] = `
             }
           }
         >
-          100
+          0
            
-          points
+          Tokens
         </Text>
          
         <Text>
-          <Text>
-            for 
-          </Text>
+          for
+           
           <Text
             style={
               Object {
@@ -461,7 +453,9 @@ exports[`notification component renders correctly for every type 5`] = `
           @
           someUser
         </Text>
-         declined your bid of 
+         
+        declined your bid of
+         
         <Text
           style={
             Object {
@@ -469,15 +463,14 @@ exports[`notification component renders correctly for every type 5`] = `
             }
           }
         >
-          100
+          0
            
-          points
+          Tokens
         </Text>
          
         <Text>
-          <Text>
-            for 
-          </Text>
+          for
+           
           <Text
             style={
               Object {
@@ -489,7 +482,7 @@ exports[`notification component renders correctly for every type 5`] = `
             some title
           </Text>
         </Text>
-        You have not been charged.
+        You have not been charged
       </Text>
     </View>
     <Text
@@ -575,7 +568,9 @@ exports[`notification component renders correctly for every type 6`] = `
           @
           someUser
         </Text>
-         is offering 
+         
+        is offering
+         
         <Text
           style={
             Object {
@@ -585,12 +580,11 @@ exports[`notification component renders correctly for every type 6`] = `
         >
           0
            
-          tokens
+          Tokens
            
           <Text>
-            <Text>
-              for 
-            </Text>
+            for
+             
             <Text
               style={
                 Object {
@@ -678,12 +672,9 @@ exports[`notification component renders correctly for every type 7`] = `
         onPress={[Function]}
       >
         Your boost 
-        100
-         
         <Text>
-          <Text>
-            for 
-          </Text>
+          for
+           
           <Text
             style={
               Object {
@@ -695,21 +686,7 @@ exports[`notification component renders correctly for every type 7`] = `
             some title
           </Text>
         </Text>
-         was rejected for 
-        <Text
-          onPress={[Function]}
-          style={
-            Object {
-              "color": "#444",
-              "fontWeight": "bold",
-            }
-          }
-        >
-          someChannel
-        </Text>
-         
-        
-        . Your points have been credited back to your wallet.
+         was rejected for . Your points have been credited back to your wallet.
       </Text>
     </View>
     <Text
@@ -784,25 +761,7 @@ exports[`notification component renders correctly for every type 8`] = `
       <Text
         onPress={[Function]}
       >
-        Your boost 
-        100
-         
-        <Text>
-          <Text>
-            for 
-          </Text>
-          <Text
-            style={
-              Object {
-                "color": "#444",
-                "fontWeight": "bold",
-              }
-            }
-          >
-            some title
-          </Text>
-        </Text>
-         was revoked
+        You revoked your boost
       </Text>
     </View>
     <Text
@@ -877,12 +836,10 @@ exports[`notification component renders correctly for every type 9`] = `
       <Text
         onPress={[Function]}
       >
-        100
-         points 
+        100 points 
         <Text>
-          <Text>
-            for 
-          </Text>
+          for
+           
           <Text
             style={
               Object {
@@ -894,7 +851,8 @@ exports[`notification component renders correctly for every type 9`] = `
             some title
           </Text>
         </Text>
-         is awaiting approval by 
+         is awaiting approval by
+         
         <Text
           onPress={[Function]}
           style={
@@ -980,12 +938,10 @@ exports[`notification component renders correctly for every type 10`] = `
       <Text
         onPress={[Function]}
       >
-        100
-         views 
+        100 views 
         <Text>
-          <Text>
-            for 
-          </Text>
+          for
+           
           <Text
             style={
               Object {
@@ -1100,8 +1056,7 @@ exports[`notification component renders correctly for every type 11`] = `
             }
           }
         >
-          some owner
-          's activity
+          some owner's activity
         </Text>
       </Text>
     </View>
@@ -1364,6 +1319,7 @@ exports[`notification component renders correctly for every type 14`] = `
         >
           some title
         </Text>
+         
         was featured
       </Text>
     </View>
@@ -1445,8 +1401,7 @@ exports[`notification component renders correctly for every type 15`] = `
           }
         }
       >
-        someUser
-         subscribed to you
+        someUser subscribed to you
       </Text>
     </View>
     <Text
@@ -1539,7 +1494,9 @@ exports[`notification component renders correctly for every type 16`] = `
           someUser
         </Text>
         <Text>
-           posted in 
+           
+          posted in
+           
         </Text>
         <Text
           style={
@@ -1625,10 +1582,7 @@ exports[`notification component renders correctly for every type 17`] = `
       <Text
         onPress={[Function]}
       >
-         invited you to join 
-        <Text>
-          someGroup
-        </Text>
+        [missing {{user}} value] invited you to join someGroup
       </Text>
     </View>
     <Text
@@ -1703,10 +1657,7 @@ exports[`notification component renders correctly for every type 18`] = `
       <Text
         onPress={[Function]}
       >
-        You were kicked off from 
-        <Text>
-          someGroup
-        </Text>
+        You were kicked off from someGroup
       </Text>
     </View>
     <Text
@@ -1893,7 +1844,8 @@ exports[`notification component renders correctly for every type 20`] = `
         >
           someUser
         </Text>
-         tried to call you.
+         
+        tried to call you.
       </Text>
     </View>
     <Text
@@ -1967,28 +1919,14 @@ exports[`notification component renders correctly for every type 21`] = `
     >
       <Text
         onPress={[Function]}
+        style={
+          Object {
+            "color": "#444",
+            "fontWeight": "bold",
+          }
+        }
       >
-        <Text
-          style={
-            Object {
-              "color": "#444",
-              "fontWeight": "bold",
-            }
-          }
-        >
-          someUser
-        </Text>
-         reminded 
-        <Text
-          style={
-            Object {
-              "color": "#444",
-              "fontWeight": "bold",
-            }
-          }
-        >
-          some title
-        </Text>
+        someUser reminded some title
       </Text>
     </View>
     <Text
@@ -2073,7 +2011,6 @@ exports[`notification component renders correctly for every type 22`] = `
         someUser
          
         tagged you in a post
-         
       </Text>
     </View>
     <Text
@@ -2219,7 +2156,7 @@ exports[`notification component renders correctly for every type 24`] = `
       }
     >
       <Text>
-        Chat securely with your mutual subscriptions.
+        [missing "en.notifications.welcomeChat" translation]
       </Text>
     </View>
     <Text
@@ -2294,17 +2231,7 @@ exports[`notification component renders correctly for every type 25`] = `
       <Text
         onPress={[Function]}
       >
-        <Text
-          style={
-            Object {
-              "color": "#444",
-              "fontWeight": "bold",
-            }
-          }
-        >
-          Tap here
-        </Text>
-         to discover new channels and media.
+        Tap here to discover new channels and media.
       </Text>
     </View>
     <Text
@@ -2460,19 +2387,16 @@ exports[`notification component renders correctly for every type 27`] = `
         }
       }
     >
-      <Text>
-        <Text
-          onPress={[Function]}
-          style={
-            Object {
-              "color": "#444",
-              "fontWeight": "bold",
-            }
+      <Text
+        onPress={[Function]}
+        style={
+          Object {
+            "color": "#444",
+            "fontWeight": "bold",
           }
-        >
-          Tap here
-        </Text>
-         to create a post.
+        }
+      >
+        Tap here to create a post.
       </Text>
     </View>
     <Text
@@ -2547,9 +2471,8 @@ exports[`notification component renders correctly for every type 28`] = `
       <Text
         onPress={[Function]}
       >
-        You have successfully wired 
-        1000
-         to 
+        You have successfully wired 1000 to
+         
         <Text
           onPress={[Function]}
           style={

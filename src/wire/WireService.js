@@ -1,4 +1,5 @@
 import api from './../common/services/api.service';
+import i18n from '../common/services/i18n.service';
 import BlockchainWireService from '../blockchain/services/BlockchainWireService';
 import BlockchainTokenService from '../blockchain/services/BlockchainTokenService';
 import BlockchainWalletService from '../blockchain/wallet/BlockchainWalletService';
@@ -88,7 +89,7 @@ class WireService {
    * @param {object} opts
    */
   async getTransactionPayloads(opts) {
-    const payload = await BlockchainWalletService.selectCurrent(`Select the wallet you would like to use for this Wire.`, { signable: true, offchain: true, buyable: true, confirmTokenExchange: opts.amount });
+    const payload = await BlockchainWalletService.selectCurrent(i18n.t('wire.selectWalletMessage'), { signable: true, offchain: true, buyable: true, confirmTokenExchange: opts.amount });
 
     if (!payload || payload.cancelled) {
       return;
@@ -110,14 +111,14 @@ class WireService {
 
       case 'onchain':
         if (!opts.owner.eth_wallet) {
-          throw new Error('User cannot receive OnChain tokens because they haven\'t setup an OnChain address. Please retry OffChain.');
+          throw new Error(i18n.t('boosts.errorCantReceiveTokens'));
         }
 
         if (opts.recurring) {
           await BlockchainTokenService.increaseApproval(
             (await BlockchainWireService.getContract()).options.address,
             opts.amount * 11,
-            'We need you to pre-approve Minds Wire wallet for the recurring wire transactions.'
+            i18n.t('wire.preApproveMessage')
           );
         }
 

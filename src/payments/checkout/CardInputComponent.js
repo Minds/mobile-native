@@ -20,6 +20,7 @@ import Colors from '../../styles/Colors';
 
 import CardType from './CardTypeComponent';
 import creditCardType from '../../common/helpers/credit-card-type';
+import i18n from '../../common/services/i18n.service';
 
 @inject('payments')
 @observer
@@ -217,7 +218,7 @@ export default class CardInput extends Component {
         selectedValue={this.state.expMonth}
         onValueChange={this.setExpMonth}
         enabled={!this.props.inProgress}
-        prompt="Card Expiration Month"
+        prompt={i18n.t('payments.cardExpirationMonth')}
       >{monthItems}</Picker>
 
       <Picker
@@ -226,7 +227,7 @@ export default class CardInput extends Component {
         selectedValue={this.state.expYear}
         onValueChange={this.setExpYear}
         enabled={!this.props.inProgress}
-        prompt="Card Expiration Year"
+        prompt={i18n.t('payments.cardExpirationYear')}
       >{yearItems}</Picker>
     </View>);
   }
@@ -250,7 +251,7 @@ export default class CardInput extends Component {
     return (<View style={style.cell}>
       <TextInput
         style={style.textInput}
-        placeholder="Cardholder's name"
+        placeholder={i18n.t('payments.cardHoldersName')}
         onChangeText={this.setName}
         value={this.state.name}
         disabled={this.props.inProgress}
@@ -298,7 +299,7 @@ export default class CardInput extends Component {
               disabled={!this.canSubmit()}
               title={
                 !this.state.inProgress ?
-                  'Confirm' :
+                  i18n.t('confirm') :
                   (<ActivityIndicator size="small" color={Colors.primary} />)
               }
               onPress={this.submitAction}

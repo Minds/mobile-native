@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -11,10 +11,12 @@ import {
 import entityService from '../../../common/services/entity.service';
 import logService from '../../../common/services/log.service';
 
+import i18n from '../../../common/services/i18n.service';
+
 /**
  * Tag Notification Component
  */
-export default class TagView extends Component {
+export default class TagView extends PureComponent {
   /**
    * Navigate to activity
    */
@@ -53,7 +55,7 @@ export default class TagView extends Component {
 
     return (
       <TouchableOpacity style={styles.bodyContents} onPress={this.navToActivity}>
-        <Text>{entity.fromObj.name} {isComment ? 'tagged you in a comment' : 'tagged you in a post' } </Text>
+        <Text>{entity.fromObj.name} {isComment ? i18n.t('notification.tagComment') : i18n.t('notification.tagPost')}</Text>
       </TouchableOpacity>
     )
   }

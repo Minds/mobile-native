@@ -14,6 +14,7 @@ import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import stylesheet from './stylesheet';
 import Touchable from '../common/components/Touchable';
+import i18n from '../common/services/i18n.service';
 
 export default class NotSupportedScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
@@ -39,11 +40,11 @@ export default class NotSupportedScreen extends Component {
   render() {
     return (
       <View style={style.view}>
-        <Text style={style.text}>This feature is not supported by your platform.</Text>
-        
+        <Text style={style.text}>{i18n.t('comingSoon.notSupported')}</Text>
+
         <Touchable onPress={this.moreInfoAction}>
           <Text style={[style.text, style.smaller, style.link]}>
-            More information at{"\n"}
+            {i18n.t('comingSoon.moreInformation')}
             {this.moreInfoUrl}
           </Text>
         </Touchable>

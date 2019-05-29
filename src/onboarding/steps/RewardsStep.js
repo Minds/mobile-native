@@ -25,6 +25,7 @@ import NavNextButton from '../../common/components/NavNextButton';
 import Colors from '../../styles/Colors';
 import stylesheet from '../../onboarding/stylesheet';
 import { CommonStyle as CS } from '../../styles/Common';
+import i18n from '../../common/services/i18n.service';
 
 @inject('user', 'wallet')
 @observer
@@ -151,7 +152,7 @@ export default class RewardsStep extends Component {
             value={this.state.phone}
             onChangePhoneNumber={this.setPhone}
             ref="phoneInput"
-            placeholder="Phone Number"
+            placeholder={i18n.t('onboarding.phoneNumber')}
           />
 
           <TransparentButton
@@ -174,16 +175,15 @@ export default class RewardsStep extends Component {
     }
 
     const body = this.state.confirmFailed ?
-      <Text style={[CS.fontXL, CS.textCenter]}>Sms was not received <Text style={CS.colorPrimary} onPress={this.rejoinAction}>Try again</Text></Text>:
+      <Text style={[CS.fontXL, CS.textCenter]}>{i18n.t('onboarding.smsNotReceived')} <Text style={CS.colorPrimary} onPress={this.rejoinAction}>{i18n.t('tryAgain')}</Text></Text>:
       this.state.smsAllowed ?
-        <Text style={[CS.colorPrimary, CS.fontXL, CS.textCenter]}> Keep the app visible and we will detect it automatically: {this.state.wait}</Text>:
+        <Text style={[CS.colorPrimary, CS.fontXL, CS.textCenter]}> {i18n.t('onboarding.waitSms')}: {this.state.wait}</Text>:
         null;
 
     return (
       <View>
         <Text style={style.p}>
-          We just sent the code to {this.state.phone} in
-          order to verify that your number is correct.
+          {i18n.t('onboarding.weJustSentCode', {phone: this.state.phone})}
         </Text>
         {body}
 
@@ -192,7 +192,7 @@ export default class RewardsStep extends Component {
             style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
             value={this.state.code}
             onChangeText={this.setCode}
-            placeholder="Confirmation Code"
+            placeholder={i18n.t('onboarding.confirmationCode')}
             keyboardType="numeric"
           />
 
@@ -228,10 +228,10 @@ export default class RewardsStep extends Component {
   render() {
     return (
       <View style={[CS.padding4x]}>
-        <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium, CS.paddingBottom3x]}>Earn tokens for your activity</Text>
+        <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium, CS.paddingBottom3x]}>{i18n.t('onboarding.earnTokens')}</Text>
 
         <Text style={style.p}>
-          Tokens can be used to support other channels or boost your content for additional views (1 token = 1,000 views). In order to earn tokens, we will need a phone number to verify that your channel is unique.
+          {i18n.t('onboarding.tokensCanBeUsed')}
         </Text>
 
         <View>
@@ -243,7 +243,7 @@ export default class RewardsStep extends Component {
         </View>}
 
         <Text style={[style.p, style.note]}>
-          We do not store your phone number on our servers.
+          {i18n.t('onboarding.weDontStorePhone')}
         </Text>
       </View>
     );

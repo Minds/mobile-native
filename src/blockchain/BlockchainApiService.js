@@ -1,4 +1,5 @@
 import api from './../common/services/api.service';
+import i18n from './../common/services/i18n.service';
 
 class BlockchainApiService {
   serverWalletAddressCache;
@@ -18,7 +19,7 @@ class BlockchainApiService {
         return response.wallet.address;
       }
     } catch (e) {
-      throw new Error('There was an issue getting your saved wallet info');
+      throw new Error(i18n.t('blockchain.errorSavingWallet'));
     }
   }
 

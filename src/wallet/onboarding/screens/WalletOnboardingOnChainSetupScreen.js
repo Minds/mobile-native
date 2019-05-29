@@ -24,6 +24,7 @@ import Colors from '../../../styles/Colors';
 import stylesheet from '../../../onboarding/stylesheet';
 import BlockchainWalletService from '../../../blockchain/wallet/BlockchainWalletService';
 import BlockchainApiService from '../../../blockchain/BlockchainApiService';
+import i18n from '../../../common/services/i18n.service';
 
 export default class WalletOnboardingOnChainSetupScreen extends Component {
   state = {
@@ -87,13 +88,8 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
 
   showEphemeralWarning() {
     return new Promise(resolve => {
-      Alert.alert('Heads up!', `
-      Ensure you EXPORT and back-up your key before uninstalling
-      or wiping the app data, or you will lose your funds.
-      ${"\n"}
-      Exporting can be done from the Address detail screen.
-      `, [
-        { text: 'I understand', onPress: () => resolve() }
+      Alert.alert(i18n.t('headsUp'), i18n.t('wallet.onboarding.ensureYouExportKey'), [
+        { text: i18n.t('iUnderstand'), onPress: () => resolve() }
       ], { cancelable: false });
     });
   }
@@ -116,7 +112,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   }
 
   setPin = pin => {
-    const error = this.validatePin(pin) ? '' : 'Password must be at least 6 characters, which can be either alphanumeric or symbols';
+    const error = this.validatePin(pin) ? '' : i18n.t('wallet.onboarding.passwordInvalid');
     this.setState({ pin, error });
   }
 
@@ -125,7 +121,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   }
 
   setPinConfirmation = pinConfirmation => {
-    const error = pinConfirmation == this.state.pin ? '' : 'Password and confirmation should match.';
+    const error = pinConfirmation == this.state.pin ? '' : i18n.t('auth.confirmPasswordError');
     this.setState({ pinConfirmation, error });
   }
 
@@ -141,8 +137,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     return (
       <View>
         <Text style={style.p}>
-          To create a new wallet address, please enter a keychain password
-          that will be used to encrypt your private key onto this device.
+          {i18n.t('wallet.onboarding.6digitDescription')}
         </Text>
 
         {!!this.state.error && <View>
@@ -154,12 +149,12 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
             style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
             value={this.getPin()}
             onChangeText={this.setPin}
-            placeholder="password"
+            placeholder={i18n.t('password')}
             secureTextEntry={true}
             maxLength={12}
           />
           <Button
-            text="CREATE"
+            text={i18n.t('create').toUpperCase()}
             onPress={this.createAction}
             containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
             disabled={!this.canCreate()}
@@ -173,9 +168,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     return (
       <View>
         <Text style={style.p}>
-          Please confirm once more your keychain password. Once confirmed
-          your wallet will be created on this device and attached
-          to your account.
+          {i18n.t('wallet.onboarding.6digitConfirm')}
         </Text>
 
         {!!this.state.error && <View>
@@ -187,19 +180,19 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
             style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
             value={this.getPinConfirmation()}
             onChangeText={this.setPinConfirmation}
-            placeholder="confirm password"
+            placeholder={i18n.t('auth.confirmpassword')}
             secureTextEntry={true}
             maxLength={12}
           />
 
           <Button
-            text="RETRY"
+            text={i18n.t('retry').toUpperCase()}
             onPress={this.retryAction}
             containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
           />
 
           <Button
-            text="CONFIRM"
+            text={i18n.t('confirm').toUpperCase()}
             onPress={this.confirmAction}
             loading={this.state.inProgress}
             containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
@@ -216,20 +209,18 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     return (
       <View>
         <Text style={style.p}>
-          Your keychain password is already setup, you just need to confirm the
-          wallet creation. Once confirmed your wallet will be created on
-          this device and attached to your account.
+          {i18n.t('wallet.onboarding.6digitAlreadySetup')}
         </Text>
 
         <View style={[style.cols, style.colsCenter, style.form]}>
           {this.state.alreadyHasPin && <Text
             style={[style.col, style.colFirst, style.primaryLegendUppercase]}
           >
-            KEYCHAIN ALREADY SETUP
+            {i18n.t('wallet.onboarding.pinAlreadySetup')}
           </Text>}
 
           <Button
-            text="CREATE"
+            text={i18n.t('create').toUpperCase()}
             onPress={this.confirmAction}
             containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
             disabled={!this.canConfirm()}
@@ -252,7 +243,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     return (
       <NavNextButton
         onPress={this.props.onNext}
-        title="SKIP, I'M NOT INTERESTED"
+        title={i18n.t('wallet.onboarding.skip')}
         color={Colors.darkGreyed}
       />
     );
@@ -261,23 +252,18 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   render() {
     return (
       <View>
-        <Text style={style.h1}>Setup your OnChain address</Text>
+        <Text style={style.h1}>{i18n.t('wallet.onboarding.setupOnchianAddress')}</Text>
 
         <Text style={style.p}>
-          To receive OnChain payments from other channels (eg, from a Wire
-          or a Boost), you will need to let us know which address to direct
-          these tokens to.
+          {i18n.t('wallet.onboarding.onchainDescription1')}
         </Text>
 
         <Text style={style.p}>
-          This address will be listed in your wallet as your Receiver Address
-          and can be changed at any time.
+          {i18n.t('wallet.onboarding.onchainDescription2')}
         </Text>
 
         <Text style={style.p}>
-          OnChain addresses, and their private keys, are saved locally in an
-          encrypted storage space. They will be available to any channel
-          that is currently logged in onto this device.
+          {i18n.t('wallet.onboarding.onchainDescription3')}
         </Text>
 
         <View>

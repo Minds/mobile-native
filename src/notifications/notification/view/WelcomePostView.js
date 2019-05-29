@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -7,10 +7,12 @@ import {
   View
 } from 'react-native';
 
+import i18n from '../../../common/services/i18n.service';
+
 /**
  * Welcome Post Notification Component
  */
-export default class WelcomePostView extends Component {
+export default class WelcomePostView extends PureComponent {
 
   navToCapture = () => {
     this.props.navigation.navigate('Capture');
@@ -21,7 +23,7 @@ export default class WelcomePostView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text><Text style={styles.link} onPress={this.navToCapture}>Tap here</Text> to create a post.</Text>
+        <Text style={styles.link} onPress={this.navToCapture}>{i18n.t('notification.welcomePost')}</Text>
       </View>
     )
   }

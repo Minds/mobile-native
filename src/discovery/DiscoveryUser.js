@@ -27,6 +27,7 @@ import abbrev from '../common/helpers/abbrev'
 import colors from '../styles/Colors'
 import { ComponentsStyle } from '../styles/Components';
 import { CommonStyle } from '../styles/Common';
+import i18n from '../common/services/i18n.service';
 
 @inject('user')
 @observer
@@ -45,9 +46,9 @@ export default class DiscoveryUser extends Component {
   toggleSubscribe = () => {
     if (this.props.entity.item.subscribed) {
       Alert.alert(
-        'Attention',
-        'Are you sure you want to unsubscribe from this channel?',
-        [{ text: 'Yes', onPress: () => this._toggleSusbcribed() }, { text: 'No'}]
+        i18n.t('attention'),
+        i18n.t('channel.confirmUnsubscribe'),
+        [{ text: i18n.t('yesImSure'), onPress: () => this._toggleSusbcribed() }, { text: i18n.t('no')}]
       );
     } else {
       this._toggleSusbcribed();
@@ -74,18 +75,18 @@ export default class DiscoveryUser extends Component {
           onPress={ this.toggleSubscribe }
           underlayColor='transparent'
           style={[ComponentsStyle.button ]}
-          accessibilityLabel="Subscribe to this channel"
+          accessibilityLabel={i18n.t('channel.subscribeMessage')}
         >
-          <Text style={{ color: '#888' }} > Subscribed </Text>
+          <Text style={{ color: '#888' }} > {i18n.t('channel.subscribed')} </Text>
         </TouchableHighlight>;
     } else {
       return <TouchableHighlight
           onPress={ this.toggleSubscribe }
           underlayColor='transparent'
           style={[ComponentsStyle.button, ComponentsStyle.buttonAction]}
-          accessibilityLabel="Unsubscribe to this channel"
+          accessibilityLabel={i18n.t('channel.unsubscribeMessage')}
         >
-          <Text style={{ color: colors.primary }} > Subscribe </Text>
+          <Text style={{ color: colors.primary }} > {i18n.t('channel.subscribe')} </Text>
         </TouchableHighlight>;
     }
   }

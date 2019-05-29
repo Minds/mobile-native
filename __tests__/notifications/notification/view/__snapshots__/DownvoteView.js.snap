@@ -86,7 +86,9 @@ exports[`renders correctly for comment 1`] = `
         }
       }
     >
-       your comment 
+       
+      your comment
+       
     </Text>
   </Text>
 </View>

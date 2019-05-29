@@ -46,6 +46,7 @@ export const ComponentsStyle = StyleSheet.create({
   },
   loginButtonText: {
     // fontFamily: 'Roboto',
+    fontSize: 16,
     fontWeight: '600',
     letterSpacing: 1.25
   },

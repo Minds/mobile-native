@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import BoostGiftView from './BoostGiftView';
+import i18n from '../../../common/services/i18n.service';
 
 /**
  * Boost Accepted Notification Component
@@ -20,9 +21,15 @@ export default class BoostAcceptedView extends BoostGiftView {
 
     const description = this.getDescription(entity);
 
+    const text = i18n.to('notification.boostAccepted',{
+      count: (entity.params.impressions || entity.params.points)
+    },{
+      description
+    });
+
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToBoostConsole}>{entity.params.impressions || entity.params.points} points {description} were accepted.</Text>
+        <Text onPress={this.navToBoostConsole}>{text}</Text>
       </View>
     )
   }

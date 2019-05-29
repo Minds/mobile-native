@@ -22,7 +22,6 @@ exports[`renders correctly activity 1`] = `
     someUser
      
     tagged you in a post
-     
   </Text>
 </View>
 `;
@@ -49,7 +48,6 @@ exports[`renders correctly comment 1`] = `
     someUser
      
     tagged you in a comment
-     
   </Text>
 </View>
 `;

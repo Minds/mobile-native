@@ -5,5 +5,5 @@ import LikeView from './LikeView';
  */
 export default class DownvoteView extends LikeView {
 
-  message = 'down voted';
+  static message = 'notification.downVoted';
 }

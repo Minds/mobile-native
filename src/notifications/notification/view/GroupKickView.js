@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -7,10 +7,12 @@ import {
   View
 } from 'react-native';
 
+import i18n from '../../../common/services/i18n.service';
+
 /**
  * Group Kick Notification Component
  */
-export default class GroupKickView extends Component {
+export default class GroupKickView extends PureComponent {
 
   /**
    * Navigate to group
@@ -25,7 +27,7 @@ export default class GroupKickView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToGroup}>You were kicked off from <Text>{entity.params.group.name}</Text></Text>
+        <Text onPress={this.navToGroup}>{i18n.t('notification.groupKicked', {name: entity.params.group.name})}</Text>
       </View>
     )
   }

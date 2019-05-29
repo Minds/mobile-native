@@ -11,6 +11,7 @@ import Modal from 'react-native-modal';
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import Button from '../../common/components/Button';
+import i18nService from '../services/i18n.service';
 
 const height = Platform.OS === 'ios' ? 300 : 150;
 
@@ -93,8 +94,8 @@ export default class ModalPicker extends PureComponent {
               {items.map((item, i) => <Picker.Item key={i} label={item[labelField]} value={item[valueField]} /> )}
             </Picker>
             <View style={[CommonStyle.rowJustifyCenter]}>
-              <Button text='Cancel' onPress={this.cancel} color={colors.darkGreyed}/>
-              <Button text='Ok' onPress={this.ok}/>
+              <Button text={i18nService.t('cancel')} onPress={this.cancel} color={colors.darkGreyed}/>
+              <Button text={i18nService.t('ok')} onPress={this.ok}/>
             </View>
           </View>
         </View>

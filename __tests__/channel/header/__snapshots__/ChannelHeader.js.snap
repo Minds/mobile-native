@@ -183,7 +183,9 @@ exports[`channel header component owner should render correctly 1`] = `
               }
             }
           >
-             SUBSCRIBE 
+             
+            SUBSCRIBE
+             
           </Text>
         </TouchableHighlight>
         <View

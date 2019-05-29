@@ -13,6 +13,7 @@ import * as Progress from 'react-native-progress';
 import { CommonStyle as CS } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import navigationService from '../../navigation/NavigationService';
+import i18nService from '../../common/services/i18n.service';
 
 /**
  * Complete Profile

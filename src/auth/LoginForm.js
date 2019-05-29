@@ -54,7 +54,7 @@ export default class LoginForm extends Component {
           {buttons}
         </View>
         <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop3x]}>
-          <Text style={[CommonStyle.colorWhite, ComponentsStyle.link]} onPress={this.onForgotPress}>FORGOT PASSWORD</Text>
+          <Text style={[CommonStyle.colorWhite, ComponentsStyle.link]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
         </View>
       </KeyboardAvoidingView>
     );

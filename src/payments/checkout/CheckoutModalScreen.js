@@ -22,6 +22,7 @@ import mindsService from '../../common/services/minds.service';
 import CardList from './CardListComponent';
 import CardInput from './CardInputComponent';
 import { CommonStyle } from '../../styles/Common';
+import i18n from '../../common/services/i18n.service';
 
 @inject('checkoutModal', 'payments')
 @observer
@@ -48,36 +49,25 @@ export default class CheckoutModalScreen extends Component {
     return true;
   };
 
-  onExistingCardSelectAction = async ({ label, token }) => {
+  onConfirmAction = async ({ label, token }) => {
     Alert.alert(
       label,
-      `${this.props.checkoutModal.opts.confirmMessage} Do you want to use this credit card?`.trim(),
+      i18n.t('payments.cardConfirmMessage', {confirmMessage: this.props.checkoutModal.opts.confirmMessage}).trim(),
       [
-        { text: 'No', style: 'cancel' },
-        { text: 'Yes', onPress: () => this.props.checkoutModal.submit(token) }
-      ]
-    );
-  };
-
-  onNewCardConfirmAction = async ({ label, token }) => {
-    Alert.alert(
-      label,
-      `${this.props.checkoutModal.opts.confirmMessage} Do you want to use this credit card?`.trim(),
-      [
-        { text: 'No', style: 'cancel' },
-        { text: 'Yes', onPress: () => this.props.checkoutModal.submit(token) }
+        { text: i18n.t('no'), style: 'cancel' },
+        { text: i18n.t('yes'), onPress: () => this.props.checkoutModal.submit(token) }
       ]
     );
   };
 
   getCardList() {
     return (<View>
-      {!!this.props.payments.cards.length && <Text style={style.title}>YOUR SAVED CARDS:</Text>}
+      {!!this.props.payments.cards.length && <Text style={style.title}>{i18n.t('payments.yourSavedCard')}</Text>}
 
       <CardList
         style={style.cardList}
         itemStyle={style.cardListItem}
-        onSelect={this.onExistingCardSelectAction}
+        onSelect={this.onConfirmAction}
       />
     </View>);
   }
@@ -93,13 +83,13 @@ export default class CheckoutModalScreen extends Component {
         !!this.props.payments.cards.length && CommonStyle.marginTop3x
       ]}>{
         !!this.props.payments.cards.length ?
-          'OR USE ANOTHER CARD:' :
-          'ENTER YOUR CARDS DETAILS:'
+          i18n.t('payments.orUseAntoherCard') :
+          i18n.t('payments.enterCardDetails')
       }</Text>
 
       <CardInput
         style={style.cardInput}
-        onConfirm={this.onNewCardConfirmAction}
+        onConfirm={this.onConfirmAction}
       />
     </View>);
   }

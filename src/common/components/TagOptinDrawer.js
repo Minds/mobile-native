@@ -9,6 +9,7 @@ import { debounce } from 'lodash';
 import TagSelect from './TagSelect';
 import TagInput from './TagInput';
 import { CommonStyle as CS } from '../../styles/Common';
+import i18n from '../services/i18n.service';
 
 /**
  * Tag Opt in Drawer
@@ -93,10 +94,10 @@ export default class TagOptinDrawer extends Component {
         <View style={[styles.modalView]}>
           <ScrollView style={CS.flexContainer}>
             <View style={[CS.rowJustifySpaceEvenly, CS.alignCenter, CS.borderBottomHair, CS.paddingBottom2x, CS.borderGreyed]}>
-              <Text>Preferred</Text>
+              <Text>{i18n.t('hashtags.preferred')}</Text>
               <Switch value={!this.props.hashtag.all} onSyncPress={this.toogleAll}></Switch>
             </View>
-            <Text style={[CS.fontS, CS.colorDarkGreyed, CS.fontLight, CS.textCenter, CS.marginTop]}>Hold to select only one</Text>
+            <Text style={[CS.fontS, CS.colorDarkGreyed, CS.fontLight, CS.textCenter, CS.marginTop]}>{i18n.t('hashtags.hold')}</Text>
             <TagSelect
               tagStyle={[CS.backgroundWhite, CS.padding1x, CS.flexContainer]}
               textSelectedStyle={[CS.fontSemibold, !this.props.hashtag.all ? CS.colorPrimary : CS.colorDarkGreyed]}

@@ -1,5 +1,5 @@
 import React, {
-  Component
+  PureComponent
 } from 'react';
 
 import {
@@ -7,10 +7,12 @@ import {
   View
 } from 'react-native';
 
+import i18n from '../../../common/services/i18n.service';
+
 /**
  * Friends Notification Component
  */
-export default class FriendsView extends Component {
+export default class FriendsView extends PureComponent {
 
   /**
    * Navigate To channel
@@ -23,9 +25,9 @@ export default class FriendsView extends Component {
     const entity = this.props.entity;
     const styles = this.props.styles;
 
-    const body = entity.fromObj.subscribed ?
-      <Text style={styles.link} onPress={this.navToChannel}>You have a match! {entity.fromObj.name} subscribed to you</Text> :
-      <Text style={styles.link} onPress={this.navToChannel}>{entity.fromObj.name} subscribed to you</Text>
+    const message = entity.fromObj.subscribed ? 'notification.friends1' : 'notification.friends2';
+
+    const body = <Text style={styles.link} onPress={this.navToChannel}>{i18n.t(message, {name: entity.fromObj.name})}</Text>
 
     return (
       <View style={styles.bodyContents}>

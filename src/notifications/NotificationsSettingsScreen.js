@@ -15,6 +15,7 @@ import {
 } from 'mobx-react/native'
 
 import Switch from 'react-native-switch-pro'
+import i18n from '../common/services/i18n.service';
 
 @inject('notificationsSettings')
 @observer
@@ -40,13 +41,13 @@ export default class NotificationsSettingsScreen extends Component {
 
     return (
       <ScrollView  style={styles.container}>
-        <Text style={styles.title}>Enable and disable push notifications</Text>
+        <Text style={styles.title}>{i18n.t('notificationSettings.enableDisable')}</Text>
         {Object.keys(settings).map(function (key) {
           const toggle = settings[key];
           return (
-            <View style={styles.row} key={toggle.id}>
-              <Text>{toggle.name}</Text>
-              <Switch value={toggle.value} onSyncPress={(val) => notificationsSettings.saveSetting(key, val)}></Switch>
+            <View style={styles.row} key={key}>
+              <Text>{i18n.t('notificationSettings.'+key)}</Text>
+              <Switch value={toggle} onSyncPress={(val) => notificationsSettings.saveSetting(key, val)}></Switch>
             </View>
           )
         })}

@@ -21,6 +21,7 @@ import {
   MINDS_CDN_URI
 } from '../../config/Config';
 
+import i18n from '../../common/services/i18n.service';
 
 /**
  * Wire lock component
@@ -52,7 +53,7 @@ export default class Lock extends PureComponent {
               iconStyle={{ fontSize: 22 }}
               color='#4caf50'
             />
-            <Text style={[CommonStyle.fontM, { color: '#4caf50' }]}>Locked</Text>
+            <Text style={[CommonStyle.fontM, { color: '#4caf50' }]}>{i18n.t('locked')}</Text>
           </View>
         </View>
       )
@@ -68,7 +69,7 @@ export default class Lock extends PureComponent {
           <View style={ styles.textContainer }>
             <Text>{intro}</Text>
           </View>
-          <Button loading={this.state.unlocking} text='UNLOCK' color='#4caf50' containerStyle={CommonStyle.rowJustifyCenter} onPress={this.unlock}>
+          <Button loading={this.state.unlocking} text={i18n.t('unlock').toUpperCase()} color='#4caf50' containerStyle={CommonStyle.rowJustifyCenter} onPress={this.unlock}>
             <Icon
               name='ios-flash'
               type='ionicon'
@@ -88,8 +89,8 @@ export default class Lock extends PureComponent {
             size={55}
             color='white'
           />
-          <Text style={[CommonStyle.colorWhite, CommonStyle.fontXXXL, CommonStyle.paddingBottom2x]}>{this.getFormatedAmount()}/month</Text>
-          <Text style={[CommonStyle.colorWhite, CommonStyle.fontS, CommonStyle.textCenter]}>THIS POST CAN ONLY BE SEEN BY SUPPORTERS WHO WIRE {this.getFormatedAmount().toUpperCase()}/MONTH TO @{entity.ownerObj.name.toUpperCase()}</Text>
+          <Text style={[CommonStyle.colorWhite, CommonStyle.fontXXXL, CommonStyle.paddingBottom2x]}>{i18n.t('wire.amountMonth', {amount: this.getFormatedAmount()})}</Text>
+          <Text style={[CommonStyle.colorWhite, CommonStyle.fontS, CommonStyle.textCenter]}>{i18n.t('wire.amountMonthDescription', {amount: this.getFormatedAmount().toUpperCase(), name: entity.ownerObj.name.toUpperCase()})}</Text>
         </View>
       </View>
     )
@@ -112,8 +113,8 @@ export default class Lock extends PureComponent {
             if (result && result.payload.method === 'onchain') {
               setTimeout(() => {
                 Alert.alert(
-                  'We\'ve received your transaction',
-                  'Please try unlocking this post after it gets processed. We estimate it may take around 5 minutes.'
+                  i18n.t('wire.weHaveReceivedYourTransaction'),
+                  i18n.t('wire.pleaseTryUnlockingMessage')
                 );
               }, 400);
             } else {
@@ -146,8 +147,7 @@ export default class Lock extends PureComponent {
    * Get intro for owners
    */
   getOwnerIntro() {
-    const entity = this.props.entity;
-    return 'Only supporters who wire you over ' + this.getFormatedAmount() + '/month will see this post.';
+    return i18n.t('wire.onlySupportersWhoWire', {amount: this.getFormatedAmount()});
   }
 
   /**
@@ -159,7 +159,7 @@ export default class Lock extends PureComponent {
     let intro = entity.get('ownerObj.merchant.exclusive.intro');
     if (intro) return intro;
 
-    intro = 'Wire me over ' + this.getFormatedAmount() + '/month to see this post.';
+    intro = i18n.t('wire.wireMeOver', {amount: this.getFormatedAmount()});
     return intro;
   }
 

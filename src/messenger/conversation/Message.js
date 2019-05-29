@@ -23,6 +23,7 @@ import { CommonStyle } from '../../styles/Common';
 import { MINDS_CDN_URI } from '../../config/Config';
 import crypto from '../../common/services/crypto.service';
 import Tags from '../../common/components/Tags';
+import i18n from '../../common/services/i18n.service';
 
 /**
  * Message Component
@@ -44,7 +45,7 @@ export default class Message extends PureComponent {
 
       this.setState({
         decrypted: false,
-        msg: 'decrypting...'
+        msg: i18n.t('messenger.decrypting')
       });
 
       // we need to decrypt inside a settimeout to fix blank list until decryption ends

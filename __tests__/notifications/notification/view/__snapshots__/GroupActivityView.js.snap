@@ -30,7 +30,9 @@ exports[`renders correctly 1`] = `
       someUser
     </Text>
     <Text>
-       posted in 
+       
+      posted in
+       
     </Text>
     <Text
       style={

@@ -17,6 +17,7 @@ import { CommonStyle as CS } from '../../styles/Common';
 import sessionService from '../../common/services/session.service';
 import imagePicker from '../../common/services/image-picker.service';
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
+import i18n from '../../common/services/i18n.service';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
@@ -123,7 +124,7 @@ export default class ChannelSetupStep extends Component {
     return (
       <View style={CS.marginBottom3x}>
         <View style={[CS.padding4x, CS.flexContainer, CS.rowJustifyStart, CS.alignCenter]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>Choose an avatar</Text>
+          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>{i18n.t('onboarding.chooseAvatar')}</Text>
           <View style={[CS.rowJustifyEnd, CS.flexContainer]}>
             <TouchableCustom onPress={this.changeAvatarAction} style={[styles.avatar, CS.marginLeft3x, CS.border, CS.borderGreyed ]} disabled={this.saving}>
               {hasAvatar && <Image source={avatar} style={styles.wrappedAvatar} />}
@@ -139,7 +140,7 @@ export default class ChannelSetupStep extends Component {
           </View>
         </View>
         <View style={[CS.padding4x, CS.flexContainer]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>Choose your display name</Text>
+          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>{i18n.t('onboarding.chooseName')}</Text>
           <TextInput
             style={[CS.borderHair, CS.borderDarkGreyed, CS.borderRadius10x, CS.fontXL, CS.padding2x, CS.fontHairline, CS.marginTop4x]}
             placeholder="eg. John Smith"
@@ -148,7 +149,7 @@ export default class ChannelSetupStep extends Component {
           />
         </View>
         <View style={[CS.padding4x, CS.flexContainer]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>Briefly describe your channel</Text>
+          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>{i18n.t('onboarding.describeChannel')}</Text>
           <TextInput
             style={[CS.borderHair, CS.borderDarkGreyed, CS.borderRadius10x, CS.fontXL, CS.padding2x, CS.fontHairline, CS.marginTop4x]}
             placeholder="eg. Independent Journalist"

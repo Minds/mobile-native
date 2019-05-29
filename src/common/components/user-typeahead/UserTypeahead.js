@@ -25,6 +25,7 @@ import channelAvatarUrl from '../../helpers/channel-avatar-url';
 import colors from '../../../styles/Colors';
 import abbrev from '../../helpers/abbrev';
 import logService from '../../services/log.service';
+import i18nService from '../../services/i18n.service';
 
 export default class UserTypeahead extends PureComponent {
   textInput = void 0;
@@ -202,8 +203,8 @@ export default class UserTypeahead extends PureComponent {
       <View style={this.styles.emptyView}>
         <Text style={this.styles.emptyText}>{
           !this.state.query ?
-            'Start typing a username to search...' :
-            `No results for ${this.state.query}`
+            i18nService.t('userTypeAhead.placeholder') :
+            i18nService.t('userTypeAhead.noResults', {query: this.state.query})
         }</Text>
       </View>
     )

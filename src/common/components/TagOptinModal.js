@@ -5,6 +5,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 import TagSelect from './TagSelect';
 import TagInput from './TagInput';
+import i18n from '../services/i18n.service';
 
 /**
  * Tag Opt in Modal
@@ -46,7 +47,7 @@ export default class TagOptinModal extends Component {
       >
         <View style={styles.modalView}>
           <View style={styles.modalHeader}>
-            <Text style={styles.modalTitle}>HASHTAGS</Text>
+            <Text style={styles.modalTitle}>{i18n.t('hashtags.title')}</Text>
             <IonIcon
               style={styles.modalCloseIcon}
               size={28}

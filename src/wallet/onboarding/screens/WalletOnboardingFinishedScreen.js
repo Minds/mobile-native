@@ -15,6 +15,7 @@ import NavNextButton from '../../../common/components/NavNextButton';
 import Colors from '../../../styles/Colors';
 
 import stylesheet from '../../../onboarding/stylesheet';
+import i18n from '../../../common/services/i18n.service';
 
 export default class WalletOnboardingFinishedScreen extends Component {
   componentDidMount() {
@@ -25,7 +26,7 @@ export default class WalletOnboardingFinishedScreen extends Component {
     return (
       <NavNextButton
         onPress={this.props.onNext}
-        title="CONTINUE"
+        title={i18n.t('continue').toUpperCase()}
         color={Colors.primary}
       />
     );
@@ -34,39 +35,35 @@ export default class WalletOnboardingFinishedScreen extends Component {
   render() {
     return (
       <View>
-        <Text style={style.h1}>You're all setup and ready to go!</Text>
+        <Text style={style.h1}>{i18n.t('onboarding.yourAreReady')}</Text>
 
         <Text style={style.p}>
-          Great, you have successfully configured your wallet to receive
-          rewards and OnChain & OffChain payments.
+          {i18n.t('onboarding.readyDescription1')}
         </Text>
 
         <Text style={style.p}>
-          To learn more about tokens and crypto, visit
-          the <Text style={style.b}>Tokens 101</Text> section below at
-          any time where you can find tutorials, videos
-          and a FAQ.
+          {i18n.t('onboarding.readyDescription2', null, {tokens:<Text style={style.b}>Tokens 101</Text>})}
         </Text>
 
         <View style={style.vertButtonBar}>
           <TransparentButton
             style={style.vertButton}
             onPress={() => {Linking.openURL('https://www.minds.com/wallet/tokens/101')}}
-            title="MORE ON REWARDS"
+            title={i18n.t('onboarding.moreOnRewards')}
             color={Colors.darkGreyed}
           />
 
           <TransparentButton
             style={style.vertButton}
             onPress={() => {Linking.openURL('https://www.minds.com/faq/wire')}}
-            title="LEARN ABOUT WIRE"
+            title={i18n.t('onboarding.moreAboutWire')}
             color={Colors.darkGreyed}
           />
 
           <TransparentButton
             style={style.vertButton}
             onPress={() => {Linking.openURL('https://www.minds.com/faq/boost')}}
-            title="LEARN ABOUT BOOST"
+            title={i18n.t('onboarding.moreAboutBoost')}
             color={Colors.darkGreyed}
           />
         </View>

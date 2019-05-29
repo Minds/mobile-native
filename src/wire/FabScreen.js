@@ -35,6 +35,8 @@ import FeaturesService from '../common/services/features.service';
 import number from '../common/helpers/number';
 import token from '../common/helpers/token';
 import addressExcerpt from '../common/helpers/address-excerpt';
+import i18n from '../common/services/i18n.service';
+import logService from '../common/services/log.service';
 
 /**
  * Wire Fab Screen
@@ -47,10 +49,7 @@ export default class FabScreen extends Component {
   componentWillMount() {
 
     if (!FeaturesService.has('crypto')) {
-      Alert.alert(
-        'Oooopppss',
-        'This feature is currently unavailable on your platform',
-      );
+      FeaturesService.showAlert();
       return this.props.navigation.goBack();
     }
 
@@ -134,11 +133,9 @@ export default class FabScreen extends Component {
       <ScrollView contentContainerStyle={styles.body}>
         {icon}
 
-        <Text style={styles.subtext}>
-          Support <Text style={styles.bold}>@{ owner.username }</Text> by sending them tokens.
-          Once you send them the amount listed in the tiers, you can receive rewards if they are offered. Otherwise,
-          it's a donation.
-        </Text>
+        <Text style={styles.subtext}>{i18n.to('wire.supportMessage', null, {
+          name: <Text style={styles.bold}>@{ owner.username }</Text>
+        })}</Text>
 
         <View style={{ flexDirection: 'row', marginTop: 32, marginBottom: 32, }}>
           <TextInput
@@ -152,14 +149,14 @@ export default class FabScreen extends Component {
 
           <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
             <Text style={{ fontSize: 24, fontWeight: '600', fontFamily: 'Roboto', padding: 16, color: '#555' }}>
-              Tokens
+              {i18n.t('tokens')}
             </Text>
           </View>
         </View>
 
         <View style={{ width: '100%', alignSelf: 'flex-start', }}>
           <CheckBox
-            title="Repeat this transaction every month"
+            title={i18n.t('wire.repeatMessage')}
             checked={this.props.wire.recurring}
             onPress={() => this.props.wire.toggleRecurring()}
             left
@@ -172,14 +169,14 @@ export default class FabScreen extends Component {
         </View>
 
         { this.props.wire.owner.wire_rewards && this.props.wire.owner.wire_rewards.length && <View>
-          <Text style={styles.rewards}>{ owner.username }'s rewards</Text>
-          <Text style={styles.lastmonth}>You have sent <Text style={styles.bold}>{txtAmount}</Text> in the last month.</Text>
+          <Text style={styles.rewards}>{i18n.t('wire.nameReward',{name: owner.username})}</Text>
+          <Text style={styles.lastmonth}>{i18n.to('wire.youHaveSent', null, {amount: <Text style={styles.bold}>{txtAmount}</Text>})}</Text>
           </View> }
 
         {carousel}
 
         <Button
-          title={(this.props.wire.amount == 0) ? 'Ok' : 'Send'}
+          title={(this.props.wire.amount == 0) ? i18n.t('ok') : i18n.t('send')}
           buttonStyle={styles.send}
           disabled={this.props.wire.sending}
           onPress={this.confirmSend}
@@ -190,7 +187,7 @@ export default class FabScreen extends Component {
           {this.props.wallet.addresses.map((address, i) => (
             <View style={styles.addressView} key={address.address}>
               <View style={styles.addressMetaView}>
-                <Text style={styles.addressLabel}>{address.label} Address</Text>
+                <Text style={styles.addressLabel}>{i18n.t('wire.addressLabel', {label:address.label})}</Text>
                 <Text style={styles.addressAddress} ellipsizeMode='tail' numberOfLines={1}>{addressExcerpt(address.address)}</Text>
               </View>
 
@@ -231,11 +228,11 @@ export default class FabScreen extends Component {
     if (!this.validate()) return;
 
     Alert.alert(
-      'Are you sure?',
-      'You will send ' + this.props.wire.formatAmount(this.props.wire.amount) + ' to @' + this.props.wire.owner.username,
+      i18n.t('confirmMessage'),
+      i18n.t('wire.confirmMessage', {amount: this.props.wire.formatAmount(this.props.wire.amount), name: this.props.wire.owner.username}),
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'OK', onPress: () => this.send() },
+        { text: i18n.t('cancel'), style: 'cancel' },
+        { text: i18n.t('ok'), onPress: () => this.send() },
       ],
       { cancelable: false }
     );
@@ -257,12 +254,12 @@ export default class FabScreen extends Component {
       this.props.navigation.goBack();
     } catch (e) {
       if (!e || e.message !== 'E_CANCELLED') {
-        console.error('Wire/send()', e);
+        logService.error(e);
 
         Alert.alert(
-          'There was a problem sending wire',
+          i18n.t('wire.errorSendingWire'),
           (e && e.message) || 'Unknown internal error',
-          [{ text: 'OK' }],
+          [{ text: i18n.t('ok') }],
           { cancelable: false }
         );
       }

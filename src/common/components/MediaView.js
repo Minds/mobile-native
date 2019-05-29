@@ -34,6 +34,7 @@ import { isEntityNsfw } from '../helpers/isNsfw';
 import openUrlService from '../services/open-url.service';
 import logService from '../services/log.service';
 import testID from '../helpers/testID';
+import i18n from '../services/i18n.service';
 
 /**
  * Activity
@@ -109,11 +110,11 @@ export default class MediaView extends Component {
    */
   download = () => {
     Alert.alert(
-      'Download to gallery',
-      `Do you want to download this image?`,
+      i18n.t('downloadGallery'),
+      i18n.t('wantToDownloadImage'),
       [
-        { text: 'No', style: 'cancel' },
-        { text: 'Yes', onPress: () => this.runDownload() },
+        { text: i18n.t('no'), style: 'cancel' },
+        { text: i18n.t('yes'), onPress: () => this.runDownload() },
       ],
       { cancelable: false }
     );
@@ -125,9 +126,9 @@ export default class MediaView extends Component {
   runDownload = async () => {
     try {
       const result = await download.downloadToGallery(this.source.uri, this.props.entity);
-      Alert.alert('Success', 'Image added to gallery!');
+      Alert.alert(i18n.t('success'), i18n.t('imageAdded'));
     } catch (e) {
-      Alert.alert('Error downloading file');
+      Alert.alert(i18n.t('errorDownloading'));
       logService.exception('[MediaView] runDownload', e);
     }
   }
@@ -164,7 +165,7 @@ export default class MediaView extends Component {
       let text = (
         <Text
           style={styles.imageLoadErrorText}
-        >The media could not be loaded.</Text>
+        >{i18n.t('errorMedia')}</Text>
       );
 
       if (this.props.entity.perma_url) {

@@ -7,6 +7,7 @@ import attachmentService from '../services/attachment.service';
 import {MINDS_MAX_VIDEO_LENGTH} from '../../config/Config';
 import mindsService from '../services/minds.service';
 import logService from '../services/log.service';
+import i18n from '../services/i18n.service';
 
 /**
  * Attachment Store
@@ -129,8 +130,9 @@ export default class AttachmentStore {
       // check video length
       if (meta.duration && meta.duration > (settings.max_video_length * 1000) ) {
         Alert.alert(
-          'Sorry',
-          'Video duration must be less than ' + (settings.max_video_length / 60) + ' minutes');
+          i18n.t('sorry'),
+          i18n.t('attachment.tooLong', {minutes: (settings.max_video_length / 60)})
+        );
         return false;
       }
     }

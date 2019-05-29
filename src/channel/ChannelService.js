@@ -2,6 +2,7 @@ import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import blockListService from '../common/services/block-list.service';
 import logService from '../common/services/log.service';
+import i18n from '../common/services/i18n.service';
 import feedService from '../common/services/feed.service';
 import featuresService from '../common/services/features.service';
 import entitiesService from '../common/services/entities.service';
@@ -156,7 +157,7 @@ class ChannelService {
       })
       .catch(err => {
         logService.exception('[ChannelService]', err);
-        throw "Oops, an error has occurred getting this image feed";
+        throw new Error (i18n.t('errorMessage'));
       })
   }
 
@@ -185,7 +186,7 @@ class ChannelService {
       })
       .catch(err => {
         logService.exception('[ChannelService]', err);
-        throw "Oops, an error has occurred getting this video feed";
+        throw new Error (i18n.t('errorMessage'));
       })
   }
 
@@ -214,7 +215,7 @@ class ChannelService {
       })
       .catch(err => {
         logService.exception('[ChannelService]', err);
-        throw "Oops, an error has occurred getting this blog feed.";
+        throw new Error (i18n.t('errorMessage'));
       })
   }
 
@@ -232,7 +233,7 @@ class ChannelService {
       })
       .catch(err => {
         logService.exception('[ChannelService]', err);
-        throw "Oops, an error has occurred getting subscribers";
+        throw new Error (i18n.t('errorMessage'));
       })
   }
 }

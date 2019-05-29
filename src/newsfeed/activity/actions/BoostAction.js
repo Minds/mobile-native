@@ -13,9 +13,11 @@ import { CommonStyle } from '../../../styles/Common';
 import { ComponentsStyle } from '../../../styles/Components';
 
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+import i18n from '../../../common/services/i18n.service';
 
 // prevent double tap in touchable
 const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
+
 /**
  * Boost Action Component
  */
@@ -37,7 +39,7 @@ export default class BoostAction extends PureComponent {
           underlayColor="transparent"
           onPress={this.openBoost}
         >
-          <Text style={[styles.text, CommonStyle.colorPrimary]} numberOfLines={1} adjustsFontSizeToFit={true}>BOOST</Text>
+          <Text style={[styles.text, CommonStyle.colorPrimary]} numberOfLines={1} adjustsFontSizeToFit={true}>{i18n.t('boost').toUpperCase()}</Text>
         </TouchableHighlightCustom>
       </View>
     );
@@ -47,7 +49,6 @@ export default class BoostAction extends PureComponent {
    * Open boost screen
    */
   openBoost = () => {
-
     this.props.navigation.push('Boost', { entity: this.props.entity });
   }
 }

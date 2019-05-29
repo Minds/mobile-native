@@ -18,6 +18,7 @@ import {
 import { CommonStyle } from '../../styles/Common';
 import JoinView from './JoinView';
 import ContributionsView from './contributions/ContributionsView';
+import i18nService from '../../common/services/i18n.service';
 
 /**
  * Token and Rewards Screen
@@ -26,8 +27,8 @@ import ContributionsView from './contributions/ContributionsView';
 @observer
 export default class ContributionsScreen extends Component {
 
-  static navigationOptions = {
-    title: 'Contributions'
+  static navigationOptions = ({ navigation }) => {
+    return {title: i18nService.t('wallet.contributionsTitle')}
   }
 
   /**

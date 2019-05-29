@@ -28,6 +28,7 @@ import Colors from '../styles/Colors';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import stylesheet from '../onboarding/stylesheet';
+import i18n from '../common/services/i18n.service';
 
 @inject('messengerList')
 @observer
@@ -47,7 +48,7 @@ export default class MessengerOnboardingScreen extends Component {
     let next = (
       <NavNextButton
         onPress={this.props.onNext}
-        title="SKIP"
+        title={i18n.t('done').toUpperCase()}
         color={Colors.darkGreyed}
       />
     );
@@ -56,7 +57,7 @@ export default class MessengerOnboardingScreen extends Component {
       next = (
         <NavNextButton
           onPress={this.setup.bind(this)}
-          title="Done"
+          title={i18n.t('done')}
           color={Colors.primary}
         />
       );
@@ -100,11 +101,10 @@ export default class MessengerOnboardingScreen extends Component {
   render() {
     return (
       <View>
-        <Text style={style.h1}>Messenger</Text>
+        <Text style={style.h1}>{i18n.t('messenger.messenger')}</Text>
 
         <Text style={style.p}>
-          An additional password is required for messenger in order to ensure that your messages
-          are private and fully encrypted.
+          {i18n.t('messenger.onboardingText')}
         </Text>
 
         <View style={[CommonStyle.flexContainer, CommonStyle.padding2x]}>
@@ -114,7 +114,7 @@ export default class MessengerOnboardingScreen extends Component {
               editable={!this.state.inProgress}
               style={ [ ComponentsStyle.passwordinput, { flex: 1 } ]}
               underlineColorAndroid='transparent'
-              placeholder='Password'
+              placeholder={i18n.t('auth.password')}
               secureTextEntry={true}
               onChangeText={(password) => {
                 this.setState({password});
@@ -129,7 +129,7 @@ export default class MessengerOnboardingScreen extends Component {
               editable={!this.state.inProgress}
               style={ [ ComponentsStyle.passwordinput, { flex: 1 } ]}
               underlineColorAndroid='transparent'
-              placeholder='Confirm password'
+              placeholder={i18n.t('auth.confirmpassword')}
               secureTextEntry={true}
               onChangeText={(password2) => {
                 this.setState({password2});

@@ -15,6 +15,7 @@ import { ListItem, Avatar } from 'react-native-elements';
 
 import Button from '../common/components/Button';
 import colors from '../styles/Colors';
+import i18n from '../common/services/i18n.service';
 
 @inject('groupView')
 @observer
@@ -37,7 +38,7 @@ export default class GroupsListItem extends Component {
             source={{ uri: MINDS_CDN_URI + 'fs/v1/avatars/' + this.props.group.guid + '/small/' + this.props.group.icontime }}
           />
         }
-        subtitle={'Members ' + this.props.group['members:count']}
+        subtitle={i18n.t('groups.listMembersCount', {count: this.props.group['members:count']})}
         onPress={this.props.onPress}
         hideChevron={!button}
         rightIcon={button}

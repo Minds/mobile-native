@@ -53,7 +53,7 @@ export default class ModalConfirmPassword extends Component {
         <View style={ [ CommonStyle.flexContainer, CommonStyle.modalScreen ]} >
           <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={Platform.OS == 'ios' ? 'padding' : null} >
             {msg}
-            <Text>Confirm password</Text>
+            <Text>{i18n.t('auth.confirmpassword')}</Text>
             <TextInput
               style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
               placeholder={i18n.t('auth.password')}

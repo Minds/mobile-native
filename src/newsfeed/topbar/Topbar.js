@@ -16,6 +16,7 @@ import {
 
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
+import i18n from '../../common/services/i18n.service';
 
 /**
  * Newsfeed top bar
@@ -42,10 +43,10 @@ export default class Topbar extends Component {
         <View style={[styles.container, CommonStyle.shadow]}>
           <View style={styles.topbar}>
             <TouchableOpacity style={[styles.tab, this.selected('subscribed')]} onPress={() => this.props.newsfeed.setFilter('subscribed')}>
-              <Text style={CommonStyle.fontXS}>SUBSCRIBED</Text>
+              <Text style={CommonStyle.fontXS}>{i18n.t('newsfeed.subscribed')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.tab, this.selected('boostfeed')]} onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
-              <Text style={CommonStyle.fontXS}>BOOSTFEED</Text>
+              <Text style={CommonStyle.fontXS}>{i18n.t('newsfeed.boostfeed')}</Text>
             </TouchableOpacity>
           </View>
         </View>
