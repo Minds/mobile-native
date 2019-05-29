@@ -66,6 +66,7 @@ export default class FeedsSync {
       let entities;
       let next;
       let attempts = 0;
+      let lastError;
 
       while (true) {
         try {
@@ -76,6 +77,7 @@ export default class FeedsSync {
           }
         } catch (e) {
           console.warn('Cannot sync, using cache');
+          lastError = e;
         }
 
         const rows = await this.db.getAllSliced('feeds', 'key', key, {
@@ -84,6 +86,8 @@ export default class FeedsSync {
         });
 
         if (!rows || !rows.length) {
+          // if there is no cache and there is a previous error we rethrow it
+          if (lastError) throw lastError;
           break;
         }
 
@@ -99,20 +103,19 @@ export default class FeedsSync {
         }
 
         if (attempts++ > 15) {
+          if (lastError) throw lastError;
           break;
         }
 
         await asyncSleep(100); // Throttle a bit
       }
 
-      //
-
       return {
         entities,
         next,
       }
     } catch (e) {
-      console.error('FeedsSync.get', e);
+      // console.error('FeedsSync.get', e);
       throw e;
     }
   }
@@ -212,7 +215,7 @@ export default class FeedsSync {
         sync: Date.now(),
       });
     } catch (e) {
-      console.warn('FeedsSync.sync', e);
+      // console.warn('FeedsSync.sync', e);
       throw e;
     }
 
@@ -233,7 +236,7 @@ export default class FeedsSync {
 
       return true;
     } catch (e) {
-      console.error('FeedsSync.prune', e);
+      // console.error('FeedsSync.prune', e);
       throw e;
     }
   }
@@ -250,7 +253,7 @@ export default class FeedsSync {
 
       return true;
     } catch (e) {
-      console.error('FeedsSync.prune', e);
+      // console.error('FeedsSync.prune', e);
       throw e;
     }
   }

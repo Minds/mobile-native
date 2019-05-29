@@ -101,7 +101,7 @@ export default class EntitiesSync {
       });
       await this.db.bulkInsert('entities', entities);
     } catch (e) {
-      console.warn('EntitiesService.fetch', e);
+      // console.log('EntitiesService.fetch', e);
       return false;
     }
 
