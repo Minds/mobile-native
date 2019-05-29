@@ -13,6 +13,7 @@ import UserModel from '../channel/UserModel';
 import GroupModel from '../groups/GroupModel';
 import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';
 import DiscoveryFeedStore from './DiscoveryFeedStore';
+import logService from '../common/services/log.service';
 
 /**
  * Discovery Store
