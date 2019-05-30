@@ -115,6 +115,13 @@ class I18nService {
     i18n.locale = locale;
   }
 
+  getCurrentLanguageName() {
+    const locale = i18n.currentLocale();
+    const obj = this.getSupportedLocales().find(l => l.value === locale);
+    if (obj) return obj.name;
+    return '';
+  }
+
   /**
    * get supported locales
    */

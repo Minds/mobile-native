@@ -12,6 +12,8 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import authService from './AuthService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
@@ -21,6 +23,7 @@ import { Button } from 'react-native-elements'
 import i18n from '../common/services/i18n.service';
 import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
+import ModalPicker from '../common/components/ModalPicker';
 
 /**
  * Login Form
@@ -33,8 +36,16 @@ export default class LoginForm extends Component {
     msg: '',
     twoFactorToken: '',
     twoFactorCode: '',
-    inProgress: false
+    inProgress: false,
+    showLanguages: false,
   };
+
+  componentWillMount() {
+    this.setState({
+      language: i18n.getCurrentLocale()
+    });
+  }
+
 
   /**
    * Render
@@ -56,8 +67,38 @@ export default class LoginForm extends Component {
         <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop3x]}>
           <Text style={[CommonStyle.colorWhite, ComponentsStyle.link]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
         </View>
+        <View style={[CommonStyle.rowJustifyCenter, CommonStyle.paddingTop3x, CommonStyle.marginTop4x]}>
+          <Icon name="md-flag" size={18} color="white" style={{paddingTop:1}}/>
+          <Text style={[CommonStyle.colorWhite]} onPress={this.showLanguages}>  {i18n.getCurrentLanguageName()}</Text>
+        </View>
+        <ModalPicker
+          onSelect={this.languageSelected}
+          onCancel={this.cancel}
+          show={this.state.showLanguages}
+          title={i18n.t('language')}
+          valueField="value"
+          labelField="name"
+          value={this.state.language}
+          items={i18n.getSupportedLocales()}
+        />
       </KeyboardAvoidingView>
     );
+  }
+
+  showLanguages = () => {
+    this.setState({showLanguages: true});
+  }
+
+  /**
+   * Language selected
+   */
+  languageSelected = (language) => {
+    this.setState({language, showLanguages: false});
+    i18n.setLocale(language);
+  }
+
+  cancel = () => {
+    this.setState({showLanguages: false});
   }
 
   getButtons() {
