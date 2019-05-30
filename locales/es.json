@@ -423,7 +423,7 @@
         "deactivateChannel": "Desactivar canal",
         "options": "Opciones",
         "notifications": "Notificaciones",
-        "logout": "Salir",
+        "logout": "Cerrar sesión",
         "errorSaving": "Error grabando configuración, por favor intenta de nuevo",
         "passwordChanged": "Contraseña cambiada satisfactoriamente",
         "keyGenerated": "Llaves generadas satisfactoriamente!",
