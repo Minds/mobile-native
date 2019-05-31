@@ -65,7 +65,11 @@ export default class NewsfeedFilterStore {
   @action
   setType(type) {
     if (type == this.type) return;
+
     this.type = type;
+    if ((type === 'channels' || type === 'groups') && this.filter !== 'top') {
+      this.setFilter('top');
+    }
   }
 
   /**
