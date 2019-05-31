@@ -24,10 +24,6 @@ import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
 
 const selectedTextStyle = {color: 'black'};
-const typeOptions = [
-  { text: i18n.t('blogs.tabSubscriptions'), value: 'network', selectedTextStyle},
-  { text: i18n.t('blogs.tabMyBlogs'), value: 'owner', selectedTextStyle},
-];
 
 const BlogCardWithErrorBoundary = withErrorBoundary(BlogCard);
 
@@ -41,6 +37,14 @@ export default class BlogsListScreen extends Component {
   static navigationOptions = {
     title: 'Blogs',
   };
+
+  constructor(props) {
+    super(props);
+    this.typeOptions = [
+      { text: i18n.t('blogs.tabSubscriptions'), value: 'network', selectedTextStyle},
+      { text: i18n.t('blogs.tabMyBlogs'), value: 'owner', selectedTextStyle},
+    ];
+  }
 
   /**
    * Load data on mount
@@ -88,7 +92,7 @@ export default class BlogsListScreen extends Component {
     return (
       <View>
         <Toolbar
-          options={ typeOptions }
+          options={ this.typeOptions }
           initial={ this.props.blogs.filter }
           onChange={ this.onTabChange }
         />
