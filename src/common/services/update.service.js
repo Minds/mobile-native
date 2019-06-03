@@ -1,4 +1,4 @@
-import ReactNativeAPK from "react-native-apk";
+import ReactNativeAPK from "rn-apk";
 import {
   Alert,
 } from 'react-native';
