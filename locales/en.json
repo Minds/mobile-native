@@ -714,5 +714,8 @@
   "errorMediaDisplay":"There was an error displaying this media",
   "stacktraceCopied":"Stack trace copied to the clipboard.",
   "errorPinnedPost":"Ooops, error setting pinned post",
-  "errorShowActivity":"Can't show this activity"
+  "errorShowActivity":"Can't show this activity",
+  "wantToUpdate":"Do you want to update the app?",
+  "updateAvailable":"Update available",
+  "rememberTomorrow":"Remember me tomorrow"
 }

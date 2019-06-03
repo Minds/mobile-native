@@ -157,7 +157,7 @@
         "nothingToPost": "Nada para postear...",
         "share": "COMPARTIR",
         "lock": "CERRADO POR WIRE",
-        "tokens": "MONEDAS",
+        "tokens": "TOKENS",
         "gallery": "Galleria",
         "photo": "Foto",
         "video": "Video",
@@ -735,5 +735,8 @@
     "errorMediaDisplay": "Hubo un error mostrando este medio",
     "stacktraceCopied": "Traza copiada al portapapeles",
     "errorPinnedPost": "Ups, error fijando la publicación",
-    "errorShowActivity": "No puedo mostrar esta actividad"
+    "errorShowActivity": "No puedo mostrar esta actividad",
+    "wantToUpdate": "Quieres actualizar la aplicación? ",
+    "updateAvailable": "Actualización disponible",
+    "rememberTomorrow": "Recuerdame mañana"
 }
