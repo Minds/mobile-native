@@ -86,7 +86,7 @@ export default class CapturePoster extends Component {
     if (params) {
       this.props.capture.reset();
       if (params.text) {
-        this.props.capture.setText(params.text);
+        this.setText(params.text);
       } else if (params.image) {
         this.onAttachedMedia({
           type: 'image/jpeg',
