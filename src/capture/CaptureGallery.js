@@ -65,10 +65,14 @@ export default class CaptureGallery extends PureComponent {
    * Load photos
    */
   _loadPhotos() {
-    CameraRoll.getPhotos({
+    const params = {
       first: 30,
       assetType: 'All',
-    })
+    }
+
+    if (Platform.OS === 'ios') params.groupTypes = 'All';
+
+    CameraRoll.getPhotos(params)
       .then(r => {
         this.setState({
           imagesLoaded: true,
