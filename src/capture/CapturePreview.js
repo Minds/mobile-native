@@ -1,13 +1,7 @@
 import React, { PureComponent } from 'react';
-import { ListView, StyleSheet, View,ScrollView, FlatList, TextInput, Text,Button, TouchableHighlight, Image, ActivityIndicator } from 'react-native';
-import { observer, inject } from 'mobx-react/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import api from './../common/services/api.service';
-
-import { post, remind } from '../newsfeed/NewsfeedService';
+import { StyleSheet, View, Image } from 'react-native';
 
 import MindsVideo from '../media/MindsVideo';
-import colors from '../styles/Colors';
 
 /**
  * Capture preview
