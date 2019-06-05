@@ -55,6 +55,7 @@ import ErrorBoundary from './src/common/components/ErrorBoundary';
 import { CommonStyle as CS } from './src/styles/Common';
 import logService from './src/common/services/log.service';
 import settingsStore from './src/settings/SettingsStore';
+import TosModal from './src/tos/TosModal';
 
 let deepLinkUrl = '';
 
@@ -304,6 +305,10 @@ export default class App extends Component<Props, State> {
       <BlockchainTransactionModalScreen key="blockchainTransactionModal" blockchainTransaction={ stores.blockchainTransaction } />
     );
 
-    return [ app, keychainModal, blockchainTransactionModal ];
+    const tosModal = (
+      <TosModal user={stores.user}/>
+    )
+
+    return [ app, keychainModal, blockchainTransactionModal,  tosModal];
   }
 }

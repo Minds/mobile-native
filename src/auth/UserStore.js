@@ -32,6 +32,11 @@ class UserStore {
     this.me.eth_wallet = value;
   }
 
+  @action
+  setTosLastUpdate(value) {
+    this.me.last_accepted_tos = value;
+  }
+
   hasRewards() {
     return !!(this.me && this.me.rewards);
   }
