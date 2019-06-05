@@ -2,14 +2,18 @@ import {
   observable,
   action,
   computed,
-} from 'mobx'
+} from 'mobx';
 
-import NotificationsService, { getFeed, getCount } from './NotificationsService';
+import { showMessage, hideMessage } from "react-native-flash-message";
+
+import NotificationsService, { getFeed, getCount, getSingle } from './NotificationsService';
 
 import OffsetListStore from '../common/stores/OffsetListStore';
 import session from '../common/services/session.service';
 import badge from '../common/services/badge.service';
 import logService from '../common/services/log.service';
+import socketService from '../common/services/socket.service';
+import { Alert } from 'react-native';
 
 /**
  * Notifications Store
@@ -20,6 +24,8 @@ class NotificationsStore {
    * Notification list store
    */
   list = new OffsetListStore('shallow');
+
+  last = null;
 
   service = new NotificationsService;
 
@@ -53,7 +59,10 @@ class NotificationsStore {
         this.loadCount();
         // start polling for count every 10 seconds
         this.startPollCount();
+
+        this.listen();
       } else {
+        this.unlisten();
         this.stopPollCount();
       }
     });
@@ -65,6 +74,31 @@ class NotificationsStore {
         dispose();
       });
     }
+  }
+
+  onSocket = async(guid) => {
+    this.increment();
+
+    // TODO: enable live notifications
+    // const response = await getSingle(guid);
+    // if (response.notification) {
+    //   // hideMessage();
+    //   this.last = response.notification;
+    //   showMessage({
+    //     type: "default",
+    //     position: 'top',
+    //     backgroundColor: "#EEF5F9",
+    //     message: ""
+    //   });
+    // }
+  }
+
+  listen() {
+    socketService.subscribe('notification', this.onSocket);
+  }
+
+  unlisten() {
+    socketService.unsubscribe('notification', this.onSocket);
   }
 
   /**
@@ -129,8 +163,8 @@ class NotificationsStore {
    */
   startPollCount() {
     this.pollInterval = setInterval(() => {
-       this.loadCount();
-    }, 10000);
+      this.loadCount();
+    }, 30000);
   }
 
   /**
@@ -153,6 +187,12 @@ class NotificationsStore {
   setUnread(count) {
     this.unread = count;
     badge.setUnreadNotifications(count);
+  }
+
+  @action
+  increment() {
+    this.unread++;
+    badge.setUnreadNotifications(this.unread);
   }
 
   @action
