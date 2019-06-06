@@ -28,7 +28,7 @@ import colors from '../styles/Colors';
 import Tags from '../common/components/Tags';
 import CaptureFab from '../capture/CaptureFab';
 import GroupHeader from './header/GroupHeader';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import CommentList from '../comments/CommentList';
 import NewsfeedList from '../newsfeed/NewsfeedList';
 import CenteredLoading from '../common/components/CenteredLoading';
@@ -204,9 +204,9 @@ export default class GroupViewScreen extends Component {
       case 'desc':
         const description = entities.decodeHTML(group.group.briefdescription).trim();
         return (
-          <ScrollView style={CommonStyle.backgroundLight}>
+          <ScrollView style={CS.backgroundLight}>
             {header}
-            <View style={CommonStyle.padding2x}>
+            <View style={CS.padding2x}>
               <Tags>{description}</Tags>
             </View>
           </ScrollView>
@@ -325,7 +325,7 @@ export default class GroupViewScreen extends Component {
       null;
 
     return (
-      <View style={{flex:1}}>
+      <View style={CS.flexContainer}>
         {this.props.groupView.tab === 'feed' && <CaptureFab navigation={this.props.navigation} group={group} /> }
         {this.getList()}
         {memberActionSheet}

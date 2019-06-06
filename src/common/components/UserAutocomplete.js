@@ -181,6 +181,8 @@ export default class UserAutocomplete extends PureComponent {
    */
   render() {
 
+    if (!this.state.tag) return null;
+
     const users = this.renderUsers();
 
     return (

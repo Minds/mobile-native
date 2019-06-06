@@ -31,7 +31,6 @@ export default class CommentModel extends ActivityModel {
 
   buildCommentsStore(parent) {
     if (this.expanded && !this.comments) {
-      console.log('BUILD STORE FOR '+this.description)
       this.comments = commentsStoreProvider.get();
       this.comments.setParent(this);
       this.parent = parent;
