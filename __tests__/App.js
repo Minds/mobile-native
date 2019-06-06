@@ -50,6 +50,7 @@ jest.mock('../src/keychain/KeychainModalScreen', () => 'KeychainModalScreen');
 
 jest.mock('../src/common/services/translation.service');
 jest.mock('../src/common/helpers/abortableFetch');
+jest.mock('../src/tos/TosModal', () => 'TosModal');
 
 it('renders correctly', () => {
   const tree = renderer.create(

@@ -13,13 +13,11 @@ describe('Activity editor component', () => {
   beforeEach(() => {
     newsfeed = {
       list: {
-        updateActivity: () => {
-          return new Promise((r, rr) => {
-            return value;
-          });
-        }
+        updateActivity: jest.fn()
       }
     }
+
+    newsfeed.list.updateActivity.mockResolvedValue(true);
 
     const navigation = { navigate: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
