@@ -1,13 +1,16 @@
-import ReactNativeAPK from "react-native-apk";
+import ReactNativeAPK from "rn-apk";
 import {
   Alert,
 } from 'react-native';
 import RNFS from 'react-native-fs';
 import api from "./api.service";
+import moment from 'moment-timezone';
 import { Version } from "../../config/Version";
 import { action, observable } from "mobx";
 import navigationService from "../../navigation/NavigationService";
 import logService from "./log.service";
+import i18n from "./i18n.service";
+import storageService from "./storage.service";
 
 /**
  * Update service
@@ -16,6 +19,22 @@ class UpdateService {
   version = '';
   @observable progress = 0;
   @observable downloading = false;
+
+  /**
+   * Check if it has to ignore the update
+   */
+  async rememberTomorrow() {
+    try {
+      const ignoreDate = await storageService.getItem('@mindsUpdateDate');
+      if (ignoreDate) {
+        const now = moment();
+        if (ignoreDate === now.format('YYYY-MM-DD')) return true;
+        return false;
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   /**
    * Check and update
@@ -30,12 +49,19 @@ class UpdateService {
     if (last) {
       try {
         if (this.needUpdate(Version.VERSION, last.version)) {
+
+          if (await this.rememberTomorrow()) return;
+
           Alert.alert(
-            'Update available v'+last.version,
-            `Do you want to update the app?`,
+            i18n.t('updateAvailable') + ' v' + last.version,
+            i18n.t('wantToUpdate'),
             [
-              { text: 'No', style: 'cancel' },
-              { text: 'Yes', onPress: () => {
+              { text: i18n.t('no'), style: 'cancel' },
+              { text: i18n.t('rememberTomorrow'), onPress: () => {
+                storageService.setItem('@mindsUpdateDate', moment().format('YYYY-MM-DD'));
+                }
+              },
+              { text: i18n.t('yes'), onPress: () => {
                   // goto update screen
                   navigationService.reset('Update');
                   this.version = last.version;

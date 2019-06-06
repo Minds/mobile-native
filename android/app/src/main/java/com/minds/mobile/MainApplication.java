@@ -3,11 +3,11 @@ package com.minds.mobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import be.skyzohlabs.rnapk.ReactNativeAPKPackage;
 import com.reactcommunity.rnlocalize.RNLocalizePackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
-import be.skyzohlabs.rnapk.ReactNativeAPKPackage;
 import com.psykar.cookiemanager.CookieManagerPackage;
 import com.github.wumke.RNExitApp.RNExitAppPackage;
 import com.peel.react.TcpSocketsModule;
@@ -58,11 +58,11 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeAPKPackage(),
             new RNLocalizePackage(),
             new RNCWebViewPackage(),
             new AsyncStoragePackage(),
             new RNGestureHandlerPackage(),
-            new ReactNativeAPKPackage(),
             new CookieManagerPackage(),
             new RNExitAppPackage(),
             new TcpSocketsModule(),
