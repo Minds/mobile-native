@@ -3,6 +3,7 @@ import apiService from "./api.service";
 import sqliteStorageProviderService from "./sqlite-storage-provider.service";
 import { Alert } from "react-native";
 import logService from "./log.service";
+import normalizeUrn from "../helpers/normalize-urn";
 
 class EntitiesService {
   constructor() {
@@ -36,7 +37,7 @@ class EntitiesService {
       return [];
     }
 
-    const urns = guids.map(guid => `urn:entity:${guid}`);
+    const urns = guids.map(guid => normalizeUrn(guid));
 
     return await this.sync.get(urns);
   }
@@ -46,7 +47,7 @@ class EntitiesService {
       return true;
     }
 
-    const urns = guids.map(guid => `urn:entity:${guid}`);
+    const urns = guids.map(guid => normalizeUrn(guid));
 
     return await this.sync.sync(urns);
   }

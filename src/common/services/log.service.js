@@ -69,6 +69,7 @@ class LogService {
     }
     if (stack) {
       deviceLog.rnerror(false, (prepend ? `${prepend} ` : '') + error.message, stack);
+      if (__DEV__) console.log(error);
     } else {
       deviceLog.error((prepend ? `${prepend} ` : '') + String(error));
     }
