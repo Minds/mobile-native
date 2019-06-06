@@ -48,8 +48,10 @@ export default class LikeView extends PureComponent {
           params.group = this.props.entity.params.parent;
           params.hydrate = true;
           params.tab = 'conversation';
+          params.focusedUrn = this.props.entity.params.focusedCommentUrn;
         } else {
           params.guid = this.props.entity.entity.entity_guid;
+          params.focusedUrn = this.props.entity.params.focusedCommentUrn;
           screen = 'Activity';
         }
 
