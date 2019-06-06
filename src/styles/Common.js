@@ -445,6 +445,9 @@ export const CommonStyle = StyleSheet.create({
   textCenter: {
     textAlign: 'center'
   },
+  textJustify: {
+    textAlign: 'justify'
+  },
 
   // Overlay∫
   blackOverlay: {
