@@ -123,7 +123,7 @@
     "errorCantReceiveTokens":"User cannot receive OnChain tokens because they haven't setup an OnChain address. Please retry OffChain.",
     "errorPayment":"Sorry, your payment failed. Please, try again, use another card or wallet",
     "errorCanNotGenerate":"Cannot generate GUID",
-    "errorGet":"Ooops, failed to get boosts",
+    "errorGet":"Sorry! failed to get boosts",
     "boostConfirm":"You're about to boost {{amount}} views for your content.",
     "boostConfirmP2p":"You're about to send {{amount}} to @{{username}} for reminding your content.",
     "selectWalletNetworkMessage":"Select the wallet you would like to use for this Network Boost.",
@@ -588,7 +588,7 @@
     "exit":"Exit"
   },
   "mindsSettings": {
-    "error":"Oops there was an error loading the settings from the server\n Please try again."
+    "error":"Sorry, there was an error loading the settings from the server\n Please try again."
   },
   "userTypeAhead":{
     "placeholder": "Start typing a username to search...",
@@ -661,7 +661,7 @@
   "cantLoad":"Can't load",
   "conversation":"Conversation",
   "confirm":"Confirm",
-  "errorMessage":"Ooops. Looks like there was an error.",
+  "errorMessage":"Sorry, it looks like there was an error.",
   "error":"Error",
   "rewards":"Rewards",
   "reply":"Reply",
@@ -703,7 +703,7 @@
   "completed":"Completed",
   "pending":"Pending",
   "hide":"Hide",
-  "ops":"Ooops",
+  "ops":"Oops",
   "pin":"Pin",
   "unpin":"Unpin",
   "downloadGallery":"Download to gallery",
@@ -713,7 +713,7 @@
   "errorMedia":"The media could not be loaded.",
   "errorMediaDisplay":"There was an error displaying this media",
   "stacktraceCopied":"Stack trace copied to the clipboard.",
-  "errorPinnedPost":"Ooops, error setting pinned post",
+  "errorPinnedPost":"Sorry! error setting pinned post",
   "errorShowActivity":"Can't show this activity",
   "wantToUpdate":"Do you want to update the app?",
   "updateAvailable":"Update available",

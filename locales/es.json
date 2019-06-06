@@ -557,7 +557,7 @@
     "images": "Imágenes",
     "videos": "Videos",
     "create": "Crear",
-    "yesImSure": "Si, estoy seguro",
+    "yesImSure": "Si, estoy seguro",git 
     "cancel": "Cancelar",
     "reject": "Rechazar",
     "revoke": "Revocar",
@@ -569,7 +569,7 @@
     "confirmNoUndo": "¿Estas seguro? Es IRREVERSIBLE.",
     "confirmMessage": "¿Estas seguro?",
     "confirm": "Confirmar",
-    "errorMessage": "Oooppppss. Parece que ha ocurrido un error.",
+    "errorMessage": "Ups! Parece que ha ocurrido un error.",
     "error": "Error",
     "rewards": "Recompensas",
     "reply": "Responder",
@@ -607,7 +607,7 @@
     "onchain": "OnChain",
     "completed": "Completado",
     "pending": "Pendiente",
-    "ops": "Oooppppss",
+    "ops": "Ups!",
     "permissions": {
         "externalStorage": "Minds necesita acceso a tu almacenamiento externo así puedes subir imagenes",
         "writeExternalStorage": "Minds necesita acceso a tu almacenamiento externo para poder descargar imágenes",
