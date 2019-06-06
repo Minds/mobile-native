@@ -61,7 +61,7 @@ export default class GroupCard extends Component {
               <Text style={styles.countervalue}>{abbrev(group['activity:count'], 0)}</Text>
             </View>
             <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
-              <Text style={styles.countertitle}>{i18n.t('comments').toUpperCase()}</Text>
+              <Text style={styles.countertitle}>{i18n.t('comments.comments').toUpperCase()}</Text>
               <Text style={styles.countervalue}>{abbrev(group['comments:count'], 0)}</Text>
             </View>
           </View>
