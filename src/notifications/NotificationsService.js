@@ -24,11 +24,14 @@ export default class NotificationsService {
       throw "Ooops";
     }
   }
-
 }
 
 export function getCount() {
   return api.get('api/v1/notifications/count');
+}
+
+export function getSingle(guid) {
+  return api.get(`api/v1/notifications/single/${guid}`);
 }
 
 export function getSettings() {
