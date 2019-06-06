@@ -90,7 +90,7 @@
     "react-native-udp": "^2.3.1",
     "react-native-vector-icons": "^6.4.2",
     "react-native-video": "react-native-community/react-native-video#c36a9cf2efdb920b86ca453e1be89398df3dae16",
-    "react-native-webview": "^5.8.1",
+    "react-native-webview": "^5.11.0",
     "react-navigation": "^3.9.1",
     "react-promise": "^2.0.0",
     "readable-stream": "1.0.33",
