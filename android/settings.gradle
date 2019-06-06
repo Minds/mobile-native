@@ -1,4 +1,6 @@
 rootProject.name = 'Minds'
+include ':rn-apk'
+project(':rn-apk').projectDir = new File(rootProject.projectDir, '../node_modules/rn-apk/android')
 include ':react-native-localize'
 project(':react-native-localize').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-localize/android')
 include ':react-native-webview'
@@ -10,8 +12,6 @@ project(':react-native-gesture-handler').projectDir = new File(rootProject.proje
 
 include ':react-native-sqlite-storage'
 project(':react-native-sqlite-storage').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sqlite-storage/src/android')
-include ':react-native-apk'
-project(':react-native-apk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-apk/android')
 include ':react-native-cookies'
 project(':react-native-cookies').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-cookies/android')
 include ':react-native-exit-app'

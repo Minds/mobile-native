@@ -17,8 +17,8 @@ class ReceiveShareService {
     if (Platform.OS === 'ios') return;
 
     ShareMenu.getSharedText((text) => {
-      if (text)
-        ShareMenu.clearSharedText();
+
+      if (text && text !== null) {
         if (text.match(IMAGE_PREFIX)) {
           navigationService.navigate('Capture',{image: text.replace(IMAGE_PREFIX, '')});
         } else if (text.match(VIDEO_PREFIX)) {
@@ -26,6 +26,8 @@ class ReceiveShareService {
         } else {
           navigationService.navigate('Capture',{text});
         }
+        ShareMenu.clearSharedText();
+      }
     });
   }
 }

@@ -31,6 +31,7 @@ import {
   Clipboard,
 } from 'react-native';
 
+import FlashMessage from "react-native-flash-message";
 import CookieManager from 'react-native-cookies';
 
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
@@ -56,6 +57,7 @@ import { CommonStyle as CS } from './src/styles/Common';
 import logService from './src/common/services/log.service';
 import settingsStore from './src/settings/SettingsStore';
 import TosModal from './src/tos/TosModal';
+import Notification from './src/notifications/notification/Notification';
 
 let deepLinkUrl = '';
 
@@ -293,6 +295,7 @@ export default class App extends Component<Props, State> {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
           />
+          <FlashMessage renderCustomContent={() => <Notification entity={stores.notifications.last} navigation={NavigationService} />} />
         </ErrorBoundary>
       </Provider>
     );

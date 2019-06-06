@@ -124,7 +124,7 @@
     "errorPayment":"Sorry, your payment failed. Please, try again, use another card or wallet",
     "errorCanNotGenerate":"Cannot generate GUID",
     "errorGet":"Ooops, failed to get boosts",
-    "boostConfirm":"You're about to boost {{amount)} views for your content.",
+    "boostConfirm":"You're about to boost {{amount}} views for your content.",
     "boostConfirmP2p":"You're about to send {{amount}} to @{{username}} for reminding your content.",
     "selectWalletNetworkMessage":"Select the wallet you would like to use for this Network Boost.",
     "selectWalletChannelMessage":"Select the wallet you would like to use for this Channel Boost.",
@@ -714,5 +714,8 @@
   "errorMediaDisplay":"There was an error displaying this media",
   "stacktraceCopied":"Stack trace copied to the clipboard.",
   "errorPinnedPost":"Ooops, error setting pinned post",
-  "errorShowActivity":"Can't show this activity"
+  "errorShowActivity":"Can't show this activity",
+  "wantToUpdate":"Do you want to update the app?",
+  "updateAvailable":"Update available",
+  "rememberTomorrow":"Remember me later"
 }

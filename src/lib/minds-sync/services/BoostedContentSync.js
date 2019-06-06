@@ -39,8 +39,8 @@ export default class BoostedContentSync {
     this.db.schema(2.1, {
       boosts: {
         primaryKey: 'urn',
-        indexes: ['sync', 'lastImpression', 'owner_guid'],
-        fields: ['impressions'],
+        fields:['impressions'],
+        indexes: ['sync', 'lastImpression', 'owner_guid']
       },
     });
 
@@ -200,7 +200,7 @@ export default class BoostedContentSync {
 
       return await this.resolvers.fetchEntities(dataSet.map(row => row.urn));
     } catch (e) {
-      console.error('BoostedContentSync.fetch', e);
+      console.log('BoostedContentSync.fetch', e);
 
       // Release locks
 
@@ -296,7 +296,7 @@ export default class BoostedContentSync {
       this.db
         .deleteLessThan('boosts', 'sync', Date.now() - this.stale_after_ms);
     } catch (e) {
-      console.error('BoostedContentSync.pruneStaleBoosts', e);
+      console.log('BoostedContentSync.pruneStaleBoosts', e);
       throw e;
     }
   }
@@ -313,7 +313,7 @@ export default class BoostedContentSync {
 
       return true;
     } catch (e) {
-      console.error('BoostedContentSync.prune', e);
+      console.log('BoostedContentSync.prune', e);
       throw e;
     }
   }
@@ -331,7 +331,7 @@ export default class BoostedContentSync {
 
       return true;
     } catch (e) {
-      console.error('BoostedContentSync.destroy', e);
+      console.log('BoostedContentSync.destroy', e);
       throw e;
     }
   }

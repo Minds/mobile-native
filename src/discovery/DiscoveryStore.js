@@ -14,6 +14,8 @@ import GroupModel from '../groups/GroupModel';
 import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';
 import DiscoveryFeedStore from './DiscoveryFeedStore';
 import logService from '../common/services/log.service';
+import featuresService from '../common/services/features.service';
+import boostedContentService from '../common/services/boosted-content.service';
 
 /**
  * Discovery Store
@@ -165,6 +167,12 @@ class DiscoveryStore {
 
       // if the filter has changed during the call we ignore the results
       if (filter === this.filters.filter) {
+
+         // inject boosts
+        if (type === 'activities' && featuresService.has('es-feeds')) {
+          await this.injectBoosts(feed, store.list);
+        }
+
         this.createModels(type, feed, preloadImage);
         this.assignRowKeys(feed);
         store.list.setList(feed, refresh);
@@ -175,11 +183,48 @@ class DiscoveryStore {
         return;
       }
       if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
-        logService.exception('[DiscoveryStore]', err);
+        logService.exception('[DiscoveryStore] loadList', err);
       }
       store.list.setErrorLoading(true);
     } finally {
       this.setLoading(store, false);
+    }
+  }
+
+  /**
+   * Inject boosts to the feed
+   * @param {object} feed
+   * @param {OffsetFeedListStore} list
+   */
+  async injectBoosts(feed, list) {
+    const start = list.entities.length;
+    const finish = feed.entities.length + start;
+
+    if (finish > 40) return;
+
+    await this.insertBoost(3, feed, start, finish);
+    await this.insertBoost(8, feed, start, finish);
+    await this.insertBoost(16, feed, start, finish);
+    await this.insertBoost(24, feed, start, finish);
+    await this.insertBoost(32, feed, start, finish);
+    await this.insertBoost(40, feed, start, finish);
+  }
+
+  /**
+   * Insert a boost in give position
+   * @param {integer} position
+   * @param {object} feed
+   * @param {integer} start
+   * @param {integer} finish
+   */
+  async insertBoost(position, feed, start, finish) {
+    if (start <= position && finish >= position) {
+      try {
+        const boost = await boostedContentService.fetch();
+        if (boost) feed.entities.splice( position + start, 0, boost );
+      } catch (err) {
+        logService.exception('[DiscoveryStore] insertBoost', err);
+      }
     }
   }
 
