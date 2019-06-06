@@ -100,6 +100,8 @@ export default class NewsfeedFilters extends Component {
   render() {
     const store = this.props.store;
     const hashActive = !this.props.hashtag.all || this.props.hashtag.hashtag;
+    const disableHotLatest = store.type === 'channels' || store.type === 'groups';
+
     return (
       <View style={CS.rowJustifyStart}>
         <TouchableHighlight
@@ -118,14 +120,20 @@ export default class NewsfeedFilters extends Component {
           </View>
         </TouchableHighlight>
         <View style={[CS.rowJustifySpaceEvenly, CS.flexContainer]}>
-          <TouchableHighlight style={[CS.padding]} onPress={ () => store.setFilter('hot') } underlayColor='#fff' {...testID('Filter hot button')}>
+          <TouchableHighlight
+            style={[CS.padding]}
+            onPress={ () => store.setFilter('hot') }
+            disabled={disableHotLatest}
+            underlayColor='#fff'
+            {...testID('Filter hot button')}
+          >
             <View style={[CS.rowJustifyCenter, CS.centered]}>
               <Icon
                 name="whatshot"
-                style={[CS.centered, store.filter == 'hot' ? CS.colorPrimary : null, {paddingTop:2}  ]}
+                style={[CS.centered, store.filter == 'hot' ? CS.colorPrimary : (disableHotLatest ? CS.colorGreyed : null), {paddingTop:2}  ]}
                 size={ 22 }
               />
-              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'hot' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>{i18n.t('newsfeedFilters.hot')}</Text> : null}
+              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'hot' ? CS.colorPrimary : (disableHotLatest ? CS.colorGreyed : CS.colorDark), CS.paddingLeft]}>{i18n.t('newsfeedFilters.hot')}</Text> : null}
             </View>
           </TouchableHighlight>
           <View style={CS.rowJustifyCenter}>
@@ -163,14 +171,20 @@ export default class NewsfeedFilters extends Component {
               </Menu>
             }
           </View>
-          <TouchableHighlight style={[CS.padding]} onPress={ () => store.setFilter('latest') } underlayColor='#fff' {...testID('Filter latest button')}>
+          <TouchableHighlight
+            style={[CS.padding]}
+            onPress={ () => store.setFilter('latest') }
+            disabled={disableHotLatest}
+            underlayColor='#fff'
+            {...testID('Filter latest button')}
+          >
             <View style={[CS.rowJustifyCenter, CS.centered]}>
               <Icon
                 name="timelapse"
-                style={[CS.centered, store.filter == 'latest' ? CS.colorPrimary : null, {paddingTop:2} ]}
+                style={[CS.centered, store.filter == 'latest' ? CS.colorPrimary : (disableHotLatest ? CS.colorGreyed : null), {paddingTop:2} ]}
                 size={ 22 }
               />
-              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'latest' ? CS.colorPrimary : CS.colorDark, CS.paddingLeft]}>{i18n.t('newsfeedFilters.latest')}</Text> : null}
+              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'latest' ? CS.colorPrimary : (disableHotLatest ? CS.colorGreyed : CS.colorDark), CS.paddingLeft]}>{i18n.t('newsfeedFilters.latest')}</Text> : null}
             </View>
           </TouchableHighlight>
         </View>
