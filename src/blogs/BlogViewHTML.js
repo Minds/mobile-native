@@ -98,7 +98,9 @@ const style = `
     }
 
     img {
+      display: block;
       max-width: 100%;
+      height: auto;
     }
 
     .medium-insert-embeds {
@@ -113,16 +115,18 @@ const style = `
 const injectedJavaScript = `
   setTimeout(() => {
     const postMessage = window.ReactNativeWebView.postMessage;
-    postMessage.toString = () => String(Object.hasOwnProperty).replace('hasOwnProperty', 'postMessage');
-    window.postMessage = postMessage;
 
-    window.postMessage(document.body.offsetHeight + 20);
+    let currentHeight = document.body.scrollHeight;
+
+    window.ReactNativeWebView.postMessage(currentHeight + 20);
 
     setTimeout(() => {
-      window.postMessage(document.body.offsetHeight + 20);
+      if (currentHeight === document.body.scrollHeight) return;
+      currentHeight = document.body.scrollHeight;
+      window.ReactNativeWebView.postMessage(currentHeight + 20);
     }, 1000);
   },100);
-
+  true;
 `;
 
 export default class BlogViewHTML extends Component {
