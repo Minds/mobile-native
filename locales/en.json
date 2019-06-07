@@ -305,6 +305,7 @@
     "wiredSubscribed":"You have subscribed to wire {{amount}}/month to",
     "wiredSubscribedFrom":"You have received a wire subscription of {{amount}}/month from",
     "tagComment":"tagged you in a comment",
+    "tagConversation":"tagged you in a conversation",
     "post":"post",
     "yourActivity":"your activity",
     "yourComment":"your comment",
