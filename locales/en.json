@@ -620,7 +620,7 @@
   },
   "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
-  "postCantBeShown":"This post cannot be shown",
+  "postCantBeShown":"This post can't be shown on apps installed via the Play Store.",
   "readMore":"Read More",
   "showLess":"Show less",
   "featureUnavailablePlatform":"This feature is currently unavailable on your platform",
