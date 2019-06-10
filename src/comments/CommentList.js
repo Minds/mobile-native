@@ -506,6 +506,7 @@ export default class CommentList extends React.Component<Props, State> {
               ListFooterComponent={footer}
               data={comments}
               keyboardShouldPersistTaps={'handled'}
+              removeClippedSubviews={false}
               renderItem={this.renderComment}
               keyExtractor={item => item.guid}
               initialNumToRender={25}
