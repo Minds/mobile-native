@@ -10,6 +10,11 @@ class MindsService {
   settings;
 
   /**
+   * Lazy load default settings
+   */
+  loadDefault = () => require("../../../settings/default.json");
+
+  /**
    * Get settings
    */
   async getSettings() {
@@ -22,7 +27,8 @@ class MindsService {
         try {
           settings = JSON.parse(await AsyncStorage.getItem('@MindsSettings'));
         } catch {
-          settings = null;
+          settings = this.loadDefault();
+          AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
         }
       }
 
