@@ -26,9 +26,7 @@ class BoostedContentService {
       if (is) {
         this.initialized = true;
 
-        // UNCOMMENT!
-        this.sync.setRating(2);
-        // this.sync.setRating(sessionService.getUser().boost_rating || null);
+        this.sync.setRating(sessionService.getUser().boost_rating || null);
       } else {
         if (this.initialized) {
           this.sync.destroy();
