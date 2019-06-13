@@ -20,11 +20,12 @@ class BoostedContentService {
       fetchEntities: async guids => await entitiesService.fetch(guids),
     });
 
-    this.sync.setUp();
-
-    sessionService.onSession((is) => {
+    sessionService.onSession(async(is) => {
       if (is) {
-        this.initialized = true;
+        if (!this.initialized) {
+          await this.sync.setUp();
+          this.initialized = true;
+        }
 
         this.sync.setRating(sessionService.getUser().boost_rating || null);
       } else {
