@@ -15,6 +15,7 @@ import socket from '../common/services/socket.service';
 import badge from '../common/services/badge.service';
 import { abort } from '../common/helpers/abortableFetch';
 import i18n from '../common/services/i18n.service';
+import logService from '../common/services/log.service';
 
 /**
  * Messenger Conversation List Store
