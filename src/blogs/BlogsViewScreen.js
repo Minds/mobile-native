@@ -21,6 +21,8 @@ import {
   Alert,
 } from 'react-native';
 
+import { Header } from 'react-navigation';
+
 import { inject, observer } from 'mobx-react/native';
 
 import FastImage from 'react-native-fast-image';
@@ -174,6 +176,7 @@ export default class BlogsViewScreen extends Component {
               entity={this.props.blogsView.blog}
               store={this.comments}
               navigation={this.props.navigation}
+              keyboardVerticalOffset = {Header.HEIGHT - 65}
             />
           :
             <View style={CS.flexColumnCentered}>
