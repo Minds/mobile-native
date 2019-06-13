@@ -46,13 +46,9 @@ export default function(input, init, tag) {
 
     const xhr = new XMLHttpRequest();
 
-    // manual implementation of timeout
-    xhr.timer = setTimeout(() => {
-      if (xhr.readyState !== XMLHttpRequest.DONE) {
-          reject(new TypeError('Network request failed'))
-          xhr.abort();
-      }
-    }, 5000);
+    if (init && init.timeout) {
+      xhr.timeout = init.timeout;
+    }
 
     if (tag !== undefined) {
       xhr.tag = tag;
@@ -72,9 +68,11 @@ export default function(input, init, tag) {
       return;
     }
 
+    xhr.ontimeout = function() {
+      reject(new TypeError('Network request failed'))
+    }
+
     xhr.onload = function() {
-      // clear timeout
-      clearTimeout(xhr.timer);
 
       const status = (xhr.status === 1223) ? 204 : xhr.status
       if (status < 100 || status > 599) {
@@ -94,7 +92,6 @@ export default function(input, init, tag) {
     }
 
     xhr.onerror = function() {
-      clearTimeout(xhr.timer);
       remove(xhr);
       reject(new TypeError('Network request failed'));
     }
@@ -103,8 +100,6 @@ export default function(input, init, tag) {
 
     xhr.onabort = () => {
       reject(new Abort());
-      // clear timeout
-      clearTimeout(xhr.timer);
     };
 
     if (request.credentials === 'include') {

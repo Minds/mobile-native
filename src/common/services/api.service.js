@@ -1,7 +1,7 @@
 import Cancelable from 'promise-cancelable';
 
 import session from './session.service';
-import { MINDS_API_URI, MINDS_URI_SETTINGS } from '../../config/Config';
+import { MINDS_API_URI, MINDS_URI_SETTINGS, NETWORK_TIMEOUT } from '../../config/Config';
 import { btoa } from 'abab';
 
 import abortableFetch from '../helpers/abortableFetch';
@@ -57,7 +57,7 @@ class ApiService {
   async get(url, params = {}, tag) {
     const headers = this.buildHeaders();
     try {
-      const response = await abortableFetch(MINDS_API_URI + this.buildUrl(url, params), { headers },  tag);
+      const response = await abortableFetch(MINDS_API_URI + this.buildUrl(url, params), { headers, timeout: NETWORK_TIMEOUT },  tag);
 
       // Bad response
       if (!response.ok) {
@@ -87,7 +87,7 @@ class ApiService {
     const headers = this.buildHeaders();
 
     try {
-      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'POST', body: JSON.stringify(body), headers });
+      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'POST', body: JSON.stringify(body), headers, timeout: NETWORK_TIMEOUT });
 
       if (!response.ok) {
         throw response;
@@ -116,7 +116,7 @@ class ApiService {
     const headers = this.buildHeaders();
 
     try {
-      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'PUT', body: JSON.stringify(body), headers });
+      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'PUT', body: JSON.stringify(body), headers, timeout: NETWORK_TIMEOUT });
 
       if (!response.ok) {
         throw response;
@@ -145,7 +145,7 @@ class ApiService {
     const headers = this.buildHeaders();
 
     try {
-      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'DELETE', body: JSON.stringify(body), headers });
+      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'DELETE', body: JSON.stringify(body), headers, timeout: NETWORK_TIMEOUT });
 
       if (!response.ok) {
         throw response;
