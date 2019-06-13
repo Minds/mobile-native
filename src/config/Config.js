@@ -10,6 +10,8 @@ import {
 export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI = 'https://www.minds.com/';
 
+export const NETWORK_TIMEOUT = 5000;
+
 export const MINDS_URI_SETTINGS = {
   //basicAuth: 'crypto:ohms',
 };
