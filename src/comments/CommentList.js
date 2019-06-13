@@ -229,7 +229,7 @@ export default class CommentList extends React.Component<Props, State> {
     if (!this.props.parent) {
       this.focusedChild = comments.findIndex(c => item === c);
       this.focusedOffset = offset;
-      this.setState({hideInput: true});
+      this.setState({hideInput: true, focused: false});
       //this.forceUpdate();
     } else {
       const index = comments.findIndex(c => item === c);
@@ -244,7 +244,7 @@ export default class CommentList extends React.Component<Props, State> {
    * On comment input focus
    */
   onBlur = () => {
-    this.setState({focused: false});
+    if (this.props.parent) this.setState({focused: false});
   }
 
   /**
