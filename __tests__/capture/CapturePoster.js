@@ -432,9 +432,10 @@ describe('cature poster component', () => {
       expect(capture.post).toHaveBeenCalled();
 
       // should be called only once
-      expect(capture.post.mock.calls.length).toBe(1);
+      expect(capture.post).toBeCalled();
 
       // should send the attachment data
+      console.log(capture.post.mock.calls);
       expect(capture.post.mock.calls[0][0]).toEqual({
         nsfw: [],
         message: "some awesome post",

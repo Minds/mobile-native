@@ -877,6 +877,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         </SafeAreaView>
       </View>
     }
+    keyboardVerticalOffset={15}
     navigation={
       Object {
         "state": Object {
