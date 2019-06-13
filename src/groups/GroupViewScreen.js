@@ -9,8 +9,11 @@ import {
   FlatList,
   ScrollView,
   Alert,
-  SafeAreaView
+  SafeAreaView,
+  Platform,
 } from 'react-native';
+
+import { Header } from 'react-navigation';
 
 import {
   observer,
@@ -64,7 +67,7 @@ export default class GroupViewScreen extends Component {
    * Disable navigation bar
    */
   static navigationOptions = {
-    header: null
+    header: null,
   }
 
   /**
@@ -199,6 +202,7 @@ export default class GroupViewScreen extends Component {
             entity={group.group}
             store={this.comments}
             navigation={this.props.navigation}
+            keyboardVerticalOffset = {Header.HEIGHT - 65}
           />
         );
       case 'desc':

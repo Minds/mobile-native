@@ -155,14 +155,13 @@ export default class CommentList extends React.Component<Props, State> {
           setTimeout(() => {
             this.listRef.scrollToIndex({
               index: this.focusedChild,
-              viewOffset: this.focusedOffset ? -(this.focusedOffset - (this.height - e.endCoordinates.height - 70)) : -e.endCoordinates.height + 70,
+              viewOffset: this.focusedOffset ? -(this.focusedOffset - (this.height - e.endCoordinates.height - 110)) : -110 ,
               viewPosition: this.focusedOffset ? 0 : 1
             });
           }, 200);
         }
-      } else {
-        if (!this.state.focused) this.setState({hideInput: true});
       }
+
     }
     // this.scrollBottomIfNeeded();
   }
@@ -171,7 +170,7 @@ export default class CommentList extends React.Component<Props, State> {
    * On keyboard  hide
    */
   _keyboardDidHide = (e) => {
-    if (!this.props.parent && !isIOS) {
+    if (!this.props.parent) {
       this.setState({hideInput: false});
     }
   }
@@ -230,6 +229,8 @@ export default class CommentList extends React.Component<Props, State> {
     if (!this.props.parent) {
       this.focusedChild = comments.findIndex(c => item === c);
       this.focusedOffset = offset;
+      this.setState({hideInput: true});
+      //this.forceUpdate();
     } else {
       const index = comments.findIndex(c => item === c);
       const frame = this.listRef._listRef._getFrameMetricsApprox(index);
@@ -498,7 +499,7 @@ export default class CommentList extends React.Component<Props, State> {
     return (
       <View style={[CS.flexContainer, CS.backgroundWhite, paddingBottom]} onLayout={this.onLayout}>
         <KeyboardAvoidingView style={[CS.flexContainer]} behavior={Platform.OS == 'ios' ? 'padding' : null}
-          keyboardVerticalOffset={vPadding} enabled={this.state.focused && !this.props.parent}>
+          keyboardVerticalOffset={this.props.keyboardVerticalOffset ? -this.props.keyboardVerticalOffset : vPadding} enabled={!this.props.parent ? (this.state.focused || this.focusedChild !== -1) : false}>
           <View style={CS.flexContainer}>
             <FlatList
               ref={this.setListRef}
