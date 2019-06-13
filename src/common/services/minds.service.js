@@ -26,6 +26,7 @@ class MindsService {
       } catch (err) {
         try {
           settings = JSON.parse(await AsyncStorage.getItem('@MindsSettings'));
+          if (!settings) throw Error('No settings stored');
         } catch {
           settings = this.loadDefault();
           AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
