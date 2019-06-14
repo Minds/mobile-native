@@ -62,6 +62,10 @@ export default class Comment extends Component {
     this.props.onTextInputfocus && this.props.onTextInputfocus(this.props.comment, offset);
   }
 
+  onCommentFocus = (comment, offset) => {
+    this.props.onCommentFocus && this.props.onCommentFocus(this.props.comment, offset);
+  }
+
   /**
    * Render
    */
@@ -116,6 +120,7 @@ export default class Comment extends Component {
               parent={comment}
               store={comment.comments}
               onInputFocus={this.onInputFocus}
+              onCommentFocus={this.onCommentFocus}
               navigation={this.props.navigation}
             />
           }
