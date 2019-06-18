@@ -615,7 +615,7 @@
     "topPeriod1":"1 year"
   },
   "update": {
-    "title":"Update",
+    "title":"Update to v{{version}}",
     "version": "New v{{version}} available!"
   },
   "downloading":"Downloading",
