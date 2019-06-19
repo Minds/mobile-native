@@ -152,6 +152,7 @@ class GroupsBarStore {
       if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
         logService.exception('[GroupsBarStore]', err);
       }
+      throw err;
     } finally {
       this.setLoading(false);
     }
