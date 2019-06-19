@@ -17,6 +17,7 @@ import {
 } from 'mobx-react/native'
 
 import { CommonStyle } from '../../styles/Common';
+import { ComponentsStyle } from '../../styles/Components';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import token from "../../common/helpers/token";
 import i18n from '../../common/services/i18n.service';
@@ -72,6 +73,13 @@ export default class TransactionsList extends Component {
 
     const header = this.getHeader();
 
+    empty = (
+      <View style={ComponentsStyle.emptyComponentContainer}>
+        <View style={ComponentsStyle.emptyComponent}>
+          <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('wallet.transactionsEmpty')}</Text>
+        </View>
+      </View>);
+
     return (
       <FlatList
         data={entities.slice()}
@@ -81,7 +89,7 @@ export default class TransactionsList extends Component {
         refreshing={wallet.ledger.list.refreshing}
         onEndReached={this.loadMore}
         // onEndReachedThreshold={0}
-        ListEmptyComponent={!wallet.ledger.list.loaded && !wallet.ledger.list.refreshing? <CenteredLoading /> : null}
+        ListEmptyComponent={!wallet.ledger.list.loaded && !wallet.ledger.list.refreshing? <CenteredLoading /> : empty}
         //ListHeaderComponent={header}
         style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}
       />
