@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+// @flow
+import * as React from 'react';
+import type { ViewLayoutEvent } from 'react-native/Libraries/Components/View/ViewPropTypes';
 
 import {
   View,
@@ -40,6 +42,7 @@ import autobind from "../common/helpers/autobind";
 type Props = {
   header?: any,
   parent?: any,
+  keyboardVerticalOffset?: any,
   entity: any,
   store: any,
   user: any,
@@ -50,6 +53,8 @@ type Props = {
 type State = {
   focused: boolean,
   hideInput: boolean,
+  guid: ?string,
+  blockedChannels: Array<string>,
   selection: {
     start: number,
     end: number
@@ -83,11 +88,12 @@ function getEntityGuid(entity) {
 @inject('user')
 @observer
 export default class CommentList extends React.Component<Props, State> {
-  listRef: any;
+  listRef: ?React.ElementRef<typeof FlatList>;
   textInput: any;
   actionAttachmentSheet: ?ActionSheet;
   actionSheet: ?ActionSheet;
   keyboardDidShowListener: any;
+  keyboardDidHideListener: any;
   focusedChild: number = -1;
   focusedOffset: number = 0;
   height: number = 0;
@@ -140,7 +146,7 @@ export default class CommentList extends React.Component<Props, State> {
     if (store.text.trim() == '' && !store.attachment.hasAttachment) return;
     Keyboard.dismiss();
     if (!store.saving){
-      await store.post();
+      await store.post(this.props.entity);
       if (!this.props.parent) this.scrollToBottom();
     }
   }
@@ -175,7 +181,7 @@ export default class CommentList extends React.Component<Props, State> {
     }
   }
 
-  onLayout = (e) => {
+  onLayout = (e: ViewLayoutEvent) => {
     if (!this.props.parent) {
       this.height = e.nativeEvent.layout.height || 0;
     }
@@ -221,7 +227,7 @@ export default class CommentList extends React.Component<Props, State> {
     }
   }
 
-  onChildFocus = (item, offset) => {
+  onChildFocus = (item: CommentType, offset: number) => {
     if (!offset) offset = 0;
 
     const comments = this.getComments();
@@ -257,7 +263,7 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Load comments
    */
-  loadComments = async (loadingMore = false, descending = true) => {
+  loadComments = async (loadingMore: boolean = false, descending: boolean = true) => {
     await this.loadBlockedChannels();
 
     let guid;
@@ -276,7 +282,6 @@ export default class CommentList extends React.Component<Props, State> {
       this.scrollBottomIfNeeded();
     }
   }
-
 
   @autobind
   async loadBlockedChannels() {
@@ -362,7 +367,7 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Render comments
    */
-  renderComment = (row: any) => {
+  renderComment = (row: any): React.Element<Comment> => {
     const comment = row.item;
 
     // add the editing observable property
@@ -405,13 +410,17 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Refresh comments
    */
-  refresh = async () => {
+  refreshAsync = async () => {
     this.props.store.refresh();
     await this.loadComments();
     this.props.store.refreshDone();
   }
 
-  getErrorLoading(errorLoading, descending) {
+  refresh() {
+    this.refreshAsync();
+  }
+
+  getErrorLoading(errorLoading: boolean, descending: boolean) {
     if (errorLoading) {
       const message = this.props.store.comments.length ?
         (i18n.t('cantLoadMore') + '\n' + i18n.t('tryAgain')) :
@@ -462,12 +471,12 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * @param {object} ref
    */
-  setListRef = ref => this.listRef = ref;
+  setListRef = (ref: ?React.ElementRef<typeof FlatList>) => this.listRef = ref;
 
   /**
    * @param {object} ref
    */
-  setActionSheetRef = o => this.actionAttachmentSheet = o;
+  setActionSheetRef = (o: ActionSheet) => this.actionAttachmentSheet = o;
 
   /**
    * Render
