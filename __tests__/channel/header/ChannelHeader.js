@@ -43,7 +43,7 @@ describe('channel header component owner', () => {
     store.loaded = true;
 
     component = renderer.create(
-      <ChannelHeader.wrappedComponent channel={store} user={userStore} navigation={navigation} styles={{}}/>
+      <ChannelHeader.wrappedComponent store={store} user={userStore} navigation={navigation} styles={{}}/>
     )
   });
 

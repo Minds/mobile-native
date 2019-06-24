@@ -14,22 +14,6 @@ exports[`Channel screen component should renders correctly 1`] = `
     header={
       <View>
         <ChannelHeader
-          channel={
-            Object {
-              "channel": Object {
-                "blocked": false,
-                "guid": "125",
-              },
-              "feedStore": Object {
-                "setChannel": [MockFunction],
-              },
-              "load": [MockFunction],
-              "rewards": Object {
-                "merged": Array [],
-              },
-              "setChannel": [MockFunction],
-            }
-          }
           navigation={
             Object {
               "navigate": [MockFunction],
@@ -69,6 +53,22 @@ exports[`Channel screen component should renders correctly 1`] = `
                   },
                 },
               },
+            }
+          }
+          store={
+            Object {
+              "channel": Object {
+                "blocked": false,
+                "guid": "125",
+              },
+              "feedStore": Object {
+                "setChannel": [MockFunction],
+              },
+              "load": [MockFunction],
+              "rewards": Object {
+                "merged": Array [],
+              },
+              "setChannel": [MockFunction],
             }
           }
           styles={

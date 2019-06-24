@@ -5,25 +5,20 @@ import { shallow } from 'enzyme';
 
 import ActivityEditor from '../../../src/newsfeed/activity/ActivityEditor';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
+import ActivityModel from '../../../src/newsfeed/ActivityModel';
+
 
 
 describe('Activity editor component', () => {
 
-  let user, comments, entity, screen, newsfeed, toggleEdit;
+  let user, comments, entity, screen, newsfeed, toggleEdit, activity;
   beforeEach(() => {
-    newsfeed = {
-      list: {
-        updateActivity: jest.fn()
-      }
-    }
-
-    newsfeed.list.updateActivity.mockResolvedValue(true);
-
     const navigation = { navigate: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
+    activity = new ActivityModel(activityResponse.activities[0])
     toggleEdit = jest.fn();
     screen = shallow(
-      <ActivityEditor entity={activityResponse.activities[0]} toggleEdit={toggleEdit} navigation={navigation} newsfeed={newsfeed}/>
+      <ActivityEditor entity={activity} toggleEdit={toggleEdit} navigation={navigation} newsfeed={newsfeed}/>
     );
 
     jest.runAllTimers();
@@ -45,7 +40,7 @@ describe('Activity editor component', () => {
     screen.update()
     let instance = screen.instance();
     expect(instance.state.text).toBe('Message');
-    const spy = jest.spyOn(instance.props.newsfeed.list, 'updateActivity');
+    const spy = jest.spyOn(activity, 'updateActivity');
     screen.find('Button').at(1).props().onPress();
 
     expect(spy).toHaveBeenCalled();

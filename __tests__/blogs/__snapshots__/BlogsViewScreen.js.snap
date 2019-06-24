@@ -16,6 +16,7 @@ exports[`blog view screen component should renders correctly 1`] = `
   <CommentList
     entity={
       BlogModel {
+        "__list": null,
         "access_id": "2",
         "boost_rejection_reason": -1,
         "categories": Array [],
@@ -40,6 +41,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         "mature": false,
         "monetized": false,
         "ownerObj": UserModel {
+          "__list": null,
           "access_id": "2",
           "banned": "no",
           "blocked": undefined,
@@ -197,6 +199,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           <OwnerBlock
             entity={
               BlogModel {
+                "__list": null,
                 "access_id": "2",
                 "boost_rejection_reason": -1,
                 "categories": Array [],
@@ -221,6 +224,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "mature": false,
                 "monetized": false,
                 "ownerObj": UserModel {
+                  "__list": null,
                   "access_id": "2",
                   "banned": "no",
                   "blocked": undefined,
@@ -360,6 +364,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   <RemindAction
                     entity={
                       BlogModel {
+                        "__list": null,
                         "access_id": "2",
                         "boost_rejection_reason": -1,
                         "categories": Array [],
@@ -384,6 +389,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "mature": false,
                         "monetized": false,
                         "ownerObj": UserModel {
+                          "__list": null,
                           "access_id": "2",
                           "banned": "no",
                           "blocked": undefined,
@@ -502,6 +508,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   <ThumbUpAction
                     entity={
                       BlogModel {
+                        "__list": null,
                         "access_id": "2",
                         "boost_rejection_reason": -1,
                         "categories": Array [],
@@ -526,6 +533,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "mature": false,
                         "monetized": false,
                         "ownerObj": UserModel {
+                          "__list": null,
                           "access_id": "2",
                           "banned": "no",
                           "blocked": undefined,
@@ -641,6 +649,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   <ThumbDownAction
                     entity={
                       BlogModel {
+                        "__list": null,
                         "access_id": "2",
                         "boost_rejection_reason": -1,
                         "categories": Array [],
@@ -665,6 +674,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "mature": false,
                         "monetized": false,
                         "ownerObj": UserModel {
+                          "__list": null,
                           "access_id": "2",
                           "banned": "no",
                           "blocked": undefined,

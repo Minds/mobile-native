@@ -94,6 +94,7 @@ exports[`Activity editor component renders correctly 1`] = `
       />
       <Button
         color="#4690D6"
+        disabled={false}
         inverted={true}
         loading={false}
         onPress={[Function]}

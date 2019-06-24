@@ -21,6 +21,7 @@ describe('channel actions component', () => {
   beforeEach(() => {
     store = new ChannelStore();
     store.channel = new UserModel(userFaker(1));
+    store.channel.toggleSubscription = jest.fn();
   });
 
   it('should renders correctly', () => {
@@ -29,7 +30,7 @@ describe('channel actions component', () => {
     features.has.mockReturnValue(true);
 
     const component = renderer.create(
-      <ChannelActions channel={store} />
+      <ChannelActions store={store} />
     ).toJSON();
 
     expect(component).toMatchSnapshot();
@@ -38,7 +39,7 @@ describe('channel actions component', () => {
   it('should show the correct options', () => {
 
     const wrapper = shallow(
-      <ChannelActions channel={store} />
+      <ChannelActions store={store} />
     );
 
     let opt = wrapper.instance().getOptions();
@@ -61,14 +62,14 @@ describe('channel actions component', () => {
 
     const navigation = {push: jest.fn()};
     const wrapper = shallow(
-      <ChannelActions channel={store} navigation={navigation}/>
+      <ChannelActions store={store} navigation={navigation}/>
     );
 
     store.channel.subscribed = true;
     store.channel.blocked = true;
 
     opt = wrapper.instance().makeAction(1);
-    expect(store.subscribe).toBeCalled();
+    expect(store.channel.toggleSubscription).toBeCalled();
 
     opt = wrapper.instance().makeAction(2);
     expect(store.toggleBlock).toBeCalled();
