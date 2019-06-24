@@ -292,7 +292,7 @@ export default class CapturePoster extends Component {
       message,
       ...metadata
     };
-    console.log(post)
+
     let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null
 
     if(HashtagService.slice(message).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
