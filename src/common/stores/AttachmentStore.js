@@ -2,6 +2,7 @@ import { observable, action, extendObservable } from 'mobx'
 import { Platform, Alert } from 'react-native';
 import rnFS from 'react-native-fs';
 import MediaMeta from 'react-native-media-meta';
+import fileType from 'react-native-file-type';
 
 import attachmentService from '../services/attachment.service';
 import {MINDS_MAX_VIDEO_LENGTH} from '../../config/Config';
@@ -103,6 +104,13 @@ export default class AttachmentStore {
    */
   @action
   async validate(media) {
+
+    if(!media.type){
+      const type = await fileType(media.path);
+      media.type = type.mime;
+    }
+
+    if(media.fileName.includes(' ')) media.fileName = media.fileName.replace(/\s/g, "_");
 
     const settings = await mindsService.getSettings();
 
