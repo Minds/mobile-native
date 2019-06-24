@@ -38,7 +38,7 @@ export default class RemindAction extends PureComponent {
    */
   render() {
     return (
-      <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.remind} {...testID('Remind activity button')}>
+      <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter, this.props.vertical === true ? styles.verticalTouchable : null]} onPress={this.remind} {...testID('Remind activity button')}>
         <Icon color={this.props.entity['reminds'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='repeat' size={this.props.size} />
         <Counter count={this.props.entity['reminds']} size={this.props.size * 0.75} />
       </TouchableOpacityCustom>
@@ -65,6 +65,10 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     padding: 5
+  },
+  verticalTouchable: {
+    flexDirection: 'column',
+    alignItems: 'center',
   }
 });
 
