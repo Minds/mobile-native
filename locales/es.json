@@ -89,7 +89,8 @@
         "tabMyBlogs": "MI BLOG",
         "blogs": "Blog",
         "errorLoading": "Error cargando este blog.",
-        "error": "PERDON, NO PUEDO CARGAR ESTE BLOG"
+        "error": "PERDON, NO PUEDO CARGAR ESTE BLOG",
+        "blogListEmpty" : "Esta lista está vacía"
     },
     "boosts": {
         "selected": "SELECCIONADO",

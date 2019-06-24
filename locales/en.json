@@ -95,7 +95,8 @@
     "tabMyBlogs":"MY BLOGS",
     "errorLoading":"There was an error loading this blog.",
     "error":"SORRY, WE COULDN'T LOAD THE BLOG",
-    "blogs":"Blogs"
+    "blogs":"Blogs",
+    "blogListEmpty" : "This list is empty"
   },
   "boosts":{
     "selected":"SELECTED",

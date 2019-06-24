@@ -7,6 +7,7 @@ import {
   FlatList,
   ActivityIndicator,
   StyleSheet,
+  Text
 } from 'react-native';
 
 import {
@@ -18,6 +19,7 @@ import BlogCard from './BlogCard';
 import Toolbar from '../common/components/toolbar/Toolbar';
 import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
 import { CommonStyle as CS } from '../styles/Common';
+import { ComponentsStyle } from '../styles/Components';
 import { MINDS_CDN_URI, MINDS_FEATURES } from '../config/Config';
 import ErrorLoading from '../common/components/ErrorLoading';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
@@ -122,13 +124,22 @@ export default class BlogsListScreen extends Component {
    * Render
    */
   render() {
+    let empty = null;
     const store = this.props.blogs;
 
     const footer = this.getFooter()
+    
+    empty = (
+      <View style={ComponentsStyle.emptyComponentContainer}>
+        <View style={ComponentsStyle.emptyComponent}>
+          <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('blogs.blogListEmpty')}</Text>
+        </View>
+      </View>);
 
     return (
       <FlatList
         data={store.list.entities.slice()}
+        ListEmptyComponent={!this.props.blogs.list.loaded && !this.props.blogs.list.refreshing? null : empty}
         removeClippedSubviews
         onRefresh={this.refresh}
         refreshing={store.list.refreshing}
