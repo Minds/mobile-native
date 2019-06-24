@@ -514,6 +514,7 @@
     "networkScore":"Network Score",
     "transactionsTitle":"Transactions",
     "transactionsDescription":"A list of transactions you have made with your addresses",
+    "transactionsEmpty": "Your transaction list is empty",
     "withdrawTitle":"Withdraw",
     "withdrawDescription":"Request a withdrawal of your token rewards to your OnChain address.",
     "contributionsTitle":"Contributions",

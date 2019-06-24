@@ -462,6 +462,7 @@
         "networkScore": "Puntaje Red",
         "transactionsTitle": "Transacciones",
         "transactionsDescription": "Una lista de transacciones que has hecho con tu dirección",
+        "transactionsEmpty": "Tu lista de transacciones está vacía",
         "withdrawTitle": "Retirar",
         "withdrawDescription": "Solicitar un retiro de tus tokens de recompensa a tu dirección OnChain",
         "contributionsTitle": "Contribuciones",
