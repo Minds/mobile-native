@@ -31,7 +31,8 @@ import i18n from '../../common/services/i18n.service';
 export default class ActivityEditor extends Component {
 
   state = {
-    text: ''
+    text: '',
+    saving: false
   }
 
   componentWillMount() {
@@ -42,7 +43,7 @@ export default class ActivityEditor extends Component {
     });
   }
 
-  update = () => {
+  update = async() => {
 
     if (HashtagService.slice(this.state.text).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
       Alert.alert(i18n.t('capture.maxHashtags', {maxHashtags: HashtagService.maxHashtags}));
@@ -62,13 +63,23 @@ export default class ActivityEditor extends Component {
       data.paywall = false;
     }
 
-    this.props.newsfeed.list.updateActivity(this.props.entity, data)
-      .catch((err) => {
-        logService.exception('[ActivityEditor] update', err);
-      })
-      .finally(() => {
-        this.props.toggleEdit(false);
-      });
+    try {
+      this.setState({saving: true});
+      await this.props.entity.updateActivity(data);
+      this.props.toggleEdit(false);
+    } catch (err) {
+      logService.exception('[ActivityEditor] update', err);
+      Alert.alert(
+        i18n.t('sorry'),
+        i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
+        [
+          {text: i18n.t('ok'), onPress: () => {}},
+        ],
+        { cancelable: false }
+      );
+    } finally {
+      this.setState({saving: false});
+    }
   }
 
   cancel = () => {
@@ -121,7 +132,7 @@ export default class ActivityEditor extends Component {
 
           <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop]}>
             <Button text={i18n.t('cancel')} onPress={this.cancel} {...testID('Post editor cancel button')}/>
-            <Button text={i18n.t('save')} color={colors.primary} inverted={true} onPress={this.update} disabled={this.props.newsfeed.list.saving} {...testID('Post editor save button')}/>
+            <Button text={i18n.t('save')} color={colors.primary} inverted={true} onPress={this.update} disabled={this.state.saving} {...testID('Post editor save button')}/>
           </View>
         </View>
       </View>
