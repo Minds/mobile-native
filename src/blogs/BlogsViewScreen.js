@@ -128,7 +128,7 @@ export default class BlogsViewScreen extends Component {
     const actions = (
       <View style={[CS.flexContainer, CS.paddingLeft2x]}>
         <View style={styles.actionsContainer}>
-          <RemindAction entity={blog} size={16} navigation={this.props.navigation}/>
+          <RemindAction entity={blog} size={16} navigation={this.props.navigation} vertical={true}/>
           <ThumbUpAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
           <ThumbDownAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
         </View>
@@ -150,7 +150,9 @@ export default class BlogsViewScreen extends Component {
             <CenteredLoading/>}
         </View>
         <View style={styles.moreInformation}>
-          <Icon color={colors.medium} size={18} name='public' onPress={() => this.props.navigation.goBack()} />
+          { blog.getLicenseText() && 
+              <Icon color={colors.medium} size={18} name='public'/>
+          }
           <Text style={[CS.fontXS, CS.paddingLeft, CS.colorMedium, CS.paddingRight2x]}>{blog.getLicenseText()}</Text>
           <Icon color={colors.primary} size={20} name='share' onPress={this.share} />
         </View>

@@ -498,6 +498,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       }
                     }
                     size={16}
+                    vertical={true}
                   />
                   <ThumbUpAction
                     entity={
@@ -817,7 +818,6 @@ exports[`blog view screen component should renders correctly 1`] = `
           <Icon
             color="#b0bec5"
             name="public"
-            onPress={[Function]}
             raised={false}
             reverse={false}
             reverseColor="white"
