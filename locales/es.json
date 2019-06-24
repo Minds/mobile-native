@@ -709,7 +709,7 @@
         "topPeriod1": "1 año"
     },
     "update": {
-        "title": "Actualizar",
+        "title": "Actualizar a v{{version}}",
         "version": "Nueva v{{version}} disponible!"
     },
     "downloading": "Descargando",
