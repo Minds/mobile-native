@@ -134,7 +134,7 @@ exports[`Activity component renders correctly 1`] = `
             "alignSelf": "flex-end",
             "position": "absolute",
             "right": 10,
-            "top": 20,
+            "top": 6,
           }
         }
       >
@@ -229,139 +229,139 @@ exports[`Activity component renders correctly 1`] = `
       </ForwardRef(Text)>
     </TouchableOpacity>
   </OwnerBlock>
-  <ForwardRef(View)>
-    <ForwardRef(View)
-      style={
-        Object {
-          "padding": 8,
+  <ForwardRef(View)
+    style={
+      Object {
+        "padding": 8,
+      }
+    }
+  >
+    <ExplicitText
+      entity={
+        ActivityModel {
+          "attachment_guid": false,
+          "blurb": false,
+          "comments:count": undefined,
+          "container_guid": "activityguid0",
+          "custom_data": false,
+          "custom_type": false,
+          "description": "Congratulations! ",
+          "edited": "",
+          "getThumbSource": [Function],
+          "guid": "activityguid0",
+          "is_visible": true,
+          "mature": false,
+          "mature_visibility": false,
+          "message": "Message",
+          "ownerObj": UserModel {
+            "getAvatarSource": [Function],
+            "guid": "824853017709780997",
+            "subtype": false,
+            "time_created": "1522036284",
+            "type": "user",
+          },
+          "owner_guid": "824853017709780997",
+          "parent_guid": "838106762591510528",
+          "paywall": undefined,
+          "perma_url": false,
+          "pinned": undefined,
+          "rowKey": "something0",
+          "shouldBeBlured": [MockFunction] {
+            "calls": Array [
+              Array [],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          },
+          "thumbnail_src": false,
+          "thumbs:down:count": undefined,
+          "thumbs:down:user_guids": undefined,
+          "thumbs:up:count": undefined,
+          "thumbs:up:user_guids": undefined,
+          "title": "TITLE",
+          "type": "activity",
+          "wire_totals": Object {
+            "tokens": 1000000000000000000,
+          },
         }
       }
-    >
-      <ExplicitText
-        entity={
-          ActivityModel {
-            "attachment_guid": false,
-            "blurb": false,
-            "comments:count": undefined,
-            "container_guid": "activityguid0",
-            "custom_data": false,
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "getThumbSource": [Function],
-            "guid": "activityguid0",
-            "is_visible": true,
-            "mature": false,
-            "mature_visibility": false,
-            "message": "Message",
-            "ownerObj": UserModel {
-              "getAvatarSource": [Function],
-              "guid": "824853017709780997",
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
-            },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "paywall": undefined,
-            "perma_url": false,
-            "pinned": undefined,
-            "rowKey": "something0",
-            "shouldBeBlured": [MockFunction] {
-              "calls": Array [
-                Array [],
-              ],
-              "results": Array [
-                Object {
-                  "type": "return",
-                  "value": undefined,
-                },
-              ],
-            },
-            "thumbnail_src": false,
-            "thumbs:down:count": undefined,
-            "thumbs:down:user_guids": undefined,
-            "thumbs:up:count": undefined,
-            "thumbs:up:user_guids": undefined,
-            "title": "TITLE",
-            "type": "activity",
-            "wire_totals": Object {
-              "tokens": 1000000000000000000,
-            },
-          }
+      navigation={
+        Object {
+          "navigate": [MockFunction],
+          "push": [MockFunction],
         }
-        navigation={
-          Object {
-            "navigate": [MockFunction],
-            "push": [MockFunction],
-          }
+      }
+      style={
+        Object {
+          "fontFamily": "Roboto",
         }
-        style={
-          Object {
-            "fontFamily": "Roboto",
-          }
+      }
+    />
+    <Translate
+      entity={
+        ActivityModel {
+          "attachment_guid": false,
+          "blurb": false,
+          "comments:count": undefined,
+          "container_guid": "activityguid0",
+          "custom_data": false,
+          "custom_type": false,
+          "description": "Congratulations! ",
+          "edited": "",
+          "getThumbSource": [Function],
+          "guid": "activityguid0",
+          "is_visible": true,
+          "mature": false,
+          "mature_visibility": false,
+          "message": "Message",
+          "ownerObj": UserModel {
+            "getAvatarSource": [Function],
+            "guid": "824853017709780997",
+            "subtype": false,
+            "time_created": "1522036284",
+            "type": "user",
+          },
+          "owner_guid": "824853017709780997",
+          "parent_guid": "838106762591510528",
+          "paywall": undefined,
+          "perma_url": false,
+          "pinned": undefined,
+          "rowKey": "something0",
+          "shouldBeBlured": [MockFunction] {
+            "calls": Array [
+              Array [],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": undefined,
+              },
+            ],
+          },
+          "thumbnail_src": false,
+          "thumbs:down:count": undefined,
+          "thumbs:down:user_guids": undefined,
+          "thumbs:up:count": undefined,
+          "thumbs:up:user_guids": undefined,
+          "title": "TITLE",
+          "type": "activity",
+          "wire_totals": Object {
+            "tokens": 1000000000000000000,
+          },
         }
-      />
-      <Translate
-        entity={
-          ActivityModel {
-            "attachment_guid": false,
-            "blurb": false,
-            "comments:count": undefined,
-            "container_guid": "activityguid0",
-            "custom_data": false,
-            "custom_type": false,
-            "description": "Congratulations! ",
-            "edited": "",
-            "getThumbSource": [Function],
-            "guid": "activityguid0",
-            "is_visible": true,
-            "mature": false,
-            "mature_visibility": false,
-            "message": "Message",
-            "ownerObj": UserModel {
-              "getAvatarSource": [Function],
-              "guid": "824853017709780997",
-              "subtype": false,
-              "time_created": "1522036284",
-              "type": "user",
-            },
-            "owner_guid": "824853017709780997",
-            "parent_guid": "838106762591510528",
-            "paywall": undefined,
-            "perma_url": false,
-            "pinned": undefined,
-            "rowKey": "something0",
-            "shouldBeBlured": [MockFunction] {
-              "calls": Array [
-                Array [],
-              ],
-              "results": Array [
-                Object {
-                  "type": "return",
-                  "value": undefined,
-                },
-              ],
-            },
-            "thumbnail_src": false,
-            "thumbs:down:count": undefined,
-            "thumbs:down:user_guids": undefined,
-            "thumbs:up:count": undefined,
-            "thumbs:up:user_guids": undefined,
-            "title": "TITLE",
-            "type": "activity",
-            "wire_totals": Object {
-              "tokens": 1000000000000000000,
-            },
-          }
+      }
+      style={
+        Object {
+          "fontFamily": "Roboto",
         }
-        style={
-          Object {
-            "fontFamily": "Roboto",
-          }
-        }
-      />
-    </ForwardRef(View)>
+      }
+    />
+  </ForwardRef(View)>
+  <ForwardRef(View)>
     <MediaView
       entity={
         ActivityModel {
@@ -421,7 +421,11 @@ exports[`Activity component renders correctly 1`] = `
           "push": [MockFunction],
         }
       }
-      style={Object {}}
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
       width={750}
     />
   </ForwardRef(View)>

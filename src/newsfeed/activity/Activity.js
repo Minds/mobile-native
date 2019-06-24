@@ -84,10 +84,11 @@ export default class Activity extends Component {
         <View style={[styles.container, this.props.isReminded ? null : CommonStyle.hairLineBottom]} onLayout={this.props.onLayout}>
           <Pinned entity={this.props.entity}/>
           { this.showOwner() }
-          <View>
             { lock }
             { message }
+          <View>
             { this.showRemind() }
+     
             <MediaView
               ref={o => {this.mediaView = o}}
               entity={ entity }
@@ -269,7 +270,7 @@ const styles = StyleSheet.create({
     padding: 0
   },
   media: {
-    //flex: 1,
+    flex: 1,
   },
   timestamp: {
     fontSize: 11,
@@ -282,7 +283,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     position: 'absolute',
     right: 10,
-    top: 20
+    top: 6
   },
   boostTagContainer: {
     flexDirection: 'row',
