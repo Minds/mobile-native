@@ -46,7 +46,7 @@ export default class Activity extends Component {
    * Nav to activity full screen
    */
   navToActivity = () => {
-    const navOpts = { entity: this.props.entity, store: this.props.newsfeed };
+    const navOpts = { entity: this.props.entity };
 
     if (this.props.entity.remind_object || this.props.hydrateOnNav) {
       navOpts.hydrate = true;
@@ -66,7 +66,7 @@ export default class Activity extends Component {
     const message = this.state.editing ?
       (
         //Passing the store in newsfeed (could be channel also)
-        <ActivityEditor entity={entity} toggleEdit={this.toggleEdit} newsfeed={this.props.newsfeed} />
+        <ActivityEditor entity={entity} toggleEdit={this.toggleEdit}/>
       ):(
         <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
           {hasText ? <ExplicitText entity={entity} navigation={this.props.navigation} style={styles.message} /> : null}
@@ -93,7 +93,6 @@ export default class Activity extends Component {
               entity={ entity }
               navigation={this.props.navigation}
               style={ styles.media }
-              newsfeed={this.props.newsfeed}
               autoHeight={ this.props.autoHeight }
               />
             { overlay }
@@ -150,7 +149,6 @@ export default class Activity extends Component {
       const rightToolbar = (
         <View style={styles.rightToolbar}>
           <ActivityActionSheet
-            newsfeed={this.props.newsfeed}
             toggleEdit={this.toggleEdit}
             entity={this.props.entity}
             navigation={this.props.navigation}
@@ -187,12 +185,10 @@ export default class Activity extends Component {
         <View>
           <RemindOwnerBlock
             entity={this.props.entity}
-            newsfeed={this.props.newsfeed}
             navigation={this.props.navigation}
             />
           <View style={styles.rightToolbar}>
             {!this.props.hideTabs && <ActivityActionSheet
-              newsfeed={this.props.newsfeed}
               toggleEdit={this.toggleEdit}
               entity={this.props.entity}
               navigation={this.props.navigation}
@@ -229,9 +225,8 @@ export default class Activity extends Component {
       return (
         <View style={styles.remind}>
           <Activity
-            ref={r => this.remind=r}
+            ref={r => this.remind = r}
             hideTabs={true}
-            newsfeed={this.props.newsfeed}
             entity={remind_object}
             navigation={this.props.navigation}
             isReminded={true}

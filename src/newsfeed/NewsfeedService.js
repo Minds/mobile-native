@@ -6,6 +6,7 @@ import stores from '../../AppStores';
 import blockListService from '../common/services/block-list.service';
 import feedsService from '../common/services/feed.service'
 import featuresService from '../common/services/features.service';
+import logService from '../common/services/log.service';
 
 export default class NewsfeedService {
 
@@ -50,8 +51,8 @@ export default class NewsfeedService {
 
   /**
    * Fetch top newsfeed
-   * @param {string} offset
-   * @param {int} limit
+   * @param {String} offset
+   * @param {Number} limit
    */
   async getFeedSuggested(offset, limit = 12) {
     return this._getFeed('api/v2/entities/suggested/activities' + (stores.hashtag.all ? '/all' : ''), offset, limit);
@@ -59,9 +60,9 @@ export default class NewsfeedService {
 
   /**
    * Fetch channel feed
-   * @param {string} guid
-   * @param {string} offset
-   * @param {int} limit
+   * @param {String} guid
+   * @param {String} offset
+   * @param {Number} limit
    */
   async getFeedChannel(guid, offset, limit = 12) {
     return this._getFeed('api/v1/newsfeed/personal/' + guid, offset, limit);
@@ -69,8 +70,8 @@ export default class NewsfeedService {
 
   /**
    * Fetch boosted content
-   * @param {string} offset
-   * @param {int} limit
+   * @param {String} offset
+   * @param {Number} limit
   */
   async getBoosts(offset, limit = 15, rating) {
 
@@ -90,74 +91,18 @@ export default class NewsfeedService {
   }
 }
 
-// /**
-//  * Common function to fetch feeds
-//  * @param {string} endpoint
-//  * @param {string} offset
-//  * @param {int} limit
-//  */
-// function _getFeed(endpoint, offset, limit) {
-//   return api.get(endpoint, { offset, limit })
-//     .then((data) => {
-//       return {
-//         entities: data.activity || data.entities,
-//         offset: data['load-next'],
-//       }
-//     })
-//     .catch(err => {
-//       if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
-//         logService.exception('[NewsfeedService]', err);
-//       }
-//       throw "Oops, an error has occured updating your newsfeed";
-//     })
-// }
-
-// /**
-//  * Fetch channel feed
-//  * @param {string} guid
-//  * @param {string} offset
-//  * @param {int} limit
-//  */
-// export function getFeedChannel(guid, offset, limit = 12) {
-//   return _getFeed('api/v1/newsfeed/personal/' + guid, offset, limit);
-// }
-
-// /**
-//  * Fetch boosted content
-//  * @param {string} offset
-//  * @param {int} limit
-//  */
-// export function getBoosts(offset, limit = 15, rating) {
-//   return api.get('api/v1/boost/fetch/newsfeed', {
-//     limit: limit || '',
-//     offset: offset || '',
-//     rating: rating || 1,
-//     platform: Platform.OS === 'ios' ? 'ios' : 'other'
-//   })
-//     .then((data) => {
-//       return {
-//         entities: data.boosts||[],
-//         offset: data['load-next'],
-//       }
-//     });
-// }
-
 export function update(post) {
   return api.post('api/v1/newsfeed/' + post.guid, post)
     .then((data) => {
       return {
         entity: data.activity,
       }
-    })
-    .catch(err => {
-      logService.exception('[NewsfeedService]', err);
-      throw "Oops, an error has occurred updating your newsfeed";
-    })
+    });
 }
 
 /**
  * Toggle comments
- * @param {string} guid
+ * @param {String} guid
  * @param {boolean} value
  */
 export function toggleComments(guid, value) {
@@ -170,44 +115,23 @@ export function toggleComments(guid, value) {
 
 /**
  * Mark as viewed
- * @param {object} entity
+ * @param {Object} entity
+ * @param {Object} data
  */
-export async function setViewed(entity) {
+export async function setViewed(entity, extra = {}) {
   let data;
-  try {
-    if (entity.boosted) {
-      data = await api.post('api/v2/analytics/views/boost/' + entity.boosted_guid );
-    } else {
-      data = await api.post('api/v2/analytics/views/activity/' + entity.guid);
-    }
-    return data;
-  } catch (e) {
-      throw e;
-  }
-}
 
-/**
- * Toggle user block
- * @param {string} guid
- * @param {boolean} value
- */
-export function toggleUserBlock(guid, value) {
-  let result;
-
-  if (value) {
-    result = api.put('api/v1/block/' + guid);
-    blockListService.add(guid);
+  if (entity.boosted) {
+    data = await api.post('api/v2/analytics/views/boost/' + entity.boosted_guid, extra );
   } else {
-    result = api.delete('api/v1/block/' + guid);
-    blockListService.remove(guid);
+    data = await api.post('api/v2/analytics/views/activity/' + entity.guid, extra);
   }
-
-  return result;
+  return data;
 }
 
 /**
  * Toggle muted
- * @param {string} guid
+ * @param {String} guid
  * @param {boolean} value
  */
 
@@ -299,7 +223,7 @@ export async function getSingle(guid) {
 
 /**
  * Set Pinned to post
- * @param {string} guid
+ * @param {String} guid
  * @param {boolean} value
  */
 export async function setPinPost(guid, value) {

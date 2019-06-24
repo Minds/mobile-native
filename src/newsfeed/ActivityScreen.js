@@ -46,16 +46,16 @@ export default class ActivityScreen extends Component {
     super(props);
 
     const params = props.navigation.state.params;
-    this.store = params.store ? params.store : new NewsfeedStore();
+
     this.comments = commentsStoreProvider.get();
 
     if (params.entity && (params.entity.guid || params.entity.entity_guid)) {
       this.entityStore.setEntity(ActivityModel.checkOrCreate(params.entity));
 
-      let index = this.store.list.entities.findIndex(x => x.guid == this.entityStore.entity.guid);
+      const entity = this.entityStore.entity;
 
-      if (index === -1) {
-        this.store.list.entities.push(this.entityStore.entity);
+      if (entity._list && entity._list.metadataServie) {
+        entity._list.metadataServie.pushSource('single');
       }
     }
   }
@@ -69,12 +69,29 @@ export default class ActivityScreen extends Component {
     if (!this.entityStore.entity || params.hydrate) {
       try {
         const resp = await getSingle(params.guid || params.entity.guid || params.entity.entity_guid);
-        await this.entityStore.setEntity(ActivityModel.checkOrCreate(resp.activity));
+
+        // if it has a list asigned we set it to the new entity
+        if (this.entityStore.entity) {
+          this.entityStore.entity.update(resp.activity);
+        } else {
+          this.entityStore.setEntity(ActivityModel.checkOrCreate(resp.activity));
+        }
       } catch (e) {
         this.setState({error: true});
         logService.exception('[ActivityScreen]',e);
         //console.error('Cannot hydrate activity', e);
       }
+    }
+  }
+
+  /**
+   * Component will unmount
+   */
+  componentWillUnmount() {
+    const entity = this.entityStore.entity;
+
+    if (entity._list && entity._list.metadataServie) {
+      entity._list.metadataServie.popSource();
     }
   }
 
@@ -86,7 +103,6 @@ export default class ActivityScreen extends Component {
       <Activity
         ref={o => this.activity = o}
         entity={ this.entityStore.entity }
-        newsfeed={ this.store }
         navigation={ this.props.navigation }
         autoHeight={false}
       /> : null;

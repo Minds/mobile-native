@@ -1,8 +1,9 @@
-import { observable, decorate, action } from 'mobx';
+import { observable, decorate, action, runInAction } from 'mobx';
 import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
 import stores from '../../AppStores';
+import ChannelService from './ChannelService';
 
 /**
  * User model
@@ -34,6 +35,21 @@ export default class UserModel extends BaseModel {
   toggleMatureVisibility() {
     if (GOOGLE_PLAY_STORE) return;
     this.mature_visibility = !this.mature_visibility;
+  }
+
+  @action
+  async toggleSubscription() {
+    const value = !this.subscribed;
+    this.subscribed = value;
+    try {
+      const metadata = this.getClientMetadata();
+      await ChannelService.toggleSubscription(this.guid, value, metadata)
+    } catch (err) {
+      runInAction(() => {
+        this.subscribed = !value;
+      });
+      throw err;
+    }
   }
 
   /**

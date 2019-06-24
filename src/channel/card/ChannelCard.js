@@ -29,8 +29,7 @@ import FastImage from 'react-native-fast-image';
 export default class ChannelCard extends Component {
 
   subscribe() {
-    let channel = this.props.entity;
-    this.props.channel.subscribe(channel.guid);
+    this.props.entity.toggleSubscription();
   }
 
   /**

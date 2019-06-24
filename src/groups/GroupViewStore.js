@@ -22,7 +22,7 @@ class GroupViewStore {
   /**
    * List feed store
    */
-  @observable list = new OffsetFeedListStore();
+  @observable list = new OffsetFeedListStore('shallow', true);
 
   /**
    * List Members
@@ -56,11 +56,13 @@ class GroupViewStore {
    */
   memberSearch = '';
 
-  /**
-   * List loading
-   */
-  viewed = [];
   guid = '';
+
+  constructor() {
+    this.list.getMetadataService()
+      .setSource('feed/groups')
+      .setMedium('feed');
+  }
 
   /**
    * Set guid
@@ -166,22 +168,6 @@ class GroupViewStore {
     }
   }
 
-
-  @action
-  async addViewed(entity) {
-    if(this.viewed.indexOf(entity.guid) < 0) {
-      let response;
-      try {
-        response = await setViewed(entity);
-        if (response) {
-          this.viewed.push(entity.guid);
-        }
-      } catch (e) {
-        throw new Error('There was an issue storing the view');
-      }
-    }
-  }
-
   /**
    * Load one group
    * @param {string} guid
@@ -190,6 +176,7 @@ class GroupViewStore {
     return groupsService.loadEntity(guid)
       .then(group => {
         this.setGroup(group);
+        this.list.clearViewed();
         return group;
       });
   }

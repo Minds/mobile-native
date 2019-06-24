@@ -50,11 +50,11 @@ export default class ChannelActions extends Component {
   getOptions() {
     let options = [ i18n.t('cancel') ];
 
-    if(this.props.channel.channel.subscribed){
+    if(this.props.store.channel.subscribed){
       options.push( i18n.t('channel.unsubscribe') );
     }
 
-    if (!this.props.channel.channel.blocked) {
+    if (!this.props.store.channel.blocked) {
       options.push( i18n.t('channel.block') );
     } else {
       options.push( i18n.t('channel.unblock') );
@@ -71,16 +71,16 @@ export default class ChannelActions extends Component {
     let selected = options[option];
     switch (selected) {
       case i18n.t('channel.unsubscribe'):
-        this.props.channel.subscribe();
+        this.props.store.channel.toggleSubscription();
         break;
       case i18n.t('channel.block'):
-        this.props.channel.toggleBlock();
+        this.props.store.toggleBlock();
         break;
       case i18n.t('channel.unblock'):
-        this.props.channel.toggleBlock();
+        this.props.store.toggleBlock();
         break;
       case i18n.t('channel.report'):
-        this.props.navigation.push('Report', { entity: this.props.channel.channel });
+        this.props.navigation.push('Report', { entity: this.props.store.channel });
         break;
     }
   }
@@ -90,12 +90,12 @@ export default class ChannelActions extends Component {
    */
   render() {
 
-    const channel = this.props.channel.channel;
+    const channel = this.props.store.channel;
     const showWire = !channel.blocked && !channel.isOwner() && featuresService.has('crypto');
 
     return (
       <View style={styles.wrapper}>
-        {!!showWire && <WireAction owner={this.props.channel.channel} navigation={this.props.navigation}/>}
+        {!!showWire && <WireAction owner={this.props.store.channel} navigation={this.props.navigation}/>}
         <Icon name="md-settings" style={ styles.icon } onPress={() => this.showActionSheet()} size={24} />
         <ActionSheet
           ref={o => this.ActionSheet = o}

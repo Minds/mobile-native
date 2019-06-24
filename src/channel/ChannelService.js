@@ -31,12 +31,14 @@ class ChannelService {
   /**
    * Subscribe to Channel
    * @param {string} guid
+   * @param {boolean} value
+   * @param {Object} data
    */
-  toggleSubscription(guid, value) {
+  toggleSubscription(guid, value, data = {}) {
     if (value) {
-      return api.post('api/v1/subscribe/' + guid);
+      return api.post('api/v1/subscribe/' + guid, data);
     } else {
-      return api.delete('api/v1/subscribe/' + guid);
+      return api.delete('api/v1/subscribe/' + guid, data);
     }
   }
 

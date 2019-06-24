@@ -11,7 +11,7 @@ import BlogModel from './BlogModel';
  */
 class BlogsViewStore {
 
-  @observable blog = null;
+  @observable.ref blog = null;
 
   /**
    * Load blog
@@ -21,7 +21,12 @@ class BlogsViewStore {
   loadBlog(guid) {
     return blogService.loadEntity(guid)
       .then(result => {
-        this.setBlog(result.blog);
+        // keep the _list if the entity has one
+        if (this.blog) {
+          this.blog.update(result.blog);
+        } else {
+          this.setBlog(result.blog);
+        }
       });
   }
 

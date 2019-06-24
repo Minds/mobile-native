@@ -39,7 +39,7 @@ export default class DiscoveryUser extends Component {
   _navToChannel = () => {
     Keyboard.dismiss();
     if (this.props.navigation) {
-      this.props.navigation.push('Channel', { guid: this.props.entity.item.guid });
+      this.props.navigation.push('Channel', { guid: this.props.entity.item.guid, entity: this.props.entity.item });
     }
   }
 
@@ -57,13 +57,8 @@ export default class DiscoveryUser extends Component {
 
   _toggleSusbcribed() {
     const item = this.props.entity.item;
-    if (this.props.store.members){
-      this.props.store.members.toggleSubscription(item.guid);
-    } else if (this.props.store.list) {
-      this.props.store.list.toggleSubscription(item.guid);
-    }
+    this.props.entity.item.toggleSubscription();
   }
-
 
   renderRightButton() {
     const item = this.props.entity.item;

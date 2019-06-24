@@ -1,4 +1,4 @@
-import { runInAction, action, observable, decorate } from 'mobx';
+import { runInAction, action, observable, decorate, toJS } from 'mobx';
 
 import FastImage from 'react-native-fast-image'
 import BaseModel from '../common/BaseModel';
@@ -6,7 +6,7 @@ import UserModel from '../channel/UserModel';
 import wireService from '../wire/WireService';
 import { thumbActivity } from './activity/ActionsService';
 import sessionService from '../common/services/session.service';
-import { setPinPost } from '../newsfeed/NewsfeedService';
+import { setPinPost, deleteItem, unfollow, follow, update } from '../newsfeed/NewsfeedService';
 import api from '../common/services/api.service';
 
 import {
@@ -15,6 +15,7 @@ import {
   MINDS_URI
 } from '../config/Config';
 import i18n from '../common/services/i18n.service';
+import logService from '../common/services/log.service';
 
 /**
  * Activity model
@@ -28,6 +29,26 @@ export default class ActivityModel extends BaseModel {
    * Is visible in flat list
    */
   @observable is_visible = true;
+
+  /**
+   *  List reference setter
+   */
+  set _list(value) {
+    this.__list = value;
+
+    // the reminded object need access to the metadata service too
+    if (this.remind_object) {
+      this.remind_object._list = value;
+    }
+  }
+
+  /**
+   *  List reference getter
+   */
+  get _list() {
+    return this.__list;
+  }
+
 
   /**
    * Child models
@@ -180,6 +201,58 @@ export default class ActivityModel extends BaseModel {
       this.pinned = !this.pinned;
       alert(i18n.t('errorPinnedPost'));
     }
+  }
+
+  @action
+  async deleteEntity() {
+    try {
+      await deleteItem(this.guid)
+      if (this._list) {
+        runInAction(() => {
+          this._list.remove(this);
+        });
+      }
+    } catch (err) {
+      logService.exception('[ActivityModel]', err);
+      throw err;
+    }
+  }
+
+  @action
+  async toogleFollow() {
+    const method = this['is:following'] ? unfollow : follow;
+    try {
+      await method(this.guid)
+      runInAction(() => {
+        this['is:following'] = !this['is:following'];
+      });
+    } catch (err) {
+      logService.exception('[OffsetFeedListStore]', err);
+      throw err;
+    }
+  }
+
+  @action
+  async updateActivity(data = {}) {
+    const list = this._list;
+    delete(this._list);
+    const entity = toJS(this);
+    this._list = list;
+
+    if (data) {
+      for (const field in data) {
+        entity[field] = data[field];
+      }
+    }
+
+    await update(entity);
+    this.setEdited(entity.message);
+  }
+
+  @action
+  setEdited(message) {
+    this.message = message
+    this.edited  = 1;
   }
 }
 

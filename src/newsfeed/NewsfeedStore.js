@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { observable, action, computed, extendObservable } from 'mobx'
 
-import NewsfeedService, { setViewed } from './NewsfeedService';
+import NewsfeedService from './NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from './ActivityModel';
 import logService from '../common/services/log.service';
@@ -17,7 +17,6 @@ class NewsfeedStore {
 
   service = new NewsfeedService;
 
-  viewed = [];
   @observable filter = 'subscribed';
 
   @observable.ref boosts = [];
@@ -37,10 +36,10 @@ class NewsfeedStore {
   buildStores() {
     this.stores = {
       'subscribed': {
-        list: new OffsetFeedListStore('shallow'),
+        list: new OffsetFeedListStore('shallow', true),
       },
       'boostfeed': {
-        list: new OffsetFeedListStore('shallow'),
+        list: new OffsetFeedListStore('shallow', true),
       },
     };
 
@@ -50,6 +49,14 @@ class NewsfeedStore {
     extendObservable(this.stores.boostfeed, {
       loading: false
     });
+
+    this.stores.subscribed.list.getMetadataService()
+      .setSource('feed/subscribed')
+      .setMedium('feed');
+
+    this.stores.boostfeed.list.getMetadataService()
+      .setSource('feed/boosts')
+      .setMedium('featured-content');
   }
 
   /**
@@ -170,21 +177,6 @@ class NewsfeedStore {
     this.loadFeed(true, false);
   }
 
-  @action
-  async addViewed(entity) {
-    if (this.viewed.indexOf(entity.guid) < 0) {
-      let response;
-      try {
-        response = await setViewed(entity);
-        if (response) {
-          this.viewed.push(entity.guid);
-        }
-      } catch (e) {
-        throw new Error('There was an issue storing the view');
-      }
-    }
-  }
-
   /**
    * return service method based on filter
    */
@@ -230,6 +222,7 @@ class NewsfeedStore {
 
   @action
   async refresh() {
+    // when refresh we report viewed again
     await this.list.refresh();
     await this.loadFeed(true);
     this.list.refreshDone();
@@ -240,7 +233,6 @@ class NewsfeedStore {
     this.buildStores();
     this.filter = 'subscribed';
     this.boosts = [];
-    this.viewed = [];
     this.loading = false;
     this.loadingBoost = false;
   }

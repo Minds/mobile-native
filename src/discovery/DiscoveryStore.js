@@ -73,10 +73,10 @@ class DiscoveryStore {
         list: new OffsetFeedListStore('shallow'),
       },
       'blogs': {
-        list: new OffsetFeedListStore('shallow'),
+        list: new OffsetFeedListStore('shallow', true),
       },
       'channels': {
-        list: new OffsetFeedListStore('shallow'),
+        list: new OffsetFeedListStore('shallow', true),
       },
       'groups': {
         list: new OffsetFeedListStore('shallow'),
@@ -85,7 +85,7 @@ class DiscoveryStore {
         list: new OffsetFeedListStore('shallow'),
       },
       'activities': {
-        list: new OffsetFeedListStore('shallow'),
+        list: new OffsetFeedListStore('shallow', true),
       }
     };
     extendObservable(this.stores.images, {
@@ -109,6 +109,18 @@ class DiscoveryStore {
     extendObservable(this.stores.activities, {
       loading: false
     });
+
+    this.stores.activities.list.getMetadataService()
+      .setSource('feed/discovery')
+      .setMedium('feed');
+
+    this.stores.blogs.list.getMetadataService()
+      .setSource('feed/discovery')
+      .setMedium('feed');
+
+    this.stores.channels.list.getMetadataService()
+      .setSource('feed/discovery')
+      .setMedium('feed');
   }
 
   @action

@@ -83,10 +83,13 @@ export default class BlogsViewScreen extends Component {
    */
   async componentDidMount() {
     const params = this.props.navigation.state.params;
-
     try {
       if (params.blog) {
+        if (params.blog._list && params.blog._list.metadataServie) {
+          params.blog._list.metadataServie.pushSource('single');
+        }
         this.props.blogsView.setBlog(params.blog);
+
         if (!params.blog.description) {
           await this.props.blogsView.loadBlog(params.blog.guid);
         }
@@ -116,6 +119,10 @@ export default class BlogsViewScreen extends Component {
    * On component will unmount
    */
   componentWillUnmount() {
+    const blog = this.props.blogsView.blog;
+    if (blog._list && blog._list.metadataServie) {
+      blog._list.metadataServie.popSource();
+    }
     this.props.blogsView.reset();
   }
 
@@ -166,7 +173,13 @@ export default class BlogsViewScreen extends Component {
    */
   render() {
 
-    if (!this.props.blogsView.blog) return <CenteredLoading />;
+    if (!this.props.blogsView.blog) {
+      return <CenteredLoading />;
+    } else {
+      // force observe on description
+      const desc = this.props.blogsView.blog.description;
+    }
+
     return (
       <View style={[CS.flexContainer, CS.backgroundWhite]}>
         {

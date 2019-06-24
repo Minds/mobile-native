@@ -2,6 +2,7 @@ import { observable, action, extendObservable } from 'mobx'
 import channelService from '../../channel/ChannelService';
 import { revokeBoost, rejectBoost, acceptBoost} from '../../boost/BoostService';
 import logService from '../services/log.service';
+import MetadataService from '../services/metadata.service';
 
 /**
  * Common infinite scroll list
@@ -29,10 +30,16 @@ export default class OffsetListStore {
   @observable offset = '';
 
   /**
-   * Constructor
-   * @param {string} 'shallow'|'ref'|null
+   * Metadata service
    */
-  constructor(type = null) {
+  metadataServie = null;
+
+  /**
+   * Constructor
+   * @param {string} type 'shallow'|'ref'|null
+   * @param {boolean} includeMetadata
+   */
+  constructor(type = null, includeMetadata = false) {
     if (type) {
       extendObservable(this,{
         entities: [],
@@ -46,18 +53,40 @@ export default class OffsetListStore {
        entities: observable
       });
     }
+
+    if (includeMetadata) {
+      this.metadataServie = new MetadataService;
+    }
   }
 
+  /**
+   * Get metadata service
+   * @returns {MetadataService}
+   */
+  getMetadataService() {
+    return this.metadataServie;
+  }
+
+  /**
+   * Set or add to the list
+   * @param {Object} list
+   * @param {boolean} replace
+   */
   @action
   setList(list, replace = false) {
-    if (list.entities && replace) {
-      this.entities = list.entities;
-    }
+    if (list.entities) {
 
-    if (list.entities && !replace) {
-      list.entities.forEach(element => {
-        this.entities.push(element);
-      });
+      if (replace) {
+        list.entities.forEach((entity) => {
+          entity._list = this;
+        });
+        this.entities = list.entities;
+      } else {
+        list.entities.forEach((entity) => {
+          entity._list = this;
+          this.entities.push(entity);
+        });
+      }
     }
 
     this.loaded = true;
@@ -71,7 +100,23 @@ export default class OffsetListStore {
 
   @action
   prepend(entity) {
+    entity._list = this;
     this.entities.unshift(entity);
+  }
+
+  @action
+  removeIndex(index) {
+    this.entities.splice(index, 1);
+  }
+
+  remove(entity) {
+    const index = this.entities.findIndex(e => e === entity);
+    if (index < 0) return;
+    this.removeIndex(index);
+  }
+
+  getIndex(entity) {
+    return this.entities.findIndex(e => e === entity);
   }
 
   @action
@@ -103,73 +148,5 @@ export default class OffsetListStore {
   @action
   cantLoadMore() {
     return this.loaded && !this.offset && !this.refreshing;
-  }
-
-  @action
-  toggleSubscription(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.entities[index];
-      let value = !entity.subscribed;
-      entity.subscribed = value;
-      return channelService.toggleSubscription(entity.guid, value)
-        .then(action(response => {
-          entity.subscribed = value;
-          this.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          entity.subscribed = !value;
-          this.entities[index] = entity;
-          logService.exception('[OffsetListStore]', err);
-        }));
-    }
-  }
-
-  @action
-  reject(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.entities[index];
-      return rejectBoost(guid)
-        .then(action(response => {
-          entity.state = 'rejected';
-          this.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          logService.exception('[OffsetListStore]', err);
-        }));
-    }
-  }
-
-  @action
-  accept(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.entities[index];
-      return acceptBoost(guid)
-        .then(action(response => {
-          entity.state = 'accepted';
-          this.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          logService.exception('[OffsetListStore]', err);
-        }));
-    }
-  }
-
-  @action
-  revoke(guid, filter) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.entities[index];
-      return revokeBoost(guid, filter)
-        .then(action(response => {
-          entity.state = 'revoked';
-          this.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          logService.exception('[OffsetListStore]', err);
-        }));
-    }
   }
 }

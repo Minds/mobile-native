@@ -74,7 +74,7 @@ export default class ChannelHeader extends Component {
       return {uri: this.state.preview_banner};
     }
 
-    return this.props.channel.channel.getBannerSource();
+    return this.props.store.channel.getBannerSource();
   }
 
   /**
@@ -85,7 +85,7 @@ export default class ChannelHeader extends Component {
       return { uri: this.state.preview_avatar };
     }
 
-    return this.props.channel.channel.getAvatarSource('large');
+    return this.props.store.channel.getAvatarSource('large');
   }
 
   /**
@@ -93,18 +93,18 @@ export default class ChannelHeader extends Component {
    */
   _navToConversation() {
     if (this.props.navigation) {
-      this.props.navigation.push('Conversation', { conversation: { guid : this.props.channel.channel.guid + ':' + session.guid } });
+      this.props.navigation.push('Conversation', { conversation: { guid : this.props.store.channel.guid + ':' + session.guid } });
     }
   }
 
   _navToSubscribers() {
     if (this.props.navigation) {
-      this.props.navigation.push('Subscribers', { guid : this.props.channel.channel.guid });
+      this.props.navigation.push('Subscribers', { guid : this.props.store.channel.guid });
     }
   }
 
   componentDidMount() {
-    const isOwner = session.guid === this.props.channel.channel.guid;
+    const isOwner = session.guid === this.props.store.channel.guid;
     if(isOwner) this.props.onboarding.getProgress();
   }
 
@@ -122,7 +122,7 @@ export default class ChannelHeader extends Component {
 
       this.setState({saving: true});
 
-      const response = await this.props.channel.save(payload);
+      const response = await this.props.store.save(payload);
 
       if (response === true) {
         this.props.user.load();
@@ -143,8 +143,8 @@ export default class ChannelHeader extends Component {
         edit: true,
         preview_avatar: null,
         preview_banner: null,
-        briefdescription: this.props.channel.channel.briefdescription,
-        name: this.props.channel.channel.name
+        briefdescription: this.props.store.channel.briefdescription,
+        name: this.props.store.channel.name
       });
     }
   }
@@ -154,9 +154,9 @@ export default class ChannelHeader extends Component {
    */
   getActionButton() {
     const styles  = this.props.styles;
-    if (!this.props.channel.loaded && session.guid !== this.props.channel.channel.guid )
+    if (!this.props.store.loaded && session.guid !== this.props.store.channel.guid )
       return null;
-    if (session.guid === this.props.channel.channel.guid) {
+    if (session.guid === this.props.store.channel.guid) {
       return (
         <ButtonCustom
           onPress={this.onEditAction}
@@ -165,7 +165,7 @@ export default class ChannelHeader extends Component {
           loading={this.state.saving}
         />
       );
-    } else if (!!this.props.channel.channel.subscribed) {
+    } else if (!!this.props.store.channel.subscribed) {
       return (
         <TouchableHighlightCustom
           onPress={() => { this._navToConversation() }}
@@ -176,7 +176,7 @@ export default class ChannelHeader extends Component {
           <Text style={{ color: colors.primary }} > {i18n.t('channel.message')}  </Text>
         </TouchableHighlightCustom>
       );
-    } else if (session.guid !== this.props.channel.channel.guid) {
+    } else if (session.guid !== this.props.store.channel.guid) {
       return (
         <TouchableHighlightCustom
           onPress={() => { this.subscribe() }}
@@ -187,7 +187,7 @@ export default class ChannelHeader extends Component {
           <Text style={{ color: colors.primary }} > {i18n.t('channel.subscribe').toUpperCase()} </Text>
         </TouchableHighlightCustom>
       );
-    } else if (this.props.channel.isUploading) {
+    } else if (this.props.store.isUploading) {
       return (
         <ActivityIndicator size="small" />
       )
@@ -195,8 +195,7 @@ export default class ChannelHeader extends Component {
   }
 
   subscribe() {
-    let channel = this.props.channel.channel;
-    this.props.channel.subscribe();
+    this.props.store.channel.toggleSubscription();
   }
 
   changeBannerAction = async () => {
@@ -239,12 +238,12 @@ export default class ChannelHeader extends Component {
    * Render Header
    */
   render() {
-    const isOwner = session.guid === this.props.channel.channel.guid;
-    const channel = this.props.channel.channel;
+    const isOwner = session.guid === this.props.store.channel.guid;
+    const channel = this.props.store.channel;
     const styles  = this.props.styles;
     const avatar  = this.getAvatar();
     const iurl = this.getBannerFromChannel();
-    const isUploading = this.props.channel.isUploading;
+    const isUploading = this.props.store.isUploading;
     const isEditable = this.state.edit && !isUploading;
 
     return (
@@ -255,8 +254,8 @@ export default class ChannelHeader extends Component {
           {isEditable && <View style={styles.tapOverlayView}>
             <Icon name="md-create" size={30} color="#fff" />
           </View>}
-          {(isUploading && this.props.channel.bannerProgress) ? <View style={styles.tapOverlayView}>
-            <Progress.Pie progress={this.props.channel.bannerProgress} size={36} />
+          {(isUploading && this.props.store.bannerProgress) ? <View style={styles.tapOverlayView}>
+            <Progress.Pie progress={this.props.store.bannerProgress} size={36} />
           </View>:null}
         </TouchableCustom>
 
@@ -299,7 +298,7 @@ export default class ChannelHeader extends Component {
             <View style={styles.buttonscol}>
               { !channel.blocked && this.getActionButton() }
               { session.guid !== channel.guid?
-                <ChannelActions navigation={this.props.navigation} channel={this.props.channel} me={session}></ChannelActions> : <View></View>
+                <ChannelActions navigation={this.props.navigation} store={this.props.store} me={session}></ChannelActions> : <View></View>
               }
             </View>
           </View>
@@ -326,8 +325,8 @@ export default class ChannelHeader extends Component {
           {isEditable && <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
             <Icon name="md-create" size={30} color="#fff" />
           </View>}
-          {(isUploading && this.props.channel.avatarProgress) ? <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
-            <Progress.Pie progress={this.props.channel.avatarProgress} size={36} />
+          {(isUploading && this.props.store.avatarProgress) ? <View style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
+            <Progress.Pie progress={this.props.store.avatarProgress} size={36} />
           </View>: null}
         </TouchableCustom>
         {isOwner && this.props.onboarding.percentage < 1 ? <CompleteProfile progress={this.props.onboarding.percentage}/>: null}
