@@ -96,7 +96,7 @@ export default class NewsfeedList extends Component {
     }
 
     // empty view
-    if (newsfeed.list.loaded && !newsfeed.list.refreshing) {
+    if (newsfeed.loaded && !newsfeed.refreshing) {
       if (emptyMessage) {
         empty = emptyMessage;
       } else if (newsfeed.filter == 'subscribed') {
@@ -147,12 +147,12 @@ export default class NewsfeedList extends Component {
         onLayout={this.onLayout}
         ListHeaderComponent={header}
         ListFooterComponent={footer}
-        data={newsfeed.list.entities.slice()}
+        data={newsfeed.feed.current.slice()}
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
-        refreshing={newsfeed.list.refreshing}
-        onEndReached={this.loadFeed}
+        refreshing={newsfeed.refreshing}
+        onEndReached={this.loadMore}
         // onEndReachedThreshold={0}
         numColumns={newsfeed.isTiled ? 3 : 1}
         style={styles.listView}
@@ -178,14 +178,14 @@ export default class NewsfeedList extends Component {
    */
   getFooter() {
 
-    if (this.props.newsfeed.loading && !this.props.newsfeed.list.refreshing){
+    if (this.props.newsfeed.loading && !this.props.newsfeed.refreshing){
       return (
         <View style={[CS.centered, CS.padding3x]}>
           <ActivityIndicator size={'large'} />
         </View>
       );
     }
-    if (this.props.newsfeed.list.errorLoading) {
+    if (this.props.newsfeed.errorLoading) {
       return this.getErrorLoading();
     }
     return null;
@@ -196,7 +196,7 @@ export default class NewsfeedList extends Component {
    */
   getErrorLoading()
   {
-    const message = this.props.newsfeed.list.entities.length ?
+    const message = this.props.newsfeed.feed.current.length ?
     i18n.t('cantLoadMore') :
     i18n.t('cantLoad');
 
@@ -215,9 +215,9 @@ export default class NewsfeedList extends Component {
   /**
    * Load feed data
    */
-  loadFeed = () => {
-    if (this.props.newsfeed.list.errorLoading) return;
-    this.props.newsfeed.loadFeed();
+  loadMore = () => {
+    if (this.props.newsfeed.feedStore.errorLoading) return;
+    // this.props.newsfeed.feedStore.loadMore();
   }
 
   /**
@@ -239,7 +239,7 @@ export default class NewsfeedList extends Component {
    * Render activity
    */
   renderActivity = (row) => {
-    let isLast = this.props.newsfeed.list.entities.length == row.index + 1;
+    let isLast = this.props.newsfeed.feed.current == row.index + 1;
     const entity = row.item;
 
     return (

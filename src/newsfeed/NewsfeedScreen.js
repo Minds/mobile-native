@@ -52,7 +52,7 @@ export default class NewsfeedScreen extends Component {
    * Load data on mount
    */
   componentWillMount() {
-    this.props.newsfeed.loadFeed();
+    this.props.newsfeed.feedStore.fetch();
     // this.props.newsfeed.loadBoosts();
 
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
@@ -88,7 +88,7 @@ export default class NewsfeedScreen extends Component {
     return (
       <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>
         <NewsfeedList
-          newsfeed={newsfeed}
+          newsfeed={newsfeed.feedStore}
           header={header}
           navigation={this.props.navigation}
           />

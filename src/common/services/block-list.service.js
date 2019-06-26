@@ -1,78 +1,62 @@
-import BlockListSync from "../../lib/minds-sync/services/BlockListSync";
 import apiService from "./api.service";
-import sqliteStorageProviderService from "./sqlite-storage-provider.service";
 import sessionService from "./session.service";
-import { EventEmitter } from "events";
+import storageService from "./storage.service";
+import logService from "./log.service";
 
-class BlockListService {
+export class BlockListService {
+
+  blocked: Map = new Map();
+
   constructor() {
-    // Properties
-
-    this.sync = new BlockListSync(apiService, sqliteStorageProviderService.get());
-
-    this._emitter = new EventEmitter();
-
-    this._cached = [];
-
-    // Initialization
-
-    this.sync.setUp();
-
-    // Events / Reactiveness
-
-    sessionService.onSession(token => {
+    sessionService.onSession(async (token) => {
       if (token) {
-        this.doSync();
+        await this.loadFromStorage();
+        this.fetch();
       } else {
         this.prune();
       }
     });
-
-    // Update cache on changes
-    this._emitter.on('change', () => this.getList());
   }
 
-  async doSync() {
-    await this.sync.sync();
-    await this.getList();
+  async loadFromStorage() {
+    const guids = await storageService.getItem('@minds:blocked');
+    if (guids) {
+      guids.forEach(g => this.blocked.set(g));
+    }
   }
 
-  async getList() {
-    const list = (await this.sync.getList()) || [];
-    this._cached = list;
-    return [...list];
-  }
+  async fetch() {
+    try {
+      const response = await apiService.get('api/v1/block', { sync: 1, limit: 10000 })
 
-  /**
-   * @returns {String[]}
-   */
-  getCachedList() {
-    return [...this._cached];
-  }
+      if (response.guids) {
+        this.blocked.clear();
+        response.guids.forEach(g => this.blocked.set(g));
+      }
 
-  async add(guid: string) {
-    const result = await this.sync.add(guid);
-    this._emitter.emit('change');
-    return result;
-  }
-
-  async remove(guid: string) {
-    const result = await this.sync.remove(guid);
-    this._emitter.emit('change');
-    return result;
+      storageService.setItem('@minds:blocked', response.guids); // save to storage
+    } catch (err) {
+      logService.exception('[BlockListService]', err);
+    }
   }
 
   async prune() {
-    const result = await this.sync.prune();
-    this._emitter.emit('change');
-    return result;
+    await storageService.removeItem('@minds:blocked');
   }
 
-  /**
-   * @returns {module:events.internal.EventEmitter}
-   */
-  get events() {
-    return this._emitter;
+  async getList() {
+    return this.blocked;
+  }
+
+  async add(guid: string) {
+    if (this.blocked.indexOf(guid) < 0)
+      this.blocked.set( guid );
+    storageService.setItem('@minds:blocked', this.blocked.keys());
+  }
+
+  async remove(guid: string) {
+    this.blocked.delete(guid);
+    storageService.setItem('@minds:blocked', this.blocked.keys());
   }
 }
 
