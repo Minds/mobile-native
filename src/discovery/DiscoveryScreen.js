@@ -67,6 +67,11 @@ export default class DiscoveryScreen extends Component {
     q: ''
   }
 
+  viewOptsFeed = {
+    viewAreaCoveragePercentThreshold: 50,
+    minimumViewTime: 300
+  }
+
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <Icon name="search" size={24} color={tintColor} />
@@ -158,12 +163,25 @@ export default class DiscoveryScreen extends Component {
    * On viewable items change in the list
    */
   onViewableItemsChanged = (change) => {
-    if (this.props.discovery.filters.type == 'images' && isIos) {
-      change.changed.forEach(c => {
-        if (c.item.gif) {
-          c.item.setVisible(c.isViewable);
-        }
-      })
+
+    switch (this.props.discovery.filters.type ) {
+      case 'images':
+        change.changed.forEach(c => {
+          if (c.item.isGif()) {
+            c.item.setVisible(c.isViewable);
+          }
+        })
+        break;
+
+      case 'blogs':
+      case 'activities':
+        change.viewableItems.forEach((item) => {
+          this.props.discovery.list.addViewed(item.item);
+        });
+        break;
+
+      default:
+        break;
     }
   }
 
@@ -232,6 +250,7 @@ export default class DiscoveryScreen extends Component {
         columnWrapperStyle={columnWrapperStyle}
         keyboardShouldPersistTaps={'handled'}
         onViewableItemsChanged={this.onViewableItemsChanged}
+        viewabilityConfig={this.cols == 3 ? undefined : this.viewOptsFeed}
       />
     );
 
@@ -517,10 +536,10 @@ export default class DiscoveryScreen extends Component {
    */
   renderTile = (row) => {
     if (!this.state.active && row.item.isGif()) {
-      return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight, backgroundColor: colors.greyed }}/>;
+      return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight }}/>;
     }
     return (
-      <ErrorBoundary message={this.tileError} containerStyle={[CS.centered, {width: this.state.itemHeight, height:this.state.itemHeight}]} textSmall={true}>
+      <ErrorBoundary message={this.tileError} containerStyle={[CS.centered, {width: this.state.itemHeight, height: this.state.itemHeight}]} textSmall={true}>
         <DiscoveryTile
           entity={row.item}
           size={this.state.itemHeight}
@@ -548,7 +567,7 @@ export default class DiscoveryScreen extends Component {
   renderActivity = (row) => {
     return (
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false} newsfeed={this.props.discovery}/>
+        <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false} />
       </ErrorBoundary>
     );
   }

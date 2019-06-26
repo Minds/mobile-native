@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
   View,
+  Alert,
   TouchableOpacity,
 } from 'react-native';
 
@@ -18,6 +19,8 @@ import { CommonStyle } from '../../../styles/Common';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import testID from '../../../common/helpers/testID';
+import i18n from '../../../common/services/i18n.service';
+import logService from '../../../common/services/log.service';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -72,7 +75,20 @@ export default class ThumbUpAction extends Component {
   /**
    * Toggle thumb
    */
-  toggleThumb = () => {
-    this.props.entity.toggleVote(this.direction);
+  toggleThumb = async () => {
+    try {
+      await this.props.entity.toggleVote(this.direction);
+    } catch (err) {
+      logService.exception(`[Thumb${this.direction}Action]`, err)
+      Alert.alert(
+        i18n.t('sorry'),
+        i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
+        [
+          {text: i18n.t('ok'), onPress: () => {}},
+        ],
+        { cancelable: false }
+      );
+    }
+
   }
 }

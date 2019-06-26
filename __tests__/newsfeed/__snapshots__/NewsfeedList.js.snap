@@ -240,6 +240,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
   }
   viewabilityConfig={
     Object {
+      "minimumViewTime": 300,
       "viewAreaCoveragePercentThreshold": 50,
     }
   }

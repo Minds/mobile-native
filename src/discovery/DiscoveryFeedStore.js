@@ -33,6 +33,7 @@ class DiscoveryFeedStore {
 
   setFeed(entities, offset) {
     this.list.clearList();
+    this.list.clearViewed();
     this.list.setList({entities, offset});
   }
 
@@ -40,7 +41,11 @@ class DiscoveryFeedStore {
    * Build lists stores
    */
   buildListStores() {
-    this.list = new OffsetFeedListStore('shallow')
+    this.list = new OffsetFeedListStore('shallow', true);
+
+    this.list.getMetadataService()
+      .setSource('feed/discovery')
+      .setMedium('feed');
   }
 
   @action

@@ -66,10 +66,17 @@ export default class DiscoveryTile extends Component {
     this.props.onLoadEnd && this.props.onLoadEnd();
   }
 
+  /**
+   * Render
+   */
   render() {
     if (this.state.error) return this.errorRender();
 
     const entity = this.props.entity;
+
+    if (!entity.is_visible){
+      return null;
+    }
 
     const url = entity.getThumbSource();
 

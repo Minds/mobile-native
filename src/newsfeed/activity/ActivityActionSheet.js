@@ -11,7 +11,6 @@ import {
   StyleSheet,
   Modal,
   Alert,
-
 } from 'react-native';
 
 import {
@@ -20,9 +19,8 @@ import {
 } from 'mobx-react/native'
 
 import translationService from '../../common/services/translation.service';
-import { isFollowing } from '../../newsfeed/NewsfeedService';
 import shareService from '../../share/ShareService';
-import { toggleUserBlock } from '../NewsfeedService';
+import { isFollowing } from '../NewsfeedService';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 import { MINDS_URI } from '../../config/Config';
@@ -123,11 +121,11 @@ export default class ActivityActions extends Component {
 
   }
 
-  deleteEntity() {
-    this.props.newsfeed.list.deleteEntity(this.props.entity.guid).then( (result) => {
-      this.setState({
-        options: this.getOptions(),
-      });
+  async deleteEntity() {
+    try {
+      await this.props.entity.deleteEntity();
+
+      this.reloadOptions();
 
       Alert.alert(
         i18n.t('success'),
@@ -136,15 +134,31 @@ export default class ActivityActions extends Component {
           {text: i18n.t('ok'), onPress: () => {}},
         ],
         { cancelable: false }
-      )
+      );
 
       if (this.props.navigation.state.routeName == 'Activity'){
         this.props.navigation.goBack();
       }
-    });
+    } catch (err) {
+      this.showError();
+    }
   }
 
-  makeAction(option) {
+  /**
+   * Show an error message
+   */
+  showError() {
+    Alert.alert(
+      i18n.t('sorry'),
+      i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
+      [
+        {text: i18n.t('ok'), onPress: () => {}},
+      ],
+      { cancelable: false }
+    );
+  }
+
+  async makeAction(option) {
     switch (option) {
       case i18n.t('translate.translate'):
         if (this.props.onTranslate) this.props.onTranslate();
@@ -165,44 +179,44 @@ export default class ActivityActions extends Component {
         break;
       case i18n.t('setExplicit'):
       case i18n.t('removeExplicit'):
-        this.props.newsfeed.list.newsfeedToggleExplicit(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
+        try {
+          await this.props.entity.toggleExplicit();
+          this.reloadOptions();
+        } catch (err) {
+          this.showError();
+        }
         break;
       case i18n.t('channel.block'):
-        toggleUserBlock(this.props.entity.ownerObj.guid, !this.state.userBlocked).then( (result) => {
+        try {
+          await this.props.entity.blockOwner();
           this.setState({
-            userBlocked:true,
+            userBlocked: true,
             options: this.getOptions(),
           });
-        });
+        } catch (err) {
+          this.showError();
+        }
         break;
       case i18n.t('channel.unblock'):
-        toggleUserBlock(this.props.entity.ownerObj.guid, !this.state.userBlocked).then( (result) => {
+        try {
+          await this.props.entity.unblockOwner();
           this.setState({
-            userBlocked:false,
+            userBlocked: false,
             options: this.getOptions(),
           });
-        });
+        } catch (err) {
+          this.showError();
+        }
         break;
       case i18n.t('follow'):
       case i18n.t('unfollow'):
-        this.props.newsfeed.list.newsfeedToogleFollow(this.props.entity.guid).then( (result) => {
-          this.setState({
-            options: this.getOptions(),
-          });
-        });
+        try {
+          await this.props.entity.toogleFollow();
+          this.reloadOptions();
+        } catch (err) {
+          this.showError();
+        }
         break;
-      // case 'Monetize':
-      // case 'Un-monetize':
-      //   this.props.newsfeed.list.toggleMonetization(this.props.entity.guid).then( (result) => {
-      //     this.setState({
-      //       options: this.getOptions(),
-      //     });
-      //   });
-      //   break;
       case i18n.t('share'):
         shareService.share(this.props.entity.text, MINDS_URI + 'newsfeed/' + this.props.entity.guid);
         break;
@@ -214,8 +228,12 @@ export default class ActivityActions extends Component {
         this.props.navigation.navigate('Report', { entity: this.props.entity });
         break;
     }
+  }
 
-
+  reloadOptions() {
+    this.setState({
+      options: this.getOptions()
+    });
   }
 
   /**

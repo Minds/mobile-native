@@ -1,168 +1,54 @@
 import { observable, action } from 'mobx';
 
-import { getFeed, toggleComments, follow, unfollow , toggleExplicit, toggleFeatured, deleteItem, monetize, update} from '../../newsfeed/NewsfeedService';
+import {toggleComments, follow, unfollow, toggleFeatured, monetize, update, setViewed} from '../../newsfeed/NewsfeedService';
 
 import channelService from '../../channel/ChannelService';
-
 import OffsetListStore from './OffsetListStore';
 import logService from '../services/log.service';
+
 /**
- * Common infinite scroll list
+ * Infinite scroll list that inform viewed
  */
 export default class OffsetFeedListStore extends OffsetListStore {
 
-  /*Activity Methods */
-  @observable saving = false;
+  /**
+   * @var {Map} viewed viewed entities list
+   */
+  viewed = new Map();
 
-  @action
-  toggleCommentsAction(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity =  this.entities[index];
-      let value = !entity.comments_disabled;
-      return toggleComments(guid, value)
-        .then(action(response => {
-          this.entities[index] = response.entity;
-        }))
-        .catch(action(err => {
-          entity.comments_disabled = !value;
-          this.entities[index] = entity;
-          logService.exception('[OffsetFeedListStore]', err);
-        }));
-    }
+  /**
+   * Clear viewed list
+   */
+  clearViewed() {
+    this.viewed.clear();
   }
 
-  // @action
-  // toggleFeaturedStore(guid, category) {
-  //   let index = this.entities.findIndex(x => x.guid == guid);
-  //   if(index >= 0) {
-  //     let entity =  this.entities[index];
-  //     let value = !entity.featured;
-  //     return toggleFeatured(guid, value, category)
-  //       .then(action(response => {
-  //         entity.featured = value;
-  //         this.entities[index] = entity;
-  //       }))
-  //       .catch(action(err => {
-  //         logService.exception('[OffsetFeedListStore]', err);
-  //       }));
-  //   }
-  // }
-
-  @action
-  newsfeedToggleExplicit(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.entities[index];
-      let value = !entity.mature;
-      return toggleExplicit(guid, value)
-        .then(action(response => {
-          entity.mature = value;
-          this.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          entity.mature = !value;
-          this.entities[index] = entity;
-          logService.exception('[OffsetFeedListStore]', err);
-        }));
-    }
+  async clearList(updateLoaded = true) {
+    this.clearViewed();
+    return super.clearList(updateLoaded);
   }
 
   @action
-  newsfeedToogleFollow(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      const entity = this.entities[index];
-      const method = entity['is:following'] ? unfollow : follow;
-      return method(guid)
-        .then(action(response => {
-          entity['is:following'] = !entity['is:following'];
-          this.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          entity['is:following'] = !entity['is:following'];
-          this.entities[index] = entity;
-          logService.exception('[OffsetFeedListStore]', err);
-        }));
-    }
+  async refresh() {
+    this.clearViewed();
+    return super.refresh();
   }
 
-  @action
-  toggleMonetization(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.entities[index];
-      let value = !entity.monetized;
-      return monetize(guid, value)
-        .then(action(response => {
-          entity.monetized = value;
-          this.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          entity.monetized = !value;
-          this.entities[index] = entity;
-          logService.exception('[OffsetFeedListStore]', err);
-        }));
-    }
-  }
-
-  @action
-  newsfeedToggleSubscription(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.entities[index];
-      let value = !entity.ownerObj.subscribed;
-      entity.ownerObj.subscribed = value;
-      return channelService.toggleSubscription(entity.ownerObj.guid, value)
-        .then(action(response => {
-          entity.ownerObj.subscribed = value;
-          this.entities[index] = entity;
-        }))
-        .catch(action(err => {
-          entity.ownerObj.subscribed = !value;
-          this.entities[index] = entity;
-          logService.exception('[OffsetFeedListStore]', err);
-        }));
-    }
-  }
-
-  @action
-  deleteEntity(guid) {
-    let index = this.entities.findIndex(x => x.guid == guid);
-    if(index >= 0) {
-      let entity = this.entities[index];
-      return deleteItem(guid)
-        .then(action(response => {
-          this.entities.splice(index, 1);
-        }))
-        .catch(action(err => {
-          logService.exception('[OffsetFeedListStore]', err);
-        }));
-    }
-  }
-
-  @action
-  updateActivity(activity, data = {}) {
-    this.saving = true;
-
-    if (data) {
-      for (const field in data) {
-        activity[field] = data[field];
+  /**
+   * Add an entity to the viewed list and inform to the backend
+   * @param {BaseModel} entity
+   */
+  async addViewed(entity) {
+    if (!this.viewed.get(entity.guid)) {
+      this.viewed.set(entity.guid, true);
+      let response;
+      try {
+        const meta = this.metadataServie ? this.metadataServie.getEntityMeta(entity) : {};
+        response = await setViewed(entity, meta);
+      } catch (e) {
+        this.viewed.delete(entity.guid);
+        throw new Error('There was an issue storing the view');
       }
     }
-
-    return update(activity)
-      .finally(action(() => {
-        this.saving = false;
-      }))
-      .then(() => {
-        this.setActivityMessage(activity, message);
-      });
-  }
-
-  @action
-  setActivityMessage(activity, message) {
-    activity.message = message;
-    activity.edited  = 1;
   }
 }

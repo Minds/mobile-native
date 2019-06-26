@@ -60,30 +60,19 @@ export default class ChannelStore {
   }
 
   @action
-  async load() {
+  async load(update = false) {
     const { channel } = await channelService.load(this.guid);
     if (channel) {
       this.loaded = true;
-      this.setChannel(channel);
+      if (update && this.channel.update) {
+        this.channel.update(channel);
+      } else {
+        this.setChannel(channel);
+      }
       return channel;
     }
     return false;
   }
-
-  @action
-  subscribe() {
-    let value = !this.channel.subscribed;
-    this.channel.subscribed = value;
-    return channelService.toggleSubscription(this.channel.guid, value)
-      .then(response => {
-        this.channel.subscribed = value;
-      })
-      .catch(err => {
-        this.channel.subscribed = !value;
-        logService.exception('[ChannelStore] subscribe', err);
-      });
-  }
-
 
   @action
   toggleBlock() {

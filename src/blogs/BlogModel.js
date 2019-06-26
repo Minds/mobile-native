@@ -65,4 +65,5 @@ decorate(BlogModel, {
   'thumbs:up:count': observable,
   'thumbs:down:user_guids': observable,
   'thumbs:up:user_guids': observable,
+  'description': observable
 });

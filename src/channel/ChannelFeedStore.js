@@ -29,8 +29,6 @@ export default class ChannelFeedStore {
 
   channel;
 
-  viewed = [];
-
   /**
    * Channel guid
    */
@@ -44,7 +42,7 @@ export default class ChannelFeedStore {
   buildStores() {
     this.stores = {
       feed: {
-        list: new OffsetFeedListStore('shallow'),
+        list: new OffsetFeedListStore('shallow', true),
       },
       images: {
         list: new OffsetFeedListStore('shallow'),
@@ -115,21 +113,6 @@ export default class ChannelFeedStore {
     feed.entities.forEach((entity, index) => {
       entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
     });
-  }
-
-  @action
-  async addViewed(entity) {
-    if(this.viewed.indexOf(entity.guid) < 0) {
-      let response;
-      try {
-        response = await setViewed(entity);
-        if (response) {
-          this.viewed.push(entity.guid);
-        }
-      } catch (e) {
-        throw new Error('There was an issue storing the view');
-      }
-    }
   }
 
   /**

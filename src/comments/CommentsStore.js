@@ -23,6 +23,7 @@ import {toggleExplicit} from '../newsfeed/NewsfeedService';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import logService from '../common/services/log.service';
 import NavigationService from '../navigation/NavigationService';
+import BaseModel from '../common/BaseModel';
 
 const COMMENTS_PAGE_SIZE = 6;
 
@@ -31,7 +32,7 @@ const COMMENTS_PAGE_SIZE = 6;
  */
 export default class CommentsStore {
 
-  @observable comments = [];
+  @observable.shallow comments = [];
   @observable refreshing = false;
   @observable loaded = false;
   @observable saving = false;
@@ -298,10 +299,10 @@ export default class CommentsStore {
     }
 
     if (response.comments) {
-      const comments = CommentModel.createMany(response.comments)
+      const comments = CommentModel.createMany(response.comments);
 
       // check and build child comments store if necessary
-      comments.forEach(c => c.buildCommentsStore(this.parent))
+      comments.forEach(c => c.buildCommentsStore(this.parent));
 
       if (descending) {
         comments.reverse().forEach(c => this.comments.unshift(c));
@@ -317,14 +318,14 @@ export default class CommentsStore {
    * @param {object} comment
    */
   @action
-  setComment(comment) {
+  pushComment(comment) {
     this.comments.push(CommentModel.create(comment));
   }
 
   /**
    * Post comment
    */
-  async post() {
+  async post(entity: BaseModel) {
     this.saving = true;
 
     const comment = {
@@ -340,11 +341,14 @@ export default class CommentsStore {
       Object.assign(comment, this.embed.meta);
     }
 
+    // Add client metada if available
+    Object.assign(comment, entity.getClientMetadata());
+
     try {
 
       const data = await postComment(this.guid, comment);
 
-      this.setComment(data.comment);
+      this.pushComment(data.comment);
       this.setText('');
       this.embed.clearRichEmbedAction();
       this.attachment.clear();

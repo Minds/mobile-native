@@ -17,6 +17,7 @@ exports[`Activity component renders correctly 1`] = `
   <Pinned
     entity={
       ActivityModel {
+        "__list": null,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
@@ -32,6 +33,7 @@ exports[`Activity component renders correctly 1`] = `
         "mature_visibility": false,
         "message": "Message",
         "ownerObj": UserModel {
+          "__list": null,
           "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
@@ -71,6 +73,7 @@ exports[`Activity component renders correctly 1`] = `
   <OwnerBlock
     entity={
       ActivityModel {
+        "__list": null,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
@@ -86,6 +89,7 @@ exports[`Activity component renders correctly 1`] = `
         "mature_visibility": false,
         "message": "Message",
         "ownerObj": UserModel {
+          "__list": null,
           "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
@@ -141,6 +145,7 @@ exports[`Activity component renders correctly 1`] = `
         <ActivityActionSheet
           entity={
             ActivityModel {
+              "__list": null,
               "attachment_guid": false,
               "blurb": false,
               "comments:count": undefined,
@@ -156,6 +161,7 @@ exports[`Activity component renders correctly 1`] = `
               "mature_visibility": false,
               "message": "Message",
               "ownerObj": UserModel {
+                "__list": null,
                 "getAvatarSource": [Function],
                 "guid": "824853017709780997",
                 "subtype": false,
@@ -239,6 +245,7 @@ exports[`Activity component renders correctly 1`] = `
     <ExplicitText
       entity={
         ActivityModel {
+          "__list": null,
           "attachment_guid": false,
           "blurb": false,
           "comments:count": undefined,
@@ -254,6 +261,7 @@ exports[`Activity component renders correctly 1`] = `
           "mature_visibility": false,
           "message": "Message",
           "ownerObj": UserModel {
+            "__list": null,
             "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
@@ -304,6 +312,7 @@ exports[`Activity component renders correctly 1`] = `
     <Translate
       entity={
         ActivityModel {
+          "__list": null,
           "attachment_guid": false,
           "blurb": false,
           "comments:count": undefined,
@@ -319,6 +328,7 @@ exports[`Activity component renders correctly 1`] = `
           "mature_visibility": false,
           "message": "Message",
           "ownerObj": UserModel {
+            "__list": null,
             "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
@@ -365,6 +375,7 @@ exports[`Activity component renders correctly 1`] = `
     <MediaView
       entity={
         ActivityModel {
+          "__list": null,
           "attachment_guid": false,
           "blurb": false,
           "comments:count": undefined,
@@ -380,6 +391,7 @@ exports[`Activity component renders correctly 1`] = `
           "mature_visibility": false,
           "message": "Message",
           "ownerObj": UserModel {
+            "__list": null,
             "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
@@ -432,6 +444,7 @@ exports[`Activity component renders correctly 1`] = `
   <Actions
     entity={
       ActivityModel {
+        "__list": null,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
@@ -447,6 +460,7 @@ exports[`Activity component renders correctly 1`] = `
         "mature_visibility": false,
         "message": "Message",
         "ownerObj": UserModel {
+          "__list": null,
           "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
@@ -492,6 +506,7 @@ exports[`Activity component renders correctly 1`] = `
   <ActivityMetrics
     entity={
       ActivityModel {
+        "__list": null,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
@@ -507,6 +522,7 @@ exports[`Activity component renders correctly 1`] = `
         "mature_visibility": false,
         "message": "Message",
         "ownerObj": UserModel {
+          "__list": null,
           "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,

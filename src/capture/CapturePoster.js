@@ -286,7 +286,13 @@ export default class CapturePoster extends Component {
   async remind() {
     const { params } = this.props.navigation.state;
     const message = this.props.capture.text;
-    const post = {message};
+    const metadata = params.entity.getClientMetadata();
+
+    const post = {
+      message,
+      ...metadata
+    };
+
     let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null
 
     if(HashtagService.slice(message).length > HashtagService.maxHashtags){ //if hashtag count greater than 5

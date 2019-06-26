@@ -16,6 +16,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
   <CommentList
     entity={
       ActivityModel {
+        "__list": null,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
@@ -31,6 +32,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
         "mature_visibility": false,
         "message": "Message",
         "ownerObj": UserModel {
+          "__list": null,
           "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
@@ -61,6 +63,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
         autoHeight={false}
         entity={
           ActivityModel {
+            "__list": null,
             "attachment_guid": false,
             "blurb": false,
             "comments:count": undefined,
@@ -76,6 +79,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
             "mature_visibility": false,
             "message": "Message",
             "ownerObj": UserModel {
+              "__list": null,
               "getAvatarSource": [Function],
               "guid": "824853017709780997",
               "subtype": false,
@@ -140,88 +144,6 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
               },
               "routeName": "some",
             },
-          }
-        }
-        newsfeed={
-          NewsfeedStore {
-            "boosts": Array [],
-            "filter": "subscribed",
-            "loadingBoost": true,
-            "service": NewsfeedService {
-              "_getFeed": [MockFunction],
-              "getBoosts": [MockFunction],
-              "getFeed": [MockFunction],
-              "getFeedChannel": [MockFunction],
-              "getFeedFromService": [MockFunction],
-              "getFeedLegacy": [MockFunction],
-              "getFeedSuggested": [MockFunction],
-            },
-            "stores": Object {
-              "boostfeed": Object {
-                "list": OffsetFeedListStore {
-                  "entities": Array [],
-                  "errorLoading": false,
-                  "loaded": false,
-                  "offset": "",
-                  "refreshing": false,
-                  "saving": false,
-                },
-                "loading": false,
-              },
-              "subscribed": Object {
-                "list": OffsetFeedListStore {
-                  "entities": Array [
-                    ActivityModel {
-                      "attachment_guid": false,
-                      "blurb": false,
-                      "comments:count": undefined,
-                      "container_guid": "activityguid0",
-                      "custom_data": false,
-                      "custom_type": false,
-                      "description": "Congratulations! ",
-                      "edited": "",
-                      "getThumbSource": [Function],
-                      "guid": "activityguid0",
-                      "is_visible": true,
-                      "mature": false,
-                      "mature_visibility": false,
-                      "message": "Message",
-                      "ownerObj": UserModel {
-                        "getAvatarSource": [Function],
-                        "guid": "824853017709780997",
-                        "subtype": false,
-                        "time_created": "1522036284",
-                        "type": "user",
-                      },
-                      "owner_guid": "824853017709780997",
-                      "parent_guid": "838106762591510528",
-                      "paywall": undefined,
-                      "perma_url": false,
-                      "pinned": undefined,
-                      "rowKey": "something0",
-                      "shouldBeBlured": [MockFunction],
-                      "thumbnail_src": false,
-                      "thumbs:down:count": undefined,
-                      "thumbs:down:user_guids": undefined,
-                      "thumbs:up:count": undefined,
-                      "thumbs:up:user_guids": undefined,
-                      "title": "TITLE",
-                      "type": "activity",
-                      "wire_totals": Object {
-                        "tokens": 1000000000000000000,
-                      },
-                    },
-                  ],
-                  "errorLoading": false,
-                  "loaded": false,
-                  "offset": "",
-                  "refreshing": false,
-                  "saving": false,
-                },
-                "loading": false,
-              },
-            },
-            "viewed": Array [],
           }
         }
       />
@@ -418,6 +340,7 @@ exports[`Activity screen component should show loader until it loads the activit
   <CommentList
     entity={
       ActivityModel {
+        "__list": null,
         "comments:count": undefined,
         "edited": undefined,
         "is_visible": true,
@@ -436,6 +359,7 @@ exports[`Activity screen component should show loader until it loads the activit
         autoHeight={false}
         entity={
           ActivityModel {
+            "__list": null,
             "comments:count": undefined,
             "edited": undefined,
             "is_visible": true,
@@ -458,45 +382,6 @@ exports[`Activity screen component should show loader until it loads the activit
               },
               "routeName": "some",
             },
-          }
-        }
-        newsfeed={
-          NewsfeedStore {
-            "loadingBoost": true,
-            "service": NewsfeedService {
-              "_getFeed": [MockFunction],
-              "getBoosts": [MockFunction],
-              "getFeed": [MockFunction],
-              "getFeedChannel": [MockFunction],
-              "getFeedFromService": [MockFunction],
-              "getFeedLegacy": [MockFunction],
-              "getFeedSuggested": [MockFunction],
-            },
-            "stores": Object {
-              "boostfeed": Object {
-                "list": OffsetFeedListStore {
-                  "entities": Array [],
-                  "errorLoading": false,
-                  "loaded": false,
-                  "offset": "",
-                  "refreshing": false,
-                  "saving": false,
-                },
-                "loading": false,
-              },
-              "subscribed": Object {
-                "list": OffsetFeedListStore {
-                  "entities": Array [],
-                  "errorLoading": false,
-                  "loaded": false,
-                  "offset": "",
-                  "refreshing": false,
-                  "saving": false,
-                },
-                "loading": false,
-              },
-            },
-            "viewed": Array [],
           }
         }
       />

@@ -152,7 +152,7 @@ export default class BoostActionBar extends Component {
       buttons.push(
         <View style={CS.flexColumnCentered} key="revoke">
           <TouchableHighlight
-            onPress={() => { this.props.boost.list.revoke(this.props.entity.guid, this.props.boost.filter)}}
+            onPress={() => { this.props.entity.revoke(this.props.boost.filter)}}
             underlayColor = 'transparent'
             style = {ComponentsStyle.redbutton}
           >
@@ -166,7 +166,7 @@ export default class BoostActionBar extends Component {
       buttons.push(
         <View style={CS.flexColumnCentered} key="reject">
           <TouchableHighlight
-            onPress={() => { this.props.boost.list.reject(this.props.entity.guid)}}
+            onPress={() => { this.props.entity.reject()}}
             underlayColor = 'transparent'
             style = {ComponentsStyle.redbutton}
           >
@@ -180,7 +180,7 @@ export default class BoostActionBar extends Component {
       buttons.push(
         <View style={CS.flexColumnCentered} key="accept">
           <TouchableHighlight
-            onPress={() => { this.props.boost.list.accept(this.props.entity.guid)}}
+            onPress={() => { this.props.entity.accept()}}
             underlayColor = 'transparent'
             style = {ComponentsStyle.bluebutton}
           >

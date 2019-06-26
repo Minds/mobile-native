@@ -26,7 +26,8 @@ export default class NewsfeedList extends Component {
 
   nextBoostedId = 1;
   viewOpts = {
-    viewAreaCoveragePercentThreshold: 50
+    viewAreaCoveragePercentThreshold: 50,
+    minimumViewTime: 300
   }
   state = {
     itemHeight: 0,
@@ -167,8 +168,14 @@ export default class NewsfeedList extends Component {
     );
   }
 
+  /**
+   * Key extractor for list items
+   */
   keyExtractor = item => item.rowKey;
 
+  /**
+   * Get footer
+   */
   getFooter() {
 
     if (this.props.newsfeed.loading && !this.props.newsfeed.list.refreshing){
@@ -184,6 +191,9 @@ export default class NewsfeedList extends Component {
     return null;
   }
 
+  /**
+   * Get error loading component
+   */
   getErrorLoading()
   {
     const message = this.props.newsfeed.list.entities.length ?
@@ -193,12 +203,12 @@ export default class NewsfeedList extends Component {
     return <ErrorLoading message={message} tryAgain={this.loadFeedForce}/>
   }
 
+  /**
+   * On viewable item changed
+   */
   onViewableItemsChanged = ({viewableItems}) => {
     viewableItems.forEach((item) => {
-      const { isViewable, key } = item;
-      if (isViewable ) {
-        this.props.newsfeed.addViewed(item.item);
-      }
+      this.props.newsfeed.list.addViewed(item.item);
     });
   }
 
@@ -210,6 +220,9 @@ export default class NewsfeedList extends Component {
     this.props.newsfeed.loadFeed();
   }
 
+  /**
+   * Force feed load
+   */
   loadFeedForce = () => {
     this.props.newsfeed.loadFeed();
   }

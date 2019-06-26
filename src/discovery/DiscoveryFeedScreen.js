@@ -44,6 +44,20 @@ export default class DiscoveryFeedScreen extends Component {
     }
   }
 
+  viewOptsFeed = {
+    viewAreaCoveragePercentThreshold: 50,
+    minimumViewTime: 300
+  }
+
+  /**
+   * On viewavleItemsChange
+   */
+  onViewableItemsChanged = ({viewableItems}) => {
+    viewableItems.forEach((item) => {
+      this.props.discovery.feedStore.list.addViewed(item.item);
+    });
+  }
+
   /**
    * Render
    */
@@ -64,6 +78,8 @@ export default class DiscoveryFeedScreen extends Component {
         windowSize={11}
         removeClippedSubviews={false}
         keyboardShouldPersistTaps={'handled'}
+        onViewableItemsChanged={this.onViewableItemsChanged}
+        viewabilityConfig={this.viewOptsFeed}
       />
     )
   }
@@ -134,7 +150,7 @@ export default class DiscoveryFeedScreen extends Component {
   renderActivity = (row) => {
     return (
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false} newsfeed={this.props.discovery}/>
+        <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false}/>
       </ErrorBoundary>
     );
   }

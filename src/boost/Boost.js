@@ -21,6 +21,7 @@ import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
 import UserModel from '../channel/UserModel';
 import GroupCard from '../groups/card/GroupCard';
+import GroupModel from '../groups/GroupModel';
 
 /**
  * Boost console item
@@ -31,7 +32,6 @@ export default class Boost extends Component {
    * Render
    */
   render() {
-
     return (
         <View style={styles.container}>
           { this.renderEntity() }
@@ -53,14 +53,14 @@ export default class Boost extends Component {
       case 'user':
         return <ChannelCard entity={UserModel.create(entity)} navigation={this.props.navigation} />;
       case 'group':
-        return <GroupCard entity={UserModel.create(entity)} navigation={this.props.navigation} />;
+        return <GroupCard entity={GroupModel.create(entity)} navigation={this.props.navigation} />;
       case 'object':
 
         switch (entity.subtype) {
           case 'blog':
             return <BlogCard entity={BlogModel.create(entity)} navigation={this.props.navigation} />;
           case 'image':
-            return <ImageCard entity={entity} navigation={this.props.navigation} />;
+            return <ImageCard entity={ActivityModel.create(entity)} navigation={this.props.navigation} />;
           case 'video':
             return <VideoCard entity={ActivityModel.create(entity)} navigation={this.props.navigation} />
         }

@@ -72,8 +72,8 @@ export default class ChannelScreen extends Component {
 
     try {
       await this.initialLoad();
-    } catch (e) {
-      logService.exception(e);
+    } catch (err) {
+      logService.exception('[ChannelScreen]', err);
     }
   }
 
@@ -105,7 +105,7 @@ export default class ChannelScreen extends Component {
     const store = this.props.channel.store(guid);
 
     try {
-      const channel = await store.load();
+      const channel = await store.load(true);
       if (channel) {
         this.props.channel.addVisited(channel);
       }
@@ -218,7 +218,7 @@ export default class ChannelScreen extends Component {
       <View>
         <ChannelHeader
           styles={styles}
-          channel={store}
+          store={store}
           navigation={this.props.navigation}
         />
 

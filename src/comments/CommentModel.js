@@ -50,7 +50,6 @@ export default class CommentModel extends ActivityModel {
     }
     return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + (this.attachment_guid || this.guid)  + '/' + size };
   }
-
 }
 
 /**
