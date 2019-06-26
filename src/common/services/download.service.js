@@ -27,7 +27,8 @@ class DownloadService {
       if (!hasPermission) hasPermission = await permissions.writeExternalStorage();
 
       if (hasPermission) {
-        const filePath = `${RNFS.CachesDirectoryPath}/${entity.guid}.jpg`;
+        const type = this.isGif(entity) ? 'gif' : 'jpg';
+        const filePath = `${RNFS.CachesDirectoryPath}/${entity.guid}.${type}`;
         const download = RNFS.downloadFile({
           fromUrl: url+'?acces_token='+session.token.toString(),
           toFile: filePath,
@@ -44,6 +45,21 @@ class DownloadService {
           });
       }
     }
+  }
+
+  /**
+   * Check if entity has gif flag
+   * @param {object} entity 
+   */
+  isGif(entity){
+    let isGif = false;
+    if('custom_data' in entity){
+      if(entity.custom_data.length > 0){
+        const data = entity.custom_data[0];
+        isGif = !!data.gif;
+      }
+    }
+    return isGif;
   }
 
 }
