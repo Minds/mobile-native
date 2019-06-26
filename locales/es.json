@@ -15,7 +15,8 @@
         "typeComment": "Escribe tu comentario...",
         "error": "PERDÓN, NO SE PUEDE CARGAR LA ACTIVIDAD",
         "tryAgain": "POR FAVOR INTENTA MAS TARDE",
-        "loadLater": "CARGAR SIGUIENTES"
+        "loadLater": "CARGAR SIGUIENTES",
+        "remindBlocked":"Este remind no esta disponible porque bloqueaste a"
     },
     "auth": {
         "login": "INGRESAR",

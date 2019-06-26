@@ -56,6 +56,16 @@ export default class Activity extends Component {
   };
 
   /**
+   * Navigate To channel
+   */
+  navToChannel = () => {
+    // only active if receive the navigation property
+    if (this.props.navigation) {
+      this.props.navigation.push('Channel', { guid:this.props.entity.remind_object.ownerObj.guid});
+    }
+  }
+
+  /**
    * Render
    */
   render() {
@@ -211,14 +221,17 @@ export default class Activity extends Component {
    */
   showRemind() {
     const remind_object = this.props.entity.remind_object;
+    console.log("showRemind: ", this.props);
     if (remind_object) {
       const blockedUsers = blockListService.getCachedList();
 
       if (blockedUsers.indexOf(remind_object.owner_guid) > -1) {
         return (
           <View style={[styles.blockedNoticeView, CommonStyle.margin2x, CommonStyle.borderRadius2x, CommonStyle.padding2x]}>
-            <Text style={[CommonStyle.textCenter, CommonStyle.marginBottom]}>This content is unavailable.</Text>
-            <Text style={[CommonStyle.textCenter, styles.blockedNoticeDesc]}>You have blocked the author of this activity.</Text>
+            <Text style={[CommonStyle.textCenter, styles.blockedNoticeDesc]}>
+              {i18n.t('activity.remindBlocked')}
+              <Text onPress={() => this.navToChannel()} style={[CommonStyle.bold]}> @{remind_object.ownerObj.username}</Text>
+            </Text>
           </View>
         );
       }
