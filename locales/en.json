@@ -95,7 +95,8 @@
     "tabMyBlogs":"MY BLOGS",
     "errorLoading":"There was an error loading this blog.",
     "error":"SORRY, WE COULDN'T LOAD THE BLOG",
-    "blogs":"Blogs"
+    "blogs":"Blogs",
+    "blogListEmpty" : "This list is empty"
   },
   "boosts":{
     "selected":"SELECTED",
@@ -513,6 +514,7 @@
     "networkScore":"Network Score",
     "transactionsTitle":"Transactions",
     "transactionsDescription":"A list of transactions you have made with your addresses",
+    "transactionsEmpty": "Your transaction list is empty",
     "withdrawTitle":"Withdraw",
     "withdrawDescription":"Request a withdrawal of your token rewards to your OnChain address.",
     "contributionsTitle":"Contributions",
@@ -615,7 +617,7 @@
     "topPeriod1":"1 year"
   },
   "update": {
-    "title":"Update",
+    "title":"Update to v{{version}}",
     "version": "New v{{version}} available!"
   },
   "downloading":"Downloading",

@@ -22,7 +22,7 @@ class AuthService {
     const data = await api.post('api/v2/oauth/token', params);
     await CookieManager.clearAll();
     await delay(100);
-    session.login(data);
+    await session.login(data);
     return data;
   }
 

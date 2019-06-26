@@ -246,6 +246,28 @@ export default class CommentList extends React.Component<Props, State> {
     }
   }
 
+  onCommentFocus = (item, offset) => {
+    if (!offset) offset = 0;
+
+    const comments = this.getComments();
+
+    if (!this.props.parent) {
+      setTimeout(() => {
+        this.listRef.scrollToIndex({
+          index: comments.findIndex(c => item === c),
+          viewOffset: offset ? -(offset - (this.height - 200)): -110 ,
+          viewPosition: 0
+        });
+      }, 50);
+    } else {
+      const index = comments.findIndex(c => item === c);
+      const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+      if (this.props.onCommentFocus) {
+        this.props.onCommentFocus(item, offset + frame.offset );
+      }
+    }
+  }
+
   /**
    * On comment input focus
    */
@@ -369,9 +391,19 @@ export default class CommentList extends React.Component<Props, State> {
    */
   renderComment = (row: any): React.Element<Comment> => {
     const comment = row.item;
+    const comments = this.props.store;
 
     // add the editing observable property
     comment.editing = observable.box(false);
+
+    if (comment.focused && this.props.parent) {
+      setTimeout(() => {
+        if (this.props.onCommentFocus && this.listRef && this.listRef._listRef) {
+          const frame = this.listRef._listRef._getFrameMetricsApprox(row.index);
+          this.props.onCommentFocus(row.item, frame.offset + frame.length);
+        }
+      }, 1000);
+    }
 
     return (
       <Comment
@@ -379,6 +411,7 @@ export default class CommentList extends React.Component<Props, State> {
         entity={this.props.entity}
         store={this.props.store}
         onTextInputfocus={this.onChildFocus}
+        onCommentFocus={this.onCommentFocus}
         navigation={this.props.navigation}
       />
     );

@@ -12,6 +12,7 @@ exports[`Thumb action component renders correctly 1`] = `
         "flexDirection": "row",
         "justifyContent": "center",
       },
+      null,
     ]
   }
   testID="Remind activity button"

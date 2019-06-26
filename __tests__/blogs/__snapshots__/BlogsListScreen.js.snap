@@ -2,6 +2,46 @@
 
 exports[`blog list screen component should renders correctly 1`] = `
 <RCTScrollView
+  ListEmptyComponent={
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "row",
+          "height": 667,
+          "justifyContent": "center",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "column",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#888",
+              "fontFamily": "Roboto",
+              "fontSize": 24,
+              "fontWeight": "200",
+              "marginBottom": 8,
+              "marginTop": 8,
+              "textAlign": "center",
+            }
+          }
+        >
+          This list is empty
+        </Text>
+      </View>
+    </View>
+  }
   ListFooterComponent={null}
   ListHeaderComponent={
     <View>

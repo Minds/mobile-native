@@ -59,6 +59,7 @@
     "react-native-exception-handler": "^2.10.7",
     "react-native-exit-app": "^1.0.0",
     "react-native-fast-image": "^5.4.2",
+    "react-native-file-type": "^0.0.8",
     "react-native-flash-message": "^0.1.13",
     "react-native-fs": "^2.13.3",
     "react-native-gesture-handler": "^1.1.0",

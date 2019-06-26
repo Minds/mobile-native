@@ -89,7 +89,8 @@
         "tabMyBlogs": "MI BLOG",
         "blogs": "Blog",
         "errorLoading": "Error cargando este blog.",
-        "error": "PERDON, NO PUEDO CARGAR ESTE BLOG"
+        "error": "PERDON, NO PUEDO CARGAR ESTE BLOG",
+        "blogListEmpty" : "Esta lista está vacía"
     },
     "boosts": {
         "selected": "SELECCIONADO",
@@ -461,6 +462,7 @@
         "networkScore": "Puntaje Red",
         "transactionsTitle": "Transacciones",
         "transactionsDescription": "Una lista de transacciones que has hecho con tu dirección",
+        "transactionsEmpty": "Tu lista de transacciones está vacía",
         "withdrawTitle": "Retirar",
         "withdrawDescription": "Solicitar un retiro de tus tokens de recompensa a tu dirección OnChain",
         "contributionsTitle": "Contribuciones",
@@ -707,7 +709,7 @@
         "topPeriod1": "1 año"
     },
     "update": {
-        "title": "Actualizar",
+        "title": "Actualizar a v{{version}}",
         "version": "Nueva v{{version}} disponible!"
     },
     "downloading": "Descargando",

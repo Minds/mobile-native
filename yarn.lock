@@ -1910,6 +1910,14 @@ buffer-xor@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/buffer-xor/-/buffer-xor-1.0.3.tgz#26e61ed1422fb70dd42e6e36729ed51d855fe8d9"
 
+buffer@5.0.8:
+  version "5.0.8"
+  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.0.8.tgz#84daa52e7cf2fa8ce4195bc5cf0f7809e0930b24"
+  integrity sha512-xXvjQhVNz50v2nPeoOsNqWCLGfiv4ji/gXZM28jnVwdLJxH4mFyqgqCKfaK9zf1KUbG6zTkjLOy7ou+jSMarGA==
+  dependencies:
+    base64-js "^1.0.2"
+    ieee754 "^1.1.4"
+
 buffer@^3.0.1:
   version "3.6.0"
   resolved "http://registry.npmjs.org/buffer/-/buffer-3.6.0.tgz#a72c936f77b96bf52f5f7e7b467180628551defb"
@@ -3471,6 +3479,7 @@ file-entry-cache@^5.0.1:
   dependencies:
     flat-cache "^2.0.1"
 
+
 file-type@^3.8.0:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/file-type/-/file-type-3.9.0.tgz#257a078384d1db8087bc449d107d52a52672b9e9"
@@ -3482,6 +3491,11 @@ file-type@^5.2.0:
 file-type@^6.1.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/file-type/-/file-type-6.2.0.tgz#e50cd75d356ffed4e306dc4f5bcf52a79903a919"
+
+file-type@7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/file-type/-/file-type-7.3.0.tgz#18869760e10c36c0416d53083684fcfc0d59df3a"
+  integrity sha1-GIaXYOEMNsBBbVMINoT8/A1Z3zo=
 
 file-uri-to-path@1:
   version "1.0.0"
@@ -5101,6 +5115,11 @@ jest@24.1.0:
   dependencies:
     import-local "^2.0.0"
     jest-cli "^24.1.0"
+
+js-base64@2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.3.2.tgz#a79a923666372b580f8e27f51845c6f7e8fbfbaf"
+  integrity sha512-Y2/+DnfJJXT1/FCwUebUhLWb3QihxiSC42+ctHLGogmW2jPY6LCapMdFZXRvVP2z6qyKW7s6qncE/9gSqZiArw==
 
 js-sha3@0.5.5:
   version "0.5.5"
@@ -7422,6 +7441,16 @@ react-native-fast-image@^5.4.2:
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-5.4.2.tgz#d761cb9dddc0473b537544617e511a11c9e18413"
   integrity sha512-S4E96Lwmx6z6QD3MaAuP7cNcXRLfgEUYU2GB694TbGEoOjk/FO1OnfbxfFp0vUs/klr4HJwACcwihPPxrFTt8w==
 
+react-native-file-type@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/react-native-file-type/-/react-native-file-type-0.0.8.tgz#1f9d9b43bb81e2e02d13a7ee6798b40b7f83353e"
+  integrity sha512-SBVBhtoK4uxxAgIHaO4gnyryOM9lkq+JbLaKYOFnnfFkInds8PGca1rCn3QbpbkPrnuLnrFzG3bsKsGJFp1PHw==
+  dependencies:
+    buffer "5.0.8"
+    file-type "7.3.0"
+    js-base64 "2.3.2"
+    react-native-fs "2.11.15"
+
 react-native-flash-message@^0.1.13:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/react-native-flash-message/-/react-native-flash-message-0.1.13.tgz#3ebf9cf17d5aabc61b923dc6dc37ce97a1ad4dd2"
@@ -7429,6 +7458,14 @@ react-native-flash-message@^0.1.13:
   dependencies:
     prop-types "^15.7.2"
     react-native-iphone-x-helper "^1.2.0"
+
+react-native-fs@2.11.15:
+  version "2.11.15"
+  resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.11.15.tgz#b80ac78edf124137624697b4864f834c1caf4f43"
+  integrity sha512-JDcpYOBYWHHZqaqxG9c17uGapTQQLvVic0GewQWxhad3ftPVodBQ6qMZxyR1h6U8SN2eaJhFqAfenUKl1UtVJg==
+  dependencies:
+    base-64 "^0.1.0"
+    utf8 "^2.1.1"
 
 react-native-fs@^2.13.3:
   version "2.13.3"
