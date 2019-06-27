@@ -19,6 +19,8 @@ import stores from '../../AppStores';
 import { CommonStyle } from '../styles/Common';
 import GroupsBar from '../groups/GroupsBar';
 import testID from '../common/helpers/testID';
+import FeedList from '../common/components/FeedList';
+import featuresService from '../common/services/features.service';
 
 /**
  * News Feed Screen
@@ -52,13 +54,19 @@ export default class NewsfeedScreen extends Component {
    * Load data on mount
    */
   componentWillMount() {
-    this.props.newsfeed.feedStore.fetch();
+    if (featuresService.has('es-feeds')) {
+      this.props.newsfeed.feedStore.fetch();
+    } else {
+      this.props.newsfeed.loadFeed();
+    }
     // this.props.newsfeed.loadBoosts();
 
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       const params = this.props.navigation.state.params;
       if (params && params.prepend) {
+
         this.props.newsfeed.prepend(params.prepend);
+
         // we clear the parameter to prevent prepend it again on goBack
         this.props.navigation.setParams({prepend: null});
       }
@@ -85,10 +93,23 @@ export default class NewsfeedScreen extends Component {
       </View>
     );
 
+    if (newsfeed.filter == 'subscribed' && featuresService.has('es-feeds')) {
+      return (
+        <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>
+          <FeedList
+            feedStore={newsfeed.feedStore}
+            header={header}
+            navigation={this.props.navigation}
+          />
+          <CaptureFab navigation={this.props.navigation}/>
+        </View>
+      );
+    }
+
     return (
       <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>
         <NewsfeedList
-          newsfeed={newsfeed.feedStore}
+          newsfeed={newsfeed}
           header={header}
           navigation={this.props.navigation}
           />

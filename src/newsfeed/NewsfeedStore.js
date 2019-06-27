@@ -7,12 +7,16 @@ import ActivityModel from './ActivityModel';
 import logService from '../common/services/log.service';
 import boostedContentService from '../common/services/boosted-content.service';
 import featuresService from '../common/services/features.service';
+import FeedStore from '../common/stores/FeedStore';
 
 /**
  * News feed store
  */
 class NewsfeedStore {
 
+  feedStore = new FeedStore;
+
+  // legacy
   stores;
 
   service = new NewsfeedService;
@@ -31,6 +35,9 @@ class NewsfeedStore {
    */
   constructor() {
     this.buildStores();
+    this.feedStore
+      .setEndpoint(`api/v2/feeds/subscribed/activities`)
+      .setLimit(12);
   }
 
   buildStores() {
@@ -207,7 +214,11 @@ class NewsfeedStore {
 
     model.rowKey = `${model.guid}:0:${this.list.entities.length}`
 
-    this.list.prepend(model);
+    if (featuresService.has('es-feeds')) {
+      this.feedStore.prepend(model);
+    } else {
+      this.list.prepend(model);
+    }
   }
 
   @action

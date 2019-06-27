@@ -2,7 +2,7 @@ import { observable, action, extendObservable } from 'mobx'
 import channelService from '../../channel/ChannelService';
 import { revokeBoost, rejectBoost, acceptBoost} from '../../boost/BoostService';
 import logService from '../services/log.service';
-import MetadataService from '../services/metadata.service';
+import metadataService from '../services/metadata.service';
 
 /**
  * Common infinite scroll list
@@ -32,7 +32,7 @@ export default class OffsetListStore {
   /**
    * Metadata service
    */
-  metadataServie = null;
+  metadataService = null;
 
   /**
    * Constructor
@@ -55,16 +55,16 @@ export default class OffsetListStore {
     }
 
     if (includeMetadata) {
-      this.metadataServie = new MetadataService;
+      this.metadataService = new metadataService;
     }
   }
 
   /**
    * Get metadata service
-   * @returns {MetadataService}
+   * @returns {metadataService}
    */
   getMetadataService() {
-    return this.metadataServie;
+    return this.metadataService;
   }
 
   /**

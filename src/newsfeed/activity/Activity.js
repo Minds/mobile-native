@@ -98,7 +98,7 @@ export default class Activity extends Component {
             { message }
           <View>
             { this.showRemind() }
-     
+
             <MediaView
               ref={o => {this.mediaView = o}}
               entity={ entity }
@@ -217,11 +217,9 @@ export default class Activity extends Component {
    */
   showRemind() {
     const remind_object = this.props.entity.remind_object;
-    console.log("showRemind: ", this.props);
-    if (remind_object) {
-      const blockedUsers = blockListService.getCachedList();
 
-      if (blockedUsers.indexOf(remind_object.owner_guid) > -1) {
+    if (remind_object) {
+      if (blockListService.has(remind_object.owner_guid)) {
         return (
           <View style={[styles.blockedNoticeView, CommonStyle.margin2x, CommonStyle.borderRadius2x, CommonStyle.padding2x]}>
             <Text style={[CommonStyle.textCenter, styles.blockedNoticeDesc]}>

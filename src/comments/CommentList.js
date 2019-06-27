@@ -54,7 +54,6 @@ type State = {
   focused: boolean,
   hideInput: boolean,
   guid: ?string,
-  blockedChannels: Array<string>,
   selection: {
     start: number,
     end: number
@@ -102,7 +101,6 @@ export default class CommentList extends React.Component<Props, State> {
     focused: false,
     hideInput: false,
     guid: null,
-    blockedChannels: [],
     selection: {
       start:0,
       end: 0
@@ -117,25 +115,16 @@ export default class CommentList extends React.Component<Props, State> {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     this.props.store.setEntity(this.props.entity);
     this.loadComments();
-
-    blockListService.events.on('change', this._onBlockListChange);
   }
 
   /**
    * Component will unmount
    */
   componentWillUnmount() {
-    blockListService.events.removeListener('change', this._onBlockListChange);
-
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
     this.props.store.unlisten();
     this.props.store.clearComments();
-  }
-
-  @autobind
-  _onBlockListChange() {
-    this.loadBlockedChannels();
   }
 
   /**
@@ -286,8 +275,6 @@ export default class CommentList extends React.Component<Props, State> {
    * Load comments
    */
   loadComments = async (loadingMore: boolean = false, descending: boolean = true) => {
-    await this.loadBlockedChannels();
-
     let guid;
     const scrollToBottom = this.props.navigation.state.params.scrollToBottom;
 
@@ -303,13 +290,6 @@ export default class CommentList extends React.Component<Props, State> {
     if (!loadingMore && scrollToBottom && this.props.store.loaded) {
       this.scrollBottomIfNeeded();
     }
-  }
-
-  @autobind
-  async loadBlockedChannels() {
-    this.setState({
-      blockedChannels: (await blockListService.getList()) || [],
-    });
   }
 
   /**
@@ -492,8 +472,8 @@ export default class CommentList extends React.Component<Props, State> {
     }
 
     return this.props.store.comments
-      .filter(comment => Boolean(comment))
-      .filter(comment => this.state.blockedChannels.indexOf(comment.owner_guid) === -1);
+      //.filter(comment => Boolean(comment)) // ???
+      .filter(comment => !blockListService.has(comment.owner_guid));
   }
 
   isWholeThreadBlocked() {

@@ -18,6 +18,10 @@ export class BlockListService {
     });
   }
 
+  has(guid) {
+    return this.blocked.has(guid);
+  }
+
   async loadFromStorage() {
     const guids = await storageService.getItem('@minds:blocked');
     if (guids) {
@@ -41,7 +45,8 @@ export class BlockListService {
   }
 
   async prune() {
-    await storageService.removeItem('@minds:blocked');
+    this.blocked.clear();
+    await storageService.setItem('@minds:blocked', []);
   }
 
   async getList() {
@@ -49,8 +54,7 @@ export class BlockListService {
   }
 
   async add(guid: string) {
-    if (this.blocked.indexOf(guid) < 0)
-      this.blocked.set( guid );
+    this.blocked.set( guid );
     storageService.setItem('@minds:blocked', this.blocked.keys());
   }
 

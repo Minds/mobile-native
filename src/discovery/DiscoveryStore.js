@@ -16,6 +16,8 @@ import DiscoveryFeedStore from './DiscoveryFeedStore';
 import logService from '../common/services/log.service';
 import featuresService from '../common/services/features.service';
 import boostedContentService from '../common/services/boosted-content.service';
+import FeedStore from '../common/stores/FeedStore';
+import appStores from '../../AppStores';
 
 /**
  * Discovery Store
@@ -28,9 +30,9 @@ class DiscoveryStore {
   feedStore;
 
   /**
-   * Lists stores
+   * Lists store
    */
-  stores;
+  listStore = new FeedStore(true);
 
   /**
    * Filter change reaction disposer
@@ -65,142 +67,23 @@ class DiscoveryStore {
 
     this.filters = new NewsfeedFilterStore('hot', 'images', '12h', []);
 
-    this.stores = {
-      'images': {
-        list: new OffsetFeedListStore('shallow'),
-      },
-      'videos': {
-        list: new OffsetFeedListStore('shallow'),
-      },
-      'blogs': {
-        list: new OffsetFeedListStore('shallow', true),
-      },
-      'channels': {
-        list: new OffsetFeedListStore('shallow', true),
-      },
-      'groups': {
-        list: new OffsetFeedListStore('shallow'),
-      },
-      'lastchannels': {
-        list: new OffsetFeedListStore('shallow'),
-      },
-      'activities': {
-        list: new OffsetFeedListStore('shallow', true),
-      }
-    };
-    extendObservable(this.stores.images, {
-      loading: false
-    });
-    extendObservable(this.stores.videos, {
-      loading: false
-    });
-    extendObservable(this.stores.blogs, {
-      loading: false
-    });
-    extendObservable(this.stores.channels, {
-      loading: false
-    });
-    extendObservable(this.stores.groups, {
-      loading: false
-    });
-    extendObservable(this.stores.lastchannels, {
-      loading: false
-    });
-    extendObservable(this.stores.activities, {
-      loading: false
-    });
+    this.listStore.setLimit(12);
 
-    this.stores.activities.list.getMetadataService()
+    this.listStore.getMetadataService()
       .setSource('feed/discovery')
       .setMedium('feed');
 
-    this.stores.blogs.list.getMetadataService()
-      .setSource('feed/discovery')
-      .setMedium('feed');
+    // this.stores.activities.list.getMetadataService()
+    //   .setSource('feed/discovery')
+    //   .setMedium('feed');
 
-    this.stores.channels.list.getMetadataService()
-      .setSource('feed/discovery')
-      .setMedium('feed');
-  }
+    // this.stores.blogs.list.getMetadataService()
+    //   .setSource('feed/discovery')
+    //   .setMedium('feed');
 
-  @action
-  setLoading(store, value) {
-    store.loading = value;
-  }
-
-  /**
-   * get current list
-   */
-  @computed
-  get list() {
-    return this.stores[this.filters.type].list;
-  }
-
-  /**
-   * set current list
-   */
-  set list(list) {
-    this.stores[this.filters.type].list = list
-  }
-
-  /**
-   * Load feed
-   */
-  @action
-  async loadList(refresh = false, preloadImage = false, limit = 12) {
-    const type = this.filters.type;
-    const filter = this.filters.filter;
-
-    // NOTE: we do not rely on this.list because it could change during the await
-    const store = this.stores[type];
-
-    // ignore last visited channels
-    if (type == 'lastchannels') return;
-
-    // no more data or loading? return
-    if (!refresh && (store.list.cantLoadMore() || store.loading)) {
-      return;
-    }
-
-    store.list.setErrorLoading(false);
-
-    this.setLoading(store, true);
-
-    try {
-      const feed = await discoveryService.getTopFeed(
-        store.list.offset,
-        this.filters.type,
-        this.filters.filter,
-        this.filters.period,
-        this.filters.nsfw.concat([]),
-        this.filters.searchtext,
-        limit
-      );
-
-      // if the filter has changed during the call we ignore the results
-      if (filter === this.filters.filter) {
-
-         // inject boosts
-        if (type === 'activities' && featuresService.has('es-feeds')) {
-          await this.injectBoosts(feed, store.list);
-        }
-
-        this.createModels(type, feed, preloadImage);
-        this.assignRowKeys(feed);
-        store.list.setList(feed, refresh);
-      }
-    } catch (err) {
-      // ignore aborts
-      if (err.code === 'Abort') {
-        return;
-      }
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
-        logService.exception('[DiscoveryStore] loadList', err);
-      }
-      store.list.setErrorLoading(true);
-    } finally {
-      this.setLoading(store, false);
-    }
+    // this.stores.channels.list.getMetadataService()
+    //   .setSource('feed/discovery')
+    //   .setMedium('feed');
   }
 
   /**
@@ -250,39 +133,6 @@ class DiscoveryStore {
     });
   }
 
-  @computed
-  get loading() {
-    return this.stores[this.filters.type].loading;
-  }
-
-  set loading(val) {
-    return this.stores[this.filters.type].loading = val;
-  }
-
-  createModels(type, feed, preloadImage) {
-    switch (type) {
-      case 'activities':
-      case 'images':
-      case 'videos':
-        feed.entities = ActivityModel.createMany(feed.entities);
-        if (preloadImage) {
-          feed.entities.forEach(entity => {
-            entity.preloadThumb();
-          });
-        }
-        break;
-      case 'blogs':
-        feed.entities = BlogModel.createMany(feed.entities);
-        break;
-      case 'channels':
-        feed.entities = UserModel.createMany(feed.entities);
-        break;
-      case 'groups':
-        feed.entities = GroupModel.createMany(feed.entities);
-        break;
-    }
-  }
-
   /**
    * Refresh list
    */
@@ -308,18 +158,32 @@ class DiscoveryStore {
    * @param {string} searchtext
    */
   onFilterChange = (filter, type, period, nsfw) => {
-    const store = this.stores[type];
-    store.list.clearList();
-    this.loadList(true);
+    this.listStore.clear();
+    this.fetch();
   }
 
   /**
    * On search change
    */
   onSearchChange = (searchtext) => {
-    const store = this.stores[this.filters.type];
-    store.list.clearList();
-    this.loadList(true);
+    store.listStore.clear();
+    this.fetch();
+  }
+
+  fetch() {
+    const hashtags = appStores.hashtag.hashtag ? encodeURIComponent(appStores.hashtag.hashtag) : '';
+    const all = appStores.hashtag.all ? '1' : '';
+
+    this.listStore
+      .setEndpoint(`api/v2/feeds/global/${this.filters.filter}/${this.filters.type}`)
+      .setParams({
+        hashtags,
+        period: this.filters.period,
+        all,
+        query: this.filters.searchtext,
+        nsfw: this.filters.nsfw.concat([]),
+      })
+      .fetch();
   }
 
   /**
@@ -343,21 +207,8 @@ class DiscoveryStore {
     this.onSearchChangeDisposer && this.onSearchChangeDisposer();
     this.filters.clear();
     this.feedStore.reset();
+    this.listStore.clear();
     this.listenChanges();
-    this.stores.images.list.clearList();
-    this.stores.videos.list.clearList();
-    this.stores.blogs.list.clearList();
-    this.stores.channels.list.clearList();
-    this.stores.groups.list.clearList();
-    this.stores.lastchannels.list.clearList();
-    this.stores.activities.list.clearList();
-    this.stores.images.loading = false;
-    this.stores.videos.loading = false;
-    this.stores.blogs.loading = false;
-    this.stores.channels.loading = false;
-    this.stores.groups.loading = false;
-    this.stores.lastchannels.loading = false;
-    this.stores.activities.loading = false;
   }
 }
 

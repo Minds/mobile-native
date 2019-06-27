@@ -8,6 +8,7 @@ import UserModel from "../../channel/UserModel";
 import BlogModel from "../../blogs/BlogModel";
 import ActivityModel from "../../newsfeed/ActivityModel";
 import stores from "../../../AppStores";
+import { abort } from "../helpers/abortableFetch";
 
 /**
  * Entities services
@@ -19,7 +20,7 @@ class EntitiesService {
    */
   entities: Map = new Map();
 
-  async getFromFeed(feed): Promise<EntityObservable[]> {
+  async getFromFeed(feed, abortTag): Promise<EntityObservable[]> {
 
     if (!feed || !feed.length) {
       return [];
@@ -45,18 +46,20 @@ class EntitiesService {
     // Fetch entities we don't have
 
     if (urnsToFetch.length) {
-      await this.fetch(urnsToFetch);
+      await this.fetch(urnsToFetch, abortTag);
     }
 
     // Fetch entities, asynchronously, with no need to wait
 
     if (urnsToResync.length) {
-      this.fetch(urnsToResync);
+      this.fetch(urnsToResync, abortTag);
     }
 
     for (const feedItem of feed) {
-      if (!blockListService.blocked.has(feedItem.owner_guid))
-        entities.push(this.entities.get(feedItem.urn));
+      if (!blockListService.has(feedItem.owner_guid)) {
+        const entity = this.entities.get(feedItem.urn)
+        if (entity) entities.push(entity);
+      }
     }
 
     return entities;
@@ -84,16 +87,12 @@ class EntitiesService {
    * @param urns string[]
    * @return []
    */
-  async fetch(urns: string[]): Promise<Array<Object>> {
+  async fetch(urns: string[], abortTag: any): Promise<Array<Object>> {
 
     try {
-      const response: any = await apiService.get('api/v2/entities/', { urns });
+      const response: any = await apiService.get('api/v2/entities/', { urns }, abortTag);
 
-      if (!response.entities.length) {
-        for (const urn of urns) {
-          this.addNotFoundEntity(urn);
-        }
-      }
+      console.log('FETCH ENTITIES', urns, response)
 
       for (const entity of response.entities) {
         this.addEntity(entity);
@@ -101,7 +100,8 @@ class EntitiesService {
 
       return response;
     } catch (err) {
-      // TODO: find a good way of sending server errors to subscribers
+      console.log(err)
+      throw err;
     }
   }
 
@@ -115,23 +115,11 @@ class EntitiesService {
     if (storedEntity) {
       storedEntity.update(entity);
     } else {
-      this.entities.set(entity.urn, this.mapModel(entity));
+      this.entities.set(entity.urn, this.mapToModel(entity));
     }
   }
 
-  /**
-   * Register a urn as not found
-   * @param urn string
-   * @return void
-   */
-  addNotFoundEntity(urn): void {
-    if (!this.entities[urn]) {
-      this.entities[urn] = new BehaviorSubject(null);
-    }
-    this.entities[urn].error("Not found");
-  }
-
-  mapModel(entity) {
+  mapToModel(entity) {
     switch (entity.type) {
       case 'activity':
         return ActivityModel.create(entity)
