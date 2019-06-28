@@ -14,7 +14,7 @@ import FeedStore from '../common/stores/FeedStore';
  */
 class NewsfeedStore {
 
-  feedStore = new FeedStore;
+  feedStore = new FeedStore(true);
 
   // legacy
   stores;
@@ -56,6 +56,10 @@ class NewsfeedStore {
     extendObservable(this.stores.boostfeed, {
       loading: false
     });
+
+    this.feedStore.getMetadataService()
+      .setSource('feed/subscribed')
+      .setMedium('feed');
 
     this.stores.subscribed.list.getMetadataService()
       .setSource('feed/subscribed')
