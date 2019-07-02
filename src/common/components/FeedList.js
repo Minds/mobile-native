@@ -188,7 +188,7 @@ export default class FeedList extends Component {
    * Render activity
    */
   renderActivity = (row) => {
-    let isLast = this.props.feedStore.feed.current == row.index + 1;
+    let isLast = this.props.feedStore.entities.length == row.index + 1;
     const entity = row.item;
 
     return (
