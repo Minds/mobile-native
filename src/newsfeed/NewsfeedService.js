@@ -4,7 +4,7 @@ import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import stores from '../../AppStores';
 import blockListService from '../common/services/block-list.service';
-import feedsService from '../common/services/feed.service'
+import feedsService from '../common/services/feeds.service'
 import featuresService from '../common/services/features.service';
 import logService from '../common/services/log.service';
 

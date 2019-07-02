@@ -250,6 +250,7 @@ class NewsfeedStore {
     this.boosts = [];
     this.loading = false;
     this.loadingBoost = false;
+    this.feedStore.clear();
   }
 
 }

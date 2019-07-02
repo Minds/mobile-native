@@ -183,7 +183,7 @@ class DiscoveryStore {
         query: this.filters.searchtext,
         nsfw: this.filters.nsfw.concat([]),
       })
-      .fetch();
+      .fetchRemoteOrLocal();
   }
 
   /**

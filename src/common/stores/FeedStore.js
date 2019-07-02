@@ -1,14 +1,10 @@
-import { fromStream } from 'mobx-utils'
 import { observable, action } from 'mobx';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { switchMap, map, tap, catchError } from "rxjs/operators";
 
 import logService from '../services/log.service';
-import apiService from '../services/api.service';
-import { abort } from '../helpers/abortableFetch';
-import entitiesService from '../services/entities.service';
 import Viewed from './Viewed';
 import MetadataService from '../services/metadata.service';
+import FeedsService from '../services/feeds.service';
+import connectivityService from '../services/connectivity.service';
 
 /**
  * Feed store
@@ -36,29 +32,9 @@ export default class FeedStore {
   @observable loading = false;
 
   /**
-   * @var {Number}
+   * feed observable
    */
-  limit: number = 12;
-
-  /**
-   * @var {Number}
-   */
-  offset: number = 0;
-
-  /**
-   * @var {string}
-   */
-  endpoint: string = '';
-
-  /**
-   * @var {Object}
-   */
-  params = {sync: 1}
-
-  /**
-   * @var {Array}
-   */
-  feed = [];
+  @observable.shallow entities = [];
 
   /**
    * Viewed store
@@ -71,33 +47,14 @@ export default class FeedStore {
   metadataService = null;
 
   /**
-   * feed observable
+   * @var {FeedsService}
    */
-  @observable.shallow entities = [];
+  feedsService = new FeedsService;
 
   constructor(includeMetadata = false) {
     if (includeMetadata) {
       this.metadataService = new MetadataService;
     }
-    // this.feed = fromStream(
-    //   this.rawFeed.pipe(
-    //     tap((feed) => {
-    //       this.setLoading(true);
-    //       console.log('feed', feed)
-    //     }),
-    //     map(feed => feed.slice(0, this.limit + this.offset)),
-    //     switchMap(feed => entitiesService.getFromFeed(feed)),
-    //     tap((activities) => {
-    //       this.setLoading(false);
-    //       console.log('activities', activities)
-    //     }),
-    //     catchError(err => {
-    //       console.log('ERROR HANDLED!',err)
-    //       this.setErrorLoading(true)
-    //     })
-    //   ),
-    //   [] // initial value from the observable
-    // );
   }
 
   /**
@@ -106,12 +63,6 @@ export default class FeedStore {
    */
   async addViewed(entity) {
     return await this.viewed.addViewed(entity, this.metadataService)
-  }
-
-  async updateEntities() {
-    const feedPage = this.feed.slice(this.offset, this.limit + this.offset);
-    const entities = await entitiesService.getFromFeed(feedPage, this);
-    this.addEntities(entities);
   }
 
   /**
@@ -135,7 +86,6 @@ export default class FeedStore {
       });
       this.entities = entities;
     } else {
-      console.log(entities)
       entities.forEach((entity) => {
         entity._list = this;
         this.entities.push(entity);
@@ -143,24 +93,6 @@ export default class FeedStore {
     }
 
     this.loaded = true;
-  }
-
-  setLimit(limit) {
-    this.limit = limit;
-    return this;
-  }
-
-  setEndpoint(endpoint: string) {
-    this.endpoint = endpoint;
-    return this;
-  }
-
-  setParams(params): FeedStore {
-    this.params = params;
-    if (!params.sync) {
-      this.params.sync = 1;
-    }
-    return this;
   }
 
   @action
@@ -196,6 +128,27 @@ export default class FeedStore {
     return this.entities.findIndex(e => e === entity);
   }
 
+
+  setEndpoint(endpoint: string) {
+    this.feedsService.setEndpoint(endpoint);
+    return this;
+  }
+
+  setParams(params: Object) {
+    this.feedsService.setParams(params);
+    return this;
+  }
+
+  setLimit(limit) {
+    this.feedsService.setLimit(limit);
+    return this;
+  }
+
+  setOffset(offset) {
+    this.feedsService.setOffset(offset);
+    return this;
+  }
+
   @action
   async fetch() {
 
@@ -204,17 +157,12 @@ export default class FeedStore {
       .setErrorLoading(false);
 
     try {
-      abort(this);
-      const response = await apiService.get(this.endpoint, {...this.params, ...{ limit: 150 }}, this);
-      this.feed = response.entities;
-      console.log(this.endpoint, this.feed)
-      await this.updateEntities();
+      await this.feedsService.fetch();
+      this.addEntities(await this.feedsService.getEntities());
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
-
-      console.log(err)
-
+      logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
       this.setLoading(false);
@@ -229,15 +177,59 @@ export default class FeedStore {
     }
   }
 
-  async loadMore() {
-    if (this.loading) return;
-    this.setLoading(true);
-    this.setErrorLoading(false);
-    this.offset += this.limit;
+  async fetchLocalOrRemote() {
+    this
+      .setLoading(true)
+      .setErrorLoading(false);
+
     try {
-      await this.updateEntities();
+      await this.feedsService.fetchLocalOrRemote();
+      this.addEntities(await this.feedsService.getEntities());
     } catch (err) {
-      console.log(err);
+      // ignore aborts
+      if (err.code === 'Abort') return;
+      logService.exception('[FeedStore]', err);
+      this.setErrorLoading(true);
+    } finally {
+      this.setLoading(false);
+    }
+  }
+
+  async fetchRemoteOrLocal() {
+    this
+      .setLoading(true)
+      .setErrorLoading(false);
+
+    try {
+      await this.feedsService.fetchRemoteOrLocal();
+      this.addEntities(await this.feedsService.getEntities());
+    } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
+      logService.exception('[FeedStore]', err);
+      this.setErrorLoading(true);
+    } finally {
+      this.setLoading(false);
+    }
+  }
+
+  async loadMore() {
+    if (this.loading || !this.loaded) return;
+
+    this
+      .setLoading(true)
+      .setErrorLoading(false);
+
+    try {
+      this.addEntities(
+        await this.feedsService
+          .next()
+          .getEntities()
+      );
+    } catch (err) {
+      // ignore aborts
+      if (err.code === 'Abort') return;
+      logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
       this.setLoading(false);
@@ -249,7 +241,7 @@ export default class FeedStore {
     this.clear();
     this.refreshing = true;
     try {
-      await this.fetch();
+      await this.fetchRemoteOrLocal();
     } finally {
       this.refreshing = false;
     }
@@ -257,13 +249,12 @@ export default class FeedStore {
 
   @action
   clear(): FeedStore {
-    this.offset = 0;
     this.refreshing = false;
     this.errorLoading = false;
     this.loaded = false;
-    this.setLoading(false);
-    this.feed = [];
+    this.loading = false;
     this.entities = [];
+    this.feedsService.clear();
     return this;
   }
 

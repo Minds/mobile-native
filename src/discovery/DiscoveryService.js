@@ -1,7 +1,6 @@
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import appStores from '../../AppStores';
-import feedService from '../common/services/feed.service';
 import featuresService from '../common/services/features.service';
 
 /**
@@ -88,40 +87,6 @@ class DiscoveryService {
       return await this.getTopFeedFromSync(offset, type, filter, period, nsfw, query, limit);
     } else {
       return await this.getTopFeedLegacy(offset, type, filter, period, nsfw, query, limit);
-    }
-  }
-
-  async getTopFeedFromSync(offset, type, filter, period, nsfw, query, limit) {
-    const hashtags = appStores.hashtag.hashtag ? encodeURIComponent(appStores.hashtag.hashtag) : '';
-    const all = appStores.hashtag.all ? '1' : '';
-
-    // const params = {
-    //   filter: 'global',
-    //   algorithm: filter,
-    //   customType: type,
-    //   limit,
-    //   offset: offset,
-    //   period: period,
-    //   all: Boolean(appStores.hashtag.all),
-    //   query: query || '',
-    //   nsfw,
-    //   // forceSync: forceSync,
-    // };
-    //
-    // if (appStores.hashtag.hashtag) {
-    //   params.hashtags = appStores.hashtag.hashtag;
-    // }
-
-    const { entities, next } = await feedService.get({
-      endpoint: `api/v2/feeds/global/${filter}/${type}?hashtags=${hashtags}&period=${period}&all=${all}&query=${query}&nsfw=${nsfw}`,
-      timebased: false,
-      limit,
-      offset,
-    });
-
-    return {
-      entities: entities || [],
-      offset: next || '',
     }
   }
 

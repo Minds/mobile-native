@@ -55,7 +55,7 @@ export default class NewsfeedScreen extends Component {
    */
   componentWillMount() {
     if (featuresService.has('es-feeds')) {
-      this.props.newsfeed.feedStore.fetch();
+      this.props.newsfeed.feedStore.fetchLocalOrRemote();
     } else {
       this.props.newsfeed.loadFeed();
     }
