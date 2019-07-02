@@ -3,12 +3,15 @@ import blockListService from "./block-list.service";
 import { first } from "rxjs/operators";
 import { BehaviorSubject } from "rxjs";
 
+import _ from 'lodash';
+
 import GroupModel from "../../groups/GroupModel";
 import UserModel from "../../channel/UserModel";
 import BlogModel from "../../blogs/BlogModel";
 import ActivityModel from "../../newsfeed/ActivityModel";
 import stores from "../../../AppStores";
 import { abort } from "../helpers/abortableFetch";
+import entitiesStorage from "./sql/entities.storage";
 
 /**
  * Entities services
@@ -22,12 +25,14 @@ class EntitiesService {
 
   async getFromFeed(feed, abortTag): Promise<EntityObservable[]> {
 
+    console.log('ENTITIES FOR PAGe', feed)
+
     if (!feed || !feed.length) {
       return [];
     }
 
     const blockedGuids = blockListService.blocked;
-    const urnsToFetch = [];
+    let urnsToFetch = [];
     const urnsToResync = [];
     const entities = [];
 
@@ -41,6 +46,20 @@ class EntitiesService {
       if (this.entities.has(feedItem.urn) && !feedItem.entity) {
         urnsToResync.push(feedItem.urn);
       }
+    }
+
+    // if we have urnstoFetch we try to load from the sql storage first
+    if (urnsToFetch.length > 0) {
+      console.log('Load from sql', urnsToFetch)
+      const localEntities = await entitiesStorage.readMany(urnsToFetch);
+      console.log('local entities', localEntities)
+      urnsToFetch = _.difference(urnsToFetch, localEntities.map(m => m.urn));
+      console.log('urnsToFetch', urnsToFetch)
+      // we add to resync list
+      localEntities.forEach(e => {
+        urnsToResync.push(e.urn);
+        this.addEntity(e, false)
+      });
     }
 
     // Fetch entities we don't have
@@ -70,16 +89,28 @@ class EntitiesService {
    * @param urn string
    * @return Object
    */
-  single(urn: string): EntityObservable {
-    if (urn.indexOf('urn:') < 0) { // not a urn, so treat as a guid
+  async single(urn: string): EntityObservable {
+    if (!urn.startsWith('urn:')) { // not a urn, so treat as a guid
       urn = `urn:activity:${urn}`; // and assume activity
     }
 
-    this.entities[urn] = new BehaviorSubject(null);
+    // from memory
+    let local = this.entities.get(urn);
 
-    this.fetch([ urn ]); // Update in the background
+    if (!local) {
+      // from sql storage
+      local = await entitiesStorage.read(urn);
+      if (local){
+        this.addEntity(local, false);
+      } else {
+        // we fetch from the server
+        await this.fetch([urn]);
+      }
+    }
 
-    return this.entities[urn];
+    if (local) this.fetch([ urn ]); // Update in the background
+
+    return this.entities.get(urn);
   }
 
   /**
@@ -92,7 +123,7 @@ class EntitiesService {
     try {
       const response: any = await apiService.get('api/v2/entities/', { urns }, abortTag);
 
-      console.log('FETCH ENTITIES', urns, response)
+      //console.log('FETCH ENTITIES', urns, response)
 
       for (const entity of response.entities) {
         this.addEntity(entity);
@@ -107,16 +138,20 @@ class EntitiesService {
 
   /**
    * Add or resync an entity
-   * @param entity
+   * @param {Object} entity
+   * @param {boolean} store
    * @return void
    */
-  addEntity(entity): void {
+  addEntity(entity, store = true): void {
     const storedEntity = this.entities.get(entity.urn);
     if (storedEntity) {
+      console.log('UPDATING ENTITY', entity)
       storedEntity.update(entity);
     } else {
+      console.log('Adding ENTITY', entity)
       this.entities.set(entity.urn, this.mapToModel(entity));
     }
+    if (store) entitiesStorage.save(entity)
   }
 
   mapToModel(entity) {
