@@ -39,7 +39,7 @@ exports[`blog card component should renders correctly 1`] = `
       source={
         Object {
           "headers": Object {
-            "App-Version": "3.7.1",
+            "App-Version": "3.7.2",
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Pragma": "no-cache",
           },
