@@ -34,13 +34,15 @@ import i18n from '../common/services/i18n.service';
 export default class BoostActionBar extends Component {
 
   render() {
+    let actions = null;
+    if(this.props.entity.currency !== 'tokens') actions = this.renderActions();
     return (
       <View style={styles.container}>
         {this.renderTarget()}
         {this.renderViews()}
         {this.renderBid()}
         {this.renderStatus()}
-        {this.renderActions()}
+        {actions}
       </View>
     );
   }
