@@ -1,5 +1,6 @@
 import sqliteStorageProviderService from "../sqlite-storage-provider.service";
 import logService from "../log.service";
+import moment from "moment";
 
 /**
  * Feeds Storage
@@ -39,6 +40,23 @@ export class FeedsStorage {
       return null;
     }
   }
+
+  /**
+   * Remove all feeds
+   */
+  removeAll() {
+    return this.db.executeSql('DELETE FROM feeds');
+  }
+
+  /**
+   * Remove feeds older than given days
+   * @param {integer} days
+   */
+  removeOlderThan(days) {
+    const when = moment().subtract(days, 'days');
+    this.db.executeSql('DELETE FROM feeds WHERE updated < ?', [when.format("X")]);
+  }
+
 
   map(data) {
     return data.map(m => ({urn: m.urn, timestamp: m.timestamp ? Math.floor(m.timestamp/ 1000) : null, owner_guid: m.owner_guid}))

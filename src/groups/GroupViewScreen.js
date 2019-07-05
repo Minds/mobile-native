@@ -37,6 +37,8 @@ import NewsfeedList from '../newsfeed/NewsfeedList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
+import featuresService from '../common/services/features.service';
+import FeedList from '../common/components/FeedList';
 
 /**
  * Groups view screen
@@ -86,9 +88,8 @@ export default class GroupViewScreen extends Component {
     const params = this.props.navigation.state.params;
 
     if (params.group) {
-      this.props.groupView.setGroup(params.group);
-      // update group
-      await this.props.groupView.loadGroup(params.group.guid);
+      // load group and update async
+      await this.props.groupView.loadGroup(params.group);
       // load feed
       this.props.groupView.loadFeed();
     } else {
@@ -97,7 +98,7 @@ export default class GroupViewScreen extends Component {
       // should move to tab after load?
       this.moveToTab = params.tab || '';
       // load group
-      await this.props.groupView.loadGroup(params.guid);
+      await this.props.groupView.loadGroupByGuid(params.guid);
       // load feed
       this.props.groupView.loadFeed();
     }
@@ -169,14 +170,25 @@ export default class GroupViewScreen extends Component {
     )
     switch (group.tab) {
       case 'feed':
-        return (
-          <NewsfeedList
-            newsfeed={ group }
-            guid={ group.group.guid }
-            header={ header }
-            navigation={ this.props.navigation }
-          />
-        );
+
+        if (featuresService.has('es-feeds')) {
+          return (
+            <FeedList
+              feedStore={ group.feed }
+              header={ header }
+              navigation={ this.props.navigation }
+            />
+          );
+        } else {
+          return (
+            <NewsfeedList
+              newsfeed={ group }
+              guid={ group.group.guid }
+              header={ header }
+              navigation={ this.props.navigation }
+            />
+          );
+        }
         break;
       case 'members':
         return (

@@ -32,6 +32,11 @@ export default class FeedStore {
   @observable loading = false;
 
   /**
+   * Is tiled
+   */
+  @observable isTiled = false;
+
+  /**
    * feed observable
    */
   @observable.shallow entities = [];
@@ -102,6 +107,12 @@ export default class FeedStore {
   }
 
   @action
+  setIsTiled(value) {
+    this.isTiled = value;
+    return this;
+  }
+
+  @action
   setErrorLoading(value) {
     this.errorLoading = value;
     return this;
@@ -149,6 +160,11 @@ export default class FeedStore {
     return this;
   }
 
+  setFeed(feed) {
+    this.feedsService.setFeed(feed);
+    return this;
+  }
+
   @action
   async fetch() {
 
@@ -177,14 +193,20 @@ export default class FeedStore {
     }
   }
 
-  async fetchLocalOrRemote() {
+  async hydratePage() {
+    this.addEntities(await this.feedsService.getEntities());
+  }
+
+  async fetchLocalOrRemote(refresh = false) {
     this
       .setLoading(true)
       .setErrorLoading(false);
 
     try {
       await this.feedsService.fetchLocalOrRemote();
-      this.addEntities(await this.feedsService.getEntities());
+      const entities = await this.feedsService.getEntities();
+      if (refresh) this.clear();
+      this.addEntities(entities);
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
@@ -195,17 +217,20 @@ export default class FeedStore {
     }
   }
 
-  async fetchRemoteOrLocal() {
+  async fetchRemoteOrLocal(refresh = false) {
     this
       .setLoading(true)
       .setErrorLoading(false);
 
     try {
       await this.feedsService.fetchRemoteOrLocal();
-      this.addEntities(await this.feedsService.getEntities());
+      const entities = await this.feedsService.getEntities();
+      if (refresh) this.clear();
+      this.addEntities(entities);
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
+      console.log(err);
       logService.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
@@ -214,7 +239,7 @@ export default class FeedStore {
   }
 
   async loadMore() {
-    if (this.loading || !this.loaded) return;
+    if (this.loading || !this.loaded || !this.feedsService.hasMore) return;
 
     this
       .setLoading(true)
@@ -238,10 +263,9 @@ export default class FeedStore {
 
   @action
   async refresh() {
-    this.clear();
     this.refreshing = true;
     try {
-      await this.fetchRemoteOrLocal();
+      await this.fetchRemoteOrLocal(true);
     } finally {
       this.refreshing = false;
     }

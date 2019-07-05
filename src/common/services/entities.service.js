@@ -23,9 +23,12 @@ class EntitiesService {
    */
   entities: Map = new Map();
 
+  /**
+   * Get entities from feed
+   * @param {Array} feed
+   * @param {Mixed} abortTag
+   */
   async getFromFeed(feed, abortTag): Promise<EntityObservable[]> {
-
-    console.log('ENTITIES FOR PAGe', feed)
 
     if (!feed || !feed.length) {
       return [];
@@ -50,11 +53,8 @@ class EntitiesService {
 
     // if we have urnstoFetch we try to load from the sql storage first
     if (urnsToFetch.length > 0) {
-      console.log('Load from sql', urnsToFetch)
       const localEntities = await entitiesStorage.readMany(urnsToFetch);
-      console.log('local entities', localEntities)
       urnsToFetch = _.difference(urnsToFetch, localEntities.map(m => m.urn));
-      console.log('urnsToFetch', urnsToFetch)
       // we add to resync list
       localEntities.forEach(e => {
         urnsToResync.push(e.urn);
@@ -86,10 +86,11 @@ class EntitiesService {
 
   /**
    * Return and fetch a single entity via a urn
-   * @param urn string
+   * @param {string} urn
+   * @param {BaseModel} defaultEntity
    * @return Object
    */
-  async single(urn: string): EntityObservable {
+  async single(urn: string, defaultEntity): EntityObservable {
     if (!urn.startsWith('urn:')) { // not a urn, so treat as a guid
       urn = `urn:activity:${urn}`; // and assume activity
     }
@@ -98,13 +99,21 @@ class EntitiesService {
     let local = this.entities.get(urn);
 
     if (!local) {
+
       // from sql storage
       local = await entitiesStorage.read(urn);
-      if (local){
+
+      if (local) {
         this.addEntity(local, false);
       } else {
-        // we fetch from the server
-        await this.fetch([urn]);
+        if (defaultEntity) {
+          // if there not exist in memory or sql we use the default entity and we update it later
+          this.entities.set(urn, defaultEntity);
+          local = defaultEntity;
+        } else {
+          // we fetch from the server
+          await this.fetch([urn]);
+        }
       }
     }
 
@@ -122,8 +131,6 @@ class EntitiesService {
 
     try {
       const response: any = await apiService.get('api/v2/entities/', { urns }, abortTag);
-
-      //console.log('FETCH ENTITIES', urns, response)
 
       for (const entity of response.entities) {
         this.addEntity(entity);
@@ -145,15 +152,17 @@ class EntitiesService {
   addEntity(entity, store = true): void {
     const storedEntity = this.entities.get(entity.urn);
     if (storedEntity) {
-      console.log('UPDATING ENTITY', entity)
       storedEntity.update(entity);
     } else {
-      console.log('Adding ENTITY', entity)
       this.entities.set(entity.urn, this.mapToModel(entity));
     }
     if (store) entitiesStorage.save(entity)
   }
 
+  /**
+   * Map object to model
+   * @param {Object} entity
+   */
   mapToModel(entity) {
     switch (entity.type) {
       case 'activity':

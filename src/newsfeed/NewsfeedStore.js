@@ -8,6 +8,7 @@ import logService from '../common/services/log.service';
 import boostedContentService from '../common/services/boosted-content.service';
 import featuresService from '../common/services/features.service';
 import FeedStore from '../common/stores/FeedStore';
+import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 /**
  * News feed store
@@ -106,7 +107,7 @@ class NewsfeedStore {
 
       store.list.setErrorLoading(true);
 
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[NewsfeedStore] loadFeed', err);
       }
     } finally {

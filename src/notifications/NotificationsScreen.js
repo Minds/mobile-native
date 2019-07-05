@@ -57,12 +57,23 @@ export default class NotificationsScreen extends Component {
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       // ignore back navigation
       if (s.action.type === 'Navigation/NAVIGATE' && s.action.routeName === 'Notifications') {
-        this.props.notifications.loadList(true);
+        //this.props.notifications.loadList(true);
         this.props.notifications.setUnread(0);
       }
     });
 
-    this.props.notifications.loadList();
+    this.initialLoad();
+  }
+
+  /**
+   * Initial load
+   */
+  async initialLoad() {
+    try {
+      await this.props.notifications.readLocal();
+    } finally {
+      await this.props.notifications.loadList(true);
+    }
   }
 
   /**
@@ -91,7 +102,7 @@ export default class NotificationsScreen extends Component {
         filter = this.props.notifications.filter.substr(0, this.props.notifications.filter.length - 1);
       }
 
-      if (me && me.hasBanned && !me.hasBanner()) { //TODO: check for avatar too
+      if (me && me.hasBanner && !me.hasBanner()) { //TODO: check for avatar too
         design = <Text
           style={ComponentsStyle.emptyComponentLink}
           onPress={() => this.props.navigation.push('Channel', { username: 'me' })}

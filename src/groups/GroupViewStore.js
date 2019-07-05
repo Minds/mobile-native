@@ -8,6 +8,11 @@ import OffsetListStore from '../common/stores/OffsetListStore';
 import UserModel from '../channel/UserModel';
 import ActivityModel from '../newsfeed/ActivityModel';
 import logService from '../common/services/log.service';
+import entitiesService from '../common/services/entities.service';
+import GroupModel from './GroupModel';
+import FeedStore from '../common/stores/FeedStore';
+import featuresService from '../common/services/features.service';
+import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 /**
  * Groups store
@@ -22,12 +27,18 @@ class GroupViewStore {
   /**
    * List feed store
    */
-  @observable list = new OffsetFeedListStore('shallow', true);
+  list = new OffsetFeedListStore('shallow', true);
 
   /**
    * List Members
    */
-  @observable members = new OffsetListStore('shallow');
+  members = new OffsetListStore('shallow');
+
+
+  /**
+   * Feed store
+   */
+  feed = new FeedStore(true);
 
   /**
    * Group
@@ -62,6 +73,10 @@ class GroupViewStore {
     this.list.getMetadataService()
       .setSource('feed/groups')
       .setMedium('feed');
+
+    this.feed.getMetadataService()
+      .setSource('feed/groups')
+      .setMedium('feed');
   }
 
   /**
@@ -81,6 +96,15 @@ class GroupViewStore {
    * Load feed
    */
   async loadFeed() {
+    if (featuresService.has('es-feeds')) {
+      this.feed
+        .setEndpoint(`api/v2/feeds/container/${this.group.guid}/activities`)
+        .setLimit(12)
+        .fetchRemoteOrLocal();
+      return;
+    }
+
+
     if (this.list.cantLoadMore() || this.loading) {
       return;
     }
@@ -116,7 +140,7 @@ class GroupViewStore {
 
       this.list.setErrorLoading(true);
 
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[GroupsViewStore]', err);
       }
     } finally {
@@ -172,13 +196,16 @@ class GroupViewStore {
    * Load one group
    * @param {string} guid
    */
-  loadGroup(guid) {
-    return groupsService.loadEntity(guid)
-      .then(group => {
-        this.setGroup(group);
-        this.list.clearViewed();
-        return group;
-      });
+  async loadGroup(defaultGroup) {
+    const group = await entitiesService.single(`urn:group:${defaultGroup.guid}`, GroupModel.checkOrCreate(defaultGroup));
+    this.setGroup(group);
+    this.list.clearViewed();
+    return group;
+  }
+
+  async loadGroupByGuid(guid) {
+    const group = await entitiesService.single(`urn:group:${guid}`);
+    this.setGroup(group);
   }
 
   /**

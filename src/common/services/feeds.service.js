@@ -1,8 +1,10 @@
 import logService from './log.service';
 import apiService from './api.service';
-import { abort } from '../helpers/abortableFetch';
+import { abort, isNetworkFail } from '../helpers/abortableFetch';
 import entitiesService from './entities.service';
 import feedsStorage from './sql/feeds.storage';
+import { showMessage } from 'react-native-flash-message';
+import i18n from './i18n.service';
 
 /**
  * Feed store
@@ -39,6 +41,15 @@ export default class FeedsService {
     return await entitiesService.getFromFeed(feedPage, this);
   }
 
+  get hasMore() {
+    return this.feed.length > this.limit + this.offset;
+  }
+
+  setFeed(feed) {
+    this.feed = feed;
+    return this;
+  }
+
   setLimit(limit) {
     this.limit = limit;
     return this;
@@ -68,10 +79,9 @@ export default class FeedsService {
 
     this.feed = response.entities;
 
-    console.log('FEED FETCH', this.feed)
-
     // save without wait
     feedsStorage.save(this);
+    return true;
   }
 
   async fetchLocal() {
@@ -90,7 +100,6 @@ export default class FeedsService {
 
     try {
       status = await this.fetchLocal();
-      console.log('LOADED LOCAL', status)
       if (!status) await this.fetch();
     } catch (err) {
 
@@ -112,8 +121,18 @@ export default class FeedsService {
 
       if (err.code === 'Abort') return;
 
-      logService.exception('[FeedService]', err);
+      if (!isNetworkFail(err)) {
+        logService.exception('[FeedService]', err);
+      }
+
       await this.fetchLocal();
+
+      showMessage({
+        position: 'center',
+        message: i18n.t('cantReachServer'),
+        description: i18n.t('showingStored'),
+        type: "default",
+      });
     }
   }
 

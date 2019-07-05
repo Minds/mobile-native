@@ -58,6 +58,9 @@ import logService from './src/common/services/log.service';
 import settingsStore from './src/settings/SettingsStore';
 import TosModal from './src/tos/TosModal';
 import Notification from './src/notifications/notification/Notification';
+import entitiesStorage from './src/common/services/sql/entities.storage';
+import feedsStorage from './src/common/services/sql/feeds.storage';
+import connectivityService from './src/common/services/connectivity.service';
 
 let deepLinkUrl = '';
 
@@ -119,6 +122,14 @@ sessionService.onLogin(async () => {
 
     // handle shared
     receiveShare.handle();
+
+    // fire offline cache garbage collector 30 seconds after start
+    setTimeout(() => {
+      if (!connectivityService.isConnected) return;
+      entitiesStorage.removeOlderThan(30);
+      feedsStorage.removeOlderThan(30);
+    }, 30000);
+
   } catch (err) {
     logService.exception(err);
   }
@@ -132,6 +143,14 @@ sessionService.onLogout(() => {
 
   // clear minds settings
   mindsService.clear();
+
+  console.log('REMOVING CACHE')
+
+  // clear offline cache
+  entitiesStorage.removeAll();
+  feedsStorage.removeAll();
+  stores.notifications.clearLocal();
+  stores.groupsBar.clearLocal();
 });
 
 // disable yellow boxes
@@ -295,7 +314,8 @@ export default class App extends Component<Props, State> {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
           />
-          <FlashMessage renderCustomContent={() => <Notification entity={stores.notifications.last} navigation={NavigationService} />} />
+          <FlashMessage renderCustomContent={this.renderNotification}
+           />
         </ErrorBoundary>
       </Provider>
     );
@@ -313,5 +333,10 @@ export default class App extends Component<Props, State> {
     )
 
     return [ app, keychainModal, blockchainTransactionModal,  tosModal];
+  }
+
+  renderNotification = () => {
+    if (!stores.notifications.last) return null;
+    return <Notification entity={stores.notifications.last} navigation={NavigationService} />
   }
 }

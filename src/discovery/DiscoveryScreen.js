@@ -417,7 +417,6 @@ export default class DiscoveryScreen extends Component {
     const discovery = this.props.discovery;
 
     if (discovery.listStore.loading && !discovery.listStore.refreshing) {
-      console.log('LOADING')
       return (
         <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
           <ActivityIndicator size={'large'} />
@@ -503,7 +502,7 @@ export default class DiscoveryScreen extends Component {
    */
   navigateToFeed = (index) => {
 
-    this.props.discovery.feedStore.setFeed(this.props.discovery.listStore.entities.slice(index), this.props.discovery.listStore.offset);
+    this.props.discovery.feedStore.setFeed(this.props.discovery.listStore.feedsService.feed.slice(index));
 
     this.props.navigation.push('DiscoveryFeed', {
       'showFeed': index,

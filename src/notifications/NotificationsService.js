@@ -1,5 +1,5 @@
 import api from './../common/services/api.service';
-import { abort } from '../common/helpers/abortableFetch';
+import { abort, isNetworkFail } from '../common/helpers/abortableFetch';
 import logService from '../common/services/log.service';
 
 export default class NotificationsService {
@@ -18,10 +18,10 @@ export default class NotificationsService {
     } catch(err) {
       // ignore aborts
       if (err.code === 'Abort') return;
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!(isNetworkFail(err))) {
         logService.exception('[NotificationsService]', err);
       }
-      throw "Ooops";
+      throw err;
     }
   }
 }

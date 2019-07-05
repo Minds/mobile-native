@@ -722,5 +722,8 @@
   "wantToUpdate":"Do you want to update the app?",
   "updateAvailable":"Update available",
   "rememberTomorrow":"Remind me later",
-  "noInternet":"No Internet Connection"
+  "noInternet":"No Internet Connection",
+  "offline":"Offline",
+  "cantReachServer":"Can't reach the server",
+  "showingStored":"Showing stored data"
 }

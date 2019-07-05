@@ -3,7 +3,6 @@ import { abort } from '../common/helpers/abortableFetch';
 import blockListService from '../common/services/block-list.service';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
-import feedService from '../common/services/feed.service';
 import featuresService from '../common/services/features.service';
 import entitiesService from '../common/services/entities.service';
 
@@ -63,13 +62,13 @@ class ChannelService {
   async getFeedFromService(guid, type, opts = { limit: 12 }) {
     const limit = opts.limit || 12;
 
-    const { entities, next } = await feedService.get({
-      endpoint: `api/v2/feeds/container/${guid}/${type}`,
-      timebased: true,
-      limit,
-      offset: opts.offset || 0,
-      syncPageSize: limit * 20,
-    });
+    // const { entities, next } = await feedService.get({
+    //   endpoint: `api/v2/feeds/container/${guid}/${type}`,
+    //   timebased: true,
+    //   limit,
+    //   offset: opts.offset || 0,
+    //   syncPageSize: limit * 20,
+    // });
 
     return {
       entities: entities || [],

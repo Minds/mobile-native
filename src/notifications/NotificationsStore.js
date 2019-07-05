@@ -2,6 +2,7 @@ import {
   observable,
   action,
   computed,
+  toJS,
 } from 'mobx';
 
 import { showMessage, hideMessage } from "react-native-flash-message";
@@ -14,6 +15,8 @@ import badge from '../common/services/badge.service';
 import logService from '../common/services/log.service';
 import socketService from '../common/services/socket.service';
 import { Alert } from 'react-native';
+import storageService from '../common/services/storage.service'
+import i18n from '../common/services/i18n.service';
 
 /**
  * Notifications Store
@@ -93,6 +96,33 @@ class NotificationsStore {
     // }
   }
 
+  persist() {
+    const data = toJS(this.list.entities);
+
+    data.forEach(n => delete(n._list));
+
+    storageService.setItem(`notificationsList:${this.filter}`, data);
+  }
+
+  @action
+  async readLocal() {
+    const notifications = await storageService.getItem(`notificationsList:${this.filter}`);
+
+    if (notifications) {
+      this.list.setList({entities: notifications}, true);
+    } else {
+      this.list.setList({entities: []}, true);
+    }
+  }
+
+  clearLocal() {
+    storageService.removeItem('notificationsList:all');
+    storageService.removeItem('notificationsList:tags');
+    storageService.removeItem('notificationsList:comments');
+    storageService.removeItem('notificationsList:boosts');
+    storageService.removeItem('notificationsList:votes');
+  }
+
   listen() {
     socketService.subscribe('notification', this.onSocket);
   }
@@ -106,8 +136,8 @@ class NotificationsStore {
    */
   async loadList(refresh = false) {
     // no more data? return
-    if (this.list.cantLoadMore()) {
-      return Promise.resolve();
+    if (!refresh && (this.list.cantLoadMore() || this.loading)) {
+      return
     }
 
     this.loading = true;
@@ -122,6 +152,7 @@ class NotificationsStore {
       if (filter == this.filter) {
         this.assignRowKeys(feed);
         this.list.setList(feed, refresh);
+        this.persist();
       }
     } finally {
       this.loading = false;
@@ -142,9 +173,20 @@ class NotificationsStore {
    * Refresh list
    */
   async refresh() {
-    await this.list.refresh();
-    await this.loadList(true);
-    this.list.refreshDone();
+    await this.list.refresh(true);
+    try {
+      await this.loadList(true);
+    } catch (err) {
+      this.readLocal();
+      showMessage({
+        position: 'center',
+        message: i18n.t('cantReachServer'),
+        description: i18n.t('showingStored'),
+        type: "default",
+      });
+    } finally {
+      this.list.refreshDone();
+    }
   }
 
   /**
@@ -180,6 +222,7 @@ class NotificationsStore {
   @action
   setFilter(filter) {
     this.filter = filter;
+    this.list.clearList();
     this.refresh();
   }
 

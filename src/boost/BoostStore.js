@@ -9,6 +9,7 @@ import {revokeBoost, rejectBoost, acceptBoost} from './BoostService';
 import BoostModel from './BoostModel';
 import BoostService from './BoostService';
 import logService from '../common/services/log.service';
+import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 /**
  * Boosts Store
@@ -51,7 +52,7 @@ class BoostStore {
     } catch(err) {
       // ignore aborts
       if (err.code === 'Abort') return;
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[BoostStore]', err);
       }
     } finally {

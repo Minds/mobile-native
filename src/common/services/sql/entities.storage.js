@@ -1,5 +1,6 @@
 import sqliteStorageProviderService from "../sqlite-storage-provider.service";
 import logService from "../log.service";
+import moment from "moment";
 
 /**
  * Feeds Storage
@@ -9,7 +10,10 @@ export class EntitiesStorage {
   db;
 
   async save(entity) {
-    if (!entity.urn) return;
+
+    if (!entity.urn){
+      return;
+    }
 
     try {
       await this.getDb();
@@ -64,7 +68,23 @@ export class EntitiesStorage {
    * @param {string} urn
    */
   remove(urn) {
-    return sqlService.db.executeSql('DELETE FROM entities WHERE urn=?', [urn]);
+    return this.db.executeSql('DELETE FROM entities WHERE urn=?', [urn]);
+  }
+
+  /**
+   * Remove all entities
+   */
+  removeAll() {
+    return this.db.executeSql('DELETE FROM entities');
+  }
+
+  /**
+   * Remove entities older than given days
+   * @param {integer} days
+   */
+  removeOlderThan(days) {
+    const when = moment().subtract(days, 'days');
+    this.db.executeSql('DELETE FROM entities WHERE updated < ?', [when.format("X")]);
   }
 
 

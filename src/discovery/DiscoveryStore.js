@@ -124,30 +124,16 @@ class DiscoveryStore {
   }
 
   /**
-   * Generate a unique Id for use with list views
-   * @param {object} feed
-   */
-  assignRowKeys(feed) {
-    feed.entities.forEach((entity, index) => {
-      entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
-    });
-  }
-
-  /**
    * Refresh list
    */
   @action
   async refresh() {
     //can we refresh
-    if (this.list.refreshing || this.loading) {
+    if (this.listStore.refreshing || this.listStore.loading) {
       return;
     }
-    // NOTE: we do not rely on this.list because it could change during the await
-    const store = this.stores[this.filters.type];
-
-    await store.list.refresh();
-    await this.loadList(true);
-    store.list.refreshDone();
+    this.listStore.clear();
+    this.fetch();
   }
 
   /**
@@ -166,16 +152,16 @@ class DiscoveryStore {
    * On search change
    */
   onSearchChange = (searchtext) => {
-    store.listStore.clear();
-    this.fetch();
+    this.fetch(true);
   }
 
-  fetch() {
+  fetch(refresh = false) {
     const hashtags = appStores.hashtag.hashtag ? encodeURIComponent(appStores.hashtag.hashtag) : '';
     const all = appStores.hashtag.all ? '1' : '';
 
     this.listStore
       .setEndpoint(`api/v2/feeds/global/${this.filters.filter}/${this.filters.type}`)
+      .setLimit((this.filters.type === 'images' || this.filters.type === 'videos') ? 24 : 12)
       .setParams({
         hashtags,
         period: this.filters.period,
@@ -183,7 +169,7 @@ class DiscoveryStore {
         query: this.filters.searchtext,
         nsfw: this.filters.nsfw.concat([]),
       })
-      .fetchRemoteOrLocal();
+      .fetchRemoteOrLocal(refresh);
   }
 
   /**
@@ -191,8 +177,8 @@ class DiscoveryStore {
    */
   @action
   reload() {
-    this.list.clearList();
-    this.loadList(true);
+    this.listStore.clear();
+    this.fetch();
   }
 
   @action

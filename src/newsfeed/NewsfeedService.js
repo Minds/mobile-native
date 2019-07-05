@@ -7,6 +7,7 @@ import blockListService from '../common/services/block-list.service';
 import feedsService from '../common/services/feeds.service'
 import featuresService from '../common/services/features.service';
 import logService from '../common/services/log.service';
+import connectivityService from '../common/services/connectivity.service';
 
 export default class NewsfeedService {
 
@@ -120,6 +121,9 @@ export function toggleComments(guid, value) {
  */
 export async function setViewed(entity, extra = {}) {
   let data;
+
+  // ignore if there is no internet
+  if (!connectivityService.isConnected) return;
 
   if (entity.boosted) {
     data = await api.post('api/v2/analytics/views/boost/' + entity.boosted_guid, extra );
