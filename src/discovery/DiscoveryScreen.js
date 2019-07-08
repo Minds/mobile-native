@@ -493,7 +493,7 @@ export default class DiscoveryScreen extends Component {
   refresh = async() => {
     if (this.props.discovery.filters.type == 'lastchannels')
       return;
-    await this.props.discovery.refresh();
+    await this.props.discovery.listStore.refresh();
   }
 
   /**

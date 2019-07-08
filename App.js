@@ -144,8 +144,6 @@ sessionService.onLogout(() => {
   // clear minds settings
   mindsService.clear();
 
-  console.log('REMOVING CACHE')
-
   // clear offline cache
   entitiesStorage.removeAll();
   feedsStorage.removeAll();

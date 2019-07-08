@@ -5,7 +5,6 @@ import {
   extendObservable
 } from 'mobx';
 
-import discoveryService from './DiscoveryService';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
@@ -72,18 +71,6 @@ class DiscoveryStore {
     this.listStore.getMetadataService()
       .setSource('feed/discovery')
       .setMedium('feed');
-
-    // this.stores.activities.list.getMetadataService()
-    //   .setSource('feed/discovery')
-    //   .setMedium('feed');
-
-    // this.stores.blogs.list.getMetadataService()
-    //   .setSource('feed/discovery')
-    //   .setMedium('feed');
-
-    // this.stores.channels.list.getMetadataService()
-    //   .setSource('feed/discovery')
-    //   .setMedium('feed');
   }
 
   /**
@@ -121,19 +108,6 @@ class DiscoveryStore {
         logService.exception('[DiscoveryStore] insertBoost', err);
       }
     }
-  }
-
-  /**
-   * Refresh list
-   */
-  @action
-  async refresh() {
-    //can we refresh
-    if (this.listStore.refreshing || this.listStore.loading) {
-      return;
-    }
-    this.listStore.clear();
-    this.fetch();
   }
 
   /**

@@ -56,6 +56,10 @@ export default class FeedStore {
    */
   feedsService = new FeedsService;
 
+  /**
+   * Class constructor
+   * @param {boolean} includeMetadata include a metadata service
+   */
   constructor(includeMetadata = false) {
     if (includeMetadata) {
       this.metadataService = new MetadataService;
@@ -100,71 +104,121 @@ export default class FeedStore {
     this.loaded = true;
   }
 
+  /**
+   * Set loading
+   * @param {boolean} value
+   */
   @action
   setLoading(value) {
     this.loading = value;
     return this;
   }
 
+  /**
+   * Set is tiled
+   * @param {boolean} value
+   */
   @action
-  setIsTiled(value) {
+  setIsTiled(value): FeedStore {
     this.isTiled = value;
     return this;
   }
 
+  /**
+   * Set error loading
+   * @param {boolean} value
+   */
   @action
-  setErrorLoading(value) {
+  setErrorLoading(value): FeedStore {
     this.errorLoading = value;
     return this;
   }
 
+  /**
+   * Prepend an entity
+   * @param {BaseModel} entity
+   */
   @action
   prepend(entity) {
     entity._list = this;
     this.entities.unshift(entity);
   }
 
+  /**
+   * Remove an entity by index
+   * @param {integer} index
+   */
   @action
   removeIndex(index) {
     this.entities.splice(index, 1);
   }
 
+  /**
+   * Remove the given entity from the list
+   * @param {BaseModel} entity
+   */
   remove(entity) {
     const index = this.entities.findIndex(e => e === entity);
     if (index < 0) return;
     this.removeIndex(index);
   }
 
+  /**
+   * Returns the index of the given entity
+   * @param {BaseModel} entity
+   */
   getIndex(entity) {
     return this.entities.findIndex(e => e === entity);
   }
 
-
-  setEndpoint(endpoint: string) {
+  /**
+   * Set endpoint for the feeds service
+   * @param {string} endpoint
+   */
+  setEndpoint(endpoint: string): FeedStore {
     this.feedsService.setEndpoint(endpoint);
     return this;
   }
 
-  setParams(params: Object) {
+  /**
+   * Set the params for the feeds service
+   * @param {Object} params
+   */
+  setParams(params: Object): FeedStore {
     this.feedsService.setParams(params);
     return this;
   }
 
-  setLimit(limit) {
+  /**
+   * Set limit for the feeds service
+   * @param {integer} limit
+   */
+  setLimit(limit): FeedStore {
     this.feedsService.setLimit(limit);
     return this;
   }
 
-  setOffset(offset) {
+  /**
+   * Set offset for the feeds service
+   * @param {integer} offset
+   */
+  setOffset(offset): FeedStore {
     this.feedsService.setOffset(offset);
     return this;
   }
 
-  setFeed(feed) {
+   /**
+   * Set feed for the feeds service
+   * @param {Array} feed
+   */
+  setFeed(feed): FeedStore {
     this.feedsService.setFeed(feed);
     return this;
   }
 
+  /**
+   * Fetch from the endpoint
+   */
   @action
   async fetch() {
 
@@ -185,6 +239,9 @@ export default class FeedStore {
     }
   }
 
+  /**
+   * Reload
+   */
   reload() {
     if (this.entities.length) {
       this.loadMore();
@@ -193,10 +250,17 @@ export default class FeedStore {
     }
   }
 
+  /**
+   * Hydrate current page
+   */
   async hydratePage() {
     this.addEntities(await this.feedsService.getEntities());
   }
 
+  /**
+   * Fetch from local cache or remote if there is no local data
+   * @param {boolean} refresh
+   */
   async fetchLocalOrRemote(refresh = false) {
     this
       .setLoading(true)
@@ -217,6 +281,10 @@ export default class FeedStore {
     }
   }
 
+  /**
+   * Fetch from remote endpoint or from the local storage if it fails
+   * @param {boolean} refresh
+   */
   async fetchRemoteOrLocal(refresh = false) {
     this
       .setLoading(true)
@@ -238,6 +306,9 @@ export default class FeedStore {
     }
   }
 
+  /**
+   * Load next page
+   */
   async loadMore() {
     if (this.loading || !this.loaded || !this.feedsService.hasMore) return;
 
@@ -261,6 +332,9 @@ export default class FeedStore {
     }
   }
 
+  /**
+   * Refresh
+   */
   @action
   async refresh() {
     this.refreshing = true;
@@ -271,6 +345,9 @@ export default class FeedStore {
     }
   }
 
+  /**
+   * Clear store
+   */
   @action
   clear(): FeedStore {
     this.refreshing = false;
@@ -281,5 +358,4 @@ export default class FeedStore {
     this.feedsService.clear();
     return this;
   }
-
 }

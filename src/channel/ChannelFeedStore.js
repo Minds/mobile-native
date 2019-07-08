@@ -57,6 +57,7 @@ export default class ChannelFeedStore {
   }
 
   buildStores() {
+    // TODO: remove this when es-feeds is in production
     this.stores = {
       feed: {
         list: new OffsetFeedListStore('shallow', true),

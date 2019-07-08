@@ -7,8 +7,15 @@ import moment from "moment";
  */
 export class EntitiesStorage {
 
+  /**
+   * @var {SqliteService}
+   */
   db;
 
+  /**
+   * Save an entity
+   * @param {Object} entity
+   */
   async save(entity) {
 
     if (!entity.urn){
@@ -23,6 +30,10 @@ export class EntitiesStorage {
     }
   }
 
+  /**
+   * Read one entity
+   * @param {string} urn
+   */
   async read(urn) {
     await this.getDb();
 
@@ -40,6 +51,10 @@ export class EntitiesStorage {
     }
   }
 
+  /**
+   * Read many entities
+   * @param {Array} urns
+   */
   async readMany(urns) {
     await this.getDb();
 
@@ -87,7 +102,9 @@ export class EntitiesStorage {
     this.db.executeSql('DELETE FROM entities WHERE updated < ?', [when.format("X")]);
   }
 
-
+  /**
+   * Get the sqlite service
+   */
   async getDb() {
     if (!this.db) {
       this.db = await sqliteStorageProviderService.get();

@@ -7,8 +7,15 @@ import moment from "moment";
  */
 export class FeedsStorage {
 
+  /**
+   * @var {SqliteService}
+   */
   db;
 
+  /**
+   * Persist a FeedsService to the cache
+   * @param {FeedsService} feed
+   */
   async save(feed) {
     // we ignore empty feeds
     if (feed.feed.length === 0) return;
@@ -23,6 +30,10 @@ export class FeedsStorage {
     }
   }
 
+  /**
+   * Read a FeedsService from the cache
+   * @param {FeedsService} feed
+   */
   async read(feed) {
     await this.getDb();
 
@@ -57,16 +68,26 @@ export class FeedsStorage {
     this.db.executeSql('DELETE FROM feeds WHERE updated < ?', [when.format("X")]);
   }
 
-
+  /**
+   * Map feeds for storage
+   * @param {Array} data
+   */
   map(data) {
     return data.map(m => ({urn: m.urn, timestamp: m.timestamp ? Math.floor(m.timestamp/ 1000) : null, owner_guid: m.owner_guid}))
   }
 
+  /**
+   * Generate the key from the state of the feeds service
+   * @param {FeedsService} feed
+   */
   getKey(feed)
   {
     return feed.endpoint + JSON.stringify(feed.params);
   }
 
+  /**
+   * Get the sqlite service
+   */
   async getDb() {
     if (!this.db) {
       this.db = await sqliteStorageProviderService.get();

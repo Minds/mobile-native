@@ -36,36 +36,62 @@ export default class FeedsService {
    */
   feed = [];
 
+  /**
+   * Get entities from the current page
+   */
   async getEntities() {
     const feedPage = this.feed.slice(this.offset, this.limit + this.offset);
     return await entitiesService.getFromFeed(feedPage, this);
   }
 
+  /**
+   * getter has More
+   */
   get hasMore() {
     return this.feed.length > this.limit + this.offset;
   }
 
-  setFeed(feed) {
+  /**
+   * Set feed
+   * @param {Array} feed
+   * @returns {FeedsService}
+   */
+  setFeed(feed): FeedsService {
     this.feed = feed;
     return this;
   }
 
-  setLimit(limit) {
+  /**
+   * Set limit
+   * @param {integer} limit
+   * @returns {FeedsService}
+   */
+  setLimit(limit): FeedsService {
     this.limit = limit;
     return this;
   }
 
-  setOffset(offset) {
+  /**
+   * Set offset
+   * @param {integer} offset
+   * @returns {FeedsService}
+   */
+  setOffset(offset): FeedsService {
     this.offset = offset;
     return this;
   }
 
-  setEndpoint(endpoint: string) {
+  /**
+   * Set endpoint
+   * @param {string} endpoint
+   * @returns {FeedsService}
+   */
+  setEndpoint(endpoint: string): FeedsService {
     this.endpoint = endpoint;
     return this;
   }
 
-  setParams(params): FeedStore {
+  setParams(params): FeedsService {
     this.params = params;
     if (!params.sync) {
       this.params.sync = 1;
@@ -73,6 +99,9 @@ export default class FeedsService {
     return this;
   }
 
+  /**
+   * Fetch
+   */
   async fetch() {
     abort(this);
     const response = await apiService.get(this.endpoint, {...this.params, ...{ limit: 150 }}, this);
@@ -84,6 +113,9 @@ export default class FeedsService {
     return true;
   }
 
+  /**
+   * Fetch feed from local cache
+   */
   async fetchLocal() {
     const feed = await feedsStorage.read(this);
 
@@ -94,6 +126,9 @@ export default class FeedsService {
     return false;
   }
 
+  /**
+   * Fetch feed from local cache or from the remote endpoint if there is no cached data
+   */
   async fetchLocalOrRemote() {
 
     let status;
@@ -110,6 +145,9 @@ export default class FeedsService {
     }
   }
 
+  /**
+   * Fetch from the remote endpoint and if it fails from local cache
+   */
   async fetchRemoteOrLocal() {
 
     let status;
@@ -136,13 +174,20 @@ export default class FeedsService {
     }
   }
 
-  next() {
+  /**
+   * Move offset to next page
+   */
+  next(): FeedStore  {
     this.offset += this.limit;
     return this;
   }
 
+  /**
+   * Clear the store
+   */
   clear(): FeedStore {
     this.offset = 0;
+    this.limit = 12;
     this.params =  {sync: 1};
     this.feed = [];
     return this;

@@ -5,7 +5,6 @@ import {
   extendObservable
 } from 'mobx';
 
-import discoveryService from './DiscoveryService';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
