@@ -355,7 +355,7 @@ export default class FeedStore {
     this.loaded = false;
     this.loading = false;
     this.entities = [];
-    this.feedsService.clear();
+    this.feedsService.setOffset(0);
     return this;
   }
 }
