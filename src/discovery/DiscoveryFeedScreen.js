@@ -58,6 +58,7 @@ export default class DiscoveryFeedScreen extends Component {
         keyExtractor={this.keyExtractor}
         initialNumToRender={3}
         style={[CS.backgroundWhite, CS.flexContainer]}
+        navigation={this.props.navigation}
         horizontal={false}
         maxToRenderPerBatch={3}
         windowSize={11}
