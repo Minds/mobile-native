@@ -429,7 +429,7 @@ export default class CommentList extends React.Component<Props, State> {
     this.props.store.refreshDone();
   }
 
-  refresh() {
+  refresh = () => {
     this.refreshAsync();
   }
 
