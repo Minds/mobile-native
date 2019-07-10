@@ -721,5 +721,7 @@
   "errorShowActivity":"Can't show this activity",
   "wantToUpdate":"Do you want to update the app?",
   "updateAvailable":"Update available",
-  "rememberTomorrow":"Remind me later"
+  "rememberTomorrow":"Remind me later",
+  "enableComments": "Enable comments",
+  "disableComments": "Disable comments"
 }

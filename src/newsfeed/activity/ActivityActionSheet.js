@@ -83,6 +83,8 @@ export default class ActivityActions extends Component {
         }
       }
 
+      options.push( this.props.entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+
     } else {
 
       if (this.props.user.isAdmin()) {
@@ -115,7 +117,6 @@ export default class ActivityActions extends Component {
     } else {
       options.push( i18n.t('unfollow') );
     }
-
 
     return options;
 
@@ -226,6 +227,14 @@ export default class ActivityActions extends Component {
         break;
       case i18n.t('report'):
         this.props.navigation.navigate('Report', { entity: this.props.entity });
+        break;
+      case i18n.t('enableComments'):
+      case i18n.t('disableComments'):
+        try {
+          await this.props.entity.toggleAllowComments();
+        } catch (err) {
+          this.showError();
+        }
         break;
     }
   }

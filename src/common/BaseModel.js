@@ -20,6 +20,11 @@ import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
 export default class BaseModel {
 
   /**
+   * Enable/Disable comments
+   */
+  @observable allow_comments = true;
+
+  /**
    * List reference (if the entity belongs to one)
    * @var {OffsetListStore}
    */
@@ -260,5 +265,10 @@ export default class BaseModel {
       logService.exception('[BaseModel]', err);
       throw err;
     }
+  }
+
+  @action
+  async toggleAllowComments(){
+    this.allow_comments = !this.allow_comments;
   }
 }

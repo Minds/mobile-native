@@ -742,5 +742,7 @@
     "errorShowActivity": "No puedo mostrar esta actividad",
     "wantToUpdate": "Quieres actualizar la aplicación? ",
     "updateAvailable": "Actualización disponible",
-    "rememberTomorrow": "Recuerdame más tarde"
+    "rememberTomorrow": "Recuerdame más tarde",
+    "enableComments": "Habilitar comentarios",
+    "disableComments": "Deshabilitar comentarios"
 }
