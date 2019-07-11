@@ -24,8 +24,8 @@ class SettingsStore {
     if (!data) return;
     this.leftHanded = data[0][1];
     this.appLog = data[1][1];
-    this.creatorNsfw = data[2][1];
-    this.consumerNsfw = data[3][1];
+    this.creatorNsfw = data[2][1] || [];
+    this.consumerNsfw = data[3][1] || [];
     return this;
   }
 
