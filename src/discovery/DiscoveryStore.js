@@ -44,8 +44,6 @@ class DiscoveryStore {
   onSearchChangeDisposer;
 
   constructor() {
-    this.buildListStores();
-    this.listenChanges();
     this.feedStore = new DiscoveryFeedStore(this.filters);
   }
 
@@ -60,13 +58,13 @@ class DiscoveryStore {
   }
 
   /**
-   * Build lists stores
+   * init
    */
-  buildListStores() {
-
+  init() {
+    // We instantiate the store later because it needs the settingsStore loaded first
     this.filters = new NewsfeedFilterStore('hot', 'images', '12h', []);
 
-    this.listStore.setLimit(12);
+    this.listenChanges();
 
     this.listStore.getMetadataService()
       .setSource('feed/discovery')

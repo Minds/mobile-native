@@ -25,7 +25,7 @@ import featuresService from '../common/services/features.service';
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user')
+@inject('newsfeed', 'user', 'discovery')
 @observer
 export default class NewsfeedScreen extends Component {
 
@@ -54,11 +54,7 @@ export default class NewsfeedScreen extends Component {
    * Load data on mount
    */
   componentWillMount() {
-    if (featuresService.has('es-feeds')) {
-      this.props.newsfeed.feedStore.fetchLocalOrRemote();
-    } else {
-      this.props.newsfeed.loadFeed();
-    }
+    this.loadFeed();
     // this.props.newsfeed.loadBoosts();
 
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
@@ -73,6 +69,18 @@ export default class NewsfeedScreen extends Component {
     });
   }
 
+  async loadFeed() {
+    if (featuresService.has('es-feeds')) {
+      await this.props.newsfeed.feedStore.fetchLocalOrRemote();
+      // load groups after the feed
+      await this.groupsBar.wrappedInstance.initialLoad();
+      // load discovery after the feed is loaded
+      this.props.discovery.fetch();
+    } else {
+      this.props.newsfeed.loadFeed();
+    }
+  }
+
   /**
    * Component will unmount
    */
@@ -80,13 +88,15 @@ export default class NewsfeedScreen extends Component {
     this.disposeEnter.remove();
   }
 
+  setGroupsBarRef = (r) => this.groupsBar = r;
+
   render() {
     const newsfeed = this.props.newsfeed;
 
     const header = (
       <View>
         <Topbar />
-        <GroupsBar/>
+        <GroupsBar ref={this.setGroupsBarRef}/>
         { false ?
           <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation} store={newsfeed} me={this.props.user.me}/>
           : null }

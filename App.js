@@ -61,39 +61,35 @@ import Notification from './src/notifications/notification/Notification';
 import entitiesStorage from './src/common/services/sql/entities.storage';
 import feedsStorage from './src/common/services/sql/feeds.storage';
 import connectivityService from './src/common/services/connectivity.service';
+import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 
 let deepLinkUrl = '';
 
 // init push service
 pushService.init();
 
+// fire sqlite init
+sqliteStorageProviderService.get();
+
 CookieManager.clearAll();
 
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
 
-  logService.info('[App] Getting minds settings');
-  // load minds settings on login
-  await mindsService.getSettings();
+  logService.info('[App] Getting minds settings and onboarding progress');
+  // load minds settings and onboarding progresss on login
+  const results = await Promise.all([mindsService.getSettings(), stores.onboarding.getProgress()]);
 
   logService.info('[App] updatting features');
   // reload fatures on login
   await featureService.updateFeatures();
 
   // register device token into backend on login
-  try {
-    pushService.registerToken();
-  } catch (err) {
-    logService.exception('[App] Error registering the push notification token', err);
-  }
 
-  // load nsfw from storage
-  logService.info('[App] loading nsfw settings');
-  await stores.discovery.filters.init();
+  pushService.registerToken();
 
   // get onboarding progress
-  logService.info('[App] getting onboarding progress');
-  const onboarding = await stores.onboarding.getProgress();
+  const onboarding = results[1];
 
   if (onboarding && onboarding.show_onboarding) {
     sessionService.setInitialScreen('OnboardingScreen');
@@ -200,9 +196,9 @@ export default class App extends Component<Props, State> {
   async componentDidMount() {
     try {
       // load app setting before start
-      await settingsStore.init();
+      const results = await Promise.all([settingsStore.init(), await Linking.getInitialURL()]),
 
-      deepLinkUrl = await Linking.getInitialURL();
+      deepLinkUrl = results[1];
 
       BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
       Linking.addEventListener('url', this.handleOpenURL);

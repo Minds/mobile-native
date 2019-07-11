@@ -1,6 +1,7 @@
 import SQLite from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-community/async-storage';
 import logService from './log.service';
+import storageService from './storage.service';
 SQLite.enablePromise(true);
 
 /**
@@ -34,9 +35,11 @@ export default class SqliteService {
    */
   async runMigrations() {
     const migrations = require('./sql/migrations').default;
-
-    let count = await AsyncStorage.getItem('minds:sqlmigrations');
+    let count = await storageService.getItem('sqlmigrations');
     if (!count) count = 0;
+    count = parseInt(count);
+
+    if (migrations.length === count) return;
 
     const torun = (count > 0) ? migrations.slice(count) : migrations;
 
@@ -47,17 +50,17 @@ export default class SqliteService {
       });
     });
 
-    AsyncStorage.setItem('minds:sqlmigrations', migrations.length.toString());
+    storageService.setItem('sqlmigrations', migrations.length);
   }
 
   async rebuildDB() {
     await SQLite.deleteDatabase({name: this.dbname, location: 'default'});
     this.db = await SQLite.openDatabase({name: this.dbname, location: 'default'});
 
-    AsyncStorage.setItem(
-      'minds:sqlmigrations', '0',
-      () => this.runMigrations()
+    await storageService.setItem(
+      'sqlmigrations', '0',
     );
+    await this.runMigrations();
   }
   /**
    * @param {string} sql

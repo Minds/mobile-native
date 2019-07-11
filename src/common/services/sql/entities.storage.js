@@ -82,8 +82,8 @@ export class EntitiesStorage {
    * Remove entity
    * @param {string} urn
    */
-  remove(urn) {
-    return this.db.executeSql('DELETE FROM entities WHERE urn=?', [urn]);
+  async remove(urn) {
+    return await this.db.executeSql('DELETE FROM entities WHERE urn=?', [urn]);
   }
 
   /**

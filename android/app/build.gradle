@@ -73,6 +73,7 @@ import com.android.build.OutputFile
  */
 
 project.ext.react = [
+    bundleCommand: "ram-bundle",
     entryFile: "index.js",
     bundleAssetName: "app.bundle"
 ]
@@ -162,6 +163,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-screens')
     implementation project(':rn-apk')
     implementation project(':react-native-localize')
     implementation project(':react-native-webview')

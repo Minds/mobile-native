@@ -1,6 +1,4 @@
-import AsyncStorage from '@react-native-community/async-storage';
-
-const namespace = '@Minds:';
+import storageService from "./storage.service";
 
 /**
  * Session service
@@ -8,15 +6,25 @@ const namespace = '@Minds:';
 class SessionStorageService {
 
   /**
-   * Get access token of the current user
+   * Get tokens of the current user
    */
-  async getAccessToken() {
+  async getAll() {
     try {
-      const data = await AsyncStorage.getItem(namespace + 'access_token');
-      return JSON.parse(data);
+      const data = await storageService.multiGet(['access_token', 'refresh_token', 'logged_in_user']);
+
+      const accessToken = data[0][1], refreshToken = data[1][1], user = data[2][1];
+
+      return [accessToken ,refreshToken, user];
     } catch (err) {
       return null;
     }
+  }
+
+  /**
+   * Get access token of the current user
+   */
+  async getAccessToken() {
+    return await storageService.getItem('access_token');
   }
 
   /**
@@ -24,10 +32,10 @@ class SessionStorageService {
    * @param {string} token
    */
   setAccessToken(token, expires) {
-    return AsyncStorage.setItem(namespace + 'access_token', JSON.stringify({
+    return storageService.setItem('access_token', {
       access_token: token,
       access_token_expires: expires
-    }));
+    });
   }
 
   /**
@@ -35,31 +43,21 @@ class SessionStorageService {
    * @param {object} user
    */
   setUser(user) {
-    return AsyncStorage.setItem(namespace + 'logged_in_user', JSON.stringify(user));
+    return storageService.setItem('logged_in_user', user);
   }
 
   /**
    * Get user
    */
   async getUser() {
-    try {
-      const user = await AsyncStorage.getItem(namespace + 'logged_in_user');
-      return JSON.parse(user);
-    } catch (err) {
-      return null;
-    }
+    return await storageService.getItem('logged_in_user');
   }
 
   /**
    * Get refresh token
    */
   async getRefreshToken() {
-    try {
-      const data = await AsyncStorage.getItem(namespace + 'refresh_token');
-      return JSON.parse(data);
-    } catch (err) {
-      return null;
-    }
+    return await storageService.getItem('refresh_token');
   }
 
   /**
@@ -68,22 +66,17 @@ class SessionStorageService {
    * @param {string} guid
    */
   setRefreshToken(token, expires) {
-    return AsyncStorage.setItem(namespace + 'refresh_token', JSON.stringify({
+    return storageService.setItem('refresh_token', {
       refresh_token: token,
       refresh_token_expires: expires
-    }));
+    });
   }
 
   /**
    * Get messenger private key of the current user
    */
   async getPrivateKey() {
-    try {
-      const privateKey = await AsyncStorage.getItem(namespace + 'private_key');
-      return privateKey;
-    } catch (err) {
-      return null;
-    }
+    return await storageService.getItem('private_key');
   }
 
   /**
@@ -91,24 +84,21 @@ class SessionStorageService {
    * @param {string} privateKey
    */
   setPrivateKey(privateKey) {
-    AsyncStorage.setItem(namespace + 'private_key', privateKey);
+    storageService.setItem('private_key', privateKey);
   }
 
   /**
    * Clear messenger private keys
    */
   clearPrivateKey() {
-    return AsyncStorage.removeItem(namespace + 'private_key');
+    return storageService.removeItem('private_key');
   }
 
   /**
    * Clear all session data (logout)
    */
   async clear() {
-    await AsyncStorage.removeItem(namespace + 'access_token');
-    await AsyncStorage.removeItem(namespace + 'refresh_token');
-    await AsyncStorage.removeItem(namespace + 'private_key');
-    await AsyncStorage.removeItem(namespace + 'logged_in_user');
+    await storageService.multiRemove(['access_token', 'refresh_token', 'private_key', 'logged_in_user']);
   }
 }
 

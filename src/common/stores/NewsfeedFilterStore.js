@@ -1,19 +1,22 @@
 import {
   observable,
   action,
-  reaction
+  reaction,
+  runInAction,
+  extendObservable
 } from 'mobx';
-import { consumerNsfwService } from '../services/nsfw.service';
+
+import SettingsStore from '../../settings/SettingsStore';
 
 /**
  * Newsfeed Filter Store
  */
 export default class NewsfeedFilterStore {
   @observable searchtext = '';
-  @observable filter     = 'hot';
-  @observable type       = 'images';
-  @observable period     = '12h';
-  @observable nsfw       = [];
+  // @observable filter     = 'hot';
+  // @observable type       = 'images';
+  // @observable period     = '12h';
+  // @observable nsfw       = [];
 
   defaultFilter;
   defaultType;
@@ -28,15 +31,14 @@ export default class NewsfeedFilterStore {
     this.defaultFilter = defaultFilter;
     this.defaultType = defaultType;
     this.defaultPeriod = defaultPeriod;
-    this.defaultNsfw = defaultNsfw;
-    this.clear();
-  }
+    this.defaultNsfw = SettingsStore.consumerNsfw;
 
-  /**
-   * Initialize the store
-   */
-  async init() {
-    await this.loadNsfwFromPersistentStorage();
+    extendObservable(this, {
+      filter : defaultFilter,
+      type : defaultType,
+      period : defaultPeriod,
+      nsfw : SettingsStore.consumerNsfw
+    });
   }
 
   /**
@@ -48,14 +50,6 @@ export default class NewsfeedFilterStore {
     this.type   = this.defaultType;
     this.period = this.defaultPeriod;
     this.nsfw   = this.defaultNsfw;
-  }
-
-  @action
-  async loadNsfwFromPersistentStorage() {
-    const newDefaultNsfw = await consumerNsfwService.get();
-
-    this.nsfw = newDefaultNsfw;
-    this.defaultNsfw = newDefaultNsfw;
   }
 
   /**
@@ -96,7 +90,7 @@ export default class NewsfeedFilterStore {
    */
   setNsfw(nsfw) {
     this.nsfw = nsfw;
-    consumerNsfwService.set(nsfw);
+    SettingsStore.setConsumerNsfw(nsfw);
   }
 
   /**

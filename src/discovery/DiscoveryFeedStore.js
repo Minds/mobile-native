@@ -10,7 +10,6 @@ import BlogModel from '../blogs/BlogModel';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import UserModel from '../channel/UserModel';
 import GroupModel from '../groups/GroupModel';
-import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';
 import { isNetworkFail } from '../common/helpers/abortableFetch';
 import FeedStore from '../common/stores/FeedStore';
 

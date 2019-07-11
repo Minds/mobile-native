@@ -3,6 +3,7 @@ package com.minds.mobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.rnscreens.RNScreensPackage;
 import be.skyzohlabs.rnapk.ReactNativeAPKPackage;
 import com.reactcommunity.rnlocalize.RNLocalizePackage;
 import com.reactnativecommunity.webview.RNCWebViewPackage;
@@ -58,6 +59,7 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNScreensPackage(),
             new ReactNativeAPKPackage(),
             new RNLocalizePackage(),
             new RNCWebViewPackage(),

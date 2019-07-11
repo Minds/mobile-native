@@ -11,14 +11,22 @@ class SettingsStore {
   @observable appLog = true;
   @observable leftHanded = null;
 
+  consumerNsfw = [];
+  creatorNsfw = [];
+
   /**
    * Initializes local variables with their correct values as stored locally.
    * Await to guarantee completion & ensure that this is called prior to using the Store.
    */
   @action.bound
   async init() {
-    this.leftHanded = await storageService.getItem('LeftHanded');
-    this.appLog = await storageService.getItem('AppLog');
+    const data  = await storageService.multiGet(['LeftHanded', 'AppLog', 'CreatorNsfw', 'ConsumerNsfw']);
+    if (!data) return;
+    this.leftHanded = data[0][1];
+    this.appLog = data[1][1];
+    this.creatorNsfw = data[2][1];
+    this.consumerNsfw = data[3][1];
+    return this;
   }
 
   /**
@@ -37,6 +45,16 @@ class SettingsStore {
   setLeftHanded(value) {
     storageService.setItem('LeftHanded', value);
     this.leftHanded = value;
+  }
+
+  setCreatorNsfw(value) {
+    storageService.setItem('CreatorNsfw', value);
+    this.creatorNsfw = value;
+  }
+
+  setConsumerNsfw(value) {
+    storageService.setItem('ConsumerNsfw', value);
+    this.consumerNsfw = value;
   }
 
 }

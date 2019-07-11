@@ -24,10 +24,6 @@ export default class GroupsBar extends Component {
     errorLoading: false,
   }
 
-  componentDidMount() {
-    this.initialLoad();
-  }
-
   async initialLoad() {
     await this.props.groupsBar.readLocal();
     await this.load();

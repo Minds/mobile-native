@@ -104,6 +104,8 @@ export default class DiscoveryScreen extends Component {
       }, 50);
     });
 
+    this.props.discovery.init();
+
     const params = this.props.navigation.state.params;
     if (params && params.type) {
       this.props.discovery.filters.setType(params.type);
