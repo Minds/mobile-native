@@ -21,6 +21,8 @@ import {
   Alert,
 } from 'react-native';
 
+import ActionSheet from 'react-native-actionsheet';
+
 import { Header } from 'react-navigation';
 
 import { inject, observer } from 'mobx-react/native';
@@ -142,10 +144,16 @@ export default class BlogsViewScreen extends Component {
       </View>
     )
     const image = blog.getBannerSource();
+
+    const actionSheet = this.getActionSheet();
     return (
       <View style={styles.screen}>
         <FastImage source={image} resizeMode={FastImage.resizeMode.cover} style={styles.image} />
         <Text style={styles.title}>{blog.title}</Text>
+        <View style={styles.rightToolbar}>
+          <Icon name="more-vert"  onPress={() => this.showActionSheet()} size={26} style={styles.icon}/>
+          {actionSheet}
+        </View>
         <View style={styles.ownerBlockContainer}>
           <OwnerBlock entity={blog} navigation={this.props.navigation} rightToolbar={actions}>
             <Text style={styles.timestamp}>{formatDate(blog.time_created)}</Text>
@@ -168,6 +176,31 @@ export default class BlogsViewScreen extends Component {
         </SafeAreaView>
       </View>
     )
+  }
+
+  getActionSheet() {
+    let options = [ i18n.t('cancel') ];
+    options.push(this.props.blogsView.blog.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+    return (
+      <ActionSheet
+        ref={o => this.ActionSheet = o}
+        options={options}
+        onPress={ (i) => { this.handleActionSheetSelection(options[i]) }}
+        cancelButtonIndex={0}
+      />
+    )
+  }
+
+  async showActionSheet() {
+    this.ActionSheet.show();
+  }
+  
+  async handleActionSheetSelection(option){
+    switch(option){
+      case i18n.t('disableComments'):
+      case i18n.t('enableComments'):
+        await this.props.blogsView.blog.toggleAllowComments();
+    }
   }
 
   /**
@@ -313,5 +346,13 @@ const styles = StyleSheet.create({
   loadCommentsText: {
     color: '#888',
     fontSize: 10,
+  },
+  rightToolbar: {
+    alignSelf: 'flex-end',
+    bottom: 35,
+    right: 10
+  },
+  icon: {
+    color: '#888',
   },
 });
