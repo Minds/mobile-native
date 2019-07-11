@@ -210,6 +210,20 @@ export default class BlogsViewScreen extends Component {
   }
 
   /**
+   * Show an error message
+   */
+  showError() {
+    Alert.alert(
+      i18n.t('sorry'),
+      i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
+      [
+        {text: i18n.t('ok'), onPress: () => {}},
+      ],
+      { cancelable: false }
+    );
+  }
+
+  /**
    * Render
    */
   render() {
