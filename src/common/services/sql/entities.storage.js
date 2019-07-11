@@ -83,13 +83,15 @@ export class EntitiesStorage {
    * @param {string} urn
    */
   async remove(urn) {
+    await this.getDb();
     return await this.db.executeSql('DELETE FROM entities WHERE urn=?', [urn]);
   }
 
   /**
    * Remove all entities
    */
-  removeAll() {
+  async removeAll() {
+    await this.getDb();
     return this.db.executeSql('DELETE FROM entities');
   }
 
@@ -97,7 +99,8 @@ export class EntitiesStorage {
    * Remove entities older than given days
    * @param {integer} days
    */
-  removeOlderThan(days) {
+  async removeOlderThan(days) {
+    await this.getDb();
     const when = moment().subtract(days, 'days');
     this.db.executeSql('DELETE FROM entities WHERE updated < ?', [when.format("X")]);
   }
