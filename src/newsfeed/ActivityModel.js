@@ -219,7 +219,7 @@ export default class ActivityModel extends BaseModel {
   }
 
   @action
-  async toogleFollow() {
+  async toggleFollow() {
     const method = this['is:following'] ? unfollow : follow;
     try {
       await method(this.guid)
