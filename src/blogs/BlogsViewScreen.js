@@ -199,7 +199,13 @@ export default class BlogsViewScreen extends Component {
     switch(option){
       case i18n.t('disableComments'):
       case i18n.t('enableComments'):
-        await this.props.blogsView.blog.toggleAllowComments();
+        try {
+          await this.props.blogsView.blog.toggleAllowComments();
+        } catch (err) {
+          console.error(err);
+          this.showError();
+        }
+        
     }
   }
 

@@ -14,6 +14,8 @@ import logService from './services/log.service';
 import channelService from '../channel/ChannelService';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
 
+import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
+
 /**
  * Base model
  */
@@ -269,6 +271,7 @@ export default class BaseModel {
 
   @action
   async toggleAllowComments(){
+    const data = await toggleAllow(this.guid, !this.allow_comments);
     this.allow_comments = !this.allow_comments;
   }
 }

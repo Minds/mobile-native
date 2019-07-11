@@ -233,6 +233,7 @@ export default class ActivityActions extends Component {
         try {
           await this.props.entity.toggleAllowComments();
         } catch (err) {
+          console.error(err);
           this.showError();
         }
         break;
