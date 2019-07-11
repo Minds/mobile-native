@@ -79,7 +79,7 @@ export default class DiscoveryScreen extends Component {
     tabBarOnPress: ({ navigation, defaultHandler }) => {
       // tab button tapped again?
       if (navigation.isFocused()) {
-        stores.discovery.refresh();
+        stores.discovery.reload();
         return;
       }
       defaultHandler();

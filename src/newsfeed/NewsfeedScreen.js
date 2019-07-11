@@ -36,7 +36,11 @@ export default class NewsfeedScreen extends Component {
     tabBarOnPress: ({ navigation, defaultHandler }) => {
       // tab button tapped again?
       if (navigation.isFocused()) {
-        stores.newsfeed.refresh();
+        if (featuresService.has('es-feeds')) {
+          stores.newsfeed.feedStore.refresh(true)
+        } else {
+          stores.newsfeed.refresh();
+        }
         return;
       }
       defaultHandler();
