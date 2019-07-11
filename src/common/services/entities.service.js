@@ -41,12 +41,14 @@ class EntitiesService {
 
     for (const feedItem of feed) {
       if (feedItem.entity) {
+
+        // fix entity urn is different than feed urn
+        feedItem.entity.urn = feedItem.urn;
+
         this.addEntity(feedItem.entity);
-      }
-      if (!this.entities.has(feedItem.urn)) {
+      } else if (!this.entities.has(feedItem.urn)) {
         urnsToFetch.push(feedItem.urn);
-      }
-      if (this.entities.has(feedItem.urn) && !feedItem.entity) {
+      } else {
         urnsToResync.push(feedItem.urn);
       }
     }
@@ -77,7 +79,11 @@ class EntitiesService {
     for (const feedItem of feed) {
       if (!blockListService.has(feedItem.owner_guid)) {
         const entity = this.entities.get(feedItem.urn)
-        if (entity) entities.push(entity);
+        if (entity) {
+          entities.push(entity);
+        } else {
+          console.log('ENTITY MISSINNG ' +feedItem.urn )
+        }
       }
     }
 
