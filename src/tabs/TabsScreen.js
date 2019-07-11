@@ -19,7 +19,6 @@ import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import DiscoveryScreen from '../discovery/DiscoveryScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
-import WalletScreen from '../wallet/WalletScreen';
 import ComingSoonScreen from '../static-views/ComingSoonScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import MoreScreen from './MoreScreen';
@@ -28,16 +27,8 @@ import featuresService from '../common/services/features.service';
 import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 import isIphoneX from '../common/helpers/isIphoneX';
 
-let platformWalletScreen = WalletScreen;
+let screens = {
 
-const screens = {
-  Wallet: {
-    screen: withErrorBoundaryScreen(platformWalletScreen),
-    navigationOptions: {
-      tabBarTestID:'Wallet tab button',
-      tabBarAccessibilityLabel: 'Wallet tab button',
-    },
-  },
   Discovery: {
     screen: withErrorBoundaryScreen(DiscoveryScreen),
     navigationOptions: {
@@ -68,8 +59,18 @@ const screens = {
   }
 };
 
-if (!featuresService.has('crypto')) {
-  delete screens.Wallet;
+if (featuresService.has('crypto')) {
+  const WalletScreen  = require('../wallet/WalletScreen').default;
+  screens = {
+    Wallet:{
+      screen: withErrorBoundaryScreen(WalletScreen),
+      navigationOptions: {
+        tabBarTestID:'Wallet tab button',
+        tabBarAccessibilityLabel: 'Wallet tab button',
+      },
+    },
+    ...screens
+  };
 }
 
 const Tabs = (

@@ -31,6 +31,7 @@ class OnboardingStore {
    * Get progress
    */
   async getProgress() {
+    logService.info('[OnboardingStore] getting onboarding progress');
     try {
       const progress = await onboardingService.getProgress();
       this.setProgress(progress);
