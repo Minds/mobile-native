@@ -212,6 +212,7 @@ export default class DiscoveryScreen extends Component {
 
     body = (
       <CollapsibleHeaderFlatList
+        disableHeaderSnap={true}
         onLayout={this.onLayout}
         key={'discofl' + this.cols} // we need to force component redering if we change cols
         data={discovery.listStore.entities.slice()}
