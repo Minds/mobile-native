@@ -61,9 +61,9 @@ export default class OnboardingScreen extends Component {
     const steps = [];
     const completed_items = this.props.onboarding.progress.completed_items;
 
-    if (!completed_items.some(r => r == 'creator_frequency')) {
-      steps.push({component: <WelcomeStep onNext={() => this.wizard.next()}/>, ready: () => false});
-    }
+    // if (!completed_items.some(r => r == 'creator_frequency')) {
+    //   steps.push({component: <WelcomeStep onNext={() => this.wizard.next()}/>, ready: () => false});
+    // }
     if (!completed_items.some(r => r == 'suggested_hashtags')) {
       steps.push({component: <HashtagsStep/>});
     }
