@@ -197,14 +197,14 @@ class GroupViewStore {
    * @param {string} guid
    */
   async loadGroup(defaultGroup) {
-    const group = await entitiesService.single(`urn:group:${defaultGroup.guid}`, GroupModel.checkOrCreate(defaultGroup));
+    const group = await entitiesService.single(`urn:entity:${defaultGroup.guid}`, GroupModel.checkOrCreate(defaultGroup));
     this.setGroup(group);
     this.list.clearViewed();
     return group;
   }
 
   async loadGroupByGuid(guid) {
-    const group = await entitiesService.single(`urn:group:${guid}`);
+    const group = await entitiesService.single(`urn:entity:${guid}`);
     this.setGroup(group);
   }
 
