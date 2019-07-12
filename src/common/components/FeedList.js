@@ -49,6 +49,19 @@ export default class FeedList extends Component {
   }
 
   /**
+   * Scroll to top
+   * @param {boolean} animated
+   */
+  scrollToTop(animated = true) {
+    this.listRef.scrollToOffset({animated, offset:0});
+  }
+
+  /**
+   * Set list reference
+   */
+  setListRef = (r) => this.listRef = r;
+
+  /**
    * Render component
    */
   render() {
@@ -94,6 +107,7 @@ export default class FeedList extends Component {
 
     return (
       <ListComponent
+        ref={this.setListRef}
         key={(feedStore.isTiled ? 't' : 'f')}
         onLayout={this.onLayout}
         ListHeaderComponent={header}
