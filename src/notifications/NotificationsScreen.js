@@ -42,6 +42,7 @@ export default class NotificationsScreen extends Component {
     tabBarOnPress: ({ navigation, defaultHandler }) => {
       // tab button tapped again?
       if (navigation.isFocused()) {
+        stores.notifications.list.clearList();
         stores.notifications.refresh();
         stores.notifications.setUnread(0);
         return;
@@ -59,6 +60,7 @@ export default class NotificationsScreen extends Component {
       if (s.action.type === 'Navigation/NAVIGATE' && s.action.routeName === 'Notifications') {
         //this.props.notifications.loadList(true);
         this.props.notifications.setUnread(0);
+        this.props.notifications.refresh();
       }
     });
 
@@ -69,6 +71,7 @@ export default class NotificationsScreen extends Component {
    * Initial load
    */
   async initialLoad() {
+
     try {
       await this.props.notifications.readLocal();
     } finally {
@@ -131,7 +134,7 @@ export default class NotificationsScreen extends Component {
       <FlatList
         data={list.entities.slice()}
         renderItem={this.renderRow}
-        keyExtractor={item => item.rowKey}
+        keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
         onEndReached={this.loadMore}
         ListEmptyComponent={empty}
@@ -152,6 +155,11 @@ export default class NotificationsScreen extends Component {
       </View>
     );
   }
+
+  /**
+   * Key extractor
+   */
+  keyExtractor = (item, index) => `${item.time_created}:${item.from.guid}:${item.entity ? item.entity.guid : index}`
 
   /**
    * Clear and reload

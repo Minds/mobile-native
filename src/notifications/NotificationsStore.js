@@ -147,26 +147,16 @@ class NotificationsStore {
     const offset = refresh ? '' : this.list.offset;
 
     try {
-      const feed = await this.service.getFeed(offset, this.filter)
+      const feed = await this.service.getFeed(offset, filter)
+
       // prevent race conditions when filter change
-      if (filter == this.filter) {
-        this.assignRowKeys(feed);
+      if (feed && filter == this.filter) {
         this.list.setList(feed, refresh);
         this.persist();
       }
     } finally {
       this.loading = false;
     }
-  }
-
-  /**
-   * Generate a unique Id for use with list views
-   * @param {object} feed
-   */
-  assignRowKeys(feed) {
-    feed.entities.forEach((entity, index) => {
-      entity.rowKey = `${entity.guid}:${index}:${this.filter}:${this.list.entities.length}`;
-    });
   }
 
   /**
