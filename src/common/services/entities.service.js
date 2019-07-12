@@ -13,6 +13,8 @@ import stores from "../../../AppStores";
 import { abort } from "../helpers/abortableFetch";
 import entitiesStorage from "./sql/entities.storage";
 
+const CACHE_TTL_MINUTES = 15;
+
 /**
  * Entities services
  */
@@ -22,6 +24,38 @@ class EntitiesService {
    * @var {Map} entities
    */
   entities: Map = new Map();
+
+  /**
+   * Contructor
+   */
+  constructor() {
+    setInterval(this.garbageCollector, 60000);
+  }
+
+  /**
+   * Get one from memory cache
+   * @param {string} urn
+   * @param {boolean} updateLast
+   */
+  getFromCache(urn, updateLast = true) {
+    const record = this.entities.get(urn)
+    if (record && updateLast) record.last = Date.now() / 1000;
+    return record ? record.entity : null;
+  }
+
+  /**
+   * Garbage collector
+   */
+  garbageCollector = () => {
+
+    const boundary = (Date.now() / 1000) - 60 * CACHE_TTL_MINUTES;
+
+    for (const [key, record] of this.entities.entries()) {
+      if (record.last < boundary) {
+        this.entities.delete(key);
+      }
+    }
+  }
 
   /**
    * Get entities from feed
@@ -78,11 +112,11 @@ class EntitiesService {
 
     for (const feedItem of feed) {
       if (!blockListService.has(feedItem.owner_guid)) {
-        const entity = this.entities.get(feedItem.urn)
+        const entity = this.getFromCache(feedItem.urn, false)
         if (entity) {
           entities.push(entity);
         } else {
-          console.log('ENTITY MISSINNG ' +feedItem.urn )
+          console.log('ENTITY MISSINNG ' + feedItem.urn )
         }
       }
     }
@@ -102,30 +136,33 @@ class EntitiesService {
     }
 
     // from memory
-    let local = this.entities.get(urn);
+    let entity = this.getFromCache(urn);
 
-    if (!local) {
+    if (!entity) {
+
 
       // from sql storage
-      local = await entitiesStorage.read(urn);
+      const stored = await entitiesStorage.read(urn);
 
-      if (local) {
-        this.addEntity(local, false);
+      if (stored) {
+        this.addEntity(stored, false);
+        entity = this.getFromCache(urn, false);
       } else {
         if (defaultEntity) {
           // if there not exist in memory or sql we use the default entity and we update it later
-          this.entities.set(urn, defaultEntity);
-          local = defaultEntity;
+          this.entities.set(urn, {entity: defaultEntity, last: Date.now() / 1000});
+          entity = defaultEntity;
         } else {
           // we fetch from the server
           await this.fetch([urn]);
+          entity = this.getFromCache(urn, false);
         }
       }
     }
 
-    if (local) this.fetch([ urn ]); // Update in the background
+    if (entity) this.fetch([ urn ]); // Update in the background
 
-    return this.entities.get(urn);
+    return entity;
   }
 
   /**
@@ -156,11 +193,11 @@ class EntitiesService {
    * @return void
    */
   addEntity(entity, store = true): void {
-    const storedEntity = this.entities.get(entity.urn);
+    const storedEntity = this.getFromCache(entity.urn);
     if (storedEntity) {
       storedEntity.update(entity);
     } else {
-      this.entities.set(entity.urn, this.mapToModel(entity));
+      this.entities.set(entity.urn, {entity: this.mapToModel(entity), last: Date.now() / 1000});
     }
     if (store) entitiesStorage.save(entity)
   }
