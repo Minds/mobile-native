@@ -17,6 +17,11 @@ class NewsfeedStore {
 
   feedStore = new FeedStore(true);
 
+  /**
+   * List reference
+   */
+  listRef;
+
   // legacy
   stores;
 
@@ -40,6 +45,18 @@ class NewsfeedStore {
       .setEndpoint(`api/v2/feeds/subscribed/activities`)
       .setLimit(12);
   }
+
+  /**
+   * Scroll to top
+   */
+  scrollToTop() {
+    this.listRef.scrollToTop(false);
+  }
+
+  /**
+   * Set FeedList reference
+   */
+  setListRef = (r) => this.listRef = r;
 
   buildStores() {
     this.stores = {

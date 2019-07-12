@@ -37,6 +37,7 @@ export default class NewsfeedScreen extends Component {
       // tab button tapped again?
       if (navigation.isFocused()) {
         if (featuresService.has('es-feeds')) {
+          stores.newsfeed.scrollToTop();
           stores.newsfeed.feedStore.refresh(true)
         } else {
           stores.newsfeed.refresh();
@@ -112,6 +113,7 @@ export default class NewsfeedScreen extends Component {
       return (
         <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>
           <FeedList
+            ref={newsfeed.setListRef}
             feedStore={newsfeed.feedStore}
             header={header}
             navigation={this.props.navigation}
