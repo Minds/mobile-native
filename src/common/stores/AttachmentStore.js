@@ -70,7 +70,7 @@ export default class AttachmentStore {
 
       const result = await uploadPromise;
       // ignore canceled
-      if (uploadPromise.isCanceled() || !result) return;
+      if ((uploadPromise.isCanceled && uploadPromise.isCanceled()) || !result) return;
       this.guid = result.guid;
     } catch (err) {
       this.clear();
@@ -110,7 +110,7 @@ export default class AttachmentStore {
       media.type = type.mime;
     }
 
-    if(media.fileName.includes(' ')) media.fileName = media.fileName.replace(/\s/g, "_");
+    if(media.fileName && media.fileName.includes(' ')) media.fileName = media.fileName.replace(/\s/g, "_");
 
     const settings = await mindsService.getSettings();
 
