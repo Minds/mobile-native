@@ -1,5 +1,5 @@
 export default {
-  getItem: jest.fn(),
+  getAll: jest.fn(),
   setItem: jest.fn(),
   removeItem: jest.fn(),
   hasItem: jest.fn(),
