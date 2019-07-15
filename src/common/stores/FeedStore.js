@@ -207,12 +207,21 @@ export default class FeedStore {
     return this;
   }
 
-   /**
+  /**
    * Set feed for the feeds service
    * @param {Array} feed
    */
   setFeed(feed): FeedStore {
     this.feedsService.setFeed(feed);
+    return this;
+  }
+
+  /**
+   * Set feed for the feeds service
+   * @param {boolean} asActivities
+   */
+  setAsActivities(asActivities): FeedStore {
+    this.feedsService.setAsActivities(asActivities);
     return this;
   }
 

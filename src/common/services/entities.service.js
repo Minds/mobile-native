@@ -61,8 +61,9 @@ class EntitiesService {
    * Get entities from feed
    * @param {Array} feed
    * @param {Mixed} abortTag
+   * @param {boolean} asActivities
    */
-  async getFromFeed(feed, abortTag): Promise<EntityObservable[]> {
+  async getFromFeed(feed, abortTag, asActivities = false): Promise<EntityObservable[]> {
 
     if (!feed || !feed.length) {
       return [];
@@ -101,13 +102,13 @@ class EntitiesService {
     // Fetch entities we don't have
 
     if (urnsToFetch.length) {
-      await this.fetch(urnsToFetch, abortTag);
+      await this.fetch(urnsToFetch, abortTag, asActivities);
     }
 
     // Fetch entities, asynchronously, with no need to wait
 
     if (urnsToResync.length) {
-      this.fetch(urnsToResync, abortTag);
+      this.fetch(urnsToResync, abortTag, asActivities);
     }
 
     for (const feedItem of feed) {
@@ -128,9 +129,10 @@ class EntitiesService {
    * Return and fetch a single entity via a urn
    * @param {string} urn
    * @param {BaseModel} defaultEntity
+   * @param {boolean} asActivities
    * @return Object
    */
-  async single(urn: string, defaultEntity): EntityObservable {
+  async single(urn: string, defaultEntity, asActivities = false): EntityObservable {
     if (!urn.startsWith('urn:')) { // not a urn, so treat as a guid
       urn = `urn:activity:${urn}`; // and assume activity
     }
@@ -154,26 +156,28 @@ class EntitiesService {
           entity = defaultEntity;
         } else {
           // we fetch from the server
-          await this.fetch([urn]);
+          await this.fetch([urn], null, asActivities);
           entity = this.getFromCache(urn, false);
         }
       }
     }
 
-    if (entity) this.fetch([ urn ]); // Update in the background
+    if (entity) this.fetch([ urn ], null, asActivities); // Update in the background
 
     return entity;
   }
 
   /**
    * Fetch entities
-   * @param urns string[]
+   * @param {Array<String>} urns
+   * @param {mixed} abortTag
+   * @param {boolean} asActivities
    * @return []
    */
-  async fetch(urns: string[], abortTag: any): Promise<Array<Object>> {
+  async fetch(urns: Array<string>, abortTag: any, asActivities = false): Promise<Array<Object>> {
 
     try {
-      const response: any = await apiService.get('api/v2/entities/', { urns }, abortTag);
+      const response: any = await apiService.get('api/v2/entities/', { urns, as_activities: asActivities ? 1 : 0}, abortTag);
 
       for (const entity of response.entities) {
         this.addEntity(entity);

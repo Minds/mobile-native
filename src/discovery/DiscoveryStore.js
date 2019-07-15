@@ -134,6 +134,7 @@ class DiscoveryStore {
     this.listStore
       .setEndpoint(`api/v2/feeds/global/${this.filters.filter}/${this.filters.type}`)
       .setLimit((this.filters.type === 'images' || this.filters.type === 'videos') ? 24 : 12)
+      .setAsActivities(this.filters.type !== 'blogs')
       .setParams({
         hashtags,
         period: this.filters.period,

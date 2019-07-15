@@ -12,6 +12,11 @@ import i18n from './i18n.service';
 export default class FeedsService {
 
   /**
+   * @var {boolean}
+   */
+  asActivities = true;
+
+  /**
    * @var {Number}
    */
   limit: number = 12;
@@ -41,7 +46,7 @@ export default class FeedsService {
    */
   async getEntities() {
     const feedPage = this.feed.slice(this.offset, this.limit + this.offset);
-    return await entitiesService.getFromFeed(feedPage, this);
+    return await entitiesService.getFromFeed(feedPage, this, this.asActivities);
   }
 
   /**
@@ -100,11 +105,21 @@ export default class FeedsService {
   }
 
   /**
+   * Set as activities
+   * @param {boolean} asActivities
+   * @returns {FeedsService}
+   */
+  setAsActivities(asActivities: boolean): FeedsService {
+    this.asActivities = asActivities;
+    return this;
+  }
+
+  /**
    * Fetch
    */
   async fetch() {
     abort(this);
-    const response = await apiService.get(this.endpoint, {...this.params, ...{ limit: 150 }}, this);
+    const response = await apiService.get(this.endpoint, {...this.params, ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 }}, this);
 
     this.feed = response.entities;
 
