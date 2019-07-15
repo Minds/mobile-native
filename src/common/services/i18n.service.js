@@ -34,7 +34,7 @@ i18n.defaultLocale = 'en';
 class I18nService {
 
   constructor() {
-    if(process.env.JEST_WORKER_ID === undefined) {
+    if (process.env.JEST_WORKER_ID === undefined) {
       this.init();
     }
   }

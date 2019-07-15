@@ -21,7 +21,7 @@ describe('Activity editor component', () => {
       <ActivityEditor entity={activity} toggleEdit={toggleEdit} navigation={navigation} newsfeed={newsfeed}/>
     );
 
-    jest.runAllTimers();
+    //jest.runAllTimers();
   });
 
   it('renders correctly', async () => {
