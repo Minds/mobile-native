@@ -6,8 +6,9 @@ import { shallow } from 'enzyme';
 import ActivityEditor from '../../../src/newsfeed/activity/ActivityEditor';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 import ActivityModel from '../../../src/newsfeed/ActivityModel';
+import apiService from '../../../src/common/services/api.service';
 
-
+jest.mock('../../../src/common/services/api.service');
 
 describe('Activity editor component', () => {
 
@@ -37,7 +38,10 @@ describe('Activity editor component', () => {
 
   it('should set the default value when init, call toggle and submit',async () => {
 
-    screen.update()
+    screen.update();
+
+    apiService.post.mockResolvedValue({activity: {}});
+
     let instance = screen.instance();
     expect(instance.state.text).toBe('Message');
     const spy = jest.spyOn(activity, 'updateActivity');
