@@ -40,8 +40,6 @@ describe('Activity screen component', () => {
       },
       attachment:{}
     });
-
-    jest.runAllTimers();
   });
 
   it('renders correctly with an entity as param', async () => {

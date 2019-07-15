@@ -31,9 +31,9 @@ jest.mock('../../src/newsfeed/ActivityModel');
 jest.mock('../../src/channel/carousel/RewardsCarousel', () => 'RewardsCarousel');
 jest.mock('../../src/channel/header/ChannelHeader', () => 'ChannelHeader');
 jest.mock('../../src/channel/toolbar/Toolbar', () => 'Toolbar');
-jest.mock('../../src/newsfeed/NewsfeedList', () => 'NewsfeedList');
 jest.mock('../../src/common/components/CenteredLoading', () => 'CenteredLoading');
 jest.mock('../../src/common/components/Button', () => 'Button');
+jest.mock('../../src/common/components/FeedList', () => 'FeedList');
 jest.mock('../../src/capture/CaptureFab', () => 'CaptureFab');
 jest.mock('../../src/blogs/BlogCard', () => 'BlogCard');
 jest.mock('../../src/common/components/Touchable', () => 'Touchable');
@@ -93,7 +93,7 @@ describe('Channel screen component', () => {
   it('should have the expectedComponents while loading, also check newsfeed', async () => {
     screen.update();
 
-    expect(screen.find('NewsfeedList')).toHaveLength(1);
+    expect(screen.find('FeedList')).toHaveLength(1);
     let render = screen.dive();
     expect(render.find('CenteredLoading')).toHaveLength(0);
     expect(screen.find('CaptureFab')).toHaveLength(1);
