@@ -17,19 +17,39 @@ exports[`channel header component owner should render correctly 1`] = `
       }
     }
   >
-    <Image
-      resizeMode="cover"
-      source={
-        Object {
-          "headers": Object {
-            "App-Version": "3.7.2",
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            "Pragma": "no-cache",
+    <View
+      style={
+        Array [
+          Object {
+            "overflow": "hidden",
           },
-          "uri": "https://cdn.minds.com/fs/v1/banners/1/fat/1523515420",
-        }
+          undefined,
+        ]
       }
-    />
+    >
+      <FastImageView
+        resizeMode="cover"
+        source={
+          Object {
+            "headers": Object {
+              "App-Version": "3.8.0",
+              "Cache-Control": "no-cache, no-store, must-revalidate",
+              "Pragma": "no-cache",
+            },
+            "uri": "https://cdn.minds.com/fs/v1/banners/1/fat/1523515420",
+          }
+        }
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          }
+        }
+      />
+    </View>
   </View>
   <View
     style={

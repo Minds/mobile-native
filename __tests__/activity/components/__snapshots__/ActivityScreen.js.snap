@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Activity screen component renders correctly with an entity as param 1`] = `
-<ForwardRef(View)
+<View
   style={
     Array [
       Object {
@@ -319,13 +319,13 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
       }
     }
   />
-</ForwardRef(View)>
+</View>
 `;
 
 exports[`Activity screen component should show loader until it loads the activity 1`] = `<CenteredLoading />`;
 
 exports[`Activity screen component should show loader until it loads the activity 2`] = `
-<ForwardRef(View)
+<View
   style={
     Array [
       Object {
@@ -346,6 +346,7 @@ exports[`Activity screen component should show loader until it loads the activit
         "is_visible": true,
         "mature": undefined,
         "mature_visibility": false,
+        "message": undefined,
         "paywall": undefined,
         "pinned": undefined,
         "thumbs:down:count": undefined,
@@ -365,6 +366,7 @@ exports[`Activity screen component should show loader until it loads the activit
             "is_visible": true,
             "mature": undefined,
             "mature_visibility": false,
+            "message": undefined,
             "paywall": undefined,
             "pinned": undefined,
             "thumbs:down:count": undefined,
@@ -527,5 +529,5 @@ exports[`Activity screen component should show loader until it loads the activit
       }
     }
   />
-</ForwardRef(View)>
+</View>
 `;

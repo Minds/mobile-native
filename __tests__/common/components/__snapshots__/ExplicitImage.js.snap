@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Explicit image component renders correctly 1`] = `
-<ForwardRef
+<FastImage
   onError={[Function]}
   onLoadEnd={[Function]}
   resizeMode="cover"

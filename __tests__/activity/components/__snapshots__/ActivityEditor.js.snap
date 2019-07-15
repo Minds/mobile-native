@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Activity editor component renders correctly 1`] = `
-<ForwardRef(View)
+<View
   style={
     Array [
       Object {
@@ -40,7 +40,7 @@ exports[`Activity editor component renders correctly 1`] = `
     underlineColorAndroid="transparent"
     value="Message"
   />
-  <ForwardRef(View)
+  <View
     style={
       Object {
         "alignItems": "center",
@@ -50,7 +50,7 @@ exports[`Activity editor component renders correctly 1`] = `
       }
     }
   >
-    <ForwardRef(View)
+    <View
       style={
         Array [
           Object {
@@ -71,8 +71,8 @@ exports[`Activity editor component renders correctly 1`] = `
         onLocking={[Function]}
         onNsfw={[Function]}
       />
-    </ForwardRef(View)>
-    <ForwardRef(View)
+    </View>
+    <View
       style={
         Array [
           Object {
@@ -101,7 +101,7 @@ exports[`Activity editor component renders correctly 1`] = `
         testID="Post editor save button"
         text="Save"
       />
-    </ForwardRef(View)>
-  </ForwardRef(View)>
-</ForwardRef(View)>
+    </View>
+  </View>
+</View>
 `;

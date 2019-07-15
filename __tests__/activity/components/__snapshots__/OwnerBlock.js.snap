@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Owner component renders correctly 1`] = `
-<ForwardRef(View)
+<View
   style={
     Object {
       "alignItems": "center",
@@ -14,7 +14,8 @@ exports[`Owner component renders correctly 1`] = `
   <PreventDoubleTap
     onPress={[Function]}
   >
-    <ForwardRef(Image)
+    <FastImage
+      resizeMode="cover"
       source={
         Object {
           "source": "http://thisisaurl",
@@ -31,7 +32,7 @@ exports[`Owner component renders correctly 1`] = `
       }
     />
   </PreventDoubleTap>
-  <ForwardRef(View)
+  <View
     style={
       Object {
         "flex": 1,
@@ -41,7 +42,7 @@ exports[`Owner component renders correctly 1`] = `
       }
     }
   >
-    <ForwardRef(View)
+    <View
       style={
         Object {
           "flexDirection": "row",
@@ -51,7 +52,7 @@ exports[`Owner component renders correctly 1`] = `
       <PreventDoubleTap
         onPress={[Function]}
       >
-        <ForwardRef(Text)
+        <Text
           style={
             Object {
               "color": "#444",
@@ -61,7 +62,7 @@ exports[`Owner component renders correctly 1`] = `
           }
         />
       </PreventDoubleTap>
-    </ForwardRef(View)>
-  </ForwardRef(View)>
-</ForwardRef(View)>
+    </View>
+  </View>
+</View>
 `;

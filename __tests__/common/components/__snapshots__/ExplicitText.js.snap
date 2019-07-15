@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Explicit text component renders correctly 1`] = `
-<ForwardRef(View)
+<View
   style={
     Object {
       "flex": 1,
@@ -11,5 +11,5 @@ exports[`Explicit text component renders correctly 1`] = `
   <Tags>
     undefined
   </Tags>
-</ForwardRef(View)>
+</View>
 `;
