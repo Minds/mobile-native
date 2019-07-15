@@ -17,7 +17,7 @@ exports[`Comment action component renders correctly 1`] = `
 >
   <Icon
     color="rgb(96, 125, 139)"
-    name="chat-bubble"
+    name="speaker-notes-off"
     raised={false}
     reverse={false}
     reverseColor="white"

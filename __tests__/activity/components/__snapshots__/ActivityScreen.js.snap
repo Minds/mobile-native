@@ -17,6 +17,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
     entity={
       ActivityModel {
         "__list": null,
+        "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
@@ -64,6 +65,7 @@ exports[`Activity screen component renders correctly with an entity as param 1`]
         entity={
           ActivityModel {
             "__list": null,
+            "allow_comments": true,
             "attachment_guid": false,
             "blurb": false,
             "comments:count": undefined,
@@ -341,6 +343,7 @@ exports[`Activity screen component should show loader until it loads the activit
     entity={
       ActivityModel {
         "__list": null,
+        "allow_comments": true,
         "comments:count": undefined,
         "edited": undefined,
         "is_visible": true,
@@ -360,6 +363,7 @@ exports[`Activity screen component should show loader until it loads the activit
         entity={
           ActivityModel {
             "__list": null,
+            "allow_comments": true,
             "comments:count": undefined,
             "edited": undefined,
             "is_visible": true,

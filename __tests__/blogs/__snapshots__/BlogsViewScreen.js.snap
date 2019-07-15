@@ -18,6 +18,7 @@ exports[`blog view screen component should renders correctly 1`] = `
       BlogModel {
         "__list": null,
         "access_id": "2",
+        "allow_comments": true,
         "boost_rejection_reason": -1,
         "categories": Array [],
         "category": "education",
@@ -43,6 +44,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         "ownerObj": UserModel {
           "__list": null,
           "access_id": "2",
+          "allow_comments": true,
           "banned": "no",
           "blocked": undefined,
           "boostProPlus": false,
@@ -192,6 +194,41 @@ exports[`blog view screen component should renders correctly 1`] = `
         <View
           style={
             Object {
+              "alignSelf": "flex-end",
+              "bottom": 35,
+              "right": 10,
+            }
+          }
+        >
+          <Icon
+            color="black"
+            name="more-vert"
+            onPress={[Function]}
+            raised={false}
+            reverse={false}
+            reverseColor="white"
+            size={26}
+            style={
+              Object {
+                "color": "#888",
+              }
+            }
+            underlayColor="white"
+          />
+          <ActionSheet
+            cancelButtonIndex={0}
+            onPress={[Function]}
+            options={
+              Array [
+                "Cancel",
+                "Disable comments",
+              ]
+            }
+          />
+        </View>
+        <View
+          style={
+            Object {
               "margin": 8,
             }
           }
@@ -201,6 +238,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               BlogModel {
                 "__list": null,
                 "access_id": "2",
+                "allow_comments": true,
                 "boost_rejection_reason": -1,
                 "categories": Array [],
                 "category": "education",
@@ -226,6 +264,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
+                  "allow_comments": true,
                   "banned": "no",
                   "blocked": undefined,
                   "boostProPlus": false,
@@ -366,6 +405,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       BlogModel {
                         "__list": null,
                         "access_id": "2",
+                        "allow_comments": true,
                         "boost_rejection_reason": -1,
                         "categories": Array [],
                         "category": "education",
@@ -391,6 +431,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "ownerObj": UserModel {
                           "__list": null,
                           "access_id": "2",
+                          "allow_comments": true,
                           "banned": "no",
                           "blocked": undefined,
                           "boostProPlus": false,
@@ -511,6 +552,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       BlogModel {
                         "__list": null,
                         "access_id": "2",
+                        "allow_comments": true,
                         "boost_rejection_reason": -1,
                         "categories": Array [],
                         "category": "education",
@@ -536,6 +578,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "ownerObj": UserModel {
                           "__list": null,
                           "access_id": "2",
+                          "allow_comments": true,
                           "banned": "no",
                           "blocked": undefined,
                           "boostProPlus": false,
@@ -652,6 +695,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                       BlogModel {
                         "__list": null,
                         "access_id": "2",
+                        "allow_comments": true,
                         "boost_rejection_reason": -1,
                         "categories": Array [],
                         "category": "education",
@@ -677,6 +721,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                         "ownerObj": UserModel {
                           "__list": null,
                           "access_id": "2",
+                          "allow_comments": true,
                           "banned": "no",
                           "blocked": undefined,
                           "boostProPlus": false,

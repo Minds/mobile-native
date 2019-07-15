@@ -18,6 +18,7 @@ exports[`Activity component renders correctly 1`] = `
     entity={
       ActivityModel {
         "__list": null,
+        "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
@@ -74,6 +75,7 @@ exports[`Activity component renders correctly 1`] = `
     entity={
       ActivityModel {
         "__list": null,
+        "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
@@ -146,6 +148,7 @@ exports[`Activity component renders correctly 1`] = `
           entity={
             ActivityModel {
               "__list": null,
+              "allow_comments": true,
               "attachment_guid": false,
               "blurb": false,
               "comments:count": undefined,
@@ -246,6 +249,7 @@ exports[`Activity component renders correctly 1`] = `
       entity={
         ActivityModel {
           "__list": null,
+          "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
           "comments:count": undefined,
@@ -313,6 +317,7 @@ exports[`Activity component renders correctly 1`] = `
       entity={
         ActivityModel {
           "__list": null,
+          "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
           "comments:count": undefined,
@@ -376,6 +381,7 @@ exports[`Activity component renders correctly 1`] = `
       entity={
         ActivityModel {
           "__list": null,
+          "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
           "comments:count": undefined,
@@ -445,6 +451,7 @@ exports[`Activity component renders correctly 1`] = `
     entity={
       ActivityModel {
         "__list": null,
+        "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
@@ -507,6 +514,7 @@ exports[`Activity component renders correctly 1`] = `
     entity={
       ActivityModel {
         "__list": null,
+        "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
