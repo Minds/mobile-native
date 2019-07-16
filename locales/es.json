@@ -217,7 +217,9 @@
         "banConfirm": "Estás seguro? Quieres suspender a este usuario?",
         "errorLoading": "Error cargando grupos",
         "confirmKick": "Estás seguro? Quieres expulsar a este usuario?",
-        "listMembersCount": "Miembros"
+        "listMembersCount": "Miembros",
+        "disableConversations":"Inhabilitar conversaciones",
+        "enableConversations":"Habilitar conversaciones"
     },
     "keychain": {
         "unlockMessage": "Desbloquear {{keychain}} keychain",
@@ -744,5 +746,5 @@
     "updateAvailable": "Actualización disponible",
     "rememberTomorrow": "Recuerdame más tarde",
     "enableComments": "Habilitar comentarios",
-    "disableComments": "Deshabilitar comentarios"
+    "disableComments": "Inhabilitar comentarios"
 }

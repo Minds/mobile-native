@@ -234,7 +234,9 @@
     "removeOwner":"Remove as Owner",
     "makeModerator":"Make Moderator",
     "removeModerator":"Remove as Moderator",
-    "listMembersCount":"Members {{count}}"
+    "listMembersCount":"Members {{count}}",
+    "disableConversations":"Disable conversations",
+    "enableConversations":"Enable conversations"
   },
   "keychain": {
     "unlockMessage": "Unlock {{keychain}} keychain",

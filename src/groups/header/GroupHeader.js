@@ -8,6 +8,7 @@ import {
   View,
   TouchableHighlight,
   ActivityIndicator,
+  StyleSheet
 } from 'react-native';
 
 import {
@@ -17,6 +18,7 @@ import {debounce} from 'lodash';
 
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ActionSheet from 'react-native-actionsheet';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
@@ -129,13 +131,15 @@ export default class GroupHeader extends Component {
    */
   renderToolbar() {
     const group = this.props.store.group;
-
+    const conversation = { text: i18n.t('conversation').toUpperCase(), icon: 'ios-chatboxes', iconType: 'ion', value: 'conversation' };
     const typeOptions = [
       { text: i18n.t('feed').toUpperCase(), icon: 'list', value: 'feed' },
       { text: i18n.t('description').toUpperCase(), icon: 'short-text', value: 'desc' },
-      { text: i18n.t('members').toUpperCase(), badge: abbrev(group['members:count'], 0), value: 'members' },
-      { text: i18n.t('conversation').toUpperCase(), icon: 'ios-chatboxes', iconType: 'ion', value: 'conversation' },
+      { text: i18n.t('members').toUpperCase(), badge: abbrev(group['members:count'], 0), value: 'members' }
     ]
+
+    if(!group.conversationDisabled)
+      typeOptions.push(conversation);
 
     const searchBar = this.props.store.tab == 'members' ?
       <SearchView
@@ -161,7 +165,7 @@ export default class GroupHeader extends Component {
    */
   onTabChange = (tab) => {
     const group = this.props.store.group;
-
+    
     switch (tab) {
       case 'feed':
         // clear list without mark loaded flag
@@ -174,6 +178,8 @@ export default class GroupHeader extends Component {
         this.props.store.loadMembers();
         break;
       case 'conversation':
+        if(group.conversationDisabled) return;
+
         this.props.groupsBar.markAsRead(group, 'conversation');
         break;
       default:
@@ -194,6 +200,53 @@ export default class GroupHeader extends Component {
     }
   }
 
+  getActionSheet() {
+    let options = [ i18n.t('cancel') ];
+    options.push(this.props.store.group.conversationDisabled ? i18n.t('groups.enableConversations') : i18n.t('groups.disableConversations'));
+    return (
+      <View style={stylesheet.rightToolbar}>
+        <Icon name="more-vert"  onPress={() => this.showActionSheet()} size={26} style={stylesheet.icon}/>
+        <ActionSheet
+          ref={o => this.ActionSheet = o}
+          options={options}
+          onPress={ (i) => { this.handleActionSheetSelection(options[i]) }}
+          cancelButtonIndex={0}
+        />
+      </View>
+    )
+  }
+
+  async showActionSheet() {
+    this.ActionSheet.show();
+  }
+  
+  async handleActionSheetSelection(option){
+    switch(option){
+      case i18n.t('groups.disableConversations'):
+      case i18n.t('groups.enableConversations'):
+        try{
+          await this.props.store.group.toggleConversationDisabled();
+        } catch (err) {
+          console.error(err);
+          this.showError();
+        }
+    }
+  }
+
+  /**
+   * Show an error message
+   */
+  showError() {
+    Alert.alert(
+      i18n.t('sorry'),
+      i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
+      [
+        {text: i18n.t('ok'), onPress: () => {}},
+      ],
+      { cancelable: false }
+    );
+  }
+
   /**
    * Render Header
    */
@@ -203,10 +256,11 @@ export default class GroupHeader extends Component {
     const styles = this.props.styles;
     const avatar = { uri: this.getAvatar() };
     const iurl = { uri: this.getBannerFromGroup() };
-
+    const actionSheet = group['is:owner'] ? this.getActionSheet() : (null);
     return (
       <View >
         <FastImage source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
+        {actionSheet}
         <View style={styles.headertextcontainer}>
           <View style={styles.avatarContainer}>
             <View style={[CommonStyle.rowJustifyStart, CommonStyle.flexContainer]}>
@@ -229,3 +283,14 @@ export default class GroupHeader extends Component {
     )
   }
 }
+
+const stylesheet = StyleSheet.create({
+  rightToolbar: {
+    alignSelf: 'flex-end',
+    top: 45,
+    right: 10
+  },
+  icon: {
+    color: '#888',
+  }
+})

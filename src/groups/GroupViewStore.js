@@ -8,6 +8,7 @@ import OffsetListStore from '../common/stores/OffsetListStore';
 import UserModel from '../channel/UserModel';
 import ActivityModel from '../newsfeed/ActivityModel';
 import logService from '../common/services/log.service';
+import GroupModel from './GroupModel';
 
 /**
  * Groups store
@@ -338,7 +339,7 @@ class GroupViewStore {
    */
   @action
   setGroup(group) {
-    this.group = group;
+    this.group = GroupModel.checkOrCreate(group);
     this.setGuid(group.guid);
   }
 
