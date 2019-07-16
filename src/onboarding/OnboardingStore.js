@@ -3,6 +3,7 @@ import onboardingService from './OnboardingService';
 import number from '../common/helpers/number';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import logService from '../common/services/log.service';
+import UserModel from '../channel/UserModel';
 
 /**
  * Onboarding store
@@ -24,13 +25,14 @@ class OnboardingStore {
 
   async getSuggestedUsers() {
     const users = await onboardingService.getSuggestedUsers();
-    if (users.suggestions) this.suggestedUsers.list.setList({entities: users.suggestions.map(r => r.entity)});
+    if (users.suggestions) this.suggestedUsers.list.setList({entities: users.suggestions.map(r => UserModel.create(r.entity))});
   }
 
   /**
    * Get progress
    */
   async getProgress() {
+    logService.info('[OnboardingStore] getting onboarding progress');
     try {
       const progress = await onboardingService.getProgress();
       this.setProgress(progress);

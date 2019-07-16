@@ -246,10 +246,12 @@ export default class ChannelHeader extends Component {
     const isUploading = this.props.store.isUploading;
     const isEditable = this.state.edit && !isUploading;
 
+    const ImageCmp = this.state.preview_banner ? Image : FastImage;
+
     return (
       <View>
         <TouchableCustom onPress={this.changeBannerAction} disabled={!isEditable}>
-          <Image source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
+          <ImageCmp source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
 
           {isEditable && <View style={styles.tapOverlayView}>
             <Icon name="md-create" size={30} color="#fff" />

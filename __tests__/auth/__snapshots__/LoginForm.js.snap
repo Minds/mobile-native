@@ -513,6 +513,56 @@ exports[`LoginForm component should renders correctly 1`] = `
                     "textColor": undefined,
                     "value": "en",
                   },
+                  Object {
+                    "label": "Arabic",
+                    "textColor": undefined,
+                    "value": "ar",
+                  },
+                  Object {
+                    "label": "German",
+                    "textColor": undefined,
+                    "value": "de",
+                  },
+                  Object {
+                    "label": "French",
+                    "textColor": undefined,
+                    "value": "fr",
+                  },
+                  Object {
+                    "label": "Hindi",
+                    "textColor": undefined,
+                    "value": "hi",
+                  },
+                  Object {
+                    "label": "Italian",
+                    "textColor": undefined,
+                    "value": "it",
+                  },
+                  Object {
+                    "label": "Japanese",
+                    "textColor": undefined,
+                    "value": "ja",
+                  },
+                  Object {
+                    "label": "Portuguese",
+                    "textColor": undefined,
+                    "value": "pt",
+                  },
+                  Object {
+                    "label": "Russian",
+                    "textColor": undefined,
+                    "value": "ru",
+                  },
+                  Object {
+                    "label": "Vietnamese",
+                    "textColor": undefined,
+                    "value": "vi",
+                  },
+                  Object {
+                    "label": "Chinese",
+                    "textColor": undefined,
+                    "value": "zh",
+                  },
                 ]
               }
               onChange={[Function]}

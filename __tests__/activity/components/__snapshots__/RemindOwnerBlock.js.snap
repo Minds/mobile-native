@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Remind owner component renders correctly 1`] = `
-<ForwardRef(View)
+<View
   style={
     Object {
       "alignItems": "center",
@@ -32,7 +32,8 @@ exports[`Remind owner component renders correctly 1`] = `
     activeOpacity={0.2}
     onPress={[Function]}
   >
-    <ForwardRef(Image)
+    <FastImage
+      resizeMode="cover"
       source={
         Object {
           "source": "http://thisisaurl",
@@ -50,7 +51,7 @@ exports[`Remind owner component renders correctly 1`] = `
       }
     />
   </TouchableOpacity>
-  <ForwardRef(View)
+  <View
     style={
       Object {
         "flex": 1,
@@ -73,7 +74,7 @@ exports[`Remind owner component renders correctly 1`] = `
         ]
       }
     >
-      <ForwardRef(Text)
+      <Text
         style={
           Object {
             "color": "#444",
@@ -84,6 +85,6 @@ exports[`Remind owner component renders correctly 1`] = `
         }
       />
     </TouchableOpacity>
-  </ForwardRef(View)>
-</ForwardRef(View)>
+  </View>
+</View>
 `;

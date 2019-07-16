@@ -7,12 +7,22 @@ import ActivityModel from './ActivityModel';
 import logService from '../common/services/log.service';
 import boostedContentService from '../common/services/boosted-content.service';
 import featuresService from '../common/services/features.service';
+import FeedStore from '../common/stores/FeedStore';
+import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 /**
  * News feed store
  */
 class NewsfeedStore {
 
+  feedStore = new FeedStore(true);
+
+  /**
+   * List reference
+   */
+  listRef;
+
+  // legacy
   stores;
 
   service = new NewsfeedService;
@@ -31,7 +41,22 @@ class NewsfeedStore {
    */
   constructor() {
     this.buildStores();
+    this.feedStore
+      .setEndpoint(`api/v2/feeds/subscribed/activities`)
+      .setLimit(12);
   }
+
+  /**
+   * Scroll to top
+   */
+  scrollToTop() {
+    this.listRef.scrollToTop(false);
+  }
+
+  /**
+   * Set FeedList reference
+   */
+  setListRef = (r) => this.listRef = r;
 
   buildStores() {
     this.stores = {
@@ -49,6 +74,10 @@ class NewsfeedStore {
     extendObservable(this.stores.boostfeed, {
       loading: false
     });
+
+    this.feedStore.getMetadataService()
+      .setSource('feed/subscribed')
+      .setMedium('feed');
 
     this.stores.subscribed.list.getMetadataService()
       .setSource('feed/subscribed')
@@ -95,7 +124,7 @@ class NewsfeedStore {
 
       store.list.setErrorLoading(true);
 
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[NewsfeedStore] loadFeed', err);
       }
     } finally {
@@ -207,7 +236,11 @@ class NewsfeedStore {
 
     model.rowKey = `${model.guid}:0:${this.list.entities.length}`
 
-    this.list.prepend(model);
+    if (featuresService.has('es-feeds')) {
+      this.feedStore.prepend(model);
+    } else {
+      this.list.prepend(model);
+    }
   }
 
   @action
@@ -235,6 +268,7 @@ class NewsfeedStore {
     this.boosts = [];
     this.loading = false;
     this.loadingBoost = false;
+    this.feedStore.clear();
   }
 
 }

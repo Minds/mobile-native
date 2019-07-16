@@ -8,6 +8,7 @@ import ChannelStore from './ChannelStore';
 import wireService from '../wire/WireService';
 import ModelStorageList from '../common/ModelStorageList';
 import logService from '../common/services/log.service';
+import channelsService from '../common/services/channels.service';
 
 /**
  * Channel Stores
@@ -28,6 +29,9 @@ class ChannelStores {
     const response = await channelService.load(name);
     const channel = response.channel;
     const store = this.store(channel.guid);
+    // save it to the local storages
+    channelsService.save(channel);
+
     store.setChannel(channel, true);
     return store;
   }

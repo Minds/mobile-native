@@ -2,6 +2,7 @@ import 'react-native';
 import React from 'react';
 import App from '../App';
 import videochat from '../src/common/services/videochat.service';
+import sqliteStorageProviderService from '../src/common/services/sqlite-storage-provider.service';
 import logservice from '../src/common/services/log.service';
 import {
   BackHandler,
@@ -13,7 +14,7 @@ import renderer from 'react-test-renderer';
 
 // mock backhandler
 BackHandler.addEventListener = jest.fn();
-
+jest.mock('../src/common/services/sqlite-storage-provider.service')
 jest.mock('../src/common/services/log.service', () => {});
 jest.mock('react-native-gesture-handler', () => {});
 jest.mock('react-navigation-stack', () => { Header: {} });

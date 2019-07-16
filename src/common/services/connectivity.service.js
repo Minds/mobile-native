@@ -1,4 +1,4 @@
-import { NetInfo } from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
 import {
   observable,
   action,
@@ -84,8 +84,7 @@ class ConnectivityService {
   startConnectivityCheck() {
     this.checkInterval = setInterval( async() => {
       this.setHasInternet(await this.checkInternet());
-      console.log('checking internet', this.hasInternet);
-    }, 3000);
+    }, CONECTIVITY_CHECK_INTERVAL);
   }
 
   /**
@@ -103,7 +102,7 @@ class ConnectivityService {
       try {
         const xhr = new XMLHttpRequest();
         xhr.open('HEAD', CONECTIVITY_CHECK_URI, true);
-        xhr.timeout = CONECTIVITY_CHECK_INTERVAL;
+        xhr.timeout = 3000;
         xhr.onload = function () {
           resolve(true);
         };

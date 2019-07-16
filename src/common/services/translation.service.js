@@ -19,7 +19,9 @@ class TranslationService {
    */
   constructor() {
     // initial caching
-    this.getLanguages();
+    if(process.env.JEST_WORKER_ID === undefined) {
+      this.getLanguages();
+    }
   }
 
   /**

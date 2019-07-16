@@ -8,35 +8,40 @@ const CRYPTO_AES_PREFIX = 'crypto:aes:';
 import KeychainService from './keychain.service';
 
 class StorageService {
+
   async getItem(key) {
-    let value = await AsyncStorage.getItem(`${STORAGE_KEY_PREFIX}${key}`),
-      originalValue = value;
+    let value = await AsyncStorage.getItem(`${STORAGE_KEY_PREFIX}${key}`);
 
     if (value === null) {
       // No data
       return null;
     }
 
+    value = await this._decryptIfNeeded(value);
+
+    return JSON.parse(value);
+  }
+
+  async _decryptIfNeeded(value) {
     if (value.startsWith(CRYPTO_AES_PREFIX)) {
       const keychain = await AsyncStorage.getItem(`${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`);
 
+      let output = null;
       try {
-        value = null;
-
         let secret = await KeychainService.getSecret(keychain);
 
         if (secret) {
-          value = CryptoJS.AES.decrypt(originalValue.substr(CRYPTO_AES_PREFIX.length), secret)
+          output = CryptoJS.AES.decrypt(value.substr(CRYPTO_AES_PREFIX.length), secret)
             .toString(CryptoJS.enc.Utf8);
         }
       } catch (e) { }
 
-      if (!value) {
+      if (!output) {
         throw new Error('E_INVALID_STORAGE_PASSWORD');
       }
+      return output;
     }
-
-    return JSON.parse(value);
+    return value;
   }
 
   async setItem(key, value = null, encrypt = false, keychain = '') {
@@ -77,6 +82,19 @@ class StorageService {
 
   async hasItem(key) {
     return !!(await AsyncStorage.getItem(`${STORAGE_KEY_PREFIX}${key}`));
+  }
+
+  async multiGet(keys) {
+    const values = await AsyncStorage.multiGet(keys.map(k => `${STORAGE_KEY_PREFIX}${k}`));
+
+    return values.map(value => {
+      try {
+        value[1] = JSON.parse(value[1])
+      } catch (err) {
+        value[1] = null;
+      }
+      return value;
+    });
   }
 
   async getKeys(prefix) {

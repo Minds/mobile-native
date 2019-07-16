@@ -5,7 +5,6 @@ import React, {
 import {
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   View
 } from 'react-native';
@@ -15,6 +14,7 @@ import { Icon } from 'react-native-elements';
 import {
   MINDS_CDN_URI
 } from '../../config/Config';
+import FastImage from 'react-native-fast-image';
 
 import { CommonStyle } from '../../styles/Common';
 import i18n from '../../common/services/i18n.service';
@@ -41,7 +41,7 @@ export default class RemindOwnerBlock extends PureComponent {
       <View style={styles.container}>
         <Icon color='rgb(70, 144, 214)' name='repeat' size={16} style={styles.icon}/>
         <TouchableOpacity onPress={this._navToChannel}>
-          <Image source={avatarSrc} style={styles.avatar}/>
+          <FastImage source={avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
         <View style={styles.body}>
           <TouchableOpacity onPress={this._navToChannel} style={[CommonStyle.flexContainer, CommonStyle.columnAlignStart]}>

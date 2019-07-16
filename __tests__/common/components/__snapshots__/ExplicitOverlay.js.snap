@@ -47,7 +47,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
       }
     }
   />
-  <ForwardRef(Text)
+  <Text
     style={
       Array [
         Object {
@@ -68,12 +68,12 @@ exports[`Explicit overlay component renders correctly 1`] = `
     }
   >
     Confirm you are 18+
-  </ForwardRef(Text)>
+  </Text>
 </TouchableOpacity>
 `;
 
 exports[`Explicit overlay component should renders the etag 1`] = `
-<ForwardRef(View)
+<View
   style={
     Array [
       Array [
@@ -108,5 +108,5 @@ exports[`Explicit overlay component should renders the etag 1`] = `
       }
     }
   />
-</ForwardRef(View)>
+</View>
 `;

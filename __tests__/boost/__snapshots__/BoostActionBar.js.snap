@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Boost action bar component renders correctly 1`] = `
-<ForwardRef(View)
+<View
   style={
     Object {
       "alignItems": "stretch",
@@ -11,9 +11,9 @@ exports[`Boost action bar component renders correctly 1`] = `
     }
   }
 >
-  <ForwardRef(View) />
-  <ForwardRef(View) />
-  <ForwardRef(View)
+  <View />
+  <View />
+  <View
     key="bid"
     style={
       Object {
@@ -40,7 +40,7 @@ exports[`Boost action bar component renders correctly 1`] = `
       type="material-community"
       underlayColor="white"
     />
-    <ForwardRef(Text)
+    <Text
       style={
         Object {
           "fontSize": 11,
@@ -49,8 +49,8 @@ exports[`Boost action bar component renders correctly 1`] = `
       }
     >
       $1.00
-    </ForwardRef(Text)>
-  </ForwardRef(View)>
-  <ForwardRef(View) />
-</ForwardRef(View)>
+    </Text>
+  </View>
+  <View />
+</View>
 `;
