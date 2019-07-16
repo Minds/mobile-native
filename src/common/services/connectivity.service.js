@@ -15,20 +15,18 @@ import {
  */
 class ConnectivityService {
 
-  @observable hasInternet = true;
+  @observable isInternetReachable = true;
 
   @observable connectionInfo = {
     type: 'unknown',
-    effectiveType: 'unknown',
+    isConnected: false
   };
-
-  checkInterval = null;
 
   /**
    * Is connected
    */
   @computed get isConnected() {
-    return this.connectionInfo.type !== 'none' && this.hasInternet;
+    return this.connectionInfo.type !== 'none' && this.isInternetReachable;
   }
 
   /**
@@ -37,7 +35,6 @@ class ConnectivityService {
   constructor() {
     // add listener
     NetInfo.addEventListener(
-      'connectionChange',
       this.handleConnectivityChange
     );
   }
@@ -52,7 +49,7 @@ class ConnectivityService {
     const connectionInfo = await NetInfo.getConnectionInfo();
 
     this.connectionInfo = connectionInfo;
-    console.log('Initial connection, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+    console.log('Initial connection, type: ' + connectionInfo.type);
 
     return connectionInfo;
   }
@@ -70,28 +67,33 @@ class ConnectivityService {
       this.stopConnectivityCheck();
     }
 
-    console.log('Connection change, type: ' + connectionInfo.type + ', effectiveType: ' + connectionInfo.effectiveType);
+    console.log('Connection change, type: ' + connectionInfo.type);
   }
 
   @action
-  setHasInternet(value) {
-    this.hasInternet = value;
+  setisInternetReachable(value) {
+    this.isInternetReachable = value;
   }
 
   /**
    * Start connectivity check
    */
-  startConnectivityCheck() {
+  async startConnectivityCheck() {
+    // clear previous interval
+    this.stopConnectivityCheck();
+    // create interval
     this.checkInterval = setInterval( async() => {
-      this.setHasInternet(await this.checkInternet());
+      this.setisInternetReachable(await this.checkInternet());
     }, CONECTIVITY_CHECK_INTERVAL);
+    // check immediately
+    this.setisInternetReachable(await this.checkInternet());
   }
 
   /**
    * Stop connectivity check
    */
   stopConnectivityCheck() {
-    clearInterval(this.checkInterval);
+    if (this.checkInterval) clearInterval(this.checkInterval);
   }
 
   /**
