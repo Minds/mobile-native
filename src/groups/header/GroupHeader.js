@@ -287,7 +287,7 @@ export default class GroupHeader extends Component {
 const stylesheet = StyleSheet.create({
   rightToolbar: {
     alignSelf: 'flex-end',
-    top: 45,
+    bottom: 126,
     right: 10
   },
   icon: {
