@@ -277,6 +277,7 @@ export default class FeedStore {
 
     try {
       await this.feedsService.fetchLocalOrRemote();
+      if (refresh) this.setOffset(0);
       const entities = await this.feedsService.getEntities();
       if (refresh) this.clear();
       this.addEntities(entities);
@@ -301,6 +302,7 @@ export default class FeedStore {
 
     try {
       await this.feedsService.fetchRemoteOrLocal();
+      if (refresh) this.setOffset(0);
       const entities = await this.feedsService.getEntities();
       if (refresh) this.clear();
       this.addEntities(entities);
@@ -348,7 +350,7 @@ export default class FeedStore {
   async refresh() {
     this.refreshing = true;
     try {
-      await this.setOffset(0).fetchRemoteOrLocal(true);
+      await this.fetchRemoteOrLocal(true);
     } finally {
       this.refreshing = false;
     }

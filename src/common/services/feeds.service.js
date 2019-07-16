@@ -5,6 +5,8 @@ import entitiesService from './entities.service';
 import feedsStorage from './sql/feeds.storage';
 import { showMessage } from 'react-native-flash-message';
 import i18n from './i18n.service';
+import connectivityService from './connectivity.service';
+import Colors from '../../styles/Colors';
 
 /**
  * Feed store
@@ -125,19 +127,22 @@ export default class FeedsService {
 
     // save without wait
     feedsStorage.save(this);
-    return true;
   }
 
   /**
    * Fetch feed from local cache
    */
   async fetchLocal() {
-    const feed = await feedsStorage.read(this);
-
-    if (feed) {
-      this.feed = feed;
-      return true;
+    try {
+      const feed = await feedsStorage.read(this);
+      if (feed) {
+        this.feed = feed;
+        return true;
+      }
+    } catch (err) {
+      logService.error('[FeedService] error loading local data')
     }
+
     return false;
   }
 
@@ -145,18 +150,18 @@ export default class FeedsService {
    * Fetch feed from local cache or from the remote endpoint if there is no cached data
    */
   async fetchLocalOrRemote() {
-
-    let status;
+    const status = await this.fetchLocal();
 
     try {
-      status = await this.fetchLocal();
       if (!status) await this.fetch();
     } catch (err) {
-
       if (err.code === 'Abort') return;
 
-      logService.exception('[FeedService]', err);
-      await this.fetch();
+      if (!isNetworkFail(err)) {
+        logService.exception('[FeedService]', err);
+      }
+
+      this.feed = [];
     }
   }
 
@@ -169,22 +174,29 @@ export default class FeedsService {
 
     try {
       status = await this.fetch();
-      if (!status) await this.fetchLocal();
+      if (!status) {
+        await this.fetchLocal();
+      }
     } catch (err) {
-
       if (err.code === 'Abort') return;
 
       if (!isNetworkFail(err)) {
         logService.exception('[FeedService]', err);
       }
 
-      await this.fetchLocal();
+      if (!await this.fetchLocal()) {
+        this.feed = [];
+      }
 
       showMessage({
-        position: 'center',
-        message: i18n.t('cantReachServer'),
+        floating: true,
+        position: 'top',
+        message: (connectivityService.isConnected ? i18n.t('cantReachServer') : i18n.t('noInternet')),
         description: i18n.t('showingStored'),
-        type: "default",
+        duration: 1300,
+        backgroundColor: '#FFDD63DD',
+        color: Colors.dark,
+        type: "info",
       });
     }
   }
