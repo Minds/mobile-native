@@ -161,7 +161,7 @@ export default class FeedsService {
         logService.exception('[FeedService]', err);
       }
 
-      this.feed = [];
+      throw err;
     }
   }
 
@@ -169,14 +169,8 @@ export default class FeedsService {
    * Fetch from the remote endpoint and if it fails from local cache
    */
   async fetchRemoteOrLocal() {
-
-    let status;
-
     try {
-      status = await this.fetch();
-      if (!status) {
-        await this.fetchLocal();
-      }
+      await this.fetch();
     } catch (err) {
       if (err.code === 'Abort') return;
 
@@ -185,7 +179,7 @@ export default class FeedsService {
       }
 
       if (!await this.fetchLocal()) {
-        this.feed = [];
+        throw new Error('Error fetching feed from remote or local');
       }
 
       showMessage({
