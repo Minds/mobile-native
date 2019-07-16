@@ -203,7 +203,6 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
     ]
   }
   disableVirtualization={false}
-  getItemLayout={null}
   horizontal={false}
   initialNumToRender={6}
   key="f"
