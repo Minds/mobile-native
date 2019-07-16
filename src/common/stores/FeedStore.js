@@ -348,7 +348,7 @@ export default class FeedStore {
   async refresh() {
     this.refreshing = true;
     try {
-      await this.fetchRemoteOrLocal(true);
+      await this.setOffset(0).fetchRemoteOrLocal(true);
     } finally {
       this.refreshing = false;
     }
