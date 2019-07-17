@@ -7,8 +7,17 @@ const CRYPTO_AES_PREFIX = 'crypto:aes:';
 
 import KeychainService from './keychain.service';
 
+/**
+ * Storage service
+ */
 class StorageService {
 
+  /**
+   * Get item
+   *
+   * @param {string} key
+   * @return {any}
+   */
   async getItem(key) {
     let value = await AsyncStorage.getItem(`${STORAGE_KEY_PREFIX}${key}`);
 
@@ -22,6 +31,11 @@ class StorageService {
     return JSON.parse(value);
   }
 
+  /**
+   * Decrypt value if needed
+   *
+   * @param {any} value
+   */
   async _decryptIfNeeded(value) {
     if (value.startsWith(CRYPTO_AES_PREFIX)) {
       const keychain = await AsyncStorage.getItem(`${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`);
@@ -44,6 +58,14 @@ class StorageService {
     return value;
   }
 
+  /**
+   * Set item
+   *
+   * @param {string} key
+   * @param {any} value
+   * @param {boolean} encrypt
+   * @param {string} keychain
+   */
   async setItem(key, value = null, encrypt = false, keychain = '') {
     let rawValue = JSON.stringify(value);
 
@@ -69,6 +91,11 @@ class StorageService {
     return this;
   }
 
+  /**
+   * Remove item
+   *
+   * @param {string} key
+   */
   async removeItem(key) {
     try {
       await AsyncStorage.removeItem(`${STORAGE_KEY_PREFIX}${key}`);
@@ -80,10 +107,31 @@ class StorageService {
     return this;
   }
 
+  /**
+   * Has item
+   *
+   * @param {string} key
+   * @returns {boolean}
+   */
   async hasItem(key) {
     return !!(await AsyncStorage.getItem(`${STORAGE_KEY_PREFIX}${key}`));
   }
 
+  /**
+   * Multi remove
+   *
+   * @param {Array<string>} keys
+   */
+  async multiRemove(keys) {
+    return await AsyncStorage.multiRemove(keys.map(k => `${STORAGE_KEY_PREFIX}${k}`));
+  }
+
+  /**
+   * Multi get
+   *
+   * @param {Array<string>} keys
+   * @returns {Array<any>}
+   */
   async multiGet(keys) {
     const values = await AsyncStorage.multiGet(keys.map(k => `${STORAGE_KEY_PREFIX}${k}`));
 
@@ -97,6 +145,11 @@ class StorageService {
     });
   }
 
+  /**
+   * Get keys with given prefix
+   *
+   * @param {string} prefix
+   */
   async getKeys(prefix) {
     if (!prefix) {
       return [];
