@@ -9,6 +9,11 @@ import colors from './Colors';
  * Styles
  */
 export const ComponentsStyle = StyleSheet.create({
+  loginInputIcon: {
+    position: 'absolute',
+    right:8,
+    top:22
+  },
   passwordinput: {
     borderColor: '#ECECEC',
     borderWidth: 1,
