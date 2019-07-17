@@ -110,7 +110,7 @@ export default class AttachmentStore {
       media.type = type.mime;
     }
 
-    if(media.fileName && media.fileName.includes(' ')) media.fileName = media.fileName.replace(/\s/g, "_");
+    if(media.fileName.includes(' ')) media.fileName = media.fileName.replace(/\s/g, "_");
 
     const settings = await mindsService.getSettings();
 
