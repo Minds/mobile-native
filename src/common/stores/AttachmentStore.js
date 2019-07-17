@@ -70,7 +70,7 @@ export default class AttachmentStore {
 
       const result = await uploadPromise;
       // ignore canceled
-      if (uploadPromise.isCanceled() || !result) return;
+      if ((uploadPromise.isCanceled && uploadPromise.isCanceled()) || !result) return;
       this.guid = result.guid;
     } catch (err) {
       this.clear();

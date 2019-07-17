@@ -141,6 +141,51 @@ class ApiService {
     }
   }
 
+  /**
+   * Upload file to s3, differences with generic upload are headers and formData (wich is not necessary)
+   * @param {any} lease 
+   * @param {any} file 
+   * @param {function} progress 
+   */
+  uploadToS3(lease, file, progress) {
+
+    return new Cancelable((resolve, reject, onCancel) => {
+
+      let xhr = new XMLHttpRequest();
+
+      // handle cancel
+      onCancel((cb) => {
+        xhr.abort();
+        cb();
+      });
+
+      if (progress) {
+        xhr.upload.addEventListener("progress", progress);
+      }
+      const url = lease.presigned_url;
+      xhr.open('PUT', url);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.onload = () => {
+        if (xhr.status == 200) {
+          resolve(true);
+        } else {
+          reject('Ooops: upload error');
+        }
+      };
+      xhr.onerror = function() {
+        reject(new TypeError('Network request failed'));
+      }
+
+      xhr.send(file);
+    })
+    .catch( error => {
+      if (error.name !== 'CancelationError') {
+        logService.exception('[ApiService] upload', error);
+        throw error;
+      }
+    });
+  }
+
   async delete(url, body={}) {
     const headers = this.buildHeaders();
 
