@@ -102,11 +102,15 @@ class EntitiesService {
     // Fetch entities we don't have
 
     if (urnsToFetch.length) {
-      await this.fetch(urnsToFetch, abortTag, asActivities);
+      try {
+        await this.fetch(urnsToFetch, abortTag, asActivities);
+      } catch (err) {
+        // we ignore the fetch error if there are local entities to show
+        if (urnsToResync.length === 0 || err.code === 'Abort') throw err;
+      }
     }
 
-    // Fetch entities, asynchronously, with no need to wait
-
+    // Fetch entities asynchronously
     if (urnsToResync.length) {
       this.fetch(urnsToResync, abortTag, asActivities);
     }
