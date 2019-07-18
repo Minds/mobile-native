@@ -129,3 +129,7 @@ export const abort = function(tag) {
     }
   }
 }
+
+export const isNetworkFail = function (err) {
+  return (err instanceof TypeError && err.message === 'Network request failed')
+}

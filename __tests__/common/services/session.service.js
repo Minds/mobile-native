@@ -15,13 +15,11 @@ describe('Session service', () => {
     now = Date.now() + 3600;
     expect(service.initialScreen).toEqual('Tabs');
     expect(service.token).toEqual('');
-    sessionStorage.getAccessToken.mockResolvedValue({access_token:'1111', access_token_expires: now});
-    sessionStorage.getRefreshToken.mockResolvedValue({refresh_token:'2222', refresh_token_expires: now});
-    sessionStorage.getUser.mockResolvedValue({guid:'guid1'});
+    sessionStorage.getAll.mockResolvedValue([{access_token:'1111', access_token_expires: now}, {refresh_token:'2222', refresh_token_expires: now}, {guid:'guid1'}]);
     AppStores.user.load.mockResolvedValue({guid:'guid1'});
     await service.init();
     expect(service.guid).toBe('guid1');
-    expect(sessionStorage.getAccessToken).toHaveBeenCalled();
+    expect(sessionStorage.getAll).toHaveBeenCalled();
 
     // set initial screen
     service.setInitialScreen('screen1');

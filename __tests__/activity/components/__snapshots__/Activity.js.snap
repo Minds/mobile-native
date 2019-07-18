@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Activity component renders correctly 1`] = `
-<ForwardRef(View)
+<View
   style={
     Array [
       Object {
@@ -221,7 +221,7 @@ exports[`Activity component renders correctly 1`] = `
         }
       }
     >
-      <ForwardRef(Text)
+      <Text
         style={
           Array [
             Object {
@@ -235,10 +235,10 @@ exports[`Activity component renders correctly 1`] = `
         }
       >
         Invalid date
-      </ForwardRef(Text)>
+      </Text>
     </TouchableOpacity>
   </OwnerBlock>
-  <ForwardRef(View)
+  <View
     style={
       Object {
         "padding": 8,
@@ -375,8 +375,8 @@ exports[`Activity component renders correctly 1`] = `
         }
       }
     />
-  </ForwardRef(View)>
-  <ForwardRef(View)>
+  </View>
+  <View>
     <MediaView
       entity={
         ActivityModel {
@@ -446,7 +446,7 @@ exports[`Activity component renders correctly 1`] = `
       }
       width={750}
     />
-  </ForwardRef(View)>
+  </View>
   <Actions
     entity={
       ActivityModel {
@@ -567,5 +567,5 @@ exports[`Activity component renders correctly 1`] = `
       }
     }
   />
-</ForwardRef(View)>
+</View>
 `;

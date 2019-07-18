@@ -9,6 +9,16 @@ const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
   en: () => require("../../../locales/en.json"),
   es: () => require("../../../locales/es.json"),
+  ar: () => require("../../../locales/ar.json"),
+  de: () => require("../../../locales/de.json"),
+  fr: () => require("../../../locales/fr.json"),
+  hi: () => require("../../../locales/hi.json"),
+  it: () => require("../../../locales/it.json"),
+  ja: () => require("../../../locales/ja.json"),
+  pt: () => require("../../../locales/pt.json"),
+  ru: () => require("../../../locales/ru.json"),
+  vi: () => require("../../../locales/vi.json"),
+  zh: () => require("../../../locales/zh.json"),
 };
 
 const translate = memoize(
@@ -24,7 +34,7 @@ i18n.defaultLocale = 'en';
 class I18nService {
 
   constructor() {
-    if(process.env.JEST_WORKER_ID === undefined) {
+    if (process.env.JEST_WORKER_ID === undefined) {
       this.init();
     }
   }
@@ -129,6 +139,16 @@ class I18nService {
     return [
       { name: 'Spanish', value: 'es' },
       { name: 'English', value: 'en' },
+      { name: 'Arabic', value: 'ar'},
+      { name: 'German', value: 'de'},
+      { name: 'French', value: 'fr'},
+      { name: 'Hindi', value: 'hi'},
+      { name: 'Italian', value: 'it'},
+      { name: 'Japanese', value: 'ja'},
+      { name: 'Portuguese', value: 'pt'},
+      { name: 'Russian', value: 'ru'},
+      { name: 'Vietnamese', value: 'vi'},
+      { name: 'Chinese', value: 'zh'},
     ]
   }
 }

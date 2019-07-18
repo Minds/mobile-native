@@ -17,8 +17,6 @@ describe('Explicit overlay component', () => {
     screen = shallow(
       <ExplicitOverlay entity={entity}/>
     );
-
-    jest.runAllTimers();
   });
 
   it('renders correctly', async () => {

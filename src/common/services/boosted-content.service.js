@@ -1,56 +1,24 @@
 import apiService from "./api.service";
-import sessionService from "./session.service";
-import entitiesService from "./entities.service";
-import blockListService from "./block-list.service";
-import BoostedContentSync from "../../lib/minds-sync/services/BoostedContentSync";
-import sqliteStorageProviderService from "./sqlite-storage-provider.service";
-import hashCode from "../helpers/hash-code";
+import FeedStore from "../stores/FeedStore";
 
 class BoostedContentService {
+  offset: number = -1;
 
-  initialized = false;
+  feedStore = new FeedStore;
 
   constructor() {
-    const storageAdapter = sqliteStorageProviderService.get();
-    this.sync = new BoostedContentSync(apiService, storageAdapter, 5 * 60, 15 * 60, 500);
-
-    this.sync.setResolvers({
-      currentUser: () => sessionService.guid,
-      blockedUserGuids: async () => await blockListService.getList(),
-      fetchEntities: async guids => await entitiesService.fetch(guids),
-    });
-
-    sessionService.onSession(async(is) => {
-      if (is) {
-        if (!this.initialized) {
-          await this.sync.setUp();
-          this.initialized = true;
-        }
-
-        this.sync.setRating(sessionService.getUser().boost_rating || null);
-      } else {
-        if (this.initialized) {
-          this.sync.destroy();
-        }
-      }
-    });
-
-    setTimeout(() => {
-      this.gc();
-    }, 60000);
+    // TODO: LOAD when session begin
+    // this.feedStore
+    //   .setLimit(50)
+    //   .setOffset(0)
+    //   .setEndpoint('api/v2/boost/feed')
+    //   .fetch();
   }
 
-  async get(opts) {
-    return await this.sync.get(opts);
+  fetch() {
+    //TODO: IMPLEMENT
   }
 
-  async fetch(opts) {
-    return await this.sync.fetch(opts);
-  }
-
-  async gc(opts) {
-    return await this.sync.gc(opts);
-  }
 
 }
 

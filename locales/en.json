@@ -725,5 +725,9 @@
   "updateAvailable":"Update available",
   "rememberTomorrow":"Remind me later",
   "enableComments": "Enable comments",
-  "disableComments": "Disable comments"
+  "disableComments": "Disable comments",
+  "noInternet":"No Internet Connection",
+  "offline":"Offline",
+  "cantReachServer":"Can't reach the server",
+  "showingStored":"Showing stored data"
 }

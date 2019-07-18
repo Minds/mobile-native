@@ -212,7 +212,7 @@ export default class ActivityActions extends Component {
       case i18n.t('follow'):
       case i18n.t('unfollow'):
         try {
-          await this.props.entity.toogleFollow();
+          await this.props.entity.toggleFollow();
           this.reloadOptions();
         } catch (err) {
           this.showError();

@@ -79,7 +79,7 @@ export default class DiscoveryScreen extends Component {
     tabBarOnPress: ({ navigation, defaultHandler }) => {
       // tab button tapped again?
       if (navigation.isFocused()) {
-        stores.discovery.refresh();
+        stores.discovery.reload();
         return;
       }
       defaultHandler();
@@ -90,8 +90,6 @@ export default class DiscoveryScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
-    this._loadData(false, 24);
-
     // load data on enter
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       setTimeout(() => {
@@ -106,28 +104,14 @@ export default class DiscoveryScreen extends Component {
       }, 50);
     });
 
+    this.props.discovery.init();
+
     const params = this.props.navigation.state.params;
     if (params && params.type) {
       this.props.discovery.filters.setType(params.type);
     }
 
     this.tileError = i18n.t('error');
-  }
-
-  /**
-   * Load data
-   */
-  _loadData(preload = false, limit = 12) {
-    const params = this.props.navigation.state.params,
-      q = params && params.q;
-
-    if (q) {
-      this.setState({ q });
-
-      return this.props.discovery.search(q);
-    } else {
-      return this.props.discovery.loadList(false, false, limit);
-    }
   }
 
   /**
@@ -176,7 +160,7 @@ export default class DiscoveryScreen extends Component {
       case 'blogs':
       case 'activities':
         change.viewableItems.forEach((item) => {
-          this.props.discovery.list.addViewed(item.item);
+          this.props.discovery.listStore.addViewed(item.item);
         });
         break;
 
@@ -192,7 +176,6 @@ export default class DiscoveryScreen extends Component {
     let body;
 
     const discovery = this.props.discovery;
-    const list = discovery.list;
 
     let renderRow, columnWrapperStyle = null;
     this.cols = 3;
@@ -229,9 +212,10 @@ export default class DiscoveryScreen extends Component {
 
     body = (
       <CollapsibleHeaderFlatList
+        disableHeaderSnap={true}
         onLayout={this.onLayout}
         key={'discofl' + this.cols} // we need to force component redering if we change cols
-        data={list.entities}
+        data={discovery.listStore.entities.slice()}
         renderItem={renderRow}
         ListFooterComponent={footer}
         CollapsibleHeaderComponent={this.getHeaders()}
@@ -239,8 +223,8 @@ export default class DiscoveryScreen extends Component {
         ListEmptyComponent={this.getEmptyList()}
         keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
-        refreshing={list.refreshing}
-        onEndReached={this.loadFeed}
+        refreshing={discovery.listStore.refreshing}
+        onEndReached={this.loadMore}
         initialNumToRender={this.cols == 3 ? 12 : 3}
         style={[CS.backgroundWhite, CS.flexContainer]}
         numColumns={this.cols}
@@ -262,13 +246,13 @@ export default class DiscoveryScreen extends Component {
     );
   }
 
-  keyExtractor = item => item.rowKey;
+  keyExtractor = item => item.urn;
 
   /**
    * Get empty list
    */
   getEmptyList() {
-    if (!this.props.discovery.list.loaded || this.props.discovery.loading || this.props.discovery.list.errorLoading) return null;
+    if (!this.props.discovery.listStore.loaded || this.props.discovery.listStore.loading || this.props.discovery.listStore.errorLoading) return null;
     return (
       <View style={ComponentsStyle.emptyComponentContainer}>
         <View style={ComponentsStyle.emptyComponent}>
@@ -435,7 +419,7 @@ export default class DiscoveryScreen extends Component {
   getFooter() {
     const discovery = this.props.discovery;
 
-    if (discovery.loading && !discovery.list.refreshing) {
+    if (discovery.listStore.loading && !discovery.listStore.refreshing) {
       return (
         <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>
           <ActivityIndicator size={'large'} />
@@ -443,9 +427,9 @@ export default class DiscoveryScreen extends Component {
       );
     }
 
-    if (!discovery.list.errorLoading) return null;
+    if (!discovery.listStore.errorLoading) return null;
 
-    const message = discovery.list.entities.length ?
+    const message = discovery.listStore.entities.length ?
       i18n.t('cantLoadMore') :
       i18n.t('cantLoad');
 
@@ -453,7 +437,7 @@ export default class DiscoveryScreen extends Component {
   }
 
   tryAgain = () => {
-    this.loadFeed(null, true);
+    this.props.discovery.listStore.reload();
   }
 
   /**
@@ -464,8 +448,8 @@ export default class DiscoveryScreen extends Component {
 
     // if (!list.length) return;
     this.props.discovery.filters.setType('lastchannels');
-    this.props.discovery.list.clearList();
-    this.props.discovery.list.setList({entities: list});
+    this.props.discovery.listStore.clear();
+    this.props.discovery.listStore.addEntities(list);
   }
 
   /**
@@ -494,18 +478,16 @@ export default class DiscoveryScreen extends Component {
   /**
    * Load feed data
    */
-  loadFeed = (e, force = false) => {
+  loadMore = (e, force = false) => {
     const type = this.props.discovery.filters.type;
     if (
       this.props.discovery.filters.type == 'lastchannels' ||
-      (this.props.discovery.list.errorLoading && !force)
+      (this.props.discovery.listStore.errorLoading && !force)
     ) {
       return;
     }
 
-    const limit = this.state.showFeed ? 12 : (type == 'images' || type == 'videos' ? 24 : 12);
-
-    this.props.discovery.loadList(false, false, limit);
+    this.props.discovery.listStore.loadMore();
   }
 
   /**
@@ -514,7 +496,7 @@ export default class DiscoveryScreen extends Component {
   refresh = async() => {
     if (this.props.discovery.filters.type == 'lastchannels')
       return;
-    await this.props.discovery.refresh();
+    await this.props.discovery.listStore.refresh();
   }
 
   /**
@@ -523,7 +505,7 @@ export default class DiscoveryScreen extends Component {
    */
   navigateToFeed = (index) => {
 
-    this.props.discovery.feedStore.setFeed(this.props.discovery.list.entities.slice(index), this.props.discovery.list.offset);
+    this.props.discovery.feedStore.setFeed(this.props.discovery.listStore.feedsService.feed.slice(index));
 
     this.props.navigation.push('DiscoveryFeed', {
       'showFeed': index,
@@ -556,7 +538,7 @@ export default class DiscoveryScreen extends Component {
     return (
 
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <DiscoveryUser store={this.props.discovery.stores['channels']} entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
+        <DiscoveryUser entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
       </ErrorBoundary>
     );
   }

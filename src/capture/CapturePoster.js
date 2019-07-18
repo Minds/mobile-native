@@ -34,10 +34,10 @@ import Activity from '../newsfeed/activity/Activity';
 import BlogCard from '../blogs/BlogCard';
 import ActivityModel from '../newsfeed/ActivityModel';
 import featuresService from '../common/services/features.service';
-import { creatorNsfwService } from '../common/services/nsfw.service';
 import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
+import settingsStore from '../settings/SettingsStore';
 
 @inject('user', 'capture')
 @observer
@@ -105,7 +105,7 @@ export default class CapturePoster extends Component {
 
   async loadNsfwFromPersistentStorage() {
     this.setState({
-      nsfw: await creatorNsfwService.get(),
+      nsfw: settingsStore.creatorNsfw,
     });
   }
 
