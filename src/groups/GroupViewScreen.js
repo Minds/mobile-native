@@ -223,7 +223,7 @@ export default class GroupViewScreen extends Component {
           <ScrollView style={CS.backgroundLight}>
             {header}
             <View style={CS.padding2x}>
-              <Tags>{description}</Tags>
+              <Tags navigation={this.props.navigation}>{description}</Tags>
             </View>
           </ScrollView>
         );
