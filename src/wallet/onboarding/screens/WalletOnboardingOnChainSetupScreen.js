@@ -149,7 +149,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
             style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
             value={this.getPin()}
             onChangeText={this.setPin}
-            placeholder={i18n.t('password')}
+            placeholder={i18n.t('auth.password')}
             secureTextEntry={true}
             maxLength={12}
           />
