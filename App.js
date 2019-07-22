@@ -62,6 +62,7 @@ import entitiesStorage from './src/common/services/sql/entities.storage';
 import feedsStorage from './src/common/services/sql/feeds.storage';
 import connectivityService from './src/common/services/connectivity.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
+import commentStorageService from './src/comments/CommentStorageService';
 
 let deepLinkUrl = '';
 
@@ -124,6 +125,7 @@ sessionService.onLogin(async () => {
       if (!connectivityService.isConnected) return;
       entitiesStorage.removeOlderThan(30);
       feedsStorage.removeOlderThan(30);
+      commentStorageService.removeOlderThan(30);
     }, 30000);
 
   } catch (err) {
