@@ -88,7 +88,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
 
   showEphemeralWarning() {
     return new Promise(resolve => {
-      Alert.alert(i18n.t('headsUp'), i18n.t('wallet.onboarding.ensureYouExportKey'), [
+      Alert.alert(i18n.t('headsUp'), i18n.t('onboarding.ensureYouExportKey'), [
         { text: i18n.t('iUnderstand'), onPress: () => resolve() }
       ], { cancelable: false });
     });
@@ -112,7 +112,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   }
 
   setPin = pin => {
-    const error = this.validatePin(pin) ? '' : i18n.t('wallet.onboarding.passwordInvalid');
+    const error = this.validatePin(pin) ? '' : i18n.t('onboarding.passwordInvalid');
     this.setState({ pin, error });
   }
 
@@ -137,7 +137,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     return (
       <View>
         <Text style={style.p}>
-          {i18n.t('wallet.onboarding.6digitDescription')}
+          {i18n.t('onboarding.6digitDescription')}
         </Text>
 
         {!!this.state.error && <View>
@@ -149,7 +149,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
             style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
             value={this.getPin()}
             onChangeText={this.setPin}
-            placeholder={i18n.t('password')}
+            placeholder={i18n.t('auth.password')}
             secureTextEntry={true}
             maxLength={12}
           />
@@ -168,7 +168,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     return (
       <View>
         <Text style={style.p}>
-          {i18n.t('wallet.onboarding.6digitConfirm')}
+          {i18n.t('onboarding.6digitConfirm')}
         </Text>
 
         {!!this.state.error && <View>
@@ -209,14 +209,14 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     return (
       <View>
         <Text style={style.p}>
-          {i18n.t('wallet.onboarding.6digitAlreadySetup')}
+          {i18n.t('onboarding.6digitAlreadySetup')}
         </Text>
 
         <View style={[style.cols, style.colsCenter, style.form]}>
           {this.state.alreadyHasPin && <Text
             style={[style.col, style.colFirst, style.primaryLegendUppercase]}
           >
-            {i18n.t('wallet.onboarding.pinAlreadySetup')}
+            {i18n.t('onboarding.pinAlreadySetup')}
           </Text>}
 
           <Button
@@ -243,7 +243,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     return (
       <NavNextButton
         onPress={this.props.onNext}
-        title={i18n.t('wallet.onboarding.skip')}
+        title={i18n.t('onboarding.skip')}
         color={Colors.darkGreyed}
       />
     );
@@ -252,18 +252,18 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   render() {
     return (
       <View>
-        <Text style={style.h1}>{i18n.t('wallet.onboarding.setupOnchianAddress')}</Text>
+        <Text style={style.h1}>{i18n.t('onboarding.setupOnchianAddress')}</Text>
 
         <Text style={style.p}>
-          {i18n.t('wallet.onboarding.onchainDescription1')}
+          {i18n.t('onboarding.onchainDescription1')}
         </Text>
 
         <Text style={style.p}>
-          {i18n.t('wallet.onboarding.onchainDescription2')}
+          {i18n.t('onboarding.onchainDescription2')}
         </Text>
 
         <Text style={style.p}>
-          {i18n.t('wallet.onboarding.onchainDescription3')}
+          {i18n.t('onboarding.onchainDescription3')}
         </Text>
 
         <View>
