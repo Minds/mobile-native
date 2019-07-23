@@ -338,7 +338,10 @@
     "group_invite": "Group Invites",
     "boost_gift": "Boost Gift",
     "boost_accepted": "Boost Accepted",
-    "boost_revoked": "Boost Revoked"
+    "boost_revoked": "Boost Revoked",
+    "referral_ping": "Referral Ping",
+    "referral_pending": "Referral Pending",
+    "referral_complete": "Referral Complete"
   },
   "payments":{
     "cardExpirationMonth":"Card Expiration Month",
