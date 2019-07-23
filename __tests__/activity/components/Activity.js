@@ -40,7 +40,6 @@ describe('Activity component', () => {
       <Activity entity={model} navigation={navigation} />
     );
 
-    jest.runAllTimers();
   });
 
   it('renders correctly', async () => {
@@ -74,7 +73,6 @@ describe('Activity component', () => {
     screen.find('TouchableOpacity').forEach(child => {
       child.simulate('press');
     });
-    jest.runAllTimers();
 
     expect(spy).toHaveBeenCalled();
   });
