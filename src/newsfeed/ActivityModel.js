@@ -16,6 +16,7 @@ import {
 } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
+import entitiesService from '../common/services/entities.service';
 
 /**
  * Activity model
@@ -212,6 +213,7 @@ export default class ActivityModel extends BaseModel {
           this._list.remove(this);
         });
       }
+      entitiesService.deleteFromCache(this.urn)
     } catch (err) {
       logService.exception('[ActivityModel]', err);
       throw err;

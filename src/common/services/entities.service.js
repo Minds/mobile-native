@@ -58,6 +58,15 @@ class EntitiesService {
   }
 
   /**
+   * Delete an entity from the cache
+   * @param {string} urn
+   */
+  deleteFromCache(urn) {
+    this.entities.delete(urn);
+    entitiesStorage.remove(urn);
+  }
+
+  /**
    * Get entities from feed
    * @param {Array} feed
    * @param {Mixed} abortTag
