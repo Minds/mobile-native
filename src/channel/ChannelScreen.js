@@ -137,7 +137,7 @@ export default class ChannelScreen extends Component {
 
     } catch(err) {
       Alert.alert(
-        i18n.t('Attention'),
+        i18n.t('attention'),
         i18n.t('channel.notFound'),
         [{ text: i18n.t('ok'), onPress: () => this.props.navigation.goBack() }],
         { cancelable: false }
