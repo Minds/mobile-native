@@ -16,7 +16,7 @@
     "typeComment":"Type your comment...",
     "error":"SORRY, WE COULDN'T LOAD THE ACTIVITY",
     "tryAgain":"PLEASE TRY AGAIN LATER",
-    "remindBlocked":"This remind is not avaible because you blocked"
+    "remindBlocked":"This remind is not available because you blocked"
   },
   "permissions": {
     "externalStorage":"Minds needs access to your external storage so you can upload awesome pictures.",
