@@ -55,7 +55,8 @@ export class FeedsStorage {
   /**
    * Remove all feeds
    */
-  removeAll() {
+  async removeAll() {
+    await this.getDb();
     return this.db.executeSql('DELETE FROM feeds');
   }
 
@@ -63,8 +64,9 @@ export class FeedsStorage {
    * Remove feeds older than given days
    * @param {integer} days
    */
-  removeOlderThan(days) {
+  async removeOlderThan(days) {
     const when = moment().subtract(days, 'days');
+    await this.getDb();
     this.db.executeSql('DELETE FROM feeds WHERE updated < ?', [when.format("X")]);
   }
 
