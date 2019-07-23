@@ -142,6 +142,7 @@ export default class FeedStore {
   prepend(entity) {
     entity._list = this;
     this.entities.unshift(entity);
+    this.feedsService.prepend(entity);
   }
 
   /**
