@@ -46,6 +46,7 @@ import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
+import featuresService from '../common/services/features.service';
 
 /**
  * Blog View Screen
@@ -146,14 +147,16 @@ export default class BlogsViewScreen extends Component {
     const image = blog.getBannerSource();
 
     const actionSheet = this.getActionSheet();
+    const optMenu = featuresService.has('allow-comments-toggle') ?
+      (<View style={styles.rightToolbar}>
+        <Icon name="more-vert"  onPress={() => this.showActionSheet()} size={26} style={styles.icon}/>
+        {actionSheet}
+      </View>) : (null);
     return (
       <View style={styles.screen}>
         <FastImage source={image} resizeMode={FastImage.resizeMode.cover} style={styles.image} />
         <Text style={styles.title}>{blog.title}</Text>
-        <View style={styles.rightToolbar}>
-          <Icon name="more-vert"  onPress={() => this.showActionSheet()} size={26} style={styles.icon}/>
-          {actionSheet}
-        </View>
+        {optMenu}
         <View style={styles.ownerBlockContainer}>
           <OwnerBlock entity={blog} navigation={this.props.navigation} rightToolbar={actions}>
             <Text style={styles.timestamp}>{formatDate(blog.time_created)}</Text>

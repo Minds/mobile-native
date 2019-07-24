@@ -26,6 +26,7 @@ import ActionSheet from 'react-native-actionsheet';
 import { MINDS_URI } from '../../config/Config';
 import testID from '../../common/helpers/testID';
 import i18n from '../../common/services/i18n.service';
+import featuresService from '../../common/services/features.service';
 
 /**
  * Activity Actions
@@ -83,7 +84,8 @@ export default class ActivityActions extends Component {
         }
       }
 
-      options.push( this.props.entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+      if(featuresService.has('allow-comments-toggle'))
+        options.push( this.props.entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
 
     } else {
 
