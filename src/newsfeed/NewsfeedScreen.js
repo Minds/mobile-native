@@ -36,7 +36,7 @@ export default class NewsfeedScreen extends Component {
     tabBarOnPress: ({ navigation, defaultHandler }) => {
       // tab button tapped again?
       if (navigation.isFocused()) {
-        if (featuresService.has('es-feeds')) {
+        if (stores.newsfeed.filter == 'subscribed') {
           stores.newsfeed.scrollToTop();
           stores.newsfeed.feedStore.refresh(true)
         } else {
@@ -109,7 +109,7 @@ export default class NewsfeedScreen extends Component {
       </View>
     );
 
-    if (newsfeed.filter == 'subscribed' && featuresService.has('es-feeds')) {
+    if (newsfeed.filter == 'subscribed' ) {
       return (
         <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>
           <FeedList

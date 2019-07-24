@@ -50,6 +50,7 @@ class NewsfeedStore {
    * Scroll to top
    */
   scrollToTop() {
+    if (this.filter !== 'subscribed') return;
     this.listRef.scrollToTop(false);
   }
 
