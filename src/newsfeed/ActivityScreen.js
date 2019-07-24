@@ -34,10 +34,6 @@ export default class ActivityScreen extends Component {
 
   entityStore = new SingleEntityStore();
 
-  state = {
-    error: null
-  };
-
   /**
    * Constructor
    * @param {object} props
@@ -50,37 +46,18 @@ export default class ActivityScreen extends Component {
     this.comments = commentsStoreProvider.get();
 
     if (params.entity && (params.entity.guid || params.entity.entity_guid)) {
-      this.entityStore.setEntity(ActivityModel.checkOrCreate(params.entity));
 
-      const entity = this.entityStore.entity;
+      const urn = 'urn:entity:' + (params.entity.guid || params.entity.entity_guid);
 
-      if (entity._list && entity._list.metadataServie) {
-        entity._list.metadataServie.pushSource('single');
+      this.entityStore.loadEntity(urn, ActivityModel.checkOrCreate(params.entity));
+
+      // change metadata source
+      if (params.entity._list && params.entity._list.metadataServie) {
+        params.entity._list.metadataServie.pushSource('single');
       }
-    }
-  }
-
-  /**
-   * Component did mount
-   */
-  async componentDidMount() {
-    const params = this.props.navigation.state.params;
-
-    if (!this.entityStore.entity || params.hydrate) {
-      try {
-        const resp = await getSingle(params.guid || params.entity.guid || params.entity.entity_guid);
-
-        // if it has a list asigned we set it to the new entity
-        if (this.entityStore.entity) {
-          this.entityStore.entity.update(resp.activity);
-        } else {
-          this.entityStore.setEntity(ActivityModel.checkOrCreate(resp.activity));
-        }
-      } catch (e) {
-        this.setState({error: true});
-        logService.exception('[ActivityScreen]',e);
-        //console.error('Cannot hydrate activity', e);
-      }
+    } else {
+      const urn = 'urn:entity:' + params.guid;
+      this.entityStore.loadEntity(urn);
     }
   }
 
@@ -119,11 +96,11 @@ export default class ActivityScreen extends Component {
    * Render
    */
   render() {
-    if (!this.entityStore.entity && !this.state.error) return <CenteredLoading />;
+    if (!this.entityStore.entity && !this.entityStore.errorLoading) return <CenteredLoading />;
     return (
       <View style={[CS.flexContainer, CS.backgroundWhite]}>
         {
-          !this.state.error ?
+          !this.entityStore.errorLoading ?
             <CommentList
               header={this.getHeader()}
               entity={this.entityStore.entity}
