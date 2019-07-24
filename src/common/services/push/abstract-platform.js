@@ -1,4 +1,5 @@
 import api from '../api.service';
+import logService from '../log.service';
 
 /**
  * Abstract Platform
@@ -24,7 +25,7 @@ export default class AbstractPlatform {
       api.post('api/v1/notifications', {
         service: service,
         token: this.token
-      });
+      }).catch(err => logService.exception('[PushService]', err));
     } else {
       this.shouldRegister = true;
     }

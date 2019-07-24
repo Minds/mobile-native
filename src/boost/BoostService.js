@@ -1,5 +1,5 @@
 import api from './../common/services/api.service';
-import { abort } from '../common/helpers/abortableFetch';
+import { abort, isNetworkFail } from '../common/helpers/abortableFetch';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 
@@ -25,7 +25,7 @@ export default class BoostService {
       }
 
     } catch (err) {
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[BoostService]', err);
       }
       throw new Error(i18n.t('boosts.errorGet'));

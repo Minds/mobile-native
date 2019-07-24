@@ -1,7 +1,10 @@
-import { observable, action } from "mobx";
+import { observable, action, toJS } from "mobx";
 import groupsService from "./GroupsService";
 import socketService from '../common/services/socket.service';
 import logService from "../common/services/log.service";
+import GroupModel from "./GroupModel";
+import storageService from "../common/services/storage.service";
+import { isNetworkFail } from "../common/helpers/abortableFetch";
 
 /**
  * Groups bar store
@@ -9,6 +12,8 @@ import logService from "../common/services/log.service";
 class GroupsBarStore {
   @observable groups = [];
   @observable loading = false;
+
+  showingLocal = false;
 
   offset = '';
   muted = [];
@@ -19,16 +24,35 @@ class GroupsBarStore {
   }
 
   @action
-  setGroups(groups) {
+  setGroups(groups, replace = false, listen = true) {
+    if (replace) this.groups = [];
     groups.forEach(group => {
-      this.listenMarkers(group);
-      this.groups.push(group);
+      if (listen) this.listenMarkers(group);
+      this.groups.push(GroupModel.checkOrCreate(group));
     });
   }
 
   @action
   setLoading(value) {
     this.loading = value;
+  }
+
+  persist() {
+    const data = toJS(this.groups);
+    storageService.setItem('groupsBar', data);
+  }
+
+  async readLocal() {
+    const groups = await storageService.getItem('groupsBar');
+
+    if (groups) {
+      this.showingLocal = true;
+      this.setGroups(groups, true, false);
+    }
+  }
+
+  clearLocal() {
+    storageService.removeItem('groupsBar');
   }
 
   /**
@@ -145,11 +169,15 @@ class GroupsBarStore {
     this.setLoading(true);
     try {
       const groups = await groupsService.loadMyGroups(this.offset);
-      this.setGroups(groups.entities);
+      this.setGroups(groups.entities, this.showingLocal);
+      if (this.showingLocal) {
+        this.showingLocal = false;
+      }
+      this.persist();
       this.offset = groups.offset;
       return groups;
     } catch (err) {
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[GroupsBarStore]', err);
       }
       throw err; //continue error flow

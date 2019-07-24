@@ -13,7 +13,7 @@ import session from './../common/services/session.service';
 import crypto from './../common/services/crypto.service';
 import socket from '../common/services/socket.service';
 import badge from '../common/services/badge.service';
-import { abort } from '../common/helpers/abortableFetch';
+import { abort, isNetworkFail } from '../common/helpers/abortableFetch';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 
@@ -157,7 +157,7 @@ class MessengerListStore {
 
       this.setErrorLoading(true);
 
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[MessengerListStore]', err);
       }
     } finally {

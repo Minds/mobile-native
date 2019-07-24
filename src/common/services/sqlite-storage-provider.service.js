@@ -1,5 +1,4 @@
 import SqliteService from "./sqlite.service";
-import SqliteStorageAdapter from "../../lib/minds-sync/adapters/SqliteStorageAdapter";
 
 /**
  * Sqlite storage provider service
@@ -9,8 +8,9 @@ class SqliteStorageProviderService {
     this.dbService = new SqliteService('minds1.db');
   }
 
-  get() {
-    return new SqliteStorageAdapter(this.dbService);
+  async get() {
+    await this.dbService.init();
+    return this.dbService;
   }
 }
 

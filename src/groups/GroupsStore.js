@@ -5,6 +5,7 @@ import { MINDS_FEATURES } from '../config/Config';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import GroupModel from './GroupModel';
 import logService from '../common/services/log.service';
+import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 /**
  * Groups store
@@ -45,7 +46,7 @@ class GroupsStore {
       // ignore aborts
       if (err.code === 'Abort') return;
       this.list.setErrorLoading(true);
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[GroupsStore]', err);
       }
     } finally {

@@ -35,6 +35,9 @@ import session from '../common/services/session.service';
 import logService from '../common/services/log.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import i18n from '../common/services/i18n.service';
+import FeedList from '../common/components/FeedList';
+import featuresService from '../common/services/features.service';
+import channelsService from '../common/services/channels.service';
 
 /**
  * Channel Screen
@@ -81,11 +84,8 @@ export default class ChannelScreen extends Component {
     const params = this.props.navigation.state.params;
 
     if (params.entity) {
-      //grab stale channel data for quick load
-      this.props.channel.store(params.entity.guid)
-        .setChannel(params.entity);
       // load channel from endpoint
-      this.loadChannel(params.entity.guid);
+      this.loadChannel(params.entity);
 
     } else if (params.username) {
       await this.loadByUsername(params.username);
@@ -100,12 +100,14 @@ export default class ChannelScreen extends Component {
     this.props.channel.store(this.guid).markInactive();
   }
 
-  async loadChannel(guid) {
-    let isOwner = guid == session.guid;
+  async loadChannel(channelOrGuid) {
+
+    const isModel = channelOrGuid instanceof UserModel;
+    const guid = isModel ? channelOrGuid.guid : channelOrGuid;
     const store = this.props.channel.store(guid);
 
     try {
-      const channel = await store.load(true);
+      const channel = await store.load(isModel ? channelOrGuid : undefined);
       if (channel) {
         this.props.channel.addVisited(channel);
       }
@@ -120,11 +122,7 @@ export default class ChannelScreen extends Component {
       return false;
     }
 
-    if(isOwner) {
-      store.feedStore.refresh();
-    } else {
-      store.feedStore.loadFeed();
-    }
+    store.feedStore.refresh();
   }
 
   //TODO: make a reverse map so we can cache usernames
@@ -261,16 +259,26 @@ export default class ChannelScreen extends Component {
 
     const emptyRender = () => <View />;
 
+    const list = featuresService.has('es-feeds') ?
+    <FeedList
+      feedStore={feed.feedStore}
+      renderActivity={renderActivity}
+      header={header}
+      navigation={this.props.navigation}
+      emptyMessage={emptyMessage}
+    /> :
+    <NewsfeedList
+      newsfeed={feed}
+      renderActivity={renderActivity}
+      header={header}
+      navigation={this.props.navigation}
+      emptyMessage={emptyMessage}
+    />;
+
+
     return (
       <View style={CommonStyle.flexContainer}>
-        {!channel.blocked && <NewsfeedList
-          newsfeed={feed}
-          renderActivity={renderActivity}
-          guid={guid}
-          header={header}
-          navigation={this.props.navigation}
-          emptyMessage={emptyMessage}
-        />}
+        {!channel.blocked && list}
 
         {/* Not using FlatList breaks header layout */}
         {channel.blocked && <FlatList

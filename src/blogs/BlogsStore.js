@@ -5,6 +5,7 @@ import BlogModel from './BlogModel';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import { MINDS_FEATURES } from '../config/Config';
 import logService from '../common/services/log.service';
+import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 /**
  * Blogs store
@@ -37,7 +38,7 @@ class BlogsStore {
       return response;
     } catch (err) {
 
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[BlogStore] loadList', err);
       }
       this.list.setErrorLoading(true);

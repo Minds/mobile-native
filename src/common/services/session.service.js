@@ -59,8 +59,10 @@ class SessionService {
   async init() {
     try {
 
-      const { access_token, access_token_expires } = await this.sessionStorage.getAccessToken();
-      const { refresh_token, refresh_token_expires } = await this.sessionStorage.getRefreshToken();
+      const [accessToken, refreshToken, user] = await this.sessionStorage.getAll();
+
+      const { access_token, access_token_expires } = accessToken;
+      const { refresh_token, refresh_token_expires } = refreshToken;
 
       this.setRefreshToken(refresh_token);
       this.setToken(access_token);
@@ -77,7 +79,7 @@ class SessionService {
       }
 
       // ensure user loaded before activate the session
-      await this.loadUser();
+      await this.loadUser(user);
 
       this.setLoggedIn(true);
 
@@ -90,9 +92,7 @@ class SessionService {
     }
   }
 
-  async loadUser() {
-    let user = await sessionStorage.getUser();
-
+  async loadUser(user) {
     if (user) {
       appStores.user.setUser(user);
       // we update the user without wait

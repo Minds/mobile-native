@@ -1,16 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Channel screen component should renders correctly 1`] = `
-<ForwardRef(View)
+<View
   style={
     Object {
       "flex": 1,
     }
   }
 >
-  <NewsfeedList
+  <FeedList
     emptyMessage={null}
-    guid="activityguid0"
     header={
       <View>
         <ChannelHeader
@@ -309,11 +308,6 @@ exports[`Channel screen component should renders correctly 1`] = `
         },
       }
     }
-    newsfeed={
-      Object {
-        "setChannel": [MockFunction],
-      }
-    }
     renderActivity={null}
   />
   <CaptureFab
@@ -359,5 +353,5 @@ exports[`Channel screen component should renders correctly 1`] = `
       }
     }
   />
-</ForwardRef(View)>
+</View>
 `;

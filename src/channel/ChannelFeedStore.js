@@ -18,6 +18,9 @@ import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
 import logService from '../common/services/log.service';
+import featuresService from '../common/services/features.service';
+import FeedStore from '../common/stores/FeedStore';
+import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 /**
  * Channel Feed store
@@ -30,6 +33,11 @@ export default class ChannelFeedStore {
   channel;
 
   /**
+   * @var {FeedStore}
+   */
+  feedStore;
+
+  /**
    * Channel guid
    */
   guid = null;
@@ -39,7 +47,17 @@ export default class ChannelFeedStore {
     this.buildStores();
   }
 
+  get esFeedfilter () {
+    switch (this.filter) {
+      case 'feed': return 'activities';
+      case 'images': return 'images';
+      case 'videos': return 'videos';
+      case 'blogs': return 'blogs';
+    }
+  }
+
   buildStores() {
+    // TODO: remove this when es-feeds is in production
     this.stores = {
       feed: {
         list: new OffsetFeedListStore('shallow', true),
@@ -69,6 +87,10 @@ export default class ChannelFeedStore {
     extendObservable(this.stores.blogs,{
       loading: false
     });
+
+    if (featuresService.has('es-feeds')) {
+      this.feedStore = new FeedStore(true);
+    }
   }
 
   @action
@@ -120,6 +142,16 @@ export default class ChannelFeedStore {
    * @param {boolean} refresh
    */
   async loadFeed(refresh = false) {
+
+    if (featuresService.has('es-feeds')) {
+      if (refresh) this.feedStore.clear();
+      this.feedStore.setEndpoint(`api/v2/feeds/container/${this.guid}/${this.esFeedfilter}`)
+        .setLimit(12)
+        .fetchRemoteOrLocal();
+
+      return;
+    }
+
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
     }
@@ -180,7 +212,7 @@ export default class ChannelFeedStore {
       // ignore aborts
       if (err.code === 'Abort') return;
       store.list.setErrorLoading(true);
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[ChannelFeedStore] _loadFeed', err);
       }
     } finally {
@@ -207,7 +239,7 @@ export default class ChannelFeedStore {
       // ignore aborts
       if (err.code === 'Abort') return;
       store.list.setErrorLoading(true);
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[ChannelFeedStore] _loadImagesFeed', err);
       }
     } finally {
@@ -230,10 +262,10 @@ export default class ChannelFeedStore {
       feed.entities = ActivityModel.createMany(feed.entities);
       this.assignRowKeys(feed, store);
       store.list.setList(feed, refresh);
-    } catch (error) {
+    } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[ChannelFeedStore] _loadVideosFeed', err);
       }
       store.list.setErrorLoading(true);
@@ -262,7 +294,7 @@ export default class ChannelFeedStore {
       store.list.setList(feed, refresh);
     } catch (err) {
       store.list.setErrorLoading(true);
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[ChannelFeedStore] _loadBlogsFeed', err);
       }
     } finally {
@@ -276,6 +308,7 @@ export default class ChannelFeedStore {
     this.isTiled = false;
     this.filter      = 'feed';
     this.showrewards = false;
+    this.feedStore.clear();
   }
 
   @action
@@ -284,18 +317,34 @@ export default class ChannelFeedStore {
     if (this.filter == 'rewards') {
       return;
     }
+
+    if (featuresService.has('es-feeds')) {
+      this.feedStore.clear();
+      this.feedStore.setEndpoint(`api/v2/feeds/container/${this.guid}/${this.esFeedfilter}`)
+        .setLimit(12)
+        .fetchRemoteOrLocal();
+
+      return;
+    }
+
     // reference because it could change after the await
     const list  = this.list;
     //this.list.refresh();
     list.clearList();
     await this.loadFeed(true);
-    this.viewed = [];
     list.refreshDone();
   }
 
   @action
   setFilter(filter) {
     this.filter = filter;
-    this.refresh();
+    if (featuresService.has('es-feeds')) {
+      this.feedStore.setEndpoint(`api/v2/feeds/container/${this.guid}/${this.esFeedfilter}`)
+        .setIsTiled(filter === 'images' || filter === 'videos')
+        .clear()
+        .fetchRemoteOrLocal();
+    } else {
+      this.refresh();
+    }
   }
 }

@@ -8,6 +8,7 @@ import wireService from '../wire/WireService';
 import ChannelFeedStore from './ChannelFeedStore';
 import UserModel from './UserModel';
 import logService from '../common/services/log.service';
+import channelsService from '../common/services/channels.service';
 
 /**
  * Channel Store
@@ -60,15 +61,12 @@ export default class ChannelStore {
   }
 
   @action
-  async load(update = false) {
-    const { channel } = await channelService.load(this.guid);
+  async load(defaultChannel) {
+    const channel = await channelsService.get(this.guid, defaultChannel);
+
     if (channel) {
       this.loaded = true;
-      if (update && this.channel.update) {
-        this.channel.update(channel);
-      } else {
-        this.setChannel(channel);
-      }
+      this.setChannel(channel);
       return channel;
     }
     return false;

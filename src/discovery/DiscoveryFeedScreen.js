@@ -30,6 +30,7 @@ import ErrorLoading from '../common/components/ErrorLoading';
 import GroupsListItem from '../groups/GroupsListItem'
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
+import FeedList from '../common/components/FeedList';
 
 /**
  * Discovery Feed Screen
@@ -44,42 +45,25 @@ export default class DiscoveryFeedScreen extends Component {
     }
   }
 
-  viewOptsFeed = {
-    viewAreaCoveragePercentThreshold: 50,
-    minimumViewTime: 300
-  }
-
-  /**
-   * On viewavleItemsChange
-   */
-  onViewableItemsChanged = ({viewableItems}) => {
-    viewableItems.forEach((item) => {
-      this.props.discovery.feedStore.list.addViewed(item.item);
-    });
-  }
-
   /**
    * Render
    */
   render() {
-    const list = this.props.discovery.feedStore.list;
+    const store = this.props.discovery.feedStore.list;
 
     return (
-      <FlatList
-        data={list.entities.slice()}
-        renderItem={this.renderActivity}
+      <FeedList
+        feedStore={store}
         ListFooterComponent={this.getFooter}
         keyExtractor={this.keyExtractor}
-        onEndReached={this.loadFeed}
         initialNumToRender={3}
         style={[CS.backgroundWhite, CS.flexContainer]}
+        navigation={this.props.navigation}
         horizontal={false}
         maxToRenderPerBatch={3}
         windowSize={11}
         removeClippedSubviews={false}
         keyboardShouldPersistTaps={'handled'}
-        onViewableItemsChanged={this.onViewableItemsChanged}
-        viewabilityConfig={this.viewOptsFeed}
       />
     )
   }
@@ -101,7 +85,7 @@ export default class DiscoveryFeedScreen extends Component {
   /**
    * Key extractor
    */
-  keyExtractor = item => item.rowKey;
+  keyExtractor = item => item.urn;
 
   /**
    * Get list footer
@@ -142,17 +126,6 @@ export default class DiscoveryFeedScreen extends Component {
     }
 
     this.props.discovery.feedStore.loadList(false, false, 12);
-  }
-
-  /**
-   * Render activity item
-   */
-  renderActivity = (row) => {
-    return (
-      <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false}/>
-      </ErrorBoundary>
-    );
   }
 }
 

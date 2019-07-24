@@ -19,6 +19,8 @@ export default class GroupModel extends BaseModel {
  * Define model observables
  */
 decorate(GroupModel, {
+  'briefdescription': observable,
+  'name': observable,
   'is:member': observable,
   'members:count': observable,
 });

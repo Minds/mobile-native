@@ -24,6 +24,7 @@ import RichEmbedStore from '../common/stores/RichEmbedStore';
 import logService from '../common/services/log.service';
 import NavigationService from '../navigation/NavigationService';
 import BaseModel from '../common/BaseModel';
+import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 const COMMENTS_PAGE_SIZE = 6;
 
@@ -157,7 +158,7 @@ export default class CommentsStore {
       } else {
         this.setErrorLoadingNext(true);
       }
-      if (!(typeof err === 'TypeError' && err.message === 'Network request failed')) {
+      if (!isNetworkFail(err)) {
         logService.exception('[CommentsStore] loadComments', err);
       }
     } finally {

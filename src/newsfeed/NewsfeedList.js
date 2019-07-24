@@ -158,7 +158,7 @@ export default class NewsfeedList extends Component {
         style={styles.listView}
         initialNumToRender={6}
         windowSize={11}
-        getItemLayout={getItemLayout}
+        //getItemLayout={getItemLayout}
         // removeClippedSubviews={true}
         ListEmptyComponent={empty}
         viewabilityConfig={this.viewOpts}

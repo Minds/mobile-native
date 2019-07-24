@@ -19,11 +19,13 @@ import stores from '../../AppStores';
 import { CommonStyle } from '../styles/Common';
 import GroupsBar from '../groups/GroupsBar';
 import testID from '../common/helpers/testID';
+import FeedList from '../common/components/FeedList';
+import featuresService from '../common/services/features.service';
 
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user')
+@inject('newsfeed', 'user', 'discovery')
 @observer
 export default class NewsfeedScreen extends Component {
 
@@ -34,7 +36,12 @@ export default class NewsfeedScreen extends Component {
     tabBarOnPress: ({ navigation, defaultHandler }) => {
       // tab button tapped again?
       if (navigation.isFocused()) {
-        stores.newsfeed.refresh();
+        if (featuresService.has('es-feeds')) {
+          stores.newsfeed.scrollToTop();
+          stores.newsfeed.feedStore.refresh(true)
+        } else {
+          stores.newsfeed.refresh();
+        }
         return;
       }
       defaultHandler();
@@ -52,17 +59,32 @@ export default class NewsfeedScreen extends Component {
    * Load data on mount
    */
   componentWillMount() {
-    this.props.newsfeed.loadFeed();
+    this.loadFeed();
     // this.props.newsfeed.loadBoosts();
 
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       const params = this.props.navigation.state.params;
       if (params && params.prepend) {
+
         this.props.newsfeed.prepend(params.prepend);
+
         // we clear the parameter to prevent prepend it again on goBack
         this.props.navigation.setParams({prepend: null});
       }
     });
+  }
+
+  async loadFeed() {
+    if (featuresService.has('es-feeds')) {
+      await this.props.newsfeed.feedStore.fetchLocalOrRemote();
+    } else {
+      await this.props.newsfeed.loadFeed();
+    }
+
+    // load groups after the feed
+    await this.groupsBar.wrappedInstance.initialLoad();
+    // load discovery after the feed is loaded
+    this.props.discovery.fetch();
   }
 
   /**
@@ -72,18 +94,34 @@ export default class NewsfeedScreen extends Component {
     this.disposeEnter.remove();
   }
 
+  setGroupsBarRef = (r) => this.groupsBar = r;
+
   render() {
     const newsfeed = this.props.newsfeed;
 
     const header = (
       <View>
         <Topbar />
-        <GroupsBar/>
+        <GroupsBar ref={this.setGroupsBarRef}/>
         { false ?
           <BoostsCarousel boosts={newsfeed.boosts} navigation={this.props.navigation} store={newsfeed} me={this.props.user.me}/>
           : null }
       </View>
     );
+
+    if (newsfeed.filter == 'subscribed' && featuresService.has('es-feeds')) {
+      return (
+        <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>
+          <FeedList
+            ref={newsfeed.setListRef}
+            feedStore={newsfeed.feedStore}
+            header={header}
+            navigation={this.props.navigation}
+          />
+          <CaptureFab navigation={this.props.navigation}/>
+        </View>
+      );
+    }
 
     return (
       <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>

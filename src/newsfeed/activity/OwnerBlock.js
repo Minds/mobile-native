@@ -6,13 +6,14 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   View
 } from 'react-native';
 
 import {
   MINDS_CDN_URI
 } from '../../config/Config';
+
+import FastImage from 'react-native-fast-image';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
@@ -72,7 +73,7 @@ export default class OwnerBlock extends PureComponent {
     return (
       <View style={styles.container}>
         <DebouncedTouchableOpacity onPress={this._navToChannel}>
-          <Image source={avatarSrc} style={styles.avatar}/>
+          <FastImage source={avatarSrc} style={styles.avatar}/>
         </DebouncedTouchableOpacity>
         <View style={styles.body}>
           <View style={styles.nameContainer}>

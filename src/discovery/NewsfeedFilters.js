@@ -8,6 +8,7 @@ import {
   View,
   LayoutAnimation,
   TouchableHighlight,
+  UIManager,
   StyleSheet,
   Platform,
 } from 'react-native';
@@ -84,6 +85,13 @@ export default class NewsfeedFilters extends Component {
   @autobind
   setNsfw(value) {
     this.props.store.setNsfw(value);
+  }
+
+  constructor(props) {
+    super(props);
+    if (Platform.OS === 'android') {
+        UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
   }
 
   /**

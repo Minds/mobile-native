@@ -16,7 +16,7 @@
         "error": "PERDÓN, NO SE PUEDE CARGAR LA ACTIVIDAD",
         "tryAgain": "POR FAVOR INTENTA MAS TARDE",
         "loadLater": "CARGAR SIGUIENTES",
-        "remindBlocked":"Este remind no esta disponible porque bloqueaste a"
+        "remindBlocked": "Este remind no esta disponible porque bloqueaste a"
     },
     "auth": {
         "login": "INGRESAR",
@@ -39,16 +39,16 @@
     },
     "blockchain": {
         "boostCreate": "Impulsar Red {{tokensAmount}} Minds Tokens. {{message}}",
-        "boostPeerCreate": "Impulsar Canal por {{tokensAmount}} Minds Tokens to {{receiver}}.{{message}}",
-        "tokenApprove": "aprobar {{address}} para gastar {{tokensAmount}} tokens en el futuro",
+        "boostPeerCreate": "Impulsar Canal por {{tokensAmount}} Minds Tokens to {{receiver}}. {{message}}",
+        "tokenApprove": "aprobar {{address}} para gastar {{tokensAmount}} tokens en el futuro.  {{message}}",
         "wire": "Enviar {{tokensAmount}} Minds Tokens a {{receiver}}.{{message}}",
         "withdraw": "Solicitar un retiro de {{tokensAmount}} Minds Tokens. {{gasEther}} ETH serán transferidos para cubrir el costo de gas. Si envías una cantidad baja de gas el retiro puede fallar. {{message}}",
         "approveTransaction": "apruebo la transacción",
         "yesApprove": "Si, la apruebo",
         "gasPrice": "precio del Gas",
-        "gasPriceDefault": "precio del Gas",
+        "gasPriceDefault": "precio del Gas (por defecto: {{gasPrice}})",
         "gasLimit": "limite del Gas",
-        "gasLimitDefault": "limite del Gas",
+        "gasLimitDefault": "limite del Gas (por defecto: {{gasLimit}})",
         "ethToTransfer": "ETH a transferir",
         "maxGasFee": "Pago máximo de GAS",
         "canAffordMessage": "Tienes actualmente {{amount}} ETH. Esta cantidad puede ser insuficiente para cubrir el costo de gas de la red Ethereum para la transacción. Intenta bajando el costo del gas.\n",
@@ -91,7 +91,7 @@
         "blogs": "Blog",
         "errorLoading": "Error cargando este blog.",
         "error": "PERDON, NO PUEDO CARGAR ESTE BLOG",
-        "blogListEmpty" : "Esta lista está vacía"
+        "blogListEmpty": "La lista está vacía"
     },
     "boosts": {
         "selected": "SELECCIONADO",
@@ -217,9 +217,13 @@
         "banConfirm": "Estás seguro? Quieres suspender a este usuario?",
         "errorLoading": "Error cargando grupos",
         "confirmKick": "Estás seguro? Quieres expulsar a este usuario?",
+<<<<<<< locales/es.json
         "listMembersCount": "Miembros",
         "disableConversations":"Inhabilitar conversaciones",
         "enableConversations":"Habilitar conversaciones"
+=======
+        "listMembersCount": "Miembros {{count}}"
+>>>>>>> locales/es.json
     },
     "keychain": {
         "unlockMessage": "Desbloquear {{keychain}} keychain",
@@ -465,7 +469,6 @@
         "networkScore": "Puntaje Red",
         "transactionsTitle": "Transacciones",
         "transactionsDescription": "Una lista de transacciones que has hecho con tu dirección",
-        "transactionsEmpty": "Tu lista de transacciones está vacía",
         "withdrawTitle": "Retirar",
         "withdrawDescription": "Solicitar un retiro de tus tokens de recompensa a tu dirección OnChain",
         "contributionsTitle": "Contribuciones",
@@ -496,7 +499,8 @@
             "errorAmountNegative": "El monto debería ser un número positivo"
         },
         "inviteFriend": "Invitar un amigo",
-        "inviteFriendDescription": "Invitar un amigo y ganar recompensas"
+        "inviteFriendDescription": "Invitar un amigo y ganar recompensas",
+        "transactionsEmpty": "Tu lista de transacciones está vacía"
     },
     "wire": {
         "amountMonth": "{{amount}}/month",
@@ -746,5 +750,9 @@
     "updateAvailable": "Actualización disponible",
     "rememberTomorrow": "Recuerdame más tarde",
     "enableComments": "Habilitar comentarios",
-    "disableComments": "Inhabilitar comentarios"
+    "disableComments": "Inhabilitar comentarios",
+    "noInternet": "Sin conexión a internet",
+    "offline": "Fuera de línea",
+    "cantReachServer": "No puedo conectarme al servidor",
+    "showingStored": "Mostrando datos guardados"
 }
