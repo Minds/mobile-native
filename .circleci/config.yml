@@ -1,0 +1,149 @@
+version: 2
+jobs:
+  node:
+    working_directory: ~/mobile-native
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+
+      - run: yarn install
+
+      - save_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+
+      - run:
+          name: jest tests
+          command: |
+            mkdir -p test-results/jest
+            yarn run test --maxWorkers=2
+          environment:
+            JEST_JUNIT_OUTPUT: test-results/jest/junit.xml
+
+      - persist_to_workspace:
+          root: ~/mobile-native
+          paths:
+            - node_modules
+
+      - store_test_results:
+          path: test-results
+
+      - store_artifacts:
+          path: test-results
+  
+  ios:
+    macos:
+      xcode: "10.1"
+    working_directory: ~/mobile-native
+
+    # use a --login shell so our "set Ruby version" command gets picked up for later steps
+    shell: /bin/bash --login -o pipefail
+
+    steps:
+      - checkout
+
+      - run:
+          name: set Ruby version
+          command:  echo "ruby-2.4" > ~/.ruby-version
+
+      - restore_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+
+      # not using a workspace here as Node and Yarn versions
+      # differ between our macOS executor image and the Docker containers above
+      - run: yarn install
+
+      - save_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+          paths:
+            - ~/.cache/yarn
+
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+          paths:
+            - node_modules
+
+      - restore_cache:
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+
+      - run:
+          command: gem update --system && gem install bundler && bundle install
+          working_directory: ios
+
+      - save_cache:
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+          paths:
+            - vendor/bundle
+
+      ### TODO- get tests running with fastlane
+
+      #- run:
+      #    command: bundle exec fastlane test
+      #    working_directory: ios
+
+      #- run:
+      #    name: set up test results
+      #    working_directory: ios
+      #    when: always
+      #    command: |
+      #      mkdir -p test-results/fastlane test-results/xcode
+      #      mv fastlane/report.xml test-results/fastlane
+      #      mv fastlane/test_output/report.junit test-results/xcode/junit.xml
+      #- store_test_results:
+      #    path: ios/test-results
+
+      #- store_artifacts:
+      #    path: ios/test-results
+
+      - run: 
+          name: Build release .ipa
+          command: fastlane buildrelease
+          working_directory: ios
+          branches:
+            only:
+              - /stable-*/
+              - /release-*/
+              - test/circle-ci
+
+      - run: 
+          name: Upload to crashalytics 
+          command: echo "TODO"
+          working_directory: ios
+          branches:
+            only:
+              - /release-*/
+
+      - run:
+          name: Upload to Testflight release
+          command: fastlane testflight
+          working_directory: ios
+          branches:
+            only:
+              - /stable-*/
+              - /release-*/
+              - test/circle-ci
+
+workflows:
+  version: 2
+  node-ios:
+    jobs:
+      - node
+      - ios:
+          requires:
+            - node
