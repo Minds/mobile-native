@@ -270,7 +270,7 @@ export default class BaseModel {
   }
 
   @action
-  async toggleAllowComments(){
+  async toggleAllowComments() {
     const data = await toggleAllow(this.guid, !this.allow_comments);
     this.allow_comments = !this.allow_comments;
   }

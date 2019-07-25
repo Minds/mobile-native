@@ -84,8 +84,9 @@ export default class ActivityActions extends Component {
         }
       }
 
-      if(featuresService.has('allow-comments-toggle'))
+      if (featuresService.has('allow-comments-toggle')) {
         options.push( this.props.entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+      }
 
     } else {
 
@@ -139,7 +140,7 @@ export default class ActivityActions extends Component {
         { cancelable: false }
       );
 
-      if (this.props.navigation.state.routeName == 'Activity'){
+      if (this.props.navigation.state.routeName == 'Activity') {
         this.props.navigation.goBack();
       }
     } catch (err) {

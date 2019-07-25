@@ -198,8 +198,8 @@ export default class BlogsViewScreen extends Component {
     this.ActionSheet.show();
   }
   
-  async handleActionSheetSelection(option){
-    switch(option){
+  async handleActionSheetSelection(option) {
+    switch(option) {
       case i18n.t('disableComments'):
       case i18n.t('enableComments'):
         try {

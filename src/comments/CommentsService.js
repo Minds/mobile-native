@@ -108,7 +108,7 @@ export function updateComment(guid, description) {
  * @param {string} guid 
  * @param {boolean} state 
  */
-export function toggleAllowComments(guid, state){
+export function toggleAllowComments(guid, state) {
   return api.post(`api/v2/permissions/comments/${guid}`,{
     allowed: state
   });

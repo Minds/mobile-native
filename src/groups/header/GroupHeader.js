@@ -138,8 +138,9 @@ export default class GroupHeader extends Component {
       { text: i18n.t('members').toUpperCase(), badge: abbrev(group['members:count'], 0), value: 'members' }
     ]
 
-    if(!group.conversationDisabled)
+    if (!group.conversationDisabled) {
       typeOptions.push(conversation);
+    }
 
     const searchBar = this.props.store.tab == 'members' ?
       <SearchView
@@ -178,7 +179,7 @@ export default class GroupHeader extends Component {
         this.props.store.loadMembers();
         break;
       case 'conversation':
-        if(group.conversationDisabled) return;
+        if (group.conversationDisabled) return;
 
         this.props.groupsBar.markAsRead(group, 'conversation');
         break;
@@ -220,8 +221,8 @@ export default class GroupHeader extends Component {
     this.ActionSheet.show();
   }
   
-  async handleActionSheetSelection(option){
-    switch(option){
+  async handleActionSheetSelection(option) {
+    switch(option) {
       case i18n.t('groups.disableConversations'):
       case i18n.t('groups.enableConversations'):
         try{

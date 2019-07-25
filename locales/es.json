@@ -217,13 +217,9 @@
         "banConfirm": "Estás seguro? Quieres suspender a este usuario?",
         "errorLoading": "Error cargando grupos",
         "confirmKick": "Estás seguro? Quieres expulsar a este usuario?",
-<<<<<<< locales/es.json
         "listMembersCount": "Miembros",
         "disableConversations":"Inhabilitar conversaciones",
         "enableConversations":"Habilitar conversaciones"
-=======
-        "listMembersCount": "Miembros {{count}}"
->>>>>>> locales/es.json
     },
     "keychain": {
         "unlockMessage": "Desbloquear {{keychain}} keychain",

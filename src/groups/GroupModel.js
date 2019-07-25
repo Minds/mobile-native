@@ -9,7 +9,7 @@ export default class GroupModel extends BaseModel {
   @observable conversationDisabled = false;
 
   @action
-  async toggleConversationDisabled(){
+  async toggleConversationDisabled() {
     await groupsService.toggleConversationDisabled(this.guid, !this.conversationDisabled);
     this.conversationDisabled = !this.conversationDisabled;
   }
