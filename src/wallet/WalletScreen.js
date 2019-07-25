@@ -43,15 +43,7 @@ export default class WalletScreen extends Component {
       {/*<IonIcon name="ios-card" size={18} color='#444' style={{paddingRight: 10}} onPress={() => navigation.navigate('NotificationsSettings')} />
       <Text>PURCHASE</Text>*/}
     </View>
-    ),
-    tabBarOnPress: ({ navigation, defaultHandler }) => {
-      // tab button tapped again?
-      if (navigation.isFocused()) {
-        this.triggerRender(stores.wallet);
-        return;
-      }
-      defaultHandler();
-    }
+    )
   });
 
   static navigationOptions = {
@@ -60,20 +52,7 @@ export default class WalletScreen extends Component {
     )
   }
 
-  triggerRender(wallet){
-    wallet.ledger.list.clearList();
-    wallet.refresh();
-  }
-
   componentWillMount() {
-
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      // ignore back navigation
-      if (s.action.type === 'Navigation/NAVIGATE' && s.action.routeName === 'Wallet') {
-        this.triggerRender(this.props.wallet);
-      }
-    });
-
     if (FeaturesService.has('crypto')) {
       this.disposeEnter = this.props.navigation.addListener('didFocus', async () => {
         if ((await this.props.wallet.canShowOnboarding()) && (!this.props.user.hasRewards() || !this.props.user.hasEthWallet())) {
@@ -86,7 +65,6 @@ export default class WalletScreen extends Component {
   }
 
   componentWillUnmount() {
-    this.props.wallet.ledger.list.clearList();
     if (this.disposeEnter)
       this.disposeEnter();
   }
@@ -96,7 +74,7 @@ export default class WalletScreen extends Component {
       <View style={CommonStyle.flexContainer}>
         <ScrollView style={ styles.mainContainer }
           keyboardShouldPersistTaps='always'>
-          <WalletBalanceTokens />
+          <WalletBalanceTokens navigation={this.props.navigation}/>
           <WalletOverviewView />
           <WalletScoresView />
           <View>
