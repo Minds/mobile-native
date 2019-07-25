@@ -29,6 +29,7 @@ import { CommonStyle } from '../styles/Common';
 import FeaturesService from '../common/services/features.service';
 import shareService from "../share/ShareService";
 import i18n from '../common/services/i18n.service';
+import stores from '../../AppStores';
 
 /**
  * Wallet screen
@@ -42,7 +43,15 @@ export default class WalletScreen extends Component {
       {/*<IonIcon name="ios-card" size={18} color='#444' style={{paddingRight: 10}} onPress={() => navigation.navigate('NotificationsSettings')} />
       <Text>PURCHASE</Text>*/}
     </View>
-    )
+    ),
+    tabBarOnPress: ({ navigation, defaultHandler }) => {
+      // tab button tapped again?
+      if (navigation.isFocused()) {
+        this.triggerRender(stores.wallet);
+        return;
+      }
+      defaultHandler();
+    }
   });
 
   static navigationOptions = {
@@ -51,7 +60,19 @@ export default class WalletScreen extends Component {
     )
   }
 
+  triggerRender(wallet){
+    wallet.ledger.list.clearList();
+    wallet.refresh();
+  }
+
   componentWillMount() {
+
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+      // ignore back navigation
+      if (s.action.type === 'Navigation/NAVIGATE' && s.action.routeName === 'Wallet') {
+        this.triggerRender(this.props.wallet);
+      }
+    });
 
     if (FeaturesService.has('crypto')) {
       this.disposeEnter = this.props.navigation.addListener('didFocus', async () => {
@@ -65,6 +86,7 @@ export default class WalletScreen extends Component {
   }
 
   componentWillUnmount() {
+    this.props.wallet.ledger.list.clearList();
     if (this.disposeEnter)
       this.disposeEnter();
   }
