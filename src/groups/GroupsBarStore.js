@@ -156,7 +156,7 @@ class GroupsBarStore {
    * @returns {Bollean}
    */
   cantLoadMore() {
-    return !this.offset && this.groups.length;
+    return !this.offset && this.groups.length && !this.showingLocal;
   }
 
   /**
