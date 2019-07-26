@@ -1,25 +1,49 @@
 import apiService from "./api.service";
-import FeedStore from "../stores/FeedStore";
+import FeedsService from "./feeds.service";
+import sessionService from "./session.service";
 
+/**
+ * Boosted content service
+ */
 class BoostedContentService {
+
   offset: number = -1;
 
-  feedStore = new FeedStore;
+  feedsService: FeedsService = new FeedsService;
 
+  boosts: Array<ActivityModel> = [];
+
+  /**
+   * Constructor
+   */
   constructor() {
-    // TODO: LOAD when session begin
-    // this.feedStore
-    //   .setLimit(50)
-    //   .setOffset(0)
-    //   .setEndpoint('api/v2/boost/feed')
-    //   .fetch();
+    // always reload on login or app restart
+    sessionService.onLogin(this.load);
   }
 
+  /**
+   * Reload boosts list
+   */
+  load = async() => {
+    await this.feedsService
+      .setLimit(12)
+      .setOffset(0)
+      .setEndpoint('api/v2/boost/feed')
+      .fetch();
+
+    this.boosts = await this.feedsService.getEntities();
+  }
+
+  /**
+   * Fetch one boost
+   */
   fetch() {
-    //TODO: IMPLEMENT
+    if (this.offset >= this.boosts.length) {
+      this.offset = -1;
+    }
+    this.offset++;
+    return this.boosts[this.offset];
   }
-
-
 }
 
 export default new BoostedContentService();

@@ -8,6 +8,7 @@ import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
 import Colors from '../../styles/Colors';
 import { toJS } from 'mobx';
+import boostedContentService from './boosted-content.service';
 
 /**
  * Feed store
@@ -17,7 +18,12 @@ export default class FeedsService {
   /**
    * @var {boolean}
    */
-  asActivities = true;
+  injectBoost: boolean = false;
+
+  /**
+   * @var {boolean}
+   */
+  asActivities: boolean = true;
 
   /**
    * @var {Number}
@@ -37,19 +43,47 @@ export default class FeedsService {
   /**
    * @var {Object}
    */
-  params = {sync: 1}
+  params: Object = {sync: 1}
 
   /**
    * @var {Array}
    */
-  feed = [];
+  feed: Array = [];
 
   /**
    * Get entities from the current page
    */
   async getEntities() {
-    const feedPage = this.feed.slice(this.offset, this.limit + this.offset);
-    return await entitiesService.getFromFeed(feedPage, this, this.asActivities);
+    const end = this.limit + this.offset;
+    const feedPage = this.feed.slice(this.offset, end);
+
+    const result = await entitiesService.getFromFeed(feedPage, this, this.asActivities);
+
+    if (!this.injectBoost) return result;
+
+    this.injectBoosted(3, result, end);
+    this.injectBoosted(8, result, end);
+    this.injectBoosted(16, result, end);
+    this.injectBoosted(24, result, end);
+    this.injectBoosted(32, result, end);
+    this.injectBoosted(40, result, end);
+
+    return result;
+  }
+
+  /**
+   * Inject boost at given position
+   *
+   * @param {number} position
+   * @param {Array<ActivityModel>} entities
+   * @param {number} end
+   */
+  injectBoosted(position, entities, end) {
+    if (this.offset <= position && end >= position) {
+      const boost =  boostedContentService.fetch();
+      console.log('INSERINT', position, boost)
+      if (boost) entities.splice( position + this.offset, 0, boost );
+    }
   }
 
   /**
@@ -85,6 +119,16 @@ export default class FeedsService {
    */
   setFeed(feed): FeedsService {
     this.feed = feed;
+    return this;
+  }
+
+  /**
+   * Set inject boost
+   * @param {Array} feed
+   * @returns {FeedsService}
+   */
+  setInjectBoost(injectBoost): FeedsService {
+    this.injectBoost = injectBoost;
     return this;
   }
 
