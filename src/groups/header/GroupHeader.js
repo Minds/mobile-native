@@ -30,6 +30,7 @@ import SearchView from '../../common/components/SearchView';
 import gathering from '../../common/services/gathering.service';
 import colors from '../../styles/Colors';
 import i18n from '../../common/services/i18n.service';
+import featuresService from '../../common/services/features.service';
 
 /**
  * Group Header
@@ -138,7 +139,7 @@ export default class GroupHeader extends Component {
       { text: i18n.t('members').toUpperCase(), badge: abbrev(group['members:count'], 0), value: 'members' }
     ]
 
-    if (!group.conversationDisabled) {
+    if (!featuresService.has('allow-disabling-groups-conversations') || group.conversationDisabled !== 1) {
       typeOptions.push(conversation);
     }
 
@@ -166,7 +167,7 @@ export default class GroupHeader extends Component {
    */
   onTabChange = (tab) => {
     const group = this.props.store.group;
-    
+
     switch (tab) {
       case 'feed':
         // clear list without mark loaded flag
@@ -220,7 +221,7 @@ export default class GroupHeader extends Component {
   async showActionSheet() {
     this.ActionSheet.show();
   }
-  
+
   async handleActionSheetSelection(option) {
     switch(option) {
       case i18n.t('groups.disableConversations'):
