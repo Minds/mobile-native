@@ -38,10 +38,12 @@ class BoostedContentService {
    * Fetch one boost
    */
   fetch() {
-    if (this.offset >= this.boosts.length) {
-      this.offset = -1;
-    }
     this.offset++;
+
+    if (this.offset >= this.boosts.length) {
+      this.offset = 0;
+    }
+
     return this.boosts[this.offset];
   }
 }
