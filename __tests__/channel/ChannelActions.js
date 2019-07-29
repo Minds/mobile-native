@@ -13,6 +13,7 @@ jest.mock('../../src/channel/ChannelStore');
 jest.mock('../../src/channel/UserModel');
 jest.mock('../../src/common/services/features.service');
 jest.mock('../../AppStores');
+jest.mock('../../src/common/services/boosted-content.service');
 
 /**
  * Tests

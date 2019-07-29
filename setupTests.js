@@ -13,7 +13,6 @@ global.XMLHttpRequest = XMLHttpRequest;
 
 configure({ adapter: new Adapter() });
 
-jest.mock('./src/common/services/boosted-content.service');
 jest.mock('react-native-localize');
 jest.mock('mobx-react/native', () => require('mobx-react/custom'));
 
