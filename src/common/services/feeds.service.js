@@ -63,6 +63,8 @@ export default class FeedsService {
       urn: entity.urn
     });
 
+    this.offset++;
+
     const plainEntity = toJS(entity);
     delete(plainEntity.__list);
 
