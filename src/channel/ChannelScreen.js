@@ -66,7 +66,7 @@ export default class ChannelScreen extends Component {
       const store = this.props.channel.store(this.guid);
       if (params && params.prepend) {
         if (store.channel && store.channel.isOwner && store.channel.isOwner()) {
-          store.feedStore.stores.feed.list.prepend(params.prepend);
+          store.feedStore.feedStore.prepend(params.prepend);
         }
         // we clear the parameter to prevent prepend it again on goBack
         this.props.navigation.setParams({prepend: null});
