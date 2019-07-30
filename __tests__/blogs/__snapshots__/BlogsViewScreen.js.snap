@@ -197,41 +197,6 @@ exports[`blog view screen component should renders correctly 1`] = `
         <View
           style={
             Object {
-              "alignSelf": "flex-end",
-              "bottom": 35,
-              "right": 10,
-            }
-          }
-        >
-          <Icon
-            color="black"
-            name="more-vert"
-            onPress={[Function]}
-            raised={false}
-            reverse={false}
-            reverseColor="white"
-            size={26}
-            style={
-              Object {
-                "color": "#888",
-              }
-            }
-            underlayColor="white"
-          />
-          <ActionSheet
-            cancelButtonIndex={0}
-            onPress={[Function]}
-            options={
-              Array [
-                "Cancel",
-                "Disable comments",
-              ]
-            }
-          />
-        </View>
-        <View
-          style={
-            Object {
               "margin": 8,
             }
           }
