@@ -109,7 +109,7 @@ export default class NewsfeedScreen extends Component {
       </View>
     );
 
-    if (newsfeed.filter == 'subscribed' ) {
+    if (newsfeed.filter == 'subscribed') {
       return (
         <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>
           <FeedList
