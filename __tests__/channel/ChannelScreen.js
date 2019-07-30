@@ -24,6 +24,7 @@ import UserModel from '../../src/channel/UserModel';
 import Touchable from '../../src/common/components/Touchable';
 import session from '../../src/common/services/session.service';
 import ChannelStore from '../../src/channel/ChannelStore';
+import featuresService from '../../src/common/services/features.service';
 
 jest.mock('../../src/common/helpers/abortableFetch');
 jest.mock('../../src/channel/UserModel');
@@ -44,6 +45,8 @@ jest.mock('../../src/common/components/Touchable', () => 'Touchable');
 describe('Channel screen component', () => {
 
   let store, screen, entities, channel, navigation, activityResponse, user;
+
+  featuresService.features['es-feeds'] = true;
 
   beforeEach(() => {
 
