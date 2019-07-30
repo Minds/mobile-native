@@ -139,6 +139,13 @@ export default class FeedsService {
   }
 
   /**
+   * Abort pending fetch
+   */
+  abort() {
+    abort(this);
+  }
+
+  /**
    * Fetch
    */
   async fetch() {

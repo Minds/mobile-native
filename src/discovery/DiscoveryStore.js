@@ -116,6 +116,7 @@ class DiscoveryStore {
    * @param {string} searchtext
    */
   onFilterChange = (filter, type, period, nsfw) => {
+    this.listStore.feedsService.abort();
     this.listStore.clear();
     this.fetch();
   }
