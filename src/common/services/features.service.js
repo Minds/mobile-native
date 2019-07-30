@@ -46,8 +46,7 @@ class FeaturesService {
    * @param {string} feature
    */
   has(feature) {
-    return (typeof this.features[feature] === 'undefined') ||
-      this.features[feature] === true ||
+    return this.features[feature] === true ||
       (this.features[feature] === 'canary' && sessionService.getUser().canary);
   }
 }

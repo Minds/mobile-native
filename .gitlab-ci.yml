@@ -2,73 +2,84 @@
 stages:
   - test
   - build
-  - test_e2e
+  - e2e
+  - deploy
 
-variables:
-  GRADLE_USER_HOME: $CI_PROJECT_DIR/.gradle
+test:jest:
+ image: node:10.10.0
+ stage: test
+ cache:
+   key: ${CI_COMMIT_REF_SLUG}
+   paths:
+     - node_modules/
+     - .jest/cache/
+ script:
+   - yarn install
+   - yarn test
 
-test_spec:
-  image: node:10.10.0
-  stage: test
-  cache:
-    paths:
-      - node_modules/
-      - .jest/cache/
-  script:
-    - echo $CI_PROJECT_NAMESPACE
-    - yarn install
-    - yarn test
-  tags:
-    - docker
-
-build:
-  image: reactnativecommunity/react-native-android
+build:android:
+  image: circleci/android:api-28-node
   stage: build
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - .gradle/wrapper
-      - .gradle/caches
-      - node_modules/
   before_script:
-    - echo 999999 > /proc/sys/fs/inotify/max_user_instances
-    - echo 999999 > /proc/sys/fs/inotify/max_user_watches
-    - echo 999999 > /proc/sys/fs/inotify/max_queued_events
-    - echo $ANDROID_KEYSTORE | base64 --decode > android/app/minds.keystore
-    - echo "MYAPP_RELEASE_STORE_PASSWORD=${KEYSTORE_PASSWORD}" >> ./android/gradle.properties
-    - echo "MYAPP_RELEASE_KEY_PASSWORD=${KEYSTORE_PASSWORD}" >> ./android/gradle.properties
-
+    - sudo sysctl fs.inotify.max_user_watches=524288
+    - sudo sysctl -p  
   script:
     - yarn install
-    - cd android && chmod +x gradlew
-    - ./gradlew assembleRelease
-    - cp app/build/outputs/apk/release/app-release.apk ../Minds.apk
+    - cd android
+    - bundle install
+    - fastlane assemble_build
+    - cp app/build/outputs/apk/release/app-release.apk ../Minds-$CI_BUILD_REF_SLUG.apk
   artifacts:
     name: "Minds APK"
     paths:
-      - Minds.apk
+      - Minds-$CI_BUILD_REF_SLUG.apk
     expire_in: 7 days
     when: on_success
-  only:
-    variables:
-      - $CI_PROJECT_NAMESPACE == "minds"
 
-
-test_e2e:
+e2e:browserstacks:
   image: node:10.10.0
-  stage: test_e2e
+  stage: e2e
   cache:
+    key: ${CI_COMMIT_REF_SLUG}
     paths:
       - node_modules/
-      - .jest/cache/
   script:
     - yarn install
-    - export bsAPP=`curl -u "${bsUSER}:${bsKEY}" -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@./Minds.apk"| grep -o 'bs\:\/\/.*"' | sed 's/.$//'`
+    - export bsAPP=`curl -u "${bsUSER}:${bsKEY}" -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@./Minds-$CI_BUILD_REF_SLUG.apk"| grep -o 'bs\:\/\/.*"' | sed 's/.$//'`
     - yarn e2e
   tags:
     - docker
   dependencies:
-    - build
+   - build:android
   only:
-    variables:
-      - $CI_PROJECT_NAMESPACE == "minds"
+    refs:
+      - /^stable-*/
+      - /^release-*/
+      - /^feat-*/
+      - /^test-*/
+  allow_failure: true
+
+deploy:s3:
+  image: minds/ci:latest
+  stage: deploy
+  script:
+    - echo "Upload Minds-$CI_BUILD_REF_SLUG.apk"
+    - aws s3 cp Minds-$CI_BUILD_REF_SLUG.apk s3://minds-repo/mobile/Minds-$CI_BUILD_REF_SLUG.apk
+  dependencies:
+   - build:android
+  only:
+    refs:
+      - /^release-*/
+      - /^test-*/
+
+deploy:google_play:
+  image: minds/ci:latest
+  stage: deploy
+  script:
+    - echo "Upload Minds-$CI_BUILD_REF_SLUG.apk"
+  dependencies:
+    - build:android
+  only:
+    refs:
+      - /^stable-*/
+      - /^test-*/

@@ -344,6 +344,7 @@ class GroupViewStore {
   @action
   clear() {
     this.list.clearList();
+    this.feed.clear();
     this.members.clearList();
     this.group = null;
     this.tab = 'feed';

@@ -16,6 +16,7 @@ export default function(guid, owner=userFakeFactory(100)) {
     "featured_id":false,
     "ownerObj": owner,
     "category":"education",
+    "impressions": 100,
     "thumbs:up:count": 2,
     "thumbs:up:user_guids":["1","2"],
     "thumbs:down:count":1,

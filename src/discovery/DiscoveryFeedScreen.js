@@ -103,7 +103,7 @@ export default class DiscoveryFeedScreen extends Component {
 
     if (!store.list.errorLoading) return null;
 
-    const message = discovery.list.entities.length ?
+    const message = store.list.entities.length ?
       i18n.t('cantLoadMore') :
       i18n.t('cantLoad');
 

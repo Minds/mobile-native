@@ -7,6 +7,7 @@ import { showMessage } from 'react-native-flash-message';
 import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
 import Colors from '../../styles/Colors';
+import { toJS } from 'mobx';
 
 /**
  * Feed store
@@ -49,6 +50,27 @@ export default class FeedsService {
   async getEntities() {
     const feedPage = this.feed.slice(this.offset, this.limit + this.offset);
     return await entitiesService.getFromFeed(feedPage, this, this.asActivities);
+  }
+
+  /**
+   * Prepend entity
+   * @param {BaseModel} entity
+   */
+  prepend(entity) {
+    this.feed.unshift({
+      owner_guid: entity.owner_guid,
+      timestamp: Date.now().toString(),
+      urn: entity.urn
+    });
+
+    this.offset++;
+
+    const plainEntity = toJS(entity);
+    delete(plainEntity.__list);
+
+    entitiesService.addEntity(plainEntity, true);
+    // save without wait
+    feedsStorage.save(this);
   }
 
   /**
@@ -114,6 +136,13 @@ export default class FeedsService {
   setAsActivities(asActivities: boolean): FeedsService {
     this.asActivities = asActivities;
     return this;
+  }
+
+  /**
+   * Abort pending fetch
+   */
+  abort() {
+    abort(this);
   }
 
   /**

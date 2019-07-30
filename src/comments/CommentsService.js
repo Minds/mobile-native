@@ -1,4 +1,5 @@
 import api from './../common/services/api.service';
+import commentStorageService from './CommentStorageService';
 
 const decodeUrn = (urn) => {
   let parts = urn.split(':');
@@ -52,7 +53,17 @@ export async function getComments(focusedUrn, entity_guid, parent_path, level, l
 
   let uri = `api/v2/comments/${opts.entity_guid}/0/${opts.parent_path}`;
 
-  let response = await api.get(uri, opts);
+  let response;
+
+  try {
+    response = await api.get(uri, opts);
+    commentStorageService.write(entity_guid, parent_path, descending, loadNext || loadPrevious, focusedUrn, response);
+  } catch(err) {
+    response = await commentStorageService.read(entity_guid, parent_path, descending, loadNext || loadPrevious, focusedUrn);
+
+    // if there is no local data we throw the exception again
+    if (!response) throw err;
+  }
 
   if (focusedUrn && focusedUrnObject) {
     for (let comment of response.comments) {

@@ -58,6 +58,15 @@ class EntitiesService {
   }
 
   /**
+   * Delete an entity from the cache
+   * @param {string} urn
+   */
+  deleteFromCache(urn) {
+    this.entities.delete(urn);
+    entitiesStorage.remove(urn);
+  }
+
+  /**
    * Get entities from feed
    * @param {Array} feed
    * @param {Mixed} abortTag
@@ -102,11 +111,15 @@ class EntitiesService {
     // Fetch entities we don't have
 
     if (urnsToFetch.length) {
-      await this.fetch(urnsToFetch, abortTag, asActivities);
+      try {
+        await this.fetch(urnsToFetch, abortTag, asActivities);
+      } catch (err) {
+        // we ignore the fetch error if there are local entities to show
+        if (urnsToResync.length === 0 || err.code === 'Abort') throw err;
+      }
     }
 
-    // Fetch entities, asynchronously, with no need to wait
-
+    // Fetch entities asynchronously
     if (urnsToResync.length) {
       this.fetch(urnsToResync, abortTag, asActivities);
     }
@@ -141,8 +154,6 @@ class EntitiesService {
     let entity = this.getFromCache(urn);
 
     if (!entity) {
-
-
       // from sql storage
       const stored = await entitiesStorage.read(urn);
 

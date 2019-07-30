@@ -32,7 +32,7 @@ exports[`channel header component owner should render correctly 1`] = `
         source={
           Object {
             "headers": Object {
-              "App-Version": "3.8.0",
+              "App-Version": "3.8.0-rc1",
               "Cache-Control": "no-cache, no-store, must-revalidate",
               "Pragma": "no-cache",
             },
@@ -144,14 +144,18 @@ exports[`channel header component owner should render correctly 1`] = `
           <Text>
             SUBSCRIBERS
           </Text>
-          <Text />
+          <Text>
+            50
+          </Text>
         </View>
       </TouchableHighlight>
       <View>
         <Text>
           VIEWS
         </Text>
-        <Text />
+        <Text>
+          100
+        </Text>
       </View>
     </View>
     <View>

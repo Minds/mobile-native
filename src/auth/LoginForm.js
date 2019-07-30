@@ -36,6 +36,7 @@ export default class LoginForm extends Component {
     msg: '',
     twoFactorToken: '',
     twoFactorCode: '',
+    hidePassword: true,
     inProgress: false,
     showLanguages: false,
   };
@@ -164,21 +165,28 @@ export default class LoginForm extends Component {
           key={1}
           {...testID('username input')}
         />,
-        <TextInput
-          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder={i18n.t('auth.password')}
-          secureTextEntry={true}
-          autoCapitalize={'none'}
-          returnKeyType={'done'}
-          placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ password: value })}
-          value={this.state.password}
-          key={2}
-          {...testID('password input')}
-        />
+        <View key={2}>
+          <TextInput
+            style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+            placeholder={i18n.t('auth.password')}
+            secureTextEntry={this.state.hidePassword}
+            autoCapitalize={'none'}
+            returnKeyType={'done'}
+            placeholderTextColor="#444"
+            underlineColorAndroid='transparent'
+            onChangeText={(value) => this.setState({ password: value })}
+            value={this.state.password}
+
+            {...testID('password input')}
+          />
+          <Icon name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'} size={25} style={ComponentsStyle.loginInputIcon} onPress={this.toggleHidePassword}/>
+        </View>
       ];
     }
+  }
+
+  toggleHidePassword = () => {
+    this.setState({hidePassword: !this.state.hidePassword});
   }
 
   onForgotPress = () => {

@@ -142,6 +142,7 @@ export default class FeedStore {
   prepend(entity) {
     entity._list = this;
     this.entities.unshift(entity);
+    this.feedsService.prepend(entity);
   }
 
   /**
@@ -235,9 +236,17 @@ export default class FeedStore {
       .setLoading(true)
       .setErrorLoading(false);
 
+    const endpoint = this.feedsService.endpoint;
+    const params = this.feedsService.params;
+
     try {
       await this.feedsService.fetch();
-      this.addEntities(await this.feedsService.getEntities());
+      const entities = await this.feedsService.getEntities();
+
+      // if the endpoint or the params are changed we ignore the result
+      if (endpoint !== this.feedsService.endpoint || params !== this.feedsService.params) return;
+
+      this.addEntities(entities);
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;
@@ -275,10 +284,17 @@ export default class FeedStore {
       .setLoading(true)
       .setErrorLoading(false);
 
+    const endpoint = this.feedsService.endpoint;
+    const params = this.feedsService.params;
+
     try {
       await this.feedsService.fetchLocalOrRemote();
       if (refresh) this.setOffset(0);
       const entities = await this.feedsService.getEntities();
+
+      // if the endpoint or the params are changed we ignore the result
+      if (endpoint !== this.feedsService.endpoint || params !== this.feedsService.params) return;
+
       if (refresh) this.clear();
       this.addEntities(entities);
     } catch (err) {
@@ -300,10 +316,17 @@ export default class FeedStore {
       .setLoading(true)
       .setErrorLoading(false);
 
+    const endpoint = this.feedsService.endpoint;
+    const params = this.feedsService.params;
+
     try {
       await this.feedsService.fetchRemoteOrLocal();
       if (refresh) this.setOffset(0);
       const entities = await this.feedsService.getEntities();
+
+      // if the endpoint or the params are changed we ignore the result
+      if (endpoint !== this.feedsService.endpoint || params !== this.feedsService.params) return;
+
       if (refresh) this.clear();
       this.addEntities(entities);
     } catch (err) {
@@ -321,18 +344,27 @@ export default class FeedStore {
    * Load next page
    */
   async loadMore() {
-    if (this.loading || !this.loaded || !this.feedsService.hasMore) return;
+    if (this.loading || !this.loaded || !this.feedsService.hasMore) {
+      return;
+    }
+
+    const endpoint = this.feedsService.endpoint;
+    const params = this.feedsService.params;
 
     this
       .setLoading(true)
       .setErrorLoading(false);
 
     try {
-      this.addEntities(
-        await this.feedsService
-          .next()
-          .getEntities()
-      );
+      const entities = await this.feedsService
+        .next()
+        .getEntities();
+
+      // if the endpoint or the params are changed we ignore the result
+      if (endpoint !== this.feedsService.endpoint || params !== this.feedsService.params) return;
+
+      this.addEntities(entities);
+
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;

@@ -14,6 +14,17 @@ export default class UserModel extends BaseModel {
    * @var boolean
    */
   @observable blocked;
+
+  /**
+   * @var integer
+   */
+  @observable subscribers_count;
+
+  /**
+   * @var integer
+   */
+  @observable impressions;
+
   /**
    * @var boolean
    */

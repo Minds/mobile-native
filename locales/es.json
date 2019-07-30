@@ -317,7 +317,10 @@
         "boost_gift": "Boost Regalo",
         "boost_accepted": "Boost aceptado",
         "boost_revoked": "Boost revocado",
-        "message": "Mensajero"
+        "message": "Mensajero",
+        "referral_ping": "Ping de Referido",
+        "referral_pending": "Referido Pendiente",
+        "referral_complete": "Referido Completado"
     },
     "payments": {
         "cardExpirationMonth": "Mes de Expiración de Tarjeta",

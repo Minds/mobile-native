@@ -38,36 +38,63 @@ exports[`LoginForm component should renders correctly 1`] = `
     underlineColorAndroid="transparent"
     value=""
   />
-  <TextInput
-    allowFontScaling={true}
-    autoCapitalize="none"
-    onChangeText={[Function]}
-    placeholder="Password"
-    placeholderTextColor="#444"
-    rejectResponderTermination={true}
-    returnKeyType="done"
-    secureTextEntry={true}
-    style={
-      Array [
-        Object {
-          "backgroundColor": "#f8f8f8",
-          "borderRadius": 4,
-          "color": "#444",
-          "fontSize": 16,
-          "fontWeight": "600",
-          "height": 50,
-          "letterSpacing": 2,
-          "padding": 15,
-        },
-        Object {
-          "marginTop": 10,
-        },
-      ]
-    }
-    testID="password input"
-    underlineColorAndroid="transparent"
-    value=""
-  />
+  <View>
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Password"
+      placeholderTextColor="#444"
+      rejectResponderTermination={true}
+      returnKeyType="done"
+      secureTextEntry={true}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#f8f8f8",
+            "borderRadius": 4,
+            "color": "#444",
+            "fontSize": 16,
+            "fontWeight": "600",
+            "height": 50,
+            "letterSpacing": 2,
+            "padding": 15,
+          },
+          Object {
+            "marginTop": 10,
+          },
+        ]
+      }
+      testID="password input"
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <Text
+      allowFontScaling={false}
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "color": undefined,
+            "fontSize": 25,
+          },
+          Object {
+            "position": "absolute",
+            "right": 8,
+            "top": 22,
+          },
+          Object {
+            "fontFamily": "Ionicons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          Object {},
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
   <View
     style={
       Array [

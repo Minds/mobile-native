@@ -1,0 +1,552 @@
+diff --git a/Controllers/Cli/Install.php b/Controllers/Cli/Install.php
+index 9b69906a2..ef6a64857 100644
+--- a/Controllers/Cli/Install.php
++++ b/Controllers/Cli/Install.php
+@@ -6,7 +6,6 @@
+ use Minds\Cli;
+ use Minds\Interfaces;
+ use Minds\Exceptions;
+-use Minds\Exceptions\ProvisionException;
+ 
+ class Install extends Cli\Controller implements Interfaces\CliControllerInterface
+ {
+@@ -17,7 +16,11 @@ public function __construct()
+ 
+     public function help($command = null)
+     {
+-        $this->out('TBD');
++        $this->out('Configures web server and provisions and sets up databases for the minds application.');
++        $this->out('use-existing-settings: uses the existing settings in settings.php.');
++        $this->out('only=[keys|site|cassandra|cockroach] to set up individual components.');
++        $this->out('cleanCassandra cleanCockroach: deletes and recreates db.');
++        $this->out('graceful-storage-provision: causes installation to proceed past storage (db) failures.');
+     }
+ 
+     public function exec()
+@@ -28,46 +31,77 @@ public function exec()
+                 ->setApp($this->getApp())
+                 ->setOptions($this->getAllOpts());
+ 
+-            $this->out('- Checking passed options:', $this::OUTPUT_INLINE);
+-            $provisioner->checkOptions();
+-            $this->out('OK');
+-
++            // If flagged, use existing settings, otherwise build from template.
+             if ($this->getOpt('use-existing-settings')) {
+                 $this->out('- Fetching settings:', $this::OUTPUT_INLINE);
+                 $provisioner->checkSettingsFile();
+-                $this->getApp()->loadConfigs();
+-                $this->out('OK');
+             } else {
+                 $this->out('- Building configuration file:', $this::OUTPUT_INLINE);
+                 $provisioner->buildConfig();
+                 $this->out('OK');
+-
+-                $this->out('- Loading new configuration:', $this::OUTPUT_INLINE);
+-                $this->getApp()->loadConfigs();
+-                $this->out('OK');
+             }
++            $this->out('- Loading new configuration:', $this::OUTPUT_INLINE);
++            $this->getApp()->loadConfigs();
++            $this->out('OK');
+ 
+-            $newStorage = false;
++            // TODO: List setup parameters flag.
+ 
+-            try {
+-                $this->out('- Setting up data storage (ignore errors, if any):', $this::OUTPUT_INLINE);
+-                $provisioner->setupStorage();
+-                $this->out('OK');
++            // REVNOTE: Moved to after the other configuration loaders, in order to parameter check
++            // values arriving from those sources.
++            $this->out('- Checking install options:', $this::OUTPUT_INLINE);
++            $provisioner->checkOptions();
++            $this->out('OK');
+ 
+-                $this->out('- Emptying Cassandra pool:', $this::OUTPUT_INLINE);
+-                $provisioner->reloadStorage();
+-                $this->out('OK');
++            // only=[keys|cassandra|cockroach|site]
++            $installOnly = $this->getopt('only');
++            $installType = $installOnly ? $installOnly : "all";
++
++            if ($installType == "all" || $installType == "keys") {
++                keys();
++            }
+ 
+-                $newStorage = true;
+-            } catch (ProvisionException $e) {
++            try {
++                if ($installType == "all" || $installType == "cassandra") {
++                    $this->out('- Provisioning Cassandra: ', $this::OUTPUT_INLINE);
++                    $isCleanCassandra = $this->getopt("cleanCassandra") != null;
++                    $provisioner->provisionCassandra($isCleanCassandra);
++                    $this->out('OK');
++
++                    $this->out('- Emptying Cassandra pool:', $this::OUTPUT_INLINE);
++                    $provisioner->reloadStorage();
++                    $this->out('OK');
++                }
++            } catch (Exception $e) {
++                // REVNOTE: This seems unused, currently. None of the database provisioners currently
++                // throw ProvisionException. We should maybe catch general exceptions (log them) and continue,
++                // and not ProvisionExceptions. I considered removing this altogether, but it is useful to continue
++                // past server errors in an setup.
+                 if ($this->getOpt('graceful-storage-provision')) {
+-                    $this->out('ALREADY SETUP');
++                    $this->out($e->getMessage());
++                    $this->out('Error in cassandra setup. Continuing.');
+                 } else {
+                     throw $e;
+                 }
+             }
+ 
+-            if ($newStorage) {
++            try {
++                if ($installType == "all" || $installType == "cockroach") {
++                    $this->out('- Provisioning Cockroach:', $this::OUTPUT_INLINE);
++                    $isCleanCockroach = $this->getopt("cleanCockroach") != null;
++                    $provisioner->provisionCockroach($isCleanCockroach);
++                    $this->out('OK');
++                }
++            } catch (Exception $e) {
++                // See REVNOTE above.
++                if ($this->getOpt('graceful-storage-provision')) {
++                    $this->out($e->getMessage());
++                    $this->out('Error in cockroach setup. Continuing.');
++                } else {
++                    throw $e;
++                }
++            }
++
++            if (($installType == "all") || ($installType == "site")) {
+                 $this->out('- Setting up site:', $this::OUTPUT_INLINE);
+                 $provisioner->setupSite();
+                 $this->out('OK');
+@@ -91,10 +125,10 @@ public function keys()
+             "private_key_bits" => 4096,
+             "private_key_type" => OPENSSL_KEYTYPE_RSA,
+         ]);
+-        
++
+         openssl_pkey_export($ssl, $privateKey);
+         $publicKey = openssl_pkey_get_details($ssl)['key'];
+-        
++
+         mkdir($target);
+         file_put_contents("{$target}minds.pem", $privateKey);
+         file_put_contents("{$target}minds.pub", $publicKey);
+diff --git a/Core/Data/DataProvider.php b/Core/Data/DataProvider.php
+index 47d7abe0b..1f6f57c7d 100644
+--- a/Core/Data/DataProvider.php
++++ b/Core/Data/DataProvider.php
+@@ -71,9 +71,10 @@ public function register()
+             $name = isset($config['name']) ? $config['name'] : 'minds';
+             $sslmode = isset($config['sslmode']) ? $config['sslmode'] : 'disable';
+             $username = isset($config['username']) ? $config['username'] : 'php';
++            // This is a generic data object using the postgres driver to connect to cockroachdb.
+             return new PDO("pgsql:host=$host;port=$port;dbname=$name;sslmode=$sslmode",
+                 $username,
+-                null, 
++                null,
+                 [
+                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                     PDO::ATTR_EMULATE_PREPARES => true,
+diff --git a/Core/Provisioner/Installer.php b/Core/Provisioner/Installer.php
+index f5dde8f42..c76e06343 100644
+--- a/Core/Provisioner/Installer.php
++++ b/Core/Provisioner/Installer.php
+@@ -4,11 +4,9 @@
+ use Minds\Core;
+ use Minds\Core\Di\Di;
+ use Minds\Entities\Site;
+-use Minds\Entities\User;
+ use Minds\Entities\Activity;
+ use Minds\Exceptions\ProvisionException;
+ use Minds\Helpers;
+-use \ElggSite;
+ 
+ class Installer
+ {
+@@ -20,8 +18,16 @@ class Installer
+     public function __construct()
+     {
+         $this->defaults = [
++            'domain' => 'localhost:8080',
++            'username' => 'minds',
++            'password' => 'Pa$$w0rd',
++            'email' => 'minds@minds.com',
++            'email-private-key' => '.dev/minds.pem',
++            'email-public-key' => '.dev/minds.pub',
++            'phone-number-private-key' => '.dev/minds.pem',
++            'phone-number-public-key' => '.dev/minds.pub',
+             'cassandra-keyspace' => 'minds',
+-            'cassandra-server' => '127.0.0.1',
++            'cassandra-server' => 'cassandra',
+             'cassandra-replication-factor' => '3',
+             'dataroot' => '/data/',
+             'default-site' => 1,
+@@ -63,7 +69,19 @@ public function setOptions(array $options = [])
+         return $this;
+     }
+ 
++    // If different checks become necessary for the other components,
++    // dispatch the calls here.
+     public function checkOptions()
++    {
++        $isInstallOnly = isset($this->options['only']);
++        if (!$isInstallOnly || $this->options['only'] === "site"){
++            $this->checkSiteOptions();
++            return;
++        }
++        // TODO: Check all database parameters.
++    }
++
++    public function checkSiteOptions()
+     {
+         if (!isset($this->options['username']) || !$this->options['username']) {
+             throw new ProvisionException('Admin username was not provided');
+@@ -83,10 +101,12 @@ public function checkOptions()
+             throw new ProvisionException('Admin email is invalid');
+         }
+ 
+-        if (isset($this->options['use-existing-settings']) && $this->options['use-existing-settings']) {
+-            // Finish checking if we're using the existing settings file
+-            return;
+-        }
++        // REVNOTE: Removing because I don't think use-existing-settings should exclude necessary parameter checks,
++        // in case there are errors in the settings.php file.
++//        if (isset($this->options['use-existing-settings']) && $this->options['use-existing-settings']) {
++//            // Finish checking if we're using the existing settings file
++//            return;
++//        }
+ 
+         if (!isset($this->options['domain']) || !$this->options['domain']) {
+             throw new ProvisionException('Domain name was not provided');
+@@ -112,7 +132,7 @@ public function checkOptions()
+             throw new ProvisionException('Phone number private key is not readable');
+         }
+ 
+-        if (!isset($this->options['email-public-key']) || !$this->options['email-public-key']) {
++        if (!isset($this->options['phone-number-public-key']) || !$this->options['phone-number-public-key']) {
+             throw new ProvisionException('Phone number public key path was not provided');
+         } elseif (!is_readable($this->options['phone-number-public-key'])) {
+             throw new ProvisionException('Phone number public key is not readable');
+@@ -122,19 +142,16 @@ public function checkOptions()
+             throw new ProvisionException('Site email is invalid');
+         }
+ 
+-        /*if (
+-            isset($this->options['cassandra-server']) &&
+-            !filter_var($this->options['cassandra-server'], FILTER_VALIDATE_IP) &&
+-            !preg_match('/^(?!\-)(?:[a-zA-Z\d\-]{0,62}[a-zA-Z\d]\.){1,126}(?!\d+)[a-zA-Z\d]{1,63}$/', $this->options['cassandra-server'])
+-        ) {
+-            throw new ProvisionException('Cassandra server host is invalid');
+-        }*/
+-
+         if (isset($this->options['elasticsearch-server']) && !filter_var($this->options['elasticsearch-server'], FILTER_VALIDATE_URL)) {
+             throw new ProvisionException('ElasticSearch server URL is invalid');
+         }
+     }
+ 
++    /* Uses settings.example.php as a template to build out settings.php, which is read at
++       runtime for every call to the server. Replaced tags take the form {{varName}} such as
++       {{dataroot}}. This is essentially a mustache style transformation to generate a runtime
++       configuration file (settings.php).
++    */
+     public function buildConfig(array $flags = [])
+     {
+         $flags = array_merge([
+@@ -159,8 +176,11 @@ public function buildConfig(array $flags = [])
+             $this->options['jwt-domain'] = $this->options['domain'];
+         }
+ 
++        // Bug REVNOTE. Was resulting in http://localhost:8080:8010
+         if (!isset($this->options['socket-server-uri'])) {
+-            $this->options['socket-server-uri'] = $this->options['domain'] . ':8010';
++            $domain = $this->options['domain'];
++            $domainParts = parse_url($domain);
++            $this->options['socket-server-uri'] = $domainParts['scheme'] . $domainParts['host'] . ':8010';
+         }
+ 
+         if (!isset($this->options['site-name'])) {
+@@ -202,13 +222,24 @@ public function checkSettingsFile()
+         }
+     }
+ 
+-    public function setupStorage(Provisioners\ProvisionerInterface $cassandraStorage = null, Provisioners\ProvisionerInterface $cockroachProvisioner = null)
++    public function setupStorage(Provisioners\ProvisionerInterface $cassandraStorage = null,
++                                 Provisioners\ProvisionerInterface $cockroachProvisioner = null,
++                                 $cleanData = false)
+     {
++        $this->provisionCassandra($cassandraStorage, $cleanData);
++        $this->provisionCockroach($cockroachProvisioner, $cleanData);
++    }
++
++    public function provisionCassandra(Provisioners\ProvisionerInterface $cassandraStorage = null,
++                                       $cleanData = false) {
+         $cassandraStorage = $cassandraStorage ?: new Provisioners\CassandraProvisioner();
+-        $cassandraStorage->provision();
++        $cassandraStorage->provision($cleanData);
++    }
+ 
+-        //$cockroachProvisioner = $cockroachProvisioner ?: new Provisioners\CockroachProvisioner();
+-        //$cockroachProvisioner->provision();
++    public function provisionCockroach(Provisioners\ProvisionerInterface $cockroachProvisioner = null,
++                                       $cleanData = false) {
++        $cockroachProvisioner = $cockroachProvisioner ?: new Provisioners\CockroachProvisioner();
++        $cockroachProvisioner->provision($cleanData);
+     }
+ 
+     public function reloadStorage()
+diff --git a/Core/Provisioner/Provisioners/CassandraProvisioner.php b/Core/Provisioner/Provisioners/CassandraProvisioner.php
+index 64d03821f..5861f7895 100644
+--- a/Core/Provisioner/Provisioners/CassandraProvisioner.php
++++ b/Core/Provisioner/Provisioners/CassandraProvisioner.php
+@@ -1,11 +1,8 @@
+ <?php
+ namespace Minds\Core\Provisioner\Provisioners;
+ 
+-use Minds\Core;
+ use Minds\Core\Di\Di;
+ use Minds\Core\Data;
+-use Minds\Entities;
+-use Minds\Exceptions\ProvisionException;
+ 
+ class CassandraProvisioner implements ProvisionerInterface
+ {
+@@ -21,8 +18,9 @@ public function __construct($config = null, $db = null, $client = null)
+         $this->client = $client ?: null; // Should be created on-the-fly at provision()
+     }
+ 
+-    public function provision()
++    public function provision(bool $cleanData)
+     {
++        // TODO: Add cleanData to provisioner.
+         $config = $this->config->get('cassandra');
+ 
+         // Apply
+diff --git a/Core/Provisioner/Provisioners/CockroachProvisioner.php b/Core/Provisioner/Provisioners/CockroachProvisioner.php
+index 26a3e4fac..edacf9e87 100644
+--- a/Core/Provisioner/Provisioners/CockroachProvisioner.php
++++ b/Core/Provisioner/Provisioners/CockroachProvisioner.php
+@@ -2,34 +2,47 @@
+ 
+ namespace Minds\Core\Provisioner\Provisioners;
+ 
+-use Minds\Core;
+ use Minds\Core\Di\Di;
+-use Minds\Core\Data;
+-use Minds\Entities;
+-use Minds\Exceptions\ProvisionException;
++use PDO;
+ 
+ class CockroachProvisioner implements ProvisionerInterface
+ {
+     protected $config;
+-    protected $db;
+ 
+-    public function __construct($db = null)
+-    {
+-        $this->db = $db ?: Di::_()->get('Database\PDO'); // Should be created on-the-fly at provision()
+-    }
+-
+-    public function provision()
++    public function provision(bool $cleanData)
+     {
++        $config = Di::_()->get('Config')->get('database');
++        $host = isset($config['host']) ? $config['host'] : 'cockroachdb';
++        $port = isset($config['port']) ? $config['port'] : 26257;
++        $dbName = isset($config['name']) ? $config['name'] : 'minds';
++        $sslMode = isset($config['sslmode']) ? $config['sslmode'] : 'disable';
++        $username = isset($config['username']) ? $config['username'] : 'php';
++
++        // Using root account because only superusers have permission to create databases.
++        $adminDb = new PDO("pgsql:host=$host;port=$port;dbname=$dbName;sslmode=$sslMode",
++            'root',
++            null,
++            [
++                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
++                PDO::ATTR_EMULATE_PREPARES => true,
++                PDO::ATTR_PERSISTENT => true,
++            ]);
++
++        $adminDb->prepare("CREATE USER IF NOT EXISTS $username")->execute();
++        if ($cleanData)
++        {
++            $adminDb->prepare("DROP DATABASE IF EXISTS $dbName")->execute();
++        }
++        $adminDb->prepare("CREATE DATABASE IF NOT EXISTS $dbName")->execute();
++        $adminDb->prepare("GRANT ALL ON DATABASE $dbName TO $username")->execute();
+         $schema = explode(';', file_get_contents(dirname(__FILE__) . '/cockroach-provision.sql'));
+ 
+         foreach ($schema as $query) {
+             if (trim($query) === '') {
+                 continue;
+             }
+-            $statement = $this->db->prepare($query);
+-
++            $statement = $adminDb->prepare($query);
+             $statement->execute();
+         }
+     }
+-
+-}
+\ No newline at end of file
++}
+diff --git a/Core/Provisioner/Provisioners/ProvisionerInterface.php b/Core/Provisioner/Provisioners/ProvisionerInterface.php
+index 0c302d471..9432c1064 100644
+--- a/Core/Provisioner/Provisioners/ProvisionerInterface.php
++++ b/Core/Provisioner/Provisioners/ProvisionerInterface.php
+@@ -5,5 +5,5 @@
+ 
+ interface ProvisionerInterface
+ {
+-    public function provision();
++    public function provision(bool $cleanData);
+ }
+diff --git a/Core/Provisioner/Provisioners/cockroach-provision.sql b/Core/Provisioner/Provisioners/cockroach-provision.sql
+index c09f0ed02..e40e900d7 100644
+--- a/Core/Provisioner/Provisioners/cockroach-provision.sql
++++ b/Core/Provisioner/Provisioners/cockroach-provision.sql
+@@ -1,25 +1,126 @@
+-CREATE TABLE minds.suggested (
+-  guid INT PRIMARY KEY,
+-  rating INT,
+-  type VARCHAR(15),
+-  score INT
++CREATE TABLE minds.comments (
++  uuid UUID NOT NULL DEFAULT gen_random_uuid(),
++  legacy_guid INT NULL,
++  parent_uuid UUID NULL,
++  owner_guid INT NULL,
++  entity_guid INT NULL,
++  created_timestamp TIMESTAMP NULL DEFAULT now():::TIMESTAMP,
++  notification_type STRING(20) NULL,
++  data JSONB NULL,
++  CONSTRAINT "primary" PRIMARY KEY (uuid ASC),
++  INDEX legacy_guid_idx (legacy_guid ASC),
++  FAMILY "primary" (uuid, legacy_guid, parent_uuid, owner_guid, entity_guid, created_timestamp, notification_type, data)
+ );
+ 
+-CREATE TABLE minds.user_hashtags (
+-  guid INT,
+-  hashtag STRING,
+-  PRIMARY KEY (guid, hashtag)
++CREATE TABLE minds.entities (
++  uuid UUID NOT NULL DEFAULT gen_random_uuid(),
++  legacy_guid INT NULL,
++  owner_guid INT NULL,
++  entity_guid INT NULL,
++  created_timestamp TIMESTAMP NULL DEFAULT now():::TIMESTAMP,
++  CONSTRAINT "primary" PRIMARY KEY (uuid ASC),
++  INDEX legacy_guid_idx (legacy_guid ASC),
++  FAMILY "primary" (uuid, legacy_guid, owner_guid, entity_guid, created_timestamp)
+ );
+ 
+ CREATE TABLE minds.entity_hashtags (
+-  guid INT,
+-  hashtag STRING,
+-  PRIMARY KEY (guid, hashtag)
++  guid INT NOT NULL,
++  hashtag STRING NOT NULL,
++  CONSTRAINT "primary" PRIMARY KEY (guid ASC, hashtag ASC),
++  INDEX entity_hashtags_hashtag_idx (hashtag ASC),
++  INDEX entity_hashtags_hashtag_guid_idx (hashtag ASC, guid ASC),
++  FAMILY "primary" (guid, hashtag)
++);
++
++CREATE TABLE minds.helpdesk_categories (
++  uuid UUID NOT NULL DEFAULT gen_random_uuid(),
++  title STRING(100) NOT NULL,
++  parent UUID NULL,
++  branch STRING NULL,
++  CONSTRAINT "primary" PRIMARY KEY (uuid ASC),
++  FAMILY "primary" (uuid, title, parent, branch)
++);
++
++CREATE TABLE minds.helpdesk_faq (
++  uuid UUID NOT NULL DEFAULT gen_random_uuid(),
++  question STRING NULL,
++  answer STRING NULL,
++  category_uuid UUID NULL,
++  CONSTRAINT "primary" PRIMARY KEY (uuid ASC),
++  CONSTRAINT fk_category_uuid_ref_helpdesk_categories FOREIGN KEY (category_uuid) REFERENCES helpdesk_categories (uuid),
++  INDEX helpdesk_faq_auto_index_fk_category_uuid_ref_helpdesk_categories (category_uuid ASC),
++  FAMILY "primary" (uuid, question, answer, category_uuid)
++);
++
++CREATE TABLE minds.helpdesk_votes (
++  question_uuid UUID NOT NULL,
++  user_guid STRING(18) NOT NULL,
++  direction STRING NOT NULL,
++  CONSTRAINT "primary" PRIMARY KEY (question_uuid ASC, user_guid ASC, direction ASC),
++  FAMILY "primary" (question_uuid, user_guid, direction)
+ );
+ 
+ CREATE TABLE minds.hidden_hashtags (
+   hashtag STRING NOT NULL,
+   hidden_since TIMESTAMP NOT NULL DEFAULT now(),
+   admin_guid INT NOT NULL,
+-  PRIMARY KEY (hashtag)
++  CONSTRAINT "primary" PRIMARY KEY (hashtag ASC),
++  FAMILY "primary" (hashtag, hidden_since, admin_guid)
++);
++
++CREATE TABLE minds.notification_batches (
++  user_guid INT NOT NULL,
++  batch_id STRING NOT NULL,
++  CONSTRAINT "primary" PRIMARY KEY (user_guid ASC, batch_id ASC),
++  INDEX notification_batches_batch_id_idx (batch_id ASC),
++  FAMILY "primary" (user_guid, batch_id)
++);
++
++CREATE TABLE minds.notifications (
++  uuid UUID NOT NULL DEFAULT gen_random_uuid(),
++  to_guid INT NOT NULL,
++  from_guid INT NULL,
++  created_timestamp TIMESTAMP NULL DEFAULT now():::TIMESTAMP,
++  read_timestamp TIMESTAMP NULL,
++  notification_type STRING NOT NULL,
++  data JSONB NULL,
++  entity_guid STRING NULL,
++  batch_id STRING NULL,
++  CONSTRAINT "primary" PRIMARY KEY (to_guid ASC, notification_type ASC, uuid DESC),
++  INDEX notifications_redux_created_timestamp_idx (created_timestamp DESC),
++  INDEX notifications_redux_batch_id_idx (batch_id ASC) STORING (from_guid, entity_guid, created_timestamp, read_timestamp, data),
++  FAMILY "primary" (uuid, to_guid, from_guid, created_timestamp, read_timestamp, notification_type, data, entity_guid, batch_id)
++);
++
++CREATE TABLE minds.suggested (
++  type STRING NOT NULL,
++  guid INT NOT NULL,
++  rating INT NULL,
++  score INT NULL,
++  lastsynced TIMESTAMP NULL,
++  CONSTRAINT "primary" PRIMARY KEY (type ASC, guid ASC),
++  INDEX suggested_lastsynced_score_rating_idx (lastsynced DESC, score DESC, rating DESC),
++  INDEX suggested_lastsynced_score_idx (lastsynced DESC, score DESC),
++  INDEX suggested_redux_rating_idx (rating DESC) STORING (lastsynced, score),
++  FAMILY "primary" (type, guid, rating, score, lastsynced)
++);
++
++CREATE TABLE minds.suggested_tags (
++  guid INT NOT NULL,
++  rating INT NULL,
++  type STRING NULL,
++  score INT NULL,
++  lastsynced TIMESTAMP NULL,
++  hashtags STRING[] NULL,
++  CONSTRAINT "primary" PRIMARY KEY (guid ASC),
++  FAMILY "primary" (guid, rating, type, score, lastsynced, hashtags)
++);
++
++CREATE TABLE minds.user_hashtags (
++  guid INT NOT NULL,
++  hashtag STRING NOT NULL,
++  CONSTRAINT "primary" PRIMARY KEY (guid ASC, hashtag ASC),
++  INDEX user_hashtags_hashtag_idx (hashtag ASC),
++  INDEX user_hashtags_hashtag_guid_idx (hashtag ASC, guid ASC),
++  FAMILY "primary" (guid, hashtag)
+ )
+\ No newline at end of file

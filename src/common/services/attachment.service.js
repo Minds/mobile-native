@@ -1,5 +1,6 @@
 import api from './api.service';
 import imagePicker from './image-picker.service';
+import Cancelable from 'promise-cancelable';
 
 /**
  * Attacment service
@@ -11,7 +12,7 @@ class AttachmentService {
    * @param {object} media
    * @param {function} onProgress
    */
-  async attachMedia(media, extra, onProgress=null) {
+  attachMedia(media, extra, onProgress=null) {
 
     let type = 'image'
 
@@ -27,11 +28,15 @@ class AttachmentService {
       if (onProgress) onProgress(pct);
     }
 
-    if(file.type.includes('video')){
-      return this.uploadToS3(file,progress);
-    }
+    let promise;
 
-    return api.upload('api/v1/media/', file, extra, progress);
+    if(file.type.includes('video')){
+      promise = this.uploadToS3(file,progress);
+    } else {
+      promise = api.upload('api/v1/media/', file, extra, progress);
+    }
+    
+    return promise;
   }
 
   /**
@@ -42,18 +47,34 @@ class AttachmentService {
    * @param {any} file 
    * @param {function} progress 
    */
-  async uploadToS3(file, progress){
+  uploadToS3(file, progress){
     // Prepare media and wait for lease => {media_type, guid}
-    const {lease} = await api.put(`api/v2/media/upload/prepare/video`);
+    let lease;
 
-    // upload file to s3 
-    await api.uploadToS3(lease, file, progress);
+    return new Cancelable((resolve, reject, onCancel) => {
+      api.put(`api/v2/media/upload/prepare/video`).then((response) => {
+      lease = response.lease
+      // upload file to s3
+      const uploadPromise = api.uploadToS3(lease, file, progress).then(async () => {
+        // complete upload and wait for status
+        const {status} = await api.put(`api/v2/media/upload/complete/${lease.media_type}/${lease.guid}`);
 
-    // complete upload and wait for status
-    const {status} = await api.put(`api/v2/media/upload/complete/${lease.media_type}/${lease.guid}`); 
-
-    // if false is returned, upload fails message will be showed
-    return status === 'success' ? {guid: lease.guid} : false;
+        // if false is returned, upload fails message will be showed
+        return status === 'success' ? {guid: lease.guid} : false;
+      });
+      // handle cancel
+      onCancel((cb) => {
+        uploadPromise.cancel();
+        cb();
+      });
+      return uploadPromise;
+    });
+    }).catch( error => {
+      if (error.name !== 'CancelationError') {
+        logService.exception('[ApiService] upload', error);
+        throw error;
+      }
+    });
   }
 
   /**

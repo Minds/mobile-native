@@ -15,7 +15,6 @@ import {
   ScrollView,
   TouchableOpacity,
   Clipboard,
-  Image,
   View,
   Dimensions
 } from 'react-native';
@@ -39,6 +38,7 @@ import CommentList from './CommentList';
 import DoubleTap from '../common/components/DoubleTap';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import colors from '../styles/Colors';
+import FastImage from 'react-native-fast-image';
 
 const DoubleTapText = DoubleTap(Text);
 
@@ -90,7 +90,7 @@ export default class Comment extends Component {
     return (
       <View style={[styles.container, comment.focused ? styles.focused : null]}>
         <TouchableOpacity onPress={this._navToChannel} style={styles.avatarContainer}>
-          <Image source={avatarSrc} style={styles.avatar}/>
+          <FastImage source={avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
 
         <View style={styles.contentContainer}>
