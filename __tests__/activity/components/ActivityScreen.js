@@ -16,12 +16,15 @@ import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker'
 import CommentList from '../../../src/comments/CommentList';
 jest.mock('../../../src/newsfeed/NewsfeedService');
 import { getSingle } from '../../../src/newsfeed/NewsfeedService';
+import entitiesService from '../../../src/common/services/entities.service';
 
 jest.mock('../../../src/newsfeed/activity/Activity', () => 'Activity');
 jest.mock('../../../src/comments/CommentList', () => 'CommentList');
 jest.mock('../../../src/common/components/CenteredLoading', () => 'CenteredLoading');
 jest.mock('../../../src/comments/CommentsStore');
 jest.mock('../../../src/comments/CommentsStoreProvider');
+jest.mock('../../../src/common/services/entities.service');
+
 
 describe('Activity screen component', () => {
 
@@ -50,39 +53,27 @@ describe('Activity screen component', () => {
         params: {entity: activitiesServiceFaker().load(1).activities[0]}
       }
     };
-    screen = shallow(
-      <ActivityScreen navigation={navigation}/>
-    );
-    expect(screen).toMatchSnapshot();
 
-    // should have a comment list component
-    expect(screen.find(CommentList)).toHaveLength(1);
-  });
-
-  it('should show loader until it loads the activity', async (done) => {
-    navigation = {
-      push: jest.fn(),
-      state: {
-        routeName: 'some',
-        params: {guid: '1'}
-      }
-    };
-
-    getSingle.mockResolvedValue(activitiesServiceFaker().load(1).activities[0]);
+    entitiesService.single.mockResolvedValue(navigation.state.params.entity);
 
     screen = shallow(
       <ActivityScreen navigation={navigation}/>
     );
+
     // shoul show loading
     expect(screen).toMatchSnapshot();
 
-    screen.update();
+    // unmount
+    await screen.instance().componentDidMount();
 
-    // workaround to run after the async didmount
-    setImmediate(() => {
-      // should show the activity
-      expect(screen).toMatchSnapshot();
-      done();
-    });
+    jest.runAllTicks();
+
+    // await is important here!
+    await screen.update();
+
+    // should show the activity
+    expect(screen).toMatchSnapshot();
+    // should have a comment list component
+    expect(screen.find(CommentList)).toHaveLength(1);
   });
 });

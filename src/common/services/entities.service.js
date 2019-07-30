@@ -154,8 +154,6 @@ class EntitiesService {
     let entity = this.getFromCache(urn);
 
     if (!entity) {
-
-
       // from sql storage
       const stored = await entitiesStorage.read(urn);
 
