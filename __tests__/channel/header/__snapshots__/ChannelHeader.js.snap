@@ -144,14 +144,18 @@ exports[`channel header component owner should render correctly 1`] = `
           <Text>
             SUBSCRIBERS
           </Text>
-          <Text />
+          <Text>
+            50
+          </Text>
         </View>
       </TouchableHighlight>
       <View>
         <Text>
           VIEWS
         </Text>
-        <Text />
+        <Text>
+          100
+        </Text>
       </View>
     </View>
     <View>
