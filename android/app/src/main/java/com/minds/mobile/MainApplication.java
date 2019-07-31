@@ -33,7 +33,6 @@ import cl.json.ShareApplication;
 import com.meedan.ShareMenuPackage;
 import com.mybigday.rnmediameta.RNMediaMetaPackage;
 import com.rnfs.RNFSPackage;
-import com.centaurwarchief.smslistener.SmsListenerPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.reactnativejitsimeet.JitsiMeetPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
@@ -85,7 +84,6 @@ public class MainApplication extends Application implements ShareApplication, Re
           new ShareMenuPackage(),
           new RNMediaMetaPackage(),
           new RNFSPackage(),
-          new SmsListenerPackage(),
           new CodePush("_C083_CqL7CmKwASrv6Xrj1wqH7erJMhIBnRQ", MainApplication.this, BuildConfig.DEBUG),
           new JitsiMeetPackage(),
           new SQLitePluginPackage(),

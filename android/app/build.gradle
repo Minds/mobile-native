@@ -187,7 +187,6 @@ dependencies {
     implementation project(':react-native-sqlite-storage')
     implementation project(':react-native-code-push')
     implementation project(':react-native-background-timer')
-    implementation project(':react-native-android-sms-listener')
     implementation project(':react-native-fs')
     implementation project(':react-native-media-meta')
     implementation project(':react-native-share-menu')
