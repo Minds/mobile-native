@@ -313,7 +313,7 @@ export default class CommentList extends React.Component<Props, State> {
    * Render poster
    */
   renderPoster() {
-    if (this.state.hideInput) return null;
+    if (this.state.hideInput || (!this.props.entity.allow_comments && this.props.entity.type !== "group")) return null;
 
     const attachment = this.props.store.attachment;
 

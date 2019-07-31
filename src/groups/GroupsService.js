@@ -201,6 +201,10 @@ class GroupsService {
   revokeModerator(group_guid, user_guid) {
     return api.delete(`api/v1/groups/management/${group_guid}/${user_guid}/moderator`);
   }
+
+  toggleConversationDisabled(group_guid, state) {
+    return api.post(`api/v1/groups/group/${group_guid}`, { conversationDisabled: state });
+  }
 }
 
 export default new GroupsService();

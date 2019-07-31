@@ -234,7 +234,9 @@
     "removeOwner":"Remove as Owner",
     "makeModerator":"Make Moderator",
     "removeModerator":"Remove as Moderator",
-    "listMembersCount":"Members {{count}}"
+    "listMembersCount":"Members {{count}}",
+    "disableConversations":"Disable conversations",
+    "enableConversations":"Enable conversations"
   },
   "keychain": {
     "unlockMessage": "Unlock {{keychain}} keychain",
@@ -725,6 +727,8 @@
   "wantToUpdate":"Do you want to update the app?",
   "updateAvailable":"Update available",
   "rememberTomorrow":"Remind me later",
+  "enableComments": "Enable comments",
+  "disableComments": "Disable comments",
   "noInternet":"No Internet Connection",
   "offline":"Offline",
   "cantReachServer":"Can't reach the server",

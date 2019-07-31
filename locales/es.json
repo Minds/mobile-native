@@ -217,7 +217,9 @@
         "banConfirm": "Estás seguro? Quieres suspender a este usuario?",
         "errorLoading": "Error cargando grupos",
         "confirmKick": "Estás seguro? Quieres expulsar a este usuario?",
-        "listMembersCount": "Miembros {{count}}"
+        "listMembersCount": "Miembros",
+        "disableConversations":"Inhabilitar conversaciones",
+        "enableConversations":"Habilitar conversaciones"
     },
     "keychain": {
         "unlockMessage": "Desbloquear {{keychain}} keychain",
@@ -746,6 +748,8 @@
     "wantToUpdate": "Quieres actualizar la aplicación? ",
     "updateAvailable": "Actualización disponible",
     "rememberTomorrow": "Recuerdame más tarde",
+    "enableComments": "Habilitar comentarios",
+    "disableComments": "Inhabilitar comentarios",
     "noInternet": "Sin conexión a internet",
     "offline": "Fuera de línea",
     "cantReachServer": "No puedo conectarme al servidor",

@@ -33,9 +33,11 @@ export default class CommentsAction extends Component {
    * Render
    */
   render() {
+    const icon = this.props.entity.allow_comments ? 'chat-bubble' : 'speaker-notes-off';
+
     return (
       <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.openComments}>
-        <Icon color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name='chat-bubble' size={this.props.size} />
+        <Icon color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={icon} size={this.props.size} />
         <Counter size={this.props.size * 0.75} count={this.props.entity['comments:count']} />
       </TouchableOpacityCustom>
     );
@@ -45,8 +47,9 @@ export default class CommentsAction extends Component {
    * Open comments screen
    */
   openComments = () => {
+    const cantOpen = !this.props.entity.allow_comments && this.props.entity['comments:count'] == 0;
     // TODO: fix
-    if (this.props.navigation.state.routeName == 'Activity' ){
+    if (this.props.navigation.state.routeName == 'Activity' || cantOpen) {
       return;
     }
     this.props.navigation.push('Activity', {
