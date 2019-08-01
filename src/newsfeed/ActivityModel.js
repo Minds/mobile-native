@@ -236,9 +236,12 @@ export default class ActivityModel extends BaseModel {
 
   @action
   async updateActivity(data = {}) {
-    const list = this._list;
-    delete(this._list);
+    const list = this.__list;
+    delete(this.__list);
+
     const entity = toJS(this);
+
+    // we use the setter just in case
     this._list = list;
 
     if (data) {
