@@ -81,7 +81,6 @@ export default class FeedsService {
   injectBoosted(position, entities, end) {
     if (this.offset <= position && end >= position) {
       const boost =  boostedContentService.fetch();
-      console.log('INSERINT', position, boost)
       if (boost) entities.splice( position + this.offset, 0, boost );
     }
   }
