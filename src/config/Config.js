@@ -2,6 +2,8 @@ import {
   Platform
 } from 'react-native';
 
+import DeviceInfo from 'react-native-device-info';
+
 // export const MINDS_URI = 'https://www.minds.com/';
 // export const MINDS_URI = 'http://dev.minds.io/';
 
@@ -58,4 +60,4 @@ export const MINDS_DEEPLINK = [
 ];
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
-export const GOOGLE_PLAY_STORE = false;
+export const GOOGLE_PLAY_STORE = DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS == 'android';
