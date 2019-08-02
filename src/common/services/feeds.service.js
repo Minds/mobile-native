@@ -45,10 +45,25 @@ export default class FeedsService {
   feed = [];
 
   /**
+   * @var {string}
+   */
+  pagingToken: string = '';
+
+  /**
+   * @var {boolean}
+   */
+  endReached = false;
+
+  /**
    * Get entities from the current page
    */
   async getEntities() {
+    const end = this.limit + this.offset;
+    if (end > this.feed.length && !this.endReached) {
+      await this.fetch();
+    }
     const feedPage = this.feed.slice(this.offset, this.limit + this.offset);
+
     return await entitiesService.getFromFeed(feedPage, this, this.asActivities);
   }
 
@@ -150,9 +165,14 @@ export default class FeedsService {
    */
   async fetch() {
     abort(this);
-    const response = await apiService.get(this.endpoint, {...this.params, ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 }}, this);
+    const response = await apiService.get(this.endpoint, {...this.params, ...{ limit: 150, as_activities: this.asActivities ? 1 : 0, from_timestamp: this.pagingToken }}, this);
 
-    this.feed = response.entities;
+    if (response.entities.length) {
+      this.feed = this.feed.concat(response.entities);
+      this.pagingToken = response['load-next'];
+    } else {
+      this.endReached = true;
+    }
 
     // save without wait
     feedsStorage.save(this);
