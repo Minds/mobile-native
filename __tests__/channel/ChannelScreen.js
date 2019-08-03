@@ -38,6 +38,7 @@ jest.mock('../../src/common/components/FeedList', () => 'FeedList');
 jest.mock('../../src/capture/CaptureFab', () => 'CaptureFab');
 jest.mock('../../src/blogs/BlogCard', () => 'BlogCard');
 jest.mock('../../src/common/components/Touchable', () => 'Touchable');
+jest.mock('../../src/common/services/boosted-content.service');
 
 /**
  * Tests
