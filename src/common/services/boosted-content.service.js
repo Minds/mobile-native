@@ -29,7 +29,7 @@ class BoostedContentService {
       .setLimit(12)
       .setOffset(0)
       .setEndpoint('api/v2/boost/feed')
-      .fetch();
+      .fetchRemoteOrLocal();
 
     this.boosts = await this.feedsService.getEntities();
   }
