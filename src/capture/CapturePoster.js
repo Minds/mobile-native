@@ -413,8 +413,6 @@ export default class CapturePoster extends Component {
   onNsfw = values => {
     const nsfw = [...values];
     this.setState({ nsfw });
-
-    creatorNsfwService.set(nsfw);
   }
 
   onShare = network => {
