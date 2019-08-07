@@ -66,46 +66,11 @@ class DiscoveryStore {
 
     this.listenChanges();
 
-    this.listStore.getMetadataService()
-      .setSource('feed/discovery')
-      .setMedium('feed');
-  }
-
-  /**
-   * Inject boosts to the feed
-   * @param {object} feed
-   * @param {OffsetFeedListStore} list
-   */
-  async injectBoosts(feed, list) {
-    const start = list.entities.length;
-    const finish = feed.entities.length + start;
-
-    if (finish > 40) return;
-
-    await this.insertBoost(3, feed, start, finish);
-    await this.insertBoost(8, feed, start, finish);
-    await this.insertBoost(16, feed, start, finish);
-    await this.insertBoost(24, feed, start, finish);
-    await this.insertBoost(32, feed, start, finish);
-    await this.insertBoost(40, feed, start, finish);
-  }
-
-  /**
-   * Insert a boost in give position
-   * @param {integer} position
-   * @param {object} feed
-   * @param {integer} start
-   * @param {integer} finish
-   */
-  async insertBoost(position, feed, start, finish) {
-    if (start <= position && finish >= position) {
-      try {
-        const boost = await boostedContentService.fetch();
-        if (boost) feed.entities.splice( position + start, 0, boost );
-      } catch (err) {
-        logService.exception('[DiscoveryStore] insertBoost', err);
-      }
-    }
+    this.listStore
+      .setInjectBoost(true)
+      .getMetadataService()
+        .setSource('feed/discovery')
+        .setMedium('feed');
   }
 
   /**

@@ -182,6 +182,16 @@ export default class FeedStore {
   }
 
   /**
+   * Set inject boost
+   * @param {Array} feed
+   * @returns {FeedStore}
+   */
+  setInjectBoost(injectBoost): FeedStore {
+    this.feedsService.setInjectBoost(injectBoost);
+    return this;
+  }
+
+  /**
    * Set the params for the feeds service
    * @param {Object} params
    */

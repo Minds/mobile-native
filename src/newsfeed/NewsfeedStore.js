@@ -43,6 +43,7 @@ class NewsfeedStore {
     this.buildStores();
     this.feedStore
       .setEndpoint(`api/v2/feeds/subscribed/activities`)
+      .setInjectBoost(true)
       .setLimit(12);
   }
 
@@ -110,11 +111,6 @@ class NewsfeedStore {
     try {
       feed = await fetchFn(store.list.offset, 12);
 
-      // inject boosts
-      if (featuresService.has('es-feeds')) {
-        await this.injectBoosts(feed);
-      }
-
       feed.entities = ActivityModel.createMany(feed.entities);
       this.assignRowKeys(feed, store);
       store.list.setList(feed, refresh);
@@ -130,42 +126,6 @@ class NewsfeedStore {
       }
     } finally {
       store.loading = false;
-    }
-  }
-
-  /**
-   * Inject boosts to the feed
-   * @param {object} feed
-   */
-  async injectBoosts(feed) {
-    const start = this.list.entities.length;
-    const finish = feed.entities.length + start;
-
-    if (finish > 40) return;
-
-    await this.insertBoost(3, feed, start, finish);
-    await this.insertBoost(8, feed, start, finish);
-    await this.insertBoost(16, feed, start, finish);
-    await this.insertBoost(24, feed, start, finish);
-    await this.insertBoost(32, feed, start, finish);
-    await this.insertBoost(40, feed, start, finish);
-  }
-
-  /**
-   * Insert a boost in give position
-   * @param {integer} position
-   * @param {object} feed
-   * @param {integer} start
-   * @param {integer} finish
-   */
-  async insertBoost(position, feed, start, finish) {
-    if (start <= position && finish >= position) {
-      try {
-        const boost = await boostedContentService.fetch();
-        if (boost) feed.entities.splice( position + start, 0, boost );
-      } catch (err) {
-        logService.exception('[NewsfeedStore] insertBoost', err);
-      }
     }
   }
 
