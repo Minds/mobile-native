@@ -41,6 +41,7 @@ class NewsfeedStore {
     this.buildStores();
     this.feedStore
       .setEndpoint(`api/v2/feeds/subscribed/activities`)
+      .setInjectBoost(true)
       .setLimit(12);
   }
 
