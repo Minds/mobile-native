@@ -1,16 +1,11 @@
-import _ from 'lodash';
-
 import React, {
   PureComponent
 } from 'react';
 
 import {
-  Text,
   StyleSheet,
   CameraRoll,
-  ActivityIndicator,
   TouchableOpacity,
-  InteractionManager,
   Image,
   View,
   FlatList,
@@ -21,7 +16,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Button } from 'react-native-elements';
 import CenteredLoading from '../common/components/CenteredLoading'
-import CaptureTabs from './CaptureTabs';
 import androidPermissionsService from '../common/services/android-permissions.service';
 import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
@@ -31,12 +25,14 @@ import logService from '../common/services/log.service';
  */
 export default class CaptureGallery extends PureComponent {
 
+  listRef = null;
+
   state = {
-    header: null,
     photos: [],
-    imageUri: '',
-    isPosting: false,
     imagesLoaded: false,
+    offset: '',
+    hasMore: true,
+    loading: false
   }
 
   static navigationOptions = {
@@ -64,26 +60,34 @@ export default class CaptureGallery extends PureComponent {
   /**
    * Load photos
    */
-  _loadPhotos() {
+  _loadPhotos = async() => {
+
+    if (this.state.loading || !this.state.hasMore) return;
+
     const params = {
       first: 30,
       assetType: 'All',
     }
 
-    if (Platform.OS === 'ios') params.groupTypes = 'All';
+    this.setState({loading: true});
 
-    CameraRoll.getPhotos(params)
-      .then(r => {
-        this.setState({
-          imagesLoaded: true,
-          photos: r.edges,
-          navigation: r.page_info,
-        });
-      })
-      .catch((err) => {
-        logService.exception('[CaptureGallery] loadPhotos', err)
-        //Error Loading Images
+    if (Platform.OS === 'ios') params.groupTypes = 'All';
+    if (this.state.offset) params.after = this.state.offset;
+
+    try {
+      const result = await CameraRoll.getPhotos(params);
+
+      this.setState({
+        imagesLoaded: true,
+        photos: this.state.photos.concat(result.edges),
+        offset: result.page_info.end_cursor,
+        hasMore: result.page_info.has_next_page,
+        loading: false
       });
+    } catch (err) {
+      logService.exception('[CaptureGallery] loadPhotos', err)
+      this.setState({loading: false});
+    }
   }
 
   /**
@@ -100,28 +104,35 @@ export default class CaptureGallery extends PureComponent {
    */
   render() {
 
-    const body = this.state.imagesLoaded ?
-      _.chunk(this.state.photos.map((p, i) => this.renderTile(p, i)), 3)
-        .map((c, i) => <View style={styles.row} key={i}>{c}</View>)
-      : <CenteredLoading />
+    if (!this.state.imagesLoaded) return <CenteredLoading />
 
     return (
-      <View>
-        <CaptureTabs onSelectedMedia={this.onSelected} />
-        {body}
-      </View>
+      <FlatList
+        ref={this.setListRef}
+        ListHeaderComponent={this.props.header}
+        data={this.state.photos}
+        renderItem={this.renderTile}
+        onEndReached={this._loadPhotos}
+        ListFooterComponent={this.state.loading ? <CenteredLoading /> : null}
+        numColumns={3}
+      />
     )
   }
 
   /**
+   * Sets List reference
+   */
+  setListRef = ref => this.listRef = ref;
+
+  /**
    * render list tile
    */
-  renderTile = (item, index) => {
-    const node = item.node;
+  renderTile = (item) => {
+    const node = item.item.node;
     return (
       <TouchableOpacity
         style={styles.tileImage}
-        key={index}
+        key={item.index}
         onPress={() => {
             this.onSelected({
               uri: node.image.uri,
@@ -142,7 +153,13 @@ export default class CaptureGallery extends PureComponent {
     );
   }
 
+  /**
+   * On media selected
+   */
   onSelected = (response) => {
+    // scroll to top on selection
+    this.listRef.scrollToOffset({x: 0, y: 0, animated: true});
+
     this.props.onSelected(response);
   }
 
