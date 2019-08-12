@@ -66,6 +66,9 @@ class DiscoveryStore {
 
     this.listenChanges();
 
+    // we don't have feed pagination on discovery
+    this.listStore.setPaginated(false);
+
     this.listStore.getMetadataService()
       .setSource('feed/discovery')
       .setMedium('feed');
