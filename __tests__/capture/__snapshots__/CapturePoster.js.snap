@@ -30,7 +30,7 @@ exports[`cature poster component should renders correctly 1`] = `
       >
         <TextInput
           allowFontScaling={true}
-          editable={true}
+          editable={false}
           multiline={true}
           onChangeText={[Function]}
           onSelectionChange={[Function]}
