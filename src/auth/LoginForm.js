@@ -7,7 +7,7 @@ import * as Animatable from 'react-native-animatable';
 import {
   View,
   Text,
-  TextInput,
+  // TextInput,
   StyleSheet,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -24,6 +24,9 @@ import i18n from '../common/services/i18n.service';
 import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
 import ModalPicker from '../common/components/ModalPicker';
+
+// workaround for android copy/paste issue
+import TextInput from '../common/components/TextInput';
 
 /**
  * Login Form
