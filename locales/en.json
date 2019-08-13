@@ -203,6 +203,8 @@
     "unsubscribe":"Unsubscribe",
     "unblock":"Un-Block",
     "report":"Report",
+    "open":"Open",
+    "closed":"Closed",
     "createFirstPost":"Create your first post",
     "blocked":"You have blocked @{{username}}",
     "tapUnblock":"Tap to unblock",

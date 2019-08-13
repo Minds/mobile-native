@@ -229,7 +229,7 @@ export default class ChannelScreen extends Component {
         {!!channel.blocked && <View style={styles.blockView}>
           <Text style={styles.blockText}>{i18n.t('channel.blocked',{username: channel.username})}</Text>
 
-          <Touchable onPress={() => this.props.channel.store(this.guid).toggleBlock()}>
+          <Touchable onPress={() => this.props.channel.store(this.guid).channel.toggleBlock()}>
             <Text style={styles.blockTextLink}>{i18n.t('channel.tapUnblock')}</Text>
           </Touchable>
         </View>}

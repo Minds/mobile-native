@@ -299,9 +299,7 @@ export default class ChannelHeader extends Component {
             </View>
             <View style={styles.buttonscol}>
               { !channel.blocked && this.getActionButton() }
-              { session.guid !== channel.guid?
-                <ChannelActions navigation={this.props.navigation} store={this.props.store} me={session}></ChannelActions> : <View></View>
-              }
+              <ChannelActions navigation={this.props.navigation} store={this.props.store} me={session}></ChannelActions>
             </View>
           </View>
           {isEditable && <View style={styles.briefdescriptionTextInputView}>

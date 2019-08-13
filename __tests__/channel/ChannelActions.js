@@ -23,6 +23,7 @@ describe('channel actions component', () => {
     store = new ChannelStore();
     store.channel = new UserModel(userFaker(1));
     store.channel.toggleSubscription = jest.fn();
+    store.channel.toggleBlock = jest.fn();
   });
 
   it('should renders correctly', () => {
@@ -73,7 +74,7 @@ describe('channel actions component', () => {
     expect(store.channel.toggleSubscription).toBeCalled();
 
     opt = wrapper.instance().makeAction(2);
-    expect(store.toggleBlock).toBeCalled();
+    expect(store.channel.toggleBlock).toBeCalled();
 
     opt = wrapper.instance().makeAction(3);
     expect(navigation.push).toBeCalled();

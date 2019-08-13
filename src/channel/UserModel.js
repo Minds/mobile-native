@@ -29,6 +29,12 @@ export default class UserModel extends BaseModel {
    * @var boolean
    */
   @observable subscribed;
+
+  /**
+   * @var boolean
+   */
+  @observable open = true;
+
   /**
    * @var boolean
    */
@@ -46,6 +52,34 @@ export default class UserModel extends BaseModel {
   toggleMatureVisibility() {
     if (GOOGLE_PLAY_STORE) return;
     this.mature_visibility = !this.mature_visibility;
+  }
+
+  @action
+  async toggleBlock() {
+    const value = !this.blocked;
+    try {
+      const response = await ChannelService.toggleBlock(this.guid, value);
+      this.blocked = value;
+    } catch (err) {
+      runInAction(() => {
+        this.blocked = !value;
+      });
+      throw err;
+    }
+  }
+
+  @action
+  async toggleOpen() {
+    const value = !this.open;
+    try {
+      const response = await ChannelService.toggleOpen(this.guid, value);
+      this.open = value;
+    } catch (err) {
+      runInAction(() => {
+        this.open = !value;
+      });
+      throw err;
+    }
   }
 
   @action

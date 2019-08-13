@@ -42,6 +42,7 @@ class ChannelService {
   /**
    * Block to Channel
    * @param {string} guid
+   * @param {boolean} value
    */
   toggleBlock(guid, value) {
     let result;
@@ -55,6 +56,15 @@ class ChannelService {
     }
 
     return result;
+  }
+
+  /**
+   * Toogle Channel Open/Closed
+   * @param {string} guid
+   * @param {boolean} value
+   */
+  toggleOpen(guid, open) {
+    return api.post(`/api/v2/permissions/channels/${guid}`, {open});
   }
 
   async getFeedFromService(guid, type, opts = { limit: 12 }) {

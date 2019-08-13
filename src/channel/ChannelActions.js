@@ -50,20 +50,27 @@ export default class ChannelActions extends Component {
   getOptions() {
     let options = [ i18n.t('cancel') ];
 
-    if(this.props.store.channel.subscribed){
-      options.push( i18n.t('channel.unsubscribe') );
-    }
-
-    if (!this.props.store.channel.blocked) {
-      options.push( i18n.t('channel.block') );
+    if (this.props.store.channel.isOwner()) {
+      if (this.props.store.channel.open) {
+        options.push( i18n.t('channel.closed') );
+      } else {
+        options.push( i18n.t('channel.open') );
+      }
     } else {
-      options.push( i18n.t('channel.unblock') );
-    }
+      if (this.props.store.channel.subscribed){
+        options.push( i18n.t('channel.unsubscribe') );
+      }
 
-    options.push( i18n.t('channel.report') );
+      if (!this.props.store.channel.blocked) {
+        options.push( i18n.t('channel.block') );
+      } else {
+        options.push( i18n.t('channel.unblock') );
+      }
+
+      options.push( i18n.t('channel.report') );
+    }
 
     return options;
-
   }
 
   makeAction(option) {
@@ -74,10 +81,12 @@ export default class ChannelActions extends Component {
         this.props.store.channel.toggleSubscription();
         break;
       case i18n.t('channel.block'):
-        this.props.store.toggleBlock();
-        break;
       case i18n.t('channel.unblock'):
-        this.props.store.toggleBlock();
+        this.props.store.channel.toggleBlock();
+        break;
+      case i18n.t('channel.close'):
+      case i18n.t('channel.opened'):
+        this.props.store.toggleOpen();
         break;
       case i18n.t('channel.report'):
         this.props.navigation.push('Report', { entity: this.props.store.channel });
