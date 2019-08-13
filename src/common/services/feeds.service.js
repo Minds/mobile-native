@@ -199,7 +199,6 @@ export default class FeedsService {
         this.feed = response.entities;
       }
       this.pagingToken = response['load-next'];
-      if (response.entities.length < 150) this.endReached = true;
     } else {
       this.endReached = true;
     }
