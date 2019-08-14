@@ -65,7 +65,9 @@ export default class FeedsService {
   async getEntities() {
     const end = this.limit + this.offset;
     if (this.paginated && end >= this.feed.length && !this.endReached) {
-      await this.fetch(true);
+      try {
+        await this.fetch(true);
+      } catch (err) {}
     }
     const feedPage = this.feed.slice(this.offset, end);
 
