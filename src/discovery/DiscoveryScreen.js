@@ -419,6 +419,8 @@ export default class DiscoveryScreen extends Component {
   getFooter() {
     const discovery = this.props.discovery;
 
+    if (discovery.filters.type == 'lastchannels') return null;
+
     if (discovery.listStore.loading && !discovery.listStore.refreshing) {
       return (
         <View style={{ flex:1, alignItems: 'center', justifyContent: 'center', padding: 16 }}>

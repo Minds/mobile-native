@@ -121,7 +121,10 @@ class DiscoveryStore {
   onFilterChange = (filter, type, period, nsfw) => {
     this.listStore.feedsService.abort();
     this.listStore.clear();
-    this.fetch();
+
+    if (this.filters.type !== 'lastchannels') {
+      this.fetch();
+    }
   }
 
   /**
