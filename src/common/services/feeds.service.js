@@ -67,7 +67,11 @@ export default class FeedsService {
     if (this.paginated && end >= this.feed.length && !this.endReached) {
       try {
         await this.fetch(true);
-      } catch (err) {}
+      } catch (err) {
+        if (!isNetworkFail(err)) {
+          logService.exception('[FeedService] getEntities', err);
+        }
+      }
     }
     const feedPage = this.feed.slice(this.offset, end);
 
@@ -191,7 +195,6 @@ export default class FeedsService {
     const params = {...this.params, ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 }};
 
     if (this.paginated && more) params.from_timestamp = this.pagingToken;
-
     const response = await apiService.get(this.endpoint, params, this);
 
     if (response.entities.length) {
