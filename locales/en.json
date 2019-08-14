@@ -318,7 +318,10 @@
     "postedIn":"posted in",
     "channel":"channel",
     "deleted":"This post was deleted",
-    "dontHave":"You don't have any notifications"
+    "dontHave":"You don't have any notifications",
+    "rewardsStateIncrease": "Congratulations! You just became a {{state}} user.\nWe've increased your daily token reward multiplier to {{multiplier}}x",
+    "rewardsStateDecrease": "We miss you! You just dropped down to a {{state}} user.\nYour daily token reward multiplier has been reduced to {{multiplier}}x",
+    "rewardsSummary": "You earned {{amount}} tokens yesterday."
   },
   "notificationSettings":{
     "enableDisable":"Enable and disable push notifications",
