@@ -501,9 +501,10 @@ export default class DiscoveryScreen extends Component {
 
   /**
    * Navigate to feed screen
-   * @param {int} index
+   * @param {string} urn
    */
-  navigateToFeed = (index) => {
+  navigateToFeed = (urn) => {
+    const index = this.props.discovery.listStore.feedsService.feed.findIndex(e => e.urn === urn);
 
     this.props.discovery.feedStore.setFeed(this.props.discovery.listStore.feedsService.feed.slice(index));
 
@@ -525,7 +526,7 @@ export default class DiscoveryScreen extends Component {
         <DiscoveryTile
           entity={row.item}
           size={this.state.itemHeight}
-          onPress={() => this.navigateToFeed(row.index)}
+          onPress={() => this.navigateToFeed(row.item.urn)}
         />
       </ErrorBoundary>
     );
