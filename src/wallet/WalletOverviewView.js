@@ -21,7 +21,6 @@ export default class WalletOverviewView extends Component {
   }
 
   render() {
-
     const duration = moment.duration(this.props.wallet.overview.nextPayout, 'seconds');
     const timer = moment.utc(duration.as('milliseconds')).format('HH:mm:ss')
     return (
@@ -48,8 +47,13 @@ export default class WalletOverviewView extends Component {
           </View>
 
           <View style={ styles.cell }>
-            <Text style={ styles.titles }>{i18n.t('wallet.networkScore')}</Text>
-            <Text style={ styles.amount }>{ number(this.props.wallet.overview.totalNetworkContribution || 0) }</Text>
+          <Text style={ styles.titles }>{i18n.t('wallet.networkScore')}</Text>
+          <Text style={ styles.amount }>{ number(this.props.wallet.overview.totalNetworkContribution || 0) }</Text>
+        </View>
+
+          <View style={ styles.cell }>
+            <Text style={ styles.titles }>{i18n.t('wallet.yourRewardFactor')}</Text>
+            <Text style={ styles.amount }>{ number(this.props.wallet.overview.yourRewardFactor || 1, 0, 1) }x</Text>
           </View>
 
           <View style={ styles.cell }>
