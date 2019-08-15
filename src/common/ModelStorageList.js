@@ -65,8 +65,10 @@ export default class ModelStorageList {
       const guid = this.index.pop();
       await AsyncStorage.removeItem(this._getKeyGuid(guid));
     }
-
+    const list = model.__list;
+    delete(model.__list);
     await this._persist(model);
+    model._list = list;
     return 0;
   }
 

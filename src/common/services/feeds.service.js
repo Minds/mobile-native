@@ -51,10 +51,36 @@ export default class FeedsService {
   feed: Array = [];
 
   /**
+   * @var {string}
+   */
+  pagingToken: string = '';
+
+  /**
+   * @var {boolean}
+   */
+  endReached = false;
+
+  /**
+   * @var {boolean}
+   */
+  paginated = true;
+
+  /**
    * Get entities from the current page
    */
   async getEntities() {
     const end = this.limit + this.offset;
+
+    if (this.paginated && end >= this.feed.length && !this.endReached) {
+      try {
+        await this.fetch(true);
+      } catch (err) {
+        if (!isNetworkFail(err)) {
+          logService.exception('[FeedService] getEntities', err);
+        }
+      }
+    }
+
     const feedPage = this.feed.slice(this.offset, end);
 
     const result = await entitiesService.getFromFeed(feedPage, this, this.asActivities);
@@ -125,7 +151,7 @@ export default class FeedsService {
 
   /**
    * Set inject boost
-   * @param {Array} feed
+   * @param {boolean} injectBoost
    * @returns {FeedsService}
    */
   setInjectBoost(injectBoost): FeedsService {
@@ -163,6 +189,10 @@ export default class FeedsService {
     return this;
   }
 
+  /**
+   * Set parameters
+   * @param {Object} params
+   */
   setParams(params): FeedsService {
     this.params = params;
     if (!params.sync) {
@@ -182,6 +212,16 @@ export default class FeedsService {
   }
 
   /**
+   * Set paginated
+   * @param {boolean} paginated
+   * @returns {FeedsService}
+   */
+  setPaginated(paginated: boolean): FeedsService {
+    this.paginated = paginated;
+    return this;
+  }
+
+  /**
    * Abort pending fetch
    */
   abort() {
@@ -190,12 +230,26 @@ export default class FeedsService {
 
   /**
    * Fetch
+   * @param {boolean} more
    */
-  async fetch() {
+  async fetch(more = false) {
     abort(this);
-    const response = await apiService.get(this.endpoint, {...this.params, ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 }}, this);
 
-    this.feed = response.entities;
+    const params = {...this.params, ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 }};
+
+    if (this.paginated && more) params.from_timestamp = this.pagingToken;
+    const response = await apiService.get(this.endpoint, params, this);
+
+    if (response.entities.length) {
+      if (more) {
+        this.feed = this.feed.concat(response.entities);
+      } else {
+        this.feed = response.entities;
+      }
+      this.pagingToken = response['load-next'];
+    } else {
+      this.endReached = true;
+    }
 
     // save without wait
     feedsStorage.save(this);
@@ -208,7 +262,14 @@ export default class FeedsService {
     try {
       const feed = await feedsStorage.read(this);
       if (feed) {
-        this.feed = feed;
+        // support old format
+        if (Array.isArray(feed)) {
+          this.feed = feed;
+          this.pagingToken = this.feed[this.feed.length - 1].timestamp - 1;
+        } else {
+          this.feed = feed.feed;
+          this.pagingToken = feed.next;
+        }
         return true;
       }
     } catch (err) {
@@ -281,6 +342,7 @@ export default class FeedsService {
   clear(): FeedStore {
     this.offset = 0;
     this.limit = 12;
+    this.pagingToken = '';
     this.params =  {sync: 1};
     this.feed = [];
     return this;

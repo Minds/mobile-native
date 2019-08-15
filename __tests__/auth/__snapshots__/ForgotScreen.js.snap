@@ -335,7 +335,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                     ]
                   }
                 >
-                  CONTIUE
+                  CONTINUE
                 </Text>
               </View>
             </View>

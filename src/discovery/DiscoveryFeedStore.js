@@ -34,6 +34,7 @@ class DiscoveryFeedStore {
     this.list.viewed.clearViewed();
 
     this.list
+      .setPaginated(false)
       .setFeed(feed)
       .setOffset(0)
       .hydratePage();
