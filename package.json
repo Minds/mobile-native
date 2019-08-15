@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "validate-locales": "node tasks/validate-locales.js",
+    "update-settings": "ts-node tasks/update-settings.js",
     "test": "jest",
     "locale": "ts-node tasks/poeditor.js",
     "e2e": "jest -c jest.e2e.config.js",
