@@ -183,11 +183,21 @@ export default class FeedStore {
 
   /**
    * Set inject boost
-   * @param {Array} feed
+   * @param {boolean} injectBoost
    * @returns {FeedStore}
    */
-  setInjectBoost(injectBoost): FeedStore {
+  setInjectBoost(injectBoost: boolean): FeedStore {
     this.feedsService.setInjectBoost(injectBoost);
+    return this;
+  }
+
+  /**
+   * Set paginated
+   * @param {boolean} paginated
+   * @returns {FeedStore}
+   */
+  setPaginated(paginated: boolean): FeedStore {
+    this.feedsService.setPaginated(paginated);
     return this;
   }
 

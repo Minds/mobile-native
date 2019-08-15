@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  TextInput,
   Text,
   Alert
 } from 'react-native';
@@ -35,6 +34,9 @@ import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import settingsStore from '../settings/SettingsStore';
 import CaptureTabs from './CaptureTabs';
+
+// workaround for android copy/paste
+import TextInput from '../common/components/TextInput';
 
 @inject('user', 'capture')
 @observer
