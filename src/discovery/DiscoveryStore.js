@@ -68,6 +68,7 @@ class DiscoveryStore {
 
     this.listStore
       .setInjectBoost(true)
+      .setPaginated(false)
       .getMetadataService()
         .setSource('feed/discovery')
         .setMedium('feed');
@@ -83,7 +84,10 @@ class DiscoveryStore {
   onFilterChange = (filter, type, period, nsfw) => {
     this.listStore.feedsService.abort();
     this.listStore.clear();
-    this.fetch();
+
+    if (this.filters.type !== 'lastchannels') {
+      this.fetch();
+    }
   }
 
   /**

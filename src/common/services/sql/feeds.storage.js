@@ -24,7 +24,9 @@ export class FeedsStorage {
 
     try {
       await this.getDb();
-      await this.db.executeSql('REPLACE INTO feeds (key, offset, data, updated) values (?,?,?,?)', [key, 0, JSON.stringify(this.map(feed.feed)), Math.floor(Date.now() / 1000)]);
+
+      const params = [key, 0, JSON.stringify({feed: this.map(feed.feed), next: feed.pagingToken}), Math.floor(Date.now() / 1000)];
+      await this.db.executeSql('REPLACE INTO feeds (key, offset, data, updated) values (?,?,?,?)', params);
     } catch (err) {
       logService.exception('[FeedsStorage]', err);
     }

@@ -5,6 +5,7 @@ import { shallow } from 'enzyme';
 
 import LoginForm from '../../src/auth/LoginForm';
 import authService from '../../src/auth/AuthService';
+import TextInput from '../../src/common/components/TextInput';
 
 jest.mock('../../src/auth/AuthService');
 
@@ -35,7 +36,7 @@ describe('LoginForm component', () => {
 
     // simulate user input
     const render = wrapper.dive();
-    render.find('TextInput').forEach(child => {
+    render.find(TextInput).forEach(child => {
       child.simulate('changeText', 'data');
     });
 
