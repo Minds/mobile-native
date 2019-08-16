@@ -62,7 +62,9 @@ export default class CaptureGallery extends PureComponent {
    */
   _loadPhotos = async() => {
 
-    if (this.state.loading || !this.state.hasMore) return;
+    if (this.state.loading || !this.state.hasMore) {
+      return;
+    }
 
     const params = {
       first: 30,
@@ -104,7 +106,9 @@ export default class CaptureGallery extends PureComponent {
    */
   render() {
 
-    if (!this.state.imagesLoaded) return <CenteredLoading />
+    if (!this.state.imagesLoaded) {
+      return <CenteredLoading />
+    }
 
     return (
       <FlatList
