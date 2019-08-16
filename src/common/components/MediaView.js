@@ -198,7 +198,7 @@ export default class MediaView extends Component {
             source={source}
             entity={this.props.entity}
             style={[styles.image, { height }]}
-            loadingIndicator="placeholder"
+            // loadingIndicator="placeholder"
             onError={this.imageError}
             imageStyle={styles.innerImage}
             />
@@ -229,7 +229,7 @@ export default class MediaView extends Component {
           source={source}
           entity={this.props.entity}
           style={styles.image}
-          loadingIndicator="placeholder"
+          // loadingIndicator="placeholder"
           onError={this.imageError}
           imageStyle={styles.innerImage}
         />
@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   innerImage: {
-    backgroundColor: 'transparent'
+    backgroundColor: 'black'
   },
   videoContainer: {
     flex: 1,
