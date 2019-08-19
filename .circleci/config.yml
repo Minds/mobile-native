@@ -109,34 +109,35 @@ jobs:
 
       #- store_artifacts:
       #    path: ios/test-results
-ios-build-test:
-    - run: 
+  ios-build-test:
+    steps:
+      - run: 
           name: Build release .ipa
           command: fastlane buildrelease
           working_directory: ios
   ios-build-release:
-    - run: 
-        name: Upload to crashalytics 
-        command: echo "TODO"
-        working_directory: ios
-
-    - run:
-        name: Upload to Testflight release
-        command: fastlane testflight
-        working_directory: ios
+    steps:
+      - run: 
+          name: Upload to crashalytics 
+          command: echo "TODO"
+          working_directory: ios
+      - run:
+          name: Upload to Testflight release
+          command: fastlane testflight
+          working_directory: ios
 
 workflows:
   version: 2
   node-ios:
     jobs:
       - node
-      - ios
+      - ios:
           requires: 
             - node
-      - ios-build-test
+      - ios-build-test:
           requires: 
             - ios
-      - ios-build-release
+      - ios-build-release:
           requires:
             - ios-build-test
           filters:
