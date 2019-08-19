@@ -118,22 +118,20 @@ jobs:
   ios-build-test:
     macos:
       xcode: "10.1"
-    working_directory: ~/mobile-native
-     # use a --login shell so our "set Ruby version" command gets picked up for later steps
-    shell: /bin/bash --login -o pipefail
+    working_directory: ~/mobile-native/ios
     steps:
-      - run:
-          command: gem update --system && gem install bundler && bundle install
-          working_directory: ios
+      - restore_cache:
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
       - run: 
           name: Build release .ipa
           command: fastlane buildrelease
-          working_directory: ios
   ios-build-release:
     macos:
       xcode: "10.1"
-    working_directory: ~/mobile-native
+    working_directory: ~/mobile-native/ios
     steps:
+      - restore_cache:
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
       - run: 
           name: Upload to crashalytics 
           command: echo "TODO"
