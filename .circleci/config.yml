@@ -90,6 +90,12 @@ jobs:
           paths:
             - vendor/bundle
 
+      - persist_to_workspace:
+          root: ~/mobile-native
+          paths:
+            - node_modules
+
+
       ### TODO- get tests running with fastlane
 
       #- run:
@@ -114,12 +120,9 @@ jobs:
       xcode: "10.1"
     working_directory: ~/mobile-native
     steps:
-      - restore_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-      - restore_cache:
-          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-      - restore_cache:
-          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+      - run:
+          command: gem update --system && gem install bundler && bundle install
+          working_directory: ios
       - run: 
           name: Build release .ipa
           command: fastlane buildrelease
