@@ -110,12 +110,18 @@ jobs:
       #- store_artifacts:
       #    path: ios/test-results
   ios-build-test:
+    macos:
+      xcode: "10.1"
+    working_directory: ~/mobile-native
     steps:
       - run: 
           name: Build release .ipa
           command: fastlane buildrelease
           working_directory: ios
   ios-build-release:
+    macos:
+      xcode: "10.1"
+    working_directory: ~/mobile-native
     steps:
       - run: 
           name: Upload to crashalytics 
