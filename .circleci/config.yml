@@ -124,7 +124,8 @@ jobs:
           key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
       - run: 
           name: Build release .ipa
-          command: fastlane buildrelease
+          command: fastlane buildrelease --verbose
+          working_directory: ios
   ios-build-release:
     macos:
       xcode: "10.1"
