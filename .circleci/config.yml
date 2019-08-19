@@ -118,8 +118,7 @@ jobs:
   ios-build-test:
     macos:
       xcode: "10.1"
-    working_directory: ~/mobile-native/ios
-    steps:
+    working_directory: ~/mobile-native
       - restore_cache:
           key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
       - run: 
