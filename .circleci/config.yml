@@ -119,6 +119,8 @@ jobs:
     macos:
       xcode: "10.1"
     working_directory: ~/mobile-native
+     # use a --login shell so our "set Ruby version" command gets picked up for later steps
+    shell: /bin/bash --login -o pipefail
     steps:
       - run:
           command: gem update --system && gem install bundler && bundle install
