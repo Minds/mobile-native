@@ -109,7 +109,7 @@ jobs:
 
       #- store_artifacts:
       #    path: ios/test-results
-  ios-build-test:
+ios-build-test:
     - run: 
           name: Build release .ipa
           command: fastlane buildrelease
@@ -131,14 +131,14 @@ workflows:
     jobs:
       - node
       - ios
-        requires: 
-          - node
+          requires: 
+            - node
       - ios-build-test
-        requires: 
-          - ios
+          requires: 
+            - ios
       - ios-build-release
           requires:
-            ios-build-test
+            - ios-build-test
           filters:
             branches:
               only:
