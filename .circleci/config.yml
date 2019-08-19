@@ -115,29 +115,15 @@ jobs:
           name: Build release .ipa
           command: fastlane buildrelease
           working_directory: ios
-          branches:
-            only:
-              - /stable-*/
-              - /release-*/
-              - test/circle-ci
-
       - run: 
           name: Upload to crashalytics 
           command: echo "TODO"
           working_directory: ios
-          branches:
-            only:
-              - /release-*/
 
       - run:
           name: Upload to Testflight release
           command: fastlane testflight
           working_directory: ios
-          branches:
-            only:
-              - /stable-*/
-              - /release-*/
-              - test/circle-ci
 
 workflows:
   version: 2
@@ -147,3 +133,9 @@ workflows:
       - ios:
           requires:
             - node
+          filters:
+            only:
+              - /stable-*/
+              - /release-*/
+              - test/circle-ci
+
