@@ -120,6 +120,7 @@ jobs:
       xcode: "10.1"
     working_directory: ~/mobile-native/ios
     steps:
+      - checkout
       - run:
           name: list directory contents
           command: ls
