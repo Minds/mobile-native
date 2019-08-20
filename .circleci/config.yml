@@ -118,17 +118,18 @@ jobs:
   ios-build-test:
     macos:
       xcode: "10.1"
-    working_directory: ~/mobile-native/ios
+    working_directory: ~/mobile-native
     steps:
       - checkout
       - run:
           name: list directory contents
-          command: ls
+          command: ls ios
       - restore_cache:
-          key: bundle-v1-{{ checksum "Gemfile.lock" }}-{{ arch }}
+          key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
       - run: 
           name: Build release .ipa
           command: fastlane buildrelease --verbose
+          working_directory: ios
   ios-build-release:
     macos:
       xcode: "10.1"
