@@ -9,6 +9,7 @@ import wireService from '../wire/WireService';
 import ModelStorageList from '../common/ModelStorageList';
 import logService from '../common/services/log.service';
 import channelsService from '../common/services/channels.service';
+import UserModel from './UserModel';
 
 /**
  * Channel Stores
@@ -49,10 +50,24 @@ class ChannelStores {
     }
   }
 
+  /**
+   * Add a visited channel to the list
+   * if the channel is already in the list it moves it to the top
+   * @param {UserModel} channel
+   */
   async addVisited(channel) {
     result = await this.lastVisited.unshift(channel);
     // if it already exist we move it to the beggining
     if (result == -1) this.lastVisited.moveFirst(channel.guid);
+  }
+
+  /**
+   * Get latest visited channels
+   * @param {number} count
+   */
+  async getVisited(count) {
+    const result = await this.lastVisited.first(count);
+    return UserModel.createMany(result);
   }
 
   @action
