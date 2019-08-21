@@ -121,11 +121,12 @@ jobs:
     working_directory: ~/mobile-native
     steps:
       - checkout
-      - run:
-          name: list directory contents
-          command: ls ios
       - restore_cache:
           key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
+      - restore_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}-{{ arch }}
       - run: 
           name: Build release .ipa
           command: fastlane buildrelease --verbose
