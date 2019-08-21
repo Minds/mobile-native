@@ -79,7 +79,6 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
-apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -163,6 +162,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-notifications')
     implementation project(':@react-native-community_netinfo')
     implementation project(':react-native-screens')
     implementation project(':rn-apk')
@@ -173,7 +173,8 @@ dependencies {
     implementation project(':react-native-cookies')
     compile project(':react-native-exit-app')
     compile project(':react-native-background-timer')
-
+    implementation 'com.google.firebase:firebase-core:16.0.7'
+    implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
     implementation(project(':react-native-jitsi-meet')) {
       // solve issues with the packages shared with the jitsi bundle
       exclude group: 'com.facebook.react', module:'react-native-vector-icons'
@@ -182,16 +183,14 @@ dependencies {
       exclude group: 'com.facebook.react',module:'react-native-fast-image'
       exclude group: 'com.facebook.react',module:'react-native-background-timer'
     //   exclude group: 'com.facebook.react',module:'react-native-google-signin'
-      exclude group: 'com.google.android.gms', module: 'play-services-base'
+      exclude group: 'com.google.firebase'
     }
     implementation project(':react-native-sqlite-storage')
-    implementation project(':react-native-code-push')
     implementation project(':react-native-background-timer')
     implementation project(':react-native-android-sms-listener')
     implementation project(':react-native-fs')
     implementation project(':react-native-media-meta')
     implementation project(':react-native-share-menu')
-    implementation project(':react-native-notifications')
     implementation project(':react-native-keep-awake')
     implementation project(':react-native-share')
     // implementation project(':react-native-udp')
@@ -208,16 +207,12 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:0.59.10"  // From node_modules
-    implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    // implementation 'com.google.android.gms:play-services-auth:16.0.1'
     implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.10.0'
     implementation 'com.facebook.fresco:animated-gif:1.10.0'
     implementation 'com.facebook.fresco:animated-webp:1.10.0'
     implementation 'com.facebook.fresco:webpsupport:1.10.0'
     implementation 'com.facebook.fresco:fresco:1.10.0'
-
-    // fix 0.58 update
-    // implementation 'com.facebook.fresco:imagepipeline-okhttp:0.8.1'
-    implementation 'com.facebook.soloader:soloader:0.6.0'
 
     // Glide
     implementation("com.github.bumptech.glide:glide:${glideVersion}") {
@@ -236,3 +231,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
+apply plugin: 'com.google.gms.google-services'
