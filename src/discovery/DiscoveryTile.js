@@ -32,7 +32,23 @@ const isAndroid = Platform.OS === 'android';
 export default class DiscoveryTile extends Component {
 
   state = {
-    error: false
+    error: false,
+    style: null
+  }
+
+  /**
+   * Derive state from props
+   * @param {object} nextProps
+   * @param {object} prevState
+   */
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.size !== nextProps.size) {
+      return {
+        style: { width: nextProps.size, height: nextProps.size }
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -85,8 +101,6 @@ export default class DiscoveryTile extends Component {
       url.priority = FastImage.priority.low;
     }
 
-    const style = { width: this.props.size, height: this.props.size };
-
     const show_overlay = (entity.shouldBeBlured() && !entity.is_parent_mature) && !(entity.shouldBeBlured() && entity.is_parent_mature);
 
     const overlay = (show_overlay) ?
@@ -98,7 +112,7 @@ export default class DiscoveryTile extends Component {
       null;
 
     return (
-      <TouchableOpacity onPress={this._navToView} style={[ style, styles.tile ]}>
+      <TouchableOpacity onPress={this._navToView} style={[ this.state.style, styles.tile ]}>
         <View style={ [CS.flexContainer, CS.backgroundGreyed] }>
           <FastImage
             source={ url }
