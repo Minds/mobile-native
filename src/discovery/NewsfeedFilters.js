@@ -175,7 +175,7 @@ export default class NewsfeedFilters extends Component {
                 <MenuItem onPress={this.setPeriod24}>{i18n.t('newsfeedFilters.topPeriod24')}</MenuItem>
                 <MenuItem onPress={this.setPeriod7}>{i18n.t('newsfeedFilters.topPeriod7')}</MenuItem>
                 <MenuItem onPress={this.setPeriod30}>{i18n.t('newsfeedFilters.topPeriod30')}</MenuItem>
-                <MenuItem onPress={this.setPeriod1}>{i18n.t('newsfeedFilters.topPeriod1')}</MenuItem>
+                {/* <MenuItem onPress={this.setPeriod1}>{i18n.t('newsfeedFilters.topPeriod1')}</MenuItem>  */}
               </Menu>
             }
           </View>
