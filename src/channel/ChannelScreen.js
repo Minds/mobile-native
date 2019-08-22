@@ -22,7 +22,6 @@ import { Icon } from 'react-native-elements'
 import RewardsCarousel from './carousel/RewardsCarousel';
 import ChannelHeader from './header/ChannelHeader';
 import Toolbar from './toolbar/Toolbar';
-import NewsfeedList from '../newsfeed/NewsfeedList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import Button from '../common/components/Button';
 import colors from '../styles/Colors';
@@ -259,26 +258,18 @@ export default class ChannelScreen extends Component {
 
     const emptyRender = () => <View />;
 
-    const list = featuresService.has('es-feeds') ?
-    <FeedList
-      feedStore={feed.feedStore}
-      renderActivity={renderActivity}
-      header={header}
-      navigation={this.props.navigation}
-      emptyMessage={emptyMessage}
-    /> :
-    <NewsfeedList
-      newsfeed={feed}
-      renderActivity={renderActivity}
-      header={header}
-      navigation={this.props.navigation}
-      emptyMessage={emptyMessage}
-    />;
 
 
     return (
       <View style={CommonStyle.flexContainer}>
-        {!channel.blocked && list}
+        {!channel.blocked &&
+        <FeedList
+          feedStore={feed.feedStore}
+          renderActivity={renderActivity}
+          header={header}
+          navigation={this.props.navigation}
+          emptyMessage={emptyMessage}
+        />}
 
         {/* Not using FlatList breaks header layout */}
         {channel.blocked && <FlatList

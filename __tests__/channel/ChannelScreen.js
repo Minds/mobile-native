@@ -47,8 +47,6 @@ describe('Channel screen component', () => {
 
   let store, screen, entities, channel, navigation, activityResponse, user;
 
-  featuresService.features['es-feeds'] = true;
-
   beforeEach(() => {
 
     let activityResponse = activitiesServiceFaker().load(1);
