@@ -62,28 +62,7 @@ export default class RewardsStep extends Component {
         secret,
         confirming: true,
         inProgress: false,
-        wait: 60
       });
-
-      this.waiting = setInterval(() => {
-        this.setState({wait: this.state.wait - 1});
-      }, 1000);
-
-      // listen for the sms for 20 seconds
-      const code = await this.props.wallet.listenForSms();
-
-      clearInterval(this.waiting);
-
-      switch(code) {
-        case false: // sms not recived
-          this.setState({confirmFailed: true});
-          break;
-        case -1: // sms read permission not allowed
-          this.setState({smsAllowed: false})
-          break;
-        default:
-          this.setState({code}, () => this.confirm());
-      }
 
     } catch (e) {
       const error = (e && e.message) || 'Unknown server error';
@@ -174,19 +153,11 @@ export default class RewardsStep extends Component {
       confirmButtonContent = <ActivityIndicator size="small" color={Colors.primary} />;
     }
 
-    const body = this.state.confirmFailed ?
-      <Text style={[CS.fontXL, CS.textCenter]}>{i18n.t('onboarding.smsNotReceived')} <Text style={CS.colorPrimary} onPress={this.rejoinAction}>{i18n.t('tryAgain')}</Text></Text>:
-      this.state.smsAllowed ?
-        <Text style={[CS.colorPrimary, CS.fontXL, CS.textCenter]}> {i18n.t('onboarding.waitSms')}: {this.state.wait}</Text>:
-        null;
-
     return (
       <View>
         <Text style={style.p}>
           {i18n.t('onboarding.weJustSentCode', {phone: this.state.phone})}
         </Text>
-        {body}
-
         <View style={[style.cols, style.form]}>
           <TextInput
             style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}

@@ -34,7 +34,7 @@ import cl.json.ShareApplication;
 import com.meedan.ShareMenuPackage;
 import com.mybigday.rnmediameta.RNMediaMetaPackage;
 import com.rnfs.RNFSPackage;
-import com.centaurwarchief.smslistener.SmsListenerPackage;
+import com.reactnativejitsimeet.JitsiMeetPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import org.pgsqlite.SQLitePluginPackage;
 import java.util.Arrays;
@@ -82,7 +82,7 @@ public class MainApplication extends Application implements ShareApplication, Re
           new ShareMenuPackage(),
           new RNMediaMetaPackage(),
           new RNFSPackage(),
-          new SmsListenerPackage(),
+          new JitsiMeetPackage(),
           new SQLitePluginPackage(),
           new BackgroundTimerPackage()
       );
