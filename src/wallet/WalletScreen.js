@@ -29,7 +29,6 @@ import { CommonStyle } from '../styles/Common';
 import FeaturesService from '../common/services/features.service';
 import shareService from "../share/ShareService";
 import i18n from '../common/services/i18n.service';
-import stores from '../../AppStores';
 
 /**
  * Wallet screen
