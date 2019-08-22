@@ -66,6 +66,7 @@ export default class ConversationScreen extends Component {
   };
 
   componentWillMount() {
+
     this.store = new MessengerConversationStore();
     const params = this.props.navigation.state.params;
     let conversation;

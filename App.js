@@ -63,6 +63,11 @@ import connectivityService from './src/common/services/connectivity.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 import commentStorageService from './src/comments/CommentStorageService';
 
+import { Sentry } from 'react-native-sentry';
+
+Sentry.config('https://d650fc58f2da4dc8ae9d95847bce152d@sentry.io/1538735').install();
+
+
 let deepLinkUrl = '';
 
 // init push service
@@ -75,6 +80,12 @@ CookieManager.clearAll();
 
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
+
+  const user = sessionService.getUser();
+
+  Sentry.setUserContext({
+    userID: user.guid
+  });
 
   logService.info('[App] Getting minds settings and onboarding progress');
   // load minds settings and onboarding progresss on login

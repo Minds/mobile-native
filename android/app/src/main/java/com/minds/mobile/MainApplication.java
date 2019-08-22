@@ -3,6 +3,7 @@ package com.minds.mobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.sentry.RNSentryPackage;
 import com.reactnativejitsimeet.JitsiMeetPackage;
 import com.wix.reactnativenotifications.RNNotificationsPackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
@@ -56,6 +57,7 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSentryPackage(),
             new JitsiMeetPackage(),
             new NetInfoPackage(),
             new RNScreensPackage(),
