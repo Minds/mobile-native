@@ -52,7 +52,6 @@ export default class WalletScreen extends Component {
   }
 
   componentWillMount() {
-
     if (FeaturesService.has('crypto')) {
       this.disposeEnter = this.props.navigation.addListener('didFocus', async () => {
         if ((await this.props.wallet.canShowOnboarding()) && (!this.props.user.hasRewards() || !this.props.user.hasEthWallet())) {
@@ -74,7 +73,7 @@ export default class WalletScreen extends Component {
       <View style={CommonStyle.flexContainer}>
         <ScrollView style={ styles.mainContainer }
           keyboardShouldPersistTaps='always'>
-          <WalletBalanceTokens />
+          <WalletBalanceTokens navigation={this.props.navigation}/>
           <WalletOverviewView />
           <WalletScoresView />
           <View>

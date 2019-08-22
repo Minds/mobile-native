@@ -23,8 +23,31 @@ export default class WalletBalanceTokens extends Component {
     this.props.wallet.refresh();
   }
 
-  render() {
+  componentWillMount() {
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+      // ignore back navigation
+      if (s.action.type === 'Navigation/NAVIGATE' && s.action.routeName === 'Wallet') {
+        this.triggerRender(this.props.wallet);
+      }
+    });
+  }
 
+  triggerRender(wallet) {
+    wallet.ledger.list.clearList();
+    wallet.refresh(true);
+  }
+
+  /**
+   * On component unmount
+   */
+  componentWillUnmount() {
+    // clear data to free memory
+    this.wallet.ledger.list.clearList();
+    this.disposeEnter.remove();
+  }
+
+  render() {
+    
     let addresses = null;
 
     if (this.props.wallet.addresses) {
