@@ -67,8 +67,6 @@ export default class ConversationScreen extends Component {
 
   componentWillMount() {
 
-    throw new Error("BOOM! It seems like your mobile app just exploded");
-
     this.store = new MessengerConversationStore();
     const params = this.props.navigation.state.params;
     let conversation;
