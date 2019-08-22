@@ -30,6 +30,7 @@ import testID from '../common/helpers/testID';
 
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import i18n from '../common/services/i18n.service';
+import settingsStore from '../settings/SettingsStore';
 
 /**
  * Newsfeed filters
