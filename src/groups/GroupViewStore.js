@@ -96,56 +96,10 @@ class GroupViewStore {
    * Load feed
    */
   async loadFeed() {
-    if (featuresService.has('es-feeds')) {
-      this.feed
-        .setEndpoint(`api/v2/feeds/container/${this.group.guid}/activities`)
-        .setLimit(12)
-        .fetchRemoteOrLocal();
-      return;
-    }
-
-
-    if (this.list.cantLoadMore() || this.loading) {
-      return;
-    }
-
-    this.setLoading(true);
-
-    let pinned = null;
-
-    if (
-      this.group.pinned_posts
-      && this.group.pinned_posts.length
-      && !this.list.offset
-    ) {
-      pinned = this.group.pinned_posts.join(',');
-    }
-
-    this.list.setErrorLoading(false);
-
-    try {
-      const data = await groupsService.loadFeed(this.guid, this.list.offset, pinned);
-      data.entities = ActivityModel.createMany(data.entities);
-      data.entities = data.entities.map(entity => {
-        if (!(this.group['is:moderator'] || this.group['is:owner'])) {
-          entity.dontPin = true;
-        }
-        return entity;
-      });
-      this.assignRowKeys(data);
-      this.list.setList(data);
-    } catch (err) {
-      // ignore aborts
-      if (err.code === 'Abort') return;
-
-      this.list.setErrorLoading(true);
-
-      if (!isNetworkFail(err)) {
-        logService.exception('[GroupsViewStore]', err);
-      }
-    } finally {
-      this.setLoading(false);
-    }
+    this.feed
+      .setEndpoint(`api/v2/feeds/container/${this.group.guid}/activities`)
+      .setLimit(12)
+      .fetchRemoteOrLocal();
   }
 
   /**

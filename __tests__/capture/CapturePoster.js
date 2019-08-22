@@ -1,24 +1,31 @@
 import 'react-native';
 import React from 'react';
-import { Alert } from 'react-native';
+import { Alert, CameraRoll } from 'react-native';
 import { shallow } from 'enzyme';
 import { Icon } from 'react-native-elements'
 
 import CapturePoster from '../../src/capture/CapturePoster';
 import CapturePreview from '../../src/capture/CapturePreview';
+import CaptureGallery from '../../src/capture/CaptureGallery';
 import UserStore from '../../src/auth/UserStore';
 import CaptureStore from '../../src/capture/CaptureStore';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import { getPhotosFaker } from '../../__mocks__/fake/CameraRollFaker';
 
 jest.mock('../../src/auth/UserStore');
 jest.mock('../../src/capture/CaptureStore');
 jest.mock('../../src/capture/CapturePostButton', () => 'CapturePostButton');
-jest.mock('../../src/capture/CapturePosterFlags', () => 'CapturePosterFlags');
 jest.mock('../../src/capture/CapturePreview', () => 'CapturePreview');
+jest.mock('../../src/capture/CapturePosterFlags', () => 'CapturePosterFlags');
 jest.mock('../../src/common/services/translation.service');
 
 Alert.alert = jest.fn();
+jest.mock('CameraRoll');
+CameraRoll.getPhotos = jest.fn();
+// fake camera roll data
+const response = getPhotosFaker(5);
+CameraRoll.getPhotos.mockResolvedValue(response);
 
 /**
  * Tests
@@ -43,14 +50,15 @@ describe('cature poster component', () => {
   });
 
   it('should renders correctly', () => {
-    const galley = renderer.create(
+    const screen = renderer.create(
       <CapturePoster.wrappedComponent
         user={userStore}
         capture={capture}
         navigation={navigation}
       />
     ).toJSON();
-    expect(galley).toMatchSnapshot();
+
+    expect(screen).toMatchSnapshot();
   });
 
   it('should receive text parameters on did mount', () => {
@@ -118,8 +126,12 @@ describe('cature poster component', () => {
   it('should show the preview when an image is attached', async (done) => {
     try {
 
+      // emulate image attachment
+      capture.attachment.hasAttachment = true;
+      capture.attachment.uri = paramsImage.uri;
+      capture.attachment.type = paramsImage.type;
 
-      const wrapper = shallow(
+      const wrapper = renderer.create(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
@@ -127,18 +139,14 @@ describe('cature poster component', () => {
         />
       );
 
-      // emulate image attachment
-      capture.attachment.hasAttachment = true;
-      capture.attachment.uri = paramsImage.uri;
-      capture.attachment.type = paramsImage.type;
+      const gallery = wrapper.root.findByType(CaptureGallery);
 
-      // update component
-      wrapper.update();
+      await gallery.instance._loadPhotos();
 
       // find Capture Preview
-      const preview = wrapper.find(CapturePreview);
+      const preview = wrapper.root.findByType(CapturePreview);
 
-      expect(preview.length).toBe(1);
+      expect(preview).toBeDefined();
 
       done();
     } catch (e) {
@@ -148,8 +156,12 @@ describe('cature poster component', () => {
 
   it('should show the preview when a video is attached', async (done) => {
     try {
+      // emulate video attachment
+      capture.attachment.hasAttachment = true;
+      capture.attachment.uri = paramsVideo.uri;
+      capture.attachment.type = paramsVideo.type;
 
-      const wrapper = shallow(
+      const wrapper = renderer.create(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
@@ -157,18 +169,14 @@ describe('cature poster component', () => {
         />
       );
 
-      // emulate video attachment
-      capture.attachment.hasAttachment = true;
-      capture.attachment.uri = paramsVideo.uri;
-      capture.attachment.type = paramsVideo.type;
+      const gallery = wrapper.root.findByType(CaptureGallery);
 
-      // update component
-      wrapper.update();
+      await gallery.instance._loadPhotos();
 
       // find Capture Preview
-      const preview = wrapper.find(CapturePreview);
+      const preview = wrapper.root.findByType(CapturePreview);
 
-      expect(preview.length).toBe(1);
+      expect(preview).toBeDefined();
 
       done();
     } catch (e) {
@@ -184,7 +192,7 @@ describe('cature poster component', () => {
       capture.attachment.uri = paramsVideo.uri;
       capture.attachment.type = paramsVideo.type;
 
-      const wrapper = shallow(
+      const wrapper = renderer.create(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
@@ -192,13 +200,17 @@ describe('cature poster component', () => {
         />
       );
 
-      // find delete icon
-      const icon = wrapper.find(Icon);
+      const gallery = wrapper.root.findByType(CaptureGallery);
 
-      expect(icon.length).toBe(1);
+      await gallery.instance._loadPhotos();
+
+      // find delete icon
+      const icon = wrapper.root.findByType(Icon);
+
+      expect(icon).toBeDefined();
 
       // simulate press on image
-      icon.at(0).simulate('press');
+      icon.props.onPress();
 
       // should be called
       expect(capture.attachment.delete).toHaveBeenCalled();

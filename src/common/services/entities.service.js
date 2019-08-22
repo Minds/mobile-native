@@ -12,6 +12,7 @@ import ActivityModel from "../../newsfeed/ActivityModel";
 import stores from "../../../AppStores";
 import { abort } from "../helpers/abortableFetch";
 import entitiesStorage from "./sql/entities.storage";
+import sessionService from "./session.service";
 
 const CACHE_TTL_MINUTES = 15;
 
@@ -208,6 +209,9 @@ class EntitiesService {
    * @return void
    */
   addEntity(entity, store = true): void {
+
+    this.cleanEntity(entity);
+
     const storedEntity = this.getFromCache(entity.urn);
     if (storedEntity) {
       storedEntity.update(entity);
@@ -215,6 +219,20 @@ class EntitiesService {
       this.entities.set(entity.urn, {entity: this.mapToModel(entity), last: Date.now() / 1000});
     }
     if (store) entitiesStorage.save(entity)
+  }
+
+  /**
+   * Clean properties to save memory and storage space
+   * @param {Object} entity
+   */
+  cleanEntity(entity) {
+    if (entity['thumbs:up:user_guids']) {
+      entity['thumbs:up:user_guids'] = entity['thumbs:up:user_guids'].filter(guid => guid == sessionService.guid);
+    }
+
+    if (entity['thumbs:down:user_guids']) {
+      entity['thumbs:down:user_guids'] = entity['thumbs:down:user_guids'].filter(guid => guid == sessionService.guid);
+    }
   }
 
   /**

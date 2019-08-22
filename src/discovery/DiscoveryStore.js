@@ -67,7 +67,7 @@ class DiscoveryStore {
     this.listenChanges();
 
     this.listStore
-      .setInjectBoost(true)
+      .setInjectBoost(false)
       .setPaginated(false)
       .getMetadataService()
         .setSource('feed/discovery')
@@ -104,6 +104,7 @@ class DiscoveryStore {
     this.listStore
       .setEndpoint(`api/v2/feeds/global/${this.filters.filter}/${this.filters.type}`)
       .setLimit((this.filters.type === 'images' || this.filters.type === 'videos') ? 24 : 12)
+      .setInjectBoost(this.filters.type === 'activities')
       .setAsActivities(this.filters.type !== 'blogs')
       .setParams({
         hashtags,

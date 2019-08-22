@@ -27,6 +27,7 @@ platform :ios do
 
   desc "Build release"
   lane :buildrelease do
+    sh("echo $SENTRY_IOS_PROPERTIES | base64 --decode > ../sentry.properties")
     match(type: "appstore")
     increment_build_number(xcodeproj: "Minds.xcodeproj", build_number: latest_testflight_build_number + 1)
     build_app(scheme: "Minds")

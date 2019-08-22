@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import storageService from './storage.service';
 import settingsService from '../../settings/SettingsService'
 import settingsStore from '../../settings/SettingsStore';
+import { Sentry } from 'react-native-sentry';
 
 const parseErrorStack = error => {
   if (!error || !error.stack) {
@@ -59,10 +60,15 @@ class LogService {
   }
 
   exception(prepend, error) {
+
     if (!error) {
       error = prepend;
       prepend = null;
     }
+
+    // report the issue to sentry
+    Sentry.captureException(error);
+
     let stack = null;
     if (__DEV__) {
       stack = parseErrorStack(error);

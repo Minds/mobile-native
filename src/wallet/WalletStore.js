@@ -11,7 +11,6 @@ import token from "../common/helpers/token";
 import number from "../common/helpers/number";
 import TokensStore from './tokens/TokensStore';
 import storageService from '../common/services/storage.service';
-import smslistener from '../common/services/sms-listener.service';
 import web3Service from '../blockchain/services/Web3Service';
 
 
@@ -82,17 +81,6 @@ class WalletStore {
   }
 
   /**
-   * Listen for the confirmation sms
-   */
-  async listenForSms() {
-    try {
-      return await smslistener.listen(/([\d]{6})/, 60000);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  /**
    * Confirm join
    * @param {string} number
    * @param {string} code
@@ -107,7 +95,18 @@ class WalletStore {
     this.addresses = [];
     this.refreshing = false;
     this.loaded = false;
-    // Onboarding
+    this.overview = {
+      contributionValues: {
+        comments: 2,
+        reminds: 4,
+        votes: 1,
+        subscribers: 4,
+        referrals: 50,
+        referrals_welcome: 50,
+        checkin: 2,
+        jury_duty: 25
+      }
+    };
     this.onboardingShown = false;
     this.ledger = new TokensStore();
     storageService.removeItem('walletOnboardingComplete');

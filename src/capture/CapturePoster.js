@@ -4,11 +4,7 @@ import {
   View,
   ScrollView,
   Text,
-  Alert,
-  Button,
-  TouchableHighlight,
-  TouchableOpacity,
-  ActivityIndicator
+  Alert
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native';
@@ -37,6 +33,7 @@ import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import settingsStore from '../settings/SettingsStore';
+import CaptureTabs from './CaptureTabs';
 
 // workaround for android copy/paste
 import TextInput from '../common/components/TextInput';
@@ -105,6 +102,9 @@ export default class CapturePoster extends Component {
     this.loadNsfwFromPersistentStorage();
   }
 
+  /**
+   * Load last saved nsfw values
+   */
   async loadNsfwFromPersistentStorage() {
     this.setState({
       nsfw: settingsStore.creatorNsfw,
@@ -165,9 +165,70 @@ export default class CapturePoster extends Component {
   }
 
   /**
+   * Get header
+   *
+   * @param {boolean} showAttachmentFeatures
+   */
+  getHeader(showAttachmentFeatures = false) {
+    return (
+      <React.Fragment>
+        {this.showContext()}
+        <View style={styles.posterWrapper}>
+          <TextInput
+            style={styles.poster}
+            editable={true}
+            placeholder={i18n.t('capture.placeholder')}
+            placeholderTextColor='#ccc'
+            underlineColorAndroid='transparent'
+            onChangeText={this.setText}
+            value={this.state.text}
+            multiline={true}
+            selectTextOnFocus={false}
+            onSelectionChange={this.onSelectionChanges}
+            {...testID('PostInput')}
+          />
+        </View>
+        {showAttachmentFeatures && this.getAttachFeature()}
+      </React.Fragment>
+    )
+  }
+
+  /**
    * Render
    */
   render() {
+    const params = this.props.navigation.state.params || {};
+
+    return params.isRemind ? this.renderRemind() : this.renderNormal();
+  }
+
+  /**
+   * Screen content for poster
+   */
+  renderNormal() {
+    const navigation = this.props.navigation;
+
+    const params = navigation.state.params || {};
+
+    return (
+      <View style={CS.flexContainer}>
+        <CaptureGallery
+          onSelected={this.onAttachedMedia}
+          header={this.getHeader(true)}
+        />
+        <UserAutocomplete
+          text={this.props.capture.text}
+          selection={this.state.selection}
+          onSelect={this.onSelectTag}
+        />
+      </View>
+    );
+  }
+
+  /**
+   * Screen content for remind
+   */
+  renderRemind() {
     const text = this.props.capture.text;
     const navigation = this.props.navigation;
 
@@ -175,24 +236,9 @@ export default class CapturePoster extends Component {
 
     return (
       <View style={CS.flexContainer}>
-        <ScrollView style={styles.posterAndPreviewWrapper} keyboardShouldPersistTaps={'always'}>
-          {this.showContext()}
-          <View style={styles.posterWrapper} pointerEvents="box-none">
-            <TextInput
-              style={styles.poster}
-              editable={true}
-              placeholder={i18n.t('capture.placeholder')}
-              placeholderTextColor='#ccc'
-              underlineColorAndroid='transparent'
-              onChangeText={this.setText}
-              value={text}
-              multiline={true}
-              selectTextOnFocus={false}
-              onSelectionChange={this.onSelectionChanges}
-              {...testID('PostInput')}
-            />
-          </View>
-          {!params.isRemind ? this.getAttachFeature() : this.getRemind()}
+        <ScrollView style={styles.posterAndPreviewWrapper} keyboardShouldPersistTaps={'always'} removeClippedSubviews={false}>
+          {this.getHeader()}
+          {this.getRemind()}
         </ScrollView>
         <UserAutocomplete
           text={text}
@@ -245,10 +291,7 @@ export default class CapturePoster extends Component {
           />
           <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()} {...testID('Attachment Delete Button')} />
         </View>}
-
-        <CaptureGallery
-          onSelected={this.onAttachedMedia}
-        />
+        <CaptureTabs onSelectedMedia={this.onAttachedMedia} />
       </React.Fragment>
     );
   }
@@ -285,6 +328,9 @@ export default class CapturePoster extends Component {
     }
   }
 
+  /**
+   * Create a remind
+   */
   async remind() {
     const { params } = this.props.navigation.state;
     const message = this.props.capture.text;
@@ -312,7 +358,7 @@ export default class CapturePoster extends Component {
   }
 
   /**
-   * Submit
+   * Submit post
    */
   async submit() {
     const attachment = this.props.capture.attachment;
@@ -402,16 +448,26 @@ export default class CapturePoster extends Component {
     }
   }
 
+  /**
+   * Set text
+   * @param {string} text
+   */
   setText = (text) => {
     this.props.capture.setText(text);
     this.props.capture.embed.richEmbedCheck(text);
   };
 
+  /**
+   * On mature value change
+   */
   onMature = () => {
     const mature = !this.state.mature;
     this.setState({ mature });
   }
 
+  /**
+   * On nsfw value change
+   */
   onNsfw = values => {
     const nsfw = [...values];
     this.setState({ nsfw });

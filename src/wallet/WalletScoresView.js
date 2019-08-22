@@ -1,32 +1,45 @@
 import React, {Component} from 'react';
-
 import {StyleSheet, View} from 'react-native';
 import {default as WalletOverviewIcon, Icons} from './icon/WalletOverviewIcon';
+import {inject} from "mobx-react";
+import {observer} from "mobx-react/native";
 
-export default class WalletOverviewView extends Component {
+@inject('wallet')
+@observer
+export default class WalletScoresView extends Component {
+/*  componentDidMount() {
+    this.props.wallet.refresh();
+  }*/
+
   render() {
     return (
       <View style={styles.container}>
         <WalletOverviewIcon
           icon={Icons.votes}
+          overview={this.props.wallet.overview}
         />
         <WalletOverviewIcon
           icon={Icons.comments}
+          overview={this.props.wallet.overview}
         />
         <WalletOverviewIcon
           icon={Icons.subscribers}
+          overview={this.props.wallet.overview}
         />
         <WalletOverviewIcon
           icon={Icons.reminds}
+          overview={this.props.wallet.overview}
         />
         <WalletOverviewIcon
           icon={Icons.referrals}
+          overview={this.props.wallet.overview}
         />
         <WalletOverviewIcon
           icon={Icons.onchain_transactions}
         />
         <WalletOverviewIcon
           icon={Icons.checkins}
+          overview={this.props.wallet.overview}
         />
         <WalletOverviewIcon
           icon={Icons.development}

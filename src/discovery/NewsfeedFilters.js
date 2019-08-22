@@ -30,6 +30,7 @@ import testID from '../common/helpers/testID';
 
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import i18n from '../common/services/i18n.service';
+import settingsStore from '../settings/SettingsStore';
 
 /**
  * Newsfeed filters
@@ -175,7 +176,7 @@ export default class NewsfeedFilters extends Component {
                 <MenuItem onPress={this.setPeriod24}>{i18n.t('newsfeedFilters.topPeriod24')}</MenuItem>
                 <MenuItem onPress={this.setPeriod7}>{i18n.t('newsfeedFilters.topPeriod7')}</MenuItem>
                 <MenuItem onPress={this.setPeriod30}>{i18n.t('newsfeedFilters.topPeriod30')}</MenuItem>
-                <MenuItem onPress={this.setPeriod1}>{i18n.t('newsfeedFilters.topPeriod1')}</MenuItem>
+                {/* <MenuItem onPress={this.setPeriod1}>{i18n.t('newsfeedFilters.topPeriod1')}</MenuItem>  */}
               </Menu>
             }
           </View>
