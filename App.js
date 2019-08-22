@@ -81,6 +81,12 @@ CookieManager.clearAll();
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
 
+  const user = sessionService.getUser();
+
+  Sentry.setUserContext({
+    userID: user.guid
+  });
+
   logService.info('[App] Getting minds settings and onboarding progress');
   // load minds settings and onboarding progresss on login
   const results = await Promise.all([mindsService.getSettings(), stores.onboarding.getProgress()]);
