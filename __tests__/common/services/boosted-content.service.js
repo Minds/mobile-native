@@ -22,7 +22,7 @@ describe('Boosted content service', () => {
     expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith('api/v2/boost/feed');
     expect(boostedContentService.feedsService.setOffset).toBeCalledWith(0);
     expect(boostedContentService.feedsService.setLimit).toBeCalledWith(12);
-    expect(boostedContentService.feedsService.fetch).toBeCalled();
+    expect(boostedContentService.feedsService.fetchRemoteOrLocal).toBeCalled();
 
     // should fetch the boosts entities
     expect(boostedContentService.feedsService.getEntities).toBeCalled();
