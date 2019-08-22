@@ -64,6 +64,11 @@ import connectivityService from './src/common/services/connectivity.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 import commentStorageService from './src/comments/CommentStorageService';
 
+import { Sentry } from 'react-native-sentry';
+
+Sentry.config('https://d650fc58f2da4dc8ae9d95847bce152d@sentry.io/1538735').install();
+
+
 let deepLinkUrl = '';
 
 // init push service

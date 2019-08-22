@@ -84,6 +84,7 @@
     "react-native-progress": "^3.4.0",
     "react-native-qrcode": "^0.2.6",
     "react-native-randombytes": "^3.4.0",
+    "react-native-sentry": "^0.43.2",
     "react-native-share": "1.1.2",
     "react-native-share-menu": "Minds/react-native-share-menu",
     "react-native-simple-radio-button": "^2.7.1",
