@@ -42,7 +42,7 @@ describe('Discovery post edit flow', () => {
   it('should search for the post', async () => {
 
     // select all list
-    const all = await driver.waitForElementByAccessibilityId('Discovery All', wd.asserters.isDisplayed, 1000);
+    const all = await driver.waitForElementByAccessibilityId('Discovery All', wd.asserters.isDisplayed, 5000);
     await all.click();
 
     await sleep(500);

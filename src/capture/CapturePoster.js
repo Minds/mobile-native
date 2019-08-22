@@ -3,7 +3,6 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  TextInput,
   Text,
   Alert,
   Button,
@@ -38,6 +37,9 @@ import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import settingsStore from '../settings/SettingsStore';
+
+// workaround for android copy/paste
+import TextInput from '../common/components/TextInput';
 
 @inject('user', 'capture')
 @observer
@@ -413,8 +415,6 @@ export default class CapturePoster extends Component {
   onNsfw = values => {
     const nsfw = [...values];
     this.setState({ nsfw });
-
-    creatorNsfwService.set(nsfw);
   }
 
   onShare = network => {

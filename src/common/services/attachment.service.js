@@ -30,12 +30,12 @@ class AttachmentService {
 
     let promise;
 
-    if(file.type.includes('video')){
-      promise = this.uploadToS3(file,progress);
+    if (file.type.includes('video')) {
+      promise = this.uploadToS3(file, progress);
     } else {
       promise = api.upload('api/v1/media/', file, extra, progress);
     }
-    
+
     return promise;
   }
 
@@ -44,31 +44,29 @@ class AttachmentService {
    *  1) prepare request return lease with signed url
    *  2) upload file to S3 with signed url
    *  3) complete upload
-   * @param {any} file 
-   * @param {function} progress 
+   * @param {any} file
+   * @param {function} progress
    */
   uploadToS3(file, progress){
     // Prepare media and wait for lease => {media_type, guid}
     let lease;
 
-    return new Cancelable((resolve, reject, onCancel) => {
-      api.put(`api/v2/media/upload/prepare/video`).then((response) => {
-      lease = response.lease
+    return new Cancelable(async (resolve, reject, onCancel) => {
+      const response = await api.put(`api/v2/media/upload/prepare/video`);
       // upload file to s3
-      const uploadPromise = api.uploadToS3(lease, file, progress).then(async () => {
+      const uploadPromise = api.uploadToS3(response.lease, file, progress).then(async () => {
         // complete upload and wait for status
-        const {status} = await api.put(`api/v2/media/upload/complete/${lease.media_type}/${lease.guid}`);
+        const {status} = await api.put(`api/v2/media/upload/complete/${response.lease.media_type}/${response.lease.guid}`);
 
         // if false is returned, upload fails message will be showed
-        return status === 'success' ? {guid: lease.guid} : false;
+        return status === 'success' ? {guid: response.lease.guid} : false;
       });
       // handle cancel
       onCancel((cb) => {
         uploadPromise.cancel();
         cb();
       });
-      return uploadPromise;
-    });
+      resolve(uploadPromise);
     }).catch( error => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);

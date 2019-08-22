@@ -75,11 +75,7 @@ export default class NewsfeedScreen extends Component {
   }
 
   async loadFeed() {
-    if (featuresService.has('es-feeds')) {
-      await this.props.newsfeed.feedStore.fetchLocalOrRemote();
-    } else {
-      await this.props.newsfeed.loadFeed();
-    }
+    await this.props.newsfeed.feedStore.fetchLocalOrRemote();
 
     // load groups after the feed
     await this.groupsBar.wrappedInstance.initialLoad();

@@ -95,7 +95,18 @@ class WalletStore {
     this.addresses = [];
     this.refreshing = false;
     this.loaded = false;
-    // Onboarding
+    this.overview = {
+      contributionValues: {
+        comments: 2,
+        reminds: 4,
+        votes: 1,
+        subscribers: 4,
+        referrals: 50,
+        referrals_welcome: 50,
+        checkin: 2,
+        jury_duty: 25
+      }
+    };
     this.onboardingShown = false;
     this.ledger = new TokensStore();
     storageService.removeItem('walletOnboardingComplete');

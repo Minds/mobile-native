@@ -320,7 +320,10 @@
     "postedIn":"posted in",
     "channel":"channel",
     "deleted":"This post was deleted",
-    "dontHave":"You don't have any notifications"
+    "dontHave":"You don't have any notifications",
+    "rewardsStateIncrease": "Congratulations! You just became a {{state}} user.\nWe've increased your daily token reward multiplier to {{multiplier}}x",
+    "rewardsStateDecrease": "We miss you! You just dropped down to a {{state}} user.\nYour daily token reward multiplier has been reduced to {{multiplier}}x",
+    "rewardsSummary": "You earned {{amount}} tokens yesterday."
   },
   "notificationSettings":{
     "enableDisable":"Enable and disable push notifications",
@@ -517,6 +520,7 @@
     "estimatedReward":"Estimated Reward",
     "yourShare":"Your Share",
     "yourScore":"Your Score",
+    "yourRewardFactor": "Your Reward Multiplier",
     "networkScore":"Network Score",
     "transactionsTitle":"Transactions",
     "transactionsDescription":"A list of transactions you have made with your addresses",
@@ -632,7 +636,7 @@
   "readMore":"Read More",
   "showLess":"Show less",
   "featureUnavailablePlatform":"This feature is currently unavailable on your platform",
-  "continue":"Contiue",
+  "continue":"Continue",
   "errorDisplaying":"Error displaying the content",
   "tapCopyError":"Tap to copy the error",
   "save":"Save",
