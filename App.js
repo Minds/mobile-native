@@ -8,7 +8,6 @@
 import './global';
 import './shim'
 import crypto from "crypto"; // DO NOT REMOVE!
-import codePush from "react-native-code-push"; // For auto updates
 
 import React, {
   Component
@@ -168,7 +167,6 @@ type Props = {
 /**
  * App
  */
-@codePush
 export default class App extends Component<Props, State> {
 
   state = {
@@ -222,8 +220,6 @@ export default class App extends Component<Props, State> {
           logService.info('[App] session initialized');
         }
       }
-
-      await this.checkForUpdates();
     } catch(err) {
       logService.exception('[App] Error initializing the app', err);
       Alert.alert(
@@ -285,21 +281,6 @@ export default class App extends Component<Props, State> {
         deeplinkService.navigate(deepLinkUrl);
         deepLinkUrl = '';
       }, 100);
-    }
-  }
-
-  async checkForUpdates() {
-    try {
-      const params = {
-        updateDialog: Platform.OS !== 'ios',
-        installMode:  codePush.InstallMode.ON_APP_RESUME,
-      };
-
-      if (CODE_PUSH_TOKEN) params.deploymentKey = CODE_PUSH_TOKEN;
-
-      let response = await codePush.sync(params);
-    } catch (err) {
-      logService.exception('[App] Error checking for code push updated', err);
     }
   }
 
