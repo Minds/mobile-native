@@ -165,7 +165,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           source={
             Object {
               "headers": Object {
-                "App-Version": "3.8.1",
+                "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
                 "Pragma": "no-cache",
               },

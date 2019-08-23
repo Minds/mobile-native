@@ -59,6 +59,7 @@
 		6BAF0EA1B8E942B3BB3511B8 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 829D13777D494F88B7DCA8BB /* EvilIcons.ttf */; };
 		707226E87AD343108E1B1EEB /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF3B89A7D90C4864A5B59272 /* libRNCAsyncStorage.a */; };
 		74408ECBEE2F41B3A5ED9865 /* Roboto-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B808F67ED574CE19BCDD458 /* Roboto-Italic.ttf */; };
+		7A6D840F1142485696971E01 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F52E1033734485294D3BB0F /* libRNDeviceInfo.a */; };
 		7C7CDEAEF57241349992BB01 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91C51941A7AA4D399B201EC5 /* FontAwesome5_Brands.ttf */; };
 		7CBCDA52EA8247B79994C52A /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C0132D399FCD48489C1D41C1 /* FontAwesome.ttf */; };
 		7E850A69733A4F908C4460B9 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25B982985ECA405E8EC9BA46 /* Octicons.ttf */; };
@@ -87,6 +88,7 @@
 		B06DC90E242C45FE86A2DD40 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 24F6DD59AFB74137B336226E /* Roboto-Regular.ttf */; };
 		C1EBB82960A6401DA2C80943 /* RNNotificationsTests.xctest in Frameworks */ = {isa = PBXBuildFile; fileRef = 7619596518A4405E9BD77FEE /* RNNotificationsTests.xctest */; };
 		C24986F76B3A428597B0079C /* libRNOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 931A515A5CF04E3DA21702AA /* libRNOS.a */; };
+		C2EB8ED1017949D49BB4F12C /* libRNDeviceInfo-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16F9D41ACA6947D8A3730251 /* libRNDeviceInfo-tvOS.a */; };
 		C3EF7D1E2005359300CFC22C /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3EF7CD12005336C00CFC22C /* libRCTCameraRoll.a */; };
 		CB1DB8B0113B4C5388B73729 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3F7B90978C4DCE9F9CBDAC /* libRNGestureHandler.a */; };
 		CB3415CC077C426D852E6016 /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F358EFC6CBE4490931B0572 /* libRNShare.a */; };
@@ -407,6 +409,13 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNNotifications;
 		};
+		8A1A1A31230F57B100D4FFB4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 273C04EF753B4DE0BD9F957E /* RNNotifications.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 50E4164622E4C98B0048367F;
+			remoteInfo = RNNotificationsTests;
+		};
 		8A21288422D93FCB00B8D718 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8D0DED1600884D44B949E368 /* RNScreens.xcodeproj */;
@@ -712,8 +721,10 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Minds/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Minds/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		16F9D41ACA6947D8A3730251 /* libRNDeviceInfo-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNDeviceInfo-tvOS.a"; sourceTree = "<group>"; };
 		1DE2115255F34DD294400C3B /* libTcpSockets.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libTcpSockets.a; sourceTree = "<group>"; };
 		1E0815484EB546DA9557C74B /* RNExitApp.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNExitApp.xcodeproj; path = "../node_modules/react-native-exit-app/ios/RNExitApp.xcodeproj"; sourceTree = "<group>"; };
+		1F52E1033734485294D3BB0F /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		20D87165B2AA40DD833BAAC8 /* RNOS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNOS.xcodeproj; path = "../node_modules/react-native-os/ios/RNOS.xcodeproj"; sourceTree = "<group>"; };
 		24F6DD59AFB74137B336226E /* Roboto-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Regular.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		25B982985ECA405E8EC9BA46 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
@@ -817,6 +828,7 @@
 		FCC74837EE60422DAA26144E /* SQLite.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlite-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		FD9DCCA27267419AA7A17F5C /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		FDA7910C8BB34AF99919D51E /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Medium.ttf"; sourceTree = "<group>"; };
+		FF60B1FCF6D24DEC96041B00 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -883,6 +895,7 @@
 				90F330ED801C40CE91A78DA1 /* libFastImage.a in Frameworks */,
 				2B1AD60D486E4612B0BDFDAA /* libRNScreens.a in Frameworks */,
 				DBF63188A9984A44A3458284 /* libRNCNetInfo.a in Frameworks */,
+				7A6D840F1142485696971E01 /* libRNDeviceInfo.a in Frameworks */,
 				EDC22A47A84C4D8DB9350D68 /* libRNSentry.a in Frameworks */,
 				EE21241544D14BEABF13A5E8 /* libRNNotifications.a in Frameworks */,
 				C1EBB82960A6401DA2C80943 /* RNNotificationsTests.xctest in Frameworks */,
@@ -906,6 +919,7 @@
 				EA8BE812E567443CBD1325A2 /* libRNLocalize-tvOS.a in Frameworks */,
 				AF7D8AD9552B4AF09C5C39CC /* libRNScreens-tvOS.a in Frameworks */,
 				662EF3C033F246B08F0527AD /* libRNCNetInfo-tvOS.a in Frameworks */,
+				C2EB8ED1017949D49BB4F12C /* libRNDeviceInfo-tvOS.a in Frameworks */,
 				93F4303E34834E5A95F07D00 /* libRNSentry-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1133,6 +1147,7 @@
 				823A79A888C24C278312423F /* FastImage.xcodeproj */,
 				8D0DED1600884D44B949E368 /* RNScreens.xcodeproj */,
 				F2B02FC7AE0D4283ABB0894F /* RNCNetInfo.xcodeproj */,
+				FF60B1FCF6D24DEC96041B00 /* RNDeviceInfo.xcodeproj */,
 				8114FFAB108A4322B3BD5664 /* RNSentry.xcodeproj */,
 				273C04EF753B4DE0BD9F957E /* RNNotifications.xcodeproj */,
 				D17BFFB7D76C401D804EDAB2 /* RNJitsiMeet.xcodeproj */,
@@ -1197,6 +1212,7 @@
 			isa = PBXGroup;
 			children = (
 				8A1190B2230F0820000D15F8 /* libRNNotifications.a */,
+				8A1A1A32230F57B100D4FFB4 /* RNNotificationsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1296,6 +1312,8 @@
 				7619596518A4405E9BD77FEE /* RNNotificationsTests.xctest */,
 				3CDBEBFE51524A0B82B06534 /* libRNJitsiMeet.a */,
 				0A172322584F425582254633 /* libRNSentry-tvOS.a */,
+				1F52E1033734485294D3BB0F /* libRNDeviceInfo.a */,
+				16F9D41ACA6947D8A3730251 /* libRNDeviceInfo-tvOS.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -2069,6 +2087,13 @@
 			remoteRef = 8A1190B1230F0820000D15F8 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		8A1A1A32230F57B100D4FFB4 /* RNNotificationsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RNNotificationsTests.xctest;
+			remoteRef = 8A1A1A31230F57B100D4FFB4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		8A21288522D93FCB00B8D718 /* libRNScreens.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2555,6 +2580,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-screens/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/netinfo/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
@@ -2615,6 +2641,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-screens/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/netinfo/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
@@ -2699,6 +2726,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-screens/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/netinfo/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
@@ -2778,6 +2806,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-screens/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/netinfo/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
@@ -2843,6 +2872,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-screens/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/netinfo/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
@@ -2911,6 +2941,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-screens/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/netinfo/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
@@ -2963,6 +2994,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-screens/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/netinfo/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
@@ -3013,6 +3045,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fast-image/ios/FastImage/**",
 					"$(SRCROOT)/../node_modules/react-native-screens/ios",
 					"$(SRCROOT)/../node_modules/@react-native-community/netinfo/ios",
+					"$(SRCROOT)/../node_modules/react-native-device-info/ios/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",

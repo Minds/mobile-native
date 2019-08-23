@@ -1,4 +1,6 @@
+import DeviceInfo from 'react-native-device-info';
+
 export const Version = {
-  VERSION: '3.8.1',
-  BUILD: '20190812'
+  VERSION: DeviceInfo.getVersion(),
+  BUILD: DeviceInfo.getBuildNumber()
 };
