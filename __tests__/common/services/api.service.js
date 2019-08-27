@@ -1,4 +1,4 @@
-import api from '../../../src/common/services/api.service';
+import api, { ApiError } from '../../../src/common/services/api.service';
 import session from '../../../src/common/services/session.service';
 import abortableFetch, {abort} from '../../../src/common/helpers/abortableFetch';
 import { MINDS_API_URI } from '../../../src/config/Config';
@@ -46,14 +46,14 @@ describe('api service POST', () => {
       const res = await api.post('api/path', params);
     } catch (err) {
       // assert on the error
-      expect(err).toEqual(response);
+      expect(err).toBeInstanceOf(ApiError);
     }
   });
 
   it('should return api error', async () => {
 
     const response = { json: jest.fn(), ok: true };
-    const respBody = { status: 'error', error: 'some error' };
+    const respBody = { status: 500, error: 'some error' };
     response.json.mockResolvedValue(respBody);
     const params = {p1: 1, p2: 2};
 
@@ -63,7 +63,7 @@ describe('api service POST', () => {
       const res = await api.post('api/path', params);
     } catch (err) {
       // assert on the error
-      expect(err).toEqual(respBody);
+      expect(err).toBeInstanceOf(ApiError);
     }
   });
 });
@@ -105,7 +105,7 @@ describe('api service GET', () => {
       const res = await api.get('api/path', params, null);
     } catch (err){
       // assert on the error
-      expect(err).toEqual(response);
+      expect(err).toBeInstanceOf(ApiError);
     }
   });
 
@@ -122,7 +122,7 @@ describe('api service GET', () => {
       const res = await api.get('api/path', params);
     } catch (err) {
       // assert on the error
-      expect(err).toEqual(respBody);
+      expect(err).toBeInstanceOf(ApiError);
     }
   });
 });
@@ -167,7 +167,7 @@ describe('api service DELETE', () => {
       const res = await api.delete('api/path', params);
     } catch (err) {
       // assert on the error
-      expect(err).toEqual(response);
+      expect(err).toBeInstanceOf(ApiError);
     }
   });
 
@@ -184,7 +184,7 @@ describe('api service DELETE', () => {
       const res = await api.delete('api/path', params);
     } catch (err) {
       // assert on the error
-      expect(err).toEqual(respBody);
+      expect(err).toBeInstanceOf(ApiError);
     }
   });
 });
@@ -229,7 +229,7 @@ describe('api service PUT', () => {
       const res = await api.put('api/path', params);
     } catch (err) {
       // assert on the error
-      expect(err).toEqual(response);
+      expect(err).toBeInstanceOf(ApiError);
     }
   });
 
@@ -245,7 +245,7 @@ describe('api service PUT', () => {
       const res = await api.put('api/path', params);
     } catch (err) {
       // assert on the error
-      expect(err).toEqual(respBody);
+      expect(err).toBeInstanceOf(ApiError);
     }
   });
 });
