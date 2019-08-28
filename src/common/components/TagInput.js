@@ -73,6 +73,8 @@ export default class TagInput extends Component {
   render() {
     let tags = null;
     const autoFocus = this.props.noAutofocus ? false : true;
+    const ViewCmp = this.props.noScroll ? View : ScrollView;
+
     if (!this.props.hideTags) {
       tags = <View style={styles.tagContainer}>
         {this.props.tags.map((t,i) => <View style={styles.tag} key={i} >
@@ -82,14 +84,14 @@ export default class TagInput extends Component {
       </View>
     }
     return (
-      <ScrollView keyboardShouldPersistTaps={'always'}>
+      <ViewCmp keyboardShouldPersistTaps={'always'}>
         {tags}
         {this.state.error ? <Text style={styles.error}>{this.state.error}</Text> : null}
         <TextInput
           autoCapitalize="none"
           autoFocus={autoFocus}
-          style={{height: 35, width: '100%', borderColor: '#ccc', borderBottomWidth: 1, padding: 10}}
-          ref={r => this.inputRef = r}
+          style={styles.input}
+          ref={this.setInputRef}
           value={this.state.text}
           blurOnSubmit={false}
           onChangeText={this.onChangeText}
@@ -99,14 +101,27 @@ export default class TagInput extends Component {
           onSubmitEditing={this.addTag}
           onEndEditing={this.addTag}
         />
-      </ScrollView>
+      </ViewCmp>
 
     );
   }
+
+  /**
+   * Set input ref
+   * @param {TextInputRef} r
+   */
+  setInputRef = r => this.inputRef = r;
 }
 
 
 const styles = StyleSheet.create({
+  input: {
+    height: 35,
+    width: '100%',
+    borderColor: '#ccc',
+    borderBottomWidth: 1,
+    padding: 10
+  },
   error: {
     fontFamily: 'Roboto',
     color: 'red',
