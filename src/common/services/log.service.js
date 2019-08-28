@@ -73,7 +73,6 @@ class LogService {
       Sentry.captureException(error);
     }
 
-
     let stack = null;
     if (__DEV__) {
       stack = parseErrorStack(error);

@@ -86,7 +86,6 @@ public class MainApplication extends Application implements ShareApplication, Re
           new ShareMenuPackage(),
           new RNMediaMetaPackage(),
           new RNFSPackage(),
-          new JitsiMeetPackage(),
           new SQLitePluginPackage(),
           new BackgroundTimerPackage()
       );

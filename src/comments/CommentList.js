@@ -9,7 +9,7 @@ import {
   FlatList,
   Keyboard,
   Platform,
-  TextInput,
+  // TextInput,
   TouchableOpacity,
   TouchableHighlight,
   ActivityIndicator,
@@ -37,6 +37,9 @@ import i18n from '../common/services/i18n.service';
 
 import blockListService from '../common/services/block-list.service';
 import autobind from "../common/helpers/autobind";
+
+// workaround for android copy/paste issue
+import TextInput from '../common/components/TextInput';
 
 // types
 type Props = {
