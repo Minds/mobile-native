@@ -88,13 +88,6 @@ export default class NewsfeedFilters extends Component {
     this.props.store.setNsfw(value);
   }
 
-  constructor(props) {
-    super(props);
-    if (Platform.OS === 'android') {
-        UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-    }
-  }
-
   /**
    * Component will react (mobx)
    */
