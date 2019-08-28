@@ -90,7 +90,7 @@ export default class TagInput extends Component {
         <TextInput
           autoCapitalize="none"
           autoFocus={autoFocus}
-          style={{height: 35, width: '100%', borderColor: '#ccc', borderBottomWidth: 1, padding: 10}}
+          style={styles.input}
           ref={this.setInputRef}
           value={this.state.text}
           blurOnSubmit={false}
@@ -115,6 +115,13 @@ export default class TagInput extends Component {
 
 
 const styles = StyleSheet.create({
+  input: {
+    height: 35,
+    width: '100%',
+    borderColor: '#ccc',
+    borderBottomWidth: 1,
+    padding: 10
+  },
   error: {
     fontFamily: 'Roboto',
     color: 'red',
