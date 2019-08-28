@@ -6,6 +6,7 @@ import storageService from './storage.service';
 import settingsService from '../../settings/SettingsService'
 import settingsStore from '../../settings/SettingsStore';
 import { Sentry } from 'react-native-sentry';
+import { isNetworkFail } from '../helpers/abortableFetch';
 
 const parseErrorStack = error => {
   if (!error || !error.stack) {
@@ -66,8 +67,10 @@ class LogService {
       prepend = null;
     }
 
-    // report the issue to sentry
-    Sentry.captureException(error);
+    if (!isNetworkFail(error)) {
+      // report the issue to sentry
+      Sentry.captureException(error);
+    }
 
     let stack = null;
     if (__DEV__) {
