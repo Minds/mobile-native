@@ -47,7 +47,7 @@ class WalletStore {
 
     if (addresses && addresses.length > 0) {
       addresses.forEach(async address => {
-        if (address.label.toLowerCase() != 'offchain') {
+        if (address.label.toLowerCase() != 'offchain' && address.address !== '') {
           address.ethBalance = await web3Service.getBalance(address.address);
         }
       });
