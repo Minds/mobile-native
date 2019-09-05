@@ -135,7 +135,11 @@ class DiscoveryStore {
   reset() {
     this.onFilterChangeDisposer && this.onFilterChangeDisposer();
     this.onSearchChangeDisposer && this.onSearchChangeDisposer();
-    this.filters.clear();
+
+    if (this.filters) {
+      this.filters.clear();
+    }
+
     this.feedStore.reset();
     this.listStore.clear();
     this.listenChanges();
