@@ -26,6 +26,7 @@ import Colors from '../../styles/Colors';
 import stylesheet from '../../onboarding/stylesheet';
 import { CommonStyle as CS } from '../../styles/Common';
 import i18n from '../../common/services/i18n.service';
+import logService from '../../common/services/log.service';
 
 @inject('user', 'wallet')
 @observer
