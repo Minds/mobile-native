@@ -312,7 +312,8 @@ export default class FeedsService {
       }
 
       if (!await this.fetchLocal()) {
-        throw new Error('Error fetching feed from remote or local');
+        // if there is no local data rethrow the exception
+        throw err;
       }
 
       showMessage({
