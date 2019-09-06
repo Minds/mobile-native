@@ -9,6 +9,7 @@ import {
 
 import { onError } from "mobx-react";
 import logService from './src/common/services/log.service';
+import Sentry from 'react-native-sentry';
 
 onError(error => {
   console.log(error);
@@ -48,7 +49,9 @@ if (!__DEV__) {
    * Native Errors
    */
   setNativeExceptionHandler((exceptionString) => {
+    Sentry.captureException(new Error(exceptionString), {
+      logger: 'NativeExceptionHandler',
+    });
     console.log(exceptionString);
-    logService.exception(exceptionString);
   });
 }
