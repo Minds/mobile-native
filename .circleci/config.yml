@@ -138,12 +138,20 @@ jobs:
               - /stable-*/
               - /release-*/
               - test/circle-ci
-
+  sentry:
+    docker:
+      - image: getsentry/sentry-cli
+    steps:
+      - run: 
+          name: Tag sentry release 
+          command: sentry-cli releases new $CIRCLE_SHA
+    
 workflows:
   version: 2
   node-ios:
     jobs:
-      - node
-      - ios:
-          requires:
-            - node
+      - sentry
+      # - node
+      # - ios:
+      #    requires:
+      #      - node
