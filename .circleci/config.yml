@@ -145,14 +145,18 @@ jobs:
       - run: 
           name: Tag sentry release 
           command: |
-            sentry-cli releases --project mobile  new ${CIRCLE_SHA1}
+            sentry-cli releases --project mobile new ${CIRCLE_SHA1}
+            sentry-cli releases set-commits --auto ${CIRCLE_SHA1}
+            sentry-cli releases finalize ${CIRCLE_SHA1}
     
 workflows:
   version: 2
   node-ios:
     jobs:
-      - sentry
-      # - node
-      # - ios:
-      #    requires:
-      #      - node
+      - node
+      - ios:
+          requires:
+            - node
+      - sentry:
+          requires:
+            - node
