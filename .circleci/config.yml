@@ -145,8 +145,7 @@ jobs:
       - run: 
           name: Tag sentry release 
           command: |
-            echo ${SENTRY_ORG}
-            sentry-cli releases new ${CIRCLE_SHA1}
+            sentry-cli releases --project mobile  new ${CIRCLE_SHA1}
     
 workflows:
   version: 2
