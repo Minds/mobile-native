@@ -18,7 +18,7 @@ export class EntitiesStorage {
    */
   async save(entity) {
 
-    if (!entity.urn){
+    if (!entity.urn) {
       return;
     }
 

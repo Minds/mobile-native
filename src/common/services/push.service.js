@@ -51,7 +51,7 @@ class PushService {
     try {
       this.push.init();
     } catch(err) {
-      logService.exception('Error on push notification initialization', err);
+      logService.exception('[PushService] Error on push notification initialization', err);
     }
   }
 

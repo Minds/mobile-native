@@ -9,7 +9,7 @@ import {
   FlatList,
   Keyboard,
   Platform,
-  TextInput,
+  // TextInput,
   TouchableOpacity,
   TouchableHighlight,
   ActivityIndicator,
@@ -37,6 +37,9 @@ import i18n from '../common/services/i18n.service';
 
 import blockListService from '../common/services/block-list.service';
 import autobind from "../common/helpers/autobind";
+
+// workaround for android copy/paste issue
+import TextInput from '../common/components/TextInput';
 
 // types
 type Props = {
@@ -313,7 +316,7 @@ export default class CommentList extends React.Component<Props, State> {
    * Render poster
    */
   renderPoster() {
-    if (this.state.hideInput) return null;
+    if (this.state.hideInput || (!this.props.entity.allow_comments && this.props.entity.type !== "group")) return null;
 
     const attachment = this.props.store.attachment;
 

@@ -113,3 +113,14 @@ export function updateComment(guid, description) {
     description: description
   });
 }
+
+/**
+ * Enable/Disable comments
+ * @param {string} guid 
+ * @param {boolean} state 
+ */
+export function toggleAllowComments(guid, state) {
+  return api.post(`api/v2/permissions/comments/${guid}`,{
+    allowed: state
+  });
+}

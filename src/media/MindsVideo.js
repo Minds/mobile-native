@@ -268,7 +268,7 @@ class MindsVideo extends Component {
           source={image}
           entity={entity}
           style={[CS.positionAbsolute]}
-          loadingIndicator="placeholder"
+          // loadingIndicator="placeholder"
         />
       )
     }

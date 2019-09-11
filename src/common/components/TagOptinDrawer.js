@@ -112,6 +112,7 @@ export default class TagOptinDrawer extends Component {
           </ScrollView>
           <View style={styles.inputContainer}>
             <TagInput
+              noScroll
               noAutofocus={true}
               hideTags={true}
               tags={this.props.hashtag.suggested.map(m => m.value)}

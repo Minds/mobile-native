@@ -5,6 +5,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import storageService from './storage.service';
 import settingsService from '../../settings/SettingsService'
 import settingsStore from '../../settings/SettingsStore';
+import { Sentry } from 'react-native-sentry';
+import { isNetworkFail } from '../helpers/abortableFetch';
+import { ApiError } from './api.service';
 
 const parseErrorStack = error => {
   if (!error || !error.stack) {
@@ -59,10 +62,17 @@ class LogService {
   }
 
   exception(prepend, error) {
+
     if (!error) {
       error = prepend;
       prepend = null;
     }
+
+    if (!isNetworkFail(error) && !(error instanceof ApiError && error.status === 401)) {
+      // report the issue to sentry
+      Sentry.captureException(error);
+    }
+
     let stack = null;
     if (__DEV__) {
       stack = parseErrorStack(error);

@@ -4,6 +4,7 @@ import {
 } from 'mobx';
 
 import hashtagService from '../services/hashtag.service'
+import settingsStore from '../../settings/SettingsStore';
 
 /**
  * Hashtag
@@ -36,6 +37,7 @@ class HashtagStore {
   @action
   toggleAll() {
     this.all = !this.all;
+    settingsStore.setUseHashtags(!this.all);
   }
 
   /**
@@ -44,6 +46,7 @@ class HashtagStore {
   @action
   setAll(value) {
     this.all = value;
+    settingsStore.setUseHashtags(!this.all);
   }
 
   /**
