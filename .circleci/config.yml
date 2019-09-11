@@ -144,7 +144,7 @@ jobs:
     steps:
       - run: 
           name: Tag sentry release 
-          command: sentry-cli releases new $CIRCLE_SHA
+          command: sentry-cli releases new $CIRCLE_SHA_1
     
 workflows:
   version: 2
