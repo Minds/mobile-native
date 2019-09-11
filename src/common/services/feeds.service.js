@@ -8,6 +8,7 @@ import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
 import Colors from '../../styles/Colors';
 import { toJS } from 'mobx';
+import boostedContentService from './boosted-content.service';
 
 /**
  * Feed store
@@ -17,7 +18,12 @@ export default class FeedsService {
   /**
    * @var {boolean}
    */
-  asActivities = true;
+  injectBoost: boolean = false;
+
+  /**
+   * @var {boolean}
+   */
+  asActivities: boolean = true;
 
   /**
    * @var {Number}
@@ -37,19 +43,72 @@ export default class FeedsService {
   /**
    * @var {Object}
    */
-  params = {sync: 1}
+  params: Object = {sync: 1}
 
   /**
    * @var {Array}
    */
-  feed = [];
+  feed: Array = [];
+
+  /**
+   * @var {string}
+   */
+  pagingToken: string = '';
+
+  /**
+   * @var {boolean}
+   */
+  endReached = false;
+
+  /**
+   * @var {boolean}
+   */
+  paginated = true;
 
   /**
    * Get entities from the current page
    */
   async getEntities() {
-    const feedPage = this.feed.slice(this.offset, this.limit + this.offset);
-    return await entitiesService.getFromFeed(feedPage, this, this.asActivities);
+    const end = this.limit + this.offset;
+
+    if (this.paginated && end >= this.feed.length && !this.endReached) {
+      try {
+        await this.fetch(true);
+      } catch (err) {
+        if (!isNetworkFail(err)) {
+          logService.exception('[FeedService] getEntities', err);
+        }
+      }
+    }
+
+    const feedPage = this.feed.slice(this.offset, end);
+
+    const result = await entitiesService.getFromFeed(feedPage, this, this.asActivities);
+
+    if (!this.injectBoost) return result;
+
+    this.injectBoosted(3, result, end);
+    this.injectBoosted(8, result, end);
+    this.injectBoosted(16, result, end);
+    this.injectBoosted(24, result, end);
+    this.injectBoosted(32, result, end);
+    this.injectBoosted(40, result, end);
+
+    return result;
+  }
+
+  /**
+   * Inject boost at given position
+   *
+   * @param {number} position
+   * @param {Array<ActivityModel>} entities
+   * @param {number} end
+   */
+  injectBoosted(position, entities, end) {
+    if (this.offset <= position && end >= position) {
+      const boost =  boostedContentService.fetch();
+      if (boost) entities.splice( position + this.offset, 0, boost );
+    }
   }
 
   /**
@@ -62,6 +121,8 @@ export default class FeedsService {
       timestamp: Date.now().toString(),
       urn: entity.urn
     });
+
+    this.offset++;
 
     const plainEntity = toJS(entity);
     delete(plainEntity.__list);
@@ -85,6 +146,16 @@ export default class FeedsService {
    */
   setFeed(feed): FeedsService {
     this.feed = feed;
+    return this;
+  }
+
+  /**
+   * Set inject boost
+   * @param {boolean} injectBoost
+   * @returns {FeedsService}
+   */
+  setInjectBoost(injectBoost): FeedsService {
+    this.injectBoost = injectBoost;
     return this;
   }
 
@@ -118,6 +189,10 @@ export default class FeedsService {
     return this;
   }
 
+  /**
+   * Set parameters
+   * @param {Object} params
+   */
   setParams(params): FeedsService {
     this.params = params;
     if (!params.sync) {
@@ -137,13 +212,44 @@ export default class FeedsService {
   }
 
   /**
-   * Fetch
+   * Set paginated
+   * @param {boolean} paginated
+   * @returns {FeedsService}
    */
-  async fetch() {
-    abort(this);
-    const response = await apiService.get(this.endpoint, {...this.params, ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 }}, this);
+  setPaginated(paginated: boolean): FeedsService {
+    this.paginated = paginated;
+    return this;
+  }
 
-    this.feed = response.entities;
+  /**
+   * Abort pending fetch
+   */
+  abort() {
+    abort(this);
+  }
+
+  /**
+   * Fetch
+   * @param {boolean} more
+   */
+  async fetch(more = false) {
+    abort(this);
+
+    const params = {...this.params, ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 }};
+
+    if (this.paginated && more) params.from_timestamp = this.pagingToken;
+    const response = await apiService.get(this.endpoint, params, this);
+
+    if (response.entities.length) {
+      if (more) {
+        this.feed = this.feed.concat(response.entities);
+      } else {
+        this.feed = response.entities;
+      }
+      this.pagingToken = response['load-next'];
+    } else {
+      this.endReached = true;
+    }
 
     // save without wait
     feedsStorage.save(this);
@@ -156,7 +262,14 @@ export default class FeedsService {
     try {
       const feed = await feedsStorage.read(this);
       if (feed) {
-        this.feed = feed;
+        // support old format
+        if (Array.isArray(feed)) {
+          this.feed = feed;
+          this.pagingToken = this.feed[this.feed.length - 1].timestamp - 1;
+        } else {
+          this.feed = feed.feed;
+          this.pagingToken = feed.next;
+        }
         return true;
       }
     } catch (err) {
@@ -199,7 +312,8 @@ export default class FeedsService {
       }
 
       if (!await this.fetchLocal()) {
-        throw new Error('Error fetching feed from remote or local');
+        // if there is no local data rethrow the exception
+        throw err;
       }
 
       showMessage({
@@ -229,6 +343,7 @@ export default class FeedsService {
   clear(): FeedStore {
     this.offset = 0;
     this.limit = 12;
+    this.pagingToken = '';
     this.params =  {sync: 1};
     this.feed = [];
     return this;

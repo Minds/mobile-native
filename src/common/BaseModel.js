@@ -14,10 +14,17 @@ import logService from './services/log.service';
 import channelService from '../channel/ChannelService';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
 
+import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
+
 /**
  * Base model
  */
 export default class BaseModel {
+
+  /**
+   * Enable/Disable comments
+   */
+  @observable allow_comments = true;
 
   /**
    * List reference (if the entity belongs to one)
@@ -260,5 +267,11 @@ export default class BaseModel {
       logService.exception('[BaseModel]', err);
       throw err;
     }
+  }
+
+  @action
+  async toggleAllowComments() {
+    const data = await toggleAllow(this.guid, !this.allow_comments);
+    this.allow_comments = !this.allow_comments;
   }
 }

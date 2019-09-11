@@ -6,7 +6,6 @@ import {
   Text,
   View,
   Image,
-  TextInput,
   FlatList,
   StyleSheet,
   TouchableOpacity,
@@ -34,8 +33,8 @@ import UserModel from '../channel/UserModel';
 import MessengerConversationStore from './MessengerConversationStore';
 import ErrorLoading from '../common/components/ErrorLoading';
 import logService from '../common/services/log.service';
+import TextInput from '../common/components/TextInput';
 import i18n from '../common/services/i18n.service';
-
 
 /**
  * Messenger Conversation Screen
@@ -66,6 +65,7 @@ export default class ConversationScreen extends Component {
   };
 
   componentWillMount() {
+
     this.store = new MessengerConversationStore();
     const params = this.props.navigation.state.params;
     let conversation;

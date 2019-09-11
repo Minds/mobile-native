@@ -8,7 +8,6 @@
 import './global';
 import './shim'
 import crypto from "crypto"; // DO NOT REMOVE!
-import codePush from "react-native-code-push"; // For auto updates
 
 import React, {
   Component
@@ -64,6 +63,11 @@ import connectivityService from './src/common/services/connectivity.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 import commentStorageService from './src/comments/CommentStorageService';
 
+import { Sentry } from 'react-native-sentry';
+
+Sentry.config('https://d650fc58f2da4dc8ae9d95847bce152d@sentry.io/1538735').install();
+
+
 let deepLinkUrl = '';
 
 // init push service
@@ -76,6 +80,12 @@ CookieManager.clearAll();
 
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
+
+  const user = sessionService.getUser();
+
+  Sentry.setUserContext({
+    userID: user.guid
+  });
 
   logService.info('[App] Getting minds settings and onboarding progress');
   // load minds settings and onboarding progresss on login
@@ -163,7 +173,6 @@ type Props = {
 /**
  * App
  */
-@codePush
 export default class App extends Component<Props, State> {
 
   state = {
@@ -217,8 +226,6 @@ export default class App extends Component<Props, State> {
           logService.info('[App] session initialized');
         }
       }
-
-      await this.checkForUpdates();
     } catch(err) {
       logService.exception('[App] Error initializing the app', err);
       Alert.alert(
@@ -280,21 +287,6 @@ export default class App extends Component<Props, State> {
         deeplinkService.navigate(deepLinkUrl);
         deepLinkUrl = '';
       }, 100);
-    }
-  }
-
-  async checkForUpdates() {
-    try {
-      const params = {
-        updateDialog: Platform.OS !== 'ios',
-        installMode:  codePush.InstallMode.ON_APP_RESUME,
-      };
-
-      if (CODE_PUSH_TOKEN) params.deploymentKey = CODE_PUSH_TOKEN;
-
-      let response = await codePush.sync(params);
-    } catch (err) {
-      logService.exception('[App] Error checking for code push updated', err);
     }
   }
 

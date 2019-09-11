@@ -3,6 +3,10 @@ package com.minds.mobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import io.sentry.RNSentryPackage;
+import com.reactnativejitsimeet.JitsiMeetPackage;
+import com.wix.reactnativenotifications.RNNotificationsPackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
 import be.skyzohlabs.rnapk.ReactNativeAPKPackage;
@@ -27,14 +31,11 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnative.photoview.PhotoViewPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
-import com.wix.reactnativenotifications.RNNotificationsPackage;
 import cl.json.RNSharePackage;
 import cl.json.ShareApplication;
 import com.meedan.ShareMenuPackage;
 import com.mybigday.rnmediameta.RNMediaMetaPackage;
 import com.rnfs.RNFSPackage;
-import com.centaurwarchief.smslistener.SmsListenerPackage;
-import com.microsoft.codepush.react.CodePush;
 import com.reactnativejitsimeet.JitsiMeetPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import org.pgsqlite.SQLitePluginPackage;
@@ -46,10 +47,7 @@ public class MainApplication extends Application implements ShareApplication, Re
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
 
-    @Override
-    protected String getJSBundleFile() {
-      return CodePush.getBundleUrl("app.bundle");
-    }
+
 
     @Override
     public boolean getUseDeveloperSupport() {
@@ -60,6 +58,9 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNDeviceInfo(),
+            new RNSentryPackage(),
+            new JitsiMeetPackage(),
             new NetInfoPackage(),
             new RNScreensPackage(),
             new ReactNativeAPKPackage(),
@@ -85,9 +86,6 @@ public class MainApplication extends Application implements ShareApplication, Re
           new ShareMenuPackage(),
           new RNMediaMetaPackage(),
           new RNFSPackage(),
-          new SmsListenerPackage(),
-          new CodePush("_C083_CqL7CmKwASrv6Xrj1wqH7erJMhIBnRQ", MainApplication.this, BuildConfig.DEBUG),
-          new JitsiMeetPackage(),
           new SQLitePluginPackage(),
           new BackgroundTimerPackage()
       );

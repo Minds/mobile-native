@@ -33,7 +33,6 @@ import CaptureFab from '../capture/CaptureFab';
 import GroupHeader from './header/GroupHeader';
 import { CommonStyle as CS } from '../styles/Common';
 import CommentList from '../comments/CommentList';
-import NewsfeedList from '../newsfeed/NewsfeedList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
@@ -170,25 +169,13 @@ export default class GroupViewScreen extends Component {
     )
     switch (group.tab) {
       case 'feed':
-
-        if (featuresService.has('es-feeds')) {
-          return (
-            <FeedList
-              feedStore={ group.feed }
-              header={ header }
-              navigation={ this.props.navigation }
-            />
-          );
-        } else {
-          return (
-            <NewsfeedList
-              newsfeed={ group }
-              guid={ group.group.guid }
-              header={ header }
-              navigation={ this.props.navigation }
-            />
-          );
-        }
+        return (
+          <FeedList
+            feedStore={ group.feed }
+            header={ header }
+            navigation={ this.props.navigation }
+          />
+        );
         break;
       case 'members':
         return (

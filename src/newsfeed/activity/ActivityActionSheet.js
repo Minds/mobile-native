@@ -26,6 +26,7 @@ import ActionSheet from 'react-native-actionsheet';
 import { MINDS_URI } from '../../config/Config';
 import testID from '../../common/helpers/testID';
 import i18n from '../../common/services/i18n.service';
+import featuresService from '../../common/services/features.service';
 
 /**
  * Activity Actions
@@ -83,6 +84,10 @@ export default class ActivityActions extends Component {
         }
       }
 
+      if (featuresService.has('allow-comments-toggle')) {
+        options.push( this.props.entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+      }
+
     } else {
 
       if (this.props.user.isAdmin()) {
@@ -116,7 +121,6 @@ export default class ActivityActions extends Component {
       options.push( i18n.t('unfollow') );
     }
 
-
     return options;
 
   }
@@ -136,7 +140,7 @@ export default class ActivityActions extends Component {
         { cancelable: false }
       );
 
-      if (this.props.navigation.state.routeName == 'Activity'){
+      if (this.props.navigation.state.routeName == 'Activity') {
         this.props.navigation.goBack();
       }
     } catch (err) {
@@ -226,6 +230,15 @@ export default class ActivityActions extends Component {
         break;
       case i18n.t('report'):
         this.props.navigation.navigate('Report', { entity: this.props.entity });
+        break;
+      case i18n.t('enableComments'):
+      case i18n.t('disableComments'):
+        try {
+          await this.props.entity.toggleAllowComments();
+        } catch (err) {
+          console.error(err);
+          this.showError();
+        }
         break;
     }
   }

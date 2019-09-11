@@ -24,6 +24,7 @@ import UserModel from '../../src/channel/UserModel';
 import Touchable from '../../src/common/components/Touchable';
 import session from '../../src/common/services/session.service';
 import ChannelStore from '../../src/channel/ChannelStore';
+import featuresService from '../../src/common/services/features.service';
 
 jest.mock('../../src/common/helpers/abortableFetch');
 jest.mock('../../src/channel/UserModel');
@@ -37,6 +38,7 @@ jest.mock('../../src/common/components/FeedList', () => 'FeedList');
 jest.mock('../../src/capture/CaptureFab', () => 'CaptureFab');
 jest.mock('../../src/blogs/BlogCard', () => 'BlogCard');
 jest.mock('../../src/common/components/Touchable', () => 'Touchable');
+jest.mock('../../src/common/services/boosted-content.service');
 
 /**
  * Tests

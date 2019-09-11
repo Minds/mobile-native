@@ -61,6 +61,13 @@ class SessionService {
 
       const [accessToken, refreshToken, user] = await this.sessionStorage.getAll();
 
+      // if there is no session active we clean up and return;
+      if (!accessToken) {
+        this.setToken(null);
+        this.setRefreshToken(null);
+        return null;
+      }
+
       const { access_token, access_token_expires } = accessToken;
       const { refresh_token, refresh_token_expires } = refreshToken;
 

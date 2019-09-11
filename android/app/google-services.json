@@ -1,43 +1,36 @@
 {
   "project_info": {
-    "project_number": "216497927604",
-    "firebase_url": "https://testproyect-b002e.firebaseio.com",
-    "project_id": "testproyect-b002e",
-    "storage_bucket": "testproyect-b002e.appspot.com"
+    "project_number": "81109256529",
+    "firebase_url": "https://minds-com-api-project-81109256529.firebaseio.com",
+    "project_id": "minds.com:api-project-81109256529"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:216497927604:android:e9dc243d6758e397",
+        "mobilesdk_app_id": "1:81109256529:android:471681f082570885",
         "android_client_info": {
-          "package_name": "com.minds.mobiletest"
+          "package_name": "com.minds.mobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "216497927604-dslu0dgqa34p7upomu9e0aqnlrkgq7ap.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "216497927604-dslu0dgqa34p7upomu9e0aqnlrkgq7ap.apps.googleusercontent.com",
+          "client_id": "81109256529-7bnt4565mfv7nelmd1suvb2mkakt3d6o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAXqcOREGAzA2BFVfl8j9bnswBzau5mReU"
+          "current_key": "AIzaSyDt4mTYivmWtg1Sb4TUbnObO8YQ-5aZGA0"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81109256529-7bnt4565mfv7nelmd1suvb2mkakt3d6o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

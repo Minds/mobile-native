@@ -15,7 +15,6 @@ export default class IosPlatfom extends AbstractPlatform {
     NotificationsIOS.addEventListener('remoteNotificationsRegistrationFailed', this._onPushRegistrationFailed.bind(this));
     NotificationsIOS.addEventListener('notificationOpened', this._onNotificationOpened.bind(this));
     NotificationsIOS.requestPermissions();
-    NotificationsIOS.consumeBackgroundQueue();
   }
 
   /**

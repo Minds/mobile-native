@@ -1,4 +1,5 @@
 import { setViewed } from "../../newsfeed/NewsfeedService";
+import { isNetworkFail } from "../helpers/abortableFetch";
 
 export default class Viewed {
 
@@ -28,7 +29,9 @@ export default class Viewed {
         response = await setViewed(entity, meta);
       } catch (e) {
         this.viewed.delete(entity.guid);
-        throw new Error('There was an issue storing the view');
+        if (!isNetworkFail(e)) {
+          throw new Error('There was an issue storing the view');
+        }
       }
     }
   }

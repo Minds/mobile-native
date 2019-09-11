@@ -5,32 +5,38 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 
 import {CommonStyle} from '../../styles/Common';
 import FastImage from 'react-native-fast-image';
+import {observer} from "mobx-react/native";
 
 export const Icons = {
   'votes': {
     'asset': require('../../assets/contributions/votes.png'),
     'title': 'Votes',
-    'score': '+1'
+    'score': '+1',
+    'overview':  'votes'
   },
   'comments': {
     'asset': require('../../assets/contributions/comments.png'),
     'title': 'Comments',
-    'score': '+2'
+    'score': '+2',
+    'overview': 'comments'
   },
   'subscribers': {
     'asset': require('../../assets/contributions/subscribers.png'),
     'title': 'Subscribers',
-    'score': '+4'
+    'score': '+4',
+    'overview': 'subscribers'
   },
   'reminds': {
     'asset': require('../../assets/contributions/reminds.png'),
     'title': 'Reminds',
-    'score': '+4'
+    'score': '+4',
+    'overview': 'reminds'
   },
   'referrals': {
     'asset': require('../../assets/contributions/referrals.png'),
     'title': 'Referrals',
-    'score': '+10'
+    'score': '+10',
+    'overview': 'referrals'
   },
   'onchain_transactions': {
     'asset': require('../../assets/contributions/onchain-transactions.png'),
@@ -40,7 +46,8 @@ export const Icons = {
   'checkins': {
     'asset': require('../../assets/contributions/checkins.png'),
     'title': 'Check-ins',
-    'score': '+2'
+    'score': '+2',
+    'overview': 'checkin'
   },
   'development': {
     'asset': require('../../assets/contributions/code.png'),
@@ -51,6 +58,7 @@ export const Icons = {
 /**
  * Custom Button component
  */
+@observer
 export default class WalletOverviewIcon extends Component {
 
   /**
@@ -61,7 +69,9 @@ export default class WalletOverviewIcon extends Component {
       asset: '',
       title: '',
       score: '',
-    }
+      overview: ''
+    },
+    overview: {}
   };
 
   /**
@@ -75,6 +85,9 @@ export default class WalletOverviewIcon extends Component {
    * Render
    */
   render() {
+    if (typeof this.props.overview.contributionValues !== 'undefined') {
+      this.props.icon.score = '+' + this.props.overview.contributionValues[this.props.icon.overview];
+    }
     const {icon} = this.props;
 
     return (

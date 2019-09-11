@@ -1,40 +1,46 @@
 import 'react-native';
 import React from 'react';
 import { Platform, CameraRoll, TouchableOpacity } from "react-native";
-import { shallow } from 'enzyme';
-import CaptureGallery from '../../src/capture/CaptureGallery';
+import { shallow, render } from 'enzyme';
 import androidPermission from '../../src/common/services/android-permissions.service';
 import { getPhotosFaker } from '../../__mocks__/fake/CameraRollFaker';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
 jest.mock('../../src/common/services/android-permissions.service');
+//jest.mock('TouchableOpacity', () => 'TouchableOpacity' )
+jest.mock('CameraRoll');
+CameraRoll.getPhotos = jest.fn();
+// fake camera roll data
+const response = getPhotosFaker(5);
+CameraRoll.getPhotos.mockResolvedValue(response);
+import CaptureGallery from '../../src/capture/CaptureGallery';
 
 /**
  * Tests
  */
 describe('cature gallery component', () => {
   beforeEach(() => {
+    CameraRoll.getPhotos.mockClear();
     androidPermission.checkReadExternalStorage.mockClear();
     androidPermission.readExternalStorage.mockClear();
   });
 
-  it('should renders correctly', () => {
+  it('should renders correctly', async() => {
     const galley = renderer.create(
-      <CaptureGallery  />
+      <CaptureGallery />
     ).toJSON();
     expect(galley).toMatchSnapshot();
   });
 
   it('should load photos on mount', () => {
-    const spyWillMount = jest.spyOn(CaptureGallery.prototype, '_loadPhotos');
+    const spyWillMount = jest.spyOn(CaptureGallery.prototype, 'loadPhotos');
 
     Platform.OS = 'ios';
 
     const wrapper = shallow(
       <CaptureGallery  />
     );
-
 
     // the call is dalayed (setTimeout) so we fast-forward timers
     jest.runAllTimers();
@@ -78,30 +84,20 @@ describe('cature gallery component', () => {
 
   it('should calls onSelected when the user select an image', async(done) => {
 
-    // fake camera roll data
-    const response = getPhotosFaker(5);
-
-    CameraRoll.getPhotos = jest.fn();
-    CameraRoll.getPhotos.mockResolvedValue(response);
-
     const mockFn = jest.fn();
 
     try {
-      const wrapper = shallow(
-        <CaptureGallery  onSelected={mockFn}/>
-      );
+      const wrapper = renderer.create(<CaptureGallery onSelected={mockFn}/>);
 
       // load phoyos
-      await wrapper.instance()._loadPhotos();
+      await wrapper.getInstance()._loadPhotos();
 
-      // update component
-      wrapper.update();
+      expect( CameraRoll.getPhotos).toBeCalled();
 
       // find TouchableOpacity (rendered images in lists)
-      const images = wrapper.find(TouchableOpacity);
+      const images = wrapper.root.findAllByType(TouchableOpacity);
 
-      // simulate press on image
-      images.at(1).simulate('press');
+      images[0].props.onPress();
 
       // expect fn to be called once
       expect(mockFn).toBeCalled();
@@ -112,27 +108,16 @@ describe('cature gallery component', () => {
   });
 
   it('should show loaded images', async(done) => {
-    // fake camera roll data
-    const response = getPhotosFaker(5);
-
-    CameraRoll.getPhotos = jest.fn();
-    CameraRoll.getPhotos.mockResolvedValue(response);
-
     const mockFn = jest.fn();
 
     try {
-      const wrapper = shallow(
-        <CaptureGallery  onSelected={mockFn}/>
-      );
+      const wrapper = renderer.create(<CaptureGallery onSelected={mockFn}/>);
 
       // load phoyos
-      await wrapper.instance()._loadPhotos();
-
-      // update component
-      wrapper.update();
+      await wrapper.getInstance()._loadPhotos();
 
       // find TouchableOpacity (rendered images in lists)
-      const images = wrapper.find(TouchableOpacity);
+      const images = wrapper.root.findAllByType(TouchableOpacity);
 
       // expect 5 images rendered
       expect(images.length).toEqual(5);

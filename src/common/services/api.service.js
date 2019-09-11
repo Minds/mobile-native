@@ -9,6 +9,15 @@ import { Version } from '../../config/Version';
 import logService from './log.service';
 
 /**
+ * Api Error
+ */
+export class ApiError extends Error {
+  constructor(...args) {
+      super(...args)
+  }
+}
+
+/**
  * Api service
  */
 class ApiService {
@@ -49,6 +58,22 @@ class ApiService {
   }
 
   /**
+   * Throw an error
+   * @param {any} err
+   * @param {string} url
+   */
+  _throwError(err, url) {
+    if (err instanceof Error) {
+      throw err;
+    }
+    const error = new ApiError(err.message || err.responseText || `Request error on: ${url}`);
+    if (err.status) {
+      error.status = err.status;
+    }
+    throw error;
+  }
+
+  /**
    * Api get with abort support
    * @param {string} url
    * @param {object} params
@@ -76,10 +101,12 @@ class ApiService {
       // Bad authorization
       if (err.status && err.status == 401) {
         const refreshed = await session.badAuthorization(); //not actually a logout
-        if (refreshed) return await this.get(url, params, tag);
+        if (refreshed) {
+          return await this.get(url, params, tag);
+        }
         session.logout();
       }
-      throw err;
+      this._throwError(err, url);
     }
   }
 
@@ -104,11 +131,13 @@ class ApiService {
     } catch(err) {
       if (err.status && err.status == 401) {
         const refreshed = await session.badAuthorization(); //not actually a logout
-        if (refreshed) return await this.post(url, body);
+        if (refreshed) {
+          return await this.post(url, body);
+        }
         logService.log('[ApiService] Token refresh failed: logout');
         session.logout();
       }
-      throw err;
+      this._throwError(err, url);
     }
   }
 
@@ -133,19 +162,21 @@ class ApiService {
     } catch(err) {
       if (err.status && err.status == 401) {
         const refreshed = await session.badAuthorization(); //not actually a logout
-        if (refreshed) return await this.post(url, body);
+        if (refreshed) {
+          return await this.put(url, body);
+        }
         logService.log('[ApiService] Token refresh failed: logout');
         session.logout();
       }
-      throw err;
+      this._throwError(err, url);
     }
   }
 
   /**
    * Upload file to s3, differences with generic upload are headers and formData (wich is not necessary)
-   * @param {any} lease 
-   * @param {any} file 
-   * @param {function} progress 
+   * @param {any} lease
+   * @param {any} file
+   * @param {function} progress
    */
   uploadToS3(lease, file, progress) {
 
@@ -207,11 +238,13 @@ class ApiService {
     } catch(err) {
       if (err.status && err.status == 401) {
         const refreshed = await session.badAuthorization(); //not actually a logout
-        if (refreshed) return await this.post(url, body);
+        if (refreshed) {
+          return await this.delete(url, body);
+        }
         logService.log('[ApiService] Token refresh failed: logout');
         session.logout();
       }
-      throw err;
+      this._throwError(err, url);
     }
   }
 

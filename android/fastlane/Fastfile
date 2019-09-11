@@ -25,6 +25,7 @@ platform :android do
   lane :assemble_build do
     sh("echo $ANDROID_KEYSTORE | base64 --decode > ../app/minds.keystore")
     sh("echo $ANDROID_KEYSTORE | base64 --decode > ../minds.keystore")
+    sh("echo $SENTRY_ANDROID_PROPERTIES | base64 --decode > ../sentry.properties")
     gradle(
       task: "assemble",
       build_type: "Release",
@@ -42,7 +43,7 @@ platform :android do
   lane :beta do
     gradle(task: "clean assembleRelease")
     crashlytics
-  
+
     # sh "your_script.sh"
     # You can also use other beta testing services here
   end
