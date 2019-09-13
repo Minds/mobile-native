@@ -136,15 +136,15 @@ jobs:
           command: fastlane preparesentry
           working_directory: ios
 
-      - run:
-          name: Upload to Testflight release
-          command: fastlane testflight
-          working_directory: ios
-          branches:
-            only:
-              - /stable-*/
-              - /release-*/
-              - test/circle-ci
+    #  - run:
+    #      name: Upload to Testflight release
+    #      command: fastlane testflight
+    #      working_directory: ios
+    #      branches:
+    #        only:
+    #         - /stable-*/
+    #          - /release-*/
+    #          - test/circle-ci
   sentry:
     docker:
       - image: getsentry/sentry-cli
