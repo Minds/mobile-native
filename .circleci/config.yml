@@ -130,6 +130,11 @@ jobs:
               - /release-*/
 
       - run:
+          name: Prepare sentry release
+          command: fastlane preparesentry
+          working_directory: ios
+
+      - run:
           name: Upload to Testflight release
           command: fastlane testflight
           working_directory: ios
@@ -145,9 +150,12 @@ jobs:
       - run: 
           name: Tag sentry release 
           command: |
-            sentry-cli releases --project mobile new ${CIRCLE_SHA1}
-            sentry-cli releases set-commits --auto ${CIRCLE_SHA1}
-            sentry-cli releases finalize ${CIRCLE_SHA1}
+            # release created by fastlane preparesentry
+            # APP_VERSION set in fastlane preparesentry
+            # https://circleci.com/docs/2.0/env-vars/#using-bash_env-to-set-environment-variables
+            # Using bashenv to persist
+            sentry-cli releases set-commits --auto ${APP_VERSION}
+            sentry-cli releases finalize ${APP_VERSION}
     
 workflows:
   version: 2
@@ -159,4 +167,4 @@ workflows:
             - node
       - sentry:
           requires:
-            - node
+            - ios
