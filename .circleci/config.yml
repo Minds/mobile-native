@@ -54,7 +54,9 @@ jobs:
 
     steps:
       - checkout
-
+      - run:
+          name: Install sentry cli for fastlane plugin
+          command: brew install getsentry/tools/sentry-cli
       - run:
           name: set Ruby version
           command:  echo "ruby-2.4" > ~/.ruby-version
