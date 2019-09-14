@@ -31,11 +31,11 @@ Build release
 fastlane ios testflight
 ```
 Push a new beta build to TestFlight
-### ios sentry
+### ios preparesentry
 ```
-fastlane ios sentry
+fastlane ios preparesentry
 ```
-Release in setry
+Prepare sentry release
 
 ----
 

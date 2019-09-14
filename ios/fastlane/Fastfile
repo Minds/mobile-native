@@ -44,7 +44,7 @@ platform :ios do
       xcodeproj: "Minds.xcodeproj",
       target: "Minds"
     )
-    sh("export APP_VERSION=" + version + " >> $BASH_ENV")
+    sh("echo " + version + " > ../version")
 
     sentry_upload_dsym(
       org_slug: 'minds-inc',

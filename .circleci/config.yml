@@ -122,6 +122,11 @@ jobs:
               - /stable-*/
               - /release-*/
               - test/circle-ci
+    
+      - persist_to_workspace:
+          root: ~/mobile-native/ios
+          paths:
+            - version
 
       - run: 
           name: Upload to crashalytics 
@@ -149,6 +154,16 @@ jobs:
     docker:
       - image: getsentry/sentry-cli
     steps:
+      - attach_workspace:
+        at: /tmp/workspace
+      - run:
+        name: Load version from workspace
+        run: |
+            if [[ `cat /tmp/workspace/echo-output` == "Hello, world!" ]]; then
+              echo "It worked!";
+            else
+              echo "Nope!"; exit 1
+            fi
       - run: 
           name: Tag sentry release 
           command: |
