@@ -156,24 +156,18 @@ jobs:
     steps:
       - attach_workspace:
         at: /tmp/workspace
-      - run:
-        name: Load version from workspace
-        run: |
-            if [[ `cat /tmp/workspace/echo-output` == "Hello, world!" ]]; then
-              echo "It worked!";
-            else
-              echo "Nope!"; exit 1
-            fi
       - run: 
           name: Tag sentry release 
           command: |
+          run: |
+            version=`cat /tmp/workspace/version`
+            echo Tagging release with ${version}
             # release created by fastlane preparesentry
             # APP_VERSION set in fastlane preparesentry
             # https://circleci.com/docs/2.0/env-vars/#using-bash_env-to-set-environment-variables
             # Using bashenv to persist
-            sentry-cli releases set-commits --auto ${APP_VERSION}
-            sentry-cli releases finalize ${APP_VERSION}
-    
+            sentry-cli releases set-commits --auto ${version}
+            sentry-cli releases finalize ${version}
 workflows:
   version: 2
   node-ios:
