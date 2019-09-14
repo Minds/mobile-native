@@ -54,6 +54,7 @@ jobs:
 
     steps:
       - checkout
+
       - run:
           name: Install sentry cli for fastlane plugin
           command: brew install getsentry/tools/sentry-cli
@@ -136,7 +137,7 @@ jobs:
           command: fastlane preparesentry
           working_directory: ios
 
-       - persist_to_workspace:
+      - persist_to_workspace:
           root: ~/mobile-native/ios
           paths:
             - version
