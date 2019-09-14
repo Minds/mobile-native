@@ -122,11 +122,6 @@ jobs:
               - /stable-*/
               - /release-*/
               - test/circle-ci
-    
-      - persist_to_workspace:
-          root: ~/mobile-native/ios
-          paths:
-            - version
 
       - run: 
           name: Upload to crashalytics 
@@ -141,6 +136,10 @@ jobs:
           command: fastlane preparesentry
           working_directory: ios
 
+       - persist_to_workspace:
+          root: ~/mobile-native/ios
+          paths:
+            - version
     #  - run:
     #      name: Upload to Testflight release
     #      command: fastlane testflight
