@@ -155,7 +155,7 @@ jobs:
       - image: getsentry/sentry-cli
     steps:
       - attach_workspace:
-        at: /tmp/workspace
+          at: /tmp/workspace
       - run: 
           name: Tag sentry release 
           command: |
