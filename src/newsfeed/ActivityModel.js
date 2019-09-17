@@ -50,6 +50,14 @@ export default class ActivityModel extends BaseModel {
     return this.__list;
   }
 
+  toPlainObject() {
+    const plainEntity = super.toPlainObject();
+    if (plainEntity.remind_object && plainEntity.remind_object.__list) {
+      delete(plainEntity.remind_object.__list);
+    }
+
+    return plainEntity;
+  }
 
   /**
    * Child models
@@ -236,10 +244,7 @@ export default class ActivityModel extends BaseModel {
 
   @action
   async updateActivity(data = {}) {
-    const list = this.__list;
-    delete(this.__list);
-    const entity = toJS(this);
-    this._list = list;
+    const entity = this.toPlainObject();
 
     if (data) {
       for (const field in data) {
@@ -248,6 +253,7 @@ export default class ActivityModel extends BaseModel {
     }
 
     await update(entity);
+
     this.setEdited(entity.message);
   }
 

@@ -124,8 +124,7 @@ export default class FeedsService {
 
     this.offset++;
 
-    const plainEntity = toJS(entity);
-    delete(plainEntity.__list);
+    const plainEntity = entity.toPlainObject();
 
     entitiesService.addEntity(plainEntity, true);
     // save without wait
