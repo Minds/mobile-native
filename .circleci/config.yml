@@ -153,18 +153,21 @@ jobs:
   sentry:
     docker:
       - image: getsentry/sentry-cli
+    working_directory: ~/mobile-native
     steps:
       - attach_workspace:
           at: /tmp/workspace
+      - run:
+          name: Install git
+          command: |
+            apk add git
+      - checkout
       - run: 
           name: Tag sentry release 
           command: |
             version=`cat /tmp/workspace/version`
             echo Tagging release with ${version}
             # release created by fastlane preparesentry
-            # APP_VERSION set in fastlane preparesentry
-            # https://circleci.com/docs/2.0/env-vars/#using-bash_env-to-set-environment-variables
-            # Using bashenv to persist
             sentry-cli releases set-commits --auto ${version}
             sentry-cli releases finalize ${version}
 workflows:
