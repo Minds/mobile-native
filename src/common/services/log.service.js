@@ -61,6 +61,14 @@ class LogService {
     deviceLog.error(...args);
   }
 
+  isApiError(error) {
+    return error instanceof ApiError;
+  }
+
+  isUnexpectedError() {
+    return !isNaN(error.status) && this.error.status >= 500;
+  }
+
   exception(prepend, error) {
 
     if (!error) {
@@ -68,7 +76,7 @@ class LogService {
       prepend = null;
     }
 
-    if (!isNetworkFail(error) && !(error instanceof ApiError && error.status === 401)) {
+    if (!isNetworkFail(error) && (!this.isApiError(error) || this.isUnexpectedError(error))) {
       // report the issue to sentry
       Sentry.captureException(error);
     }
