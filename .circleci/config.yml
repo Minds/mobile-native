@@ -169,7 +169,7 @@ jobs:
             echo Tagging release with ${version}
             ls -a
             # release created by fastlane preparesentry
-            sentry-cli releases set-commits --auto ${version} --log-level=debug
+            sentry-cli releases set-commits --commit "Minds / Minds Mobile@${CIRCLE_SHA1}" ${version} --log-level=debug
             sentry-cli releases finalize ${version}
 workflows:
   version: 2
