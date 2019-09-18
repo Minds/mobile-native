@@ -5,6 +5,7 @@ import {
   action,
   computed,
   runInAction,
+  toJS,
 } from 'mobx';
 import _ from 'lodash';
 import sessionService from './services/session.service';
@@ -44,6 +45,15 @@ export default class BaseModel {
    */
   get _list() {
     return this.__list;
+  }
+
+  toPlainObject() {
+    const plainEntity = toJS(this);
+
+    // remove references to the list
+    delete(plainEntity.__list);
+
+    return plainEntity;
   }
 
   /**
