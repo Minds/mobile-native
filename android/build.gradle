@@ -35,7 +35,7 @@ allprojects {
             url "$rootDir/../node_modules/react-native/android"
         }
 
-        maven { url "https://jitpack.io" }
+        maven { url "https://www.jitpack.io" }
     }
     configurations.all {
         resolutionStrategy.force "com.android.support:support-v4:${rootProject.ext.supportLibVersion}"
