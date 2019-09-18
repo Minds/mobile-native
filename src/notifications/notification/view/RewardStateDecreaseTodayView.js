@@ -11,7 +11,7 @@ import i18n from "../../../common/services/i18n.service";
 /**
  * Custom Message Notification Component
  */
-export default class RewardsStateDecreaseView extends Component {
+export default class RewardsStateDecreaseTodayView extends Component {
 
   navToWallet = () => {
     this.props.navigation.push('Wallet');
@@ -22,7 +22,7 @@ export default class RewardsStateDecreaseView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToWallet}>{i18n.t('notification.rewardsStateDecrease', {state: this.props.state, multiplier: this.props.multiplier})}</Text>
+        <Text onPress={this.navToWallet}>{i18n.t('notification.rewardsStateDecreaseToday', {state: this.props.state, multiplier: this.props.multiplier})}</Text>
       </View>
     )
   }

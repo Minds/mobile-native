@@ -86,7 +86,7 @@ export default class WalletOverviewIcon extends Component {
    */
   render() {
     if (typeof this.props.overview.contributionValues !== 'undefined') {
-      this.props.icon.score = '+' + this.props.overview.contributionValues[this.props.icon.overview];
+      this.props.icon.score = '+' + this.props.overview.contributionValues[this.props.icon.overview].toPrecision(3);
     }
     const {icon} = this.props;
 

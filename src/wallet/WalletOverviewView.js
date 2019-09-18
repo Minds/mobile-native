@@ -13,7 +13,7 @@ import token from "../common/helpers/token";
 import number from "../common/helpers/number";
 import i18n from '../common/services/i18n.service';
 
-@inject('wallet')
+@inject('wallet', 'user')
 @observer
 export default class WalletOverviewView extends Component {
   componentDidMount() {
@@ -54,6 +54,11 @@ export default class WalletOverviewView extends Component {
           <View style={ styles.cell }>
             <Text style={ styles.titles }>{i18n.t('wallet.yourRewardFactor')}</Text>
             <Text style={ styles.amount }>{ number(this.props.wallet.overview.yourRewardFactor || 1, 0, 1) }x</Text>
+          </View>
+
+          <View style={ styles.cell }>
+            <Text style={ styles.titles }>{i18n.t('wallet.yourUserState')}</Text>
+            <Text style={ styles.amount }>{ this.props.user.me.user_state }</Text>
           </View>
 
           <View style={ styles.cell }>

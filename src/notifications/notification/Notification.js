@@ -49,6 +49,7 @@ import MessengerInviteView from './view/MessengerInviteView';
 import styles from './style';
 import RewardsStateIncreaseView from "./view/RewardsStateIncreaseView";
 import RewardsStateDecreaseView from "./view/RewardsStateDecreaseView";
+import RewardsStateDecreaseTodayView from "./view/RewardStateDecreaseTodayView";
 import RewardsSummaryView from "./view/RewardsSummaryView";
 
 /**
@@ -201,6 +202,9 @@ export default class Notification extends Component {
 
       case "rewards_state_decrease":
         return <RewardsStateDecreaseView navigation={this.props.navigation} styles={styles} state={entity.params.state} multiplier={entity.params.reward_factor}/>
+
+      case "rewards_state_decrease_today":
+        return <RewardsStateDecreaseTodayView navigation={this.props.navigation} styles={styles} state={entity.params.state} multiplier={entity.params.reward_factor}/>
 
       case "rewards_summary":
         return <RewardsSummaryView navigation={this.props.navigation} styles={styles} amount={entity.params.amount}/>

@@ -323,6 +323,7 @@
     "dontHave":"You don't have any notifications",
     "rewardsStateIncrease": "Congratulations! You just became a {{state}} user.\nWe've increased your daily token reward multiplier to {{multiplier}}x",
     "rewardsStateDecrease": "We miss you! You just dropped down to a {{state}} user.\nYour daily token reward multiplier has been reduced to {{multiplier}}x",
+    "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
     "rewardsSummary": "You earned {{amount}} tokens yesterday."
   },
   "notificationSettings":{
@@ -521,6 +522,7 @@
     "yourShare":"Your Share",
     "yourScore":"Your Score",
     "yourRewardFactor": "Your Reward Multiplier",
+    "yourUserState": "Your User State",
     "networkScore":"Network Score",
     "transactionsTitle":"Transactions",
     "transactionsDescription":"A list of transactions you have made with your addresses",
