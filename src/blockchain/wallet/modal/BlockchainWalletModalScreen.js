@@ -22,7 +22,7 @@ import currency from '../../../common/helpers/currency';
 import BlockchainApiService from '../../BlockchainApiService';
 import i18n from '../../../common/services/i18n.service';
 
-@inject('blockchainWallet', 'blockchainWalletSelector', 'checkoutModal')
+@inject('blockchainWallet', 'blockchainWalletSelector')
 @observer
 export default class BlockchainWalletModalScreen extends Component {
   async select(wallet) {
@@ -39,35 +39,26 @@ export default class BlockchainWalletModalScreen extends Component {
       payload = {
         type: 'offchain'
       };
-    } else if (opts.buyable && wallet.address == 'creditcard') {
-      const ccOpts = {};
-
-      if (opts.confirmTokenExchange) {
-        try {
-          const usd = await BlockchainApiService.getRate('tokens') * opts.confirmTokenExchange;
-          ccOpts.confirmMessage = i18n.t('blockchain.walletConfirmMessage', {currency: currency(usd, 'usd'), tokens: currency(opts.confirmTokenExchange, 'tokens')});
-        } catch (e) {
-          ccOpts.confirmMessage = i18n.t('blockchain.walletNotDeterminedMessage', {tokens: currency(opts.confirmTokenExchange, 'tokens')});
-        }
-      }
-
-      const ccPayload = await this.props.checkoutModal.show(ccOpts);
-
-      if (ccPayload === null) {
-        return;
-      }
-
-      payload = {
-        type: 'creditcard',
-        token: ccPayload
-      }
     } else {
       if (opts.signable && !wallet.privateKey) {
         return;
       }
 
+      let type;
+
+      switch(opts.currency) {
+        case 'tokens':
+          type = 'onchain';
+          break;
+        case 'eth':
+          type = 'eth';
+          break;
+        default:
+          throw new Error('BlockchainWalletModal: currency not supported '+ opts.currency);
+      }
+
       payload = {
-        type: 'onchain',
+        type,
         wallet: toJS(wallet)
       }
     }
@@ -126,7 +117,6 @@ export default class BlockchainWalletModalScreen extends Component {
           onSelect={this.selectAction}
           signableOnly={opts.signable}
           allowOffchain={opts.offchain}
-          allowCreditCard={opts.buyable}
         />
 
       </View>

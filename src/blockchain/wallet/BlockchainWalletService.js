@@ -167,7 +167,7 @@ export class BlockchainWalletService {
 
   async getCurrent(onlyWithPrivateKey = false) {
     if (!this.current || (!this.current.privateKey && onlyWithPrivateKey)) {
-      const payload = await this.selectCurrent(i18n.t('blockchain.selectTheWallet'), { signable: onlyWithPrivateKey, offchain: false, buyable: false });
+      const payload = await this.selectCurrent(i18n.t('blockchain.selectTheWallet'), { signable: onlyWithPrivateKey, offchain: false});
 
       if (payload && payload.type === 'onchain') {
         this.current = payload.wallet;

@@ -36,7 +36,6 @@ import BlockchainWalletImportScreen from '../blockchain/wallet/import/Blockchain
 import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/BlockchainWalletDetailsScreen';
 import ReportScreen from '../report/ReportScreen';
 import MoreScreen from '../tabs/MoreScreen';
-import CheckoutModalScreen from '../payments/checkout/CheckoutModalScreen';
 import WithdrawScreen from '../wallet/tokens/WithdrawScreen';
 import WalletOnboardingScreen from "../wallet/onboarding/WalletOnboardingScreen";
 import ComingSoonScreen from '../static-views/ComingSoonScreen';
@@ -185,12 +184,6 @@ const Stack = createStackNavigator({
   },
   More: {
     screen: withErrorBoundaryScreen(MoreScreen)
-  },
-  CheckoutModal: {
-    screen: withErrorBoundaryScreen(CheckoutModalScreen),
-    navigationOptions: {
-      gesturesEnabled: false
-    },
   },
   Withdraw: {
     screen: withErrorBoundaryScreen(WithdrawScreen)

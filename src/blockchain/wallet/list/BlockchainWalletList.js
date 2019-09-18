@@ -61,7 +61,6 @@ export default class BlockchainWalletList extends Component {
     const wallets = this.props.blockchainWallet.getList(
       this.props.signableOnly,
       this.props.allowOffchain,
-      this.props.allowCreditCard
     );
 
     return (

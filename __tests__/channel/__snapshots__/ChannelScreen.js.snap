@@ -142,9 +142,9 @@ exports[`Channel screen component should renders correctly 1`] = `
               },
               "buttonscol": Object {
                 "alignItems": "center",
-                "alignSelf": "flex-end",
+                "alignSelf": "flex-start",
                 "flexDirection": "row",
-                "justifyContent": "flex-end",
+                "justifyContent": "flex-start",
               },
               "carouselcontainer": Object {
                 "flex": 1,
@@ -195,7 +195,7 @@ exports[`Channel screen component should renders correctly 1`] = `
               "name": Object {
                 "color": "#444",
                 "fontFamily": "Roboto",
-                "fontSize": 20,
+                "fontSize": 22,
                 "fontWeight": "700",
                 "letterSpacing": 0.5,
                 "marginRight": 8,
@@ -232,7 +232,7 @@ exports[`Channel screen component should renders correctly 1`] = `
               },
               "username": Object {
                 "color": "#999",
-                "fontSize": 10,
+                "fontSize": 14,
               },
               "wrappedAvatar": Object {
                 "borderRadius": 55,

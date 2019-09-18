@@ -342,7 +342,7 @@ exports[`LoginForm component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "white",
+            "color": "#FFFFFF",
           },
           Object {
             "fontWeight": "bold",
@@ -396,7 +396,7 @@ exports[`LoginForm component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "white",
+            "color": "#FFFFFF",
           },
         ]
       }
@@ -506,7 +506,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                 "padding": 10,
               },
               Object {
-                "color": "white",
+                "color": "#FFFFFF",
               },
             ]
           }
@@ -634,7 +634,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "alignItems": "center",
                   "backgroundColor": "white",
                   "borderColor": "#777777",
-                  "borderRadius": 15,
+                  "borderRadius": 20,
                   "borderWidth": 1,
                   "margin": 4,
                   "opacity": 1,
@@ -671,7 +671,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "alignItems": "center",
                   "backgroundColor": "white",
                   "borderColor": "#4690D6",
-                  "borderRadius": 15,
+                  "borderRadius": 20,
                   "borderWidth": 1,
                   "margin": 4,
                   "opacity": 1,

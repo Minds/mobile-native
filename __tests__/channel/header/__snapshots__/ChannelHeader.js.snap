@@ -180,74 +180,60 @@ exports[`channel header component owner should render correctly 1`] = `
           someusermane
         </Text>
       </View>
-      <View>
-        <TouchableHighlight
+    </View>
+    <View>
+      <View
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "flex-end",
+            },
+            Object {
+              "marginTop": 10,
+            },
+          ]
+        }
+      >
+        <View
           accessibilityLabel="Subscribe to this channel"
-          onPress={[Function]}
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
-            Array [
-              Object {
-                "borderColor": "#ececec",
-                "borderRadius": 30,
-                "borderWidth": 1,
-                "padding": 8,
-              },
-              Object {
-                "borderColor": "#4690D6",
-              },
-              undefined,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#4690D6",
+              "borderRadius": 20,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "margin": 4,
+              "marginLeft": 0,
+              "opacity": 1,
+              "padding": 4,
+            }
           }
-          underlayColor="transparent"
         >
           <Text
             style={
-              Object {
-                "color": "#4690D6",
-              }
+              Array [
+                Object {
+                  "color": "#4690D6",
+                },
+                undefined,
+              ]
             }
           >
              
             SUBSCRIBE
              
-          </Text>
-        </TouchableHighlight>
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#FFF",
-              "flexDirection": "row",
-              "height": 40,
-              "justifyContent": "flex-end",
-              "paddingLeft": 8,
-              "width": 40,
-            }
-          }
-        >
-          <Text
-            allowFontScaling={false}
-            onPress={[Function]}
-            style={
-              Array [
-                Object {
-                  "color": undefined,
-                  "fontSize": 24,
-                },
-                Object {
-                  "color": "#888888",
-                  "paddingLeft": 10,
-                },
-                Object {
-                  "fontFamily": "Ionicons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
           </Text>
         </View>
       </View>

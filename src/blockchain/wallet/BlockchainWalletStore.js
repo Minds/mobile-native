@@ -22,7 +22,7 @@ class BlockchainWalletStore {
       .filter(wallet => !!wallet.privateKey);
   }
 
-  getList(signableOnly, allowOffchain, allowCreditCard) {
+  getList(signableOnly, allowOffchain) {
     const wallets = (signableOnly ? this.signableWallets : this.wallets).slice();
 
     if (allowOffchain) {
@@ -32,14 +32,6 @@ class BlockchainWalletStore {
         offchain: true
       })
     }
-
-    /*if (allowCreditCard) {
-      wallets.push({
-        address: 'creditcard',
-        alias: 'Credit Card',
-        creditcard: true
-      })
-    }*/
 
     return wallets;
   }

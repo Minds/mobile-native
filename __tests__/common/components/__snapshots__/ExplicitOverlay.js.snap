@@ -51,7 +51,7 @@ exports[`Explicit overlay component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "white",
+          "color": "#FFFFFF",
         },
         Object {
           "elevation": 4,

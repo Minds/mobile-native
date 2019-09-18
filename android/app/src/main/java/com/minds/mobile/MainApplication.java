@@ -3,6 +3,8 @@ package com.minds.mobile;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.gettipsi.stripe.StripeReactPackage;
+import com.horcrux.svg.SvgPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import io.sentry.RNSentryPackage;
 import com.reactnativejitsimeet.JitsiMeetPackage;
@@ -58,6 +60,8 @@ public class MainApplication extends Application implements ShareApplication, Re
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new StripeReactPackage(),
+            new SvgPackage(),
             new RNDeviceInfo(),
             new RNSentryPackage(),
             new JitsiMeetPackage(),

@@ -11,7 +11,6 @@ let dispose;
 const DEFAULT_OPTS = {
   signable: false,
   offchain: false,
-  buyable: false,
 };
 
 /**

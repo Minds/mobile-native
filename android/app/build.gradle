@@ -163,6 +163,8 @@ android {
 }
 
 dependencies {
+    implementation project(':tipsi-stripe')
+    implementation project(':react-native-svg')
     implementation project(':react-native-device-info')
     implementation project(':react-native-sentry')
     implementation project(':react-native-notifications')

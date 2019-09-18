@@ -26,7 +26,7 @@ class StorageService {
       return null;
     }
 
-    value = await this._decryptIfNeeded(value);
+    value = await this._decryptIfNeeded(value, key);
 
     return JSON.parse(value);
   }
@@ -36,7 +36,7 @@ class StorageService {
    *
    * @param {any} value
    */
-  async _decryptIfNeeded(value) {
+  async _decryptIfNeeded(value, key) {
     if (value.startsWith(CRYPTO_AES_PREFIX)) {
       const keychain = await AsyncStorage.getItem(`${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`);
 

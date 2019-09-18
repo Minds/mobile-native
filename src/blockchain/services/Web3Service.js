@@ -126,6 +126,36 @@ class Web3Service {
       throw new Error('E_CANCELLED');
     }
   }
+
+  /**
+   * Send ETH from the selected wallet to the destination address
+   * @param {string} to destination ETH address
+   * @param {number} amount eth amount
+   */
+  async sendEth(to, amount) {
+    const toHex = this.web3.utils.toHex;
+    const baseOptions = await this.getTransactionOptions();
+    const privateKey = await BlockchainWalletService.unlock(baseOptions.from);
+
+    const nonce = await this.web3.eth.getTransactionCount(baseOptions.from);
+
+    const tx = {
+      nonce,
+      to,
+      from: baseOptions.from,
+      value: toHex( this.web3.utils.toWei(amount, 'ether') ),
+      gas: toHex(21000),
+      gasPrice: toHex( this.web3.utils.toWei('2', 'Gwei') ), // converts the gwei price to wei
+    }
+
+    const signedTx = sign(tx, privateKey);
+
+    return await new Promise((resolve, reject) => {
+      this.web3.eth.sendSignedTransaction(signedTx)
+        .once('transactionHash', hash => resolve({ transactionHash: hash }))
+        .once('error', e => reject(e));
+    });
+  }
 }
 
 export default new Web3Service();
