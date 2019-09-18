@@ -249,6 +249,11 @@ export default class FeedsService {
       this.pagingToken = response['load-next'];
     } else {
       this.endReached = true;
+
+      // if there is no result and isn't a pagination request we clear the feed data
+      if (!more) {
+        this.feed = [];
+      }
     }
 
     // save without wait
