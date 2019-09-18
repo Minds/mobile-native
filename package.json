@@ -10,6 +10,7 @@
     "locale": "ts-node tasks/poeditor.js",
     "e2e": "jest -c jest.e2e.config.js",
     "e2e-local": "e2elocal=1 jest -c jest.e2e.config.js",
+    "preinstall": "git config core.hooksPath .githooks",
     "postinstall": "echo \"Fixing web3 require() issue…\" && replace \"c. . .rypto\" \"crypto\" node_modules -r --include=\"bytes.js\" && rn-nodeify --install --hack"
   },
   "dependencies": {
