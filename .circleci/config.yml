@@ -167,8 +167,9 @@ jobs:
           command: |
             version=`cat /tmp/workspace/version`
             echo Tagging release with ${version}
+            ls -a
             # release created by fastlane preparesentry
-            sentry-cli releases set-commits --auto ${version}
+            sentry-cli releases set-commits --auto ${version} --log-level=debug
             sentry-cli releases finalize ${version}
 workflows:
   version: 2
