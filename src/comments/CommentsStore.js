@@ -10,7 +10,8 @@ import {
   getComments,
   postComment,
   updateComment,
-  deleteComment
+  deleteComment,
+  getComment
 } from './CommentsService';
 
 import Comment from './Comment';
@@ -262,9 +263,9 @@ export default class CommentsStore {
     }
 
     try {
-      const response = await getComments(this.guid, this.getParentPath(), true, null, false, 1, guid);
-      if (response.comments && response.comments[0]) {
-        this.comments.push(CommentModel.create(response.comments[0]));
+      const comment = await getComment(this.guid, guid, this.getParentPath());
+      if (comment) {
+        this.comments.push(CommentModel.create(comment));
       }
     } catch(err) {
       logService.exception('[CommentsStore] commentSocket', err);
