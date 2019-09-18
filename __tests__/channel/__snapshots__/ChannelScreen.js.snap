@@ -19,6 +19,14 @@ exports[`Channel screen component should renders correctly 1`] = `
               "state": Object {
                 "params": Object {
                   "entity": Object {
+                    "_list": Object {
+                      "viewed": Object {
+                        "addViewed": [Function],
+                        "viewed": Map {
+                          "1019155171608096768" => true,
+                        },
+                      },
+                    },
                     "attachment_guid": false,
                     "blurb": false,
                     "container_guid": "activityguid0",
@@ -273,6 +281,14 @@ exports[`Channel screen component should renders correctly 1`] = `
         "state": Object {
           "params": Object {
             "entity": Object {
+              "_list": Object {
+                "viewed": Object {
+                  "addViewed": [Function],
+                  "viewed": Map {
+                    "1019155171608096768" => true,
+                  },
+                },
+              },
               "attachment_guid": false,
               "blurb": false,
               "container_guid": "activityguid0",
@@ -317,6 +333,14 @@ exports[`Channel screen component should renders correctly 1`] = `
         "state": Object {
           "params": Object {
             "entity": Object {
+              "_list": Object {
+                "viewed": Object {
+                  "addViewed": [Function],
+                  "viewed": Map {
+                    "1019155171608096768" => true,
+                  },
+                },
+              },
               "attachment_guid": false,
               "blurb": false,
               "container_guid": "activityguid0",

@@ -17,7 +17,14 @@ exports[`Activity component renders correctly 1`] = `
   <Pinned
     entity={
       ActivityModel {
-        "__list": null,
+        "__list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -74,7 +81,14 @@ exports[`Activity component renders correctly 1`] = `
   <OwnerBlock
     entity={
       ActivityModel {
-        "__list": null,
+        "__list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -147,7 +161,14 @@ exports[`Activity component renders correctly 1`] = `
         <ActivityActionSheet
           entity={
             ActivityModel {
-              "__list": null,
+              "__list": Object {
+                "viewed": Object {
+                  "addViewed": [Function],
+                  "viewed": Map {
+                    "1019155171608096768" => true,
+                  },
+                },
+              },
               "allow_comments": true,
               "attachment_guid": false,
               "blurb": false,
@@ -248,7 +269,14 @@ exports[`Activity component renders correctly 1`] = `
     <ExplicitText
       entity={
         ActivityModel {
-          "__list": null,
+          "__list": Object {
+            "viewed": Object {
+              "addViewed": [Function],
+              "viewed": Map {
+                "1019155171608096768" => true,
+              },
+            },
+          },
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
@@ -316,7 +344,14 @@ exports[`Activity component renders correctly 1`] = `
     <Translate
       entity={
         ActivityModel {
-          "__list": null,
+          "__list": Object {
+            "viewed": Object {
+              "addViewed": [Function],
+              "viewed": Map {
+                "1019155171608096768" => true,
+              },
+            },
+          },
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
@@ -380,7 +415,14 @@ exports[`Activity component renders correctly 1`] = `
     <MediaView
       entity={
         ActivityModel {
-          "__list": null,
+          "__list": Object {
+            "viewed": Object {
+              "addViewed": [Function],
+              "viewed": Map {
+                "1019155171608096768" => true,
+              },
+            },
+          },
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
@@ -450,7 +492,14 @@ exports[`Activity component renders correctly 1`] = `
   <Actions
     entity={
       ActivityModel {
-        "__list": null,
+        "__list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -513,7 +562,14 @@ exports[`Activity component renders correctly 1`] = `
   <ActivityMetrics
     entity={
       ActivityModel {
-        "__list": null,
+        "__list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,

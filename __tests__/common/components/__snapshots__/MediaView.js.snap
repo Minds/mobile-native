@@ -22,6 +22,14 @@ exports[`Media view component renders correctly 1`] = `
     <ExplicitImage
       entity={
         Object {
+          "_list": Object {
+            "viewed": Object {
+              "addViewed": [Function],
+              "viewed": Map {
+                "1019155171608096768" => true,
+              },
+            },
+          },
           "attachment_guid": false,
           "blurb": false,
           "container_guid": "activityguid0",

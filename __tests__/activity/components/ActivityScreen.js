@@ -18,6 +18,7 @@ jest.mock('../../../src/newsfeed/NewsfeedService');
 import { getSingle } from '../../../src/newsfeed/NewsfeedService';
 import entitiesService from '../../../src/common/services/entities.service';
 
+jest.mock('../../../src/common/BaseModel');
 jest.mock('../../../src/newsfeed/activity/Activity', () => 'Activity');
 jest.mock('../../../src/comments/CommentList', () => 'CommentList');
 jest.mock('../../../src/common/components/CenteredLoading', () => 'CenteredLoading');

@@ -43,7 +43,7 @@ export default class OffsetFeedListStore extends OffsetListStore {
       this.viewed.set(entity.guid, true);
       let response;
       try {
-        const meta = this.metadataServie ? this.metadataServie.getEntityMeta(entity) : {};
+        const meta = this.metadataService ? this.metadataService.getEntityMeta(entity) : {};
         response = await setViewed(entity, meta);
       } catch (e) {
         this.viewed.delete(entity.guid);

@@ -46,6 +46,14 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
   data={
     Array [
       Object {
+        "_list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "attachment_guid": false,
         "blurb": false,
         "container_guid": "activityguid0",
@@ -77,6 +85,14 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         },
       },
       Object {
+        "_list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "attachment_guid": false,
         "blurb": false,
         "container_guid": "activityguid1",
@@ -108,6 +124,14 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         },
       },
       Object {
+        "_list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "attachment_guid": false,
         "blurb": false,
         "container_guid": "activityguid2",
@@ -139,6 +163,14 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         },
       },
       Object {
+        "_list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "attachment_guid": false,
         "blurb": false,
         "container_guid": "activityguid3",
@@ -170,6 +202,14 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         },
       },
       Object {
+        "_list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "attachment_guid": false,
         "blurb": false,
         "container_guid": "activityguid4",

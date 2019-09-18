@@ -36,6 +36,14 @@ function load(count) {
       wire_totals: {
         tokens: 1000000000000000000
       },
+      _list: {
+        viewed: {
+          viewed: new Map([["1019155171608096768",true]]),
+          addViewed: () => {
+            return;
+          }
+        }
+      },
       getThumbSource: () => {
         return {
           source:'http://thisisaurl'
