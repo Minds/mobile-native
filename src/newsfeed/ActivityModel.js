@@ -265,6 +265,7 @@ decorate(ActivityModel, {
   'thumbs:down:count': observable,
   'thumbs:up:count': observable,
   'comments:count': observable,
+  'custom_data': observable,
   'paywall': observable,
   'mature': observable,
   'pinned': observable,

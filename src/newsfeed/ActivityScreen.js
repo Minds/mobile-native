@@ -49,7 +49,7 @@ export default class ActivityScreen extends Component {
 
       const urn = 'urn:entity:' + (params.entity.guid || params.entity.entity_guid);
 
-      this.entityStore.loadEntity(urn, ActivityModel.checkOrCreate(params.entity));
+      this.entityStore.loadEntity(urn, ActivityModel.checkOrCreate(params.entity), true);
 
       // change metadata source
       if (params.entity._list && params.entity._list.metadataServie) {
