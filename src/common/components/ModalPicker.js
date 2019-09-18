@@ -90,7 +90,7 @@ export default class ModalPicker extends PureComponent {
         <View style={[CommonStyle.backgroundWhite, { height, paddingBottom: 8 }]}>
           <Text style={[CommonStyle.fontL, CommonStyle.textCenter, CommonStyle.backgroundPrimary, CommonStyle.padding2x, CommonStyle.colorWhite]}>{title}</Text>
           <View style={[CommonStyle.flexContainer]}>
-            <Picker {...props} onValueChange={this.select} selectedValue={this.state.value} style={{flex:1}} itemStyle={CommonStyle.fontM}>
+            <Picker {...props} onValueChange={this.select} selectedValue={this.state.value} style={CommonStyle.flexContainer} itemStyle={CommonStyle.fontM}>
               {items.map((item, i) => <Picker.Item key={i} label={item[labelField]} value={item[valueField]} /> )}
             </Picker>
             <View style={[CommonStyle.rowJustifyCenter]}>

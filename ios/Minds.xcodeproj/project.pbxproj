@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
@@ -119,6 +118,9 @@
 		ED3896E8C44E4052B0F644E6 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6FD29168F5514DE7A39A4014 /* Roboto-Bold.ttf */; };
 		EDC22A47A84C4D8DB9350D68 /* libRNSentry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C778756C8BC4B48A2A71659 /* libRNSentry.a */; };
 		EE21241544D14BEABF13A5E8 /* libRNNotifications.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 294BED4444FF4BE6B0649BA0 /* libRNNotifications.a */; };
+		A745914F5C5E4197A70828AF /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D56CA59E11D4B41B880B0E2 /* Fontisto.ttf */; };
+		3D2B52E507864C27BD4A1EF0 /* libRNSVG.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 20F30C4C31254B428E7A670D /* libRNSVG.a */; };
+		3227B223D9B74B22A9152C04 /* libRNSVG-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF8DD64A0C334408B078F53D /* libRNSVG-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -514,6 +516,20 @@
 			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
 			remoteInfo = RCTCameraRoll;
 		};
+		D70A2934231B876E00F5286B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF60B1FCF6D24DEC96041B00 /* RNDeviceInfo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DA5891D81BA9A9FC002B4DB2;
+			remoteInfo = RNDeviceInfo;
+		};
+		D70A2936231B876E00F5286B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FF60B1FCF6D24DEC96041B00 /* RNDeviceInfo.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E72EC1401F7ABB5A0001BC90;
+			remoteInfo = "RNDeviceInfo-tvOS";
+		};
 		EC20F06421FBA068001431A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1E0815484EB546DA9557C74B /* RNExitApp.xcodeproj */;
@@ -829,6 +845,10 @@
 		FD9DCCA27267419AA7A17F5C /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		FDA7910C8BB34AF99919D51E /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto/Roboto-Medium.ttf"; sourceTree = "<group>"; };
 		FF60B1FCF6D24DEC96041B00 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/ios/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
+		5D56CA59E11D4B41B880B0E2 /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		DC53504B8BAC4D839EC34973 /* RNSVG.xcodeproj */ = {isa = PBXFileReference; name = "RNSVG.xcodeproj"; path = "../node_modules/react-native-svg/ios/RNSVG.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		20F30C4C31254B428E7A670D /* libRNSVG.a */ = {isa = PBXFileReference; name = "libRNSVG.a"; path = "libRNSVG.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		CF8DD64A0C334408B078F53D /* libRNSVG-tvOS.a */ = {isa = PBXFileReference; name = "libRNSVG-tvOS.a"; path = "libRNSVG-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -900,6 +920,7 @@
 				EE21241544D14BEABF13A5E8 /* libRNNotifications.a in Frameworks */,
 				C1EBB82960A6401DA2C80943 /* RNNotificationsTests.xctest in Frameworks */,
 				AC879597D579444DBF643C90 /* libRNJitsiMeet.a in Frameworks */,
+				3D2B52E507864C27BD4A1EF0 /* libRNSVG.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -921,6 +942,7 @@
 				662EF3C033F246B08F0527AD /* libRNCNetInfo-tvOS.a in Frameworks */,
 				C2EB8ED1017949D49BB4F12C /* libRNDeviceInfo-tvOS.a in Frameworks */,
 				93F4303E34834E5A95F07D00 /* libRNSentry-tvOS.a in Frameworks */,
+				3227B223D9B74B22A9152C04 /* libRNSVG-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1151,6 +1173,7 @@
 				8114FFAB108A4322B3BD5664 /* RNSentry.xcodeproj */,
 				273C04EF753B4DE0BD9F957E /* RNNotifications.xcodeproj */,
 				D17BFFB7D76C401D804EDAB2 /* RNJitsiMeet.xcodeproj */,
+				DC53504B8BAC4D839EC34973 /* RNSVG.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1264,6 +1287,7 @@
 				91C51941A7AA4D399B201EC5 /* FontAwesome5_Brands.ttf */,
 				D15C6E14E81945ECAB0AE6DD /* FontAwesome5_Regular.ttf */,
 				7B6135FFB5DD428E86EEA903 /* FontAwesome5_Solid.ttf */,
+				5D56CA59E11D4B41B880B0E2 /* Fontisto.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1414,6 +1438,15 @@
 				4D3411CC203CDDF60030746B /* RNNotifications.m */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D70A28FB231B876D00F5286B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D70A2935231B876E00F5286B /* libRNDeviceInfo.a */,
+				D70A2937231B876E00F5286B /* libRNDeviceInfo-tvOS.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		EC20F06121FBA068001431A8 /* Products */ = {
@@ -1733,6 +1766,10 @@
 				{
 					ProductGroup = EC8753D122A09BEB003494BA /* Products */;
 					ProjectRef = 3200C0F71F234F28B5891CB2 /* RNCWebView.xcodeproj */;
+				},
+				{
+					ProductGroup = D70A28FB231B876D00F5286B /* Products */;
+					ProjectRef = FF60B1FCF6D24DEC96041B00 /* RNDeviceInfo.xcodeproj */;
 				},
 				{
 					ProductGroup = EC20F06121FBA068001431A8 /* Products */;
@@ -2192,6 +2229,20 @@
 			remoteRef = C3EF7CD02005336C00CFC22C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		D70A2935231B876E00F5286B /* libRNDeviceInfo.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNDeviceInfo.a;
+			remoteRef = D70A2934231B876E00F5286B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D70A2937231B876E00F5286B /* libRNDeviceInfo-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNDeviceInfo-tvOS.a";
+			remoteRef = D70A2936231B876E00F5286B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		EC20F06521FBA068001431A8 /* libRNExitApp.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -2399,6 +2450,7 @@
 				7C7CDEAEF57241349992BB01 /* FontAwesome5_Brands.ttf in Resources */,
 				18D7817B06A64228945402B0 /* FontAwesome5_Regular.ttf in Resources */,
 				91D63456565E429F98A5B58F /* FontAwesome5_Solid.ttf in Resources */,
+				A745914F5C5E4197A70828AF /* Fontisto.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2584,12 +2636,15 @@
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 				);
 				INFOPLIST_FILE = MindsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2645,6 +2700,7 @@
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 				);
 				INFOPLIST_FILE = MindsTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -2652,6 +2708,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2730,6 +2788,7 @@
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 				);
 				INFOPLIST_FILE = Minds/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -2810,6 +2869,7 @@
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 				);
 				INFOPLIST_FILE = Minds/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
@@ -2876,11 +2936,14 @@
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 				);
 				INFOPLIST_FILE = "Minds-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2945,11 +3008,14 @@
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 				);
 				INFOPLIST_FILE = "Minds-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -2998,11 +3064,14 @@
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 				);
 				INFOPLIST_FILE = "Minds-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -3049,11 +3118,14 @@
 					"$(SRCROOT)/../node_modules/react-native-sentry/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-notifications/RNNotifications/**",
 					"$(SRCROOT)/../node_modules/react-native-jitsi-meet/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-svg/ios/**",
 				);
 				INFOPLIST_FILE = "Minds-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",

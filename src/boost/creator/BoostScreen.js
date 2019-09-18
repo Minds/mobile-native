@@ -47,7 +47,7 @@ class VisibleError extends Error {
 /**
  * Boost Screen
  */
-@inject('user', 'checkoutModal')
+@inject('user')
 export default class BoostScreen extends Component {
 
   textInput = void 0;
@@ -460,16 +460,6 @@ export default class BoostScreen extends Component {
                 throw new Error('Not supported');
                 break;
             }
-            break;
-
-          case 'usd':
-            const token = await this.props.checkoutModal.show();
-
-            if (!token) {
-              return;
-            }
-
-            nonce = token;
             break;
 
           default:

@@ -15,7 +15,7 @@ import { btoa } from 'abab';
 
 import Share from 'react-native-share';
 
-import QRCode from 'react-native-qrcode';
+import QRCode from 'react-native-qrcode-svg';
 
 import TransparentButton from '../../../common/components/TransparentButton';
 import Touchable from '../../../common/components/Touchable';
