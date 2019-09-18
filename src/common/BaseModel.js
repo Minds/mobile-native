@@ -204,7 +204,7 @@ export default class BaseModel {
   }
 
   getClientMetadata() {
-    return (this._list && this._list.metadataServie) ? this._list.metadataServie.getEntityMeta(this) : {};
+    return (this._list && this._list.metadataService) ? this._list.metadataService.getEntityMeta(this) : {};
   }
 
   /**
