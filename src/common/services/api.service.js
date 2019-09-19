@@ -17,6 +17,10 @@ export class ApiError extends Error {
   }
 }
 
+export const isApiError = function(err) {
+  return err instanceof ApiError;
+}
+
 /**
  * Api service
  */

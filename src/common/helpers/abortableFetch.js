@@ -3,7 +3,7 @@
  * based on https://github.com/apentle/react-native-cancelable-fetch/blob/master/index.js
  */
 
-class Abort extends Error {
+export class Abort extends Error {
   constructor(...args) {
       super(...args)
       this.code = 'Abort'
@@ -132,4 +132,8 @@ export const abort = function(tag) {
 
 export const isNetworkFail = function (err) {
   return (err instanceof TypeError && err.message === 'Network request failed')
+}
+
+export const isAbort = function(err) {
+  return err instanceof Abort;
 }
