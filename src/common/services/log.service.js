@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import storageService from './storage.service';
 import settingsService from '../../settings/SettingsService'
 import settingsStore from '../../settings/SettingsStore';
-import { Sentry } from 'react-native-sentry';
+import * as Sentry from '@sentry/react-native';
 import { isNetworkFail } from '../helpers/abortableFetch';
 import { ApiError } from './api.service';
 

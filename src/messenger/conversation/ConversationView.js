@@ -13,7 +13,7 @@ import { observer } from 'mobx-react/native'
 
 import { MINDS_CDN_URI } from '../../config/Config';
 
-import Sentry from 'react-native-sentry';
+import * as Sentry from '@sentry/react-native';
 
 /**
  * Conversation Component
