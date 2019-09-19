@@ -40,8 +40,13 @@ sentry:
   image: getsentry/sentry-cli
   stage: build
   script:
-    - sentry-cli releases set-commits --commit "Minds / Minds Mobile@${CI_COMMIT_SHA}" "com.minds.mobile-${CI_BUILD_REF_SLUG}"
+    - echo $CI_BUILD_REF_SLUG
+    - sentry-cli releases set-commits --commit "Minds / Minds Mobile@${CI_COMMIT_SHA}" com.minds.mobile-${CI_BUILD_REF_SLUG}
     - sentry-cli releases finalize "com.minds.mobile-${CI_BUILD_REF_SLUG}"
+  only:
+    refs:
+      - /^release-*/
+      - /^test-*/
 
 e2e:browserstacks:
   image: node:10.10.0
