@@ -62,11 +62,7 @@ import feedsStorage from './src/common/services/sql/feeds.storage';
 import connectivityService from './src/common/services/connectivity.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 import commentStorageService from './src/comments/CommentStorageService';
-
-import { Sentry } from 'react-native-sentry';
-
-Sentry.config('https://d650fc58f2da4dc8ae9d95847bce152d@sentry.io/1538735').install();
-
+import * as Sentry from '@sentry/react-native';
 
 let deepLinkUrl = '';
 
@@ -83,8 +79,8 @@ sessionService.onLogin(async () => {
 
   const user = sessionService.getUser();
 
-  Sentry.setUserContext({
-    userID: user.guid
+  Sentry.configureScope(scope => {
+    scope.setUser({id: user.guid});
   });
 
   logService.info('[App] Getting minds settings and onboarding progress');

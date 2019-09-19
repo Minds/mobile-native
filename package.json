@@ -16,6 +16,7 @@
   "dependencies": {
     "@react-native-community/async-storage": "^1.5.1",
     "@react-native-community/netinfo": "^3.2.1",
+    "@sentry/react-native": "^1.0.6",
     "@tradle/react-native-http": "^2.0.1",
     "@types/react": "^16.8.17",
     "@types/react-native": "^0.57.53",
@@ -86,7 +87,6 @@
     "react-native-qrcode": "^0.2.6",
     "react-native-qrcode-svg": "^5.2.0",
     "react-native-randombytes": "^3.4.0",
-    "react-native-sentry": "^0.43.2",
     "react-native-share": "1.1.2",
     "react-native-share-menu": "Minds/react-native-share-menu",
     "react-native-simple-radio-button": "^2.7.1",
