@@ -37,4 +37,27 @@ platform :ios do
   lane :testflight do
     upload_to_testflight(skip_waiting_for_build_processing: true)
   end
+
+  desc "Prepare sentry release"
+  lane :preparesentry do
+    version = get_version_number(
+      xcodeproj: "Minds.xcodeproj",
+      target: "Minds"
+    )
+    sh("echo " + version + " > ../version")
+
+    sentry_upload_dsym(
+      org_slug: 'minds-inc',
+      project_slug: 'mobile',
+      dsym_path: 'Minds.app.dSYM.zip'
+    )
+
+    sentry_create_release(
+      org_slug: 'minds-inc',
+      project_slug: 'mobile',
+      version: version ,
+      finalize: false
+    )
+  end
+
 end
