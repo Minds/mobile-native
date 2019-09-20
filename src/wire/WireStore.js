@@ -126,6 +126,11 @@ class WireStore {
           this.errors.push(i18n.t('wire.noAddress', {type: 'ETH'}));
         }
         break;
+      case 'usd':
+        if (this.owner && (!this.owner.merchant || this.owner.merchant.service !== 'stripe')) {
+          this.errors.push(i18n.t('wire.noAddress', {type: 'USD'}));
+        }
+        break;
     }
 
     if (this.amount <= 0) {
