@@ -258,7 +258,11 @@ export default class ActivityModel extends BaseModel {
       }
     }
 
+    // call update endpoint
     await update(entity);
+
+    // update instance properties
+    this.update(data);
 
     this.setEdited(entity.message);
   }
@@ -278,6 +282,7 @@ decorate(ActivityModel, {
   'thumbs:up:count': observable,
   'comments:count': observable,
   'custom_data': observable,
+  'time_created': observable,
   'paywall': observable,
   'mature': observable,
   'pinned': observable,
