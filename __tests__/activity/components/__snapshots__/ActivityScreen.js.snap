@@ -50,6 +50,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction],
         "thumbnail_src": false,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {
@@ -94,6 +95,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
             "rowKey": "something0",
             "shouldBeBlured": [MockFunction],
             "thumbnail_src": false,
+            "time_created": "1522036284",
             "title": "TITLE",
             "type": "activity",
             "wire_totals": Object {
@@ -139,6 +141,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
                   "rowKey": "something0",
                   "shouldBeBlured": [MockFunction],
                   "thumbnail_src": false,
+                  "time_created": "1522036284",
                   "title": "TITLE",
                   "type": "activity",
                   "wire_totals": Object {
@@ -190,6 +193,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
               "rowKey": "something0",
               "shouldBeBlured": [MockFunction],
               "thumbnail_src": false,
+              "time_created": "1522036284",
               "title": "TITLE",
               "type": "activity",
               "wire_totals": Object {

@@ -14,6 +14,7 @@ function load(count) {
       edited:"",
       guid:code,
       mature:false,
+      time_created: "1522036284",
       ownerObj:{
         guid: "824853017709780997",
         type: "user",

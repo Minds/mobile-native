@@ -68,7 +68,6 @@ export default class ActivityEditor extends Component {
     try {
       this.setState({saving: true});
       await this.props.entity.updateActivity(data);
-      this.props.afterEdit(data.time_created);
       this.props.toggleEdit(false);
     } catch (err) {
       logService.exception('[ActivityEditor] update', err);
