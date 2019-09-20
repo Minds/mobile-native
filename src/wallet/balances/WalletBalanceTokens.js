@@ -43,7 +43,9 @@ export default class WalletBalanceTokens extends Component {
   componentWillUnmount() {
     // clear data to free memory
     this.wallet.ledger.list.clearList();
-    this.disposeEnter.remove();
+    if (this.disposeEnter) {
+      this.disposeEnter.remove();
+    }
   }
 
   render() {

@@ -137,7 +137,9 @@ export default class GroupViewScreen extends Component {
    */
   componentWillUnmount() {
     this.props.groupView.clear();
-    this.disposeEnter.remove();
+    if (this.disposeEnter) {
+      this.disposeEnter.remove();
+    }
   }
 
   /**

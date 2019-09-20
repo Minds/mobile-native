@@ -94,7 +94,9 @@ export default class ChannelScreen extends Component {
   }
 
   componentWillUnmount() {
-    this.disposeEnter.remove();
+    if (this.disposeEnter) {
+      this.disposeEnter.remove();
+    }
     this.props.channel.garbageCollect();
     this.props.channel.store(this.guid).markInactive();
   }
