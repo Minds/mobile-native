@@ -78,6 +78,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction],
         "thumbnail_src": false,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {
@@ -117,6 +118,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         "rowKey": "something1",
         "shouldBeBlured": [MockFunction],
         "thumbnail_src": false,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {
@@ -156,6 +158,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         "rowKey": "something2",
         "shouldBeBlured": [MockFunction],
         "thumbnail_src": false,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {
@@ -195,6 +198,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         "rowKey": "something3",
         "shouldBeBlured": [MockFunction],
         "thumbnail_src": false,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {
@@ -234,6 +238,7 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
         "rowKey": "something4",
         "shouldBeBlured": [MockFunction],
         "thumbnail_src": false,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {
