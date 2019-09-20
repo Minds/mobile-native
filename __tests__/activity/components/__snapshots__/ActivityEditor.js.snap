@@ -70,6 +70,8 @@ exports[`Activity editor component renders correctly 1`] = `
         nsfwValue={Array []}
         onLocking={[Function]}
         onNsfw={[Function]}
+        onScheduled={[Function]}
+        timeCreatedValue={null}
       />
     </View>
     <View

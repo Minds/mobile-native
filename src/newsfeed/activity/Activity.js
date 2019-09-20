@@ -65,6 +65,10 @@ export default class Activity extends Component {
     }
   }
 
+  afterEdit = (time_created) => {
+    this.props.entity.time_created = time_created;
+  }
+
   /**
    * Render
    */
@@ -76,7 +80,7 @@ export default class Activity extends Component {
     const message = this.state.editing ?
       (
         //Passing the store in newsfeed (could be channel also)
-        <ActivityEditor entity={entity} toggleEdit={this.toggleEdit}/>
+        <ActivityEditor entity={entity} toggleEdit={this.toggleEdit} afterEdit={this.afterEdit}/>
       ):(
         <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
           {hasText ? <ExplicitText entity={entity} navigation={this.props.navigation} style={styles.message} /> : null}

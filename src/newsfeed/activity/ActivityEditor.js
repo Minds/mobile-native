@@ -40,6 +40,7 @@ export default class ActivityEditor extends Component {
       text: this.props.entity.message,
       wire_threshold: this.props.entity.wire_threshold || null,
       nsfw: this.props.entity.nsfw || [],
+      time_created: this.props.entity.time_created,
     });
   }
 
@@ -52,6 +53,7 @@ export default class ActivityEditor extends Component {
 
     const data = {
       message: this.state.text,
+      time_created: this.formatTimeCreated(),
     };
 
     data.nsfw = [...this.state.nsfw];
@@ -66,6 +68,7 @@ export default class ActivityEditor extends Component {
     try {
       this.setState({saving: true});
       await this.props.entity.updateActivity(data);
+      this.props.afterEdit(data.time_created);
       this.props.toggleEdit(false);
     } catch (err) {
       logService.exception('[ActivityEditor] update', err);
@@ -93,10 +96,23 @@ export default class ActivityEditor extends Component {
     });
   }
 
- @autobind
- onLocking(wire_threshold) {
-   this.setState({wire_threshold})
- }
+  @autobind
+  onLocking(wire_threshold) {
+    this.setState({wire_threshold})
+  }
+
+  onScheduled = timeCreated => {
+    this.setState({ time_created: timeCreated });
+  }
+
+  formatTimeCreated = () => {
+    let time_created = this.state.time_created;
+    if (!parseInt(this.state.time_created)) {
+      time_created = new Date(this.state.time_created).getTime();
+      time_created = Math.floor(time_created / 1000);
+    }
+    return time_created;
+  }
 
   renderFlagsView() {
     return (
@@ -108,6 +124,8 @@ export default class ActivityEditor extends Component {
           nsfwValue={this.state.nsfw}
           onNsfw={this.onNsfwChange}
           onLocking={this.onLocking}
+          timeCreatedValue={this.state.time_created ? new Date(this.state.time_created * 1000) : null}
+          onScheduled={this.onScheduled}
         />
       </View>
     );

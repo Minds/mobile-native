@@ -168,6 +168,11 @@ class ChannelService {
         throw new Error (i18n.t('errorMessage'));
       })
   }
+
+  async getScheduledCount(guid) {
+    const response = await api.get(`api/v2/feeds/scheduled/${guid}/count`);
+    return response.count;
+  }
 }
 
 export default new ChannelService();
