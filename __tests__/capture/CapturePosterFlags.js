@@ -16,6 +16,16 @@ jest.mock('../../src/capture/CaptureStore');
 jest.mock('../../src/common/components/LicensePicker', () => 'LicensePicker');
 jest.mock('../../src/newsfeed/topbar/TagsSubBar', () => 'TagsSubBar');
 
+Date = class extends Date {
+  constructor(date) {
+    if (date) {
+        return super(date);
+    }
+
+    return new Date('2018-09-20T23:00:00Z');
+  }
+}
+
 
 defaultState = {
   mature: false,
@@ -53,6 +63,7 @@ const testRenderWithValue = (value) => {
         onMature={fn}
         onShare={fn}
         onLocking={fn}
+        onScheduled={fn}
       />
   ).toJSON();
   expect(preview).toMatchSnapshot();
@@ -104,7 +115,7 @@ describe('cature poster flags component', () => {
     const hashtagStore = new HashtagStore();
     store.loadSuggestedTags.mockResolvedValue();
 
-    const capturePosterFlag = renderer.create(
+    let capturePosterFlag = renderer.create(
       <CapturePosterFlags
         capture={store}
         hashtag={hashtagStore}
@@ -124,6 +135,19 @@ describe('cature poster flags component', () => {
     expect(picker.length).toEqual(0);
 
     store.attachment.hasAttachment = true;
+
+    capturePosterFlag = renderer.create(
+      <CapturePosterFlags
+        capture={store}
+        hashtag={hashtagStore}
+        matureValue={defaultState.mature}
+        shareValue={defaultState.share}
+        lockValue={defaultState.lock}
+        onMature={fn}
+        onShare={fn}
+        onLocking={fn}
+      />
+    );
 
     picker = capturePosterFlag.root.findAllByType('LicensePicker');
 

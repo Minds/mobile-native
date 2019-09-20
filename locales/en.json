@@ -206,7 +206,8 @@
     "createFirstPost":"Create your first post",
     "blocked":"You have blocked @{{username}}",
     "tapUnblock":"Tap to unblock",
-    "notFound":"Channel not found"
+    "notFound":"Channel not found",
+    "viewScheduled":"Scheduled"
   },
   "discovery":{
     "search":"Search...",

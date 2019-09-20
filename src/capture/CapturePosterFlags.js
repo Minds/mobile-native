@@ -18,6 +18,7 @@ import logService from '../common/services/log.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 
 @inject('capture')
@@ -30,6 +31,7 @@ export default class CapturePosterFlags extends Component {
     lockingModalVisible: false,
     lock: false,
     min: '0',
+    datePickerVisible: false,
   };
 
   // Lifecycle
@@ -201,6 +203,32 @@ export default class CapturePosterFlags extends Component {
     );
   }
 
+  showDatePicker = () => {
+    this.setState({ datePickerVisible: true });
+  }
+
+  dismissDatePicker = () => {
+    this.setState({ datePickerVisible: false });
+  }
+
+  /**
+   * Is considered scheduled when time_created is setted and is gt current time
+   */
+  isScheduled = () => {
+    let response = false;
+    if (this.props.timeCreatedValue) {
+      const timeCreatedValue = new Date(this.props.timeCreatedValue);
+      response = timeCreatedValue.getTime() > Date.now();
+    }
+
+    return response;
+  }
+
+  shouldRenderScheduler = () => {
+    const hasFeature = featuresService.has('post-scheduler');
+    return hasFeature && (this.isScheduled() || !this.timeCreatedValue);
+  }
+
   // Locking (Wire Threshold)
 
   showLockingModal = () => {
@@ -270,6 +298,23 @@ export default class CapturePosterFlags extends Component {
     } else {
       this.setState({ lock: true, min: `${lockValue.min}` });
     }
+  }
+
+  schedulerDatePicker() {
+    return (
+      <DateTimePicker
+        isVisible={this.state.datePickerVisible}
+        onConfirm={this.onScheduled}
+        date={this.props.timeCreatedValue || new Date()}
+        onCancel={this.dismissDatePicker}
+        mode='datetime'
+      />
+    )
+  }
+
+  onScheduled = time_created => {
+    this.props.onScheduled(time_created);
+    this.dismissDatePicker();
   }
 
   lockingModalPartial() {
@@ -381,9 +426,19 @@ export default class CapturePosterFlags extends Component {
             {...testID('Post lock button')}
           />
         </Touchable>}
+
+        {this.shouldRenderScheduler() && <Touchable style={[styles.cell, styles.cell__last]} onPress={this.showDatePicker}>
+          <IonIcon
+            name="md-calendar"
+            color={this.isScheduled() ? Colors.primary : Colors.darkGreyed}
+            size={30}
+            {...testID('Post scheduler button')}
+          />
+        </Touchable>}
         {this.shareModalPartial()}
         {this.lockingModalPartial()}
         {this.hashsModal()}
+        {this.schedulerDatePicker()}
       </View>
     );
   }

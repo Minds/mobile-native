@@ -58,7 +58,8 @@ export default class CapturePoster extends Component {
     selection: {
       start:0,
       end: 0
-    }
+    },
+    time_created: null,
   };
 
   /**
@@ -278,10 +279,12 @@ export default class CapturePoster extends Component {
           shareValue={this.state.share}
           lockValue={this.state.lock}
           nsfwValue={this.state.nsfw}
+          timeCreatedValue={this.state.time_created}
           onMature={this.onMature}
           onNsfw={this.onNsfw}
           onShare={this.onShare}
           onLocking={this.onLocking}
+          onScheduled={this.onScheduled}
         />
 
         {attachment.hasAttachment && <View style={styles.preview}>
@@ -385,7 +388,8 @@ export default class CapturePoster extends Component {
 
     let newPost = {
       message: text,
-      wire_threshold: this.state.lock
+      wire_threshold: this.state.lock,
+      time_created: this.formatTimeCreated()
     };
 
 
@@ -487,6 +491,20 @@ export default class CapturePoster extends Component {
 
   onLocking = lock => {
     this.setState({ lock });
+  }
+
+  onScheduled = timeCreated => {
+    this.setState({ time_created: timeCreated })
+  }
+
+  formatTimeCreated = () => {
+    let time_created;
+    if (this.state.time_created) {
+      time_created = new Date(this.state.time_created).getTime();
+    } else {
+      time_created = Date.now();
+    }
+    return Math.floor(time_created / 1000);
   }
 }
 
