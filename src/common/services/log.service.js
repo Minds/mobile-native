@@ -65,8 +65,8 @@ class LogService {
     return error instanceof ApiError;
   }
 
-  isUnexpectedError() {
-    return !isNaN(error.status) && this.error.status >= 500;
+  isUnexpectedError(error) {
+    return !isNaN(error.status) && error.status >= 500;
   }
 
   exception(prepend, error) {
