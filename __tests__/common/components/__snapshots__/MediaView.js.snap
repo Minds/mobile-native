@@ -74,6 +74,7 @@ exports[`Media view component renders correctly 1`] = `
           "shouldBeBlured": [MockFunction],
           "subtype": "image",
           "thumbnail_src": false,
+          "time_created": "1522036284",
           "title": "TITLE",
           "type": "activity",
           "wire_totals": Object {
