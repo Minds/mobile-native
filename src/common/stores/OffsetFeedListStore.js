@@ -1,10 +1,9 @@
-import { observable, action } from 'mobx';
+import { action } from 'mobx';
 
-import {toggleComments, follow, unfollow, toggleFeatured, monetize, update, setViewed} from '../../newsfeed/NewsfeedService';
+import { setViewed } from '../../newsfeed/NewsfeedService';
 
-import channelService from '../../channel/ChannelService';
 import OffsetListStore from './OffsetListStore';
-import logService from '../services/log.service';
+import { isNetworkFail } from '../helpers/abortableFetch';
 
 /**
  * Infinite scroll list that inform viewed
@@ -41,13 +40,14 @@ export default class OffsetFeedListStore extends OffsetListStore {
   async addViewed(entity) {
     if (!this.viewed.get(entity.guid)) {
       this.viewed.set(entity.guid, true);
-      let response;
       try {
         const meta = this.metadataService ? this.metadataService.getEntityMeta(entity) : {};
-        response = await setViewed(entity, meta);
+        await setViewed(entity, meta);
       } catch (e) {
         this.viewed.delete(entity.guid);
-        throw new Error('There was an issue storing the view');
+        if (!isNetworkFail(e)) {
+          throw e;
+        }
       }
     }
   }
