@@ -59,8 +59,6 @@ export default class ChannelHeader extends Component {
     name: '',
     saving: false,
     edit: false,
-    viewScheduled: false,
-    scheduledCount: '',
   };
 
   uploads = {
@@ -94,10 +92,6 @@ export default class ChannelHeader extends Component {
     if (this.props.navigation) {
       this.props.navigation.push('Subscribers', { guid : this.props.store.channel.guid });
     }
-  }
-
-  componentWillMount() {
-    this.getScheduledCount();
   }
 
   componentDidMount() {
@@ -148,73 +142,6 @@ export default class ChannelHeader extends Component {
 
   onViewScheduledAction = async () => {
     this.props.store.feedStore.toggleScheduled();
-  }
-
-  getScheduledCount = async () => {
-    if (featuresService.has('post-scheduler')) {
-      const count = await this.props.store.feedStore.getScheduledCount();
-      this.setState({ scheduledCount: count });
-    }
-  }
-
-  shouldRenderScheduledButton = () => {
-    return featuresService.has('post-scheduler') && !this.state.edit;
-  }
-
-  /**
-   * Get Action Button, Message or Subscribe
-   */
-  getActionButton() {
-    const styles  = this.props.styles;
-    if (!this.props.store.loaded && session.guid !== this.props.store.channel.guid )
-      return null;
-    if (session.guid === this.props.store.channel.guid) {
-      const viewScheduledButton = this.shouldRenderScheduledButton() ? (
-        <ButtonCustom
-          onPress={this.onViewScheduledAction}
-          accessibilityLabel={i18n.t('channel.viewScheduled')}
-          text={`${i18n.t('channel.viewScheduled').toUpperCase()}: ${this.state.scheduledCount}`}
-          loading={this.state.saving}
-          inverted={this.props.store.feedStore.endpoint == this.props.store.feedStore.scheduledEndpoint ? true : undefined}
-        /> ) : null ;
-      return (
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-            { viewScheduledButton }
-            <ButtonCustom
-              onPress={this.onEditAction}
-              accessibilityLabel={this.state.edit ? i18n.t('channel.saveChanges') : i18n.t('channel.editChannel')}
-              text={this.state.edit ? i18n.t('save').toUpperCase() : i18n.t('edit').toUpperCase()}
-              loading={this.state.saving}
-            />
-        </View>
-      );
-    } else if (!!this.props.store.channel.subscribed) {
-      return (
-        <TouchableHighlightCustom
-          onPress={() => { this._navToConversation() }}
-          underlayColor='transparent'
-          style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
-          accessibilityLabel={i18n.t('channel.sendMessage')}
-        >
-          <Text style={{ color: colors.primary }} > {i18n.t('channel.message')}  </Text>
-        </TouchableHighlightCustom>
-      );
-    } else if (session.guid !== this.props.store.channel.guid) {
-      return (
-        <TouchableHighlightCustom
-          onPress={() => { this.subscribe() }}
-          underlayColor='transparent'
-          style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
-          accessibilityLabel={i18n.t('channel.subscribeMessage')}
-        >
-          <Text style={{ color: colors.primary }} > {i18n.t('channel.subscribe').toUpperCase()} </Text>
-        </TouchableHighlightCustom>
-      );
-    } else if (this.props.store.isUploading) {
-      return (
-        <ActivityIndicator size="small" />
-      )
-    }
   }
 
   subscribe() {
@@ -326,6 +253,7 @@ export default class ChannelHeader extends Component {
               navigation={this.props.navigation}
               store={this.props.store}
               onEditAction={this.onEditAction}
+              onViewScheduledAction={this.onViewScheduledAction}
               editing={this.state.edit}
               saving={this.state.saving}
             />

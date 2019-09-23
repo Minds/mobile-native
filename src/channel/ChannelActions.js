@@ -38,9 +38,14 @@ export default class ChannelActions extends Component {
     super(props)
     this.state = {
       selected: '',
+      scheduledCount: '',
     }
 
     this.handleSelection = this.handleSelection.bind(this);
+  }
+
+  componentWillMount() {
+    this.getScheduledCount();
   }
 
   showActionSheet = () => {
@@ -110,6 +115,21 @@ export default class ChannelActions extends Component {
     this.props.onEditAction();
   }
 
+  onViewScheduledAction = async () => {
+    this.props.onViewScheduledAction();
+  }
+
+  getScheduledCount = async () => {
+    if (featuresService.has('post-scheduler')) {
+      const count = await this.props.store.feedStore.getScheduledCount();
+      this.setState({ scheduledCount: count });
+    }
+  }
+
+  shouldRenderScheduledButton = () => {
+    return featuresService.has('post-scheduler') && !this.state.edit;
+  }
+
   /**
    * Get Action Button, Message or Subscribe
    */
@@ -117,14 +137,25 @@ export default class ChannelActions extends Component {
     if (!this.props.store.loaded && sessionService.guid !== this.props.store.channel.guid )
       return null;
     if (sessionService.guid === this.props.store.channel.guid) {
-      return (
+      const viewScheduledButton = this.shouldRenderScheduledButton() ? (
         <ButtonCustom
-          onPress={this.onEditAction}
-          containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
-          accessibilityLabel={this.props.editing ? i18n.t('channel.saveChanges') : i18n.t('channel.editChannel')}
-          text={this.props.editing ? i18n.t('save').toUpperCase() : i18n.t('edit').toUpperCase()}
-          loading={this.props.saving}
-        />
+          onPress={this.onViewScheduledAction}
+          accessibilityLabel={i18n.t('channel.viewScheduled')}
+          text={`${i18n.t('channel.viewScheduled').toUpperCase()}: ${this.state.scheduledCount}`}
+          loading={this.state.saving}
+          inverted={this.props.store.feedStore.endpoint == this.props.store.feedStore.scheduledEndpoint ? true : undefined}
+        /> ) : null ;
+      return (
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+          { viewScheduledButton }
+          <ButtonCustom
+            onPress={this.onEditAction}
+            containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
+            accessibilityLabel={this.props.editing ? i18n.t('channel.saveChanges') : i18n.t('channel.editChannel')}
+            text={this.props.editing ? i18n.t('save').toUpperCase() : i18n.t('edit').toUpperCase()}
+            loading={this.props.saving}
+          />
+        </View>
       );
     } else if (!!this.props.store.channel.subscribed) {
       return (
