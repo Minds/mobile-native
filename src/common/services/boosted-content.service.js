@@ -1,6 +1,9 @@
-import apiService from "./api.service";
+// @flow
 import FeedsService from "./feeds.service";
 import sessionService from "./session.service";
+
+// types
+import type ActivityModel from "../../newsfeed/ActivityModel";
 
 /**
  * Boosted content service
@@ -24,7 +27,7 @@ class BoostedContentService {
   /**
    * Reload boosts list
    */
-  load = async() => {
+  load = async(): Promise<any> => {
     await this.feedsService
       .setLimit(12)
       .setOffset(0)
@@ -37,7 +40,7 @@ class BoostedContentService {
   /**
    * Fetch one boost
    */
-  fetch() {
+  fetch(): ?ActivityModel {
     this.offset++;
 
     if (this.offset >= this.boosts.length) {

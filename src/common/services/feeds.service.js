@@ -1,3 +1,4 @@
+// @flow
 import logService from './log.service';
 import apiService from './api.service';
 import { abort, isNetworkFail } from '../helpers/abortableFetch';
@@ -7,8 +8,15 @@ import { showMessage } from 'react-native-flash-message';
 import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
 import Colors from '../../styles/Colors';
-import { toJS } from 'mobx';
 import boostedContentService from './boosted-content.service';
+import BaseModel from '../BaseModel';
+
+export type FeedRecordType = {
+  owner_guid: string,
+  timestamp: string,
+  urn: string,
+  entity?: Object
+};
 
 /**
  * Feed store
@@ -48,7 +56,7 @@ export default class FeedsService {
   /**
    * @var {Array}
    */
-  feed: Array = [];
+  feed: Array<FeedRecordType> = [];
 
   /**
    * @var {string}
@@ -68,7 +76,7 @@ export default class FeedsService {
   /**
    * Get entities from the current page
    */
-  async getEntities() {
+  async getEntities(): Promise<Array<any>> {
     const end = this.limit + this.offset;
 
     if (this.paginated && end >= this.feed.length && !this.endReached) {
@@ -83,7 +91,7 @@ export default class FeedsService {
 
     const feedPage = this.feed.slice(this.offset, end);
 
-    const result = await entitiesService.getFromFeed(feedPage, this, this.asActivities);
+    const result: Array<any> = await entitiesService.getFromFeed(feedPage, this, this.asActivities);
 
     if (!this.injectBoost) return result;
 
@@ -104,7 +112,7 @@ export default class FeedsService {
    * @param {Array<ActivityModel>} entities
    * @param {number} end
    */
-  injectBoosted(position, entities, end) {
+  injectBoosted(position: number, entities: Array<BaseModel>, end: number) {
     if (this.offset <= position && end >= position) {
       const boost =  boostedContentService.fetch();
       if (boost) entities.splice( position + this.offset, 0, boost );
@@ -115,7 +123,7 @@ export default class FeedsService {
    * Prepend entity
    * @param {BaseModel} entity
    */
-  prepend(entity) {
+  prepend(entity: BaseModel) {
     this.feed.unshift({
       owner_guid: entity.owner_guid,
       timestamp: Date.now().toString(),
@@ -134,16 +142,16 @@ export default class FeedsService {
   /**
    * getter has More
    */
-  get hasMore() {
+  get hasMore(): boolean {
     return this.feed.length > this.limit + this.offset;
   }
 
   /**
    * Set feed
-   * @param {Array} feed
+   * @param {Array<FeedRecordType>} feed
    * @returns {FeedsService}
    */
-  setFeed(feed): FeedsService {
+  setFeed(feed: Array<FeedRecordType>): FeedsService {
     this.feed = feed;
     return this;
   }
@@ -153,17 +161,17 @@ export default class FeedsService {
    * @param {boolean} injectBoost
    * @returns {FeedsService}
    */
-  setInjectBoost(injectBoost): FeedsService {
+  setInjectBoost(injectBoost: boolean): FeedsService {
     this.injectBoost = injectBoost;
     return this;
   }
 
   /**
    * Set limit
-   * @param {integer} limit
+   * @param {number} limit
    * @returns {FeedsService}
    */
-  setLimit(limit): FeedsService {
+  setLimit(limit: number): FeedsService {
     this.limit = limit;
     return this;
   }
@@ -173,7 +181,7 @@ export default class FeedsService {
    * @param {integer} offset
    * @returns {FeedsService}
    */
-  setOffset(offset): FeedsService {
+  setOffset(offset: number): FeedsService {
     this.offset = offset;
     return this;
   }
@@ -192,7 +200,7 @@ export default class FeedsService {
    * Set parameters
    * @param {Object} params
    */
-  setParams(params): FeedsService {
+  setParams(params: Object): FeedsService {
     this.params = params;
     if (!params.sync) {
       this.params.sync = 1;
@@ -231,7 +239,7 @@ export default class FeedsService {
    * Fetch
    * @param {boolean} more
    */
-  async fetch(more = false) {
+  async fetch(more: boolean = false): Promise<void> {
     abort(this);
 
     const params = {...this.params, ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 }};
@@ -261,15 +269,16 @@ export default class FeedsService {
 
   /**
    * Fetch feed from local cache
+   * @returns {boolean} true if there is local data or false otherwise
    */
-  async fetchLocal() {
+  async fetchLocal(): Promise<boolean> {
     try {
       const feed = await feedsStorage.read(this);
       if (feed) {
         // support old format
         if (Array.isArray(feed)) {
           this.feed = feed;
-          this.pagingToken = this.feed[this.feed.length - 1].timestamp - 1;
+          this.pagingToken = (this.feed[this.feed.length - 1].timestamp - 1).toString();
         } else {
           this.feed = feed.feed;
           this.pagingToken = feed.next;
@@ -286,7 +295,7 @@ export default class FeedsService {
   /**
    * Fetch feed from local cache or from the remote endpoint if there is no cached data
    */
-  async fetchLocalOrRemote() {
+  async fetchLocalOrRemote(): Promise<void> {
     const status = await this.fetchLocal();
 
     try {
@@ -305,7 +314,7 @@ export default class FeedsService {
   /**
    * Fetch from the remote endpoint and if it fails from local cache
    */
-  async fetchRemoteOrLocal() {
+  async fetchRemoteOrLocal(): Promise<void> {
     try {
       await this.fetch();
     } catch (err) {
@@ -336,7 +345,7 @@ export default class FeedsService {
   /**
    * Move offset to next page
    */
-  next(): FeedStore  {
+  next(): FeedsService  {
     this.offset += this.limit;
     return this;
   }
@@ -344,7 +353,7 @@ export default class FeedsService {
   /**
    * Clear the store
    */
-  clear(): FeedStore {
+  clear(): FeedsService {
     this.offset = 0;
     this.limit = 12;
     this.pagingToken = '';
