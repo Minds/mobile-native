@@ -205,7 +205,7 @@ export class BlockchainWalletService {
       };
     }
 
-    if (payload.type === 'onchain') {
+    if (payload.type === 'onchain' || payload.type === 'eth') {
       this.current = payload.wallet;
       await saveCurrentWalletAddressToStorage(payload.wallet.address);
     }
