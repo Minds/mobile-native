@@ -172,7 +172,7 @@
         "saveChanges": "Guarda tus cambios",
         "editChannel": "Cambia la configuración de tu canal",
         "sendMessage": "Envia un mensaje a este canal",
-        "message": "MENSAJE",
+        "message": "Mensaje",
         "subscribe": "Suscribir",
         "subscribeMessage": "Suscribirse a este canal",
         "unsubscribeMessage": "Cancelar suscripción de este canal",
@@ -189,7 +189,8 @@
         "subscribed": "Suscrito",
         "blocked": "Has bloqueado a @{{username}}",
         "tapUnblock": "Pulsa para desbloquear",
-        "notFound": "Canal no encontrado"
+        "notFound": "Canal no encontrado",
+        "viewScheduled": "Agendado"
     },
     "discovery": {
         "search": "Buscar...",
@@ -217,9 +218,9 @@
         "banConfirm": "Estás seguro? Quieres suspender a este usuario?",
         "errorLoading": "Error cargando grupos",
         "confirmKick": "Estás seguro? Quieres expulsar a este usuario?",
-        "listMembersCount": "Miembros",
-        "disableConversations":"Inhabilitar conversaciones",
-        "enableConversations":"Habilitar conversaciones"
+        "listMembersCount": "Miembros {{count}}",
+        "disableConversations": "Desactivar conversaciones",
+        "enableConversations": "Activar conversaciones"
     },
     "keychain": {
         "unlockMessage": "Desbloquear {{keychain}} keychain",
@@ -297,7 +298,11 @@
         "welcomeChat": "Chatea seguro con tus subscripciones mutuas",
         "repliedCommentOn": "contesto tu comentario en",
         "groupComment": "Grupo {{title}}",
-        "tagConversation": "te etiquetó en una conversación"
+        "tagConversation": "te etiquetó en una conversación",
+        "rewardsStateIncrease": "Felicitaciones! Ahora eres un usuario {{state}}.\nHemos incrementedo tu multiplicador de rewards diarios a {{multiplier}}x",
+        "rewardsStateDecrease": "Te extrañamos! Has bajado a un usuario {{state}}.\nHemos reducido tu multiplicador de rewards diarios a {{multiplier}}x",
+        "rewardsStateDecreaseToday": "No es tarde! Tu bajaras a un usuario {{state}} para el final del día y tu multiplicador diario de reward se reducira a {{multiplier}}x. Comienza a votar y comentar para recuperar tu puntaje.",
+        "rewardsSummary": "Ganaste {{amount}} tokens ayer."
     },
     "notificationSettings": {
         "enableDisable": "Activa y desactiva las notificaciones",
@@ -329,7 +334,8 @@
         "cardConfirmMessage": "{{confirmMessage}} ¿Quieres usar esta tarjeta de crédito?",
         "orUseAntoherCard": "O USAR OTRA TARJETA",
         "enterCardDetails": "INGRESAR LA INFORMACIÓN DE TU TARJETA",
-        "yourSavedCard": "TUS TARJETAS GUARDADAS:"
+        "yourSavedCard": "TUS TARJETAS GUARDADAS:",
+        "confirmDeleteCard": "Quieres borrar esta tarjeta?"
     },
     "reports": {
         "explain": "Por favor explica porque tu deseas reportar este contenido en pocas palabras",
@@ -499,7 +505,9 @@
         },
         "inviteFriend": "Invitar un amigo",
         "inviteFriendDescription": "Invitar un amigo y ganar recompensas",
-        "transactionsEmpty": "Tu lista de transacciones está vacía"
+        "transactionsEmpty": "Tu lista de transacciones está vacía",
+        "yourRewardFactor": "Tu Multiplicador de Reward",
+        "yourUserState": "Tu Estado de Usuario"
     },
     "wire": {
         "amountMonth": "{{amount}}/month",
@@ -516,7 +524,11 @@
         "selectWalletMessage": "Selecciona la billetera que te gustaria usar para este Wire.",
         "preApproveMessage": "Necesitamos que tu pre-aprueves una billetera Minds Wire para transacciones recurrentes en wire.",
         "nameReward": "recompensas de {{name}}",
-        "addressLabel": "{{label}} Dirección"
+        "addressLabel": "{{label}} Dirección",
+        "customDonation": "Donación",
+        "selectCredit": "Selecciona una tarjeta",
+        "willNotRecur": "Tu puedes enviar {{currency}} a este usuario. pero no sera recurrente.",
+        "noAddress": "Este canal no ha configurado su cuenta {{type}} aún."
     },
     "validation": {
         "email": "Email Inválido",
@@ -748,10 +760,11 @@
     "wantToUpdate": "Quieres actualizar la aplicación? ",
     "updateAvailable": "Actualización disponible",
     "rememberTomorrow": "Recuerdame más tarde",
-    "enableComments": "Habilitar comentarios",
-    "disableComments": "Inhabilitar comentarios",
     "noInternet": "Sin conexión a internet",
     "offline": "Fuera de línea",
     "cantReachServer": "No puedo conectarme al servidor",
-    "showingStored": "Mostrando datos guardados"
+    "showingStored": "Mostrando datos guardados",
+    "enableComments": "Activar comentarios",
+    "disableComments": "Desactivar comentarios",
+    "more": "Más"
 }
