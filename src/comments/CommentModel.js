@@ -6,6 +6,8 @@ import {
   MINDS_CDN_URI
 } from '../config/Config';
 
+import api from '../common/services/api.service';
+
 /**
  * Comment model
  */
