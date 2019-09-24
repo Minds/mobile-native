@@ -153,10 +153,4 @@ export default class ChannelFeedStore {
     this.endpoint = this.endpoint == this.feedsEndpoint ? this.scheduledEndpoint : this.feedsEndpoint;
     this.setFilter(this.filter);
   }
-
-  @action
-  toggleScheduled() {
-    this.endpoint = this.endpoint == this.feedsEndpoint ? this.scheduledEndpoint : this.feedsEndpoint;
-    this.setFilter(this.filter);
-  }
 }

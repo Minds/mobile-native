@@ -239,7 +239,7 @@ export default class FeedsService {
     if (this.paginated && more) params.from_timestamp = this.pagingToken;
     const response = await apiService.get(this.endpoint, params, this);
 
-    if (response.entities.length) {
+    if (response.entities && response.entities.length) {
       if (more) {
         this.feed = this.feed.concat(response.entities);
       } else {
