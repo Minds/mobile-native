@@ -107,7 +107,7 @@ export async function setViewed(entity, extra = {}) {
   if (entity.boosted) {
     data = await api.post('api/v2/analytics/views/boost/' + entity.boosted_guid, extra );
   } else {
-    data = await api.post('api/v2/analytics/views/activity/' + entity.guid, extra);
+    data = await api.post('api/v2/analytics/views/entity/' + entity.guid, extra);
   }
   return data;
 }
