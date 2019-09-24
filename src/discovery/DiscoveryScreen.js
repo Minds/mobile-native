@@ -118,8 +118,13 @@ export default class DiscoveryScreen extends Component {
    * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    this.disposeEnter.remove();
-    this.disposeLeave.remove();
+    if (this.disposeEnter) {
+      this.disposeEnter.remove();
+    }
+
+    if (this.disposeLeave) {
+      this.disposeLeave.remove();
+    }
   }
 
   /**

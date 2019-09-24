@@ -87,7 +87,9 @@ export default class NewsfeedScreen extends Component {
    * Component will unmount
    */
   componentWillUnmount() {
-    this.disposeEnter.remove();
+    if (this.disposeEnter) {
+      this.disposeEnter.remove();
+    }
   }
 
   setGroupsBarRef = (r) => this.groupsBar = r;

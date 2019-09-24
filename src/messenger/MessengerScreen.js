@@ -76,7 +76,9 @@ export default class MessengerScreen extends Component {
    */
   componentWillUnmount() {
     this.props.messengerList.unlisten();
-    this.disposeEnter.remove();
+    if (this.disposeEnter) {
+      this.disposeEnter.remove();
+    }
     //this.disposeLeave();
   }
 
