@@ -10,7 +10,7 @@ import {
 import { onError } from "mobx-react";
 import logService from './src/common/services/log.service';
 import * as Sentry from '@sentry/react-native';
-import { isAbort } from './src/common/helpers/abortableFetch';
+import { isAbort, isNetworkFail } from './src/common/helpers/abortableFetch';
 import { isApiError } from './src/common/services/api.service';
 
 
@@ -22,19 +22,26 @@ if (process.env.JEST_WORKER_ID === undefined) {
       'Non-Error exception captured with keys: code, domain, localizedDescription', // ignore initial error of sdk
     ],
     beforeSend(event, hint) {
+
+      if (hint.originalException) {
+
+        // ignore network request failed
+        if (isNetworkFail(hint.originalException)) {
+          return null;
+        }
+        // ignore aborts
+        if (isAbort(hint.originalException)) {
+          return null;
+        }
+        // only log api 500 errors
+        if (isApiError(hint.originalException) && hint.originalException.status < 500) {
+          return null;
+        }
+      }
+
       // for dev only log into the console
       if (__DEV__) {
         console.log('sentry', event, hint);
-        return null;
-      }
-
-      // ignore aborts
-      if (hint.originalException && isAbort(hint.originalException)) {
-        return null;
-      }
-
-      // only log api 500 errors
-      if (hint.originalException && isApiError(hint.originalException) && hint.originalException.status < 500) {
         return null;
       }
 
