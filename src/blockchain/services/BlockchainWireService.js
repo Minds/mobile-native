@@ -7,6 +7,12 @@ class BlockchainWireService {
     return await Web3Service.getContract('wire');
   }
 
+  /**
+   * Create an onchain tokens wireß
+   * @param {string} receiver
+   * @param {string} tokensAmount
+   * @param {string} message
+   */
   async create(receiver, tokensAmount, message = '') {
     const token = await BlockchainTokenService.getContract(),
       wireAddress = (await this.getContract()).options.address;
@@ -20,6 +26,21 @@ class BlockchainWireService {
     const result = await Web3Service.sendSignedContractMethod(
       tokenApproveAndCallWire,
       i18n.t('blockchain.wire',{tokensAmount, receiver, message}).trim()
+    );
+
+    return result.transactionHash;
+  }
+
+  /**
+   * Create a eth wire
+   * @param {string} receiver
+   * @param {string} tokensAmount
+   */
+  async createEth(receiver, tokensAmount) {
+
+    const result = await Web3Service.sendEth(
+      receiver,
+      tokensAmount
     );
 
     return result.transactionHash;

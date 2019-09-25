@@ -134,48 +134,6 @@ describe('wire service', () => {
     return expect(WireService.send({amount: 1})).resolves.toBeUndefined();
   });
 
-  it('it should send credit card wire', async(done) => {
-
-    const fakePayload = {
-      type: 'creditcard',
-      token: 10
-    };
-
-    api.post.mockResolvedValue({postresult: 1});
-
-    BlockchainWalletService.selectCurrent.mockResolvedValue(fakePayload);
-
-    try {
-      const result = await WireService.send({amount: 1, guid: 123123123});
-
-      // expect post to be called with the payload
-      expect(api.post).toBeCalledWith(`api/v1/wire/123123123`, {
-        amount: 1,
-        method: 'tokens',
-        payload: {
-          address: 'offchain',
-          method: 'creditcard',
-          token: 10
-        },
-        recurring: false
-      });
-
-      // expect to return the post result with the payload added
-      expect(result).toEqual({
-        postresult: 1,
-        payload: {
-          address: 'offchain',
-          method: 'creditcard',
-          token: 10
-        }
-      });
-
-    } catch(e) {
-      done.fail(e);
-    }
-    done();
-  });
-
   it('it should send offchain wire', async(done) => {
 
     const fakePayload = {
@@ -187,12 +145,12 @@ describe('wire service', () => {
     BlockchainWalletService.selectCurrent.mockResolvedValue(fakePayload);
 
     try {
-      const result = await WireService.send({amount: 1, guid: 123123123});
+      const result = await WireService.send({amount: 1, guid: 123123123, currency: 'tokens'});
 
       // expect post to be called with the payload
-      expect(api.post).toBeCalledWith(`api/v1/wire/123123123`, {
+      expect(api.post).toBeCalledWith(`api/v2/wire/123123123`, {
         amount: 1,
-        method: 'tokens',
+        method: 'offchain',
         payload: {
           method: 'offchain',
           address: 'offchain'
@@ -230,12 +188,12 @@ describe('wire service', () => {
     BlockchainWireService.create.mockResolvedValue('0xtxhash');
 
     try {
-      const result = await WireService.send({amount: 1, guid: 123123123, owner: {eth_wallet: '0xaddress'}});
+      const result = await WireService.send({amount: 1, guid: 123123123, currency: 'tokens',  owner: {eth_wallet: '0xaddress'}});
 
       // expect post to be called with the payload
-      expect(api.post).toBeCalledWith(`api/v1/wire/123123123`, {
+      expect(api.post).toBeCalledWith(`api/v2/wire/123123123`, {
         amount: 1,
-        method: 'tokens',
+        method: 'onchain',
         payload: {
           method: 'onchain',
           address: fakePayload.wallet.address,
@@ -279,12 +237,12 @@ describe('wire service', () => {
     BlockchainTokenService.increaseApproval.mockResolvedValue(true);
 
     try {
-      const result = await WireService.send({amount: 1,recurring: true, guid: 123123123, owner: {eth_wallet: '0xaddress'}});
+      const result = await WireService.send({amount: 1, recurring: true, guid: 123123123, currency: 'tokens', owner: {eth_wallet: '0xaddress'}});
 
       // expect post to be called with the payload
-      expect(api.post).toBeCalledWith(`api/v1/wire/123123123`, {
+      expect(api.post).toBeCalledWith(`api/v2/wire/123123123`, {
         amount: 1,
-        method: 'tokens',
+        method: 'onchain',
         payload: {
           method: 'onchain',
           address: fakePayload.wallet.address,
@@ -319,7 +277,7 @@ describe('wire service', () => {
   });
 
   it('should throw error when try to send without an address', () => {
-    return expect(WireService.send({amount: 1, guid: 123123123, owner: {eth_wallet: null}}))
+    return expect(WireService.send({amount: 1, guid: 123123123, currency: 'tokens', owner: {eth_wallet: null}}))
       .rejects.toThrowError('User cannot receive OnChain tokens because they haven\'t setup an OnChain address. Please retry OffChain.');
   });
 
@@ -327,7 +285,7 @@ describe('wire service', () => {
     // return an unexpected payload type
     BlockchainWalletService.selectCurrent.mockResolvedValue({type: 'unexpected'});
 
-    return expect(WireService.send({amount: 1, guid: 123123123, owner: {eth_wallet: '0xsome'}}))
+    return expect(WireService.send({amount: 1, guid: 123123123, currency: 'tokens', owner: {eth_wallet: '0xsome'}}))
       .rejects.toThrowError('Unknown type');
   });
 

@@ -23,10 +23,10 @@ class SingleEntityStore {
     this.errorLoading = value;
   }
 
-  async loadEntity(urn, defaultEntity) {
+  async loadEntity(urn, defaultEntity, asActivity = false) {
     this.setErrorLoading(false);
     try {
-      const entity = await entitiesService.single(urn, defaultEntity);
+      const entity = await entitiesService.single(urn, defaultEntity, asActivity);
       this.setEntity(entity);
     } catch (err) {
       this.setErrorLoading(true);

@@ -17,7 +17,14 @@ exports[`Activity component renders correctly 1`] = `
   <Pinned
     entity={
       ActivityModel {
-        "__list": null,
+        "__list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -63,6 +70,7 @@ exports[`Activity component renders correctly 1`] = `
         "thumbs:down:user_guids": undefined,
         "thumbs:up:count": undefined,
         "thumbs:up:user_guids": undefined,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {
@@ -74,7 +82,14 @@ exports[`Activity component renders correctly 1`] = `
   <OwnerBlock
     entity={
       ActivityModel {
-        "__list": null,
+        "__list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -120,6 +135,7 @@ exports[`Activity component renders correctly 1`] = `
         "thumbs:down:user_guids": undefined,
         "thumbs:up:count": undefined,
         "thumbs:up:user_guids": undefined,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {
@@ -147,7 +163,14 @@ exports[`Activity component renders correctly 1`] = `
         <ActivityActionSheet
           entity={
             ActivityModel {
-              "__list": null,
+              "__list": Object {
+                "viewed": Object {
+                  "addViewed": [Function],
+                  "viewed": Map {
+                    "1019155171608096768" => true,
+                  },
+                },
+              },
               "allow_comments": true,
               "attachment_guid": false,
               "blurb": false,
@@ -193,6 +216,7 @@ exports[`Activity component renders correctly 1`] = `
               "thumbs:down:user_guids": undefined,
               "thumbs:up:count": undefined,
               "thumbs:up:user_guids": undefined,
+              "time_created": "1522036284",
               "title": "TITLE",
               "type": "activity",
               "wire_totals": Object {
@@ -234,7 +258,7 @@ exports[`Activity component renders correctly 1`] = `
           ]
         }
       >
-        Invalid date
+        Mar 25, 2018, 20:51
       </Text>
     </TouchableOpacity>
   </OwnerBlock>
@@ -248,7 +272,14 @@ exports[`Activity component renders correctly 1`] = `
     <ExplicitText
       entity={
         ActivityModel {
-          "__list": null,
+          "__list": Object {
+            "viewed": Object {
+              "addViewed": [Function],
+              "viewed": Map {
+                "1019155171608096768" => true,
+              },
+            },
+          },
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
@@ -294,6 +325,7 @@ exports[`Activity component renders correctly 1`] = `
           "thumbs:down:user_guids": undefined,
           "thumbs:up:count": undefined,
           "thumbs:up:user_guids": undefined,
+          "time_created": "1522036284",
           "title": "TITLE",
           "type": "activity",
           "wire_totals": Object {
@@ -316,7 +348,14 @@ exports[`Activity component renders correctly 1`] = `
     <Translate
       entity={
         ActivityModel {
-          "__list": null,
+          "__list": Object {
+            "viewed": Object {
+              "addViewed": [Function],
+              "viewed": Map {
+                "1019155171608096768" => true,
+              },
+            },
+          },
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
@@ -362,6 +401,7 @@ exports[`Activity component renders correctly 1`] = `
           "thumbs:down:user_guids": undefined,
           "thumbs:up:count": undefined,
           "thumbs:up:user_guids": undefined,
+          "time_created": "1522036284",
           "title": "TITLE",
           "type": "activity",
           "wire_totals": Object {
@@ -380,7 +420,14 @@ exports[`Activity component renders correctly 1`] = `
     <MediaView
       entity={
         ActivityModel {
-          "__list": null,
+          "__list": Object {
+            "viewed": Object {
+              "addViewed": [Function],
+              "viewed": Map {
+                "1019155171608096768" => true,
+              },
+            },
+          },
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
@@ -426,6 +473,7 @@ exports[`Activity component renders correctly 1`] = `
           "thumbs:down:user_guids": undefined,
           "thumbs:up:count": undefined,
           "thumbs:up:user_guids": undefined,
+          "time_created": "1522036284",
           "title": "TITLE",
           "type": "activity",
           "wire_totals": Object {
@@ -450,7 +498,14 @@ exports[`Activity component renders correctly 1`] = `
   <Actions
     entity={
       ActivityModel {
-        "__list": null,
+        "__list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -496,6 +551,7 @@ exports[`Activity component renders correctly 1`] = `
         "thumbs:down:user_guids": undefined,
         "thumbs:up:count": undefined,
         "thumbs:up:user_guids": undefined,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {
@@ -513,7 +569,14 @@ exports[`Activity component renders correctly 1`] = `
   <ActivityMetrics
     entity={
       ActivityModel {
-        "__list": null,
+        "__list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Map {
+              "1019155171608096768" => true,
+            },
+          },
+        },
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
@@ -559,6 +622,7 @@ exports[`Activity component renders correctly 1`] = `
         "thumbs:down:user_guids": undefined,
         "thumbs:up:count": undefined,
         "thumbs:up:user_guids": undefined,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {

@@ -22,26 +22,26 @@ export const CommonStyle = StyleSheet.create({
     alignContent: 'center',
   },
   centered: {
-    alignItems: 'center',
-    justifyContent: 'center',
     alignContent: 'center',
-    alignSelf: 'center'
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
   },
   columnAlignCenter: {
-    flexDirection: 'column',
     alignItems: 'center',
+    flexDirection: 'column',
   },
   columnAlignStart: {
-    flexDirection: 'column',
     alignItems: 'flex-start',
+    flexDirection: 'column',
   },
   columnAlignEnd: {
-    flexDirection: 'column',
     alignItems: 'flex-end',
+    flexDirection: 'column',
   },
   columnStretch: {
-    flexDirection: 'column',
     alignItems: 'stretch',
+    flexDirection: 'column',
   },
   rowJustifyEnd: {
     flexDirection: 'row',
@@ -74,12 +74,11 @@ export const CommonStyle = StyleSheet.create({
   fillFlex: {
     flexGrow: 1,
   },
-  // color
   colorWhite: {
-    color: 'white'
+    color: '#FFFFFF'
   },
   colorBlack: {
-    color: 'black'
+    color: '#000000'
   },
   colorLight: {
     color: colors.light
@@ -90,8 +89,8 @@ export const CommonStyle = StyleSheet.create({
   colorSecondary: {
     color: colors.secondary
   },
-  colorTerciary: {
-    color: colors.terciary
+  colorTertiary: {
+    color: colors.tertiary
   },
   colorPrimary: {
     color: colors.primary
@@ -145,8 +144,8 @@ export const CommonStyle = StyleSheet.create({
   backgroundTransparent: {
     backgroundColor: 'transparent'
   },
-  backgroundTerciary: {
-    backgroundColor: colors.terciary
+  backgroundTertiary: {
+    backgroundColor: colors.tertiary
   },
   // borders
   borderWhite: {
@@ -158,11 +157,14 @@ export const CommonStyle = StyleSheet.create({
   borderLight: {
     borderColor: colors.light
   },
+  borderLightGreyed: {
+    borderColor: colors.lightGreyed
+  },
   borderSecondary: {
     borderColor: colors.secondary
   },
-  borderTerciary: {
-    borderColor: colors.terciary
+  borderTertiary: {
+    borderColor: colors.tertiary
   },
   borderPrimary: {
     borderColor: colors.primary
@@ -238,6 +240,20 @@ export const CommonStyle = StyleSheet.create({
   marginBottom: {
     marginBottom: 5
   },
+
+  marginTop0x: {
+    marginTop: 0
+  },
+  marginLeft0x: {
+    marginLeft: 0
+  },
+  marginRight0x: {
+    marginRight: 0
+  },
+  marginBottom0x: {
+    marginBottom: 0
+  },
+
   // padding
   padding4x: {
     padding: 20
@@ -447,6 +463,14 @@ export const CommonStyle = StyleSheet.create({
   },
   textJustify: {
     textAlign: 'justify'
+  },
+
+  fullWidth: {
+    width: '100%'
+  },
+
+  halfWidth: {
+    width: '50%'
   },
 
   // Overlay∫

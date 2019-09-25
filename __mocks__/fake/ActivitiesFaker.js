@@ -14,6 +14,7 @@ function load(count) {
       edited:"",
       guid:code,
       mature:false,
+      time_created: "1522036284",
       ownerObj:{
         guid: "824853017709780997",
         type: "user",
@@ -35,6 +36,14 @@ function load(count) {
       type:"activity",
       wire_totals: {
         tokens: 1000000000000000000
+      },
+      _list: {
+        viewed: {
+          viewed: new Map([["1019155171608096768",true]]),
+          addViewed: () => {
+            return;
+          }
+        }
       },
       getThumbSource: () => {
         return {

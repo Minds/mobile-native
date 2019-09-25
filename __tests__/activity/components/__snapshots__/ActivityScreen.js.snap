@@ -18,6 +18,14 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
   <CommentList
     entity={
       Object {
+        "_list": Object {
+          "viewed": Object {
+            "addViewed": [Function],
+            "viewed": Object {
+              "1019155171608096768": true,
+            },
+          },
+        },
         "attachment_guid": false,
         "blurb": false,
         "container_guid": "activityguid0",
@@ -42,6 +50,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction],
         "thumbnail_src": false,
+        "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
         "wire_totals": Object {
@@ -54,6 +63,14 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
         autoHeight={false}
         entity={
           Object {
+            "_list": Object {
+              "viewed": Object {
+                "addViewed": [Function],
+                "viewed": Object {
+                  "1019155171608096768": true,
+                },
+              },
+            },
             "attachment_guid": false,
             "blurb": false,
             "container_guid": "activityguid0",
@@ -78,6 +95,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
             "rowKey": "something0",
             "shouldBeBlured": [MockFunction],
             "thumbnail_src": false,
+            "time_created": "1522036284",
             "title": "TITLE",
             "type": "activity",
             "wire_totals": Object {
@@ -91,6 +109,14 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
             "state": Object {
               "params": Object {
                 "entity": Object {
+                  "_list": Object {
+                    "viewed": Object {
+                      "addViewed": [Function],
+                      "viewed": Map {
+                        "1019155171608096768" => true,
+                      },
+                    },
+                  },
                   "attachment_guid": false,
                   "blurb": false,
                   "container_guid": "activityguid0",
@@ -115,6 +141,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
                   "rowKey": "something0",
                   "shouldBeBlured": [MockFunction],
                   "thumbnail_src": false,
+                  "time_created": "1522036284",
                   "title": "TITLE",
                   "type": "activity",
                   "wire_totals": Object {
@@ -134,6 +161,14 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
         "state": Object {
           "params": Object {
             "entity": Object {
+              "_list": Object {
+                "viewed": Object {
+                  "addViewed": [Function],
+                  "viewed": Map {
+                    "1019155171608096768" => true,
+                  },
+                },
+              },
               "attachment_guid": false,
               "blurb": false,
               "container_guid": "activityguid0",
@@ -158,6 +193,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
               "rowKey": "something0",
               "shouldBeBlured": [MockFunction],
               "thumbnail_src": false,
+              "time_created": "1522036284",
               "title": "TITLE",
               "type": "activity",
               "wire_totals": Object {

@@ -49,15 +49,22 @@ export default class ActivityScreen extends Component {
 
       const urn = 'urn:entity:' + (params.entity.guid || params.entity.entity_guid);
 
-      this.entityStore.loadEntity(urn, ActivityModel.checkOrCreate(params.entity));
+      this.entityStore.loadEntity(urn, ActivityModel.checkOrCreate(params.entity), true);
 
       // change metadata source
-      if (params.entity._list && params.entity._list.metadataServie) {
-        params.entity._list.metadataServie.pushSource('single');
+      if (params.entity._list && params.entity._list.metadataService) {
+        params.entity._list.metadataService.pushSource('single');
       }
     } else {
       const urn = 'urn:entity:' + params.guid;
       this.entityStore.loadEntity(urn);
+    }
+
+    if (params.entity && params.entity._list) {
+      params.entity._list.viewed.addViewed(
+        params.entity,
+        params.entity._list.metadataService
+      );
     }
   }
 
@@ -67,8 +74,8 @@ export default class ActivityScreen extends Component {
   componentWillUnmount() {
     const entity = this.entityStore.entity;
 
-    if (entity._list && entity._list.metadataServie) {
-      entity._list.metadataServie.popSource();
+    if (entity._list && entity._list.metadataService) {
+      entity._list.metadataService.popSource();
     }
   }
 

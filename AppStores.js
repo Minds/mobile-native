@@ -19,8 +19,6 @@ import keychain from './src/keychain/KeychainStore';
 import blockchainTransaction from './src/blockchain/transaction-modal/BlockchainTransactionStore';
 import blockchainWallet from './src/blockchain/wallet/BlockchainWalletStore';
 import blockchainWalletSelector from './src/blockchain/wallet/BlockchainWalletSelectorStore';
-import payments from './src/payments/PaymentsStore';
-import checkoutModal from './src/payments/checkout/CheckoutModalStore';
 import capture from './src/capture/CaptureStore';
 import withdraw from './src/wallet/tokens/WithdrawStore';
 import hashtag from './src/common/stores/HashtagStore';
@@ -55,8 +53,6 @@ const stores = {
   blockchainWallet: new blockchainWallet(),
   blockchainWalletSelector: new blockchainWalletSelector(),
   channelSubscribersStore: new channelSubscribersStore(),
-  payments: new payments(),
-  checkoutModal: new checkoutModal(),
   capture: new capture(),
   withdraw: new withdraw(),
   hashtag: new hashtag(),

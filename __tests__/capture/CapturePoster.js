@@ -331,7 +331,8 @@ describe('cature poster component', () => {
       // should be called only once
       expect(capture.post.mock.calls.length).toBe(1);
 
-      expect(capture.post.mock.calls[0][0]).toEqual({ nsfw: [], message: "some awesome post", wire_threshold: null});
+      const entity = capture.post.mock.calls[0][0];
+      expect(capture.post.mock.calls[0][0]).toEqual({ nsfw: [], message: "some awesome post", wire_threshold: null, "time_created": entity.time_created});
 
       expect(result).toEqual(response)
 
@@ -400,12 +401,14 @@ describe('cature poster component', () => {
       // should be called only once
       expect(capture.post.mock.calls.length).toBe(1);
 
+      const entity = capture.post.mock.calls[0][0];
       expect(capture.post.mock.calls[0][0]).toEqual({
         nsfw: [],
         message: "some awesome post",
         wire_threshold: null,
         facebook: 1,
-        twitter: 1
+        twitter: 1,
+        time_created: entity.time_created
       });
 
       done();
@@ -446,14 +449,15 @@ describe('cature poster component', () => {
       // should be called only once
       expect(capture.post).toBeCalled();
 
+      const entity = capture.post.mock.calls[0][0];
       // should send the attachment data
-      console.log(capture.post.mock.calls);
       expect(capture.post.mock.calls[0][0]).toEqual({
         nsfw: [],
         message: "some awesome post",
         wire_threshold: null,
         attachment_guid: 1000,
-        attachment_license: ''}
+        attachment_license: '',
+        time_created: entity.time_created}
       );
       // should return server response
       expect(result).toEqual(response)

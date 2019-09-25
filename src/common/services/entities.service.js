@@ -1,18 +1,18 @@
-import apiService from "./api.service";
-import blockListService from "./block-list.service";
-import { first } from "rxjs/operators";
-import { BehaviorSubject } from "rxjs";
-
+// @flow
 import _ from 'lodash';
 
+import apiService from "./api.service";
+import sessionService from "./session.service";
+import blockListService from "./block-list.service";
 import GroupModel from "../../groups/GroupModel";
 import UserModel from "../../channel/UserModel";
 import BlogModel from "../../blogs/BlogModel";
 import ActivityModel from "../../newsfeed/ActivityModel";
-import stores from "../../../AppStores";
-import { abort } from "../helpers/abortableFetch";
 import entitiesStorage from "./sql/entities.storage";
-import sessionService from "./session.service";
+
+// types
+import type { FeedRecordType } from "./feeds.service";
+import type BaseModel from "../BaseModel";
 
 const CACHE_TTL_MINUTES = 15;
 
@@ -24,7 +24,7 @@ class EntitiesService {
   /**
    * @var {Map} entities
    */
-  entities: Map = new Map();
+  entities: Map<string, BaseModel> = new Map();
 
   /**
    * Contructor
@@ -38,7 +38,7 @@ class EntitiesService {
    * @param {string} urn
    * @param {boolean} updateLast
    */
-  getFromCache(urn, updateLast = true) {
+  getFromCache(urn: string, updateLast: boolean = true): ?BaseModel {
     const record = this.entities.get(urn)
     if (record && updateLast) record.last = Date.now() / 1000;
     return record ? record.entity : null;
@@ -62,7 +62,7 @@ class EntitiesService {
    * Delete an entity from the cache
    * @param {string} urn
    */
-  deleteFromCache(urn) {
+  deleteFromCache(urn: string) {
     this.entities.delete(urn);
     entitiesStorage.remove(urn);
   }
@@ -73,13 +73,12 @@ class EntitiesService {
    * @param {Mixed} abortTag
    * @param {boolean} asActivities
    */
-  async getFromFeed(feed, abortTag, asActivities = false): Promise<EntityObservable[]> {
+  async getFromFeed(feed: Array<FeedRecordType>, abortTag: any, asActivities: boolean = false): Promise<Array<BaseModel>> {
 
     if (!feed || !feed.length) {
       return [];
     }
 
-    const blockedGuids = blockListService.blocked;
     let urnsToFetch = [];
     const urnsToResync = [];
     const entities = [];
@@ -98,14 +97,14 @@ class EntitiesService {
       }
     }
 
-    // if we have urnstoFetch we try to load from the sql storage first
+    // if we have urnsToFetch we try to load from the sql storage first
     if (urnsToFetch.length > 0) {
       const localEntities = await entitiesStorage.readMany(urnsToFetch);
-      urnsToFetch = _.difference(urnsToFetch, localEntities.map(m => m.urn));
+      urnsToFetch = _.difference(urnsToFetch, localEntities.map((m: any): string => m.urn));
       // we add to resync list
-      localEntities.forEach(e => {
-        urnsToResync.push(e.urn);
-        this.addEntity(e, false)
+      localEntities.forEach((entity: any) => {
+        urnsToResync.push(entity.urn);
+        this.addEntity(entity, false)
       });
     }
 
@@ -146,7 +145,7 @@ class EntitiesService {
    * @param {boolean} asActivities
    * @return Object
    */
-  async single(urn: string, defaultEntity, asActivities = false): EntityObservable {
+  async single(urn: string, defaultEntity: BaseModel, asActivities: boolean = false): BaseModel {
     if (!urn.startsWith('urn:')) { // not a urn, so treat as a guid
       urn = `urn:activity:${urn}`; // and assume activity
     }
@@ -186,7 +185,7 @@ class EntitiesService {
    * @param {boolean} asActivities
    * @return []
    */
-  async fetch(urns: Array<string>, abortTag: any, asActivities = false): Promise<Array<Object>> {
+  async fetch(urns: Array<string>, abortTag: any, asActivities: boolean = false): Promise<Array<Object>> {
 
     try {
       const response: any = await apiService.get('api/v2/entities/', { urns, as_activities: asActivities ? 1 : 0}, abortTag);
@@ -206,9 +205,8 @@ class EntitiesService {
    * Add or resync an entity
    * @param {Object} entity
    * @param {boolean} store
-   * @return void
    */
-  addEntity(entity, store = true): void {
+  addEntity(entity: Object, store: boolean = true) {
 
     this.cleanEntity(entity);
 
@@ -225,13 +223,13 @@ class EntitiesService {
    * Clean properties to save memory and storage space
    * @param {Object} entity
    */
-  cleanEntity(entity) {
+  cleanEntity(entity: Object) {
     if (entity['thumbs:up:user_guids']) {
-      entity['thumbs:up:user_guids'] = entity['thumbs:up:user_guids'].filter(guid => guid == sessionService.guid);
+      entity['thumbs:up:user_guids'] = entity['thumbs:up:user_guids'].filter((guid: string): boolean => guid == sessionService.guid);
     }
 
     if (entity['thumbs:down:user_guids']) {
-      entity['thumbs:down:user_guids'] = entity['thumbs:down:user_guids'].filter(guid => guid == sessionService.guid);
+      entity['thumbs:down:user_guids'] = entity['thumbs:down:user_guids'].filter((guid: string): boolean => guid == sessionService.guid);
     }
   }
 
@@ -239,7 +237,7 @@ class EntitiesService {
    * Map object to model
    * @param {Object} entity
    */
-  mapToModel(entity) {
+  mapToModel(entity: Object): BaseModel {
     switch (entity.type) {
       case 'activity':
         return ActivityModel.create(entity)

@@ -13,6 +13,8 @@ import { observer } from 'mobx-react/native'
 
 import { MINDS_CDN_URI } from '../../config/Config';
 
+import * as Sentry from '@sentry/react-native';
+
 /**
  * Conversation Component
  */
@@ -34,6 +36,11 @@ export default class ConversationView extends Component {
     const styles = this.props.styles;
     let unread = item.unread ? <Icon style={styles.icons} name='md-notifications' color='#4caf50' size={19} /> : null;
     let online = item.online ? <Icon style={styles.icons} name='md-radio-button-on' color='#2196f3' size={19} /> : null;
+
+    // Added to capture information about /issues/1203549247/?project=1538735
+    if (item.username && !item.username.toUpperCase) {
+      Sentry.captureMessage('ISSUE 1203549247 No username on ' + item.guid + ' name: ' + item.name);
+    }
 
     return (
       <TouchableOpacity style={styles.row} onPress={this._navToConversation}>

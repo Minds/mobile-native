@@ -35,6 +35,7 @@ import openUrlService from '../services/open-url.service';
 import logService from '../services/log.service';
 import testID from '../helpers/testID';
 import i18n from '../services/i18n.service';
+import api from '../services/api.service';
 
 /**
  * Activity
@@ -96,7 +97,7 @@ export default class MediaView extends Component {
       guid = this.props.entity.guid;
     }
 
-    const source = {uri: `${mindsService.settings.cinemr_url}${guid}/360.mp4`};
+    const source = {uri: MINDS_API_URI + `api/v1/media/${guid}/play`, headers: api.buildHeaders() };
 
     return (
       <View style={styles.videoContainer}>

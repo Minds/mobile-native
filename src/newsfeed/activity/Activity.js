@@ -76,7 +76,7 @@ export default class Activity extends Component {
     const message = this.state.editing ?
       (
         //Passing the store in newsfeed (could be channel also)
-        <ActivityEditor entity={entity} toggleEdit={this.toggleEdit}/>
+        <ActivityEditor entity={entity} toggleEdit={this.toggleEdit} />
       ):(
         <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
           {hasText ? <ExplicitText entity={entity} navigation={this.props.navigation} style={styles.message} /> : null}

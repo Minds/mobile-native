@@ -17,6 +17,34 @@ const decodeUrn = (urn) => {
 }
 
 /**
+ * Get a single comment
+ * @param {string} entity_guid
+ * @param {string} guid
+ * @param {string} parent_path
+ */
+export async function getComment(entity_guid, guid, parent_path) {
+  let response: any = await api.get(
+    `api/v2/comments/${entity_guid}/${guid}/${parent_path}`,
+    {
+      limit: 1,
+      reversed: false,
+      descending: true,
+    }
+  );
+
+  if (!response.comments || response.comments.length === 0) {
+    return null;
+  }
+
+  if (response.comments[0]._guid != guid) {
+    return null;
+  }
+
+  return response.comments[0];
+}
+
+
+/**
  * Get comments
  * @param {string} guid
  * @param {boolean} reversed
@@ -116,8 +144,8 @@ export function updateComment(guid, description) {
 
 /**
  * Enable/Disable comments
- * @param {string} guid 
- * @param {boolean} state 
+ * @param {string} guid
+ * @param {boolean} state
  */
 export function toggleAllowComments(guid, state) {
   return api.post(`api/v2/permissions/comments/${guid}`,{

@@ -56,6 +56,9 @@ jobs:
       - checkout
 
       - run:
+          name: Install sentry cli for fastlane plugin
+          command: brew install getsentry/tools/sentry-cli
+      - run:
           name: set Ruby version
           command:  echo "ruby-2.4" > ~/.ruby-version
 
@@ -130,6 +133,15 @@ jobs:
               - /release-*/
 
       - run:
+          name: Prepare sentry release
+          command: fastlane preparesentry
+          working_directory: ios
+
+      - persist_to_workspace:
+          root: ~/mobile-native/ios
+          paths:
+            - version
+      - run:
           name: Upload to Testflight release
           command: fastlane testflight
           working_directory: ios
@@ -138,7 +150,27 @@ jobs:
               - /stable-*/
               - /release-*/
               - test/circle-ci
-
+  sentry:
+    docker:
+      - image: getsentry/sentry-cli
+    working_directory: ~/mobile-native
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Install git
+          command: |
+            apk add git
+      - checkout
+      - run: 
+          name: Tag sentry release 
+          command: |
+            version=`cat /tmp/workspace/version`
+            echo Tagging release with ${version}
+            ls -a
+            # release created by fastlane preparesentry
+            sentry-cli releases set-commits --commit "Minds / Minds Mobile@${CIRCLE_SHA1}" ${version} --log-level=debug
+            sentry-cli releases finalize ${version}
 workflows:
   version: 2
   node-ios:
@@ -147,3 +179,6 @@ workflows:
       - ios:
           requires:
             - node
+      - sentry:
+          requires:
+            - ios

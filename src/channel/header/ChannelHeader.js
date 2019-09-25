@@ -36,11 +36,11 @@ import imagePicker from '../../common/services/image-picker.service';
 import Button from '../../common/components/Button';
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import CompleteProfile from './CompleteProfile';
+import featuresService from '../../common/services/features.service';
 
 // prevent accidental double tap in touchables
 const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
 const TouchableCustom = withPreventDoubleTap(Touchable);
-const ButtonCustom = withPreventDoubleTap(Button);
 
 /**
  * Channel Header
@@ -58,7 +58,7 @@ export default class ChannelHeader extends Component {
     briefdescription: '',
     name: '',
     saving: false,
-    edit: false
+    edit: false,
   };
 
   uploads = {
@@ -86,15 +86,6 @@ export default class ChannelHeader extends Component {
     }
 
     return this.props.store.channel.getAvatarSource('large');
-  }
-
-  /**
-   * Navigate To conversation
-   */
-  _navToConversation() {
-    if (this.props.navigation) {
-      this.props.navigation.push('Conversation', { conversation: { guid : this.props.store.channel.guid + ':' + session.guid } });
-    }
   }
 
   _navToSubscribers() {
@@ -149,49 +140,8 @@ export default class ChannelHeader extends Component {
     }
   }
 
-  /**
-   * Get Action Button, Message or Subscribe
-   */
-  getActionButton() {
-    const styles  = this.props.styles;
-    if (!this.props.store.loaded && session.guid !== this.props.store.channel.guid )
-      return null;
-    if (session.guid === this.props.store.channel.guid) {
-      return (
-        <ButtonCustom
-          onPress={this.onEditAction}
-          accessibilityLabel={this.state.edit ? i18n.t('channel.saveChanges') : i18n.t('channel.editChannel')}
-          text={this.state.edit ? i18n.t('save').toUpperCase() : i18n.t('edit').toUpperCase()}
-          loading={this.state.saving}
-        />
-      );
-    } else if (!!this.props.store.channel.subscribed) {
-      return (
-        <TouchableHighlightCustom
-          onPress={() => { this._navToConversation() }}
-          underlayColor='transparent'
-          style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
-          accessibilityLabel={i18n.t('channel.sendMessage')}
-        >
-          <Text style={{ color: colors.primary }} > {i18n.t('channel.message')}  </Text>
-        </TouchableHighlightCustom>
-      );
-    } else if (session.guid !== this.props.store.channel.guid) {
-      return (
-        <TouchableHighlightCustom
-          onPress={() => { this.subscribe() }}
-          underlayColor='transparent'
-          style={[ComponentsStyle.button, ComponentsStyle.buttonAction, styles.bluebutton]}
-          accessibilityLabel={i18n.t('channel.subscribeMessage')}
-        >
-          <Text style={{ color: colors.primary }} > {i18n.t('channel.subscribe').toUpperCase()} </Text>
-        </TouchableHighlightCustom>
-      );
-    } else if (this.props.store.isUploading) {
-      return (
-        <ActivityIndicator size="small" />
-      )
-    }
+  onViewScheduledAction = async () => {
+    this.props.store.feedStore.toggleScheduled();
   }
 
   subscribe() {
@@ -297,12 +247,16 @@ export default class ChannelHeader extends Component {
                 </View>}
               <Text style={styles.username}>@{channel.username}</Text>
             </View>
-            <View style={styles.buttonscol}>
-              { !channel.blocked && this.getActionButton() }
-              { session.guid !== channel.guid?
-                <ChannelActions navigation={this.props.navigation} store={this.props.store} me={session}></ChannelActions> : <View></View>
-              }
-            </View>
+          </View>
+          <View style={styles.buttonscol}>
+            <ChannelActions
+              navigation={this.props.navigation}
+              store={this.props.store}
+              onEditAction={this.onEditAction}
+              onViewScheduledAction={this.onViewScheduledAction}
+              editing={this.state.edit}
+              saving={this.state.saving}
+            />
           </View>
           {isEditable && <View style={styles.briefdescriptionTextInputView}>
             <TextInput

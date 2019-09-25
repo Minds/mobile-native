@@ -64,3 +64,5 @@ coverage/
 
 # Sentry secrets
 sentry.properties
+
+!/.githooks

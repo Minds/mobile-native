@@ -27,8 +27,12 @@ import { isNetworkFail } from '../common/helpers/abortableFetch';
  */
 export default class ChannelFeedStore {
 
+  feedsEndpoint = 'feeds/container';
+  scheduledEndpoint = 'feeds/scheduled';
+
   @observable filter = 'feed';
   @observable showrewards = false;
+  @observable endpoint = 'feeds/container';
 
   channel;
 
@@ -88,11 +92,27 @@ export default class ChannelFeedStore {
 
     if (refresh) this.feedStore.clear();
 
-    this.feedStore.setEndpoint(`api/v2/feeds/container/${this.guid}/${this.esFeedfilter}`)
+    this.feedStore.setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
       .setLimit(12)
       .fetchRemoteOrLocal();
 
     return;
+  }
+
+  /**
+   * Get channel scheduled activities count
+   */
+  async getScheduledCount() {
+    const count = await channelService.getScheduledCount(this.guid);
+    return count;
+  }
+
+  /**
+   * Get channel scheduled activities count
+   */
+  async getScheduledCount() {
+    const count = await channelService.getScheduledCount(this.guid);
+    return count;
   }
 
   @action
@@ -110,7 +130,7 @@ export default class ChannelFeedStore {
     }
 
     this.feedStore.clear();
-    this.feedStore.setEndpoint(`api/v2/feeds/container/${this.guid}/${this.esFeedfilter}`)
+    this.feedStore.setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
       .setLimit(12)
       .fetchRemoteOrLocal();
 
@@ -122,9 +142,15 @@ export default class ChannelFeedStore {
   setFilter(filter) {
     this.filter = filter;
 
-    this.feedStore.setEndpoint(`api/v2/feeds/container/${this.guid}/${this.esFeedfilter}`)
+    this.feedStore.setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
       .setIsTiled(filter === 'images' || filter === 'videos')
       .clear()
       .fetchRemoteOrLocal();
+  }
+
+  @action
+  toggleScheduled() {
+    this.endpoint = this.endpoint == this.feedsEndpoint ? this.scheduledEndpoint : this.feedsEndpoint;
+    this.setFilter(this.filter);
   }
 }

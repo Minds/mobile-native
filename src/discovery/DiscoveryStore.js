@@ -136,13 +136,13 @@ class DiscoveryStore {
     this.onFilterChangeDisposer && this.onFilterChangeDisposer();
     this.onSearchChangeDisposer && this.onSearchChangeDisposer();
 
-    if (this.filters) {
-      this.filters.clear();
-    }
-
     this.feedStore.reset();
     this.listStore.clear();
-    this.listenChanges();
+
+    if (this.filters) {
+      this.filters.clear();
+      this.listenChanges();
+    }
   }
 }
 

@@ -50,6 +50,14 @@ export default class ActivityModel extends BaseModel {
     return this.__list;
   }
 
+  toPlainObject() {
+    const plainEntity = super.toPlainObject();
+    if (plainEntity.remind_object && plainEntity.remind_object.__list) {
+      delete(plainEntity.remind_object.__list);
+    }
+
+    return plainEntity;
+  }
 
   /**
    * Child models
@@ -69,6 +77,12 @@ export default class ActivityModel extends BaseModel {
   getThumbSource(size = 'medium') {
     // for gif use always the same size to take adventage of the cache (they are not resized)
     if (this.isGif()) size = 'medium';
+
+    if (this.thumbnails && this.thumbnails[size]) {
+      return {uri: this.thumbnails[size], headers: api.buildHeaders() };
+    }
+
+    // fallback to old behavior
     if (this.paywall || this.paywall_unlocked) {
       return { uri: MINDS_URI + 'fs/v1/thumbnail/' + this.entity_guid, headers: api.buildHeaders() };
     }
@@ -236,10 +250,7 @@ export default class ActivityModel extends BaseModel {
 
   @action
   async updateActivity(data = {}) {
-    const list = this.__list;
-    delete(this.__list);
-    const entity = toJS(this);
-    this._list = list;
+    const entity = this.toPlainObject();
 
     if (data) {
       for (const field in data) {
@@ -247,7 +258,12 @@ export default class ActivityModel extends BaseModel {
       }
     }
 
+    // call update endpoint
     await update(entity);
+
+    // update instance properties
+    this.update(data);
+
     this.setEdited(entity.message);
   }
 
@@ -265,6 +281,8 @@ decorate(ActivityModel, {
   'thumbs:down:count': observable,
   'thumbs:up:count': observable,
   'comments:count': observable,
+  'custom_data': observable,
+  'time_created': observable,
   'paywall': observable,
   'mature': observable,
   'pinned': observable,

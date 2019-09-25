@@ -1,0 +1,8 @@
+#!/bin/sh
+if git commit -v --dry-run | grep '!testcode' >/dev/null 2>&1
+then
+  echo "Trying to commit test code."
+  exit 1
+else
+  exit 0
+fi

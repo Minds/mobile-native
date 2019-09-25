@@ -94,7 +94,9 @@ export default class ChannelScreen extends Component {
   }
 
   componentWillUnmount() {
-    this.disposeEnter.remove();
+    if (this.disposeEnter) {
+      this.disposeEnter.remove();
+    }
     this.props.channel.garbageCollect();
     this.props.channel.store(this.guid).markInactive();
   }
@@ -310,9 +312,9 @@ const styles = StyleSheet.create({
   buttonscol: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
     //width: 150,
-    alignSelf:'flex-end'
+    alignSelf:'flex-start'
   },
   carouselcontainer: {
     flex: 1,
@@ -331,13 +333,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   username: {
-    fontSize: 10,
+    fontSize: 14,
     color: '#999'
   },
   name: {
     fontWeight: '700',
     fontFamily: 'Roboto',
-    fontSize: 20,
+    fontSize: 22,
     letterSpacing: 0.5,
     marginRight: 8,
     color: '#444',

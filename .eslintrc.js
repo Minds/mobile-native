@@ -1,11 +1,17 @@
 module.exports = {
   "parser": "babel-eslint",
   "plugins": [
+    "react",
     "react-native",
     "flowtype"
   ],
-  "extends": ["plugin:react-native/all"],
+  "extends": ["plugin:react-native/all", "plugin:react/recommended"],
+  "env": {
+    "react-native/react-native": true
+  },
   "rules": {
+    "no-unused-vars": [1],
+    "react/jsx-uses-vars": [2],
     "flowtype/boolean-style": [
       2,
       "boolean"
