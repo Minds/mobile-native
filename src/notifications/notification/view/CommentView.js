@@ -56,7 +56,7 @@ export default class CommentView extends PureComponent {
         }
         break;
       case 'group':
-        this.props.navigation.push('GroupView', { group: this.props.entity.entityObj, hydrate: true, tab: 'conversation', focusedUrn: this.props.entity.params.focusedCommentUrn  });
+        this.props.navigation.push('GroupView', { guid: this.props.entity.entityObj.guid, tab: 'conversation', focusedUrn: this.props.entity.params.focusedCommentUrn  });
         break;
     }
   }
