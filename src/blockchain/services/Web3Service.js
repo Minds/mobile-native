@@ -4,12 +4,9 @@ const Web3 = require('web3');
 
 import { BLOCKCHAIN_URI } from "../../config/Config";
 
-import MindsService from '../../common/services/minds.service';
-import BlockchainApiService from '../BlockchainApiService';
-import StorageService from '../../common/services/storage.service';
-
 import appStores from '../../../AppStores';
 import logService from '../../common/services/log.service';
+import mindsService from '../../common/services/minds.service';
 
 const sign = require('ethjs-signer').sign;
 
@@ -56,7 +53,7 @@ class Web3Service {
   // Contracts
 
   async getContract(contractId) {
-    const settings = (await MindsService.getSettings()).blockchain;
+    const settings = (await mindsService.getSettings()).blockchain;
 
     if (!this.contractInstances[contractId]) {
       this.contractInstances[contractId] = new this.web3.eth.Contract(settings[contractId].abi, settings[contractId].address);
@@ -139,13 +136,17 @@ class Web3Service {
 
     const nonce = await this.web3.eth.getTransactionCount(baseOptions.from);
 
+    const settings = await mindsService.getSettings();
+
+    const gasPrice = ((settings.blockchain && settings.blockchain.default_gas_price) ? settings.blockchain.default_gas_price : '20') + ''; // force string
+
     const tx = {
       nonce,
       to,
       from: baseOptions.from,
       value: toHex( this.web3.utils.toWei(amount, 'ether') ),
       gas: toHex(21000),
-      gasPrice: toHex( this.web3.utils.toWei('2', 'Gwei') ), // converts the gwei price to wei
+      gasPrice: toHex( this.web3.utils.toWei(gasPrice, 'Gwei') ), // converts the gwei price to wei
     }
 
     const signedTx = sign(tx, privateKey);
