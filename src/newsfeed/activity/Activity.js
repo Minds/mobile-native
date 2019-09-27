@@ -109,20 +109,18 @@ export default class Activity extends Component {
             { overlay }
           </View>
           { this.showActions() }
-          { this.isScheduled() && 
+          { this.props.entity.isScheduled() && 
             <View style={[{backgroundColor: '#ffecb3'}, CommonStyle.padding]}>
               <Text style={[styles.scheduledText, CommonStyle.paddingLeft]}> 
                 {`${i18n.t('activity.scheduled')} ${formatDate(this.props.entity.time_created)}.`}
               </Text>
             </View> }
           { this.props.isLast ? <View style={styles.activitySpacer}></View> : null}
-          { !this.props.hideTabs && !this.isScheduled() && <ActivityMetrics entity={this.props.entity}/> }
+          { !this.props.hideTabs && 
+            !this.props.entity.isScheduled() && 
+            <ActivityMetrics entity={this.props.entity}/> }
         </View>
     );
-  }
-
-  isScheduled() {
-    return this.props.entity.time_created * 1000 > Date.now();
   }
 
   /**
