@@ -3,6 +3,7 @@ import navigation from '../../../navigation/NavigationService'
 import session from '../session.service'
 import featuresService from '../features.service';
 import logService from '../log.service';
+import entitiesService from '../entities.service';
 
 /**
  * Push Router
@@ -10,7 +11,7 @@ import logService from '../log.service';
 export default class Router {
 
   /**
-   *
+   * Navigate to the screen based on the notification data
    * @param {object} notification
    */
   navigate(data) {
@@ -41,7 +42,8 @@ export default class Router {
           let entity_type = data.json.entity_type.split(':');
 
           if (entity_type[0] === 'comment') {
-            navigation.push('Activity', { guid: data.json.parent_guid });
+            this.navigateToActivityOrGroup(data);
+            //navigation.push('Activity', { guid: data.json.parent_guid });
           } else if (entity_type[0] === 'activity') {
             navigation.push('Activity', { guid: data.json.entity_guid });
           } else if (entity_type[1] === 'blog') {
@@ -77,10 +79,28 @@ export default class Router {
 
         default:
           navigation.navigate('Notifications', {});
-          logService.exception('[DeepLinkRouter] Unknown notification:', data);
+          logService.error('[DeepLinkRouter] Unknown notification:' + JSON.stringify(data));
           break;
 
       }
+    }
+  }
+
+  /**
+   * Temporary fix until the push notification includes the necessary data to decide
+   * @param {Object} data
+   */
+  async navigateToActivityOrGroup(data) {
+    try {
+      const entity = await entitiesService.single('urn:entity:' + data.json.parent_guid);
+
+      if (entity.type === 'group') {
+        navigation.push('GroupView', { guid: data.json.parent_guid, tab: 'conversation'});
+      } else {
+        navigation.push('Activity', { entity: entity });
+      }
+    } catch (err) {
+
     }
   }
 }
