@@ -151,6 +151,7 @@ export default class CommentList extends React.Component<Props, State> {
       if (isIOS) {
         if (this.focusedChild !== -1) {
           setTimeout(() => {
+            if (!this.listRef) return;
             this.listRef.scrollToIndex({
               index: this.focusedChild,
               viewOffset: this.focusedOffset ? -(this.focusedOffset - (this.height - e.endCoordinates.height - 110)) : -110 ,
@@ -245,6 +246,7 @@ export default class CommentList extends React.Component<Props, State> {
 
     if (!this.props.parent) {
       setTimeout(() => {
+        if (!this.listRef) return;
         this.listRef.scrollToIndex({
           index: comments.findIndex(c => item === c),
           viewOffset: offset ? -(offset - (this.height - 200)): -110 ,
