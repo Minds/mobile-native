@@ -155,11 +155,10 @@ export default class BlogsViewScreen extends Component {
     const image = blog.getBannerSource();
 
     const actionSheet = this.getActionSheet();
-    const optMenu = featuresService.has('allow-comments-toggle') ?
-      (<View style={styles.rightToolbar}>
+    const optMenu = <View style={styles.rightToolbar}>
         <Icon name="more-vert"  onPress={() => this.showActionSheet()} size={26} style={styles.icon}/>
         {actionSheet}
-      </View>) : (null);
+      </View>
     return (
       <View style={styles.screen}>
         <FastImage source={image} resizeMode={FastImage.resizeMode.cover} style={styles.image} />
@@ -190,8 +189,10 @@ export default class BlogsViewScreen extends Component {
   }
 
   getActionSheet() {
-    let options = [ i18n.t('cancel') ];
-    options.push(this.props.blogsView.blog.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+    let options = [ i18n.t('report'), i18n.t('cancel') ];
+    if (featuresService.has('allow-comments-toggle')) {
+      options.push(this.props.blogsView.blog.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+    }
     return (
       <ActionSheet
         ref={o => this.ActionSheet = o}
@@ -208,6 +209,9 @@ export default class BlogsViewScreen extends Component {
   
   async handleActionSheetSelection(option) {
     switch(option) {
+      case i18n.t('report'):
+        this.props.navigation.navigate('Report', { entity: this.props.blogsView.blog });
+        break;
       case i18n.t('disableComments'):
       case i18n.t('enableComments'):
         try {
@@ -216,6 +220,7 @@ export default class BlogsViewScreen extends Component {
           console.error(err);
           this.showError();
         }
+        break;
         
     }
   }
