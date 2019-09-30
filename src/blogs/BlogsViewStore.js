@@ -1,10 +1,9 @@
 import {
   observable,
-  action,
-  inject
-} from 'mobx'
-import blogService from './BlogsService';
+  action
+} from 'mobx';
 import BlogModel from './BlogModel';
+import entitiesService from '../common/services/entities.service';
 
 /**
  * Blogs View Store
@@ -18,16 +17,15 @@ class BlogsViewStore {
    * @param {string} guid
    */
   @action
-  loadBlog(guid) {
-    return blogService.loadEntity(guid)
-      .then(result => {
-        // keep the _list if the entity has one
-        if (this.blog) {
-          this.blog.update(result.blog);
-        } else {
-          this.setBlog(result.blog);
-        }
-      });
+  async loadBlog(guid) {
+    const urn = 'urn:entity:' + guid; 
+    const blog = await entitiesService.single(urn);
+    // keep the _list if the entity has one
+    if (this.blog) {
+      this.blog.update(blog);
+    } else {
+      this.setBlog(blog);
+    }
   }
 
   /**
