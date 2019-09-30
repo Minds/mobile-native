@@ -189,7 +189,7 @@ export default class BlogsViewScreen extends Component {
   }
 
   getActionSheet() {
-    let options = [ i18n.t('report'), i18n.t('cancel') ];
+    let options = [ i18n.t('share'), i18n.t('report'), i18n.t('cancel') ];
     if (featuresService.has('allow-comments-toggle')) {
       options.push(this.props.blogsView.blog.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
     }
@@ -209,6 +209,9 @@ export default class BlogsViewScreen extends Component {
   
   async handleActionSheetSelection(option) {
     switch(option) {
+      case i18n.t('share'):
+        this.share():
+        break;
       case i18n.t('report'):
         this.props.navigation.navigate('Report', { entity: this.props.blogsView.blog });
         break;
