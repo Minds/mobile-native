@@ -722,6 +722,9 @@ exports[`channel subscribers component should render correctly 1`] = `
                 "metadataService": null,
                 "offset": "",
                 "refreshing": false,
+                "viewed": Viewed {
+                  "viewed": Map {},
+                },
               },
               "loadList": [MockFunction],
               "refresh": [MockFunction],
@@ -1096,6 +1099,9 @@ exports[`channel subscribers component should render correctly 1`] = `
                 "metadataService": null,
                 "offset": "",
                 "refreshing": false,
+                "viewed": Viewed {
+                  "viewed": Map {},
+                },
               },
               "loadList": [MockFunction],
               "refresh": [MockFunction],
@@ -1470,6 +1476,9 @@ exports[`channel subscribers component should render correctly 1`] = `
                 "metadataService": null,
                 "offset": "",
                 "refreshing": false,
+                "viewed": Viewed {
+                  "viewed": Map {},
+                },
               },
               "loadList": [MockFunction],
               "refresh": [MockFunction],
