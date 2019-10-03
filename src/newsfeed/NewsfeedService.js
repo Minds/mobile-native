@@ -98,11 +98,15 @@ export function toggleComments(guid, value) {
  * @param {Object} entity
  * @param {Object} data
  */
-export async function setViewed(entity, extra = {}) {
+export async function setViewed(entity, extra = {}, isVideo = false) {
   let data;
 
   // ignore if there is no internet
   if (!connectivityService.isConnected) return;
+
+  if (isVideo) {
+    return await api.put('api/v2/analytics/plays/' + entity.guid, extra);
+  }
 
   if (entity.boosted) {
     data = await api.post('api/v2/analytics/views/boost/' + entity.boosted_guid, extra );

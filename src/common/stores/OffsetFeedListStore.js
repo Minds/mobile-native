@@ -37,12 +37,12 @@ export default class OffsetFeedListStore extends OffsetListStore {
    * Add an entity to the viewed list and inform to the backend
    * @param {BaseModel} entity
    */
-  async addViewed(entity) {
+  async addViewed(entity, isVideo = false) {
     if (!this.viewed.get(entity.guid)) {
       this.viewed.set(entity.guid, true);
       try {
         const meta = this.metadataService ? this.metadataService.getEntityMeta(entity) : {};
-        await setViewed(entity, meta);
+        await setViewed(entity, meta, isVideo);
       } catch (e) {
         this.viewed.delete(entity.guid);
         if (!isNetworkFail(e)) {

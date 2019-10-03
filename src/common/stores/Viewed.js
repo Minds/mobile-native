@@ -20,14 +20,16 @@ export default class Viewed {
    * @param {BaseModel} entity
    * @param {MetadataService|undefined} metadataService
    */
-  async addViewed(entity, metadataService) {
+  async addViewed(entity, metadataService, isVideo = false) {
     if (!this.viewed.get(entity.guid)) {
       this.viewed.set(entity.guid, true);
       try {
         const meta = metadataService ? metadataService.getEntityMeta(entity) : {};
-        await setViewed(entity, meta);
+        await setViewed(entity, meta, isVideo);
       } catch (e) {
-        this.viewed.delete(entity.guid);
+        if (!isVideo) {
+          this.viewed.delete(entity.guid);
+        }
         if (!isNetworkFail(e)) {
           throw e;
         }

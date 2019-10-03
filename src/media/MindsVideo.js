@@ -30,6 +30,7 @@ import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import en from "../../locales/en";
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
+import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -158,7 +159,21 @@ class MindsVideo extends Component {
     this.setState({fullScreen: !this.state.fullScreen});
   }
 
+  addViewed = (entity) => {
+    if (entity._list instanceof OffsetFeedListStore) {
+      entity._list.addViewed(entity, true);
+    } else {
+      entity._list.viewed.addViewed(
+        entity,
+        entity._list.metadataService,
+        true
+      );
+    }
+  }
+
   play = () => {
+    this.addViewed(this.props.entity);
+
     this.setState({
       showOverlay: false,
     });
