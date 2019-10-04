@@ -1,9 +1,10 @@
-import { observable, decorate, action, runInAction } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
-import stores from '../../AppStores';
 import ChannelService from './ChannelService';
+import sessionService from '../common/services/session.service';
+
 
 /**
  * User model
@@ -35,8 +36,8 @@ export default class UserModel extends BaseModel {
   @observable mature_visibility = false;
 
   getOwnerIcontime() {
-    if (stores.user.me && stores.user.me.guid === this.guid) {
-      return stores.user.me.icontime;
+    if (sessionService.getUser().guid === this.guid) {
+      return sessionService.getUser().icontime;
     } else {
       return this.icontime;
     }
@@ -67,7 +68,8 @@ export default class UserModel extends BaseModel {
    * current user is owner of the channel
    */
   isOwner() {
-    return stores.user.me.guid === this.guid;
+    console.log(sessionService.getUser().guid , this.guid, sessionService.getUser().guid === this.guid)
+    return sessionService.getUser().guid === this.guid;
   }
 
   /**

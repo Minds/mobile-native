@@ -1,16 +1,14 @@
 import {
-  extendObservable,
-  decorate,
   observable,
   action,
   computed,
-  runInAction,
   toJS,
 } from 'mobx';
 import _ from 'lodash';
+
 import sessionService from './services/session.service';
 import { vote } from './services/votes.service';
-import { toggleExplicit, toggleUserBlock, update } from '../newsfeed/NewsfeedService';
+import { toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
 import channelService from '../channel/ChannelService';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
@@ -26,6 +24,11 @@ export default class BaseModel {
    * Enable/Disable comments
    */
   @observable allow_comments = true;
+
+  /**
+   * Entity permissions
+   */
+  @observable.ref permissions = {};
 
   /**
    * List reference (if the entity belongs to one)
@@ -283,5 +286,23 @@ export default class BaseModel {
   async toggleAllowComments() {
     const data = await toggleAllow(this.guid, !this.allow_comments);
     this.allow_comments = !this.allow_comments;
+  }
+
+  @action
+  setPermissions(permissions) {
+    this.permissions = permissions;
+  }
+
+  /**
+   * Check if the user can perform an action with the entity
+   * @param {string} permission
+   * @returns {boolean}
+   */
+  can(permission) {
+    if (!this.permissions || !this.permissions.permissions) {
+      return false;
+    }
+
+    return this.permissions.permissions.some(item => item === permission);
   }
 }
