@@ -69,13 +69,13 @@ describe('channel actions component', () => {
     store.channel.subscribed = true;
     store.channel.blocked = true;
 
-    opt = wrapper.instance().makeAction(1);
+    opt = wrapper.instance().executeAction(1);
     expect(store.channel.toggleSubscription).toBeCalled();
 
-    opt = wrapper.instance().makeAction(2);
+    opt = wrapper.instance().executeAction(2);
     expect(store.toggleBlock).toBeCalled();
 
-    opt = wrapper.instance().makeAction(3);
+    opt = wrapper.instance().executeAction(3);
     expect(navigation.push).toBeCalled();
   });
 
