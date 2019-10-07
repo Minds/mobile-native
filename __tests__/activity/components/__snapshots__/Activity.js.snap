@@ -52,6 +52,7 @@ exports[`Activity component renders correctly 1`] = `
         "parent_guid": "838106762591510528",
         "paywall": undefined,
         "perma_url": false,
+        "permissions": Object {},
         "pinned": undefined,
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction] {
@@ -117,6 +118,7 @@ exports[`Activity component renders correctly 1`] = `
         "parent_guid": "838106762591510528",
         "paywall": undefined,
         "perma_url": false,
+        "permissions": Object {},
         "pinned": undefined,
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction] {
@@ -198,6 +200,7 @@ exports[`Activity component renders correctly 1`] = `
               "parent_guid": "838106762591510528",
               "paywall": undefined,
               "perma_url": false,
+              "permissions": Object {},
               "pinned": undefined,
               "rowKey": "something0",
               "shouldBeBlured": [MockFunction] {
@@ -307,6 +310,7 @@ exports[`Activity component renders correctly 1`] = `
           "parent_guid": "838106762591510528",
           "paywall": undefined,
           "perma_url": false,
+          "permissions": Object {},
           "pinned": undefined,
           "rowKey": "something0",
           "shouldBeBlured": [MockFunction] {
@@ -383,6 +387,7 @@ exports[`Activity component renders correctly 1`] = `
           "parent_guid": "838106762591510528",
           "paywall": undefined,
           "perma_url": false,
+          "permissions": Object {},
           "pinned": undefined,
           "rowKey": "something0",
           "shouldBeBlured": [MockFunction] {
@@ -455,6 +460,7 @@ exports[`Activity component renders correctly 1`] = `
           "parent_guid": "838106762591510528",
           "paywall": undefined,
           "perma_url": false,
+          "permissions": Object {},
           "pinned": undefined,
           "rowKey": "something0",
           "shouldBeBlured": [MockFunction] {
@@ -533,6 +539,7 @@ exports[`Activity component renders correctly 1`] = `
         "parent_guid": "838106762591510528",
         "paywall": undefined,
         "perma_url": false,
+        "permissions": Object {},
         "pinned": undefined,
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction] {
@@ -604,6 +611,7 @@ exports[`Activity component renders correctly 1`] = `
         "parent_guid": "838106762591510528",
         "paywall": undefined,
         "perma_url": false,
+        "permissions": Object {},
         "pinned": undefined,
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction] {
