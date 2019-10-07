@@ -371,13 +371,13 @@ export default class CapturePoster extends Component {
       Alert.alert(i18n.t('capture.pleaseTryAgain'));
       return false;
     }
-
+    
     if (
       !attachment.hasAttachment &&
       !text &&
-      (!this.props.capture.embed.meta || !this.props.capture.embed.meta.perma_url)
+      (!this.props.capture.embed.meta || !this.props.capture.embed.meta.url)
     ) {
-      Alert.alert(i18n.t('capture.nothingToPosts'));
+      Alert.alert(i18n.t('capture.nothingToPost'));
       return false;
     }
 
