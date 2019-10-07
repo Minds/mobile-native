@@ -55,7 +55,7 @@ export default class UserModel extends BaseModel {
     this.subscribed = value;
     try {
       const metadata = this.getClientMetadata();
-      await ChannelService.toggleSubscription(this.guid, value, metadata)
+      await ChannelService.toggleSubscription(this.guid, value, metadata);
     } catch (err) {
       runInAction(() => {
         this.subscribed = !value;
@@ -68,7 +68,6 @@ export default class UserModel extends BaseModel {
    * current user is owner of the channel
    */
   isOwner() {
-    console.log(sessionService.getUser().guid , this.guid, sessionService.getUser().guid === this.guid)
     return sessionService.getUser().guid === this.guid;
   }
 
