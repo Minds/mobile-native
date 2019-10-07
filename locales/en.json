@@ -745,5 +745,6 @@
   "noInternet":"No Internet Connection",
   "offline":"Offline",
   "cantReachServer":"Can't reach the server",
-  "showingStored":"Showing stored data"
+  "showingStored":"Showing stored data",
+  "actions":"Actions"
 }
