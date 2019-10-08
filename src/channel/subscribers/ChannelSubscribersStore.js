@@ -5,6 +5,7 @@ import {
 
 import OffsetListStore from '../../common/stores/OffsetListStore';
 import channelService from '../ChannelService';
+import UserModel from '../UserModel';
 
 /**
  * Subscribers Store
@@ -38,6 +39,7 @@ class ChannelSubscribersStore {
 
     return channelService.getSubscribers(this.guid, this.filter, this.list.offset)
       .then( feed => {
+        feed.entities = UserModel.createMany(feed.entities);
         this.list.setList(feed);
       })
       .finally(() => {
