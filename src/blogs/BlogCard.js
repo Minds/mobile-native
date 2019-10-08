@@ -4,19 +4,10 @@ import React, {
 
 import {
   Text,
-  Image,
   View,
   TouchableOpacity,
-  Button,
   StyleSheet,
-  Platform,
-  Linking,
 } from 'react-native';
-
-import {
-  observer,
-  inject
-} from 'mobx-react/native'
 
 import {
   Avatar,
@@ -24,6 +15,8 @@ import {
 
 import FastImage from 'react-native-fast-image';
 import formatDate from '../common/helpers/date';
+import { CommonStyle as CS} from '../styles/Common';
+import { FLAG_VIEW } from '../common/Permissions';
 
 /**
  * Blog Card
@@ -34,7 +27,7 @@ export default class BlogCard extends PureComponent {
    * Navigate to blog
    */
   navToBlog = () => {
-    if (!this.props.navigation) return;
+    if (!this.props.navigation || !this.props.entity.can(FLAG_VIEW)) return;
     return this.props.navigation.push('BlogView', { blog: this.props.entity });
   }
 
@@ -47,22 +40,20 @@ export default class BlogCard extends PureComponent {
     const image = blog.getBannerSource();
 
     return (
-      <TouchableOpacity onPress={this.navToBlog} style={styles.container}>
+      <TouchableOpacity onPress={this.navToBlog} style={CS.backgroundWhite}>
         <FastImage source={image} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
-        <View style={styles.bodyContainer}>
-          <View style={styles.titleContainer}>
-            <View style={styles.titlecol}>
-              <Text style={styles.title}>{blog.title}</Text>
-              <View style={styles.ownerContainer}>
-                { channel && <Avatar
-                  width={24}
-                  height={24}
-                  rounded
-                  source={channel.getAvatarSource()}
-                /> }
-                <Text style={styles.username}>{blog.ownerObj && blog.ownerObj.username.toUpperCase()}</Text>
-                <Text style={styles.createdDate}>{formatDate(blog.time_created)}</Text>
-              </View>
+        <View style={[CS.padding2x]}>
+          <View style={[CS.columnAlignStart, CS.fullWidth]}>
+            <Text style={[CS.fontL, CS.fontMedium]}>{blog.title}</Text>
+            <View style={[CS.marginBottom2x, CS.marginTop2x, CS.rowJustifyCenter, CS.alignCenter]}>
+              { channel && <Avatar
+                width={24}
+                height={24}
+                rounded
+                source={channel.getAvatarSource()}
+              /> }
+              <Text style={[CS.fontS, CS.paddingLeft, CS.flexContainer]} numberOfLines={1}>{blog.ownerObj && blog.ownerObj.username.toUpperCase()}</Text>
+              <Text style={[CS.fontXS, CS.paddingLeft]}>{formatDate(blog.time_created)}</Text>
             </View>
           </View>
         </View>
@@ -72,73 +63,10 @@ export default class BlogCard extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#FFF',
-  },
-  bodyContainer: {
-    padding: 12,
-    paddingLeft: 12,
-    paddingRight: 12,
-    alignItems: 'stretch',
-    flexDirection: 'column',
-    width: '100%',
-  },
-  titlecol: {
-    flex:1
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    flex:1,
-  },
-  title: {
-    fontWeight: '800',
-    fontFamily: 'Roboto',
-    color: '#444',
-    letterSpacing: 0.5,
-    fontSize: 16,
-  },
-  ownerContainer: {
-    flex:1,
-    flexDirection: 'row',
-    alignSelf: 'flex-start',
-    paddingTop: 4,
-    paddingBottom: 4,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   banner: {
-    flexDirection: 'row',
     alignItems: 'stretch',
-    width: '100%',
-    height: 150,
-  },
-  headercontainer: {
-    flex: 1,
-    height: 100,
     flexDirection: 'row',
-  },
-  username: {
-    paddingLeft: 8,
-    fontSize: 10,
-    color: '#888'
-  },
-  createdDate: {
-    paddingLeft: 5,
-    fontSize: 8,
-  },
-  countercontainer: {
-    paddingLeft: 130,
-    height: 60,
-    flexDirection: 'row'
-  },
-  avatar: {
-    height: 20,
-    width: 20,
-    borderRadius: 10
-  },
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#FFF'
+    height: 150,
+    width: '100%',
   }
 });
