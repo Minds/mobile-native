@@ -77,6 +77,9 @@ export const CommonStyle = StyleSheet.create({
   colorWhite: {
     color: '#FFFFFF'
   },
+  colorAction: {
+    color: colors.action
+  },
   colorBlack: {
     color: '#000000'
   },
@@ -113,6 +116,9 @@ export const CommonStyle = StyleSheet.create({
   // backgrounds
   backgroundWhite: {
     backgroundColor: 'white'
+  },
+  backgroundAction: {
+    backgroundColor: colors.action,
   },
   backgroundLightGreyed: {
     backgroundColor: colors.lightGreyed
