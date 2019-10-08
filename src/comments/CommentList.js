@@ -327,7 +327,7 @@ class CommentList extends React.Component<PropsType, StateType> {
 
     const entity = this.props.entity;
 
-    if (this.state.hideInput || (!entity.allow_comments && entity.type !== "group" && entity.can(FLAG_CREATE_COMMENT))) return null;
+    if (this.state.hideInput || (!entity.allow_comments && entity.type !== "group") || !entity.can(FLAG_CREATE_COMMENT)) return null;
 
     const attachment = this.props.store.attachment;
 
