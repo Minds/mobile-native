@@ -272,6 +272,10 @@ export default class ActivityModel extends BaseModel {
     this.message = message
     this.edited  = 1;
   }
+
+  static isActivity(entity) {
+    return entity instanceof ActivityModel;
+  }
 }
 
 /**
