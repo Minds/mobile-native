@@ -38,6 +38,7 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import FeedList from '../common/components/FeedList';
+import { FLAG_CREATE_POST } from '../common/Permissions';
 
 /**
  * Groups view screen
@@ -315,9 +316,12 @@ export default class GroupViewScreen extends Component {
   render() {
     const group = this.props.groupView.group;
 
+
     if (!group) {
       return <CenteredLoading/>
     }
+
+    const showPosterFab = this.props.groupView.tab === 'feed' && group.can(FLAG_CREATE_POST);
 
     const memberActionSheet = this.state.memberActions ?
       <ActionSheet
@@ -331,7 +335,7 @@ export default class GroupViewScreen extends Component {
 
     return (
       <View style={CS.flexContainer}>
-        {this.props.groupView.tab === 'feed' && <CaptureFab navigation={this.props.navigation} group={group} /> }
+        {showPosterFab && <CaptureFab navigation={this.props.navigation} group={group} /> }
         {this.getList()}
         {memberActionSheet}
       </View>
