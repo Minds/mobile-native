@@ -38,7 +38,7 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import FeedList from '../common/components/FeedList';
-import { FLAG_CREATE_POST } from '../common/Permissions';
+import { FLAG_CREATE_POST, FLAG_APPOINT_MODERATOR } from '../common/Permissions';
 
 /**
  * Groups view screen
@@ -226,18 +226,23 @@ export default class GroupViewScreen extends Component {
    */
   memberMenuPress = (member) => {
 
+    const group = this.props.groupView.group;
     const memberActions = [ i18n.t('cancel') ];
-    const imOwner = this.props.groupView.group['is:owner'];
-    const imModerator = this.props.groupView.group['is:moderator'];
+    const imOwner = group['is:owner'];
+    const imModerator = group['is:moderator'];
 
     if (imOwner) {
       if (member['is:owner']) {
         memberActions.push( i18n.t('groups.removeOwner') );
       } else if (!member['is:moderator']) {
         memberActions.push( i18n.t('groups.makeOwner') );
-        memberActions.push( i18n.t('groups.makeModerator') );
+        if (group.can(FLAG_APPOINT_MODERATOR)) {
+          memberActions.push( i18n.t('groups.makeModerator') );
+        }
       } else {
-        memberActions.push( i18n.t('groups.removeModerator') );
+        if (group.can(FLAG_APPOINT_MODERATOR)) {
+          memberActions.push( i18n.t('groups.removeModerator') );
+        }
       }
     }
 
