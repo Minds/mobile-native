@@ -28,6 +28,7 @@ import colors from '../styles/Colors'
 import { ComponentsStyle } from '../styles/Components';
 import { CommonStyle } from '../styles/Common';
 import i18n from '../common/services/i18n.service';
+import { FLAG_SUBSCRIBE } from '../common/Permissions';
 
 @inject('user')
 @observer
@@ -62,7 +63,7 @@ export default class DiscoveryUser extends Component {
 
   renderRightButton() {
     const item = this.props.entity.item;
-    if (this.props.user.me.guid === item.guid || this.props.hideButtons) {
+    if (this.props.user.me.guid === item.guid || this.props.hideButtons || !item.can(FLAG_SUBSCRIBE)) {
       return;
     }
     if (item.subscribed) {
