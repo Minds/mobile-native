@@ -5,6 +5,7 @@ import { Platform } from 'react-native';
 import appStores from '../../../AppStores';
 import { observable, action } from 'mobx';
 import logService from './log.service';
+import { FLAG_JOIN_GATHERING } from '../Permissions';
 
 /**
  * Gathering service
@@ -21,7 +22,7 @@ class GatheringService {
    */
   @action
   async join(entity) {
-    if (this.isActive) {
+    if (this.isActive || entity.can(FLAG_JOIN_GATHERING)) {
       return;
     }
     try {
