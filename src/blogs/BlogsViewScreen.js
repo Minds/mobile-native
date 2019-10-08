@@ -144,12 +144,10 @@ export default class BlogsViewScreen extends Component {
     const blog = this.props.blogsView.blog;
 
     const actions = (
-      <View style={[CS.flexContainer, CS.paddingLeft2x]}>
-        <View style={styles.actionsContainer}>
-          <RemindAction entity={blog} size={16} navigation={this.props.navigation} vertical={true}/>
-          <ThumbUpAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
-          <ThumbDownAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
-        </View>
+      <View style={[CS.rowJustifyStart]}>
+        <RemindAction entity={blog} navigation={this.props.navigation}/>
+        <ThumbUpAction entity={blog} />
+        <ThumbDownAction entity={blog} />
       </View>
     )
     const image = blog.getBannerSource();
@@ -166,17 +164,18 @@ export default class BlogsViewScreen extends Component {
         <Text style={styles.title}>{blog.title}</Text>
         {optMenu}
         <View style={styles.ownerBlockContainer}>
-          <OwnerBlock entity={blog} navigation={this.props.navigation} rightToolbar={actions}>
+          <OwnerBlock entity={blog} navigation={this.props.navigation}>
             <Text style={styles.timestamp}>{formatDate(blog.time_created)}</Text>
           </OwnerBlock>
         </View>
+        {actions}
         <View style={styles.description}>
           {blog.description ?
             <BlogViewHTML html={blog.description} /> :
             <CenteredLoading/>}
         </View>
         <View style={styles.moreInformation}>
-          { blog.getLicenseText() && 
+          { blog.getLicenseText() &&
               <Icon color={colors.medium} size={18} name='public'/>
           }
           <Text style={[CS.fontXS, CS.paddingLeft, CS.colorMedium, CS.paddingRight2x]}>{blog.getLicenseText()}</Text>
@@ -205,7 +204,7 @@ export default class BlogsViewScreen extends Component {
   async showActionSheet() {
     this.ActionSheet.show();
   }
-  
+
   async handleActionSheetSelection(option) {
     switch(option) {
       case i18n.t('disableComments'):
@@ -216,7 +215,7 @@ export default class BlogsViewScreen extends Component {
           console.error(err);
           this.showError();
         }
-        
+
     }
   }
 
