@@ -567,7 +567,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderBlog = (row) => {
     return (
-      <View style={styles.blogCardContainer}>
+      <View style={[CS.paddingBottom2x, CS.backgroundLight]}>
         <ErrorBoundary containerStyle={CS.hairLineBottom}>
           <BlogCard entity={row.item} navigation={this.props.navigation} />
         </ErrorBoundary>
@@ -627,9 +627,5 @@ const styles = StyleSheet.create({
   },
   iconActive: {
     color: colors.primary,
-  },
-  blogCardContainer: {
-    backgroundColor: '#ececec',
-    paddingBottom: 8,
-  },
+  }
 });
