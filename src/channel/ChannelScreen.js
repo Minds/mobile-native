@@ -6,7 +6,6 @@ import {
   StyleSheet,
   FlatList,
   Text,
-  Image,
   View,
   Alert,
   SafeAreaView,
@@ -35,15 +34,15 @@ import logService from '../common/services/log.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import FeedList from '../common/components/FeedList';
-import featuresService from '../common/services/features.service';
-import channelsService from '../common/services/channels.service';
+import { FLAG_VIEW } from '../common/Permissions';
 
 /**
  * Channel Screen
  */
+export default
 @inject('channel')
 @observer
-export default class ChannelScreen extends Component {
+class ChannelScreen extends Component {
 
   state = {
     guid: null
@@ -109,7 +108,11 @@ export default class ChannelScreen extends Component {
 
     try {
       const channel = await store.load(isModel ? channelOrGuid : undefined);
+
       if (channel) {
+        // check permissions
+        if (!this.checkCanView(channel)) return;
+
         this.props.channel.addVisited(channel);
       }
     } catch (err) {
@@ -126,6 +129,18 @@ export default class ChannelScreen extends Component {
     store.feedStore.refresh();
   }
 
+  /**
+   * Check if the current user can view this channel
+   * @param {UserModel} channel
+   */
+  checkCanView(channel) {
+    if (!channel.can(FLAG_VIEW, true)) {
+      this.props.navigation.goBack();
+      return false;
+    }
+    return true;
+  }
+
   //TODO: make a reverse map so we can cache usernames
   async loadByUsername(username) {
     try {
@@ -133,6 +148,10 @@ export default class ChannelScreen extends Component {
       // get store by name and load channel
       const store = await this.props.channel.storeByName(username);
       this.setState({ guid: store.channel.guid });
+
+      // check permissions
+      if (!this.checkCanView(store.channel)) return;
+
       // load feed now
       store.feedStore.loadFeed();
 
