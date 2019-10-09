@@ -66,7 +66,6 @@ class ThumbUpAction extends Component {
       <TouchableOpacityCustom
         style={[CS.flexContainer, CS.centered, this.props.orientation == 'column' ? CS.columnAlignCenter : CS.rowJustifyCenter ]}
         onPress={this.toggleThumb}
-        disabled={!canVote}
         {...testID(`Thumb ${this.direction} activity button`)}
       >
         <Icon style={[color, CS.marginRight]} name={this.iconName} size={this.props.size} />
@@ -83,6 +82,9 @@ class ThumbUpAction extends Component {
    * Toggle thumb
    */
   toggleThumb = async () => {
+
+    if (!this.props.entity.can(FLAG_VOTE, true)) return;
+
     try {
       await this.props.entity.toggleVote(this.direction);
     } catch (err) {
