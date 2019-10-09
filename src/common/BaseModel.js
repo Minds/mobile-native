@@ -5,6 +5,7 @@ import {
   toJS,
 } from 'mobx';
 import _ from 'lodash';
+import { Alert } from 'react-native';
 
 import sessionService from './services/session.service';
 import { vote } from './services/votes.service';
@@ -12,8 +13,8 @@ import { toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
 import channelService from '../channel/ChannelService';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
-
 import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
+import i18n from './services/i18n.service';
 
 /**
  * Base model
@@ -294,15 +295,28 @@ export default class BaseModel {
   }
 
   /**
-   * Check if the user can perform an action with the entity
-   * @param {string} permission
+   * Check if the current user can perform an action with the entity
+   * @param {string} action
+   * @param {boolean} showAlert Show an alert message if the action is not allowed
    * @returns {boolean}
    */
-  can(permission) {
+  can(action, showAlert = false) {
+
+    let allowed = true;
+
     if (!this.permissions || !this.permissions.permissions) {
-      return false;
+      allowed = false;
+    } else {
+      allowed = this.permissions.permissions.some(item => item === action);
     }
 
-    return this.permissions.permissions.some(item => item === permission);
+    if (showAlert && !allowed) {
+      Alert.alert(
+        i18n.t('sorry'),
+        i18n.t(`permissions.notAllowed.${action}`, {defaultValue: i18n.t('notAllowed')})
+      );
+    }
+
+    return allowed;
   }
 }
