@@ -28,7 +28,7 @@ import colors from '../styles/Colors'
 import { ComponentsStyle } from '../styles/Components';
 import { CommonStyle } from '../styles/Common';
 import i18n from '../common/services/i18n.service';
-import { FLAG_SUBSCRIBE } from '../common/Permissions';
+import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 
 @inject('user')
 @observer
@@ -40,6 +40,9 @@ export default class DiscoveryUser extends Component {
   _navToChannel = () => {
     Keyboard.dismiss();
     if (this.props.navigation) {
+      if (!this.props.entity.item.can(FLAG_VIEW, true)) {
+        return;
+      }
       this.props.navigation.push('Channel', { entity: this.props.entity.item });
     }
   }
