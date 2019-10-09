@@ -37,7 +37,6 @@ export default class RemindAction extends PureComponent {
       <TouchableOpacityCustom
         style={[CS.flexContainer, CS.centered, this.props.vertical === true ? CS.columnAlignCenter : CS.rowJustifyCenter]}
         onPress={this.remind}
-        disabled={!canRemind}
         {...testID('Remind activity button')}
       >
         <Icon style={[color, CS.marginRight]} name='repeat' size={this.props.size} />
@@ -50,6 +49,9 @@ export default class RemindAction extends PureComponent {
    * Open remind
    */
   remind = () => {
+    // check permission and show alert
+    if (!this.props.entity.can(FLAG_REMIND, true)) return;
+
     const { state } = this.props.navigation
     this.props.navigation.push('Capture', {isRemind: true, entity: this.props.entity, parentKey: state.key});
   }
