@@ -27,7 +27,7 @@ export default class BlogCard extends PureComponent {
    * Navigate to blog
    */
   navToBlog = () => {
-    if (!this.props.navigation || !this.props.entity.can(FLAG_VIEW)) return;
+    if (!this.props.navigation || !this.props.entity.can(FLAG_VIEW, true)) return;
     return this.props.navigation.push('BlogView', { blog: this.props.entity });
   }
 
