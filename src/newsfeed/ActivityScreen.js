@@ -7,8 +7,6 @@ import {
 import { observer } from 'mobx-react/native'
 import FastImage from 'react-native-fast-image';
 
-import NewsfeedStore from "./NewsfeedStore";
-import { getSingle } from './NewsfeedService';
 import { CommonStyle as CS } from '../styles/Common';
 import CommentList from '../comments/CommentList';
 import Activity from '../newsfeed/activity/Activity';
@@ -17,15 +15,16 @@ import { ComponentsStyle } from '../styles/Components';
 import SingleEntityStore from '../common/stores/SingleEntityStore';
 import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
-import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
+import { FLAG_VIEW } from '../common/Permissions';
 
 /**
  * Activity screen
  */
+export default
 @observer
-export default class ActivityScreen extends Component {
+class ActivityScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
@@ -42,15 +41,26 @@ export default class ActivityScreen extends Component {
   constructor(props) {
     super(props);
 
-    const params = props.navigation.state.params;
-
     this.comments = commentsStoreProvider.get();
+
+    this.loadEntity();
+  }
+
+  async loadEntity() {
+    const params = this.props.navigation.state.params;
 
     if (params.entity && (params.entity.guid || params.entity.entity_guid)) {
 
       const urn = 'urn:entity:' + (params.entity.guid || params.entity.entity_guid);
 
-      this.entityStore.loadEntity(urn, ActivityModel.checkOrCreate(params.entity), true);
+      const entity = ActivityModel.checkOrCreate(params.entity);
+
+      if (!entity.can(FLAG_VIEW, true)) {
+        this.props.navigation.goBack();
+        return;
+      }
+
+      this.entityStore.loadEntity(urn, entity, true);
 
       // change metadata source
       if (params.entity._list && params.entity._list.metadataService) {
@@ -58,7 +68,12 @@ export default class ActivityScreen extends Component {
       }
     } else {
       const urn = 'urn:entity:' + params.guid;
-      this.entityStore.loadEntity(urn);
+      await this.entityStore.loadEntity(urn);
+
+      if (!this.entityStore.entity.can(FLAG_VIEW, true)) {
+        this.props.navigation.goBack();
+        return;
+      }
     }
 
     if (params.entity && params.entity._list) {
