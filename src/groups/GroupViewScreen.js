@@ -38,7 +38,7 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import FeedList from '../common/components/FeedList';
-import { FLAG_CREATE_POST, FLAG_APPOINT_MODERATOR } from '../common/Permissions';
+import { FLAG_CREATE_POST, FLAG_APPOINT_MODERATOR, FLAG_VIEW } from '../common/Permissions';
 
 /**
  * Groups view screen
@@ -82,19 +82,10 @@ export default class GroupViewScreen extends Component {
   }
 
   /**
-   * On component will mount
+   * Load initial data
    */
-  async componentWillMount() {
+  async initialLoad() {
     const params = this.props.navigation.state.params;
-
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      const params = this.props.navigation.state.params;
-      if (params && params.prepend) {
-        this.props.groupView.prepend(params.prepend);
-        // we clear the parameter to prevent prepend it again on goBack
-        this.props.navigation.setParams({prepend: null});
-      }
-    });
 
     if (params.group) {
       // load group and update async
@@ -111,18 +102,37 @@ export default class GroupViewScreen extends Component {
       // load feed
       this.props.groupView.loadFeed();
     }
+
+    // check permissions
+    if (!this.props.groupView.group.can(FLAG_VIEW, true)) {
+      this.props.navigation.goBack();
+      return;
+    }
+
     this.props.groupView.loadTopMembers();
   }
 
   componentDidMount() {
-    const navParams = this.props.navigation.state.params;
+    const params = this.props.navigation.state.params;
 
-    if (navParams && navParams.prepend) {
-      this.props.groupView.prepend(navParams.prepend);
+    // load data async
+    this.initialLoad();
+
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+      const params = this.props.navigation.state.params;
+      if (params && params.prepend) {
+        this.props.groupView.prepend(params.prepend);
+        // we clear the parameter to prevent prepend it again on goBack
+        this.props.navigation.setParams({prepend: null});
+      }
+    });
+
+    if (params && params.prepend) {
+      this.props.groupView.prepend(params.prepend);
     }
 
-    if (navParams.tab && this.headerRef) {
-      this.headerRef.wrappedInstance.onTabChange(navParams.tab)
+    if (params.tab && this.headerRef) {
+      this.headerRef.wrappedInstance.onTabChange(params.tab)
     }
   }
 
