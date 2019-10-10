@@ -20,6 +20,7 @@ import i18n from '../../common/services/i18n.service';
 import featuresService from '../../common/services/features.service';
 import translationService from '../../common/services/translation.service';
 import { FLAG_EDIT_POST, FLAG_DELETE_POST } from '../../common/Permissions';
+import sessionService from '../../common/services/session.service';
 
 /**
  * Activity Actions Component
@@ -60,56 +61,108 @@ export default class ActivityActionSheet extends Component {
     let options = [ i18n.t('cancel') ];
     const entity = this.props.entity;
 
-    // if can edit
-    if (entity.can(FLAG_EDIT_POST)) {
-      options.push( i18n.t('edit') );
+    // TODO: remove feature flag
+    if (featuresService.has('permissions')) {
+      // if can edit
+      if (entity.can(FLAG_EDIT_POST)) {
+        options.push( i18n.t('edit') );
 
-      if (!entity.mature) {
-        options.push( i18n.t('setExplicit') );
-      } else {
-        options.push( i18n.t('removeExplicit') );
-      }
-
-      if (!entity.dontPin) {
-        if (!entity.pinned) {
-          options.push( i18n.t('pin') );
+        if (!entity.mature) {
+          options.push( i18n.t('setExplicit') );
         } else {
-          options.push( i18n.t('unpin') );
+          options.push( i18n.t('removeExplicit') );
+        }
+
+        if (!entity.dontPin) {
+          if (!entity.pinned) {
+            options.push( i18n.t('pin') );
+          } else {
+            options.push( i18n.t('unpin') );
+          }
+        }
+        if (featuresService.has('allow-comments-toggle')) {
+          options.push( entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
         }
       }
-      if (featuresService.has('allow-comments-toggle')) {
-        options.push( entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+
+      if (translationService.isTranslatable(entity)) {
+        options.push( i18n.t('translate.translate') );
       }
-    }
 
-    if (translationService.isTranslatable(entity)) {
-      options.push( i18n.t('translate.translate') );
-    }
+      // if is not the owner
+      if (!entity.isOwner()) {
+        options.push( i18n.t('report') );
 
-    // if is not the owner
-    if (!entity.isOwner()) {
-      options.push( i18n.t('report') );
+        if (this.state && this.state.userBlocked) {
+          options.push( i18n.t('channel.unblock') );
+        } else {
+          options.push( i18n.t('channel.block') );
+        }
+      }
 
-      if (this.state && this.state.userBlocked) {
-        options.push( i18n.t('channel.unblock') );
+      options.push( i18n.t('share') );
+
+      if (!entity['is:following']) {
+        options.push( i18n.t('follow') );
       } else {
-        options.push( i18n.t('channel.block') );
+        options.push( i18n.t('unfollow') );
       }
-    }
-
-    options.push( i18n.t('share') );
-
-    if (!entity['is:following']) {
-      options.push( i18n.t('follow') );
-    } else {
-      options.push( i18n.t('unfollow') );
-    }
 
       // if can delete
       if (entity.can(FLAG_DELETE_POST)) {
         options.push(<Text style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>);
       }
+    } else {
+      // if can edit
+      if (entity.isOwner()) {
+        options.push( i18n.t('edit') );
 
+        if (!entity.mature) {
+          options.push( i18n.t('setExplicit') );
+        } else {
+          options.push( i18n.t('removeExplicit') );
+        }
+
+        if (!entity.dontPin) {
+          if (!entity.pinned) {
+            options.push( i18n.t('pin') );
+          } else {
+            options.push( i18n.t('unpin') );
+          }
+        }
+        if (featuresService.has('allow-comments-toggle')) {
+          options.push( entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+        }
+      }
+
+      if (translationService.isTranslatable(entity)) {
+        options.push( i18n.t('translate.translate') );
+      }
+
+      // if is not the owner
+      if (!entity.isOwner()) {
+        options.push( i18n.t('report') );
+
+        if (this.state && this.state.userBlocked) {
+          options.push( i18n.t('channel.unblock') );
+        } else {
+          options.push( i18n.t('channel.block') );
+        }
+      }
+
+      options.push( i18n.t('share') );
+
+      if (!entity['is:following']) {
+        options.push( i18n.t('follow') );
+      } else {
+        options.push( i18n.t('unfollow') );
+      }
+
+      // if can delete
+      if (entity.isOwner() || sessionService.getUser().isAdmin()) {
+        options.push(<Text style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>);
+      }
+    }
 
     return options;
   }

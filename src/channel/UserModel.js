@@ -65,6 +65,13 @@ export default class UserModel extends BaseModel {
   }
 
   /**
+   * Is admin
+   */
+  isAdmin() {
+    return !!this.admin;
+  }
+
+  /**
    * current user is owner of the channel
    */
   isOwner() {

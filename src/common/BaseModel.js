@@ -15,6 +15,7 @@ import channelService from '../channel/ChannelService';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
 import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
 import i18n from './services/i18n.service';
+import featuresService from './services/features.service';
 
 /**
  * Base model
@@ -301,6 +302,9 @@ export default class BaseModel {
    * @returns {boolean}
    */
   can(action, showAlert = false) {
+
+    // TODO: clean up permissions feature flag
+    if (!featuresService.has('permissions')) return true;
 
     let allowed = true;
 

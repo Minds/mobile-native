@@ -5,6 +5,8 @@ import React, {
 import ActionSheet from 'react-native-actionsheet';
 import i18n from '../common/services/i18n.service';
 import { FLAG_EDIT_COMMENT, FLAG_DELETE_COMMENT, FLAG_CREATE_COMMENT } from '../common/Permissions';
+import featuresService from '../common/services/features.service';
+import sessionService from '../common/services/session.service';
 
 /**
  * Comment Component
@@ -44,28 +46,60 @@ export default class CommentActionSheet extends Component {
 
     const comment = this.props.comment;
 
-    if (comment.can(FLAG_EDIT_COMMENT)) {
-      actions.push( i18n.t('edit') );
-      if (!comment.mature) {
-        actions.push( i18n.t('setExplicit') );
+    // TODO: clean up permissions feature flag
+    if (featuresService.has('permissions')) {
+      if (comment.can(FLAG_EDIT_COMMENT)) {
+        actions.push( i18n.t('edit') );
+        if (!comment.mature) {
+          actions.push( i18n.t('setExplicit') );
+        } else {
+          actions.push( i18n.t('removeExplicit') );
+        }
+      }
+
+      if (comment.can(FLAG_DELETE_COMMENT)) {
+        actions.push( i18n.t('delete') );
+      }
+
+      if (!comment.isOwner()) {
+        actions.push( i18n.t('report') );
+      }
+
+      actions.push( i18n.t('copy') );
+
+      if (comment.parent_guid_l2 == 0 && comment.can(FLAG_CREATE_COMMENT)) {
+        actions.push( i18n.t('reply') );
+      }
+
+    } else {
+      if (comment.isOwner()) {
+        actions.push( i18n.t('edit') );
+        actions.push( i18n.t('delete') );
+
+        if (!comment.mature) {
+          actions.push( i18n.t('setExplicit') );
+        } else {
+          actions.push( i18n.t('removeExplicit') );
+        }
       } else {
-        actions.push( i18n.t('removeExplicit') );
+        if (sessionService.getUser().isAdmin()) {
+          actions.push( i18n.t('delete') );
+
+          if (!comment.mature) {
+            actions.push( i18n.t('setExplicit') );
+          } else {
+            actions.push( i18n.t('removeExplicit') )
+          }
+        }
+
+        actions.push( i18n.t('report') );
+        actions.push( i18n.t('copy') );
+      }
+      if (comment.parent_guid_l2 == 0) {
+        actions.push( i18n.t('reply') );
       }
     }
 
-    if (comment.can(FLAG_DELETE_COMMENT)) {
-      actions.push( i18n.t('delete') );
-    }
-
-    if (comment.parent_guid_l2 == 0 && comment.can(FLAG_CREATE_COMMENT)) {
-      actions.push( i18n.t('reply') );
-    }
-
-    if (!comment.isOwner()) {
-      actions.push( i18n.t('report') );
-    }
-
-    actions.push( i18n.t('copy') );
     return actions;
   }
 

@@ -130,7 +130,8 @@ class ChannelActions extends Component {
     const showWire = !channel.blocked && !isOwner && featuresService.has('crypto') && channel.can(FLAG_WIRE);
     const showScheduled = featuresService.has('post-scheduler') && !this.state.edit && isOwner;
     const showSubscribe = !isOwner && !channel.subscribed && channel.can(FLAG_SUBSCRIBE);
-    const showMessage = !isOwner && channel.can(FLAG_MESSAGE);
+    const showMessage = !isOwner && channel.subscribed && channel.can(FLAG_MESSAGE);
+    const showEdit = isOwner && channel.can(FLAG_EDIT_CHANNEL);
 
     if (this.props.store.isUploading) {
       return (
@@ -165,7 +166,7 @@ class ChannelActions extends Component {
             text={i18n.t('channel.message')}
           />
         }
-        { channel.can(FLAG_EDIT_CHANNEL) &&
+        { showEdit &&
           <ButtonCustom
             onPress={this.onEditAction}
             containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
