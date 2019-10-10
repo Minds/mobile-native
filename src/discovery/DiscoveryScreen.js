@@ -510,7 +510,7 @@ export default class DiscoveryScreen extends Component {
    * Navigate to feed screen
    * @param {string} urn
    */
-  navigateToFeed = (urn) => {
+  navigateToFeed = ({urn}) => {
     const index = this.props.discovery.listStore.feedsService.feed.findIndex(e => e.urn === urn);
 
     this.props.discovery.feedStore.setFeed(this.props.discovery.listStore.feedsService.feed.slice(index));
@@ -533,7 +533,7 @@ export default class DiscoveryScreen extends Component {
         <DiscoveryTile
           entity={row.item}
           size={this.state.itemHeight}
-          onPress={() => this.navigateToFeed(row.item.urn)}
+          onPress={this.navigateToFeed}
         />
       </ErrorBoundary>
     );
@@ -582,12 +582,12 @@ export default class DiscoveryScreen extends Component {
     const item = row.item;
     return (
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <GroupsListItem group={row.item} onPress={() => this.navigateToGroup(row.item)}/>
+        <GroupsListItem group={row.item} onPress={this.navigateToGroup}/>
       </ErrorBoundary>
     )
   }
 
-  navigateToGroup(group) {
+  navigateToGroup = (group) => {
     this.props.navigation.push('GroupView', { group: group })
   }
 }
