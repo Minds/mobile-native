@@ -22,7 +22,7 @@ class GatheringService {
    */
   @action
   async join(entity) {
-    if (this.isActive || entity.can(FLAG_JOIN_GATHERING)) {
+    if (this.isActive || !entity.can(FLAG_JOIN_GATHERING)) {
       return;
     }
     try {
