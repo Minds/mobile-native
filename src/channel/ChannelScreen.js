@@ -134,6 +134,11 @@ class ChannelScreen extends Component {
    * @param {UserModel} channel
    */
   checkCanView(channel) {
+    // if the channel obj doesn't have the permissions loaded return true
+    if (!channel.permissions.permissions) {
+      return true
+    }
+
     if (!channel.can(FLAG_VIEW, true)) {
       this.props.navigation.goBack();
       return false;
@@ -184,6 +189,7 @@ class ChannelScreen extends Component {
    * Render
    */
   render() {
+
     const store = this.props.channel.store(this.guid);
 
     if (!this.guid || !store.channel.guid) {
@@ -191,6 +197,13 @@ class ChannelScreen extends Component {
         <CenteredLoading />
       );
     }
+
+    /**
+     * We check in the render method in order to observe the changes of the channels permissions
+     * this is needed because in some cases the channel is shown using the owner of an activity
+     * while we refresh the channel's data from the server
+     */
+    this.checkCanView(store.channel);
 
     const feed    = store.feedStore;
     const channel = store.channel;
