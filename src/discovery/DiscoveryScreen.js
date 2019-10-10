@@ -47,6 +47,7 @@ import DiscoveryFilters from './NewsfeedFilters';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
+import { FLAG_VIEW } from '../common/Permissions';
 
 const isIos = Platform.OS === 'ios';
 
@@ -588,6 +589,10 @@ export default class DiscoveryScreen extends Component {
   }
 
   navigateToGroup = (group) => {
+    if (!group.can(FLAG_VIEW, true)) {
+      return;
+    }
+
     this.props.navigation.push('GroupView', { group: group })
   }
 }
