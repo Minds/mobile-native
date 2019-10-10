@@ -47,6 +47,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
+import { FLAG_VIEW } from '../common/Permissions';
 
 /**
  * Blog View Screen
@@ -100,12 +101,18 @@ export default class BlogsViewScreen extends Component {
         this.props.blogsView.reset();
         let guid;
         if (params.slug) {
-          guid = params.slug.substr(params.slug.lastIndexOf('-')+1);
+          guid = params.slug.substr(params.slug.lastIndexOf('-') + 1);
         } else {
           guid = params.guid;
         }
 
         await this.props.blogsView.loadBlog(guid);
+      }
+
+      // check permissions
+      if (!this.props.blogsView.blog.can(FLAG_VIEW, true)) {
+        this.props.navigation.goBack();
+        return;
       }
 
       if (this.props.blogsView.blog && this.props.blogsView.blog._list) {
