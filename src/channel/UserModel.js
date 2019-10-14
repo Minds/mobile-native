@@ -156,6 +156,14 @@ export default class UserModel extends BaseModel {
   }
 
   /**
+   * Is subscribed
+   * @returns {boolean}
+   */
+  isSubscribed() {
+    return !!this.subscribed;
+  }
+
+  /**
    * Request subscribe
    */
   async subscribeRequest() {

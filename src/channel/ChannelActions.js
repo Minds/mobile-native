@@ -49,7 +49,7 @@ class ChannelActions extends Component {
   getOptions() {
     let options = [ i18n.t('cancel') ];
 
-    if (this.props.store.channel.subscribed){
+    if (this.props.store.channel.isSubscribed()){
       options.push( i18n.t('channel.unsubscribe') );
     }
 
@@ -73,10 +73,10 @@ class ChannelActions extends Component {
         this.props.store.channel.toggleSubscription();
         break;
       case i18n.t('channel.block'):
-        this.props.store.toggleBlock();
+        this.props.store.channel.toggleBlock();
         break;
       case i18n.t('channel.unblock'):
-        this.props.store.toggleBlock();
+        this.props.store.channel.toggleBlock();
         break;
       case i18n.t('channel.report'):
         this.props.navigation.push('Report', { entity: this.props.store.channel });
@@ -120,6 +120,8 @@ class ChannelActions extends Component {
     return featuresService.has('post-scheduler') && !this.state.edit;
   }
 
+  setSheetRef = o => this.ActionSheet = o;
+
   /**
    * Render Header
    */
@@ -129,8 +131,8 @@ class ChannelActions extends Component {
     const isOwner = channel.isOwner();
     const showWire = !channel.blocked && !isOwner && featuresService.has('crypto') && channel.can(FLAG_WIRE);
     const showScheduled = featuresService.has('post-scheduler') && !this.state.edit && isOwner;
-    const showSubscribe = !isOwner && !channel.subscribed && channel.can(FLAG_SUBSCRIBE);
-    const showMessage = !isOwner && channel.subscribed && channel.can(FLAG_MESSAGE);
+    const showSubscribe = !isOwner && !channel.isSubscribed() && channel.can(FLAG_SUBSCRIBE);
+    const showMessage = !isOwner && channel.isSubscribed() && channel.can(FLAG_MESSAGE);
     const showEdit = isOwner && channel.can(FLAG_EDIT_CHANNEL);
 
     if (this.props.store.isUploading) {
@@ -198,7 +200,7 @@ class ChannelActions extends Component {
           />
         }
         <ActionSheet
-          ref={o => this.ActionSheet = o}
+          ref={this.setSheetRef}
           title={i18n.t('actions')}
           options={this.getOptions()}
           onPress={this.handleSelection}
