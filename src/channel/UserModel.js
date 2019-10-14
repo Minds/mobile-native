@@ -4,7 +4,12 @@ import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
 import ChannelService from './ChannelService';
 import sessionService from '../common/services/session.service';
+import apiService from '../common/services/api.service';
+import logService from '../common/services/log.service';
 
+export const USER_MODE_OPEN = 0;
+export const USER_MODE_MODERATED = 1;
+export const USER_MODE_CLOSED = 2;
 
 /**
  * User model
@@ -12,28 +17,34 @@ import sessionService from '../common/services/session.service';
 export default class UserModel extends BaseModel {
 
   /**
-   * @var boolean
+   * @var {boolean}
    */
   @observable blocked;
 
   /**
-   * @var integer
+   * @var {number}
    */
   @observable subscribers_count;
 
   /**
-   * @var integer
+   * @var {number}
    */
   @observable impressions;
 
   /**
-   * @var boolean
+   * @var {boolean}
    */
   @observable subscribed;
+
   /**
-   * @var boolean
+   * @var {boolean}
    */
   @observable mature_visibility = false;
+
+  /**
+   * @var {boolean}
+   */
+  @observable pending_subscribe = false;
 
   getOwnerIcontime() {
     if (sessionService.getUser().guid === this.guid) {
@@ -64,6 +75,19 @@ export default class UserModel extends BaseModel {
     }
   }
 
+  @action
+  async toggleBlock(value = null) {
+    value = (value === null) ? !this.blocked : value;
+
+    try {
+      await ChannelService.toggleBlock(this.guid, value);
+      this.blocked = value;
+    } catch (err) {
+      this.blocked = !value;
+      logService.exception('[ChannelStore] toggleBlock', err);
+    }
+  }
+
   /**
    * Is admin
    */
@@ -83,7 +107,6 @@ export default class UserModel extends BaseModel {
    * @param {string} size
    */
   getBannerSource(size='medium') {
-
     if (this.carousels) {
       return {
         uri: this.carousels[0].src
@@ -102,8 +125,61 @@ export default class UserModel extends BaseModel {
 
   /**
    * Has banner
+   * @returns {boolean}
    */
   hasBanner() {
     return !!this.carousels;
+  }
+
+  /**
+   * Is closed
+   * @returns {boolean}
+   */
+  isClosed() {
+    return this.mode === USER_MODE_CLOSED;
+  }
+
+  /**
+   * Is open
+   * @returns {boolean}
+   */
+  isOpen() {
+    return this.mode === USER_MODE_OPEN;
+  }
+
+  /**
+   * Is moderated
+   * @returns {boolean}
+   */
+  isModerated() {
+    return this.mode === USER_MODE_MODERATED;
+  }
+
+  /**
+   * Request subscribe
+   */
+  async subscribeRequest() {
+    if (this.pending_subscribe || this.mode !== USER_MODE_CLOSED) return;
+    try {
+      this.pending_subscribe = true;
+      await apiService.put(`api/v2/subscriptions/outgoing/${this.guid}`);
+    } catch (err) {
+      this.pending_subscribe = false;
+      logService.exception(err);
+    }
+  }
+
+  /**
+   * Cancel subscribe request
+   */
+  async cancelSubscribeRequest() {
+    if (!this.pending_subscribe || this.mode !== USER_MODE_CLOSED) return;
+    try {
+      this.pending_subscribe = false;
+      await apiService.delete(`api/v2/subscriptions/outgoing/${this.guid}`);
+    } catch (err) {
+      this.pending_subscribe = true;
+      logService.exception(err);
+    }
   }
 }
