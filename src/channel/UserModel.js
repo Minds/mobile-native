@@ -46,6 +46,11 @@ export default class UserModel extends BaseModel {
    */
   @observable pending_subscribe = false;
 
+  /**
+   * @var {numeric}
+   */
+  @observable mode = 0;
+
   getOwnerIcontime() {
     if (sessionService.getUser().guid === this.guid) {
       return sessionService.getUser().icontime;
@@ -86,6 +91,11 @@ export default class UserModel extends BaseModel {
       this.blocked = !value;
       logService.exception('[ChannelStore] toggleBlock', err);
     }
+  }
+
+  @action
+  setMode(value) {
+    this.mode = value;
   }
 
   /**

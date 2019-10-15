@@ -65,7 +65,7 @@ class Toolbar extends Component {
       )
     }
 
-    if (this.props.channel.isOwner() && featuresService.has('permissions')) {
+    if (this.props.channel.isOwner() && featuresService.has('permissions') && !this.props.channel.isOpen()) {
       subscriptionRequests = (
         <TouchableOpacity style={styles.button} onPress={this.filterRequests}>
           <FAIcon name="user-check" size={ICON_SIZE} color={filter == 'requests' ? colors.primary : color} style={styles.icon} />

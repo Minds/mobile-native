@@ -20,6 +20,7 @@ import Button from '../common/components/Button';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import { CommonStyle as CS } from '../styles/Common';
 import { FLAG_SUBSCRIBE, FLAG_MESSAGE, FLAG_EDIT_CHANNEL, FLAG_WIRE } from '../common/Permissions';
+import ChannelModeSelector from './ChannelModeSelector';
 
 const ButtonCustom = withPreventDoubleTap(Button);
 
@@ -134,6 +135,7 @@ class ChannelActions extends Component {
     const showSubscribe = !isOwner && !channel.isSubscribed() && channel.can(FLAG_SUBSCRIBE);
     const showMessage = !isOwner && channel.isSubscribed() && channel.can(FLAG_MESSAGE);
     const showEdit = isOwner && channel.can(FLAG_EDIT_CHANNEL);
+    const showMode = isOwner && featuresService.has('permissions') && this.props.editing;
 
     if (this.props.store.isUploading) {
       return (
@@ -176,6 +178,9 @@ class ChannelActions extends Component {
             text={this.props.editing ? i18n.t('save') : i18n.t('edit')}
             loading={this.props.saving}
           />
+        }
+        { showMode &&
+          <ChannelModeSelector channel={channel} />
         }
         { showWire &&
           <ButtonCustom

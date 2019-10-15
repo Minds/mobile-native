@@ -189,7 +189,7 @@ class ChannelScreen extends Component {
     const feed    = store.feedStore;
     const channel = store.channel;
     const rewards = store.rewards;
-    const showClosed = channel.isClosed() && !channel.subscribed;
+    const showClosed = channel.isClosed() && !channel.subscribed && !channel.isOwner();
 
     return (
       <View>
@@ -266,7 +266,7 @@ class ChannelScreen extends Component {
     const rewards = store.rewards;
     const guid    = this.guid;
     const isOwner = guid == session.guid;
-    const isClosed = channel.isClosed() && !channel.subscribed;
+    const isClosed = channel.isClosed() && !channel.subscribed && !channel.isOwner();
 
     let emptyMessage = null;
 
