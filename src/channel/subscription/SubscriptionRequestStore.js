@@ -3,6 +3,8 @@ import { observable, action, extendObservable } from "mobx";
 import api from "../../common/services/api.service";
 import logService from "../../common/services/log.service";
 import UserModel from "../UserModel";
+import sessionService from "../../common/services/session.service";
+import { FLAG_APPROVE_SUBSCRIBER } from "../../common/Permissions";
 
 /**
  * Subscription request store
@@ -36,6 +38,11 @@ export default class SubscriptionRequestStore {
    * @param {any} request
    */
   async accept(request: any): Promise<void> {
+
+    if (!sessionService.getUser().can(FLAG_APPROVE_SUBSCRIBER, true)) {
+      return;
+    }
+
     try {
       this.setInProgress(request, true);
       await api.put(
@@ -54,6 +61,11 @@ export default class SubscriptionRequestStore {
    * @param {any} request
    */
   async decline(request: any): Promise<void> {
+
+    if (!sessionService.getUser().can(FLAG_APPROVE_SUBSCRIBER, true)) {
+      return;
+    }
+
     try {
       this.setInProgress(request, true);
       await api.put(
