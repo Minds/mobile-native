@@ -53,8 +53,8 @@ class DownloadService {
    */
   isGif(entity){
     let isGif = false;
-    if('custom_data' in entity){
-      if(entity.custom_data.length > 0){
+    if (entity && entity.custom_data && Array.isArray(entity.custom_data)) {
+      if (entity.custom_data.length > 0) {
         const data = entity.custom_data[0];
         isGif = !!data.gif;
       }
