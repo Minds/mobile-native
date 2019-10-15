@@ -76,20 +76,21 @@ class LogService {
       prepend = null;
     }
 
+    // do not log request or api errors < 500
     if (!isNetworkFail(error) && (!this.isApiError(error) || this.isUnexpectedError(error))) {
       // report the issue to sentry
       Sentry.captureException(error);
-    }
 
-    let stack = null;
-    if (__DEV__) {
-      stack = parseErrorStack(error);
-    }
-    if (stack) {
-      deviceLog.rnerror(false, (prepend ? `${prepend} ` : '') + error.message, stack);
-      if (__DEV__) console.log(error);
-    } else {
-      deviceLog.error((prepend ? `${prepend} ` : '') + String(error));
+      let stack = null;
+      if (__DEV__) {
+        stack = parseErrorStack(error);
+      }
+      if (stack) {
+        deviceLog.rnerror(false, (prepend ? `${prepend} ` : '') + error.message, stack);
+        if (__DEV__) console.log(error);
+      } else {
+        deviceLog.error((prepend ? `${prepend} ` : '') + String(error));
+      }
     }
   }
 }
