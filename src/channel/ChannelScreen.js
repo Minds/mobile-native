@@ -4,7 +4,6 @@ import React, {
 
 import {
   StyleSheet,
-  FlatList,
   Text,
   View,
   Alert,
@@ -18,7 +17,6 @@ import {
 
 import { Icon } from 'react-native-elements'
 
-import RewardsCarousel from './carousel/RewardsCarousel';
 import ChannelHeader from './header/ChannelHeader';
 import Toolbar from './toolbar/Toolbar';
 import CenteredLoading from '../common/components/CenteredLoading';
@@ -35,12 +33,14 @@ import { GOOGLE_PLAY_STORE } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import FeedList from '../common/components/FeedList';
 import { FLAG_VIEW } from '../common/Permissions';
+import SubscriptionButton from './subscription/SubscriptionButton';
+import SubscriptionRequestList from './subscription/SubscriptionRequestList';
 
 /**
  * Channel Screen
  */
 export default
-@inject('channel')
+@inject('channel', 'subscriptionRequest')
 @observer
 class ChannelScreen extends Component {
 
@@ -135,7 +135,7 @@ class ChannelScreen extends Component {
    */
   checkCanView(channel) {
     // if the channel obj doesn't have the permissions loaded return true
-    if (!channel.permissions.permissions) {
+    if (channel.isClosed() || !channel.permissions.permissions) {
       return true
     }
 
@@ -185,6 +185,62 @@ class ChannelScreen extends Component {
     this.props.navigation.navigate('Capture');
   }
 
+  getHeader(store) {
+    const feed    = store.feedStore;
+    const channel = store.channel;
+    const rewards = store.rewards;
+    const showClosed = channel.isClosed() && !channel.subscribed;
+
+    return (
+      <View>
+        <ChannelHeader
+          styles={styles}
+          store={store}
+          navigation={this.props.navigation}
+        />
+
+        {!channel.blocked && !showClosed &&
+          <Toolbar
+            feed={feed}
+            subscriptionRequest={this.props.subscriptionRequest}
+            channel={channel}
+            hasRewards={rewards.merged && rewards.merged.length}
+          />
+        }
+
+        {!!channel.blocked &&
+          <View style={styles.blockView}>
+            <Text style={styles.blockText}>{i18n.t('channel.blocked',{username: channel.username})}</Text>
+
+            <Touchable onPress={this.toggleBlock}>
+              <Text style={styles.blockTextLink}>{i18n.t('channel.tapUnblock')}</Text>
+            </Touchable>
+          </View>
+        }
+        {!!showClosed && !channel.blocked  &&
+          <View style={styles.blockView}>
+            <Text style={styles.blockText}>{i18n.t('channel.isClosed')}</Text>
+            <SubscriptionButton channel={channel} />
+          </View>
+        }
+      </View>
+    );
+  }
+
+  /**
+   * Toggle block channel
+   */
+  toggleBlock = () => {
+    this.props.channel.store(this.guid).channel.toggleBlock();
+  }
+
+  /**
+   * Nav to prev screen
+   */
+  goBack = () => {
+    this.props.navigation.goBack();
+  }
+
   /**
    * Render
    */
@@ -210,18 +266,9 @@ class ChannelScreen extends Component {
     const rewards = store.rewards;
     const guid    = this.guid;
     const isOwner = guid == session.guid;
+    const isClosed = channel.isClosed() && !channel.subscribed;
 
     let emptyMessage = null;
-    let carousel = null;
-
-    // carousel only visible if we have data
-    /*if (rewards.merged && rewards.merged.length && channelfeed.showrewards) {
-      carousel = (
-        <View style={styles.carouselcontainer}>
-          <RewardsCarousel rewards={rewards.merged} />
-        </View>
-      );
-    }*/
 
     if (channel.is_mature && !channel.mature_visibility) {
       return (
@@ -245,31 +292,9 @@ class ChannelScreen extends Component {
     }
 
     // channel header
-    const header = (
-      <View>
-        <ChannelHeader
-          styles={styles}
-          store={store}
-          navigation={this.props.navigation}
-        />
+    const header = this.getHeader(store);
 
-        {!channel.blocked && <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>}
-        {carousel}
-        <SafeAreaView style={styles.gobackicon}>
-          <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
-        </SafeAreaView>
-
-        {!!channel.blocked && <View style={styles.blockView}>
-          <Text style={styles.blockText}>{i18n.t('channel.blocked',{username: channel.username})}</Text>
-
-          <Touchable onPress={() => this.props.channel.store(this.guid).toggleBlock()}>
-            <Text style={styles.blockTextLink}>{i18n.t('channel.tapUnblock')}</Text>
-          </Touchable>
-        </View>}
-      </View>
-    );
-
-    let renderActivity = null
+    let renderActivity = null, body = null;
 
     // is a blog? use blog card to render
     if(feed.filter == 'blogs') {
@@ -290,29 +315,25 @@ class ChannelScreen extends Component {
       );
     }
 
-    const emptyRender = () => <View />;
-
-
+    body = feed.filter != 'requests' ?
+      <FeedList
+        feedStore={feed.feedStore}
+        renderActivity={renderActivity}
+        header={header}
+        navigation={this.props.navigation}
+        emptyMessage={emptyMessage}
+      /> :
+      <SubscriptionRequestList
+        ListHeaderComponent={header}
+        style={[CommonStyle.flexContainer]}
+      />
 
     return (
       <View style={CommonStyle.flexContainer}>
-        {!channel.blocked &&
-        <FeedList
-          feedStore={feed.feedStore}
-          renderActivity={renderActivity}
-          header={header}
-          navigation={this.props.navigation}
-          emptyMessage={emptyMessage}
-        />}
-
-        {/* Not using FlatList breaks header layout */}
-        {channel.blocked && <FlatList
-          style={{ flex: 1, backgroundColor: '#fff' }}
-          ListHeaderComponent={header}
-          data={[]}
-          renderItem={emptyRender}
-        />}
-
+        { (!channel.blocked && !isClosed) ? body : header }
+        <SafeAreaView style={styles.gobackicon}>
+          <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={this.goBack}/>
+        </SafeAreaView>
         <CaptureFab navigation={this.props.navigation} />
       </View>
     );

@@ -27,11 +27,13 @@ import groupsBar from './src/groups/GroupsBarStore';
 
 import sessionService from './src/common/services/session.service';
 import logService from './src/common/services/log.service';
+import SubscriptionRequestStore from './src/channel/subscription/SubscriptionRequestStore';
 
 /**
  * App stores
  */
 const stores = {
+  subscriptionRequest: new SubscriptionRequestStore(),
   newsfeed: new newsfeed(),
   notifications: new notifications(),
   notificationsSettings: new notificationsSettings(),

@@ -73,19 +73,6 @@ export default class ChannelStore {
   }
 
   @action
-  toggleBlock() {
-    let value = !this.channel.blocked;
-    return channelService.toggleBlock(this.channel.guid, value)
-      .then(response => {
-        this.channel.blocked = value;
-      })
-      .catch(err => {
-        this.channel.blocked = !value;
-        logService.exception('[ChannelStore] toggleBlock', err);
-      });
-  }
-
-  @action
   loadrewards(guid) {
     wireService.rewards(guid)
       .then(action(rewards => {

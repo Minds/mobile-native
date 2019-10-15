@@ -211,6 +211,7 @@
     "video":"Video"
   },
   "channel":{
+    "isClosed":"This is a closed channel",
     "channel":"channel",
     "errorSaving":"Error saving channel",
     "saveChanges":"Save your changes",
@@ -220,6 +221,7 @@
     "mature":"This channel contains mature content",
     "confirmUnsubscribe":"Are you sure you want to unsubscribe from this channel?",
     "subscribe":"Subscribe",
+    "requestSubscription":"Request Subscription",
     "subscribed":"Subscribed",
     "subscribeMessage":"Subscribe to this channel",
     "unsubscribeMessage":"Unsubscribe to this channel",
@@ -234,7 +236,9 @@
     "blocked":"You have blocked @{{username}}",
     "tapUnblock":"Tap to unblock",
     "notFound":"Channel not found",
-    "viewScheduled":"Scheduled"
+    "viewScheduled":"Scheduled",
+    "requestAccepted":"Accepted",
+    "requestRejected":"Rejected"
   },
   "discovery":{
     "search":"Search...",
@@ -774,5 +778,6 @@
   "cantReachServer":"Can't reach the server",
   "showingStored":"Showing stored data",
   "actions":"Actions",
+  "requests":"Requests",
   "notAllowed":"You are not allowed"
 }

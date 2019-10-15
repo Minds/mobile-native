@@ -227,7 +227,7 @@ export default class BaseModel {
    */
   blockOwner() {
     if (!this.ownerObj) throw new Error('This entity has no owner');
-    return channelService.toggleBlock(this.ownerObj.guid, true);
+    return this.ownerObj.toggleBlock(true);
   }
 
   /**
@@ -235,7 +235,7 @@ export default class BaseModel {
    */
   unblockOwner() {
     if (!this.ownerObj) throw new Error('This entity has no owner');
-    return channelService.toggleBlock(this.ownerObj.guid, false);
+    return this.ownerObj.toggleBlock(false);
   }
 
   @action

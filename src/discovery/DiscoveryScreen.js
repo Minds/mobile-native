@@ -547,7 +547,7 @@ export default class DiscoveryScreen extends Component {
     return (
 
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <DiscoveryUser entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
+        <DiscoveryUser row={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
       </ErrorBoundary>
     );
   }

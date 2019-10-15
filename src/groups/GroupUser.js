@@ -1,15 +1,9 @@
-import React, {
-  Component
-} from 'react';
+import React from 'react';
 
 import {
   StyleSheet
 } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import DiscoveryUser from '../discovery/DiscoveryUser';
@@ -18,24 +12,24 @@ import DiscoveryUser from '../discovery/DiscoveryUser';
 /**
  * Group user component
  */
-@inject('user')
-export default class GroupUser extends DiscoveryUser.wrappedComponent {
+export default
+class GroupUser extends DiscoveryUser {
 
   /**
    * Handle right button press
    */
   handlePress = () => {
-    this.props.onRightIconPress(this.props.entity.item)
+    this.props.onRightIconPress(this.props.row.item)
   }
 
   /**
    * Render right button
    */
   renderRightButton() {
-    const item = this.props.entity.item;
+    const item = this.props.row.item;
     if (!(this.props.isOwner || this.props.isModerator) ||
-      this.props.user.me.guid === item.guid ||
-      this.props.isModerator && this.props.entity.item['is:owner']) {
+      item.isOwner() ||
+      this.props.isModerator && this.props.row.item['is:owner']) {
       return;
     }
 
