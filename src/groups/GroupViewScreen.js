@@ -276,7 +276,7 @@ export default class GroupViewScreen extends Component {
     return (
       <GroupUser
         store={this.props.groupView}
-        entity={row}
+        row={row}
         navigation={this.props.navigation}
         onRightIconPress={this.memberMenuPress}
         isOwner={this.props.groupView.group['is:owner']}
