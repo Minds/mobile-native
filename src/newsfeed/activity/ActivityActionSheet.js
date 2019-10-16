@@ -33,6 +33,15 @@ export default class ActivityActionSheet extends Component {
   }
 
   /**
+   * Constructor
+   * @param {Object} props
+   */
+  constructor(props) {
+    super(props);
+    this.deleteOption = <Text style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>
+  }
+
+  /**
    * Show menu
    */
   async showActionSheet() {
@@ -51,7 +60,7 @@ export default class ActivityActionSheet extends Component {
    */
   handleSelection = (index) => {
     if (!this.state.options[index]) return;
-    this.executeAction(this.state.options[index]);
+    this.executeAction(this.state.options[index], index);
   }
 
   /**
@@ -110,7 +119,7 @@ export default class ActivityActionSheet extends Component {
 
       // if can delete
       if (entity.can(FLAG_DELETE_POST)) {
-        options.push(<Text style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>);
+        options.push(this.deleteOption);
       }
     } else {
       // if can edit
@@ -160,7 +169,7 @@ export default class ActivityActionSheet extends Component {
 
       // if can delete
       if (entity.isOwner() || sessionService.getUser().isAdmin()) {
-        options.push(<Text style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>);
+        options.push(this.deleteOption);
       }
     }
 
@@ -211,22 +220,25 @@ export default class ActivityActionSheet extends Component {
    */
   async executeAction(option) {
     switch (option) {
+      case this.deleteOption:
+        setTimeout(() => {
+          Alert.alert(
+            i18n.t('delete'),
+            i18n.t('confirmNoUndo'),
+            [
+              {text: i18n.t('cancel'), style: 'cancel'},
+              {text: i18n.t('ok'), onPress: () => this.deleteEntity()},
+            ],
+            { cancelable: false }
+          );
+          return;
+        }, 300);
+        break;
       case i18n.t('translate.translate'):
         if (this.props.onTranslate) this.props.onTranslate();
         break;
       case i18n.t('edit'):
         this.props.toggleEdit(true);
-        break;
-      case i18n.t('delete'):
-        Alert.alert(
-          i18n.t('delete'),
-          i18n.t('confirmNoUndo'),
-          [
-            {text: i18n.t('cancel'), style: 'cancel'},
-            {text: i18n.t('ok'), onPress: () => this.deleteEntity()},
-          ],
-          { cancelable: false }
-        )
         break;
       case i18n.t('setExplicit'):
       case i18n.t('removeExplicit'):
