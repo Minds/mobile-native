@@ -211,6 +211,9 @@
     "video":"Video"
   },
   "channel":{
+    "modeClosed":"Closed",
+    "modeOpen":"Public",
+    "modeModerated":"Moderated",
     "isClosed":"This is a closed channel",
     "channel":"channel",
     "errorSaving":"Error saving channel",
