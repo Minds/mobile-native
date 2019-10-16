@@ -78,7 +78,7 @@
     "react-native-media-meta": "^0.0.10",
     "react-native-minds-encryption": "https://github.com/Minds/react-native-minds-encryption",
     "react-native-modal": "^9.0.0",
-    "react-native-modal-datetime-picker": "^6.0.0",
+    "react-native-modal-datetime-picker": "^7.6.0",
     "react-native-notifications": "Minds/react-native-notifications#333e376f866a805f250cc68706d97ace503b948a",
     "react-native-os": "^1.2.1",
     "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
