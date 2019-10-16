@@ -23,8 +23,8 @@ export default class Selector extends Component {
     };
   }
 
-  show = () => {
-    this.setState({show: true});
+  show = (item) => {
+    this.setState({show: true, selected: item});
   }
 
   close = () => {
@@ -32,9 +32,10 @@ export default class Selector extends Component {
   }
 
   renderItem = ({item}) => {
+    const fontColor = this.isSelected(item) ? styles.selectedColorFont : styles.fontColor;
     return (
-      <Touchable onPress={() => this.itemSelect(item)}>
-        <Text style={[{color:'white'}]}>{this.valueExtractor(item)}</Text>
+      <Touchable onPress={() => this.itemSelect(item)} style={CommonStyle.margin2x}>
+        <Text style={fontColor}>{this.valueExtractor(item)}</Text>
       </Touchable>
     );
   };
@@ -44,8 +45,12 @@ export default class Selector extends Component {
     this.close();
   }
 
+  isSelected = (item) => {
+    return this.state.selected === this.keyExtractor(item);
+  }
+
   setSelected = (item) => {
-    this.setState({selected: this.valueExtractor(item)});
+    this.setState({selected: this.keyExtractor(item)});
   }
 
   valueExtractor = (item) => {
@@ -61,15 +66,16 @@ export default class Selector extends Component {
       <View>
         <Modal isVisible={this.state.show}>
           <View style={[styles.container]}>
-            <Text style={[{color:'white'}, CommonStyle.fontXL]}> {this.props.title} </Text>
-            <View style={[ CommonStyle.flexContainer ]}>
+            <Text style={[styles.fontColor, CommonStyle.fontXL, styles.marginBottom]}> {this.props.title} </Text>
+            <View style={[ CommonStyle.flexContainer, CommonStyle.marginTop3x, CommonStyle.paddingLeft2x, styles.marginBottom ]}>
               <FlatList
                 data={this.props.data}
                 renderItem={this.renderItem}
                 keyExtractor={this.props.keyExtractor}
+                extraData={this.state.selected}
               />
             </View>
-            <Icon 
+            <Icon
               raised
               name="md-close"
               type='ionicon'
@@ -89,7 +95,7 @@ Selector.propTypes = {
   data: PropTypes.array.isRequired,
   valueExtractor: PropTypes.func.isRequired,
   keyExtractor: PropTypes.func.isRequired,
-  title: PropTypes.string,
+  title: PropTypes.string.isRequired,
   onItemSelect: PropTypes.func.isRequired,
 }
 
@@ -105,9 +111,18 @@ const styles = StyleSheet.create({
     right: 70,
   },
   iconContainer: {
-    backgroundColor:'white',
-    width:55,
-    height:55,
-    zIndex:1000,
+    backgroundColor: '#fff',
+    width: 55,
+    height: 55,
+    zIndex: 1000,
   },
+  fontColor: {
+    color: '#fff'
+  },
+  selectedColorFont: {
+    color: 'blue'
+  },
+  marginBottom: {
+    marginBottom: 30
+  }
 });
