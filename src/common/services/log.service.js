@@ -1,12 +1,10 @@
-import deviceLog, {LogView, InMemoryAdapter} from 'react-native-device-log';
+import deviceLog from 'react-native-device-log';
 import * as stacktraceParser from "stacktrace-parser";
 
 import AsyncStorage from '@react-native-community/async-storage';
-import storageService from './storage.service';
-import settingsService from '../../settings/SettingsService'
 import settingsStore from '../../settings/SettingsStore';
 import * as Sentry from '@sentry/react-native';
-import { isNetworkFail } from '../helpers/abortableFetch';
+import { isNetworkFail, isAbort } from '../helpers/abortableFetch';
 import { ApiError } from './api.service';
 
 const parseErrorStack = error => {
@@ -77,7 +75,7 @@ class LogService {
     }
 
     // do not log request or api errors < 500
-    if (!isNetworkFail(error) && (!this.isApiError(error) || this.isUnexpectedError(error))) {
+    if (!isNetworkFail(error) && (!this.isApiError(error) || this.isUnexpectedError(error)) && !isAbort(error)) {
       // report the issue to sentry
       Sentry.captureException(error);
 
