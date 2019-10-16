@@ -403,6 +403,8 @@ export default class FeedStore {
     this.refreshing = true;
     try {
       await this.fetchRemoteOrLocal(true);
+    } catch (err) {
+      logService.exception('[FeedStore]', err);
     } finally {
       this.refreshing = false;
     }
