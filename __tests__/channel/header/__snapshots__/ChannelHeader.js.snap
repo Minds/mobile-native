@@ -194,7 +194,49 @@ exports[`channel header component owner should render correctly 1`] = `
             },
           ]
         }
-      />
+      >
+        <View
+          accessibilityLabel="Edit your channel settings"
+          accessible={true}
+          isTVSelectable={true}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderColor": "#4690D6",
+              "borderRadius": 20,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "margin": 4,
+              "marginLeft": 0,
+              "opacity": 1,
+              "padding": 4,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#4690D6",
+                },
+                undefined,
+              ]
+            }
+          >
+             
+            Edit
+             
+          </Text>
+        </View>
+      </View>
     </View>
     <View
       style={

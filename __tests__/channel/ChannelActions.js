@@ -10,7 +10,6 @@ import features from '../../src/common/services/features.service';
 import renderer from 'react-test-renderer';
 
 jest.mock('../../src/channel/ChannelStore');
-jest.mock('../../src/channel/UserModel');
 jest.mock('../../src/common/services/features.service');
 jest.mock('../../AppStores');
 jest.mock('../../src/common/services/boosted-content.service');
@@ -19,10 +18,13 @@ jest.mock('../../src/common/services/boosted-content.service');
  * Tests
  */
 describe('channel actions component', () => {
+  let store;
+
   beforeEach(() => {
     store = new ChannelStore();
     store.channel = new UserModel(userFaker(1));
     store.channel.toggleSubscription = jest.fn();
+    store.channel.toggleBlock = jest.fn();
   });
 
   it('should renders correctly', () => {
@@ -73,7 +75,7 @@ describe('channel actions component', () => {
     expect(store.channel.toggleSubscription).toBeCalled();
 
     opt = wrapper.instance().executeAction(2);
-    expect(store.toggleBlock).toBeCalled();
+    expect(store.channel.toggleBlock).toBeCalled();
 
     opt = wrapper.instance().executeAction(3);
     expect(navigation.push).toBeCalled();

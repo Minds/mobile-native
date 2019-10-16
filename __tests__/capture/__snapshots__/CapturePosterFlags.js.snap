@@ -15,430 +15,25 @@ exports[`cature poster flags component should renders correctly for props false 
     ]
   }
 >
-  <View
-    collapsable={false}
-  >
-    <View>
-      <View
-        accessibilityLabel="NSFW button"
-        accessible={true}
-        isTVSelectable={true}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "opacity": 1,
-            "paddingLeft": 10,
-          }
-        }
-      >
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
-              Object {
-                "color": "#777777",
-                "fontSize": 25,
-              },
-              Array [
-                undefined,
-                false,
-              ],
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-    </View>
-    <Modal
-      hardwareAccelerated={false}
-      onDismiss={[Function]}
-      onRequestClose={[Function]}
-      supportedOrientations={
-        Array [
-          "portrait",
-          "portrait-upside-down",
-          "landscape",
-          "landscape-left",
-          "landscape-right",
-        ]
+  <NsfwToggle
+    containerStyle={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "paddingLeft": 10,
       }
-      transparent={true}
-      visible={false}
-    >
-      <View
-        accessible={false}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-      >
-        <View
-          onLayout={[Function]}
-          style={
-            Object {
-              "backgroundColor": "white",
-              "borderRadius": 4,
-              "left": 8,
-              "marginTop": 20,
-              "opacity": 0,
-              "position": "absolute",
-              "shadowColor": "black",
-              "shadowOffset": Object {
-                "height": 2,
-                "width": 0,
-              },
-              "shadowOpacity": 0.14,
-              "shadowRadius": 2,
-              "top": 8,
-              "transform": Array [],
-              "width": 180,
-            }
-          }
-        >
-          <View
-            style={
-              Object {
-                "overflow": "hidden",
-              }
-            }
-          >
-            <View
-              accessibilityLabel="NSFW Nudity"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Nudity
-                </Text>
-              </View>
-            </View>
-            <View
-              accessibilityLabel="NSFW Pornography"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Pornography
-                </Text>
-              </View>
-            </View>
-            <View
-              accessibilityLabel="NSFW Profanity"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Profanity
-                </Text>
-              </View>
-            </View>
-            <View
-              accessibilityLabel="NSFW Violence and Gore"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Violence and Gore
-                </Text>
-              </View>
-            </View>
-            <View
-              accessibilityLabel="NSFW Race and Religion"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Race and Religion
-                </Text>
-              </View>
-            </View>
-            <View
-              accessibilityLabel="NSFW Other"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Other
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-    </Modal>
-  </View>
+    }
+    labelStyle={
+      Object {
+        "color": "#f44336",
+        "fontFamily": "Roboto",
+        "fontSize": 12,
+        "fontWeight": "600",
+        "marginLeft": 3,
+      }
+    }
+  />
   <View
     accessible={true}
     isTVSelectable={true}
@@ -1331,7 +926,10 @@ exports[`cature poster flags component should renders correctly for props false 
     hardwareAccelerated={false}
     hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
+    onModalWillHide={[Function]}
+    onModalWillShow={[Function]}
     onRequestClose={[Function]}
+    scrollHorizontal={false}
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
@@ -1370,7 +968,10 @@ exports[`cature poster flags component should renders correctly for props false 
     <View
       hideModalContentWhileAnimating={false}
       onModalHide={[Function]}
+      onModalWillHide={[Function]}
+      onModalWillShow={[Function]}
       pointerEvents="box-none"
+      scrollHorizontal={false}
       scrollOffset={0}
       scrollOffsetMax={0}
       scrollTo={null}
@@ -1398,10 +999,12 @@ exports[`cature poster flags component should renders correctly for props false 
         style={
           Array [
             Object {
-              "backgroundColor": "white",
               "borderRadius": 13,
               "marginBottom": 8,
               "overflow": "hidden",
+            },
+            Object {
+              "backgroundColor": "white",
             },
             undefined,
           ]
@@ -1498,13 +1101,18 @@ exports[`cature poster flags component should renders correctly for props false 
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "backgroundColor": "white",
-            "borderRadius": 13,
-            "height": 57,
-            "justifyContent": "center",
-            "marginBottom": 0,
-          }
+          Array [
+            Object {
+              "borderRadius": 13,
+              "height": 57,
+              "justifyContent": "center",
+              "marginBottom": 0,
+            },
+            Object {
+              "backgroundColor": "white",
+            },
+            undefined,
+          ]
         }
       >
         <Text
@@ -1545,430 +1153,25 @@ exports[`cature poster flags component should renders correctly for props true 1
     ]
   }
 >
-  <View
-    collapsable={false}
-  >
-    <View>
-      <View
-        accessibilityLabel="NSFW button"
-        accessible={true}
-        isTVSelectable={true}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-            "opacity": 1,
-            "paddingLeft": 10,
-          }
-        }
-      >
-        <Text
-          allowFontScaling={false}
-          style={
-            Array [
-              Object {
-                "color": "#777777",
-                "fontSize": 25,
-              },
-              Array [
-                undefined,
-                false,
-              ],
-              Object {
-                "fontFamily": "Material Icons",
-                "fontStyle": "normal",
-                "fontWeight": "normal",
-              },
-              Object {},
-            ]
-          }
-        >
-          
-        </Text>
-      </View>
-    </View>
-    <Modal
-      hardwareAccelerated={false}
-      onDismiss={[Function]}
-      onRequestClose={[Function]}
-      supportedOrientations={
-        Array [
-          "portrait",
-          "portrait-upside-down",
-          "landscape",
-          "landscape-left",
-          "landscape-right",
-        ]
+  <NsfwToggle
+    containerStyle={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "paddingLeft": 10,
       }
-      transparent={true}
-      visible={false}
-    >
-      <View
-        accessible={false}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          }
-        }
-      >
-        <View
-          onLayout={[Function]}
-          style={
-            Object {
-              "backgroundColor": "white",
-              "borderRadius": 4,
-              "left": 8,
-              "marginTop": 20,
-              "opacity": 0,
-              "position": "absolute",
-              "shadowColor": "black",
-              "shadowOffset": Object {
-                "height": 2,
-                "width": 0,
-              },
-              "shadowOpacity": 0.14,
-              "shadowRadius": 2,
-              "top": 8,
-              "transform": Array [],
-              "width": 180,
-            }
-          }
-        >
-          <View
-            style={
-              Object {
-                "overflow": "hidden",
-              }
-            }
-          >
-            <View
-              accessibilityLabel="NSFW Nudity"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Nudity
-                </Text>
-              </View>
-            </View>
-            <View
-              accessibilityLabel="NSFW Pornography"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Pornography
-                </Text>
-              </View>
-            </View>
-            <View
-              accessibilityLabel="NSFW Profanity"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Profanity
-                </Text>
-              </View>
-            </View>
-            <View
-              accessibilityLabel="NSFW Violence and Gore"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Violence and Gore
-                </Text>
-              </View>
-            </View>
-            <View
-              accessibilityLabel="NSFW Race and Religion"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Race and Religion
-                </Text>
-              </View>
-            </View>
-            <View
-              accessibilityLabel="NSFW Other"
-              accessible={true}
-              isTVSelectable={true}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={null}
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "height": 48,
-                      "justifyContent": "center",
-                      "maxWidth": 248,
-                      "minWidth": 124,
-                    },
-                    undefined,
-                  ]
-                }
-              >
-                <Text
-                  ellipsizeMode="clip"
-                  numberOfLines={1}
-                  style={
-                    Array [
-                      Object {
-                        "fontSize": 14,
-                        "fontWeight": "400",
-                        "paddingHorizontal": 16,
-                        "textAlign": "left",
-                      },
-                      false,
-                      Array [
-                        Object {
-                          "color": "#777777",
-                        },
-                        false,
-                      ],
-                    ]
-                  }
-                >
-                   
-                  Other
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-    </Modal>
-  </View>
+    }
+    labelStyle={
+      Object {
+        "color": "#f44336",
+        "fontFamily": "Roboto",
+        "fontSize": 12,
+        "fontWeight": "600",
+        "marginLeft": 3,
+      }
+    }
+  />
   <View
     accessible={true}
     isTVSelectable={true}
@@ -2861,7 +2064,10 @@ exports[`cature poster flags component should renders correctly for props true 1
     hardwareAccelerated={false}
     hideModalContentWhileAnimating={false}
     onModalHide={[Function]}
+    onModalWillHide={[Function]}
+    onModalWillShow={[Function]}
     onRequestClose={[Function]}
+    scrollHorizontal={false}
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
@@ -2900,7 +2106,10 @@ exports[`cature poster flags component should renders correctly for props true 1
     <View
       hideModalContentWhileAnimating={false}
       onModalHide={[Function]}
+      onModalWillHide={[Function]}
+      onModalWillShow={[Function]}
       pointerEvents="box-none"
+      scrollHorizontal={false}
       scrollOffset={0}
       scrollOffsetMax={0}
       scrollTo={null}
@@ -2928,10 +2137,12 @@ exports[`cature poster flags component should renders correctly for props true 1
         style={
           Array [
             Object {
-              "backgroundColor": "white",
               "borderRadius": 13,
               "marginBottom": 8,
               "overflow": "hidden",
+            },
+            Object {
+              "backgroundColor": "white",
             },
             undefined,
           ]
@@ -3028,13 +2239,18 @@ exports[`cature poster flags component should renders correctly for props true 1
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Object {
-            "backgroundColor": "white",
-            "borderRadius": 13,
-            "height": 57,
-            "justifyContent": "center",
-            "marginBottom": 0,
-          }
+          Array [
+            Object {
+              "borderRadius": 13,
+              "height": 57,
+              "justifyContent": "center",
+              "marginBottom": 0,
+            },
+            Object {
+              "backgroundColor": "white",
+            },
+            undefined,
+          ]
         }
       >
         <Text

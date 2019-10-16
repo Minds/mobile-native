@@ -3,7 +3,6 @@ export default {
   upload: jest.fn(),
   save: jest.fn(),
   toggleSubscription: jest.fn(),
-  toggleBlock: jest.fn(),
   getImageFeed: jest.fn(),
   getVideoFeed: jest.fn(),
   getBlogFeed: jest.fn(),

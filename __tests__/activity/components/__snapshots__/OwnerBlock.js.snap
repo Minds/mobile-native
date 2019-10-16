@@ -18,7 +18,12 @@ exports[`Owner component renders correctly 1`] = `
       resizeMode="cover"
       source={
         Object {
-          "source": "http://thisisaurl",
+          "headers": Object {
+            "App-Version": "3.8.0",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+          },
+          "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
         }
       }
       style={
@@ -61,6 +66,30 @@ exports[`Owner component renders correctly 1`] = `
             }
           }
         />
+      </PreventDoubleTap>
+      <PreventDoubleTap
+        onPress={[Function]}
+        style={
+          Object {
+            "flex": 1,
+            "marginLeft": 4,
+          }
+        }
+      >
+        <Text
+          lineBreakMode="tail"
+          numberOfLines={1}
+          style={
+            Object {
+              "color": "#888",
+              "fontFamily": "Roboto",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          &gt; 
+          group
+        </Text>
       </PreventDoubleTap>
     </View>
   </View>

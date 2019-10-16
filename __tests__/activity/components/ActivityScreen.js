@@ -1,24 +1,17 @@
 import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
-import {
-  FlatList,
-  KeyboardAvoidingView
-} from 'react-native';
 
 import ActivityScreen from '../../../src/newsfeed/ActivityScreen';
-// import SingleEntityStore from '../../../src/common/stores/SingleEntityStore';
 import RichEmbedStore from '../../../src/common/stores/RichEmbedStore';
 import commentsStoreProvider from '../../../src/comments/CommentsStoreProvider';
 
 import { commentsServiceFaker } from '../../../__mocks__/fake/CommentsFaker';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 import CommentList from '../../../src/comments/CommentList';
-jest.mock('../../../src/newsfeed/NewsfeedService');
-import { getSingle } from '../../../src/newsfeed/NewsfeedService';
 import entitiesService from '../../../src/common/services/entities.service';
 
-jest.mock('../../../src/common/BaseModel');
+jest.mock('../../../src/newsfeed/NewsfeedService');
 jest.mock('../../../src/newsfeed/activity/Activity', () => 'Activity');
 jest.mock('../../../src/comments/CommentList', () => 'CommentList');
 jest.mock('../../../src/common/components/CenteredLoading', () => 'CenteredLoading');
@@ -65,7 +58,7 @@ describe('Activity screen component', () => {
     expect(screen).toMatchSnapshot();
 
     // unmount
-    await screen.instance().componentDidMount();
+    await screen.instance().loadEntity();
 
     jest.runAllTicks();
 

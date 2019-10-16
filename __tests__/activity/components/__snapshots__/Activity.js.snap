@@ -17,24 +17,17 @@ exports[`Activity component renders correctly 1`] = `
   <Pinned
     entity={
       ActivityModel {
-        "__list": Object {
-          "viewed": Object {
-            "addViewed": [Function],
-            "viewed": Map {
-              "1019155171608096768" => true,
-            },
-          },
-        },
+        "__list": null,
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
+        "containerObj": undefined,
         "container_guid": "activityguid0",
         "custom_data": false,
         "custom_type": false,
         "description": "Congratulations! ",
         "edited": "",
-        "getThumbSource": [Function],
         "guid": "activityguid0",
         "is_visible": true,
         "mature": false,
@@ -42,7 +35,6 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
-          "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
           "time_created": "1522036284",
@@ -83,24 +75,17 @@ exports[`Activity component renders correctly 1`] = `
   <OwnerBlock
     entity={
       ActivityModel {
-        "__list": Object {
-          "viewed": Object {
-            "addViewed": [Function],
-            "viewed": Map {
-              "1019155171608096768" => true,
-            },
-          },
-        },
+        "__list": null,
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
+        "containerObj": undefined,
         "container_guid": "activityguid0",
         "custom_data": false,
         "custom_type": false,
         "description": "Congratulations! ",
         "edited": "",
-        "getThumbSource": [Function],
         "guid": "activityguid0",
         "is_visible": true,
         "mature": false,
@@ -108,7 +93,6 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
-          "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
           "time_created": "1522036284",
@@ -165,24 +149,17 @@ exports[`Activity component renders correctly 1`] = `
         <ActivityActionSheet
           entity={
             ActivityModel {
-              "__list": Object {
-                "viewed": Object {
-                  "addViewed": [Function],
-                  "viewed": Map {
-                    "1019155171608096768" => true,
-                  },
-                },
-              },
+              "__list": null,
               "allow_comments": true,
               "attachment_guid": false,
               "blurb": false,
               "comments:count": undefined,
+              "containerObj": undefined,
               "container_guid": "activityguid0",
               "custom_data": false,
               "custom_type": false,
               "description": "Congratulations! ",
               "edited": "",
-              "getThumbSource": [Function],
               "guid": "activityguid0",
               "is_visible": true,
               "mature": false,
@@ -190,7 +167,6 @@ exports[`Activity component renders correctly 1`] = `
               "message": "Message",
               "ownerObj": UserModel {
                 "__list": null,
-                "getAvatarSource": [Function],
                 "guid": "824853017709780997",
                 "subtype": false,
                 "time_created": "1522036284",
@@ -275,24 +251,17 @@ exports[`Activity component renders correctly 1`] = `
     <ExplicitText
       entity={
         ActivityModel {
-          "__list": Object {
-            "viewed": Object {
-              "addViewed": [Function],
-              "viewed": Map {
-                "1019155171608096768" => true,
-              },
-            },
-          },
+          "__list": null,
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
           "comments:count": undefined,
+          "containerObj": undefined,
           "container_guid": "activityguid0",
           "custom_data": false,
           "custom_type": false,
           "description": "Congratulations! ",
           "edited": "",
-          "getThumbSource": [Function],
           "guid": "activityguid0",
           "is_visible": true,
           "mature": false,
@@ -300,7 +269,6 @@ exports[`Activity component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": UserModel {
             "__list": null,
-            "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
             "time_created": "1522036284",
@@ -352,24 +320,17 @@ exports[`Activity component renders correctly 1`] = `
     <Translate
       entity={
         ActivityModel {
-          "__list": Object {
-            "viewed": Object {
-              "addViewed": [Function],
-              "viewed": Map {
-                "1019155171608096768" => true,
-              },
-            },
-          },
+          "__list": null,
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
           "comments:count": undefined,
+          "containerObj": undefined,
           "container_guid": "activityguid0",
           "custom_data": false,
           "custom_type": false,
           "description": "Congratulations! ",
           "edited": "",
-          "getThumbSource": [Function],
           "guid": "activityguid0",
           "is_visible": true,
           "mature": false,
@@ -377,7 +338,6 @@ exports[`Activity component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": UserModel {
             "__list": null,
-            "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
             "time_created": "1522036284",
@@ -425,24 +385,17 @@ exports[`Activity component renders correctly 1`] = `
     <MediaView
       entity={
         ActivityModel {
-          "__list": Object {
-            "viewed": Object {
-              "addViewed": [Function],
-              "viewed": Map {
-                "1019155171608096768" => true,
-              },
-            },
-          },
+          "__list": null,
           "allow_comments": true,
           "attachment_guid": false,
           "blurb": false,
           "comments:count": undefined,
+          "containerObj": undefined,
           "container_guid": "activityguid0",
           "custom_data": false,
           "custom_type": false,
           "description": "Congratulations! ",
           "edited": "",
-          "getThumbSource": [Function],
           "guid": "activityguid0",
           "is_visible": true,
           "mature": false,
@@ -450,7 +403,6 @@ exports[`Activity component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": UserModel {
             "__list": null,
-            "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
             "time_created": "1522036284",
@@ -504,24 +456,17 @@ exports[`Activity component renders correctly 1`] = `
   <Actions
     entity={
       ActivityModel {
-        "__list": Object {
-          "viewed": Object {
-            "addViewed": [Function],
-            "viewed": Map {
-              "1019155171608096768" => true,
-            },
-          },
-        },
+        "__list": null,
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
+        "containerObj": undefined,
         "container_guid": "activityguid0",
         "custom_data": false,
         "custom_type": false,
         "description": "Congratulations! ",
         "edited": "",
-        "getThumbSource": [Function],
         "guid": "activityguid0",
         "is_visible": true,
         "mature": false,
@@ -529,7 +474,6 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
-          "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
           "time_created": "1522036284",
@@ -576,24 +520,17 @@ exports[`Activity component renders correctly 1`] = `
   <ActivityMetrics
     entity={
       ActivityModel {
-        "__list": Object {
-          "viewed": Object {
-            "addViewed": [Function],
-            "viewed": Map {
-              "1019155171608096768" => true,
-            },
-          },
-        },
+        "__list": null,
         "allow_comments": true,
         "attachment_guid": false,
         "blurb": false,
         "comments:count": undefined,
+        "containerObj": undefined,
         "container_guid": "activityguid0",
         "custom_data": false,
         "custom_type": false,
         "description": "Congratulations! ",
         "edited": "",
-        "getThumbSource": [Function],
         "guid": "activityguid0",
         "is_visible": true,
         "mature": false,
@@ -601,7 +538,6 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
-          "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
           "time_created": "1522036284",

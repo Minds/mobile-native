@@ -36,7 +36,12 @@ exports[`Remind owner component renders correctly 1`] = `
       resizeMode="cover"
       source={
         Object {
-          "source": "http://thisisaurl",
+          "headers": Object {
+            "App-Version": "3.8.0",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+          },
+          "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
         }
       }
       style={

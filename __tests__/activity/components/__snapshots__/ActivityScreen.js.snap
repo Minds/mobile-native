@@ -18,27 +18,18 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
   <CommentList
     entity={
       Object {
-        "_list": Object {
-          "viewed": Object {
-            "addViewed": [Function],
-            "viewed": Object {
-              "1019155171608096768": true,
-            },
-          },
-        },
         "attachment_guid": false,
         "blurb": false,
+        "containerObj": undefined,
         "container_guid": "activityguid0",
         "custom_data": false,
         "custom_type": false,
         "description": "Congratulations! ",
         "edited": "",
-        "getThumbSource": [Function],
         "guid": "activityguid0",
         "mature": false,
         "message": "Message",
         "ownerObj": Object {
-          "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
           "time_created": "1522036284",
@@ -63,27 +54,18 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
         autoHeight={false}
         entity={
           Object {
-            "_list": Object {
-              "viewed": Object {
-                "addViewed": [Function],
-                "viewed": Object {
-                  "1019155171608096768": true,
-                },
-              },
-            },
             "attachment_guid": false,
             "blurb": false,
+            "containerObj": undefined,
             "container_guid": "activityguid0",
             "custom_data": false,
             "custom_type": false,
             "description": "Congratulations! ",
             "edited": "",
-            "getThumbSource": [Function],
             "guid": "activityguid0",
             "mature": false,
             "message": "Message",
             "ownerObj": Object {
-              "getAvatarSource": [Function],
               "guid": "824853017709780997",
               "subtype": false,
               "time_created": "1522036284",
@@ -109,27 +91,18 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
             "state": Object {
               "params": Object {
                 "entity": Object {
-                  "_list": Object {
-                    "viewed": Object {
-                      "addViewed": [Function],
-                      "viewed": Map {
-                        "1019155171608096768" => true,
-                      },
-                    },
-                  },
                   "attachment_guid": false,
                   "blurb": false,
+                  "containerObj": undefined,
                   "container_guid": "activityguid0",
                   "custom_data": false,
                   "custom_type": false,
                   "description": "Congratulations! ",
                   "edited": "",
-                  "getThumbSource": [Function],
                   "guid": "activityguid0",
                   "mature": false,
                   "message": "Message",
                   "ownerObj": Object {
-                    "getAvatarSource": [Function],
                     "guid": "824853017709780997",
                     "subtype": false,
                     "time_created": "1522036284",
@@ -161,27 +134,18 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
         "state": Object {
           "params": Object {
             "entity": Object {
-              "_list": Object {
-                "viewed": Object {
-                  "addViewed": [Function],
-                  "viewed": Map {
-                    "1019155171608096768" => true,
-                  },
-                },
-              },
               "attachment_guid": false,
               "blurb": false,
+              "containerObj": undefined,
               "container_guid": "activityguid0",
               "custom_data": false,
               "custom_type": false,
               "description": "Congratulations! ",
               "edited": "",
-              "getThumbSource": [Function],
               "guid": "activityguid0",
               "mature": false,
               "message": "Message",
               "ownerObj": Object {
-                "getAvatarSource": [Function],
                 "guid": "824853017709780997",
                 "subtype": false,
                 "time_created": "1522036284",
