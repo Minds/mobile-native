@@ -194,7 +194,7 @@ class EntitiesService {
         this.addEntity(entity);
       }
 
-      return response;
+      return response.entities;
     } catch (err) {
       console.log(err)
       throw err;
