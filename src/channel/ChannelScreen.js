@@ -259,7 +259,7 @@ class ChannelScreen extends Component {
      * this is needed because in some cases the channel is shown using the owner of an activity
      * while we refresh the channel's data from the server
      */
-    this.checkCanView(store.channel);
+    if (!this.checkCanView(store.channel)) return null;
 
     const feed    = store.feedStore;
     const channel = store.channel;
