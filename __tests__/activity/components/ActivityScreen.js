@@ -10,6 +10,7 @@ import { commentsServiceFaker } from '../../../__mocks__/fake/CommentsFaker';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 import CommentList from '../../../src/comments/CommentList';
 import entitiesService from '../../../src/common/services/entities.service';
+import ActivityModel from '../../../src/newsfeed/ActivityModel';
 
 jest.mock('../../../src/newsfeed/NewsfeedService');
 jest.mock('../../../src/newsfeed/activity/Activity', () => 'Activity');
@@ -48,7 +49,7 @@ describe('Activity screen component', () => {
       }
     };
 
-    entitiesService.single.mockResolvedValue(navigation.state.params.entity);
+    entitiesService.single.mockResolvedValue(ActivityModel.create(navigation.state.params.entity));
 
     screen = shallow(
       <ActivityScreen navigation={navigation}/>
