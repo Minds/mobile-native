@@ -336,6 +336,12 @@ export default class GroupViewScreen extends Component {
       return <CenteredLoading/>
     }
 
+    // check async update of permissions
+    if (!group.can(FLAG_VIEW, true)) {
+      this.props.navigation.goBack();
+      return null;
+    }
+
     const showPosterFab = this.props.groupView.tab === 'feed' && group.can(FLAG_CREATE_POST);
 
     const memberActionSheet = this.state.memberActions ?

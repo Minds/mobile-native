@@ -252,6 +252,12 @@ export default class BlogsViewScreen extends Component {
       const desc = this.props.blogsView.blog.description;
     }
 
+    // check async update of permissions
+    if (!this.props.blogsView.blog.can(FLAG_VIEW, true)) {
+      this.props.navigation.goBack();
+      return null;
+    }
+
     return (
       <View style={[CS.flexContainer, CS.backgroundWhite]}>
         {
