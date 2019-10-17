@@ -5,7 +5,8 @@ import { shallow } from 'enzyme';
 import ChannelScreen from '../../src/channel/ChannelScreen';
 import { activitiesServiceFaker } from '../../__mocks__/fake/ActivitiesFaker';
 import userFaker from '../../__mocks__/fake/channel/UserFactory'
-import UserModel from '../../src/channel/UserModel';
+import UserModel, { USER_MODE_CLOSED, USER_MODE_OPEN } from '../../src/channel/UserModel';
+import featuresService from '../../src/common/services/features.service';
 
 jest.mock('../../src/common/helpers/abortableFetch');
 jest.mock('../../src/newsfeed/ActivityModel');
@@ -34,7 +35,7 @@ describe('Channel screen component', () => {
     activity.wire_totals = { tokens: 20};
     activity.impressions = 20;
 
-    navigation = { navigate: jest.fn() };
+    navigation = { navigate: jest.fn(), goBack: jest.fn() };
     navigation.state = {
         params: {
             entity: activity
@@ -60,7 +61,6 @@ describe('Channel screen component', () => {
       <ChannelScreen.wrappedComponent channel={channel} navigation={navigation} />
     );
 
-    screen.update();
   });
 
   it('should renders correctly', () => {
@@ -68,8 +68,7 @@ describe('Channel screen component', () => {
     expect(screen).toMatchSnapshot();
   });
 
-  it('should have the expectedComponents while loading, also check newsfeed', async () => {
-    screen.update();
+  it('should have the expected components while loading, also check newsfeed', async () => {
 
     expect(screen.find('FeedList')).toHaveLength(1);
     let render = screen.dive();
@@ -77,8 +76,7 @@ describe('Channel screen component', () => {
     expect(screen.find('CaptureFab')).toHaveLength(1);
   });
 
-
-  it('should have the expectedComponents while loading, also check flatlist for blocked', async () => {
+  it('should have the expected components while loading, also check flatlist for blocked', async () => {
 
     channelStore.channel.blocked = true;
 
@@ -88,6 +86,32 @@ describe('Channel screen component', () => {
     let render = screen.dive();
     expect(render.find('CenteredLoading')).toHaveLength(0);
     expect(screen.find('CaptureFab')).toHaveLength(1);
+  });
+
+  it('should show closed channel message', async () => {
+
+    channelStore.channel.blocked = false;
+    channelStore.channel.mode = USER_MODE_CLOSED;
+
+    await screen.update();
+
+    expect(screen).toMatchSnapshot();
+  });
+
+
+  it('should navigate back if the the VIEW permissions are removed', async () => {
+
+    channelStore.channel.mode = USER_MODE_OPEN;
+
+    // force permissions feature flag
+    featuresService.features = {permissions: true};
+
+    channelStore.channel.setPermissions({permissions:[]});
+
+    await screen.update();
+
+    expect(navigation.goBack).toBeCalled();
+
   });
 
 });
