@@ -21,6 +21,10 @@ export const isApiError = function(err) {
   return err instanceof ApiError;
 }
 
+export const isApiForbidden = function(err) {
+  return err instanceof ApiError && err.status == 403;
+}
+
 /**
  * Api service
  */

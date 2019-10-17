@@ -125,6 +125,12 @@ class ActivityScreen extends Component {
    */
   render() {
     if (!this.entityStore.entity && !this.entityStore.errorLoading) return <CenteredLoading />;
+
+    if (!this.entityStore.entity.can(FLAG_VIEW, true)) {
+      this.props.navigation.goBack();
+      return null;
+    }
+
     return (
       <View style={[CS.flexContainer, CS.backgroundWhite]}>
         {

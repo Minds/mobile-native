@@ -52,6 +52,13 @@ export default class BaseModel {
     return this.__list;
   }
 
+  @action
+  removeFromList() {
+    if (this._list) {
+      this._list.remove(this);
+    }
+  }
+
   toPlainObject() {
     const plainEntity = toJS(this);
 
@@ -92,9 +99,9 @@ export default class BaseModel {
     const childs = this.childModels();
 
     Object.getOwnPropertyNames(this).forEach(key => {
-      if (data[key]) {
+      if (data[key] !== undefined) {
 
-        if (childs[key]) {
+        if (childs[key] && this[key] && this[key].update) {
           // we update the child model
           this[key].update(data[key]);
         } else {

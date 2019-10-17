@@ -222,11 +222,7 @@ export default class ActivityModel extends BaseModel {
   async deleteEntity() {
     try {
       await deleteItem(this.guid)
-      if (this._list) {
-        runInAction(() => {
-          this._list.remove(this);
-        });
-      }
+      this.removeFromList();
       entitiesService.deleteFromCache(this.urn)
     } catch (err) {
       logService.exception('[ActivityModel]', err);

@@ -88,6 +88,15 @@ export class EntitiesStorage {
   }
 
   /**
+   * Remove many entities
+   * @param {Array} urns
+   */
+  async removeMany(urns) {
+    const urnsIn = "('" + urns.join("','") + "')";
+    return await this.db.executeSql('DELETE FROM entities WHERE urn IN ' + urnsIn);
+  }
+
+  /**
    * Remove all entities
    */
   async removeAll() {
