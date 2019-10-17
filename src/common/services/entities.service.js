@@ -1,7 +1,7 @@
 // @flow
 import _ from 'lodash';
 
-import apiService, { isApiForbidden, ApiError } from "./api.service";
+import apiService, { isApiForbidden } from "./api.service";
 import sessionService from "./session.service";
 import blockListService from "./block-list.service";
 import GroupModel from "../../groups/GroupModel";
