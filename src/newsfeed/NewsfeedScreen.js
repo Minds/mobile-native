@@ -115,6 +115,7 @@ export default class NewsfeedScreen extends Component {
             feedStore={newsfeed.feedStore}
             header={header}
             navigation={this.props.navigation}
+            newsfeed={newsfeed}
           />
           <CaptureFab navigation={this.props.navigation}/>
         </View>

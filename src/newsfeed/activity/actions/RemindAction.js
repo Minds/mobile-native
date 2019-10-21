@@ -50,7 +50,7 @@ export default class RemindAction extends PureComponent {
    */
   remind = () => {
     const { state } = this.props.navigation
-    this.props.navigation.push('Capture', {isRemind: true, entity: this.props.entity, parentKey: state.key});
+    this.props.navigation.push('Capture', {isRemind: true, entity: this.props.entity, parentKey: state.key, activityIndex: this.props.activityIndex});
   }
 }
 

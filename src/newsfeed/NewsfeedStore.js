@@ -22,6 +22,11 @@ class NewsfeedStore {
    */
   listRef;
 
+  /**
+   * If the user reminded, contains remind height
+   */
+  userJustReminded = false;
+
   service = new NewsfeedService;
 
   @observable filter = 'subscribed';
@@ -51,6 +56,16 @@ class NewsfeedStore {
   scrollToTop() {
     if (this.filter !== 'subscribed') return;
     this.listRef.scrollToTop(false);
+  }
+
+  scrollToIndex(index, animated = true) {
+    if (this.filter !== 'subscribed') return;
+    this.listRef.listRef.scrollToIndex({
+      animated: animated,
+      index: index,
+      viewOffset: 0,
+      viewPosition: 0
+    });
   }
 
   /**

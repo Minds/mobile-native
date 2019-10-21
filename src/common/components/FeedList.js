@@ -56,6 +56,14 @@ export default class FeedList extends Component {
     this.listRef.scrollToOffset({animated, offset:0});
   }
 
+  componentDidUpdate() {
+    if (this.props.newsfeed && this.props.newsfeed.userJustReminded) {
+      const itemIndex = this.props.newsfeed.userJustReminded;
+      this.props.newsfeed.userJustReminded = false;
+      this.props.newsfeed.scrollToIndex(itemIndex + 1); //+1 because of the just appended activity
+    }
+  }
+
   /**
    * Set list reference
    */
@@ -213,6 +221,7 @@ export default class FeedList extends Component {
           navigation={this.props.navigation}
           autoHeight={false}
           isLast={isLast}
+          activityIndex={row.index}
         />
       </ErrorBoundary>
     )

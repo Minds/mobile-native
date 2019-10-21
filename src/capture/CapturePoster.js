@@ -38,7 +38,7 @@ import CaptureTabs from './CaptureTabs';
 // workaround for android copy/paste
 import TextInput from '../common/components/TextInput';
 
-@inject('user', 'capture')
+@inject('user', 'capture', 'newsfeed')
 @observer
 export default class CapturePoster extends Component {
 
@@ -353,6 +353,7 @@ export default class CapturePoster extends Component {
 
     try {
       const response = await this.props.capture.remind(params.entity.guid, post);
+      this.props.newsfeed.userJustReminded = params.activityIndex || false;
       this.navToPrevious(response.entity, group);
     } catch (err) {
       logService.exception('[CapturePoster]', err);

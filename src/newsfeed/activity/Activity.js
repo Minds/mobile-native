@@ -257,6 +257,7 @@ export default class Activity extends Component {
       return <Actions
                 entity={this.props.entity}
                 navigation={this.props.navigation}
+                activityIndex={this.props.activityIndex}
                 />
     }
   }
