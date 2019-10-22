@@ -31,6 +31,7 @@ class BoostedContentService {
     await this.feedsService
       .setLimit(12)
       .setOffset(0)
+      .setPaginated(false)
       .setEndpoint('api/v2/boost/feed')
       .fetchRemoteOrLocal();
 
