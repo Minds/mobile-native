@@ -1,8 +1,9 @@
 import React, {
     Component
 } from 'react';
+
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import {
-  createMaterialTopTabNavigator,
   jumpTo,
   SafeAreaView
 } from 'react-navigation';
