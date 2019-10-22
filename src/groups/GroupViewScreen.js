@@ -25,7 +25,7 @@ import { Icon } from 'react-native-elements';
 
 import {truncate} from 'lodash';
 
-import entities from 'entities';
+import * as entities from 'entities';
 import GroupUser from './GroupUser';
 import colors from '../styles/Colors';
 import Tags from '../common/components/Tags';
