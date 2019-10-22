@@ -5,18 +5,15 @@
  * @format
  * @flow
  */
-import './global';
-import './shim'
-import crypto from "crypto"; // DO NOT REMOVE!
 
 import React, {
-  Component
+  Component,
 } from 'react';
 
 import {
   Observer,
   Provider,
-} from 'mobx-react/native'  // import from mobx-react/native instead of mobx-react fix test
+} from 'mobx-react/native';  // import from mobx-react/native instead of mobx-react fix test
 
 import NavigationService from './src/navigation/NavigationService';
 
@@ -27,11 +24,10 @@ import {
   Linking,
   Text,
   Alert,
-  Clipboard,
+  Clipboard
 } from 'react-native';
 
 import FlashMessage from "react-native-flash-message";
-import CookieManager from 'react-native-cookies';
 
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
@@ -39,7 +35,7 @@ import NavigationStack from './src/navigation/NavigationStack';
 import stores from './AppStores';
 import './AppErrors';
 import './src/common/services/socket.service';
-import pushService from './src/common/services/push.service';
+// import pushService from './src/common/services/push.service'; //TODO: fix for 0.61
 import mindsService from './src/common/services/minds.service';
 import featureService from './src/common/services/features.service';
 import receiveShare from './src/common/services/receive-share.service';
@@ -63,16 +59,17 @@ import connectivityService from './src/common/services/connectivity.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 import commentStorageService from './src/comments/CommentStorageService';
 import * as Sentry from '@sentry/react-native';
+import apiService from './src/common/services/api.service';
 
 let deepLinkUrl = '';
 
 // init push service
-pushService.init();
+//pushService.init(); //TODO: fix for 0.61
 
 // fire sqlite init
 sqliteStorageProviderService.get();
 
-CookieManager.clearAll();
+apiService.clearCookies();
 
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
@@ -93,7 +90,7 @@ sessionService.onLogin(async () => {
 
   // register device token into backend on login
 
-  pushService.registerToken();
+  // pushService.registerToken(); //TODO: fix for 0.61
 
   // get onboarding progress
   const onboarding = results[1];
@@ -121,7 +118,7 @@ sessionService.onLogin(async () => {
     }
 
     // handle initial notifications (if the app is opened by tap on one)
-    pushService.handleInitialNotification();
+    // pushService.handleInitialNotification(); //TODO: fix for 0.61
 
     // handle shared
     receiveShare.handle();

@@ -1,3 +1,6 @@
+project.ext {
+    excludeAppGlideModule = true
+}
 
 buildscript {
     ext {
@@ -48,17 +51,7 @@ allprojects {
 
 
 subprojects {
-    // fix missing gradle versions in jcenter
-    if (project.name.contains('react-native-fast-image')
-        || project.name.contains('react-native-image-picker')
-        || project.name.contains('react-native-vector-icons')
-        ) {
-        buildscript {
-            repositories {
-                maven { url = "https://dl.bintray.com/android/android-tools/" }
-            }
-        }
-    }
+
 
     afterEvaluate {p ->
         if (p.hasProperty("android")) {

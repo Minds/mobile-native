@@ -75,7 +75,7 @@ import com.android.build.OutputFile
 project.ext.react = [
     bundleCommand: "ram-bundle",
     entryFile: "index.js",
-    bundleAssetName: "app.bundle",
+    // bundleAssetName: "app.bundle",
     enableHermes: false,  // clean and rebuild if changing
 ]
 
@@ -135,8 +135,6 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode Integer.parseInt(project.versionCode)
         versionName project.versionName
-        renderscriptTargetApi 21
-        renderscriptSupportModeEnabled true
     }
     signingConfigs {
         debug {
@@ -154,7 +152,7 @@ android {
             }
         }
     }
-  splits {
+    splits {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
@@ -187,23 +185,28 @@ android {
         }
     }
 
-    packagingOptions {
-        pickFirst '**/libjsc.so'
-        pickFirst '**/libc++_shared.so'
-    }
+    // packagingOptions {
+    //     pickFirst '**/libjsc.so'
+    //     pickFirst '**/libc++_shared.so'
+    // }
 }
 
 dependencies {
+    implementation project(':react-native-randombytes')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    // react-native-screens need both
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
+
+
     implementation project(':tipsi-stripe')
-    implementation project(':react-native-notifications')
-    // implementation project(':@react-native-community_netinfo')
+    // implementation project(':react-native-notifications')
 
 
     implementation project(':rn-apk')
     implementation project(':react-native-gesture-handler')
-    implementation project(':react-native-cookies')
     compile project(':react-native-background-timer')
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
@@ -217,29 +220,21 @@ dependencies {
     // //   exclude group: 'com.facebook.react',module:'react-native-google-signin'
     //   exclude group: 'com.google.firebase'
     // }
-    implementation project(':react-native-sqlite-storage')
     implementation project(':react-native-background-timer')
     implementation project(':react-native-fs')
-    implementation project(':react-native-media-meta')
     implementation project(':react-native-share-menu')
     implementation project(':react-native-keep-awake')
-    // implementation project(':react-native-udp')
-    implementation project(':react-native-tcp')
-    implementation project(':react-native-randombytes')
-    implementation project(':react-native-os')
     implementation project(':react-native-minds-encryption')
     implementation project(':react-native-video-exoplayer')
-    implementation project(':react-native-photo-view')
     implementation project(':react-native-exception-handler')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     // implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.facebook.react:react-native:0.59.10"  // From node_modules
     // implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.10.0'
-    implementation 'com.facebook.fresco:animated-gif:1.10.0'
-    implementation 'com.facebook.fresco:animated-webp:1.10.0'
-    implementation 'com.facebook.fresco:webpsupport:1.10.0'
-    implementation 'com.facebook.fresco:fresco:1.10.0'
+    // implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.10.0'
+    // implementation 'com.facebook.fresco:animated-gif:1.10.0'
+    // implementation 'com.facebook.fresco:animated-webp:1.10.0'
+    // implementation 'com.facebook.fresco:webpsupport:1.10.0'
+    // implementation 'com.facebook.fresco:fresco:1.10.0'
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";

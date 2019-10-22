@@ -6,6 +6,9 @@
  */
 
 module.exports = {
+  resolver: {
+    extraNodeModules: require('@hawkingnetwork/node-libs-react-native'),
+  },
   transformer: {
     getTransformOptions: async () => ({
       transform: {
