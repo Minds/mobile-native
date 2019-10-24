@@ -64,7 +64,7 @@ class UpdateService {
               },
               { text: i18n.t('yes'), onPress: () => {
                   // goto update screen
-                  navigationService.reset('Update');
+                  navigationService.navigate('Update');
                   this.version = last.version;
                   this.updateApk(last.href);
                 }
@@ -177,7 +177,7 @@ class UpdateService {
 
     download.promise
       .then(result => {
-        navigationService.reset('Tabs');
+        navigationService.navigate('Tabs');
         if (result.statusCode == 200) {
           ReactNativeAPK.installApp(filePath);
         } else {
@@ -190,7 +190,7 @@ class UpdateService {
         logService.exception("[UpdateService]", e);
         this.setProgress(0);
         this.setDownloading(false);
-        navigationService.reset('Tabs');
+        navigationService.navigate('Tabs');
       });
   }
 

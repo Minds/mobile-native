@@ -100,7 +100,7 @@ sessionService.onLogin(async () => {
   }
 
   logService.info('[App] navigating to initial screen', sessionService.initialScreen);
-  NavigationService.reset(sessionService.initialScreen);
+  NavigationService.navigate(sessionService.initialScreen);
 
   // check update
   if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
@@ -214,7 +214,7 @@ export default class App extends Component<Props, State> {
 
         if (!token) {
           logService.info('[App] there is no active session');
-          NavigationService.reset('Login');
+          NavigationService.navigate('Login');
         } else {
           logService.info('[App] session initialized');
         }

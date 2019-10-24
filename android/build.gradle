@@ -28,9 +28,7 @@ allprojects {
     repositories {
         mavenLocal()
         maven {
-            // url "$rootDir/../../jitsi-maven-repository/releases" // used for local dev of jitsi sdk
-            // url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases" // original
-            url "https://gitlab.com/minds/jitsi-maven-repository/raw/master/releases" // ours custom sdk
+            url "https://github.com/jitsi/jitsi-maven-repository/raw/master/releases"
         }
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
@@ -63,14 +61,6 @@ subprojects {
     }
 
     configurations.all {
-        // afterEvaluate {p ->
-        //     if (p.hasProperty("android")) {
-        //         android {
-        //             compileSdkVersion rootProject.ext.compileSdkVersion
-        //             buildToolsVersion rootProject.ext.supportLibVersion
-        //         }
-        //     }
-        // }
         resolutionStrategy.eachDependency { details ->
             if (details.requested.group == 'com.android.support'
                 && !details.requested.name.contains('multidex') ) {

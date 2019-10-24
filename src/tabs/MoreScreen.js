@@ -20,7 +20,8 @@ import {
 inject
 } from 'mobx-react/native'
 
-import RNExitApp from 'react-native-exit-app';
+//TODO: fix for 0.61
+// import RNExitApp from 'react-native-exit-app';
 
 import {
 MINDS_URI,
@@ -68,20 +69,6 @@ export default class MoreScreen extends Component {
 
   render() {
     const list = [
-      // {
-      //   name: 'Blogs',
-      //   icon: (<Icon name='subject' size={ICON_SIZE} style={ styles.icon }/>),
-      //   onPress: () => {
-      //     this.props.navigation.navigate('BlogList');
-      //   }
-      // },
-      // {
-      //   name: 'Groups',
-      //   icon: (<Icon name='group-work' size={ICON_SIZE} style={ styles.icon }/>),
-      //   onPress: () => {
-      //     this.props.navigation.navigate('GroupsList');
-      //   }
-      // },
       {
         name: i18n.t('moreScreen.helpSupport'),
         icon: (<Icon name='help-outline' size={ICON_SIZE} style={ styles.icon }/>),
@@ -103,27 +90,13 @@ export default class MoreScreen extends Component {
           this.props.navigation.navigate('Settings');
         }
       },
-      // {
-      //   name: 'Push Notifications',
-      //   icon: (<Icon name='notifications' size={ICON_SIZE} style={ styles.icon } />),
-      //   onPress: () => {
-      //     this.props.navigation.navigate('NotificationsSettings');
-      //   }
-      // },
       {
         name: i18n.t('settings.logout'),
         hideChevron: true,
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
           authService.logout();
-          const loginAction = StackActions.reset({
-            index: 0,
-            actions: [
-              NavigationActions.navigate({ routeName: 'Login' })
-            ]
-          })
-
-          this.props.navigation.dispatch(loginAction);
+          this.props.navigation.navigate('Login');
         }
       }
     ];
@@ -172,14 +145,15 @@ export default class MoreScreen extends Component {
       });
     }
 
-    list.push({
-      name: i18n.t('moreScreen.exit'),
-      hideChevron: true,
-      icon: (<Icon name='close' size={ICON_SIZE} style={ styles.icon } />),
-      onPress: () => {
-        RNExitApp.exitApp();
-      }
-    });
+    //TODO: fix for 0.61
+    // list.push({
+    //   name: i18n.t('moreScreen.exit'),
+    //   hideChevron: true,
+    //   icon: (<Icon name='close' size={ICON_SIZE} style={ styles.icon } />),
+    //   onPress: () => {
+    //     RNExitApp.exitApp();
+    //   }
+    // });
 
     return (
       <ScrollView style={styles.scrollView}>

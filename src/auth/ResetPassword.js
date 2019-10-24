@@ -99,7 +99,7 @@ export default class ResetPassword extends PureComponent {
    * On press back
    */
   onPressBack = () =>  {
-    navigation.reset('Login');
+    navigation.navigate('Login');
   }
 
   /**

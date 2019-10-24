@@ -184,11 +184,6 @@ android {
             // }
         }
     }
-
-    // packagingOptions {
-    //     pickFirst '**/libjsc.so'
-    //     pickFirst '**/libc++_shared.so'
-    // }
 }
 
 dependencies {
@@ -206,21 +201,21 @@ dependencies {
 
 
     implementation project(':rn-apk')
-    implementation project(':react-native-gesture-handler')
-    compile project(':react-native-background-timer')
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
-    // implementation(project(':react-native-jitsi-meet')) {
-    //   // solve issues with the packages shared with the jitsi bundle
-    //   exclude group: 'com.facebook.react', module:'react-native-vector-icons'
-    //   exclude group: 'com.facebook.react',module:'react-native-fetch-blob'
-    //   exclude group: 'com.facebook.react',module:'react-native-keep-awake'
-    //   exclude group: 'com.facebook.react',module:'react-native-fast-image'
-    //   exclude group: 'com.facebook.react',module:'react-native-background-timer'
-    // //   exclude group: 'com.facebook.react',module:'react-native-google-signin'
-    //   exclude group: 'com.google.firebase'
-    // }
-    implementation project(':react-native-background-timer')
+
+    // I manually linked this package to fix the build errors ignoring the following packages
+    implementation(project(':react-native-jitsi-meet')) {
+      exclude group: 'com.facebook.react', module:'react-native-community-async-storage'
+      exclude group: 'com.facebook.react', module:'react-native-community_netinfo'
+      exclude group: 'com.facebook.react', module:'react-native-webview'
+      exclude group: 'com.facebook.react', module:'react-native-vector-icons'
+      exclude group: 'com.facebook.react', module:'react-native-keep-awake'
+      exclude group: 'com.facebook.react', module:'react-native-svg'
+      exclude group: 'com.facebook.react', module:'react-native-gesture-handler'
+      exclude group: 'com.google.firebase'
+    }
+
     implementation project(':react-native-fs')
     implementation project(':react-native-share-menu')
     implementation project(':react-native-keep-awake')

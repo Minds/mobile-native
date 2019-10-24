@@ -163,7 +163,7 @@ export default class GroupViewScreen extends Component {
 
     const header = (
       <View>
-        <GroupHeader store={this.props.groupView} me={this.props.user.me} styles={styles} ref={this.headerRefHandler}/>
+        <GroupHeader store={this.props.groupView} me={this.props.user.me} styles={styles} ref={this.headerRefHandler} navigation={this.props.navigation}/>
         <SafeAreaView style={styles.gobackicon}>
           <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
         </SafeAreaView>

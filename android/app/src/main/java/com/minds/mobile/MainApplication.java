@@ -16,7 +16,6 @@ import com.corbt.keepawake.KCKeepAwakePackage;
 import cl.json.ShareApplication;
 import com.meedan.ShareMenuPackage;
 import com.rnfs.RNFSPackage;
-import com.ocetnik.timer.BackgroundTimerPackage;
 import java.util.List;
 import javax.annotation.Nullable;
 import java.lang.reflect.InvocationTargetException;
@@ -34,16 +33,6 @@ public class MainApplication extends Application implements ShareApplication, Re
       protected List<ReactPackage> getPackages() {
         @SuppressWarnings("UnnecessaryLocalVariable")
         List<ReactPackage> packages = new PackageList(this).getPackages();
-        // Packages that cannot be autolinked yet can be added manually here, for example:
-        // packages.add(new MyReactNativePackage());
-        // packages.add(new BackgroundTimerPackage());
-        // packages.add(new CryptoPackage());
-        // packages.add(new RNFSPackage());
-        // packages.add(new KCKeepAwakePackage()); //TOOD: update to new expo keep awake
-        // packages.add(new ShareMenuPackage()); //TOOD: migrate to new https://github.com/ajith-ab/react-native-file-share-intent
-
-        // packages.add(new RNNotificationsPackage()); //TOOD: update to new expo keep awake
-
         return packages;
       }
 
