@@ -1,4 +1,6 @@
-import '@hawkingnetwork/node-libs-react-native/globals';
+// created this file because the bundler is not reading index for some reason
+import 'react-native-gesture-handler'; // fix ongesture handler error
+
 import { AppRegistry } from 'react-native';
 import App from './App';
 import { useScreens } from 'react-native-screens';
