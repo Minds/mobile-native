@@ -7108,7 +7108,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@15.6.2, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -7608,10 +7608,6 @@ react-native-share@^2.0.0:
   resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-2.0.0.tgz#4543a746013e0d8fa9f765fb8937007cfbcffcf7"
   integrity sha512-J8Xl3mq0L9KDFtSYtKsQDAnZWw/niZIpAD1PRiNfZFHo44Rc+oS2bEIhskNnoQXKEgBNdPzCl/DenMXYAHXRYg==
 
-react-native-simple-radio-button@^2.7.1:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/react-native-simple-radio-button/-/react-native-simple-radio-button-2.7.2.tgz#295a7baf8b36295e36778a58b75cacf6a53d48df"
-
 react-native-snap-carousel@^3.8.2:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.8.2.tgz#681443b3f03bd146bbc3012e2d21298336569bdb"
@@ -8049,13 +8045,6 @@ rn-apk@^0.2.9:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/rn-apk/-/rn-apk-0.2.9.tgz#6aec783dd64cdf6074b0a590cc51261999351b79"
   integrity sha512-JcqO9raQWdjQAaRKjz6OFdE6G4GzZnqhqMLRyKHQ9WBaYFzhNpzujTyTr0T9cngvMJ1JOmHfxG1U8DFHf7QU3A==
-
-rn-placeholder@^1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/rn-placeholder/-/rn-placeholder-1.3.3.tgz#205067c1a2f08bcdfe09971b0c48b46afcd9c952"
-  integrity sha512-QNW+t5UzAX9Syx9oROrrPusuDrU7flR/DTQoa3RCDJxzoNLWp1d1WqA0BdHGStuyA3f6sVaLNkl0vFDg/6bACw==
-  dependencies:
-    prop-types "15.6.2"
 
 rst-selector-parser@^2.2.3:
   version "2.2.3"

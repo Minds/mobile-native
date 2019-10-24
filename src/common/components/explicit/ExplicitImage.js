@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 
 import { observer } from 'mobx-react/native';
-import Placeholder from 'rn-placeholder';
 
 import {
   findNodeHandle,
@@ -60,23 +59,6 @@ export default class ExplicitImage extends Component {
             onLoadEnd={this.setActive}
             style={[CommonStyle.positionAbsolute, this.props.imageStyle]}
           />
-        );
-      case 'placeholder':
-        return (
-          <View style={[CommonStyle.positionAbsolute, this.props.imageStyle]}>
-            <FastImage
-              source={this.props.source}
-              onError={this.imageError}
-              onLoadEnd={this.setActive}
-              style={[CommonStyle.positionAbsolute, this.props.imageStyle]}
-            />
-            {!this.state.ready && <Placeholder.Box
-              height="100%"
-              width="100%"
-              animate="fade"
-              color="grey"
-            />}
-          </View>
         );
       case 'progress':
         return (
