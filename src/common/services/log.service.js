@@ -8,6 +8,7 @@ import settingsStore from '../../settings/SettingsStore';
 import * as Sentry from '@sentry/react-native';
 import { isNetworkFail } from '../helpers/abortableFetch';
 import { ApiError } from './api.service';
+import { isUserError } from '../UserError';
 
 const parseErrorStack = error => {
   if (!error || !error.stack) {
@@ -76,7 +77,7 @@ class LogService {
       prepend = null;
     }
 
-    if (!isNetworkFail(error) && (!this.isApiError(error) || this.isUnexpectedError(error))) {
+    if (!isNetworkFail(error) && !isUserError(error) && (!this.isApiError(error) || this.isUnexpectedError(error))) {
       // report the issue to sentry
       Sentry.captureException(error);
     }
