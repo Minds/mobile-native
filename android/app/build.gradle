@@ -210,7 +210,6 @@ dependencies {
       exclude group: 'com.facebook.react', module:'react-native-community_netinfo'
       exclude group: 'com.facebook.react', module:'react-native-webview'
       exclude group: 'com.facebook.react', module:'react-native-vector-icons'
-      exclude group: 'com.facebook.react', module:'react-native-keep-awake'
       exclude group: 'com.facebook.react', module:'react-native-svg'
       exclude group: 'com.facebook.react', module:'react-native-gesture-handler'
       exclude group: 'com.google.firebase'
@@ -218,7 +217,6 @@ dependencies {
 
     implementation project(':react-native-fs')
     implementation project(':react-native-share-menu')
-    implementation project(':react-native-keep-awake')
     implementation project(':react-native-minds-encryption')
     implementation project(':react-native-video-exoplayer')
     implementation project(':react-native-exception-handler')

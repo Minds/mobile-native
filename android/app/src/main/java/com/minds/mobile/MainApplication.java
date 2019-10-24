@@ -12,7 +12,6 @@ import com.minds.crypto.CryptoPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.corbt.keepawake.KCKeepAwakePackage;
 import cl.json.ShareApplication;
 import com.meedan.ShareMenuPackage;
 import com.rnfs.RNFSPackage;

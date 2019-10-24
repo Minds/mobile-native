@@ -7499,11 +7499,6 @@ react-native-jitsi-meet@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-jitsi-meet/-/react-native-jitsi-meet-2.0.1.tgz#738b984cf50cee99d81e1bea3832aac705548250"
   integrity sha512-SAESWWbseN+co+UP4wdqHJoLilZcMk30Z2o/BBVGiitB7R4whLl1irggvUeuUl19pcQavZvkzN0fiF9PUa/uBg==
 
-react-native-keep-awake@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-keep-awake/-/react-native-keep-awake-4.0.0.tgz#d89fdc3fb60b3cffa979ef37dc5816196df998a2"
-  integrity sha512-0Fotox+eLXQooeibVs3P60yASYUWjtRw9MZNmbuHt5UZQrgUrAKsE4jm7gTr4tPU1m1RkwGzcgUFpcOkh/ec7g==
-
 react-native-localize@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/react-native-localize/-/react-native-localize-1.3.0.tgz#7f48bdffb89a402925344ec9c37b636750e92cc2"
@@ -9219,10 +9214,6 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
-
-vargs@Minds/vargs#0f6d9b9578abacb0a68f75a7b886f14719f563de:
-  version "0.0.0"
-  resolved "https://codeload.github.com/Minds/vargs/tar.gz/0f6d9b9578abacb0a68f75a7b886f14719f563de"
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"

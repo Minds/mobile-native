@@ -21,13 +21,11 @@ import ProgressBar from './ProgressBar';
 let FORWARD_DURATION = 7;
 
 import { observer, inject } from 'mobx-react/native';
-import KeepAwake from 'react-native-keep-awake';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { withNavigation } from 'react-navigation';
 import { CommonStyle as CS } from '../styles/Common';
 import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
-import en from "../../locales/en";
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 
@@ -81,7 +79,6 @@ class MindsVideo extends Component {
   }
 
   onVideoEnd = () => {
-    KeepAwake.deactivate();
     this.setState({key: new Date(), currentTime: 0, paused: true}, () => {
       this.player.seek(0);
     });
@@ -163,8 +160,6 @@ class MindsVideo extends Component {
       showOverlay: false,
     });
 
-    KeepAwake.activate();
-
     this.setState({
       active: true,
       paused: false,
@@ -172,8 +167,6 @@ class MindsVideo extends Component {
   }
 
   pause = () => {
-    KeepAwake.deactivate();
-
     this.setState({
       paused: true,
     });
