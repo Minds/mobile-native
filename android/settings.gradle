@@ -14,8 +14,6 @@ project(':rn-apk').projectDir = new File(rootProject.projectDir, '../node_module
 
 include ':react-native-fs'
 project(':react-native-fs').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-fs/android')
-include ':react-native-share-menu'
-project(':react-native-share-menu').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-share-menu/android')
 include ':react-native-minds-encryption'
 project(':react-native-minds-encryption').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-minds-encryption/android')
 include ':react-native-video-exoplayer'

@@ -1,4 +1,4 @@
-import ShareMenu from 'react-native-share-menu';
+import RNFileShareIntent from 'react-native-file-share-intent';
 import navigationService from '../../navigation/NavigationService';
 import { Platform } from 'react-native';
 
@@ -9,15 +9,13 @@ const VIDEO_PREFIX = /^video\/([a-z]|\*)*@/;
  * Receive Share Service
  */
 class ReceiveShareService {
-
   /**
    * Handle received data
    */
   handle() {
-    if (Platform.OS === 'ios') return;
-
-    ShareMenu.getSharedText((text) => {
-
+    // TODO: 0.61 fix the handling of content:// file paths
+    // TODO: 0.61 Implement Shared.js for ios
+    RNFileShareIntent.getFilepath(text => {
       if (text && text !== null) {
         if (text.match(IMAGE_PREFIX)) {
           navigationService.navigate('Capture',{image: text.replace(IMAGE_PREFIX, '')});
@@ -26,7 +24,6 @@ class ReceiveShareService {
         } else {
           navigationService.navigate('Capture',{text});
         }
-        ShareMenu.clearSharedText();
       }
     });
   }

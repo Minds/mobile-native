@@ -216,7 +216,6 @@ dependencies {
     }
 
     implementation project(':react-native-fs')
-    implementation project(':react-native-share-menu')
     implementation project(':react-native-minds-encryption')
     implementation project(':react-native-video-exoplayer')
     implementation project(':react-native-exception-handler')

@@ -4,17 +4,16 @@ import React, {
 
 import {
   StyleSheet,
-  CameraRoll,
   TouchableOpacity,
   Image,
-  View,
   FlatList,
   Platform,
 } from 'react-native';
 
+import CameraRoll from "@react-native-community/cameraroll";
+
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { Button } from 'react-native-elements';
 import CenteredLoading from '../common/components/CenteredLoading'
 import androidPermissionsService from '../common/services/android-permissions.service';
 import testID from '../common/helpers/testID';
