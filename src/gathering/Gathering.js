@@ -26,7 +26,7 @@ class Gathering extends React.Component {
       const user = sessionService.getUser();
       const avatar = user.getAvatarSource().uri;
 
-      JitsiMeet.call(url, avatar, user.name, entity.name);
+      JitsiMeet.callWithUserInfo(url, avatar, user.name, entity.name);
     }, 1000);
   }
 
