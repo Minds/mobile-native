@@ -75,7 +75,7 @@ import com.android.build.OutputFile
 project.ext.react = [
     bundleCommand: "ram-bundle",
     entryFile: "index.js",
-    // bundleAssetName: "app.bundle",
+    bundleAssetName: "app.bundle",
     enableHermes: false,  // clean and rebuild if changing
 ]
 
@@ -211,7 +211,7 @@ dependencies {
       exclude group: 'com.facebook.react', module:'react-native-webview'
       exclude group: 'com.facebook.react', module:'react-native-vector-icons'
       exclude group: 'com.facebook.react', module:'react-native-svg'
-      exclude group: 'com.facebook.react', module:'react-native-gesture-handler'
+    //   exclude group: 'com.facebook.react', module:'react-native-gesture-handler'
       exclude group: 'com.google.firebase'
     }
 

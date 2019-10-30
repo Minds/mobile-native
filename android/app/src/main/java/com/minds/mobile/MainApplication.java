@@ -13,7 +13,6 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import cl.json.ShareApplication;
-import com.meedan.ShareMenuPackage;
 import com.rnfs.RNFSPackage;
 import java.util.List;
 import javax.annotation.Nullable;
@@ -35,15 +34,15 @@ public class MainApplication extends Application implements ShareApplication, Re
         return packages;
       }
 
-      // @Override
-      // protected String getJSMainModuleName() {
-      //   return "index";
-      // }
+      @Override
+      protected String getJSMainModuleName() {
+        return "index";
+      }
 
-      // @Override
-      // protected @Nullable String getBundleAssetName() {
-      //   return "app.bundle";
-      // }
+      @Override
+      protected @Nullable String getBundleAssetName() {
+        return "app.bundle";
+      }
   };
 
   @Override
