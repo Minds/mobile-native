@@ -1,6 +1,4 @@
-import React, {
-  PureComponent
-} from 'react';
+import React, {PureComponent} from 'react';
 
 import {
   StyleSheet,
@@ -10,14 +8,16 @@ import {
   Platform,
 } from 'react-native';
 
-import CameraRoll from "@react-native-community/cameraroll";
+import CameraRoll from '@react-native-community/cameraroll';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import CenteredLoading from '../common/components/CenteredLoading'
+import CenteredLoading from '../common/components/CenteredLoading';
 import androidPermissionsService from '../common/services/android-permissions.service';
 import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
+import { CommonStyle } from '../styles/Common';
+import { View } from 'react-native-animatable';
 
 /**
  * Gallery View
@@ -31,36 +31,37 @@ export default class CaptureGallery extends PureComponent {
     imagesLoaded: false,
     offset: '',
     hasMore: true,
-    loading: false
-  }
+    loading: false,
+  };
 
   static navigationOptions = {
     header: null,
     tabBarIcon: ({ tintColor }) => (
       <Icon name="md-radio-button-on" size={24} color={tintColor} />
-    )
-  }
+    ),
+  };
 
   /**
    * Load Photos
    */
   async loadPhotos() {
     let allowed = true;
-    if (Platform.OS != 'ios' ) {
+    if (Platform.OS !== 'ios') {
       allowed = await androidPermissionsService.checkReadExternalStorage();
-      if(!allowed) {
+      if (!allowed) {
         allowed = await androidPermissionsService.readExternalStorage();
       }
     }
 
-    if (allowed === true) this._loadPhotos();
+    if (allowed === true) {
+      this._loadPhotos();
+    }
   }
 
   /**
    * Load photos
    */
   _loadPhotos = async() => {
-
     if (this.state.loading || !this.state.hasMore) {
       return;
     }
@@ -68,12 +69,16 @@ export default class CaptureGallery extends PureComponent {
     const params = {
       first: 30,
       assetType: 'All',
-    }
+    };
 
     this.setState({loading: true});
 
-    if (Platform.OS === 'ios') params.groupTypes = 'All';
-    if (this.state.offset) params.after = this.state.offset;
+    if (Platform.OS === 'ios') {
+      params.groupTypes = 'All';
+    }
+    if (this.state.offset) {
+      params.after = this.state.offset;
+    }
 
     try {
       const result = await CameraRoll.getPhotos(params);
@@ -89,12 +94,12 @@ export default class CaptureGallery extends PureComponent {
       logService.exception('[CaptureGallery] loadPhotos', err)
       this.setState({loading: false});
     }
-  }
+  };
 
   /**
    * on component mount load photos
    */
-  componentWillMount() {
+  componentDidMount() {
     setTimeout(() => {
       this.loadPhotos();
     }, 50);
@@ -104,9 +109,8 @@ export default class CaptureGallery extends PureComponent {
    * Render
    */
   render() {
-
     if (!this.state.imagesLoaded) {
-      return <CenteredLoading />
+      return <CenteredLoading />;
     }
 
     return (
@@ -119,7 +123,7 @@ export default class CaptureGallery extends PureComponent {
         ListFooterComponent={this.state.loading ? <CenteredLoading /> : null}
         numColumns={3}
       />
-    )
+    );
   }
 
   /**
@@ -132,18 +136,27 @@ export default class CaptureGallery extends PureComponent {
    */
   renderTile = (item) => {
     const node = item.item.node;
+
+    const icon = node.type.startsWith('video') ? (
+        <View style={[CommonStyle.positionAbsolute, CommonStyle.centered]}>
+          <Icon name="ios-play-circle" size={24} style={CommonStyle.colorWhite}/>
+        </View>
+      ) : null;
+
     return (
       <TouchableOpacity
         style={styles.tileImage}
         key={item.index}
-        onPress={() => {
+        onPress={
+          () => {
             this.onSelected({
               uri: node.image.uri,
               type: node.type,
               fileName: node.image.filename,
+              duration: node.image.playableDuration,
               width: node.image.width,
-              height: node.image.height
-            })
+              height: node.image.height,
+            });
           }
         }
         {...testID(`Gallery ${node.type}`)}
@@ -151,7 +164,9 @@ export default class CaptureGallery extends PureComponent {
         <Image
           source={{ uri : node.image.uri }}
           style={styles.tileImage}
-        />
+        >
+        </Image>
+        {icon}
       </TouchableOpacity>
     );
   }
@@ -169,48 +184,9 @@ export default class CaptureGallery extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-  screenWrapper: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#FFF'
-  },
-  row: {
-    flexDirection: 'row',
-    minHeight: 120,
-    flex:1,
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
-  },
   tileImage: {
     minHeight: 120,
     flex: 1,
     padding: 1,
-  },
-  listView: {
-    backgroundColor: '#FFF',
-    flex:1,
-    padding: 1,
-  },
-  selectedImage: {
-    flex:3,
-    borderWidth:1,
-    borderColor: 'white',
-  },
-  submitButton: {
-    position: 'absolute',
-    top:15,
-    right:30,
-    zIndex:100
   }
 });
