@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@hawkingnetwork/node-libs-react-native": "^1.0.10",
+    "@react-native-community/art": "^1.0.2",
     "@react-native-community/async-storage": "^1.3.4",
     "@react-native-community/cameraroll": "^1.2.1",
     "@react-native-community/netinfo": "^4.4.0",
@@ -56,7 +57,7 @@
     "react-native-modal": "^11.4.0",
     "react-native-modal-datetime-picker": "^7.6.0",
     "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
-    "react-native-progress": "^4.0.0",
+    "react-native-progress": "^3.6.0",
     "react-native-qrcode-svg": "^5.2.0",
     "react-native-randombytes": "^3.5.3",
     "react-native-reanimated": "^1.3.0",

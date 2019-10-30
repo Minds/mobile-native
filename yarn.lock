@@ -1164,10 +1164,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@react-native-community/art@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/art/-/art-1.0.1.tgz#3066b3177c06453547b7199d532309b91d090c3b"
-  integrity sha512-1pVkvCsZQf7pf9BMXm+oD0LoQHJ8FRHo6VvOOJ8jRn5rpcOFThn8S5AO1qKL5JIjlxiM4e7umnR8+MsMy+pdKA==
+"@react-native-community/art@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/art/-/art-1.0.2.tgz#38671edcf4eb3d820d62dc5ba3a151d75352f847"
+  integrity sha512-GFqRy5DfHmD0LF+cIn1TPeNienFNTuLsv3SNq1vsg2J04l51ESSAUq7dY35cCE/g6Hfi9t8zx+A9sEMplRKZ0g==
   dependencies:
     art "^0.10.3"
     invariant "^2.2.4"
@@ -7552,12 +7552,11 @@ react-native-phone-input@thegamenicorus/react-native-phone-input#6ab1a91a09ddd42
     lodash "^4.17.4"
     prop-types "^15.5.10"
 
-react-native-progress@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-4.0.0.tgz#dbbfec346c15a058e68804a5fb6793bf2b18599b"
-  integrity sha512-N6bhIros3rcPqQH371knVAn9Kb5EW4hxqtxzwO2xCTHwLm4X13DXUqJBoO5a//lv7aVrdOkLh5ew3kCV7alhGA==
+react-native-progress@^3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-3.6.0.tgz#feaf37491f91bb421207fd761e20cb7258a2a3a6"
+  integrity sha512-zzTe595xaaskyfR5OzaGrU4O0R+YkgdEw+EspgGD7wh8Hu0fs6ue3xLW+HEbTjOCn62pCRivwi3NxbpWNBCC7Q==
   dependencies:
-    "@react-native-community/art" "^1.0.1"
     prop-types "^15.7.2"
 
 react-native-qrcode-svg@^5.2.0:
