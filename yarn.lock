@@ -7507,10 +7507,9 @@ react-native-iphone-x-helper@^1.2.1:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
   integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
 
-react-native-jitsi-meet@^2.0.1:
+react-native-jitsi-meet@Minds/react-native-jitsi-meet#a8362eecfbbbd93f64775cdcea24e3e9485461de:
   version "2.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-jitsi-meet/-/react-native-jitsi-meet-2.0.1.tgz#738b984cf50cee99d81e1bea3832aac705548250"
-  integrity sha512-SAESWWbseN+co+UP4wdqHJoLilZcMk30Z2o/BBVGiitB7R4whLl1irggvUeuUl19pcQavZvkzN0fiF9PUa/uBg==
+  resolved "https://codeload.github.com/Minds/react-native-jitsi-meet/tar.gz/a8362eecfbbbd93f64775cdcea24e3e9485461de"
 
 react-native-localize@^1.3.0:
   version "1.3.0"
@@ -7524,9 +7523,9 @@ react-native-material-menu@^1.0.0:
   dependencies:
     prop-types "^15.6.0"
 
-"react-native-minds-encryption@https://github.com/Minds/react-native-minds-encryption":
+react-native-minds-encryption@Minds/react-native-minds-encryption#736571522c9d5f96c9bc4b454b2828e3940b6ccc:
   version "0.1.0"
-  resolved "https://github.com/Minds/react-native-minds-encryption#226e439c6a9ff1260369d1ff694ad27e59ae4f39"
+  resolved "https://codeload.github.com/Minds/react-native-minds-encryption/tar.gz/736571522c9d5f96c9bc4b454b2828e3940b6ccc"
 
 react-native-modal-datetime-picker@^7.6.0:
   version "7.6.0"
