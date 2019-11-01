@@ -40,28 +40,39 @@ class MindsVideo extends Component {
       paused: true,
       volume: 1,
       loaded: true,
-      active: false,
+      active: !props.entity,
       showOverlay: true,
       fullScreen: false,
       error: false,
       inProgress: false,
+      video: {},
     };
+  }
+
+  /**
+   * Derive state from props
+   * @param {object} nextProps
+   * @param {object} prevState
+   */
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.video && nextProps.video.uri !== prevState.video.uri) {
+      return {
+        video: {uri: nextProps.video.uri},
+      };
+    }
+    return null;
   }
 
   /**
    * On component will mount
    */
-  componentWillMount () {
+  componentDidMount() {
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true
-    })
-
-    if (!this.props.entity) {
-      this.setState({active: true})
-    }
+    });
 
     this.onScreenBlur = this.props.navigation.addListener(
       'didBlur',
@@ -103,7 +114,7 @@ class MindsVideo extends Component {
   };
 
   onError = (err) => {
-    logService.exception('[MindsVideo]', err)
+    logService.exception('[MindsVideo]', new Error(err));
     this.setState({ error: true, inProgress: false, });
   };
 
@@ -244,7 +255,7 @@ class MindsVideo extends Component {
           onProgress = {this.onProgress}
           onError={this.onError}
           ignoreSilentSwitch={'obey'}
-          source={{ uri: video.uri.replace('file://',''), type: 'mp4' }}
+          source={this.state.video}
           paused={paused}
           fullscreen={this.state.fullScreen}
           resizeMode={"contain"}

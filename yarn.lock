@@ -7376,6 +7376,11 @@ react-native-collapsible-header-views@^1.0.2:
   dependencies:
     fast-memoize "^2.5.1"
 
+react-native-convert-ph-asset@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-convert-ph-asset/-/react-native-convert-ph-asset-1.0.3.tgz#af299a6a3f7270b55c3bdfe472a40cea02c93c80"
+  integrity sha512-qdTrUsDlxOvC7KnamjjRnxaijr3myfOwzbYR0vyTl0BjPT25jkCQ9a4Q26egRdy8uqiw7mqB1ZhG5OohwnpsOg==
+
 react-native-crypto@^2.0.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/react-native-crypto/-/react-native-crypto-2.2.0.tgz#c999ed7c96064f830e1f958687f53d0c44025770"
