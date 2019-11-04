@@ -57,6 +57,7 @@
     "react-native-minds-encryption": "Minds/react-native-minds-encryption#736571522c9d5f96c9bc4b454b2828e3940b6ccc",
     "react-native-modal": "^11.4.0",
     "react-native-modal-datetime-picker": "^7.6.0",
+    "react-native-notifications": "Minds/react-native-notifications.git",
     "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
     "react-native-progress": "^3.6.0",
     "react-native-qrcode-svg": "^5.2.0",

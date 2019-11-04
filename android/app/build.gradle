@@ -135,6 +135,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode Integer.parseInt(project.versionCode)
         versionName project.versionName
+        missingDimensionStrategy "RNNotifications.reactNativeVersion", "reactNative60"
     }
     signingConfigs {
         debug {
@@ -197,7 +198,7 @@ dependencies {
 
 
     implementation project(':tipsi-stripe')
-    // implementation project(':react-native-notifications')
+    implementation project(':reactnativenotifications')
 
 
     implementation project(':rn-apk')

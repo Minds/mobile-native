@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#import "RNNotifications.h"
 #import "AppDelegate.h"
 
 #import <React/RCTBridge.h>
@@ -28,6 +29,7 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [RNNotifications startMonitorNotifications];
   return YES;
 }
 
@@ -54,4 +56,14 @@
                    continueUserActivity:userActivity
                      restorationHandler:restorationHandler];
 }
+
+// Required to register for notifications
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  [RNNotifications didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+  [RNNotifications didFailToRegisterForRemoteNotificationsWithError:error];
+}
+
 @end
