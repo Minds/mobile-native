@@ -11,7 +11,6 @@ import React, {
 } from 'react';
 
 import {
-  Observer,
   Provider,
 } from 'mobx-react/native';  // import from mobx-react/native instead of mobx-react fix test
 
@@ -24,10 +23,10 @@ import {
   Linking,
   Text,
   Alert,
-  Clipboard
+  Clipboard,
 } from 'react-native';
 
-import FlashMessage from "react-native-flash-message";
+import FlashMessage from 'react-native-flash-message';
 
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
@@ -35,7 +34,7 @@ import NavigationStack from './src/navigation/NavigationStack';
 import stores from './AppStores';
 import './AppErrors';
 import './src/common/services/socket.service';
-// import pushService from './src/common/services/push.service'; //TODO: fix for 0.61
+import pushService from './src/common/services/push.service'; //TODO: fix for 0.61
 import mindsService from './src/common/services/minds.service';
 import featureService from './src/common/services/features.service';
 import receiveShare from './src/common/services/receive-share.service';
@@ -43,9 +42,9 @@ import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import badgeService from './src/common/services/badge.service';
 import authService from './src/auth/AuthService';
-import NotificationsService from "./src/notifications/NotificationsService";
+import NotificationsService from './src/notifications/NotificationsService';
 import getMaches from './src/common/helpers/getMatches';
-import {CODE_PUSH_TOKEN, GOOGLE_PLAY_STORE} from './src/config/Config';
+import { GOOGLE_PLAY_STORE } from './src/config/Config';
 import updateService from './src/common/services/update.service';
 import ErrorBoundary from './src/common/components/ErrorBoundary';
 import { CommonStyle as CS } from './src/styles/Common';
@@ -64,7 +63,7 @@ import apiService from './src/common/services/api.service';
 let deepLinkUrl = '';
 
 // init push service
-//pushService.init(); //TODO: fix for 0.61
+pushService.init(); //TODO: fix for 0.61
 
 // fire sqlite init
 sqliteStorageProviderService.get();
@@ -90,7 +89,7 @@ sessionService.onLogin(async () => {
 
   // register device token into backend on login
 
-  // pushService.registerToken(); //TODO: fix for 0.61
+  pushService.registerToken();
 
   // get onboarding progress
   const onboarding = results[1];
@@ -118,7 +117,7 @@ sessionService.onLogin(async () => {
     }
 
     // handle initial notifications (if the app is opened by tap on one)
-    // pushService.handleInitialNotification(); //TODO: fix for 0.61
+    pushService.handleInitialNotification();
 
     // handle shared
     receiveShare.handle();
