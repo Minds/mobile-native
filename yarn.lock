@@ -7431,6 +7431,10 @@ react-native-exception-handler@^2.10.8:
   resolved "https://registry.yarnpkg.com/react-native-exception-handler/-/react-native-exception-handler-2.10.8.tgz#1a7f846592d888d23adaf797e31802585f1d9ff0"
   integrity sha512-ZN+jwpADRkCUNdad/50k0mZdMoICGrGdtaxgvRU+pNcWRRBAXJhuo4+jY0eQaoVpx1ghycGE6tBu9ka8gL2NOQ==
 
+react-native-exit-app@wumke/react-native-exit-app:
+  version "1.1.0"
+  resolved "https://codeload.github.com/wumke/react-native-exit-app/tar.gz/f38d15dfa07f8e8799622b2d05d400bb40683edf"
+
 react-native-fast-image@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-7.0.2.tgz#e06b21f42f4a9786eaa86f3db35d919070fb8403"

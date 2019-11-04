@@ -43,6 +43,7 @@
     "react-native-device-log": "Minds/react-native-device-log#74f06b09c6656aa228a9a3a474c714d82abf509e",
     "react-native-elements": "^0.19.1",
     "react-native-exception-handler": "^2.10.8",
+    "react-native-exit-app": "wumke/react-native-exit-app",
     "react-native-fast-image": "^7.0.2",
     "react-native-file-share-intent": "^1.1.2",
     "react-native-file-type": "^0.0.8",

@@ -34,7 +34,7 @@ import NavigationStack from './src/navigation/NavigationStack';
 import stores from './AppStores';
 import './AppErrors';
 import './src/common/services/socket.service';
-import pushService from './src/common/services/push.service'; //TODO: fix for 0.61
+import pushService from './src/common/services/push.service';
 import mindsService from './src/common/services/minds.service';
 import featureService from './src/common/services/features.service';
 import receiveShare from './src/common/services/receive-share.service';
@@ -63,7 +63,7 @@ import apiService from './src/common/services/api.service';
 let deepLinkUrl = '';
 
 // init push service
-pushService.init(); //TODO: fix for 0.61
+pushService.init();
 
 // fire sqlite init
 sqliteStorageProviderService.get();

@@ -20,8 +20,7 @@ import {
 inject
 } from 'mobx-react/native'
 
-//TODO: fix for 0.61
-// import RNExitApp from 'react-native-exit-app';
+import RNExitApp from 'react-native-exit-app';
 
 import {
 MINDS_URI,
@@ -145,15 +144,14 @@ export default class MoreScreen extends Component {
       });
     }
 
-    //TODO: fix for 0.61
-    // list.push({
-    //   name: i18n.t('moreScreen.exit'),
-    //   hideChevron: true,
-    //   icon: (<Icon name='close' size={ICON_SIZE} style={ styles.icon } />),
-    //   onPress: () => {
-    //     RNExitApp.exitApp();
-    //   }
-    // });
+    list.push({
+      name: i18n.t('moreScreen.exit'),
+      hideChevron: true,
+      icon: (<Icon name='close' size={ICON_SIZE} style={ styles.icon } />),
+      onPress: () => {
+        RNExitApp.exitApp();
+      }
+    });
 
     return (
       <ScrollView style={styles.scrollView}>
