@@ -59,6 +59,7 @@ import sqliteStorageProviderService from './src/common/services/sqlite-storage-p
 import commentStorageService from './src/comments/CommentStorageService';
 import * as Sentry from '@sentry/react-native';
 import apiService from './src/common/services/api.service';
+import boostedContentService from './src/common/services/boosted-content.service';
 
 let deepLinkUrl = '';
 
@@ -81,7 +82,7 @@ sessionService.onLogin(async () => {
 
   logService.info('[App] Getting minds settings and onboarding progress');
   // load minds settings and onboarding progresss on login
-  const results = await Promise.all([mindsService.getSettings(), stores.onboarding.getProgress()]);
+  const results = await Promise.all([mindsService.getSettings(), stores.onboarding.getProgress(), boostedContentService.load()]);
 
   logService.info('[App] updatting features');
   // reload fatures on login

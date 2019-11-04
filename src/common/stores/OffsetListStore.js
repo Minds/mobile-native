@@ -3,6 +3,7 @@ import channelService from '../../channel/ChannelService';
 import { revokeBoost, rejectBoost, acceptBoost} from '../../boost/BoostService';
 import logService from '../services/log.service';
 import metadataService from '../services/metadata.service';
+import Viewed from './Viewed';
 
 /**
  * Common infinite scroll list
@@ -33,6 +34,11 @@ export default class OffsetListStore {
    * Metadata service
    */
   metadataService = null;
+
+  /**
+   * Viewed store
+   */
+  viewed = new Viewed;
 
   /**
    * Constructor

@@ -19,6 +19,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
+import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 
 /**
  * Activity screen
@@ -61,10 +62,15 @@ export default class ActivityScreen extends Component {
     }
 
     if (params.entity && params.entity._list) {
-      params.entity._list.viewed.addViewed(
-        params.entity,
-        params.entity._list.metadataService
-      );
+      // this second condition it's for legacy boost feed
+      if (params.entity._list instanceof OffsetFeedListStore) {
+        params.entity._list.addViewed(params.entity);
+      } else {
+        params.entity._list.viewed.addViewed(
+          params.entity,
+          params.entity._list.metadataService
+        );
+      }
     }
   }
 

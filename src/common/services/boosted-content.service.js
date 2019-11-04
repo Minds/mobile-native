@@ -1,6 +1,6 @@
 // @flow
 import FeedsService from "./feeds.service";
-import sessionService from "./session.service";
+import logService from "./log.service";
 
 // types
 import type ActivityModel from "../../newsfeed/ActivityModel";
@@ -17,25 +17,21 @@ class BoostedContentService {
   boosts: Array<ActivityModel> = [];
 
   /**
-   * Constructor
-   */
-  constructor() {
-    // always reload on login or app restart
-    sessionService.onLogin(this.load);
-  }
-
-  /**
    * Reload boosts list
    */
   load = async(): Promise<any> => {
-    await this.feedsService
-      .setLimit(12)
-      .setOffset(0)
-      .setPaginated(false)
-      .setEndpoint('api/v2/boost/feed')
-      .fetchRemoteOrLocal();
+    try {
+      await this.feedsService
+        .setLimit(12)
+        .setOffset(0)
+        .setPaginated(false)
+        .setEndpoint('api/v2/boost/feed')
+        .fetchRemoteOrLocal();
 
-    this.boosts = await this.feedsService.getEntities();
+      this.boosts = await this.feedsService.getEntities();
+    } catch (err) {
+      logService.exception('[BoostedContentService]', err);
+    }
   }
 
   /**
