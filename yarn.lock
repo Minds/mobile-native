@@ -7440,10 +7440,9 @@ react-native-fast-image@^7.0.2:
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-7.0.2.tgz#e06b21f42f4a9786eaa86f3db35d919070fb8403"
   integrity sha512-MfuzJbC0RjYobR2gFCdqe1I7jvNOCfDkjQ7VGOHXniqjohhULMkcWNBE9Umovi9Dx93lJ6t5utcE2wf/09zvlg==
 
-react-native-file-share-intent@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-file-share-intent/-/react-native-file-share-intent-1.1.2.tgz#7c99fe526b7c0e894ed7fe2a567a220a80d116e9"
-  integrity sha512-70I2c3HXVxG8XOM+Pd4Nq4BITwFqWJFbPIJSLEtjt7SHv81ATWkf/pn3PxukLrJBrEAx6LrfUjGyDouvxujz4A==
+react-native-file-share-intent@Minds/react-native-file-share-intent:
+  version "1.1.1"
+  resolved "https://codeload.github.com/Minds/react-native-file-share-intent/tar.gz/d46d7a9f04352d201b1f7d502706b31c3322722c"
 
 react-native-file-type@^0.0.8:
   version "0.0.8"
