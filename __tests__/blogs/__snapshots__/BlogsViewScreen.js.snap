@@ -890,7 +890,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             underlayColor="white"
           />
         </View>
-        <SafeAreaView
+        <ForwardRef(_SafeAreaView)
           style={
             Object {
               "left": 0,
@@ -909,7 +909,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             size={22}
             underlayColor="white"
           />
-        </SafeAreaView>
+        </ForwardRef(_SafeAreaView)>
       </View>
     }
     keyboardVerticalOffset={15}
@@ -925,8 +925,9 @@ exports[`blog view screen component should renders correctly 1`] = `
     store={
       CommentsStore {
         "attachment": AttachmentStore {
+          "fileName": null,
           "guid": "",
-          "tempIosVideo": "",
+          "transcoding": false,
         },
         "embed": RichEmbedStore {
           "_richEmbedFetchTimer": null,

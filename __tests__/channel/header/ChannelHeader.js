@@ -15,7 +15,6 @@ jest.mock('../../../src/auth/UserStore');
 jest.mock('../../../AppStores');
 jest.mock('../../../src/channel/ChannelStore');
 jest.mock('../../../src/common/services/boosted-content.service');
-jest.mock('TouchableHighlight', () => 'TouchableHighlight');
 
 /**
  * Tests

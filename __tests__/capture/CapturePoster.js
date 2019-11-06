@@ -1,8 +1,9 @@
 import 'react-native';
 import React from 'react';
-import { Alert, CameraRoll } from 'react-native';
+import { Alert } from 'react-native';
 import { shallow } from 'enzyme';
 import { Icon } from 'react-native-elements'
+import CameraRoll from '@react-native-community/cameraroll';
 
 import CapturePoster from '../../src/capture/CapturePoster';
 import CapturePreview from '../../src/capture/CapturePreview';
@@ -21,7 +22,6 @@ jest.mock('../../src/capture/CapturePosterFlags', () => 'CapturePosterFlags');
 jest.mock('../../src/common/services/translation.service');
 
 Alert.alert = jest.fn();
-jest.mock('CameraRoll');
 CameraRoll.getPhotos = jest.fn();
 // fake camera roll data
 const response = getPhotosFaker(5);
