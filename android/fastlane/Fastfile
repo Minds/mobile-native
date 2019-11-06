@@ -31,6 +31,8 @@ platform :android do
       build_type: "Release",
       print_command: false,
       properties: {
+        "android.enableJetifier" => "true",
+        "android.useAndroidX" => "true",
         "android.injected.signing.store.file" => "minds.keystore",
         "android.injected.signing.store.password" => ENV['KEYSTORE_PASSWORD'],
         "android.injected.signing.key.alias" => "alias_name",

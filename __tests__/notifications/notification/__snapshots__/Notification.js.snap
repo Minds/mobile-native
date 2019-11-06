@@ -18,6 +18,8 @@ exports[`notification component renders correctly for every type 1`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -108,6 +110,8 @@ exports[`notification component renders correctly for every type 2`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -198,6 +202,8 @@ exports[`notification component renders correctly for every type 3`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -288,6 +294,8 @@ exports[`notification component renders correctly for every type 4`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -402,6 +410,8 @@ exports[`notification component renders correctly for every type 5`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -517,6 +527,8 @@ exports[`notification component renders correctly for every type 6`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -631,6 +643,8 @@ exports[`notification component renders correctly for every type 7`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -721,6 +735,8 @@ exports[`notification component renders correctly for every type 8`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -796,6 +812,8 @@ exports[`notification component renders correctly for every type 9`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -898,6 +916,8 @@ exports[`notification component renders correctly for every type 10`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -988,6 +1008,8 @@ exports[`notification component renders correctly for every type 11`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1019,7 +1041,9 @@ exports[`notification component renders correctly for every type 11`] = `
   >
     <View
       accessible={true}
+      focusable={true}
       isTVSelectable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1092,6 +1116,8 @@ exports[`notification component renders correctly for every type 12`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1165,6 +1191,8 @@ exports[`notification component renders correctly for every type 13`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1196,7 +1224,9 @@ exports[`notification component renders correctly for every type 13`] = `
   >
     <View
       accessible={true}
+      focusable={true}
       isTVSelectable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1269,6 +1299,8 @@ exports[`notification component renders correctly for every type 14`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1355,6 +1387,8 @@ exports[`notification component renders correctly for every type 15`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1436,6 +1470,8 @@ exports[`notification component renders correctly for every type 16`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1467,7 +1503,9 @@ exports[`notification component renders correctly for every type 16`] = `
   >
     <View
       accessible={true}
+      focusable={true}
       isTVSelectable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1542,6 +1580,8 @@ exports[`notification component renders correctly for every type 17`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1617,6 +1657,8 @@ exports[`notification component renders correctly for every type 18`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1692,6 +1734,8 @@ exports[`notification component renders correctly for every type 19`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1723,7 +1767,9 @@ exports[`notification component renders correctly for every type 19`] = `
   >
     <View
       accessible={true}
+      focusable={true}
       isTVSelectable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1796,6 +1842,8 @@ exports[`notification component renders correctly for every type 20`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1880,6 +1928,8 @@ exports[`notification component renders correctly for every type 21`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1961,6 +2011,8 @@ exports[`notification component renders correctly for every type 22`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1992,7 +2044,9 @@ exports[`notification component renders correctly for every type 22`] = `
   >
     <View
       accessible={true}
+      focusable={true}
       isTVSelectable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -2045,6 +2099,8 @@ exports[`notification component renders correctly for every type 23`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2118,6 +2174,8 @@ exports[`notification component renders correctly for every type 24`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2191,6 +2249,8 @@ exports[`notification component renders correctly for every type 25`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2266,6 +2326,8 @@ exports[`notification component renders correctly for every type 26`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2350,6 +2412,8 @@ exports[`notification component renders correctly for every type 27`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -2431,6 +2495,8 @@ exports[`notification component renders correctly for every type 28`] = `
 >
   <Image
     accessible={true}
+    focusable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
