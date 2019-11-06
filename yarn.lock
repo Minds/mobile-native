@@ -7551,7 +7551,7 @@ react-native-modal@^11.0.2, react-native-modal@^11.4.0:
     prop-types "^15.6.2"
     react-native-animatable "^1.3.1"
 
-react-native-notifications@Minds/react-native-notifications.git:
+react-native-notifications@Minds/react-native-notifications#333e376f866a805f250cc68706d97ace503b948a:
   version "2.0.6"
   resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/333e376f866a805f250cc68706d97ace503b948a"
   dependencies:

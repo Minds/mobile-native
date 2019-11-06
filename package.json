@@ -13,7 +13,8 @@
     "locale": "ts-node tasks/poeditor.js",
     "e2e": "jest -c jest.e2e.config.js",
     "e2e-local": "e2elocal=1 jest -c jest.e2e.config.js",
-    "preinstall": "git config core.hooksPath .githooks"
+    "preinstall": "git config core.hooksPath .githooks",
+    "postinstall": "jetify"
   },
   "dependencies": {
     "@hawkingnetwork/node-libs-react-native": "^1.0.10",
@@ -58,7 +59,7 @@
     "react-native-minds-encryption": "Minds/react-native-minds-encryption#736571522c9d5f96c9bc4b454b2828e3940b6ccc",
     "react-native-modal": "^11.4.0",
     "react-native-modal-datetime-picker": "^7.6.0",
-    "react-native-notifications": "Minds/react-native-notifications.git",
+    "react-native-notifications": "Minds/react-native-notifications#333e376f866a805f250cc68706d97ace503b948a",
     "react-native-phone-input": "thegamenicorus/react-native-phone-input#6ab1a91a09ddd4272fe85e30ecedf092f0fcb1a7",
     "react-native-progress": "^3.6.0",
     "react-native-qrcode-svg": "^5.2.0",
