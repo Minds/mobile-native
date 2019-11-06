@@ -36,7 +36,9 @@ exports[`cature poster flags component should renders correctly for props false 
   />
   <View
     accessible={true}
+    focusable={true}
     isTVSelectable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -76,7 +78,9 @@ exports[`cature poster flags component should renders correctly for props false 
   </View>
   <View
     accessible={true}
+    focusable={true}
     isTVSelectable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -116,7 +120,9 @@ exports[`cature poster flags component should renders correctly for props false 
   </View>
   <View
     accessible={true}
+    focusable={true}
     isTVSelectable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -164,6 +170,7 @@ exports[`cature poster flags component should renders correctly for props false 
     onModalWillHide={[Function]}
     onModalWillShow={[Function]}
     onRequestClose={[Function]}
+    scrollHorizontal={false}
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
@@ -179,6 +186,8 @@ exports[`cature poster flags component should renders correctly for props false 
   >
     <View
       accessible={true}
+      focusable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -229,6 +238,7 @@ exports[`cature poster flags component should renders correctly for props false 
         onModalWillHide={[Function]}
         onModalWillShow={[Function]}
         pointerEvents="box-none"
+        scrollHorizontal={false}
         scrollOffset={0}
         scrollOffsetMax={0}
         scrollTo={null}
@@ -311,7 +321,9 @@ exports[`cature poster flags component should renders correctly for props false 
           </View>
           <View
             accessible={true}
+            focusable={true}
             isTVSelectable={true}
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -367,7 +379,9 @@ exports[`cature poster flags component should renders correctly for props false 
           </View>
           <View
             accessible={true}
+            focusable={true}
             isTVSelectable={true}
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -433,6 +447,7 @@ exports[`cature poster flags component should renders correctly for props false 
     onModalWillHide={[Function]}
     onModalWillShow={[Function]}
     onRequestClose={[Function]}
+    scrollHorizontal={false}
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
@@ -448,6 +463,8 @@ exports[`cature poster flags component should renders correctly for props false 
   >
     <View
       accessible={true}
+      focusable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -498,6 +515,7 @@ exports[`cature poster flags component should renders correctly for props false 
         onModalWillHide={[Function]}
         onModalWillShow={[Function]}
         pointerEvents="box-none"
+        scrollHorizontal={false}
         scrollOffset={0}
         scrollOffsetMax={0}
         scrollTo={null}
@@ -638,7 +656,9 @@ exports[`cature poster flags component should renders correctly for props false 
               <View
                 accessibilityLabel="Poster lock done button"
                 accessible={true}
+                focusable={true}
                 isTVSelectable={true}
+                onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -701,6 +721,7 @@ exports[`cature poster flags component should renders correctly for props false 
     onModalWillHide={[Function]}
     onModalWillShow={[Function]}
     onRequestClose={[Function]}
+    scrollHorizontal={false}
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
@@ -716,6 +737,8 @@ exports[`cature poster flags component should renders correctly for props false 
   >
     <View
       accessible={true}
+      focusable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -766,6 +789,7 @@ exports[`cature poster flags component should renders correctly for props false 
         onModalWillHide={[Function]}
         onModalWillShow={[Function]}
         pointerEvents="box-none"
+        scrollHorizontal={false}
         scrollOffset={0}
         scrollOffsetMax={0}
         scrollTo={null}
@@ -945,6 +969,8 @@ exports[`cature poster flags component should renders correctly for props false 
   >
     <View
       accessible={true}
+      focusable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1056,7 +1082,9 @@ exports[`cature poster flags component should renders correctly for props false 
         </View>
         <View
           accessible={true}
+          focusable={true}
           isTVSelectable={true}
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -1093,7 +1121,9 @@ exports[`cature poster flags component should renders correctly for props false 
       </View>
       <View
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -1174,7 +1204,9 @@ exports[`cature poster flags component should renders correctly for props true 1
   />
   <View
     accessible={true}
+    focusable={true}
     isTVSelectable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1214,7 +1246,9 @@ exports[`cature poster flags component should renders correctly for props true 1
   </View>
   <View
     accessible={true}
+    focusable={true}
     isTVSelectable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1254,7 +1288,9 @@ exports[`cature poster flags component should renders correctly for props true 1
   </View>
   <View
     accessible={true}
+    focusable={true}
     isTVSelectable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -1302,6 +1338,7 @@ exports[`cature poster flags component should renders correctly for props true 1
     onModalWillHide={[Function]}
     onModalWillShow={[Function]}
     onRequestClose={[Function]}
+    scrollHorizontal={false}
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
@@ -1317,6 +1354,8 @@ exports[`cature poster flags component should renders correctly for props true 1
   >
     <View
       accessible={true}
+      focusable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1367,6 +1406,7 @@ exports[`cature poster flags component should renders correctly for props true 1
         onModalWillHide={[Function]}
         onModalWillShow={[Function]}
         pointerEvents="box-none"
+        scrollHorizontal={false}
         scrollOffset={0}
         scrollOffsetMax={0}
         scrollTo={null}
@@ -1449,7 +1489,9 @@ exports[`cature poster flags component should renders correctly for props true 1
           </View>
           <View
             accessible={true}
+            focusable={true}
             isTVSelectable={true}
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1505,7 +1547,9 @@ exports[`cature poster flags component should renders correctly for props true 1
           </View>
           <View
             accessible={true}
+            focusable={true}
             isTVSelectable={true}
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}
@@ -1571,6 +1615,7 @@ exports[`cature poster flags component should renders correctly for props true 1
     onModalWillHide={[Function]}
     onModalWillShow={[Function]}
     onRequestClose={[Function]}
+    scrollHorizontal={false}
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
@@ -1586,6 +1631,8 @@ exports[`cature poster flags component should renders correctly for props true 1
   >
     <View
       accessible={true}
+      focusable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1636,6 +1683,7 @@ exports[`cature poster flags component should renders correctly for props true 1
         onModalWillHide={[Function]}
         onModalWillShow={[Function]}
         pointerEvents="box-none"
+        scrollHorizontal={false}
         scrollOffset={0}
         scrollOffsetMax={0}
         scrollTo={null}
@@ -1776,7 +1824,9 @@ exports[`cature poster flags component should renders correctly for props true 1
               <View
                 accessibilityLabel="Poster lock done button"
                 accessible={true}
+                focusable={true}
                 isTVSelectable={true}
+                onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
                 onResponderRelease={[Function]}
@@ -1839,6 +1889,7 @@ exports[`cature poster flags component should renders correctly for props true 1
     onModalWillHide={[Function]}
     onModalWillShow={[Function]}
     onRequestClose={[Function]}
+    scrollHorizontal={false}
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
@@ -1854,6 +1905,8 @@ exports[`cature poster flags component should renders correctly for props true 1
   >
     <View
       accessible={true}
+      focusable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -1904,6 +1957,7 @@ exports[`cature poster flags component should renders correctly for props true 1
         onModalWillHide={[Function]}
         onModalWillShow={[Function]}
         pointerEvents="box-none"
+        scrollHorizontal={false}
         scrollOffset={0}
         scrollOffsetMax={0}
         scrollTo={null}
@@ -2083,6 +2137,8 @@ exports[`cature poster flags component should renders correctly for props true 1
   >
     <View
       accessible={true}
+      focusable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -2194,7 +2250,9 @@ exports[`cature poster flags component should renders correctly for props true 1
         </View>
         <View
           accessible={true}
+          focusable={true}
           isTVSelectable={true}
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -2231,7 +2289,9 @@ exports[`cature poster flags component should renders correctly for props true 1
       </View>
       <View
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}

@@ -47,7 +47,7 @@ export default class OnboardingScreen extends Component {
       await this.props.onboarding.setShown(true);
       await this.props.onboarding.getProgress();
       this.props.hashtag.setAll(false);
-      navigationService.reset('Tabs');
+      navigationService.navigate('Tabs');
     } catch (err) {
       Alert.alert(i18nService.t('error'), i18n.t('errorMessage') + '\n' + i18n.t('tryAgain'))
     }

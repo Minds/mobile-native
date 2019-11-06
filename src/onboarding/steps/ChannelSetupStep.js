@@ -18,6 +18,7 @@ import sessionService from '../../common/services/session.service';
 import imagePicker from '../../common/services/image-picker.service';
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import i18n from '../../common/services/i18n.service';
+import { UserError } from '../../common/UserError';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
@@ -72,7 +73,7 @@ export default class ChannelSetupStep extends Component {
   }
 
   save = async () => {
-    if (this.store.isUploading) throw Error('Avatar is uploading, please wait');
+    if (this.store.isUploading) throw new UserError('Avatar is uploading, please wait');
     if (!this.state.dirty) return;
     payload = {
       briefdescription: this.state.briefdescription,

@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import {
   observable,
   action,
@@ -221,7 +220,7 @@ class SessionService {
     this.guid = null;
     this.setToken(null);
     this.setLoggedIn(false);
-    NavigationService.reset('Login');
+    NavigationService.jumpTo('Auth');
   }
 
   refresh(tokens) {

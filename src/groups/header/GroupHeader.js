@@ -120,7 +120,7 @@ export default class GroupHeader extends Component {
     const group = this.props.store.group;
     this.setState({openingGathering: true});
     setTimeout(() => this.setState({openingGathering: false}), 1500);
-    gathering.join(group);
+    this.props.navigation.navigate('Gathering', {entity: group});
   }
 
 

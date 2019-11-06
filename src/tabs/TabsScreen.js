@@ -1,8 +1,9 @@
 import React, {
     Component
 } from 'react';
+
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import {
-  createMaterialTopTabNavigator,
   jumpTo,
   SafeAreaView
 } from 'react-navigation';
@@ -19,10 +20,6 @@ import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import DiscoveryScreen from '../discovery/DiscoveryScreen';
 import MessengerScreen from '../messenger/MessengerScreen';
-import ComingSoonScreen from '../static-views/ComingSoonScreen';
-import NotSupportedScreen from '../static-views/NotSupportedScreen';
-import MoreScreen from './MoreScreen';
-import stores from '../../AppStores';
 import featuresService from '../common/services/features.service';
 import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 import isIphoneX from '../common/helpers/isIphoneX';
@@ -79,7 +76,7 @@ const Tabs = (
     animationEnabled: false,
     swipeEnabled: true,
     lazy: false,
-    removeClippedSubviews: true,
+    removeClippedSubviews: false,
     tabBarOptions: {
       showLabel: false,
       showIcon: true,

@@ -6,6 +6,7 @@ import settingsStore from '../../settings/SettingsStore';
 import * as Sentry from '@sentry/react-native';
 import { isNetworkFail, isAbort } from '../helpers/abortableFetch';
 import { ApiError } from './api.service';
+import { isUserError } from '../UserError';
 
 const parseErrorStack = error => {
   if (!error || !error.stack) {
@@ -74,8 +75,7 @@ class LogService {
       prepend = null;
     }
 
-    // do not log request or api errors < 500
-    if (!isNetworkFail(error) && (!this.isApiError(error) || this.isUnexpectedError(error)) && !isAbort(error)) {
+    if (!isNetworkFail(error) && !isUserError(error) && !isAbort(error) && (!this.isApiError(error) || this.isUnexpectedError(error))) {
       // report the issue to sentry
       Sentry.captureException(error);
 

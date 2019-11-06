@@ -418,7 +418,7 @@ export default class BoostScreen extends Component {
       if (this.state.type !== 'p2p') {
         switch (this.state.payment) {
           case 'tokens':
-            let payload = await BlockchainWalletService.selectCurrent(i18n.t('boosts.selectWalletNetworkMessage'), { signable: true, offchain: true, buyable: true });
+            let payload = await BlockchainWalletService.selectCurrent(i18n.t('boosts.selectWalletNetworkMessage'), { signable: true, offchain: true, buyable: true, currency: 'tokens' });
 
             if (!payload || payload.cancelled) {
               return;
@@ -478,7 +478,7 @@ export default class BoostScreen extends Component {
 
         switch (this.state.payment) {
           case 'tokens':
-            let payload = await BlockchainWalletService.selectCurrent(i18n.t('boosts.selectWalletChannelMessage'), { signable: true, offchain: true, buyable: true });
+            let payload = await BlockchainWalletService.selectCurrent(i18n.t('boosts.selectWalletChannelMessage'), { signable: true, offchain: true, buyable: true, currency: 'tokens' });
 
             if (!payload || payload.cancelled) {
               return;

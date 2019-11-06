@@ -75,11 +75,11 @@ import com.android.build.OutputFile
 project.ext.react = [
     bundleCommand: "ram-bundle",
     entryFile: "index.js",
-    bundleAssetName: "app.bundle"
+    bundleAssetName: "app.bundle",
+    enableHermes: false,  // clean and rebuild if changing
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
-apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -95,6 +95,28 @@ def enableSeparateBuildPerCPUArchitecture = false
  * Run Proguard to shrink the Java bytecode in release builds.
  */
 def enableProguardInReleaseBuilds = false
+
+/**
+ * The preferred build flavor of JavaScriptCore.
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US.  Note that
+ * this variant is about 6MiB larger per architecture than default.
+ */
+def jscFlavor = 'org.webkit:android-jsc:+'
+
+/**
+ * Whether to enable the Hermes VM.
+ *
+ * This should be set on project.ext.react and mirrored here.  If it is not set
+ * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
+ * and the benefits of using Hermes will therefore be sharply reduced.
+ */
+def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -113,10 +135,15 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode Integer.parseInt(project.versionCode)
         versionName project.versionName
-        renderscriptTargetApi 21
-        renderscriptSupportModeEnabled true
+        missingDimensionStrategy "RNNotifications.reactNativeVersion", "reactNative60"
     }
     signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
         release {
             if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
                 storeFile file(MYAPP_RELEASE_STORE_FILE)
@@ -126,7 +153,7 @@ android {
             }
         }
     }
-  splits {
+    splits {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
@@ -135,6 +162,9 @@ android {
         }
     }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -146,8 +176,8 @@ android {
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
-            // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2, "arm64-v8a": 3, "x86_64": 4]
+            // https://developer.android.com/studio/build/configure-apk-splits.html
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
             def abi = output.getFilter(OutputFile.ABI)
             // if (abi != null) {  // null for the universal-debug, universal-release variants
             //     output.versionCodeOverride =
@@ -155,68 +185,57 @@ android {
             // }
         }
     }
-
-    packagingOptions {
-        pickFirst '**/libjsc.so'
-        pickFirst '**/libc++_shared.so'
-    }
 }
 
 dependencies {
-    implementation project(':@sentry_react-native')
+    implementation project(':react-native-randombytes')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    // react-native-screens need both
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
+
+
     implementation project(':tipsi-stripe')
-    implementation project(':react-native-svg')
-    implementation project(':react-native-device-info')
-    implementation project(':react-native-notifications')
-    implementation project(':@react-native-community_netinfo')
-    implementation project(':react-native-screens')
+    implementation project(':reactnativenotifications')
+
+
     implementation project(':rn-apk')
-    implementation project(':react-native-localize')
-    implementation project(':react-native-webview')
-    implementation project(':@react-native-community_async-storage')
-    implementation project(':react-native-gesture-handler')
-    implementation project(':react-native-cookies')
-    compile project(':react-native-exit-app')
-    compile project(':react-native-background-timer')
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-messaging:17.3.3' // IMPORTANT: fix the crash when the app receives a push notification
+
+    // I manually linked this package to fix the build errors ignoring the following packages
     implementation(project(':react-native-jitsi-meet')) {
-      // solve issues with the packages shared with the jitsi bundle
+      exclude group: 'com.facebook.react', module:'react-native-community-async-storage'
+      exclude group: 'com.facebook.react', module:'react-native-community_netinfo'
+      exclude group: 'com.facebook.react', module:'react-native-webview'
       exclude group: 'com.facebook.react', module:'react-native-vector-icons'
-      exclude group: 'com.facebook.react',module:'react-native-fetch-blob'
-      exclude group: 'com.facebook.react',module:'react-native-keep-awake'
-      exclude group: 'com.facebook.react',module:'react-native-fast-image'
-      exclude group: 'com.facebook.react',module:'react-native-background-timer'
-    //   exclude group: 'com.facebook.react',module:'react-native-google-signin'
+      exclude group: 'com.facebook.react', module:'react-native-svg'
+    //   exclude group: 'com.facebook.react', module:'react-native-gesture-handler'
       exclude group: 'com.google.firebase'
     }
-    implementation project(':react-native-sqlite-storage')
-    implementation project(':react-native-background-timer')
+
     implementation project(':react-native-fs')
-    implementation project(':react-native-media-meta')
-    implementation project(':react-native-share-menu')
-    implementation project(':react-native-keep-awake')
-    implementation project(':react-native-share')
-    // implementation project(':react-native-udp')
-    implementation project(':react-native-tcp')
-    implementation project(':react-native-randombytes')
-    implementation project(':react-native-os')
     implementation project(':react-native-minds-encryption')
     implementation project(':react-native-video-exoplayer')
-    implementation project(':react-native-photo-view')
-    implementation project(':react-native-fast-image')
     implementation project(':react-native-exception-handler')
-    implementation project(':react-native-image-picker')
-    implementation project(':react-native-vector-icons')
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
-    implementation "com.facebook.react:react-native:0.59.10"  // From node_modules
+    // implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     // implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.10.0'
-    implementation 'com.facebook.fresco:animated-gif:1.10.0'
-    implementation 'com.facebook.fresco:animated-webp:1.10.0'
-    implementation 'com.facebook.fresco:webpsupport:1.10.0'
-    implementation 'com.facebook.fresco:fresco:1.10.0'
+    // implementation 'com.facebook.fresco:imagepipeline-okhttp3:1.10.0'
+    // implementation 'com.facebook.fresco:animated-gif:1.10.0'
+    // implementation 'com.facebook.fresco:animated-webp:1.10.0'
+    // implementation 'com.facebook.fresco:webpsupport:1.10.0'
+    // implementation 'com.facebook.fresco:fresco:1.10.0'
+
+    if (enableHermes) {
+        def hermesPath = "../../node_modules/hermes-engine/android/";
+        debugImplementation files(hermesPath + "hermes-debug.aar")
+        releaseImplementation files(hermesPath + "hermes-release.aar")
+    } else {
+        implementation jscFlavor
+    }
 
     // Glide
     implementation("com.github.bumptech.glide:glide:${glideVersion}") {
@@ -233,6 +252,8 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
