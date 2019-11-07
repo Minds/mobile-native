@@ -19,7 +19,6 @@ import {
 import {
   observer
 } from 'mobx-react/native'
-import Placeholder from 'rn-placeholder';
 
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';

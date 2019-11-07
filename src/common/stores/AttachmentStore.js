@@ -1,14 +1,11 @@
-import { observable, action, extendObservable } from 'mobx'
-import { Platform, Alert } from 'react-native';
-import rnFS from 'react-native-fs';
-import MediaMeta from 'react-native-media-meta';
-import fileType from 'react-native-file-type';
+import {observable, action} from 'mobx';
+import {Alert, Platform} from 'react-native';
+import RNConvertPhAsset from 'react-native-convert-ph-asset';
 
 import attachmentService from '../services/attachment.service';
-import {MINDS_MAX_VIDEO_LENGTH} from '../../config/Config';
-import mindsService from '../services/minds.service';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
+import mindsService from '../services/minds.service';
 
 /**
  * Attachment Store
@@ -16,15 +13,14 @@ import i18n from '../services/i18n.service';
 export default class AttachmentStore {
   @observable hasAttachment = false;
   @observable uploading = false;
-  @observable checkingVideoLength = false;
   @observable progress = 0;
-
-  guid = '';
-
-  @observable uri  = '';
+  @observable uri = '';
   @observable type = '';
   @observable license = '';
-  tempIosVideo = '';
+
+  guid = '';
+  fileName = null;
+  transcoding = false;
 
   /**
    * Attach media
@@ -33,14 +29,10 @@ export default class AttachmentStore {
    */
   @action
   async attachMedia(media, extra = null) {
-
-    // no new media acepted if we are checking for video length
-    if (this.checkingVideoLength) return;
-
-    // validate media
-    const valid = await this.validate(media);
-    if (!valid) return;
-
+    if (this.transcoding) {
+      return;
+    }
+    console.log('ATTACHING', media, extra);
     if (this.uploading) {
       // abort current upload
       this.cancelCurrentUpload();
@@ -50,16 +42,45 @@ export default class AttachmentStore {
         await attachmentService.deleteMedia(this.guid);
       } catch (error) {
         // we ignore delete error for now
-        logService.info('Error deleting the uploaded media '+this.guid);
+        logService.info('Error deleting the uploaded media ' + this.guid);
       }
     }
 
-    this.uri  = media.uri;
-    this.type = media.type;
+    if (!await this.validate(media)) {
+      return;
+    }
+
     this.setHasAttachment(true);
 
+    // correctly handle videos from ph:// paths on ios
+    if (
+      Platform.OS === 'ios' &&
+      media.type === 'video' &&
+      media.uri.startsWith('ph://')
+    ) {
+      try {
+        this.transcoding = true;
+        const converted = await RNConvertPhAsset.convertVideoFromUrl({
+          url: media.uri,
+          convertTo: 'm4v',
+          quality: 'high',
+        });
+        media.type = converted.mimeType;
+        media.uri = converted.path;
+        media.filename = converted.filename;
+      } catch (error) {
+        Alert.alert('Error reading the video', 'Please try again');
+      } finally {
+        this.transcoding = false;
+      }
+    }
+
+    this.uri = media.uri;
+    this.type = media.type;
+    this.fileName = media.fileName;
+
     try {
-      const uploadPromise = attachmentService.attachMedia(media, extra, (pct) => {
+      const uploadPromise = attachmentService.attachMedia(media, extra, pct => {
         this.setProgress(pct);
       });
 
@@ -70,7 +91,9 @@ export default class AttachmentStore {
 
       const result = await uploadPromise;
       // ignore canceled
-      if ((uploadPromise.isCanceled && uploadPromise.isCanceled()) || !result) return;
+      if ((uploadPromise.isCanceled && uploadPromise.isCanceled()) || !result) {
+        return;
+      }
       this.guid = result.guid;
     } catch (err) {
       this.clear();
@@ -79,82 +102,31 @@ export default class AttachmentStore {
       this.setUploading(false);
     }
 
-    // delete temp ios video if necessary
-    if (this.tempIosVideo) {
-      rnFS.unlink(this.tempIosVideo);
-      this.tempIosVideo = '';
-    }
-
     return this.guid;
+  }
+
+  async validate(media) {
+    const settings = await mindsService.getSettings();
+    if (media.duration && media.duration > settings.max_video_length * 1000) {
+      Alert.alert(
+        i18n.t('sorry'),
+        i18n.t('attachment.tooLong', {minutes: settings.max_video_length / 60}),
+      );
+      return false;
+    }
+    return true;
   }
 
   /**
    * Cancel current upload promise and request
    */
-  cancelCurrentUpload(clear=true)
-  {
-    this.uploadPromise && this.uploadPromise.cancel(() => {
-      if (clear) this.clear();
-    });
-  }
-
-  /**
-   * Validate media
-   * @param {object} media
-   */
-  @action
-  async validate(media) {
-
-    if(!media.type){
-      const type = await fileType(media.path);
-      media.type = type.mime;
-    }
-
-    if (media.fileName && media.fileName.includes(' ')) media.fileName = media.fileName.replace(/\s/g, "_");
-
-    const settings = await mindsService.getSettings();
-
-    let videoPath = null;
-    switch (media.type) {
-      case 'video/mp4':
-        videoPath = media.path || media.uri.replace(/^.*:\/\//, '');
-        break;
-      case 'ALAssetTypeVideo':
-        // if video is selected from cameraroll we need to copy
-        await this.copyVideoIos(media);
-        videoPath = this.tempIosVideo;
-        media.type = 'video/mp4';
-        media.path = videoPath;
-        media.uri  = 'file:\/\/'+videoPath;
-        break;
-    }
-
-    if (videoPath) {
-      this.checkingVideoLength = true;
-      const meta = await MediaMeta.get(videoPath);
-
-      this.checkingVideoLength = false;
-
-      // check video length
-      if (meta.duration && meta.duration > (settings.max_video_length * 1000) ) {
-        Alert.alert(
-          i18n.t('sorry'),
-          i18n.t('attachment.tooLong', {minutes: (settings.max_video_length / 60)})
-        );
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * copy a video from ios library assets to temporal app folder
-   * @param {object} media
-   */
-  copyVideoIos(media) {
-    this.tempIosVideo = rnFS.TemporaryDirectoryPath+'MINDS-'+Date.now()+'.MP4'
-    return rnFS.copyAssetsVideoIOS(media.uri, this.tempIosVideo);
+  cancelCurrentUpload(clear = true) {
+    this.uploadPromise &&
+      this.uploadPromise.cancel(() => {
+        if (clear) {
+          this.clear();
+        }
+      });
   }
 
   /**
@@ -165,7 +137,7 @@ export default class AttachmentStore {
       try {
         attachmentService.deleteMedia(this.guid);
         this.clear();
-        return true
+        return true;
       } catch (err) {
         return false;
       }
@@ -177,12 +149,12 @@ export default class AttachmentStore {
 
   @action
   setProgress(value) {
-    this.progress = value
+    this.progress = value;
   }
 
   @action
   setUploading(value) {
-    this.uploading = value
+    this.uploading = value;
   }
 
   @action
@@ -205,11 +177,5 @@ export default class AttachmentStore {
     this.checkingVideoLength = false;
     this.uploading = false;
     this.progress = 0;
-
-    if (this.tempIosVideo) {
-      rnFS.unlink(this.tempIosVideo);
-      this.tempIosVideo = '';
-    }
   }
-
 }

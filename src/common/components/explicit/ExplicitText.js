@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 
 import {observer} from "mobx-react/native";
-import entities from 'entities';
+import * as entities from 'entities';
 import {
   Text,
   StyleSheet,

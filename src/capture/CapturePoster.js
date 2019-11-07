@@ -182,7 +182,7 @@ export default class CapturePoster extends Component {
             placeholderTextColor='#ccc'
             underlineColorAndroid='transparent'
             onChangeText={this.setText}
-            value={this.state.text}
+            value={this.props.capture.text}
             multiline={true}
             selectTextOnFocus={false}
             onSelectionChange={this.onSelectionChanges}
