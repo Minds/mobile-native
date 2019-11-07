@@ -330,4 +330,19 @@ export default class BaseModel {
 
     return allowed;
   }
+
+  isScheduled() {
+    return  this.time_created * 1000 > Date.now();
+  }
+
+  static isScheduled(timeCreatedValue) {
+    let response = false;
+
+    if (timeCreatedValue) {
+      timeCreatedValue = new Date(timeCreatedValue);
+      response = timeCreatedValue.getTime() > Date.now();
+    }
+
+    return response;
+  }
 }

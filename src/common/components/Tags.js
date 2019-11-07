@@ -6,7 +6,6 @@ import React, {
 
 import {
   Text,
-  View,
 } from 'react-native';
 
 import colors from '../../styles/Colors';
@@ -128,7 +127,7 @@ export default class Tags extends PureComponent {
    * Navigate to discovery
    */
   navToDiscovery = (q) => {
-    this.props.navigation.navigate('Discovery', {q});
+    this.props.navigation.navigate('Discovery', {query : q});
   }
 
   /**
