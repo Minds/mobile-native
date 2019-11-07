@@ -58,7 +58,7 @@ export default class NewsfeedScreen extends Component {
   /**
    * Load data on mount
    */
-  componentWillMount() {
+  componentDidMount() {
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
 
