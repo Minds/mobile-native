@@ -23,27 +23,18 @@ exports[`Activity component renders correctly 1`] = `
     <ThumbUpAction
       entity={
         Object {
-          "_list": Object {
-            "viewed": Object {
-              "addViewed": [Function],
-              "viewed": Map {
-                "1019155171608096768" => true,
-              },
-            },
-          },
           "attachment_guid": false,
           "blurb": false,
+          "containerObj": undefined,
           "container_guid": "activityguid0",
           "custom_data": false,
           "custom_type": false,
           "description": "Congratulations! ",
           "edited": "",
-          "getThumbSource": [Function],
           "guid": "activityguid0",
           "mature": false,
           "message": "Message",
           "ownerObj": Object {
-            "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
             "time_created": "1522036284",
@@ -72,27 +63,18 @@ exports[`Activity component renders correctly 1`] = `
     <ThumbDownAction
       entity={
         Object {
-          "_list": Object {
-            "viewed": Object {
-              "addViewed": [Function],
-              "viewed": Map {
-                "1019155171608096768" => true,
-              },
-            },
-          },
           "attachment_guid": false,
           "blurb": false,
+          "containerObj": undefined,
           "container_guid": "activityguid0",
           "custom_data": false,
           "custom_type": false,
           "description": "Congratulations! ",
           "edited": "",
-          "getThumbSource": [Function],
           "guid": "activityguid0",
           "mature": false,
           "message": "Message",
           "ownerObj": Object {
-            "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
             "time_created": "1522036284",
@@ -121,7 +103,6 @@ exports[`Activity component renders correctly 1`] = `
     <WireAction
       owner={
         Object {
-          "getAvatarSource": [Function],
           "guid": "824853017709780997",
           "subtype": false,
           "time_created": "1522036284",
@@ -132,27 +113,18 @@ exports[`Activity component renders correctly 1`] = `
     <CommentsAction
       entity={
         Object {
-          "_list": Object {
-            "viewed": Object {
-              "addViewed": [Function],
-              "viewed": Map {
-                "1019155171608096768" => true,
-              },
-            },
-          },
           "attachment_guid": false,
           "blurb": false,
+          "containerObj": undefined,
           "container_guid": "activityguid0",
           "custom_data": false,
           "custom_type": false,
           "description": "Congratulations! ",
           "edited": "",
-          "getThumbSource": [Function],
           "guid": "activityguid0",
           "mature": false,
           "message": "Message",
           "ownerObj": Object {
-            "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
             "time_created": "1522036284",
@@ -176,27 +148,18 @@ exports[`Activity component renders correctly 1`] = `
     <RemindAction
       entity={
         Object {
-          "_list": Object {
-            "viewed": Object {
-              "addViewed": [Function],
-              "viewed": Map {
-                "1019155171608096768" => true,
-              },
-            },
-          },
           "attachment_guid": false,
           "blurb": false,
+          "containerObj": undefined,
           "container_guid": "activityguid0",
           "custom_data": false,
           "custom_type": false,
           "description": "Congratulations! ",
           "edited": "",
-          "getThumbSource": [Function],
           "guid": "activityguid0",
           "mature": false,
           "message": "Message",
           "ownerObj": Object {
-            "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
             "time_created": "1522036284",
