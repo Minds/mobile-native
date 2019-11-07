@@ -45,7 +45,15 @@ export default class IosPlatfom extends AbstractPlatform {
   /**
    * Handle the notification that open the app
    */
-  handleInitialNotification() {
+  async handleInitialNotification() {
+    try {
+      const notification = await NotificationsIOS.getInitialNotification();
+      if (notification && this.onInitialNotification) {
+        this.onInitialNotification(notification);
+      }
+    } catch (err) {
+      logService.exception('[PushService]', err);
+    }
   }
 
   /**
@@ -81,6 +89,6 @@ export default class IosPlatfom extends AbstractPlatform {
     //   code: 3010,
     //   localizedDescription: 'remote notifications are not supported in the simulator'
     // }
-    logService.exception(error);
+    logService.error(error.localizedDescription);
   }
 }

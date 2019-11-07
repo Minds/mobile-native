@@ -6,7 +6,7 @@ import { Icon } from 'react-native-elements'
 
 
 import { observer, inject } from 'mobx-react/native';
-import entities from 'entities';
+import * as entities from 'entities';
 
 import {
   Text,

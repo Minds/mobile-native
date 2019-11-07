@@ -83,9 +83,25 @@ export default class DiscoveryScreen extends Component {
   }
 
   /**
+   * constructor
+   */
+  constructor(props) {
+    super(props);
+
+    this.props.discovery.init();
+
+    const params = this.props.navigation.state.params;
+    if (params && params.type) {
+      this.props.discovery.filters.setType(params.type);
+    }
+
+    this.tileError = i18n.t('error');
+  }
+
+  /**
    * On component will mount
    */
-  componentWillMount() {
+  componentDidMount() {
     // load data on enter
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       setTimeout(() => {
@@ -104,15 +120,6 @@ export default class DiscoveryScreen extends Component {
         this.setState({active: false});
       }, 50);
     });
-
-    this.props.discovery.init();
-
-    const params = this.props.navigation.state.params;
-    if (params && params.type) {
-      this.props.discovery.filters.setType(params.type);
-    }
-
-    this.tileError = i18n.t('error');
   }
 
   /**

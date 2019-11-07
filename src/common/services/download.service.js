@@ -1,7 +1,9 @@
 import {
-  CameraRoll,
   Platform,
 } from 'react-native';
+
+import CameraRoll from "@react-native-community/cameraroll";
+
 import session from './session.service';
 import RNFS from 'react-native-fs';
 import permissions from './android-permissions.service';
@@ -49,7 +51,7 @@ class DownloadService {
 
   /**
    * Check if entity has gif flag
-   * @param {object} entity 
+   * @param {object} entity
    */
   isGif(entity){
     let isGif = false;

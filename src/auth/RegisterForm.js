@@ -12,8 +12,6 @@ import {
   Alert,
 } from 'react-native';
 
-import CookieManager from 'react-native-cookies';
-
 import authService from '../auth/AuthService';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
@@ -28,6 +26,7 @@ import {
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import delay from '../common/helpers/delay';
+import apiService from '../common/services/api.service';
 
 /**
  * Register Form
@@ -207,7 +206,7 @@ export default class RegisterForm extends Component {
       };
       await authService.register(params);
       sessionService.setInitialScreen('OnboardingScreen');
-      await CookieManager.clearAll();
+      await apiService.clearCookies();
       await delay(100);
       await authService.login(this.state.username ,this.state.password);
     } catch (err) {

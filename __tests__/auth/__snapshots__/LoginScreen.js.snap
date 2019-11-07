@@ -42,7 +42,11 @@ exports[`LoginScreen component should renders correctly 1`] = `
     >
       <Image
         resizeMode="contain"
-        source={1}
+        source={
+          Object {
+            "testUri": "../../../src/assets/logos/logo-white.png",
+          }
+        }
         style={
           Object {
             "alignSelf": "center",

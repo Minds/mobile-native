@@ -1,4 +1,4 @@
-import { NavigationActions, StackActions } from 'react-navigation';
+import { NavigationActions, StackActions, SwitchActions } from 'react-navigation';
 
 let _navigator;
 
@@ -36,6 +36,10 @@ function goBack() {
   _navigator.dispatch(NavigationActions.back());
 }
 
+function jumpTo(route) {
+  _navigator.dispatch(SwitchActions.jumpTo({ route }));
+}
+
 function reset(routeName, params) {
   const resetAction = StackActions.reset({
     index: 0,
@@ -51,6 +55,7 @@ function reset(routeName, params) {
 export default {
   navigate,
   getState,
+  jumpTo,
   reset,
   getCurrentState,
   push,
