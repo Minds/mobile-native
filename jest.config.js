@@ -14,7 +14,7 @@ const config = {
   ],
   "moduleNameMapper": {
     "^image![a-zA-Z0-9$_-]+$": "GlobalImageStub",
-    "^[@./a-zA-Z0-9$_-]+\\.(png|gif)$": "RelativeImageStub"
+    // "^[@./a-zA-Z0-9$_-]+\\.(png|gif)$": "RelativeImageStub"
   },
   "snapshotSerializers": [
     "./node_modules/enzyme-to-json/serializer"

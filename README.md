@@ -31,7 +31,7 @@
 ## Building
 
 - `yarn install`
-- `react-native run-ios` or `react-native run-android`
+- `yarn android` or `yarn ios`
 
 ## Testing
 

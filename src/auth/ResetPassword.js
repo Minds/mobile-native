@@ -10,8 +10,6 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
-import CookieManager from 'react-native-cookies';
-
 import authService from './AuthService';
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
@@ -22,6 +20,7 @@ import i18n from '../common/services/i18n.service';
 import navigation from '../navigation/NavigationService';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
+import apiService from '../common/services/api.service';
 
 /**
  * Reset Password Form
@@ -100,7 +99,7 @@ export default class ResetPassword extends PureComponent {
    * On press back
    */
   onPressBack = () =>  {
-    navigation.reset('Login');
+    navigation.navigate('Login');
   }
 
   /**
@@ -121,7 +120,7 @@ export default class ResetPassword extends PureComponent {
       try {
         const data = await authService.reset(state.params.username, this.state.password, state.params.code);
         // clear the cookies (fix future issues with calls)
-        await CookieManager.clearAll();
+        await apiService.clearCookies();;
 
         if (data.status === 'success') {
           await delay(100);

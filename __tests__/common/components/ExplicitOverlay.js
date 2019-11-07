@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import ExplicitOverlay from '../../../src/common/components/explicit/ExplicitOverlay';
 import ActivityModel from '../../../src/newsfeed/ActivityModel';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
-jest.mock('TouchableOpacity', () => 'TouchableOpacity');
 
 describe('Explicit overlay component', () => {
 
