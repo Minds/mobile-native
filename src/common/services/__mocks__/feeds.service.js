@@ -1,6 +1,7 @@
 const feedService = function() {
   this.getEntities = jest.fn();
   this.prepend = jest.fn();
+  this.setPaginated =jest.fn().mockImplementation(() => this);
   this.setInjectBoost = jest.fn().mockImplementation(() => this);
   this.setLimit = jest.fn().mockImplementation(() => this);
   this.setOffset = jest.fn().mockImplementation(() => this);

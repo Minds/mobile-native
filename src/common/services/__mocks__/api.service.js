@@ -3,5 +3,6 @@ export default {
   get: jest.fn(),
   put: jest.fn(),
   upload: jest.fn(),
-  delete: jest.fn()
-}
+  delete: jest.fn(),
+  clearCookies: jest.fn(),
+};

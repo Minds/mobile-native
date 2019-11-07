@@ -10,15 +10,11 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  TouchableHighlight,
   ScrollView,
-  ActivityIndicator,
   View,
   TouchableOpacity,
   Linking,
 } from 'react-native';
-
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
 
 import reportService from './ReportService';
 
