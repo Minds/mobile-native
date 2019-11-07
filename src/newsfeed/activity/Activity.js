@@ -110,8 +110,16 @@ export default class Activity extends Component {
             { overlay }
           </View>
           { this.showActions() }
+          { this.props.entity.isScheduled() && 
+            <View style={[{backgroundColor: '#ffecb3'}, CommonStyle.padding]}>
+              <Text style={[styles.scheduledText, CommonStyle.paddingLeft]}> 
+                {`${i18n.t('activity.scheduled')} ${formatDate(this.props.entity.time_created)}.`}
+              </Text>
+            </View> }
           { this.props.isLast ? <View style={styles.activitySpacer}></View> : null}
-          { !this.props.hideTabs && <ActivityMetrics entity={this.props.entity}/> }
+          { !this.props.hideTabs && 
+            !this.props.entity.isScheduled() && 
+            <ActivityMetrics entity={this.props.entity}/> }
         </View>
     );
   }
@@ -314,5 +322,9 @@ const styles = StyleSheet.create({
   },
   blockedNoticeDesc: {
     opacity: 0.7,
+  },
+  scheduledText: {
+    fontSize: 11,
+    color: '#000',
   }
 });

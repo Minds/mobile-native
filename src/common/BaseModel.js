@@ -1,16 +1,13 @@
 import {
-  extendObservable,
-  decorate,
   observable,
   action,
   computed,
-  runInAction,
   toJS,
 } from 'mobx';
 import _ from 'lodash';
 import sessionService from './services/session.service';
 import { vote } from './services/votes.service';
-import { toggleExplicit, toggleUserBlock, update } from '../newsfeed/NewsfeedService';
+import { toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
 import channelService from '../channel/ChannelService';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
@@ -283,5 +280,20 @@ export default class BaseModel {
   async toggleAllowComments() {
     const data = await toggleAllow(this.guid, !this.allow_comments);
     this.allow_comments = !this.allow_comments;
+  }
+
+  isScheduled() {
+    return  this.time_created * 1000 > Date.now();
+  }
+
+  static isScheduled(timeCreatedValue) {
+    let response = false;
+    
+    if (timeCreatedValue) {
+      timeCreatedValue = new Date(timeCreatedValue);
+      response = timeCreatedValue.getTime() > Date.now();
+    }
+
+    return response;
   }
 }
