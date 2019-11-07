@@ -70,7 +70,7 @@ export default class Activity extends Component {
    * Render
    */
   render() {
-    const entity = ActivityModel.isActivity(this.props.entity) ? this.props.entity : ActivityModel.create(this.props.entity);
+    const entity = ActivityModel.checkOrCreate(this.props.entity);
     const hasText = !!entity.text;
     const lock = (entity.paywall && entity.paywall !== '0')? <Lock entity={entity} navigation={this.props.navigation}/> : null;
 
