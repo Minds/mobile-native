@@ -162,7 +162,11 @@ class ImagePickerService {
       takePhotoButtonTitle: i18n.t('imagePicker.camera'),
       chooseFromLibraryButtonTitle: i18n.t('imagePicker.gallery'),
       cancelButtonTitle: i18n.t('imagePicker.cancel'),
-      noData: true // improve performance! (no base64 conversion field)
+      noData: true, // improve performance! (no base64 conversion field)
+      storageOptions: {
+        cameraRoll: true,
+        waitUntilSaved: true,
+      },
     }
   }
 }
