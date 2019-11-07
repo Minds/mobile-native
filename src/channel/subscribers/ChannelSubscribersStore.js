@@ -11,8 +11,11 @@ import UserModel from '../UserModel';
  * Subscribers Store
  */
 class ChannelSubscribersStore {
+
   list = new OffsetListStore();
+
   @observable filter = 'subscribers';
+
   guid = '';
 
   loading = false;

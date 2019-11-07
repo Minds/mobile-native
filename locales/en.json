@@ -23,7 +23,34 @@
     "externalStorage":"Minds needs access to your external storage so you can upload awesome pictures.",
     "writeExternalStorage":"Minds needs access to your external storage so you can download awesome pictures.",
     "sms":"Minds needs access to read sms to auto-detect the validation code.",
-    "camera":"Minds needs access to your external camera so you can upload awesome pictures."
+    "camera":"Minds needs access to your external camera so you can upload awesome pictures.",
+    "notAllowed":{
+      "appoint_admin":"You are not allowed to appoint an admin",
+      "appoint_moderator":"You are not allowed to appoint a moderator",
+      "approve_subscriber":"You are not allowed to approve a subscriber",
+      "create_channel":"You are not allowed to create a channel",
+      "create_comment":"You are not allowed to create a comment",
+      "create_group":"You are not allowed to create a group",
+      "create_post":"You are not allowed to create a post",
+      "delete_channel":"You are not allowed to delete this channel",
+      "delete_comment":"You are not allowed to delete this comment",
+      "delete_group":"You are not allowed to delete this group",
+      "delete_post":"You are not allowed to delete this post",
+      "edit_channel":"You are not allowed to edit this channel",
+      "edit_comment":"You are not allowed to edit this comment",
+      "edit_group":"You are not allowed to edit this group",
+      "edit_post":"You are not allowed to edit this post",
+      "invite":"You are not allowed to invite",
+      "join":"You are not allowed to join",
+      "gathering":"You are not allowed to join to this gathering",
+      "message":"You are not allowed to message this user",
+      "subscribe":"You are not allowed to subscribe",
+      "tag":"You are not allowed to tag this content",
+      "remind":"You are not allowed to remind this content",
+      "wire":"You are not allowed to wire this user",
+      "view":"You are not allowed to view this content",
+      "vote":"You are not allowed to vote this content"
+    }
   },
   "auth":{
     "login":"LOGIN",
@@ -185,6 +212,10 @@
     "video":"Video"
   },
   "channel":{
+    "modeClosed":"Closed",
+    "modeOpen":"Public",
+    "modeModerated":"Moderated",
+    "isClosed":"This is a closed channel",
     "channel":"channel",
     "errorSaving":"Error saving channel",
     "saveChanges":"Save your changes",
@@ -194,6 +225,7 @@
     "mature":"This channel contains mature content",
     "confirmUnsubscribe":"Are you sure you want to unsubscribe from this channel?",
     "subscribe":"Subscribe",
+    "requestSubscription":"Request Subscription",
     "subscribed":"Subscribed",
     "subscribeMessage":"Subscribe to this channel",
     "unsubscribeMessage":"Unsubscribe to this channel",
@@ -208,7 +240,9 @@
     "blocked":"You have blocked @{{username}}",
     "tapUnblock":"Tap to unblock",
     "notFound":"Channel not found",
-    "viewScheduled":"Scheduled"
+    "viewScheduled":"Scheduled",
+    "requestAccepted":"Accepted",
+    "requestRejected":"Rejected"
   },
   "discovery":{
     "search":"Search...",
@@ -746,5 +780,8 @@
   "noInternet":"No Internet Connection",
   "offline":"Offline",
   "cantReachServer":"Can't reach the server",
-  "showingStored":"Showing stored data"
+  "showingStored":"Showing stored data",
+  "actions":"Actions",
+  "requests":"Requests",
+  "notAllowed":"You are not allowed"
 }

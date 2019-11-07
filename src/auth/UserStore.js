@@ -73,7 +73,7 @@ class UserStore {
   }
 
   isAdmin() {
-    return this.me.admin;
+    return this.me.isAdmin();
   }
 
   @action

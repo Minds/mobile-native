@@ -45,6 +45,7 @@ import DiscoveryFilters from './NewsfeedFilters';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
+import { FLAG_VIEW } from '../common/Permissions';
 
 /**
  * Discovery screen
@@ -518,7 +519,7 @@ export default class DiscoveryScreen extends Component {
    * Navigate to feed screen
    * @param {string} urn
    */
-  navigateToFeed = (urn) => {
+  navigateToFeed = ({urn}) => {
     const index = this.props.discovery.listStore.feedsService.feed.findIndex(e => e.urn === urn);
 
     this.props.discovery.feedStore.setFeed(this.props.discovery.listStore.feedsService.feed.slice(index));
@@ -541,7 +542,7 @@ export default class DiscoveryScreen extends Component {
         <DiscoveryTile
           entity={row.item}
           size={this.state.itemHeight}
-          onPress={() => this.navigateToFeed(row.item.urn)}
+          onPress={this.navigateToFeed}
         />
       </ErrorBoundary>
     );
@@ -554,7 +555,7 @@ export default class DiscoveryScreen extends Component {
     return (
 
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <DiscoveryUser entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
+        <DiscoveryUser row={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
       </ErrorBoundary>
     );
   }
@@ -575,7 +576,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderBlog = (row) => {
     return (
-      <View style={styles.blogCardContainer}>
+      <View style={[CS.paddingBottom2x, CS.backgroundLight]}>
         <ErrorBoundary containerStyle={CS.hairLineBottom}>
           <BlogCard entity={row.item} navigation={this.props.navigation} />
         </ErrorBoundary>
@@ -590,12 +591,16 @@ export default class DiscoveryScreen extends Component {
     const item = row.item;
     return (
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <GroupsListItem group={row.item} onPress={() => this.navigateToGroup(row.item)}/>
+        <GroupsListItem group={row.item} onPress={this.navigateToGroup}/>
       </ErrorBoundary>
     )
   }
 
-  navigateToGroup(group) {
+  navigateToGroup = (group) => {
+    if (!group.can(FLAG_VIEW, true)) {
+      return;
+    }
+
     this.props.navigation.push('GroupView', { group: group })
   }
 }
@@ -635,9 +640,5 @@ const styles = StyleSheet.create({
   },
   iconActive: {
     color: colors.primary,
-  },
-  blogCardContainer: {
-    backgroundColor: '#ececec',
-    paddingBottom: 8,
-  },
+  }
 });

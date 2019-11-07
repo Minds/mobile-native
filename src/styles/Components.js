@@ -67,11 +67,13 @@ export const ComponentsStyle = StyleSheet.create({
 
   //button
   commonButton: {
-    margin: 4,
-    padding: 4,
     alignItems: 'center',
     borderRadius: 20,
     borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    margin: 4,
+    padding: 4,
   },
   bluebutton: {
     margin:4,

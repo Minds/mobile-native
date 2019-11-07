@@ -2,7 +2,6 @@ import { observable, action } from 'mobx'
 
 import groupsService from './GroupsService';
 
-import { setViewed } from '../newsfeed/NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import OffsetListStore from '../common/stores/OffsetListStore';
 import UserModel from '../channel/UserModel';
@@ -11,8 +10,6 @@ import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
 import GroupModel from './GroupModel';
 import FeedStore from '../common/stores/FeedStore';
-import featuresService from '../common/services/features.service';
-import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 /**
  * Groups store
@@ -139,8 +136,8 @@ class GroupViewStore {
       data.offset = data['load-next'];
       this.members.setList(data);
       this.assignRowKeys(data);
-    } catch (error) {
-
+    } catch (err) {
+      logService.exception(err)
     } finally {
       this.setLoading(false);
     }

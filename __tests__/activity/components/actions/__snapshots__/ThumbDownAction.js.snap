@@ -23,16 +23,27 @@ exports[`Thumb action component renders correctly 1`] = `
   testID="Thumb down activity button"
 >
   <Icon
-    color="rgb(96, 125, 139)"
+    allowFontScaling={false}
     name="thumb-down"
-    raised={false}
-    reverse={false}
-    reverseColor="white"
     size={20}
-    underlayColor="white"
+    style={
+      Array [
+        Object {
+          "color": "rgb(96, 125, 139)",
+        },
+        Object {
+          "marginRight": 5,
+        },
+      ]
+    }
   />
   <Counter
-    size={15}
+    size={14}
+    style={
+      Object {
+        "color": "rgb(96, 125, 139)",
+      }
+    }
     testID="Thumb down count"
   />
 </PreventDoubleTap>

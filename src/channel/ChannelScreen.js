@@ -4,9 +4,7 @@ import React, {
 
 import {
   StyleSheet,
-  FlatList,
   Text,
-  Image,
   View,
   Alert,
   SafeAreaView,
@@ -19,7 +17,6 @@ import {
 
 import { Icon } from 'react-native-elements'
 
-import RewardsCarousel from './carousel/RewardsCarousel';
 import ChannelHeader from './header/ChannelHeader';
 import Toolbar from './toolbar/Toolbar';
 import CenteredLoading from '../common/components/CenteredLoading';
@@ -35,15 +32,17 @@ import logService from '../common/services/log.service';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import FeedList from '../common/components/FeedList';
-import featuresService from '../common/services/features.service';
-import channelsService from '../common/services/channels.service';
+import { FLAG_VIEW } from '../common/Permissions';
+import SubscriptionButton from './subscription/SubscriptionButton';
+import SubscriptionRequestList from './subscription/SubscriptionRequestList';
 
 /**
  * Channel Screen
  */
-@inject('channel')
+export default
+@inject('channel', 'subscriptionRequest')
 @observer
-export default class ChannelScreen extends Component {
+class ChannelScreen extends Component {
 
   state = {
     guid: null
@@ -109,7 +108,11 @@ export default class ChannelScreen extends Component {
 
     try {
       const channel = await store.load(isModel ? channelOrGuid : undefined);
+
       if (channel) {
+        // check permissions
+        if (!this.checkCanView(channel)) return;
+
         this.props.channel.addVisited(channel);
       }
     } catch (err) {
@@ -126,6 +129,23 @@ export default class ChannelScreen extends Component {
     store.feedStore.refresh();
   }
 
+  /**
+   * Check if the current user can view this channel
+   * @param {UserModel} channel
+   */
+  checkCanView(channel) {
+    // if the channel obj doesn't have the permissions loaded return true
+    if (channel.isClosed() || !channel.permissions.permissions) {
+      return true
+    }
+
+    if (!channel.can(FLAG_VIEW, true)) {
+      this.props.navigation.goBack();
+      return false;
+    }
+    return true;
+  }
+
   //TODO: make a reverse map so we can cache usernames
   async loadByUsername(username) {
     try {
@@ -133,6 +153,10 @@ export default class ChannelScreen extends Component {
       // get store by name and load channel
       const store = await this.props.channel.storeByName(username);
       this.setState({ guid: store.channel.guid });
+
+      // check permissions
+      if (!this.checkCanView(store.channel)) return;
+
       // load feed now
       store.feedStore.loadFeed();
 
@@ -161,10 +185,67 @@ export default class ChannelScreen extends Component {
     this.props.navigation.navigate('Capture');
   }
 
+  getHeader(store) {
+    const feed    = store.feedStore;
+    const channel = store.channel;
+    const rewards = store.rewards;
+    const showClosed = channel.isClosed() && !channel.subscribed && !channel.isOwner();
+
+    return (
+      <View>
+        <ChannelHeader
+          styles={styles}
+          store={store}
+          navigation={this.props.navigation}
+        />
+
+        {!channel.blocked && !showClosed &&
+          <Toolbar
+            feed={feed}
+            subscriptionRequest={this.props.subscriptionRequest}
+            channel={channel}
+            hasRewards={rewards.merged && rewards.merged.length}
+          />
+        }
+
+        {!!channel.blocked &&
+          <View style={styles.blockView}>
+            <Text style={styles.blockText}>{i18n.t('channel.blocked',{username: channel.username})}</Text>
+
+            <Touchable onPress={this.toggleBlock}>
+              <Text style={styles.blockTextLink}>{i18n.t('channel.tapUnblock')}</Text>
+            </Touchable>
+          </View>
+        }
+        {!!showClosed && !channel.blocked  &&
+          <View style={styles.blockView}>
+            <Text style={styles.blockText}>{i18n.t('channel.isClosed')}</Text>
+            <SubscriptionButton channel={channel} />
+          </View>
+        }
+      </View>
+    );
+  }
+
+  /**
+   * Toggle block channel
+   */
+  toggleBlock = () => {
+    this.props.channel.store(this.guid).channel.toggleBlock();
+  }
+
+  /**
+   * Nav to prev screen
+   */
+  goBack = () => {
+    this.props.navigation.goBack();
+  }
+
   /**
    * Render
    */
   render() {
+
     const store = this.props.channel.store(this.guid);
 
     if (!this.guid || !store.channel.guid) {
@@ -173,23 +254,21 @@ export default class ChannelScreen extends Component {
       );
     }
 
+    /**
+     * We check in the render method in order to observe the changes of the channels permissions
+     * this is needed because in some cases the channel is shown using the owner of an activity
+     * while we refresh the channel's data from the server
+     */
+    if (!this.checkCanView(store.channel)) return null;
+
     const feed    = store.feedStore;
     const channel = store.channel;
     const rewards = store.rewards;
     const guid    = this.guid;
     const isOwner = guid == session.guid;
+    const isClosed = channel.isClosed() && !channel.subscribed && !channel.isOwner();
 
     let emptyMessage = null;
-    let carousel = null;
-
-    // carousel only visible if we have data
-    /*if (rewards.merged && rewards.merged.length && channelfeed.showrewards) {
-      carousel = (
-        <View style={styles.carouselcontainer}>
-          <RewardsCarousel rewards={rewards.merged} />
-        </View>
-      );
-    }*/
 
     if (channel.is_mature && !channel.mature_visibility) {
       return (
@@ -213,31 +292,9 @@ export default class ChannelScreen extends Component {
     }
 
     // channel header
-    const header = (
-      <View>
-        <ChannelHeader
-          styles={styles}
-          store={store}
-          navigation={this.props.navigation}
-        />
+    const header = this.getHeader(store);
 
-        {!channel.blocked && <Toolbar feed={feed} hasRewards={rewards.merged && rewards.merged.length}/>}
-        {carousel}
-        <SafeAreaView style={styles.gobackicon}>
-          <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
-        </SafeAreaView>
-
-        {!!channel.blocked && <View style={styles.blockView}>
-          <Text style={styles.blockText}>{i18n.t('channel.blocked',{username: channel.username})}</Text>
-
-          <Touchable onPress={() => this.props.channel.store(this.guid).toggleBlock()}>
-            <Text style={styles.blockTextLink}>{i18n.t('channel.tapUnblock')}</Text>
-          </Touchable>
-        </View>}
-      </View>
-    );
-
-    let renderActivity = null
+    let renderActivity = null, body = null;
 
     // is a blog? use blog card to render
     if(feed.filter == 'blogs') {
@@ -258,29 +315,25 @@ export default class ChannelScreen extends Component {
       );
     }
 
-    const emptyRender = () => <View />;
-
-
+    body = feed.filter != 'requests' ?
+      <FeedList
+        feedStore={feed.feedStore}
+        renderActivity={renderActivity}
+        header={header}
+        navigation={this.props.navigation}
+        emptyMessage={emptyMessage}
+      /> :
+      <SubscriptionRequestList
+        ListHeaderComponent={header}
+        style={[CommonStyle.flexContainer]}
+      />
 
     return (
       <View style={CommonStyle.flexContainer}>
-        {!channel.blocked &&
-        <FeedList
-          feedStore={feed.feedStore}
-          renderActivity={renderActivity}
-          header={header}
-          navigation={this.props.navigation}
-          emptyMessage={emptyMessage}
-        />}
-
-        {/* Not using FlatList breaks header layout */}
-        {channel.blocked && <FlatList
-          style={{ flex: 1, backgroundColor: '#fff' }}
-          ListHeaderComponent={header}
-          data={[]}
-          renderItem={emptyRender}
-        />}
-
+        { (!channel.blocked && !isClosed) ? body : header }
+        <SafeAreaView style={styles.gobackicon}>
+          <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={this.goBack}/>
+        </SafeAreaView>
         <CaptureFab navigation={this.props.navigation} />
       </View>
     );

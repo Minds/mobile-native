@@ -1,7 +1,7 @@
 // @flow
 import _ from 'lodash';
 
-import apiService from "./api.service";
+import apiService, { isApiForbidden } from "./api.service";
 import sessionService from "./session.service";
 import blockListService from "./block-list.service";
 import GroupModel from "../../groups/GroupModel";
@@ -65,6 +65,15 @@ class EntitiesService {
   deleteFromCache(urn: string) {
     this.entities.delete(urn);
     entitiesStorage.remove(urn);
+  }
+
+  /**
+   * Delete an entity from the cache
+   * @param {Array<string>} urn
+   */
+  deleteManyFromCache(urns: Array<string>) {
+    urns.forEach((urn: string): boolean => this.entities.delete(urn));
+    entitiesStorage.removeMany(urns);
   }
 
   /**
@@ -185,7 +194,7 @@ class EntitiesService {
    * @param {boolean} asActivities
    * @return []
    */
-  async fetch(urns: Array<string>, abortTag: any, asActivities: boolean = false): Promise<Array<Object>> {
+  async fetch(urns: Array<string>, abortTag: any, asActivities: boolean = false): Promise<void> {
 
     try {
       const response: any = await apiService.get('api/v2/entities/', { urns, as_activities: asActivities ? 1 : 0}, abortTag);
@@ -196,7 +205,24 @@ class EntitiesService {
 
       return response.entities;
     } catch (err) {
-      console.log(err)
+
+      // if the server response is a 403
+      if (isApiForbidden(err)) {
+        // if the entity exists in the cache, remove the permissions to force the UI update
+        urns.forEach((urn: string) => {
+          const cache = this.entities.get(urn);
+
+          if (cache) {
+            // remove permissions
+            cache.entity.setPermissions({permissions:[]});
+            // if the entity is attached to a list we remove if from the list
+            cache.entity.removeFromList();
+          }
+        })
+        // remove it from memory and local storage
+        this.deleteManyFromCache(urns);
+        return;
+      }
       throw err;
     }
   }
@@ -211,6 +237,7 @@ class EntitiesService {
     this.cleanEntity(entity);
 
     const storedEntity = this.getFromCache(entity.urn);
+
     if (storedEntity) {
       storedEntity.update(entity);
     } else {
@@ -254,6 +281,7 @@ class EntitiesService {
             return ActivityModel.create(entity);
         }
     }
+    return ActivityModel.create(entity)
   }
 }
 

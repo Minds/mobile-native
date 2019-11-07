@@ -3,48 +3,39 @@ import React, {
 } from 'react';
 
 import {
-  Text,
-  Image,
   View,
-  ActivityIndicator,
-  StyleSheet
+  ActivityIndicator
 } from 'react-native';
 
 import {
   observer,
-  inject
 } from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import channelService from './ChannelService';
 import i18n from '../common/services/i18n.service';
 import ActionSheet from 'react-native-actionsheet';
-import WireAction from '../newsfeed/activity/actions/WireAction';
 import featuresService from '../common/services/features.service';
 import sessionService from '../common/services/session.service';
 import Button from '../common/components/Button';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import { CommonStyle as CS } from '../styles/Common';
+import { FLAG_SUBSCRIBE, FLAG_MESSAGE, FLAG_EDIT_CHANNEL, FLAG_WIRE } from '../common/Permissions';
+import ChannelModeSelector from './ChannelModeSelector';
 
 const ButtonCustom = withPreventDoubleTap(Button);
+
 /**
  * Channel Actions
  */
-const title = 'Actions';
+export default
 @observer
-export default class ChannelActions extends Component {
+class ChannelActions extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      selected: '',
-      scheduledCount: '',
-    }
-
-    this.handleSelection = this.handleSelection.bind(this);
+  state = {
+    scheduledCount: '',
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.getScheduledCount();
   }
 
@@ -52,14 +43,14 @@ export default class ChannelActions extends Component {
     this.ActionSheet.show();
   }
 
-  handleSelection(i) {
-    this.makeAction(i);
+  handleSelection = (index) => {
+    this.executeAction(index);
   }
 
   getOptions() {
     let options = [ i18n.t('cancel') ];
 
-    if(this.props.store.channel.subscribed){
+    if (this.props.store.channel.isSubscribed()){
       options.push( i18n.t('channel.unsubscribe') );
     }
 
@@ -75,7 +66,7 @@ export default class ChannelActions extends Component {
 
   }
 
-  makeAction(option) {
+  executeAction(option) {
     let options = this.getOptions();
     let selected = options[option];
     switch (selected) {
@@ -83,10 +74,10 @@ export default class ChannelActions extends Component {
         this.props.store.channel.toggleSubscription();
         break;
       case i18n.t('channel.block'):
-        this.props.store.toggleBlock();
+        this.props.store.channel.toggleBlock();
         break;
       case i18n.t('channel.unblock'):
-        this.props.store.toggleBlock();
+        this.props.store.channel.toggleBlock();
         break;
       case i18n.t('channel.report'):
         this.props.navigation.push('Report', { entity: this.props.store.channel });
@@ -130,57 +121,7 @@ export default class ChannelActions extends Component {
     return featuresService.has('post-scheduler') && !this.state.edit;
   }
 
-  /**
-   * Get Action Button, Message or Subscribe
-   */
-  getActionButton() {
-    if (!this.props.store.loaded && sessionService.guid !== this.props.store.channel.guid )
-      return null;
-    if (sessionService.guid === this.props.store.channel.guid) {
-      const viewScheduledButton = this.shouldRenderScheduledButton() ? (
-        <ButtonCustom
-          onPress={this.onViewScheduledAction}
-          accessibilityLabel={i18n.t('channel.viewScheduled')}
-          text={`${i18n.t('channel.viewScheduled').toUpperCase()}: ${this.state.scheduledCount}`}
-          loading={this.state.saving}
-          inverted={this.props.store.feedStore.endpoint == this.props.store.feedStore.scheduledEndpoint ? true : undefined}
-        /> ) : null ;
-      return (
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-          { viewScheduledButton }
-          <ButtonCustom
-            onPress={this.onEditAction}
-            containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
-            accessibilityLabel={this.props.editing ? i18n.t('channel.saveChanges') : i18n.t('channel.editChannel')}
-            text={this.props.editing ? i18n.t('save').toUpperCase() : i18n.t('edit').toUpperCase()}
-            loading={this.props.saving}
-          />
-        </View>
-      );
-    } else if (!!this.props.store.channel.subscribed) {
-      return (
-        <ButtonCustom
-          onPress={ this.navToConversation }
-          containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
-          accessibilityLabel={i18n.t('channel.sendMessage')}
-          text={i18n.t('channel.message')}
-        />
-      );
-    } else if (sessionService.guid !== this.props.store.channel.guid) {
-      return (
-        <ButtonCustom
-          onPress={this.toggleSubscription}
-          containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
-          accessibilityLabel={i18n.t('channel.subscribeMessage')}
-          text={i18n.t('channel.subscribe').toUpperCase()}
-        />
-      );
-    } else if (this.props.store.isUploading) {
-      return (
-        <ActivityIndicator size="small" />
-      )
-    }
-  }
+  setSheetRef = o => this.ActionSheet = o;
 
   /**
    * Render Header
@@ -188,24 +129,72 @@ export default class ChannelActions extends Component {
   render() {
 
     const channel = this.props.store.channel;
-    const showWire = !channel.blocked && !channel.isOwner() && featuresService.has('crypto');
+    const isOwner = channel.isOwner();
+    const showWire = !channel.blocked && !isOwner && featuresService.has('crypto') && channel.can(FLAG_WIRE);
+    const showScheduled = featuresService.has('post-scheduler') && !this.state.edit && isOwner;
+    const showSubscribe = !isOwner && !channel.isSubscribed() && channel.can(FLAG_SUBSCRIBE);
+    const showMessage = !isOwner && channel.isSubscribed() && channel.can(FLAG_MESSAGE);
+    const showEdit = isOwner && channel.can(FLAG_EDIT_CHANNEL);
+    const showMode = isOwner && featuresService.has('permissions') && this.props.editing;
+
+    if (this.props.store.isUploading) {
+      return (
+        <ActivityIndicator size="small" />
+      )
+    }
 
     return (
       <View style={[CS.rowJustifyEnd, CS.marginTop2x]}>
-        {this.getActionButton()}
-        {!!showWire &&
+        { showScheduled &&
           <ButtonCustom
-          onPress={ this.openWire }
-          accessibilityLabel="Wire Button"
-          containerStyle={[CS.rowJustifyCenter]}
-          textStyle={[CS.marginLeft, CS.marginRight]}
-          icon="ios-flash"
-          text="Wire"
+            onPress={this.onViewScheduledAction}
+            accessibilityLabel={i18n.t('channel.viewScheduled')}
+            text={`${i18n.t('channel.viewScheduled')}: ${this.state.scheduledCount}`}
+            loading={this.state.saving}
+            inverted={this.props.store.feedStore.endpoint == this.props.store.feedStore.scheduledEndpoint ? true : undefined}
+          />
+        }
+        { showSubscribe &&
+          <ButtonCustom
+            onPress={this.toggleSubscription}
+            containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
+            accessibilityLabel={i18n.t('channel.subscribeMessage')}
+            text={i18n.t('channel.subscribe')}
+          />
+        }
+        { showMessage &&
+          <ButtonCustom
+            onPress={ this.navToConversation }
+            containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
+            accessibilityLabel={i18n.t('channel.sendMessage')}
+            text={i18n.t('channel.message')}
+          />
+        }
+        { showEdit &&
+          <ButtonCustom
+            onPress={this.onEditAction}
+            containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
+            accessibilityLabel={this.props.editing ? i18n.t('channel.saveChanges') : i18n.t('channel.editChannel')}
+            text={this.props.editing ? i18n.t('save') : i18n.t('edit')}
+            loading={this.props.saving}
+          />
+        }
+        { showMode &&
+          <ChannelModeSelector channel={channel} />
+        }
+        { showWire &&
+          <ButtonCustom
+            onPress={ this.openWire }
+            accessibilityLabel="Wire Button"
+            containerStyle={[CS.rowJustifyCenter]}
+            textStyle={[CS.marginLeft, CS.marginRight]}
+            icon="ios-flash"
+            text="Wire"
           >
             <Icon name='ios-flash' size={18} style={[CS.marginLeft, CS.colorPrimary]} />
           </ButtonCustom>
         }
-        {!channel.isOwner() &&
+        { !isOwner &&
           <ButtonCustom
             onPress={ this.showActionSheet }
             accessibilityLabel={i18n.t('more')}
@@ -216,8 +205,8 @@ export default class ChannelActions extends Component {
           />
         }
         <ActionSheet
-          ref={o => this.ActionSheet = o}
-          title={title}
+          ref={this.setSheetRef}
+          title={i18n.t('actions')}
           options={this.getOptions()}
           onPress={this.handleSelection}
           cancelButtonIndex={0}
@@ -226,18 +215,3 @@ export default class ChannelActions extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-	wrapper: {
-    backgroundColor: '#FFF',
-    paddingLeft: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    height: 40,
-  },
-  icon: {
-    paddingLeft: 10,
-    color: '#888888',
-  },
-});

@@ -208,7 +208,7 @@ exports[`channel header component owner should render correctly 1`] = `
         }
       >
         <View
-          accessibilityLabel="Subscribe to this channel"
+          accessibilityLabel="Edit your channel settings"
           accessible={true}
           focusable={true}
           isTVSelectable={true}
@@ -246,7 +246,7 @@ exports[`channel header component owner should render correctly 1`] = `
             }
           >
              
-            SUBSCRIBE
+            Edit
              
           </Text>
         </View>

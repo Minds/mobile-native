@@ -14,13 +14,14 @@ import {
   observer,
 } from 'mobx-react/native'
 
-import { Icon } from 'react-native-elements';
-import { CommonStyle } from '../../../styles/Common';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { CommonStyle as CS } from '../../../styles/Common';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import testID from '../../../common/helpers/testID';
 import i18n from '../../../common/services/i18n.service';
 import logService from '../../../common/services/log.service';
+import { FLAG_VOTE } from '../../../common/Permissions';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -28,8 +29,9 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 /**
  * Thumb Up Action Component
  */
+export default
 @observer
-export default class ThumbUpAction extends Component {
+class ThumbUpAction extends Component {
 
   /**
    * Default Props
@@ -56,14 +58,18 @@ export default class ThumbUpAction extends Component {
 
     const count = entity[`thumbs:${this.direction}:count`];
 
+    const canVote = entity.can(FLAG_VOTE);
+
+    const color = canVote ? (this.voted ? CS.colorPrimary : CS.colorAction) : CS.colorLightGreyed;
+
     return (
       <TouchableOpacityCustom
-        style={[CommonStyle.flexContainer, CommonStyle.centered, this.props.orientation == 'column' ? CommonStyle.columnAlignCenter : CommonStyle.rowJustifyCenter ]}
+        style={[CS.flexContainer, CS.centered, this.props.orientation == 'column' ? CS.columnAlignCenter : CS.rowJustifyCenter ]}
         onPress={this.toggleThumb}
         {...testID(`Thumb ${this.direction} activity button`)}
       >
-        <Icon color={this.voted ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={this.iconName} size={this.props.size} />
-        <Counter size={this.props.size * 0.75} count={count} orientation={this.props.orientation} {...testID(`Thumb ${this.direction} count`)}/>
+        <Icon style={[color, CS.marginRight]} name={this.iconName} size={this.props.size} />
+        <Counter size={this.props.size * 0.70} count={count} orientation={this.props.orientation} {...testID(`Thumb ${this.direction} count`)}/>
       </TouchableOpacityCustom>
     );
   }
@@ -76,6 +82,9 @@ export default class ThumbUpAction extends Component {
    * Toggle thumb
    */
   toggleThumb = async () => {
+
+    if (!this.props.entity.can(FLAG_VOTE, true)) return;
+
     try {
       await this.props.entity.toggleVote(this.direction);
     } catch (err) {

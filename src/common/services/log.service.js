@@ -1,12 +1,10 @@
-import deviceLog, {LogView, InMemoryAdapter} from 'react-native-device-log';
+import deviceLog from 'react-native-device-log';
 import * as stacktraceParser from "stacktrace-parser";
 
 import AsyncStorage from '@react-native-community/async-storage';
-import storageService from './storage.service';
-import settingsService from '../../settings/SettingsService'
 import settingsStore from '../../settings/SettingsStore';
 import * as Sentry from '@sentry/react-native';
-import { isNetworkFail } from '../helpers/abortableFetch';
+import { isNetworkFail, isAbort } from '../helpers/abortableFetch';
 import { ApiError } from './api.service';
 import { isUserError } from '../UserError';
 
@@ -77,20 +75,20 @@ class LogService {
       prepend = null;
     }
 
-    if (!isNetworkFail(error) && !isUserError(error) && (!this.isApiError(error) || this.isUnexpectedError(error))) {
+    if (!isNetworkFail(error) && !isUserError(error) && !isAbort(error) && (!this.isApiError(error) || this.isUnexpectedError(error))) {
       // report the issue to sentry
       Sentry.captureException(error);
-    }
 
-    let stack = null;
-    if (__DEV__) {
-      stack = parseErrorStack(error);
-    }
-    if (stack) {
-      deviceLog.rnerror(false, (prepend ? `${prepend} ` : '') + error.message, stack);
-      if (__DEV__) console.log(error);
-    } else {
-      deviceLog.error((prepend ? `${prepend} ` : '') + String(error));
+      let stack = null;
+      if (__DEV__) {
+        stack = parseErrorStack(error);
+      }
+      if (stack) {
+        deviceLog.rnerror(false, (prepend ? `${prepend} ` : '') + error.message, stack);
+        if (__DEV__) console.log(error);
+      } else {
+        deviceLog.error((prepend ? `${prepend} ` : '') + String(error));
+      }
     }
   }
 }

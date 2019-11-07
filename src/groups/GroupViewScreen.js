@@ -38,6 +38,7 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import FeedList from '../common/components/FeedList';
+import { FLAG_CREATE_POST, FLAG_APPOINT_MODERATOR, FLAG_VIEW } from '../common/Permissions';
 
 /**
  * Groups view screen
@@ -81,19 +82,10 @@ export default class GroupViewScreen extends Component {
   }
 
   /**
-   * On component will mount
+   * Load initial data
    */
-  async componentWillMount() {
+  async initialLoad() {
     const params = this.props.navigation.state.params;
-
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      const params = this.props.navigation.state.params;
-      if (params && params.prepend) {
-        this.props.groupView.prepend(params.prepend);
-        // we clear the parameter to prevent prepend it again on goBack
-        this.props.navigation.setParams({prepend: null});
-      }
-    });
 
     if (params.group) {
       // load group and update async
@@ -110,18 +102,37 @@ export default class GroupViewScreen extends Component {
       // load feed
       this.props.groupView.loadFeed();
     }
+
+    // check permissions
+    if (!this.props.groupView.group.can(FLAG_VIEW, true)) {
+      this.props.navigation.goBack();
+      return;
+    }
+
     this.props.groupView.loadTopMembers();
   }
 
   componentDidMount() {
-    const navParams = this.props.navigation.state.params;
+    const params = this.props.navigation.state.params;
 
-    if (navParams && navParams.prepend) {
-      this.props.groupView.prepend(navParams.prepend);
+    // load data async
+    this.initialLoad();
+
+    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+      const params = this.props.navigation.state.params;
+      if (params && params.prepend) {
+        this.props.groupView.prepend(params.prepend);
+        // we clear the parameter to prevent prepend it again on goBack
+        this.props.navigation.setParams({prepend: null});
+      }
+    });
+
+    if (params && params.prepend) {
+      this.props.groupView.prepend(params.prepend);
     }
 
-    if (navParams.tab && this.headerRef) {
-      this.headerRef.wrappedInstance.onTabChange(navParams.tab)
+    if (params.tab && this.headerRef) {
+      this.headerRef.wrappedInstance.onTabChange(params.tab)
     }
   }
 
@@ -225,18 +236,23 @@ export default class GroupViewScreen extends Component {
    */
   memberMenuPress = (member) => {
 
+    const group = this.props.groupView.group;
     const memberActions = [ i18n.t('cancel') ];
-    const imOwner = this.props.groupView.group['is:owner'];
-    const imModerator = this.props.groupView.group['is:moderator'];
+    const imOwner = group['is:owner'];
+    const imModerator = group['is:moderator'];
 
     if (imOwner) {
       if (member['is:owner']) {
         memberActions.push( i18n.t('groups.removeOwner') );
       } else if (!member['is:moderator']) {
         memberActions.push( i18n.t('groups.makeOwner') );
-        memberActions.push( i18n.t('groups.makeModerator') );
+        if (group.can(FLAG_APPOINT_MODERATOR)) {
+          memberActions.push( i18n.t('groups.makeModerator') );
+        }
       } else {
-        memberActions.push( i18n.t('groups.removeModerator') );
+        if (group.can(FLAG_APPOINT_MODERATOR)) {
+          memberActions.push( i18n.t('groups.removeModerator') );
+        }
       }
     }
 
@@ -260,7 +276,7 @@ export default class GroupViewScreen extends Component {
     return (
       <GroupUser
         store={this.props.groupView}
-        entity={row}
+        row={row}
         navigation={this.props.navigation}
         onRightIconPress={this.memberMenuPress}
         isOwner={this.props.groupView.group['is:owner']}
@@ -315,9 +331,18 @@ export default class GroupViewScreen extends Component {
   render() {
     const group = this.props.groupView.group;
 
+
     if (!group) {
       return <CenteredLoading/>
     }
+
+    // check async update of permissions
+    if (!group.can(FLAG_VIEW, true)) {
+      this.props.navigation.goBack();
+      return null;
+    }
+
+    const showPosterFab = this.props.groupView.tab === 'feed' && group.can(FLAG_CREATE_POST);
 
     const memberActionSheet = this.state.memberActions ?
       <ActionSheet
@@ -331,7 +356,7 @@ export default class GroupViewScreen extends Component {
 
     return (
       <View style={CS.flexContainer}>
-        {this.props.groupView.tab === 'feed' && <CaptureFab navigation={this.props.navigation} group={group} /> }
+        {showPosterFab && <CaptureFab navigation={this.props.navigation} group={group} /> }
         {this.getList()}
         {memberActionSheet}
       </View>

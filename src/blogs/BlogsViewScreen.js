@@ -47,6 +47,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
+import { FLAG_VIEW } from '../common/Permissions';
 
 /**
  * Blog View Screen
@@ -100,12 +101,18 @@ export default class BlogsViewScreen extends Component {
         this.props.blogsView.reset();
         let guid;
         if (params.slug) {
-          guid = params.slug.substr(params.slug.lastIndexOf('-')+1);
+          guid = params.slug.substr(params.slug.lastIndexOf('-') + 1);
         } else {
           guid = params.guid;
         }
 
         await this.props.blogsView.loadBlog(guid);
+      }
+
+      // check permissions
+      if (!this.props.blogsView.blog.can(FLAG_VIEW, true)) {
+        this.props.navigation.goBack();
+        return;
       }
 
       if (this.props.blogsView.blog && this.props.blogsView.blog._list) {
@@ -144,12 +151,10 @@ export default class BlogsViewScreen extends Component {
     const blog = this.props.blogsView.blog;
 
     const actions = (
-      <View style={[CS.flexContainer, CS.paddingLeft2x]}>
-        <View style={styles.actionsContainer}>
-          <RemindAction entity={blog} size={16} navigation={this.props.navigation} vertical={true}/>
-          <ThumbUpAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
-          <ThumbDownAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
-        </View>
+      <View style={[CS.rowJustifyStart]}>
+        <RemindAction entity={blog} navigation={this.props.navigation}/>
+        <ThumbUpAction entity={blog} />
+        <ThumbDownAction entity={blog} />
       </View>
     )
     const image = blog.getBannerSource();
@@ -166,10 +171,11 @@ export default class BlogsViewScreen extends Component {
         <Text style={styles.title}>{blog.title}</Text>
         {optMenu}
         <View style={styles.ownerBlockContainer}>
-          <OwnerBlock entity={blog} navigation={this.props.navigation} rightToolbar={actions}>
+          <OwnerBlock entity={blog} navigation={this.props.navigation}>
             <Text style={styles.timestamp}>{formatDate(blog.time_created)}</Text>
           </OwnerBlock>
         </View>
+        {actions}
         <View style={styles.description}>
           {blog.description ?
             <BlogViewHTML html={blog.description} /> :
@@ -244,6 +250,12 @@ export default class BlogsViewScreen extends Component {
     } else {
       // force observe on description
       const desc = this.props.blogsView.blog.description;
+    }
+
+    // check async update of permissions
+    if (!this.props.blogsView.blog.can(FLAG_VIEW, true)) {
+      this.props.navigation.goBack();
+      return null;
     }
 
     return (

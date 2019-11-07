@@ -9,25 +9,41 @@ exports[`Thumb action component renders correctly 1`] = `
         "flex": 1,
       },
       Object {
+        "alignContent": "center",
+        "alignItems": "center",
+        "alignSelf": "center",
+        "justifyContent": "center",
+      },
+      Object {
         "flexDirection": "row",
         "justifyContent": "center",
       },
-      null,
     ]
   }
   testID="Remind activity button"
 >
   <Icon
-    color="rgb(96, 125, 139)"
+    allowFontScaling={false}
     name="repeat"
-    raised={false}
-    reverse={false}
-    reverseColor="white"
     size={20}
-    underlayColor="white"
+    style={
+      Array [
+        Object {
+          "color": "rgb(96, 125, 139)",
+        },
+        Object {
+          "marginRight": 5,
+        },
+      ]
+    }
   />
   <Counter
-    size={15}
+    size={14}
+    style={
+      Object {
+        "color": "rgb(96, 125, 139)",
+      }
+    }
   />
 </PreventDoubleTap>
 `;
