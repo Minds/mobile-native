@@ -272,6 +272,7 @@ export default class ActivityModel extends BaseModel {
     this.message = message
     this.edited  = 1;
   }
+
 }
 
 /**
