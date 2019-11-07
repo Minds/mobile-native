@@ -1,15 +1,16 @@
 import 'react-native';
 import React from 'react';
-import { Platform, CameraRoll, TouchableOpacity } from "react-native";
+import { Platform, TouchableOpacity } from "react-native";
 import { shallow, render } from 'enzyme';
+import CameraRoll from '@react-native-community/cameraroll';
+
 import androidPermission from '../../src/common/services/android-permissions.service';
 import { getPhotosFaker } from '../../__mocks__/fake/CameraRollFaker';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
 jest.mock('../../src/common/services/android-permissions.service');
-//jest.mock('TouchableOpacity', () => 'TouchableOpacity' )
-jest.mock('CameraRoll');
+jest.mock('@react-native-community/cameraroll');
 CameraRoll.getPhotos = jest.fn();
 // fake camera roll data
 const response = getPhotosFaker(5);

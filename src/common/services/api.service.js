@@ -1,8 +1,8 @@
 import Cancelable from 'promise-cancelable';
+import { NativeModules } from 'react-native';
 
 import session from './session.service';
 import { MINDS_API_URI, MINDS_URI_SETTINGS, NETWORK_TIMEOUT } from '../../config/Config';
-import { btoa } from 'abab';
 
 import abortableFetch from '../helpers/abortableFetch';
 import { Version } from '../../config/Version';
@@ -13,35 +13,49 @@ import logService from './log.service';
  */
 export class ApiError extends Error {
   constructor(...args) {
-      super(...args)
+    super(...args);
   }
 }
 
 export const isApiError = function(err) {
   return err instanceof ApiError;
-}
+};
 
 /**
  * Api service
  */
 class ApiService {
+  /**
+   * Clear cookies
+   */
+  clearCookies() {
+    return new Promise(success => {
+      NativeModules.Networking.clearCookies(success);
+    });
+  }
 
+  /**
+   * Build headers
+   */
   buildHeaders() {
-    const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
-      accessToken = session.token,
-      headers = {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'App-Version': Version.VERSION
-      };
+    const headers = {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'App-Version': Version.VERSION
+    };
 
-      if (session.token) {
-        headers.Authorization = 'Bearer ' + session.token;
-      }
+    if (session.token) {
+      headers.Authorization = 'Bearer ' + session.token;
+    }
 
     return headers;
   }
 
+  /**
+   * Build url
+   * @param {string} url
+   * @param {any} params
+   */
   buildUrl(url, params = {}) {
     if (!params) {
       params = {};
@@ -54,6 +68,7 @@ class ApiService {
 
     return `${url}${sep}${paramsString}`
   }
+
 
   getParamsString(params) {
     return Object.keys(params).map(k => {
