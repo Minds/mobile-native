@@ -254,7 +254,7 @@ exports[`Channel screen component should renders correctly 1`] = `
           }
           hasRewards={0}
         />
-        <SafeAreaView
+        <ForwardRef(_SafeAreaView)
           style={
             Object {
               "left": 0,
@@ -273,7 +273,7 @@ exports[`Channel screen component should renders correctly 1`] = `
             size={22}
             underlayColor="white"
           />
-        </SafeAreaView>
+        </ForwardRef(_SafeAreaView)>
       </View>
     }
     navigation={

@@ -39,7 +39,7 @@ export default class DiscoveryUser extends Component {
   _navToChannel = () => {
     Keyboard.dismiss();
     if (this.props.navigation) {
-      this.props.navigation.push('Channel', { entity: this.props.entity.item });
+      this.props.navigation.push('Channel', { guid: this.props.entity.item.guid });
     }
   }
 

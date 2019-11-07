@@ -4,19 +4,18 @@ import React, {
 
 import {
   View,
-  Dimensions,
-  Image,
-  StatusBar,
   StyleSheet,
+  Dimensions,
   Platform,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import PhotoView from 'react-native-photo-view';
+// import PhotoView from 'react-native-photo-view';
 
 import { CommonStyle } from '../styles/Common';
 import testID from '../common/helpers/testID';
+import ImageViewer from '../common/components/ImageViewer';
 
 /**
  * Full screen image viewer
@@ -24,21 +23,30 @@ import testID from '../common/helpers/testID';
 export default class ViewImageScreen extends Component {
 
   static navigationOptions = ({ navigation }) => ({
-    header: (
-      <View style={styles.header}>
-        <Icon
-          size={36}
-          name="ios-close"
-          onPress={() => navigation.goBack()}
-          style={styles.iconclose}
-          {...testID('Go back button')}
-        />
-      </View>
-    ),
     transitionConfig: {
       isModal: true
     }
-  })
+  });
+
+  constructor(props) {
+    super(props);
+
+    const custom_data = this.props.navigation.state.params.entity.custom_data;
+
+    const width = Dimensions.get('window').width;
+
+    let height = 300;
+
+    if (custom_data && custom_data[0].height && custom_data[0].height != '0') {
+      let ratio = custom_data[0].height / custom_data[0].width;
+      height = width * ratio;
+    }
+
+    this.state = {
+      width,
+      height,
+    };
+  }
 
   getSource() {
     return this.props.navigation.state.params.source;
@@ -49,12 +57,13 @@ export default class ViewImageScreen extends Component {
     const source = this.getSource();
 
     return (
-      <PhotoView
-        source={source}
-        minimumZoomScale={1}
-        maximumZoomScale={3}
-        androidScaleType="fitCenter"
-        style={[CommonStyle.flexContainer, CommonStyle.backgroundBlack]} />
+      <View style={[CommonStyle.flexContainerCenter, CommonStyle.alignCenter, CommonStyle.backgroundBlack]}>
+        <ImageViewer
+          source={source}
+          width={this.state.width}
+          height={this.state.height}
+        />
+      </View>
     )
   }
 }

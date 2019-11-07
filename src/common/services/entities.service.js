@@ -224,11 +224,11 @@ class EntitiesService {
    * @param {Object} entity
    */
   cleanEntity(entity: Object) {
-    if (entity['thumbs:up:user_guids']) {
+    if (entity['thumbs:up:user_guids'] && Array.isArray(entity['thumbs:up:user_guids'])) {
       entity['thumbs:up:user_guids'] = entity['thumbs:up:user_guids'].filter((guid: string): boolean => guid == sessionService.guid);
     }
 
-    if (entity['thumbs:down:user_guids']) {
+    if (entity['thumbs:down:user_guids'] && Array.isArray(entity['thumbs:down:user_guids'])) {
       entity['thumbs:down:user_guids'] = entity['thumbs:down:user_guids'].filter((guid: string): boolean => guid == sessionService.guid);
     }
   }

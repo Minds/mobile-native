@@ -52,7 +52,7 @@ export default class MessengerScreen extends Component {
   /**
    * On component will mount
    */
-  componentWillMount() {
+  componentDidMount() {
 
     this.props.messengerList.loadList();
 

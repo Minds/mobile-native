@@ -1,6 +1,5 @@
 import 'react-native';
 import React from 'react';
-//import { Platform, CameraRoll, TouchableOpacity } from "react-native";
 import { shallow } from 'enzyme';
 import ChannelScreen from '../../src/channel/ChannelScreen';
 import { activitiesServiceFaker } from '../../__mocks__/fake/ActivitiesFaker';

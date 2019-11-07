@@ -12,6 +12,7 @@ import logService from './src/common/services/log.service';
 import * as Sentry from '@sentry/react-native';
 import { isAbort, isNetworkFail } from './src/common/helpers/abortableFetch';
 import { isApiError } from './src/common/services/api.service';
+import { isUserError } from './src/common/UserError';
 
 
 // Init Sentry (if not running test)
@@ -31,6 +32,10 @@ if (process.env.JEST_WORKER_ID === undefined) {
         }
         // ignore aborts
         if (isAbort(hint.originalException)) {
+          return null;
+        }
+        // ignore user errors
+        if (isUserError(hint.originalException)) {
           return null;
         }
         // only log api 500 errors

@@ -146,14 +146,8 @@ export default class SettingsScreen extends Component {
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
           authService.logout();
-          const loginAction = StackActions.reset({
-            index: 0,
-            actions: [
-              NavigationActions.navigate({ routeName: 'Login' })
-            ]
-          })
 
-          this.props.navigation.dispatch(loginAction);
+          this.props.navigation.navigate( 'Login');
         }
       },
       {
@@ -168,13 +162,15 @@ export default class SettingsScreen extends Component {
         icon: (<Icon name='warning' size={ICON_SIZE} style={ styles.icon } />),
         onPress: this.wipeEthereumKeychainAction
       },
-      {
-        name: i18n.t('settings.logs'),
-        icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
-        onPress: () => {
-          this.props.navigation.push('Logs');
-        }
-      },
+
+      // ListView used by log package is deprecated
+      // {
+      //   name: i18n.t('settings.logs'),
+      //   icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
+      //   onPress: () => {
+      //     this.props.navigation.push('Logs');
+      //   }
+      // },
       {
         name: i18n.t('settings.logOnlyErrors'),
         icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
