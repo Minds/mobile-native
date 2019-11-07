@@ -202,6 +202,8 @@ class EntitiesService {
       for (const entity of response.entities) {
         this.addEntity(entity);
       }
+
+      return response.entities;
     } catch (err) {
 
       // if the server response is a 403
