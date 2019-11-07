@@ -14,6 +14,7 @@ import { observer } from 'mobx-react/native'
 import { MINDS_CDN_URI } from '../../config/Config';
 
 import * as Sentry from '@sentry/react-native';
+import { FLAG_MESSAGE } from '../../common/Permissions';
 
 /**
  * Conversation Component
@@ -25,7 +26,7 @@ export default class ConversationView extends Component {
    * Navigate To conversation
    */
   _navToConversation = () => {
-    if (this.props.navigation) {
+    if (this.props.navigation && this.props.item.can(FLAG_MESSAGE)) {
       this.props.navigation.push('Conversation', { conversation: this.props.item });
     }
   }
