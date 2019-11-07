@@ -32,23 +32,19 @@ import DiscoveryTile from './DiscoveryTile';
 import DiscoveryUser from './DiscoveryUser';
 import Activity from '../newsfeed/activity/Activity';
 import SearchView from '../common/components/SearchView';
-import CenteredLoading from '../common/components/CenteredLoading';
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
 import stores from '../../AppStores';
 import CaptureFab from '../capture/CaptureFab';
-import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
+import { GOOGLE_PLAY_STORE } from '../config/Config';
 import ErrorLoading from '../common/components/ErrorLoading';
-import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
 import GroupsListItem from '../groups/GroupsListItem'
 import DiscoveryFilters from './NewsfeedFilters';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
-
-const isIos = Platform.OS === 'ios';
 
 /**
  * Discovery screen
@@ -110,6 +106,11 @@ export default class DiscoveryScreen extends Component {
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       setTimeout(() => {
         this.setState({active: true});
+        const params = this.props.navigation.state.params;
+        if (params && params.query) {
+          this.setQ(params.query);
+          params.query = null; //clean query 
+        }
       }, 50);
     });
 
