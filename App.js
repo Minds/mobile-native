@@ -295,8 +295,7 @@ export default class App extends Component<Props, State> {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
           />
-          <FlashMessage renderCustomContent={this.renderNotification}
-           />
+          <FlashMessage renderCustomContent={this.renderNotification} />
         </ErrorBoundary>
       </Provider>
     );
@@ -310,7 +309,7 @@ export default class App extends Component<Props, State> {
     );
 
     const tosModal = (
-      <TosModal user={stores.user}/>
+      <TosModal user={stores.user} key="tosModal"/>
     )
 
     return [ app, keychainModal, blockchainTransactionModal,  tosModal];
