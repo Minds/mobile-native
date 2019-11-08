@@ -63,7 +63,7 @@ export default class MediaView extends Component {
     switch (type) {
       case 'image':
       case 'batch':
-        source = this.props.entity.getThumbSource('large');
+        source = this.props.entity.getThumbSource('xlarge');
         return this.getImage(source);
       case 'video':
         return this.getVideo();
