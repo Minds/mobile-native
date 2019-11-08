@@ -10,6 +10,10 @@ class ReceiveShareService {
    * Handle received data
    */
   handle() {
+    if (!RNFileShareIntent) {
+      return;
+    }
+
     RNFileShareIntent.getFilepath(async (text, type) => {
       RNFileShareIntent.clearFilePath();
       if (text && type) {
