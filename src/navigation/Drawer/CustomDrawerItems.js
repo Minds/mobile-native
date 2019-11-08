@@ -1,18 +1,15 @@
-import React, {
-  Component
-} from 'react';
+import React, {Component} from 'react';
 
 import Accordion from 'react-native-collapsible/Accordion';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import { FlatList } from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 import i18n from '../../common/services/i18n.service';
 import AuthService from '../../auth/AuthService';
-import { StackActions, NavigationActions } from 'react-navigation';
+import {StackActions, NavigationActions} from 'react-navigation';
 import ShareService from '../../share/ShareService';
 
 export default class CustomDrawerItems extends Component {
-
   state = {
     activeSections: [],
     pressedItem: null,
@@ -27,7 +24,7 @@ export default class CustomDrawerItems extends Component {
       headerText: i18n.t('moreScreen.invite'),
       onPress: () => {
         ShareService.invite(this.props.user.me.guid);
-      }
+      },
     },
     {
       isButton: true,
@@ -37,75 +34,83 @@ export default class CustomDrawerItems extends Component {
         AuthService.logout();
         const loginAction = StackActions.reset({
           index: 0,
-          actions: [
-            NavigationActions.navigate({ routeName: 'Login' })
-          ]
-        })
+          actions: [NavigationActions.navigate({routeName: 'Login'})],
+        });
         this.props.navigation.dispatch(loginAction);
-      }
+      },
     },
-  ]
+  ];
 
   navigateTo = pressedItem => {
-    this.setState({ pressedItem });
+    this.setState({pressedItem});
     this.props.navigation.navigate(pressedItem);
-  }
+  };
 
   /**
    * This is used for cases where section.options.title isn't present
    */
-  getHeaderText = (key) => {
+  getHeaderText = key => {
     if (key.includes('&')) {
       return key.replace(/([a-z0-9])(\&)([A-Z])/g, '$1 $2 $3');
     }
     return key.replace(/([a-z0-9])([A-Z])/g, '$1 $2');
-  }
+  };
 
   /**
    * Check if the section is active
    */
-  isActive = (section) => {
-    if (this.state.activeSections.length && this.state.activeSections.length > 0) {
+  isActive = section => {
+    if (
+      this.state.activeSections.length &&
+      this.state.activeSections.length > 0
+    ) {
       const activeSection = this.sections[this.state.activeSections[0]];
-      return activeSection.key == section.key;
+      return activeSection.key === section.key;
     }
     return false;
-  }
+  };
 
-  isPressed = (item) => {
+  isPressed = item => {
     if (this.state.pressedItem) {
-      return item == this.state.pressedItem;
+      return item === this.state.pressedItem;
     }
     return false;
-  }
+  };
 
   /**
    * Set the array from where we build items
    */
   _setSections = () => {
-    this.sections = [...Object.values(this.props.descriptors), ...this.sectionsButtons];
-  }
+    this.sections = [
+      ...Object.values(this.props.descriptors).filter(
+        ({key}) => key !== 'Main',
+      ),
+      ...this.sectionsButtons,
+    ];
+  };
 
   /**
-   * Get the title of the section and render an Icon if has childs items 
+   * Get the title of the section and render an Icon if has childs items
    */
   _renderHeader = section => {
-    return section.isButton ? this.renderButtonHeader(section) : this.renderScreenHeader(section);
+    return section.isButton
+      ? this.renderButtonHeader(section)
+      : this.renderScreenHeader(section);
   };
 
   renderScreenHeader = section => {
     const headerText = section.options.title || this.getHeaderText(section.key);
     const headerTextStyle = [styles.headerText];
-    const icon = this.isActive(section) ? "ios-arrow-up" : "ios-arrow-down";
+    const icon = this.isActive(section) ? 'ios-arrow-up' : 'ios-arrow-down';
 
     if (this.isPressed(section.key)) {
       headerTextStyle.push(styles.itemPressed);
     }
-    
+
     let header = (
       <View style={styles.header}>
         <Text style={headerTextStyle}>{headerText}</Text>
-        <IonIcon name={icon} size={ 14 } />
+        <IonIcon name={icon} size={14} />
       </View>
     );
 
@@ -119,7 +124,7 @@ export default class CustomDrawerItems extends Component {
       );
     }
     return header;
-  }
+  };
 
   renderButtonHeader = section => {
     const headerText = section.headerText;
@@ -135,22 +140,21 @@ export default class CustomDrawerItems extends Component {
           <Text style={headerTextStyle}>{headerText}</Text>
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
   /**
    * Render a FlatList for sections with childs items
    */
   _renderContent = section => {
-    if (!section.navigation || !section.navigation.router) return null;
+    if (!section.navigation || !section.navigation.router) {
+      return null;
+    }
 
     const items = Object.keys(section.navigation.router.childRouters);
     return (
       <View style={styles.content}>
-        <FlatList 
-          data={items}
-          renderItem={this.renderItemContent}
-        />
+        <FlatList data={items} renderItem={this.renderItemContent} />
       </View>
     );
   };
@@ -169,16 +173,15 @@ export default class CustomDrawerItems extends Component {
           <Text style={childTextStyles}> {item} </Text>
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
   _updateSections = activeSections => {
-    this.setState({ activeSections });
+    this.setState({activeSections});
   };
 
   render() {
     this._setSections();
-    const props = this.props;
     return (
       <Accordion
         sections={this.sections}
@@ -189,7 +192,6 @@ export default class CustomDrawerItems extends Component {
       />
     );
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -213,5 +215,5 @@ const styles = StyleSheet.create({
   },
   itemPressed: {
     color: '#4A90E2',
-  }
-})
+  },
+});

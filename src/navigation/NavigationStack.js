@@ -1,5 +1,6 @@
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
+import {createDrawerNavigator} from 'react-navigation-drawer';
 import LoadingScreen from '../LoadingScreen';
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
@@ -49,6 +50,7 @@ import {withErrorBoundaryScreen} from '../common/components/ErrorBoundary';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
+import {DrawerContentComponent} from './Drawer/DrawerContentComponent';
 
 /**
  * Main stack navigator
@@ -197,13 +199,30 @@ const Stack = createStackNavigator({
   },
 });
 
+const Drawer = createDrawerNavigator(
+  {
+    Main: {
+      screen: Stack,
+    },
+    Groups: {
+      screen: withErrorBoundaryScreen(GroupsListScreen),
+    },
+    BlogList: {
+      screen: withErrorBoundaryScreen(BlogsListScreen),
+    },
+  },
+  {
+    contentComponent: DrawerContentComponent,
+  },
+);
+
 /**
  * RootStack
  */
 const RootStack = createStackNavigator(
   {
-    Main: {
-      screen: Stack,
+    Drawer: {
+      screen: Drawer,
     },
     // modal screen
     Gathering: {

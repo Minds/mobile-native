@@ -31,6 +31,12 @@ export default class Topbar extends Component {
     this.props.wallet.refresh();
   }
 
+  openMenu = () => {
+    // Uncomment to enable drawer
+    // this.props.navigation.openDrawer();
+    this.props.navigation.navigate('More', { navigation: this.props.navigation });
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container} forceInset={forceInset}>
@@ -58,7 +64,7 @@ export default class Topbar extends Component {
             /> }
           </View>
 
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('More', { navigation: this.props.navigation })} {...testID('Main menu button')}>
+          <TouchableOpacity onPress={this.openMenu} {...testID('Main menu button')}>
             <View style={styles.topbarRight}>
               <Icon name="menu" size={22} color='#444' style={ styles.button }/>
             </View>
