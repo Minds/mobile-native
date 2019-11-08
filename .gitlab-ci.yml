@@ -18,7 +18,7 @@ test:jest:
    - yarn test
 
 build:android:
-  image: circleci/android:api-28-node@sha256:38591c473c01926977d258f522d987ae81d3b2851e604cd0126202e1f78b3bd8
+  image: circleci/android:api-28-node@sha256:92ffee5a1d98d856634e8b71132e8a95d96c83a63fde1099be3d86df3106def9
   stage: build
   before_script:
     - sudo sysctl fs.inotify.max_user_watches=524288
