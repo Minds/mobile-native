@@ -206,7 +206,7 @@ export default class BaseModel {
       this['thumbs:' + direction + ':user_guids'] = [sessionService.guid, ...guids];
     }
 
-    this['thumbs:' + direction + ':count'] += delta;
+    this['thumbs:' + direction + ':count'] = parseInt(this['thumbs:' + direction + ':count'], 10) + delta;
 
     const params = this.getClientMetadata();
 
@@ -220,7 +220,7 @@ export default class BaseModel {
       } else {
         this['thumbs:' + direction + ':user_guids'] = [sessionService.guid, ...guids];
       }
-      this['thumbs:' + direction + ':count'] -= delta;
+      this['thumbs:' + direction + ':count'] = parseInt(this['thumbs:' + direction + ':count'], 10) - delta;
       throw err;
     }
   }
