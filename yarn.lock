@@ -2983,6 +2983,11 @@ decompress@^4.0.0:
     pify "^2.3.0"
     strip-dirs "^2.0.0"
 
+deep-diff@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-1.0.2.tgz#afd3d1f749115be965e89c63edc7abb1506b9c26"
+  integrity sha512-aWS3UIVH+NPGCD1kki+DCU9Dua032iSsO43LqQpcs4R3+dVv7tX0qBGjiVHJHjplsoUM2XRO/KB92glqc68awg==
+
 deep-extend@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
@@ -5708,6 +5713,11 @@ lodash.range@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/lodash.range/-/lodash.range-3.2.0.tgz#f461e588f66683f7eadeade513e38a69a565a15d"
 
+lodash.set@^4.3.2:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
+  integrity sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
+
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -7581,6 +7591,14 @@ react-native-phone-input@thegamenicorus/react-native-phone-input#6ab1a91a09ddd42
     google-libphonenumber "^2.0.9"
     lodash "^4.17.4"
     prop-types "^15.5.10"
+
+react-native-plotly@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-plotly/-/react-native-plotly-3.0.0.tgz#3c05e4f372dd1c43f79f807d75630608260f651d"
+  integrity sha512-LVdfSMrvTxZc2IP3b3K1LBe+iO33oH2cfY+p4lLpjRwf7sqR01N7fwQHgOxMCllTR0tpKfTuhPS00R8AxjKqoQ==
+  dependencies:
+    deep-diff "^1.0.2"
+    lodash.set "^4.3.2"
 
 react-native-progress@^3.6.0:
   version "3.6.0"
