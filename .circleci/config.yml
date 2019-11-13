@@ -46,7 +46,7 @@ jobs:
 
   ios:
     macos:
-      xcode: "10.3"
+      xcode: "11.1.0"
     working_directory: ~/mobile-native
 
     # use a --login shell so our "set Ruby version" command gets picked up for later steps
