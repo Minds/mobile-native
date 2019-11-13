@@ -161,7 +161,7 @@ export default class NotificationsScreen extends Component {
   /**
    * Key extractor
    */
-  keyExtractor = (item, index) => `${item.time_created}:${item.from.guid}:${item.entity ? item.entity.guid : index}`
+  keyExtractor = (item, index) => `${item.time_created}:${item.from.guid}:${item.entity ? item.entity.guid + index : index}`
 
   /**
    * Clear and reload
