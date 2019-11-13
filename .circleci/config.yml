@@ -60,7 +60,7 @@ jobs:
           command: brew install getsentry/tools/sentry-cli
       - run:
           name: set Ruby version
-          command:  echo "ruby-2.4" > ~/.ruby-version
+          command:  echo "ruby-2.6" > ~/.ruby-version
 
       - restore_cache:
           key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
