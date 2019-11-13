@@ -49,6 +49,7 @@ import {withErrorBoundaryScreen} from '../common/components/ErrorBoundary';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
+import ReferralsScreen from '../share/ReferralsScreen';
 
 /**
  * Main stack navigator
@@ -152,6 +153,9 @@ const Stack = createStackNavigator({
   },
   Contributions: {
     screen: withErrorBoundaryScreen(ContributionsScreen),
+  },
+  Referrals: {
+    screen: withErrorBoundaryScreen(ReferralsScreen)
   },
   Transactions: {
     screen: withErrorBoundaryScreen(TransactionsScreen),

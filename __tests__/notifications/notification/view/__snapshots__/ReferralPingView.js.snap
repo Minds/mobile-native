@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+    }
+  }
+>
+  <Text
+    onPress={[Function]}
+  >
+    Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and 
+    <Text
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      someUser
+    </Text>
+     will earn tokens for your referral
+  </Text>
+</View>
+`;

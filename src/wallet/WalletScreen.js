@@ -118,13 +118,13 @@ export default class WalletScreen extends Component {
               </View>
             </TouchableOpacity>}
 
-            <TouchableOpacity style={styles.itemContainer} onPress={ () => shareService.invite(this.props.user.me.guid)} >
+            <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Referrals')} >
               <View style={styles.iconContainer}>
                 <Icon name="share" size={24} style={ styles.icon } />
               </View>
               <View style={styles.item}>
-                <Text style={styles.title}>{i18n.t('wallet.inviteFriend')}</Text>
-                <Text style={styles.subtitle}>{i18n.t('wallet.inviteFriendDescription')}</Text>
+                <Text style={styles.title}>{i18n.t('referrals.referralsTitle')}</Text>
+                <Text style={styles.subtitle}>{i18n.t('referrals.referralsTitleDescription')}</Text>
               </View>
             </TouchableOpacity>
           </View>

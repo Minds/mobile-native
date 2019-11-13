@@ -45,12 +45,16 @@ import WelcomePointsView from './view/WelcomePointsView';
 import WireHappenedView from './view/WireHappenedView';
 import ReportActionedView from './view/ReportActionedView';
 import MessengerInviteView from './view/MessengerInviteView';
+import ReferralRegisteredView from './view/ReferralRegisteredView';
 
 import styles from './style';
 import RewardsStateIncreaseView from "./view/RewardsStateIncreaseView";
 import RewardsStateDecreaseView from "./view/RewardsStateDecreaseView";
 import RewardsStateDecreaseTodayView from "./view/RewardStateDecreaseTodayView";
 import RewardsSummaryView from "./view/RewardsSummaryView";
+import ReferralWalletJoinView from './view/ReferralWalletJoinView';
+import ReferralPingView from './view/ReferralPingView';
+
 
 /**
  * Main Notification row Component
@@ -209,6 +213,15 @@ export default class Notification extends Component {
       case "rewards_summary":
         return <RewardsSummaryView navigation={this.props.navigation} styles={styles} amount={entity.params.amount}/>
 
+      case "referral_pending":
+        return <ReferralRegisteredView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "referral_complete":
+        return <ReferralWalletJoinView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "referral_ping":
+        return <ReferralPingView  entity={entity} navigation={this.props.navigation} styles={styles} />
+  
       default:
         return (
           <View style={styles.bodyContents}>

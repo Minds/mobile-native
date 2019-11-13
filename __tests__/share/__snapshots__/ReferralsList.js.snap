@@ -1,0 +1,814 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`referrals list screen component should renders correctly 1`] = `
+<RCTScrollView
+  ListEmptyComponent={<View />}
+  ListHeaderComponent={
+    <View
+      style={
+        Object {
+          "paddingTop": 5,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+            },
+            Object {
+              "borderBottomColor": "#ececec",
+              "borderBottomWidth": 1,
+              "paddingBottom": 16,
+              "paddingLeft": 8,
+              "paddingRight": 8,
+              "paddingTop": 16,
+            },
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "flex": 5,
+                "fontSize": 10,
+                "fontWeight": "800",
+              },
+            ]
+          }
+        >
+          Username
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "flex": 2,
+                "fontSize": 10,
+                "fontWeight": "800",
+              },
+            ]
+          }
+        >
+          Status
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "flex": 3,
+                "fontSize": 10,
+                "fontWeight": "800",
+              },
+            ]
+          }
+        >
+          Rewards Signup
+        </Text>
+      </View>
+    </View>
+  }
+  data={
+    Array [
+      Object {
+        "guid": "",
+        "join_timestamp": 0,
+        "ping_timestamp": 1563807625000,
+        "pingable": false,
+        "prospect": Object {
+          "access_id": "2",
+          "allow_comments": false,
+          "ban_reason": false,
+          "banned": "no",
+          "boostProPlus": false,
+          "boost_autorotate": true,
+          "boost_rating": 1,
+          "briefdescription": "",
+          "canary": false,
+          "categories": Array [],
+          "city": false,
+          "container_guid": "0",
+          "disabled_boost": false,
+          "dob": false,
+          "eth_wallet": "",
+          "fb": false,
+          "feature_flags": false,
+          "featured_id": false,
+          "founder": false,
+          "gender": false,
+          "guid": "1000054646431031307",
+          "hashtags": false,
+          "icontime": "1563807607",
+          "is_admin": false,
+          "is_mature": false,
+          "language": "en",
+          "last_accepted_tos": 1558597098,
+          "last_avatar_upload": "0",
+          "legacy_guid": false,
+          "mature": 0,
+          "mature_lock": false,
+          "merchant": false,
+          "monetized": false,
+          "name": "juanmsolaro_test6",
+          "nsfw": Array [],
+          "nsfw_lock": Array [],
+          "onchain_booster": 0,
+          "opted_in_hashtags": 6,
+          "owner_guid": "0",
+          "p2p_media_enabled": false,
+          "pinned_posts": Array [],
+          "plus": false,
+          "programs": Array [],
+          "rating": 1,
+          "rewards": true,
+          "signup_method": false,
+          "site_guid": false,
+          "social_profiles": Array [],
+          "subscribed": false,
+          "subscriber": true,
+          "subtype": false,
+          "tags": Array [],
+          "theme": false,
+          "time_created": "1563807607",
+          "time_updated": false,
+          "toaster_notifications": true,
+          "type": "user",
+          "urn": "urn:user:1000054646431031307",
+          "username": "juanmsolaro_test6",
+          "verified": false,
+          "website": false,
+          "wire_rewards": null,
+        },
+        "referrer_guid": "968187695744425997",
+        "register_timestamp": 1563807608000,
+        "state": "pending",
+      },
+      Object {
+        "guid": "",
+        "join_timestamp": 0,
+        "ping_timestamp": 1563807336000,
+        "pingable": false,
+        "prospect": Object {
+          "access_id": "2",
+          "allow_comments": false,
+          "ban_reason": false,
+          "banned": "no",
+          "boostProPlus": false,
+          "boost_autorotate": true,
+          "boost_rating": 1,
+          "briefdescription": "",
+          "canary": false,
+          "categories": Array [],
+          "city": false,
+          "container_guid": "0",
+          "disabled_boost": false,
+          "dob": false,
+          "eth_wallet": "",
+          "fb": false,
+          "feature_flags": false,
+          "featured_id": false,
+          "founder": false,
+          "gender": false,
+          "guid": "1000053388060139527",
+          "hashtags": false,
+          "icontime": "1563807307",
+          "is_admin": false,
+          "is_mature": false,
+          "language": "en",
+          "last_accepted_tos": 1558597098,
+          "last_avatar_upload": "0",
+          "legacy_guid": false,
+          "mature": 0,
+          "mature_lock": false,
+          "merchant": false,
+          "monetized": false,
+          "name": "juanmsolaro_test5",
+          "nsfw": Array [],
+          "nsfw_lock": Array [],
+          "onchain_booster": 0,
+          "opted_in_hashtags": 0,
+          "owner_guid": "0",
+          "p2p_media_enabled": false,
+          "pinned_posts": Array [],
+          "plus": false,
+          "programs": Array [],
+          "rating": 1,
+          "rewards": true,
+          "signup_method": false,
+          "site_guid": false,
+          "social_profiles": Array [],
+          "subscribed": false,
+          "subscriber": true,
+          "subtype": false,
+          "tags": Array [],
+          "theme": false,
+          "time_created": "1563807307",
+          "time_updated": false,
+          "toaster_notifications": true,
+          "type": "user",
+          "urn": "urn:user:1000053388060139527",
+          "username": "juanmsolaro_test5",
+          "verified": false,
+          "website": false,
+          "wire_rewards": null,
+        },
+        "referrer_guid": "968187695744425997",
+        "register_timestamp": 1563807308000,
+        "state": "pending",
+      },
+      Object {
+        "guid": "",
+        "join_timestamp": 0,
+        "ping_timestamp": 1563718223000,
+        "pingable": false,
+        "prospect": Object {
+          "access_id": "2",
+          "allow_comments": false,
+          "ban_reason": false,
+          "banned": "no",
+          "boostProPlus": false,
+          "boost_autorotate": true,
+          "boost_rating": 1,
+          "briefdescription": "",
+          "canary": false,
+          "categories": Array [],
+          "city": false,
+          "container_guid": "0",
+          "disabled_boost": false,
+          "dob": false,
+          "eth_wallet": "",
+          "fb": false,
+          "feature_flags": false,
+          "featured_id": false,
+          "founder": false,
+          "gender": false,
+          "guid": "998950563171278864",
+          "hashtags": false,
+          "icontime": "1563544373",
+          "is_admin": false,
+          "is_mature": false,
+          "language": "en",
+          "last_accepted_tos": 1558597098,
+          "last_avatar_upload": "0",
+          "legacy_guid": false,
+          "mature": 0,
+          "mature_lock": false,
+          "merchant": false,
+          "monetized": false,
+          "name": "juanmsolaro_test4",
+          "nsfw": Array [],
+          "nsfw_lock": Array [],
+          "onchain_booster": 0,
+          "opted_in_hashtags": 0,
+          "owner_guid": "0",
+          "p2p_media_enabled": false,
+          "pinned_posts": Array [],
+          "plus": false,
+          "programs": Array [],
+          "rating": 1,
+          "rewards": false,
+          "signup_method": false,
+          "site_guid": false,
+          "social_profiles": Array [],
+          "subscribed": false,
+          "subscriber": true,
+          "subtype": false,
+          "tags": Array [],
+          "theme": false,
+          "time_created": "1563544373",
+          "time_updated": false,
+          "toaster_notifications": true,
+          "type": "user",
+          "urn": "urn:user:998950563171278864",
+          "username": "juanmsolaro_test4",
+          "verified": false,
+          "website": false,
+          "wire_rewards": null,
+        },
+        "referrer_guid": "968187695744425997",
+        "register_timestamp": 1563544374000,
+        "state": "pending",
+      },
+      Object {
+        "guid": "",
+        "join_timestamp": 1563471531000,
+        "ping_timestamp": 1563469457000,
+        "pingable": false,
+        "prospect": Object {
+          "access_id": "2",
+          "allow_comments": false,
+          "ban_reason": false,
+          "banned": "no",
+          "boostProPlus": false,
+          "boost_autorotate": true,
+          "boost_rating": 1,
+          "briefdescription": "",
+          "canary": false,
+          "categories": Array [],
+          "city": false,
+          "container_guid": "0",
+          "disabled_boost": false,
+          "dob": false,
+          "eth_wallet": "",
+          "fb": false,
+          "feature_flags": false,
+          "featured_id": false,
+          "founder": false,
+          "gender": false,
+          "guid": "998594694852124673",
+          "hashtags": false,
+          "icontime": "1563459528",
+          "is_admin": false,
+          "is_mature": false,
+          "language": "en",
+          "last_accepted_tos": 1558597098,
+          "last_avatar_upload": "0",
+          "legacy_guid": false,
+          "mature": 0,
+          "mature_lock": false,
+          "merchant": false,
+          "monetized": false,
+          "name": "Juanmsolaro_test3",
+          "nsfw": Array [],
+          "nsfw_lock": Array [],
+          "onchain_booster": 0,
+          "opted_in_hashtags": 0,
+          "owner_guid": "0",
+          "p2p_media_enabled": false,
+          "pinned_posts": Array [],
+          "plus": false,
+          "programs": Array [],
+          "rating": 1,
+          "rewards": true,
+          "signup_method": false,
+          "site_guid": false,
+          "social_profiles": Array [],
+          "subscribed": false,
+          "subscriber": true,
+          "subtype": false,
+          "tags": Array [],
+          "theme": false,
+          "time_created": "1563459528",
+          "time_updated": false,
+          "toaster_notifications": true,
+          "type": "user",
+          "urn": "urn:user:998594694852124673",
+          "username": "juanmsolaro_test3",
+          "verified": false,
+          "website": false,
+          "wire_rewards": null,
+        },
+        "referrer_guid": "968187695744425997",
+        "register_timestamp": 1563459528000,
+        "state": "complete",
+      },
+    ]
+  }
+  disableVirtualization={false}
+  getItem={[Function]}
+  getItemCount={[Function]}
+  horizontal={false}
+  initialNumToRender={10}
+  keyExtractor={[Function]}
+  maxToRenderPerBatch={10}
+  numColumns={1}
+  onContentSizeChange={[Function]}
+  onEndReached={[Function]}
+  onEndReachedThreshold={2}
+  onLayout={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onRefresh={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  refreshControl={
+    <RefreshControlMock
+      onRefresh={[Function]}
+      refreshing={false}
+    />
+  }
+  refreshing={false}
+  removeClippedSubviews={false}
+  renderItem={[Function]}
+  scrollEventThrottle={50}
+  stickyHeaderIndices={Array []}
+  style={
+    Array [
+      Object {
+        "flex": 1,
+      },
+      Object {
+        "backgroundColor": "white",
+      },
+    ]
+  }
+  updateCellsBatchingPeriod={50}
+  viewabilityConfigCallbackPairs={Array []}
+  windowSize={21}
+>
+  <RCTRefreshControl />
+  <View>
+    <View
+      onLayout={[Function]}
+    >
+      <View
+        style={
+          Object {
+            "paddingTop": 5,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "flex-start",
+              },
+              Object {
+                "borderBottomColor": "#ececec",
+                "borderBottomWidth": 1,
+                "paddingBottom": 16,
+                "paddingLeft": 8,
+                "paddingRight": 8,
+                "paddingTop": 16,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "flex": 5,
+                  "fontSize": 10,
+                  "fontWeight": "800",
+                },
+              ]
+            }
+          >
+            Username
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "flex": 2,
+                  "fontSize": 10,
+                  "fontWeight": "800",
+                },
+              ]
+            }
+          >
+            Status
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "flex": 3,
+                  "fontSize": 10,
+                  "fontWeight": "800",
+                },
+              ]
+            }
+          >
+            Rewards Signup
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <ReferralsRow
+        item={
+          Object {
+            "guid": "",
+            "join_timestamp": 0,
+            "ping_timestamp": 1563807625000,
+            "pingable": false,
+            "prospect": Object {
+              "access_id": "2",
+              "allow_comments": false,
+              "ban_reason": false,
+              "banned": "no",
+              "boostProPlus": false,
+              "boost_autorotate": true,
+              "boost_rating": 1,
+              "briefdescription": "",
+              "canary": false,
+              "categories": Array [],
+              "city": false,
+              "container_guid": "0",
+              "disabled_boost": false,
+              "dob": false,
+              "eth_wallet": "",
+              "fb": false,
+              "feature_flags": false,
+              "featured_id": false,
+              "founder": false,
+              "gender": false,
+              "guid": "1000054646431031307",
+              "hashtags": false,
+              "icontime": "1563807607",
+              "is_admin": false,
+              "is_mature": false,
+              "language": "en",
+              "last_accepted_tos": 1558597098,
+              "last_avatar_upload": "0",
+              "legacy_guid": false,
+              "mature": 0,
+              "mature_lock": false,
+              "merchant": false,
+              "monetized": false,
+              "name": "juanmsolaro_test6",
+              "nsfw": Array [],
+              "nsfw_lock": Array [],
+              "onchain_booster": 0,
+              "opted_in_hashtags": 6,
+              "owner_guid": "0",
+              "p2p_media_enabled": false,
+              "pinned_posts": Array [],
+              "plus": false,
+              "programs": Array [],
+              "rating": 1,
+              "rewards": true,
+              "signup_method": false,
+              "site_guid": false,
+              "social_profiles": Array [],
+              "subscribed": false,
+              "subscriber": true,
+              "subtype": false,
+              "tags": Array [],
+              "theme": false,
+              "time_created": "1563807607",
+              "time_updated": false,
+              "toaster_notifications": true,
+              "type": "user",
+              "urn": "urn:user:1000054646431031307",
+              "username": "juanmsolaro_test6",
+              "verified": false,
+              "website": false,
+              "wire_rewards": null,
+            },
+            "referrer_guid": "968187695744425997",
+            "register_timestamp": 1563807608000,
+            "state": "pending",
+          }
+        }
+      />
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <ReferralsRow
+        item={
+          Object {
+            "guid": "",
+            "join_timestamp": 0,
+            "ping_timestamp": 1563807336000,
+            "pingable": false,
+            "prospect": Object {
+              "access_id": "2",
+              "allow_comments": false,
+              "ban_reason": false,
+              "banned": "no",
+              "boostProPlus": false,
+              "boost_autorotate": true,
+              "boost_rating": 1,
+              "briefdescription": "",
+              "canary": false,
+              "categories": Array [],
+              "city": false,
+              "container_guid": "0",
+              "disabled_boost": false,
+              "dob": false,
+              "eth_wallet": "",
+              "fb": false,
+              "feature_flags": false,
+              "featured_id": false,
+              "founder": false,
+              "gender": false,
+              "guid": "1000053388060139527",
+              "hashtags": false,
+              "icontime": "1563807307",
+              "is_admin": false,
+              "is_mature": false,
+              "language": "en",
+              "last_accepted_tos": 1558597098,
+              "last_avatar_upload": "0",
+              "legacy_guid": false,
+              "mature": 0,
+              "mature_lock": false,
+              "merchant": false,
+              "monetized": false,
+              "name": "juanmsolaro_test5",
+              "nsfw": Array [],
+              "nsfw_lock": Array [],
+              "onchain_booster": 0,
+              "opted_in_hashtags": 0,
+              "owner_guid": "0",
+              "p2p_media_enabled": false,
+              "pinned_posts": Array [],
+              "plus": false,
+              "programs": Array [],
+              "rating": 1,
+              "rewards": true,
+              "signup_method": false,
+              "site_guid": false,
+              "social_profiles": Array [],
+              "subscribed": false,
+              "subscriber": true,
+              "subtype": false,
+              "tags": Array [],
+              "theme": false,
+              "time_created": "1563807307",
+              "time_updated": false,
+              "toaster_notifications": true,
+              "type": "user",
+              "urn": "urn:user:1000053388060139527",
+              "username": "juanmsolaro_test5",
+              "verified": false,
+              "website": false,
+              "wire_rewards": null,
+            },
+            "referrer_guid": "968187695744425997",
+            "register_timestamp": 1563807308000,
+            "state": "pending",
+          }
+        }
+      />
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <ReferralsRow
+        item={
+          Object {
+            "guid": "",
+            "join_timestamp": 0,
+            "ping_timestamp": 1563718223000,
+            "pingable": false,
+            "prospect": Object {
+              "access_id": "2",
+              "allow_comments": false,
+              "ban_reason": false,
+              "banned": "no",
+              "boostProPlus": false,
+              "boost_autorotate": true,
+              "boost_rating": 1,
+              "briefdescription": "",
+              "canary": false,
+              "categories": Array [],
+              "city": false,
+              "container_guid": "0",
+              "disabled_boost": false,
+              "dob": false,
+              "eth_wallet": "",
+              "fb": false,
+              "feature_flags": false,
+              "featured_id": false,
+              "founder": false,
+              "gender": false,
+              "guid": "998950563171278864",
+              "hashtags": false,
+              "icontime": "1563544373",
+              "is_admin": false,
+              "is_mature": false,
+              "language": "en",
+              "last_accepted_tos": 1558597098,
+              "last_avatar_upload": "0",
+              "legacy_guid": false,
+              "mature": 0,
+              "mature_lock": false,
+              "merchant": false,
+              "monetized": false,
+              "name": "juanmsolaro_test4",
+              "nsfw": Array [],
+              "nsfw_lock": Array [],
+              "onchain_booster": 0,
+              "opted_in_hashtags": 0,
+              "owner_guid": "0",
+              "p2p_media_enabled": false,
+              "pinned_posts": Array [],
+              "plus": false,
+              "programs": Array [],
+              "rating": 1,
+              "rewards": false,
+              "signup_method": false,
+              "site_guid": false,
+              "social_profiles": Array [],
+              "subscribed": false,
+              "subscriber": true,
+              "subtype": false,
+              "tags": Array [],
+              "theme": false,
+              "time_created": "1563544373",
+              "time_updated": false,
+              "toaster_notifications": true,
+              "type": "user",
+              "urn": "urn:user:998950563171278864",
+              "username": "juanmsolaro_test4",
+              "verified": false,
+              "website": false,
+              "wire_rewards": null,
+            },
+            "referrer_guid": "968187695744425997",
+            "register_timestamp": 1563544374000,
+            "state": "pending",
+          }
+        }
+      />
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <ReferralsRow
+        item={
+          Object {
+            "guid": "",
+            "join_timestamp": 1563471531000,
+            "ping_timestamp": 1563469457000,
+            "pingable": false,
+            "prospect": Object {
+              "access_id": "2",
+              "allow_comments": false,
+              "ban_reason": false,
+              "banned": "no",
+              "boostProPlus": false,
+              "boost_autorotate": true,
+              "boost_rating": 1,
+              "briefdescription": "",
+              "canary": false,
+              "categories": Array [],
+              "city": false,
+              "container_guid": "0",
+              "disabled_boost": false,
+              "dob": false,
+              "eth_wallet": "",
+              "fb": false,
+              "feature_flags": false,
+              "featured_id": false,
+              "founder": false,
+              "gender": false,
+              "guid": "998594694852124673",
+              "hashtags": false,
+              "icontime": "1563459528",
+              "is_admin": false,
+              "is_mature": false,
+              "language": "en",
+              "last_accepted_tos": 1558597098,
+              "last_avatar_upload": "0",
+              "legacy_guid": false,
+              "mature": 0,
+              "mature_lock": false,
+              "merchant": false,
+              "monetized": false,
+              "name": "Juanmsolaro_test3",
+              "nsfw": Array [],
+              "nsfw_lock": Array [],
+              "onchain_booster": 0,
+              "opted_in_hashtags": 0,
+              "owner_guid": "0",
+              "p2p_media_enabled": false,
+              "pinned_posts": Array [],
+              "plus": false,
+              "programs": Array [],
+              "rating": 1,
+              "rewards": true,
+              "signup_method": false,
+              "site_guid": false,
+              "social_profiles": Array [],
+              "subscribed": false,
+              "subscriber": true,
+              "subtype": false,
+              "tags": Array [],
+              "theme": false,
+              "time_created": "1563459528",
+              "time_updated": false,
+              "toaster_notifications": true,
+              "type": "user",
+              "urn": "urn:user:998594694852124673",
+              "username": "juanmsolaro_test3",
+              "verified": false,
+              "website": false,
+              "wire_rewards": null,
+            },
+            "referrer_guid": "968187695744425997",
+            "register_timestamp": 1563459528000,
+            "state": "complete",
+          }
+        }
+      />
+    </View>
+  </View>
+</RCTScrollView>
+`;

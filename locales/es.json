@@ -559,6 +559,18 @@
         "reportBug": "Reportar error",
         "exit": "Salir"
     },
+    "referrals":{
+        "referralsTitle": "Referidos",
+        "referralsTitleDescription": "Invita amigos y gana recompensas",
+        "referralsDescription": "Si tus amigos se registran dentro de las 24 horas luego de compartir el link, serán agregados a tu lista de referidos en estado pendiente. Una vez que ellos se registren al programa de recompensas configurando su billetera de Minds, el referido se habrá completado y ambos recibirán +50 en puntaje de recompensas!",
+        "referralsHowWork": "Cómo funciona?",
+        "referralsStatus": "Estado",
+        "referralsSingup": "Registro Minds",
+        "referralsWalletSingup": "Registro recompensa",
+        "referralregistered": "Tienes un referido pendiente! &{name}& ha usado tu link de referidos cuando se registró en Minds. Recibirás tokens cuando se una al programa de recompensas y configure su billetera de Minds",
+        "referralwalletjoin": "Has obtenido tokens! &{name}& ha completado el referenciamiento",
+        "referralping": "Tokens gratis te están esperando! Una vez que te hayas unido al programa de recompensas configurando tu billetera de Minds, tu y &{name}& obtendrán tokens por tu referencia"
+    },
     "featureUnavailablePlatform": "Esta funcionalidad no está actualmente disponible en tu plataforma",
     "continue": "Continuar",
     "save": "Guardar",

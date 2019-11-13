@@ -35,7 +35,7 @@ export const Icons = {
   'referrals': {
     'asset': require('../../assets/contributions/referrals.png'),
     'title': 'Referrals',
-    'score': '+10',
+    'score': '+50',
     'overview': 'referrals'
   },
   'onchain_transactions': {

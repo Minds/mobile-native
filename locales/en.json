@@ -673,6 +673,18 @@
     "title":"Update to v{{version}}",
     "version": "New v{{version}} available!"
   },
+  "referrals":{
+    "referralsTitle": "Referrals",
+    "referralsTitleDescription": "Invite friends and earn rewards",
+    "referralsDescription": "If your friends signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +50 added to your contribution scores!",
+    "referralsHowWork": "How does it work?",
+    "referralsStatus": "Status",
+    "referralsSingup": "Minds Signup",
+    "referralsWalletSingup": "Rewards Signup",
+    "referralregistered": "You have a pending referral! &{name}& used your referral link when they signed up for Minds. You'll get tokens once they join the rewards program and set up their wallet",
+    "referralwalletjoin": "You've earned tokens for the completed referral of &{name}&",
+    "referralping": "Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and &{name}& will earn tokens for your referral"
+  },
   "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
   "postCantBeShown":"This post can't be shown on apps installed via the Play Store.",
