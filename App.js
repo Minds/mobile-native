@@ -81,8 +81,9 @@ sessionService.onLogin(async () => {
   });
 
   logService.info('[App] Getting minds settings and onboarding progress');
-  // load minds settings and onboarding progresss on login
-  const results = await Promise.all([mindsService.getSettings(), stores.onboarding.getProgress(), boostedContentService.load()]);
+
+  // load minds settings and boosted content
+  await Promise.all([mindsService.getSettings(), boostedContentService.load()]);
 
   logService.info('[App] updatting features');
   // reload fatures on login
@@ -92,15 +93,11 @@ sessionService.onLogin(async () => {
 
   pushService.registerToken();
 
-  // get onboarding progress
-  const onboarding = results[1];
-
-  if (onboarding && onboarding.show_onboarding) {
-    sessionService.setInitialScreen('OnboardingScreen');
-  }
-
   logService.info('[App] navigating to initial screen', sessionService.initialScreen);
   NavigationService.navigate(sessionService.initialScreen);
+
+  // check onboarding progress and navigate if necessary
+  stores.onboarding.getProgress();
 
   // check update
   if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
@@ -199,8 +196,9 @@ export default class App extends Component<Props, State> {
    */
   async componentDidMount() {
     try {
+
       // load app setting before start
-      const results = await Promise.all([settingsStore.init(), await Linking.getInitialURL()]),
+      const results = await Promise.all([settingsStore.init(), await Linking.getInitialURL()]);
 
       deepLinkUrl = results[1];
 
@@ -210,6 +208,7 @@ export default class App extends Component<Props, State> {
 
       if (!this.handlePasswordResetDeepLink()) {
         logService.info('[App] initializing session');
+
         const token = await sessionService.init();
 
         if (!token) {

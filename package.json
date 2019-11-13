@@ -80,7 +80,7 @@
     "rn-apk": "^0.2.9",
     "socket.io-client": "^2.3.0",
     "tipsi-stripe": "8.0.0-beta.8",
-    "web3": "1.0.0-beta.33"
+    "web3": "^1.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.3",

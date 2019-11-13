@@ -9,6 +9,7 @@ import {
   Text,
   FlatList,
   Dimensions,
+  RefreshControl,
   View,
   TouchableHighlight,
   Keyboard,
@@ -110,7 +111,7 @@ export default class DiscoveryScreen extends Component {
         const params = this.props.navigation.state.params;
         if (params && params.query) {
           this.setQ(params.query);
-          params.query = null; //clean query 
+          params.query = null; //clean query
         }
       }, 50);
     });
@@ -230,14 +231,16 @@ export default class DiscoveryScreen extends Component {
         onLayout={this.onLayout}
         key={'discofl' + this.cols} // we need to force component redering if we change cols
         data={discovery.listStore.entities.slice()}
+        bounces={true}
+        refreshControl={
+          <RefreshControl refreshing={discovery.listStore.refreshing} onRefresh={this.refresh} progressViewOffset={146} />
+        }
         renderItem={renderRow}
         ListFooterComponent={footer}
         CollapsibleHeaderComponent={this.getHeaders()}
         headerHeight={(GOOGLE_PLAY_STORE && discovery.filters.type !== 'channels') ? 94 : 146}
         ListEmptyComponent={this.getEmptyList()}
         keyExtractor={this.keyExtractor}
-        onRefresh={this.refresh}
-        refreshing={discovery.listStore.refreshing}
         onEndReached={this.loadMore}
         initialNumToRender={this.cols == 3 ? 12 : 3}
         style={[CS.backgroundWhite, CS.flexContainer]}
