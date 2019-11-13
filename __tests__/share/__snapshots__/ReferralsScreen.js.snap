@@ -51,7 +51,9 @@ exports[`referrals screen component should renders correctly 1`] = `
   <ReferralsList />
   <View
     accessible={true}
+    focusable={true}
     isTVSelectable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
