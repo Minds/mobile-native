@@ -14,6 +14,7 @@ describe('Boosted content service', () => {
     const fakeBoosts = [{guid: 1}, {guid: 2}, {guid: 3}];
 
     boostedContentService.feedsService.getEntities.mockResolvedValue(fakeBoosts);
+    boostedContentService.feedsService.fetchLocal.mockResolvedValue(true);
 
     // load the boosts
     await boostedContentService.load();
@@ -22,7 +23,7 @@ describe('Boosted content service', () => {
     expect(boostedContentService.feedsService.setEndpoint).toBeCalledWith('api/v2/boost/feed');
     expect(boostedContentService.feedsService.setOffset).toBeCalledWith(0);
     expect(boostedContentService.feedsService.setLimit).toBeCalledWith(12);
-    expect(boostedContentService.feedsService.fetchRemoteOrLocal).toBeCalled();
+    expect(boostedContentService.feedsService.fetchLocal).toBeCalled();
 
     // should fetch the boosts entities
     expect(boostedContentService.feedsService.getEntities).toBeCalled();
