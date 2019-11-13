@@ -14,6 +14,12 @@ class MindsService {
    */
   loadDefault = () => require("../../../settings/default.json");
 
+  async update() {
+    const settings = await api.get('api/v1/minds/config');
+    AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
+    this.settings = this.settings;
+  }
+
   /**
    * Get settings
    */
@@ -21,31 +27,14 @@ class MindsService {
     let settings;
     if (!this.settings) {
       try {
-        settings = await api.get('api/v1/minds/config');
+        settings = JSON.parse(await AsyncStorage.getItem('@MindsSettings'));
+        if (!settings) throw Error('No settings stored');
+      } catch {
+        settings = this.loadDefault();
         AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
-      } catch (err) {
-        try {
-          settings = JSON.parse(await AsyncStorage.getItem('@MindsSettings'));
-          if (!settings) throw Error('No settings stored');
-        } catch {
-          settings = this.loadDefault();
-          AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
-        }
       }
-
-      if (settings) {
-        this.settings = settings;
-      } else {
-        return await new Promise(resolve => {
-          Alert.alert(
-            i18n.t('error'),
-            i18n.t('mindsSettings.error'),
-            [
-              { text: i18n.t('retry'), onPress: async () => resolve(await this.getSettings()) }
-            ]
-          );
-        });
-      }
+      this.settings = settings;
+      this.update();
     }
 
     return this.settings;
