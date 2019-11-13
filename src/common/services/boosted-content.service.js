@@ -45,7 +45,7 @@ class BoostedContentService {
    * Update boosted content from server
    */
   async update() {
-    await this.feedsService.fetchRemote();
+    await this.feedsService.fetch();
     this.boosts = await this.feedsService.getEntities();
   }
 
