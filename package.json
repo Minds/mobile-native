@@ -1,6 +1,6 @@
 {
   "name": "Minds",
-  "version": "0.0.1",
+  "version": "3.12.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -11,8 +11,6 @@
     "update-settings": "ts-node tasks/update-settings.js",
     "test": "jest",
     "locale": "ts-node tasks/poeditor.js",
-    "e2e": "jest -c jest.e2e.config.js",
-    "e2e-local": "e2elocal=1 jest -c jest.e2e.config.js",
     "preinstall": "git config core.hooksPath .githooks",
     "postinstall": "jetify"
   },
@@ -90,6 +88,7 @@
     "@react-native-community/eslint-config": "^0.0.5",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
+    "detox": "^14.7.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.4.0",
@@ -102,5 +101,18 @@
     "react-test-renderer": "16.9.0",
     "ts-node": "^8.4.1",
     "typescript": "^3.7.2"
+  },
+  "detox": {
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Minds/Build/Products/Debug-iphonesimulator/Minds.app",
+        "build": "xcodebuild -workspace ios/Minds.xcworkspace -scheme Minds -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "device": {
+          "type": "iPhone X"
+        }
+      }
+    },
+    "test-runner": "jest"
   }
 }
