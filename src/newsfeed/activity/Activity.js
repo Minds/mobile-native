@@ -33,6 +33,7 @@ import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
+import BlockedChannel from '../../common/components/BlockedChannel';
 
 /**
  * Activity
@@ -71,6 +72,11 @@ export default class Activity extends Component {
    */
   render() {
     const entity = ActivityModel.checkOrCreate(this.props.entity);
+
+    if (blockListService.blocked.has(entity.ownerObj.guid)) {
+      return (<BlockedChannel entity={entity} navigation={this.props.navigation}/>);
+    }
+
     const hasText = !!entity.text;
     const lock = (entity.paywall && entity.paywall !== '0')? <Lock entity={entity} navigation={this.props.navigation}/> : null;
 

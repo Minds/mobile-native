@@ -238,6 +238,7 @@
     "report":"Report",
     "createFirstPost":"Create your first post",
     "blocked":"You have blocked @{{username}}",
+    "blockedNav":"You have blocked &{username}&",
     "tapUnblock":"Tap to unblock",
     "notFound":"Channel not found",
     "viewScheduled":"Scheduled",
@@ -783,5 +784,6 @@
   "showingStored":"Showing stored data",
   "actions":"Actions",
   "requests":"Requests",
-  "notAllowed":"You are not allowed"
+  "notAllowed":"You are not allowed",
+  "undo":"Undo"
 }
