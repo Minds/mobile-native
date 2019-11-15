@@ -117,7 +117,7 @@ jobs:
               brew install --HEAD applesimutils
               yarn global add detox-cli
       - run: detox build -c ios.sim.release
-      - run: detox test -c ios.sim.release
+      - run: detox test -c ios.sim.release --cleanup
 
 
       ### TODO- get tests running with fastlane
