@@ -36,29 +36,6 @@ build:android:
     expire_in: 7 days
     when: on_success
 
-e2e:browserstacks:
-  image: node:10.16.3
-  stage: e2e
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-  script:
-    - yarn install
-    - export bsAPP=`curl -u "${bsUSER}:${bsKEY}" -X POST "https://api-cloud.browserstack.com/app-automate/upload" -F "file=@./Minds-$CI_BUILD_REF_SLUG.apk"| grep -o 'bs\:\/\/.*"' | sed 's/.$//'`
-    - yarn e2e
-  tags:
-    - docker
-  dependencies:
-   - build:android
-  only:
-    refs:
-      - /^stable-*/
-      - /^release-*/
-      - /^feat-*/
-      - /^test-*/
-  allow_failure: true
-
 deploy:s3:
   image: minds/ci:latest
   stage: deploy
