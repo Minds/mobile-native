@@ -45,8 +45,10 @@ Install the detox cli
 - `yarn global add detox-cli`
 
 Run the tests
-- `detox build`
-- `detox test`
+- `detox build -c ios.sim.debug`
+- `detox test -c ios.sim.debug`
+
+You can use -c ios.sim.release for e2e test a production build
 
 
 ### _Copyright Minds 2018_

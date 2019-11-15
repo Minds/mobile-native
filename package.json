@@ -105,8 +105,16 @@
   "detox": {
     "configurations": {
       "ios.sim.debug": {
-        "binaryPath": "ios/build/Minds/Build/Products/Debug-iphonesimulator/Minds.app",
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/Minds.app",
         "build": "xcodebuild -workspace ios/Minds.xcworkspace -scheme Minds -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "device": {
+          "type": "iPhone X"
+        }
+      },
+      "ios.sim.release": {
+        "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/Minds.app",
+        "build": "xcodebuild -workspace ios/Minds.xcworkspace -scheme Minds -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "device": {
           "type": "iPhone X"
