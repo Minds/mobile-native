@@ -37,5 +37,16 @@
 
 - `yarn test`
 
+## Testing e2e (macOS)
+
+Install the detox cli
+- `brew tap wix/brew`
+- `brew install applesimutils`
+- `yarn global add detox-cli`
+
+Run the tests
+- `detox build`
+- `detox test`
+
 
 ### _Copyright Minds 2018_
