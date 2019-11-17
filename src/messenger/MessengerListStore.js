@@ -16,6 +16,7 @@ import badge from '../common/services/badge.service';
 import { abort, isNetworkFail } from '../common/helpers/abortableFetch';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
+import ConversationModel from './ConversationModel';
 
 /**
  * Messenger Conversation List Store
@@ -261,6 +262,7 @@ class MessengerListStore {
 
   @action
   pushConversations(conversations) {
+    conversations = ConversationModel.createMany(conversations);
     this.conversations = [... this.conversations, ...conversations];
   }
 

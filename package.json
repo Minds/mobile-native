@@ -28,7 +28,7 @@
     "ethjs-signer": "^0.1.1",
     "i18n-js": "^3.2.2",
     "lodash": "^4.17.11",
-    "mobx": "^5.9.4",
+    "mobx": "^5.14.0",
     "mobx-react": "^5.4.4",
     "mobx-utils": "^5.4.1",
     "moment": "^2.24.0",
@@ -80,7 +80,7 @@
     "rn-apk": "^0.2.9",
     "socket.io-client": "^2.3.0",
     "tipsi-stripe": "8.0.0-beta.8",
-    "web3": "1.0.0-beta.33"
+    "web3": "^1.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.3",
@@ -99,6 +99,8 @@
     "metro-react-native-babel-preset": "^0.56.0",
     "react-addons-test-utils": "^15.6.2",
     "react-dom": "^16.6.3",
-    "react-test-renderer": "16.9.0"
+    "react-test-renderer": "16.9.0",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.7.2"
   }
 }

@@ -20,6 +20,7 @@ import Image from "react-native-image-progress";
 import { CommonStyle } from "../../styles/Common";
 import Touchable from "../../common/components/Touchable";
 import Colors from "../../styles/Colors";
+import CenteredLoading from '../../common/components/CenteredLoading';
 
 export default class BlockedChannelsScreen extends Component {
   static navigationOptions = {
@@ -31,6 +32,7 @@ export default class BlockedChannelsScreen extends Component {
 
     this.state = {
       channels: [],
+      loading: true
     }
   }
 
@@ -39,14 +41,12 @@ export default class BlockedChannelsScreen extends Component {
   }
 
   async load() {
-    await blockListService.doSync();
-
     const guids = await blockListService.getList();
-    const channels = (await entitiesService.fetch(guids))
-      .filter(channel => Boolean(channel));
-
+    const channels = (await entitiesService.fetch(Array.from(guids.keys())));
+      //.filter(channel => Boolean(channel));
     this.setState({
       channels,
+      loading: false
     });
   }
 
@@ -103,6 +103,10 @@ export default class BlockedChannelsScreen extends Component {
   }
 
   render() {
+    if (this.state.loading) {
+      return <CenteredLoading />
+    }
+
     const rows = [];
 
     for (const channel of this.state.channels) {

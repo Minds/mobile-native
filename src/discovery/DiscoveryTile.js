@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 
 import {
-  Platform,
   Text,
   View,
   TouchableOpacity,
@@ -13,22 +12,16 @@ import {
 import FastImage from 'react-native-fast-image';
 
 import {
-  MINDS_CDN_URI
-} from '../config/Config';
-
-import {
   observer
 } from 'mobx-react/native'
 
-import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import { CommonStyle as CS } from '../styles/Common';
 import i18n from '../common/services/i18n.service';
 
-const isAndroid = Platform.OS === 'android';
-
+export default
 @observer
-export default class DiscoveryTile extends Component {
+class DiscoveryTile extends Component {
 
   state = {
     error: false,
@@ -51,16 +44,12 @@ export default class DiscoveryTile extends Component {
   }
 
   /**
-   * Navigate to view
+   * On press
    */
-  _navToView = () => {
-    if (this.props.navigation) {
-      this.props.navigation.push('Activity', {
-        entity: this.props.entity,
-        scrollToBottom: false
-      });
+  _onPress = () => {
+    if (this.props.onPress) {
+      this.props.onPress(this.props.entity);
     }
-    if (this.props.onPress) this.props.onPress();
   }
 
   errorRender = (err) => {
@@ -111,7 +100,7 @@ export default class DiscoveryTile extends Component {
       null;
 
     return (
-      <TouchableOpacity onPress={this._navToView} style={[ this.state.style, styles.tile ]}>
+      <TouchableOpacity onPress={this._onPress} style={[ this.state.style, styles.tile ]}>
         <View style={ [CS.flexContainer, CS.backgroundGreyed] }>
           <FastImage
             source={ url }

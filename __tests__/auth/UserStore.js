@@ -7,7 +7,6 @@ import UserModel from '../../src/channel/UserModel';
 
 
 jest.mock('../../src/channel/ChannelService');
-jest.mock('../../src/channel/UserModel');
 
 // mock the static create method
 UserModel.create = jest.fn();
@@ -258,8 +257,10 @@ describe('user store', () => {
     const fakeUser = meFactory(1);
     fakeUser.admin = true;
 
+    const entity = new UserModel(fakeUser);
+
     // mock methods called
-    UserModel.create.mockReturnValue(fakeUser);
+    UserModel.create.mockReturnValue(entity);
 
     try {
       // set the user

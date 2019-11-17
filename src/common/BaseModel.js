@@ -1,21 +1,21 @@
 import {
-  extendObservable,
-  decorate,
   observable,
   action,
   computed,
-  runInAction,
   toJS,
 } from 'mobx';
 import _ from 'lodash';
+import { Alert } from 'react-native';
+
 import sessionService from './services/session.service';
 import { vote } from './services/votes.service';
-import { toggleExplicit, toggleUserBlock, update } from '../newsfeed/NewsfeedService';
+import { toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
 import channelService from '../channel/ChannelService';
 import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
-
 import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
+import i18n from './services/i18n.service';
+import featuresService from './services/features.service';
 
 /**
  * Base model
@@ -26,6 +26,11 @@ export default class BaseModel {
    * Enable/Disable comments
    */
   @observable allow_comments = true;
+
+  /**
+   * Entity permissions
+   */
+  @observable.ref permissions = {};
 
   /**
    * List reference (if the entity belongs to one)
@@ -45,6 +50,13 @@ export default class BaseModel {
    */
   get _list() {
     return this.__list;
+  }
+
+  @action
+  removeFromList() {
+    if (this._list) {
+      this._list.remove(this);
+    }
   }
 
   toPlainObject() {
@@ -87,9 +99,9 @@ export default class BaseModel {
     const childs = this.childModels();
 
     Object.getOwnPropertyNames(this).forEach(key => {
-      if (data[key]) {
+      if (data[key] !== undefined) {
 
-        if (childs[key]) {
+        if (childs[key] && this[key] && this[key].update) {
           // we update the child model
           this[key].update(data[key]);
         } else {
@@ -194,7 +206,7 @@ export default class BaseModel {
       this['thumbs:' + direction + ':user_guids'] = [sessionService.guid, ...guids];
     }
 
-    this['thumbs:' + direction + ':count'] += delta;
+    this['thumbs:' + direction + ':count'] = parseInt(this['thumbs:' + direction + ':count'], 10) + delta;
 
     const params = this.getClientMetadata();
 
@@ -208,7 +220,7 @@ export default class BaseModel {
       } else {
         this['thumbs:' + direction + ':user_guids'] = [sessionService.guid, ...guids];
       }
-      this['thumbs:' + direction + ':count'] -= delta;
+      this['thumbs:' + direction + ':count'] = parseInt(this['thumbs:' + direction + ':count'], 10) - delta;
       throw err;
     }
   }
@@ -222,7 +234,7 @@ export default class BaseModel {
    */
   blockOwner() {
     if (!this.ownerObj) throw new Error('This entity has no owner');
-    return channelService.toggleBlock(this.ownerObj.guid, true);
+    return this.ownerObj.toggleBlock(true);
   }
 
   /**
@@ -230,7 +242,7 @@ export default class BaseModel {
    */
   unblockOwner() {
     if (!this.ownerObj) throw new Error('This entity has no owner');
-    return channelService.toggleBlock(this.ownerObj.guid, false);
+    return this.ownerObj.toggleBlock(false);
   }
 
   @action
@@ -283,5 +295,54 @@ export default class BaseModel {
   async toggleAllowComments() {
     const data = await toggleAllow(this.guid, !this.allow_comments);
     this.allow_comments = !this.allow_comments;
+  }
+
+  @action
+  setPermissions(permissions) {
+    this.permissions = permissions;
+  }
+
+  /**
+   * Check if the current user can perform an action with the entity
+   * @param {string} action
+   * @param {boolean} showAlert Show an alert message if the action is not allowed
+   * @returns {boolean}
+   */
+  can(action, showAlert = false) {
+
+    // TODO: clean up permissions feature flag
+    if (!featuresService.has('permissions')) return true;
+
+    let allowed = true;
+
+    if (!this.permissions || !this.permissions.permissions) {
+      allowed = false;
+    } else {
+      allowed = this.permissions.permissions.some(item => item === action);
+    }
+
+    if (showAlert && !allowed) {
+      Alert.alert(
+        i18n.t('sorry'),
+        i18n.t(`permissions.notAllowed.${action}`, {defaultValue: i18n.t('notAllowed')})
+      );
+    }
+
+    return allowed;
+  }
+
+  isScheduled() {
+    return  this.time_created * 1000 > Date.now();
+  }
+
+  static isScheduled(timeCreatedValue) {
+    let response = false;
+
+    if (timeCreatedValue) {
+      timeCreatedValue = new Date(timeCreatedValue);
+      response = timeCreatedValue.getTime() > Date.now();
+    }
+
+    return response;
   }
 }

@@ -16,7 +16,8 @@
         "error": "PERDÓN, NO SE PUEDE CARGAR LA ACTIVIDAD",
         "tryAgain": "POR FAVOR INTENTA MAS TARDE",
         "loadLater": "CARGAR SIGUIENTES",
-        "remindBlocked": "Este remind no esta disponible porque bloqueaste a"
+        "remindBlocked": "Este remind no esta disponible porque bloqueaste a",
+        "scheduled":"Esta actividad esta agendada para mostrarse en"
     },
     "auth": {
         "login": "INGRESAR",

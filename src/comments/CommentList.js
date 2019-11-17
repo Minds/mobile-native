@@ -28,7 +28,6 @@ import isIphoneX from '../common/helpers/isIphoneX';
 import CapturePreview from '../capture/CapturePreview';
 import CenteredLoading from '../common/components/CenteredLoading';
 import UserAutocomplete from '../common/components/UserAutocomplete';
-import ErrorLoading from '../common/components/ErrorLoading';
 import CaptureMetaPreview from '../capture/CaptureMetaPreview';
 
 import { CommonStyle as CS } from '../styles/Common';
@@ -36,13 +35,17 @@ import { ComponentsStyle as CmpStyle } from '../styles/Components';
 import i18n from '../common/services/i18n.service';
 
 import blockListService from '../common/services/block-list.service';
-import autobind from "../common/helpers/autobind";
+
 
 // workaround for android copy/paste issue
 import TextInput from '../common/components/TextInput';
+import { FLAG_CREATE_COMMENT } from '../common/Permissions';
+
+
+import type CommentModel from './CommentModel';
 
 // types
-type Props = {
+type PropsType = {
   header?: any,
   parent?: any,
   keyboardVerticalOffset?: any,
@@ -50,10 +53,11 @@ type Props = {
   store: any,
   user: any,
   navigation: any,
-  onInputFocus?: Function
+  onInputFocus?: Function,
+  onCommentFocus?: Function
 };
 
-type State = {
+type StateType = {
   focused: boolean,
   hideInput: boolean,
   guid: ?string,
@@ -61,13 +65,13 @@ type State = {
     start: number,
     end: number
   }
-}
+};
 
 type CommentType = {
   ownerObj: {
     username: string
   },
-  editing: any,
+  editing: any
 };
 
 const isIOS = Platform.OS === 'ios';
@@ -75,25 +79,17 @@ const vPadding = isIphoneX ? 88 : 66;
 const paddingBottom = isIphoneX ? { paddingBottom: 12 } : null;
 const inputStyle = isIOS ? { marginTop:3 } : { marginTop:2 };
 
-// helper method
-function getEntityGuid(entity) {
-  let guid = entity.guid;
-  if (entity.entity_guid) {
-    guid = entity.entity_guid;
-  }
-  return guid;
-}
-
 /**
  * Comment List Component
  */
+
+export default
 @inject('user')
 @observer
-export default class CommentList extends React.Component<Props, State> {
-  listRef: ?React.ElementRef<typeof FlatList>;
-  textInput: any;
-  actionAttachmentSheet: ?ActionSheet;
-  actionSheet: ?ActionSheet;
+class CommentList extends React.Component<PropsType, StateType> {
+  listRef: FlatList<any>;
+  actionAttachmentSheetRef: ?ActionSheet;
+  actionSheetRef: ?ActionSheet;
   keyboardDidShowListener: any;
   keyboardDidHideListener: any;
   focusedChild: number = -1;
@@ -133,7 +129,7 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Post comment
    */
-  postComment = async() => {
+  postComment = async(): Promise<void> => {
     const store = this.props.store;
     if (store.text.trim() == '' && !store.attachment.hasAttachment) return;
     Keyboard.dismiss();
@@ -226,12 +222,12 @@ export default class CommentList extends React.Component<Props, State> {
     const comments = this.getComments();
 
     if (!this.props.parent) {
-      this.focusedChild = comments.findIndex(c => item === c);
+      this.focusedChild = comments.indexOf(item);
       this.focusedOffset = offset;
       this.setState({hideInput: true, focused: false});
       //this.forceUpdate();
     } else {
-      const index = comments.findIndex(c => item === c);
+      const index = comments.indexOf(item);
       const frame = this.listRef._listRef._getFrameMetricsApprox(index);
       if (this.props.onInputFocus) {
         this.props.onInputFocus(item, offset + frame.offset + frame.length);
@@ -248,13 +244,13 @@ export default class CommentList extends React.Component<Props, State> {
       setTimeout(() => {
         if (!this.listRef) return;
         this.listRef.scrollToIndex({
-          index: comments.findIndex(c => item === c),
+          index: comments.indexOf(item),
           viewOffset: offset ? -(offset - (this.height - 200)): -110 ,
           viewPosition: 0
         });
       }, 50);
     } else {
-      const index = comments.findIndex(c => item === c);
+      const index = comments.indexOf(item);
       const frame = this.listRef._listRef._getFrameMetricsApprox(index);
       if (this.props.onCommentFocus) {
         this.props.onCommentFocus(item, offset + frame.offset );
@@ -279,7 +275,7 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Load comments
    */
-  loadComments = async (loadingMore: boolean = false, descending: boolean = true) => {
+  loadComments = async (loadingMore: boolean = false, descending: boolean = true): Promise<void> => {
     let guid;
     const scrollToBottom = this.props.navigation.state.params.scrollToBottom;
 
@@ -303,7 +299,7 @@ export default class CommentList extends React.Component<Props, State> {
   selectMediaSource = (opt: number) => {
     switch (opt) {
       case 1:
-        this.props.store.gallery(this.actionSheet);
+        this.props.store.gallery(this.actionSheetRef);
         break;
       case 2:
         this.props.store.photo();
@@ -315,10 +311,23 @@ export default class CommentList extends React.Component<Props, State> {
   }
 
   /**
+   * Show attachment
+   */
+  showAttachment = (): any => this.actionAttachmentSheetRef && this.actionAttachmentSheetRef.show();
+
+  /**
+   * Delete attachment
+   */
+  deleteAttachment = (): any => this.props.store.deleteAttachment();
+
+  /**
    * Render poster
    */
-  renderPoster() {
-    if (this.state.hideInput || (!this.props.entity.allow_comments && this.props.entity.type !== "group")) return null;
+  renderPoster(): React.Node {
+
+    const entity = this.props.entity;
+
+    if (this.state.hideInput || (!entity.allow_comments && entity.type !== "group") || !entity.can(FLAG_CREATE_COMMENT)) return null;
 
     const attachment = this.props.store.attachment;
 
@@ -342,31 +351,35 @@ export default class CommentList extends React.Component<Props, State> {
             autogrow={true}
             maxHeight={110}
             value={comments.text}
-            ref={textInput => this.textInput = textInput}
             onSelectionChange={this.onSelectionChanges}
           />
-          {attachment.uploading ?
-            <Progress.Pie progress={attachment.progress} size={36} />:
+          { attachment.uploading ?
+            <Progress.Pie progress={attachment.progress} size={36} /> :
             (comments.saving || attachment.checkingVideoLength) ?
               <ActivityIndicator size={'large'} /> :
               <View style={[CS.rowJustifyEnd, CS.centered]}>
-                <TouchableOpacity onPress={() => this.actionAttachmentSheet.show()} style={CS.paddingRight2x}><Icon name="md-attach" size={24} style={CS.paddingRight2x} /></TouchableOpacity>
+                <TouchableOpacity onPress={this.showAttachment} style={CS.paddingRight2x}><Icon name="md-attach" size={24} style={CS.paddingRight2x} /></TouchableOpacity>
                 <TouchableOpacity onPress={this.postComment} style={CS.paddingRight2x}><Icon name="md-send" size={24} /></TouchableOpacity>
-              </View>}
+              </View>
+          }
         </View>
-          {attachment.hasAttachment && <View style={CmpStyle.preview}>
-            <CapturePreview
-              uri={attachment.uri}
-              type={attachment.type}
-            />
+          { attachment.hasAttachment &&
+            <View style={CmpStyle.preview}>
+              <CapturePreview
+                uri={attachment.uri}
+                type={attachment.type}
+              />
 
-            <Icon name="md-close" size={36} style={[CS.positionAbsoluteTopRight, CS.colorWhite, CS.paddingRight2x]} onPress={() => this.props.store.deleteAttachment()} />
-          </View>}
-          {(this.props.store.embed.meta || this.props.store.embed.metaInProgress) && <CaptureMetaPreview
-            meta={this.props.store.embed.meta}
-            inProgress={this.props.store.embed.metaInProgress}
-            onRemove={this.props.store.embed.clearRichEmbedAction}
-          />}
+              <Icon name="md-close" size={36} style={[CS.positionAbsoluteTopRight, CS.colorWhite, CS.paddingRight2x]} onPress={this.deleteAttachment} />
+            </View>
+          }
+          { (this.props.store.embed.meta || this.props.store.embed.metaInProgress) &&
+            <CaptureMetaPreview
+              meta={this.props.store.embed.meta}
+              inProgress={this.props.store.embed.metaInProgress}
+              onRemove={this.props.store.embed.clearRichEmbedAction}
+            />
+          }
       </View>
     )
   }
@@ -376,7 +389,6 @@ export default class CommentList extends React.Component<Props, State> {
    */
   renderComment = (row: any): React.Element<Comment> => {
     const comment = row.item;
-    const comments = this.props.store;
 
     // add the editing observable property
     comment.editing = observable.box(false);
@@ -405,7 +417,7 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Get list header
    */
-  getHeader() {
+  getHeader(): React.Node {
     const header = this.props.header || null;
     return (
       <View>
@@ -428,7 +440,7 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Refresh comments
    */
-  refreshAsync = async () => {
+  refreshAsync = async(): Promise<void> => {
     this.props.store.refresh();
     await this.loadComments();
     this.props.store.refreshDone();
@@ -438,13 +450,13 @@ export default class CommentList extends React.Component<Props, State> {
     this.refreshAsync();
   }
 
-  getErrorLoading(errorLoading: boolean, descending: boolean) {
+  getErrorLoading(errorLoading: boolean): React.Node {
     if (errorLoading) {
       const message = this.props.store.comments.length ?
         (i18n.t('cantLoadMore') + '\n' + i18n.t('tryAgain')) :
         (i18n.t('cantLoad') + '\n' + i18n.t('tryAgain'));
 
-      return <Text onPress={() => this.loadComments(true)} style={[CS.fontM, CS.colorDarkGreyed, CS.marginBottom, CS.textCenter]}><Text style={CS.fontSemibold}>{i18n.t('ops')}</Text> {message}</Text>
+      return <Text onPress={(): any => this.loadComments()} style={[CS.fontM, CS.colorDarkGreyed, CS.marginBottom, CS.textCenter]}><Text style={CS.fontSemibold}>{i18n.t('ops')}</Text> {message}</Text>
     }
     return null;
   }
@@ -452,12 +464,12 @@ export default class CommentList extends React.Component<Props, State> {
   /**
    * Get list footer
    */
-  getFooter() {
+  getFooter(): React.Node {
     return (
       <View>
         { this.props.store.loadNext && !this.props.store.loadingNext ?
           <TouchableHighlight
-            onPress={() => this.loadComments(true, false)}
+            onPress={(): any => this.loadComments(true, false)}
             underlayColor = 'transparent'
             style = {[CS.rowJustifyCenter, CS.padding2x]}
           >
@@ -470,36 +482,40 @@ export default class CommentList extends React.Component<Props, State> {
     )
   }
 
-
-  getComments() {
+  getComments(): Array<CommentModel> {
     if (!this.props.store.comments) {
       return [];
     }
 
     return this.props.store.comments
       //.filter(comment => Boolean(comment)) // ???
-      .filter(comment => !blockListService.has(comment.owner_guid));
+      .filter((comment: CommentModel): boolean => !blockListService.has(comment.owner_guid));
   }
 
-  isWholeThreadBlocked() {
+  isWholeThreadBlocked(): boolean {
     return this.props.store.comments.length > 0 &&
       this.props.store.comments.length !== this.getComments().length;
   }
 
   /**
-   * @param {object} ref
+   * @param {FlatList} ref
    */
-  setListRef = (ref: ?React.ElementRef<typeof FlatList>) => this.listRef = ref;
+  setListRef = (ref: FlatList<any>): FlatList<any> => this.listRef = ref;
 
   /**
-   * @param {object} ref
+   * @param {ActionSheet} ref
    */
-  setActionSheetRef = (o: ActionSheet) => this.actionAttachmentSheet = o;
+  setActionSheetRef = (ref: ActionSheet): ActionSheet => this.actionAttachmentSheetRef = ref;
+
+  /**
+   * Set ios action sheet ref
+   */
+  setIosActionSheetRef = (ref: ActionSheet): ActionSheet => this.actionSheetRef = ref;
 
   /**
    * Render
    */
-  render() {
+  render(): React.Node {
 
     const header = this.getHeader();
 
@@ -507,7 +523,7 @@ export default class CommentList extends React.Component<Props, State> {
 
     if (Platform.OS != 'ios') {
       actionsheet = <ActionSheet
-        ref={o => this.actionSheet = o}
+        ref={this.setIosActionSheetRef}
         options={[i18n.t('cancel'), i18n.t('images'), i18n.t('videos')]}
         onPress={this.props.store.selectMediaType}
         cancelButtonIndex={0}

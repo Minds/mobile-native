@@ -14,9 +14,7 @@ exports[`blog card component should renders correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "backgroundColor": "#FFF",
-      "flex": 1,
-      "flexDirection": "column",
+      "backgroundColor": "white",
       "opacity": 1,
     }
   }
@@ -61,68 +59,93 @@ exports[`blog card component should renders correctly 1`] = `
   </View>
   <View
     style={
-      Object {
-        "alignItems": "stretch",
-        "flexDirection": "column",
-        "padding": 12,
-        "paddingLeft": 12,
-        "paddingRight": 12,
-        "width": "100%",
-      }
+      Array [
+        Object {
+          "padding": 10,
+        },
+      ]
     }
   >
     <View
       style={
-        Object {
-          "flex": 1,
-          "flexDirection": "row",
-        }
+        Array [
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "column",
+          },
+          Object {
+            "width": "100%",
+          },
+        ]
       }
     >
-      <View
+      <Text
         style={
-          Object {
-            "flex": 1,
-          }
+          Array [
+            Object {
+              "fontSize": 16,
+            },
+            Object {
+              "fontWeight": "500",
+            },
+          ]
         }
       >
-        <Text
-          style={
+        Some Title
+      </Text>
+      <View
+        style={
+          Array [
             Object {
-              "color": "#444",
-              "fontFamily": "Roboto",
-              "fontSize": 16,
-              "fontWeight": "800",
-              "letterSpacing": 0.5,
-            }
-          }
-        >
-          Some Title
-        </Text>
-        <View
-          style={
+              "marginBottom": 10,
+            },
             Object {
-              "alignItems": "center",
-              "alignSelf": "flex-start",
-              "flex": 1,
+              "marginTop": 10,
+            },
+            Object {
               "flexDirection": "row",
               "justifyContent": "center",
-              "paddingBottom": 4,
-              "paddingTop": 4,
-            }
+            },
+            Object {
+              "alignItems": "center",
+            },
+          ]
+        }
+      >
+        <View
+          height={24}
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "height": 24,
+                "paddingBottom": 10,
+                "paddingRight": 10,
+                "paddingTop": 10,
+                "width": 24,
+              },
+              Object {
+                "borderRadius": 12,
+              },
+              undefined,
+            ]
           }
+          width={24}
         >
           <View
-            height={24}
             style={
               Array [
                 Object {
-                  "backgroundColor": "transparent",
-                  "height": 24,
-                  "paddingBottom": 10,
-                  "paddingRight": 10,
-                  "paddingTop": 10,
-                  "width": 24,
+                  "alignItems": "center",
+                  "alignSelf": "stretch",
+                  "backgroundColor": "rgba(0,0,0,0.2)",
+                  "bottom": 0,
+                  "flex": 1,
+                  "justifyContent": "center",
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
                 },
                 Object {
                   "borderRadius": 12,
@@ -130,53 +153,40 @@ exports[`blog card component should renders correctly 1`] = `
                 undefined,
               ]
             }
-            width={24}
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "alignSelf": "stretch",
-                    "backgroundColor": "rgba(0,0,0,0.2)",
-                    "bottom": 0,
-                    "flex": 1,
-                    "justifyContent": "center",
-                    "left": 0,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  },
-                  Object {
-                    "borderRadius": 12,
-                  },
-                  undefined,
-                ]
-              }
-            />
-          </View>
-          <Text
-            style={
-              Object {
-                "color": "#888",
-                "fontSize": 10,
-                "paddingLeft": 8,
-              }
-            }
-          >
-            SOMEUSERMANE
-          </Text>
-          <Text
-            style={
-              Object {
-                "fontSize": 8,
-                "paddingLeft": 5,
-              }
-            }
-          >
-            Apr 27, 2018, 07:17
-          </Text>
+          />
         </View>
+        <Text
+          numberOfLines={1}
+          style={
+            Array [
+              Object {
+                "fontSize": 12,
+              },
+              Object {
+                "paddingLeft": 5,
+              },
+              Object {
+                "flex": 1,
+              },
+            ]
+          }
+        >
+          SOMEUSERMANE
+        </Text>
+        <Text
+          style={
+            Array [
+              Object {
+                "fontSize": 10,
+              },
+              Object {
+                "paddingLeft": 5,
+              },
+            ]
+          }
+        >
+          Apr 27, 2018, 07:17
+        </Text>
       </View>
     </View>
   </View>

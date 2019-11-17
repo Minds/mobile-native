@@ -11,24 +11,24 @@ import ThumbDownAction from '../../../../src/newsfeed/activity/actions/ThumbDown
 import withPreventDoubleTap from '../../../../src/common/components/PreventDoubleTap';
 import featuresService from '../../../../src/common/services/features.service';
 import UserStore from '../../../../src/auth/UserStore';
+import ActivityModel from '../../../../src/newsfeed/ActivityModel';
 
 jest.mock('../../../../src/auth/UserStore');
 // prevent double tap in touchable
 
 describe('Thumb action component', () => {
 
-  let screen;
+  let screen, entity;
   beforeEach(() => {
 
     const TouchableOpacityCustom = <TouchableOpacity onPress={this.onPress} />;
 
     const navigation = { navigate: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
+    entity = ActivityModel.create(activityResponse.activities[0]);
     screen = shallow(
-      <ThumbDownAction entity={activityResponse.activities[0]} navigation={navigation} />
+      <ThumbDownAction entity={entity} navigation={navigation} />
     );
-
-    jest.runAllTimers();
   });
 
   it('renders correctly', async () => {
@@ -43,21 +43,21 @@ describe('Thumb action component', () => {
   });
 
   it('should navigate a thumb on press ', () => {
-    let activityResponse = activitiesServiceFaker().load(1);
 
-    const navigation = { 
-      navigate: jest.fn() 
+    const navigation = {
+      navigate: jest.fn()
     };
-    let entity = activityResponse.activities[0];
+
     entity.toggleVote = jest.fn();
-    entity.votedUp = true;
+
     screen = shallow(
       <ThumbDownAction entity={entity} navigation={navigation}/>
     );
+
     screen.update();
+
     let touchables = screen.find('PreventDoubleTap');
     touchables.at(0).props().onPress();
-    jest.runAllTimers();
 
     expect(entity.toggleVote).toHaveBeenCalled();
 

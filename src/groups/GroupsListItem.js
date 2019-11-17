@@ -16,10 +16,13 @@ import { ListItem, Avatar } from 'react-native-elements';
 import Button from '../common/components/Button';
 import colors from '../styles/Colors';
 import i18n from '../common/services/i18n.service';
+import { CommonStyle as CS } from '../styles/Common';
+import { FLAG_JOIN } from '../common/Permissions';
 
+export default
 @inject('groupView')
 @observer
-export default class GroupsListItem extends Component {
+class GroupsListItem extends Component {
   /**
    * Render
    */
@@ -27,7 +30,7 @@ export default class GroupsListItem extends Component {
     const button = this.getButton();
     return (
       <ListItem
-        containerStyle={{ borderBottomWidth: 0 }}
+        containerStyle={CS.noBorderBottom}
         title={this.props.group.name}
         keyExtractor={item => item.rowKey}
         avatar={
@@ -39,11 +42,20 @@ export default class GroupsListItem extends Component {
           />
         }
         subtitle={i18n.t('groups.listMembersCount', {count: this.props.group['members:count']})}
-        onPress={this.props.onPress}
+        onPress={this._onPress}
         hideChevron={!button}
         rightIcon={button}
       />
     );
+  }
+
+  /**
+   * On press
+   */
+  _onPress = () => {
+    if (this.props.onPress) {
+      this.props.onPress(this.props.group)
+    }
   }
 
   /**
@@ -59,6 +71,7 @@ export default class GroupsListItem extends Component {
    * Join the group
    */
   join = () => {
+    if (!this.props.group.can(FLAG_JOIN, true)) return;
     this.props.groupView.setGroup(this.props.group);
     this.props.groupView.join(this.props.group.guid);
   }

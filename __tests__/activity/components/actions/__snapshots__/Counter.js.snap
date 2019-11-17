@@ -3,25 +3,22 @@
 exports[`Owner component renders correctly 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "flexDirection": "column",
-      "justifyContent": "center",
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "flexDirection": "column",
+      },
+    ]
   }
 >
   <Text
     style={
       Array [
         Object {
-          "paddingLeft": 4,
+          "color": "rgb(96, 125, 139)",
         },
         Object {
-          "color": "#888",
-          "fontWeight": "800",
-        },
-        Object {
-          "fontSize": 11,
+          "fontSize": 15,
         },
       ]
     }

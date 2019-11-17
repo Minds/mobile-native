@@ -1,4 +1,4 @@
-import apiService from "./api.service";
+import apiService, { isApiForbidden } from "./api.service";
 
 import UserModel from "../../channel/UserModel";
 import { abort } from "../helpers/abortableFetch";
@@ -42,6 +42,7 @@ class ChannelsService {
 
       if (response.channel) {
         const urn = `urn:channels:${guid}`;
+
         if (channel) {
           channel.update(response.channel);
         } else {
@@ -55,15 +56,37 @@ class ChannelsService {
         throw new Error('No channel response');
       }
     } catch (err) {
-      console.log(err)
+      // if the server response is a 403
+      if (isApiForbidden(err)) {
+        // remove the permissions to force the UI update\
+        if (channel) {
+          channel.setPermissions({permissions:[]});
+        }
+        // remove it from local storage
+        this.removeFromCache(channel);
+        return;
+      }
       throw err;
     }
   }
 
+  /**
+   * Save to cache
+   * @param {UserModel} channel
+   */
   async save(channel) {
     // add urn to channel
     channel.urn = `urn:channels:${channel.guid}`;
     entitiesStorage.save(channel);
+  }
+
+  /**
+   * Remove from cache
+   * @param {UserModel} channel
+   */
+  removeFromCache(channel) {
+    const urn = `urn:channels:${channel.guid}`;
+    entitiesStorage.remove( urn );
   }
 }
 

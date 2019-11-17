@@ -9,6 +9,7 @@ import {
   Text,
   FlatList,
   Dimensions,
+  RefreshControl,
   View,
   TouchableHighlight,
   Keyboard,
@@ -32,23 +33,20 @@ import DiscoveryTile from './DiscoveryTile';
 import DiscoveryUser from './DiscoveryUser';
 import Activity from '../newsfeed/activity/Activity';
 import SearchView from '../common/components/SearchView';
-import CenteredLoading from '../common/components/CenteredLoading';
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
 import stores from '../../AppStores';
 import CaptureFab from '../capture/CaptureFab';
-import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
+import { GOOGLE_PLAY_STORE } from '../config/Config';
 import ErrorLoading from '../common/components/ErrorLoading';
-import TagsSubBar from '../newsfeed/topbar/TagsSubBar';
 import GroupsListItem from '../groups/GroupsListItem'
 import DiscoveryFilters from './NewsfeedFilters';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
-
-const isIos = Platform.OS === 'ios';
+import { FLAG_VIEW } from '../common/Permissions';
 
 /**
  * Discovery screen
@@ -110,6 +108,11 @@ export default class DiscoveryScreen extends Component {
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       setTimeout(() => {
         this.setState({active: true});
+        const params = this.props.navigation.state.params;
+        if (params && params.query) {
+          this.setQ(params.query);
+          params.query = null; //clean query
+        }
       }, 50);
     });
 
@@ -228,14 +231,16 @@ export default class DiscoveryScreen extends Component {
         onLayout={this.onLayout}
         key={'discofl' + this.cols} // we need to force component redering if we change cols
         data={discovery.listStore.entities.slice()}
+        bounces={true}
+        refreshControl={
+          <RefreshControl refreshing={discovery.listStore.refreshing} onRefresh={this.refresh} progressViewOffset={146} />
+        }
         renderItem={renderRow}
         ListFooterComponent={footer}
         CollapsibleHeaderComponent={this.getHeaders()}
         headerHeight={(GOOGLE_PLAY_STORE && discovery.filters.type !== 'channels') ? 94 : 146}
         ListEmptyComponent={this.getEmptyList()}
         keyExtractor={this.keyExtractor}
-        onRefresh={this.refresh}
-        refreshing={discovery.listStore.refreshing}
         onEndReached={this.loadMore}
         initialNumToRender={this.cols == 3 ? 12 : 3}
         style={[CS.backgroundWhite, CS.flexContainer]}
@@ -517,7 +522,7 @@ export default class DiscoveryScreen extends Component {
    * Navigate to feed screen
    * @param {string} urn
    */
-  navigateToFeed = (urn) => {
+  navigateToFeed = ({urn}) => {
     const index = this.props.discovery.listStore.feedsService.feed.findIndex(e => e.urn === urn);
 
     this.props.discovery.feedStore.setFeed(this.props.discovery.listStore.feedsService.feed.slice(index));
@@ -540,7 +545,7 @@ export default class DiscoveryScreen extends Component {
         <DiscoveryTile
           entity={row.item}
           size={this.state.itemHeight}
-          onPress={() => this.navigateToFeed(row.item.urn)}
+          onPress={this.navigateToFeed}
         />
       </ErrorBoundary>
     );
@@ -553,7 +558,7 @@ export default class DiscoveryScreen extends Component {
     return (
 
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <DiscoveryUser entity={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
+        <DiscoveryUser row={row} navigation={this.props.navigation} hideButtons={this.props.discovery.filters.type == 'lastchannels'} />
       </ErrorBoundary>
     );
   }
@@ -574,7 +579,7 @@ export default class DiscoveryScreen extends Component {
    */
   renderBlog = (row) => {
     return (
-      <View style={styles.blogCardContainer}>
+      <View style={[CS.paddingBottom2x, CS.backgroundLight]}>
         <ErrorBoundary containerStyle={CS.hairLineBottom}>
           <BlogCard entity={row.item} navigation={this.props.navigation} />
         </ErrorBoundary>
@@ -589,12 +594,16 @@ export default class DiscoveryScreen extends Component {
     const item = row.item;
     return (
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
-        <GroupsListItem group={row.item} onPress={() => this.navigateToGroup(row.item)}/>
+        <GroupsListItem group={row.item} onPress={this.navigateToGroup}/>
       </ErrorBoundary>
     )
   }
 
-  navigateToGroup(group) {
+  navigateToGroup = (group) => {
+    if (!group.can(FLAG_VIEW, true)) {
+      return;
+    }
+
     this.props.navigation.push('GroupView', { group: group })
   }
 }
@@ -634,9 +643,5 @@ const styles = StyleSheet.create({
   },
   iconActive: {
     color: colors.primary,
-  },
-  blogCardContainer: {
-    backgroundColor: '#ececec',
-    paddingBottom: 8,
-  },
+  }
 });

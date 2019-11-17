@@ -5,17 +5,15 @@ import React, {
 import { observer, inject } from 'mobx-react/native';
 
 import {
-  Text,
-  StyleSheet,
-  View,
   TouchableOpacity,
 } from 'react-native';
 
-import { Icon } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { CommonStyle } from '../../../styles/Common';
+import { CommonStyle as CS } from '../../../styles/Common';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+import { FLAG_CREATE_COMMENT } from '../../../common/Permissions';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -23,8 +21,9 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 /**
  * Comments Action Component
  */
+export default
 @observer
-export default class CommentsAction extends Component {
+class CommentsAction extends Component {
 
   static defaultProps = {
     size: 20,
@@ -35,10 +34,14 @@ export default class CommentsAction extends Component {
   render() {
     const icon = this.props.entity.allow_comments ? 'chat-bubble' : 'speaker-notes-off';
 
+    const canComment = this.props.entity.allow_comments && this.props.entity.can(FLAG_CREATE_COMMENT);
+
+    const color = canComment ? (this.props.entity['comments:count'] > 0 ? CS.colorPrimary : CS.colorAction) : CS.colorLightGreyed;
+
     return (
-      <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]} onPress={this.openComments}>
-        <Icon color={this.props.entity['comments:count'] > 0 ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)'} name={icon} size={this.props.size} />
-        <Counter size={this.props.size * 0.75} count={this.props.entity['comments:count']} />
+      <TouchableOpacityCustom style={[CS.flexContainer, CS.centered, CS.rowJustifyCenter]} onPress={this.openComments}>
+        <Icon style={[color, CS.marginRight]} name={icon} size={this.props.size} />
+        <Counter size={this.props.size * 0.70} count={this.props.entity['comments:count']} />
       </TouchableOpacityCustom>
     );
   }
