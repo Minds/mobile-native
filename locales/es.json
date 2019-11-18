@@ -189,6 +189,7 @@
         "confirmUnsubscribe": "Estás seguro que quieres desuscribirte de este canal? ",
         "subscribed": "Suscrito",
         "blocked": "Has bloqueado a @{{username}}",
+        "blockedNav":"Has bloqueado a &{username}&",
         "tapUnblock": "Pulsa para desbloquear",
         "notFound": "Canal no encontrado",
         "viewScheduled": "Agendado"
@@ -767,5 +768,6 @@
     "showingStored": "Mostrando datos guardados",
     "enableComments": "Activar comentarios",
     "disableComments": "Desactivar comentarios",
-    "more": "Más"
+    "more": "Más",
+    "undo":"Deshacer"
 }
