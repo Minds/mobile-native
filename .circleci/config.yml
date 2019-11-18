@@ -114,7 +114,7 @@ jobs:
             |
               brew update
               brew tap wix/brew
-              brew install --HEAD applesimutils
+              brew install applesimutils
               yarn global add detox-cli
       - run: detox build -c ios.sim.release
       - run: detox test -c ios.sim.release --cleanup
