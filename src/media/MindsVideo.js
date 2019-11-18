@@ -28,6 +28,7 @@ import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
+import attachmentService from '../common/services/attachment.service';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -46,6 +47,7 @@ class MindsVideo extends Component {
       error: false,
       inProgress: false,
       video: {},
+      transcoding: false,
     };
   }
 
@@ -113,9 +115,20 @@ class MindsVideo extends Component {
     this.setState({ error: false, inProgress: true, });
   };
 
-  onError = (err) => {
-    logService.exception('[MindsVideo]', new Error(err));
-    this.setState({ error: true, inProgress: false, });
+  onError = async err => {
+    const entity = this.props.entity;
+    try {
+      const response = await attachmentService.isTranscoding(entity.entity_guid);
+      if (response.transcoding) {
+        this.setState({transcoding: true});
+      } else {
+        logService.exception('[MindsVideo]', new Error(err));
+        this.setState({ error: true, inProgress: false, });
+      }
+    } catch (error) {
+      logService.exception('[MindsVideo]', new Error(error));
+      this.setState({ error: true, inProgress: false, });
+    }
   };
 
   onLoadEnd = () => {
@@ -241,7 +254,6 @@ class MindsVideo extends Component {
     let { video, entity } = this.props;
     let { paused, volume } = this.state;
     const thumb_uri = entity ? (entity.get('custom_data.thumbnail_src') || entity.thumbnail_src) : null;
-
     if (this.state.active || !thumb_uri) {
       return (
         <Video
@@ -342,24 +354,33 @@ class MindsVideo extends Component {
     </View>);
   }
 
+  renderTranscodingOverlay() {
+    return (
+      <View
+        style={[styles.controlOverlayContainer, styles.controlOverlayContainerTransparent]}>
+        <Text style={styles.errorText}>{i18n.t('transcodingMediaDisplay')}</Text>
+      </View>
+    );
+  }
+
   /**
    * Render
    */
   render() {
-    const { error, inProgress } = this.state;
+    const { error, inProgress, transcoding } = this.state;
 
     const overlay = this.renderOverlay();
     return (
       <View style={[CS.flexContainer, CS.backgroundBlack]} >
         <TouchableWithoutFeedback
           style={CS.flexContainer}
-          onPress={this.openControlOverlay}
-          >
+          onPress={this.openControlOverlay}>
           { this.video }
         </TouchableWithoutFeedback>
         { inProgress && this.renderInProgressOverlay() }
         { !inProgress && error && this.renderErrorOverlay() }
-        { !inProgress && !error && overlay }
+        { transcoding && this.renderTranscodingOverlay() }
+        { !inProgress && !error && !transcoding && overlay }
       </View>
     )
   }

@@ -756,6 +756,7 @@
     "errorDownloading": "Error bajando el archivo",
     "errorMedia": "Medio no pudo cargarse",
     "errorMediaDisplay": "Hubo un error mostrando este medio",
+    "transcodingMediaDisplay": "El video esta siendo procesado",
     "stacktraceCopied": "Traza copiada al portapapeles",
     "errorPinnedPost": "Ups, error fijando la publicación",
     "errorShowActivity": "No puedo mostrar esta actividad",
