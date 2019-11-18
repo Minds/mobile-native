@@ -13,7 +13,7 @@ import {
   Platform,
 } from 'react-native';
 
-import { Header } from 'react-navigation';
+import { Header } from 'react-navigation-stack';
 
 import {
   observer,
