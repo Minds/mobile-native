@@ -24,9 +24,49 @@ jest.mock('web3');
 //mock notifications
 jest.mock('react-native-notifications');
 jest.mock('react-native-convert-ph-asset');
-jest.mock('react-navigation');
+jest.mock('react-navigation', () => {
+  return {
+    createAppContainer: jest
+      .fn()
+      .mockReturnValue(function NavigationContainer(props) {
+        return null;
+      }),
+    createDrawerNavigator: jest.fn().mockImplementation(nav => {
+      return {};
+    }),
+    createMaterialTopTabNavigator: jest.fn(),
+    createStackNavigator: jest.fn().mockImplementation(nav => {
+      return {};
+    }),
+    createSwitchNavigator: jest.fn().mockImplementation(nav => {
+      return {};
+    }),
+    createBottomTabNavigator: jest.fn(),
+    withNavigation: jest.fn().mockImplementation(component => component),
+    StackActions: {
+      push: jest
+        .fn()
+        .mockImplementation(x => ({ ...x, type: 'Navigation/PUSH' })),
+      replace: jest
+        .fn()
+        .mockImplementation(x => ({ ...x, type: 'Navigation/REPLACE' })),
+    },
+    NavigationActions: {
+      navigate: jest.fn().mockImplementation(x => x),
+    },
+    ThemeColors: {
+      light: {
+        bodyContent: '',
+      },
+      dark: {
+        bodyContent: '',
+      },
+    },
+  };
+});
 jest.mock('react-navigation-tabs');
 jest.mock('react-navigation-stack');
+jest.mock('react-navigation-drawer');
 
 //mock i18n
 jest.mock('react-native-video');
