@@ -17,7 +17,7 @@
         "tryAgain": "POR FAVOR INTENTA MAS TARDE",
         "loadLater": "CARGAR SIGUIENTES",
         "remindBlocked": "Este remind no esta disponible porque bloqueaste a",
-        "scheduled":"Esta actividad esta agendada para mostrarse en"
+        "scheduled": "Esta actividad esta agendada para mostrarse en"
     },
     "auth": {
         "login": "INGRESAR",
@@ -189,7 +189,6 @@
         "confirmUnsubscribe": "Estás seguro que quieres desuscribirte de este canal? ",
         "subscribed": "Suscrito",
         "blocked": "Has bloqueado a @{{username}}",
-        "blockedNav":"Has bloqueado a &{username}&",
         "tapUnblock": "Pulsa para desbloquear",
         "notFound": "Canal no encontrado",
         "viewScheduled": "Agendado"
@@ -635,7 +634,28 @@
         "externalStorage": "Minds necesita acceso a tu almacenamiento externo así puedes subir imagenes",
         "writeExternalStorage": "Minds necesita acceso a tu almacenamiento externo para poder descargar imágenes",
         "sms": "Minds necesita leer los sms para detectar el código de validación automáticamente",
-        "camera": "Minds necesita acceso a tu cámara para subir fotos y videos"
+        "camera": "Minds necesita acceso a tu cámara para subir fotos y videos",
+        "notAllowed": {
+            "appoint_admin": "No tienes permiso para designar un admin",
+            "appoint_moderator": "No tienes permiso para designar un moderador",
+            "approve_subscriber": "No tienes permiso para aprobar un subscriptor",
+            "create_channel": "No tienes permiso para crear un canal",
+            "create_comment": "No tienes permiso para crear un comentario",
+            "create_group": "No tienes permiso para crear un grupo",
+            "create_post": "No tienes permiso para crear una publicación",
+            "delete_channel": "No tienes permiso para borrar este canal",
+            "delete_comment": "No tienes permiso para borrar este comentario",
+            "delete_group": "No tienes permiso para borrar este grupo",
+            "delete_post": "No tienes permiso para borrar esta publicación",
+            "edit_channel": "No tienes permiso para editar este canal",
+            "edit_comment": "No tienes permiso para editar este comentario",
+            "edit_group": "No tienes permiso para editar este grupo",
+            "edit_post": "No tienes permiso para editar esta publicación",
+            "invite": "No tienes permiso para invitar",
+            "join": "No tienes permiso para unirte",
+            "gathering": "No tienes permiso para unirte a esta gathering",
+            "message": "No tienes permiso para enviar mensajes a este usuario"
+        }
     },
     "translate": {
         "from": "traducido desde",
@@ -756,7 +776,6 @@
     "errorDownloading": "Error bajando el archivo",
     "errorMedia": "Medio no pudo cargarse",
     "errorMediaDisplay": "Hubo un error mostrando este medio",
-    "transcodingMediaDisplay": "El video esta siendo procesado",
     "stacktraceCopied": "Traza copiada al portapapeles",
     "errorPinnedPost": "Ups, error fijando la publicación",
     "errorShowActivity": "No puedo mostrar esta actividad",
@@ -769,6 +788,5 @@
     "showingStored": "Mostrando datos guardados",
     "enableComments": "Activar comentarios",
     "disableComments": "Desactivar comentarios",
-    "more": "Más",
-    "undo":"Deshacer"
+    "more": "Más"
 }
