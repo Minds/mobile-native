@@ -15,6 +15,7 @@ import {
 } from 'mobx-react/native';  // import from mobx-react/native instead of mobx-react fix test
 
 import NavigationService from './src/navigation/NavigationService';
+import RNBootSplash from "react-native-bootsplash";
 
 import {
   BackHandler,
@@ -94,6 +95,10 @@ sessionService.onLogin(async () => {
   pushService.registerToken();
 
   logService.info('[App] navigating to initial screen', sessionService.initialScreen);
+
+  // hide splash
+  RNBootSplash.hide({ duration: 250 });
+
   NavigationService.navigate(sessionService.initialScreen);
 
   // check onboarding progress and navigate if necessary
@@ -213,6 +218,7 @@ export default class App extends Component<Props, State> {
 
         if (!token) {
           logService.info('[App] there is no active session');
+          RNBootSplash.hide({ duration: 250 });
           NavigationService.navigate('Login');
         } else {
           logService.info('[App] session initialized');

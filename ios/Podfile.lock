@@ -196,7 +196,7 @@ PODS:
   - React-jsinspector (0.61.4)
   - react-native-cameraroll (1.3.0):
     - React
-  - react-native-image-picker (1.1.0):
+  - react-native-image-picker (0.28.1):
     - React
   - react-native-jitsi-meet (2.0.1):
     - JitsiMeetSDK (= 2.4.0)
@@ -254,6 +254,8 @@ PODS:
   - ReactNativeART (1.0.2):
     - React
   - ReactNativeExceptionHandler (2.10.8):
+    - React
+  - RNBootSplash (1.0.3):
     - React
   - RNCAsyncStorage (1.6.2):
     - React
@@ -339,6 +341,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "ReactNativeART (from `../node_modules/@react-native-community/art`)"
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
+  - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - RNConvertPhAsset (from `../node_modules/react-native-convert-ph-asset`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
@@ -438,6 +441,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/art"
   ReactNativeExceptionHandler:
     :path: "../node_modules/react-native-exception-handler"
+  RNBootSplash:
+    :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNConvertPhAsset:
@@ -491,7 +496,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 8dfb73b987afa9324e4009bdce62a18ce23d983c
   React-jsinspector: d15478d0a8ada19864aa4d1cc1c697b41b3fa92f
   react-native-cameraroll: 463aff54e37cff27ea76eb792e6f1fa43b876320
-  react-native-image-picker: 7a85cf7b0a53845f03ae52fb4592a2748ded069b
+  react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
   react-native-jitsi-meet: becd37e8fa1c5f3321b9222c232d190a36f90880
   react-native-netinfo: fa32a5bb986924e9be82a261c262039042dde81e
   react-native-notifications: 163ddedac6fcc8d850ea15b06abdadcacdff00f1
@@ -511,6 +516,7 @@ SPEC CHECKSUMS:
   ReactCommon: a6a294e7028ed67b926d29551aa9394fd989c24c
   ReactNativeART: 103929e284be663b5a2f921ed912821f04120a70
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
+  RNBootSplash: 161de9d2b5dc2af37c2777063b8e6d844ab2a6ff
   RNCAsyncStorage: 60a80e72d95bf02a01cace55d3697d9724f0d77f
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
