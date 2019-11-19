@@ -109,7 +109,12 @@ class EntitiesService {
     // if we have urnsToFetch we try to load from the sql storage first
     if (urnsToFetch.length > 0) {
       const localEntities = await entitiesStorage.readMany(urnsToFetch);
-      urnsToFetch = _.difference(urnsToFetch, localEntities.map((m: any): string => m.urn));
+      if (localEntities) {
+        urnsToFetch = _.difference(
+          urnsToFetch,
+          localEntities.map((m: any): string => m.urn),
+        );
+      }
       // we add to resync list
       localEntities.forEach((entity: any) => {
         urnsToResync.push(entity.urn);
