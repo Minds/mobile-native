@@ -75,7 +75,7 @@ class LogService {
     }
 
     if (
-      !(error instanceof Error) &&
+      error instanceof Error &&
       !isNetworkFail(error) &&
       !isUserError(error) &&
       !isAbort(error) &&
