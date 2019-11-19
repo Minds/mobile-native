@@ -9,8 +9,6 @@ import {observer} from 'mobx-react/native';
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import {CommonStyle as CS} from '../styles/Common';
 import i18n from '../common/services/i18n.service';
-import attachmentService from '../common/services/attachment.service';
-import logService from '../common/services/log.service';
 
 export default
 @observer
