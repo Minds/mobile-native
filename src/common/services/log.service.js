@@ -69,13 +69,18 @@ class LogService {
   }
 
   exception(prepend, error) {
-
     if (!error) {
       error = prepend;
       prepend = null;
     }
 
-    if (!isNetworkFail(error) && !isUserError(error) && !isAbort(error) && (!this.isApiError(error) || this.isUnexpectedError(error))) {
+    if (
+      !(error instanceof Error) &&
+      !isNetworkFail(error) &&
+      !isUserError(error) &&
+      !isAbort(error) &&
+      (!this.isApiError(error) || this.isUnexpectedError(error))
+    ) {
       // report the issue to sentry
       Sentry.captureException(error);
 
