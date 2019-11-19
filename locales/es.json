@@ -191,7 +191,15 @@
         "blocked": "Has bloqueado a @{{username}}",
         "tapUnblock": "Pulsa para desbloquear",
         "notFound": "Canal no encontrado",
-        "viewScheduled": "Agendado"
+        "viewScheduled": "Agendado",
+        "modeClosed": "Cerrado",
+        "modeOpen": "Público",
+        "modeModerated": "Moderado",
+        "isClosed": "Este es un canal cerrado",
+        "requestSubscription": "Pedir subscripción",
+        "blockedNav": "Has bloqueado a &{username}&",
+        "requestAccepted": "Aceptado",
+        "requestRejected": "Rechazado"
     },
     "discovery": {
         "search": "Buscar...",
@@ -654,7 +662,13 @@
             "invite": "No tienes permiso para invitar",
             "join": "No tienes permiso para unirte",
             "gathering": "No tienes permiso para unirte a esta gathering",
-            "message": "No tienes permiso para enviar mensajes a este usuario"
+            "message": "No tienes permiso para enviar mensajes a este usuario",
+            "subscribe": "No tienes permiso para suscribirte",
+            "tag": "No tienes permiso para crear tags en este contenido",
+            "remind": "No puedes hacer remind de este contenido",
+            "wire": "No tienes permiso para hacer un Wire a este usuario",
+            "view": "No tienes permiso para ver este contenido",
+            "vote": "No tienes permiso para votar este contenido"
         }
     },
     "translate": {
@@ -788,5 +802,10 @@
     "showingStored": "Mostrando datos guardados",
     "enableComments": "Activar comentarios",
     "disableComments": "Desactivar comentarios",
-    "more": "Más"
+    "more": "Más",
+    "transcodingMediaDisplay": "Este video se esta procesando",
+    "actions": "Acciones",
+    "requests": "Pedidos",
+    "notAllowed": "No tienes permiso",
+    "undo": "Deshacer"
 }
