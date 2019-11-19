@@ -57,9 +57,7 @@ class DiscoveryTile extends Component {
       <TouchableOpacity
         onPress={this._onPress}
         style={[this.state.style, styles.tile]}>
-        <View style={[CS.flexContainer, CS.backgroundBlack]}>
-          <Text styles={[CS.colorWhite, CS.fontS, CS.textCenter]} />
-        </View>
+        <View style={[CS.flexContainer, CS.backgroundBlack]} />
       </TouchableOpacity>
     );
   };
