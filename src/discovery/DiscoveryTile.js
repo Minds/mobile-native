@@ -1,32 +1,22 @@
-import React, {
-  Component
-} from 'react';
+import React, {Component} from 'react';
 
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  StyleSheet
-} from 'react-native';
+import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 
-import {
-  observer
-} from 'mobx-react/native'
+import {observer} from 'mobx-react/native';
 
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
-import { CommonStyle as CS } from '../styles/Common';
+import {CommonStyle as CS} from '../styles/Common';
 import i18n from '../common/services/i18n.service';
 
 export default
 @observer
 class DiscoveryTile extends Component {
-
   state = {
     error: false,
-    style: null
-  }
+    style: null,
+  };
 
   /**
    * Derive state from props
@@ -36,8 +26,8 @@ class DiscoveryTile extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.size !== nextProps.size) {
       return {
-        style: { width: nextProps.size, height: nextProps.size }
-      }
+        style: {width: nextProps.size, height: nextProps.size},
+      };
     }
 
     return null;
@@ -50,35 +40,51 @@ class DiscoveryTile extends Component {
     if (this.props.onPress) {
       this.props.onPress(this.props.entity);
     }
-  }
+  };
 
-  errorRender = (err) => {
+  errorRender = () => {
     return (
       <View style={CS.centered}>
-        <Text styles={[CS.colorWhite, CS.fontS, CS.textCenter]}>{i18n.t('discovery.imageError')}</Text>
+        <Text styles={[CS.colorWhite, CS.fontS, CS.textCenter]}>
+          {i18n.t('discovery.imageError')}
+        </Text>
       </View>
-    )
-  }
+    );
+  };
 
-  setError = (err) => {
+  errorRenderVideo = () => {
+    return (
+      <TouchableOpacity
+        onPress={this._onPress}
+        style={[this.state.style, styles.tile]}>
+        <View style={[CS.flexContainer, CS.backgroundBlack]} />
+      </TouchableOpacity>
+    );
+  };
+
+  setError = () => {
     this.setState({error: true});
-  }
+  };
 
   setActive = () => {
     this.setState({ready: true});
     // bubble event up
     this.props.onLoadEnd && this.props.onLoadEnd();
-  }
+  };
 
   /**
    * Render
    */
   render() {
-    if (this.state.error) return this.errorRender();
-
     const entity = this.props.entity;
 
-    if (!entity.is_visible){
+    if (this.state.error) {
+      return entity.custom_type && entity.custom_type === 'video'
+        ? this.errorRenderVideo()
+        : this.errorRender();
+    }
+
+    if (!entity.is_visible) {
       return null;
     }
 
@@ -89,22 +95,23 @@ class DiscoveryTile extends Component {
       url.priority = FastImage.priority.low;
     }
 
-    const show_overlay = (entity.shouldBeBlured() && !entity.is_parent_mature) && !(entity.shouldBeBlured() && entity.is_parent_mature);
+    const show_overlay =
+      entity.shouldBeBlured() &&
+      !entity.is_parent_mature &&
+      !(entity.shouldBeBlured() && entity.is_parent_mature);
 
-    const overlay = (show_overlay) ?
-      <ExplicitOverlay
-        entity={entity}
-        iconSize={45}
-        hideText={true}
-      /> :
-      null;
+    const overlay = show_overlay ? (
+      <ExplicitOverlay entity={entity} iconSize={45} hideText={true} />
+    ) : null;
 
     return (
-      <TouchableOpacity onPress={this._onPress} style={[ this.state.style, styles.tile ]}>
-        <View style={ [CS.flexContainer, CS.backgroundGreyed] }>
+      <TouchableOpacity
+        onPress={this._onPress}
+        style={[this.state.style, styles.tile]}>
+        <View style={[CS.flexContainer, CS.backgroundGreyed]}>
           <FastImage
-            source={ url }
-            style={ CS.positionAbsolute }
+            source={url}
+            style={CS.positionAbsolute}
             onLoadEnd={this.setActive}
             onError={this.setError}
           />
@@ -121,5 +128,5 @@ const styles = StyleSheet.create({
     paddingBottom: 1,
     paddingRight: 1,
     paddingLeft: 1,
-  }
+  },
 });

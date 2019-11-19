@@ -83,6 +83,10 @@ class AttachmentService {
     return api.delete('api/v1/media/' + guid);
   }
 
+  isTranscoding(guid) {
+    return api.get(`api/v1/media/transcoding/${guid}`);
+  }
+
   /**
    * Capture video
    */
