@@ -1,5 +1,7 @@
 package com.minds.mobile;
 
+import android.os.Bundle;
+import com.zoontek.rnbootsplash.RNBootSplash;
 import com.facebook.react.ReactActivity;
 
 // image picker imports
@@ -41,6 +43,12 @@ public class MainActivity extends ReactActivity implements OnImagePickerPermissi
          return new RNGestureHandlerEnabledRootView(MainActivity.this);
         }
       };
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        RNBootSplash.show(R.drawable.bootsplash, MainActivity.this);
     }
 
 

@@ -7,6 +7,7 @@
 
 #import "RNNotifications.h"
 #import "AppDelegate.h"
+#import "RNBootSplash.h"
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
@@ -29,6 +30,9 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  [RNBootSplash show:@"LaunchScreen" inView:rootView];
+
   [RNNotifications startMonitorNotifications];
   return YES;
 }
