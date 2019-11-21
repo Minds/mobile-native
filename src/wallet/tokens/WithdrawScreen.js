@@ -28,6 +28,7 @@ import formatDate from '../../common/helpers/date';
 import token from '../../common/helpers/token';
 import readableError from '../../common/helpers/readable-error';
 import i18n from '../../common/services/i18n.service';
+import { CommonStyle } from '../../styles/Common';
 
 @inject('user', 'withdraw')
 @observer
@@ -162,7 +163,26 @@ export default class WithdrawScreen extends Component {
     return (
       <View style={style.formWrapperView}>
         <Text style={style.legendText}>
-          {i18n.t('wallet.withdraw.youCanRequest')}
+          {
+            i18n.to(
+              'wallet.withdraw.youCanRequest1',
+              {
+                amount: this.getAmount()
+              },
+              {
+                onchain: <Text style={CommonStyle.bold}>OnChain</Text>,
+                note:  <Text style={{fontSize: 11}}>
+                    {i18n.to(
+                      'wallet.withdraw.youCanRequest2',
+                      null,
+                      {
+                        approval: <Text style={CommonStyle.bold}>{i18n.t('wallet.withdraw.youCanRequest3')}</Text>
+                      },
+                    )}
+                  </Text>,
+              }
+            )
+          }
           {
             !!this.state.withholding ?
             i18n.t('wallet.withdraw.holdingMessage',{amount: number(this.state.withholding, 0, 4)})  : ''
