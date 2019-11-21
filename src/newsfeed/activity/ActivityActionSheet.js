@@ -310,7 +310,7 @@ export default class ActivityActionSheet extends Component {
           onPress={() => this.showActionSheet()}
           size={26}
           style={CS.colorDarkGreyed}
-          {...testID('Activity Menu button')}
+          testID={this.props.testID}
         />
         <ActionSheet
           ref={o => this.ActionSheet = o}
