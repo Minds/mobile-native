@@ -68,9 +68,19 @@ jobs:
       - restore_cache:
           key: node-v1-{{ checksum "package.json" }}-{{ arch }}
 
+      # remove detox from CI until is fixed
+      # - run:
+      #     name: Install detox
+      #     command:
+      #       |
+      #       HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew
+      #       HOMEBREW_NO_AUTO_UPDATE=1 brew install --HEAD applesimutils
+      #       npm install -g detox-cli
+      #       npm install -g detox
+
       # not using a workspace here as Node and Yarn versions
       # differ between our macOS executor image and the Docker containers above
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - save_cache:
           key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
@@ -106,6 +116,11 @@ jobs:
           key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
           paths:
             - ios/Pods
+
+      # remove detox from CI until is fixed
+      # Run e2e
+      # - run: detox build -c ios.sim.release
+      # - run: detox test -c ios.sim.release --cleanup
 
 
       ### TODO- get tests running with fastlane
