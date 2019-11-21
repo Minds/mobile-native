@@ -25,8 +25,14 @@ class OnboardingStore {
   }
 
   async getSuggestedUsers() {
-    const users = await onboardingService.getSuggestedUsers();
-    if (users.suggestions) this.suggestedUsers.list.setList({entities: users.suggestions.map(r => UserModel.create(r.entity))});
+    try {
+      const users = await onboardingService.getSuggestedUsers();
+      if (users.suggestions) {
+        this.suggestedUsers.list.setList({entities: users.suggestions.map(r => UserModel.create(r.entity))});
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   /**
