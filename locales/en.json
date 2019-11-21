@@ -315,6 +315,9 @@
     "errorRemoving":"Error removing comment"
   },
   "notification":{
+    "referralPing":"Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and &{user}& will earn tokens for your referral",
+    "referralPending":"You have a pending referral! &{user}& used your referral link when they signed up for Minds. You'll get tokens once they join the rewards program and set up their wallet",
+    "referralComplete":"You've earned tokens for the completed referral of &{user}&",
     "boostAccepted":"{{count}} tokens &{description}& were accepted.",
     "boostCompleted":"{{impressions}}/{{impressions}} views &{description}& have been met.",
     "boostGiftView":"{{name}} gifted you {{impressions}} views &{description}&",

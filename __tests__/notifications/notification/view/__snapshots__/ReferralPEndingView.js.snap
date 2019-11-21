@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+    }
+  }
+>
+  <Text
+    onPress={[Function]}
+  >
+    You have a pending referral! 
+    <Text
+      style={
+        Object {
+          "color": "#444",
+          "fontWeight": "bold",
+        }
+      }
+    >
+      someUser
+    </Text>
+     used your referral link when they signed up for Minds. You'll get tokens once they join the rewards program and set up their wallet
+  </Text>
+</View>
+`;
