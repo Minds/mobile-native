@@ -48,7 +48,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
           >
             go through an approval process
           </Text>
-           and may take a few hours to complete
+           and may take up to 72 hours to complete
         </Text>
         
         
@@ -186,7 +186,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
             >
               go through an approval process
             </Text>
-             and may take a few hours to complete
+             and may take up to 72 hours to complete
           </Text>
           
           
