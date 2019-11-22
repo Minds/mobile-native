@@ -55,7 +55,6 @@ export default class LoginForm extends Component {
    * Render
    */
   render() {
-    console.log('IST',Platform.isTesting);
     const msg = this.state.msg ? (
       <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]} testID="loginMsg">{this.state.msg}</Animatable.Text>
     ) : null;
