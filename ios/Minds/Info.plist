@@ -22,6 +22,8 @@
 	<string>3.12.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -36,7 +38,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>201907230145</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationCategoryType</key>
