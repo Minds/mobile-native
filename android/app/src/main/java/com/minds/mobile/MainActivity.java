@@ -47,7 +47,7 @@ public class MainActivity extends ReactActivity implements OnImagePickerPermissi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         RNBootSplash.show(R.drawable.bootsplash, MainActivity.this);
     }
 
