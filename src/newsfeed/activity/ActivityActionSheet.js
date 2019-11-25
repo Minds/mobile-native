@@ -38,7 +38,7 @@ export default class ActivityActionSheet extends Component {
    */
   constructor(props) {
     super(props);
-    this.deleteOption = <Text style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>
+    this.deleteOption = <Text testID='deleteOption' style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>
   }
 
   /**

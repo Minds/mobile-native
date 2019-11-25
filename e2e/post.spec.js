@@ -1,7 +1,15 @@
 import sleep from '../src/common/helpers/sleep';
 import capturePoster from './actions/capturePoster';
+import { waitForElement, waitForAndType, tapElement, waitForAndTap } from './helpers/waitFor';
 
-describe('Login Flow', () => {
+const deletePost = async () => {
+  await waitForAndTap(by.id, 'ActivityMoreButton');
+  await waitForAndTap(by.id, 'deleteOption');
+  await waitForAndTap(by.text, 'Ok');
+  await waitForAndTap(by.text, 'Ok');
+}
+
+describe('Post Flow', () => {
   beforeEach(async () => {
     await device.launchApp({
       newInstance: true,
@@ -17,10 +25,15 @@ describe('Login Flow', () => {
 
   it('should be able to create a text only post', async () => {
     const text = 'e2eTest';
-    await expect(element(by.id('PostInput'))).toBeVisible();
-    await element(by.id('PostInput')).typeText(text);
-    await element(by.id('CapturePostButton')).tap();
-    await waitFor(element(by.id('ActivityMoreButton'))).toBeVisible().withTimeout(5000);
-    //await element(by.id('ActivityMoreButton')).tap();
+
+    // create post
+    await waitForAndType(by.id, 'PostInput', text);
+    await tapElement(by.id, 'CapturePostButton');
+
+    // wait for newsfeed
+    await waitForElement(by.id, 'NewsfeedScreen');
+    
+    await deletePost();
+    
   });
 });

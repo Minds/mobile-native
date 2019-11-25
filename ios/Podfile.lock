@@ -360,7 +360,7 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - boost-for-react-native
     - JitsiMeetSDK
     - libwebp
@@ -539,4 +539,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 1f47b505eab73a09e6446d8196944df88cfdecc2
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4
