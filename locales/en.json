@@ -315,6 +315,9 @@
     "errorRemoving":"Error removing comment"
   },
   "notification":{
+    "referralPing":"Free tokens are waiting for you! Once you join the rewards program by setting up your Minds wallet, both you and &{user}& will earn tokens for your referral",
+    "referralPending":"You have a pending referral! &{user}& used your referral link when they signed up for Minds. You'll get tokens once they join the rewards program and set up their wallet",
+    "referralComplete":"You've earned tokens for the completed referral of &{user}&",
     "boostAccepted":"{{count}} tokens &{description}& were accepted.",
     "boostCompleted":"{{impressions}}/{{impressions}} views &{description}& have been met.",
     "boostGiftView":"{{name}} gifted you {{impressions}} views &{description}&",
@@ -588,7 +591,9 @@
       "errorReadingStatus":"Error reading withdrawal status",
       "errorOnlyOnceDay":"You can only withdraw once a day",
       "errorWithdrawing":"Error withdrawing tokens",
-      "youCanRequest":"You can request to withdraw your OffChain token rewards to your OnChain address below.\n Note: a small amount of ETH will be charged to cover the transaction fee.\n Withdrawals may take up to a few hours to complete",
+      "youCanRequest1":"You can request to withdraw up to {{amount}} tokens from your rewards to your &{onchain}& wallet.\n &{note}&",
+      "youCanRequest2":"Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals &{approval}& and may take up to 72 hours to complete",
+      "youCanRequest3":"go through an approval process",
       "holdingMessage":"{{amount}} tokens are unavailable due to credit card payment. They will be released after 30 days the payment occurred.",
       "amount":"Amount",
       "errorReadingBalances":"Error reading balances",

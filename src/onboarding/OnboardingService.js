@@ -33,7 +33,7 @@ class OnboardingService {
    * Get suggested users
    */
   getSuggestedUsers() {
-    return api.get('api/v2/suggestions', {limit: 12});
+    return api.get('api/v2/suggestions/user', {limit: 12});
   }
 }
 
