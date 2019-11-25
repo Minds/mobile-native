@@ -279,7 +279,7 @@ PODS:
     - React
   - RNReanimated (1.4.0):
     - React
-  - RNScreens (1.0.0-alpha.23):
+  - RNScreens (2.0.0-alpha.11):
     - React
   - RNSentry (1.0.9):
     - React
@@ -527,7 +527,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: a4ddde1ffc6e590c8127b8b7eabfdade45475c74
   RNLocalize: 07eb7a91d10021cdf59d80061ebf3adb8a5b5688
   RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
-  RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
+  RNScreens: ad3661f864ef18d952e9a4799b6791683e33c1fc
   RNSentry: 2803ba8c8129dcf26b79e9b4d8c80168be6e4390
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSVG: f6177f8d7c095fada7cfee2e4bb7388ba426064c

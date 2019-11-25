@@ -25,6 +25,7 @@ import {
   Text,
   Alert,
   Clipboard,
+  StatusBar,
 } from 'react-native';
 
 import FlashMessage from 'react-native-flash-message';
@@ -63,6 +64,8 @@ import apiService from './src/common/services/api.service';
 import boostedContentService from './src/common/services/boosted-content.service';
 
 let deepLinkUrl = '';
+
+const statusBarStyle = Platform.OS === 'ios' ? 'dark-content' : 'default';
 
 // init push service
 pushService.init();
@@ -140,13 +143,10 @@ sessionService.onLogin(async () => {
 
 //on app logout
 sessionService.onLogout(() => {
+
   // clear app badge
   badgeService.setUnreadConversations(0);
   badgeService.setUnreadNotifications(0);
-
-  // clear minds settings
-  mindsService.clear();
-
   // clear offline cache
   entitiesStorage.removeAll();
   feedsStorage.removeAll();
@@ -295,6 +295,7 @@ export default class App extends Component<Props, State> {
     const app = (
       <Provider key="app" {...stores}>
         <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
+          <StatusBar barStyle={statusBarStyle} />
           <NavigationStack
             ref={navigatorRef => {
               NavigationService.setTopLevelNavigator(navigatorRef);
