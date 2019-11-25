@@ -568,7 +568,7 @@ export const CommonStyle = StyleSheet.create({
     paddingBottom: 10,
   },
   modalTitle: {
-    fontWeight: '700',
+    fontFamily: 'Roboto-Black',
     fontSize: 18,
     color: '#444',
     marginBottom: 8,
