@@ -529,7 +529,8 @@ export const CommonStyle = StyleSheet.create({
     fontWeight: '700'
   },
   extraBold: {
-    fontWeight: '800'
+    // fontWeight: '800'
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
   fontThin: {
     fontWeight: '200'
@@ -567,7 +568,7 @@ export const CommonStyle = StyleSheet.create({
     paddingBottom: 10,
   },
   modalTitle: {
-    fontWeight: '800',
+    fontWeight: '700',
     fontSize: 18,
     color: '#444',
     marginBottom: 8,

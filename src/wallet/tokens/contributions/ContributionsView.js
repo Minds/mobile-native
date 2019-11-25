@@ -100,9 +100,9 @@ export default class ContributionsView extends Component {
     return (
       <View style={styles.header}>
         <View style={[CommonStyle.rowJustifyStart, styles.row]}>
-          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>{i18n.t('wallet.contributions.date')}</Text>
-          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>{i18n.t('wallet.contributions.score')}</Text>
-          <Text style={[CommonStyle.flexContainer, {fontWeight: '800', fontSize: 10 }]}>{i18n.t('wallet.contributions.share')}</Text>
+          <Text style={[CommonStyle.flexContainer, styles.text]}>{i18n.t('wallet.contributions.date')}</Text>
+          <Text style={[CommonStyle.flexContainer, styles.text]}>{i18n.t('wallet.contributions.score')}</Text>
+          <Text style={[CommonStyle.flexContainer, styles.text]}>{i18n.t('wallet.contributions.share')}</Text>
         </View>
       </View>
     );
@@ -157,6 +157,10 @@ const styles = StyleSheet.create({
     //paddingBottom: 15,
     //borderBottomWidth: 1,
     //borderBottomColor: '#ececec',
+  },
+  text: {
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
+    fontSize: 10,
   },
   row: {
     paddingTop: 16,

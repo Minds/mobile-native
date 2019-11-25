@@ -27,7 +27,7 @@ export default class ContributionRow extends PureComponent {
     const item = this.props.item;
     const selected = this.state.selected;
 
-    const color = selected ? [CommonStyle.colorBlack, {fontWeight: '800'}] : [CommonStyle.colorDark];
+    const color = selected ? [CommonStyle.colorBlack, {fontFamily: 'Roboto-Black'}] : [CommonStyle.colorDark];
 
     const detail = selected ? this.getDetail() : null;
 

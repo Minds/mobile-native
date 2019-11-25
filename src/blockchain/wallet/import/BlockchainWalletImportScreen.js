@@ -135,6 +135,7 @@ export default class BlockchainWalletImportScreen extends Component {
 const styles = StyleSheet.create({
   title: {
     fontWeight: '800',
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
     fontSize: 18,
     color: '#444',
     marginBottom: 8,

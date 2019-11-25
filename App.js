@@ -186,10 +186,14 @@ export default class App extends Component<Props, State> {
   }
 
   /**
-   * On component will mount
+   * contructor
    */
-  componentWillMount() {
-    if (!Text.defaultProps) Text.defaultProps = {};
+  constructor(props) {
+    super(props);
+
+    if (!Text.defaultProps) {
+      Text.defaultProps = {};
+    }
     Text.defaultProps.style = {
       fontFamily: 'Roboto',
       color: '#444',
