@@ -2,6 +2,14 @@ import { NavigationActions, StackActions, SwitchActions } from 'react-navigation
 
 let _navigator;
 
+function getStateFrom(nav) {
+  let state = nav.routes[nav.index];
+  if (state.routes) {
+    state = getStateFrom(state);
+  }
+  return state;
+}
+
 function setTopLevelNavigator(navigatorRef) {
   _navigator = navigatorRef;
 }
@@ -11,7 +19,7 @@ function getState() {
 }
 
 function getCurrentState() {
-  return _navigator.state.nav.routes[_navigator.state.nav.index];
+  return getStateFrom(_navigator.state.nav);
 }
 
 function navigate(routeName, params) {
