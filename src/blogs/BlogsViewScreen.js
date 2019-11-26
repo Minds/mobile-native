@@ -319,7 +319,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#444',
     fontFamily: 'Roboto',
-    fontWeight: '800',
+    // fontWeight: '800',
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
   ownerBlockContainer: {
     margin: 8,

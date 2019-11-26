@@ -96,7 +96,8 @@ const styles = StyleSheet.create({
   titles: {
     fontFamily: 'Roboto',
     fontSize: 12,
-    fontWeight: '800',
+    // fontWeight: '800',
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
     color: '#444',
     flex: 1,
   }
