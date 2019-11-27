@@ -301,7 +301,7 @@ class MindsVideo extends Component {
     const entity = this.props.entity;
     let {currentTime, duration, paused} = this.state;
 
-    const mustShow = (this.state.showOverlay && !isIOS) || this.state.paused;
+    const mustShow = (this.state.showOverlay && !isIOS) || this.state.paused && entity;
 
     if (mustShow) {
       const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
