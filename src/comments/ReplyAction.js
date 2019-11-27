@@ -49,7 +49,16 @@ export default class ReplyAction extends Component {
     const textStyle = {color};
 
     return (
-      <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.centered, CommonStyle.paddingRight2x, this.props.orientation == 'column' ? CommonStyle.columnAlignCenter : CommonStyle.rowJustifyCenter ]} onPress={this.toggleExpand} testID='ReplyCommentButton'>
+      <TouchableOpacityCustom 
+        style={[
+          CommonStyle.flexContainer,
+          CommonStyle.centered,
+          CommonStyle.paddingRight2x,
+          this.props.orientation == 'column' ? CommonStyle.columnAlignCenter : CommonStyle.rowJustifyCenter
+        ]}
+        onPress={this.toggleExpand}
+        testID='ReplyCommentButton'
+      >
         <Icon color={color} name={this.iconName} size={this.props.size} />
         <Text style={textStyle}>{i18n.t('reply')}</Text>
         <Counter size={this.props.size * 0.75} count={entity.replies_count} orientation={this.props.orientation}/>
