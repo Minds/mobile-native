@@ -159,7 +159,8 @@ const styles = StyleSheet.create({
   label: {
     paddingBottom: 3,
     fontSize: 16,
-    fontWeight: '800',
+    // fontWeight: '800',
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
     letterSpacing: 1,
   },
   listAliasHighlight: {
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
     paddingRight: 3,
     color: 'green',
     fontSize: 20,
-    fontWeight: '800',
+    fontWeight: '700',
     textAlign: 'right',
   },
   eth: {

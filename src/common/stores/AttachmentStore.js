@@ -32,7 +32,7 @@ export default class AttachmentStore {
     if (this.transcoding) {
       return;
     }
-    console.log('ATTACHING', media, extra);
+
     if (this.uploading) {
       // abort current upload
       this.cancelCurrentUpload();
@@ -52,26 +52,34 @@ export default class AttachmentStore {
 
     this.setHasAttachment(true);
 
-    // correctly handle videos from ph:// paths on ios
-    if (
-      Platform.OS === 'ios' &&
-      media.type === 'video' &&
-      media.uri.startsWith('ph://')
-    ) {
-      try {
-        this.transcoding = true;
-        const converted = await RNConvertPhAsset.convertVideoFromUrl({
-          url: media.uri,
-          convertTo: 'm4v',
-          quality: 'high',
-        });
-        media.type = converted.mimeType;
-        media.uri = converted.path;
-        media.filename = converted.filename;
-      } catch (error) {
-        Alert.alert('Error reading the video', 'Please try again');
-      } finally {
-        this.transcoding = false;
+    if (Platform.OS === 'ios') {
+      // correctly handle videos from ph:// paths on ios
+      if (media.type === 'video' && media.uri.startsWith('ph://')) {
+        try {
+          this.transcoding = true;
+          const converted = await RNConvertPhAsset.convertVideoFromUrl({
+            url: media.uri,
+            convertTo: 'm4v',
+            quality: 'high',
+          });
+          media.type = converted.mimeType;
+          media.uri = converted.path;
+          media.filename = converted.filename;
+        } catch (error) {
+          Alert.alert('Error reading the video', 'Please try again');
+        } finally {
+          this.transcoding = false;
+        }
+      }
+
+      // fix camera roll gif issue
+      if (media.type === 'image' && media.fileName) {
+        const extension = media.fileName.split('.').pop();
+        if (extension && extension.toLowerCase() === 'gif') {
+          media.type = 'image/gif';
+          const appleId = media.uri.substring(5, 41);
+          media.uri = `assets-library://asset/asset.GIF?id=${appleId}&ext=GIF`;
+        }
       }
     }
 

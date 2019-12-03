@@ -186,9 +186,8 @@ exports[`blog view screen component should renders correctly 1`] = `
           style={
             Object {
               "color": "#444",
-              "fontFamily": "Roboto",
+              "fontFamily": "Roboto-Black",
               "fontSize": 22,
-              "fontWeight": "800",
               "paddingBottom": 8,
               "paddingLeft": 12,
               "paddingRight": 12,

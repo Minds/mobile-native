@@ -93,7 +93,7 @@ class Comment extends Component {
                   <CommentEditor setEditing={this.setEditing} comment={comment} store={this.props.store}/>
                 :
                   <DoubleTapText style={styles.message} selectable={true} onDoubleTap={this.showActions} selectable={false} onLongPress={this.showActions}>
-                    <Text style={styles.username}>@{comment.ownerObj.username} </Text>
+                    <Text style={styles.username} onPress={this._navToChannel} >@{comment.ownerObj.username} </Text>
                     { comment.description &&
                       <Tags
                         navigation={this.props.navigation}
@@ -300,7 +300,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   username: {
-    fontWeight: '800',
+    // fontWeight: '800',
+    fontFamily: 'Roboto-Black',
     paddingRight: 8,
     color: '#444',
   },

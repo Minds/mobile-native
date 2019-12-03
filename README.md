@@ -28,9 +28,13 @@
 - iOS
 - Android
 
-## Building
+## Install dependencies
 
 - `yarn install`
+- `cd ios && pod install` (iOS only)
+
+## Building
+
 - `yarn android` or `yarn ios`
 
 ## Testing

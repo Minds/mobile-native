@@ -231,7 +231,8 @@ const styles = StyleSheet.create({
   },
   count: {
     fontSize: 24,
-    fontWeight: '800',
+    // fontWeight: '800',
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
     flexGrow: 1,
   },
   positive: {

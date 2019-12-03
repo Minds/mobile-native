@@ -497,7 +497,8 @@ const styles = StyleSheet.create({
   label: {
     color: '#444',
     fontSize: 16,
-    fontWeight: '800',
+    // fontWeight: '800',
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
   supportingTextContainer: {
     flexDirection: 'row',
