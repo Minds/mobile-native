@@ -21,15 +21,14 @@ import ProgressBar from './ProgressBar';
 let FORWARD_DURATION = 7;
 
 import { observer, inject } from 'mobx-react/native';
-import KeepAwake from 'react-native-keep-awake';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { withNavigation } from 'react-navigation';
 import { CommonStyle as CS } from '../styles/Common';
 import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
-import en from "../../locales/en";
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
+import attachmentService from '../common/services/attachment.service';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -42,28 +41,40 @@ class MindsVideo extends Component {
       paused: true,
       volume: 1,
       loaded: true,
-      active: false,
+      active: !props.entity,
       showOverlay: true,
       fullScreen: false,
       error: false,
       inProgress: false,
+      video: {},
+      transcoding: false,
     };
+  }
+
+  /**
+   * Derive state from props
+   * @param {object} nextProps
+   * @param {object} prevState
+   */
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.video && nextProps.video.uri !== prevState.video.uri) {
+      return {
+        video: {uri: nextProps.video.uri},
+      };
+    }
+    return null;
   }
 
   /**
    * On component will mount
    */
-  componentWillMount () {
+  componentDidMount() {
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (evt, gestureState) => true,
       onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
       onMoveShouldSetPanResponder: (evt, gestureState) => true,
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true
-    })
-
-    if (!this.props.entity) {
-      this.setState({active: true})
-    }
+    });
 
     this.onScreenBlur = this.props.navigation.addListener(
       'didBlur',
@@ -81,7 +92,6 @@ class MindsVideo extends Component {
   }
 
   onVideoEnd = () => {
-    KeepAwake.deactivate();
     this.setState({key: new Date(), currentTime: 0, paused: true}, () => {
       this.player.seek(0);
     });
@@ -105,9 +115,20 @@ class MindsVideo extends Component {
     this.setState({ error: false, inProgress: true, });
   };
 
-  onError = (err) => {
-    logService.exception('[MindsVideo]', err)
-    this.setState({ error: true, inProgress: false, });
+  onError = async err => {
+    const entity = this.props.entity;
+    try {
+      const response = await attachmentService.isTranscoding(entity.entity_guid);
+      if (response.transcoding) {
+        this.setState({transcoding: true});
+      } else {
+        logService.exception('[MindsVideo]', new Error(err));
+        this.setState({ error: true, inProgress: false, });
+      }
+    } catch (error) {
+      logService.exception('[MindsVideo]', new Error(error));
+      this.setState({ error: true, inProgress: false, });
+    }
   };
 
   onLoadEnd = () => {
@@ -163,8 +184,6 @@ class MindsVideo extends Component {
       showOverlay: false,
     });
 
-    KeepAwake.activate();
-
     this.setState({
       active: true,
       paused: false,
@@ -172,8 +191,6 @@ class MindsVideo extends Component {
   }
 
   pause = () => {
-    KeepAwake.deactivate();
-
     this.setState({
       paused: true,
     });
@@ -237,7 +254,6 @@ class MindsVideo extends Component {
     let { video, entity } = this.props;
     let { paused, volume } = this.state;
     const thumb_uri = entity ? (entity.get('custom_data.thumbnail_src') || entity.thumbnail_src) : null;
-
     if (this.state.active || !thumb_uri) {
       return (
         <Video
@@ -251,7 +267,7 @@ class MindsVideo extends Component {
           onProgress = {this.onProgress}
           onError={this.onError}
           ignoreSilentSwitch={'obey'}
-          source={{ uri: video.uri.replace('file://',''), type: 'mp4' }}
+          source={this.state.video}
           paused={paused}
           fullscreen={this.state.fullScreen}
           resizeMode={"contain"}
@@ -285,7 +301,7 @@ class MindsVideo extends Component {
     const entity = this.props.entity;
     let {currentTime, duration, paused} = this.state;
 
-    const mustShow = (this.state.showOverlay && !isIOS) || this.state.paused;
+    const mustShow = (this.state.showOverlay && !isIOS) || this.state.paused && entity;
 
     if (mustShow) {
       const completedPercentage = this.getCurrentTimePercentage(currentTime, duration) * 100;
@@ -338,24 +354,33 @@ class MindsVideo extends Component {
     </View>);
   }
 
+  renderTranscodingOverlay() {
+    return (
+      <View
+        style={[styles.controlOverlayContainer, styles.controlOverlayContainerTransparent]}>
+        <Text style={styles.errorText}>{i18n.t('transcodingMediaDisplay')}</Text>
+      </View>
+    );
+  }
+
   /**
    * Render
    */
   render() {
-    const { error, inProgress } = this.state;
+    const { error, inProgress, transcoding } = this.state;
 
     const overlay = this.renderOverlay();
     return (
       <View style={[CS.flexContainer, CS.backgroundBlack]} >
         <TouchableWithoutFeedback
           style={CS.flexContainer}
-          onPress={this.openControlOverlay}
-          >
+          onPress={this.openControlOverlay}>
           { this.video }
         </TouchableWithoutFeedback>
         { inProgress && this.renderInProgressOverlay() }
         { !inProgress && error && this.renderErrorOverlay() }
-        { !inProgress && !error && overlay }
+        { transcoding && this.renderTranscodingOverlay() }
+        { !inProgress && !error && !transcoding && overlay }
       </View>
     )
   }

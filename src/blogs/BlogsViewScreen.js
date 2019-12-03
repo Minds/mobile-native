@@ -23,7 +23,7 @@ import {
 
 import ActionSheet from 'react-native-actionsheet';
 
-import { Header } from 'react-navigation';
+import { Header } from 'react-navigation-stack';
 
 import { inject, observer } from 'mobx-react/native';
 
@@ -47,6 +47,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
+import { FLAG_VIEW } from '../common/Permissions';
 
 /**
  * Blog View Screen
@@ -100,12 +101,18 @@ export default class BlogsViewScreen extends Component {
         this.props.blogsView.reset();
         let guid;
         if (params.slug) {
-          guid = params.slug.substr(params.slug.lastIndexOf('-')+1);
+          guid = params.slug.substr(params.slug.lastIndexOf('-') + 1);
         } else {
           guid = params.guid;
         }
 
         await this.props.blogsView.loadBlog(guid);
+      }
+
+      // check permissions
+      if (!this.props.blogsView.blog.can(FLAG_VIEW, true)) {
+        this.props.navigation.goBack();
+        return;
       }
 
       if (this.props.blogsView.blog && this.props.blogsView.blog._list) {
@@ -144,12 +151,10 @@ export default class BlogsViewScreen extends Component {
     const blog = this.props.blogsView.blog;
 
     const actions = (
-      <View style={[CS.flexContainer, CS.paddingLeft2x]}>
-        <View style={styles.actionsContainer}>
-          <RemindAction entity={blog} size={16} navigation={this.props.navigation} vertical={true}/>
-          <ThumbUpAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
-          <ThumbDownAction entity={blog} orientation='column' size={16} me={this.props.user.me} />
-        </View>
+      <View style={[CS.rowJustifyStart]}>
+        <RemindAction entity={blog} navigation={this.props.navigation}/>
+        <ThumbUpAction entity={blog} />
+        <ThumbDownAction entity={blog} />
       </View>
     )
     const image = blog.getBannerSource();
@@ -166,17 +171,18 @@ export default class BlogsViewScreen extends Component {
         <Text style={styles.title}>{blog.title}</Text>
         {optMenu}
         <View style={styles.ownerBlockContainer}>
-          <OwnerBlock entity={blog} navigation={this.props.navigation} rightToolbar={actions}>
+          <OwnerBlock entity={blog} navigation={this.props.navigation}>
             <Text style={styles.timestamp}>{formatDate(blog.time_created)}</Text>
           </OwnerBlock>
         </View>
+        {actions}
         <View style={styles.description}>
           {blog.description ?
             <BlogViewHTML html={blog.description} /> :
             <CenteredLoading/>}
         </View>
         <View style={styles.moreInformation}>
-          { blog.getLicenseText() && 
+          { blog.getLicenseText() &&
               <Icon color={colors.medium} size={18} name='public'/>
           }
           <Text style={[CS.fontXS, CS.paddingLeft, CS.colorMedium, CS.paddingRight2x]}>{blog.getLicenseText()}</Text>
@@ -205,7 +211,7 @@ export default class BlogsViewScreen extends Component {
   async showActionSheet() {
     this.ActionSheet.show();
   }
-  
+
   async handleActionSheetSelection(option) {
     switch(option) {
       case i18n.t('disableComments'):
@@ -216,7 +222,7 @@ export default class BlogsViewScreen extends Component {
           console.error(err);
           this.showError();
         }
-        
+
     }
   }
 
@@ -244,6 +250,12 @@ export default class BlogsViewScreen extends Component {
     } else {
       // force observe on description
       const desc = this.props.blogsView.blog.description;
+    }
+
+    // check async update of permissions
+    if (!this.props.blogsView.blog.can(FLAG_VIEW, true)) {
+      this.props.navigation.goBack();
+      return null;
     }
 
     return (
@@ -307,7 +319,8 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: '#444',
     fontFamily: 'Roboto',
-    fontWeight: '800',
+    // fontWeight: '800',
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
   ownerBlockContainer: {
     margin: 8,

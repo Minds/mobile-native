@@ -7,7 +7,6 @@ import MdIcon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../styles/Colors';
 import Touchable from '../common/components/Touchable';
 import Modal from 'react-native-modal';
-import { CheckBox } from 'react-native-elements'
 import TransparentButton from '../common/components/TransparentButton';
 import LicensePicker from '../common/components/LicensePicker';
 import TagInput from '../common/components/TagInput';
@@ -19,6 +18,7 @@ import { GOOGLE_PLAY_STORE } from '../config/Config';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import BaseModel from '../common/BaseModel';
 
 
 @inject('capture')
@@ -211,22 +211,10 @@ export default class CapturePosterFlags extends Component {
     this.setState({ datePickerVisible: false });
   }
 
-  /**
-   * Is considered scheduled when time_created is setted and is gt current time
-   */
-  isScheduled = () => {
-    let response = false;
-    if (this.props.timeCreatedValue) {
-      const timeCreatedValue = new Date(this.props.timeCreatedValue);
-      response = timeCreatedValue.getTime() > Date.now();
-    }
-
-    return response;
-  }
-
   shouldRenderScheduler = () => {
     const hasFeature = featuresService.has('post-scheduler');
-    return hasFeature && (this.isScheduled() || !this.timeCreatedValue);
+    const timeCreatedValue = this.props.timeCreatedValue;
+    return hasFeature && (!timeCreatedValue || BaseModel.isScheduled(timeCreatedValue));
   }
 
   // Locking (Wire Threshold)
@@ -430,7 +418,7 @@ export default class CapturePosterFlags extends Component {
         {this.shouldRenderScheduler() && <Touchable style={[styles.cell, styles.cell__last]} onPress={this.showDatePicker}>
           <IonIcon
             name="md-calendar"
-            color={this.isScheduled() ? Colors.primary : Colors.darkGreyed}
+            color={BaseModel.isScheduled(this.props.timeCreatedValue) ? Colors.primary : Colors.darkGreyed}
             size={30}
             {...testID('Post scheduler button')}
           />

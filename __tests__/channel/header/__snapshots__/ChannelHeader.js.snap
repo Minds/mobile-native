@@ -4,7 +4,9 @@ exports[`channel header component owner should render correctly 1`] = `
 <View>
   <View
     accessible={true}
+    focusable={true}
     isTVSelectable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}
@@ -131,16 +133,26 @@ exports[`channel header component owner should render correctly 1`] = `
   </View>
   <View>
     <View>
-      <TouchableHighlight
-        onPress={[Function]}
+      <View
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
         style={
           Array [
             undefined,
           ]
         }
-        underlayColor="transparent"
       >
-        <View>
+        <View
+          style={null}
+        >
           <Text>
             SUBSCRIBERS
           </Text>
@@ -148,7 +160,7 @@ exports[`channel header component owner should render correctly 1`] = `
             50
           </Text>
         </View>
-      </TouchableHighlight>
+      </View>
       <View>
         <Text>
           VIEWS
@@ -196,9 +208,11 @@ exports[`channel header component owner should render correctly 1`] = `
         }
       >
         <View
-          accessibilityLabel="Subscribe to this channel"
+          accessibilityLabel="Edit your channel settings"
           accessible={true}
+          focusable={true}
           isTVSelectable={true}
+          onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
           onResponderRelease={[Function]}
@@ -232,7 +246,7 @@ exports[`channel header component owner should render correctly 1`] = `
             }
           >
              
-            SUBSCRIBE
+            Edit
              
           </Text>
         </View>
@@ -252,7 +266,9 @@ exports[`channel header component owner should render correctly 1`] = `
   </View>
   <View
     accessible={true}
+    focusable={true}
     isTVSelectable={true}
+    onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
     onResponderRelease={[Function]}

@@ -3,7 +3,6 @@ import React, {
 } from 'react';
 
 import {
-  Image,
   View,
 } from 'react-native';
 
@@ -18,13 +17,7 @@ export default class LoadingScreen extends Component {
 
   render() {
     return (
-      <View style={[CommonStyle.backgroundWhite ,CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
-        <Image
-          resizeMode={"contain"}
-          style={ComponentsStyle.logo}
-          source={require('./assets/logos/logo.png')}
-        />
-      </View>
+      <View style={[CommonStyle.backgroundWhite ,CommonStyle.flexContainerCenter, CommonStyle.padding2x]}/>
     );
   }
 }

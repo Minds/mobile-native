@@ -3,133 +3,185 @@ import React, {
 } from 'react';
 
 import {
-  Text,
-  Image,
   View,
-  ActivityIndicator,
-  Button,
-  StyleSheet,
-  Modal,
   Alert,
+  Text,
 } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react/native'
-
-import translationService from '../../common/services/translation.service';
-import shareService from '../../share/ShareService';
-import { isFollowing } from '../NewsfeedService';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import ActionSheet from 'react-native-actionsheet';
+import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
+
 import { MINDS_URI } from '../../config/Config';
 import testID from '../../common/helpers/testID';
+import { isFollowing } from '../NewsfeedService';
+import { CommonStyle as CS } from '../../styles/Common';
+import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
 import featuresService from '../../common/services/features.service';
+import translationService from '../../common/services/translation.service';
+import { FLAG_EDIT_POST, FLAG_DELETE_POST } from '../../common/Permissions';
+import sessionService from '../../common/services/session.service';
 
 /**
- * Activity Actions
+ * Activity Actions Component
  */
-const title = 'Actions';
+export default class ActivityActionSheet extends Component {
 
-@inject("user")
-@inject("newsfeed")
-@observer
-export default class ActivityActions extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      selected: '',
-      reportModalVisible: false,
-      userBlocked: false
-    }
-
-    this.handleSelection = this.handleSelection.bind(this);
+  state = {
+    options: [],
+    userBlocked: false
   }
 
+  /**
+   * Constructor
+   * @param {Object} props
+   */
+  constructor(props) {
+    super(props);
+    this.deleteOption = <Text style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>
+  }
+
+  /**
+   * Show menu
+   */
   async showActionSheet() {
     if (this.props.entity['is:following'] === undefined) {
       this.props.entity['is:following'] = await isFollowing(this.props.entity.guid);
     }
 
-    this.setState({
-      options: this.getOptions()
+    this.setState({options: this.getOptions()}, () => {
+      this.ActionSheet.show();
     });
-    this.ActionSheet.show();
   }
 
-  handleSelection(i) {
-    this.makeAction(this.state.options[i]);
+  /**
+   * Handle selection by index
+   * @param {number} index
+   */
+  handleSelection = (index) => {
+    if (!this.state.options[index]) return;
+    this.executeAction(this.state.options[index], index);
   }
 
+  /**
+   * Get the options array based on the permissions
+   */
   getOptions() {
     let options = [ i18n.t('cancel') ];
-    if (this.props.entity.isOwner()) {
-      options.push( i18n.t('edit') );
+    const entity = this.props.entity;
 
-      options.push( i18n.t('delete') );
+    // TODO: remove feature flag
+    if (featuresService.has('permissions')) {
+      // if can edit
+      if (entity.can(FLAG_EDIT_POST)) {
+        options.push( i18n.t('edit') );
 
-      if (!this.props.entity.mature) {
-        options.push( i18n.t('setExplicit') );
-      } else {
-        options.push( i18n.t('removeExplicit') );
-      }
-      if (!this.props.entity.dontPin) {
-        if (!this.props.entity.pinned) {
-          options.push( i18n.t('pin') );
-        } else {
-          options.push( i18n.t('unpin') );
-        }
-      }
-
-      if (featuresService.has('allow-comments-toggle')) {
-        options.push( this.props.entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
-      }
-
-    } else {
-
-      if (this.props.user.isAdmin()) {
-        options.push( i18n.t('delete') );
-
-        if (!this.props.entity.mature) {
+        if (!entity.mature) {
           options.push( i18n.t('setExplicit') );
         } else {
           options.push( i18n.t('removeExplicit') );
         }
+
+        if (!entity.dontPin) {
+          if (!entity.pinned) {
+            options.push( i18n.t('pin') );
+          } else {
+            options.push( i18n.t('unpin') );
+          }
+        }
+        if (featuresService.has('allow-comments-toggle')) {
+          options.push( entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+        }
       }
 
-      if (this.state && this.state.userBlocked) {
-        options.push( i18n.t('channel.unblock') );
-      } else {
-        options.push( i18n.t('channel.block') );
-      }
-
-      if (translationService.isTranslatable(this.props.entity)) {
+      if (translationService.isTranslatable(entity)) {
         options.push( i18n.t('translate.translate') );
       }
 
-      options.push( i18n.t('report') );
-    }
+      // if is not the owner
+      if (!entity.isOwner()) {
+        options.push( i18n.t('report') );
 
-    options.push( i18n.t('share') );
+        if (this.state && this.state.userBlocked) {
+          options.push( i18n.t('channel.unblock') );
+        } else {
+          options.push( i18n.t('channel.block') );
+        }
+      }
 
-    if (!this.props.entity['is:following']) {
-      options.push( i18n.t('follow') );
+      options.push( i18n.t('share') );
+
+      if (!entity['is:following']) {
+        options.push( i18n.t('follow') );
+      } else {
+        options.push( i18n.t('unfollow') );
+      }
+
+      // if can delete
+      if (entity.can(FLAG_DELETE_POST)) {
+        options.push(this.deleteOption);
+      }
     } else {
-      options.push( i18n.t('unfollow') );
+      // if can edit
+      if (entity.isOwner()) {
+        options.push( i18n.t('edit') );
+
+        if (!entity.mature) {
+          options.push( i18n.t('setExplicit') );
+        } else {
+          options.push( i18n.t('removeExplicit') );
+        }
+
+        if (!entity.dontPin) {
+          if (!entity.pinned) {
+            options.push( i18n.t('pin') );
+          } else {
+            options.push( i18n.t('unpin') );
+          }
+        }
+        if (featuresService.has('allow-comments-toggle')) {
+          options.push( entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+        }
+      }
+
+      if (translationService.isTranslatable(entity)) {
+        options.push( i18n.t('translate.translate') );
+      }
+
+      // if is not the owner
+      if (!entity.isOwner()) {
+        options.push( i18n.t('report') );
+
+        if (this.state && this.state.userBlocked) {
+          options.push( i18n.t('channel.unblock') );
+        } else {
+          options.push( i18n.t('channel.block') );
+        }
+      }
+
+      options.push( i18n.t('share') );
+
+      if (!entity['is:following']) {
+        options.push( i18n.t('follow') );
+      } else {
+        options.push( i18n.t('unfollow') );
+      }
+
+      // if can delete
+      if (entity.isOwner() || sessionService.getUser().isAdmin()) {
+        options.push(this.deleteOption);
+      }
     }
 
     return options;
-
   }
 
+  /**
+   * Delete an entity
+   */
   async deleteEntity() {
     try {
       await this.props.entity.deleteEntity();
-
-      this.reloadOptions();
 
       Alert.alert(
         i18n.t('success'),
@@ -162,30 +214,37 @@ export default class ActivityActions extends Component {
     );
   }
 
-  async makeAction(option) {
+  /**
+   * Execute an action
+   * @param {string} option
+   */
+  async executeAction(option) {
     switch (option) {
+      case this.deleteOption:
+        setTimeout(() => {
+          Alert.alert(
+            i18n.t('delete'),
+            i18n.t('confirmNoUndo'),
+            [
+              {text: i18n.t('cancel'), style: 'cancel'},
+              {text: i18n.t('ok'), onPress: () => this.deleteEntity()},
+            ],
+            { cancelable: false }
+          );
+          return;
+        }, 300);
+        break;
       case i18n.t('translate.translate'):
         if (this.props.onTranslate) this.props.onTranslate();
         break;
       case i18n.t('edit'):
         this.props.toggleEdit(true);
         break;
-      case i18n.t('delete'):
-        Alert.alert(
-          i18n.t('delete'),
-          i18n.t('confirmNoUndo'),
-          [
-            {text: i18n.t('cancel'), style: 'cancel'},
-            {text: i18n.t('ok'), onPress: () => this.deleteEntity()},
-          ],
-          { cancelable: false }
-        )
-        break;
       case i18n.t('setExplicit'):
       case i18n.t('removeExplicit'):
         try {
           await this.props.entity.toggleExplicit();
-          this.reloadOptions();
+          // this.reloadOptions();
         } catch (err) {
           this.showError();
         }
@@ -195,7 +254,6 @@ export default class ActivityActions extends Component {
           await this.props.entity.blockOwner();
           this.setState({
             userBlocked: true,
-            options: this.getOptions(),
           });
         } catch (err) {
           this.showError();
@@ -206,7 +264,6 @@ export default class ActivityActions extends Component {
           await this.props.entity.unblockOwner();
           this.setState({
             userBlocked: false,
-            options: this.getOptions(),
           });
         } catch (err) {
           this.showError();
@@ -216,7 +273,7 @@ export default class ActivityActions extends Component {
       case i18n.t('unfollow'):
         try {
           await this.props.entity.toggleFollow();
-          this.reloadOptions();
+          // this.reloadOptions();
         } catch (err) {
           this.showError();
         }
@@ -236,45 +293,29 @@ export default class ActivityActions extends Component {
         try {
           await this.props.entity.toggleAllowComments();
         } catch (err) {
-          console.error(err);
           this.showError();
         }
         break;
     }
   }
 
-  reloadOptions() {
-    this.setState({
-      options: this.getOptions()
-    });
-  }
-
-  /**
-   * Close report modal
-   */
-  closeReport = () => {
-    this.setState({ reportModalVisible: false });
-  }
-
   /**
    * Render Header
    */
   render() {
-
-
     return (
-      <View style={styles.wrapper}>
+      <View style={[CS.flexContainer, CS.centered]}>
         <Icon
           name="more-vert"
           onPress={() => this.showActionSheet()}
           size={26}
-          style={styles.icon}
+          style={CS.colorDarkGreyed}
           {...testID('Activity Menu button')}
-          />
+        />
         <ActionSheet
           ref={o => this.ActionSheet = o}
-          title={title}
-          options={this.getOptions()}
+          title={i18n.t('actions')}
+          options={this.state.options}
           onPress={this.handleSelection}
           cancelButtonIndex={0}
         />
@@ -282,27 +323,3 @@ export default class ActivityActions extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex:1,
-    alignSelf: 'center'
-  },
-  icon: {
-    color: '#888',
-  },
-  iconclose: {
-    flex:1,
-  },
-  modal: {
-    flex: 1,
-    paddingTop: 4,
-  },
-  modalContainer: {
-    alignItems: 'center',
-    backgroundColor: '#ede3f2',
-  },
-  modalHeader: {
-    padding: 5
-  }
-});

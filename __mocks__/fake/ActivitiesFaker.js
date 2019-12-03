@@ -1,5 +1,5 @@
 
-function load(count) {
+function load(count, container) {
 
   let activities = [...Array(count)].map((_, i) => {
     const code = 'activityguid' + i;
@@ -20,11 +20,11 @@ function load(count) {
         type: "user",
         subtype: false,
         time_created: "1522036284",
-        getAvatarSource: () => {
-          return {
-            source:'http://thisisaurl'
-          }
-        }
+        // getAvatarSource: () => {
+        //   return {
+        //     source:'http://thisisaurl'
+        //   }
+        // }
       },
       shouldBeBlured: jest.fn(),
       message:"Message",
@@ -37,19 +37,20 @@ function load(count) {
       wire_totals: {
         tokens: 1000000000000000000
       },
-      _list: {
-        viewed: {
-          viewed: new Map([["1019155171608096768",true]]),
-          addViewed: () => {
-            return;
-          }
-        }
-      },
-      getThumbSource: () => {
-        return {
-          source:'http://thisisaurl'
-        }
-      }
+      containerObj: container
+      // _list: {
+      //   viewed: {
+      //     viewed: new Map([["1019155171608096768",true]]),
+      //     addViewed: () => {
+      //       return;
+      //     }
+      //   }
+      // },
+      // getThumbSource: () => {
+      //   return {
+      //     source:'http://thisisaurl'
+      //   }
+      // }
     }
   });
 

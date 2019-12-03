@@ -57,23 +57,6 @@ class ChannelService {
     return result;
   }
 
-  async getFeedFromService(guid, type, opts = { limit: 12 }) {
-    const limit = opts.limit || 12;
-
-    // const { entities, next } = await feedService.get({
-    //   endpoint: `api/v2/feeds/container/${guid}/${type}`,
-    //   timebased: true,
-    //   limit,
-    //   offset: opts.offset || 0,
-    //   syncPageSize: limit * 20,
-    // });
-
-    return {
-      entities: entities || [],
-      offset: entities && entities.length ? next : '',
-    }
-  }
-
   async getFeed(guid, opts = { limit: 12 }) {
     const tag = `channel:feed:${guid}`;
     // abort previous call

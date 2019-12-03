@@ -16,7 +16,8 @@
         "error": "PERDÓN, NO SE PUEDE CARGAR LA ACTIVIDAD",
         "tryAgain": "POR FAVOR INTENTA MAS TARDE",
         "loadLater": "CARGAR SIGUIENTES",
-        "remindBlocked": "Este remind no esta disponible porque bloqueaste a"
+        "remindBlocked": "Este remind no esta disponible porque bloqueaste a",
+        "scheduled": "Esta actividad esta agendada para mostrarse en"
     },
     "auth": {
         "login": "INGRESAR",
@@ -190,7 +191,15 @@
         "blocked": "Has bloqueado a @{{username}}",
         "tapUnblock": "Pulsa para desbloquear",
         "notFound": "Canal no encontrado",
-        "viewScheduled": "Agendado"
+        "viewScheduled": "Agendado",
+        "modeClosed": "Cerrado",
+        "modeOpen": "Público",
+        "modeModerated": "Moderado",
+        "isClosed": "Este es un canal cerrado",
+        "requestSubscription": "Pedir subscripción",
+        "blockedNav": "Has bloqueado a &{username}&",
+        "requestAccepted": "Aceptado",
+        "requestRejected": "Rechazado"
     },
     "discovery": {
         "search": "Buscar...",
@@ -497,7 +506,9 @@
             "errorReadingStatus": "Error leyendo el estado del retiro",
             "errorOnlyOnceDay": "Tu puedes retirar solo una vez por día",
             "errorWithdrawing": "Error retirando tokens",
-            "youCanRequest": "Puede solicitar retirar sus recompensas de token de OffChain a su dirección de OnChain a continuación.\n Nota: se cobrará una pequeña cantidad de ETH para cubrir la tarifa de la transacción.\n Los retiros pueden tardar hasta unas pocas horas en completarse.",
+            "youCanRequest1":"Puedes solicitar retirar hasta {{amount}} tokens de tus recomensas a tu dirección de &{onchain}&.\n &{note}&",
+            "youCanRequest2":"Nota: se cobrará una pequeña cantidad de ETH para cubrir la tarifa de la transacción. Los retiros &{approval}& y pueden tardar hasta 72 horas en completarse",
+            "youCanRequest3":"pasan por un proceso de aprobación",
             "holdingMessage": "{{amount}} tokens no están disponibles debido al pago con tarjeta de crédito. Serán liberados después de 30 días de ocurrido el pago.",
             "amount": "Monto",
             "errorReadingBalances": "Error leyendo saldos",
@@ -633,7 +644,34 @@
         "externalStorage": "Minds necesita acceso a tu almacenamiento externo así puedes subir imagenes",
         "writeExternalStorage": "Minds necesita acceso a tu almacenamiento externo para poder descargar imágenes",
         "sms": "Minds necesita leer los sms para detectar el código de validación automáticamente",
-        "camera": "Minds necesita acceso a tu cámara para subir fotos y videos"
+        "camera": "Minds necesita acceso a tu cámara para subir fotos y videos",
+        "notAllowed": {
+            "appoint_admin": "No tienes permiso para designar un admin",
+            "appoint_moderator": "No tienes permiso para designar un moderador",
+            "approve_subscriber": "No tienes permiso para aprobar un subscriptor",
+            "create_channel": "No tienes permiso para crear un canal",
+            "create_comment": "No tienes permiso para crear un comentario",
+            "create_group": "No tienes permiso para crear un grupo",
+            "create_post": "No tienes permiso para crear una publicación",
+            "delete_channel": "No tienes permiso para borrar este canal",
+            "delete_comment": "No tienes permiso para borrar este comentario",
+            "delete_group": "No tienes permiso para borrar este grupo",
+            "delete_post": "No tienes permiso para borrar esta publicación",
+            "edit_channel": "No tienes permiso para editar este canal",
+            "edit_comment": "No tienes permiso para editar este comentario",
+            "edit_group": "No tienes permiso para editar este grupo",
+            "edit_post": "No tienes permiso para editar esta publicación",
+            "invite": "No tienes permiso para invitar",
+            "join": "No tienes permiso para unirte",
+            "gathering": "No tienes permiso para unirte a esta gathering",
+            "message": "No tienes permiso para enviar mensajes a este usuario",
+            "subscribe": "No tienes permiso para suscribirte",
+            "tag": "No tienes permiso para crear tags en este contenido",
+            "remind": "No puedes hacer remind de este contenido",
+            "wire": "No tienes permiso para hacer un Wire a este usuario",
+            "view": "No tienes permiso para ver este contenido",
+            "vote": "No tienes permiso para votar este contenido"
+        }
     },
     "translate": {
         "from": "traducido desde",
@@ -766,5 +804,10 @@
     "showingStored": "Mostrando datos guardados",
     "enableComments": "Activar comentarios",
     "disableComments": "Desactivar comentarios",
-    "more": "Más"
+    "more": "Más",
+    "transcodingMediaDisplay": "Este video se esta procesando",
+    "actions": "Acciones",
+    "requests": "Pedidos",
+    "notAllowed": "No tienes permiso",
+    "undo": "Deshacer"
 }

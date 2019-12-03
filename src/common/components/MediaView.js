@@ -63,7 +63,7 @@ export default class MediaView extends Component {
     switch (type) {
       case 'image':
       case 'batch':
-        source = this.props.entity.getThumbSource('large');
+        source = this.props.entity.getThumbSource('xlarge');
         return this.getImage(source);
       case 'video':
         return this.getVideo();
@@ -307,7 +307,7 @@ export default class MediaView extends Component {
       this.openLink();
     } else {
       const source = this.props.entity.getThumbSource('xlarge');
-      this.props.navigation.push('ViewImage', { source });
+      this.props.navigation.push('ViewImage', { source, entity: this.props.entity });
     }
   }
 

@@ -239,7 +239,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   link: {
-    fontWeight: '800',
+    // fontWeight: '800',
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
   warning: {
     marginTop: 10,

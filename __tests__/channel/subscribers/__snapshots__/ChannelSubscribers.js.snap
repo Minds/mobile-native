@@ -32,7 +32,9 @@ exports[`channel subscribers component should render correctly 1`] = `
     >
       <View
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -61,7 +63,9 @@ exports[`channel subscribers component should render correctly 1`] = `
       </View>
       <View
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -375,7 +379,17 @@ exports[`channel subscribers component should render correctly 1`] = `
         style={null}
       >
         <DiscoveryUser
-          entity={
+          navigation={
+            Object {
+              "navigate": [MockFunction],
+              "state": Object {
+                "params": Object {
+                  "guid": 1,
+                },
+              },
+            }
+          }
+          row={
             Object {
               "index": 0,
               "item": Object {
@@ -464,16 +478,6 @@ exports[`channel subscribers component should render correctly 1`] = `
               },
             }
           }
-          navigation={
-            Object {
-              "navigate": [MockFunction],
-              "state": Object {
-                "params": Object {
-                  "guid": 1,
-                },
-              },
-            }
-          }
           store={
             Object {
               "filter": "subscribers",
@@ -752,7 +756,17 @@ exports[`channel subscribers component should render correctly 1`] = `
         style={null}
       >
         <DiscoveryUser
-          entity={
+          navigation={
+            Object {
+              "navigate": [MockFunction],
+              "state": Object {
+                "params": Object {
+                  "guid": 1,
+                },
+              },
+            }
+          }
+          row={
             Object {
               "index": 1,
               "item": Object {
@@ -841,16 +855,6 @@ exports[`channel subscribers component should render correctly 1`] = `
               },
             }
           }
-          navigation={
-            Object {
-              "navigate": [MockFunction],
-              "state": Object {
-                "params": Object {
-                  "guid": 1,
-                },
-              },
-            }
-          }
           store={
             Object {
               "filter": "subscribers",
@@ -1129,7 +1133,17 @@ exports[`channel subscribers component should render correctly 1`] = `
         style={null}
       >
         <DiscoveryUser
-          entity={
+          navigation={
+            Object {
+              "navigate": [MockFunction],
+              "state": Object {
+                "params": Object {
+                  "guid": 1,
+                },
+              },
+            }
+          }
+          row={
             Object {
               "index": 2,
               "item": Object {
@@ -1215,16 +1229,6 @@ exports[`channel subscribers component should render correctly 1`] = `
                 "highlight": [Function],
                 "unhighlight": [Function],
                 "updateProps": [Function],
-              },
-            }
-          }
-          navigation={
-            Object {
-              "navigate": [MockFunction],
-              "state": Object {
-                "params": Object {
-                  "guid": 1,
-                },
               },
             }
           }
@@ -1538,7 +1542,9 @@ exports[`channel subscribers component should render correctly without data 1`] 
     >
       <View
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -1567,7 +1573,9 @@ exports[`channel subscribers component should render correctly without data 1`] 
       </View>
       <View
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}

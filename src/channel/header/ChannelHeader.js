@@ -109,6 +109,7 @@ export default class ChannelHeader extends Component {
         name: this.state.name,
         avatar: this.uploads.avatar,
         banner: this.uploads.banner,
+        mode: this.props.store.channel.mode || 0
       };
 
       this.setState({saving: true});

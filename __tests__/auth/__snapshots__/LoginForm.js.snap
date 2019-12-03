@@ -35,7 +35,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         },
       ]
     }
-    testID="username input"
+    testID="usernameInput"
     underlineColorAndroid="transparent"
     value=""
   />
@@ -67,7 +67,7 @@ exports[`LoginForm component should renders correctly 1`] = `
           },
         ]
       }
-      testID="password input"
+      testID="userPasswordInput"
       underlineColorAndroid="transparent"
       value=""
     />
@@ -133,7 +133,9 @@ exports[`LoginForm component should renders correctly 1`] = `
     >
       <View
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -239,7 +241,9 @@ exports[`LoginForm component should renders correctly 1`] = `
     >
       <View
         accessible={true}
+        focusable={true}
         isTVSelectable={true}
+        onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
         onResponderRelease={[Function]}
@@ -247,7 +251,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={null}
-        testID="login button"
+        testID="loginButton"
       >
         <View
           pointerEvents="box-only"
@@ -413,6 +417,7 @@ exports[`LoginForm component should renders correctly 1`] = `
     onModalWillHide={[Function]}
     onModalWillShow={[Function]}
     onRequestClose={[Function]}
+    scrollHorizontal={false}
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
@@ -428,6 +433,8 @@ exports[`LoginForm component should renders correctly 1`] = `
   >
     <View
       accessible={true}
+      focusable={true}
+      onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
       onResponderRelease={[Function]}
@@ -454,6 +461,7 @@ exports[`LoginForm component should renders correctly 1`] = `
       onModalWillHide={[Function]}
       onModalWillShow={[Function]}
       pointerEvents="box-none"
+      scrollHorizontal={false}
       scrollOffset={0}
       scrollOffsetMax={0}
       scrollTo={null}
@@ -622,7 +630,9 @@ exports[`LoginForm component should renders correctly 1`] = `
           >
             <View
               accessible={true}
+              focusable={true}
               isTVSelectable={true}
+              onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
@@ -636,6 +646,8 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "borderColor": "#777777",
                   "borderRadius": 20,
                   "borderWidth": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
                   "margin": 4,
                   "opacity": 1,
                   "padding": 4,
@@ -659,7 +671,9 @@ exports[`LoginForm component should renders correctly 1`] = `
             </View>
             <View
               accessible={true}
+              focusable={true}
               isTVSelectable={true}
+              onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
@@ -673,6 +687,8 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "borderColor": "#4690D6",
                   "borderRadius": 20,
                   "borderWidth": 1,
+                  "flexDirection": "row",
+                  "justifyContent": "center",
                   "margin": 4,
                   "opacity": 1,
                   "padding": 4,

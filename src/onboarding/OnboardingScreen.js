@@ -30,6 +30,7 @@ import WelcomeStep from './steps/WelcomeStep';
 import { CommonStyle as CS } from '../styles/Common';
 import navigationService from '../navigation/NavigationService';
 import i18nService from '../common/services/i18n.service';
+import CenteredLoading from '../common/components/CenteredLoading';
 
 @observer
 @inject('onboarding', 'hashtag')
@@ -47,7 +48,7 @@ export default class OnboardingScreen extends Component {
       await this.props.onboarding.setShown(true);
       await this.props.onboarding.getProgress();
       this.props.hashtag.setAll(false);
-      navigationService.reset('Tabs');
+      navigationService.navigate('Tabs');
     } catch (err) {
       Alert.alert(i18nService.t('error'), i18n.t('errorMessage') + '\n' + i18n.t('tryAgain'))
     }
@@ -59,6 +60,9 @@ export default class OnboardingScreen extends Component {
 
   render() {
     const steps = [];
+    if (!this.props.onboarding.progress) {
+      return <CenteredLoading/>
+    }
     const completed_items = this.props.onboarding.progress.completed_items;
 
     // if (!completed_items.some(r => r == 'creator_frequency')) {

@@ -1,10 +1,8 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from "react-native";
 import { shallow } from 'enzyme';
 
 import RegisterScreen from '../../src/auth/RegisterScreen';
-import { NavigationActions, StackActions } from 'react-navigation';
 
 jest.mock('../../src/auth/RegisterForm', () => 'RegisterForm');
 jest.mock('../../src/common/components/VideoBackground', () => 'VideoBackground');
@@ -35,14 +33,13 @@ describe('RegisterScreen component', () => {
   it('should navigate on RegisterForm events', async () => {
 
     const navigation = {
-      dispatch: jest.fn()
+      dispatch: jest.fn(),
+      navigate: jest.fn(),
     };
 
     const wrapper = shallow(
       <RegisterScreen navigation={navigation}/>
     );
-
-    StackActions.reset.mockReturnValue(1)
 
     // find register form
     const registerForms = wrapper.find('RegisterForm');
@@ -53,10 +50,7 @@ describe('RegisterScreen component', () => {
     // simulate onBack event
     registerForms.at(0).props().onBack();
 
-    // should call navigate
-    expect(StackActions.reset).toBeCalledWith({"actions": [undefined], "index": 0});
-
     // with a navigation action with route to Login
-    expect(NavigationActions.navigate).toBeCalledWith({"routeName": "Login"});
+    expect(navigation.navigate).toBeCalledWith('Login');
   });
 });

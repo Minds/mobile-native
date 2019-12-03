@@ -54,7 +54,7 @@ export default class NotificationsScreen extends Component {
   /**
    * On component mount
    */
-  componentWillMount() {
+  componentDidMount() {
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       // ignore back navigation
       if (s.action.type === 'Navigation/NAVIGATE' && s.action.routeName === 'Notifications') {
@@ -146,7 +146,7 @@ export default class NotificationsScreen extends Component {
         stickyHeaderIndices={[0]}
         windowSize={8}
         refreshing={list.refreshing}
-        style={CS.backgroundWhite}
+        style={[CS.backgroundWhite, CS.flexContainer]}
       />
     );
 
@@ -161,7 +161,7 @@ export default class NotificationsScreen extends Component {
   /**
    * Key extractor
    */
-  keyExtractor = (item, index) => `${item.time_created}:${item.from.guid}:${item.entity ? item.entity.guid : index}`
+  keyExtractor = (item, index) => `${item.time_created}:${item.from.guid}:${item.entity ? item.entity.guid + index : index}`
 
   /**
    * Clear and reload

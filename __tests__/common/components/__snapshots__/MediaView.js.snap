@@ -22,16 +22,9 @@ exports[`Media view component renders correctly 1`] = `
     <ExplicitImage
       entity={
         Object {
-          "_list": Object {
-            "viewed": Object {
-              "addViewed": [Function],
-              "viewed": Map {
-                "1019155171608096768" => true,
-              },
-            },
-          },
           "attachment_guid": false,
           "blurb": false,
+          "containerObj": undefined,
           "container_guid": "activityguid0",
           "custom_data": Array [
             Object {
@@ -45,7 +38,7 @@ exports[`Media view component renders correctly 1`] = `
           "getThumbSource": [MockFunction] {
             "calls": Array [
               Array [
-                "large",
+                "xlarge",
               ],
             ],
             "results": Array [
@@ -61,7 +54,6 @@ exports[`Media view component renders correctly 1`] = `
           "mature": false,
           "message": "Message",
           "ownerObj": Object {
-            "getAvatarSource": [Function],
             "guid": "824853017709780997",
             "subtype": false,
             "time_created": "1522036284",

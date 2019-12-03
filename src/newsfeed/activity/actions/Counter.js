@@ -1,45 +1,57 @@
+// @flow
 import React, {
   PureComponent
 } from 'react';
 
 import {
   Text,
-  StyleSheet,
   View,
 } from 'react-native';
 
-import { CommonStyle } from '../../../styles/Common';
-
+import { CommonStyle as CS } from '../../../styles/Common';
 import abbrev from '../../../common/helpers/abbrev';
+
+import type {
+  TextStyleProp,
+} from 'react-native/Libraries/StyleSheet/StyleSheet';
+
+import type { Node } from 'react';
+
+type PropsType = {
+  size: number,
+  count: number,
+  style: TextStyleProp
+};
 
 /**
  * Counters
  */
-export default class Counter extends PureComponent {
+export default class Counter extends PureComponent<PropsType> {
 
   /**
    * Default Props
    */
   static defaultProps = {
     size: 15,
+    style: CS.colorAction
   };
 
   /**
    * Render
    */
-  render() {
+  render(): Node {
 
     const {
-      orientation,
       size,
       count,
+      style,
       ...otherProps
     } = this.props;
 
     return (
-      <View style={styles.counterContainer}>
+      <View style={[CS.columnAlignCenter]}>
         <Text
-          style={[ orientation != 'column' ? { paddingLeft: 4 } : { paddingLeft: 0}, styles.counter, { fontSize: Math.round(size * 0.75)}]}
+          style={[style, { fontSize: size}]}
           {...otherProps}
         >
           {count > 0 ? abbrev(count,0) : ''}
@@ -47,17 +59,4 @@ export default class Counter extends PureComponent {
       </View>
     )
   }
-
 }
-
-const styles = StyleSheet.create({
-  counterContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  counter: {
-    color: '#888',
-    fontWeight: '800',
-  },
-});

@@ -21,16 +21,32 @@ class BoostedContentService {
    */
   load = async(): Promise<any> => {
     try {
-      await this.feedsService
+      const done = await this.feedsService
         .setLimit(12)
         .setOffset(0)
+        .setPaginated(false)
         .setEndpoint('api/v2/boost/feed')
-        .fetchRemoteOrLocal();
+        .fetchLocal();
 
-      this.boosts = await this.feedsService.getEntities();
+      if (!done) {
+        await this.update();
+      } else {
+        this.boosts = await this.feedsService.getEntities();
+        // refresh boost without the wait
+        this.update();
+      }
+
     } catch (err) {
       logService.exception('[BoostedContentService]', err);
     }
+  }
+
+  /**
+   * Update boosted content from server
+   */
+  async update() {
+    await this.feedsService.fetch();
+    this.boosts = await this.feedsService.getEntities();
   }
 
   /**

@@ -9,8 +9,6 @@ import {
   StyleSheet,
 } from 'react-native';
 
-
-import Icon from 'react-native-vector-icons/Ionicons';
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 import FastImage from 'react-native-fast-image';

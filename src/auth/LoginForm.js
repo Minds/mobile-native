@@ -10,6 +10,7 @@ import {
   // TextInput,
   StyleSheet,
   KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -21,7 +22,6 @@ import { ComponentsStyle } from '../styles/Components';
 import { Button } from 'react-native-elements'
 
 import i18n from '../common/services/i18n.service';
-import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
 import ModalPicker from '../common/components/ModalPicker';
 
@@ -55,8 +55,9 @@ export default class LoginForm extends Component {
    * Render
    */
   render() {
-
-    const msg = (this.state.msg) ? <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]} {...testID('loginMsg')}>{this.state.msg}</Animatable.Text>:null;
+    const msg = this.state.msg ? (
+      <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]} testID="loginMsg">{this.state.msg}</Animatable.Text>
+    ) : null;
 
     const inputs = this.getInputs();
     const buttons = this.getButtons();
@@ -119,7 +120,7 @@ export default class LoginForm extends Component {
         loadingRight={true}
         disabled={this.state.inProgress}
         disabledStyle={CommonStyle.backgroundTransparent}
-        {...testID('login button')}
+        testID="loginButton"
       />
     ]
 
@@ -166,7 +167,7 @@ export default class LoginForm extends Component {
           autoCapitalize={'none'}
           value={this.state.username.trim()}
           key={1}
-          {...testID('username input')}
+          testID="usernameInput"
         />,
         <View key={2}>
           <TextInput
@@ -179,10 +180,14 @@ export default class LoginForm extends Component {
             underlineColorAndroid='transparent'
             onChangeText={(value) => this.setState({ password: value })}
             value={this.state.password}
-
-            {...testID('password input')}
+            testID="userPasswordInput"
           />
-          <Icon name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'} size={25} style={ComponentsStyle.loginInputIcon} onPress={this.toggleHidePassword}/>
+          <Icon
+            name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
+            size={25}
+            style={ComponentsStyle.loginInputIcon}
+            onPress={this.toggleHidePassword}
+          />
         </View>
       ];
     }

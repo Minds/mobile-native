@@ -182,7 +182,7 @@ export default class CapturePoster extends Component {
             placeholderTextColor='#ccc'
             underlineColorAndroid='transparent'
             onChangeText={this.setText}
-            value={this.state.text}
+            value={this.props.capture.text}
             multiline={true}
             selectTextOnFocus={false}
             onSelectionChange={this.onSelectionChanges}
@@ -371,13 +371,13 @@ export default class CapturePoster extends Component {
       Alert.alert(i18n.t('capture.pleaseTryAgain'));
       return false;
     }
-
+    
     if (
       !attachment.hasAttachment &&
       !text &&
-      (!this.props.capture.embed.meta || !this.props.capture.embed.meta.perma_url)
+      (!this.props.capture.embed.meta || !this.props.capture.embed.meta.url)
     ) {
-      Alert.alert(i18n.t('capture.nothingToPosts'));
+      Alert.alert(i18n.t('capture.nothingToPost'));
       return false;
     }
 
