@@ -22,6 +22,7 @@
     "@react-native-community/netinfo": "^4.4.0",
     "@sentry/react-native": "^1.0.9",
     "crypto-js": "^3.1.9-1",
+    "detox": "^14.8.1",
     "entities": "^2.0.0",
     "ethjs-signer": "^0.1.1",
     "i18n-js": "^3.2.2",
@@ -120,6 +121,22 @@
         "type": "ios.simulator",
         "device": {
           "type": "iPhone 11"
+        }
+      },
+      "android.emu.debug": {
+        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
+        "type": "android.attached",
+        "device": {
+          "name": "ZY2234PLHJ"
+        }
+      },
+      "android.emu.release": {
+        "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
+        "build": "cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ..",
+        "type": "android.attached",
+        "device": {
+          "name": "ZY2234PLHJ"
         }
       }
     },
