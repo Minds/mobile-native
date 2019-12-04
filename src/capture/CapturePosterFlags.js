@@ -361,7 +361,7 @@ export default class CapturePosterFlags extends Component {
   }
 
   renderNsfw() {
-    if (GOOGLE_PLAY_STORE || Platform.OS === 'ios') return null;
+    //if (GOOGLE_PLAY_STORE || Platform.OS === 'ios') return null;
     return (
       <NsfwToggle
         containerStyle={styles.cell}

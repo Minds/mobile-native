@@ -50,6 +50,7 @@ export default class SearchView extends PureComponent {
             'transparent'
           }
           style={styles.input}
+          testID="MessengerContactText"
         />
         {rIcon}
       </View>

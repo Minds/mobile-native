@@ -44,7 +44,7 @@ export default class ConversationView extends Component {
     }
 
     return (
-      <TouchableOpacity style={styles.row} onPress={this._navToConversation}>
+      <TouchableOpacity style={styles.row} onPress={this._navToConversation} testID={this.props.testID}>
         <Image source={avatarImg} style={styles.avatar} />
         <Text style={styles.body}>{item.username.toUpperCase()}</Text>
         {unread}

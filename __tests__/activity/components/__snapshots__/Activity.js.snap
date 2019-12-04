@@ -210,6 +210,7 @@ exports[`Activity component renders correctly 1`] = `
             }
           }
           onTranslate={[Function]}
+          testID=""
           toggleEdit={[Function]}
         />
       </View>
