@@ -179,6 +179,7 @@ export default class Activity extends Component {
             entity={this.props.entity}
             navigation={this.props.navigation}
             onTranslate={this.showTranslate}
+            testID={this.props.entity.text==='e2eTest' ? 'ActivityMoreButton' : ''}
           />
        </View>
       )
@@ -219,6 +220,7 @@ export default class Activity extends Component {
               entity={this.props.entity}
               navigation={this.props.navigation}
               onTranslate={this.showTranslate}
+              testID={this.props.entity.text==='e2eTest' ? 'ActivityMoreButton' : ''}
             />}
           </View>
         </View>

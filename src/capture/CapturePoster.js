@@ -73,6 +73,7 @@ export default class CapturePoster extends Component {
       headerRight: <CapturePostButton
         onPress={() => !params.isRemind ? this.submit() : this.remind()}
         text={params.isRemind ? i18n.t('capture.remind').toUpperCase() : i18n.t('capture.post').toUpperCase()}
+        testID="CapturePostButton"
       />
     });
   }
@@ -186,7 +187,7 @@ export default class CapturePoster extends Component {
             multiline={true}
             selectTextOnFocus={false}
             onSelectionChange={this.onSelectionChanges}
-            {...testID('PostInput')}
+            testID="PostInput"
           />
         </View>
         {showAttachmentFeatures && this.getAttachFeature()}
@@ -212,7 +213,7 @@ export default class CapturePoster extends Component {
     const params = navigation.state.params || {};
 
     return (
-      <View style={CS.flexContainer}>
+      <View style={CS.flexContainer} testID="capturePosterView">
         <CaptureGallery
           onSelected={this.onAttachedMedia}
           header={this.getHeader(true)}
@@ -292,7 +293,7 @@ export default class CapturePoster extends Component {
             uri={attachment.uri}
             type={attachment.type}
           />
-          <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()} {...testID('Attachment Delete Button')} />
+          <Icon raised name="md-close" type="ionicon" color='#fff' size={22} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()} testID="AttachmentDeleteButton" />
         </View>}
         <CaptureTabs onSelectedMedia={this.onAttachedMedia} />
       </React.Fragment>

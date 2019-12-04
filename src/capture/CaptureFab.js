@@ -35,7 +35,7 @@ export default class CaptureFab extends Component {
         size={32}
         containerStyle={ settingsStore.leftHanded ? styles.leftSide : styles.rightSide }
         onPress={() => this.navToCapture()}
-        {...testID('CaptureButton')}
+        testID={this.props.testID}
         />
 
     );
