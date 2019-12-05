@@ -47,13 +47,15 @@ export const ComponentsStyle = StyleSheet.create({
     marginLeft: 10,
     backgroundColor: 'transparent',
     borderColor: '#FFF',
-    borderWidth: 1
+    borderWidth: 1,
+    borderRadius: 30,
   },
   loginButtonText: {
     // fontFamily: 'Roboto',
     fontSize: 16,
     fontWeight: '600',
-    letterSpacing: 1.25
+    letterSpacing: 1.25,
+    color: 'white',
   },
   registerCheckboxText: {
     color: 'white'

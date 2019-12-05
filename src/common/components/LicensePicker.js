@@ -6,7 +6,6 @@ import {
   Platform
 } from 'react-native';
 import { Icon } from 'react-native-elements'
-import Modal from 'react-native-modal';
 
 import { LICENSES, getLicenseText} from '../services/list-options.service';
 import { CommonStyle } from '../../styles/Common';
@@ -38,7 +37,7 @@ export default class LicensePicker extends PureComponent {
    */
   licenseSelected = (value) => {
     this.toggle(value);
-    this.props.onLicenseSelected(value)
+    this.props.onLicenseSelected(value);
   }
 
   /**

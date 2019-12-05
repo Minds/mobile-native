@@ -841,14 +841,10 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           }
         >
-          <Icon
+          <Themed.Icon
             color="#b0bec5"
             name="public"
-            raised={false}
-            reverse={false}
-            reverseColor="white"
             size={18}
-            underlayColor="white"
           />
           <Text
             style={
@@ -870,15 +866,11 @@ exports[`blog view screen component should renders correctly 1`] = `
           >
             Attribution-NonCommerical CC BY-NC
           </Text>
-          <Icon
+          <Themed.Icon
             color="#4690D6"
             name="share"
             onPress={[Function]}
-            raised={false}
-            reverse={false}
-            reverseColor="white"
             size={20}
-            underlayColor="white"
           />
         </View>
         <ForwardRef(_SafeAreaView)
@@ -890,15 +882,12 @@ exports[`blog view screen component should renders correctly 1`] = `
             }
           }
         >
-          <Icon
+          <Themed.Icon
             color="#4690D6"
             name="arrow-back"
             onPress={[Function]}
             raised={true}
-            reverse={false}
-            reverseColor="white"
             size={22}
-            underlayColor="white"
           />
         </ForwardRef(_SafeAreaView)>
       </View>

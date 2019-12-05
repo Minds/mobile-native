@@ -124,7 +124,7 @@ export default class RewardsStep extends Component {
 
     return (
       <View>
-        <View style={[style.cols, style.form]}>
+        <View style={[style.cols, style.form]} testID="RewardsOnboarding">
           <PhoneInput
             disabled={this.state.inProgress}
             style={{ ...stylesheet.col, ...stylesheet.colFirst, ...stylesheet.phoneInput }}

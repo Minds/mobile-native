@@ -75,6 +75,7 @@ export default class TagSelect extends Component {
               key={i}
               onPress={() => this.toogle(tag)}
               onLongPress={() => this.toogleOne(tag)}
+              testID={tag.value + 'TestID'}
             >
             <Text style={[styles.tagText, textStyle, tag.selected ? [CS.colorPrimary, textSelectedStyle] : null]}>#{tag.value}</Text>
           </TouchableOpacity>)}
