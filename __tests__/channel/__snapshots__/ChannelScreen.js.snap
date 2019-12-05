@@ -469,15 +469,12 @@ exports[`Channel screen component should renders correctly 1`] = `
       }
     }
   >
-    <Icon
+    <Themed.Icon
       color="#4690D6"
       name="arrow-back"
       onPress={[Function]}
       raised={true}
-      reverse={false}
-      reverseColor="white"
       size={22}
-      underlayColor="white"
     />
   </SafeAreaView>
   <CaptureFab
@@ -964,15 +961,12 @@ exports[`Channel screen component should show closed channel message 1`] = `
       }
     }
   >
-    <Icon
+    <Themed.Icon
       color="#4690D6"
       name="arrow-back"
       onPress={[Function]}
       raised={true}
-      reverse={false}
-      reverseColor="white"
       size={22}
-      underlayColor="white"
     />
   </SafeAreaView>
   <CaptureFab

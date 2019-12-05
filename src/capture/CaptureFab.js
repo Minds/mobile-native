@@ -29,10 +29,11 @@ export default class CaptureFab extends Component {
     return (
       <Icon
         raised
+        reverse
         name="md-create"
         type='ionicon'
-        color='#fff'
-        size={32}
+        color='#4690DF'
+        size={28}
         containerStyle={ settingsStore.leftHanded ? styles.leftSide : styles.rightSide }
         onPress={() => this.navToCapture()}
         testID={this.props.testID}
@@ -45,18 +46,14 @@ export default class CaptureFab extends Component {
 const styles = StyleSheet.create({
   rightSide: {
     position:'absolute',
-    backgroundColor:'#4690DF',
-    width:55,
-    height:55,
+    // backgroundColor:'#4690DF',
     bottom:8,
     zIndex:1000,
     right:8
   },
   leftSide: {
     position:'absolute',
-    backgroundColor:'#4690DF',
-    width:55,
-    height:55,
+    // backgroundColor:'#4690DF',
     bottom:8,
     zIndex:1000,
     left:8

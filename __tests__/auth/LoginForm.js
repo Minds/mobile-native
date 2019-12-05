@@ -2,6 +2,7 @@ import 'react-native';
 import React from 'react';
 import { Text, TouchableOpacity } from "react-native";
 import { shallow } from 'enzyme';
+import { Button } from 'react-native-elements';
 
 import LoginForm from '../../src/auth/LoginForm';
 import authService from '../../src/auth/AuthService';
@@ -41,7 +42,7 @@ describe('LoginForm component', () => {
     });
 
     // press login
-    await render.find('Button').at(1).simulate('press');
+    await render.find(Button).at(1).simulate('press');
 
     // check state
     expect(wrapper.state().password).toEqual('data');

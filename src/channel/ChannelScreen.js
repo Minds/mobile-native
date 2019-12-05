@@ -15,7 +15,7 @@ import {
   inject
 } from 'mobx-react/native'
 
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
 
 import ChannelHeader from './header/ChannelHeader';
 import Toolbar from './toolbar/Toolbar';
