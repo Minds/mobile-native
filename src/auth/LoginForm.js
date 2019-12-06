@@ -8,9 +8,7 @@ import {
   View,
   Text,
   // TextInput,
-  StyleSheet,
   KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -32,7 +30,9 @@ import TextInput from '../common/components/TextInput';
  * Login Form
  */
 export default class LoginForm extends Component {
-
+  /**
+   * State
+   */
   state = {
     username: '',
     password: '',
@@ -44,12 +44,13 @@ export default class LoginForm extends Component {
     showLanguages: false,
   };
 
-  componentWillMount() {
-    this.setState({
-      language: i18n.getCurrentLocale()
-    });
+  /**
+   * Constructor
+   */
+  constructor(props) {
+    super(props);
+    this.state.language = i18n.getCurrentLocale();
   }
-
 
   /**
    * Render
@@ -90,9 +91,12 @@ export default class LoginForm extends Component {
     );
   }
 
+  /**
+   * Show languages
+   */
   showLanguages = () => {
     this.setState({showLanguages: true});
-  }
+  };
 
   /**
    * Language selected
@@ -100,12 +104,18 @@ export default class LoginForm extends Component {
   languageSelected = (language) => {
     this.setState({language, showLanguages: false});
     i18n.setLocale(language);
-  }
+  };
 
+  /**
+   * Cancel language selection
+   */
   cancel = () => {
     this.setState({showLanguages: false});
-  }
+  };
 
+  /**
+   * Returns the buttons
+   */
   getButtons() {
     const buttons = [
       <Button
@@ -122,7 +132,7 @@ export default class LoginForm extends Component {
         disabledStyle={CommonStyle.backgroundTransparent}
         testID="loginButton"
       />
-    ]
+    ];
 
     if (!this.state.twoFactorToken) {
       buttons.unshift(
@@ -141,6 +151,9 @@ export default class LoginForm extends Component {
     return buttons;
   }
 
+  /**
+   * Return the inputs for the form
+   */
   getInputs() {
     if (this.state.twoFactorToken) {
       return (
@@ -150,7 +163,7 @@ export default class LoginForm extends Component {
           returnKeyType={'done'}
           placeholderTextColor="#444"
           underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ twoFactorCode: value })}
+          onChangeText={this.setTwoFactor}
           autoCapitalize={'none'}
           value={this.state.twoFactorCode}
         />
@@ -163,9 +176,9 @@ export default class LoginForm extends Component {
           returnKeyType={'done'}
           placeholderTextColor="#444"
           underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ username: value })}
+          onChangeText={this.setUsername}
           autoCapitalize={'none'}
-          value={this.state.username.trim()}
+          value={this.state.username}
           key={1}
           testID="usernameInput"
         />,
@@ -178,7 +191,7 @@ export default class LoginForm extends Component {
             returnKeyType={'done'}
             placeholderTextColor="#444"
             underlineColorAndroid='transparent'
-            onChangeText={(value) => this.setState({ password: value })}
+            onChangeText={this.setPassword}
             value={this.state.password}
             testID="userPasswordInput"
           />
@@ -193,13 +206,47 @@ export default class LoginForm extends Component {
     }
   }
 
+  /**
+   * Set two factor
+   * @param {string} value
+   */
+  setTwoFactor = value => {
+    const twoFactorCode = String(value).trim();
+    this.setState({twoFactorCode});
+  };
+
+  /**
+   * Set two factor
+   * @param {string} value
+   */
+  setUsername = value => {
+    const username = String(value).trim();
+    this.setState({username});
+  };
+
+  /**
+   * Set two factor
+   * @param {string} value
+   */
+  setPassword = value => {
+    const password = String(value).trim();
+    this.setState({password});
+  };
+
+  /**
+   * Set two factor
+   * @param {string} value
+   */
   toggleHidePassword = () => {
     this.setState({hidePassword: !this.state.hidePassword});
-  }
+  };
 
+  /**
+   * Handle forgot password
+   */
   onForgotPress = () => {
-    this.props.onForgot()
-  }
+    this.props.onForgot();
+  };
 
   /**
    * On login press
