@@ -152,6 +152,7 @@ exports[`channel header component owner should render correctly 1`] = `
       >
         <View
           style={null}
+          testID="SubscribersView"
         >
           <Text>
             SUBSCRIBERS
@@ -161,7 +162,9 @@ exports[`channel header component owner should render correctly 1`] = `
           </Text>
         </View>
       </View>
-      <View>
+      <View
+        testID="ViewsView"
+      >
         <Text>
           VIEWS
         </Text>
@@ -179,6 +182,7 @@ exports[`channel header component owner should render correctly 1`] = `
               "flexDirection": "row",
             }
           }
+          testID="ChannelNameView"
         >
           <Text
             ellipsizeMode="tail"
@@ -234,6 +238,7 @@ exports[`channel header component owner should render correctly 1`] = `
               "padding": 4,
             }
           }
+          testID="EditButton"
         >
           <Text
             style={

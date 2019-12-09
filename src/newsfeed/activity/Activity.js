@@ -98,7 +98,7 @@ export default class Activity extends Component {
 
 
     return (
-        <View style={[styles.container, this.props.isReminded ? null : CommonStyle.hairLineBottom]} onLayout={this.props.onLayout}>
+        <View style={[styles.container, this.props.isReminded ? null : CommonStyle.hairLineBottom]} onLayout={this.props.onLayout} testID="ActivityView">
           <Pinned entity={this.props.entity}/>
           { this.showOwner() }
             { lock }

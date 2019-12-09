@@ -13,6 +13,7 @@ exports[`Activity component renders correctly 1`] = `
       },
     ]
   }
+  testID="ActivityView"
 >
   <Pinned
     entity={
