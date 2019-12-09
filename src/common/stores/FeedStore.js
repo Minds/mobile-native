@@ -423,4 +423,12 @@ export default class FeedStore {
     this.feedsService.setOffset(0);
     return this;
   }
+
+  /**
+   * Reset store and service data
+   */
+  reset() {
+    this.clear();
+    this.feedsService.clear();
+  }
 }

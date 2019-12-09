@@ -100,6 +100,22 @@ describe('auth service logout', () => {
     expect(session.logout.mock.calls.length).toEqual(1);
   });
 
+  it('should clear cookies on logout', async () => {
+
+    api.post.mockResolvedValue(true);
+
+    const res = await authService.logout();
+
+    // assert on the response
+    expect(res).toEqual(true);
+
+    // call session logout one time
+    expect(session.logout.mock.calls.length).toBe(1);
+
+    // should clear cookies
+    expect(api.clearCookies).toBeCalled();
+  });
+
   it('logout returns errors', async () => {
 
     const response = {status: 'error', error: 'some error'};

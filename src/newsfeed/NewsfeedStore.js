@@ -39,10 +39,6 @@ class NewsfeedStore {
    */
   constructor() {
     this.buildStores();
-    this.feedStore
-      .setEndpoint(`api/v2/feeds/subscribed/activities`)
-      .setInjectBoost(true)
-      .setLimit(12);
   }
 
   /**
@@ -68,6 +64,11 @@ class NewsfeedStore {
     this.list.getMetadataService()
       .setSource('feed/boosts')
       .setMedium('featured-content');
+
+    this.feedStore
+      .setEndpoint('api/v2/feeds/subscribed/activities')
+      .setInjectBoost(true)
+      .setLimit(12);
   }
 
   /**
@@ -167,12 +168,12 @@ class NewsfeedStore {
 
   @action
   reset() {
+    this.feedStore.reset();
     this.buildStores();
     this.filter = 'subscribed';
     this.boosts = [];
     this.loading = false;
     this.loadingBoost = false;
-    this.feedStore.clear();
   }
 
 }
