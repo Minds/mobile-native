@@ -81,6 +81,11 @@ export default class BaseModel {
   constructor(data) {
     Object.assign(this, data);
 
+    // Some users have a number as username and engine return them as a number
+    if (this.username) {
+      this.username = this.username.toString();
+    }
+
     // create childs instances
     const childs = this.childModels()
     for (var prop in childs) {

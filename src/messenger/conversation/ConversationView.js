@@ -38,11 +38,6 @@ export default class ConversationView extends Component {
     let unread = item.unread ? <Icon style={styles.icons} name='md-notifications' color='#4caf50' size={19} /> : null;
     let online = item.online ? <Icon style={styles.icons} name='md-radio-button-on' color='#2196f3' size={19} /> : null;
 
-    // Added to capture information about /issues/1203549247/?project=1538735
-    if (item.username && !item.username.toUpperCase) {
-      Sentry.captureMessage('ISSUE 1203549247 No username on ' + item.guid + ' name: ' + item.name);
-    }
-
     return (
       <TouchableOpacity style={styles.row} onPress={this._navToConversation}>
         <Image source={avatarImg} style={styles.avatar} />
