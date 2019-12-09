@@ -96,6 +96,13 @@ export default class BaseModel {
   }
 
   /**
+   * Return if the current user is the owner of the activity
+   */
+  isOwner = () => {
+    return this.ownerObj && sessionService.guid === this.ownerObj.guid;
+  }
+
+  /**
    * Update model data
    * @param {Object} data
    */

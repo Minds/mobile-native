@@ -30,6 +30,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
         "description": "Congratulations! ",
         "edited": "",
         "guid": "activityguid0",
+        "isOwner": [Function],
         "is_visible": true,
         "mature": false,
         "mature_visibility": false,
@@ -37,6 +38,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
         "ownerObj": UserModel {
           "__list": null,
           "guid": "824853017709780997",
+          "isOwner": [Function],
           "subtype": false,
           "time_created": "1522036284",
           "type": "user",
@@ -79,6 +81,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
             "description": "Congratulations! ",
             "edited": "",
             "guid": "activityguid0",
+            "isOwner": [Function],
             "is_visible": true,
             "mature": false,
             "mature_visibility": false,
@@ -86,6 +89,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
             "ownerObj": UserModel {
               "__list": null,
               "guid": "824853017709780997",
+              "isOwner": [Function],
               "subtype": false,
               "time_created": "1522036284",
               "type": "user",
