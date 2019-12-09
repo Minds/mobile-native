@@ -144,7 +144,7 @@ export default class FeedList extends Component {
 
     if (this.props.feedStore.loading && !this.props.feedStore.refreshing){
       return (
-        <View style={[CS.centered, CS.padding3x]}>
+        <View style={[CS.centered, CS.padding3x]} testID="ActivityIndicatorView">
           <ActivityIndicator size={'large'} />
         </View>
       );

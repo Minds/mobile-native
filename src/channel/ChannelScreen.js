@@ -329,12 +329,12 @@ class ChannelScreen extends Component {
       />
 
     return (
-      <View style={CommonStyle.flexContainer}>
+      <View style={CommonStyle.flexContainer} testID="ChannelScreen">
         { (!channel.blocked && !isClosed) ? body : header }
         <SafeAreaView style={styles.gobackicon}>
           <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={this.goBack}/>
         </SafeAreaView>
-        <CaptureFab navigation={this.props.navigation} />
+        <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
       </View>
     );
   }
