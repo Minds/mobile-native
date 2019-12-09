@@ -29,6 +29,7 @@ import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import attachmentService from '../common/services/attachment.service';
+import videoPlayerService from '../common/services/video-player.service';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -89,6 +90,9 @@ class MindsVideo extends Component {
    */
   componentWillUnmount() {
     this.onScreenBlur.remove();
+    if (videoPlayerService.current === this) {
+      videoPlayerService.clear();
+    }
   }
 
   onVideoEnd = () => {
@@ -106,13 +110,13 @@ class MindsVideo extends Component {
     }
 
     this.setState({loaded: false, currentTime: current, duration: e.duration});
-    this.player.seek(current)
+    this.player.seek(current);
 
     this.onLoadEnd();
   }
 
   onLoadStart = () => {
-    this.setState({ error: false, inProgress: true, });
+    this.setState({error: false, inProgress: true});
   };
 
   onError = async err => {
@@ -123,31 +127,31 @@ class MindsVideo extends Component {
         this.setState({transcoding: true});
       } else {
         logService.exception('[MindsVideo]', new Error(err));
-        this.setState({ error: true, inProgress: false, });
+        this.setState({error: true, inProgress: false});
       }
     } catch (error) {
       logService.exception('[MindsVideo]', new Error(error));
-      this.setState({ error: true, inProgress: false, });
+      this.setState({error: true, inProgress: false});
     }
   };
 
   onLoadEnd = () => {
-    this.setState({ error: false, inProgress: false, });
+    this.setState({error: false, inProgress: false});
   };
 
   toggleVolume = () => {
     const v = this.state.volume ? 0 : 1;
     this.setState({volume: v});
-  }
+  };
 
-  onProgress = (e) => {
+  onProgress = e => {
     this.setState({currentTime: e.currentTime});
-  }
+  };
 
   onBackward(currentTime) {
     let newTime = Math.max(currentTime - FORWARD_DURATION, 0);
     this.player.seek(newTime);
-    this.setState({currentTime: newTime})
+    this.setState({currentTime: newTime});
   }
 
   onForward(currentTime, duration) {
@@ -180,15 +184,13 @@ class MindsVideo extends Component {
   }
 
   play = () => {
-    this.setState({
-      showOverlay: false,
-    });
-
+    videoPlayerService.setCurrent(this);
     this.setState({
       active: true,
+      showOverlay: false,
       paused: false,
     });
-  }
+  };
 
   pause = () => {
     this.setState({
@@ -248,6 +250,13 @@ class MindsVideo extends Component {
   }
 
   /**
+   * Set the reference to the video player
+   */
+  setRef = (ref) => {
+    this.player = ref;
+  };
+
+  /**
    * Get video component or thumb
    */
   get video() {
@@ -257,9 +266,7 @@ class MindsVideo extends Component {
     if (this.state.active || !thumb_uri) {
       return (
         <Video
-          ref={(ref) => {
-            this.player = ref
-          }}
+          ref={this.setRef}
           volume={parseFloat(this.state.volume)}
           onEnd={this.onVideoEnd}
           onLoadStart={this.onLoadStart}
