@@ -35,6 +35,8 @@ target 'Minds' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
 
+  pod 'RNSentry', :path => '../node_modules/@sentry/react-native'
+
   target 'MindsTests' do
     inherit! :search_paths
     # Pods for testing
