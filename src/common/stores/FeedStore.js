@@ -5,11 +5,14 @@ import Viewed from './Viewed';
 import MetadataService from '../services/metadata.service';
 import FeedsService from '../services/feeds.service';
 import connectivityService from '../services/connectivity.service';
+import channelService from '../../channel/ChannelService';
 
 /**
  * Feed store
  */
 export default class FeedStore {
+
+  @observable scheduledCount = '';
 
   /**
    * Refreshing
@@ -143,6 +146,9 @@ export default class FeedStore {
     entity._list = this;
     this.entities.unshift(entity);
     this.feedsService.prepend(entity);
+    if (entity.isScheduled()) {
+      this.setScheduledCount(this.scheduledCount + 1);
+    }
   }
 
   /**
@@ -162,6 +168,9 @@ export default class FeedStore {
     const index = this.entities.findIndex(e => e === entity);
     if (index < 0) return;
     this.removeIndex(index);
+    if (entity.isScheduled()) {
+      this.setScheduledCount(this.scheduledCount - 1);
+    }
   }
 
   /**
@@ -430,5 +439,18 @@ export default class FeedStore {
   reset() {
     this.clear();
     this.feedsService.clear();
+  }
+
+  /**
+   * Get channel scheduled activities count
+   */
+  async getScheduledCount(guid) {
+    const count = await channelService.getScheduledCount(guid);
+    this.setScheduledCount(count);
+  }
+
+  @action
+  setScheduledCount(count) {
+    this.scheduledCount = count;
   }
 }
