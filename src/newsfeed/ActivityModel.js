@@ -104,13 +104,6 @@ export default class ActivityModel extends BaseModel {
     FastImage.preload([this.getThumbSource(size)]);
   }
 
-  /**
-   * Return if the current user is the owner of the activity
-   */
-  isOwner() {
-    return sessionService.guid == this.ownerObj.guid;
-  }
-
   shouldBeBlured() {
 
     const user = sessionService.getUser();

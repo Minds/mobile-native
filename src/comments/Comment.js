@@ -135,6 +135,7 @@ class Comment extends Component {
 
         </View>
         <CommentActionSheet
+          entity={this.props.entity}
           comment={this.props.comment}
           onSelection={this.onSelection}
           ref={this.actionSheetRef}
