@@ -17,6 +17,7 @@ import FastImage from 'react-native-fast-image';
 import formatDate from '../common/helpers/date';
 import { CommonStyle as CS} from '../styles/Common';
 import { FLAG_VIEW } from '../common/Permissions';
+import Actions from '../newsfeed/activity/Actions';
 
 /**
  * Blog Card
@@ -57,6 +58,10 @@ export default class BlogCard extends PureComponent {
             </View>
           </View>
         </View>
+        <Actions
+          entity={blog}
+          navigation={this.props.navigation}
+        />
       </TouchableOpacity>
     )
   }

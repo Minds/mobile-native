@@ -7,8 +7,11 @@ import blogFakeFactory from '../../__mocks__/fake/blogs/BlogFactory'
 import BlogModel from '../../src/blogs/BlogModel';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import Actions from '../../src/newsfeed/activity/Actions';
 
 Linking.openURL = jest.fn();
+
+jest.mock('../../src/newsfeed/activity/Actions', () => 'Actions');
 
 /**
  * Tests
@@ -44,7 +47,7 @@ describe('blog card component', () => {
       wrapper.instance().navToBlog();
 
       // expect fn to be called once
-      expect(navigation.push).toBeCalledWith('BlogView', {blog:blogEntity});
+      expect(navigation.push).toBeCalledWith('BlogView', {blog: blogEntity});
       done();
     } catch(e) {
       done.fail(e);
