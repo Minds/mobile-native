@@ -15,32 +15,24 @@ exports[`Channel screen component should renders correctly 1`] = `
         <ChannelHeader
           navigation={
             Object {
+              "goBack": [MockFunction],
               "navigate": [MockFunction],
               "state": Object {
                 "params": Object {
                   "entity": Object {
-                    "_list": Object {
-                      "viewed": Object {
-                        "addViewed": [Function],
-                        "viewed": Map {
-                          "1019155171608096768" => true,
-                        },
-                      },
-                    },
                     "attachment_guid": false,
                     "blurb": false,
+                    "containerObj": undefined,
                     "container_guid": "activityguid0",
                     "custom_data": false,
                     "custom_type": false,
                     "description": "Congratulations! ",
                     "edited": "",
-                    "getThumbSource": [Function],
                     "guid": "activityguid0",
                     "impressions": 20,
                     "mature": false,
                     "message": "Message",
                     "ownerObj": Object {
-                      "getAvatarSource": [Function],
                       "guid": "824853017709780997",
                       "subtype": false,
                       "time_created": "1522036284",
@@ -65,9 +57,91 @@ exports[`Channel screen component should renders correctly 1`] = `
           }
           store={
             Object {
-              "channel": Object {
+              "channel": UserModel {
+                "__list": null,
+                "access_id": "2",
+                "allow_comments": true,
+                "banned": "no",
                 "blocked": false,
-                "guid": "125",
+                "boostProPlus": false,
+                "boost_autorotate": true,
+                "boost_rating": "2",
+                "briefdescription": "",
+                "categories": Array [
+                  "music",
+                  "nature",
+                  "news",
+                  "politics",
+                  "science",
+                  "technology",
+                  "education",
+                  "art",
+                  "health",
+                ],
+                "chat": true,
+                "city": "",
+                "container_guid": "0",
+                "deleted": "0",
+                "disabled_boost": false,
+                "dob": "",
+                "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+                "fb": false,
+                "feature_flags": false,
+                "featured_id": "725165605782560768",
+                "founder": false,
+                "gender": "private",
+                "getAvatarSource": [MockFunction],
+                "guid": 1,
+                "icontime": "1523515420",
+                "impressions": 100,
+                "isOwner": [Function],
+                "language": "en",
+                "legacy_guid": false,
+                "mature": "1",
+                "mature_channel": "0",
+                "mature_visibility": false,
+                "merchant": Object {
+                  "exclusive": Object {
+                    "amount": "10",
+                    "enabled": true,
+                  },
+                  "id": "acct_Dsdfjdlsaf34243",
+                  "service": "stripe",
+                },
+                "mode": 0,
+                "monetized": "",
+                "name": "Some User",
+                "owner_guid": "0",
+                "pending_subscribe": false,
+                "permissions": Object {},
+                "pinned_posts": Array [],
+                "plus": true,
+                "programs": Array [
+                  "affiliate",
+                ],
+                "rating": "1",
+                "rewards": true,
+                "signup_method": false,
+                "site_guid": false,
+                "social_profiles": Array [],
+                "spam": "0",
+                "subscribed": false,
+                "subscriber": true,
+                "subscribers_count": 50,
+                "subtype": false,
+                "time_created": "1468113204",
+                "time_updated": false,
+                "type": "user",
+                "username": "someusermane",
+                "verified": true,
+                "website": "",
+                "wire_rewards": Object {
+                  "description": "",
+                  "rewards": Object {
+                    "money": Array [],
+                    "points": Array [],
+                  },
+                },
               },
               "feedStore": Object {
                 "setChannel": [MockFunction],
@@ -247,6 +321,94 @@ exports[`Channel screen component should renders correctly 1`] = `
           }
         />
         <Toolbar
+          channel={
+            UserModel {
+              "__list": null,
+              "access_id": "2",
+              "allow_comments": true,
+              "banned": "no",
+              "blocked": false,
+              "boostProPlus": false,
+              "boost_autorotate": true,
+              "boost_rating": "2",
+              "briefdescription": "",
+              "categories": Array [
+                "music",
+                "nature",
+                "news",
+                "politics",
+                "science",
+                "technology",
+                "education",
+                "art",
+                "health",
+              ],
+              "chat": true,
+              "city": "",
+              "container_guid": "0",
+              "deleted": "0",
+              "disabled_boost": false,
+              "dob": "",
+              "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+              "fb": false,
+              "feature_flags": false,
+              "featured_id": "725165605782560768",
+              "founder": false,
+              "gender": "private",
+              "getAvatarSource": [MockFunction],
+              "guid": 1,
+              "icontime": "1523515420",
+              "impressions": 100,
+              "isOwner": [Function],
+              "language": "en",
+              "legacy_guid": false,
+              "mature": "1",
+              "mature_channel": "0",
+              "mature_visibility": false,
+              "merchant": Object {
+                "exclusive": Object {
+                  "amount": "10",
+                  "enabled": true,
+                },
+                "id": "acct_Dsdfjdlsaf34243",
+                "service": "stripe",
+              },
+              "mode": 0,
+              "monetized": "",
+              "name": "Some User",
+              "owner_guid": "0",
+              "pending_subscribe": false,
+              "permissions": Object {},
+              "pinned_posts": Array [],
+              "plus": true,
+              "programs": Array [
+                "affiliate",
+              ],
+              "rating": "1",
+              "rewards": true,
+              "signup_method": false,
+              "site_guid": false,
+              "social_profiles": Array [],
+              "spam": "0",
+              "subscribed": false,
+              "subscriber": true,
+              "subscribers_count": 50,
+              "subtype": false,
+              "time_created": "1468113204",
+              "time_updated": false,
+              "type": "user",
+              "username": "someusermane",
+              "verified": true,
+              "website": "",
+              "wire_rewards": Object {
+                "description": "",
+                "rewards": Object {
+                  "money": Array [],
+                  "points": Array [],
+                },
+              },
+            }
+          }
           feed={
             Object {
               "setChannel": [MockFunction],
@@ -254,56 +416,28 @@ exports[`Channel screen component should renders correctly 1`] = `
           }
           hasRewards={0}
         />
-        <SafeAreaView
-          style={
-            Object {
-              "left": 0,
-              "position": "absolute",
-              "top": 16,
-            }
-          }
-        >
-          <Icon
-            color="#4690D6"
-            name="arrow-back"
-            onPress={[Function]}
-            raised={true}
-            reverse={false}
-            reverseColor="white"
-            size={22}
-            underlayColor="white"
-          />
-        </SafeAreaView>
       </View>
     }
     navigation={
       Object {
+        "goBack": [MockFunction],
         "navigate": [MockFunction],
         "state": Object {
           "params": Object {
             "entity": Object {
-              "_list": Object {
-                "viewed": Object {
-                  "addViewed": [Function],
-                  "viewed": Map {
-                    "1019155171608096768" => true,
-                  },
-                },
-              },
               "attachment_guid": false,
               "blurb": false,
+              "containerObj": undefined,
               "container_guid": "activityguid0",
               "custom_data": false,
               "custom_type": false,
               "description": "Congratulations! ",
               "edited": "",
-              "getThumbSource": [Function],
               "guid": "activityguid0",
               "impressions": 20,
               "mature": false,
               "message": "Message",
               "ownerObj": Object {
-                "getAvatarSource": [Function],
                 "guid": "824853017709780997",
                 "subtype": false,
                 "time_created": "1522036284",
@@ -328,35 +462,544 @@ exports[`Channel screen component should renders correctly 1`] = `
     }
     renderActivity={null}
   />
+  <SafeAreaView
+    style={
+      Object {
+        "left": 0,
+        "position": "absolute",
+        "top": 16,
+      }
+    }
+  >
+    <Icon
+      color="#4690D6"
+      name="arrow-back"
+      onPress={[Function]}
+      raised={true}
+      reverse={false}
+      reverseColor="white"
+      size={22}
+      underlayColor="white"
+    />
+  </SafeAreaView>
   <CaptureFab
     navigation={
       Object {
+        "goBack": [MockFunction],
         "navigate": [MockFunction],
         "state": Object {
           "params": Object {
             "entity": Object {
-              "_list": Object {
-                "viewed": Object {
-                  "addViewed": [Function],
-                  "viewed": Map {
-                    "1019155171608096768" => true,
-                  },
-                },
-              },
               "attachment_guid": false,
               "blurb": false,
+              "containerObj": undefined,
               "container_guid": "activityguid0",
               "custom_data": false,
               "custom_type": false,
               "description": "Congratulations! ",
               "edited": "",
-              "getThumbSource": [Function],
               "guid": "activityguid0",
               "impressions": 20,
               "mature": false,
               "message": "Message",
               "ownerObj": Object {
-                "getAvatarSource": [Function],
+                "guid": "824853017709780997",
+                "subtype": false,
+                "time_created": "1522036284",
+                "type": "user",
+              },
+              "owner_guid": "824853017709780997",
+              "parent_guid": "838106762591510528",
+              "perma_url": false,
+              "rowKey": "something0",
+              "shouldBeBlured": [MockFunction],
+              "thumbnail_src": false,
+              "time_created": "1522036284",
+              "title": "TITLE",
+              "type": "activity",
+              "wire_totals": Object {
+                "tokens": 20,
+              },
+            },
+          },
+        },
+      }
+    }
+  />
+</View>
+`;
+
+exports[`Channel screen component should show closed channel message 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View>
+    <ChannelHeader
+      navigation={
+        Object {
+          "goBack": [MockFunction],
+          "navigate": [MockFunction],
+          "state": Object {
+            "params": Object {
+              "entity": Object {
+                "attachment_guid": false,
+                "blurb": false,
+                "containerObj": undefined,
+                "container_guid": "activityguid0",
+                "custom_data": false,
+                "custom_type": false,
+                "description": "Congratulations! ",
+                "edited": "",
+                "guid": "activityguid0",
+                "impressions": 20,
+                "mature": false,
+                "message": "Message",
+                "ownerObj": Object {
+                  "guid": "824853017709780997",
+                  "subtype": false,
+                  "time_created": "1522036284",
+                  "type": "user",
+                },
+                "owner_guid": "824853017709780997",
+                "parent_guid": "838106762591510528",
+                "perma_url": false,
+                "rowKey": "something0",
+                "shouldBeBlured": [MockFunction],
+                "thumbnail_src": false,
+                "time_created": "1522036284",
+                "title": "TITLE",
+                "type": "activity",
+                "wire_totals": Object {
+                  "tokens": 20,
+                },
+              },
+            },
+          },
+        }
+      }
+      store={
+        Object {
+          "channel": UserModel {
+            "__list": null,
+            "access_id": "2",
+            "allow_comments": true,
+            "banned": "no",
+            "blocked": false,
+            "boostProPlus": false,
+            "boost_autorotate": true,
+            "boost_rating": "2",
+            "briefdescription": "",
+            "categories": Array [
+              "music",
+              "nature",
+              "news",
+              "politics",
+              "science",
+              "technology",
+              "education",
+              "art",
+              "health",
+            ],
+            "chat": true,
+            "city": "",
+            "container_guid": "0",
+            "deleted": "0",
+            "disabled_boost": false,
+            "dob": "",
+            "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+            "fb": false,
+            "feature_flags": false,
+            "featured_id": "725165605782560768",
+            "founder": false,
+            "gender": "private",
+            "getAvatarSource": [MockFunction],
+            "guid": 1,
+            "icontime": "1523515420",
+            "impressions": 100,
+            "isOwner": [Function],
+            "language": "en",
+            "legacy_guid": false,
+            "mature": "1",
+            "mature_channel": "0",
+            "mature_visibility": false,
+            "merchant": Object {
+              "exclusive": Object {
+                "amount": "10",
+                "enabled": true,
+              },
+              "id": "acct_Dsdfjdlsaf34243",
+              "service": "stripe",
+            },
+            "mode": 2,
+            "monetized": "",
+            "name": "Some User",
+            "owner_guid": "0",
+            "pending_subscribe": false,
+            "permissions": Object {},
+            "pinned_posts": Array [],
+            "plus": true,
+            "programs": Array [
+              "affiliate",
+            ],
+            "rating": "1",
+            "rewards": true,
+            "signup_method": false,
+            "site_guid": false,
+            "social_profiles": Array [],
+            "spam": "0",
+            "subscribed": false,
+            "subscriber": true,
+            "subscribers_count": 50,
+            "subtype": false,
+            "time_created": "1468113204",
+            "time_updated": false,
+            "type": "user",
+            "username": "someusermane",
+            "verified": true,
+            "website": "",
+            "wire_rewards": Object {
+              "description": "",
+              "rewards": Object {
+                "money": Array [],
+                "points": Array [],
+              },
+            },
+          },
+          "feedStore": Object {
+            "setChannel": [MockFunction],
+          },
+          "load": [MockFunction],
+          "rewards": Object {
+            "merged": Array [],
+          },
+          "setChannel": [MockFunction],
+        }
+      }
+      styles={
+        Object {
+          "avatar": Object {
+            "borderRadius": 55,
+            "height": 110,
+            "left": 20,
+            "position": "absolute",
+            "top": 135,
+            "width": 110,
+          },
+          "banner": Object {
+            "alignItems": "stretch",
+            "backgroundColor": "#eee",
+            "flexDirection": "row",
+            "height": 190,
+            "width": "100%",
+          },
+          "blockText": Object {
+            "fontFamily": "Roboto",
+            "fontSize": 20,
+            "fontWeight": "500",
+            "letterSpacing": 1,
+            "padding": 20,
+            "paddingTop": 0,
+          },
+          "blockTextLink": Object {
+            "color": "#4690D6",
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "fontWeight": "400",
+            "letterSpacing": 1,
+            "padding": 20,
+            "paddingTop": 0,
+          },
+          "blockView": Object {
+            "alignItems": "center",
+          },
+          "bluebutton": Object {
+            "marginRight": 8,
+          },
+          "briefdescription": Object {
+            "color": "#777",
+            "fontFamily": "Roboto",
+            "fontSize": 13,
+            "paddingBottom": 20,
+            "paddingTop": 25,
+          },
+          "briefdescriptionTextInput": Object {
+            "color": "#777",
+            "fontFamily": "Roboto",
+            "fontSize": 13,
+            "maxHeight": 100,
+          },
+          "briefdescriptionTextInputView": Object {
+            "borderColor": "#ececec",
+            "borderRadius": 3,
+            "borderWidth": 1,
+            "marginBottom": 20,
+            "marginTop": 20,
+            "padding": 8,
+            "paddingTop": 3,
+          },
+          "buttonscol": Object {
+            "alignItems": "center",
+            "alignSelf": "flex-start",
+            "flexDirection": "row",
+            "justifyContent": "flex-start",
+          },
+          "carouselcontainer": Object {
+            "flex": 1,
+            "paddingBottom": 20,
+          },
+          "container": Object {
+            "backgroundColor": "#FFF",
+            "flex": 1,
+            "flexDirection": "column",
+          },
+          "counter": Object {
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "column",
+          },
+          "countercontainer": Object {
+            "flexDirection": "row",
+            "height": 60,
+            "paddingLeft": 130,
+          },
+          "countertitle": Object {
+            "color": "#666",
+            "fontSize": 10,
+          },
+          "countervalue": Object {
+            "color": "#444",
+            "fontWeight": "bold",
+            "paddingTop": 5,
+          },
+          "gobackicon": Object {
+            "left": 0,
+            "position": "absolute",
+            "top": 16,
+          },
+          "headercontainer": Object {
+            "flex": 1,
+            "flexDirection": "row",
+            "height": 200,
+          },
+          "headertextcontainer": Object {
+            "alignItems": "stretch",
+            "flexDirection": "column",
+            "padding": 8,
+            "paddingLeft": 15,
+            "paddingRight": 15,
+            "width": "100%",
+          },
+          "name": Object {
+            "color": "#444",
+            "fontFamily": "Roboto",
+            "fontSize": 22,
+            "fontWeight": "700",
+            "letterSpacing": 0.5,
+            "marginRight": 8,
+          },
+          "nameTextInput": Object {
+            "borderColor": "#ececec",
+            "borderRadius": 3,
+            "borderWidth": 1,
+            "color": "#444",
+            "fontFamily": "Roboto",
+            "fontSize": 20,
+            "fontWeight": "700",
+            "letterSpacing": 0.5,
+            "marginBottom": 4,
+            "padding": 3,
+          },
+          "namecol": Object {
+            "flex": 1,
+          },
+          "namecontainer": Object {
+            "flex": 1,
+            "flexDirection": "row",
+          },
+          "tapOverlayView": Object {
+            "alignItems": "center",
+            "backgroundColor": "#000",
+            "bottom": 0,
+            "justifyContent": "center",
+            "left": 0,
+            "opacity": 0.65,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+          "username": Object {
+            "color": "#999",
+            "fontSize": 14,
+          },
+          "wrappedAvatar": Object {
+            "borderRadius": 55,
+            "height": 110,
+            "width": 110,
+          },
+          "wrappedAvatarOverlayView": Object {
+            "borderRadius": 55,
+          },
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "fontFamily": "Roboto",
+            "fontSize": 20,
+            "fontWeight": "500",
+            "letterSpacing": 1,
+            "padding": 20,
+            "paddingTop": 0,
+          }
+        }
+      >
+        This is a closed channel
+      </Text>
+      <SubscriptionButton
+        channel={
+          UserModel {
+            "__list": null,
+            "access_id": "2",
+            "allow_comments": true,
+            "banned": "no",
+            "blocked": false,
+            "boostProPlus": false,
+            "boost_autorotate": true,
+            "boost_rating": "2",
+            "briefdescription": "",
+            "categories": Array [
+              "music",
+              "nature",
+              "news",
+              "politics",
+              "science",
+              "technology",
+              "education",
+              "art",
+              "health",
+            ],
+            "chat": true,
+            "city": "",
+            "container_guid": "0",
+            "deleted": "0",
+            "disabled_boost": false,
+            "dob": "",
+            "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
+            "fb": false,
+            "feature_flags": false,
+            "featured_id": "725165605782560768",
+            "founder": false,
+            "gender": "private",
+            "getAvatarSource": [MockFunction],
+            "guid": 1,
+            "icontime": "1523515420",
+            "impressions": 100,
+            "isOwner": [Function],
+            "language": "en",
+            "legacy_guid": false,
+            "mature": "1",
+            "mature_channel": "0",
+            "mature_visibility": false,
+            "merchant": Object {
+              "exclusive": Object {
+                "amount": "10",
+                "enabled": true,
+              },
+              "id": "acct_Dsdfjdlsaf34243",
+              "service": "stripe",
+            },
+            "mode": 2,
+            "monetized": "",
+            "name": "Some User",
+            "owner_guid": "0",
+            "pending_subscribe": false,
+            "permissions": Object {},
+            "pinned_posts": Array [],
+            "plus": true,
+            "programs": Array [
+              "affiliate",
+            ],
+            "rating": "1",
+            "rewards": true,
+            "signup_method": false,
+            "site_guid": false,
+            "social_profiles": Array [],
+            "spam": "0",
+            "subscribed": false,
+            "subscriber": true,
+            "subscribers_count": 50,
+            "subtype": false,
+            "time_created": "1468113204",
+            "time_updated": false,
+            "type": "user",
+            "username": "someusermane",
+            "verified": true,
+            "website": "",
+            "wire_rewards": Object {
+              "description": "",
+              "rewards": Object {
+                "money": Array [],
+                "points": Array [],
+              },
+            },
+          }
+        }
+      />
+    </View>
+  </View>
+  <SafeAreaView
+    style={
+      Object {
+        "left": 0,
+        "position": "absolute",
+        "top": 16,
+      }
+    }
+  >
+    <Icon
+      color="#4690D6"
+      name="arrow-back"
+      onPress={[Function]}
+      raised={true}
+      reverse={false}
+      reverseColor="white"
+      size={22}
+      underlayColor="white"
+    />
+  </SafeAreaView>
+  <CaptureFab
+    navigation={
+      Object {
+        "goBack": [MockFunction],
+        "navigate": [MockFunction],
+        "state": Object {
+          "params": Object {
+            "entity": Object {
+              "attachment_guid": false,
+              "blurb": false,
+              "containerObj": undefined,
+              "container_guid": "activityguid0",
+              "custom_data": false,
+              "custom_type": false,
+              "description": "Congratulations! ",
+              "edited": "",
+              "guid": "activityguid0",
+              "impressions": 20,
+              "mature": false,
+              "message": "Message",
+              "ownerObj": Object {
                 "guid": "824853017709780997",
                 "subtype": false,
                 "time_created": "1522036284",

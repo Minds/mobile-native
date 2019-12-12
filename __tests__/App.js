@@ -1,7 +1,6 @@
 import 'react-native';
 import React from 'react';
 import App from '../App';
-import videochat from '../src/common/services/videochat.service';
 import sqliteStorageProviderService from '../src/common/services/sqlite-storage-provider.service';
 import logService from '../src/common/services/log.service';
 import {
@@ -10,6 +9,7 @@ import {
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock'));
 
 
 // mock backhandler
@@ -18,31 +18,16 @@ jest.mock('../src/common/services/sqlite-storage-provider.service')
 jest.mock('../src/common/services/log.service', () => {});
 jest.mock('../src/common/services/push.service');
 jest.mock('react-native-gesture-handler', () => {});
-jest.mock('react-navigation-stack', () => { Header: {} });
-jest.mock('react-navigation', () => {
-  return {
-      createAppContainer: jest.fn().mockReturnValue(function NavigationContainer(props) {return null;}),
-      createDrawerNavigator: jest.fn(),
-      createMaterialTopTabNavigator: jest.fn().mockImplementation(x => ({router: 'router'})),
-      createStackNavigator: jest.fn(),
-      withNavigation: jest.fn(),
-      StackActions: {
-          push: jest.fn().mockImplementation(x => ({...x,  "type": "Navigation/PUSH"})),
-          replace: jest.fn().mockImplementation(x => ({...x,  "type": "Navigation/REPLACE"})),
-      },
-      NavigationActions: {
-          navigate: jest.fn().mockImplementation(x => x),
-      }
-  }
-});
 
 // use the web3 mock to prevent sintax error from node_tar
 jest.mock('web3');
 
 //mock notifications
 jest.mock('react-native-notifications');
-
-jest.mock('../src/common/services/videochat.service');
+jest.mock('react-native-convert-ph-asset');
+jest.mock('react-navigation');
+jest.mock('react-navigation-tabs');
+jest.mock('react-navigation-stack');
 
 //mock i18n
 jest.mock('react-native-video');

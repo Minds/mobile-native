@@ -49,32 +49,10 @@ export default class Register extends Component {
   }
 
   onPressBack = () => {
-    this._navigate('Login');
+    this.props.navigation.navigate('Login');
   }
 
   onRegister = guid => {
     logService.info('[Register] new user registered '+guid);
-  }
-
-  /**
-   * Navigate to screen
-   * @param {string} destination
-   * @param {*} childRouterAction
-   */
-  _navigate(destination, childRouterAction) {
-    const navigateAction = { routeName: destination };
-
-    if (childRouterAction) {
-      navigateAction.action = NavigationActions.navigate(childRouterAction);
-    }
-
-    const resetAction = StackActions.reset({
-      index: 0,
-      actions: [
-        NavigationActions.navigate(navigateAction)
-      ]
-    })
-
-    this.props.navigation.dispatch(resetAction);
   }
 }

@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, Platform } from 'react-native';
 
 import MindsVideo from '../media/MindsVideo';
 
@@ -15,25 +15,29 @@ export default class CapturePreview extends PureComponent {
     switch (this.props.type) {
       case 'image/gif':
       case 'image/jpeg':
+      case 'image':
       default:
-        body = <Image
-          resizeMode='contain'
-          source={{ uri: this.props.uri }}
-          style={styles.preview}
-        />
+        body = (
+          <Image
+            resizeMode="contain"
+            source={{uri: this.props.uri}}
+            style={styles.preview}
+          />
+        );
         break;
       case 'video/mp4':
-        body = <View style={styles.preview}>
-          <MindsVideo video={{ 'uri': this.props.uri }} />
-        </View>
+      case 'video/quicktime':
+      case 'video/x-m4v':
+      case 'video':
+        body = (
+          <View style={styles.preview}>
+            <MindsVideo video={{uri: this.props.uri}} />
+          </View>
+        );
         break;
     }
 
-    return (
-      <View style={styles.wrapper}>
-        {body}
-      </View>
-    );
+    return <View style={styles.wrapper}>{body}</View>;
   }
 
 }
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'stretch',
-    backgroundColor: 'black'
+    backgroundColor: 'black',
   },
   preview: {
     flex: 1,

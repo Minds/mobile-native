@@ -2,7 +2,6 @@ import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
 import { configure } from 'mobx';
-import LicensePicker from '../../src/common/components/LicensePicker';
 import CaptureStore from  '../../src/capture/CaptureStore';
 import CapturePosterFlags from '../../src/capture/CapturePosterFlags';
 import HashtagStore from '../../src/common/stores/HashtagStore';
@@ -15,6 +14,8 @@ jest.mock('../../src/common/stores/HashtagStore');
 jest.mock('../../src/capture/CaptureStore');
 jest.mock('../../src/common/components/LicensePicker', () => 'LicensePicker');
 jest.mock('../../src/newsfeed/topbar/TagsSubBar', () => 'TagsSubBar');
+jest.mock('../../src/common/components/nsfw/NsfwToggle', () => 'NsfwToggle');
+
 
 Date = class extends Date {
   constructor(date) {

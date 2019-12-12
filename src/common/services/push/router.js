@@ -51,7 +51,8 @@ export default class Router {
           } else if (entity_type[0] === 'object') {
             navigation.push('Activity', { guid: data.json.entity_guid });
           } else {
-            logService.exception('[DeepLinkRouter] Unknown notification:', entity_type, data);
+            const err = new Error(`[DeepLinkRouter] Unknown notification, entity_type: ${entity_type}`);
+            logService.exception('[DeepLinkRouter] Unknown notification:', err);
           }
 
           break;

@@ -31,6 +31,7 @@ import gathering from '../../common/services/gathering.service';
 import colors from '../../styles/Colors';
 import i18n from '../../common/services/i18n.service';
 import featuresService from '../../common/services/features.service';
+import { FLAG_JOIN, FLAG_JOIN_GATHERING } from '../../common/Permissions';
 
 /**
  * Group Header
@@ -82,7 +83,7 @@ export default class GroupHeader extends Component {
           accessibilityLabel={i18n.t('group.subscribeMessage')}
           disabled={store.saving}
         >
-          <Text style={CommonStyle.colorPrimary} ref="btntext"> {i18n.t('join').toUpperCase()} </Text>
+          <Text style={CommonStyle.colorPrimary} ref="btntext"> {i18n.t('join')} </Text>
         </TouchableHighlight>
       );
     } else {
@@ -94,7 +95,7 @@ export default class GroupHeader extends Component {
           accessibilityLabel={i18n.t('group.leaveMessage')}
           disabled={store.saving}
         >
-          <Text style={CommonStyle.colorPrimary} ref="btntext"> {i18n.t('leave').toUpperCase()} </Text>
+          <Text style={CommonStyle.colorPrimary} ref="btntext"> {i18n.t('leave')} </Text>
         </TouchableHighlight>
       );
     }
@@ -119,7 +120,7 @@ export default class GroupHeader extends Component {
     const group = this.props.store.group;
     this.setState({openingGathering: true});
     setTimeout(() => this.setState({openingGathering: false}), 1500);
-    gathering.join(group);
+    this.props.navigation.navigate('Gathering', {entity: group});
   }
 
 
@@ -274,8 +275,8 @@ export default class GroupHeader extends Component {
               <Text style={styles.name}>{group.name.toUpperCase()}</Text>
             </View>
             <View style={styles.buttonscol}>
-              {this.getGatheringButton()}
-              {this.getActionButton()}
+              {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()}
+              {group.can(FLAG_JOIN) && this.getActionButton()}
             </View>
           </View>
         </View>

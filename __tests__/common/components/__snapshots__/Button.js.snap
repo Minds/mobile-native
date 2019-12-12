@@ -3,7 +3,9 @@
 exports[`renders correctly 1`] = `
 <View
   accessible={true}
+  focusable={false}
   isTVSelectable={true}
+  onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
@@ -17,6 +19,8 @@ exports[`renders correctly 1`] = `
       "borderColor": "#4690D6",
       "borderRadius": 20,
       "borderWidth": 1,
+      "flexDirection": "row",
+      "justifyContent": "center",
       "margin": 4,
       "opacity": 1,
       "padding": 4,

@@ -32,6 +32,8 @@ import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
+import ActivityModel from '../ActivityModel';
+import BlockedChannel from '../../common/components/BlockedChannel';
 
 /**
  * Activity
@@ -69,7 +71,12 @@ export default class Activity extends Component {
    * Render
    */
   render() {
-    const entity = this.props.entity;
+    const entity = ActivityModel.checkOrCreate(this.props.entity);
+
+    if (blockListService.blocked.has(entity.ownerObj.guid)) {
+      return (<BlockedChannel entity={entity} navigation={this.props.navigation}/>);
+    }
+
     const hasText = !!entity.text;
     const lock = (entity.paywall && entity.paywall !== '0')? <Lock entity={entity} navigation={this.props.navigation}/> : null;
 
@@ -109,8 +116,16 @@ export default class Activity extends Component {
             { overlay }
           </View>
           { this.showActions() }
+          { this.props.entity.isScheduled() && 
+            <View style={[{backgroundColor: '#ffecb3'}, CommonStyle.padding]}>
+              <Text style={[styles.scheduledText, CommonStyle.paddingLeft]}> 
+                {`${i18n.t('activity.scheduled')} ${formatDate(this.props.entity.time_created)}.`}
+              </Text>
+            </View> }
           { this.props.isLast ? <View style={styles.activitySpacer}></View> : null}
-          { !this.props.hideTabs && <ActivityMetrics entity={this.props.entity}/> }
+          { !this.props.hideTabs && 
+            !this.props.entity.isScheduled() && 
+            <ActivityMetrics entity={this.props.entity}/> }
         </View>
     );
   }
@@ -314,5 +329,9 @@ const styles = StyleSheet.create({
   },
   blockedNoticeDesc: {
     opacity: 0.7,
+  },
+  scheduledText: {
+    fontSize: 11,
+    color: '#000',
   }
 });

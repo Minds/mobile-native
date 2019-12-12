@@ -8,7 +8,6 @@ import {
   View,
   Text,
   // TextInput,
-  StyleSheet,
   KeyboardAvoidingView,
 } from 'react-native';
 
@@ -21,7 +20,6 @@ import { ComponentsStyle } from '../styles/Components';
 import { Button } from 'react-native-elements'
 
 import i18n from '../common/services/i18n.service';
-import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
 import ModalPicker from '../common/components/ModalPicker';
 
@@ -32,7 +30,9 @@ import TextInput from '../common/components/TextInput';
  * Login Form
  */
 export default class LoginForm extends Component {
-
+  /**
+   * State
+   */
   state = {
     username: '',
     password: '',
@@ -44,19 +44,21 @@ export default class LoginForm extends Component {
     showLanguages: false,
   };
 
-  componentWillMount() {
-    this.setState({
-      language: i18n.getCurrentLocale()
-    });
+  /**
+   * Constructor
+   */
+  constructor(props) {
+    super(props);
+    this.state.language = i18n.getCurrentLocale();
   }
-
 
   /**
    * Render
    */
   render() {
-
-    const msg = (this.state.msg) ? <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]} {...testID('loginMsg')}>{this.state.msg}</Animatable.Text>:null;
+    const msg = this.state.msg ? (
+      <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]} testID="loginMsg">{this.state.msg}</Animatable.Text>
+    ) : null;
 
     const inputs = this.getInputs();
     const buttons = this.getButtons();
@@ -89,9 +91,12 @@ export default class LoginForm extends Component {
     );
   }
 
+  /**
+   * Show languages
+   */
   showLanguages = () => {
     this.setState({showLanguages: true});
-  }
+  };
 
   /**
    * Language selected
@@ -99,12 +104,18 @@ export default class LoginForm extends Component {
   languageSelected = (language) => {
     this.setState({language, showLanguages: false});
     i18n.setLocale(language);
-  }
+  };
 
+  /**
+   * Cancel language selection
+   */
   cancel = () => {
     this.setState({showLanguages: false});
-  }
+  };
 
+  /**
+   * Returns the buttons
+   */
   getButtons() {
     const buttons = [
       <Button
@@ -119,9 +130,9 @@ export default class LoginForm extends Component {
         loadingRight={true}
         disabled={this.state.inProgress}
         disabledStyle={CommonStyle.backgroundTransparent}
-        {...testID('login button')}
+        testID="loginButton"
       />
-    ]
+    ];
 
     if (!this.state.twoFactorToken) {
       buttons.unshift(
@@ -140,6 +151,9 @@ export default class LoginForm extends Component {
     return buttons;
   }
 
+  /**
+   * Return the inputs for the form
+   */
   getInputs() {
     if (this.state.twoFactorToken) {
       return (
@@ -149,7 +163,7 @@ export default class LoginForm extends Component {
           returnKeyType={'done'}
           placeholderTextColor="#444"
           underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ twoFactorCode: value })}
+          onChangeText={this.setTwoFactor}
           autoCapitalize={'none'}
           value={this.state.twoFactorCode}
         />
@@ -162,11 +176,11 @@ export default class LoginForm extends Component {
           returnKeyType={'done'}
           placeholderTextColor="#444"
           underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ username: value })}
+          onChangeText={this.setUsername}
           autoCapitalize={'none'}
-          value={this.state.username.trim()}
+          value={this.state.username}
           key={1}
-          {...testID('username input')}
+          testID="usernameInput"
         />,
         <View key={2}>
           <TextInput
@@ -177,24 +191,62 @@ export default class LoginForm extends Component {
             returnKeyType={'done'}
             placeholderTextColor="#444"
             underlineColorAndroid='transparent'
-            onChangeText={(value) => this.setState({ password: value })}
+            onChangeText={this.setPassword}
             value={this.state.password}
-
-            {...testID('password input')}
+            testID="userPasswordInput"
           />
-          <Icon name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'} size={25} style={ComponentsStyle.loginInputIcon} onPress={this.toggleHidePassword}/>
+          <Icon
+            name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
+            size={25}
+            style={ComponentsStyle.loginInputIcon}
+            onPress={this.toggleHidePassword}
+          />
         </View>
       ];
     }
   }
 
+  /**
+   * Set two factor
+   * @param {string} value
+   */
+  setTwoFactor = value => {
+    const twoFactorCode = String(value).trim();
+    this.setState({twoFactorCode});
+  };
+
+  /**
+   * Set two factor
+   * @param {string} value
+   */
+  setUsername = value => {
+    const username = String(value).trim();
+    this.setState({username});
+  };
+
+  /**
+   * Set two factor
+   * @param {string} value
+   */
+  setPassword = value => {
+    const password = String(value).trim();
+    this.setState({password});
+  };
+
+  /**
+   * Set two factor
+   * @param {string} value
+   */
   toggleHidePassword = () => {
     this.setState({hidePassword: !this.state.hidePassword});
-  }
+  };
 
+  /**
+   * Handle forgot password
+   */
   onForgotPress = () => {
-    this.props.onForgot()
-  }
+    this.props.onForgot();
+  };
 
   /**
    * On login press

@@ -1,7 +1,7 @@
 // @flow
 import _ from 'lodash';
 
-import apiService from "./api.service";
+import apiService, { isApiForbidden } from "./api.service";
 import sessionService from "./session.service";
 import blockListService from "./block-list.service";
 import GroupModel from "../../groups/GroupModel";
@@ -68,6 +68,15 @@ class EntitiesService {
   }
 
   /**
+   * Delete an entity from the cache
+   * @param {Array<string>} urn
+   */
+  deleteManyFromCache(urns: Array<string>) {
+    urns.forEach((urn: string): boolean => this.entities.delete(urn));
+    entitiesStorage.removeMany(urns);
+  }
+
+  /**
    * Get entities from feed
    * @param {Array} feed
    * @param {Mixed} abortTag
@@ -100,7 +109,12 @@ class EntitiesService {
     // if we have urnsToFetch we try to load from the sql storage first
     if (urnsToFetch.length > 0) {
       const localEntities = await entitiesStorage.readMany(urnsToFetch);
-      urnsToFetch = _.difference(urnsToFetch, localEntities.map((m: any): string => m.urn));
+      if (localEntities) {
+        urnsToFetch = _.difference(
+          urnsToFetch,
+          localEntities.map((m: any): string => m.urn),
+        );
+      }
       // we add to resync list
       localEntities.forEach((entity: any) => {
         urnsToResync.push(entity.urn);
@@ -185,7 +199,7 @@ class EntitiesService {
    * @param {boolean} asActivities
    * @return []
    */
-  async fetch(urns: Array<string>, abortTag: any, asActivities: boolean = false): Promise<Array<Object>> {
+  async fetch(urns: Array<string>, abortTag: any, asActivities: boolean = false): Promise<void> {
 
     try {
       const response: any = await apiService.get('api/v2/entities/', { urns, as_activities: asActivities ? 1 : 0}, abortTag);
@@ -194,9 +208,26 @@ class EntitiesService {
         this.addEntity(entity);
       }
 
-      return response;
+      return response.entities;
     } catch (err) {
-      console.log(err)
+
+      // if the server response is a 403
+      if (isApiForbidden(err)) {
+        // if the entity exists in the cache, remove the permissions to force the UI update
+        urns.forEach((urn: string) => {
+          const cache = this.entities.get(urn);
+
+          if (cache) {
+            // remove permissions
+            cache.entity.setPermissions({permissions:[]});
+            // if the entity is attached to a list we remove if from the list
+            cache.entity.removeFromList();
+          }
+        })
+        // remove it from memory and local storage
+        this.deleteManyFromCache(urns);
+        return;
+      }
       throw err;
     }
   }
@@ -211,6 +242,7 @@ class EntitiesService {
     this.cleanEntity(entity);
 
     const storedEntity = this.getFromCache(entity.urn);
+
     if (storedEntity) {
       storedEntity.update(entity);
     } else {
@@ -254,6 +286,7 @@ class EntitiesService {
             return ActivityModel.create(entity);
         }
     }
+    return ActivityModel.create(entity)
   }
 }
 

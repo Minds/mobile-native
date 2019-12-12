@@ -19,9 +19,38 @@ exports[`WithdrawScreen renders correctly 1`] = `
           }
         }
       >
-        You can request to withdraw your OffChain token rewards to your OnChain address below.
- Note: a small amount of ETH will be charged to cover the transaction fee.
- Withdrawals may take up to a few hours to complete
+        You can request to withdraw up to 0 tokens from your rewards to your 
+        <Text
+          style={
+            Object {
+              "fontWeight": "700",
+            }
+          }
+        >
+          OnChain
+        </Text>
+         wallet.
+ 
+        <Text
+          style={
+            Object {
+              "fontSize": 11,
+            }
+          }
+        >
+          Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals 
+          <Text
+            style={
+              Object {
+                "fontWeight": "700",
+              }
+            }
+          >
+            go through an approval process
+          </Text>
+           and may take up to 72 hours to complete
+        </Text>
+        
         
       </Text>
       <View
@@ -128,9 +157,38 @@ exports[`WithdrawScreen renders correctly 1`] = `
             }
           }
         >
-          You can request to withdraw your OffChain token rewards to your OnChain address below.
- Note: a small amount of ETH will be charged to cover the transaction fee.
- Withdrawals may take up to a few hours to complete
+          You can request to withdraw up to 0 tokens from your rewards to your 
+          <Text
+            style={
+              Object {
+                "fontWeight": "700",
+              }
+            }
+          >
+            OnChain
+          </Text>
+           wallet.
+ 
+          <Text
+            style={
+              Object {
+                "fontSize": 11,
+              }
+            }
+          >
+            Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals 
+            <Text
+              style={
+                Object {
+                  "fontWeight": "700",
+                }
+              }
+            >
+              go through an approval process
+            </Text>
+             and may take up to 72 hours to complete
+          </Text>
+          
           
         </Text>
         <View
@@ -166,7 +224,9 @@ exports[`WithdrawScreen renders correctly 1`] = `
           />
           <View
             accessible={true}
+            focusable={true}
             isTVSelectable={true}
+            onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
             onResponderRelease={[Function]}

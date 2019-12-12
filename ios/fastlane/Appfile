@@ -1,5 +1,5 @@
 app_identifier("com.minds.mobile") # The bundle identifier of your app
-apple_id("mark@minds.com") # Your Apple email address
+apple_id("msantang78@gmail.com") # Your Apple email address
 
 itc_team_id("1312581") # App Store Connect Team ID
 team_id("35U3998VRZ") # Developer Portal Team ID

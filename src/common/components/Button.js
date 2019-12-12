@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import colors from '../../styles/Colors';
 
@@ -62,7 +61,7 @@ export default class Button extends Component {
 
     const body = this.props.loading ?
       <ActivityIndicator color={mainColor}/> :
-      <Text style={[{ color: textColor || mainColor }, textStyle]} > {this.props.text} </Text>;
+      <Text style={[{ color: textColor || mainColor }, textStyle]}> {this.props.text} </Text>;
 
     const onButtonPress = this.props.loading ? null : onPress;
 

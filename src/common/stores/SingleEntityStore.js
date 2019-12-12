@@ -4,6 +4,7 @@ import {
 } from 'mobx';
 
 import entitiesService from '../services/entities.service';
+import logService from '../services/log.service';
 
 /**
  * Single Entity Store
@@ -30,6 +31,7 @@ class SingleEntityStore {
       this.setEntity(entity);
     } catch (err) {
       this.setErrorLoading(true);
+      logService.exception(err);
     }
   }
 

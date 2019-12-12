@@ -17,15 +17,14 @@ import i18n from '../../common/services/i18n.service';
 @observer
 export default class SuggestedChannelsStep extends Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.onboarding.suggestedUsers.list.clearList();
     this.props.onboarding.getSuggestedUsers();
   }
 
   renderUser = (user) => {
     return <DiscoveryUser
-      store={this.props.onboarding.suggestedUsers}
-      entity={{item: user}}
+      row={{item: user}}
       key={user.guid}
     />
   }

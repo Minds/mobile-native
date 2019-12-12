@@ -49,7 +49,7 @@ export default class WalletBalanceTokens extends Component {
   }
 
   render() {
-    
+
     let addresses = null;
 
     if (this.props.wallet.addresses) {
@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: colors.primary,
     fontSize: 16,
-    fontWeight: '800',
-    fontFamily: 'Roboto',
+    // fontWeight: '800',
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
   addressesEthBalance: {
     fontSize: 12,

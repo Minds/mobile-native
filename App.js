@@ -5,20 +5,17 @@
  * @format
  * @flow
  */
-import './global';
-import './shim'
-import crypto from "crypto"; // DO NOT REMOVE!
 
 import React, {
-  Component
+  Component,
 } from 'react';
 
 import {
-  Observer,
   Provider,
-} from 'mobx-react/native'  // import from mobx-react/native instead of mobx-react fix test
+} from 'mobx-react/native';  // import from mobx-react/native instead of mobx-react fix test
 
 import NavigationService from './src/navigation/NavigationService';
+import RNBootSplash from "react-native-bootsplash";
 
 import {
   BackHandler,
@@ -28,10 +25,10 @@ import {
   Text,
   Alert,
   Clipboard,
+  StatusBar,
 } from 'react-native';
 
-import FlashMessage from "react-native-flash-message";
-import CookieManager from 'react-native-cookies';
+import FlashMessage from 'react-native-flash-message';
 
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
@@ -47,9 +44,9 @@ import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import badgeService from './src/common/services/badge.service';
 import authService from './src/auth/AuthService';
-import NotificationsService from "./src/notifications/NotificationsService";
+import NotificationsService from './src/notifications/NotificationsService';
 import getMaches from './src/common/helpers/getMatches';
-import {CODE_PUSH_TOKEN, GOOGLE_PLAY_STORE} from './src/config/Config';
+import { GOOGLE_PLAY_STORE } from './src/config/Config';
 import updateService from './src/common/services/update.service';
 import ErrorBoundary from './src/common/components/ErrorBoundary';
 import { CommonStyle as CS } from './src/styles/Common';
@@ -63,9 +60,12 @@ import connectivityService from './src/common/services/connectivity.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 import commentStorageService from './src/comments/CommentStorageService';
 import * as Sentry from '@sentry/react-native';
+import apiService from './src/common/services/api.service';
 import boostedContentService from './src/common/services/boosted-content.service';
 
 let deepLinkUrl = '';
+
+const statusBarStyle = Platform.OS === 'ios' ? 'dark-content' : 'default';
 
 // init push service
 pushService.init();
@@ -73,7 +73,7 @@ pushService.init();
 // fire sqlite init
 sqliteStorageProviderService.get();
 
-CookieManager.clearAll();
+apiService.clearCookies();
 
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
@@ -85,8 +85,9 @@ sessionService.onLogin(async () => {
   });
 
   logService.info('[App] Getting minds settings and onboarding progress');
-  // load minds settings and onboarding progresss on login
-  const results = await Promise.all([mindsService.getSettings(), stores.onboarding.getProgress(), boostedContentService.load()]);
+
+  // load minds settings and boosted content
+  await Promise.all([mindsService.getSettings(), boostedContentService.load()]);
 
   logService.info('[App] updatting features');
   // reload fatures on login
@@ -96,15 +97,15 @@ sessionService.onLogin(async () => {
 
   pushService.registerToken();
 
-  // get onboarding progress
-  const onboarding = results[1];
-
-  if (onboarding && onboarding.show_onboarding) {
-    sessionService.setInitialScreen('OnboardingScreen');
-  }
-
   logService.info('[App] navigating to initial screen', sessionService.initialScreen);
-  NavigationService.reset(sessionService.initialScreen);
+
+  // hide splash
+  RNBootSplash.hide({ duration: 250 });
+
+  NavigationService.navigate(sessionService.initialScreen);
+
+  // check onboarding progress and navigate if necessary
+  stores.onboarding.getProgress();
 
   // check update
   if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
@@ -142,13 +143,10 @@ sessionService.onLogin(async () => {
 
 //on app logout
 sessionService.onLogout(() => {
+
   // clear app badge
   badgeService.setUnreadConversations(0);
   badgeService.setUnreadNotifications(0);
-
-  // clear minds settings
-  mindsService.clear();
-
   // clear offline cache
   entitiesStorage.removeAll();
   feedsStorage.removeAll();
@@ -188,10 +186,14 @@ export default class App extends Component<Props, State> {
   }
 
   /**
-   * On component will mount
+   * contructor
    */
-  componentWillMount() {
-    if (!Text.defaultProps) Text.defaultProps = {};
+  constructor(props) {
+    super(props);
+
+    if (!Text.defaultProps) {
+      Text.defaultProps = {};
+    }
     Text.defaultProps.style = {
       fontFamily: 'Roboto',
       color: '#444',
@@ -203,8 +205,9 @@ export default class App extends Component<Props, State> {
    */
   async componentDidMount() {
     try {
+
       // load app setting before start
-      const results = await Promise.all([settingsStore.init(), await Linking.getInitialURL()]),
+      const results = await Promise.all([settingsStore.init(), await Linking.getInitialURL()]);
 
       deepLinkUrl = results[1];
 
@@ -214,11 +217,13 @@ export default class App extends Component<Props, State> {
 
       if (!this.handlePasswordResetDeepLink()) {
         logService.info('[App] initializing session');
+
         const token = await sessionService.init();
 
         if (!token) {
           logService.info('[App] there is no active session');
-          NavigationService.reset('Login');
+          RNBootSplash.hide({ duration: 250 });
+          NavigationService.navigate('Login');
         } else {
           logService.info('[App] session initialized');
         }
@@ -294,13 +299,13 @@ export default class App extends Component<Props, State> {
     const app = (
       <Provider key="app" {...stores}>
         <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
+          <StatusBar barStyle={statusBarStyle} />
           <NavigationStack
             ref={navigatorRef => {
               NavigationService.setTopLevelNavigator(navigatorRef);
             }}
           />
-          <FlashMessage renderCustomContent={this.renderNotification}
-           />
+          <FlashMessage renderCustomContent={this.renderNotification} />
         </ErrorBoundary>
       </Provider>
     );
@@ -314,7 +319,7 @@ export default class App extends Component<Props, State> {
     );
 
     const tosModal = (
-      <TosModal user={stores.user}/>
+      <TosModal user={stores.user} key="tosModal"/>
     )
 
     return [ app, keychainModal, blockchainTransactionModal,  tosModal];

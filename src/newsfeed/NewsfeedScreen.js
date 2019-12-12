@@ -18,7 +18,6 @@ import CaptureFab from '../capture/CaptureFab';
 import stores from '../../AppStores';
 import { CommonStyle } from '../styles/Common';
 import GroupsBar from '../groups/GroupsBar';
-import testID from '../common/helpers/testID';
 import FeedList from '../common/components/FeedList';
 import featuresService from '../common/services/features.service';
 
@@ -58,7 +57,7 @@ export default class NewsfeedScreen extends Component {
   /**
    * Load data on mount
    */
-  componentWillMount() {
+  componentDidMount() {
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
 
@@ -109,7 +108,7 @@ export default class NewsfeedScreen extends Component {
 
     if (newsfeed.filter == 'subscribed') {
       return (
-        <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>
+        <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
           <FeedList
             ref={newsfeed.setListRef}
             feedStore={newsfeed.feedStore}
@@ -123,7 +122,7 @@ export default class NewsfeedScreen extends Component {
     }
 
     return (
-      <View style={CommonStyle.flexContainer} {...testID('Newsfeed Screen')}>
+      <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
         <NewsfeedList
           newsfeed={newsfeed}
           header={header}

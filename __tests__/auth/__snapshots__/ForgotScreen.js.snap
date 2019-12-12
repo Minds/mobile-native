@@ -42,7 +42,11 @@ exports[`ForgotScreen component should renders correctly 1`] = `
     >
       <Image
         resizeMode="contain"
-        source={1}
+        source={
+          Object {
+            "testUri": "../../../src/assets/logos/logo-white.png",
+          }
+        }
         style={
           Object {
             "alignSelf": "center",
@@ -151,7 +155,9 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           >
             <View
               accessible={true}
+              focusable={true}
               isTVSelectable={true}
+              onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}
@@ -257,7 +263,9 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           >
             <View
               accessible={true}
+              focusable={true}
               isTVSelectable={true}
+              onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
               onResponderRelease={[Function]}

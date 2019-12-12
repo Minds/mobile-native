@@ -1,26 +1,9 @@
 import {
   observable,
   action,
-  computed,
-  extendObservable
 } from 'mobx'
 
-import {
-  getFeedChannel,
-  toggleComments,
-  toggleExplicit,
-  setViewed
-} from '../newsfeed/NewsfeedService';
-
-import api from '../common/services/api.service';
-import channelService from './ChannelService';
-import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
-import ActivityModel from '../newsfeed/ActivityModel';
-import BlogModel from '../blogs/BlogModel';
-import logService from '../common/services/log.service';
-import featuresService from '../common/services/features.service';
 import FeedStore from '../common/stores/FeedStore';
-import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 /**
  * Channel Feed store
@@ -103,16 +86,7 @@ export default class ChannelFeedStore {
    * Get channel scheduled activities count
    */
   async getScheduledCount() {
-    const count = await channelService.getScheduledCount(this.guid);
-    return count;
-  }
-
-  /**
-   * Get channel scheduled activities count
-   */
-  async getScheduledCount() {
-    const count = await channelService.getScheduledCount(this.guid);
-    return count;
+    await this.feedStore.getScheduledCount(this.guid);
   }
 
   @action
@@ -124,8 +98,8 @@ export default class ChannelFeedStore {
 
   @action
   async refresh() {
-    //ignore refresh on rewards view
-    if (this.filter == 'rewards') {
+    // ignore refresh on rewards or requests view
+    if (this.filter == 'rewards' || this.filter == 'request') {
       return;
     }
 
@@ -141,6 +115,8 @@ export default class ChannelFeedStore {
   @action
   setFilter(filter) {
     this.filter = filter;
+
+    if (filter == 'requests' || filter == 'rewards') return;
 
     this.feedStore.setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
       .setIsTiled(filter === 'images' || filter === 'videos')

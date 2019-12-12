@@ -18,6 +18,7 @@ import BoostAction from './actions/BoostAction';
 
 import { CommonStyle } from '../../styles/Common';
 import featuresService from '../../common/services/features.service';
+import BaseModel from '../../common/BaseModel';
 
 @inject('user')
 export default class Actions extends PureComponent {
@@ -28,16 +29,17 @@ export default class Actions extends PureComponent {
   render() {
     const entity = this.props.entity;
     const isOwner = this.props.user.me.guid === entity.owner_guid;
-
+    const hasCrypto = featuresService.has('crypto');
+    const isScheduled = BaseModel.isScheduled(entity.time_created * 1000);
     return (
       <View style={CommonStyle.flexContainer}>
         { entity && <View style={styles.container}>
           <ThumbUpAction entity={entity} me={this.props.user.me}/>
           <ThumbDownAction entity={entity} me={this.props.user.me}/>
-          {!isOwner && featuresService.has('crypto') && <WireAction owner={entity.ownerObj} navigation={this.props.navigation}/>}
+          {!isOwner && hasCrypto && <WireAction owner={entity.ownerObj} navigation={this.props.navigation}/>}
           <CommentsAction entity={entity} navigation={this.props.navigation}/>
           <RemindAction entity={entity} navigation={this.props.navigation} activityIndex={this.props.activityIndex}/>
-          {isOwner && featuresService.has('crypto') && <BoostAction entity={entity} navigation={this.props.navigation}/>}
+          {isOwner && hasCrypto && !isScheduled && <BoostAction entity={entity} navigation={this.props.navigation}/>}
         </View> }
       </View>
     );

@@ -11,8 +11,6 @@ import {
   Platform,
 } from 'react-native';
 
-import { btoa } from 'abab';
-
 import Share from 'react-native-share';
 
 import QRCode from 'react-native-qrcode-svg';
@@ -499,7 +497,8 @@ const styles = StyleSheet.create({
   label: {
     color: '#444',
     fontSize: 16,
-    fontWeight: '800',
+    // fontWeight: '800',
+    fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
   supportingTextContainer: {
     flexDirection: 'row',

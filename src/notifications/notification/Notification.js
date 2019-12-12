@@ -45,12 +45,15 @@ import WelcomePointsView from './view/WelcomePointsView';
 import WireHappenedView from './view/WireHappenedView';
 import ReportActionedView from './view/ReportActionedView';
 import MessengerInviteView from './view/MessengerInviteView';
+import RewardsStateIncreaseView from './view/RewardsStateIncreaseView';
+import RewardsStateDecreaseView from './view/RewardsStateDecreaseView';
+import RewardsStateDecreaseTodayView from './view/RewardStateDecreaseTodayView';
+import RewardsSummaryView from './view/RewardsSummaryView';
+import ReferralCompleteView from './view/ReferralCompleteView';
+import ReferralPendingView from './view/ReferralPendingView';
+import ReferralPingView from './view/ReferralPingView';
 
 import styles from './style';
-import RewardsStateIncreaseView from "./view/RewardsStateIncreaseView";
-import RewardsStateDecreaseView from "./view/RewardsStateDecreaseView";
-import RewardsStateDecreaseTodayView from "./view/RewardStateDecreaseTodayView";
-import RewardsSummaryView from "./view/RewardsSummaryView";
 
 /**
  * Main Notification row Component
@@ -193,6 +196,15 @@ export default class Notification extends Component {
 
       case "wire_happened":
         return <WireHappenedView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "referral_complete":
+        return <ReferralCompleteView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "referral_pending":
+        return <ReferralPendingView entity={entity} navigation={this.props.navigation} styles={styles} />
+
+      case "referral_ping":
+        return <ReferralPingView entity={entity} navigation={this.props.navigation} styles={styles} />
 
       case "report_actioned":
         return <ReportActionedView entity={entity} navigation={this.props.navigation} styles={styles} />

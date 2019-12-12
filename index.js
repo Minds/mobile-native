@@ -1,7 +1,11 @@
-import { AppRegistry } from 'react-native';
+import 'react-native-gesture-handler'; // fix ongesture handler error
+import "@hawkingnetwork/node-libs-react-native/globals";
+import "./global";
+
+import { AppRegistry, Platform } from 'react-native';
 import App from './App';
 import { useScreens } from 'react-native-screens';
-useScreens();
+useScreens(Platform.OS !== 'ios');
 
 // const modules = require.getModules();
 // const moduleIds = Object.keys(modules);

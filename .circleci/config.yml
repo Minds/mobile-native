@@ -43,10 +43,10 @@ jobs:
 
       - store_artifacts:
           path: test-results
-  
+
   ios:
     macos:
-      xcode: "10.1"
+      xcode: "11.1.0"
     working_directory: ~/mobile-native
 
     # use a --login shell so our "set Ruby version" command gets picked up for later steps
@@ -60,7 +60,7 @@ jobs:
           command: brew install getsentry/tools/sentry-cli
       - run:
           name: set Ruby version
-          command:  echo "ruby-2.4" > ~/.ruby-version
+          command:  echo "ruby-2.6" > ~/.ruby-version
 
       - restore_cache:
           key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
@@ -68,9 +68,19 @@ jobs:
       - restore_cache:
           key: node-v1-{{ checksum "package.json" }}-{{ arch }}
 
+      # remove detox from CI until is fixed
+      # - run:
+      #     name: Install detox
+      #     command:
+      #       |
+      #       HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew
+      #       HOMEBREW_NO_AUTO_UPDATE=1 brew install --HEAD applesimutils
+      #       npm install -g detox-cli
+      #       npm install -g detox
+
       # not using a workspace here as Node and Yarn versions
       # differ between our macOS executor image and the Docker containers above
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
 
       - save_cache:
           key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
@@ -94,6 +104,25 @@ jobs:
           paths:
             - vendor/bundle
 
+      - restore_cache:
+          key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+
+      - run:
+          name: Install CocoaPods
+          command: pod install --verbose
+          working_directory: ios
+
+      - save_cache:
+          key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+          paths:
+            - ios/Pods
+
+      # remove detox from CI until is fixed
+      # Run e2e
+      # - run: detox build -c ios.sim.release
+      # - run: detox test -c ios.sim.release --cleanup
+
+
       ### TODO- get tests running with fastlane
 
       #- run:
@@ -114,7 +143,7 @@ jobs:
       #- store_artifacts:
       #    path: ios/test-results
 
-      - run: 
+      - run:
           name: Build release .ipa
           command: fastlane buildrelease
           working_directory: ios
@@ -124,8 +153,8 @@ jobs:
               - /release-*/
               - test/circle-ci
 
-      - run: 
-          name: Upload to crashalytics 
+      - run:
+          name: Upload to crashalytics
           command: echo "TODO"
           working_directory: ios
           branches:
@@ -162,8 +191,8 @@ jobs:
           command: |
             apk add git
       - checkout
-      - run: 
-          name: Tag sentry release 
+      - run:
+          name: Tag sentry release
           command: |
             version=`cat /tmp/workspace/version`
             echo Tagging release with ${version}

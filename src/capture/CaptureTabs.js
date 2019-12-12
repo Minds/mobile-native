@@ -3,23 +3,16 @@
 } from 'react';
 
 import {
-  TabNavigator
-} from 'react-navigation';
-
-import {
   StyleSheet,
-  CameraRoll,
   View,
   Text,
   TouchableHighlight,
-  Platform
+  Platform,
 } from 'react-native';
 
 import ActionSheet from 'react-native-actionsheet';
-import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import Topbar from '../topbar/Topbar';
 import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import attachmentService from '../common/services/attachment.service';

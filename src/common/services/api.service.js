@@ -1,24 +1,30 @@
 import Cancelable from 'promise-cancelable';
+import { NativeModules } from 'react-native';
 
 import session from './session.service';
 import { MINDS_API_URI, MINDS_URI_SETTINGS, NETWORK_TIMEOUT } from '../../config/Config';
-import { btoa } from 'abab';
 
 import abortableFetch from '../helpers/abortableFetch';
 import { Version } from '../../config/Version';
 import logService from './log.service';
+
+import * as Sentry from '@sentry/react-native';
 
 /**
  * Api Error
  */
 export class ApiError extends Error {
   constructor(...args) {
-      super(...args)
+    super(...args);
   }
 }
 
 export const isApiError = function(err) {
   return err instanceof ApiError;
+};
+
+export const isApiForbidden = function(err) {
+  return err instanceof ApiError && err.status == 403;
 }
 
 /**
@@ -26,22 +32,46 @@ export const isApiError = function(err) {
  */
 class ApiService {
 
-  buildHeaders() {
-    const basicAuth = MINDS_URI_SETTINGS && MINDS_URI_SETTINGS.basicAuth,
-      accessToken = session.token,
-      headers = {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'App-Version': Version.VERSION
-      };
+  async parseJSON(response) {
+    try {
+      return await response.json(); 
+    } catch (error) {
+      Sentry.captureMessage(`ISSUE #1572 URL: ${response.url}, STATUS: ${response.status} STATUSTEXT: ${response.statusText}`);
+      throw error;
+    }
+  }
 
-      if (session.token) {
-        headers.Authorization = 'Bearer ' + session.token;
-      }
+  /**
+   * Clear cookies
+   */
+  clearCookies() {
+    return new Promise(success => {
+      NativeModules.Networking.clearCookies(success);
+    });
+  }
+
+  /**
+   * Build headers
+   */
+  buildHeaders() {
+    const headers = {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'App-Version': Version.VERSION
+    };
+
+    if (session.token) {
+      headers.Authorization = 'Bearer ' + session.token;
+    }
 
     return headers;
   }
 
+  /**
+   * Build url
+   * @param {string} url
+   * @param {any} params
+   */
   buildUrl(url, params = {}) {
     if (!params) {
       params = {};
@@ -54,6 +84,7 @@ class ApiService {
 
     return `${url}${sep}${paramsString}`
   }
+
 
   getParamsString(params) {
     return Object.keys(params).map(k => {
@@ -94,7 +125,7 @@ class ApiService {
       }
 
       // Convert from JSON
-      const data = await response.json();
+      const data = await this.parseJSON(response);
 
       // Failed on API side
       if (data.status != 'success') {
@@ -125,7 +156,7 @@ class ApiService {
       }
 
       // Convert from JSON
-      const data = await response.json();
+      const data = await this.parseJSON(response);
 
       // Failed on API side
       if (data.status != 'success') {
@@ -156,7 +187,7 @@ class ApiService {
       }
 
       // Convert from JSON
-      const data = await response.json();
+      const data = await this.parseJSON(response);
 
       // Failed on API side
       if (data.status === 'error') {
@@ -232,7 +263,7 @@ class ApiService {
       }
 
       // Convert from JSON
-      const data = await response.json();
+      const data = await this.parseJSON(response);
 
       // Failed on API side
       if (data.status === 'error') {

@@ -1,8 +1,6 @@
-import { Alert } from 'react-native';
 import api from './../common/services/api.service';
 import session from './../common/services/session.service';
 import delay from '../common/helpers/delay';
-import CookieManager from 'react-native-cookies';
 import logService from '../common/services/log.service';
 
 /**
@@ -20,7 +18,7 @@ class AuthService {
     };
 
     const data = await api.post('api/v2/oauth/token', params);
-    await CookieManager.clearAll();
+    await api.clearCookies();
     await delay(100);
     await session.login(data);
     return data;
@@ -30,6 +28,10 @@ class AuthService {
     try {
       let resp = await api.delete('api/v2/oauth/token');
       session.logout();
+
+      // Fixes autosubscribe issue on register
+      await api.clearCookies();
+
       return true;
     } catch (err) {
       logService.exception('[AuthService] logout', err);
