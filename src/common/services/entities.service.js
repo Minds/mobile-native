@@ -114,12 +114,13 @@ class EntitiesService {
           urnsToFetch,
           localEntities.map((m: any): string => m.urn),
         );
+
+        // we add to resync list
+        localEntities.forEach((entity: any) => {
+          urnsToResync.push(entity.urn);
+          this.addEntity(entity, false)
+        });
       }
-      // we add to resync list
-      localEntities.forEach((entity: any) => {
-        urnsToResync.push(entity.urn);
-        this.addEntity(entity, false)
-      });
     }
 
     // Fetch entities we don't have
