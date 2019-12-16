@@ -1,24 +1,14 @@
-import React, {
-  PureComponent
-} from 'react';
+import React, {PureComponent} from 'react';
 
-import {
-  Text,
-  Picker,
-  View,
-  Alert
-} from 'react-native';
-
-import { observer } from "mobx-react/native";
+import {Text, View, Alert} from 'react-native';
 
 import * as entities from 'entities';
-import { Icon } from 'react-native-elements'
+import {Icon} from 'react-native-elements';
 
-import { CommonStyle } from '../../styles/Common';
+import {CommonStyle} from '../../styles/Common';
 import translationService from '../../common/services/translation.service';
 import Tags from '../../common/components/Tags';
 import ModalPicker from './ModalPicker';
-import ViewImageScreen from '../../media/ViewImageScreen';
 import CenterLoading from '../../common/components/CenteredLoading';
 import i18n from '../services/i18n.service';
 
@@ -26,8 +16,13 @@ import i18n from '../services/i18n.service';
  * Translate component
  */
 export default class Translate extends PureComponent {
-
+  /**
+   * Translate from
+   */
   translatedFrom = null;
+  /**
+   * Selected Resolve
+   */
   selectedResolve = null;
 
   state = {
@@ -35,7 +30,7 @@ export default class Translate extends PureComponent {
     languages: null,
     translating: false,
     current: null,
-    translated: false
+    translated: false,
   };
 
   /**
@@ -44,7 +39,7 @@ export default class Translate extends PureComponent {
   showPicker = async () => {
     const languages = await translationService.getLanguages();
 
-    const current = this.state.current || languages[0].language;
+    const current = this.state.current || i18n.getCurrentLocale() || languages[0].language;
 
     this.setState({languages, current});
 
@@ -53,14 +48,14 @@ export default class Translate extends PureComponent {
     });
 
     return await selectPromise;
-  }
+  };
 
   /**
    * Hide language picker
    */
   hidePicker = () => {
     this.setState({languages: null});
-  }
+  };
 
   /**
    * On language selected
@@ -146,11 +141,10 @@ export default class Translate extends PureComponent {
         }
       }
       this.setState({translated: translation, translating: false});
-    } catch(e) {
+    } catch (e) {
       this.setState({translating: false});
       this.showError();
     }
-
   }
 
   showError() {
@@ -164,7 +158,9 @@ export default class Translate extends PureComponent {
    * Render translated
    */
   renderTranslated() {
-    if (!this.state.translated) return null;
+    if (!this.state.translated) {
+      return null;
+    }
 
     let message = entities.decodeHTML(this.getTranslated('message') || this.getTranslated('title')).trim();
     let description = entities.decodeHTML(this.getTranslated('description')).trim();
