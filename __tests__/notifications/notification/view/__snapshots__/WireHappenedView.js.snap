@@ -72,7 +72,7 @@ exports[`renders correctly for owner and subscribed 1`] = `
   <Text
     onPress={[Function]}
   >
-    [missing "en.notification.wiredSubscribedYou" translation]
+    You have subscribed to wire 1000/month to
      
     <Text
       onPress={[Function]}

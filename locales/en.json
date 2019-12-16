@@ -66,7 +66,6 @@
     "invalidPassword":"Incorrect password. Please try again.",
     "confirmPasswordError": "Passwords should match",
     "termsAcceptedError":"You should accept the terms and conditions",
-    "promotions":"Receive exclusive promotions from Minds\n(recommended)",
     "accept":"I accept the",
     "termsAndConditions":"terms and conditions",
     "code":"Code"
@@ -111,8 +110,6 @@
     "receivaOnly":"RECEIVE ONLY",
     "offchain":"Offchain",
     "receiver":"Receiver",
-    "walletConfirmMessage":"You will be charged {{currency}} for {{tokens}}.",
-    "walletNotDeterminedMessage":"We couldn't determine the charges for <{{tokens}}.",
     "selectWallet":"Select a wallet",
     "walletAddresses":"Wallet Addresses",
     "selectTheWallet":"Select the wallet you would like to use",
@@ -129,14 +126,12 @@
   },
   "boosts":{
     "selected":"SELECTED",
-    "priority":"PRIORITY",
     "target":"TARGET",
     "boostType":"BOOST TYPE",
     "cost":"COST",
     "howManyViewsDoYouWant":"HOW MANY VIEWS DO YOU WANT?",
     "whatIsYourOffer":"WHAT'S YOUR OFFER ?",
     "targetDescription":"Search for the channel you want to boost to.",
-    "priorityDescription":"Priority content goes to the front of the line, but costs at least twice the price of a regular boost.",
     "youDontHaveBoosts":"You don't have any boosts",
     "youCantSelectYourself":"You cant select yourself to make a p2p boost",
     "tapToChangeChannel":"TAP TO CHANGE CHANNEL",
@@ -185,7 +180,7 @@
     "from":"translated from",
     "translate":"Translate",
     "changeLanguage":"Change Language",
-    "error":"There was an error on translation.\n Plase try again."
+    "error":"There was an error on translation"
   },
   "hashtags":{
     "exists":"Tag already exists",
@@ -199,7 +194,6 @@
     "remind":"Remind",
     "postingIn":"(Posting in {{group}})",
     "placeholder":"Speak your mind...",
-    "submitPost":"Submit post",
     "uploadError":"Caught upload error",
     "errorDeleting":"Caught error deleting the file",
     "pleaseTryAgain":"Please try again in a moment.",
@@ -216,7 +210,6 @@
     "modeOpen":"Public",
     "modeModerated":"Moderated",
     "isClosed":"This is a closed channel",
-    "channel":"channel",
     "errorSaving":"Error saving channel",
     "saveChanges":"Save your changes",
     "editChannel":"Edit your channel settings",
@@ -226,9 +219,7 @@
     "confirmUnsubscribe":"Are you sure you want to unsubscribe from this channel?",
     "subscribe":"Subscribe",
     "requestSubscription":"Request Subscription",
-    "subscribed":"Subscribed",
     "subscribeMessage":"Subscribe to this channel",
-    "unsubscribeMessage":"Unsubscribe to this channel",
     "selectBanner":"Select banner",
     "selectAvatar":"Select avatar",
     "briefDescription":"Brief description about you...",
@@ -241,9 +232,7 @@
     "blockedNav":"You have blocked &{username}&",
     "tapUnblock":"Tap to unblock",
     "notFound":"Channel not found",
-    "viewScheduled":"Scheduled",
-    "requestAccepted":"Accepted",
-    "requestRejected":"Rejected"
+    "viewScheduled":"Scheduled"
   },
   "discovery":{
     "search":"Search...",
@@ -278,7 +267,8 @@
   "keychain": {
     "unlockMessage": "Unlock {{keychain}} keychain",
     "setupMessage": "Unlock {{keychain}} keychain",
-    "encryptMessage":"Enter a password that will encrypt the {{keychain}} keychain.\nRemember the password or you will be unable to read/write from it."
+    "encryptMessage":"Enter a password that will encrypt the {{keychain}} keychain.",
+    "encryptMessage1":"Remember the password or you will be unable to read/write from it."
   },
   "messenger": {
     "decrypting":"decrypting...",
@@ -300,8 +290,6 @@
     "setupMessage3":"By default the content of your messages is fully encrypted. For heightened security you may wish to go to your app settings and turn off push notifications in order to disallow metadata from being tracked."
   },
   "newsfeed": {
-    "muteNotifications":"Mute notifications",
-    "unmuteNotifications":"Unmute notifications",
     "successRemoving":"Entity removed succesfully",
     "subscribed":"SUBSCRIBED",
     "boostfeed":"BOOSTFEED",
@@ -309,7 +297,6 @@
     "empty":"Your newsfeed is empty"
   },
   "comments": {
-    "deleteConfirm":"Do you want to delete this comment?\n\nThere's no UNDO.",
     "successRemoving":"Comment removed succesfully",
     "comments":"Comments",
     "errorRemoving":"Error removing comment"
@@ -361,8 +348,10 @@
     "channel":"channel",
     "deleted":"This post was deleted",
     "dontHave":"You don't have any notifications",
-    "rewardsStateIncrease": "Congratulations! You just became a {{state}} user.\nWe've increased your daily token reward multiplier to {{multiplier}}x",
-    "rewardsStateDecrease": "We miss you! You just dropped down to a {{state}} user.\nYour daily token reward multiplier has been reduced to {{multiplier}}x",
+    "rewardsStateIncrease": "Congratulations! You just became a {{state}} user.",
+    "rewardsStateIncrease1": "We've increased your daily token reward multiplier to {{multiplier}}x",
+    "rewardsStateDecrease": "We miss you! You just dropped down to a {{state}} user.",
+    "rewardsStateDecrease1": "Your daily token reward multiplier has been reduced to {{multiplier}}x",
     "rewardsStateDecreaseToday": "It's not too late! You will drop down to a {{state}} user by the end of today and your daily token reward multiplier will reduce to {{multiplier}}x. Get liking and commenting to bring your score back up!",
     "rewardsSummary": "You earned {{amount}} tokens yesterday."
   },
@@ -390,14 +379,7 @@
     "referral_complete": "Referral Complete"
   },
   "payments":{
-    "confirmDeleteCard":"Do you want to delete this card?",
-    "cardExpirationMonth":"Card Expiration Month",
-    "cardExpirationYear":"Card Expiration Year",
-    "yourSavedCard":"YOUR SAVED CARDS:",
-    "cardHoldersName":"Cardholder's name",
-    "cardConfirmMessage":"{{confirmMessage}} Do you want to use this credit card?",
-    "orUseAntoherCard":"OR USE ANOTHER CARD",
-    "enterCardDetails":"ENTER YOUR CARDS DETAILS"
+    "confirmDeleteCard":"Do you want to delete this card?"
   },
   "reports":{
     "reasons":{
@@ -485,9 +467,6 @@
     "leftHandedMode":"Left Handed Mode",
     "recurringPayments":"Recurring Payments",
     "deactivate":"Deactivate",
-    "deactivateChannel":"Deactivate Channel",
-    "options":"Options",
-    "notifications":"Notifications",
     "logout":"Logout",
     "errorSaving":"Error saving setting, please try again",
     "passwordChanged":"Password changed succesfully.",
@@ -497,14 +476,12 @@
     "confirmDeleteKeychain1":"This will delete your Ethereum keychain from this phone. Ensure you backed up the private keys. If you didn't you can lose access to all your funds. There's NO UNDO!",
     "pushNotification":"Push Notifications",
     "regenerateKey":"Regenerate messenger keys",
-    "deleteBlockchain":"Delete blockchain keychain",
-    "pleaseDeactivate":"Please deactivate your account on the desktop"
+    "deleteBlockchain":"Delete blockchain keychain"
   },
   "comingSoon":{
-    "notAvailable":"This feature is not available yet.",
-    "try":"Try the canary app at\nwww.minds.com/mobile",
+    "try":"Try the canary app at",
     "notSupported":"This feature is not supported by your platform.",
-    "moreInformation":"More information at\n"
+    "moreInformation":"More information at"
   },
   "attachment":{
     "tooLong":"Video duration must be less than {{minutes}} minutes"
@@ -517,10 +494,8 @@
     "chooseName":"Choose your display name",
     "describeChannel":"Briefly describe your channel",
     "hashtagSelect":"What topics are you interested in?",
-    "waitSms":" Keep the app visible and we will detect it automatically",
     "earnTokens":"Earn tokens for your activity",
     "weDontStorePhone":"We do not store your phone number on our servers.",
-    "smsNotReceived":"Sms was not received",
     "suggestedChannels":"Suggested channels",
     "suggestedChannelsDescription":"Subscribe to some popular channels below based on your interests",
     "suggestedGroups":"Suggested groups",
@@ -536,10 +511,13 @@
     "phoneNumber":"Phone Number",
     "weJustSentCode":"We just sent the code to {{phone}} in order to verify that your number is correct.",
     "confirmationCode":"Confirmation Code",
-    "rewardsDescription":"You can earn tokens for your contributions to the Minds network. \nThe more interactions on your content, the greater your share of the daily token reward pool to your OffChain address.",
+    "rewardsDescription":"You can earn tokens for your contributions to the Minds network.",
+    "rewardsDescription1":"The more interactions on your content, the greater your share of the daily token reward pool to your OffChain address.",
     "rewardsNote":"Note: Minds does not store the phone numbers you provide. The numbers are hashed using SHA-256 and combined with a salt key for privacy purposes.",
-    "ensureYouExportKey":"Ensure you EXPORT and back-up your key before uninstalling or wiping the app data, or you will lose your funds.\n Exporting can be done from the Address detail screen.",
-    "6digitDescription":"To create a new wallet address, please enter a keychain password\nthat will be used to encrypt your private key onto this device.",
+    "ensureYouExportKey":"Ensure you EXPORT and back-up your key before uninstalling or wiping the app data, or you will lose your funds.",
+    "ensureYouExportKey1":"Exporting can be done from the Address detail screen.",
+    "6digitDescription":"To create a new wallet address, please enter a keychain password",
+    "6digitDescription1":"that will be used to encrypt your private key onto this device.",
     "6digitConfirm":"Please confirm once more your keychain password. Once confirmed your wallet will be created on this device and attached to your account.",
     "6digitAlreadySetup":"Your keychain password is already setup, you just need to confirm the wallet creation. Once confirmed your wallet will be created on this device and attached to your account.",
     "passwordInvalid":"Password must be at least 6 characters, which can be either alphanumeric or symbols",
@@ -591,7 +569,7 @@
       "errorReadingStatus":"Error reading withdrawal status",
       "errorOnlyOnceDay":"You can only withdraw once a day",
       "errorWithdrawing":"Error withdrawing tokens",
-      "youCanRequest1":"You can request to withdraw up to {{amount}} tokens from your rewards to your &{onchain}& wallet.\n &{note}&",
+      "youCanRequest1":"You can request to withdraw up to {{amount}} tokens from your rewards to your &{onchain}& wallet.",
       "youCanRequest2":"Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals &{approval}& and may take up to 72 hours to complete",
       "youCanRequest3":"go through an approval process",
       "holdingMessage":"{{amount}} tokens are unavailable due to credit card payment. They will be released after 30 days the payment occurred.",
@@ -618,8 +596,7 @@
     "errorSendingWire":"There was a problem sending wire",
     "selectWalletMessage":"Select the wallet you would like to use for this Wire.",
     "preApproveMessage":"We need you to pre-approve Minds Wire wallet for the recurring wire transactions.",
-    "nameReward":"{{name}}'s rewards",
-    "addressLabel":"{{label}} Address"
+    "nameReward":"{{name}}'s rewards"
   },
   "validation":{
     "email":"Invalid email",
@@ -638,19 +615,14 @@
   },
   "moreScreen": {
     "reportBug":"Report a bug",
-    "groups":"Groups",
     "helpSupport":"Help & Support",
     "invite":"Refer your friends",
     "settings":"Settings",
-    "pushNotifications":"Push Notifications",
     "faq":"FAQ",
     "code":"Code",
     "terms":"Terms",
     "privacy":"Privacy",
     "exit":"Exit"
-  },
-  "mindsSettings": {
-    "error":"Sorry, there was an error loading the settings from the server\n Please try again."
   },
   "userTypeAhead":{
     "placeholder": "Start typing a username to search...",
@@ -676,8 +648,7 @@
     "topPeriod1":"1 year"
   },
   "update": {
-    "title":"Update to v{{version}}",
-    "version": "New v{{version}} available!"
+    "title":"Update to v{{version}}"
   },
   "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
@@ -715,7 +686,6 @@
   "name":"Name",
   "approve":"Approve",
   "done":"Done",
-  "skip":"Skip",
   "accept":"Accept",
   "confirmNoUndo":"Are you sure? There's no UNDO.",
   "confirmMessage":"Are you sure?",
@@ -736,6 +706,8 @@
   "description":"Description",
   "sorry":"Sorry!",
   "tryAgain":"Try again",
+  "tryAgainLater":"Try again later",
+  "pleaseTryAgain":"Plase try again",
   "attention":"Attention",
   "retry":"Retry",
   "unlock":"Unlock",

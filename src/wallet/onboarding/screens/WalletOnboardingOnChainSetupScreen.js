@@ -6,16 +6,12 @@ import {
   View,
   Text,
   TextInput,
-  ActivityIndicator,
   StyleSheet,
   Alert,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import keychainService from '../../../common/services/keychain.service';
 
-import TransparentButton from '../../../common/components/TransparentButton';
 import Button from '../../../common/components/Button';
 import NavNextButton from '../../../common/components/NavNextButton';
 
@@ -33,8 +29,8 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     pinConfirmation: '',
     confirmingPin: false,
     alreadyHasPin: false,
-    error: ''
-  }
+    error: '',
+  };
 
   async componentWillMount() {
     if (await keychainService.hasSecret('wallet')) {
@@ -88,9 +84,17 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
 
   showEphemeralWarning() {
     return new Promise(resolve => {
-      Alert.alert(i18n.t('headsUp'), i18n.t('onboarding.ensureYouExportKey'), [
-        { text: i18n.t('iUnderstand'), onPress: () => resolve() }
-      ], { cancelable: false });
+      const message =
+        i18n.t('onboarding.ensureYouExportKey') +
+        '\n' +
+        i18n.t('onboarding.ensureYouExportKey1');
+
+      Alert.alert(
+        i18n.t('headsUp'),
+        message,
+        [{text: i18n.t('iUnderstand'), onPress: () => resolve()}],
+        {cancelable: false},
+      );
     });
   }
 
@@ -137,7 +141,9 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     return (
       <View>
         <Text style={style.p}>
-          {i18n.t('onboarding.6digitDescription')}
+          {i18n.t('onboarding.6digitDescription') +
+            '\n' +
+            i18n.t('onboarding.6digitDescription1')}
         </Text>
 
         {!!this.state.error && <View>
@@ -204,8 +210,6 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   }
 
   getAlreadyHasPinFormPartial() {
-
-
     return (
       <View>
         <Text style={style.p}>
@@ -231,13 +235,12 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   }
 
   getFormPartial() {
-    if (!this.state.confirmingPin)
+    if (!this.state.confirmingPin) {
       return this.getPinFormPartial();
-    else
+    } else {
       return this.state.alreadyHasPin ? this.getAlreadyHasPinFormPartial() : this.getConfirmPinFormPartial();
+    }
   }
-
-  //
 
   getNextButton = () => {
     return (
@@ -247,7 +250,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
         color={Colors.darkGreyed}
       />
     );
-  }
+  };
 
   render() {
     return (

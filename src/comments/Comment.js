@@ -184,7 +184,7 @@ class Comment extends Component {
       case i18n.t('delete'):
         Alert.alert(
           i18n.t('confirm'),
-          i18n.t('comments.deleteConfirm'),
+          i18n.t('confirmNoUndo'),
           [
             { text: i18n.t('no'), style: 'cancel' },
             {
