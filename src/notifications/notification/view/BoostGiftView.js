@@ -46,23 +46,24 @@ export default class BoostGiftView extends Component {
   /**
    * Nav to boost console
    */
-  navToBoostConsole = (params={}) => {
+  navToBoostConsole = (params = {}) => {
     this.props.navigation.push('BoostConsole', params);
-  }
+  };
 
   /**
    * Navigate To channel
    */
   navToChannel = () => {
     this.props.navigation.push('Channel', { guid: this.props.entity.fromObj.guid });
-  }
+  };
 
-  getDescription(entity, pron='your') {
+  getDescription(entity, pron = null) {
     const styles = this.props.styles;
 
-    if (!entity.entityObj) return '';
-
-    pron = i18n.t(pron);
+    if (!entity.entityObj) {
+      return '';
+    }
+    if (!pron) pron = i18n.t('your');
 
     let desc = (entity.entityObj.title || entity.entityObj.name || (entity.entityObj.type !== 'user' ? `${pron} ` + i18n.t('notification.post') : `${pron} ` + i18n.t('notification.channel')));
 

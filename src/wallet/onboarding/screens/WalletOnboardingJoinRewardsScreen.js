@@ -206,7 +206,8 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
         <Text style={style.h1}>{i18n.t('rewards')}</Text>
 
         <Text style={style.p}>
-          {i18n.t('onboarding.rewardsDescription')}
+          {i18n.t('onboarding.rewardsDescription') + '\n'}
+          {i18n.t('onboarding.rewardsDescription1')}
         </Text>
 
         <View>

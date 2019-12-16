@@ -154,7 +154,10 @@ export default class Translate extends PureComponent {
   }
 
   showError() {
-    Alert.alert(i18n.t('ops'), i18n.t('translate.error'));
+    Alert.alert(
+      i18n.t('ops'),
+      i18n.t('translate.error') + '\n' + i18n.t('pleaseTryAgain'),
+    );
   }
 
   /**

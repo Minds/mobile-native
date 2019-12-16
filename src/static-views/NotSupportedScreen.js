@@ -44,7 +44,7 @@ export default class NotSupportedScreen extends Component {
 
         <Touchable onPress={this.moreInfoAction}>
           <Text style={[style.text, style.smaller, style.link]}>
-            {i18n.t('comingSoon.moreInformation')}
+            {i18n.t('comingSoon.moreInformation') + '\n'}
             {this.moreInfoUrl}
           </Text>
         </Touchable>

@@ -59,7 +59,9 @@ export default class GroupsBarItem extends Component {
             />
             {group.marker_activity ? <View style={styles.acitivity}/> : null}
           </View>
-          <Text style={[CS.fontXS, CS.marginTop, CS.fontMedium]}>{excerpt(group.name, 11)}</Text>
+          <Text style={[CS.fontXS, CS.marginTop, CS.fontMedium]}>
+            {excerpt(group.name, 11)}
+          </Text>
           {group.marker_conversation ? <FAIcon name="circle" size={12} color='rgba(70, 144, 223, 1)' style={styles.unread} /> : null}
         </View>
       )
