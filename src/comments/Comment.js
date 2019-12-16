@@ -58,6 +58,12 @@ class Comment extends Component {
     this.props.onCommentFocus && this.props.onCommentFocus(this.props.comment, offset);
   }
 
+  componentDidMount() {
+    if (this.props.commentFocusCall) {
+      this.props.commentFocusCall(this.props.comment, this.props.index);
+    }
+  }
+
   /**
    * Render
    */
