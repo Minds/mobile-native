@@ -1,6 +1,9 @@
 import {Alert} from 'react-native';
 
-import {setNativeExceptionHandler} from 'react-native-exception-handler';
+import {
+  setNativeExceptionHandler,
+  setJSExceptionHandler,
+} from 'react-native-exception-handler';
 
 import {onError} from 'mobx-react';
 import logService from './src/common/services/log.service';

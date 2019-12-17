@@ -600,6 +600,11 @@ exports[`LoginForm component should renders correctly 1`] = `
                     "textColor": undefined,
                     "value": "zh",
                   },
+                  Object {
+                    "label": "Slovak",
+                    "textColor": undefined,
+                    "value": "sk",
+                  },
                 ]
               }
               onChange={[Function]}
