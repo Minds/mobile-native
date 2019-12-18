@@ -1,10 +1,10 @@
 
 stages:
-  - test
   - build
   - e2e
-  - deploy
   - i18n
+  - deploy
+  - test
 
 test:jest:
   image: node:10.16.3
@@ -14,8 +14,9 @@ test:jest:
     paths:
       - node_modules/
       - .jest/cache/
-  script:
+  before_script:
     - yarn install
+  script:
     - yarn test
 
 i18n:upload:
@@ -25,9 +26,9 @@ i18n:upload:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - node_modules/
-      - .jest/cache/
-  script:
+  before_script:
     - yarn install
+  script:
     - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1
   only:
     refs:
@@ -40,32 +41,66 @@ i18n:uploadsync:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - node_modules/
-      - .jest/cache/
-  script:
+  before_script:
     - yarn install
+  script:
     - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1 --sync_terms=1
   only:
     refs:
-      - /^stable-*/
+      - master
 
 build:android:
   image: circleci/android:api-28-node
   stage: build
+  cache:
+    key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+    paths:
+      - node_modules/
+      - android/vendor/bundle
+      - .gradle/caches
+      - .gradle/wrapper
+      - .android/build-cache/
   before_script:
+    - 'sed -i ''s/^apply from: "..\/..\/node_modules\/\@sentry\/react-native\/sentry.gradle"//'' android/app/build.gradle'
+    - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
+    - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
     - sudo sysctl fs.inotify.max_user_watches=524288
     - sudo sysctl -p
-  script:
     - yarn install
     - cd android
-    - bundle install
-    - fastlane assemble_build
-    - cp app/build/outputs/apk/release/app-release.apk ../Minds-$CI_BUILD_REF_SLUG.apk
+    - bundle install --path=vendor/bundle
+  script:
+    - bundle exec fastlane assemble_build
+    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_BUILD_REF_SLUG.apk
   artifacts:
     name: "Minds APK"
     paths:
       - Minds-$CI_BUILD_REF_SLUG.apk
     expire_in: 7 days
     when: on_success
+
+# build:android-playstore:
+#   image: circleci/android:api-28-node
+#   stage: build
+#   before_script:
+#     - sudo sysctl fs.inotify.max_user_watches=524288
+#     - sudo sysctl -p
+#   cache:
+#     key: ${CI_COMMIT_REF_SLUG}
+#     paths:
+#       - node_modules/
+#   script:
+#     - yarn install
+#     - cd android
+#     - bundle install
+#     - fastlane assemble_build
+#     - cp app/build/outputs/apk/release/app-release.apk ../Minds-$CI_BUILD_REF_SLUG.apk
+#   artifacts:
+#     name: "Minds APK"
+#     paths:
+#       - Minds-$CI_BUILD_REF_SLUG.apk
+#     expire_in: 7 days
+#     when: on_success
 
 deploy:s3:
   image: minds/ci:latest
