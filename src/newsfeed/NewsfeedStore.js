@@ -143,7 +143,9 @@ class NewsfeedStore {
   }
 
   prepend(entity) {
-    const model = ActivityModel.checkOrCreate(entity)
+    const model = ActivityModel.checkOrCreate(entity);
+
+    model.listRef = this.listRef.listRef;
 
     this.feedStore.prepend(model);
   }
