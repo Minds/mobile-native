@@ -600,7 +600,10 @@
   },
   "validation":{
     "email":"Invalid email",
-    "number":"Invalid number"
+    "number":"Invalid number",
+    "confirm":"Please confirm your email anddress. Didn't get it?",
+    "sendAgain": "Click here to send again.",
+    "confirmNote": "Note: If you change your email address, it will need to be confirmed again."
   },
   "imagePicker":{
     "gallery":"Choose from gallery",

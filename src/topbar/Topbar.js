@@ -19,6 +19,7 @@ import featuresService from '../common/services/features.service';
 import { SafeAreaView } from 'react-navigation';
 import isIphoneX from '../common/helpers/isIphoneX';
 import testID from '../common/helpers/testID';
+import EmailConfirmation from './EmailConfirmation';
 
 const forceInset = isIphoneX ? {top: 32} : null
 
@@ -33,37 +34,42 @@ export default class Topbar extends Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container} forceInset={forceInset}>
-        <View style={styles.topbar}>
+      <SafeAreaView forceInset={forceInset}>
+        <View style={styles.container} >
+          <View style={styles.topbar}>
 
-          { featuresService.has('crypto') && 
-            <TouchableOpacity 
-              onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} 
-              {...testID('boost-console button')} >
-            <View style={styles.topbarLeft}>
-              <Icon name="trending-up" size={22} color='#444' style={ styles.button }/>
+            { featuresService.has('crypto') && 
+              <TouchableOpacity 
+                onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} 
+                {...testID('boost-console button')} >
+              <View style={styles.topbarLeft}>
+                <Icon name="trending-up" size={22} color='#444' style={ styles.button }/>
+              </View>
+            </TouchableOpacity>}
+
+            { !featuresService.has('crypto') && <View style={styles.topbarLeft} />}
+
+            <View style={styles.topbarCenter}>
+              { this.props.user.me && <Avatar
+                rounded
+                source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' +  this.props.user.me.icontime}}
+                width={38}
+                height={38}
+                onPress={() => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })}
+                {...testID('topbar avatar button')} 
+              /> }
             </View>
-          </TouchableOpacity>}
 
-          { !featuresService.has('crypto') && <View style={styles.topbarLeft} />}
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('More', { navigation: this.props.navigation })} {...testID('Main menu button')}>
+              <View style={styles.topbarRight}>
+                <Icon name="menu" size={22} color='#444' style={ styles.button }/>
+              </View>
+            </TouchableOpacity>
 
-          <View style={styles.topbarCenter}>
-            { this.props.user.me && <Avatar
-              rounded
-              source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' +  this.props.user.me.icontime}}
-              width={38}
-              height={38}
-              onPress={() => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })}
-              {...testID('topbar avatar button')} 
-            /> }
           </View>
-
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('More', { navigation: this.props.navigation })} {...testID('Main menu button')}>
-            <View style={styles.topbarRight}>
-              <Icon name="menu" size={22} color='#444' style={ styles.button }/>
-            </View>
-          </TouchableOpacity>
-
+        </View>
+        <View>
+          <EmailConfirmation user={this.props.user} />
         </View>
       </SafeAreaView>
     );
