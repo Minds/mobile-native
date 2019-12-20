@@ -60,6 +60,11 @@ export default class FeedStore {
   feedsService = new FeedsService;
 
   /**
+   * The offset of the list
+   */
+  scrollOffset = 0;
+
+  /**
    * Class constructor
    * @param {boolean} includeMetadata include a metadata service
    */
