@@ -62,6 +62,7 @@ import commentStorageService from './src/comments/CommentStorageService';
 import * as Sentry from '@sentry/react-native';
 import apiService from './src/common/services/api.service';
 import boostedContentService from './src/common/services/boosted-content.service';
+import translationService from './src/common/services/translation.service';
 
 let deepLinkUrl = '';
 
@@ -143,7 +144,6 @@ sessionService.onLogin(async () => {
 
 //on app logout
 sessionService.onLogout(() => {
-
   // clear app badge
   badgeService.setUnreadConversations(0);
   badgeService.setUnreadNotifications(0);
@@ -152,6 +152,7 @@ sessionService.onLogout(() => {
   feedsStorage.removeAll();
   stores.notifications.clearLocal();
   stores.groupsBar.clearLocal();
+  translationService.purgeLanguagesCache();
 });
 
 // disable yellow boxes

@@ -19,7 +19,7 @@ export default class WelcomeChatView extends PureComponent {
 
     return (
       <View style={styles.bodyContents}>
-        <Text>{i18n.t('notifications.welcomeChat')}</Text>
+        <Text>{i18n.t('notification.welcomeChat')}</Text>
       </View>
     )
   }

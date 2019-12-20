@@ -15,7 +15,9 @@
         "typeComment": "Nhập nhận xét của bạn",
         "error": "XIN LỖI, CHÚNG TÔI KHÔNG THỂ TẢI NHỮNG HOẠT ĐỘNG",
         "tryAgain": "XIN VUI LÒNG THỬ LẠI SAU",
-        "loadLater": "TẢI SAU"
+        "loadLater": "TẢI SAU",
+        "remindBlocked": "Lời nhắc này không còn tồn tại vì nó đã bị chặn",
+        "scheduled": "Hoạt động này dự kiến được hiển trị trong"
     },
     "auth": {
         "login": "Đăng Nhập",
@@ -28,10 +30,9 @@
         "requestNewPassword": "Để yêu cầu mật khẩu mới, hãy nhập tên người dùng của bạn",
         "requestNewPasswordSuccess": "Chúng tôi đã gửi mã mở khóa đến địa chỉ email mà bạn đã đăng ký.",
         "invalidGrant": "Tên người dùng / mật khẩu không đúng. Vui lòng thử lại.",
-        "invalidPassword": "Mật khẩu không đúng. Vui lòng thử lại.",
+        "invalidPassword": " Mật khẩu không đúng. Vui lòng thử lại. ",
         "confirmPasswordError": "Mật khẩu phải khớp",
         "termsAcceptedError": "Bạn nên chấp nhận các điều khoản và điều kiện.",
-        "promotions": "Nhận khuyến mãi độc quyền từ Minds (được khuyến khích)",
         "accept": "Tôi chấp nhận",
         "termsAndConditions": "Các điều khoản và điều kiện",
         "code": "Mật mã"
@@ -70,9 +71,7 @@
         "noTokensNoProblem": "Không có mã thông báo? Không vấn đề gì!",
         "receivaOnly": "CHỈ NHẬN",
         "offchain": "Offchain",
-        "receiver": "Người nhận",
-        "walletConfirmMessage": "Bạn sẽ bị tính phí {{currency}} cho {{tokens}}.",
-        "walletNotDeterminedMessage": "Chúng tôi không thể xác định chi phí cho <{{tokens}}.",
+        "receiver": " Người nhận ",
         "selectWallet": "Chọn Ví",
         "walletAddresses": "Địa chỉ Ví",
         "selectTheWallet": "Chọn ví bạn muốn sử dụng",
@@ -89,18 +88,17 @@
         "tabMyBlogs": "BLOGS CỦA TÔI",
         "blogs": "Blogs",
         "errorLoading": "Có lỗi khi tải trang này",
-        "error": "XIN LỖI, CHÚNG TÔI KHÔNG THỂ TẢI TRANG WEB"
+        "error": "XIN LỖI, CHÚNG TÔI KHÔNG THỂ TẢI TRANG WEB",
+        "blogListEmpty": "Danh sách này rỗng"
     },
     "boosts": {
         "selected": "Đã Chọn",
-        "priority": "Ưu Tiên",
         "target": "Mục tiêu",
         "boostType": "LOẠI TĂNG CƯỜNG",
         "cost": "GIÁ",
         "howManyViewsDoYouWant": "Bạn muốn có bao nhiêu lượt xem?",
         "whatIsYourOffer": "ĐỀ NGHỊ CỦA BẠN LÀ GÌ ?",
         "targetDescription": "Tìm kiếm kênh bạn muốn thăng hạng",
-        "priorityDescription": "Nội dung ưu tiên đi lên dòng đầu, nhưng chi phí ít nhất gấp đôi giá của mức tăng thông thường.",
         "youDontHaveBoosts": "Bạn không có bất kỳ sự tăng hạng nào",
         "youCantSelectYourself": "Bạn không thể chọn chính mình để tăng cường p2p",
         "tapToChangeChannel": "NHẤN ĐỂ ĐỔI KÊNH",
@@ -141,7 +139,7 @@
             "7": "RÁC",
             "8": "Khiếu nại về quyết định Tăng cường",
             "12": "Thanh toán Onchain bị lỗi",
-            "13": "Bài gốc bị xóa"
+            "13": "Bài gốc đã bị xóa"
         },
         "errorGet": "Ồ, tăng cường bị lỗi"
     },
@@ -150,7 +148,6 @@
         "post": "Đăng",
         "postingIn": "(Đăng trong {{group}})",
         "placeholder": "Bạn đang nghĩ rằng...",
-        "submitPost": "Gửi bài đăng",
         "uploadError": "Lỗi tải lên",
         "errorDeleting": "Đã xảy ra lỗi khi xóa tệp",
         "pleaseTryAgain": "Vui lòng thử lại sau giây lát",
@@ -165,7 +162,6 @@
         "remind": "Nhắc nhở"
     },
     "channel": {
-        "channel": "Kênh",
         "errorSaving": "Lỗi khi lưu kênh",
         "saveChanges": "Lưu thay đổi của bạn",
         "editChannel": "Chỉnh sửa cài đặt kênh của bạn",
@@ -173,7 +169,6 @@
         "message": "Tin Nhắn",
         "subscribe": "Đăng Ký",
         "subscribeMessage": "Đăng ký kênh này",
-        "unsubscribeMessage": "Hủy đăng ký kênh này",
         "selectBanner": "Chọn biểu ngữ",
         "selectAvatar": "Chọn hình ảnh đại diện",
         "briefDescription": "Mô tả ngắn gọn về bản thân bạn ...",
@@ -184,10 +179,16 @@
         "createFirstPost": "Tạo bài đăng đầu tiên của bạn",
         "mature": "Kênh này chứa nội dung nhạy cảm",
         "confirmUnsubscribe": "Bạn có chắc muốn hủy theo dõi kênh này?",
-        "subscribed": "Đã theo dõi",
         "blocked": "Bạn đã khóa @{{username}}",
         "tapUnblock": "Bấm để mở khóa",
-        "notFound": "Không tìm thấy kênh"
+        "notFound": "Không tìm thấy kênh",
+        "viewScheduled": "Đã lên kế hoạch",
+        "modeClosed": "Đã đóng",
+        "modeOpen": "Công khai",
+        "modeModerated": "Kiểm duyệt",
+        "isClosed": "Kênh này đã bị đóng",
+        "requestSubscription": "Yêu cầu đăng kí",
+        "blockedNav": "Bạn đã khóa &{tài khoản}&"
     },
     "discovery": {
         "search": "Tìm kiếm...",
@@ -215,12 +216,15 @@
         "banConfirm": "Bạn chắc không?  Bạn muốn cấm người dùng này?",
         "errorLoading": "Lỗi tải các nhóm",
         "confirmKick": "Bạn chắc không?  Bạn muốn loại người dùng này?",
-        "listMembersCount": "Thành viên {{count}}"
+        "listMembersCount": "Thành viên {{count}}",
+        "disableConversations": "Ẩn cuộc hội thoại",
+        "enableConversations": "Mở cuộc hội thoại"
     },
     "keychain": {
         "unlockMessage": "Mở khóa keychain {{keychain}}",
         "setupMessage": "Mở khóa keychain {{keychain}}",
-        "encryptMessage": "Nhập mật khẩu sẽ mã hóa chuỗi {{keychain}} keychain.\nHãy nhớ mật khẩu hoặc bạn sẽ không thể đọc/ghi từ nó."
+        "encryptMessage": "Nhập mật khẩu sẽ mã hóa chuỗi {{keychain}} keychain.",
+        "encryptMessage1": "Hãy nhớ mật khẩu hoặc bạn sẽ không thể đọc/ghi từ nó."
     },
     "messenger": {
         "decrypting": "giải mã",
@@ -242,8 +246,6 @@
         "setupMessage3": "Mặc định, nội dung thư của bạn được mã hóa hoàn toàn. Để tăng cường bảo mật, bạn có thể chuyển đến cài đặt ứng dụng và tắt thông báo đẩy để tránh hoàn toàn khả năng dữ liệu bị theo dõi."
     },
     "newsfeed": {
-        "muteNotifications": "Ẩn thông báo",
-        "unmuteNotifications": "Hiển thị thông báo",
         "successRemoving": "Xóa đối tượng thành công",
         "subscribed": "Đã đăng ký",
         "boostfeed": "Các tin boots",
@@ -259,12 +261,12 @@
         "boostPeerRequest": "đang cung cấp",
         "boostRejected": "Quảng cáo &{description}& của bạn & đã bị từ chối vì {{reason}}. Điểm của bạn đã được ghi trở lại ví của bạn.",
         "boostRevoked": "Bạn đã thu hồi tăng của mình",
-        "boostSubmittedP2p": "{{points}} điểm &{description}& đang chờ phê duyệt",
+        "boostSubmittedP2p": " {{points}} điểm &{description}& đang chờ phê duyệt ",
         "boostSubmitted": "{{impressions}} lượt xem &{description}& đang chờ phê duyệt",
         "comment": "{{name}}'s {{subtype}}",
         "featured": "đã nổi bật",
         "friends1": "Bạn có một đối tương! {{name}} đã đăng ký với bạn",
-        "friends2": "{{name}} đã đăng ký với bạn",
+        "friends2": " {{name}} đã đăng ký với bạn ",
         "groupInvite": "{{user}} đã mời bạn tham gia {{name}}",
         "groupKicked": "Bạn đã bị loại khỏi từ {{name}}",
         "notCharged": "Bạn chưa bị tính phí",
@@ -293,7 +295,13 @@
         "welcomeChat": "Trò chuyện riêng với người theo dõi bạn",
         "repliedCommentOn": "đã trả lời bình luận của bạn tại",
         "groupComment": "Nhóm {{title}}",
-        "tagConversation": "thẻ của bạn trong  cuộc trò chuyện"
+        "tagConversation": "thẻ của bạn trong  cuộc trò chuyện",
+        "rewardsStateIncrease": "Chúc mừng!. Bạn vừa trở thành {{trạng thái}} người dùng.",
+        "rewardsStateDecrease": "Chúng tôi nhớ bạn!. Bạn vừa xuống người dùng {{trạng thái}}.",
+        "rewardsStateDecreaseToday": "Không có gì là quá trễ!. Bạn vừa xuống người dùng {{trạng thái}} vào cuối ngày hôm nay và mã phần thưởng của bạn sẽ giảm xuống {{số nhân}} x. Hãy thích và bình luận để đưa điểm số của bạn trở lại như xưa!",
+        "rewardsSummary": "Ngày hôm qua bạn đã kiếm được {{số}} tokens",
+        "rewardsStateIncrease1": "Chúng tôi đã tăng số token hằng ngày của bạn lên con số",
+        "rewardsStateDecrease1": "Mã phần thưởng của bạn vừa bị giảm xuống {{số nhân}} x "
     },
     "notificationSettings": {
         "enableDisable": "Bật và tắt cài đặt thông báo",
@@ -313,16 +321,10 @@
         "boost_gift": "Tăng quà tặng",
         "boost_accepted": "Tăng cường chấp nhận",
         "boost_revoked": "Thu hồi tăng",
-        "message": "Người Nhắn Tin"
-    },
-    "payments": {
-        "cardExpirationMonth": "Tháng hết hạn thẻ",
-        "cardExpirationYear": "Năm hết hạn thẻ",
-        "cardHoldersName": "Tên chủ thẻ",
-        "cardConfirmMessage": "{{confirmMessage}} Bạn có muốn sử dụng thẻ tín dụng này không?",
-        "orUseAntoherCard": "HOẶC SỬ DỤNG THẺ KHÁC",
-        "enterCardDetails": "NHẬP CHI TIẾT THẺ CỦA BẠN",
-        "yourSavedCard": "THẺ ĐÃ LƯU CỦA BẠN:"
+        "message": "Người Nhắn Tin",
+        "referral_ping": "Ping giới thiệu",
+        "referral_pending": "Việc giới thiệu đang bị hoãn lại",
+        "referral_complete": "Việc giới thiệu đã hoàn thành"
     },
     "reports": {
         "explain": "Vui lòng giải thích lý do bạn muốn báo cáo nội dung này trong một vài dòng tóm tắt",
@@ -353,7 +355,7 @@
                 }
             },
             "2": {
-                "label": "NSFW (không an toàn cho công việc)",
+                "label": "NSFW (không an toàn cho công việc) ",
                 "reasons": {
                     "1": {
                         "label": "Khỏa thân"
@@ -406,7 +408,7 @@
                 "label": "Lý do khác"
             }
         },
-        "DMCA": "Xin vui lòng gởi DMCA tới copyright@minds.com",
+        "DMCA": "Xin vui lòng gửi DMCA tới copyright@minds.com",
         "reportAs": "Bạn có muốn báo cáo bài viết này với tư cách:"
     },
     "settings": {
@@ -421,9 +423,6 @@
         "add": "Thêm",
         "recurringPayments": "Thanh toán định kỳ",
         "deactivate": "Hủy kích hoạt",
-        "deactivateChannel": "Hủy kích hoạt kênh",
-        "options": "Tùy chọn",
-        "notifications": "Thông báo",
         "logout": "Đăng xuất",
         "errorSaving": "Lỗi khi lưu cài đặt, vui lòng thử lại",
         "passwordChanged": "Mật khẩu đã thay đổi thành công.",
@@ -434,7 +433,6 @@
         "pushNotification": "Đẩy thông báo",
         "regenerateKey": "Tạo lại các mã tin nhắn",
         "deleteBlockchain": "Xóa blockchain keychain",
-        "pleaseDeactivate": "Vui lòng hủy kích hoạt tài khoản của bạn trên màn hình",
         "blockedChannels": "Những kênh đã bị khóa",
         "disableChannelConfirm": "Tài khoản của bạn sẽ bị vô hiệu hóa. Bạn có muốn tiếp tục?",
         "deleteChannelConfirm": "Tài khoản và dữ liệu liên quan sẽ bị xóa ngay lập tức. Bạn có muốn tiếp tục?",
@@ -447,9 +445,8 @@
         "leftHandedMode": "Chế độ tay trái"
     },
     "comingSoon": {
-        "notAvailable": "Tính năng này chưa khả dụng.",
         "try": "Dùng thử ứng dụng carany tại địa chỉ www.minds.com/mobile",
-        "notSupported": "Tính năng này không được hổ trợ bởi nền tảng của bạn.",
+        "notSupported": "Tính năng này không được hỗ trợ bởi nền tảng của bạn.",
         "moreInformation": "Xem thêm thông tin tại"
     },
     "wallet": {
@@ -484,14 +481,16 @@
             "errorReadingStatus": "Lỗi khi đọc trạng thái rút tiền",
             "errorOnlyOnceDay": "Bạn chỉ có thể rút tiền mỗi ngày một lần",
             "errorWithdrawing": "Lỗi khi rút mã thông báo",
-            "youCanRequest": "Bạn có thể yêu cầu rút phần thưởng mã thông báo OffChain vào địa chỉ OnChain của bạn bên dưới. \nLưu ý: một số tiền nhỏ của ETH sẽ được tính để trang trải phí giao dịch. \nRút tiền có thể mất tối đa vài giờ để hoàn thành",
             "holdingMessage": "{{amount}} mã thông báo không khả dụng do thanh toán bằng thẻ tín dụng. Họ sẽ được phát hành sau 30 ngày thanh toán đã xảy ra.",
             "amount": "Số tiền",
             "errorReadingBalances": "Lỗi khi đọc số dư",
             "errorAmountNegative": "Số tiền phải là số dương"
         },
         "inviteFriend": "Mời một người bạn",
-        "inviteFriendDescription": "Mời bạn và kiếm thêm điểm thưởng"
+        "inviteFriendDescription": "Mời bạn và kiếm thêm điểm thưởng",
+        "transactionsEmpty": "Danh sách phiên làm việc trống",
+        "yourRewardFactor": "Phần thưởng của bạn",
+        "yourUserState": "Trạng thái người dùng"
     },
     "wire": {
         "amountMonth": "{{amount}}/Tháng",
@@ -508,7 +507,10 @@
         "selectWalletMessage": "Chọn ví bạn muốn sử dụng cho Wire này.",
         "preApproveMessage": "Chúng tôi cần bạn phê duyệt trước ví Wire Minds cho các giao dịch chuỗi định kỳ",
         "nameReward": "Phần thưởng của {{name}}",
-        "addressLabel": "{{label}} Địa chỉ"
+        "customDonation": "Tùy chỉnh đóng góp",
+        "selectCredit": "Lựa chọn thẻ thanh toán",
+        "willNotRecur": "Bạn có thể gửi {{tiền tệ}} tới người dùng này, tuy nhiên không thể thực hiện việc này quá một lần",
+        "noAddress": "Kênh này chưa được cấu hình {{kiểu}} địa chỉ"
     },
     "validation": {
         "email": "Email không hợp lệ",
@@ -518,19 +520,17 @@
         "gallery": "Lựa chọn từ bộ sưu tập",
         "camera": "Chụp ảnh mới",
         "cancel": "Hủy bỏ",
-        "deniedExternal": "Bạn bị cấp truy cập bộ nhớ ngoài của Minds",
-        "deniedCamera": "Bạn bị cấm truy cập camera của Minds"
+        "deniedExternal": "Bạn đã từ chối quyền truy cập bộ nhớ ngoài cho Minds",
+        "deniedCamera": "Bạn đã từ chối quyền truy cập camera cho Minds."
     },
     "subtype": {
         "image": "Ảnh",
         "video": "Video"
     },
     "moreScreen": {
-        "groups": "Nhóm",
         "helpSupport": "Trợ giúp & Hỗ trợ",
         "invite": "Mời",
         "settings": "Thiết Lập",
-        "pushNotifications": "Bật tính năng thông báo",
         "faq": "Câu hỏi thường gặp",
         "code": "Mã số",
         "terms": "Điều kiện",
@@ -565,23 +565,22 @@
     "name": "Tên",
     "approve": "Phê duyệt",
     "done": "Xong",
-    "skip": "Bỏ qua",
     "accept": "Chấp nhận",
     "confirmNoUndo": "Bạn có chắc không? Không có THỰC HIỆN LẠI.",
     "confirmMessage": "Bạn có chắc không?",
     "confirm": "Xác nhận",
-    "errorMessage": "Ooops. Có vẻ như đã xảy ra lỗi.",
+    "errorMessage": "Ồ. Có vẻ như đã xảy ra lỗi.",
     "error": "Lỗi",
     "rewards": "Phần thưởng",
     "reply": "Trả lời",
     "setExplicit": "Đặt rõ ràng",
     "report": "Báo cáo",
-    "removeExplicit": "Xóa nội dung khiêu dâm",
-    "members": "Các thành viên",
+    "removeExplicit": "Xóa nội dung",
+    "members": "Thành viên",
     "join": "Tham gia",
     "leave": "Rời khỏi",
     "description": "Miêu tả",
-    "sorry": "Xin lỗi! ",
+    "sorry": "Xin lỗi!",
     "tryAgain": "Thử lại",
     "retry": "Thử lại",
     "unlock": "Mở khóa",
@@ -591,14 +590,14 @@
     "passwordConmfirmPlaceholder": "Xác nhận mật khẩu..",
     "boost": "Tăng cường",
     "boosted": "Đã tăng cường",
-    "tokens": "Thẻ",
+    "tokens": "Mã",
     "share": "Chia sẻ",
     "edited": "Đã chỉnh sửa",
     "success": "Thành công",
     "createAPost": "Tạo bài đăng",
     "findChannels": "Tìm kênh",
     "your": "của bạn",
-    "their": "Của Họ",
+    "their": "của họ",
     "for": "Cho",
     "usd": "Đô La Mỹ",
     "locked": "Đã khóa",
@@ -613,13 +612,40 @@
         "externalStorage": "Để có thể tải lên những bức ảnh đẹp, Minds cần quyền truy cập bộ nhớ ngoài của bạn",
         "writeExternalStorage": "Để có thể tải xuống lên những bức ảnh đẹp, Minds cần quyền truy cập bộ nhớ ngoài của bạn",
         "sms": "Minds cần quyền đọc tin nhắn sms để tự động xác thực mã xác nhận",
-        "camera": "Để có thể tải lên những bức ảnh đẹp, Minds cần quyền truy cập camera ngoài của bạn"
+        "camera": "Để có thể tải lên những bức ảnh đẹp, Minds cần quyền truy cập camera ngoài của bạn",
+        "notAllowed": {
+            "appoint_admin": "Bạn không được phép chỉ định quản trị viên",
+            "appoint_moderator": "Bạn không được phép chỉ định người điều hành",
+            "approve_subscriber": "Bạn không được phép phê duyệt người đăng kí",
+            "create_channel": "Bạn không được phép tạo kênh",
+            "create_comment": "Bạn không được phép đăng bình luận",
+            "create_group": "Bạn không được phép tạo nhóm",
+            "create_post": "Bạn không được phép tạo bài viết",
+            "delete_channel": "Bạn không được phép xóa kênh này",
+            "delete_comment": "Bạn không được phép xóa bình luận này",
+            "delete_group": "Bạn không được phép xóa nhóm này",
+            "delete_post": "Bạn không được phép xóa bài viết này",
+            "edit_channel": "Bạn không được phép chỉnh sửa kênh này",
+            "edit_comment": "Bạn không được phép chỉnh sửa comment này",
+            "edit_group": "Bạn không được phép chỉnh sửa nhóm này",
+            "edit_post": "Bạn không được phép chính sửa bài viết này",
+            "invite": "Bạn không được phép mời",
+            "join": "Bạn không được phép tham gia",
+            "gathering": "Bạn không được phép tham gia buổi gặp mặt này",
+            "message": "Bạn không được phép gửi tin nhắn tới người dùng này",
+            "subscribe": "Bạn không được phép đăng kí",
+            "tag": "Bạn được phép gắn thẻ nội dung này",
+            "remind": "Bạn không được phép nhắc nội dung này",
+            "wire": "Bạn không được phép kết nối với người dùng này",
+            "view": "Bạn không được phép xem nội dung này",
+            "vote": "Bạn không được phép bình chọn nội dung này"
+        }
     },
     "translate": {
         "from": "dịch từ",
         "translate": "Dịch",
         "changeLanguage": "Thay đổi ngôn ngữ",
-        "error": "Có lỗi khi dịch. \nVui lòng thử lại."
+        "error": "Có lỗi khi dịch."
     },
     "hashtags": {
         "exists": "Thẻ đã tồn tại",
@@ -627,7 +653,6 @@
         "hold": "Giữ để chọn một"
     },
     "comments": {
-        "deleteConfirm": "Bạn có muốn xóa bình luận này? Hành động không thể PHỤC HỒI",
         "successRemoving": "Bình luận đã xóa thành công",
         "comments": "Bình luận",
         "errorRemoving": "Lỗi khi xóa bình luận"
@@ -643,13 +668,11 @@
         "chooseName": "Chọn tên hiển thị của bạn",
         "describeChannel": "Giới thiệu kênh của bạn",
         "hashtagSelect": "Bạn quan tâm chủ đề nào?",
-        "waitSms": "Giữ ứng dụng sẵn sàng và chúng tôi sẽ tự động xác nhận",
         "earnTokens": "Kiếm điểm dựa trên hoạt động của bạn",
         "weDontStorePhone": "Chúng tôi không lưu số điện thoại của bạn trên những máy chủ của chúng tôi",
-        "smsNotReceived": "Rất tiếc, không thể nhận được tin nhắn",
-        "suggestedChannels": "Những kênh gợi ý",
+        "suggestedChannels": "Kênh gợi ý",
         "suggestedChannelsDescription": "Theo dõi một vài kênh phổ biến dự trên sở thích của bạn",
-        "suggestedGroups": "Những nhóm được gợi ý",
+        "suggestedGroups": "Nhóm gợi ý",
         "suggestedGroupsDescription": "Tham gia một vào nhóm phổ biến dự trên sở thích của bạn",
         "tokensCanBeUsed": "Điểm có thể được dùng để hỗ trợ những kênh khác hoặc tăng cường lượt xem cho nội dung của bạn (1 Điểm = 1,000 lượt xem). Để kiếm nhiều điểm, bạn cần một số điện thoại để xác nhận kênh bạn duy nhất",
         "yourAreReady": "Bạn đã thiết lập xong và sẵn sàng để tiếp tục",
@@ -658,17 +681,17 @@
         "moreOnRewards": "THÊM PHẦN THƯỞNG",
         "moreAboutWire": "TÌM HIỂU VỀ WIRE",
         "moreAboutBoost": "TÌM HIỂU VỀ BOOST",
-        "startEarning": "Bắt đầu kiếm điểm thưởng, số điện thoại bạn sẽ cần phải là duy nhất",
+        "startEarning": "Để bắt đầu kiếm phần thưởng, bạn sẽ phải nhập duy nhất một số điện thoại.",
         "phoneNumber": "Số điện thoại",
         "weJustSentCode": "Chúng tôi vừa gửi mã đến {{phone}} để xác thực số điện thoại của bạn",
         "confirmationCode": "Mã xác nhận",
-        "rewardsDescription": "Bạn có thể kiếm nhiều điểm dựa trên tương tác với Minds. Càng nhiều tương tác trên nội dung của bạn, bạn càng chia sẻ nhóm phần thưởng mã thông báo hàng ngày cho địa chỉ OffChain của bạn.",
-        "rewardsNote": "Note: Minds does not store the phone numbers you provide. The numbers are hashed using SHA-256 and combined with a salt key for privacy purposes.",
+        "rewardsDescription": "Bạn có thể kiếm nhiều điểm dựa trên tương tác với Minds.",
+        "rewardsNote": "Lưu ý: Minds không lưu số điện thoại bạn cung cấp. Số điện thoại sẽ được mã hóa SHA-256 và kết hợp với chìa khóa để đảm bảo tính riêng tư.",
         "ensureYouExportKey": "Đảm bảo bạn trích xuất và sao lưu khóa của bạn trước khi gỡ cài đặt hoặc xóa dữ liệu ứng dụng, hoặc không bạn sẽ mất tiền. Trích xuất có thể được thực hiện từ màn hình chi tiết địa chỉ.",
-        "6digitDescription": "Để tạo địa chỉ ví mới, vui lòng nhập mật khẩu sẽ được sử dụng để mã hóa khóa riêng của bạn trên thiết bị này.",
+        "6digitDescription": "Để tạo địa chỉ ví mới, vui lòng nhập mật khẩu sẽ",
         "6digitConfirm": "Vui lòng xác nhận một lần nữa mật khẩu keychain của bạn. Sau khi xác nhận, ví của bạn sẽ được tạo trên thiết bị này và được đính kèm vào tài khoản của bạn.",
         "6digitAlreadySetup": "Mật khẩu của bạn đã được thiết lập, bạn chỉ cần xác nhận việc tạo ví. Sau khi xác nhận, ví của bạn sẽ được tạo trên thiết bị này và được đính kèm vào tài khoản của bạn.",
-        "passwordInvalid": "Mật khẩu phải ít nhất có 6 ký tự, bao gồm chữ và số",
+        "passwordInvalid": "Mật khẩu phải có ít nhất 6 ký tự, có thể là chữ và số hoặc ký hiệu",
         "pinAlreadySetup": "KEYCHAIN ĐÃ ĐƯỢC THIẾT LẬP",
         "skip": "BỎ QUA, TÔI KHÔNG THÍCH",
         "setupOnchianAddress": "Thiết lập địa chỉ OnChain của bạn",
@@ -678,10 +701,9 @@
         "welcomToWallet": "Chào mừng đến ví của bạn",
         "tokensDescription": "Mã thông báo là loại tiền điện tử được sử dụng trên Minds. Tổng số dư mã thông báo của bạn sẽ được lưu trữ ở hai loại địa chỉ khác nhau.",
         "onchainDescription": "Các khoản thanh toán OnChain sẽ được xuất bản lên blockchain công khai và yêu cầu một khoản phí khí đốt ETH nhỏ. Bạn có thể thiết lập khóa riêng của mình hoặc tạo ví mới.",
-        "offchainDescription": "Các khoản thanh toán OffChain sẽ không được công bố lên blockchain và có giới hạn chi tiêu. Bạn sẽ nhận được phần thưởng vào địa chỉ này."
-    },
-    "mindsSettings": {
-        "error": "Ồ có lỗi khi tải cấu hình từ máy chủ\nVui lòng thử lại"
+        "offchainDescription": "Các khoản thanh toán OffChain sẽ không được công bố lên blockchain và có giới hạn chi tiêu. Bạn sẽ nhận được phần thưởng vào địa chỉ này.",
+        "rewardsDescription1": "Càng nhiều tương tác trên nội dung của bạn, bạn càng chia sẻ nhóm phần thưởng mã thông báo hàng ngày cho địa chỉ OffChain của bạn.",
+        "6digitDescription1": "được sử dụng để mã hóa khóa riêng của bạn trên thiết bị này."
     },
     "userTypeAhead": {
         "placeholder": "Bắt đầu nhập username để tìm kiếm",
@@ -700,15 +722,14 @@
         "hot": "Tin Nóng",
         "top": "Trên Cùng",
         "latest": "Mới Nhất",
-        "topPeriod12": "12 giớ",
+        "topPeriod12": "12 giờ",
         "topPeriod24": "24 giờ",
         "topPeriod7": "7 ngày",
         "topPeriod30": "30 ngày",
         "topPeriod1": "1 năm"
     },
     "update": {
-        "title": "Cập nhật lên v{{version}}",
-        "version": "v{{version}} mới có sẵn!"
+        "title": "Cập nhật lên v{{version}}"
     },
     "downloading": "Đang tải",
     "confirm18": "Xác nhận bạn 18+",
@@ -737,7 +758,23 @@
     "stacktraceCopied": "Nội dung theo dõi đã được sao chép vào clipboard",
     "errorPinnedPost": "Ồ, lỗi thiết lập bài ghim",
     "errorShowActivity": "Không thể hiển thị hoạt động này",
-    "wantToUpdate": "Bạn có muốn cập nhật ứng dụng",
-    "updateAvailable": "Bản cập nhất có sẵn",
-    "rememberTomorrow": "Ghi nhớ tôi"
+    "wantToUpdate": "Bạn có muốn cập nhật ứng dụng?",
+    "updateAvailable": "Bản cập nhật có sẵn",
+    "rememberTomorrow": "Ghi nhớ tôi",
+    "noInternet": "Không có kết nối internet",
+    "offline": "Ngoại tuyến",
+    "cantReachServer": "Không thể truy cập tới máy chủ",
+    "showingStored": "Hiển thị dữ liệu đã lưu",
+    "enableComments": "Hiển thị bình luận",
+    "disableComments": "Ẩn bình luận",
+    "payments": {
+        "confirmDeleteCard": "Bạn có muốn xóa thẻ này không?"
+    },
+    "more": "Thêm",
+    "transcodingMediaDisplay": "Video này đang được chuyển mã",
+    "actions": "Hoạt động",
+    "requests": "Yêu cầu",
+    "notAllowed": "Bạn không được đồng ý thực hiện",
+    "undo": "Quay lại",
+    "pleaseTryAgain": "Vui lòng thử lại."
 }

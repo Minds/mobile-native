@@ -8,6 +8,7 @@
     "start": "react-native start",
     "lint": "eslint .",
     "validate-locales": "node tasks/validate-locales.js",
+    "unused-locales": "ts-node tasks/unused-locales.js",
     "update-settings": "ts-node tasks/update-settings.js",
     "test": "jest",
     "locale": "ts-node tasks/poeditor.js",

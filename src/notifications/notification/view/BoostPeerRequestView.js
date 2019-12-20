@@ -4,11 +4,8 @@ import React, {
 
 import {
   Text,
-  View
+  View,
 } from 'react-native';
-
-import number from '../../../../src/common/helpers/number';
-import token from '../../../../src/common/helpers/token';
 
 import BoostPeerAcceptedView from './BoostPeerAcceptedView';
 import i18n from '../../../common/services/i18n.service';
@@ -18,11 +15,14 @@ import i18n from '../../../common/services/i18n.service';
  */
 export default class BoostPeerRequestView extends BoostPeerAcceptedView {
 
+  /**
+   * Render
+   */
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
 
-    const description = this.getDescription(entity, 'their');
+    const description = this.getDescription(entity, i18n.t('their'));
     const type = this.getType();
     const amount = this.getAmount();
 
@@ -32,6 +32,6 @@ export default class BoostPeerRequestView extends BoostPeerAcceptedView {
           <Text style={styles.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> {i18n.t('notification.boostPeerRequest')} <Text style={styles.bold}>{amount} {type} {description}</Text>
         </Text>
       </View>
-    )
+    );
   }
 }

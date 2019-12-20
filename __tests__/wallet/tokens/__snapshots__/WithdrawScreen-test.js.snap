@@ -30,7 +30,8 @@ exports[`WithdrawScreen renders correctly 1`] = `
           OnChain
         </Text>
          wallet.
- 
+        
+
         <Text
           style={
             Object {
@@ -50,7 +51,6 @@ exports[`WithdrawScreen renders correctly 1`] = `
           </Text>
            and may take up to 72 hours to complete
         </Text>
-        
         
       </Text>
       <View
@@ -168,7 +168,8 @@ exports[`WithdrawScreen renders correctly 1`] = `
             OnChain
           </Text>
            wallet.
- 
+          
+
           <Text
             style={
               Object {
@@ -188,7 +189,6 @@ exports[`WithdrawScreen renders correctly 1`] = `
             </Text>
              and may take up to 72 hours to complete
           </Text>
-          
           
         </Text>
         <View

@@ -108,7 +108,7 @@ export default class UserModel extends BaseModel {
   /**
    * current user is owner of the channel
    */
-  isOwner() {
+  isOwner = () => {
     return sessionService.getUser().guid === this.guid;
   }
 

@@ -15,12 +15,14 @@
         "typeComment": "Escreva o seu comentário...",
         "error": "DESCULPE, NÓS NÃO PODEMOS CARREGAR A ATIVIDADE",
         "tryAgain": "POR FAVOR TENTE NOVAMENTE MAIS TARDE",
-        "loadLater": "Carregar depois"
+        "loadLater": "Carregar depois",
+        "remindBlocked": "Este lembrete não está disponível porque está bloqueado",
+        "scheduled": "Esta atividade está programada para ser mostrada em"
     },
     "auth": {
         "login": "Iniciar sessão",
         "create": "CRIAR UM CANAL",
-        "forgot": "ESQUECEU A PALAVRA-PASSE",
+        "forgot": "ESQUECEU A PALAVRA-PASSE ",
         "email": "Email",
         "username": "Nome de utilizador",
         "password": "Palavra-passe",
@@ -31,24 +33,23 @@
         "invalidPassword": "Palavra-passe incorrecta. Por favor, tente novamente.",
         "confirmPasswordError": "As palavras-passe devem ser iguais",
         "termsAcceptedError": "Deve aceitar os termos e as condições.",
-        "promotions": "Receba promoções exclusivas de Minds\n(recomendado)",
         "accept": "Eu aceito os",
         "termsAndConditions": "termos e condições",
         "code": "Código"
     },
     "blockchain": {
         "boostCreate": "Rede Boost para {{tokensAmount}} Minds Tokens. {{message}}",
-        "boostPeerCreate": "Canal Boost para {{tokensAmount}} Minds Tokens para {{receiver}}. {{message}}",
+        "boostPeerCreate": "Canal Boost para {{tokensAmount}} Minds Tokens para {{receiver}}. {{message}} ",
         "tokenApprove": "Aprovar {{address}} para gastar {{tokensAmount}} tokens no futuro. {{message}}",
         "wire": "Enviar {{tokensAmount}} Minds Tokens para {{receiver}}. {{message}}",
-        "withdraw": "Requerer o levantamento de {{tokensAmount}} Minds Tokens. {{gasEther}} ETH será transferido para suportar a taxa do gás. Se enviar um pequeno valor de taxa de gás, o seu levantamento poderá falhar. {{message}}",
+        "withdraw": "Requerer o levantamento de {{tokensAmount}} Minds Tokens. {{gasEther}} ETH será transferido para suportar a taxa do gás. Se enviar um pequeno valor de taxa de gás, o seu levantamento poderá falhar. {{message}} ",
         "approveTransaction": "Aprovar Transação",
         "yesApprove": "Sim, aprovar",
         "gasPrice": "Preço do Gás",
         "gasPriceDefault": "Preço do Gás (default: {{gasPrice}})",
         "gasLimit": "Limite do Gás",
         "gasLimitDefault": "Limite do Gás (default: {{gasLimit}})",
-        "ethToTransfer": "ETH A SER TRANSFERIDO",
+        "ethToTransfer": "ETH A SER TRANSFERIDO ",
         "maxGasFee": "MAX. CUSTO GÁS",
         "canAffordMessage": "Correntemente tem {{amount}} ETH. Esta quantia pode ser insuficiente para cobrir o Gás da Rede Ethereum para a transacção. Tente reduzir o preço do Gás.",
         "alreadyApproving": "Já está a ser aprovada uma transacção",
@@ -56,7 +57,7 @@
         "walletNameExample": "Ex. Gastos com Telemóvel",
         "receiverAddress": "Endereço de Recepção",
         "shouldBeReceiver": "Deverá ser este o seu endereço de recepção para Wire & Boost?",
-        "downloadPrivate": "Descarregue a chave privada desta carteira",
+        "downloadPrivate": "Descarregue a chave privada desta carteira ",
         "deleteWarning": "AVISO: isto é irreversível e todos os tokens serão perdidos",
         "deleteConfirmWarning": "Esta acção é IRREVERSÍVEL. Se não fez cópia de segurança da sua chave privada, poderá perder todos os seus fundos.",
         "importKeyNotExist": "A chave privada para esta carteira não existe.",
@@ -71,8 +72,6 @@
         "receivaOnly": "SOMENTE RECEBER",
         "offchain": "Offchain",
         "receiver": "Receptor",
-        "walletConfirmMessage": "Serão cobrados {{currency}} para {{tokens}}.",
-        "walletNotDeterminedMessage": "Não conseguimos determinar os custos para <{{tokens}}.",
         "selectWallet": "Selecione uma carteira",
         "walletAddresses": "Endereços das Carteiras",
         "selectTheWallet": "Seleccione a carteira que deseja usar",
@@ -90,18 +89,16 @@
         "blogs": "Blogs",
         "errorLoading": "Houve um erro ao carregar este blog.",
         "error": "DESCULPE, NÃO PODEMOS CARREGAR O BLOG",
-        "blogListEmpty": "Esta lista está vazia"
+        "blogListEmpty": "Esta lista está vazia "
     },
     "boosts": {
         "selected": "SELECCIONADO",
-        "priority": "PRIORIDADE",
         "target": "DESTINATARIO",
         "boostType": "TIPO DE BOOST",
         "cost": "CUSTO",
         "howManyViewsDoYouWant": "QUANTAS VISUALIZAÇÕES DESEJA?",
         "whatIsYourOffer": "QUAL É A SUA OFERTA?",
         "targetDescription": "Procurar pelo canal que quer incrementar.",
-        "priorityDescription": "Conteúdos prioritários vão para a frente da linha, mas custa o dobro do preço de um incremento normal",
         "youDontHaveBoosts": "Não tem boosts",
         "youCantSelectYourself": "Não pode seleccionar-se a si  próprio, para fazer boost p2p",
         "tapToChangeChannel": "TOQUE PARA MUDAR DE CANAL",
@@ -112,16 +109,16 @@
         "errorShouldSpendAtLeast": "Tem que gastar pelo menos {{amount}}.",
         "errorShouldSelectTarget": "Tem de seleccionar um alvo.",
         "errorTargetSelf": "O alvo não pode ser ele mesmo.",
-        "errorBetween": "Deve usar o boost entre {{min}} e {{max}} visualizações.",
-        "errorShouldHaveReceiverAddress": "O alvo do boost deve ter o endereço do receptor.",
-        "errorShouldParticipateRewards": "O alvo do boost deve participar no programa de Recompensas.",
+        "errorBetween": "Deve usar o boost entre {{min}} e {{max}} visualizações. ",
+        "errorShouldHaveReceiverAddress": "O alvo do boost deve ter o endereço do receptor. ",
+        "errorShouldParticipateRewards": "O alvo do boost deve participar no programa de Recompensas. ",
         "errorCantReceiveTokens": "O nome de utilizador não pode receber tokens OnChain porque não configuraram um endereço OnChain. Por favor tente novamente o OffChain.",
         "errorPayment": "O seu pagamento falhou. Tente novamente ou use outro cartão ou carteira",
         "errorCanNotGenerate": "Não é possivel gerar GUID",
         "boostConfirm": "Irá incrementar {{amount}} visualizações para o seu conteúdo.",
         "boostConfirmP2p": "Irá enviar {{amount}} ao @{{username}} por ter se lembrado do seu conteudo.",
-        "selectWalletNetworkMessage": "Escolha a carteira que deseja utilizar para este Network Boost.",
-        "selectWalletChannelMessage": "Escolha a carteira que deseja utilizar para este Channel Boost.",
+        "selectWalletNetworkMessage": "Escolha a carteira que deseja utilizar para este Network Boost. ",
+        "selectWalletChannelMessage": "Escolha a carteira que deseja utilizar para este Channel Boost. ",
         "feeds": "Feeds",
         "offers": "Ofertas",
         "sidebars": "Barras laterais",
@@ -135,24 +132,23 @@
             "0": "Ilegal",
             "1": "Explicito",
             "2": "Encoraja ou incita à violência",
-            "3": "Ameaça, persegue, intimida ou encoraja outros a fazer",
+            "3": "Ameaça, persegue, intimida ou encoraja outros a fazer ",
             "4": "Informação pessoal e confidencial",
             "5": "Usuários maliciosos (@name, links, imagens ou vídeos)",
             "6": "Personificar alguém para enganar",
             "7": "Spam",
-            "8": "Apela a decisão do Boost",
+            "8": "Apela a decisão do Boost ",
             "12": "O pagamento OnChain falhou",
             "13": "Publicação original removida"
         },
         "errorGet": "Upps, não conseguiu boosts"
     },
     "capture": {
-        "couldNotLoad": "A mídia de {{domain}} não pôde ser carregada.",
+        "couldNotLoad": "A mídia de {{domain}} não pôde ser carregada. ",
         "post": "PUBLICAÇÃO",
         "postingIn": "(Publicar em {{group}})",
         "placeholder": "Diga o que pensa...",
-        "submitPost": "Submeter publicação",
-        "uploadError": "Erro de upload",
+        "uploadError": "Erro de upload ",
         "errorDeleting": "Erro em apagar o ficheiro",
         "pleaseTryAgain": "Por favor, tente mais tarde",
         "nothingToPost": "Nada para publicar...",
@@ -166,7 +162,6 @@
         "remind": "Lembrar"
     },
     "channel": {
-        "channel": "Canal",
         "errorSaving": "Erro ao gravar canal",
         "saveChanges": "Grave as suas alterações",
         "editChannel": "Edite as definições do seu canal",
@@ -174,7 +169,6 @@
         "message": "MENSAGEM",
         "subscribe": "Subscrever",
         "subscribeMessage": "Subscrever este canal",
-        "unsubscribeMessage": "Anular inscrição neste canal",
         "selectBanner": "Escolher banner",
         "selectAvatar": "Escolher avatar",
         "briefDescription": "Breve descrição de si...",
@@ -184,15 +178,21 @@
         "report": "Reportar",
         "createFirstPost": "Crie a sua primeira publicação",
         "mature": "Este canal contém conteúdo adulto",
-        "confirmUnsubscribe": "Tem certeza de que deseja cancelar a inscrição deste canal?",
-        "subscribed": "Subscrito",
+        "confirmUnsubscribe": "Tem certeza de que deseja cancelar a inscrição deste canal? ",
         "blocked": "Você bloqueou @{{username}}",
         "tapUnblock": "Toque para desbloquear",
-        "notFound": "Canal não encontrado"
+        "notFound": "Canal não encontrado",
+        "viewScheduled": "Programado",
+        "modeClosed": "Fechados",
+        "modeOpen": "Público",
+        "modeModerated": "Moderado",
+        "isClosed": "Este é um canal fechado",
+        "requestSubscription": "Solicitar assinatura",
+        "blockedNav": "Bloqueou &{nome de usuário}&"
     },
     "discovery": {
         "search": "Procurar",
-        "imageError": "Erro ao carregar mídia",
+        "imageError": "Erro ao carregar mídia ",
         "nothingToShow": "Nada para exibir",
         "all": "Todos(as)",
         "channels": "Canais",
@@ -213,25 +213,28 @@
         "removeOwner": "Remover Proprietário",
         "makeModerator": "Fazer Moderador",
         "removeModerator": "Remover Moderador",
-        "banConfirm": "Tem certeza? Você quer banir este usuário?",
+        "banConfirm": "Tem certeza? Você quer banir este usuário? ",
         "errorLoading": "Erro ao carregar grupos",
         "confirmKick": "Você tem certeza? Você quer expulsar este usuário?",
-        "listMembersCount": "Membros {{count}}"
+        "listMembersCount": "Membros {{count}}",
+        "disableConversations": "Desativar conversas",
+        "enableConversations": "Ativar conversas"
     },
     "keychain": {
         "unlockMessage": "Desbloquear {{keychain}} o cadeado",
-        "setupMessage": "Desbloquear {{keychain}} chaveiro",
-        "encryptMessage": "Insira a sua palavra-passe que irá encriptar o {{keychain}} chaveiro. Lembre-se da palavra-passe ou você não será capaz de ler/escrever a partir dela."
+        "setupMessage": "Desbloquear {{keychain}} chaveiro ",
+        "encryptMessage": "Insira a sua palavra-passe que irá encriptar o {{keychain}} chaveiro.",
+        "encryptMessage1": "Lembre-se da palavra-passe ou você não será capaz de ler/escrever a partir dela."
     },
     "messenger": {
-        "decrypting": "desencriptando...",
+        "decrypting": "desencriptando... ",
         "typeYourMessage": "Escreva a sua mensagem...",
         "invited": "Convidado",
         "invite": "Convidar",
-        "isntUsingMessenger": "não use o Minds Messenger ainda",
-        "looksLike": "Parece que",
+        "isntUsingMessenger": "não use o Minds Messenger ainda ",
+        "looksLike": "Parece que ",
         "checkCredentials": "Verifique as suas credenciais",
-        "errorCreatingKeys": "Erro ao criar as chaves de encriptação",
+        "errorCreatingKeys": "Erro ao criar as chaves de encriptação ",
         "messenger": "Messenger",
         "noMessages": "Não tem mensagens",
         "logoutMessage": "Quer sair do Messenger?",
@@ -243,8 +246,6 @@
         "setupMessage3": "Por defeito o conteúdo das mensagens são encriptadas. Para aumentar mais a segurança, pode ir às definições do aplicativo e desligar as notificações push de forma a impedir que os meta-dados possam ser rastreados."
     },
     "newsfeed": {
-        "muteNotifications": "Silenciar notificações",
-        "unmuteNotifications": "Activar notificações",
         "successRemoving": "Entidade removida com sucesso",
         "subscribed": "SUBSCRITO",
         "boostfeed": "BOOSTFEED",
@@ -294,7 +295,16 @@
         "welcomeChat": "Bate-papo com segurança com suas subscrição mútuas.",
         "repliedCommentOn": "respondeu ao seu comentário sobre",
         "groupComment": "Grupo {{title}}",
-        "tagConversation": "te marcou em uma conversa"
+        "tagConversation": "te marcou em uma conversa",
+        "rewardsStateIncrease": "Parabéns! Acabou de se tornar um usuário do {{state}}.",
+        "rewardsStateDecrease": "Temos saudades suas! Acabou de descer para um usuário {{state}}",
+        "rewardsStateDecreaseToday": "Não é tão tarde! Descerá para um usuário {{state}} até o final de hoje e o seu multiplicador diário de recompensa de token será reduzido por {{multiplicador}}x. Curta e comenta para aumentar a sua pontuação!",
+        "rewardsSummary": "Ganhou {{amount}} tokens ontem.",
+        "referralPing": "Tokens gratuitos estão esperando! Depois de ingressar no programa de recompensas, configurando sua carteira do Minds, você e o (usuário) ganharão tokens por sua referência.",
+        "referralPending": "Tem uma referência pendente! &{user}& usou seu link de referência quando se inscreveram no Minds. Receberá tokens assim que ingressarem no programa de recompensas e montarem sua carteira",
+        "referralComplete": "Ganhou tokens pela referência completa de &{user}&",
+        "rewardsStateIncrease1": "Aumentamos seu multiplicador diário de recompensa de token por {{multiplicador}}x",
+        "rewardsStateDecrease1": "Seu multiplicador diário de recompensa de token foi reduzido por {{multiplicador}}x"
     },
     "notificationSettings": {
         "enableDisable": "Ativar e desativar publicações push",
@@ -314,16 +324,10 @@
         "boost_gift": "Oferta de Boost",
         "boost_accepted": "Boost aceitados",
         "boost_revoked": "Boost Revogados",
-        "message": "Messenger"
-    },
-    "payments": {
-        "cardExpirationMonth": "Mês de expiração do cartão",
-        "cardExpirationYear": "Ano de expiração do cartão",
-        "cardHoldersName": "Nome no Cartão",
-        "cardConfirmMessage": "{{confirmMessage}} Deseja usar este cartão de crédito?",
-        "orUseAntoherCard": "OU USE OUTRO CARTÃO",
-        "enterCardDetails": "INTRODUZA OS DETALHES DO CARTÃO",
-        "yourSavedCard": "Seus cartões salvos:"
+        "message": "Messenger",
+        "referral_ping": "Ping de referência",
+        "referral_pending": "Referência pendente",
+        "referral_complete": "Referência completa"
     },
     "reports": {
         "explain": "Explique porque deseja reportar este conteúdo em breves palavras",
@@ -383,7 +387,7 @@
                 "label": "Informação pessoal e confidêncial"
             },
             "7": {
-                "label": "Usurpação"
+                "label": "Usurpação "
             },
             "8": {
                 "label": "Spam"
@@ -422,9 +426,6 @@
         "add": "ADICIONAR",
         "recurringPayments": "Pagamentos recorrentes",
         "deactivate": "Desativar",
-        "deactivateChannel": "Desativar canal",
-        "options": "Opções",
-        "notifications": "Notificações",
         "logout": "Fechar sessão",
         "errorSaving": "Erro ao salvar definições, volte a tentar",
         "passwordChanged": "Mudança de palavra-passe realizada",
@@ -435,20 +436,18 @@
         "pushNotification": "Notificações Push",
         "regenerateKey": "Gerar chaves para o Messenger",
         "deleteBlockchain": "Apagar o blockchain do chaveiro",
-        "pleaseDeactivate": "Desative a sua conta na Area de Trabalho",
         "blockedChannels": "Canais bloqueados",
-        "disableChannelConfirm": "Sua conta será desativada. Tem certeza de que deseja continuar?",
-        "deleteChannelConfirm": "Sua conta e todos os dados relacionados a ela serão apagados permanentemente. Tem certeza de que deseja continuar?",
+        "disableChannelConfirm": "Sua conta será desativada. Tem certeza de que deseja continuar? ",
+        "deleteChannelConfirm": "Sua conta e todos os dados relacionados a ela serão apagados permanentemente. Tem certeza de que deseja continuar? ",
         "disableChannel": "Desabilitar canal",
         "deleteChannel": "Apagar canal",
-        "disableDescription": "Desativar sua conta tornará seu perfil invisível. Também não receberá emails ou notificações. Seu nome de utilizador será reservado caso volte para a Minds.",
+        "disableDescription": "Desativar sua conta tornará seu perfil invisível. Também não receberá emails ou notificações. Seu nome de utilizador será reservado caso volte para a Minds. ",
         "deleteDescription": "Aviso: isso não é reversível e resultará na perda permanente de seu canal e de todos os seus dados. Seu canal não será recuperável. Seu nome de utilizador será liberado para o público.",
         "logs": "Registros",
         "logOnlyErrors": "Registrar apenas erros",
         "leftHandedMode": "Modo esquerdo"
     },
     "comingSoon": {
-        "notAvailable": "Esta função ainda não está disponível",
         "try": "Tente o aplicativo canary no www.minds.com/mobile",
         "notSupported": "Esta função não é suportada na sua plataforma.",
         "moreInformation": "Mais informação em"
@@ -485,15 +484,19 @@
             "errorReadingStatus": "Erro ao ler o estado de reembolsos",
             "errorOnlyOnceDay": "Só pode fazer um reembolso por dia",
             "errorWithdrawing": "Erro ao reembolsar tokens",
-            "youCanRequest": "Você pode solicitar a retirada de suas recompensas de tokens OffChain para seu endereço OnChain abaixo. Nota: uma pequena quantia de ETH será cobrada para cobrir a taxa de transação. Retiradas podem demorar algumas horas para ser completadas.",
-            "holdingMessage": "{{amount}} de ingressos indisponíveis devido a falha de pagamento com o seu cartão de credito. Serão disponíveis 30 dias depois de ter ocorrido o pagamento.",
+            "holdingMessage": "{{amount}} de ingressos indisponíveis devido a falha de pagamento com o seu cartão de credito. Serão disponíveis 30 dias depois de ter ocorrido o pagamento. ",
             "amount": "Quantia",
             "errorReadingBalances": "Erro ao ler os balanços",
-            "errorAmountNegative": "Quantia tem que ser um número positivo"
+            "errorAmountNegative": "Quantia tem que ser um número positivo",
+            "youCanRequest1": "Pode solicitar a retirada de {{amount}} tokens de suas recompensas para sua  carteira &{onchain}&.",
+            "youCanRequest2": "Nota: uma pequena quantidade de ETH será cobrada para cobrir a taxa da transação. Retiradas e {aprovação} e pode levar até 72 horas para concluir",
+            "youCanRequest3": "passar por um processo de aprovação"
         },
         "inviteFriend": "Convide um amigo",
         "inviteFriendDescription": "Convide um amigo e ganhe recompensas",
-        "transactionsEmpty": "Sua lista de transações está vazia"
+        "transactionsEmpty": "Sua lista de transações está vazia ",
+        "yourRewardFactor": "Seu multiplicador de recompensa",
+        "yourUserState": "Seu estado de usuário"
     },
     "wire": {
         "amountMonth": "{{amount}}/mês",
@@ -510,7 +513,10 @@
         "selectWalletMessage": "Escolha a carteira que quer usar para esta Wire,",
         "preApproveMessage": "Precisamos que você pré-aprove a carteira Minds Wire para a transacção Wire recorrente.",
         "nameReward": "Recompensas de {{name}}",
-        "addressLabel": "{{label}} Endereço"
+        "customDonation": "Doação personalizada",
+        "selectCredit": "Selecione um cartão de crédito.",
+        "willNotRecur": "Pode enviar {{currency}} para esse usuário, mais não se repetirá",
+        "noAddress": "Este canal ainda não configurou o endereço {{type}}"
     },
     "validation": {
         "email": "Email inválido",
@@ -520,7 +526,7 @@
         "gallery": "Escolha da galeria",
         "camera": "Tire uma nova foto",
         "cancel": "Cancelar",
-        "deniedExternal": "Negaste permissões para armazenamento externo para Minds",
+        "deniedExternal": "Negaste permissões para armazenamento externo para Minds ",
         "deniedCamera": "Negaste permissões para a câmera Minds"
     },
     "subtype": {
@@ -528,11 +534,9 @@
         "video": "vídeo"
     },
     "moreScreen": {
-        "groups": "Grupos",
         "helpSupport": "Ajuda e Suporte",
         "invite": "Convite seus amigos",
         "settings": "Configurações",
-        "pushNotifications": "Notificações Push",
         "faq": "FAQ",
         "code": "Código",
         "terms": "Termos",
@@ -567,7 +571,6 @@
     "name": "Nome",
     "approve": "Aprovar",
     "done": "Feito",
-    "skip": "Omitir",
     "accept": "Aceitar",
     "confirmNoUndo": "Tem certeza? Não há VOLTA.",
     "confirmMessage": "Tem certeza?",
@@ -615,13 +618,40 @@
         "externalStorage": "Minds precisa acessar seu armazenamento externo para carregar imagens.",
         "writeExternalStorage": "Minds precisa de acesso ao seu armazenamento externo para que você possa enviar fotos incríveis.",
         "sms": "Minds precisa de acesso para ler sms e detectar automaticamente o código de validação.",
-        "camera": "Minds precisa de acesso à sua câmera externa para que você possa enviar fotos incríveis."
+        "camera": "Minds precisa de acesso à sua câmera externa para que você possa enviar fotos incríveis.",
+        "notAllowed": {
+            "appoint_admin": "Não tem permissão para nomear um administrador",
+            "appoint_moderator": "Não tem permissão para nomear um moderador",
+            "approve_subscriber": "Não tem permissão para aprovar um assinante",
+            "create_channel": "Não tem permissão para criar um canal",
+            "create_comment": "Não tem permissão para criar um comentário",
+            "create_group": "Não tem permissão para criar um grupo",
+            "create_post": "Não tem permissão para criar uma postagem",
+            "delete_channel": "Não tem permissão para excluir este canal",
+            "delete_comment": "Não tem permissão para excluir este comentário",
+            "delete_group": "Não tem permissão para excluir este grupo",
+            "delete_post": "Não tem permissão para excluir esta postagem",
+            "edit_channel": "Não tem permissão para editar este canal",
+            "edit_comment": "Não tem permissão para editar este comentário",
+            "edit_group": "Não tem permissão para editar este grupo",
+            "edit_post": "Não tem permissão para editar esta postagem",
+            "invite": "Não tem permissão para convidar",
+            "join": "Não tem permissão para participar",
+            "gathering": "Não tem permissão para participar desta reunião",
+            "message": "Não tem permissão para enviar mensagens a este usuário",
+            "subscribe": "Não tem permissão para se inscrever",
+            "tag": "Não tem permissão para marcar este conteúdo",
+            "remind": "Não tem permissão para lembrar este conteúdo",
+            "wire": "Não tem permissão para conectar este usuário",
+            "view": "Não tem permissão para visualizar este conteúdo",
+            "vote": "Não tem permissão para votar neste conteúdo"
+        }
     },
     "translate": {
         "from": "traduzido de",
         "translate": "traduzir",
         "changeLanguage": "Mudar idioma",
-        "error": "Houve um erro na tradução.\nPor favor, tente novamente"
+        "error": "Houve um erro na tradução."
     },
     "hashtags": {
         "exists": "Tag já existente",
@@ -629,7 +659,6 @@
         "hold": "Segure para selecionar apenas um"
     },
     "comments": {
-        "deleteConfirm": "Você quer apagar este comentário? \nNão há VOLTA.",
         "successRemoving": "Comentário removido com sucesso",
         "comments": "Comentários",
         "errorRemoving": "Erro ao remover o comentário"
@@ -645,10 +674,8 @@
         "chooseName": "Escolha seu nome de exibição",
         "describeChannel": "Descreva brevemente seu canal",
         "hashtagSelect": "Quais tópicos tem interesse?",
-        "waitSms": "Mantenha o aplicativo visível e nós o detectaremos automáticamente",
         "earnTokens": "Ganhe tokens para sua atividade",
         "weDontStorePhone": "Nós não armazenamos seu número de telefone em nossos servidores.",
-        "smsNotReceived": "Sms não foi recebido",
         "suggestedChannels": "Canais sugeridos",
         "suggestedChannelsDescription": "Inscreva-se em alguns canais populares abaixo com base nos seus interesses",
         "suggestedGroups": "Grupos sugeridos",
@@ -664,10 +691,10 @@
         "phoneNumber": "Número de telefone",
         "weJustSentCode": "Acabamos de enviar o código para {{phone}} para verificar se o seu número está correto.",
         "confirmationCode": "Código de confirmação",
-        "rewardsDescription": "Você pode ganhar tokens por suas contribuições para a rede Minds.\nQuanto mais interações em seu conteúdo, maior será sua parcela do conjunto de prêmios de token diário para seu endereço OffChain.",
+        "rewardsDescription": "Você pode ganhar tokens por suas contribuições para a rede Minds. Quanto mais interações em seu conteúdo, maior será sua parcela do conjunto de prêmios de token diário para seu endereço OffChain.",
         "rewardsNote": "Nota: Minds não armazena os números de telefone que você fornece. Os números são divididos usando SHA-256 e combinados com uma chave salt para fins de privacidade.",
-        "ensureYouExportKey": "Certifique-se de EXPORTAR e fazer o backup da sua chave antes de desinstalar ou limpar os dados do aplicativo, ou você perderá seus fundos.\n A exportação pode ser feita a partir da tela detalhada Endereço.",
-        "6digitDescription": "Para criar um novo endereço de carteira, digite uma senha de chave\nque será usado para criptografar sua chave privada neste dispositivo.",
+        "ensureYouExportKey": "Certifique-se de EXPORTAR e fazer o backup da sua chave antes de desinstalar ou limpar os dados do aplicativo, ou você perderá seus fundos.  A exportação pode ser feita a partir da tela detalhada Endereço.",
+        "6digitDescription": "Para criar um novo endereço de carteira, digite uma senha de chave",
         "6digitConfirm": "Por favor, confirme mais uma vez sua senha de chaveiro. Depois de confirmar, a sua carteira será criada neste dispositivo e anexada à sua conta.",
         "6digitAlreadySetup": "Sua senha de chaveiro já está configurada, você só precisa confirmar a criação da carteira. Depois de confirmar, a sua carteira será criada neste dispositivo e anexada à sua conta.",
         "passwordInvalid": "A palavra-passe deve ter pelo menos 6 caracteres, que podem ser alfanuméricos ou símbolos",
@@ -680,10 +707,10 @@
         "welcomToWallet": "Bem vindo a tua carteira",
         "tokensDescription": "Os tokens são a criptomoeda usada em Minds. Seu saldo total de tokens será armazenado em dois tipos diferentes de endereços.",
         "onchainDescription": "Os pagamentos OnChain serão publicados no blockchain público e exigirão uma pequena taxa de gás ETH. Você pode configurar suas próprias chaves privadas ou criar novas carteiras.",
-        "offchainDescription": "Os pagamentos da OffChain não serão publicados no blockchain e terão limites de gastos. Você receberá recompensas neste endereço."
-    },
-    "mindsSettings": {
-        "error": "Ups! Ocorreu um erro ao carregar as configurações do servidor\n Por favor, tente novamente."
+        "offchainDescription": "Os pagamentos da OffChain não serão publicados no blockchain e terão limites de gastos. Você receberá recompensas neste endereço.",
+        "rewardsDescription1": "Quanto mais interações no seu conteúdo, maior a sua participação no conjunto de recompensas diárias de tokens no seu endereço OffChain.",
+        "ensureYouExportKey1": "A exportação pode ser feita na tela de detalhes do endereço.",
+        "6digitDescription1": "que será usado para criptografar sua chave privada neste dispositivo."
     },
     "userTypeAhead": {
         "placeholder": "Comece a digitar um nome de utilizador para pesquisar ...",
@@ -709,8 +736,7 @@
         "topPeriod1": "1 ano"
     },
     "update": {
-        "title": "Atualizar para v{{version}}",
-        "version": "Nova v{{version}} disponível!"
+        "title": "Atualizar para v{{version}}"
     },
     "downloading": "Descarregando",
     "confirm18": "Confirme que você tem mais de 18 anos",
@@ -741,5 +767,22 @@
     "errorShowActivity": "Não é possível exibir a atividade",
     "wantToUpdate": "Deseja atualizar o aplicativo?",
     "updateAvailable": "Atualização disponível",
-    "rememberTomorrow": "Lembrar-me depois"
+    "rememberTomorrow": "Lembrar-me depois",
+    "noInternet": "Sem conexão a internet",
+    "offline": "Desligado",
+    "cantReachServer": "Não é possível acessar o servidor",
+    "showingStored": "Mostrando dados armazenados",
+    "enableComments": "Ativar comentários",
+    "disableComments": "Desativar comentários",
+    "payments": {
+        "confirmDeleteCard": "Deseja excluir este cartão?"
+    },
+    "more": "Mais",
+    "transcodingMediaDisplay": "O vídeo está sendo transcodificado",
+    "actions": "Ações",
+    "requests": "Solicitações",
+    "notAllowed": "Não está autorizado",
+    "undo": "Desfazer",
+    "tryAgainLater": "Tente mais tarde",
+    "pleaseTryAgain": "Por favor, tente novamente"
 }

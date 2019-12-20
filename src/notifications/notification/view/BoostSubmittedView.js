@@ -15,11 +15,12 @@ import i18n from '../../../common/services/i18n.service';
  */
 export default class BoostSubmittedView extends BoostGiftView {
 
+  /**
+   * Render
+   */
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
-
-    const isComment = entity.entityObj.type != 'comment';
 
     const description = this.getDescription(entity);
 
