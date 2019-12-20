@@ -229,7 +229,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
             }
           }
         >
-          I accept the
+          I have read and accept the
            
           <Text
             onPress={[Function]}
@@ -239,7 +239,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
               }
             }
           >
-            terms and conditions
+            terms of use
           </Text>
         </Text>
         <Text
