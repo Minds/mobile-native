@@ -214,6 +214,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 37,
     textAlign: 'center',
-    paddingTop: 35,
+    paddingTop: 25,
   }
 });

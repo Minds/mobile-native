@@ -37,6 +37,7 @@ export default class RegisterScreenNew extends Component {
   render() {
     return (
       <View style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x, {zIndex:15}]}>
+        <Image source={require('./../assets/logos/bulb.png')} style={styles.bulb}/>
         <TriangleCornerYellow />
         <View style={CommonStyle.flexContainerCenter}>
           <View style={[styles.rectangle, styles.top]} />
@@ -68,12 +69,12 @@ export default class RegisterScreenNew extends Component {
 const styles = StyleSheet.create({
   rectangle: {
     position: 'absolute',
-    top: 80,
+    top: 60,
     left: 20,
     backgroundColor: '#FFF',
     zIndex: -5,
     width: '87.5%',
-    height: '72.78%',
+    height: '78.78%',
     transform: [{rotate: '-1deg'}],
     shadowColor: "#000",
     shadowOffset: {
@@ -86,6 +87,12 @@ const styles = StyleSheet.create({
   },
   top: {},
   bottom: {
-    top: 75,
+    top: 55,
   },
+  bulb: {
+    width: 26.25,
+    height: 45,
+    marginLeft: 15,
+    marginTop: 15
+  }
 });
