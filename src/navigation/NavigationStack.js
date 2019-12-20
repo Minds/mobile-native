@@ -11,6 +11,7 @@ import ChannelScreen from '../channel/ChannelScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
 import CapturePoster from '../capture/CapturePoster';
 import RegisterScreen from '../auth/RegisterScreen';
+import RegisterScreenNew from '../auth/RegisterScreenNew';
 import ConversationScreen from '../messenger/ConversationScreen';
 import SettingsScreen from '../settings/SettingsScreen';
 import PasswordScreen from '../settings/screens/PasswordScreen';
@@ -228,6 +229,9 @@ const AuthStack = createStackNavigator({
   },
   Register: {
     screen: withErrorBoundaryScreen(RegisterScreen),
+  },
+  RegisterNew: {
+    screen: withErrorBoundaryScreen(RegisterScreenNew),
   },
 });
 

@@ -22,6 +22,7 @@ import VideoBackground from '../common/components/VideoBackground';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import logService from '../common/services/log.service';
+import featuresService from '../common/services/features.service';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -108,7 +109,11 @@ export default class LoginScreen extends Component {
    * On press register
    */
   onPressRegister = () => {
-    this.props.navigation.push('Register');
+    if (featuresService.has('on-boarding')) {
+      this.props.navigation.push('RegisterNew');
+    } else {
+      this.props.navigation.push('Register');
+    }
   }
 
   /**

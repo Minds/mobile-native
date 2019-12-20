@@ -66,9 +66,10 @@
     "invalidPassword":"Incorrect password. Please try again.",
     "confirmPasswordError": "Passwords should match",
     "termsAcceptedError":"You should accept the terms and conditions",
-    "accept":"I accept the",
-    "termsAndConditions":"terms and conditions",
-    "code":"Code"
+    "accept":"I have read and accept the",
+    "termsAndConditions":"terms of use",
+    "code":"Code",
+    "join":"Join the Minds Revolution"
   },
   "blockchain": {
     "boostCreate": "Network Boost for {{tokensAmount}} Minds Tokens. {{message}}",

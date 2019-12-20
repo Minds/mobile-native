@@ -42,6 +42,20 @@ export const ComponentsStyle = StyleSheet.create({
     height: 50,
     borderRadius: 4,
   },
+  loginInputNew: {
+    color: '#4A4A4A',
+    fontSize: 16,
+    padding: 10,
+    fontFamily: 'Roboto',
+    backgroundColor: '#FFFFFF',
+    height: 40,
+    borderRadius: 2,
+    borderColor: '#D8D8D8',
+    borderWidth: 1,
+    lineHeight: 21,
+    marginLeft: 20,
+    marginRight: 20
+  },
   loginButton: {
     marginRight: 0,
     marginLeft: 10,
@@ -63,6 +77,15 @@ export const ComponentsStyle = StyleSheet.create({
     borderWidth: 0,
     marginRight: 0,
     alignSelf: 'flex-end'
+  },
+  registerCheckboxTextNew: {
+    color: '#4A4A4A'
+  },
+  registerCheckboxNew: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    alignSelf: 'flex-start',
+    marginTop: 15
   },
 
   //button
@@ -126,6 +149,13 @@ export const ComponentsStyle = StyleSheet.create({
   terms: {
     color: 'white',
     paddingRight: 8
+  },
+  linkNew: {
+    color: '#0091FF',
+  },
+  termsNew: {
+    color: '#4A4A4A',
+    paddingLeft: 8
   },
   preview: {
     height: 200,
