@@ -44,7 +44,7 @@ export default class ComingSoonScreen extends Component {
 
         <Touchable onPress={this.moreInfoAction}>
           <Text style={[style.text, style.smaller, style.link]}>
-            {i18n.t('comingSoon.try')}
+            {i18n.t('comingSoon.try') + '\nwww.minds.com/mobile'}
             {this.moreInfoUrl}
           </Text>
         </Touchable>

@@ -15,7 +15,9 @@
         "typeComment": "コメントを入力してください",
         "error": "申し訳ありません。このアクティビティを読み込むことができません",
         "tryAgain": "後ほどもう一度お試しください",
-        "loadLater": "後で読み込む"
+        "loadLater": "後で読み込む",
+        "remindBlocked": "このリマインダーはあなたがブロックしたため使用できません。",
+        "scheduled": "このアクティビティは{　}上に表示すると予定されています。"
     },
     "auth": {
         "login": "ログイン",
@@ -31,17 +33,16 @@
         "invalidPassword": "パスワードが違います。もう一度お試しください。",
         "confirmPasswordError": "パスワードは一致する必要があります",
         "termsAcceptedError": "利用規約に同意する必要があります",
-        "promotions": "Mindsからの特別プロモーションを受け取る（推奨）",
         "accept": "に同意する",
         "termsAndConditions": "規約と条件",
         "code": "コード"
     },
     "blockchain": {
-        "boostCreate": "{{tokensAmount}}MindsトークンのネットワークBoost。{{message}}\n",
+        "boostCreate": "{{tokensAmount}}MindsトークンのネットワークBoost。{{message}} ",
         "boostPeerCreate": "{{tokensAmount}}Mindsトークンを{{receiver}}へのチャンネルBoost。{{message}}",
         "tokenApprove": "{{address}}が今後{{tokensAmount}}のトークンを消費することを承認する。 {{message}}",
         "wire": "{{receiver}}に{{tokensAmount}}Mindsトークンを送る。 {{message}}",
-        "withdraw": "{{tokensAmount}} Mindsトークンの引き落としをリクエストする。 {{gasEther}} \nETHはガス代を賄うために振り込まれます。あなたが少量のガス代を送れば、あなたの引き出しは失敗するかもしれません。 {{message}}",
+        "withdraw": "{{tokensAmount}} Mindsトークンの引き落としをリクエストする。 {{gasEther}}  ETHはガス代を賄うために振り込まれます。あなたが少量のガス代を送れば、あなたの引き出しは失敗するかもしれません。 {{message}}",
         "approveTransaction": "取引を承認する",
         "yesApprove": "はい。承認します。",
         "gasPrice": "ガス価格",
@@ -50,7 +51,7 @@
         "gasLimitDefault": "Gas limit (デフォルト: {{gasLimit}})",
         "ethToTransfer": "ETHを転送する",
         "maxGasFee": "マックス。ガス代",
-        "canAffordMessage": "あなたは現在{{amount}}ETH保有しています。\nこの額は、取引のためのEthereumネットワークガス料金をまかなうには不十分かもしれません。ガス価格を下げてみてください。",
+        "canAffordMessage": "あなたは現在{{amount}}ETH保有しています。 この額は、取引のためのEthereumネットワークガス料金をまかなうには不十分かもしれません。ガス価格を下げてみてください。",
         "alreadyApproving": "すでに取引を承認しています",
         "balance": "バランス",
         "walletNameExample": "例 モバイル支出",
@@ -71,8 +72,6 @@
         "receivaOnly": "受信専用",
         "offchain": "オフチェーン",
         "receiver": "レシーバー",
-        "walletConfirmMessage": "あなたは{{tokens}}のために{{currency}}をチャージされます。",
-        "walletNotDeterminedMessage": "<{{tokens}}のチャージを特定できませんでした。",
         "selectWallet": "ウォレットを選択してください。",
         "walletAddresses": "ウォレットのアドレス",
         "selectTheWallet": "使いたいウォレットを選択してください。",
@@ -89,18 +88,17 @@
         "tabMyBlogs": "マイブログ",
         "blogs": "ブログ",
         "errorLoading": "ブログの読み込みエラー",
-        "error": "申し訳ありません。ブログを読み込みことができません。"
+        "error": "申し訳ありません。ブログを読み込みことができません。",
+        "blogListEmpty": "このリストは空っぽです。"
     },
     "boosts": {
         "selected": "選択済み",
-        "priority": "優先度",
         "target": "対象",
         "boostType": "BOOSTタイプ",
         "cost": "コスト",
         "howManyViewsDoYouWant": "どのくらいの閲覧が欲しいですか？",
         "whatIsYourOffer": "何をオファーしましたか？",
         "targetDescription": "ブーストしたいチャンネルを探す。",
-        "priorityDescription": "プライオリティコンテンツは先頭に行きますが、少なくとも通常ブーストの2倍のコストがかかります。",
         "youDontHaveBoosts": "あなたはブーストを持っていません。",
         "youCantSelectYourself": "あなたはp2pブーストをするために自分自身での選択はできません",
         "tapToChangeChannel": "タップしてチャンネルを変える",
@@ -136,7 +134,7 @@
             "2": "暴力を奨励または誘発する",
             "3": "他人を脅迫、嫌がらせ、いじめたり、またはそうすることを奨励する",
             "4": "個人情報および機密情報",
-            "5": "悪意を持ってユーザーへの対象(@name, links, images or videos)\n",
+            "5": "悪意を持ってユーザーへの対象(@name, links, images or videos) ",
             "6": "誤解を招く、または詐欺的な方法で他人になりすます",
             "7": "スパム",
             "8": "Boost決定にアピール",
@@ -150,7 +148,6 @@
         "post": "投稿",
         "postingIn": "({{group}}に投稿)",
         "placeholder": "あなたの気持ちを話してください...",
-        "submitPost": "投稿を提出",
         "uploadError": "アップロードエラー発生",
         "errorDeleting": "ファイルの削除中にエラーが発生しました",
         "pleaseTryAgain": "しばらくしてからもう一度お試しください。",
@@ -165,7 +162,6 @@
         "remind": "リマインド"
     },
     "channel": {
-        "channel": "チャンネル",
         "errorSaving": "チャンネル保存エラー",
         "saveChanges": "変更を保存する",
         "editChannel": "チャンネル設定を編集する",
@@ -173,7 +169,6 @@
         "message": "メッセージ",
         "subscribe": "申し込み",
         "subscribeMessage": "このチャンネルに申し込む",
-        "unsubscribeMessage": "このチャンネルの申し込みに停止",
         "selectBanner": "バナーを選択する",
         "selectAvatar": "アバターを選択する",
         "briefDescription": "あなたについての簡単な説明...",
@@ -184,10 +179,16 @@
         "createFirstPost": "最初の投稿を作成する",
         "mature": "このチャンネルには成人向けコンテンツが含まれています。",
         "confirmUnsubscribe": "本当にこのチャンネルの退会しますか？",
-        "subscribed": "購読中",
         "blocked": "あなたは@{{username}}にブロックしました",
         "tapUnblock": "ブロック解除のためタップする",
-        "notFound": "チャンネルが見つかりません"
+        "notFound": "チャンネルが見つかりません",
+        "viewScheduled": "スケジュール",
+        "modeClosed": "閉る。",
+        "modeOpen": "公的",
+        "modeModerated": "モデレートされた。",
+        "isClosed": "これは閉じたチャンネルです。",
+        "requestSubscription": "申し込むへの要求。",
+        "blockedNav": "＆{username}＆をブロックしました。"
     },
     "discovery": {
         "search": "検索中…",
@@ -215,12 +216,15 @@
         "banConfirm": "本当にこのユーザーを追放しますか？",
         "errorLoading": "グループ読み込みエラー",
         "confirmKick": "本当にこのユーザーを禁止しますか？",
-        "listMembersCount": "{{count}}のメンバー"
+        "listMembersCount": "{{count}}のメンバー",
+        "disableConversations": "会話を無効にする。",
+        "enableConversations": "会話を有効にする。"
     },
     "keychain": {
         "unlockMessage": "{{keychain}}キーチェーンをアンロックする",
         "setupMessage": "{{keychain}}キーチェーンをアンロックする",
-        "encryptMessage": "{{keychain}}キーチェーンを暗号化するパスワードを入力してください。\nパスワードを忘れないようにしてください。パスワードを読み書きできなくなります。"
+        "encryptMessage": "{{keychain}}キーチェーンを暗号化するパスワードを入力してください。",
+        "encryptMessage1": "パスワードを忘れないようにしてください。パスワードを読み書きできなくなります。"
     },
     "messenger": {
         "decrypting": "復号化...",
@@ -242,8 +246,6 @@
         "setupMessage3": "デフォルトでは、メッセージの内容は完全に暗号化されています。セキュリティを強化するために、メタデータが追跡されないようにするために、アプリの設定に移動してプッシュ通知をオフにすることをお勧めします。"
     },
     "newsfeed": {
-        "muteNotifications": "通知のミュート",
-        "unmuteNotifications": "通知のミュート解除",
         "successRemoving": "Entity は正常に削除されました",
         "subscribed": "申し込み済み",
         "boostfeed": "BOOSTフィード",
@@ -265,7 +267,7 @@
         "featured": "紹介されました",
         "friends1": "マッチがあります！ {{name}}があなたを購読しました",
         "friends2": "マッチがあります！ {{name}}があなたに申し込みしました",
-        "groupInvite": "{{user}} が{{name}}への参加を招待しています\n",
+        "groupInvite": "{{user}} が{{name}}への参加を招待しています ",
         "groupKicked": "あなたは{{name}}からキックオフされました",
         "notCharged": "請求されていません",
         "votedUp": "投票した",
@@ -293,7 +295,13 @@
         "welcomeChat": "あなたの相互参加者と安全にチャットしましょう。",
         "repliedCommentOn": "あなたのコメントへの返信",
         "groupComment": "グループ{{title}}",
-        "tagConversation": "あなたを会話にタグ付けされました"
+        "tagConversation": "あなたを会話にタグ付けされました",
+        "rewardsStateIncrease": "おめでとうございます！ あなたは{{state}}ユーザーになりました。",
+        "rewardsStateDecrease": "みんなあなたに会いたがっている！ あなたは{{state}}ユーザーにドロップダウンしました。",
+        "rewardsStateDecreaseToday": "遅すぎることはありません！ あなたは今日の終わりまでに、{{state}}ユーザーにドロップダウンすると、毎日のトークン報酬乗数は{{multiplier}} xに減少されます。 好みやコメントを取得して、スコアを元に戻しましょう！",
+        "rewardsSummary": "昨日は{{amount}}トークンを獲得しました。",
+        "rewardsStateIncrease1": "あなたの毎日のトークン報酬乗数を{{multiplier}}xに増やしました。",
+        "rewardsStateDecrease1": "あなたの毎日のトークン報酬乗数は{{multiplier}} xに削減されました。"
     },
     "notificationSettings": {
         "enableDisable": "プッシュ通知の設定または解除",
@@ -313,16 +321,10 @@
         "boost_gift": "ギフトBoost",
         "boost_accepted": "承認済みBoost",
         "boost_revoked": "取り消されたBoost",
-        "message": "メッセンジャー"
-    },
-    "payments": {
-        "cardExpirationMonth": "カードが期限切れになる月",
-        "cardExpirationYear": "カードが期限切れになる年",
-        "cardHoldersName": "カード所有者の名前",
-        "cardConfirmMessage": "{{confirmMessage}} このクレジットカードを使用しますか?",
-        "orUseAntoherCard": "または他のカードを使う",
-        "enterCardDetails": "カード詳細を入力してください",
-        "yourSavedCard": "保存したカード:"
+        "message": "メッセンジャー",
+        "referral_ping": "紹介Ping",
+        "referral_pending": "紹介保留",
+        "referral_complete": "紹介完了"
     },
     "reports": {
         "explain": "なぜあなたがこのコンテンツを報告したいのか説明してください。",
@@ -421,9 +423,6 @@
         "add": "追加",
         "recurringPayments": "定期支払い",
         "deactivate": "無効化",
-        "deactivateChannel": "チャンネルを無効にする",
-        "options": "オプション",
-        "notifications": "通知",
         "logout": "ログアウト",
         "errorSaving": "エラー保存設定です。もう一度お試しください。",
         "passwordChanged": "パスワードの変更に成功しました。",
@@ -434,7 +433,6 @@
         "pushNotification": "プッシュ通知",
         "regenerateKey": "メッセンジャーキーを再生成",
         "deleteBlockchain": "blockchain キーチェーンを削除する",
-        "pleaseDeactivate": "デスクトップのアカウントを無効化してください",
         "blockedChannels": "ブロックしたチャンネル",
         "disableChannelConfirm": "あなたのアカウントは無効になります。本当に続けますか？",
         "deleteChannelConfirm": "あなたのすべてのアカウントとすべての関連データは永久的に削除されます。本当に進めますか？",
@@ -447,8 +445,7 @@
         "leftHandedMode": "左手モード"
     },
     "comingSoon": {
-        "notAvailable": "この機能はまだ使用できません。",
-        "try": "www.minds.com/mobile\nでカナリーアプリを試す",
+        "try": "www.minds.com/mobile でカナリーアプリを試す",
         "notSupported": "この機能はあなたのプラットフォームには対応していません。",
         "moreInformation": "より詳しい情報は"
     },
@@ -484,14 +481,16 @@
             "errorReadingStatus": "引き出し状況の読み取りエラー",
             "errorOnlyOnceDay": "1日に1回のみ引き出すことができます",
             "errorWithdrawing": "トークンの引き出しエラー",
-            "youCanRequest": "あなたは下記のあなたのOnChainアドレスへ、あなたのOffChainトークンの報酬を撤回することを要求することができます。。\n 注：取引手数料をカバーするために、少量のETHが請求されます。\n 引き出しが完了するまでに数時間かかる場合があります",
             "holdingMessage": "クレジットカードでの支払いのため、{{amount}}トークンを利用できません。それらは支払いが行われた30日後に解放されます。",
             "amount": "額",
             "errorReadingBalances": "バランス読み込みエラー",
             "errorAmountNegative": "金額は正数でなければなりません"
         },
         "inviteFriend": "友達を招待する",
-        "inviteFriendDescription": "友達を招待して報酬を獲得する"
+        "inviteFriendDescription": "友達を招待して報酬を獲得する",
+        "transactionsEmpty": "あなたの取引リストは空っぽです。",
+        "yourRewardFactor": "報酬乗数",
+        "yourUserState": "ユーザーの状態"
     },
     "wire": {
         "amountMonth": "{{amount}}/月",
@@ -508,7 +507,10 @@
         "selectWalletMessage": "このWireに使用するウォレットを選択してください",
         "preApproveMessage": "定期的なWire取引のためにMinds Wireウォレットを事前承認する必要があります。",
         "nameReward": "{{name}}の報酬",
-        "addressLabel": "{{label}} アドレス"
+        "customDonation": "カスタム寄付",
+        "selectCredit": "クレジットカードを選んでください。",
+        "willNotRecur": "あなたはこのユーザーに{{currency}}を送信できますが、繰り返しはできません。",
+        "noAddress": "このチャンネルはまだ{{type}}アドレスを設定していません。"
     },
     "validation": {
         "email": "無効のeメール",
@@ -526,11 +528,9 @@
         "video": "ビデオ"
     },
     "moreScreen": {
-        "groups": "グループ",
         "helpSupport": "ヘルプとサポート",
         "invite": "友達に紹介する",
         "settings": "設定",
-        "pushNotifications": "プッシュ通知",
         "faq": "FAQ",
         "code": "コード",
         "terms": "規約",
@@ -565,7 +565,6 @@
     "name": "名前",
     "approve": "承認する",
     "done": "完了",
-    "skip": "スキップ",
     "accept": "承諾する",
     "confirmNoUndo": "本当にしますか？元に戻すことはできません",
     "confirmMessage": "本当にしますか？",
@@ -613,13 +612,40 @@
         "externalStorage": "あなたが素晴らしい写真をアップロードするには、Mindsはあなたの外部記憶装置へのクセスを必要とします。",
         "writeExternalStorage": "あなたが素晴らしい写真をダウンロードすることができるようにするには、Mindsはあなたの外部記憶装置へのアクセスを必要とします。",
         "sms": "Mindsは、検証コードを自動検出するためにsms読み込みへのアクセスを必要とします。",
-        "camera": "あなたが素晴らしい写真をアップロードすることができるようにMindsはあなたの外部カメラへのアクセスを必要とします。"
+        "camera": "あなたが素晴らしい写真をアップロードすることができるようにMindsはあなたの外部カメラへのアクセスを必要とします。",
+        "notAllowed": {
+            "appoint_admin": "管理者を任命することはできません。",
+            "appoint_moderator": "モデレーターを任命することはできません",
+            "approve_subscriber": "予約者を承認することはできません。",
+            "create_channel": "チャンネルを作成することはできません 。",
+            "create_comment": "コメントを作成することはできません。",
+            "create_group": "グループを作成することはできません。",
+            "create_post": "投稿を作成することはできません。",
+            "delete_channel": "このチャンネルを削除することはできません。",
+            "delete_comment": "このコメントを削除するのは許可されていません。",
+            "delete_group": "このグループを削除するのは許可されていません。",
+            "delete_post": "この投稿を削除するのは許可されていません。",
+            "edit_channel": "このチャンネルの編集は許可されていません。",
+            "edit_comment": "このコメントの編集は許可されていません。",
+            "edit_group": "このグループの編集は許可されていません。",
+            "edit_post": "この投稿の編集は許可されていません。",
+            "invite": "招待することは許可されていません。",
+            "join": "参加することが許可されていません。",
+            "gathering": "この集まりに参加することが許可されていません。",
+            "message": "このユーザーにメッセージを送信することが許可されていません。",
+            "subscribe": "申し込むことが許可されていません。",
+            "tag": "この内容にタグを付けることが許可されていません。",
+            "remind": "この内容にリマインダーすることが許可されていません。",
+            "wire": "このユーザーを接続することはできません。",
+            "view": "この内容の閲覧は許可されていません。",
+            "vote": "この内容には投票することはできません。"
+        }
     },
     "translate": {
         "from": "からの翻訳",
         "translate": "翻訳",
         "changeLanguage": "言語を変更する",
-        "error": "翻訳にエラーがありました。\nもう一度お試しください。"
+        "error": "翻訳にエラーがありました。"
     },
     "hashtags": {
         "exists": "存在するタグ",
@@ -627,7 +653,6 @@
         "hold": "1つだけ選択する"
     },
     "comments": {
-        "deleteConfirm": "このコメントを削除したいですか？\n\n元に戻すことはできません。",
         "successRemoving": "コメントの削除に成功しました",
         "comments": "コメント",
         "errorRemoving": "コメント削除エラー"
@@ -643,10 +668,8 @@
         "chooseName": "あなたの表示名を選択",
         "describeChannel": "あなたのチャンネルを簡単に説明してください",
         "hashtagSelect": "どのようなトピックに興味がありますか？",
-        "waitSms": " アプリを表示したままにすると、自動的に検出されます",
         "earnTokens": "あなたの活動のためにトークンを獲得",
         "weDontStorePhone": "私達は私達のサーバーにあなたの電話番号を保持しません。",
-        "smsNotReceived": "SMSは受信されませんでした",
         "suggestedChannels": "提案されたチャンネル",
         "suggestedChannelsDescription": "あなたの興味に基づいた下記のいくつかの人気のあるチャンネルに参加する",
         "suggestedGroups": "提案されたグループ",
@@ -662,10 +685,10 @@
         "phoneNumber": "電話番号",
         "weJustSentCode": "お客様の番号が正しいことを確認するために、コードを{{phone}}に送信しました。",
         "confirmationCode": "確認コード",
-        "rewardsDescription": "あなたはMindsネットワークへの貢献によるトークンを得ることができます。\nあなたのコンテンツへのより多くの相互インタラクションによって、あなたのOffChainアドレスへのデイリートークン報酬プール分がより多くなります。",
+        "rewardsDescription": "あなたはMindsネットワークへの貢献によるトークンを得ることができます。",
         "rewardsNote": "注意：Mindsはあなたが提供した電話番号を保存しません。番号はSHA-256を使用してハッシュされ、プライバシー目的でソルトキーと組み合わされます。",
-        "ensureYouExportKey": "アプリデータをアンインストールまたは消去する前に、必ずキーをエクスポートしてバックアップしてください。そうしないと、資金が失われます。\n エクスポートは、アドレス詳細画面から行うことができます。",
-        "6digitDescription": "新しいウォレットアドレスを作成するには、キーチェーンのパスワードを入力してください\nそれはあなたの秘密鍵をこの機器に暗号化するのに使われます。",
+        "ensureYouExportKey": "アプリデータをアンインストールまたは消去する前に、必ずキーをエクスポートしてバックアップしてください。そうしないと、資金が失われます。  エクスポートは、アドレス詳細画面から行うことができます。",
+        "6digitDescription": "新しいウォレットアドレスを作成するには、キーチェーンのパスワードを入力してください ",
         "6digitConfirm": "キーチェーンのパスワードをもう一度確認してください。確認が済むと、あなたのウォレットがこのデバイス上に作成され、あなたのアカウントに付与されます。",
         "6digitAlreadySetup": "キーチェーンのパスワードはすでに設定されています。ウォレットの作成を確認するだけです。確認が済むと、あなたのウォレットがこのデバイス上に作成され、あなたのアカウントに添付されます。",
         "passwordInvalid": "パスワードは6文字以上で、英数字または記号のどちらでも使用可能です。",
@@ -678,10 +701,9 @@
         "welcomToWallet": "ウォレットへようこそ",
         "tokensDescription": "トークンは、Mindsで使用される暗号通貨です。トークンの残高は、2種類のアドレスに保存されます。",
         "onchainDescription": "OnChainの支払いはパブリックブロックチェーンに公開され、小額のETHガス料金が必要となります。あなたはあなた自身のプライベートキーを設定するか新しいウォレットを作成することができます。",
-        "offchainDescription": "OffChain支払いはブロックチェーンには公開されず、支出制限があります。あなたはこのアドレスに報酬を受け取ります。"
-    },
-    "mindsSettings": {
-        "error": "サーバーから設定をロード中にエラーが発生しました\n もう一度やり直してください。"
+        "offchainDescription": "OffChain支払いはブロックチェーンには公開されず、支出制限があります。あなたはこのアドレスに報酬を受け取ります。",
+        "rewardsDescription1": "あなたのコンテンツへのより多くの相互インタラクションによって、あなたのOffChainアドレスへのデイリートークン報酬プール分がより多くなります。",
+        "6digitDescription1": "それはあなたの秘密鍵をこの機器に暗号化するのに使われます。"
     },
     "userTypeAhead": {
         "placeholder": "検索のためユーザー名入力開始...",
@@ -707,8 +729,7 @@
         "topPeriod1": "1年間"
     },
     "update": {
-        "title": "v{{version}}への更新",
-        "version": "新しいv{{version}}使用可能!"
+        "title": "v{{version}}への更新"
     },
     "downloading": "ダウンロード中",
     "confirm18": "18歳以上であることを確認",
@@ -739,5 +760,21 @@
     "errorShowActivity": "このアクティビティを表示できません",
     "wantToUpdate": "アプリをアップデートしますか？",
     "updateAvailable": "利用可能なアップデート",
-    "rememberTomorrow": "後で通知する"
+    "rememberTomorrow": "後で通知する",
+    "noInternet": "インターネット接続無し",
+    "offline": "オフライン",
+    "cantReachServer": "サーバーに到達できません。",
+    "showingStored": "保存されたデータを表示する。",
+    "enableComments": "コメントを有効にする。",
+    "disableComments": "コメントを無効にする。",
+    "payments": {
+        "confirmDeleteCard": "このカードを削除しますか？"
+    },
+    "more": "もっと",
+    "transcodingMediaDisplay": "この動画はトランスコードされています。",
+    "actions": "行動",
+    "requests": "要求",
+    "notAllowed": "許可されていません。",
+    "undo": "元に戻す。",
+    "pleaseTryAgain": "もう一度お試しください。"
 }

@@ -2,6 +2,7 @@
 
 exports[`Activity component renders correctly 1`] = `
 <View
+  onLayout={[Function]}
   style={
     Array [
       Object {

@@ -2214,7 +2214,7 @@ exports[`notification component renders correctly for every type 24`] = `
       }
     >
       <Text>
-        [missing "en.notifications.welcomeChat" translation]
+        Chat securely with your mutual subscriptions.
       </Text>
     </View>
     <Text

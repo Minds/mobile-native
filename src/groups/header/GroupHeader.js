@@ -80,7 +80,7 @@ export default class GroupHeader extends Component {
           onPress={() => { store.join(group.guid) }}
           underlayColor='transparent'
           style={ComponentsStyle.bluebutton}
-          accessibilityLabel={i18n.t('group.subscribeMessage')}
+          accessibilityLabel={i18n.t('groups.subscribeMessage')}
           disabled={store.saving}
         >
           <Text style={CommonStyle.colorPrimary} ref="btntext"> {i18n.t('join')} </Text>
@@ -92,7 +92,7 @@ export default class GroupHeader extends Component {
           onPress={() => { store.leave(group.guid)  }}
           underlayColor='transparent'
           style={ComponentsStyle.bluebutton}
-          accessibilityLabel={i18n.t('group.leaveMessage')}
+          accessibilityLabel={i18n.t('groups.leaveMessage')}
           disabled={store.saving}
         >
           <Text style={CommonStyle.colorPrimary} ref="btntext"> {i18n.t('leave')} </Text>

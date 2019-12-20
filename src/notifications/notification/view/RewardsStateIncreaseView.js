@@ -4,7 +4,7 @@ import React, {
 
 import {
   Text,
-  View
+  View,
 } from 'react-native';
 import i18n from "../../../common/services/i18n.service";
 
@@ -13,17 +13,26 @@ import i18n from "../../../common/services/i18n.service";
  */
 export default class RewardsStateIncreaseView extends Component {
 
+  /**
+   * Navigate to wallet
+   */
   navToWallet = () => {
     this.props.navigation.push('Wallet');
   }
 
+  /**
+   * Render
+   */
   render() {
     const styles = this.props.styles;
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToWallet}>{i18n.t('notification.rewardsStateIncrease', {state: this.props.state, 'multiplier': this.props.multiplier})}</Text>
+        <Text onPress={this.navToWallet}>
+          {i18n.t('notification.rewardsStateIncrease', {state: this.props.state}) + '\n'}
+          {i18n.t('notification.rewardsStateIncrease1', {'multiplier': this.props.multiplier})}
+        </Text>
       </View>
-    )
+    );
   }
 }
