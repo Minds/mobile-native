@@ -15,7 +15,9 @@
         "typeComment": "اكتب تعليقك ...",
         "error": "نعتذر. لم نستطع تحميل الشاشة",
         "tryAgain": "من فضلك حاول مجدداً لاحقاً",
-        "loadLater": "تحميل لاحقاً"
+        "loadLater": "تحميل لاحقاً",
+        "remindBlocked": "هذا التذكير غير متوفر لأنك قمت بحجب",
+        "scheduled": "هذا النشاط معد ليتم إظهاره في"
     },
     "auth": {
         "login": "تسجيل الدخول",
@@ -31,7 +33,6 @@
         "invalidPassword": "كلمة مرور غير صحيحة. الرجاء إعادة المحاولة.",
         "confirmPasswordError": "يجب أن تتطابق كلمات المرور",
         "termsAcceptedError": "يجب عليك قبول الشروط والأحكام",
-        "promotions": "تلقي عروض ترويجية حصرية من Minds (مستحسن)",
         "accept": "أوافق على",
         "termsAndConditions": "الأحكام والشروط",
         "code": "رمز"
@@ -71,8 +72,6 @@
         "receivaOnly": "تلقّي فقط",
         "offchain": "خارج السلسلة",
         "receiver": "المستقبل",
-        "walletConfirmMessage": "سوف تدفع {{currency}} مقابل {{tokens}}.",
-        "walletNotDeterminedMessage": "لم نتمكن من تحديد تكاليف <{{tokens}}.",
         "selectWallet": "اختر محفظة",
         "walletAddresses": "عناوين المحافظ",
         "selectTheWallet": "اختر المحفظة التي تريد استخدامها",
@@ -89,18 +88,17 @@
         "tabMyBlogs": "مدوّناتي",
         "blogs": "مدوّنات",
         "errorLoading": "فشل في تحميل هذه المدونة.",
-        "error": "مع الأسف, لم نستطيع تحميل المدونة"
+        "error": "مع الأسف, لم نستطيع تحميل المدونة",
+        "blogListEmpty": "هذه اللائحة فارغة"
     },
     "boosts": {
         "selected": "مختار",
-        "priority": "أولوية",
         "target": "هدف",
         "boostType": "نوع التعزيز(BOOST)",
         "cost": "الكلفة",
         "howManyViewsDoYouWant": "كم عدد المشاهدات المرغوبة؟",
         "whatIsYourOffer": "ما هو عرضك؟",
         "targetDescription": "ابحث عن القناة التي تريد استهدافها بالتعزيز.",
-        "priorityDescription": "يذهب المحتوى ذي الأولوية إلى مقدمة السطر، لكنه يكلف ضعف سعر التعزيز العادي على الأقل.",
         "youDontHaveBoosts": "ليس لديك أي تعزيز",
         "youCantSelectYourself": "لا يمكنك اختيار نفسك لاجراء تعزيز P2P",
         "tapToChangeChannel": "انقر لتغيير القناة",
@@ -150,7 +148,6 @@
         "post": "منشور",
         "postingIn": "(جاري النشر في {{group}})",
         "placeholder": "تكلم عن ما يجول في خاطرك...",
-        "submitPost": "إرسال المنشور",
         "uploadError": "خطأ في التحميل",
         "errorDeleting": "خطأ في حذف الملف",
         "pleaseTryAgain": "يرجى إعادة المحاولة بعد فترة.",
@@ -165,7 +162,6 @@
         "remind": "تذكير"
     },
     "channel": {
-        "channel": "قناة",
         "errorSaving": "خطأ في حفظ القناة",
         "saveChanges": "حفظ التغييرات",
         "editChannel": "عدّل اعدادات قناتك",
@@ -173,7 +169,6 @@
         "message": "رسالة",
         "subscribe": "اشترك",
         "subscribeMessage": "اشترك في القناة",
-        "unsubscribeMessage": "الغ اشتراكك في القناة",
         "selectBanner": "اختر صورة غلاف",
         "selectAvatar": "اختر صورة شخصية",
         "briefDescription": "وصف موجز عنك...",
@@ -184,10 +179,16 @@
         "createFirstPost": "أنشئ منشورك الأول",
         "mature": "هذه القناة تحوي محتوى للبالغين",
         "confirmUnsubscribe": "هل أنت متأكد من إلغاء اشتراكك في القناة؟",
-        "subscribed": "مشترك",
         "blocked": "لقد قمت بحظر @{{username}}",
         "tapUnblock": "انقر لإلغاء الحظر",
-        "notFound": "لم يتم العثور على القناة"
+        "notFound": "لم يتم العثور على القناة",
+        "viewScheduled": "مجدولة",
+        "modeClosed": "مغلق",
+        "modeOpen": "عام",
+        "modeModerated": "معدل",
+        "isClosed": "هذه القناة مغلقة",
+        "requestSubscription": "طلب متابعة",
+        "blockedNav": "لقد قمت بحظر &{username}&"
     },
     "discovery": {
         "search": "بحث...",
@@ -215,12 +216,15 @@
         "banConfirm": "هل أنت متأكد؟ تريد حظر هذا المستخدم؟",
         "errorLoading": "فشل في تحميل المجموعات",
         "confirmKick": "هل أنت متأكد؟ تريد طرد هذا المستخدم؟",
-        "listMembersCount": "الأعضاء {{count}}"
+        "listMembersCount": "الأعضاء {{count}}",
+        "disableConversations": "تعطيل المحادثات",
+        "enableConversations": "تفعيل المحادثات"
     },
     "keychain": {
         "unlockMessage": "فك قفل المفتاح {{keychain}}",
         "setupMessage": "فك قفل المفتاح {{keychain}}",
-        "encryptMessage": "أدخل كلمة مرور من شأنها تشفير سلسلة المفاتيح {{keychain}}.\nتذكر كلمة المرور وإلا فلن تتمكن من القراءة أو الكتابة منها."
+        "encryptMessage": "أدخل كلمة مرور من شأنها تشفير سلسلة المفاتيح {{keychain}}.",
+        "encryptMessage1": "تذكر كلمة المرور وإلا فلن تتمكن من القراءة أو الكتابة منها."
     },
     "messenger": {
         "decrypting": "فك تشفير...",
@@ -242,8 +246,6 @@
         "setupMessage3": "بشكل افتراضي، يتم تشفير محتوى رسائلك بالكامل. للحصول على مزيد من الأمان، قد ترغب في الانتقال إلى إعدادات التطبيق وإيقاف تشغيل إشعارات الدفع من أجل عدم السماح بتعقب البيانات الوصفية."
     },
     "newsfeed": {
-        "muteNotifications": "كتم الإشعارات",
-        "unmuteNotifications": "ايقاف كتم الإشعارات",
         "successRemoving": "تمت إزالة الكيان بنجاح",
         "subscribed": "مسجّل",
         "boostfeed": "النشرة المعززة",
@@ -293,7 +295,13 @@
         "welcomeChat": "تحدث بشكل آمن مع الاشتراكات المتبادلة",
         "repliedCommentOn": "قام بالرد على تعليق في",
         "groupComment": "مجموعة {{title}}",
-        "tagConversation": "ذكرك في محادثة"
+        "tagConversation": "ذكرك في محادثة",
+        "rewardsStateIncrease": "تهانينا! لقد أصبحت مستخدم {{state}}.",
+        "rewardsStateDecrease": "نحن افتقدك! لقد تم تخفيض مستواك إلى مستخدم {{state}}.",
+        "rewardsStateDecreaseToday": "لم يفت الأوان! سيتم تخفيض مستواك إلى مستخدم {{state}} مع نهاية اليوم. وسوف تم تخفيض معامل الضرب الخاص بجوائزك إلى × {{multiplier}}. أحصل على تعليقات وإعجابات لرفع رصيدك مجددا!",
+        "rewardsSummary": "لقد كسبت {{amount}} من التوكنز البارحة.",
+        "rewardsStateIncrease1": "لقد قمنا بزيادة معامل الضرب الخاص بجوائزك إلى ×{{multiplier}}",
+        "rewardsStateDecrease1": "لقد تم تخفيض معامل الضرب الخاص بجوائزك إلى × {{multiplier}}"
     },
     "notificationSettings": {
         "enableDisable": "تمكين وتعطيل الإشعارات",
@@ -313,16 +321,10 @@
         "boost_gift": "تعزيز مجاني",
         "boost_accepted": "تم قبول التعزيز",
         "boost_revoked": "تم إلغاء التعزيز",
-        "message": "تطبيق المحادثة"
-    },
-    "payments": {
-        "cardExpirationMonth": "شهر انتهاء صلاحية البطاقة",
-        "cardExpirationYear": "سنة انتهاء صلاحية البطاقة",
-        "cardHoldersName": "اسم صاحب البطاقة",
-        "cardConfirmMessage": "{{confirmMessage}} هل ترغب باستخدام هذه البطاقة الإئتمانية؟",
-        "orUseAntoherCard": "أو استخدام بطاقة أخرى",
-        "enterCardDetails": "أدخل معلومات بطاقاتك",
-        "yourSavedCard": "الكروت المخزنة الخاصة بك"
+        "message": "تطبيق المحادثة",
+        "referral_ping": "إشعارات التوصيات",
+        "referral_pending": "التوصية قيد الانتظار",
+        "referral_complete": "التوصية اكتملت"
     },
     "reports": {
         "explain": "يرجى توضيح سبب رغبتك في الإبلاغ عن هذا المحتوى في بضع جمل قصيرة.",
@@ -421,9 +423,6 @@
         "add": "إضافة",
         "recurringPayments": "دفع متكرر",
         "deactivate": "إلغاء تفعيل",
-        "deactivateChannel": "إلغاء تفعيل القناة",
-        "options": "خيارات",
-        "notifications": "إشعارات",
         "logout": "خروج",
         "errorSaving": "خطأ في حفظ الإعداد، يرجى المحاولة مرة أخرى",
         "passwordChanged": "تم تغيير كلمة المرور بنجاح.",
@@ -434,10 +433,9 @@
         "pushNotification": "التنبيهات",
         "regenerateKey": "أعد توليد مفاتيح تطبيق المحادثة",
         "deleteBlockchain": "حذف سلسلة المفاتيح الخاص بـ blockchain ",
-        "pleaseDeactivate": "من فضلك قم بتعطيل حسابك على الكمبيوتر",
         "blockedChannels": "قنوات محظورة",
         "disableChannelConfirm": "سيتم إلغاء تفعيل حسابك. هل أنت متأكد أنك تريد المتابعة؟",
-        "deleteChannelConfirm": "سيتم حذف حسابك وكل المعلومات المتعلقة به نهائياً.\nهل أنت متأكد من رغبتك بالمتابعة؟",
+        "deleteChannelConfirm": "سيتم حذف حسابك وكل المعلومات المتعلقة به نهائياً. هل أنت متأكد من رغبتك بالمتابعة؟",
         "disableChannel": "تعطيل القناة",
         "deleteChannel": "حذف القناة",
         "disableDescription": "تعطيل حسابك سيؤدي لجعل حسابك غير مرأي. أيضاً لن تستطيع تلقي أي رسائل أو تنبيهات. اسم المستخدم الخاص بك سيبقى محجوزاً في حال أردت العودة لـ Minds.",
@@ -447,8 +445,7 @@
         "leftHandedMode": "نمط اليد اليسرى"
     },
     "comingSoon": {
-        "notAvailable": "هذه الخدمة غير متوفرة بعد.",
-        "try": "جرب تطبيق canary على\nwww.minds.com/mobile",
+        "try": "جرب تطبيق canary على www.minds.com/mobile",
         "notSupported": "هذه الخدمة غير مدعومة على المنصفة الخاصة بك.",
         "moreInformation": "المزيد من المعلومات"
     },
@@ -484,14 +481,16 @@
             "errorReadingStatus": "فشل أثناء قراءة حالة عملية السحب",
             "errorOnlyOnceDay": "تستطيع السحب مرة واحدة في اليوم",
             "errorWithdrawing": "فشل أثناء سحب ال tokens",
-            "youCanRequest": "تستطيع طلب سحب مكافآت token الـ OffChain إلى عنوان الـ OnChain  التالي.\nملاحظة: مقدار صغير من ETH سيتم اقتطاعه كأجر لهذه العملية.\nعمليات السحب قد تستغرق بضع ساعات.",
             "holdingMessage": "{{amount}} tokens غير متوفرة كنتيجة لدفعة credit card. سيتم تحريرهم بعد 30 يوم من حدوث عملية الدفع. ",
             "amount": "المقدار",
             "errorReadingBalances": "خطأ في قراءة الرصيد",
             "errorAmountNegative": "يجب أن يكون المقدار عدد إيجابياً"
         },
         "inviteFriend": "قم بدعوة صديق",
-        "inviteFriendDescription": "قم بدعوة صديق واكسب مكافآت"
+        "inviteFriendDescription": "قم بدعوة صديق واكسب مكافآت",
+        "transactionsEmpty": "لائحة العمليات الخاصة بك فارغة",
+        "yourRewardFactor": "معامل الضرب الخاص بجوائزك",
+        "yourUserState": "حالة المستخدم الخاص بك"
     },
     "wire": {
         "amountMonth": "{{amount}}/الشهر",
@@ -508,7 +507,10 @@
         "selectWalletMessage": "اختر المحفظة الذي تريد استخدامه للقيام بعملية الـ Wire هذه.",
         "preApproveMessage": "نحن بحاجة أن تقوم بالموافقة المسبقة لعمليات Minds Wire الدورية.",
         "nameReward": "المكافآت الخاصة بـ {{name}}",
-        "addressLabel": "عنوان {{label}}"
+        "customDonation": "تبرع مخصص",
+        "selectCredit": "قم باختيار بطاقة ائتمان",
+        "willNotRecur": "يمكنك إرسال {{currency}} إلى هذا المستخدم، لن يتم تكرار هذه العملية",
+        "noAddress": "هذه القناة لم تقوم بضبط عنوان ال{{type}} بعد."
     },
     "validation": {
         "email": "بريد الكتروني غير صالح",
@@ -526,11 +528,9 @@
         "video": "فيديو"
     },
     "moreScreen": {
-        "groups": "مجموعات",
         "helpSupport": "المساعدة والدعم",
         "invite": "قم بدعوة أصدقائك",
         "settings": "الإعدادات",
-        "pushNotifications": "التنبيهات",
         "faq": "الأسئلة الشائعة",
         "code": "رمز",
         "terms": "الشروط",
@@ -565,7 +565,6 @@
     "name": "اسم",
     "approve": "تأكيد",
     "done": "تم",
-    "skip": "تخطي",
     "accept": "موافقة",
     "confirmNoUndo": "هل أنت متأكد؟ لن يمكنك التراجع عن هذه العملية",
     "confirmMessage": "هل أنت متأكد؟",
@@ -613,13 +612,40 @@
         "externalStorage": "Minds يحتاج اذن للوصول إلى ذاكرة التخزين لتتمكن من رفع صور رائعة.",
         "writeExternalStorage": "Minds يحتاج اذن للوصول إلى ذاكرة التخزين لتتمكن من تحميل صور رائعة.",
         "sms": "Minds يحتاج اذن لقراءة الرسائل للتحقق تلقائياً من رمز التفعيل.",
-        "camera": "Minds يحتاج اذن للوصول إلى  الكاميرا لتتمكن من إضافة صور رائعة."
+        "camera": "Minds يحتاج اذن للوصول إلى  الكاميرا لتتمكن من إضافة صور رائعة.",
+        "notAllowed": {
+            "appoint_admin": "لا يمكنك تعيين مدير",
+            "appoint_moderator": "لا يمكنك تعيين محرر",
+            "approve_subscriber": "لا يمكنك الموافقة على طلب الانضمام",
+            "create_channel": "لا يمكنك إنشاء قناة",
+            "create_comment": "لا يمكنك التعليق",
+            "create_group": "لا يمكنك إنشاء مجموعة",
+            "create_post": "لا يمكنك إنشاء منشور",
+            "delete_channel": "لا يمكنك حذف هذه القناة",
+            "delete_comment": "لا يمكنك حذف هذا التعليق",
+            "delete_group": "لا يمكنك حذف هذه المجموعة",
+            "delete_post": "لا يمكنك حذف هذا المنشور",
+            "edit_channel": "لا يمكنك تعديل هذه القناة",
+            "edit_comment": "لا يمكنك تعديل هذا التعليق",
+            "edit_group": "لا يمكنك تعديل هذه المجموعة",
+            "edit_post": "لا يمكنك تعديل هذا المنشور",
+            "invite": "لا يمكنك دعوة أشخاص",
+            "join": "لا يمكنك الإنضمام",
+            "gathering": "لا يمكنك الإنضمام لهذا التجمع",
+            "message": "لا يمكنك مراسلة هذا المستخدم",
+            "subscribe": "لا يمكنك المتابعة ",
+            "tag": "لا يمكنك إضافة وسم لهذا المحتوى",
+            "remind": "لا يمكنك إضافة تذكير لهذا المحتوى",
+            "wire": "لا يمكنك القيام ب wire لهذا المستخدم",
+            "view": "لا يمكنك عرض هذا المحتوى",
+            "vote": "لا يمكنك التصويت لهذا المحتوى"
+        }
     },
     "translate": {
         "from": "مترجم من",
         "translate": "ترجم",
         "changeLanguage": "اختر لغة",
-        "error": "حدث خطأ في الترجمة.\nحاول مجدداً من فضلك."
+        "error": "حدث خطأ في الترجمة."
     },
     "hashtags": {
         "exists": "الوسم موجود مسبقاً",
@@ -627,7 +653,6 @@
         "hold": "اضغط لتحديد واحد فقط"
     },
     "comments": {
-        "deleteConfirm": "هل تريد حذف هذا التعليق؟\nلن يمكنك التراجع.",
         "successRemoving": "تم حذف التعليق بنجاح",
         "comments": "التعليقات",
         "errorRemoving": "فشل في حذف التعليق"
@@ -643,10 +668,8 @@
         "chooseName": "اختر اسم للعرض",
         "describeChannel": "صف قناتك باختصار",
         "hashtagSelect": "ما هي المواضيع التي تهمك؟",
-        "waitSms": "اترك التطبيق ظاهراً وسنقوم بالكشف عنه تلقائياُ",
         "earnTokens": "إكسب tokens لنشاطك",
         "weDontStorePhone": "لا نقوم بتخزين رقم هاتفك في قواعد بياناتنا",
-        "smsNotReceived": "لم يتم تلقي رسالة قصيرة",
         "suggestedChannels": "قنوات مقترحة",
         "suggestedChannelsDescription": "قم بالاشتراك ببعض القنوات المشهورة التالية المختارة بناءاً على اهتماماتك.",
         "suggestedGroups": "مجموعات مقترحة",
@@ -662,10 +685,10 @@
         "phoneNumber": "رقم الهاتف",
         "weJustSentCode": "لقد قمنا بإرسال الرمز إلى {{phone}} للتحقق من صحة الرقم المدخل.",
         "confirmationCode": "رمز التحقق",
-        "rewardsDescription": "يمكنك كسب tokens من مساهماتك في شبكة Minds.\nكل ما زادت التفاعلات على محتواك, تزيد حصتك من مكافآت الـ token اليومية المرسلة إلى عنوان الـ OffChain.",
+        "rewardsDescription": "يمكنك كسب tokens من مساهماتك في شبكة Minds.",
         "rewardsNote": "ملاحظة: لا تقوم Minds بتخزين أرقام الهواتف. الأرقام يتم تشفيرها باستخدام خوارزمية SHA-256 ودمجها مع مفتاح salt لأغراض الخصوصية.",
-        "ensureYouExportKey": "تأكد من تصدير وأخذ نسخة احتياطية من مفتاحك قبل إزالة تثبيت أو حذف بيانات التطبيق. أو ستفقد أموالك.\nيمكن اليوم بالتصدير من شاشة تفاصيل العنوان.",
-        "6digitDescription": "لإنشاء عنوان محفظة جديدة, من فضلك قم بإدخال كلمة سر سلسلة مفاتيح والتي سيتم استخدامها لتشفير مفتاحك السري في هذا الجهاز.",
+        "ensureYouExportKey": "تأكد من تصدير وأخذ نسخة احتياطية من مفتاحك قبل إزالة تثبيت أو حذف بيانات التطبيق. أو ستفقد أموالك. يمكن اليوم بالتصدير من شاشة تفاصيل العنوان.",
+        "6digitDescription": "لإنشاء عنوان محفظة جديدة, من فضلك قم بإدخال كلمة سر سلسلة مفاتيح والتي سيتم استخدامها لتشفير مفتاحك ",
         "6digitConfirm": "من فضلك قم بتأكيد كلمة سر سلسلة المفاتيح مرة أخرى. بمجرد التأكيد سيتم إنشاء المحفظة الخاصة بك على هذا الجهاز وربطه بحسابك.",
         "6digitAlreadySetup": "كلمة سر سلسلة المفاتيح الخاصة بك معدة مسبقاً, يجب عليك فقط تأكيد إنشاء المحفظة. بمجرد التأكيد سيتم إنشاء محفظتك على هذا الجهاز وإرفاقه بالحساب الخاص بك.",
         "passwordInvalid": "كلمة المرور يجب أن تتكون من 6 محارف (أرقام أو رموز) على الأقل.",
@@ -678,10 +701,9 @@
         "welcomToWallet": "أهلاً بك في المحفظة الخاصة بك",
         "tokensDescription": "الـ Tokens هي العملة المعماة المستخدمة على Minds. سيتم تخزين رصيدك الكلي من الـ tokens في نوعين مختلفين من العناوين.",
         "onchainDescription": "دفعات الـ OnChain سيتم نشرها إلى الـ blockchain العام وتتطلب أجراً قليلاً من ETH gas. يمكنك ضبط مفاتيح سرية خاصة بك أو إنشاء محفظة جديدة.",
-        "offchainDescription": "دفعات الـ OffChain لن يتم نشرها إلى الـ blockchain ويوجد لها قيود على الإنفاق. ستتلقى مكافآت على هذا العنوان."
-    },
-    "mindsSettings": {
-        "error": "نعتذر لقد حصل خطأ أثناء تحميل الإعدادات من المخدم\nمن فضلك حاول مرة أخرى."
+        "offchainDescription": "دفعات الـ OffChain لن يتم نشرها إلى الـ blockchain ويوجد لها قيود على الإنفاق. ستتلقى مكافآت على هذا العنوان.",
+        "rewardsDescription1": "كل ما زادت التفاعلات على محتواك, تزيد حصتك من مكافآت الـ token اليومية المرسلة إلى عنوان الـ OffChain.",
+        "6digitDescription1": "السري في هذا الجهاز."
     },
     "userTypeAhead": {
         "placeholder": "ادخل اسم مستخدم للبحث",
@@ -707,8 +729,7 @@
         "topPeriod1": "1 سنة"
     },
     "update": {
-        "title": "تحديث v{{version}}",
-        "version": "إصدار v{{version}} جديد متوفر"
+        "title": "تحديث v{{version}}"
     },
     "downloading": "تحميل",
     "confirm18": "تأكيد أن سنك فوق الـ 18",
@@ -739,5 +760,22 @@
     "errorShowActivity": "لا يمكن عرض هذا النشاط",
     "wantToUpdate": "هل تريد تديث التطبيق؟",
     "updateAvailable": "تحديث متوفر",
-    "rememberTomorrow": "تذكرني لاحقاً"
+    "rememberTomorrow": "تذكرني لاحقاً",
+    "noInternet": "لا يوجد اتصال مع الانترنت",
+    "offline": "خارج الخدمة",
+    "cantReachServer": "لا يمكن الوصول للسيرفر",
+    "showingStored": "إظهار المعلومات المخزنة",
+    "enableComments": "تفعيل التعليقات",
+    "disableComments": "تعطيل التعليقات",
+    "payments": {
+        "confirmDeleteCard": "هل تريد حذف هذه البطاقة؟"
+    },
+    "more": "المزيد",
+    "transcodingMediaDisplay": "الفيديو قيد المعالجة",
+    "actions": "عمليات",
+    "requests": "طلبات",
+    "notAllowed": "غير مسموح لك",
+    "undo": "تراجع",
+    "tryAgainLater": "حاول مرة أخرى في وقت لاحق",
+    "pleaseTryAgain": "حاول مجدداً من فضلك."
 }

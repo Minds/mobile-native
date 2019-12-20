@@ -10,7 +10,7 @@ exports[`renders correctly 1`] = `
   }
 >
   <Text>
-    [missing "en.notifications.welcomeChat" translation]
+    Chat securely with your mutual subscriptions.
   </Text>
 </View>
 `;

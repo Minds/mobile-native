@@ -58,6 +58,12 @@ class Comment extends Component {
     this.props.onCommentFocus && this.props.onCommentFocus(this.props.comment, offset);
   }
 
+  componentDidMount() {
+    if (this.props.commentFocusCall) {
+      this.props.commentFocusCall(this.props.comment, this.props.index);
+    }
+  }
+
   /**
    * Render
    */
@@ -184,7 +190,7 @@ class Comment extends Component {
       case i18n.t('delete'):
         Alert.alert(
           i18n.t('confirm'),
-          i18n.t('comments.deleteConfirm'),
+          i18n.t('confirmNoUndo'),
           [
             { text: i18n.t('no'), style: 'cancel' },
             {

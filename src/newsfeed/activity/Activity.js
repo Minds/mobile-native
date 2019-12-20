@@ -67,6 +67,24 @@ export default class Activity extends Component {
     }
   }
 
+  onLayout = (e) => {
+    if (this.props.onLayout) {
+      this.props.onLayout(e);
+    }
+
+    if (this.props.entity.listRef) {
+      const offsetToScrollTo = this.props.entity._list.scrollOffset + e.nativeEvent.layout.height;
+
+      setTimeout(() => {
+        this.props.entity.listRef.scrollToOffset({
+          offset: offsetToScrollTo,
+          animated: true
+        });
+        this.props.entity.listRef = null;
+      }, 1000);
+    }
+  }
+
   /**
    * Render
    */
@@ -98,7 +116,7 @@ export default class Activity extends Component {
 
 
     return (
-        <View style={[styles.container, this.props.isReminded ? null : CommonStyle.hairLineBottom]} onLayout={this.props.onLayout} testID="ActivityView">
+        <View style={[styles.container, this.props.isReminded ? null : CommonStyle.hairLineBottom]} onLayout={this.onLayout} testID="ActivityView">
           <Pinned entity={this.props.entity}/>
           { this.showOwner() }
             { lock }
@@ -116,15 +134,15 @@ export default class Activity extends Component {
             { overlay }
           </View>
           { this.showActions() }
-          { this.props.entity.isScheduled() && 
+          { this.props.entity.isScheduled() &&
             <View style={[{backgroundColor: '#ffecb3'}, CommonStyle.padding]}>
-              <Text style={[styles.scheduledText, CommonStyle.paddingLeft]}> 
+              <Text style={[styles.scheduledText, CommonStyle.paddingLeft]}>
                 {`${i18n.t('activity.scheduled')} ${formatDate(this.props.entity.time_created)}.`}
               </Text>
             </View> }
           { this.props.isLast ? <View style={styles.activitySpacer}></View> : null}
-          { !this.props.hideTabs && 
-            !this.props.entity.isScheduled() && 
+          { !this.props.hideTabs &&
+            !this.props.entity.isScheduled() &&
             <ActivityMetrics entity={this.props.entity}/> }
         </View>
     );

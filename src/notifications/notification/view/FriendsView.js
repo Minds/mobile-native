@@ -25,9 +25,11 @@ export default class FriendsView extends PureComponent {
     const entity = this.props.entity;
     const styles = this.props.styles;
 
-    const message = entity.fromObj.subscribed ? 'notification.friends1' : 'notification.friends2';
+    const message = entity.fromObj.subscribed
+      ? i18n.t('notification.friends1', {name: entity.fromObj.name})
+      : i18n.t('notification.friends2', {name: entity.fromObj.name});
 
-    const body = <Text style={styles.link} onPress={this.navToChannel}>{i18n.t(message, {name: entity.fromObj.name})}</Text>
+    const body = <Text style={styles.link} onPress={this.navToChannel}>{message}</Text>
 
     return (
       <View style={styles.bodyContents}>

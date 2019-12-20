@@ -155,8 +155,7 @@ class NotificationsStore {
         this.persist();
       }
     } catch (err) {
-      const myError = new Error(`loadList Error: ${err}.`)
-      logService.exception('[NotificationStore]', myError);
+      logService.exception('[NotificationStore]', err);
     } finally {
       this.loading = false;
     }

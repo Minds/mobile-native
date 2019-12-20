@@ -31,9 +31,7 @@ export default
 @observer
 class ChannelActions extends Component {
 
-  state = {
-    scheduledCount: '',
-  }
+  state = {}
 
   componentDidMount() {
     this.getScheduledCount();
@@ -112,8 +110,7 @@ class ChannelActions extends Component {
 
   getScheduledCount = async () => {
     if (featuresService.has('post-scheduler')) {
-      const count = await this.props.store.feedStore.getScheduledCount();
-      this.setState({ scheduledCount: count });
+      await this.props.store.feedStore.getScheduledCount();
     }
   }
 
@@ -149,7 +146,7 @@ class ChannelActions extends Component {
           <ButtonCustom
             onPress={this.onViewScheduledAction}
             accessibilityLabel={i18n.t('channel.viewScheduled')}
-            text={`${i18n.t('channel.viewScheduled')}: ${this.state.scheduledCount}`}
+            text={`${i18n.t('channel.viewScheduled')}: ${this.props.store.feedStore.feedStore.scheduledCount}`}
             loading={this.state.saving}
             inverted={this.props.store.feedStore.endpoint == this.props.store.feedStore.scheduledEndpoint ? true : undefined}
           />

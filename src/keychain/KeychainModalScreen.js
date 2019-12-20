@@ -68,7 +68,7 @@ export default class KeychainModalScreen extends Component {
             {i18n.t('keychain.setupMessage', {keychain: this.props.keychain.unlockingKeychain})}
           </Text>
           <Text style={styles.note}>
-            {i18n.t('keychain.encryptMessage', {keychain: this.props.keychain.unlockingKeychain})}
+            {i18n.t('keychain.encryptMessage', {keychain: this.props.keychain.unlockingKeychain}) + '\n' + i18n.t('keychain.encryptMessage1')}
           </Text>
           <TextInput
             style={ComponentsStyle.input}

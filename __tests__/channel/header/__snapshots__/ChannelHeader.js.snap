@@ -212,7 +212,7 @@ exports[`channel header component owner should render correctly 1`] = `
         }
       >
         <View
-          accessibilityLabel="Subscribe to this channel"
+          accessibilityLabel="Edit your channel settings"
           accessible={true}
           focusable={true}
           isTVSelectable={true}
@@ -251,56 +251,7 @@ exports[`channel header component owner should render correctly 1`] = `
             }
           >
              
-            Subscribe
-             
-          </Text>
-        </View>
-        <View
-          accessibilityLabel="More"
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "white",
-              "borderColor": "#4690D6",
-              "borderRadius": 20,
-              "borderWidth": 1,
-              "flexDirection": "row",
-              "justifyContent": "center",
-              "margin": 4,
-              "opacity": 1,
-              "padding": 4,
-            }
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#4690D6",
-                },
-                Array [
-                  Object {
-                    "marginLeft": 5,
-                  },
-                  Object {
-                    "marginRight": 5,
-                  },
-                ],
-              ]
-            }
-          >
-             
-            More
+            Edit
              
           </Text>
         </View>

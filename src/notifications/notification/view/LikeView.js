@@ -15,11 +15,16 @@ import i18n from '../../../common/services/i18n.service';
  */
 export default class LikeView extends PureComponent {
 
-  static message = 'notification.votedUp';
-
   constructor(props) {
     super(props);
-    this.translatedMessage = i18n.t(this.constructor.message);
+    this.translatedMessage = this.getMessage();
+  }
+
+  /**
+   * Get translated message
+   */
+  getMessage() {
+    return i18n.t('notification.votedUp');
   }
 
   render() {

@@ -4,18 +4,49 @@ stages:
   - build
   - e2e
   - deploy
+  - i18n
 
 test:jest:
- image: node:10.16.3
- stage: test
- cache:
-   key: ${CI_COMMIT_REF_SLUG}
-   paths:
-     - node_modules/
-     - .jest/cache/
- script:
-   - yarn install
-   - yarn test
+  image: node:10.16.3
+  stage: test
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - .jest/cache/
+  script:
+    - yarn install
+    - yarn test
+
+i18n:upload:
+  image: node:10.16.3
+  stage: i18n
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - .jest/cache/
+  script:
+    - yarn install
+    - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1
+  only:
+    refs:
+      - /^release-*/
+
+i18n:uploadsync:
+  image: node:10.16.3
+  stage: i18n
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - node_modules/
+      - .jest/cache/
+  script:
+    - yarn install
+    - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1 --sync_terms=1
+  only:
+    refs:
+      - /^stable-*/
 
 build:android:
   image: circleci/android:api-28-node
@@ -46,7 +77,7 @@ deploy:s3:
    - build:android
   only:
     refs:
-      - /^release-*/
+      - /^stable-*/
       - /^test-*/
 
 deploy:google_play:

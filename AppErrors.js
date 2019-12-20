@@ -1,19 +1,14 @@
-import {
-  Alert,
-} from 'react-native';
+import {Alert} from 'react-native';
 
 import {
   setNativeExceptionHandler,
-  setJSExceptionHandler
+  setJSExceptionHandler,
 } from 'react-native-exception-handler';
 
-import { onError } from "mobx-react";
+import {onError} from 'mobx-react';
 import logService from './src/common/services/log.service';
 import * as Sentry from '@sentry/react-native';
-import { isAbort, isNetworkFail } from './src/common/helpers/abortableFetch';
-import { isApiError } from './src/common/services/api.service';
-import { isUserError } from './src/common/UserError';
-
+import shouldReportToSentry from './src/common/helpers/errors';
 
 // Init Sentry (if not running test)
 if (process.env.JEST_WORKER_ID === undefined) {
@@ -23,25 +18,8 @@ if (process.env.JEST_WORKER_ID === undefined) {
       'Non-Error exception captured with keys: code, domain, localizedDescription', // ignore initial error of sdk
     ],
     beforeSend(event, hint) {
-
       if (hint.originalException) {
-
-        // ignore network request failed
-        if (isNetworkFail(hint.originalException)) {
-          return null;
-        }
-        // ignore aborts
-        if (isAbort(hint.originalException)) {
-          return null;
-        }
-        // ignore user errors
-        if (isUserError(hint.originalException)) {
-          return null;
-        }
-        // only log api 500 errors
-        if (isApiError(hint.originalException) &&
-          (isNaN(hint.originalException.status) || hint.originalException.status < 500)
-        ) {
+        if (!shouldReportToSentry(hint.originalException)) {
           return null;
         }
       }
@@ -53,7 +31,7 @@ if (process.env.JEST_WORKER_ID === undefined) {
       }
 
       return event;
-    }
+    },
   });
 }
 

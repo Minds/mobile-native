@@ -3,7 +3,6 @@ import {
   action,
 } from 'mobx'
 
-import channelService from './ChannelService';
 import FeedStore from '../common/stores/FeedStore';
 
 /**
@@ -87,16 +86,7 @@ export default class ChannelFeedStore {
    * Get channel scheduled activities count
    */
   async getScheduledCount() {
-    const count = await channelService.getScheduledCount(this.guid);
-    return count;
-  }
-
-  /**
-   * Get channel scheduled activities count
-   */
-  async getScheduledCount() {
-    const count = await channelService.getScheduledCount(this.guid);
-    return count;
+    await this.feedStore.getScheduledCount(this.guid);
   }
 
   @action

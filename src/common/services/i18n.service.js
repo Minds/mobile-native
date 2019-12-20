@@ -149,6 +149,7 @@ class I18nService {
       { name: 'Russian', value: 'ru'},
       { name: 'Vietnamese', value: 'vi'},
       { name: 'Chinese', value: 'zh'},
+      { name: 'Slovak', value: 'sk'},
     ]
   }
 }

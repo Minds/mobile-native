@@ -15,7 +15,9 @@
         "typeComment": "Kommentar eingeben...",
         "error": "VERZEIHUNG, DIE AKTIVITÄT KONNTE NICHT GELADEN WERDEN",
         "tryAgain": "BITTE VERSUCHEN SIE ES SPÄTER ERNEUT",
-        "loadLater": "SPÄTER LADEN"
+        "loadLater": "SPÄTER LADEN",
+        "remindBlocked": "Erinnerung is wegen folgendem Block nicht verfügbar:",
+        "scheduled": "Diese Aktivität wird geplant gezeigt am:"
     },
     "auth": {
         "login": "ANMELDEN",
@@ -25,13 +27,12 @@
         "username": "Benutzername",
         "password": "Passwort",
         "confirmpassword": "Passwort bestätigen",
-        "requestNewPassword": "Geben Sie Ihren Benutzernamen ein, um ein neues Passwort anzufordern",
-        "requestNewPasswordSuccess": "Wir haben einen Aktivierungscode an Ihre E-Mail-Adresse gesendet.",
+        "requestNewPassword": " Geben Sie Ihren Benutzernamen ein, um ein neues Passwort anzufordern",
+        "requestNewPasswordSuccess": " Wir haben einen Aktivierungscode an Ihre E-Mail-Adresse gesendet.",
         "invalidGrant": "Benutzername/Passwort falsch. Bitte versuchen Sie es erneut.",
         "invalidPassword": "Falsches Passwort. Bitte versuchen Sie es erneut.",
         "confirmPasswordError": "Die Passwörter müssen übereinstimmen.",
         "termsAcceptedError": "Sie sollten die Allgemeinen Geschäftsbedingungen akzeptieren.",
-        "promotions": "Erhalten Sie exklusive Werbeaktionen von Minds (empfohlen)",
         "accept": "Ich akzeptiere die",
         "termsAndConditions": "Geschäftsbedingungen",
         "code": "Code"
@@ -71,8 +72,6 @@
         "receivaOnly": "NUR EMPFANGEN",
         "offchain": "Off-Chain",
         "receiver": "Empfänger",
-        "walletConfirmMessage": "Ihnen werden {{currency}} für {{tokens}} berechnet.",
-        "walletNotDeterminedMessage": "Berechnung von <{{tokens}} fehlgeschlagen.",
         "selectWallet": "Wählen Sie ein Wallet",
         "walletAddresses": "Wallet-Addresse",
         "selectTheWallet": "Wählen Sie ein Wallet aus",
@@ -89,18 +88,17 @@
         "tabMyBlogs": "MEINE BLOGS",
         "blogs": "Blogs",
         "errorLoading": "Fehler beim Laden des Blogs.",
-        "error": "VERZEIHUNG, DER BLOG KONNTE NICHT GELADEN WERDEN"
+        "error": "VERZEIHUNG, DER BLOG KONNTE NICHT GELADEN WERDEN",
+        "blogListEmpty": "Diese Liste ist leer."
     },
     "boosts": {
         "selected": "AUSGEWÄHLT",
-        "priority": "PRIORITÄT",
         "target": "ZIEL",
         "boostType": "BOOST-ART",
         "cost": "KOSTEN",
         "howManyViewsDoYouWant": "WIE VIELE AUFRUFE MÖCHTEN SIE?",
         "whatIsYourOffer": "WAS IST IHR ANGEBOT?",
         "targetDescription": "Suchen Sie nach dem Kanal den Sie boosten möchten.",
-        "priorityDescription": "Inhalte mit Priorität gehen an die erste Stelle, kosten jedoch mindestens doppelt so viel wie ein regulärer Boost.",
         "youDontHaveBoosts": "Sie haben keine Boosts",
         "youCantSelectYourself": "Sie können keinen p2p-Boost an Sie selbst ausführen.",
         "tapToChangeChannel": "TIPPEN ZUM KANALWECHSEL",
@@ -148,9 +146,8 @@
     "capture": {
         "couldNotLoad": "Inhalte von {{domain}} konnten nicht geladen werden.",
         "post": "Post",
-        "postingIn": "(Posted in {{group}})",
+        "postingIn": "(Postet in {{group}})",
         "placeholder": "Sag deine Meinung",
-        "submitPost": "Beitrag veröffentlichen",
         "uploadError": "Upload-Fehler aufgetreten",
         "errorDeleting": "Fehler beim Löschen der Datei aufgetreten",
         "pleaseTryAgain": "Bitte versuchen Sie es gleich erneut.",
@@ -165,7 +162,6 @@
         "remind": "Erinnern"
     },
     "channel": {
-        "channel": "Kanal",
         "errorSaving": "Fehler beim Speichern des Kanals",
         "saveChanges": "Änderungen speichern",
         "editChannel": "Kanaleinstellungen bearbeiten",
@@ -173,7 +169,6 @@
         "message": "NACHRICHT",
         "subscribe": "Abonnieren",
         "subscribeMessage": "Diesen Kanal abonnieren",
-        "unsubscribeMessage": "Abonnement dieses Kanals beenden",
         "selectBanner": "Banner auswählen",
         "selectAvatar": "Avatar auswählen",
         "briefDescription": "Kurze Selbstauskunft",
@@ -184,10 +179,16 @@
         "createFirstPost": "Erstellen Sie Ihren ersten Post",
         "mature": "Dieser Kanal enthält nicht jugendfreie Inhalte",
         "confirmUnsubscribe": "Wollen Sie Ihr Abonnement wirklich kündigen?",
-        "subscribed": "Abonniert",
         "blocked": "Sie haben @{{username}} geblockt.",
         "tapUnblock": "Tippen, um Block aufzuheben",
-        "notFound": "Kanal nicht gefunden"
+        "notFound": "Kanal nicht gefunden",
+        "viewScheduled": "Geplant",
+        "modeClosed": "Privat",
+        "modeOpen": "Öffentlich",
+        "modeModerated": "Moderiert",
+        "isClosed": "Dieser Kanal ist privat",
+        "requestSubscription": "Abo anfragen",
+        "blockedNav": "Sie haben &{username}& geblockt"
     },
     "discovery": {
         "search": "Suchen...",
@@ -215,12 +216,15 @@
         "banConfirm": "Sind Sie sicher? Sie wollen diesen Nutzer bannen?",
         "errorLoading": "Fehler beim Laden der Gruppen",
         "confirmKick": "Sind Sie sicher? Sie wollen diesen Nutzer kicken?",
-        "listMembersCount": "Mitglieder {{count}}"
+        "listMembersCount": "Mitglieder {{count}}",
+        "disableConversations": "Gespräche deaktivieren",
+        "enableConversations": "Gespräche aktivieren"
     },
     "keychain": {
         "unlockMessage": "Keychain {{keychain}} freischalten",
         "setupMessage": "Keychain {{keychain}} freischalten",
-        "encryptMessage": "Ein Passwort zur Verschlüsselung der Keychain {{keychain}} eingeben. Ohne es kann kein Zugriff auf sie genommen werden."
+        "encryptMessage": "Ein Passwort zur Verschlüsselung der Keychain {{keychain}} eingeben.",
+        "encryptMessage1": "Ohne es kann kein Zugriff auf sie genommen werden."
     },
     "messenger": {
         "decrypting": "entschlüsseln...",
@@ -242,8 +246,6 @@
         "setupMessage3": "Standardmäßig wird der Inhalt Ihrer Nachrichten vollständig verschlüsselt. Um Ihre Sicherheit weiter zu erhöhen, können Sie in Ihren App-Einstellungen Push-Benachrichtigungen ausschalten, um die Sammlung von Metadaten zu unterbinden."
     },
     "newsfeed": {
-        "muteNotifications": "Benachrichtigungen ausschalten",
-        "unmuteNotifications": "Benachrichtigungen anschalten",
         "successRemoving": "Entität erfolgreich entfernt",
         "subscribed": "ABONNIERT",
         "boostfeed": "BOOSTFEED",
@@ -293,7 +295,13 @@
         "welcomeChat": "Sicher mit Ihren gemeinsamen Abonnements chatten.",
         "repliedCommentOn": "antwortete auf Ihr Kommentar zu",
         "groupComment": "Gruppe {{title}}",
-        "tagConversation": "Erwähnte Sie in einem Gespräch"
+        "tagConversation": "erwähnte Sie in einem Gespräch",
+        "rewardsStateIncrease": "Glückwunsch! Sie sind jetzt ein {{state}} User.",
+        "rewardsStateDecrease": "Wir vermissen Sie! Sie sind jetzt nur noch ein {{state}} User.",
+        "rewardsStateDecreaseToday": "Handeln Sie jetzt! Sie werden am Tagesende zum {{state}} User runtergestuft und Ihr Bonustokenfaktor auf {{multiplier}}x gesenkt. Werden Sie mit Likes und Kommentaren aktiv, um Ihre Wertung zu steigern!",
+        "rewardsSummary": "Sie haben gestern {{amount}} Tokens verdient.",
+        "rewardsStateIncrease1": "Wir haben Ihren täglichen Bonustokenfaktor auf {{multiplier}}x erhöht.",
+        "rewardsStateDecrease1": "Ihr täglicher Bonustokenfaktor wurde auf {{multiplier}}x reduziert."
     },
     "notificationSettings": {
         "enableDisable": "Push-Benachrichtigungen an-/ausschalten",
@@ -313,16 +321,10 @@
         "boost_gift": "Boost-Geschenk",
         "boost_accepted": "Boost angenommen",
         "boost_revoked": "Boost widerrufen",
-        "message": "Messenger"
-    },
-    "payments": {
-        "cardExpirationMonth": "Gültig bis: Monat",
-        "cardExpirationYear": "Gültig bis: Jahr",
-        "cardHoldersName": "Names des Karteninhabers",
-        "cardConfirmMessage": "{{confirmMessage}} Wollen Sie diese Kredikarte verwenden?",
-        "orUseAntoherCard": "ODER ANDERE KARTE NUTZEN",
-        "enterCardDetails": "KREDITKARTENDATEN EINGEBEN",
-        "yourSavedCard": "IHRE GESPEICHERTEN KARTEN:"
+        "message": "Messenger",
+        "referral_ping": "Genehmigungscheck",
+        "referral_pending": "Erwarte Genehmigung",
+        "referral_complete": "Genehmigt"
     },
     "reports": {
         "explain": "Erklären Sie bitte in ein paar Sätzen, warum Sie diesen Content melden möchten.",
@@ -421,9 +423,6 @@
         "add": "HINZUFÜGEN",
         "recurringPayments": "Regelmäßige Zahlungen",
         "deactivate": "Deaktivieren",
-        "deactivateChannel": "Kanal deaktivieren",
-        "options": "Optionen",
-        "notifications": "Benachrichtigungen",
         "logout": "Abmelden",
         "errorSaving": "Fehler beim Übernehmen, bitte erneut versuchen",
         "passwordChanged": "Passwort erfolgreich geändert.",
@@ -434,7 +433,6 @@
         "pushNotification": "Push-Benachrichtigungen",
         "regenerateKey": "Messenger-Schlüssel neu generieren",
         "deleteBlockchain": "Blockchain-Keychain entfernen",
-        "pleaseDeactivate": "Bitte deaktivieren Sie Ihren Account am PC",
         "blockedChannels": "Geblockte Kanäle",
         "disableChannelConfirm": "Ihr Konto wird deaktiviert. Wollen Sie wirklich fortfahren?",
         "deleteChannelConfirm": "Ihr Konto und alle zugehörigen Daten werden für immer gelöscht. Wollen Sie wirklich fortfahren?",
@@ -447,7 +445,6 @@
         "leftHandedMode": "Linkshändermodus"
     },
     "comingSoon": {
-        "notAvailable": "Dieses Feature steht noch nicht zur Verfügung.",
         "try": "Probieren Sie die Canary-App auf www.minds.com/mobile",
         "notSupported": "Dieses Feature ist auf Ihrer Plattform nicht unterstützt.",
         "moreInformation": "Mehr Infos auf"
@@ -484,14 +481,16 @@
             "errorReadingStatus": "Fehler beim Statusabruf",
             "errorOnlyOnceDay": "Sie können nur einmal täglich abheben",
             "errorWithdrawing": "Fehler beim Abheben der Token",
-            "youCanRequest": "Sie können anfragen, Ihre Off-Chain-Tokens auf Ihre On-Chain-Adresse unten abzuheben.\nHinweis: Zum Decken der Überweisungsgebühr wird ein kleiner Betrag ETH berechnet.\nDer Vorgang kann mehrere Stunden dauern",
             "holdingMessage": "{{amount}} Tokens sind wegen Kreditkartenzahlung unzugänglich. Sie werden 30 Tage nach Zahlungseingang freigeschaltet.",
             "amount": "Betrag",
             "errorReadingBalances": "Fehler beim Bestandsabruf",
             "errorAmountNegative": "Betrag sollte positive Zahl sein"
         },
         "inviteFriend": "Freund einladen",
-        "inviteFriendDescription": "Laden Sie einen Freund ein und erhalten Sie Belohnungen"
+        "inviteFriendDescription": "Laden Sie einen Freund ein und erhalten Sie Belohnungen",
+        "transactionsEmpty": "Ihre Überweisungsliste ist leer",
+        "yourRewardFactor": "Ihr Bonusfaktor",
+        "yourUserState": "Ihr User-Status"
     },
     "wire": {
         "amountMonth": "{{amount}}/Monat",
@@ -508,7 +507,10 @@
         "selectWalletMessage": "Wählen Sie das Wallet für diese Sendung",
         "preApproveMessage": "Wir benötigen Ihre Zustimmung für regelmäßige Minds-Wire-Wallet-Überweisungen.",
         "nameReward": "{{name}}s Belohnungen",
-        "addressLabel": "{{label}} Adresse"
+        "customDonation": "Einzelspende",
+        "selectCredit": "Kreditkarte wählen.",
+        "willNotRecur": "Sie können dem User einmalig {{currency}} senden.",
+        "noAddress": "Dieser Kanal hat seine {{type}} Adresse noch nicht eingestellt."
     },
     "validation": {
         "email": "Ungültige E-Mail",
@@ -526,11 +528,9 @@
         "video": "Video"
     },
     "moreScreen": {
-        "groups": "Gruppen",
         "helpSupport": "Hilfe & Support",
         "invite": "Freunde empfehlen",
         "settings": "Einstellungen",
-        "pushNotifications": "Push-Benachrichtigungen",
         "faq": "FAQ",
         "code": "Code",
         "terms": "Bestimmungen",
@@ -565,7 +565,6 @@
     "name": "Name",
     "approve": "Annehmen",
     "done": "Fertig",
-    "skip": "Überspringen",
     "accept": "Akzeptieren",
     "confirmNoUndo": "Sind Sie sicher? Dies ist UNWIDERRUFLICH.",
     "confirmMessage": "Sind Sie sicher?",
@@ -613,13 +612,40 @@
         "externalStorage": "Minds benötigt Zugriff auf Ihren externen Speicher, damit Sie Ihre coolen Bilder hochladen können.",
         "writeExternalStorage": "Minds benötigt Zugriff auf Ihren externen Speicher, damit Sie coole Bilder runerladen können.",
         "sms": "Minds benötigt die Erlaubnis, SMS zu lesen, um den Bestätigungscode automatisch zu erkennnen.",
-        "camera": "Minds benötigt Zugriff auf Ihre Kamera, damit Sie Ihre coolen Bilder hochladen können."
+        "camera": "Minds benötigt Zugriff auf Ihre Kamera, damit Sie Ihre coolen Bilder hochladen können.",
+        "notAllowed": {
+            "appoint_admin": "Sie dürfen keinen Admin bestimmen",
+            "appoint_moderator": "Sie dürfen keinen Moderator bestimmen",
+            "approve_subscriber": "Sie dürfen keinen Abonnenten annehmen",
+            "create_channel": "Sie dürfen keinen Kanal erstellen",
+            "create_comment": "Sie dürfen keinen Kommentar erstellen",
+            "create_group": "Sie dürfen keine Gruppe erstellen",
+            "create_post": "Sie dürfen keinen Post erstellen",
+            "delete_channel": "Sie dürfen diesen Kanal nicht löschen",
+            "delete_comment": "Sie dürfen diesen Kommentar nicht löschen",
+            "delete_group": "Sie dürfen diese Gruppe nicht löschen",
+            "delete_post": "Sie dürfen diesen Post nicht löschen",
+            "edit_channel": "Sie dürfen diesen Kanal nicht bearbeiten",
+            "edit_comment": "Sie dürfen diesen Kommentar nicht bearbeiten",
+            "edit_group": "Sie dürfen diese Gruppe nicht bearbeiten",
+            "edit_post": "Sie dürfen diesen Post nicht bearbeiten",
+            "invite": "Sie dürfen keine Einladungen vergeben",
+            "join": "Sie dürfen nicht beitreten",
+            "gathering": "Sie dürfen der Versammlung nicht beitreten",
+            "message": "Sie dürfen diesem User keine Nachrichten senden",
+            "subscribe": "Sie dürfen nicht abonnieren",
+            "tag": "Sie dürfen diesen Content nicht taggen",
+            "remind": "Sie dürfen nicht an diesen Content erinnern",
+            "wire": "Sie dürfen nicht an diesen User überweisen",
+            "view": "Sie dürfen diesen Content nicht ansehen",
+            "vote": "Sie dürfen nicht für diesen Content stimmen"
+        }
     },
     "translate": {
         "from": "übersetzt aus",
         "translate": "Übersetzen",
         "changeLanguage": "Sprache ändern",
-        "error": "Fehler bei der Übersetzung.\nBitte erneut versuchen."
+        "error": "Fehler bei der Übersetzung."
     },
     "hashtags": {
         "exists": "Tag existiert schon.",
@@ -627,7 +653,6 @@
         "hold": "Halten, um nur eins auszuwählen"
     },
     "comments": {
-        "deleteConfirm": "Wollen Sie diesen Kommentar löschen?\n\nEs ist UNWIDERRUFLICH.",
         "successRemoving": "Kommentar gelöscht",
         "comments": "Kommentare",
         "errorRemoving": "Fehler beim Löschen des Kommentars"
@@ -643,10 +668,8 @@
         "chooseName": "Wählen Sie Ihren Nutzernamen",
         "describeChannel": "Beschreiben Sie kurz Ihren Kanal",
         "hashtagSelect": "Welche Themengebiete interessieren Sie?",
-        "waitSms": " Zur automatischen Erkennung lassen Sie die App offen",
         "earnTokens": "Verdienen Sie Tokens für Ihre Aktivitäten",
         "weDontStorePhone": "Wir speichern Ihre Telefonnumer nicht auf unseren Servern.",
-        "smsNotReceived": "SMS nicht erhalten",
         "suggestedChannels": "Empfohlene Kanäle",
         "suggestedChannelsDescription": "Abonnieren Sie einige der beliebten Kanäle unten, die Sie interessieren.",
         "suggestedGroups": "Empfohlene Gruppen",
@@ -662,10 +685,10 @@
         "phoneNumber": "Telefonnummer",
         "weJustSentCode": "Wir haben den Code an {{phone}} geschickt, um die Richtigkeit der Nummer zu überprüfen.",
         "confirmationCode": "Bestätigungscode",
-        "rewardsDescription": "Sie können Tokens für Ihre Beitrage zum Minds-Netzwerk erlangen. Umso mehr Interaktion Ihr Content anregt, umso größer ist Ihr Tokenanteil am täglichen Belohnungsfonds, der an Ihre Off-Chain-Adresse geht.",
+        "rewardsDescription": "Sie können Tokens für Ihre Beitrage zum Minds-Netzwerk erlangen.",
         "rewardsNote": "Hinweis: Minds speichert die angegebenen Telefonnummern nicht. Sie werden mit einer Hashfunktion (SHA-256) und einem Salt-Key für Kodierungs- und Sicherheitszwecke verwendet.",
-        "ensureYouExportKey": "Stellen Sie sicher, dass Sie Ihren Schlüssel EXPORTIEREN und abspeichern, bevor Sie die App oder ihre Daten entfernen, oder Ihre Zahlungsmittel gehen verloren. \nDer Export kann vom Addressdetail-Screen durchgeführt werden.",
-        "6digitDescription": "Geben Sie bitte ein Keychain-Passwort für eine neue Wallet-Adresse ein, mit dem Ihr Private-Key auf diesem Gerät verschlüsselt wird.",
+        "ensureYouExportKey": "Stellen Sie sicher, dass Sie Ihren Schlüssel EXPORTIEREN und abspeichern, bevor Sie die App oder ihre Daten entfernen, oder Ihre Zahlungsmittel gehen verloren.  Der Export kann vom Addressdetail-Screen durchgeführt werden.",
+        "6digitDescription": "Geben Sie bitte ein Keychain-Passwort für eine neue Wallet-Adresse ein",
         "6digitConfirm": "Bitte bestätigen Sie Ihr Keychain-Passwort noch einmal. Danach wird Ihr Wallet auf diesem Gerät erstellt und mit Ihrem Konto verknüpft.",
         "6digitAlreadySetup": "Ihr Keychain-Passwort besteht bereits, Sie müssen nur die Wallet-Erstellung bestätigen. Danach wird Ihr Wallet auf diesem Gerät erstellt und mit Ihrem Konto verknüpft.",
         "passwordInvalid": "Das Passwort muss mindestens 6 Zeichen lang sein, die entweder alphanumerisch oder Symbole sein können.",
@@ -678,10 +701,9 @@
         "welcomToWallet": "Willkommen in Ihrem Wallet",
         "tokensDescription": "Tokens sind die Kryptowährung auf Minds. Ihr Gesamtbestand an Tokens verteilt sich auf zwei verschiedene Arten von Adressen.",
         "onchainDescription": "On-Chain-Zahlungen werden in der öffentlichen Blockchain getätigt und kosten eine kleine ETH-Gasgebühr. Sie können Ihre eigenen Private Keys oder neue Wallets erstellen.",
-        "offchainDescription": "Off-Chain-Zahlungen werden nicht in der Blockchain veröffentlicht und haben Ausgabenlimits. Hierhin gehen Ihre Belohnungen."
-    },
-    "mindsSettings": {
-        "error": "Ups es gab einen Fehler beim Laden der Servereinstellungen.\nBitte versuchen Sie es erneut."
+        "offchainDescription": "Off-Chain-Zahlungen werden nicht in der Blockchain veröffentlicht und haben Ausgabenlimits. Hierhin gehen Ihre Belohnungen.",
+        "rewardsDescription1": "Umso mehr Interaktion Ihr Content anregt, umso größer ist Ihr Tokenanteil am täglichen Belohnungsfonds, der an Ihre Off-Chain-Adresse geht.",
+        "6digitDescription1": "mit dem Ihr Private-Key auf diesem Gerät verschlüsselt wird."
     },
     "userTypeAhead": {
         "placeholder": "Nutzername zur Suche eingeben",
@@ -707,8 +729,7 @@
         "topPeriod1": "1 Jahr"
     },
     "update": {
-        "title": "Update auf v{{version}}",
-        "version": "Neue v{{version}} verfügbar!"
+        "title": "Update auf v{{version}}"
     },
     "downloading": "Lade runter",
     "confirm18": "Bestätigen Sie Ihre Volljährigkeit",
@@ -739,5 +760,21 @@
     "errorShowActivity": "Aktivität kann nicht angezeigt werden",
     "wantToUpdate": "Wollen Sie die App updaten?",
     "updateAvailable": "Update verfügbar",
-    "rememberTomorrow": "Später erinnern"
+    "rememberTomorrow": "Später erinnern",
+    "noInternet": "Keine Internetverbindung",
+    "offline": "Offline",
+    "cantReachServer": "Server kann nicht erreicht werden",
+    "showingStored": "Zeige gespeicherte Daten",
+    "enableComments": "Kommentare aktivieren",
+    "disableComments": "Kommentare deaktivieren",
+    "payments": {
+        "confirmDeleteCard": "Wollen Sie diese Karte löschen?"
+    },
+    "more": "Mehr",
+    "transcodingMediaDisplay": "Video wird transkodiert",
+    "actions": "Aktionen",
+    "requests": "Anfragen",
+    "notAllowed": "Sie dürfen nicht",
+    "undo": "Rückgängig",
+    "pleaseTryAgain": "Bitte erneut versuchen."
 }

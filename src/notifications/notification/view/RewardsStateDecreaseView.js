@@ -22,7 +22,10 @@ export default class RewardsStateDecreaseView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToWallet}>{i18n.t('notification.rewardsStateDecrease', {state: this.props.state, multiplier: this.props.multiplier})}</Text>
+        <Text onPress={this.navToWallet}>
+          {i18n.t('notification.rewardsStateDecrease', {state: this.props.state}) + '\n'}
+          {i18n.t('notification.rewardsStateDecrease1', {'multiplier': this.props.multiplier})}
+        </Text>
       </View>
     )
   }

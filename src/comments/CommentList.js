@@ -385,6 +385,21 @@ class CommentList extends React.Component<PropsType, StateType> {
     )
   }
 
+  commentFocusCall = (comment: CommentModel, index: number) => {
+    if (comment.focused && this.props.parent) {
+      setTimeout(() => {
+        if (
+          this.props.onCommentFocus &&
+          this.listRef &&
+          this.listRef._listRef
+        ) {
+          const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+          this.props.onCommentFocus(comment, frame.offset + frame.length);
+        }
+      }, 1000);
+    }
+  };
+
   /**
    * Render comments
    */
@@ -394,15 +409,6 @@ class CommentList extends React.Component<PropsType, StateType> {
     // add the editing observable property
     comment.editing = observable.box(false);
 
-    if (comment.focused && this.props.parent) {
-      setTimeout(() => {
-        if (this.props.onCommentFocus && this.listRef && this.listRef._listRef) {
-          const frame = this.listRef._listRef._getFrameMetricsApprox(row.index);
-          this.props.onCommentFocus(row.item, frame.offset + frame.length);
-        }
-      }, 1000);
-    }
-
     return (
       <Comment
         comment={comment}
@@ -411,6 +417,8 @@ class CommentList extends React.Component<PropsType, StateType> {
         onTextInputfocus={this.onChildFocus}
         onCommentFocus={this.onCommentFocus}
         navigation={this.props.navigation}
+        commentFocusCall={this.commentFocusCall}
+        index={row.index}
       />
     );
   }
