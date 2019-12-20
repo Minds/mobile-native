@@ -121,6 +121,10 @@ class DiscoveryStore {
    */
   @action
   reload() {
+    // ignore reload for latest channels
+    if (this.filters.type === 'lastchannels') {
+      return;
+    }
     this.listStore.clear();
     this.fetch();
   }

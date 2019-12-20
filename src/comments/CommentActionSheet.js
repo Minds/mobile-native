@@ -90,6 +90,8 @@ export default class CommentActionSheet extends Component {
           } else {
             actions.push( i18n.t('removeExplicit') )
           }
+        } else if (this.props.entity.isOwner()) {
+          actions.push( i18n.t('delete') );
         }
 
         actions.push( i18n.t('report') );

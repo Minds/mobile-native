@@ -39,7 +39,9 @@ if (process.env.JEST_WORKER_ID === undefined) {
           return null;
         }
         // only log api 500 errors
-        if (isApiError(hint.originalException) && hint.originalException.status < 500) {
+        if (isApiError(hint.originalException) &&
+          (isNaN(hint.originalException.status) || hint.originalException.status < 500)
+        ) {
           return null;
         }
       }

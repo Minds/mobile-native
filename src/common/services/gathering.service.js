@@ -4,6 +4,11 @@ import api from './../../common/services/api.service';
  * Gathering service
  */
 class GatheringService {
+  keepAliveInterval = null;
+
+  get isActive() {
+    return this.keepAliveInterval !== null;
+  }
   /**
    * Start keep alive pooling
    */
@@ -16,6 +21,7 @@ class GatheringService {
    */
   stopKeepAlive() {
     clearInterval(this.keepAliveInterval);
+    this.keepAliveInterval = null;
   }
 
   /**

@@ -153,9 +153,12 @@ export default class BlogViewHTML extends Component {
     }
 
     if (html.indexOf('<iframe') >= 0) {
-      html = html.replace('<iframe', '<div class="iframewrapper"><iframe');
-      html = html.replace('</iframe>', '</iframe></div>');
-      html = html.replace('src="//', 'src="https://');
+      const iframeOpen = new RegExp(/\<iframe/g);
+      const iframeClose = new RegExp(/\<\/iframe\>/g);
+      const badSrc = new RegExp(/src=\"\/\//g);
+      html = html.replace(iframeOpen, '<div class="iframewrapper"><iframe');
+      html = html.replace(iframeClose, '</iframe></div>');
+      html = html.replace(badSrc, 'src="https://');
     }
 
     return `<!DOCTYPE html><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />

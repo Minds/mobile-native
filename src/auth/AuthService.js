@@ -28,6 +28,10 @@ class AuthService {
     try {
       let resp = await api.delete('api/v2/oauth/token');
       session.logout();
+
+      // Fixes autosubscribe issue on register
+      await api.clearCookies();
+
       return true;
     } catch (err) {
       logService.exception('[AuthService] logout', err);
