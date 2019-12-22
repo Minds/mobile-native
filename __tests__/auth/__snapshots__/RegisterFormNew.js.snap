@@ -1,0 +1,340 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegisterFormNew component should renders correctly 1`] = `
+<RCTScrollView>
+  <View>
+    <View>
+      <Text
+        style={
+          Object {
+            "color": "#4A4A4A",
+            "fontFamily": "Roboto",
+            "fontSize": 36,
+            "fontWeight": "bold",
+            "lineHeight": 37,
+            "paddingTop": 25,
+            "textAlign": "center",
+          }
+        }
+      >
+        Join the Minds Revolution
+      </Text>
+    </View>
+    <View>
+      <Text
+        style={
+          Object {
+            "color": "#F00",
+            "paddingLeft": 4,
+            "paddingTop": 4,
+            "textAlign": "center",
+          }
+        }
+      />
+    </View>
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      editable={true}
+      onChangeText={[Function]}
+      placeholder="Username"
+      placeholderTextColor="#444"
+      rejectResponderTermination={true}
+      returnKeyType="done"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#D8D8D8",
+            "borderRadius": 2,
+            "borderWidth": 1,
+            "color": "#4A4A4A",
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "height": 40,
+            "lineHeight": 21,
+            "marginLeft": 20,
+            "marginRight": 20,
+            "padding": 10,
+          },
+        ]
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      editable={true}
+      onChangeText={[Function]}
+      placeholder="Email"
+      placeholderTextColor="#444"
+      rejectResponderTermination={true}
+      returnKeyType="done"
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#D8D8D8",
+            "borderRadius": 2,
+            "borderWidth": 1,
+            "color": "#4A4A4A",
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "height": 40,
+            "lineHeight": 21,
+            "marginLeft": 20,
+            "marginRight": 20,
+            "padding": 10,
+          },
+          Object {
+            "marginTop": 10,
+          },
+        ]
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      editable={true}
+      onChangeText={[Function]}
+      placeholder="Password"
+      placeholderTextColor="#444"
+      rejectResponderTermination={true}
+      returnKeyType="done"
+      secureTextEntry={true}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#D8D8D8",
+            "borderRadius": 2,
+            "borderWidth": 1,
+            "color": "#4A4A4A",
+            "fontFamily": "Roboto",
+            "fontSize": 16,
+            "height": 40,
+            "lineHeight": 21,
+            "marginLeft": 20,
+            "marginRight": 20,
+            "padding": 10,
+          },
+          Object {
+            "marginTop": 10,
+          },
+        ]
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <View
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignSelf": "flex-start",
+          "backgroundColor": "transparent",
+          "borderColor": "#ededed",
+          "borderRadius": 3,
+          "borderWidth": 0,
+          "margin": 5,
+          "marginLeft": 10,
+          "marginRight": 10,
+          "marginTop": 15,
+          "opacity": 1,
+          "padding": 10,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+            },
+            Object {
+              "justifyContent": "flex-end",
+            },
+            false,
+          ]
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "#bfbfbf",
+                "fontSize": 24,
+              },
+              undefined,
+              Object {
+                "fontFamily": "FontAwesome",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+        >
+          
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#4A4A4A",
+              "paddingLeft": 8,
+            }
+          }
+        >
+          I have read and accept the
+           
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#0091FF",
+              }
+            }
+          >
+            terms of use
+          </Text>
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "center",
+          },
+          Object {
+            "marginTop": 10,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {
+              "marginLeft": 15,
+              "marginRight": 15,
+            },
+            undefined,
+            Object {
+              "backgroundColor": "transparent",
+              "borderColor": "#FFF",
+              "borderWidth": 1,
+              "marginLeft": 10,
+              "marginRight": 0,
+            },
+            Object {
+              "borderRadius": 2,
+            },
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          focusable={true}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={null}
+        >
+          <View
+            pointerEvents="box-only"
+            style={
+              Array [
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#9E9E9E",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "padding": 19,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                Object {
+                  "backgroundColor": "#5DBAC0",
+                },
+                Object {
+                  "borderRadius": 2,
+                },
+                Object {
+                  "padding": 12,
+                },
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                false,
+                false,
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {},
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  undefined,
+                  Array [
+                    Object {
+                      "color": "white",
+                      "fontSize": 20,
+                    },
+                    undefined,
+                    Object {
+                      "fontSize": 17.5,
+                    },
+                    undefined,
+                    Object {
+                      "fontSize": 16,
+                      "fontWeight": "600",
+                      "letterSpacing": 1.25,
+                    },
+                    undefined,
+                    undefined,
+                    false,
+                  ],
+                ]
+              }
+            >
+              CREATE A CHANNEL
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;

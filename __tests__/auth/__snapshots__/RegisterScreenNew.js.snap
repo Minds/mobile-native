@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegisterScreenNew component should renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "justifyContent": "center",
+      },
+      Object {
+        "padding": 10,
+      },
+      Object {
+        "zIndex": 15,
+      },
+    ]
+  }
+>
+  <Image
+    source={
+      Object {
+        "testUri": "../../../src/assets/logos/bulb.png",
+      }
+    }
+    style={
+      Object {
+        "height": 45,
+        "marginLeft": 15,
+        "marginTop": 15,
+        "width": 26.25,
+      }
+    }
+  />
+  <View
+    style={
+      Array [
+        Object {
+          "backgroundColor": "transparent",
+          "borderRightColor": "transparent",
+          "borderRightWidth": 100,
+          "borderStyle": "solid",
+          "borderTopColor": "red",
+          "borderTopWidth": 100,
+          "height": 0,
+          "width": 0,
+        },
+        Object {
+          "borderTopColor": "#FED12F",
+          "position": "absolute",
+          "right": 5,
+          "top": -80,
+          "transform": Array [
+            Object {
+              "rotate": "90deg",
+            },
+            Object {
+              "skewY": "60deg",
+            },
+            Object {
+              "scaleX": 4,
+            },
+            Object {
+              "scaleY": 8,
+            },
+          ],
+          "zIndex": -10,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      Object {
+        "flex": 1,
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFF",
+            "elevation": 11,
+            "height": "78.78%",
+            "left": 20,
+            "position": "absolute",
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 5,
+              "width": 5,
+            },
+            "shadowOpacity": 0.8,
+            "shadowRadius": 6.68,
+            "top": 60,
+            "transform": Array [
+              Object {
+                "rotate": "-1deg",
+              },
+            ],
+            "width": "87.5%",
+            "zIndex": -5,
+          },
+          Object {},
+        ]
+      }
+    />
+    <View
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#FFF",
+            "elevation": 11,
+            "height": "78.78%",
+            "left": 20,
+            "position": "absolute",
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 5,
+              "width": 5,
+            },
+            "shadowOpacity": 0.8,
+            "shadowRadius": 6.68,
+            "top": 60,
+            "transform": Array [
+              Object {
+                "rotate": "-1deg",
+              },
+            ],
+            "width": "87.5%",
+            "zIndex": -5,
+          },
+          Object {
+            "top": 55,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          Object {
+            "opacity": 0,
+            "transform": Array [
+              Object {
+                "scale": 0.3,
+              },
+            ],
+          }
+        }
+      >
+        <View>
+          <RegisterFormNew
+            onBack={[Function]}
+            onRegister={[Function]}
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
