@@ -20,7 +20,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import authService from './../auth/AuthService';
-import { List, ListItem } from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 import { FormLabel, FormInput, Button } from 'react-native-elements';
 import settingsService from './SettingsService';
 import settingsStore from './SettingsStore';
@@ -202,7 +202,7 @@ export default class SettingsScreen extends Component {
           items={languages}
         />
         <View style={styles.scrollViewContainer}>
-          <List containerStyle={styles.container}>
+          <View style={styles.container}>
             {
               list.map((l, i) => (
                 <ListItem
@@ -221,7 +221,7 @@ export default class SettingsScreen extends Component {
                 />
               ))
             }
-          </List>
+          </View>
         </View>
       </ScrollView>
     );

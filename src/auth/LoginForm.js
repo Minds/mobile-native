@@ -121,10 +121,9 @@ export default class LoginForm extends Component {
       <Button
         onPress={() => this.onLoginPress()}
         title={i18n.t('auth.login')}
-        borderRadius={30}
-        backgroundColor="transparent"
-        containerViewStyle={ComponentsStyle.loginButton}
-        textStyle={ComponentsStyle.loginButtonText}
+        type="clear"
+        containerStyle={ComponentsStyle.loginButton}
+        titleStyle={ComponentsStyle.loginButtonText}
         key={1}
         loading={this.state.inProgress}
         loadingRight={true}
@@ -139,11 +138,11 @@ export default class LoginForm extends Component {
         <Button
           onPress={() => this.props.onRegister()}
           title={i18n.t('auth.create')}
-          borderRadius={30}
-          backgroundColor="transparent"
-          containerViewStyle={ComponentsStyle.loginButton}
-          textStyle={ComponentsStyle.loginButtonText}
+          type="clear"
+          containerStyle={ComponentsStyle.loginButton}
+          titleStyle={ComponentsStyle.loginButtonText}
           key={2}
+          testID="registerButton"
         />
       );
     }

@@ -115,7 +115,7 @@ export default class NewsfeedScreen extends Component {
             header={header}
             navigation={this.props.navigation}
           />
-          <CaptureFab navigation={this.props.navigation}/>
+          <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
         </View>
       );
     }
@@ -127,7 +127,7 @@ export default class NewsfeedScreen extends Component {
           header={header}
           navigation={this.props.navigation}
           />
-        <CaptureFab navigation={this.props.navigation}/>
+        <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
       </View>
     );
   }

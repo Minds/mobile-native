@@ -77,19 +77,19 @@ class Toolbar extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.topbar}>
-          <TouchableOpacity style={styles.button} onPress={this.filterFeed}>
+          <TouchableOpacity style={styles.button} onPress={this.filterFeed} testID="FeedButton">
             <Icon name="list" size={ICON_SIZE} color={filter == 'feed' ? colors.primary : color} style={styles.icon} />
             <Text style={[styles.buttontext, filter == 'feed' ? styles.buttontextSelected : null]}>{i18n.t('feed').toUpperCase()}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={this.filterImages} >
+          <TouchableOpacity style={styles.button} onPress={this.filterImages} testID="ImagesButton">
             <IonIcon name="md-image" size={ICON_SIZE} color={filter == 'images' ? colors.primary : color} style={styles.icon} />
             <Text style={[styles.buttontext, filter == 'images' ? styles.buttontextSelected : null]}>{i18n.t('images').toUpperCase()}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={this.filterVideos} >
+          <TouchableOpacity style={styles.button} onPress={this.filterVideos} testID="VideosButton">
             <IonIcon name="md-videocam" size={ICON_SIZE} color={filter == 'videos' ? colors.primary : color} style={styles.icon} />
             <Text style={[styles.buttontext, filter == 'videos' ? styles.buttontextSelected : null]}>{i18n.t('videos').toUpperCase()}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={this.filterBlogs}>
+          <TouchableOpacity style={styles.button} onPress={this.filterBlogs} testID="BlogsButton">
             <Icon name="subject" size={ICON_SIZE} color={filter == 'blogs' ? colors.primary : color} style={styles.icon} />
             <Text style={[styles.buttontext, filter == 'blogs' ? styles.buttontextSelected : null]}>{i18n.t('blogs.blogs').toUpperCase()}</Text>
           </TouchableOpacity>

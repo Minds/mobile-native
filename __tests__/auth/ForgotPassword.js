@@ -1,10 +1,10 @@
 import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Button } from 'react-native-elements';
 
 import ForgotPassword from '../../src/auth/ForgotPassword';
 import authService from '../../src/auth/AuthService';
-
 jest.mock('../../src/auth/AuthService');
 
 // Note: test renderer must be required after react-native.
@@ -37,7 +37,7 @@ describe('ForgotPassword component', () => {
     });
 
     // press send
-    await render.find('Button').at(1).simulate('press');
+    await render.find(Button).at(1).simulate('press');
 
     // expect auth service login to be called once
     expect(authService.forgot).toBeCalled();
@@ -57,7 +57,7 @@ describe('ForgotPassword component', () => {
     const render = wrapper.dive();
 
     // press go back
-    await render.find('Button').at(0).simulate('press');
+    await render.find(Button).at(0).simulate('press');
 
     // expect onLogin to be called once
     expect(mockFn).toBeCalled();

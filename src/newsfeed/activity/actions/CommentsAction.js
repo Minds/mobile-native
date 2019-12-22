@@ -39,7 +39,7 @@ class CommentsAction extends Component {
     const color = canComment ? (this.props.entity['comments:count'] > 0 ? CS.colorPrimary : CS.colorAction) : CS.colorLightGreyed;
 
     return (
-      <TouchableOpacityCustom style={[CS.flexContainer, CS.centered, CS.rowJustifyCenter]} onPress={this.openComments}>
+      <TouchableOpacityCustom style={[CS.flexContainer, CS.centered, CS.rowJustifyCenter]} onPress={this.openComments} testID={this.props.testID}>
         <Icon style={[color, CS.marginRight]} name={icon} size={this.props.size} />
         <Counter size={this.props.size * 0.70} count={this.props.entity['comments:count']} />
       </TouchableOpacityCustom>

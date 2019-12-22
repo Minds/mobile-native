@@ -12,8 +12,7 @@ import {
 } from 'react-native';
 
 import { List, ListItem } from 'react-native-elements';
-import { FormLabel, FormInput, Button } from 'react-native-elements';
-import settingsService from '../SettingsService';
+import { Button } from 'react-native-elements';
 import i18n from '../../common/services/i18n.service';
 
 export default class BillingScreen extends Component {

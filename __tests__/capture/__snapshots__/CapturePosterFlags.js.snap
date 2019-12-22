@@ -936,6 +936,7 @@ exports[`cature poster flags component should renders correctly for props false 
                     "width": "100%",
                   }
                 }
+                testID="tagInput"
                 underlineColorAndroid="transparent"
                 value=""
               />
@@ -2104,6 +2105,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "width": "100%",
                   }
                 }
+                testID="tagInput"
                 underlineColorAndroid="transparent"
                 value=""
               />
