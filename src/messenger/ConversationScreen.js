@@ -210,8 +210,9 @@ export default class ConversationScreen extends Component {
             autogrow={true}
             maxHeight={110}
             value={this.state.text}
+            testID='ConversationTextInput'
           />
-          <TouchableOpacity onPress={this.send} style={styles.sendicon}><Icon name="md-send" size={24} style={{ color: '#444' }}/></TouchableOpacity>
+          <TouchableOpacity onPress={this.send} style={styles.sendicon} testID='ConversationSendButton'><Icon name="md-send" size={24} style={{ color: '#444' }}/></TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     );

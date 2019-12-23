@@ -47,7 +47,16 @@ export default class Topbar extends Component {
               </View>
             </TouchableOpacity>}
 
-            { !featuresService.has('crypto') && <View style={styles.topbarLeft} />}
+          <View style={styles.topbarCenter}>
+            { this.props.user.me && <Avatar
+              rounded
+              source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' +  this.props.user.me.icontime}}
+              width={38}
+              height={38}
+              onPress={() => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })}
+              testID="AvatarButton"
+            /> }
+          </View>
 
             <View style={styles.topbarCenter}>
               { this.props.user.me && <Avatar

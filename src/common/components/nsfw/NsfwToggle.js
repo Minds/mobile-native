@@ -58,7 +58,7 @@ export default class NsfwToggle extends Component {
   render() {
     const isActive = Boolean(this.props.value && this.props.value.length);
     const button = (
-      <Touchable style={this.props.containerStyle} onPress={this.showDropdown} {...testID('NSFW button')}>
+      <Touchable style={this.props.containerStyle} onPress={this.showDropdown} testID="NsfwToggle">
         <MdIcon
           name="explicit"
           color={isActive ? Colors.explicit : Colors.darkGreyed}
@@ -80,7 +80,7 @@ export default class NsfwToggle extends Component {
               key={i}
               onPress={() => this.toggleDropdownOption(reason)}
               textStyle={[styles.menuItemText, this.isReasonActive(reason) && styles.menuItemTextActive]}
-              {...testID(`NSFW ${reason.label}`)}
+              testID={`NsfwReason${reason.label}`}
             >{this.isReasonActive(reason) && <MdIcon name="check" />} {reason.label}</MenuItem>
           ))}
         </Menu>

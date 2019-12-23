@@ -13,12 +13,9 @@ exports[`Remind owner component renders correctly 1`] = `
     }
   }
 >
-  <Icon
+  <Themed.Icon
     color="rgb(70, 144, 214)"
     name="repeat"
-    raised={false}
-    reverse={false}
-    reverseColor="white"
     size={16}
     style={
       Object {
@@ -26,7 +23,6 @@ exports[`Remind owner component renders correctly 1`] = `
         "marginRight": 8,
       }
     }
-    underlayColor="white"
   />
   <TouchableOpacity
     activeOpacity={0.2}

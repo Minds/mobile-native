@@ -100,6 +100,7 @@ export default class TagInput extends Component {
           keyboardType="default"
           onSubmitEditing={this.addTag}
           onEndEditing={this.addTag}
+          testID="tagInput"
         />
       </ViewCmp>
 

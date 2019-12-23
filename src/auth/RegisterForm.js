@@ -27,6 +27,7 @@ import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import delay from '../common/helpers/delay';
 import apiService from '../common/services/api.service';
+import { DISABLE_PASSWORD_INPUTS } from '../config/Config';
 
 /**
  * Register Form
@@ -83,6 +84,7 @@ export default class RegisterForm extends Component {
           onChangeText={(value) => this.setState({ username: value })}
           value={this.state.username}
           editable={!this.state.inProgress}
+          testID="registerUsernameInput"
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
@@ -94,11 +96,12 @@ export default class RegisterForm extends Component {
           onChangeText={(value) => this.setState({ email: value })}
           value={this.state.email}
           editable={!this.state.inProgress}
+          testID="registerEmailInput"
         />
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
           placeholder={i18n.t('auth.password')}
-          secureTextEntry={true}
+          secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
           autoCapitalize={'none'}
           returnKeyType={'done'}
           placeholderTextColor="#444"
@@ -106,20 +109,21 @@ export default class RegisterForm extends Component {
           onChangeText={(value) => this.setState({ password: value })}
           value={this.state.password}
           editable={!this.state.inProgress}
+          testID="registerPasswordInput"
         />
-        { this.state.password ?
-          <TextInput
-            style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-            placeholder={i18n.t('auth.confirmpassword')}
-            secureTextEntry={true}
-            autoCapitalize={'none'}
-            returnKeyType={'done'}
-            placeholderTextColor="#444"
-            underlineColorAndroid='transparent'
-            onChangeText={(value) => this.setState({ confirmPassword: value })}
-            value={this.state.confirmPassword}
-            editable={!this.state.inProgress}
-          /> : null }
+        <TextInput
+          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+          placeholder={i18n.t('auth.confirmpassword')}
+          secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
+          autoCapitalize={'none'}
+          returnKeyType={'done'}
+          placeholderTextColor="#444"
+          underlineColorAndroid='transparent'
+          onChangeText={(value) => this.setState({ confirmPassword: value })}
+          value={this.state.confirmPassword}
+          editable={!this.state.inProgress}
+          testID="registerPasswordConfirmInput"
+        />
         <CheckBox
           right
           iconRight
@@ -144,20 +148,19 @@ export default class RegisterForm extends Component {
             <Button
               onPress={() => this.onPressBack()}
               title={i18n.t('goback')}
-              borderRadius={30}
-              backgroundColor="transparent"
-              containerViewStyle={ComponentsStyle.loginButton}
-              textStyle={ComponentsStyle.loginButtonText}
+              type="clear"
+              containerStyle={ComponentsStyle.loginButton}
+              titleStyle={ComponentsStyle.loginButtonText}
               disabled={this.state.inProgress}
               disabledStyle={CommonStyle.backgroundTransparent}
             />
             <Button
               onPress={() => this.onPressRegister()}
               title={i18n.t('auth.create')}
-              backgroundColor="transparent"
-              borderRadius={30}
-              containerViewStyle={ComponentsStyle.loginButton}
-              textStyle={ComponentsStyle.loginButtonText}
+              testID="registerCreateButton"
+              type="clear"
+              containerStyle={ComponentsStyle.loginButton}
+              titleStyle={ComponentsStyle.loginButtonText}
               loading={this.state.inProgress}
               loadingRight={true}
               disabled={this.state.inProgress}

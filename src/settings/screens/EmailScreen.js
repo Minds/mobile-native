@@ -9,8 +9,7 @@ import {
   Alert,
 } from 'react-native';
 
-import { List, ListItem } from 'react-native-elements';
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import validator from '../../common/services/validator.service';
