@@ -41,6 +41,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
           },
         ]
       }
+      testID="registerUsernameInput"
       underlineColorAndroid="transparent"
       value=""
     />
@@ -70,6 +71,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
           },
         ]
       }
+      testID="registerEmailInput"
       underlineColorAndroid="transparent"
       value=""
     />
@@ -100,6 +102,38 @@ exports[`RegisterForm component should renders correctly 1`] = `
           },
         ]
       }
+      testID="registerPasswordInput"
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      editable={true}
+      onChangeText={[Function]}
+      placeholder="Confirm Password"
+      placeholderTextColor="#444"
+      rejectResponderTermination={true}
+      returnKeyType="done"
+      secureTextEntry={true}
+      style={
+        Array [
+          Object {
+            "backgroundColor": "#f8f8f8",
+            "borderRadius": 4,
+            "color": "#444",
+            "fontSize": 16,
+            "fontWeight": "600",
+            "height": 50,
+            "letterSpacing": 2,
+            "padding": 15,
+          },
+          Object {
+            "marginTop": 10,
+          },
+        ]
+      }
+      testID="registerPasswordConfirmInput"
       underlineColorAndroid="transparent"
       value=""
     />
@@ -128,19 +162,15 @@ exports[`RegisterForm component should renders correctly 1`] = `
           "padding": 10,
         }
       }
+      testID="checkbox"
     >
       <View
         style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-            },
-            Object {
-              "justifyContent": "flex-end",
-            },
-            false,
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+          }
         }
       >
         <Text
@@ -167,7 +197,9 @@ exports[`RegisterForm component should renders correctly 1`] = `
                 "color": "#bfbfbf",
                 "fontSize": 24,
               },
-              undefined,
+              Object {
+                "minWidth": 24,
+              },
               Object {
                 "fontFamily": "FontAwesome",
                 "fontStyle": "normal",
@@ -206,19 +238,15 @@ exports[`RegisterForm component should renders correctly 1`] = `
           "padding": 10,
         }
       }
+      testID="checkbox"
     >
       <View
         style={
-          Array [
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-            },
-            Object {
-              "justifyContent": "flex-end",
-            },
-            false,
-          ]
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "flex-end",
+          }
         }
       >
         <Text
@@ -250,7 +278,9 @@ exports[`RegisterForm component should renders correctly 1`] = `
                 "color": "#bfbfbf",
                 "fontSize": 24,
               },
-              undefined,
+              Object {
+                "minWidth": 24,
+              },
               Object {
                 "fontFamily": "FontAwesome",
                 "fontStyle": "normal",
@@ -279,23 +309,14 @@ exports[`RegisterForm component should renders correctly 1`] = `
     >
       <View
         style={
-          Array [
-            Object {
-              "marginLeft": 15,
-              "marginRight": 15,
-            },
-            undefined,
-            Object {
-              "backgroundColor": "transparent",
-              "borderColor": "#FFF",
-              "borderWidth": 1,
-              "marginLeft": 10,
-              "marginRight": 0,
-            },
-            Object {
-              "borderRadius": 30,
-            },
-          ]
+          Object {
+            "backgroundColor": "transparent",
+            "borderColor": "#FFF",
+            "borderRadius": 30,
+            "borderWidth": 1,
+            "marginLeft": 10,
+            "marginRight": 0,
+          }
         }
       >
         <View
@@ -309,75 +330,37 @@ exports[`RegisterForm component should renders correctly 1`] = `
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={null}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
         >
           <View
-            pointerEvents="box-only"
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "transparent",
-                },
-                Object {
-                  "borderRadius": 30,
-                },
-                Object {
-                  "padding": 12,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                false,
-                false,
-              ]
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "borderColor": "#2089dc",
+                "borderRadius": 3,
+                "borderWidth": 0,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 8,
+              }
             }
           >
             <Text
               style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 20,
-                    },
-                    undefined,
-                    Object {
-                      "fontSize": 17.5,
-                    },
-                    undefined,
-                    Object {
-                      "fontSize": 16,
-                      "fontWeight": "600",
-                      "letterSpacing": 1.25,
-                    },
-                    undefined,
-                    undefined,
-                    false,
-                  ],
-                ]
+                Object {
+                  "color": "white",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 1.25,
+                  "paddingBottom": 1,
+                  "paddingTop": 2,
+                  "textAlign": "center",
+                }
               }
             >
               GO BACK
@@ -387,23 +370,14 @@ exports[`RegisterForm component should renders correctly 1`] = `
       </View>
       <View
         style={
-          Array [
-            Object {
-              "marginLeft": 15,
-              "marginRight": 15,
-            },
-            undefined,
-            Object {
-              "backgroundColor": "transparent",
-              "borderColor": "#FFF",
-              "borderWidth": 1,
-              "marginLeft": 10,
-              "marginRight": 0,
-            },
-            Object {
-              "borderRadius": 30,
-            },
-          ]
+          Object {
+            "backgroundColor": "transparent",
+            "borderColor": "#FFF",
+            "borderRadius": 30,
+            "borderWidth": 1,
+            "marginLeft": 10,
+            "marginRight": 0,
+          }
         }
       >
         <View
@@ -417,75 +391,38 @@ exports[`RegisterForm component should renders correctly 1`] = `
           onResponderTerminate={[Function]}
           onResponderTerminationRequest={[Function]}
           onStartShouldSetResponder={[Function]}
-          style={null}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="registerCreateButton"
         >
           <View
-            pointerEvents="box-only"
             style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "backgroundColor": "#9E9E9E",
-                  "flexDirection": "row",
-                  "justifyContent": "center",
-                  "padding": 19,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Object {
-                  "backgroundColor": "transparent",
-                },
-                Object {
-                  "borderRadius": 30,
-                },
-                Object {
-                  "padding": 12,
-                },
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                false,
-                false,
-              ]
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "borderColor": "#2089dc",
+                "borderRadius": 3,
+                "borderWidth": 0,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "padding": 8,
+              }
             }
           >
             <Text
               style={
-                Array [
-                  Object {},
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  undefined,
-                  Array [
-                    Object {
-                      "color": "white",
-                      "fontSize": 20,
-                    },
-                    undefined,
-                    Object {
-                      "fontSize": 17.5,
-                    },
-                    undefined,
-                    Object {
-                      "fontSize": 16,
-                      "fontWeight": "600",
-                      "letterSpacing": 1.25,
-                    },
-                    undefined,
-                    undefined,
-                    false,
-                  ],
-                ]
+                Object {
+                  "color": "white",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "letterSpacing": 1.25,
+                  "paddingBottom": 1,
+                  "paddingTop": 2,
+                  "textAlign": "center",
+                }
               }
             >
               CREATE A CHANNEL

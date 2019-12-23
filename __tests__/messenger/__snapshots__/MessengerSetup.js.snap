@@ -127,6 +127,7 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
           "padding": 16,
         }
       }
+      testID="MessengerSetupText"
       underlineColorAndroid="transparent"
     />
   </View>

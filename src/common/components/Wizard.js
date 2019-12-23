@@ -59,13 +59,13 @@ export default class Wizard extends PureComponent<Props, State>  {
       <View style={[CS.rowJustifyCenter, CS.backgroundWhite, CS.padding2x, CS.marginTop4x, CS.marginBottom4x]}>
         {first ?
           <View style={{width:50}}/> :
-          <TouchableOpacity style={[{width:50}, CS.centered]} onPress={this.previous}>
+          <TouchableOpacity style={[{width:50}, CS.centered]} onPress={this.previous} testID="wizardPrevious">
             <Icon size={34} name="keyboard-arrow-left" color={colors.primary}/>
           </TouchableOpacity>}
         <View style={[CS.flexContainer, CS.centered]}>
           <Image source={require('./../../assets/logos/bulb.png')} style={{width:35, height:60}}/>
         </View>
-        <TouchableOpacity style={[{width:50}, CS.centered]} onPress={this.next} disabled={!ready || this.state.waitingNext}>
+        <TouchableOpacity style={[{width:50}, CS.centered]} onPress={this.next} disabled={!ready || this.state.waitingNext} testID="wizardNext">
           {
             this.state.waitingNext ? <ActivityIndicator size="small"/> :
             <Icon size={34} name="keyboard-arrow-right" color={ready ? colors.primary : colors.greyed}/>

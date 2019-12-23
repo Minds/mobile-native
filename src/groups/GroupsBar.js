@@ -8,12 +8,11 @@ import {
 } from 'mobx-react/native'
 
 import {
-  FlatList, View, TouchableOpacity, StyleSheet, ActivityIndicator
+  FlatList, View, TouchableOpacity, StyleSheet, ActivityIndicator, Text
 } from 'react-native'
 
 import {CommonStyle as CS} from '../styles/Common';
 import GrousBarItem from './GroupsBarItem';
-import { Text } from 'react-native-elements';
 import i18n from '../common/services/i18n.service';
 
 @inject('groupsBar')

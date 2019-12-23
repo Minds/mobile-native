@@ -158,6 +158,7 @@ export default class MessengerScreen extends Component {
           refreshing={messengerList.refreshing}
           style={styles.listView}
           ListEmptyComponent={empty}
+          testID="MessengerList"
         />
       </View>
     );
@@ -210,6 +211,7 @@ export default class MessengerScreen extends Component {
         item={row.item}
         styles={styles}
         navigation={this.props.navigation}
+        testID={row.item.username.toUpperCase()}
         />
     );
   }

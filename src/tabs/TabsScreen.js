@@ -43,7 +43,7 @@ let screens = {
   Messenger: {
     screen: withErrorBoundaryScreen(MessengerScreen),
     navigationOptions: {
-      tabBarTestID:'Messenger tab button',
+      tabBarTestID:'MessengerTabButton',
       tabBarAccessibilityLabel: 'Messenger tab button',
     },
   },
