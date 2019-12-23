@@ -24,11 +24,14 @@ import { ComponentsStyle } from '../styles/Components';
 import logService from '../common/services/log.service';
 import TriangleCornerYellow from '../common/components/shapes/TriangleCornerYellow';
 import RegisterFormNew from './RegisterFormNew';
+import TriangleCorner from '../common/components/shapes/TriangleCorner';
+import Rectangle from '../common/components/shapes/Rectangle';
 
 export default class RegisterScreenNew extends Component {
 
   /**
    * Disable navigation bar
+   * 
    */
   static navigationOptions = {
     header: null
@@ -36,23 +39,16 @@ export default class RegisterScreenNew extends Component {
 
   render() {
     return (
-      <View style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x, {zIndex:15}]}>
-        <Image source={require('./../assets/logos/bulb.png')} style={styles.bulb}/>
-        <TriangleCornerYellow />
-        <View style={CommonStyle.flexContainerCenter}>
-          <View style={[styles.rectangle, styles.top]} />
-          <View style={[styles.rectangle, styles.bottom]}>
-            <Animatable.View animation="bounceIn">
-              <Animated.View>
-                <RegisterFormNew
-                  onRegister={this.onRegister}
-                  onBack={this.onPressBack}
-                />
-              </Animated.View>
-            </Animatable.View>
-          </View>
-        </View>
-      </View>
+      <Rectangle>
+        <Animatable.View animation="bounceIn">
+          <Animated.View>
+            <RegisterFormNew
+              onRegister={this.onRegister}
+              onBack={this.onPressBack}
+            />
+          </Animated.View>
+        </Animatable.View>
+      </Rectangle>
     );
   }
 
@@ -67,32 +63,5 @@ export default class RegisterScreenNew extends Component {
 
 
 const styles = StyleSheet.create({
-  rectangle: {
-    position: 'absolute',
-    top: 60,
-    left: 20,
-    backgroundColor: '#FFF',
-    zIndex: -5,
-    width: '87.5%',
-    height: '78.78%',
-    transform: [{rotate: '-1deg'}],
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 5,
-      height: 5,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 6.68,
-    elevation: 11,
-  },
-  top: {},
-  bottom: {
-    top: 55,
-  },
-  bulb: {
-    width: 26.25,
-    height: 45,
-    marginLeft: 15,
-    marginTop: 15
-  }
+
 });
