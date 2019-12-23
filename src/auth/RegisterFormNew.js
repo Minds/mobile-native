@@ -28,6 +28,7 @@ import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import delay from '../common/helpers/delay';
 import apiService from '../common/services/api.service';
+import Input from '../common/components/Input';
 
 /**
  * Register Form
@@ -66,6 +67,11 @@ export default class RegisterFormNew extends Component {
     this.setState({ termsAccepted: !!value, error });
   }
 
+  setUsername = username => this.setState({username});
+  setEmail = email => this.setState({email});
+  setPassword = password => this.setState({password});
+  setConfirmPassword = confirmPassword => this.setState({confirmPassword});
+
   render() {
     return (
       <ScrollView>
@@ -79,50 +85,30 @@ export default class RegisterFormNew extends Component {
             {this.state.error.termsAcceptedError}
           </Text>
         </View>
-        <TextInput
-          style={[ComponentsStyle.loginInputNew]}
+        <Input
           placeholder={i18n.t('auth.username')}
-          placeholderTextColor="#444"
-          returnKeyType={'done'}
-          autoCapitalize={'none'}
-          underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ username: value })}
+          onChangeText={this.setUsername}
           value={this.state.username}
           editable={!this.state.inProgress}
         />
-        <TextInput
-          style={[ComponentsStyle.loginInputNew, CommonStyle.marginTop2x]}
+        <Input
           placeholder={i18n.t('auth.email')}
-          returnKeyType={'done'}
-          autoCapitalize={'none'}
-          placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ email: value })}
+          onChangeText={this.setEmail}
           value={this.state.email}
           editable={!this.state.inProgress}
         />
-        <TextInput
-          style={[ComponentsStyle.loginInputNew, CommonStyle.marginTop2x]}
+        <Input
           placeholder={i18n.t('auth.password')}
           secureTextEntry={true}
-          autoCapitalize={'none'}
-          returnKeyType={'done'}
-          placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ password: value })}
+          onChangeText={this.setPassword}
           value={this.state.password}
           editable={!this.state.inProgress}
         />
         { this.state.password ?
-          <TextInput
-            style={[ComponentsStyle.loginInputNew, CommonStyle.marginTop2x]}
+          <Input
             placeholder={i18n.t('auth.confirmpassword')}
             secureTextEntry={true}
-            autoCapitalize={'none'}
-            returnKeyType={'done'}
-            placeholderTextColor="#444"
-            underlineColorAndroid='transparent'
-            onChangeText={(value) => this.setState({ confirmPassword: value })}
+            onChangeText={this.setConfirmPassword}
             value={this.state.confirmPassword}
             editable={!this.state.inProgress}
           /> : null }
@@ -136,13 +122,13 @@ export default class RegisterFormNew extends Component {
           onPress={() => { this.setState({ termsAccepted: !this.state.termsAccepted }) }}
           disabled={this.state.inProgress}
         />
-        <View style={[CommonStyle.rowJustifyCenter, CommonStyle.marginTop2x]}>
+        <View style={[styles.containerButton, CommonStyle.marginTop2x]}>
             <Button
               onPress={() => this.onPressRegister()}
-              title={i18n.t('auth.create')}
+              title={i18n.t('auth.createChannel')}
               backgroundColor="#5DBAC0"
               borderRadius={2}
-              containerViewStyle={ComponentsStyle.loginButton}
+              containerViewStyle={[styles.button, ComponentsStyle.loginButton]}
               textStyle={ComponentsStyle.loginButtonText}
               loading={this.state.inProgress}
               loadingRight={true}
@@ -215,5 +201,13 @@ const styles = StyleSheet.create({
     lineHeight: 37,
     textAlign: 'center',
     paddingTop: 25,
-  }
+  },
+  containerButton: {
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 20,
+  },
+  button: {
+    alignSelf: 'stretch',
+  },
 });

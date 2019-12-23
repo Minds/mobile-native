@@ -69,7 +69,8 @@
     "accept":"I have read and accept the",
     "termsAndConditions":"terms of use",
     "code":"Code",
-    "join":"Join the Minds Revolution"
+    "join":"Join the Minds Revolution",
+    "createChannel":"Join Minds Now"
   },
   "blockchain": {
     "boostCreate": "Network Boost for {{tokensAmount}} Minds Tokens. {{message}}",
