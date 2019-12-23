@@ -57,22 +57,21 @@ export default class ForgotPassword extends PureComponent {
           <Button
             onPress={() => this.onPressBack()}
             title={i18n.t('goback')}
-            backgroundColor="rgba(0,0,0, 0.5)"
-            borderRadius={4}
-            containerViewStyle={ComponentsStyle.loginButton}
-            textStyle={ComponentsStyle.loginButtonText}
+            type="clear"
+            containerStyle={ComponentsStyle.loginButton}
+            titleStyle={ComponentsStyle.loginButtonText}
           />
           {!this.state.sent && <Button
             onPress={() => this.onContinuePress()}
             title={i18n.t('continue').toUpperCase()}
             backgroundColor="rgba(0,0,0, 0.5)"
             hidde={this.state.sent}
-            borderRadius={4}
             loading={this.state.sending}
             loadingRight={true}
             disable={this.state.sending}
-            containerViewStyle={ComponentsStyle.loginButton}
-            textStyle={ComponentsStyle.loginButtonText}
+            type="clear"
+            containerStyle={ComponentsStyle.loginButton}
+            titleStyle={ComponentsStyle.loginButtonText}
           />}
         </View>
       </KeyboardAvoidingView>

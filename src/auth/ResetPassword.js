@@ -14,7 +14,7 @@ import authService from './AuthService';
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
-import { Button } from 'react-native-elements'
+import { Button } from 'react-native-elements';
 
 import i18n from '../common/services/i18n.service';
 import navigation from '../navigation/NavigationService';
@@ -73,23 +73,23 @@ export default class ResetPassword extends PureComponent {
           <Button
             onPress={this.onPressBack}
             title={i18n.t('goback')}
-            backgroundColor="rgba(0,0,0, 0.5)"
-            borderRadius={30}
-            containerViewStyle={ComponentsStyle.loginButton}
-            textStyle={ComponentsStyle.loginButtonText}
+            type="clear"
+            containerStyle={ComponentsStyle.loginButton}
+            titleStyle={ComponentsStyle.loginButtonText}
           />
-          {!this.state.sent && <Button
-            onPress={() => this.onContinuePress()}
-            title={i18n.t('continue')}
-            backgroundColor="rgba(0,0,0, 0.5)"
-            hidde={this.state.sent}
-            borderRadius={30}
-            loading={this.state.sending}
-            loadingRight={true}
-            disable={this.state.sending || !this.state.password || !this.state.confirmation}
-            containerViewStyle={ComponentsStyle.loginButton}
-            textStyle={ComponentsStyle.loginButtonText}
-          />}
+          {!this.state.sent &&
+            <Button
+              onPress={() => this.onContinuePress()}
+              title={i18n.t('continue')}
+              type="clear"
+              containerStyle={ComponentsStyle.loginButton}
+              titleStyle={ComponentsStyle.loginButtonText}
+              hidde={this.state.sent}
+              loading={this.state.sending}
+              loadingRight={true}
+              disable={this.state.sending || !this.state.password || !this.state.confirmation}
+            />
+          }
         </View>
       </KeyboardAvoidingView>
     );

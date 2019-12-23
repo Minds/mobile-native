@@ -127,7 +127,12 @@ export default class ChannelSetupStep extends Component {
         <View style={[CS.padding4x, CS.flexContainer, CS.rowJustifyStart, CS.alignCenter]}>
           <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>{i18n.t('onboarding.chooseAvatar')}</Text>
           <View style={[CS.rowJustifyEnd, CS.flexContainer]}>
-            <TouchableCustom onPress={this.changeAvatarAction} style={[styles.avatar, CS.marginLeft3x, CS.border, CS.borderGreyed ]} disabled={this.saving}>
+            <TouchableCustom
+              onPress={this.changeAvatarAction}
+              style={[styles.avatar, CS.marginLeft3x, CS.border, CS.borderGreyed ]}
+              disabled={this.saving}
+              testID="selectAvatar"
+            >
               {hasAvatar && <Image source={avatar} style={styles.wrappedAvatar} />}
 
               <View style={[styles.tapOverlayView, hasAvatar ? null : CS.backgroundTransparent]}/>

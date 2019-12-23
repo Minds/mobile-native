@@ -2,6 +2,7 @@ import 'react-native';
 import React from 'react';
 import { Alert } from "react-native";
 import { shallow } from 'enzyme';
+import { Button, CheckBox } from 'react-native-elements';
 
 import RegisterForm from '../../src/auth/RegisterForm';
 import authService from '../../src/auth/AuthService';
@@ -45,7 +46,7 @@ describe('RegisterForm component', () => {
     let inputs = render.find('TextInput');
 
     // should have 4 inputs
-    expect(inputs.length).toBe(3);
+    expect(inputs.length).toBe(4);
 
     // simulate user input
     inputs.at(0).simulate('changeText', 'myFancyUsername');
@@ -53,7 +54,7 @@ describe('RegisterForm component', () => {
     inputs.at(2).simulate('changeText', 'somepassword');
 
     // simulate press checkbox
-    await render.find('CheckBox').at(1).simulate('press');
+    await render.find(CheckBox).at(1).simulate('press');
 
     // update component (password confirmation is shown after the password field is set)
     await wrapper.update();
@@ -65,7 +66,7 @@ describe('RegisterForm component', () => {
     inputs.at(3).simulate('changeText', 'somepassword');
 
     // simulate press register
-    await render.find('Button').at(1).simulate('press');
+    await render.find(Button).at(1).simulate('press');
 
     // expect auth service register to be called once
     expect(authService.register).toBeCalled();
@@ -83,8 +84,7 @@ describe('RegisterForm component', () => {
     // find the text inputs
     let inputs = render.find('TextInput');
 
-    // should have 4 inputs
-    expect(inputs.length).toBe(3);
+    expect(inputs.length).toBe(4);
 
     // simulate user input
     inputs.at(0).simulate('changeText', 'myFancyUsername');
@@ -100,7 +100,7 @@ describe('RegisterForm component', () => {
     inputs.at(3).simulate('changeText', 'ohNoItIsDifferent');
 
     // simulate press register
-    await render.find('Button').at(1).simulate('press');
+    await render.find(Button).at(1).simulate('press');
 
     // should call alert
     expect(Alert.alert).toBeCalled();
@@ -122,7 +122,7 @@ describe('RegisterForm component', () => {
     let inputs = render.find('TextInput');
 
     // should have 4 inputs
-    expect(inputs.length).toBe(3);
+    expect(inputs.length).toBe(4);
 
     // simulate user input
     inputs.at(0).simulate('changeText', 'myFancyUsername');
@@ -138,7 +138,7 @@ describe('RegisterForm component', () => {
     inputs.at(3).simulate('changeText', 'somepassword');
 
     // simulate press register
-    await render.find('Button').at(1).simulate('press');
+    await render.find(Button).at(1).simulate('press');
 
     // should call alert
     expect(Alert.alert).toBeCalled();

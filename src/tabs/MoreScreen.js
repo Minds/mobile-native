@@ -3,38 +3,38 @@ import React, {
 } from 'react';
 
 import {
-View,
-StyleSheet,
-Text,
-ScrollView,
-BackHandler,
-Linking,
-ImageBackground,
-Alert,
-Platform,
-ToastAndroid,
-TouchableOpacity,
+  View,
+  StyleSheet,
+  Text,
+  ScrollView,
+  BackHandler,
+  Linking,
+  ImageBackground,
+  Alert,
+  Platform,
+  ToastAndroid,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
-inject
+  inject
 } from 'mobx-react/native'
 
 import RNExitApp from 'react-native-exit-app';
 
 import {
-MINDS_URI,
-CODE_PUSH_TOKEN
+  MINDS_URI,
+  CODE_PUSH_TOKEN
 } from '../config/Config';
 
 import {
-StackActions,
-NavigationActions
+  StackActions,
+  NavigationActions
 } from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import authService from './../auth/AuthService';
-import { List, ListItem } from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
 import FastImage from 'react-native-fast-image';
 
 import { ComponentsStyle } from '../styles/Components';
@@ -198,7 +198,7 @@ export default class MoreScreen extends Component {
 
   getList(list) {
     return (
-      <List containerStyle={styles.container}>
+      <View style={styles.container}>
         {
           list.map((l, i) => (
             <ListItem
@@ -215,7 +215,7 @@ export default class MoreScreen extends Component {
             />
           ))
         }
-      </List>
+      </View>
     )
   }
 }

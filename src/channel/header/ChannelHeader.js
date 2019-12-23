@@ -217,12 +217,12 @@ export default class ChannelHeader extends Component {
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
             <TouchableHighlightCustom underlayColor="transparent" style={[styles.counter]} onPress={() => { this._navToSubscribers() }}>
-              <View style={styles.counter}>
+              <View style={styles.counter} testID="SubscribersView">
                 <Text style={styles.countertitle}>{i18n.t('subscribers').toUpperCase()}</Text>
                 <Text style={styles.countervalue}>{abbrev(channel.subscribers_count, 0)}</Text>
               </View>
             </TouchableHighlightCustom>
-            <View style={styles.counter}>
+            <View style={styles.counter} testID="ViewsView">
               <Text style={styles.countertitle}>{i18n.t('views').toUpperCase()}</Text>
               <Text style={styles.countervalue}>{abbrev(channel.impressions, 0)}</Text>
             </View>
@@ -235,9 +235,10 @@ export default class ChannelHeader extends Component {
                 style={styles.nameTextInput}
                 value={this.state.name}
                 onChangeText={this.setName}
+                testID="ChannelNameTextInput"
               />}
               {!isEditable &&
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }} testID="ChannelNameView">
                   <Text
                     style={styles.name}
                     ellipsizeMode='tail'

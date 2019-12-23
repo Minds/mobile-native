@@ -15,7 +15,7 @@ import {
   inject
 } from 'mobx-react/native'
 
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
 
 import ChannelHeader from './header/ChannelHeader';
 import Toolbar from './toolbar/Toolbar';
@@ -329,12 +329,12 @@ class ChannelScreen extends Component {
       />
 
     return (
-      <View style={CommonStyle.flexContainer}>
+      <View style={CommonStyle.flexContainer} testID="ChannelScreen">
         { (!channel.blocked && !isClosed) ? body : header }
         <SafeAreaView style={styles.gobackicon}>
           <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={this.goBack}/>
         </SafeAreaView>
-        <CaptureFab navigation={this.props.navigation} />
+        <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
       </View>
     );
   }

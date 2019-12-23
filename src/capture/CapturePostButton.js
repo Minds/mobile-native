@@ -46,7 +46,7 @@ class CapturePostButton extends Component {
                   : CS.borderGreyed,
                 CS.border,
               ]}
-              {...testID('Capture Post Button')}
+              testID={this.props.testID}
             >
               <Text style={[styles.buttonText, connectivityService.isConnected ? CS.colorPrimary : CS.colorGreyed]}>{text}</Text>
             </TouchableOpacity>
