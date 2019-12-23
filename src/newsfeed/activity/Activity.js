@@ -67,6 +67,24 @@ export default class Activity extends Component {
     }
   }
 
+  onLayout = (e) => {
+    if (this.props.onLayout) {
+      this.props.onLayout(e);
+    }
+
+    if (this.props.entity.listRef) {
+      const offsetToScrollTo = this.props.entity._list.scrollOffset + e.nativeEvent.layout.height;
+      
+      setTimeout(() => {
+        this.props.entity.listRef.scrollToOffset({
+          offset: offsetToScrollTo,
+          animated: true
+        });
+        this.props.entity.listRef = null;
+      }, 1000);
+    }
+  }
+
   /**
    * Render
    */
@@ -98,7 +116,7 @@ export default class Activity extends Component {
 
 
     return (
-        <View style={[styles.container, this.props.isReminded ? null : CommonStyle.hairLineBottom]} onLayout={this.props.onLayout}>
+        <View style={[styles.container, this.props.isReminded ? null : CommonStyle.hairLineBottom]} onLayout={this.onLayout}>
           <Pinned entity={this.props.entity}/>
           { this.showOwner() }
             { lock }
