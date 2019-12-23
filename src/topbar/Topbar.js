@@ -38,25 +38,14 @@ export default class Topbar extends Component {
         <View style={styles.container} >
           <View style={styles.topbar}>
 
-            { featuresService.has('crypto') && 
-              <TouchableOpacity 
-                onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} 
+            { featuresService.has('crypto') &&
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })}
                 {...testID('boost-console button')} >
               <View style={styles.topbarLeft}>
                 <Icon name="trending-up" size={22} color='#444' style={ styles.button }/>
               </View>
             </TouchableOpacity>}
-
-          <View style={styles.topbarCenter}>
-            { this.props.user.me && <Avatar
-              rounded
-              source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' +  this.props.user.me.icontime}}
-              width={38}
-              height={38}
-              onPress={() => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })}
-              testID="AvatarButton"
-            /> }
-          </View>
 
             <View style={styles.topbarCenter}>
               { this.props.user.me && <Avatar
@@ -65,7 +54,7 @@ export default class Topbar extends Component {
                 width={38}
                 height={38}
                 onPress={() => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })}
-                {...testID('topbar avatar button')} 
+                testID="AvatarButton"
               /> }
             </View>
 
