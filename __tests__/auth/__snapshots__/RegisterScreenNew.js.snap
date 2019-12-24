@@ -11,9 +11,6 @@ exports[`RegisterScreenNew component should renders correctly 1`] = `
       Object {
         "padding": 10,
       },
-      Object {
-        "zIndex": 15,
-      },
     ]
   }
 >
@@ -82,10 +79,15 @@ exports[`RegisterScreenNew component should renders correctly 1`] = `
         Array [
           Object {
             "backgroundColor": "#FFF",
-            "elevation": 11,
             "height": "78.78%",
             "left": 20,
             "position": "absolute",
+            "top": 60,
+            "width": "87.5%",
+            "zIndex": -5,
+          },
+          Object {
+            "elevation": 11,
             "shadowColor": "#000",
             "shadowOffset": Object {
               "height": 5,
@@ -93,50 +95,38 @@ exports[`RegisterScreenNew component should renders correctly 1`] = `
             },
             "shadowOpacity": 0.8,
             "shadowRadius": 6.68,
-            "top": 60,
-            "transform": Array [
-              Object {
-                "rotate": "-1deg",
-              },
-            ],
-            "width": "87.5%",
-            "zIndex": -5,
-          },
-          Object {},
-        ]
-      }
-    />
-    <View
-      style={
-        Array [
-          Object {
-            "backgroundColor": "#FFF",
-            "elevation": 11,
-            "height": "78.78%",
-            "left": 20,
-            "position": "absolute",
-            "shadowColor": "#000",
-            "shadowOffset": Object {
-              "height": 5,
-              "width": 5,
-            },
-            "shadowOpacity": 0.8,
-            "shadowRadius": 6.68,
-            "top": 60,
-            "transform": Array [
-              Object {
-                "rotate": "-1deg",
-              },
-            ],
-            "width": "87.5%",
-            "zIndex": -5,
-          },
-          Object {
-            "top": 55,
           },
         ]
       }
     >
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderRightColor": "transparent",
+              "borderRightWidth": 100,
+              "borderStyle": "solid",
+              "borderTopColor": "red",
+              "borderTopWidth": 100,
+              "height": 0,
+              "width": 0,
+            },
+            Object {
+              "borderRightWidth": 345,
+              "borderTopColor": "#FFF",
+              "borderTopWidth": 10,
+              "right": 2.5,
+              "top": -10,
+              "transform": Array [
+                Object {
+                  "rotate": "180deg",
+                },
+              ],
+            },
+          ]
+        }
+      />
       <View
         style={
           Object {
@@ -156,6 +146,29 @@ exports[`RegisterScreenNew component should renders correctly 1`] = `
           />
         </View>
       </View>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "borderRightColor": "transparent",
+              "borderRightWidth": 100,
+              "borderStyle": "solid",
+              "borderTopColor": "red",
+              "borderTopWidth": 100,
+              "height": 0,
+              "width": 0,
+            },
+            Object {
+              "borderRightWidth": 345,
+              "borderTopColor": "#FFF",
+              "borderTopWidth": 10,
+              "right": 0,
+              "top": 132,
+            },
+          ]
+        }
+      />
     </View>
   </View>
 </View>

@@ -42,7 +42,7 @@ describe('RegisterFormNew component', () => {
     const render = wrapper.dive();
 
     // find the text inputs
-    let inputs = render.find('TextInput');
+    let inputs = render.find('Input');
 
     // should have 4 inputs
     expect(inputs.length).toBe(3);
@@ -59,7 +59,7 @@ describe('RegisterFormNew component', () => {
     await wrapper.update();
 
     // update the inputs search
-    inputs = render.find('TextInput');
+    inputs = render.find('Input');
 
     // simulate user input for paddword confirmation
     inputs.at(3).simulate('changeText', 'somepassword');
@@ -81,7 +81,7 @@ describe('RegisterFormNew component', () => {
     const render = wrapper.dive();
 
     // find the text inputs
-    let inputs = render.find('TextInput');
+    let inputs = render.find('Input');
 
     // should have 4 inputs
     expect(inputs.length).toBe(3);
@@ -94,7 +94,7 @@ describe('RegisterFormNew component', () => {
     await wrapper.update();
 
     // update the inputs search
-    inputs = render.find('TextInput');
+    inputs = render.find('Input');
 
     // simulate user input for paddword confirmation
     inputs.at(3).simulate('changeText', 'ohNoItIsDifferent');
@@ -119,7 +119,7 @@ describe('RegisterFormNew component', () => {
     const render = wrapper.dive();
 
     // find the text inputs
-    let inputs = render.find('TextInput');
+    let inputs = render.find('Input');
 
     // should have 4 inputs
     expect(inputs.length).toBe(3);
@@ -132,7 +132,7 @@ describe('RegisterFormNew component', () => {
     await wrapper.update();
 
     // update the inputs search
-    inputs = render.find('TextInput');
+    inputs = render.find('Input');
 
     // simulate user input for paddword confirmation
     inputs.at(3).simulate('changeText', 'somepassword');
