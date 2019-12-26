@@ -80,6 +80,8 @@ exports[`blog card component should renders correctly 1`] = `
       }
     >
       <Text
+        ellipsizeMode="tail"
+        numberOfLines={2}
         style={
           Array [
             Object {
@@ -87,6 +89,9 @@ exports[`blog card component should renders correctly 1`] = `
             },
             Object {
               "fontWeight": "500",
+            },
+            Object {
+              "flex": 1,
             },
           ]
         }
