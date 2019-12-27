@@ -19,6 +19,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import * as Progress from 'react-native-progress';
+import ReadMore from 'react-native-read-more-text';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
@@ -185,6 +186,28 @@ export default class ChannelHeader extends Component {
   setBriefdescription = briefdescription => this.setState({ briefdescription });
   setName = name => this.setState({ name });
 
+
+  /**
+   * Truncated footer render for description
+   */
+  _renderTruncatedFooter = (handlePress) => {
+    return (
+      <Text style={[CommonStyle.fontM, CommonStyle.colorPrimary, CommonStyle.marginTop2x]} onPress={handlePress}>
+        {i18n.t('readMore')}
+      </Text>
+    );
+  }
+  /**
+   * Revealed footer render for description
+   */
+  _renderRevealedFooter = (handlePress) => {
+    return (
+      <Text style={[CommonStyle.fontM, CommonStyle.colorPrimary, CommonStyle.marginTop2x]} onPress={handlePress}>
+        {i18n.t('showLess')}
+      </Text>
+    );
+  }
+
   /**
    * Render Header
    */
@@ -272,7 +295,13 @@ export default class ChannelHeader extends Component {
           </View>}
           {!isEditable &&
             <View style={CommonStyle.paddingTop2x}>
-              <Tags navigation={this.props.navigation}>{channel.briefdescription}</Tags>
+              <ReadMore
+                numberOfLines={3}
+                renderTruncatedFooter={this._renderTruncatedFooter}
+                renderRevealedFooter={this._renderRevealedFooter}
+              >
+                <Tags navigation={this.props.navigation}>{channel.briefdescription}</Tags>
+              </ReadMore>
             </View>
           }
         </View>
