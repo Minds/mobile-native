@@ -27,7 +27,7 @@
     "entities": "^2.0.0",
     "ethjs-signer": "^0.1.1",
     "i18n-js": "^3.2.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "mobx": "^5.14.0",
     "mobx-react": "^5.4.4",
     "mobx-utils": "^5.4.1",
