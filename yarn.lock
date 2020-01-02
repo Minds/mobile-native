@@ -8261,7 +8261,7 @@ prop-types-exact@^1.2.0:
     object.assign "^4.1.0"
     reflect.ownkeys "^0.2.0"
 
-prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8594,6 +8594,19 @@ react-native-device-log@Minds/react-native-device-log#74f06b09c6656aa228a9a3a474
     moment "^2.18.1"
     react-native-invertible-scroll-view "^1.1.1"
     stacktrace-parser "^0.1.4"
+
+react-native-elements@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-1.1.0.tgz#f99bcda4459a886f3ab4591c684c099d37aedf2b"
+  integrity sha512-n1eOL0kUdlH01zX7bn1p7qhYXn7kquqxYQ0oWlxoAck9t5Db/KeK5ViOsAk8seYSvAG6Pe7OxgzRFnMfFhng0Q==
+  dependencies:
+    color "^3.1.0"
+    deepmerge "^3.1.0"
+    hoist-non-react-statics "^3.1.0"
+    opencollective-postinstall "^2.0.0"
+    prop-types "^15.5.8"
+    react-native-ratings "^6.3.0"
+    react-native-status-bar-height "^2.2.0"
 
 react-native-elements@^1.2.7:
   version "1.2.7"
@@ -9338,6 +9351,12 @@ rn-apk@^0.2.9:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/rn-apk/-/rn-apk-0.2.9.tgz#6aec783dd64cdf6074b0a590cc51261999351b79"
   integrity sha512-JcqO9raQWdjQAaRKjz6OFdE6G4GzZnqhqMLRyKHQ9WBaYFzhNpzujTyTr0T9cngvMJ1JOmHfxG1U8DFHf7QU3A==
+
+"rne-modal-tooltip@gist:b28c003d87c619674def0878473338a0":
+  version "1.1.0"
+  resolved "https://gist.github.com/b28c003d87c619674def0878473338a0.git#b68c9d067545ce72b0aa4c9bf5a5fea90d136bc0"
+  dependencies:
+    react-native-elements "1.1.0"
 
 rst-selector-parser@^2.2.3:
   version "2.2.3"
