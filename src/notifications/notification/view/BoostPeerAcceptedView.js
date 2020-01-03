@@ -35,14 +35,14 @@ export default class BoostPeerAcceptedView extends BoostGiftView {
   }
 
   getType() {
-    return (this.props.entity.params.type == 'pro') ? i18n.t('usd') : i18n.t('tokens');
+    return (this.props.entity.params.type === 'pro') ? i18n.t('usd') : i18n.t('tokens');
   }
 
   getAmount() {
-    if (this.props.entity.params.type == 'pro') {
+    if (this.props.entity.params.type === 'pro') {
       return this.props.entity.params.bid;
     } else {
-      return number(token(this.props.entity.params.bid, 18), 0, 3)
+      return number(token(this.props.entity.params.bid, 18), 0, 3);
     }
   }
 }
