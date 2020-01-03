@@ -43,17 +43,19 @@ export default
 @inject('channel', 'subscriptionRequest')
 @observer
 class ChannelScreen extends Component {
-
+  /**
+   * State
+   */
   state = {
-    guid: null
+    guid: null,
   };
 
   /**
    * Disable navigation bar
    */
   static navigationOptions = {
-    header: null
-  }
+    header: null,
+  };
 
   /**
    * Load data on mount
@@ -78,6 +80,9 @@ class ChannelScreen extends Component {
     }
   }
 
+  /**
+   * Initial load
+   */
   async initialLoad() {
     const params = this.props.navigation.state.params;
 
@@ -92,6 +97,9 @@ class ChannelScreen extends Component {
     }
   }
 
+  /**
+   * Component will unmount
+   */
   componentWillUnmount() {
     if (this.disposeEnter) {
       this.disposeEnter.remove();
@@ -100,8 +108,11 @@ class ChannelScreen extends Component {
     this.props.channel.store(this.guid).markInactive();
   }
 
+  /**
+   * Load channel
+   * @param {string|UserModel} channelOrGuid
+   */
   async loadChannel(channelOrGuid) {
-
     const isModel = channelOrGuid instanceof UserModel;
     const guid = isModel ? channelOrGuid.guid : channelOrGuid;
     const store = this.props.channel.store(guid);
@@ -160,14 +171,14 @@ class ChannelScreen extends Component {
       // load feed now
       store.feedStore.loadFeed();
 
-    } catch(err) {
+    } catch (err) {
       Alert.alert(
         i18n.t('attention'),
         i18n.t('channel.notFound'),
         [{ text: i18n.t('ok'), onPress: () => this.props.navigation.goBack() }],
         { cancelable: false }
       );
-    };
+    }
   }
 
   get guid() {

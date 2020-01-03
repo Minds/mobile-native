@@ -1,7 +1,5 @@
-import {
-  observable,
-  action
-} from 'mobx';
+import {observable, action} from 'mobx';
+import {cloneDeep} from 'lodash';
 
 import channelService from './ChannelService';
 import wireService from '../wire/WireService';
@@ -62,6 +60,9 @@ export default class ChannelStore {
 
   @action
   async load(defaultChannel) {
+    if (defaultChannel) {
+      defaultChannel = cloneDeep(defaultChannel);
+    }
     const channel = await channelsService.get(this.guid, defaultChannel);
 
     if (channel) {
