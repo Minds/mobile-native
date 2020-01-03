@@ -8797,6 +8797,10 @@ react-native-ratings@^6.3.0:
     lodash "^4.17.4"
     prop-types "^15.5.10"
 
+react-native-read-more-text@devbelieve365/react-native-read-more-text:
+  version "1.0.0"
+  resolved "https://codeload.github.com/devbelieve365/react-native-read-more-text/tar.gz/7828b78bd632feeb3f5f6bb3fa1b61021ded900f"
+
 react-native-reanimated@^1.3.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.4.0.tgz#7f1acbf9be08492d834f512700570978052be2f9"

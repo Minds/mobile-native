@@ -264,9 +264,21 @@ exports[`channel header component owner should render correctly 1`] = `
         }
       }
     >
-      <Text
-        selectable={true}
-      />
+      <View
+        style={
+          Object {
+            "height": undefined,
+          }
+        }
+      >
+        <Text
+          numberOfLines={0}
+        >
+          <Text
+            selectable={true}
+          />
+        </Text>
+      </View>
     </View>
   </View>
   <View
