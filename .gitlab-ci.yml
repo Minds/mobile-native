@@ -2,10 +2,10 @@
 stages:
   - test
   - build
-  - e2e
-  - deploy
   - i18n
+  - deploy
 
+# Spec test
 test:jest:
   image: node:10.16.3
   stage: test
@@ -14,10 +14,12 @@ test:jest:
     paths:
       - node_modules/
       - .jest/cache/
+  before_script:
+    - yarn install --frozen-lockfile
   script:
-    - yarn install
     - yarn test
 
+# Upload new terms to poeditor
 i18n:upload:
   image: node:10.16.3
   stage: i18n
@@ -25,14 +27,15 @@ i18n:upload:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - node_modules/
-      - .jest/cache/
+  before_script:
+    - yarn install --frozen-lockfile
   script:
-    - yarn install
     - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1
   only:
     refs:
       - /^release-*/
 
+# Upload new terms and remove the deleted
 i18n:uploadsync:
   image: node:10.16.3
   stage: i18n
@@ -40,53 +43,132 @@ i18n:uploadsync:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - node_modules/
-      - .jest/cache/
+  before_script:
+    - yarn install --frozen-lockfile
   script:
-    - yarn install
     - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1 --sync_terms=1
   only:
     refs:
-      - /^stable-*/
+      - master
 
+# Web dev version using cache and without sentry maps upload
 build:android:
   image: circleci/android:api-28-node
   stage: build
+  cache:
+    key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+    paths:
+      - node_modules/
+      - android/vendor/bundle
+      - .gradle/caches
+      - .gradle/wrapper
+      - .android/build-cache/
   before_script:
+    - 'sed -i ''s/^apply from: "..\/..\/node_modules\/\@sentry\/react-native\/sentry.gradle"//'' android/app/build.gradle'
+    - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
+    - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
     - sudo sysctl fs.inotify.max_user_watches=524288
     - sudo sysctl -p
-  script:
-    - yarn install
+    - yarn install --frozen-lockfile
     - cd android
-    - bundle install
-    - fastlane assemble_build
-    - cp app/build/outputs/apk/release/app-release.apk ../Minds-$CI_BUILD_REF_SLUG.apk
+    - bundle install --path=vendor/bundle
+  script:
+    - bundle exec fastlane assemble_build
+    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG-dev.apk
   artifacts:
     name: "Minds APK"
     paths:
-      - Minds-$CI_BUILD_REF_SLUG.apk
+      - Minds-$CI_COMMIT_REF_SLUG-dev.apk
     expire_in: 7 days
     when: on_success
+  only:
+    refs:
+      - /^release-*/
 
-deploy:s3:
+# Web version (Higher version code)
+build:androidproduction:
+  image: circleci/android:api-28-node
+  stage: build
+  before_script:
+    - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
+    - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
+    - sudo sysctl fs.inotify.max_user_watches=524288
+    - sudo sysctl -p
+    - yarn install --frozen-lockfile
+    - cd android
+    - bundle install --path=vendor/bundle
+  script:
+    - bundle exec fastlane assemble_build
+    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
+  artifacts:
+    name: "Minds APK"
+    paths:
+      - Minds-$CI_COMMIT_REF_SLUG.apk
+    expire_in: 7 days
+    when: on_success
+  only:
+    refs:
+      - /^stable-*/
+      - /^test-*/
+
+# Play store version (Lowest version code)
+build:androidproduction-playstore:
+  image: circleci/android:api-28-node
+  stage: build
+  before_script:
+    - 'sed -i ''s/^versionCode=/# versionCode=/'' android/gradle.properties'
+    - 'sed -i ''s/^## versionCode/versionCode/'' android/gradle.properties'
+    - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
+    - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
+    - sudo sysctl fs.inotify.max_user_watches=524288
+    - sudo sysctl -p
+    - yarn install --frozen-lockfile
+    - cd android
+    - bundle install --path=vendor/bundle
+  script:
+    - bundle exec fastlane assemble_build
+    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk
+  artifacts:
+    name: "Minds APK"
+    paths:
+      - Minds-$CI_COMMIT_REF_SLUG-play_store.apk
+    expire_in: 7 days
+    when: on_success
+  only:
+    refs:
+      - /^stable-*/
+      - /^test-*/
+
+# Deploy Web/PlayStore versions to s3 and browserstack
+deploy:s3andbrowserstack:
   image: minds/ci:latest
   stage: deploy
   script:
-    - echo "Upload Minds-$CI_BUILD_REF_SLUG.apk"
-    - aws s3 cp Minds-$CI_BUILD_REF_SLUG.apk s3://minds-repo/mobile/Minds-$CI_BUILD_REF_SLUG.apk
+    - echo "Upload Minds-$CI_COMMIT_REF_SLUG.apk"
+    - aws s3 cp Minds-$CI_COMMIT_REF_SLUG.apk s3://minds-repo/mobile/Minds-$CI_COMMIT_REF_SLUG.apk
+    - aws s3 cp Minds-$CI_COMMIT_REF_SLUG-play_store.apk s3://minds-repo/mobile/Minds-$CI_COMMIT_REF_SLUG-play_store.apk
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@Minds-$CI_COMMIT_REF_SLUG.apk"
+    - curl -u $CI_BROWSERSTACK_APIKEY -X POST "https://api-cloud.browserstack.com/app-live/upload" -F "file=@Minds-$CI_COMMIT_REF_SLUG-play_store.apk"
   dependencies:
-   - build:android
+    - build:androidproduction
+    - build:androidproduction-playstore
   only:
     refs:
       - /^stable-*/
       - /^test-*/
 
 deploy:google_play:
-  image: minds/ci:latest
+  image: circleci/android:api-28-node
   stage: deploy
+  before_script:
+    - cd android
+    - bundle install --path=vendor/bundle
+    - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > ../app/play-store.json'
   script:
-    - echo "Upload Minds-$CI_BUILD_REF_SLUG.apk"
+    - echo "Upload to the play store Minds-$CI_COMMIT_REF_SLUG-play_store.apk"
+    - bundle exec fastlane supply --apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk --track beta --rollout 0
   dependencies:
-    - build:android
+    - build:androidproduction-playstore
   only:
     refs:
       - /^stable-*/

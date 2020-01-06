@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  node:
+  test:
     working_directory: ~/mobile-native
     docker:
       - image: circleci/node:10
@@ -174,11 +174,7 @@ jobs:
           name: Upload to Testflight release
           command: fastlane testflight
           working_directory: ios
-          branches:
-            only:
-              - /stable-*/
-              - /release-*/
-              - test/circle-ci
+
   sentry:
     docker:
       - image: getsentry/sentry-cli
@@ -204,10 +200,16 @@ workflows:
   version: 2
   node-ios:
     jobs:
-      - node
+      - test
       - ios:
           requires:
-            - node
+            - test
+          filters:
+            branches:
+              only:
+                - /stable-*/
+                - /release-*/
+                - test/circle-ci
       - sentry:
           requires:
             - ios
