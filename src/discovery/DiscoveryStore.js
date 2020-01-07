@@ -75,14 +75,14 @@ class DiscoveryStore {
     if (this.filters.type !== 'lastchannels') {
       this.fetch();
     }
-  }
+  };
 
   /**
    * On search change
    */
   onSearchChange = (searchtext) => {
     this.fetch(true);
-  }
+  };
 
   fetch(refresh = false) {
     const hashtags = appStores.hashtag.hashtag ? encodeURIComponent(appStores.hashtag.hashtag) : '';
@@ -99,6 +99,7 @@ class DiscoveryStore {
         all,
         query: this.filters.searchtext,
         nsfw: this.filters.nsfw.concat([]),
+        period_fallback: 1,
       })
       .fetchRemoteOrLocal(refresh);
   }
