@@ -39,6 +39,7 @@ export default class CommentsStore {
   @observable loaded = false;
   @observable saving = false;
   @observable text = '';
+  @observable mature = 0;
   @observable loadingPrevious = false;
   @observable loadingNext = false;
 
@@ -70,6 +71,11 @@ export default class CommentsStore {
   getParentPath() {
     return (this.parent && this.parent.child_path) ? this.parent.child_path : '0:0:0';
   }
+
+  @action
+  toggleMature = () => {
+    this.mature = this.mature ? 0 : 1;
+  };
 
   /**
    * Set the entity
@@ -332,8 +338,9 @@ export default class CommentsStore {
 
     const comment = {
       comment: this.text,
-      parent_path: this.getParentPath()
-    }
+      mature: this.mature,
+      parent_path: this.getParentPath(),
+    };
 
     if (this.attachment.guid) {
       comment.attachment_guid = this.attachment.guid;
@@ -347,7 +354,6 @@ export default class CommentsStore {
     Object.assign(comment, entity.getClientMetadata());
 
     try {
-
       const data = await postComment(this.guid, comment);
 
       this.pushComment(data.comment);

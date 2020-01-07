@@ -21,6 +21,7 @@ import { observer, inject } from 'mobx-react/native';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconMd from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 
 import Comment from './Comment';
@@ -337,7 +338,17 @@ class CommentList extends React.Component<PropsType, StateType> {
 
     return (
       <View>
-        <View style={[CS.rowJustifyCenter, CS.margin, CS.padding, CS.backgroundWhite, CS.borderRadius12x, CS.borderGreyed, CS.borderHair]} testID={this.props.parent ? 'CommentParentView' : ''}>
+        <View
+          style={[
+            CS.rowJustifyCenter,
+            CS.margin,
+            CS.padding,
+            CS.backgroundWhite,
+            CS.borderRadius12x,
+            CS.borderGreyed,
+            CS.borderHair,
+          ]}
+          testID={this.props.parent ? 'CommentParentView' : ''}>
           <Image source={avatarImg} style={CmpStyle.posterAvatar} />
           <TextInput
             style={[CS.flexContainer, CS.marginLeft, inputStyle, {paddingVertical: 2}]}
@@ -359,8 +370,22 @@ class CommentList extends React.Component<PropsType, StateType> {
             (comments.saving || attachment.checkingVideoLength) ?
               <ActivityIndicator size={'large'} /> :
               <View style={[CS.rowJustifyEnd, CS.centered]}>
-                <TouchableOpacity onPress={this.showAttachment} style={CS.paddingRight2x}><Icon name="md-attach" size={24} style={CS.paddingRight2x} /></TouchableOpacity>
-                <TouchableOpacity onPress={this.postComment} style={CS.paddingRight2x} testID='PostCommentButton'><Icon name="md-send" size={24} /></TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.showAttachment}
+                style={CS.paddingRight2x}>
+                <Icon name="md-attach" size={24} style={[CS.paddingRight2x, CS.colorDarkGreyed]} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={comments.toggleMature}
+                style={CS.paddingRight2x}>
+                <IconMd name="explicit" size={24} style={[CS.paddingRight2x, comments.mature ? CS.colorDanger : CS.colorDarkGreyed]} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={this.postComment}
+                style={CS.paddingRight2x}
+                testID="PostCommentButton">
+                <Icon name="md-send" size={24} style={CS.colorDarkGreyed}/>
+              </TouchableOpacity>
               </View>
           }
         </View>
