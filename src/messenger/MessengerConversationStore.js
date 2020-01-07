@@ -1,12 +1,7 @@
 import {
   observable,
   action,
-  inject
 } from 'mobx';
-
-import {
-  Alert
-} from 'react-native';
 
 import messengerService from './MessengerService';
 import crypto from './../common/services/crypto.service';
@@ -18,7 +13,6 @@ import logService from '../common/services/log.service';
  * Messenger Conversation Store
  */
 class MessengerConversationStore {
-
   /**
    * Messages observable
    */
