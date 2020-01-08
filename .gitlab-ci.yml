@@ -166,7 +166,7 @@ deploy:google_play:
     - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > app/play-store.json'
   script:
     - echo "Upload to the play store Minds-$CI_COMMIT_REF_SLUG-play_store.apk"
-    - bundle exec fastlane supply --apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk --track beta --validate_only true
+    - bundle exec fastlane supply --apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk --track beta
   dependencies:
     - build:androidproduction-playstore
   only:
