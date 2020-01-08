@@ -163,10 +163,10 @@ deploy:google_play:
   before_script:
     - cd android
     - bundle install --path=vendor/bundle
-    - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > ../app/play-store.json'
+    - 'echo $ANDROID_PLAYSTORE_JSON | base64 --decode > app/play-store.json'
   script:
     - echo "Upload to the play store Minds-$CI_COMMIT_REF_SLUG-play_store.apk"
-    - bundle exec fastlane supply --apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk --track beta --rollout 0
+    - bundle exec fastlane supply --apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk --track beta
   dependencies:
     - build:androidproduction-playstore
   only:

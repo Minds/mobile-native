@@ -208,7 +208,7 @@ workflows:
             branches:
               only:
                 - /stable-*/
-                - /release-*/
+                - /test-*/
                 - test/circle-ci
       - sentry:
           requires:
