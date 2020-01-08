@@ -21,11 +21,6 @@ or alternatively using `brew cask install fastlane`
 fastlane android test
 ```
 Runs all the tests
-### android copy_secrets
-```
-fastlane android copy_secrets
-```
-Copy secrets
 ### android assemble_build
 ```
 fastlane android assemble_build

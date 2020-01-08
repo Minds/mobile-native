@@ -1,0 +1,21 @@
+The Crypto Social Network
+
+★ Features. Newsfeed, Wallet, Groups, Blogs, Video, Images, Search, Channels, Videos, Images, Statuses, Rewards, Video Chat
+
+★ Privacy. Chat securely with encrypted messenger. Be anonymous if you wish.
+
+★ Contribute. Create popular original content that receives upvotes, comments and reminds. Gain new subscribers, refer contacts, check-in, develop code and more.
+
+★ Earn. Each day we measure your contribution relative to the community and reward you with tokens.
+
+★ Get Views. Exchange your tokens for views on your content and increase your chances of earning rewards. No algorithms or surveillance. 100% organic reach. 1 token = 1,000 views.
+
+★ Sell Digital Services. Share exclusive digital content and other custom rewards to your supporters and earn tokens.  
+
+★ Open Source. Minds is free and open source which allows anyone to inspect, modify or share their version of the source code. 
+
+For support, questions, or more information, please visit:
+https://minds.com/faq 
+
+Source code:
+https://minds.org
