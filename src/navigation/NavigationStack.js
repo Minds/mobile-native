@@ -49,6 +49,7 @@ import {withErrorBoundaryScreen} from '../common/components/ErrorBoundary';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
+import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 
 /**
  * Main stack navigator
@@ -56,6 +57,9 @@ import Gathering from '../gathering/Gathering';
 const Stack = createStackNavigator({
   Tabs: {
     screen: withErrorBoundaryScreen(TabsScreen),
+  },
+  EmailConfirmation: {
+    screen: withErrorBoundaryScreen(EmailConfirmationScreen)
   },
   // Logs: {
   //   screen: LogsScreen

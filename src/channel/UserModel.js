@@ -51,6 +51,26 @@ export default class UserModel extends BaseModel {
    */
   @observable mode = 0;
 
+  /**
+   * @var {boolean}
+   */
+  @observable email_confirmed = false;
+
+  /**
+   * Confirm email
+   * @param {Object} params
+   */
+  confirmEmail = async params => {
+    // call any api endpoint with the param
+    try {
+      await apiService.get('api/v2/entities/', { urn: this.urn, ...params });
+      this.setEmailConfirmed(true);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
   getOwnerIcontime() {
     if (sessionService.getUser().guid === this.guid) {
       return sessionService.getUser().icontime;
@@ -96,6 +116,11 @@ export default class UserModel extends BaseModel {
   @action
   setMode(value) {
     this.mode = value;
+  }
+
+  @action
+  setEmailConfirmed(value) {
+    this.email_confirmed = value;
   }
 
   /**

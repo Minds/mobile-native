@@ -14,6 +14,12 @@ import { Alert } from 'react-native';
  */
 class UserStore {
   @observable me = {};
+  @observable emailConfirmMessageDismiss = false;
+
+  @action
+  setDissmis(value) {
+    this.emailConfirmMessageDismiss = value;
+  }
 
   @action
   setUser(user) {

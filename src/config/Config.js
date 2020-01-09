@@ -23,7 +23,7 @@ export const MINDS_URI_SETTINGS = {
 
 export const MINDS_MAX_VIDEO_LENGTH = 5; // in minutes
 
-export const SOCKET_URI = 'wss://ha-socket-io-us-east-1.minds.com:3030'
+export const SOCKET_URI = 'wss://ha-socket-io-us-east-1.minds.com:3030';
 
 export const MINDS_CDN_URI = 'https://cdn.minds.com/';
 export const MINDS_ASSETS_CDN_URI = 'https://cdn-assets.minds.com/';
@@ -45,6 +45,7 @@ export const MINDS_FEATURES = {
  * Deeplink to screen/params maping
  */
 export const MINDS_DEEPLINK = [
+  ['email-confirmation', 'EmailConfirmation'],
   ['groups/profile/:guid/feed', 'GroupView'],
   ['groups/profile/:guid', 'GroupView'],
   ['notifications', 'Notifications'],
