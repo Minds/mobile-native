@@ -104,11 +104,24 @@ class DiscoveryTile extends Component {
       <ExplicitOverlay entity={entity} iconSize={45} hideText={true} />
     ) : null;
 
+    const boundary = this.props.boundaryText ? (
+      <View
+        style={[
+          CS.positionAbsoluteTop,
+          CS.backgroundGreyed,
+          CS.centered,
+          styles.boundary,
+        ]}>
+        <Text>{this.props.boundaryText}</Text>
+      </View>
+    ) : null;
+
     return (
       <TouchableOpacity
         onPress={this._onPress}
         style={[this.state.style, styles.tile]}>
         <View style={[CS.flexContainer, CS.backgroundGreyed]}>
+          {boundary}
           <FastImage
             source={url}
             style={CS.positionAbsolute}
@@ -123,6 +136,11 @@ class DiscoveryTile extends Component {
 }
 
 const styles = StyleSheet.create({
+  boundary: {
+    height: 20,
+    width: '100%',
+    zIndex: 1000,
+  },
   tile: {
     paddingTop: 1,
     paddingBottom: 1,

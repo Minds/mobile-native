@@ -25,8 +25,21 @@ export class FeedsStorage {
     try {
       await this.getDb();
 
-      const params = [key, 0, JSON.stringify({feed: this.map(feed.feed), next: feed.pagingToken}), Math.floor(Date.now() / 1000)];
-      await this.db.executeSql('REPLACE INTO feeds (key, offset, data, updated) values (?,?,?,?)', params);
+      const params = [
+        key,
+        0,
+        JSON.stringify({
+          feed: this.map(feed.feed),
+          next: feed.pagingToken,
+          fallbackAt: feed.fallbackAt,
+          fallbackIndex: feed.fallbackIndex,
+        }),
+        Math.floor(Date.now() / 1000),
+      ];
+      await this.db.executeSql(
+        'REPLACE INTO feeds (key, offset, data, updated) values (?,?,?,?)',
+        params,
+      );
     } catch (err) {
       logService.exception('[FeedsStorage]', err);
     }
@@ -41,7 +54,10 @@ export class FeedsStorage {
 
     try {
       const key = this.getKey(feed);
-      const [result] = await this.db.executeSql('SELECT * FROM feeds WHERE key=? AND offset=?;', [key, 0]);
+      const [result] = await this.db.executeSql(
+        'SELECT * FROM feeds WHERE key=? AND offset=?;',
+        [key, 0],
+      );
 
       const rows = result.rows.raw();
 

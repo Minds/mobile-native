@@ -294,7 +294,8 @@
     "subscribed":"SUBSCRIBED",
     "boostfeed":"BOOSTFEED",
     "designYourChannel":"Design your channel",
-    "empty":"Your newsfeed is empty"
+    "empty":"Your newsfeed is empty",
+    "olderThan":"Older than {{period}}"
   },
   "comments": {
     "successRemoving":"Comment removed succesfully",
