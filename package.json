@@ -13,7 +13,8 @@
     "test": "jest",
     "locale": "ts-node tasks/poeditor.js",
     "preinstall": "git config core.hooksPath .githooks",
-    "postinstall": "jetify"
+    "postinstall": "jetify",
+    "release-json": "node tasks/generate_release_json.js"
   },
   "dependencies": {
     "@hawkingnetwork/node-libs-react-native": "^1.0.10",
