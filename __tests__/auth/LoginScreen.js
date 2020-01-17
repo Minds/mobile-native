@@ -6,6 +6,7 @@ import { shallow } from 'enzyme';
 import LoginScreen from '../../src/auth/LoginScreen';
 
 jest.mock('../../src/auth/AuthService');
+jest.mock('../../src/auth/UserStore');
 
 jest.mock('../../src/auth/LoginForm', () => 'LoginForm');
 jest.mock('../../src/auth/ForgotPassword', () => 'ForgotPassword');
@@ -13,19 +14,25 @@ jest.mock('../../src/common/components/VideoBackground', () => 'VideoBackground'
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import UserStore from '../../src/auth/UserStore';
 
 describe('LoginScreen component', () => {
 
   it('should renders correctly', () => {
-    const loginScreen = renderer.create(
-      <LoginScreen />
-    ).toJSON();
+    const userStore = new UserStore();
+
+    const loginScreen = shallow(
+      <LoginScreen user={userStore}/>
+    );
+
     expect(loginScreen).toMatchSnapshot();
   });
 
   it('should shows login form component', async () => {
+    const userStore = new UserStore();
+
     const wrapper = shallow(
-      <LoginScreen />
+      <LoginScreen user={userStore}/>
     );
 
     // search login form
@@ -37,13 +44,15 @@ describe('LoginScreen component', () => {
   });
 
   it('should shows forgot password component if the user press the button', async () => {
+    const userStore = new UserStore();
+
 
     const navigation = {
       push: jest.fn()
     };
 
     const wrapper = shallow(
-      <LoginScreen navigation={navigation}/>
+      <LoginScreen navigation={navigation} user={userStore}/>
     );
 
     // search login form
