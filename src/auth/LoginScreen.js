@@ -22,6 +22,7 @@ import VideoBackground from '../common/components/VideoBackground';
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import logService from '../common/services/log.service';
+import BannerInfo from '../topbar/BannerInfo';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -77,6 +78,7 @@ export default class LoginScreen extends Component {
     return (
       <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
         <VideoBackground />
+        <BannerInfo logged={false} />
         <View style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
           <Animatable.View animation="bounceIn">
             <Animated.Image

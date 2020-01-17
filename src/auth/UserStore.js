@@ -15,6 +15,12 @@ import { Alert } from 'react-native';
 class UserStore {
   @observable me = {};
   @observable emailConfirmMessageDismiss = false;
+  @observable bannerInfoDismiss = false;
+
+  @action
+  setDissmisBanner(value) {
+    this.bannerInfoDismiss = value;
+  }
 
   @action
   setDissmis(value) {

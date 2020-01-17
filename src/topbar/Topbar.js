@@ -20,6 +20,7 @@ import { SafeAreaView } from 'react-navigation';
 import isIphoneX from '../common/helpers/isIphoneX';
 import testID from '../common/helpers/testID';
 import EmailConfirmation from './EmailConfirmation';
+import BannerInfo from './BannerInfo';
 
 const forceInset = isIphoneX ? {top: 32} : null
 
@@ -67,6 +68,7 @@ class Topbar extends Component {
 
         </View>
         <EmailConfirmation user={this.props.user} />
+        <BannerInfo user={this.props.user} logged={true} />
       </SafeAreaView>
     );
   }
