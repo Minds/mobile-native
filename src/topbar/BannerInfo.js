@@ -37,7 +37,7 @@ class BannerInfo extends Component {
         <Text style={[CS.fontM, CS.colorWhite]}>
           {"BREAKING: TICKETS ON SALE FOR \"MINDS: FESTIVAL OF IDEAS\""}
         </Text>
-        <Text style={[CS.bold, CS.colorWhite]} onPress={this.send}>
+        <Text style={[CS.bold, CS.colorWhite]}>
           {"@ RADIO CITY ON 6/13/2020. HELP US SELL OUT FAST!"}
         </Text>
         <IonIcon
