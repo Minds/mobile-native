@@ -209,6 +209,7 @@ workflows:
               only:
                 - /stable-*/
                 - /test-*/
+                - test-*/
                 - test/circle-ci
       - sentry:
           requires:
