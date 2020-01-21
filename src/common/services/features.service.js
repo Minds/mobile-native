@@ -29,9 +29,18 @@ class FeaturesService {
     const features = settings.features;
 
     Object.assign(features, MINDS_FEATURES);
-
+    
     this.features = features;
     this.loaded = true;
+  }
+
+  @action
+  async injectFeatures(otherFeatures) {
+    const features = this.features;
+
+    Object.assign(features, otherFeatures);
+    
+    this.features = features;
   }
 
   /**

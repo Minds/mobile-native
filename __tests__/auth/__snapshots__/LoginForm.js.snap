@@ -112,23 +112,14 @@ exports[`LoginForm component should renders correctly 1`] = `
   >
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "backgroundColor": "transparent",
-            "borderColor": "#FFF",
-            "borderWidth": 1,
-            "marginLeft": 10,
-            "marginRight": 0,
-          },
-          Object {
-            "borderRadius": 30,
-          },
-        ]
+        Object {
+          "backgroundColor": "transparent",
+          "borderColor": "#FFF",
+          "borderRadius": 30,
+          "borderWidth": 1,
+          "marginLeft": 10,
+          "marginRight": 0,
+        }
       }
     >
       <View
@@ -142,75 +133,38 @@ exports[`LoginForm component should renders correctly 1`] = `
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={null}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="registerButton"
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "transparent",
-              },
-              Object {
-                "borderRadius": 30,
-              },
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#2089dc",
+              "borderRadius": 3,
+              "borderWidth": 0,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 8,
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 20,
-                  },
-                  undefined,
-                  Object {
-                    "fontSize": 17.5,
-                  },
-                  undefined,
-                  Object {
-                    "fontSize": 16,
-                    "fontWeight": "600",
-                    "letterSpacing": 1.25,
-                  },
-                  undefined,
-                  undefined,
-                  undefined,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "letterSpacing": 1.25,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
             CREATE A CHANNEL
@@ -220,23 +174,14 @@ exports[`LoginForm component should renders correctly 1`] = `
     </View>
     <View
       style={
-        Array [
-          Object {
-            "marginLeft": 15,
-            "marginRight": 15,
-          },
-          undefined,
-          Object {
-            "backgroundColor": "transparent",
-            "borderColor": "#FFF",
-            "borderWidth": 1,
-            "marginLeft": 10,
-            "marginRight": 0,
-          },
-          Object {
-            "borderRadius": 30,
-          },
-        ]
+        Object {
+          "backgroundColor": "transparent",
+          "borderColor": "#FFF",
+          "borderRadius": 30,
+          "borderWidth": 1,
+          "marginLeft": 10,
+          "marginRight": 0,
+        }
       }
     >
       <View
@@ -250,79 +195,41 @@ exports[`LoginForm component should renders correctly 1`] = `
         onResponderTerminate={[Function]}
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
-        style={null}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
         testID="loginButton"
       >
         <View
-          pointerEvents="box-only"
           style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#9E9E9E",
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "padding": 19,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              Object {
-                "backgroundColor": "transparent",
-              },
-              Object {
-                "borderRadius": 30,
-              },
-              Object {
-                "padding": 12,
-              },
-              undefined,
-              undefined,
-              undefined,
-              undefined,
-              false,
-              false,
-            ]
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#2089dc",
+              "borderRadius": 3,
+              "borderWidth": 0,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 8,
+            }
           }
         >
           <Text
             style={
-              Array [
-                Object {},
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                undefined,
-                Array [
-                  Object {
-                    "color": "white",
-                    "fontSize": 20,
-                  },
-                  undefined,
-                  Object {
-                    "fontSize": 17.5,
-                  },
-                  undefined,
-                  Object {
-                    "fontSize": 16,
-                    "fontWeight": "600",
-                    "letterSpacing": 1.25,
-                  },
-                  undefined,
-                  undefined,
-                  false,
-                ],
-              ]
+              Object {
+                "color": "white",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "letterSpacing": 1.25,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
             }
           >
-            LOGIN
+            Login
           </Text>
         </View>
       </View>
@@ -354,7 +261,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         ]
       }
     >
-      FORGOT PASSWORD
+      Forgot your password?
     </Text>
   </View>
   <View

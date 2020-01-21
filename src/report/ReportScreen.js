@@ -18,10 +18,8 @@ import {
 
 import reportService from './ReportService';
 
-import ModalTopbar from '../topbar/ModalTopbar';
 import colors from '../styles/Colors';
 import { CommonStyle as CS } from '../styles/Common';
-import { ComponentsStyle } from '../styles/Components';
 import i18n from '../common/services/i18n.service';
 
 import mindsService from '../common/services/minds.service';

@@ -42,6 +42,7 @@ export default class NavNextButton extends Component {
           style.button,
           this.props.style,
         ]}
+        testID="NavNextButton"
       >
         <View style={style.row}>
           {submitContent}

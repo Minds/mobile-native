@@ -10,9 +10,6 @@ import {
 
 import { observer, inject } from 'mobx-react/native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Avatar } from 'react-native-elements';
-
-import { MINDS_CDN_URI } from '../config/Config';
 
 export default class ModalTopbar extends Component {
 

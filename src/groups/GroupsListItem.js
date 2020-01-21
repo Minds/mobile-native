@@ -83,6 +83,3 @@ class GroupsListItem extends Component {
     this.props.groupView.leave(this.props.group.guid);
   }
 }
-
-
-

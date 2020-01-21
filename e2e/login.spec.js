@@ -1,5 +1,4 @@
 import login from "./actions/login";
-import sleep from '../src/common/helpers/sleep';
 
 describe('Login Flow', () => {
   beforeEach(async () => {
@@ -12,13 +11,18 @@ describe('Login Flow', () => {
   });
 
   it('should show error', async () => {
-    // should login successfully
-    await expect(element(by.id('usernameInput'))).toBeVisible();
+    // login should be visible
+    await waitFor(element(by.id('usernameInput')))
+      .toBeVisible()
+      .withTimeout(10000);
 
     // we moved the login logic to an action to avoid code duplication
     await login('bad', 'credentials');
 
-    await sleep(1000);
+    // wait for the message
+    await waitFor(element(by.id('loginMsg')))
+      .toBeVisible()
+      .withTimeout(2000);
 
     // it should show the error message
     // according to the detox docs it should be toHaveText but it only works with toHaveLabel
@@ -26,8 +30,10 @@ describe('Login Flow', () => {
   });
 
   it('should login successfully', async () => {
-    // should login successfully
-    await expect(element(by.id('usernameInput'))).toBeVisible();
+    // login should be visible
+    await waitFor(element(by.id('usernameInput')))
+      .toBeVisible()
+      .withTimeout(10000);
 
     // we moved the login logic to an action to avoid code duplication
     await login(process.env.loginUser, process.env.loginPass);

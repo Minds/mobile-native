@@ -9,8 +9,7 @@ import {
   Alert,
 } from 'react-native';
 
-import { List, ListItem } from 'react-native-elements';
-import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { Input } from 'react-native-elements';
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import validator from '../../common/services/validator.service';
@@ -87,13 +86,16 @@ export default class EmailScreen extends Component {
 
     // validate
     const error = validator.emailMessage(email);
-    const message = error ? <FormValidationMessage>{error}</FormValidationMessage> : null;
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
-        <FormLabel labelStyle={CommonStyle.fieldLabel}>{i18n.t('settings.currentEmail')}</FormLabel>
-        <FormInput onChangeText={this.setEmail} value={email} inputStyle={CommonStyle.fieldTextInput}/>
-        {message}
+      <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite, CommonStyle.marginTop2x]}>
+        <Input
+          label={i18n.t('settings.currentEmail')}
+          onChangeText={this.setEmail}
+          value={email}
+          errorMessage={error}
+          leftIcon={{ type: 'font-awesome', name: 'envelope-o' }}
+        />
         <Button
           text={i18n.t('save').toUpperCase()}
           loading={this.state.saving}

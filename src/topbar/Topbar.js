@@ -54,7 +54,7 @@ export default class Topbar extends Component {
               width={38}
               height={38}
               onPress={() => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })}
-              {...testID('topbar avatar button')} 
+              testID="AvatarButton"
             /> }
           </View>
 
