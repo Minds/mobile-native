@@ -229,7 +229,7 @@ exports[`LoginForm component should renders correctly 1`] = `
               }
             }
           >
-            LOGIN
+            Login
           </Text>
         </View>
       </View>
@@ -261,7 +261,7 @@ exports[`LoginForm component should renders correctly 1`] = `
         ]
       }
     >
-      FORGOT PASSWORD
+      Forgot your password?
     </Text>
   </View>
   <View

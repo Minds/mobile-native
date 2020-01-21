@@ -16,6 +16,8 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CommonStyle as CS } from '../../styles/Common';
 import colors from '../../styles/Colors';
+import Rectangle from './shapes/Rectangle';
+import featuresService from '../services/features.service';
 
 // types
 type Props = {
@@ -124,15 +126,24 @@ export default class Wizard extends PureComponent<Props, State>  {
    * Render
    */
   render() {
-    const {
-      steps
-    } = this.props;
+    const {steps} = this.props;
 
-    return (
-      <ScrollView style={[CS.flexContainer, CS.backgroundWhite]}>
-        {this.getHeader()}
-        {this.props.steps[this.state.current].component}
-      </ScrollView>
-    );
+    let component;
+    if (featuresService.has('onboarding-december-2019')) {
+      component = (
+        <View style={[CS.flexContainer]}>
+          {this.props.steps[this.state.current].component}
+        </View>
+      );
+    } else {
+      component = (
+        <ScrollView style={[CS.flexContainer, CS.backgroundWhite]}>
+          {this.getHeader()}
+          {this.props.steps[this.state.current].component}
+        </ScrollView>
+      );
+    }
+
+    return component;
   }
 }

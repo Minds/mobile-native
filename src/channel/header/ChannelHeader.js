@@ -316,7 +316,7 @@ export default class ChannelHeader extends Component {
             <Progress.Pie progress={this.props.store.avatarProgress} size={36} />
           </View>: null}
         </TouchableCustom>
-        {isOwner && this.props.onboarding.percentage < 1 ? <CompleteProfile progress={this.props.onboarding.percentage}/>: null}
+        {isOwner && !featuresService.has('onboarding-december-2019') && this.props.onboarding.percentage < 1 ? <CompleteProfile progress={this.props.onboarding.percentage}/>: null}
       </View>
     )
   }

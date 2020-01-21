@@ -53,9 +53,9 @@
     }
   },
   "auth":{
-    "login":"LOGIN",
+    "login":"Login",
     "create":"CREATE A CHANNEL",
-    "forgot":"FORGOT PASSWORD",
+    "forgot":"Forgot your password?",
     "email":"Email",
     "username":"Username",
     "password":"Password",
@@ -66,9 +66,13 @@
     "invalidPassword":"Incorrect password. Please try again.",
     "confirmPasswordError": "Passwords should match",
     "termsAcceptedError":"You should accept the terms and conditions",
-    "accept":"I accept the",
-    "termsAndConditions":"terms and conditions",
-    "code":"Code"
+    "accept":"I have read and accept the",
+    "termsAndConditions":"terms of use",
+    "code":"Code",
+    "join":"Join the Revolution",
+    "createChannel":"Join Minds Now",
+    "haveAccount":"Don't have an account?",
+    "alreadyHaveAccount":"Already have an account? &{login}&"
   },
   "blockchain": {
     "boostCreate": "Network Boost for {{tokensAmount}} Minds Tokens. {{message}}",
@@ -260,7 +264,7 @@
     "removeOwner":"Remove as Owner",
     "makeModerator":"Make Moderator",
     "removeModerator":"Remove as Moderator",
-    "listMembersCount":"Members {{count}}",
+    "listMembersCount":"{{count}} members",
     "disableConversations":"Disable conversations",
     "enableConversations":"Enable conversations"
   },
@@ -497,10 +501,10 @@
     "hashtagSelect":"What topics are you interested in?",
     "earnTokens":"Earn tokens for your activity",
     "weDontStorePhone":"We do not store your phone number on our servers.",
-    "suggestedChannels":"Suggested channels",
-    "suggestedChannelsDescription":"Subscribe to some popular channels below based on your interests",
+    "suggestedChannels":"Channels",
+    "suggestedChannelsDescription":"Some channels that may be of interest to you.",
     "suggestedGroups":"Suggested groups",
-    "suggestedGroupsDescription":"Join some popular groups below based on your interests",
+    "suggestedGroupsDescription":"Join some groups that may be of interest to you.",
     "tokensCanBeUsed":"Tokens can be used to support other channels or boost your content for additional views (1 token = 1,000 views). In order to earn tokens, we will need a phone number to verify that your channel is unique.",
     "yourAreReady":"You're all setup and ready to go!",
     "readyDescription1":"Great, you have successfully configured your wallet to receive rewards and OnChain & OffChain payments.",
@@ -531,7 +535,22 @@
     "welcomToWallet":"Welcome to your wallet",
     "tokensDescription":"Tokens are the cryptocurrency used on Minds. Your total balance of tokens will be stored in two different types of addresses.",
     "onchainDescription":"OnChain payments will be published to the public blockchain and require a small ETH gas fee. You can setup your own private keys or create new wallets.",
-    "offchainDescription":"OffChain payments will not be published to the blockchain and have spending limits. You will receive rewards into this address."
+    "offchainDescription":"OffChain payments will not be published to the blockchain and have spending limits. You will receive rewards into this address.",
+    "welcomeNew":"Welcome to the Minds Community!",
+    "welcomePrivacy":"Your privacy is our priority. You are free to provide as much or as little information as you wish for better recommendations and to connect with people in your local area.",
+    "welcomeLater":"No thanks, I’ll do it later",
+    "welcomeSetup":"Let’s Get Setup",
+    "profileSetup":"PROFILE SETUP",
+    "hashtagTitle":"Hashtags",
+    "step":"Step {{step}} of {{total}}",
+    "hashtagInterest":"Some hashtags that may be of interest to you.",
+    "skipStep":"Skip this step",
+    "infoTitle":"Info",
+    "infoMobileNumber":"Mobile Phone Number",
+    "infoLocation":"Location",
+    "infoDateBirth":"Date of Birth",
+    "groupTitle":"Groups",
+    "numberConfirmed":"Your number has beed validated"
   },
   "wallet": {
     "inviteFriend":"Invite a Friend",
@@ -771,5 +790,6 @@
   "actions":"Actions",
   "requests":"Requests",
   "notAllowed":"You are not allowed",
-  "undo":"Undo"
+  "undo":"Undo",
+  "validate":"VALIDATE"
 }
