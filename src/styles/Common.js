@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import colors from './Colors';
+import colors, {DARK_THEME, LIGHT_THEME} from './Colors';
 
 /**
  * Styles
@@ -59,6 +59,10 @@ export const CommonStyle = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
+  rowStretch: {
+    alignItems: 'stretch',
+    flexDirection: 'row',
+  },
   // align
   alignCenter: {
     alignItems: 'center'
@@ -113,6 +117,21 @@ export const CommonStyle = StyleSheet.create({
   colorLightGreyed: {
     color: colors.lightGreyed
   },
+  colorPrimaryText: {
+    color: LIGHT_THEME.primary_text
+  },
+  colorSecondaryText: {
+    color: LIGHT_THEME.secondary_text
+  },
+  colorButton: {
+    color: LIGHT_THEME.button_border
+  },
+  colorDone: {
+    color: LIGHT_THEME.done
+  },
+  colorActionNew: {
+    color: LIGHT_THEME.action
+  },
   // backgrounds
   backgroundWhite: {
     backgroundColor: 'white'
@@ -153,6 +172,12 @@ export const CommonStyle = StyleSheet.create({
   backgroundTertiary: {
     backgroundColor: colors.tertiary
   },
+  backgroundThemePrimary: {
+    backgroundColor: LIGHT_THEME.primary_background,
+  },
+  backgroundThemeSecondary: {
+    backgroundColor: LIGHT_THEME.secondary_background,
+  },
   // borders
   borderWhite: {
     borderColor: 'white'
@@ -189,6 +214,9 @@ export const CommonStyle = StyleSheet.create({
   },
   borderTransparent: {
     borderColor: 'transparent'
+  },
+  borderButton: {
+    borderColor: LIGHT_THEME.button_border
   },
   // margin
   margin4x: {
@@ -237,6 +265,9 @@ export const CommonStyle = StyleSheet.create({
     marginLeft: 5
   },
   // margin bottom
+  marginBottom4x: {
+    marginBottom: 20
+  },
   marginBottom3x: {
     marginBottom: 15
   },
@@ -595,5 +626,55 @@ export const CommonStyle = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e4e4e4',
     borderRadius: 2
+  },
+  onboardingTitle: {
+    color: '#AEB0B8',
+    fontSize: 13,
+    lineHeight: 18,
+    letterSpacing: 2,
+  },
+  onboardingSubtitle: {
+    color: '#4A4A4A',
+    fontSize: 26,
+    lineHeight: 37,
+    fontWeight: '600',
+  },
+  onboardingSteps: {
+    color: '#A2A2A2',
+    fontSize: 11,
+    lineHeight: 15,
+  },
+  linkNew: {
+    color: '#9B9B9B',
+    fontSize: 13,
+    lineHeight: 20
+  },
+  mindsLayoutBody: {
+    flex: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 10,
+  },
+  mindsLayoutFooter: {
+    flex: 2,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  titleText: {
+    fontFamily: 'Roboto',
+    fontSize: 28,
+    fontWeight: 'bold',
+    lineHeight: 44,
+  },
+  subTitleText: {
+    fontFamily: 'Roboto',
+    fontSize: 17,
+    fontWeight: '500',
+    lineHeight: 23,
   }
 });

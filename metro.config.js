@@ -5,6 +5,7 @@
  * @format
  */
 const blacklist = require('metro-config/src/defaults/blacklist');
+const defaultSourceExts = require('metro-config/src/defaults/defaults').sourceExts;
 
 module.exports = {
   resolver: {
@@ -12,6 +13,9 @@ module.exports = {
     blacklistRE: blacklist([
       /ios\/Pods\/JitsiMeetSDK\/Frameworks\/JitsiMeet.framework\/assets\/node_modules\/react-native\/.*/,
     ]),
+    sourceExts: process.env.RN_SRC_EXT
+      ? process.env.RN_SRC_EXT.split(',').concat(defaultSourceExts)
+      : defaultSourceExts,
   },
   transformer: {
     getTransformOptions: async () => ({

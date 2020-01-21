@@ -192,6 +192,10 @@ export default class App extends Component<Props, State> {
   constructor(props) {
     super(props);
 
+    /*if (props.features) {
+      featureService.injectFeatures(JSON.parse(props.features));
+    }*/
+
     if (!Text.defaultProps) {
       Text.defaultProps = {};
     }

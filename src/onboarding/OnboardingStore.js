@@ -5,6 +5,7 @@ import OffsetListStore from '../common/stores/OffsetListStore';
 import logService from '../common/services/log.service';
 import UserModel from '../channel/UserModel';
 import NavigationService from '../navigation/NavigationService';
+import featuresService from '../common/services/features.service';
 
 /**
  * Onboarding store
@@ -40,11 +41,12 @@ class OnboardingStore {
    */
   async getProgress() {
     logService.info('[OnboardingStore] getting onboarding progress');
+    let onboarding = featuresService.has('onboarding-december-2019') ? 'OnboardingScreenNew' : 'OnboardingScreen';
     try {
       const progress = await onboardingService.getProgress();
       this.setProgress(progress);
       if (progress && progress.show_onboarding) {
-        NavigationService.push('OnboardingScreen');
+        NavigationService.push(onboarding);
       }
       return progress;
     } catch (err) {

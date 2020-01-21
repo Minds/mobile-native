@@ -37,7 +37,7 @@ export default class Actions extends PureComponent {
           <ThumbUpAction entity={entity} me={this.props.user.me}/>
           <ThumbDownAction entity={entity} me={this.props.user.me}/>
           {!isOwner && hasCrypto && <WireAction owner={entity.ownerObj} navigation={this.props.navigation}/>}
-          <CommentsAction entity={entity} navigation={this.props.navigation}/>
+          <CommentsAction entity={entity} navigation={this.props.navigation} testID={this.props.entity.text==='e2eTest' ? 'ActivityCommentButton' : ''}/>
           <RemindAction entity={entity} navigation={this.props.navigation}/>
           {isOwner && hasCrypto && !isScheduled && <BoostAction entity={entity} navigation={this.props.navigation}/>}
         </View> }

@@ -112,6 +112,7 @@ export default class MessengerSetup extends Component {
             placeholder={i18n.t('passwordPlaceholder')}
             secureTextEntry={true}
             onChangeText={(password) => this.password = password}
+            testID="MessengerSetupText"
           />
         </View>
 

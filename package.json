@@ -23,6 +23,7 @@
     "@react-native-community/netinfo": "^4.4.0",
     "@sentry/react-native": "^1.0.9",
     "crypto-js": "^3.1.9-1",
+    "detox": "^14.8.1",
     "entities": "^2.0.0",
     "ethjs-signer": "^0.1.1",
     "i18n-js": "^3.2.2",
@@ -42,7 +43,7 @@
     "react-native-convert-ph-asset": "^1.0.3",
     "react-native-device-info": "^4.0.1",
     "react-native-device-log": "Minds/react-native-device-log#74f06b09c6656aa228a9a3a474c714d82abf509e",
-    "react-native-elements": "^0.19.1",
+    "react-native-elements": "^1.2.7",
     "react-native-exception-handler": "^2.10.8",
     "react-native-exit-app": "wumke/react-native-exit-app",
     "react-native-fast-image": "^7.0.2",
@@ -109,7 +110,7 @@
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/Minds.app",
-        "build": "xcodebuild -workspace ios/Minds.xcworkspace -scheme Minds -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "build": "RN_SRC_EXT=e2e.js xcodebuild -workspace ios/Minds.xcworkspace -scheme Minds -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "device": {
           "type": "iPhone 11"
@@ -117,10 +118,26 @@
       },
       "ios.sim.release": {
         "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/Minds.app",
-        "build": "xcodebuild -workspace ios/Minds.xcworkspace -scheme Minds -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
+        "build": "RN_SRC_EXT=e2e.js xcodebuild -workspace ios/Minds.xcworkspace -scheme Minds -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
         "type": "ios.simulator",
         "device": {
           "type": "iPhone 11"
+        }
+      },
+      "android.emu.debug": {
+        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
+        "type": "android.attached",
+        "device": {
+          "name": "ZY2234PLHJ"
+        }
+      },
+      "android.emu.release": {
+        "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
+        "build": "cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ..",
+        "type": "android.attached",
+        "device": {
+          "name": "ZY2234PLHJ"
         }
       }
     },

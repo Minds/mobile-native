@@ -5,6 +5,7 @@ import React, {
 import {
   StyleSheet,
   FlatList,
+  Text,
   View
 } from 'react-native';
 
@@ -17,7 +18,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import CenteredLoading from '../common/components/CenteredLoading';
-import { Text } from 'react-native-elements';
 import formatDate from '../common/helpers/date';
 /**
  * Notification Screen
