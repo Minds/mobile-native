@@ -298,7 +298,8 @@
     "subscribed":"SUBSCRIBED",
     "boostfeed":"BOOSTFEED",
     "designYourChannel":"Design your channel",
-    "empty":"Your newsfeed is empty"
+    "empty":"Your newsfeed is empty",
+    "olderThan":"Older than {{period}}"
   },
   "comments": {
     "successRemoving":"Comment removed succesfully",
@@ -620,6 +621,13 @@
   "validation":{
     "email":"Invalid email",
     "number":"Invalid number"
+  },
+  "emailConfirm": {
+    "confirmed":"Email address confirmed!",
+    "confirm":"Please confirm your email address. Didn't get it?",
+    "sendAgain": "Click here to send again.",
+    "confirmNote": "Note: If you change your email address, it will need to be confirmed again.",
+    "sent":"Email sent"
   },
   "imagePicker":{
     "gallery":"Choose from gallery",

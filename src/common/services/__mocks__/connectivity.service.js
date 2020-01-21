@@ -1,13 +1,9 @@
-import { jsxEmptyExpression } from "@babel/types";
-
 export default {
-
-  connectionInfo : {
+  connectionInfo: {
     type: 'unknown',
     effectiveType: 'unknown',
   },
   isConnected: true,
 
-  init: jsxEmptyExpression.fn(),
-
-}
+  init: jest.fn(),
+};

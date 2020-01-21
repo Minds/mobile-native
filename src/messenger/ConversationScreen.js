@@ -71,6 +71,7 @@ export default class ConversationScreen extends Component {
     let conversation;
     if (params.conversation) {
       conversation = params.conversation;
+      conversation.unread = false;
     } else {
       // open conversation with params.target user (minor guid go first)
       if (params.target > this.props.user.me.guid) {

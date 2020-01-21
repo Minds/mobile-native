@@ -80,6 +80,8 @@ exports[`blog card component should renders correctly 1`] = `
       }
     >
       <Text
+        ellipsizeMode="tail"
+        numberOfLines={2}
         style={
           Array [
             Object {
@@ -87,6 +89,9 @@ exports[`blog card component should renders correctly 1`] = `
             },
             Object {
               "fontWeight": "500",
+            },
+            Object {
+              "flex": 1,
             },
           ]
         }
@@ -357,10 +362,12 @@ exports[`blog card component should renders correctly 1`] = `
           ],
           "chat": true,
           "city": "",
+          "confirmEmail": [Function],
           "container_guid": "0",
           "deleted": "0",
           "disabled_boost": false,
           "dob": "",
+          "email_confirmed": false,
           "eth_wallet": "0x6fffffdadae350ddd5a1777d5a1777a4f39f0317",
           "fb": false,
           "feature_flags": false,

@@ -97,11 +97,9 @@ export default class MediaView extends Component {
       guid = this.props.entity.guid;
     }
 
-    const source = {uri: MINDS_API_URI + `api/v1/media/${guid}/play`, headers: api.buildHeaders() };
-
     return (
       <View style={styles.videoContainer}>
-        <MindsVideo video={source} entity={this.props.entity} ref={o => {this.videoPlayer = o}}/>
+        <MindsVideo entity={this.props.entity} ref={o => {this.videoPlayer = o}}/>
       </View>
     );
   }

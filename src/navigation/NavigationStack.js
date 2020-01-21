@@ -53,6 +53,7 @@ import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import LoginScreenNew from '../auth/LoginScreenNew';
 import featuresService from '../common/services/features.service';
+import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 
 /**
  * Main stack navigator
@@ -60,6 +61,9 @@ import featuresService from '../common/services/features.service';
 const Stack = createStackNavigator({
   Tabs: {
     screen: withErrorBoundaryScreen(TabsScreen),
+  },
+  EmailConfirmation: {
+    screen: withErrorBoundaryScreen(EmailConfirmationScreen)
   },
   // Logs: {
   //   screen: LogsScreen
@@ -228,9 +232,10 @@ const RootStack = createStackNavigator(
  */
 const AuthStack = createStackNavigator({
   Login: {
-    screen: withErrorBoundaryScreen(
-      featuresService.has('homepage-december-2019') ? LoginScreenNew : LoginScreen
-    ),
+    screen: withErrorBoundaryScreen(LoginScreen),
+  },
+  LoginNew: {
+    screen: withErrorBoundaryScreen(LoginScreenNew),
   },
   Forgot: {
     screen: withErrorBoundaryScreen(ForgotScreen),

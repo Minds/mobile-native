@@ -37,6 +37,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
+          "confirmEmail": [Function],
           "guid": "824853017709780997",
           "isOwner": [Function],
           "subtype": false,
@@ -88,6 +89,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
             "message": "Message",
             "ownerObj": UserModel {
               "__list": null,
+              "confirmEmail": [Function],
               "guid": "824853017709780997",
               "isOwner": [Function],
               "subtype": false,

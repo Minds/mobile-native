@@ -23,6 +23,7 @@ import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import logService from '../common/services/log.service';
 import featuresService from '../common/services/features.service';
+import CenteredLoading from '../common/components/CenteredLoading';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -31,6 +32,10 @@ const LOGO_HEIGHT_SMALL = 50;
  * Login screen
  */
 export default class LoginScreen extends Component {
+
+  state = {
+    loading: true,
+  };
 
   /**
    * Disable navigation bar
@@ -45,7 +50,17 @@ export default class LoginScreen extends Component {
     this.logoHeight = new Animated.Value(LOGO_HEIGHT);
   }
 
-  componentWillMount () {
+  async componentDidMount() {
+    await featuresService.updateFeatures();
+    if (featuresService.has('homepage-december-2019')) {
+      this.props.navigation.navigate('LoginNew');
+    }
+    this.setLoading(false);
+  }
+
+  setLoading = loading => this.setState({ loading });
+
+  componentWillMount() {
     this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
   }
@@ -74,6 +89,10 @@ export default class LoginScreen extends Component {
    */
   render() {
     const resizeMode = 'center';
+
+    if (this.state.loading) {
+      return <CenteredLoading />;
+    }
 
     return (
       <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null }>

@@ -1,6 +1,7 @@
 // @flow
 import FeedsService from "./feeds.service";
 import logService from "./log.service";
+import blockListService from "./block-list.service";
 
 // types
 import type ActivityModel from "../../newsfeed/ActivityModel";
@@ -9,17 +10,28 @@ import type ActivityModel from "../../newsfeed/ActivityModel";
  * Boosted content service
  */
 class BoostedContentService {
-
+  /**
+   * Offset
+   * @var {number}
+   */
   offset: number = -1;
 
-  feedsService: FeedsService = new FeedsService;
+  /**
+   * Feed service
+   * @var {FeedsService}
+   */
+  feedsService: FeedsService = new FeedsService();
 
+  /**
+   * Boosts
+   * @var {Array<ActivityModel>} boosts
+   */
   boosts: Array<ActivityModel> = [];
 
   /**
    * Reload boosts list
    */
-  load = async(): Promise<any> => {
+  load = async (): Promise<any> => {
     try {
       const done = await this.feedsService
         .setLimit(12)
@@ -31,14 +43,24 @@ class BoostedContentService {
       if (!done) {
         await this.update();
       } else {
-        this.boosts = await this.feedsService.getEntities();
-        // refresh boost without the wait
+        this.boosts = this.cleanBoosts(await this.feedsService.getEntities());
+
         this.update();
       }
-
     } catch (err) {
       logService.exception('[BoostedContentService]', err);
     }
+  };
+
+  /**
+   * Remove blocked channel's boosts and sets boosted to true
+   * @param {Array<ActivityModel} boosts
+   */
+  cleanBoosts(boosts: Array<ActivityModel>): Array<ActivityModel> {
+    return boosts.filter((e: ActivityModel) => {
+      e.boosted = true;
+      return !blockListService.has(e.ownerObj.guid);
+    });
   }
 
   /**
@@ -46,7 +68,7 @@ class BoostedContentService {
    */
   async update() {
     await this.feedsService.fetch();
-    this.boosts = await this.feedsService.getEntities();
+    this.boosts = this.cleanBoosts(await this.feedsService.getEntities());
   }
 
   /**

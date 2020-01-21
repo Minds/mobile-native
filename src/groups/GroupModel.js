@@ -8,6 +8,14 @@ import groupsService from './GroupsService';
 export default class GroupModel extends BaseModel {
   @observable conversationDisabled = false;
 
+  /**
+   * Constructor
+   */
+  constructor(data) {
+    data.name = String(data.name);
+    super(data);
+  }
+
   @action
   async toggleConversationDisabled() {
     await groupsService.toggleConversationDisabled(this.guid, !this.conversationDisabled);

@@ -17,10 +17,12 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import Button from '../../common/components/Button';
 import { CommonStyle } from '../../styles/Common';
 import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
+import { inject } from 'mobx-react/native'
 
 /**
  * Email settings screen
  */
+@inject('user')
 export default class EmailScreen extends Component {
 
   static navigationOptions = {
@@ -31,7 +33,8 @@ export default class EmailScreen extends Component {
     email: null,
     saving: false,
     isVisible: false,
-    loaded: false
+    loaded: false,
+    showConfirmNote: false,
   }
 
   constructor(){
@@ -45,7 +48,7 @@ export default class EmailScreen extends Component {
    * Set email value
    */
   setEmail = (email) => {
-    this.setState({email});
+    this.setState({email, showConfirmNote: true});
   }
 
   /**
@@ -61,9 +64,9 @@ export default class EmailScreen extends Component {
         this.props.navigation.goBack();
       })
       .finally(() => {
-
         this.setState({isVisible:false});
         this.setState({saving: false});
+        this.props.user.me.setEmailConfirmed(false);
       })
       .catch(() => {
         Alert.alert(i18n.t('error'), i18n.t('settings.errorSaving'));
@@ -83,19 +86,19 @@ export default class EmailScreen extends Component {
     }
 
     const email = this.state.email;
+    const showConfirmNote = this.state.showConfirmNote;
 
     // validate
     const error = validator.emailMessage(email);
+    const message = error ? <FormValidationMessage>{error}</FormValidationMessage> : null;
+    const confirmNote = showConfirmNote ? <FormValidationMessage>{i18n.t('emailConfirm.confirmNote')}</FormValidationMessage> : null;
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite, CommonStyle.marginTop2x]}>
-        <Input
-          label={i18n.t('settings.currentEmail')}
-          onChangeText={this.setEmail}
-          value={email}
-          errorMessage={error}
-          leftIcon={{ type: 'font-awesome', name: 'envelope-o' }}
-        />
+      <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
+        <FormLabel labelStyle={CommonStyle.fieldLabel}>{i18n.t('settings.currentEmail')}</FormLabel>
+        <FormInput onChangeText={this.setEmail} value={email} inputStyle={CommonStyle.fieldTextInput}/>
+        {message}
+        {confirmNote}
         <Button
           text={i18n.t('save').toUpperCase()}
           loading={this.state.saving}

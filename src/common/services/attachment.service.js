@@ -6,16 +6,12 @@ import Cancelable from 'promise-cancelable';
  * Attacment service
  */
 class AttachmentService {
-
   /**
    * Attach media file
    * @param {object} media
    * @param {function} onProgress
    */
-  attachMedia(media, extra, onProgress=null) {
-
-    let type = 'image'
-
+  attachMedia(media, extra, onProgress = null) {
     const file = {
       uri: media.uri,
       path: media.path || null,
@@ -25,8 +21,10 @@ class AttachmentService {
 
     const progress = (e) => {
       let pct = e.loaded / e.total;
-      if (onProgress) onProgress(pct);
-    }
+      if (onProgress) {
+        onProgress(pct);
+      }
+    };
 
     let promise;
 
@@ -87,6 +85,10 @@ class AttachmentService {
     return api.get(`api/v1/media/transcoding/${guid}`);
   }
 
+  getVideoSources(guid) {
+    return api.get(`api/v2/media/video/${guid}`);
+  }
+
   /**
    * Capture video
    */
@@ -98,8 +100,8 @@ class AttachmentService {
         uri: response.uri,
         path: response.path,
         type: 'video/mp4',
-        fileName: 'image.mp4'
-      }
+        fileName: 'image.mp4',
+      };
     }
 
     return response;

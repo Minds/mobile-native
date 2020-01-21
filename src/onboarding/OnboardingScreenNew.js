@@ -69,7 +69,7 @@ export default class OnboardingScreenNew extends Component {
     if (!this.props.onboarding.progress) {
       return <CenteredLoading/>
     }
-    const completed_items = this.props.onboarding.progress.completed_items;
+    const completed_items = [];//this.props.onboarding.progress.completed_items;
 
     if (!completed_items.some(r => r == 'creator_frequency')) {
       steps.push({component: <WelcomeStepNew onNext={this.onNext} onFinish={this.onFinish}/>, ready: () => false});

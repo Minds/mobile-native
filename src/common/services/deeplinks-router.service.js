@@ -5,7 +5,9 @@ import navigationService from '../../navigation/NavigationService';
  * Deeplinks router
  */
 class DeeplinksRouter {
-
+  /**
+   * Routes
+   */
   routes = [];
 
   /**
@@ -13,6 +15,28 @@ class DeeplinksRouter {
    */
   constructor() {
     MINDS_DEEPLINK.forEach(r => this.add(r[0], r[1]));
+  }
+
+  /**
+   * Clear routes
+   */
+  clearRoutes() {
+    this.routes = [];
+  }
+
+  /**
+   * Parse params
+   * @param {string} url
+   */
+  parseQueryParams(url) {
+    let regex = /[?&]([^=#]+)=([^&#]*)/g,
+      params = {},
+      match;
+
+    while ((match = regex.exec(url))) {
+      params[match[1]] = match[2];
+    }
+    return params;
   }
 
   /**
@@ -28,7 +52,7 @@ class DeeplinksRouter {
     this.routes.push({
       screen,
       params,
-      re: new RegExp('^' + url.replace(re, '([^\/]+?)') + '\/?$')
+      re: new RegExp('^' + url.replace(re, '([^\/]+?)') + '(\/?$|\/?\\?)')
     });
   }
 
@@ -63,8 +87,9 @@ class DeeplinksRouter {
       if (match) {
         const params = {};
         route.params.forEach((v, i) => params[v] = match[i + 1]);
+        const urlParams = this.parseQueryParams(url);
 
-        return { screen: route.screen, params }
+        return { screen: route.screen, params: {...params, ...urlParams}}
       }
     }
     return null;

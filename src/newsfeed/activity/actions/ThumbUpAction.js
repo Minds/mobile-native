@@ -22,6 +22,7 @@ import testID from '../../../common/helpers/testID';
 import i18n from '../../../common/services/i18n.service';
 import logService from '../../../common/services/log.service';
 import { FLAG_VOTE } from '../../../common/Permissions';
+import remoteAction from '../../../common/RemoteAction';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -82,22 +83,12 @@ class ThumbUpAction extends Component {
    * Toggle thumb
    */
   toggleThumb = async () => {
-
-    if (!this.props.entity.can(FLAG_VOTE, true)) return;
-
-    try {
-      await this.props.entity.toggleVote(this.direction);
-    } catch (err) {
-      logService.exception(`[Thumb${this.direction}Action]`, err)
-      Alert.alert(
-        i18n.t('sorry'),
-        i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
-        [
-          {text: i18n.t('ok'), onPress: () => {}},
-        ],
-        { cancelable: false }
-      );
+    if (!this.props.entity.can(FLAG_VOTE, true)) {
+      return;
     }
 
-  }
+    remoteAction(async () => {
+      await this.props.entity.toggleVote(this.direction);
+    });
+  };
 }
