@@ -2,79 +2,21 @@
 
 exports[`LoginScreen component should renders correctly 1`] = `
 <View
-  onLayout={[Function]}
   style={
-    Array [
-      Object {
-        "flex": 1,
-      },
-      Object {
-        "paddingBottom": 0,
-      },
-    ]
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "white",
+      "flex": 1,
+      "justifyContent": "center",
+      "minHeight": 100,
+    }
   }
 >
-  <VideoBackground />
-  <View
-    style={
-      Array [
-        Object {
-          "flex": 1,
-          "justifyContent": "center",
-        },
-        Object {
-          "padding": 10,
-        },
-      ]
-    }
-  >
-    <View
-      style={
-        Object {
-          "opacity": 0,
-          "transform": Array [
-            Object {
-              "scale": 0.3,
-            },
-          ],
-        }
-      }
-    >
-      <Image
-        resizeMode="contain"
-        source={
-          Object {
-            "testUri": "../../../src/assets/logos/logo-white.png",
-          }
-        }
-        style={
-          Object {
-            "alignSelf": "center",
-            "height": 100,
-            "marginBottom": 30,
-            "width": 200,
-          }
-        }
-      />
-    </View>
-    <View
-      style={
-        Object {
-          "opacity": 0,
-          "transform": Array [
-            Object {
-              "translateY": 100,
-            },
-          ],
-        }
-      }
-    >
-      <LoginForm
-        onForgot={[Function]}
-        onLogin={[Function]}
-        onRegister={[Function]}
-      />
-    </View>
-  </View>
+  <ActivityIndicator
+    animating={true}
+    color="#999999"
+    hidesWhenStopped={true}
+    size="large"
+  />
 </View>
 `;

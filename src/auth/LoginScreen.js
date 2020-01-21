@@ -51,9 +51,11 @@ export default class LoginScreen extends Component {
   }
 
   async componentDidMount() {
-    await featuresService.updateFeatures();
-    if (featuresService.has('homepage-december-2019')) {
-      this.props.navigation.navigate('LoginNew');
+    if (!this.props.hopFeatures) {
+      await featuresService.updateFeatures();
+      if (featuresService.has('homepage-december-2019')) {
+        this.props.navigation.navigate('LoginNew');
+      }
     }
     this.setLoading(false);
   }
