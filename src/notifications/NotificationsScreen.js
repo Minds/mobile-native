@@ -26,6 +26,8 @@ import NotificationsTabIcon from './NotificationsTabIcon';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import CenteredLoading from '../common/components/CenteredLoading';
 import i18n from '../common/services/i18n.service';
+import featuresService from '../common/services/features.service';
+import TabIcon from '../tabs/TabIcon';
 
 /**
  * Notification Screen

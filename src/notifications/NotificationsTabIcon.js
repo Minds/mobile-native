@@ -25,7 +25,7 @@ export default class NotificationIcon extends Component {
     return (
       <View style={styles.container}>
         <CIcon name="bell" size={24} color={tintColor} />
-        { this.props.notifications.unread ? <FAIcon name="circle" size={10} color='rgba(70, 144, 223, 1)' style={styles.unread} /> : null}
+        { this.props.notifications.unread ? <FAIcon name="circle" size={10} color='#E02020' style={styles.unread} /> : null}
       </View>
     );
   }

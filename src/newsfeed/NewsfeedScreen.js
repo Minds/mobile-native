@@ -20,6 +20,7 @@ import { CommonStyle } from '../styles/Common';
 import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
 import featuresService from '../common/services/features.service';
+import TabIcon from '../tabs/TabIcon';
 
 /**
  * News Feed Screen
@@ -29,8 +30,11 @@ import featuresService from '../common/services/features.service';
 export default class NewsfeedScreen extends Component {
 
   static navigationOptions = {
+    header: props => <TopbarNew {...props} />,
     tabBarIcon: ({ tintColor }) => (
-      <IonIcon name="md-home" size={24} color={tintColor} />
+      featuresService.has('new-navigation-january-2020')
+      ? <TabIcon name="md-home" color={tintColor} />
+      : <IonIcon name="md-home" size={24} color={tintColor} />
     ),
     tabBarOnPress: ({ navigation, defaultHandler }) => {
       // tab button tapped again?

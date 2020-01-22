@@ -46,6 +46,7 @@ import colors from '../styles/Colors';
 import logService from '../common/services/log.service';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
+import TabIcon from './TabIcon';
 
 
 const ICON_SIZE = 24;
@@ -58,6 +59,9 @@ export default class MoreScreen extends Component {
 
   static navigationOptions = {
     title: 'Minds',
+    tabBarIcon: ({ tintColor }) => (
+      <TabIcon name="md-menu" size={24} color={tintColor} />
+    ),
   };
 
   state = {

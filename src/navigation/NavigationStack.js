@@ -4,6 +4,7 @@ import LoadingScreen from '../LoadingScreen';
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
 import TabsScreen from '../tabs/TabsScreen';
+import TabsScreenNew from '../tabs/TabsScreenNew';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
@@ -60,7 +61,9 @@ import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
  */
 const Stack = createStackNavigator({
   Tabs: {
-    screen: withErrorBoundaryScreen(TabsScreen),
+    screen: featuresService.has('new-navigation-january-2020')
+      ? withErrorBoundaryScreen(TabsScreenNew)
+      : withErrorBoundaryScreen(TabsScreen)
   },
   EmailConfirmation: {
     screen: withErrorBoundaryScreen(EmailConfirmationScreen)

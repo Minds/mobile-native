@@ -37,6 +37,7 @@ import CaptureTabs from './CaptureTabs';
 
 // workaround for android copy/paste
 import TextInput from '../common/components/TextInput';
+import TabIcon from '../tabs/TabIcon';
 
 @inject('user', 'capture')
 @observer
@@ -46,6 +47,9 @@ export default class CapturePoster extends Component {
    * Disable navigation bar
    */
   static navigationOptions = ({ navigation }) => ({
+    tabBarIcon: ({ tintColor }) => (
+      <TabIcon name="md-add-circle-outline" size={44} color={tintColor} />
+    ),
     headerRight: navigation.state.params && navigation.state.params.headerRight
   });
 

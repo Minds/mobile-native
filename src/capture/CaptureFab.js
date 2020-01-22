@@ -13,6 +13,7 @@ import { Icon } from 'react-native-elements'
 import testID from '../common/helpers/testID';
 import settingsService from '../settings/SettingsService'
 import settingsStore from '../settings/SettingsStore'
+import featuresService from '../common/services/features.service';
 
 @observer
 export default class CaptureFab extends Component {
@@ -26,6 +27,10 @@ export default class CaptureFab extends Component {
   }
 
   render() {
+    if (featuresService.has('new-navigation-january-2020')) {
+      return null;
+    }
+    
     return (
       <Icon
         raised

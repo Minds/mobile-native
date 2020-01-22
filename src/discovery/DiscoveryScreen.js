@@ -46,6 +46,8 @@ import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
 import { FLAG_VIEW } from '../common/Permissions';
 import FallbackBoundary from './FallbackBoundary';
+import TabIcon from '../tabs/TabIcon';
+import featuresService from '../common/services/features.service';
 
 /**
  * Discovery screen
@@ -71,7 +73,9 @@ class DiscoveryScreen extends Component {
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
-      <Icon name="search" size={24} color={tintColor} />
+      featuresService.has('new-navigation-january-2020')
+      ? <TabIcon name="hashtag" color={tintColor} />
+      : <Icon name="search" size={24} color={tintColor} />
     ),
     tabBarOnPress: ({ navigation, defaultHandler }) => {
       // tab button tapped again?
