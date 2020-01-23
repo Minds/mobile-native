@@ -78,7 +78,7 @@ apiService.clearCookies();
 
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
-
+  stores.mindsServiceStore.clear();
   const user = sessionService.getUser();
 
   Sentry.configureScope(scope => {
@@ -153,6 +153,7 @@ sessionService.onLogout(() => {
   stores.notifications.clearLocal();
   stores.groupsBar.clearLocal();
   translationService.purgeLanguagesCache();
+  stores.mindsServiceStore.clear()
 });
 
 // disable yellow boxes
@@ -324,7 +325,7 @@ export default class App extends Component<Props, State> {
     );
 
     const tosModal = (
-      <TosModal user={stores.user} key="tosModal"/>
+      <TosModal user={stores.user} key="tosModal" mindsServiceStore={stores.mindsServiceStore}/>
     )
 
     return [ app, keychainModal, blockchainTransactionModal,  tosModal];
