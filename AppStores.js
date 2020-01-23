@@ -28,6 +28,8 @@ import groupsBar from './src/groups/GroupsBarStore';
 import sessionService from './src/common/services/session.service';
 import logService from './src/common/services/log.service';
 import SubscriptionRequestStore from './src/channel/subscription/SubscriptionRequestStore';
+import MindsServiceStore from './src/common/stores/MindsServiceStore';
+
 
 /**
  * App stores
@@ -60,6 +62,7 @@ const stores = {
   hashtag: new hashtag(),
   onboarding: new onboarding(),
   groupsBar: new groupsBar(),
+  mindsServiceStore: new MindsServiceStore(),
 };
 
 /**
