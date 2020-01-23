@@ -27,7 +27,7 @@ export default class SuggestedChannelsStepNew extends Component {
 
     this.props.discovery.init();
     this.props.discovery.filters.setType('channels');
-    this.props.discovery.filters.setPeriod('30d');
+    this.props.discovery.filters.setPeriod('1y');
   }
 
   /**

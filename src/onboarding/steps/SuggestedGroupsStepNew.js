@@ -28,7 +28,7 @@ export default class SuggestedGroupsStepNew extends Component {
   
   componentDidMount() {
     this.props.discovery.filters.setType('groups');
-    this.props.discovery.filters.setPeriod('30d');
+    this.props.discovery.filters.setPeriod('1y');
   }
 
   renderGroup = (group, i) => {
