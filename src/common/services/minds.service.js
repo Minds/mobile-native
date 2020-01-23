@@ -16,8 +16,8 @@ class MindsService {
 
   async update() {
     const settings = await api.get('api/v1/minds/config');
-    AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
-    this.settings = this.settings;
+    await AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
+    this.settings = settings;
   }
 
   /**
@@ -31,10 +31,10 @@ class MindsService {
         if (!settings) throw Error('No settings stored');
       } catch {
         settings = this.loadDefault();
-        AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
+        await AsyncStorage.setItem('@MindsSettings', JSON.stringify(settings));
       }
       this.settings = settings;
-      this.update();
+      await this.update();
     }
 
     return this.settings;

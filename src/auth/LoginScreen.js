@@ -24,6 +24,7 @@ import { ComponentsStyle } from '../styles/Components';
 import logService from '../common/services/log.service';
 import featuresService from '../common/services/features.service';
 import CenteredLoading from '../common/components/CenteredLoading';
+import { inject } from 'mobx-react/native';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -31,6 +32,7 @@ const LOGO_HEIGHT_SMALL = 50;
 /**
  * Login screen
  */
+@inject('mindsServiceStore')
 export default class LoginScreen extends Component {
 
   state = {
@@ -52,7 +54,7 @@ export default class LoginScreen extends Component {
 
   async componentDidMount() {
     if (!this.props.hopFeatures) {
-      await featuresService.updateFeatures();
+      await featuresService.updateFeatures(this.props.mindsServiceStore);
       if (featuresService.has('homepage-december-2019')) {
         this.props.navigation.navigate('LoginNew');
       }

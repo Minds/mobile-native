@@ -24,8 +24,13 @@ class FeaturesService {
    * Update features from minds services
    */
   @action
-  async updateFeatures() {
-    const settings = await mindsService.getSettings();
+  async updateFeatures(mindsServiceStore = null) {
+    let settings;
+    if (mindsServiceStore) {
+      settings = await mindsServiceStore.getSettings();
+    } else {
+      settings = await mindsService.getSettings();
+    }
     const features = settings.features;
 
     Object.assign(features, MINDS_FEATURES);
