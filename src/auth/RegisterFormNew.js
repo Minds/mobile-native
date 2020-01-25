@@ -208,7 +208,7 @@ export default class RegisterFormNew extends Component {
         exclusive_promotions: this.state.exclusive_promotions
       };
       await authService.register(params);
-      //sessionService.setInitialScreen('OnboardingScreenNew');
+      sessionService.setInitialScreen('OnboardingScreenNew');
       await apiService.clearCookies();
       await delay(100);
       await authService.login(this.state.username ,this.state.password);
