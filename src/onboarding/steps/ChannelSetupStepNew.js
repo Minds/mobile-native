@@ -32,7 +32,8 @@ export default class ChannelSetupStepNew extends Component {
     preview_avatar: null,
     preview_banner: null,
     saving: false,
-    dirty: false
+    dirty: false,
+    showFooter: true,
   };
 
   uploads = {
@@ -111,6 +112,8 @@ export default class ChannelSetupStepNew extends Component {
     }
   }
 
+  toggleFooter = () => this.setState({showFooter: !this.state.showFooter});
+
   getBody = () => {
     const hasAvatar = this.props.user.hasAvatar() || this.state.preview_avatar;
     const avatar = this.getAvatar();
@@ -152,6 +155,8 @@ export default class ChannelSetupStepNew extends Component {
             editable={true}
             optional={true}
             info={i18n.t('onboarding.phoneNumberTooltip')}
+            onFocus={this.toggleFooter}
+            onBlur={this.toggleFooter}
             inputType={'phoneInput'}
           />
           <Input
@@ -186,9 +191,9 @@ export default class ChannelSetupStepNew extends Component {
         <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
           {this.getBody()}
         </View>
-        <View style={[CS.mindsLayoutFooter, CS.backgroundThemePrimary]}>
+        { this.state.showFooter && <View style={[CS.mindsLayoutFooter, CS.backgroundThemePrimary]}>
           {this.getFooter()}
-        </View>
+        </View>}
       </View>
     );
   }
