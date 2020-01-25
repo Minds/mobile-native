@@ -106,7 +106,8 @@ sessionService.onLogin(async () => {
   NavigationService.navigate(sessionService.initialScreen);
 
   // check onboarding progress and navigate if necessary
-  stores.onboarding.getProgress();
+  // commenting this to prevent that the app navigates to onboarding after login
+  //stores.onboarding.getProgress();
 
   // check update
   if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {

@@ -97,7 +97,7 @@ export default class ChannelHeader extends Component {
 
   componentDidMount() {
     const isOwner = session.guid === this.props.store.channel.guid;
-    if(isOwner) this.props.onboarding.getProgress();
+    if(isOwner && !featuresService.has('onboarding-december-2019')) this.props.onboarding.getProgress();
   }
 
   onEditAction = async () => {

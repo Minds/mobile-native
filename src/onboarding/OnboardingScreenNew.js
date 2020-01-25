@@ -35,7 +35,7 @@ import SuggestedGroupsStepNew from './steps/SuggestedGroupsStepNew';
 import AllDoneStep from './steps/AllDoneStep';
 
 @observer
-@inject('onboarding', 'hashtag')
+@inject('onboarding', 'hashtag', 'groupsBar')
 export default class OnboardingScreenNew extends Component {
 
   /**
@@ -48,8 +48,11 @@ export default class OnboardingScreenNew extends Component {
   onFinish = async () => {
     try {
       await this.props.onboarding.setShown(true);
-      await this.props.onboarding.getProgress();
+      //await this.props.onboarding.getProgress();
       this.props.hashtag.setAll(false);
+      this.props.groupsBar.reset();
+      await this.props.groupsBar.loadGroups();
+      await this.props.groupsBar.loadMarkers();
       navigationService.navigate('Tabs');
     } catch (err) {
       Alert.alert(i18nService.t('error'), i18n.t('errorMessage') + '\n' + i18n.t('tryAgain'))

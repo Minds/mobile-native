@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderRadius: 2,
     paddingHorizontal: 30,
-    paddingVertical: 10,
-    marginTop: 20,
+    paddingVertical: 5,
+    marginTop: 10,
   },
   skipText: {
     color: '#AEB0B8',

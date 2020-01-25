@@ -54,7 +54,7 @@ export const ComponentsStyle = StyleSheet.create({
     padding: 10,
     fontFamily: 'Roboto',
     backgroundColor: 'transparent',
-    height: 40,
+    height: 50,
     borderRadius: 2,
     borderColor: LIGHT_THEME.button_border,
     borderWidth: 1,

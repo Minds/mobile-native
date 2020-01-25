@@ -34,7 +34,7 @@ import { DISABLE_PASSWORD_INPUTS } from '../config/Config';
 /**
  * Register Form
  */
-@inject('user')
+@inject('user', 'onboarding')
 @observer
 export default class RegisterFormNew extends Component {
   state = {
@@ -123,7 +123,7 @@ export default class RegisterFormNew extends Component {
             testID="registerPasswordConfirmInput"
           /> : null }
         <CheckBox
-          right
+          left
           iconLeft
           containerStyle={ComponentsStyle.registerCheckboxNew}
           title={<Text style={ComponentsStyle.termsNew}>{i18n.t('auth.accept')} <Text style={ComponentsStyle.linkNew} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>{i18n.t('auth.termsAndConditions')}</Text></Text>}
@@ -208,10 +208,13 @@ export default class RegisterFormNew extends Component {
         exclusive_promotions: this.state.exclusive_promotions
       };
       await authService.register(params);
-      sessionService.setInitialScreen('OnboardingScreenNew');
+      //sessionService.setInitialScreen('OnboardingScreenNew');
       await apiService.clearCookies();
       await delay(100);
       await authService.login(this.state.username ,this.state.password);
+      // getProgress basically navigates to onboarding
+      // added this and removed from onLogin in App.js
+      this.props.onboarding.getProgress();
     } catch (err) {
       Alert.alert(
         i18n.t('ops'),

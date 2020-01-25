@@ -151,7 +151,7 @@ export default class ChannelSetupStepNew extends Component {
             value={this.state.phoneNumber}
             editable={true}
             optional={true}
-            info={"Info"}
+            info={i18n.t('onboarding.phoneNumberTooltip')}
             inputType={'phoneInput'}
           />
           <Input
@@ -160,7 +160,7 @@ export default class ChannelSetupStepNew extends Component {
             value={this.state.location}
             editable={true}
             optional={true}
-            info={"No Info"}
+            info={i18n.t('onboarding.locationTooltip')}
           />
           <Input
             placeholder={i18n.t('onboarding.infoDateBirth')}
@@ -168,7 +168,7 @@ export default class ChannelSetupStepNew extends Component {
             value={this.state.birthDate}
             editable={true}
             optional={true}
-            info={"No Info"}
+            info={i18n.t('onboarding.dateofBirthTooltip')}
             inputType={'dateInput'}
           />
         </ScrollView>
