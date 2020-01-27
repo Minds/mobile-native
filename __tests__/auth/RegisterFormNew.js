@@ -9,6 +9,7 @@ import authService from '../../src/auth/AuthService';
 
 jest.mock('../../src/auth/AuthService');
 jest.mock('../../src/auth/UserStore');
+jest.mock('../../src/onboarding/OnboardingStore');
 
 
 Alert.alert = jest.fn();
@@ -16,6 +17,7 @@ Alert.alert = jest.fn();
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import UserStore from '../../src/auth/UserStore';
+import OnboardingStore from '../../src/onboarding/OnboardingStore';
 
 describe('RegisterFormNew component', () => {
   beforeEach(() => {
@@ -25,8 +27,9 @@ describe('RegisterFormNew component', () => {
 
   it('should renders correctly', () => {
     const userStore = new UserStore();
+    const onboardingStore = new OnboardingStore();
     const registerForm = renderer.create(
-      <RegisterFormNew user={userStore} />
+      <RegisterFormNew user={userStore}  onboarding={onboardingStore}/>
     ).toJSON();
     expect(registerForm).toMatchSnapshot();
   });
@@ -36,9 +39,10 @@ describe('RegisterFormNew component', () => {
     authService.register.mockResolvedValue();
 
     const userStore = new UserStore();
+    const onboardingStore = new OnboardingStore();
 
     const wrapper = shallow(
-      <RegisterFormNew user={userStore} />
+      <RegisterFormNew user={userStore} onboarding={onboardingStore}/>
     );
 
     const render = wrapper.dive();
@@ -75,9 +79,10 @@ describe('RegisterFormNew component', () => {
 
   it('should warn the user if the password confirmation is different', async () => {
     const userStore = new UserStore();
+    const onboardingStore = new OnboardingStore();
 
     const wrapper = shallow(
-      <RegisterFormNew user={userStore} />
+      <RegisterFormNew user={userStore} onboarding={onboardingStore}/>
     );
 
     const render = wrapper.dive();
@@ -113,9 +118,10 @@ describe('RegisterFormNew component', () => {
 
   it('should warn the user if the terms and conditions are not accepted', async () => {
     const userStore = new UserStore();
+    const onboardingStore = new OnboardingStore();
 
     const wrapper = shallow(
-      <RegisterFormNew user={userStore}/>
+      <RegisterFormNew user={userStore} onboarding={onboardingStore}/>
     );
 
     const render = wrapper.dive();
