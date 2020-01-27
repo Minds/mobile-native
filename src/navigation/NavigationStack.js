@@ -11,7 +11,6 @@ import ChannelScreen from '../channel/ChannelScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
 import CapturePoster from '../capture/CapturePoster';
 import RegisterScreen from '../auth/RegisterScreen';
-import RegisterScreenNew from '../auth/RegisterScreenNew';
 import ConversationScreen from '../messenger/ConversationScreen';
 import SettingsScreen from '../settings/SettingsScreen';
 import PasswordScreen from '../settings/screens/PasswordScreen';
@@ -51,8 +50,6 @@ import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
-import LoginScreenNew from '../auth/LoginScreenNew';
-import featuresService from '../common/services/features.service';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 
 /**
@@ -234,17 +231,11 @@ const AuthStack = createStackNavigator({
   Login: {
     screen: withErrorBoundaryScreen(LoginScreen),
   },
-  LoginNew: {
-    screen: withErrorBoundaryScreen(LoginScreenNew),
-  },
   Forgot: {
     screen: withErrorBoundaryScreen(ForgotScreen),
   },
   Register: {
     screen: withErrorBoundaryScreen(RegisterScreen),
-  },
-  RegisterNew: {
-    screen: withErrorBoundaryScreen(RegisterScreenNew),
   },
 });
 
