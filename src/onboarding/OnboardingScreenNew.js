@@ -35,7 +35,7 @@ import SuggestedGroupsStepNew from './steps/SuggestedGroupsStepNew';
 import AllDoneStep from './steps/AllDoneStep';
 
 @observer
-@inject('onboarding', 'hashtag', 'groupsBar')
+@inject('onboarding', 'hashtag', 'groupsBar', 'discovery')
 export default class OnboardingScreenNew extends Component {
 
   /**
@@ -50,13 +50,29 @@ export default class OnboardingScreenNew extends Component {
       await this.props.onboarding.setShown(true);
       //await this.props.onboarding.getProgress();
       this.props.hashtag.setAll(false);
-      this.props.groupsBar.reset();
-      await this.props.groupsBar.loadGroups();
-      await this.props.groupsBar.loadMarkers();
+      await this.loadJoinedGroups();
+      await this.clearDiscovery();
       navigationService.navigate('Tabs');
     } catch (err) {
       Alert.alert(i18nService.t('error'), i18n.t('errorMessage') + '\n' + i18n.t('tryAgain'))
     }
+  }
+
+  /**
+   * Load the groups user joined on suggested groups step
+   */
+  loadJoinedGroups = async () => {
+    this.props.groupsBar.reset();
+    await this.props.groupsBar.loadGroups();
+    await this.props.groupsBar.loadMarkers();
+  }
+
+  /**
+   * Clear discovery used for suggested groups and channels
+   */
+  clearDiscovery = async () => {
+    this.props.discovery.clearList();
+    this.props.discovery.reset();
   }
 
   handleWizarRef = (ref) => {

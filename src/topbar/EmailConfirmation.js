@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Alert } from 'react-native';
+import { Text, StyleSheet, View, Alert, Platform } from 'react-native';
 import i18n from '../common/services/i18n.service';
 import emailConfirmationService from '../common/services/email-confirmation.service';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -61,6 +61,8 @@ class EmailConfirmation extends Component {
   }
 }
 
+const topPosition = Platform.OS === 'ios' ? (isIphoneX ? 40 : 30) : 0;
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#4690df',
@@ -70,7 +72,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     width: '100%',
-    top: isIphoneX ? 40 : 30,
+    top: topPosition,
+    zIndex: 999,
   },
   body: {
     flexDirection: 'column',
