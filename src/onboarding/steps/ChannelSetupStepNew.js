@@ -27,8 +27,8 @@ const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 export default class ChannelSetupStepNew extends Component {
   state = {
     phoneNumber: '+1',
-    location: '',
-    birthDate: '',
+    city: '',
+    dob: '',
     preview_avatar: null,
     preview_banner: null,
     saving: false,
@@ -77,19 +77,18 @@ export default class ChannelSetupStepNew extends Component {
   }
 
   setPhoneNumber = phoneNumber => this.setState({phoneNumber});
-  setLocation = location => this.setState({location});
-  setBirthDate = birthDate => this.setState({birthDate});
+  setCity = city => this.setState({city});
+  setBirthDate = dob => this.setState({dob});
 
   save = async () => {
     if (this.store.isUploading) throw new UserError('Avatar is uploading, please wait');
-    if (!this.state.dirty) return;
 
-    const {phoneNumber, location, birthDate} = this.state;
-
-    payload = {
+    const {phoneNumber, city, dob} = this.state;
+    
+    const payload = {
       phoneNumber,
-      location,
-      birthDate
+      city,
+      dob
     };
 
     this.setState({saving: true});
@@ -161,8 +160,8 @@ export default class ChannelSetupStepNew extends Component {
           />
           <Input
             placeholder={i18n.t('onboarding.infoLocation')}
-            onChangeText={this.setLocation}
-            value={this.state.location}
+            onChangeText={this.setCity}
+            value={this.state.city}
             editable={true}
             optional={true}
             info={i18n.t('onboarding.locationTooltip')}
@@ -170,7 +169,7 @@ export default class ChannelSetupStepNew extends Component {
           <Input
             placeholder={i18n.t('onboarding.infoDateBirth')}
             onChangeText={this.setBirthDate}
-            value={this.state.birthDate}
+            value={this.state.dob}
             editable={true}
             optional={true}
             info={i18n.t('onboarding.dateofBirthTooltip')}
@@ -181,8 +180,13 @@ export default class ChannelSetupStepNew extends Component {
     );
   };
 
+  next = async () => {
+    await this.save();
+    this.props.onNext();
+  }
+
   getFooter = () => {
-    return <OnboardingButtons onNext={this.props.onNext} />;
+    return <OnboardingButtons onNext={this.next} saving={this.state.saving}/>;
   };
 
   render() {

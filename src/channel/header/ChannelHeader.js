@@ -304,6 +304,12 @@ export default class ChannelHeader extends Component {
               </ReadMore>
             </View>
           }
+          {!isEditable && channel.city &&
+            <View style={[CommonStyle.paddingTop2x, CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
+              <Icon name="md-pin" size={24}  style={styles.name} />
+              <Text style={CommonStyle.marginLeft1x}>{channel.city}</Text>
+            </View>
+          }
         </View>
 
         <TouchableCustom onPress={this.changeAvatarAction} style={styles.avatar} disabled={!isEditable}>
