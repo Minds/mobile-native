@@ -1,19 +1,14 @@
-import {
-  observable,
-  action,
-  computed,
-  toJS,
-} from 'mobx';
+import {observable, action, computed, toJS} from 'mobx';
 import _ from 'lodash';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
+import EventEmitter from 'eventemitter3';
 
 import sessionService from './services/session.service';
-import { vote } from './services/votes.service';
-import { toggleExplicit } from '../newsfeed/NewsfeedService';
+import {vote} from './services/votes.service';
+import {toggleExplicit} from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
-import channelService from '../channel/ChannelService';
-import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
-import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
+import {revokeBoost, acceptBoost, rejectBoost} from '../boost/BoostService';
+import {toggleAllowComments as toggleAllow} from '../comments/CommentsService';
 import i18n from './services/i18n.service';
 import featuresService from './services/features.service';
 
@@ -21,6 +16,10 @@ import featuresService from './services/features.service';
  * Base model
  */
 export default class BaseModel {
+  /**
+   * Event emitter
+   */
+  static events = new EventEmitter();
 
   /**
    * Enable/Disable comments
@@ -63,7 +62,7 @@ export default class BaseModel {
     const plainEntity = toJS(this);
 
     // remove references to the list
-    delete(plainEntity.__list);
+    delete plainEntity.__list;
 
     return plainEntity;
   }
@@ -72,7 +71,7 @@ export default class BaseModel {
    * Child models classes
    */
   childModels() {
-    return {}
+    return {};
   }
 
   /**
@@ -87,7 +86,7 @@ export default class BaseModel {
     }
 
     // create childs instances
-    const childs = this.childModels()
+    const childs = this.childModels();
     for (var prop in childs) {
       if (this[prop]) {
         this[prop] = childs[prop].create(this[prop]);
@@ -100,7 +99,7 @@ export default class BaseModel {
    */
   isOwner = () => {
     return this.ownerObj && sessionService.guid === this.ownerObj.guid;
-  }
+  };
 
   /**
    * Update model data
@@ -112,7 +111,6 @@ export default class BaseModel {
 
     Object.getOwnPropertyNames(this).forEach(key => {
       if (data[key] !== undefined) {
-
         if (childs[key] && this[key] && this[key].update) {
           // we update the child model
           this[key].update(data[key]);
@@ -140,7 +138,7 @@ export default class BaseModel {
     const collection = [];
     if (!arrayData) return collection;
 
-    arrayData.forEach((data) => {
+    arrayData.forEach(data => {
       collection.push(new this(data));
     });
 
@@ -174,9 +172,9 @@ export default class BaseModel {
   @computed
   get votedUp() {
     if (
-      this['thumbs:up:user_guids']
-      && this['thumbs:up:user_guids'].length
-      && this['thumbs:up:user_guids'].indexOf(sessionService.guid) >= 0
+      this['thumbs:up:user_guids'] &&
+      this['thumbs:up:user_guids'].length &&
+      this['thumbs:up:user_guids'].indexOf(sessionService.guid) >= 0
     ) {
       return true;
     }
@@ -189,9 +187,9 @@ export default class BaseModel {
   @computed
   get votedDown() {
     if (
-      this['thumbs:down:user_guids']
-      && this['thumbs:down:user_guids'].length
-      && this['thumbs:down:user_guids'].indexOf(sessionService.guid) >= 0
+      this['thumbs:down:user_guids'] &&
+      this['thumbs:down:user_guids'].length &&
+      this['thumbs:down:user_guids'].indexOf(sessionService.guid) >= 0
     ) {
       return true;
     }
@@ -204,41 +202,54 @@ export default class BaseModel {
    */
   @action
   async toggleVote(direction) {
-
-    const voted = (direction == 'up') ? this.votedUp : this.votedDown;
-    const delta = (voted) ? -1 : 1;
+    const voted = direction == 'up' ? this.votedUp : this.votedDown;
+    const delta = voted ? -1 : 1;
 
     const guids = this['thumbs:' + direction + ':user_guids'] || [];
 
     if (voted) {
-      this['thumbs:' + direction + ':user_guids'] = guids.filter(function (item) {
+      this['thumbs:' + direction + ':user_guids'] = guids.filter(function(
+        item,
+      ) {
         return item !== sessionService.guid;
       });
     } else {
-      this['thumbs:' + direction + ':user_guids'] = [sessionService.guid, ...guids];
+      this['thumbs:' + direction + ':user_guids'] = [
+        sessionService.guid,
+        ...guids,
+      ];
     }
 
-    this['thumbs:' + direction + ':count'] = parseInt(this['thumbs:' + direction + ':count'], 10) + delta;
+    this['thumbs:' + direction + ':count'] =
+      parseInt(this['thumbs:' + direction + ':count'], 10) + delta;
 
     const params = this.getClientMetadata();
 
     try {
-      await vote(this.guid, direction, params)
+      await vote(this.guid, direction, params);
     } catch (err) {
       if (!voted) {
-        this['thumbs:' + direction + ':user_guids'] = guids.filter(function (item) {
+        this['thumbs:' + direction + ':user_guids'] = guids.filter(function(
+          item,
+        ) {
           return item !== sessionService.guid;
         });
       } else {
-        this['thumbs:' + direction + ':user_guids'] = [sessionService.guid, ...guids];
+        this['thumbs:' + direction + ':user_guids'] = [
+          sessionService.guid,
+          ...guids,
+        ];
       }
-      this['thumbs:' + direction + ':count'] = parseInt(this['thumbs:' + direction + ':count'], 10) - delta;
+      this['thumbs:' + direction + ':count'] =
+        parseInt(this['thumbs:' + direction + ':count'], 10) - delta;
       throw err;
     }
   }
 
   getClientMetadata() {
-    return (this._list && this._list.metadataService) ? this._list.metadataService.getEntityMeta(this) : {};
+    return this._list && this._list.metadataService
+      ? this._list.metadataService.getEntityMeta(this)
+      : {};
   }
 
   /**
@@ -321,7 +332,6 @@ export default class BaseModel {
    * @returns {boolean}
    */
   can(action, showAlert = false) {
-
     // TODO: clean up permissions feature flag
     if (!featuresService.has('permissions')) return true;
 
@@ -336,7 +346,9 @@ export default class BaseModel {
     if (showAlert && !allowed) {
       Alert.alert(
         i18n.t('sorry'),
-        i18n.t(`permissions.notAllowed.${action}`, {defaultValue: i18n.t('notAllowed')})
+        i18n.t(`permissions.notAllowed.${action}`, {
+          defaultValue: i18n.t('notAllowed'),
+        }),
       );
     }
 
@@ -344,7 +356,7 @@ export default class BaseModel {
   }
 
   isScheduled() {
-    return  this.time_created * 1000 > Date.now();
+    return this.time_created * 1000 > Date.now();
   }
 
   static isScheduled(timeCreatedValue) {

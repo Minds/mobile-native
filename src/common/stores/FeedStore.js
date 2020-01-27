@@ -4,15 +4,16 @@ import logService from '../services/log.service';
 import Viewed from './Viewed';
 import MetadataService from '../services/metadata.service';
 import FeedsService from '../services/feeds.service';
-import connectivityService from '../services/connectivity.service';
 import channelService from '../../channel/ChannelService';
 
 /**
  * Feed store
  */
 export default class FeedStore {
-
-  @observable scheduledCount = '';
+  /**
+   * Scheduled count
+   */
+  @observable scheduledCount = 0;
 
   /**
    * Refreshing
@@ -182,6 +183,24 @@ export default class FeedStore {
     this.removeIndex(index);
     if (entity.isScheduled()) {
       this.setScheduledCount(this.scheduledCount - 1);
+    }
+  }
+
+  /**
+   * Remove the given entity from the list
+   * @param {string} guid
+   */
+  @action
+  removeFromOwner(guid) {
+    this.entities = this.entities.filter(
+      e => !e.ownerObj || e.ownerObj.guid !== guid,
+    );
+    this.feedsService.removeFromOwner(guid);
+
+    // after the filter we have less than a page of data?
+    if (this.feedsService.offset < this.feedsService.limit) {
+      // we load another page to prevent block the pagination
+      this.loadMore();
     }
   }
 

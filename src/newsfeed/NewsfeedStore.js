@@ -1,20 +1,19 @@
-import { Alert } from 'react-native';
-import { observable, action, computed, extendObservable } from 'mobx'
+import {observable, action} from 'mobx';
 
 import NewsfeedService from './NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from './ActivityModel';
 import logService from '../common/services/log.service';
 import boostedContentService from '../common/services/boosted-content.service';
-import featuresService from '../common/services/features.service';
+
 import FeedStore from '../common/stores/FeedStore';
-import { isNetworkFail } from '../common/helpers/abortableFetch';
+import {isNetworkFail} from '../common/helpers/abortableFetch';
+import UserModel from '../channel/UserModel';
 
 /**
  * News feed store
  */
 class NewsfeedStore {
-
   feedStore = new FeedStore(true);
 
   /**
@@ -22,7 +21,7 @@ class NewsfeedStore {
    */
   listRef;
 
-  service = new NewsfeedService;
+  service = new NewsfeedService();
 
   @observable filter = 'subscribed';
   @observable loading = false;
@@ -39,7 +38,21 @@ class NewsfeedStore {
    */
   constructor() {
     this.buildStores();
+
+    // we don't need to unsubscribe to the event because this stores is destroyed when the app is closed
+    UserModel.events.on('toggleSubscription', this.onSubscriptionChange);
   }
+
+  /**
+   * On subscription change
+   */
+  onSubscriptionChange = (user: UserModel) => {
+    if (!user.subscribed) {
+      this.feedStore.removeFromOwner(user.guid);
+    } else {
+      this.feedStore.refresh();
+    }
+  };
 
   /**
    * Scroll to top
@@ -52,16 +65,18 @@ class NewsfeedStore {
   /**
    * Set FeedList reference
    */
-  setListRef = (r) => this.listRef = r;
+  setListRef = r => (this.listRef = r);
 
   buildStores() {
     this.list = new OffsetFeedListStore('shallow', true);
 
-    this.feedStore.getMetadataService()
+    this.feedStore
+      .getMetadataService()
       .setSource('feed/subscribed')
       .setMedium('feed');
 
-    this.list.getMetadataService()
+    this.list
+      .getMetadataService()
       .setSource('feed/boosts')
       .setMedium('featured-content');
 
@@ -76,7 +91,6 @@ class NewsfeedStore {
    */
   @action
   async loadFeed(refresh = false) {
-
     let feed;
 
     if (this.list.cantLoadMore() || this.loading) {
@@ -135,11 +149,10 @@ class NewsfeedStore {
   loadBoosts(rating) {
     // get first 15 boosts
     this.loadingBoost = true;
-    this.service.getBoosts('', 15, rating)
-      .then(boosts => {
-        this.loadingBoost = false;
-        this.boosts = boosts.entities;
-      })
+    this.service.getBoosts('', 15, rating).then(boosts => {
+      this.loadingBoost = false;
+      this.boosts = boosts.entities;
+    });
   }
 
   prepend(entity) {
@@ -177,7 +190,6 @@ class NewsfeedStore {
     this.loading = false;
     this.loadingBoost = false;
   }
-
 }
 
 export default NewsfeedStore;
