@@ -2,15 +2,11 @@ import React, {
   Component
 } from 'react';
 
-import { StackActions, NavigationActions } from 'react-navigation';
-import FastImage from 'react-native-fast-image';
 
 import {
   StyleSheet,
-  ScrollView,
   View,
   KeyboardAvoidingView,
-  Button,
   Keyboard,
   Animated,
   Platform,
@@ -20,11 +16,9 @@ import * as Animatable from 'react-native-animatable';
 import LoginForm from './LoginForm';
 import VideoBackground from '../common/components/VideoBackground';
 import { CommonStyle } from '../styles/Common';
-import { ComponentsStyle } from '../styles/Components';
 import logService from '../common/services/log.service';
 import featuresService from '../common/services/features.service';
 import CenteredLoading from '../common/components/CenteredLoading';
-import { inject } from 'mobx-react/native';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -32,7 +26,6 @@ const LOGO_HEIGHT_SMALL = 50;
 /**
  * Login screen
  */
-@inject('mindsServiceStore')
 export default class LoginScreen extends Component {
 
   state = {
@@ -54,7 +47,7 @@ export default class LoginScreen extends Component {
 
   async componentDidMount() {
     if (!this.props.hopFeatures) {
-      await featuresService.updateFeatures(this.props.mindsServiceStore);
+      await featuresService.updateFeatures();
       if (featuresService.has('homepage-december-2019')) {
         this.props.navigation.navigate('LoginNew');
       }

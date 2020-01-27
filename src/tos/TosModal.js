@@ -19,7 +19,6 @@ import apiService from '../common/services/api.service';
 /**
  * Tos Modal
  */
-@inject('mindsServiceStore')
 @observer
 export default class TosModal extends PureComponent {
 
@@ -34,7 +33,7 @@ export default class TosModal extends PureComponent {
    */
   async componentDidMount() {
     try {
-      const settings = await this.props.mindsServiceStore.getSettings();
+      const settings = await mindsService.getSettings();
       if (settings.last_accepted_tos) {
         this.setState({last_accepted_tos: settings.last_accepted_tos});
       }
