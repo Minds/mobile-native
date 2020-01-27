@@ -32,7 +32,6 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import HashtagsStepNew from './steps/HashtagsStepNew';
 import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
 import SuggestedGroupsStepNew from './steps/SuggestedGroupsStepNew';
-import AllDoneStep from './steps/AllDoneStep';
 
 @observer
 @inject('onboarding', 'hashtag', 'groupsBar', 'discovery')
@@ -109,8 +108,6 @@ export default class OnboardingScreenNew extends Component {
     if (!completed_items.some(r => r == 'suggested_channels')) {
       steps.push({component: <SuggestedChannelsStepNew onNext={this.onNext} onBack={this.onBack}/>});
     }
-
-    steps.push({component: <AllDoneStep onNext={this.onNext}/>})
 
     return (
       <SafeAreaView style={[CS.flexContainer, CS.backgroundThemePrimary]}>
