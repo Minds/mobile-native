@@ -10,6 +10,7 @@ import {
   Platform,
   StyleSheet,
   Alert,
+  BackHandler,
   SafeAreaView,
 } from 'react-native';
 
@@ -43,6 +44,28 @@ export default class OnboardingScreenNew extends Component {
    */
   static navigationOptions = {
     header: null
+  }
+
+  /**
+   * Component did mount
+   */
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  /**
+   * On hardware back press
+   */
+  onBackPress = () => {
+    this.wizard.previous();
+    return true;
   }
 
   onFinish = async () => {
@@ -82,7 +105,7 @@ export default class OnboardingScreenNew extends Component {
     if (!completed_items.some(r => r == 'tokens_verification')) {
       steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext} onBack={this.onBack}/> });
     }
-    
+
     if (!completed_items.some(r => r == 'suggested_groups')) {
       steps.push({component: <SuggestedGroupsStepNew onNext={this.onNext} onBack={this.onBack}/>});
     }
