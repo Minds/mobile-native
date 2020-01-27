@@ -2,11 +2,11 @@ import 'react-native';
 import React from 'react';
 import { Text, TouchableOpacity } from "react-native";
 import { shallow } from 'enzyme';
-import { Button } from 'react-native-elements';
 
 import LoginForm from '../../src/auth/LoginForm';
 import authService from '../../src/auth/AuthService';
-import TextInput from '../../src/common/components/TextInput';
+import Input from '../../src/common/components/Input';
+import Button from '../../src/common/components/Button';
 
 jest.mock('../../src/auth/AuthService');
 
@@ -37,12 +37,12 @@ describe('LoginForm component', () => {
 
     // simulate user input
     const render = wrapper.dive();
-    render.find(TextInput).forEach(child => {
+    render.find(Input).forEach(child => {
       child.simulate('changeText', 'data');
     });
 
     // press login
-    await render.find(Button).at(1).simulate('press');
+    await render.find(Button).at(0).simulate('press');
 
     // check state
     expect(wrapper.state().password).toEqual('data');

@@ -5,7 +5,6 @@ import { shallow } from 'enzyme';
 import RegisterScreen from '../../src/auth/RegisterScreen';
 
 jest.mock('../../src/auth/RegisterForm', () => 'RegisterForm');
-jest.mock('../../src/common/components/VideoBackground', () => 'VideoBackground');
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
@@ -30,7 +29,7 @@ describe('RegisterScreen component', () => {
     expect(registerForms.length).toBe(1);
   });
 
-  it('should navigate on RegisterForm events', async () => {
+  it('should navigate on RegisterFormNew events', async () => {
 
     const navigation = {
       dispatch: jest.fn(),
