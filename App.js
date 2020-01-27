@@ -76,9 +76,10 @@ sqliteStorageProviderService.get();
 
 apiService.clearCookies();
 
+const mindsSettingsPromise = mindsService.getSettings();
+
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
-  stores.mindsServiceStore.clear();
   const user = sessionService.getUser();
 
   Sentry.configureScope(scope => {
@@ -88,11 +89,9 @@ sessionService.onLogin(async () => {
   logService.info('[App] Getting minds settings and onboarding progress');
 
   // load minds settings and boosted content
-  await Promise.all([mindsService.getSettings(), boostedContentService.load()]);
+  await Promise.all([mindsSettingsPromise, boostedContentService.load()]);
 
   logService.info('[App] updatting features');
-  // reload fatures on login
-  await featureService.updateFeatures();
 
   // register device token into backend on login
 
@@ -153,7 +152,6 @@ sessionService.onLogout(() => {
   stores.notifications.clearLocal();
   stores.groupsBar.clearLocal();
   translationService.purgeLanguagesCache();
-  stores.mindsServiceStore.clear()
 });
 
 // disable yellow boxes
@@ -192,10 +190,6 @@ export default class App extends Component<Props, State> {
    */
   constructor(props) {
     super(props);
-
-    /*if (props.features) {
-      featureService.injectFeatures(JSON.parse(props.features));
-    }*/
 
     if (!Text.defaultProps) {
       Text.defaultProps = {};
@@ -325,7 +319,7 @@ export default class App extends Component<Props, State> {
     );
 
     const tosModal = (
-      <TosModal user={stores.user} key="tosModal" mindsServiceStore={stores.mindsServiceStore}/>
+      <TosModal user={stores.user} key="tosModal" />
     )
 
     return [ app, keychainModal, blockchainTransactionModal,  tosModal];
