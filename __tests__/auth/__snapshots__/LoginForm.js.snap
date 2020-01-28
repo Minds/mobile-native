@@ -95,6 +95,7 @@ exports[`LoginForm component should renders correctly 1`] = `
           <TextInput
             allowFontScaling={true}
             autoCapitalize="none"
+            editable={false}
             onChangeText={[Function]}
             placeholder=""
             placeholderTextColor="#444"
@@ -174,6 +175,7 @@ exports[`LoginForm component should renders correctly 1`] = `
             <TextInput
               allowFontScaling={true}
               autoCapitalize="none"
+              editable={false}
               onChangeText={[Function]}
               placeholder=""
               placeholderTextColor="#444"

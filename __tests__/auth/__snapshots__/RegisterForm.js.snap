@@ -185,7 +185,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
           <TextInput
             allowFontScaling={true}
             autoCapitalize="none"
-            editable={true}
+            editable={false}
             onChangeText={[Function]}
             placeholder=""
             placeholderTextColor="#444"
@@ -264,7 +264,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
           <TextInput
             allowFontScaling={true}
             autoCapitalize="none"
-            editable={true}
+            editable={false}
             onChangeText={[Function]}
             placeholder=""
             placeholderTextColor="#444"
@@ -343,7 +343,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
           <TextInput
             allowFontScaling={true}
             autoCapitalize="none"
-            editable={true}
+            editable={false}
             onChangeText={[Function]}
             placeholder=""
             placeholderTextColor="#444"
