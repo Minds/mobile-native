@@ -411,17 +411,24 @@ class CommentList extends React.Component<PropsType, StateType> {
   }
 
   commentFocusCall = (comment: CommentModel, index: number) => {
-    if (comment.focused && this.props.parent) {
-      setTimeout(() => {
-        if (
-          this.props.onCommentFocus &&
-          this.listRef &&
-          this.listRef._listRef
-        ) {
+    if (comment.focused) {
+      if (this.props.parent) {
+        setTimeout(() => {
+          if (
+            this.props.onCommentFocus &&
+            this.listRef &&
+            this.listRef._listRef
+          ) {
+            const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+            this.props.onCommentFocus(comment, frame.offset + frame.length);
+          }
+        }, 1000);
+      } else {
+        if (this.listRef && this.listRef._listRef) {
           const frame = this.listRef._listRef._getFrameMetricsApprox(index);
-          this.props.onCommentFocus(comment, frame.offset + frame.length);
+          this.onCommentFocus(comment, frame.offset + frame.length);
         }
-      }, 1000);
+      }
     }
   };
 
