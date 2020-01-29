@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Alert } from 'react-native';
+import { Text, StyleSheet, View, Alert, Platform } from 'react-native';
 import i18n from '../common/services/i18n.service';
 import emailConfirmationService from '../common/services/email-confirmation.service';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { CommonStyle as CS } from '../styles/Common';
 import { observer, inject } from 'mobx-react/native';
+import isIphoneX from '../common/helpers/isIphoneX';
 
 /**
  * Email Confirmation Message
@@ -45,33 +46,41 @@ class EmailConfirmation extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={[CS.fontM, CS.colorWhite]}>
-          {i18n.t('emailConfirm.confirm')}
-        </Text>
-        <Text style={[CS.bold, CS.colorWhite]} onPress={this.send}>
-          {i18n.t('emailConfirm.sendAgain')}
-        </Text>
-        <IonIcon
-          style={[styles.modalCloseIcon, CS.colorWhite]}
-          size={28}
-          name="ios-close"
-          onPress={this.dismiss}
-        />
+        
+        <View style={styles.body}>
+          <Text style={[CS.fontM, CS.colorWhite]}>
+            {i18n.t('emailConfirm.confirm')}
+          </Text>
+          <Text style={[CS.bold, CS.colorWhite]} onPress={this.send}>
+            {i18n.t('emailConfirm.sendAgain')}
+          </Text>
+        </View>
+        <Text style={[styles.modalCloseIcon, CS.colorWhite, CS.bold]} onPress={this.dismiss}>[Close]</Text>
       </View>
     );
   }
 }
 
+const topPosition = Platform.OS === 'ios' ? (isIphoneX ? 40 : 30) : 0;
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#4690df',
-    height: 40,
+    height: 70,
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    width: '100%',
+    top: topPosition,
+    zIndex: 999,
+  },
+  body: {
     flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   modalCloseIcon: {
-    position: 'absolute',
     alignSelf: 'flex-end',
     paddingRight: 15,
   },

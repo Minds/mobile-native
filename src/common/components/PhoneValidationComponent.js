@@ -145,6 +145,10 @@ export default class PhoneValidationComponent extends Component {
             onChangePhoneNumber={this.setPhone}
             ref="phoneInput"
             placeholder={i18n.t('onboarding.phoneNumber')}
+            textProps={{
+              onFocus: this.props.onFocus,
+              onBlur: this.props.onBlur,
+            }}
           />
 
           <ListItemButton onPress={this.joinAction} disabled={!this.canJoin()}>

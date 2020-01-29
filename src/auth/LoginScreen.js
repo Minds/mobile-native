@@ -15,6 +15,7 @@ import { CommonStyle as CS } from '../styles/Common';
 import logService from '../common/services/log.service';
 import featuresService from '../common/services/features.service';
 import i18nService from '../common/services/i18n.service';
+import sessionService from '../common/services/session.service';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -34,6 +35,11 @@ export default class LoginScreen extends Component {
     super(props);
 
     this.logoHeight = new Animated.Value(LOGO_HEIGHT);
+
+    // Setting this here because if user register, then onboarding then logout and login again, will go to onboarding again
+    sessionService.setInitialScreen('Tabs');
+
+    this.setState({ loading:true });
   }
 
   componentWillMount () {

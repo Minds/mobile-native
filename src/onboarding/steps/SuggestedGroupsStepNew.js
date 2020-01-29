@@ -16,7 +16,7 @@ import i18n from '../../common/services/i18n.service';
 import OnboardingButtons from '../OnboardingButtons';
 import OnboardingBackButton from '../OnboardingBackButton';
 
-@inject('discovery')
+@inject('discovery', 'hashtag')
 @observer
 export default class SuggestedGroupsStepNew extends Component {
 
@@ -27,6 +27,7 @@ export default class SuggestedGroupsStepNew extends Component {
   }
   
   componentDidMount() {
+    this.props.hashtag.setAll(false);
     this.props.discovery.filters.setType('groups');
     this.props.discovery.filters.setPeriod('1y');
   }

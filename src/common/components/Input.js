@@ -66,6 +66,8 @@ export default class Input extends Component {
       <PhoneValidationComponent
         style={[ComponentsStyle.loginInputNew, this.props.style]}
         textStyle={CS.colorWhite}
+        onFocus={this.props.onFocus}
+        onBlur={this.props.onBlur}
       />
     );
   };
@@ -85,7 +87,6 @@ export default class Input extends Component {
           underlineColorAndroid="transparent"
           placeholder=""
           onPress={this.showDatePicker}>
-        >
           <Text style={CS.colorPrimaryText}>{this.props.value}</Text>
         </TouchableOpacity>
         <DateTimePicker
