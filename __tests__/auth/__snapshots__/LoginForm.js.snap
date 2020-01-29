@@ -217,7 +217,7 @@ exports[`LoginForm component should renders correctly 1`] = `
                   "color": "#404A4E",
                   "position": "absolute",
                   "right": 8,
-                  "top": 30,
+                  "top": 33,
                 },
                 Object {
                   "fontFamily": "Ionicons",
