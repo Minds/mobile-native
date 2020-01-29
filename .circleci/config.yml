@@ -147,11 +147,6 @@ jobs:
           name: Build release .ipa
           command: fastlane buildrelease
           working_directory: ios
-          branches:
-            only:
-              - /stable-*/
-              - /release-*/
-              - test/circle-ci
 
       - run:
           name: Upload to crashalytics
@@ -207,8 +202,8 @@ workflows:
           filters:
             branches:
               only:
-                - /stable-*/
-                - /test-*/
+                - /^stable-.*/
+                - /^test-.*/
                 - test/circle-ci
       - sentry:
           requires:
