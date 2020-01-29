@@ -48,9 +48,6 @@ exports[`LoginForm component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "flex": 1,
-              },
-              Object {
                 "marginBottom": 10,
               },
             ]
@@ -127,9 +124,6 @@ exports[`LoginForm component should renders correctly 1`] = `
           <View
             style={
               Array [
-                Object {
-                  "flex": 1,
-                },
                 Object {
                   "marginBottom": 10,
                 },
@@ -274,26 +268,20 @@ exports[`LoginForm component should renders correctly 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "white",
-                "fontSize": 20,
-                "fontWeight": "500",
-              }
-            }
-          >
-            Login
-          </Text>
-          <Text
-            style={
               Array [
                 Object {
                   "color": "#4690D6",
                 },
-                undefined,
+                Object {
+                  "color": "white",
+                  "fontSize": 20,
+                  "fontWeight": "500",
+                },
               ]
             }
           >
              
+            Login
              
           </Text>
         </View>

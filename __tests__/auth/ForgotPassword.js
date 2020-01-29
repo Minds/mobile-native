@@ -1,10 +1,13 @@
 import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Button } from 'react-native-elements';
+
 
 import ForgotPassword from '../../src/auth/ForgotPassword';
 import authService from '../../src/auth/AuthService';
+import Button from '../../src/common/components/Button';
+import Input from '../../src/common/components/Input';
+
 jest.mock('../../src/auth/AuthService');
 
 // Note: test renderer must be required after react-native.
@@ -32,7 +35,7 @@ describe('ForgotPassword component', () => {
 
     // simulate user input
     const render = wrapper.dive();
-    render.find('TextInput').forEach(child => {
+    render.find(Input).forEach(child => {
       child.simulate('changeText', 'myFancyUsername');
     });
 

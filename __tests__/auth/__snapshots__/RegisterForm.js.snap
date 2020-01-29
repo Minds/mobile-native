@@ -138,9 +138,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "flex": 1,
-              },
-              Object {
                 "marginBottom": 10,
               },
             ]
@@ -217,9 +214,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "flex": 1,
-              },
-              Object {
                 "marginBottom": 10,
               },
             ]
@@ -295,9 +289,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
         <View
           style={
             Array [
-              Object {
-                "flex": 1,
-              },
               Object {
                 "marginBottom": 10,
               },

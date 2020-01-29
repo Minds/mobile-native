@@ -17,16 +17,9 @@ import authService from './AuthService';
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
-
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import ModalPicker from '../common/components/ModalPicker';
-
-// workaround for android copy/paste issue
-import TextInput from '../common/components/TextInput';
-
 import Input from '../common/components/Input';
-
 import Button from '../common/components/Button';
 
 /**
@@ -97,17 +90,16 @@ export default class LoginForm extends Component {
           <View style={[{flex:6, marginTop: 30}]}>
             <Button
               onPress={() => this.onLoginPress()}
-              title={i18n.t('auth.login')}
-              type="clear"
+              text={i18n.t('auth.login')}
               containerStyle={ComponentsStyle.loginButtonNew}
+              textStyle={ComponentsStyle.loginButtonTextNew}
               key={1}
               loading={this.state.inProgress}
               loadingRight={true}
               disabled={this.state.inProgress}
               disabledStyle={CS.backgroundTransparent}
-              testID="loginButton">
-              <Text style={ComponentsStyle.loginButtonTextNew}>{i18n.t('auth.login')}</Text>
-            </Button>
+              testID="loginButton"
+            />
             <View style={CS.marginTop4x}>
               <Text style={[ComponentsStyle.linkNew]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
             </View>

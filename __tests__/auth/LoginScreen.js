@@ -10,7 +10,6 @@ jest.mock('../../src/auth/AuthService');
 
 jest.mock('../../src/auth/LoginForm', () => 'LoginForm');
 jest.mock('../../src/auth/ForgotPassword', () => 'ForgotPassword');
-jest.mock('../../src/common/components/VideoBackground', () => 'VideoBackground');
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
