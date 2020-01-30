@@ -93,6 +93,7 @@ exports[`channel subscribers component should render correctly 1`] = `
     </View>
   </View>
   <RCTScrollView
+    ListFooterComponent={null}
     data={
       Array [
         Object {
