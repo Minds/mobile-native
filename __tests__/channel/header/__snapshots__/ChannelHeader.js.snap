@@ -280,7 +280,6 @@ exports[`channel header component owner should render correctly 1`] = `
         </Text>
       </View>
     </View>
-    
   </View>
   <View
     accessible={true}
