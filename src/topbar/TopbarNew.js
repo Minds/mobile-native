@@ -33,19 +33,18 @@ export default class TopbarNew extends Component {
   }
 
   render() {
-    console.log("TOPBARNEW PROPS", this.props);
     return (
-      <View style={styles.container} forceInset={forceInset}>
+      <SafeAreaView style={styles.container} forceInset={forceInset}>
         <View style={styles.topbar}>
             <View style={styles.topbarLeft}>
-              <Text style={[CS.titleText, CS.colorPrimaryText]} >Newsfeed</Text>
+              <Text style={[CS.titleText, CS.colorPrimaryText]} >{this.props.title}</Text>
             </View>
             <View style={styles.topbarRight}>
               <Icon name="chat-bubble-outline" size={24} style={ styles.button }/>
               <Icon name="search" size={24} style={ styles.button }/>
             </View>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }

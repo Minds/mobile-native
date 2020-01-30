@@ -21,6 +21,8 @@ import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
 import featuresService from '../common/services/features.service';
 import TabIcon from '../tabs/TabIcon';
+import TopbarNew from '../topbar/TopbarNew';
+import i18n from '../common/services/i18n.service';
 
 /**
  * News Feed Screen
@@ -110,27 +112,26 @@ export default class NewsfeedScreen extends Component {
       </View>
     );
 
+    let feed;
     if (newsfeed.filter == 'subscribed') {
-      return (
-        <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
-          <FeedList
-            ref={newsfeed.setListRef}
-            feedStore={newsfeed.feedStore}
-            header={header}
-            navigation={this.props.navigation}
-          />
-          <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
-        </View>
-      );
+      feed = <FeedList
+        ref={newsfeed.setListRef}
+        feedStore={newsfeed.feedStore}
+        header={header}
+        navigation={this.props.navigation}
+      />;
+    } else {
+      feed = <NewsfeedList
+        newsfeed={newsfeed}
+        header={header}
+        navigation={this.props.navigation}
+      />;
     }
 
     return (
       <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
-        <NewsfeedList
-          newsfeed={newsfeed}
-          header={header}
-          navigation={this.props.navigation}
-          />
+        <TopbarNew title={i18n.t('tabTitleNewsfeed')}/>
+        { feed }
         <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
       </View>
     );

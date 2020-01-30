@@ -52,6 +52,7 @@ import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
+import featuresService from '../common/services/features.service';
 
 /**
  * Main stack navigator

@@ -38,6 +38,7 @@ import CaptureTabs from './CaptureTabs';
 // workaround for android copy/paste
 import TextInput from '../common/components/TextInput';
 import TabIcon from '../tabs/TabIcon';
+import TopbarNew from '../topbar/TopbarNew';
 
 @inject('user', 'capture')
 @observer
@@ -218,6 +219,7 @@ export default class CapturePoster extends Component {
 
     return (
       <View style={CS.flexContainer} testID="capturePosterView">
+        <TopbarNew title={i18n.t('tabTitleNotifications')}/>
         <CaptureGallery
           onSelected={this.onAttachedMedia}
           header={this.getHeader(true)}

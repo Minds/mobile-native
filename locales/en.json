@@ -652,7 +652,8 @@
     "code":"Code",
     "terms":"Terms",
     "privacy":"Privacy",
-    "exit":"Exit"
+    "exit":"Exit",
+    "wallet":"Wallet"
   },
   "userTypeAhead":{
     "placeholder": "Start typing a username to search...",
@@ -794,5 +795,8 @@
   "requests":"Requests",
   "notAllowed":"You are not allowed",
   "undo":"Undo",
-  "validate":"VALIDATE"
+  "validate":"VALIDATE",
+  "tabTitleNewsfeed":"Newsfeed",
+  "tabTitleNotifications":"Notifications",
+  "tabTitleDiscovery":"Discovery"
 }

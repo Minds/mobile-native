@@ -28,6 +28,7 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import TabIcon from '../tabs/TabIcon';
+import TopbarNew from '../topbar/TopbarNew';
 
 /**
  * Notification Screen
@@ -154,6 +155,7 @@ export default class NotificationsScreen extends Component {
 
     return (
       <View style={CS.flexContainer}>
+        <TopbarNew title={i18n.t('tabTitleNotifications')}/>
         {body}
         <CaptureFab navigation={this.props.navigation} />
       </View>

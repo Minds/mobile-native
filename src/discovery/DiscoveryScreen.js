@@ -48,6 +48,7 @@ import { FLAG_VIEW } from '../common/Permissions';
 import FallbackBoundary from './FallbackBoundary';
 import TabIcon from '../tabs/TabIcon';
 import featuresService from '../common/services/features.service';
+import TopbarNew from '../topbar/TopbarNew';
 
 /**
  * Discovery screen
@@ -261,6 +262,7 @@ class DiscoveryScreen extends Component {
 
     return (
       <View style={[CS.flexContainer, CS.backgroundWhite]}>
+        <TopbarNew title={i18n.t('tabTitleDiscovery')}/>
         {body}
         <CaptureFab navigation={this.props.navigation} />
       </View>

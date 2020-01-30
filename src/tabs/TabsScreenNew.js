@@ -24,8 +24,8 @@ import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 import isIphoneX from '../common/helpers/isIphoneX';
 import { CommonStyle as CS } from '../styles/Common';
 import CapturePoster from '../capture/CapturePoster';
-import MoreScreen from './MoreScreen';
 import TopbarNew from '../topbar/TopbarNew';
+import MoreScreenNew from './MoreScreenNew';
 
 let screens = {
 
@@ -58,7 +58,7 @@ let screens = {
     },
   },
   Menu: {
-    screen: withErrorBoundaryScreen(MoreScreen),
+    screen: withErrorBoundaryScreen(MoreScreenNew),
     navigationOptions: {
       tabBarTestID:'Menu tab button',
       tabBarAccessibilityLabel: 'Menu tab button',
@@ -80,11 +80,12 @@ const Tabs = (
       inactiveTintColor: '#777777',
       style: {
         ...CS.backgroundThemeSecondary,
-        paddingBottom: isIphoneX ? 20 : null,
+        marginBottom: isIphoneX ? 10 : null,
         height: 60,
       },
       indicatorStyle: {
-        marginBottom: isIphoneX ? 20 : null
+        marginBottom: isIphoneX ? 10 : null,
+        backgroundColor: 'transparent'
       },
       iconStyle: {
         height: 44,
@@ -101,6 +102,10 @@ const inset = { bottom: 'always', top: 'never' };
 export default class TabsScreenNew extends Component {
   // link router between tab and main stack navigator
   static router = Tabs.router;
+
+  static navigationOptions = {
+    header: null,
+  }
 
   render() {
     return (
