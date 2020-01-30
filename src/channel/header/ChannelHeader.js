@@ -97,7 +97,7 @@ export default class ChannelHeader extends Component {
 
   componentDidMount() {
     const isOwner = session.guid === this.props.store.channel.guid;
-    if(isOwner) this.props.onboarding.getProgress();
+    if(isOwner && !featuresService.has('onboarding-december-2019')) this.props.onboarding.getProgress();
   }
 
   onEditAction = async () => {
@@ -302,6 +302,12 @@ export default class ChannelHeader extends Component {
               >
                 <Tags navigation={this.props.navigation}>{channel.briefdescription}</Tags>
               </ReadMore>
+            </View>
+          }
+          {!isEditable && channel.city &&
+            <View style={[CommonStyle.paddingTop2x, CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
+              <Icon name="md-pin" size={24}  style={styles.name} />
+              <Text style={CommonStyle.marginLeft1x}>{channel.city}</Text>
             </View>
           }
         </View>

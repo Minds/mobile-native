@@ -38,19 +38,17 @@ export default class HashtagsStepNew extends Component {
             CS.marginTop4x
           ]}>{i18n.t('onboarding.hashtagInterest')}</Text>
         </View>
-        <View>
-          <TagSelect
-            tagStyle={styles.hashtag}
-            tagSelectedStyle={styles.tagSelected}
-            textSelectedStyle={styles.textSelected}
-            textStyle={styles.hashtagText}
-            containerStyle={[CS.rowJustifyStart]}
-            onTagDeleted={this.props.hashtag.deselect}
-            onTagAdded={this.props.hashtag.select}
-            tags={this.props.hashtag.suggested}
-            disableSort={true}
-          />
-        </View>
+        <TagSelect
+          tagStyle={styles.hashtag}
+          tagSelectedStyle={styles.tagSelected}
+          textSelectedStyle={styles.textSelected}
+          textStyle={styles.hashtagText}
+          containerStyle={[CS.rowJustifyStart]}
+          onTagDeleted={this.props.hashtag.deselect}
+          onTagAdded={this.props.hashtag.select}
+          tags={this.props.hashtag.suggested}
+          disableSort={true}
+        />
       </View>
     );
   };

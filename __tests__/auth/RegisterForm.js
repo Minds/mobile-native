@@ -10,6 +10,7 @@ import authService from '../../src/auth/AuthService';
 jest.mock('../../src/auth/AuthService');
 jest.mock('../../src/auth/UserStore');
 
+
 Alert.alert = jest.fn();
 
 // Note: test renderer must be required after react-native.
@@ -25,7 +26,7 @@ describe('RegisterForm component', () => {
   it('should renders correctly', () => {
     const userStore = new UserStore();
     const registerForm = renderer.create(
-      <RegisterForm user={userStore}/>
+      <RegisterForm user={userStore} />
     ).toJSON();
     expect(registerForm).toMatchSnapshot();
   });
@@ -37,36 +38,36 @@ describe('RegisterForm component', () => {
     const userStore = new UserStore();
 
     const wrapper = shallow(
-      <RegisterForm user={userStore}/>
+      <RegisterForm user={userStore} />
     );
 
     const render = wrapper.dive();
 
     // find the text inputs
-    let inputs = render.find('TextInput');
+    let inputs = render.find('Input');
 
-    // should have 4 inputs
-    expect(inputs.length).toBe(4);
+    // should have 3 inputs
+    expect(inputs.length).toBe(3);
 
     // simulate user input
     inputs.at(0).simulate('changeText', 'myFancyUsername');
     inputs.at(1).simulate('changeText', 'my@mail.com');
     inputs.at(2).simulate('changeText', 'somepassword');
 
-    // simulate press checkbox
-    await render.find(CheckBox).at(1).simulate('press');
-
     // update component (password confirmation is shown after the password field is set)
     await wrapper.update();
 
     // update the inputs search
-    inputs = render.find('TextInput');
+    inputs = render.find('Input');
 
     // simulate user input for paddword confirmation
     inputs.at(3).simulate('changeText', 'somepassword');
 
+    // simulate press checkbox
+    await render.find(CheckBox).at(0).simulate('press');
+
     // simulate press register
-    await render.find(Button).at(1).simulate('press');
+    await render.find('Button').at(0).simulate('press');
 
     // expect auth service register to be called once
     expect(authService.register).toBeCalled();
@@ -76,15 +77,16 @@ describe('RegisterForm component', () => {
     const userStore = new UserStore();
 
     const wrapper = shallow(
-      <RegisterForm user={userStore}/>
+      <RegisterForm user={userStore} />
     );
 
     const render = wrapper.dive();
 
     // find the text inputs
-    let inputs = render.find('TextInput');
+    let inputs = render.find('Input');
 
-    expect(inputs.length).toBe(4);
+    // should have 4 inputs
+    expect(inputs.length).toBe(3);
 
     // simulate user input
     inputs.at(0).simulate('changeText', 'myFancyUsername');
@@ -94,13 +96,13 @@ describe('RegisterForm component', () => {
     await wrapper.update();
 
     // update the inputs search
-    inputs = render.find('TextInput');
+    inputs = render.find('Input');
 
     // simulate user input for paddword confirmation
     inputs.at(3).simulate('changeText', 'ohNoItIsDifferent');
 
     // simulate press register
-    await render.find(Button).at(1).simulate('press');
+    await render.find('Button').at(0).simulate('press');
 
     // should call alert
     expect(Alert.alert).toBeCalled();
@@ -119,10 +121,10 @@ describe('RegisterForm component', () => {
     const render = wrapper.dive();
 
     // find the text inputs
-    let inputs = render.find('TextInput');
+    let inputs = render.find('Input');
 
     // should have 4 inputs
-    expect(inputs.length).toBe(4);
+    expect(inputs.length).toBe(3);
 
     // simulate user input
     inputs.at(0).simulate('changeText', 'myFancyUsername');
@@ -132,13 +134,13 @@ describe('RegisterForm component', () => {
     await wrapper.update();
 
     // update the inputs search
-    inputs = render.find('TextInput');
+    inputs = render.find('Input');
 
     // simulate user input for paddword confirmation
     inputs.at(3).simulate('changeText', 'somepassword');
 
     // simulate press register
-    await render.find(Button).at(1).simulate('press');
+    await render.find('Button').at(0).simulate('press');
 
     // should call alert
     expect(Alert.alert).toBeCalled();

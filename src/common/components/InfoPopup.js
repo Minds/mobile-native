@@ -2,12 +2,15 @@ import React, {Component} from 'react';
 import {StyleSheet, Text} from 'react-native';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Tooltip} from 'react-native-elements';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class InfoPopup extends Component {
 
   render() {
     return (
       <Tooltip
+        width={350}
+        height={100}
         pointerColor={'#4A90E2'}
         popover={<Text style={styles.textTooltip}>{this.props.info}</Text>}
         containerStyle={styles.tooltip}>

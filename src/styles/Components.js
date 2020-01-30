@@ -1,9 +1,6 @@
-import {
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 
-import colors, {DARK_THEME, LIGHT_THEME} from './Colors';
+import colors, { DARK_THEME, LIGHT_THEME } from './Colors';
 
 /**
  * Styles
@@ -17,8 +14,8 @@ export const ComponentsStyle = StyleSheet.create({
   loginInputIconNew: {
     position: 'absolute',
     right:8,
-    top:30,
-    color: '#404A4E'
+    top: Platform.OS === 'ios' ? 33 : 37,
+    color: '#404A4E',
   },
   passwordinput: {
     borderColor: '#ECECEC',
@@ -54,7 +51,7 @@ export const ComponentsStyle = StyleSheet.create({
     padding: 10,
     fontFamily: 'Roboto',
     backgroundColor: 'transparent',
-    height: 40,
+    height: 50,
     borderRadius: 2,
     borderColor: LIGHT_THEME.button_border,
     borderWidth: 1,

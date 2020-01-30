@@ -1,33 +1,49 @@
 import React, { Component } from 'react';
-import {TextInput, Text, View, StyleSheet, TouchableOpacity, Modal, TouchableHighlight, Alert} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { ComponentsStyle } from '../../styles/Components';
-import i18n from '../services/i18n.service';
 import { CommonStyle as CS } from '../../styles/Common';
-import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
-import PhoneInput from 'react-native-phone-input';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
 import PhoneValidationComponent from './PhoneValidationComponent';
 
-export default class Input extends Component {
+import TextInput from './TextInput';
 
+/**
+ * Form input
+ */
+export default class Input extends Component {
+  /**
+   * State
+   */
   state = {
     datePickerVisible: false,
   };
 
+  /**
+   * Show date picker
+   */
   showDatePicker = () => {
     this.setState({datePickerVisible: true});
   };
 
+  /**
+   * Dismiss date picker
+   */
   dismissDatePicker = () => {
     this.setState({datePickerVisible: false});
   };
 
+  /**
+   * Confirm date picker
+   */
   confirmDatePicker = date => {
     this.props.onChangeText(date.toLocaleDateString());
     this.dismissDatePicker();
   };
 
+  /**
+   * Text input
+   */
   textInput = () => {
     return (
       <TextInput
@@ -36,51 +52,61 @@ export default class Input extends Component {
         placeholderTextColor="#444"
         returnKeyType={'done'}
         autoCapitalize={'none'}
-        underlineColorAndroid='transparent'
-        placeholder=''
+        underlineColorAndroid="transparent"
+        placeholder=""
       />
     );
-  }
-  
+  };
+
+  /**
+   * Phone input
+   */
   phoneInput = () => {
     return (
-      <PhoneValidationComponent 
+      <PhoneValidationComponent
         style={[ComponentsStyle.loginInputNew, this.props.style]}
-        textStyle={{color: '#FFFFFF'}}
+        textStyle={CS.colorWhite}
+        onFocus={this.props.onFocus}
+        onBlur={this.props.onBlur}
       />
     );
-  }
+  };
 
+  /**
+   * Date input
+   */
   dateInput = () => {
     return (
       <View>
-      <TouchableOpacity
-        {...this.props}
-        style={[ComponentsStyle.loginInputNew, this.props.style]}
-        placeholderTextColor="#444"
-        returnKeyType={'done'}
-        autoCapitalize={'none'}
-        underlineColorAndroid='transparent'
-        placeholder=''
-        onPress={this.showDatePicker}
-      >
-        <Text style={CS.colorPrimaryText}>{this.props.value}</Text>
-      </TouchableOpacity>
-      <DateTimePicker
-        isVisible={this.state.datePickerVisible}
-        onConfirm={this.confirmDatePicker}
-        date={new Date()}
-        onCancel={this.dismissDatePicker}
-        mode='date'
-      />
+        <TouchableOpacity
+          {...this.props}
+          style={[ComponentsStyle.loginInputNew, this.props.style]}
+          placeholderTextColor="#444"
+          returnKeyType={'done'}
+          autoCapitalize={'none'}
+          underlineColorAndroid="transparent"
+          placeholder=""
+          onPress={this.showDatePicker}>
+          <Text style={CS.colorPrimaryText}>{this.props.value}</Text>
+        </TouchableOpacity>
+        <DateTimePicker
+          isVisible={this.state.datePickerVisible}
+          onConfirm={this.confirmDatePicker}
+          date={new Date()}
+          onCancel={this.dismissDatePicker}
+          mode="date"
+        />
       </View>
     );
   };
 
+  /**
+   * renders correct input
+   */
   renderInput = () => {
     const inputType = this.props.inputType;
     if (inputType) {
-      switch(inputType) {
+      switch (inputType) {
         case 'textInput':
           return this.textInput();
         case 'phoneInput':
@@ -92,11 +118,14 @@ export default class Input extends Component {
     return this.textInput();
   };
 
+  /**
+   * Render
+   */
   render() {
     const optional = (<Text style={[styles.optional]}>{"Optional"}</Text>);
 
     return (
-      <View style={[CS.flexContainer, CS.marginBottom2x]}>
+      <View style={[CS.marginBottom2x]}>
         <View style={[styles.row, CS.marginBottom]}>
           <View style={styles.row}>
             <Text style={[styles.label]}>{this.props.placeholder}</Text>

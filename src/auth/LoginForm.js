@@ -7,24 +7,20 @@ import * as Animatable from 'react-native-animatable';
 import {
   View,
   Text,
+  ScrollView,
   // TextInput,
-  KeyboardAvoidingView,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import authService from './AuthService';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
-
-import { Button } from 'react-native-elements'
 
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
-import ModalPicker from '../common/components/ModalPicker';
-
-// workaround for android copy/paste issue
-import TextInput from '../common/components/TextInput';
+import Input from '../common/components/Input';
+import Button from '../common/components/Button';
 
 /**
  * Login Form
@@ -57,37 +53,59 @@ export default class LoginForm extends Component {
    */
   render() {
     const msg = this.state.msg ? (
-      <Animatable.Text animation="bounceInLeft" style={[CommonStyle.colorLight, { textAlign: 'center' }]} testID="loginMsg">{this.state.msg}</Animatable.Text>
+      <Animatable.Text animation="bounceInLeft" style={[CS.subTitleText, CS.colorSecondaryText, { textAlign: 'center' }]} testID="loginMsg">{this.state.msg}</Animatable.Text>
     ) : null;
 
-    const inputs = this.getInputs();
-    const buttons = this.getButtons();
-
     return (
-      <KeyboardAvoidingView behavior='padding'>
-        {msg}
-        {inputs}
-        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
-          {buttons}
-        </View>
-        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop3x]}>
-          <Text style={[CommonStyle.colorWhite, ComponentsStyle.link]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
-        </View>
-        <View style={[CommonStyle.rowJustifyCenter, CommonStyle.paddingTop3x, CommonStyle.marginTop4x]}>
-          <Icon name="md-flag" size={18} color="white" style={{paddingTop:1}}/>
-          <Text style={[CommonStyle.colorWhite]} onPress={this.showLanguages}>  {i18n.getCurrentLanguageName()}</Text>
-        </View>
-        <ModalPicker
-          onSelect={this.languageSelected}
-          onCancel={this.cancel}
-          show={this.state.showLanguages}
-          title={i18n.t('language')}
-          valueField="value"
-          labelField="name"
-          value={this.state.language}
-          items={i18n.getSupportedLocales()}
-        />
-      </KeyboardAvoidingView>
+      <View
+        style={[CS.flexContainer]}>
+        <ScrollView style={[CS.flexContainer]}>
+          <View style={{flex:6}}>
+            <Text style={[CS.titleText, CS.colorPrimaryText]}>
+              {i18n.t('auth.login')}
+            </Text>
+            {msg}
+            <Input
+              placeholder={i18n.t('auth.username')}
+              onChangeText={this.setUsername}
+              value={this.state.username}
+              testID="usernameInput"
+            />
+            <View>
+              <Input
+                placeholder={i18n.t('auth.password')}
+                secureTextEntry={this.state.hidePassword}
+                onChangeText={this.setPassword}
+                value={this.state.password}
+                testID="userPasswordInput"
+              />
+              <Icon
+                name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
+                size={25}
+                onPress={this.toggleHidePassword}
+                style={ComponentsStyle.loginInputIconNew}
+              />
+            </View>
+          </View>
+          <View style={[{flex:6, marginTop: 30}]}>
+            <Button
+              onPress={() => this.onLoginPress()}
+              text={i18n.t('auth.login')}
+              containerStyle={ComponentsStyle.loginButtonNew}
+              textStyle={ComponentsStyle.loginButtonTextNew}
+              key={1}
+              loading={this.state.inProgress}
+              loadingRight={true}
+              disabled={this.state.inProgress}
+              disabledStyle={CS.backgroundTransparent}
+              testID="loginButton"
+            />
+            <View style={CS.marginTop4x}>
+              <Text style={[ComponentsStyle.linkNew]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 
@@ -112,98 +130,6 @@ export default class LoginForm extends Component {
   cancel = () => {
     this.setState({showLanguages: false});
   };
-
-  /**
-   * Returns the buttons
-   */
-  getButtons() {
-    const buttons = [
-      <Button
-        onPress={() => this.onLoginPress()}
-        title={i18n.t('auth.login')}
-        type="clear"
-        containerStyle={ComponentsStyle.loginButton}
-        titleStyle={ComponentsStyle.loginButtonText}
-        key={1}
-        loading={this.state.inProgress}
-        loadingRight={true}
-        disabled={this.state.inProgress}
-        disabledStyle={CommonStyle.backgroundTransparent}
-        testID="loginButton"
-      />
-    ];
-
-    if (!this.state.twoFactorToken) {
-      buttons.unshift(
-        <Button
-          onPress={() => this.props.onRegister()}
-          title={i18n.t('auth.create')}
-          type="clear"
-          containerStyle={ComponentsStyle.loginButton}
-          titleStyle={ComponentsStyle.loginButtonText}
-          key={2}
-          testID="registerButton"
-        />
-      );
-    }
-
-    return buttons;
-  }
-
-  /**
-   * Return the inputs for the form
-   */
-  getInputs() {
-    if (this.state.twoFactorToken) {
-      return (
-        <TextInput
-          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder={i18n.t('auth.code')}
-          returnKeyType={'done'}
-          placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
-          onChangeText={this.setTwoFactor}
-          autoCapitalize={'none'}
-          value={this.state.twoFactorCode}
-        />
-      );
-    } else {
-      return [
-        <TextInput
-          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-          placeholder={i18n.t('auth.username')}
-          returnKeyType={'done'}
-          placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
-          onChangeText={this.setUsername}
-          autoCapitalize={'none'}
-          value={this.state.username}
-          key={1}
-          testID="usernameInput"
-        />,
-        <View key={2}>
-          <TextInput
-            style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
-            placeholder={i18n.t('auth.password')}
-            secureTextEntry={this.state.hidePassword}
-            autoCapitalize={'none'}
-            returnKeyType={'done'}
-            placeholderTextColor="#444"
-            underlineColorAndroid='transparent'
-            onChangeText={this.setPassword}
-            value={this.state.password}
-            testID="userPasswordInput"
-          />
-          <Icon
-            name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
-            size={25}
-            style={ComponentsStyle.loginInputIcon}
-            onPress={this.toggleHidePassword}
-          />
-        </View>
-      ];
-    }
-  }
 
   /**
    * Set two factor

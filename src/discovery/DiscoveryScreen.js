@@ -53,7 +53,7 @@ import featuresService from '../common/services/features.service';
  * Discovery screen
  */
 export default
-@inject('discovery', 'channel')
+@inject('discovery', 'channel', 'hashtag')
 @observer
 class DiscoveryScreen extends Component {
   cols = 3;
@@ -113,7 +113,8 @@ class DiscoveryScreen extends Component {
         this.setState({active: true});
         const params = this.props.navigation.state.params;
         if (params && params.query) {
-          this.setQ(params.query);
+          this.props.hashtag.setHashtag(params.query.replace('#',''));
+          this.props.discovery.reload();
           params.query = null; //clean query
         }
       }, 50);

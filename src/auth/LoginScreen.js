@@ -1,29 +1,21 @@
-import React, {
-  Component
-} from 'react';
-
-import { StackActions, NavigationActions } from 'react-navigation';
-import FastImage from 'react-native-fast-image';
+import React, { Component } from 'react';
 
 import {
   StyleSheet,
-  ScrollView,
   View,
-  KeyboardAvoidingView,
-  Button,
   Keyboard,
   Animated,
-  Platform,
+  Text,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
-import * as Animatable from 'react-native-animatable';
 
 import LoginForm from './LoginForm';
-import VideoBackground from '../common/components/VideoBackground';
-import { CommonStyle } from '../styles/Common';
-import { ComponentsStyle } from '../styles/Components';
+import { CommonStyle as CS } from '../styles/Common';
 import logService from '../common/services/log.service';
 import featuresService from '../common/services/features.service';
-import CenteredLoading from '../common/components/CenteredLoading';
+import i18nService from '../common/services/i18n.service';
+import sessionService from '../common/services/session.service';
 
 const LOGO_HEIGHT = 100;
 const LOGO_HEIGHT_SMALL = 50;
@@ -32,11 +24,6 @@ const LOGO_HEIGHT_SMALL = 50;
  * Login screen
  */
 export default class LoginScreen extends Component {
-
-  state = {
-    loading: true,
-  };
-
   /**
    * Disable navigation bar
    */
@@ -48,21 +35,14 @@ export default class LoginScreen extends Component {
     super(props);
 
     this.logoHeight = new Animated.Value(LOGO_HEIGHT);
+
+    // Setting this here because if user register, then onboarding then logout and login again, will go to onboarding again
+    sessionService.setInitialScreen('Tabs');
+
+    this.setState({ loading:true });
   }
 
-  async componentDidMount() {
-    if (!this.props.hopFeatures) {
-      await featuresService.updateFeatures();
-      if (featuresService.has('homepage-december-2019')) {
-        this.props.navigation.navigate('LoginNew');
-      }
-    }
-    this.setLoading(false);
-  }
-
-  setLoading = loading => this.setState({ loading });
-
-  componentWillMount() {
+  componentWillMount () {
     this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
   }
@@ -86,36 +66,47 @@ export default class LoginScreen extends Component {
     }).start();
   };
 
+  getLoginBody = () => {
+    return (
+      <View style={[CS.flexContainer, CS.paddingTop2x]}>
+        <Image
+          source={require('./../assets/logos/bulb.png')}
+          style={styles.bulb}
+        />
+        <LoginForm
+          onLogin={() => this.login()}
+          onForgot={this.onPressForgot}
+        />
+      </View>
+    );
+  };
+
+  getLoginFooter = () => {
+    return (
+      <TouchableOpacity onPress={this.onPressRegister} testID="registerButton">
+        <View style={CS.flexColumnCentered}>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>{i18nService.t('auth.haveAccount')}</Text>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>{i18nService.t('auth.createChannel')}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   /**
    * Render
    */
   render() {
     const resizeMode = 'center';
 
-    if (this.state.loading) {
-      return <CenteredLoading />;
-    }
-
     return (
-      <KeyboardAvoidingView style={CommonStyle.flexContainer} behavior={ Platform.OS == 'ios' ? 'padding' : null }>
-        <VideoBackground />
-        <View style={[CommonStyle.flexContainerCenter, CommonStyle.padding2x]}>
-          <Animatable.View animation="bounceIn">
-            <Animated.Image
-              resizeMode="contain"
-              style={[styles.logo, { height: this.logoHeight }]}
-              source={require('../assets/logos/logo-white.png')}
-            />
-          </Animatable.View>
-          <Animatable.View animation="fadeInUp">
-            <LoginForm
-              onLogin={() => this.login()}
-              onRegister={this.onPressRegister}
-              onForgot={this.onPressForgot}
-            />
-          </Animatable.View>
+      <View style={[CS.flexContainerCenter]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
+          {this.getLoginBody()}
         </View>
-      </KeyboardAvoidingView>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundThemeSecondary]}>
+          {this.getLoginFooter()}
+        </View>
+      </View>
     );
   }
 
@@ -130,11 +121,7 @@ export default class LoginScreen extends Component {
    * On press register
    */
   onPressRegister = () => {
-    if (featuresService.has('register_pages-december-2019')) {
-      this.props.navigation.push('RegisterNew');
-    } else {
-      this.props.navigation.push('Register');
-    }
+    this.props.navigation.push('Register');
   }
 
   /**
@@ -151,5 +138,11 @@ const styles = StyleSheet.create({
     height: 84,
     marginBottom: 30,
     alignSelf: 'center',
+  },
+  bulb: {
+    width: 34.72,
+    height: 59.51,
+    alignSelf: 'center',
+    marginTop: 10
   },
 });

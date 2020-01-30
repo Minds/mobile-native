@@ -13,7 +13,6 @@ import i18n from './i18n.service';
  * Feature service
  */
 class FeaturesService {
-
   /**
    * Local config features are available without inicialization
    */
@@ -25,12 +24,20 @@ class FeaturesService {
    */
   @action
   async updateFeatures() {
-    const settings = await mindsService.getSettings();
+    let settings;
+
+    settings = await mindsService.getSettings();
+
     const features = settings.features;
 
     Object.assign(features, MINDS_FEATURES);
-    
+
     this.features = features;
+
+    // set this to true as per request for build test
+    // TODO: remove this...
+    this.features['onboarding-december-2019'] = true;
+
     this.loaded = true;
   }
 
@@ -39,7 +46,7 @@ class FeaturesService {
     const features = this.features;
 
     Object.assign(features, otherFeatures);
-    
+
     this.features = features;
   }
 

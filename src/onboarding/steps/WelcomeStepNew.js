@@ -56,7 +56,7 @@ export default class WelcomeStep extends Component {
         >
           <Text style={ComponentsStyle.loginButtonTextNew}>{i18nService.t('onboarding.welcomeSetup')}</Text>
         </Button>
-         <Text style={[CS.linkNew, CS.marginTop4x, CS.centered]} onPress={ this.props.onFinish }>{i18nService.t('onboarding.welcomeLater')}</Text>
+         <Text style={[CS.linkNew, CS.marginTop2x, CS.centered]} onPress={ this.props.onFinish }>{i18nService.t('onboarding.welcomeLater')}</Text>
       </View>
     )
   }

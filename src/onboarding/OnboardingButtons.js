@@ -13,7 +13,8 @@ export default class OnboardingButtons extends Component {
           onPress={this.props.onNext}
           borderRadius={2}
           containerStyle={ComponentsStyle.loginButtonNew}
-          testID="wizardNext">
+          testID="wizardNext"
+          loading={this.props.saving}>
           <Text style={ComponentsStyle.loginButtonTextNew}>
             {i18n.t('continue')}
           </Text>
@@ -34,8 +35,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderRadius: 2,
     paddingHorizontal: 30,
-    paddingVertical: 10,
-    marginTop: 20,
+    paddingVertical: 5,
+    marginTop: 5,
   },
   skipText: {
     color: '#AEB0B8',

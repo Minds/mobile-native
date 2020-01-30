@@ -10,6 +10,7 @@ import {
   Platform,
   StyleSheet,
   Alert,
+  BackHandler,
   SafeAreaView,
 } from 'react-native';
 
@@ -32,10 +33,9 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import HashtagsStepNew from './steps/HashtagsStepNew';
 import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
 import SuggestedGroupsStepNew from './steps/SuggestedGroupsStepNew';
-import AllDoneStep from './steps/AllDoneStep';
 
 @observer
-@inject('onboarding', 'hashtag')
+@inject('onboarding', 'hashtag', 'groupsBar', 'discovery')
 export default class OnboardingScreenNew extends Component {
 
   /**
@@ -45,15 +45,56 @@ export default class OnboardingScreenNew extends Component {
     header: null
   }
 
+  /**
+   * Component did mount
+   */
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  /**
+   * On hardware back press
+   */
+  onBackPress = () => {
+    this.wizard.previous();
+    return true;
+  }
+
   onFinish = async () => {
     try {
       await this.props.onboarding.setShown(true);
-      await this.props.onboarding.getProgress();
+      //await this.props.onboarding.getProgress();
       this.props.hashtag.setAll(false);
+      await this.loadJoinedGroups();
+      await this.clearDiscovery();
       navigationService.navigate('Tabs');
     } catch (err) {
       Alert.alert(i18nService.t('error'), i18n.t('errorMessage') + '\n' + i18n.t('tryAgain'))
     }
+  }
+
+  /**
+   * Load the groups user joined on suggested groups step
+   */
+  loadJoinedGroups = async () => {
+    this.props.groupsBar.reset();
+    await this.props.groupsBar.loadGroups();
+    await this.props.groupsBar.loadMarkers();
+  }
+
+  /**
+   * Clear discovery used for suggested groups and channels
+   */
+  clearDiscovery = async () => {
+    this.props.discovery.clearList();
+    this.props.discovery.reset();
   }
 
   handleWizarRef = (ref) => {
@@ -82,7 +123,7 @@ export default class OnboardingScreenNew extends Component {
     if (!completed_items.some(r => r == 'tokens_verification')) {
       steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext} onBack={this.onBack}/> });
     }
-    
+
     if (!completed_items.some(r => r == 'suggested_groups')) {
       steps.push({component: <SuggestedGroupsStepNew onNext={this.onNext} onBack={this.onBack}/>});
     }
@@ -90,8 +131,6 @@ export default class OnboardingScreenNew extends Component {
     if (!completed_items.some(r => r == 'suggested_channels')) {
       steps.push({component: <SuggestedChannelsStepNew onNext={this.onNext} onBack={this.onBack}/>});
     }
-
-    steps.push({component: <AllDoneStep onNext={this.onNext}/>})
 
     return (
       <SafeAreaView style={[CS.flexContainer, CS.backgroundThemePrimary]}>
