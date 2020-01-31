@@ -15,6 +15,7 @@ import { Alert } from 'react-native';
 class UserStore {
   @observable me = {};
   @observable emailConfirmMessageDismiss = false;
+  @observable searching = false;
 
   @action
   setDissmis(value) {
@@ -85,6 +86,11 @@ class UserStore {
   @action
   reset() {
     this.me = {};
+  }
+
+  @action
+  toggleSearching() {
+    this.searching = !this.searching;
   }
 
 }

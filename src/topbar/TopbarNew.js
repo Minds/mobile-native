@@ -21,6 +21,8 @@ import isIphoneX from '../common/helpers/isIphoneX';
 import testID from '../common/helpers/testID';
 import { CommonStyle as CS } from '../styles/Common';
 
+import SearchComponent from './SearchComponent';
+
 const forceInset = isIphoneX ? {top: 32} : null
 
 @inject('user')
@@ -32,16 +34,19 @@ export default class TopbarNew extends Component {
     this.props.wallet.refresh();
   }
 
+  listenForSearch = () => this.props.user.searching ? styles.scale0 : {};
+
   render() {
+    const user = this.props.user;
     return (
       <SafeAreaView style={styles.container} forceInset={forceInset}>
         <View style={styles.topbar}>
-            <View style={styles.topbarLeft}>
-              <Text style={[CS.titleText, CS.colorPrimaryText]} >{this.props.title}</Text>
+            <View style={[styles.topbarLeft, this.listenForSearch()]}>
+              <Text style={[CS.titleText, CS.colorPrimaryText, {lineHeight:0}]} >{this.props.title}</Text>
             </View>
             <View style={styles.topbarRight}>
-              <Icon name="chat-bubble-outline" size={24} style={ styles.button }/>
-              <Icon name="search" size={24} style={ styles.button }/>
+              <Icon name="chat-bubble-outline" size={24} style={[styles.button, CS.colorIcon, this.listenForSearch()]}/>
+              <SearchComponent user={this.props.user} />
             </View>
         </View>
       </SafeAreaView>
@@ -53,7 +58,7 @@ let topbarHeight = 56;
 let topMargin = 0;
 
 if (Platform.OS == 'ios') {
-  topbarHeight = 45;
+  topbarHeight = 56;
 }
 
 const styles = StyleSheet.create({
@@ -67,13 +72,14 @@ const styles = StyleSheet.create({
   },
   topbar: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     flexDirection: 'row',
+    paddingBottom: 5,
   },
   topbarLeft: {
     ...CS.marginLeft2x,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
     flexDirection: 'row'
   },
   topbarCenter: {
@@ -90,6 +96,8 @@ const styles = StyleSheet.create({
   },
   button: {
     paddingHorizontal: 8,
-    ...CS.colorIcon,
+  },
+  scale0: {
+    transform: [{ scale: 0 }]
   }
 });
