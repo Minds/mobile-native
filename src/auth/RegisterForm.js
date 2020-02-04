@@ -76,21 +76,15 @@ export default class RegisterForm extends Component {
   getFormBody = () => {
     return (
       <ScrollView style={[CS.flexContainer, CS.marginTop2x]}>
-        <View style={CS.marginBottom3x}>
-          <TouchableOpacity onPress={this.props.onBack}>
-            <Icon size={34} name="keyboard-arrow-left" style={CS.colorSecondaryText} />
-          </TouchableOpacity>
-        </View>
-        <View style={[CS.marginBottom3x, CS.centered]}>
-          <Text style={[CS.titleText, CS.colorPrimaryText]}>
-            {i18n.t('auth.join')}
-          </Text>
-        </View>
-        <View>
-          <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
-            {this.state.error.termsAcceptedError}
-          </Text>
-        </View>
+        <TouchableOpacity onPress={this.props.onBack} style={CS.marginBottom3x}>
+          <Icon size={34} name="keyboard-arrow-left" style={CS.colorSecondaryText} />
+        </TouchableOpacity>
+        <Text style={[CS.marginBottom3x, CS.textCenter, CS.titleText, CS.colorPrimaryText]}>
+          {i18n.t('auth.join')}
+        </Text>
+        <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
+          {this.state.error.termsAcceptedError}
+        </Text>
         <Input
           placeholder={i18n.t('auth.username')}
           onChangeText={this.setUsername}
@@ -123,18 +117,20 @@ export default class RegisterForm extends Component {
             testID="registerPasswordConfirmInput"
           /> : null }
         <CheckBox
-          right
-          iconLeft
           containerStyle={ComponentsStyle.registerCheckboxNew}
           title={<Text style={ComponentsStyle.termsNew}>{i18n.t('auth.accept')} <Text style={ComponentsStyle.linkNew} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>{i18n.t('auth.termsAndConditions')}</Text></Text>}
           checked={this.state.termsAccepted}
-          textStyle={ComponentsStyle.registerCheckboxTextNew}
-          onPress={() => { this.setState({ termsAccepted: !this.state.termsAccepted }) }}
+          // textStyle={ComponentsStyle.registerCheckboxTextNew}
+          onPress={this.check}
           disabled={this.state.inProgress}
           testID="checkbox"
         />
       </ScrollView>
     );
+  };
+
+  check = () => {
+    this.setState({ termsAccepted: !this.state.termsAccepted })
   };
 
   getFormFooter = () => {

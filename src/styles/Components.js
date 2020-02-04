@@ -101,9 +101,10 @@ export const ComponentsStyle = StyleSheet.create({
   },
   registerCheckboxNew: {
     backgroundColor: 'transparent',
+    marginLeft: 0,
+    paddingLeft: 0,
     borderWidth: 0,
-    alignSelf: 'flex-start',
-    marginTop: 15
+    marginTop: 15,
   },
 
   //button

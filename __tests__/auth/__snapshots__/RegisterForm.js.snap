@@ -42,98 +42,79 @@ exports[`RegisterForm component should renders correctly 1`] = `
     >
       <View>
         <View
+          accessible={true}
+          focusable={false}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
           style={
             Object {
               "marginBottom": 15,
+              "opacity": 1,
             }
           }
         >
-          <View
-            accessible={true}
-            focusable={false}
-            isTVSelectable={true}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+          <Text
+            allowFontScaling={false}
             style={
-              Object {
-                "opacity": 1,
-              }
+              Array [
+                Object {
+                  "color": undefined,
+                  "fontSize": 34,
+                },
+                Object {
+                  "color": "#939397",
+                },
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
             }
           >
-            <Text
-              allowFontScaling={false}
-              style={
-                Array [
-                  Object {
-                    "color": undefined,
-                    "fontSize": 34,
-                  },
-                  Object {
-                    "color": "#939397",
-                  },
-                  Object {
-                    "fontFamily": "Material Icons",
-                    "fontStyle": "normal",
-                    "fontWeight": "normal",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              
-            </Text>
-          </View>
+            
+          </Text>
         </View>
-        <View
+        <Text
           style={
             Array [
               Object {
                 "marginBottom": 15,
               },
               Object {
-                "alignContent": "center",
-                "alignItems": "center",
-                "alignSelf": "center",
-                "justifyContent": "center",
+                "textAlign": "center",
+              },
+              Object {
+                "fontFamily": "Roboto",
+                "fontSize": 28,
+                "fontWeight": "bold",
+                "lineHeight": 44,
+              },
+              Object {
+                "color": "#4F4F50",
               },
             ]
           }
         >
-          <Text
-            style={
-              Array [
-                Object {
-                  "fontFamily": "Roboto",
-                  "fontSize": 28,
-                  "fontWeight": "bold",
-                  "lineHeight": 44,
-                },
-                Object {
-                  "color": "#4F4F50",
-                },
-              ]
+          Join the Revolution
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#F00",
+              "paddingLeft": 4,
+              "paddingTop": 4,
+              "textAlign": "center",
             }
-          >
-            Join the Revolution
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={
-              Object {
-                "color": "#F00",
-                "paddingLeft": 4,
-                "paddingTop": 4,
-                "textAlign": "center",
-              }
-            }
-          />
-        </View>
+          }
+        />
         <View
           style={
             Object {
@@ -370,17 +351,17 @@ exports[`RegisterForm component should renders correctly 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "alignSelf": "flex-start",
               "backgroundColor": "transparent",
               "borderColor": "#ededed",
               "borderRadius": 3,
               "borderWidth": 0,
               "margin": 5,
-              "marginLeft": 10,
+              "marginLeft": 0,
               "marginRight": 10,
               "marginTop": 15,
               "opacity": 1,
               "padding": 10,
+              "paddingLeft": 0,
             }
           }
           testID="checkbox"
@@ -390,7 +371,6 @@ exports[`RegisterForm component should renders correctly 1`] = `
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "justifyContent": "flex-end",
               }
             }
           >
