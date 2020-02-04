@@ -27,14 +27,15 @@ import DiscoveryUser from '../../discovery/DiscoveryUser';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
-
+import ErrorLoading from '../../common/components/ErrorLoading';
 
 /**
  * Discovery screen
  */
+export default
 @inject('channelSubscribersStore')
 @observer
-export default class ChannelSubscribers extends Component {
+class ChannelSubscribers extends Component {
 
   /**
    * On component will mount
@@ -66,35 +67,40 @@ export default class ChannelSubscribers extends Component {
   render() {
     let body;
 
-    const channels = this.props.channelSubscribersStore;
+    const store = this.props.channelSubscribersStore;
 
-    if (!channels.list.loaded && !channels.list.refreshing) {
-      body = <CenteredLoading />
+    const footerCmp = store.errorLoading ? (
+      <ErrorLoading message={i18n.t('cantLoad')} tryAgain={store.loadList} />
+    ) : null;
+
+    if (!store.list.loaded && !store.list.refreshing && !store.errorLoading) {
+      body = <CenteredLoading />;
     } else {
       body = (
         <FlatList
-          data={channels.list.entities.slice()}
+          data={store.list.entities.slice()}
           renderItem={this.renderRow}
           keyExtractor={item => item.guid}
           onRefresh={this.refresh}
-          refreshing={channels.list.refreshing}
+          refreshing={store.list.refreshing}
           onEndReached={this.loadFeed}
           // onEndReachedThreshold={0}
           initialNumToRender={12}
           style={styles.listView}
           removeClippedSubviews={false}
+          ListFooterComponent={footerCmp}
         />
-      )
+      );
     }
 
     return (
       <View style={CommonStyle.flexContainer}>
         <View style={styles.topbar}>
           <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
-            <TouchableHighlight underlayColor='transparent' onPress={() => channels.setFilter('subscribers')} style={channels.filter == 'subscribers'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
+            <TouchableHighlight underlayColor='transparent' onPress={() => store.setFilter('subscribers')} style={store.filter == 'subscribers'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
               <Text>{i18n.t('subscribers')}</Text>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor='transparent' onPress={() => channels.setFilter('subscriptions')} style={channels.filter == 'subscriptions'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter ]}>
+            <TouchableHighlight underlayColor='transparent' onPress={() => store.setFilter('subscriptions')} style={store.filter == 'subscriptions'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter ]}>
               <Text>{i18n.t('subscriptions')}</Text>
             </TouchableHighlight>
           </View>
@@ -103,7 +109,6 @@ export default class ChannelSubscribers extends Component {
       </View>
     );
   }
-
 
   /**
    * Load subs data

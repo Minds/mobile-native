@@ -134,22 +134,22 @@ class ChannelService {
       });
   }
 
-  getSubscribers(guid, filter, offset) {
-    const tag = `channel:subscribers:${guid}`;
-    // abort previous call
-    abort(tag);
+  /**
+   * Get subscribers
+   * @param {string} guid
+   * @param {string} filter
+   * @param {string} offset
+   */
+  async getSubscribers(guid, filter, offset) {
+    const data = await api.get('api/v1/subscribe/' + filter + '/' + guid, {
+      offset: offset,
+      limit: 12,
+    });
 
-    return api.get('api/v1/subscribe/' + filter + '/' + guid, { offset: offset, limit: 12 }, tag)
-    .then((data) => {
-      return {
-        entities: data.users,
-        offset: data['load-next'],
-        }
-      })
-      .catch(err => {
-        logService.exception('[ChannelService]', err);
-        throw new Error (i18n.t('errorMessage'));
-      })
+    return {
+      entities: data.users,
+      offset: data['load-next'],
+    };
   }
 
   async getScheduledCount(guid) {
