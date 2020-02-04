@@ -34,10 +34,6 @@ class FeaturesService {
 
     this.features = features;
 
-    // set this to true as per request for build test
-    // TODO: remove this...
-    this.features['onboarding-december-2019'] = true;
-
     this.loaded = true;
   }
 
