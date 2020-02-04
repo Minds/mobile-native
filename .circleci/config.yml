@@ -202,8 +202,8 @@ workflows:
           filters:
             branches:
               only:
-                - /^stable-.*/
-                - /^test-.*/
+                - /^stable-*/
+                - /^test-*/
                 - test/circle-ci
       - sentry:
           requires:
