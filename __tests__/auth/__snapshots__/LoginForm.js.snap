@@ -46,11 +46,9 @@ exports[`LoginForm component should renders correctly 1`] = `
         </Text>
         <View
           style={
-            Array [
-              Object {
-                "marginBottom": 10,
-              },
-            ]
+            Object {
+              "marginBottom": 10,
+            }
           }
         >
           <View
@@ -123,11 +121,9 @@ exports[`LoginForm component should renders correctly 1`] = `
         <View>
           <View
             style={
-              Array [
-                Object {
-                  "marginBottom": 10,
-                },
-              ]
+              Object {
+                "marginBottom": 10,
+              }
             }
           >
             <View

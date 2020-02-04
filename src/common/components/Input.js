@@ -122,16 +122,18 @@ export default class Input extends Component {
    * Render
    */
   render() {
-    const optional = (<Text style={[styles.optional]}>{"Optional"}</Text>);
+    const optional = this.props.optional ? (
+      <Text style={[styles.optional]}>{'Optional'}</Text>
+    ) : null;
 
     return (
-      <View style={[CS.marginBottom2x]}>
+      <View style={CS.marginBottom2x}>
         <View style={[styles.row, CS.marginBottom]}>
           <View style={styles.row}>
             <Text style={[styles.label]}>{this.props.placeholder}</Text>
             {this.props.info && <InfoPopup info={this.props.info} />}
           </View>
-          {this.props.optional && optional}
+          {optional}
         </View>
         {this.renderInput()}
       </View>
