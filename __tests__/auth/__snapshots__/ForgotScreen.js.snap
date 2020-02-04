@@ -85,11 +85,9 @@ exports[`ForgotScreen component should renders correctly 1`] = `
       </Text>
       <View
         style={
-          Array [
-            Object {
-              "marginBottom": 10,
-            },
-          ]
+          Object {
+            "marginBottom": 10,
+          }
         }
       >
         <View
