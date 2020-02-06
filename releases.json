@@ -1,6 +1,30 @@
 {
   "versions": [
     {
+      "version": "3.15.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-3-15-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.15.0",
+      "changelog": [
+        "New login and register screens",
+        "Bug fixes"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "0b41d23037645b7f3eb033c1f617da6a"
+        },
+        {
+          "type": "sha256",
+          "value": "f069afcaef9527921fff54194734b62da77756610228a7590a98e29d6f159462"
+        },
+        {
+          "type": "sha512",
+          "value": "0e6606c99855e173ddc1e62d716684a920e7cec4433bdce8495e0216fa3c0e61cb5ff1abd9dd5cb265764f81bfb6518a37764a645f02350083cc44cb19c60f43"
+        }
+      ]
+    },
+    {
       "version": "3.14.0",
       "timestamp": 1576783681,
       "href": "https://cdn-assets.minds.com/android/minds-3_14_0.apk",
