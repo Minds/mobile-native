@@ -191,9 +191,11 @@ class CommentList extends React.Component<PropsType, StateType> {
    */
   scrollToBottom = () => {
     setTimeout(() => {
-      this.listRef.scrollToEnd();
-    }, 250); //delay to allow rendering
-  }
+      if (this.listRef) {
+        this.listRef.scrollToEnd();
+      }
+    }, 600); //delay to allow rendering
+  };
 
   /**
    * Set comment text
