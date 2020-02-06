@@ -13,7 +13,6 @@ import i18n from './i18n.service';
  * Feature service
  */
 class FeaturesService {
-
   /**
    * Local config features are available without inicialization
    */
@@ -25,13 +24,26 @@ class FeaturesService {
    */
   @action
   async updateFeatures() {
-    const settings = await mindsService.getSettings();
+    let settings;
+
+    settings = await mindsService.getSettings();
+
     const features = settings.features;
 
     Object.assign(features, MINDS_FEATURES);
 
     this.features = features;
+
     this.loaded = true;
+  }
+
+  @action
+  async injectFeatures(otherFeatures) {
+    const features = this.features;
+
+    Object.assign(features, otherFeatures);
+
+    this.features = features;
   }
 
   /**

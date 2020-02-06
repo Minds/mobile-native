@@ -74,7 +74,7 @@ export default class NewsfeedScreen extends Component {
   }
 
   async loadFeed() {
-    await this.props.newsfeed.feedStore.fetchLocalOrRemote();
+    await this.props.newsfeed.feedStore.fetchRemoteOrLocal();
 
     // load groups after the feed
     await this.groupsBar.wrappedInstance.initialLoad();
@@ -115,7 +115,7 @@ export default class NewsfeedScreen extends Component {
             header={header}
             navigation={this.props.navigation}
           />
-          <CaptureFab navigation={this.props.navigation}/>
+          <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
         </View>
       );
     }
@@ -127,7 +127,7 @@ export default class NewsfeedScreen extends Component {
           header={header}
           navigation={this.props.navigation}
           />
-        <CaptureFab navigation={this.props.navigation}/>
+        <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
       </View>
     );
   }

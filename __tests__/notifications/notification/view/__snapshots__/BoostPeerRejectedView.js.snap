@@ -52,6 +52,7 @@ exports[`renders correctly 1`] = `
         some title
       </Text>
     </Text>
+     
     You have not been charged
   </Text>
 </View>

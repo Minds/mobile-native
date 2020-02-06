@@ -2,6 +2,7 @@ import 'react-native';
 import React from 'react';
 import { Text, TouchableOpacity } from "react-native";
 import { shallow } from 'enzyme';
+import featuresService from '../../src/common/services/features.service';
 
 import LoginScreen from '../../src/auth/LoginScreen';
 
@@ -9,12 +10,15 @@ jest.mock('../../src/auth/AuthService');
 
 jest.mock('../../src/auth/LoginForm', () => 'LoginForm');
 jest.mock('../../src/auth/ForgotPassword', () => 'ForgotPassword');
-jest.mock('../../src/common/components/VideoBackground', () => 'VideoBackground');
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
 describe('LoginScreen component', () => {
+
+  beforeEach(() => {
+    featuresService.features = {'homepage-december-2019': false};
+  });
 
   it('should renders correctly', () => {
     const loginScreen = renderer.create(
@@ -25,7 +29,7 @@ describe('LoginScreen component', () => {
 
   it('should shows login form component', async () => {
     const wrapper = shallow(
-      <LoginScreen />
+      <LoginScreen hopFeatures={true} />
     );
 
     // search login form
@@ -43,7 +47,7 @@ describe('LoginScreen component', () => {
     };
 
     const wrapper = shallow(
-      <LoginScreen navigation={navigation}/>
+      <LoginScreen navigation={navigation} hopFeatures={true} />
     );
 
     // search login form

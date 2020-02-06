@@ -19,6 +19,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
 import * as Progress from 'react-native-progress';
+import ReadMore from 'react-native-read-more-text';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
@@ -45,10 +46,10 @@ const TouchableCustom = withPreventDoubleTap(Touchable);
 /**
  * Channel Header
  */
+export default
 @inject('user', 'onboarding')
 @observer
-export default class ChannelHeader extends Component {
-
+class ChannelHeader extends Component {
   ActionSheetRef;
   loaded;
 
@@ -96,7 +97,7 @@ export default class ChannelHeader extends Component {
 
   componentDidMount() {
     const isOwner = session.guid === this.props.store.channel.guid;
-    if(isOwner) this.props.onboarding.getProgress();
+    if(isOwner && !featuresService.has('onboarding-december-2019')) this.props.onboarding.getProgress();
   }
 
   onEditAction = async () => {
@@ -185,6 +186,28 @@ export default class ChannelHeader extends Component {
   setBriefdescription = briefdescription => this.setState({ briefdescription });
   setName = name => this.setState({ name });
 
+
+  /**
+   * Truncated footer render for description
+   */
+  _renderTruncatedFooter = (handlePress) => {
+    return (
+      <Text style={[CommonStyle.fontM, CommonStyle.colorPrimary, CommonStyle.marginTop2x]} onPress={handlePress}>
+        {i18n.t('readMore')}
+      </Text>
+    );
+  }
+  /**
+   * Revealed footer render for description
+   */
+  _renderRevealedFooter = (handlePress) => {
+    return (
+      <Text style={[CommonStyle.fontM, CommonStyle.colorPrimary, CommonStyle.marginTop2x]} onPress={handlePress}>
+        {i18n.t('showLess')}
+      </Text>
+    );
+  }
+
   /**
    * Render Header
    */
@@ -217,12 +240,12 @@ export default class ChannelHeader extends Component {
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
             <TouchableHighlightCustom underlayColor="transparent" style={[styles.counter]} onPress={() => { this._navToSubscribers() }}>
-              <View style={styles.counter}>
+              <View style={styles.counter} testID="SubscribersView">
                 <Text style={styles.countertitle}>{i18n.t('subscribers').toUpperCase()}</Text>
                 <Text style={styles.countervalue}>{abbrev(channel.subscribers_count, 0)}</Text>
               </View>
             </TouchableHighlightCustom>
-            <View style={styles.counter}>
+            <View style={styles.counter} testID="ViewsView">
               <Text style={styles.countertitle}>{i18n.t('views').toUpperCase()}</Text>
               <Text style={styles.countervalue}>{abbrev(channel.impressions, 0)}</Text>
             </View>
@@ -235,9 +258,10 @@ export default class ChannelHeader extends Component {
                 style={styles.nameTextInput}
                 value={this.state.name}
                 onChangeText={this.setName}
+                testID="ChannelNameTextInput"
               />}
               {!isEditable &&
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }} testID="ChannelNameView">
                   <Text
                     style={styles.name}
                     ellipsizeMode='tail'
@@ -271,9 +295,21 @@ export default class ChannelHeader extends Component {
           </View>}
           {!isEditable &&
             <View style={CommonStyle.paddingTop2x}>
-              <Tags navigation={this.props.navigation}>{channel.briefdescription}</Tags>
+              <ReadMore
+                numberOfLines={3}
+                renderTruncatedFooter={this._renderTruncatedFooter}
+                renderRevealedFooter={this._renderRevealedFooter}
+              >
+                <Tags navigation={this.props.navigation}>{channel.briefdescription}</Tags>
+              </ReadMore>
             </View>
           }
+          {!isEditable && channel.city ? (
+            <View style={[CommonStyle.paddingTop2x, CommonStyle.flexContainer, CommonStyle.rowJustifyStart]}>
+              <Icon name="md-pin" size={24} style={styles.name} />
+              <Text style={CommonStyle.marginLeft1x}>{channel.city}</Text>
+            </View>
+          ) : null}
         </View>
 
         <TouchableCustom onPress={this.changeAvatarAction} style={styles.avatar} disabled={!isEditable}>
@@ -286,7 +322,7 @@ export default class ChannelHeader extends Component {
             <Progress.Pie progress={this.props.store.avatarProgress} size={36} />
           </View>: null}
         </TouchableCustom>
-        {isOwner && this.props.onboarding.percentage < 1 ? <CompleteProfile progress={this.props.onboarding.percentage}/>: null}
+        {isOwner && !featuresService.has('onboarding-december-2019') && this.props.onboarding.percentage < 1 ? <CompleteProfile progress={this.props.onboarding.percentage}/>: null}
       </View>
     )
   }

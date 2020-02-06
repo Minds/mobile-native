@@ -1,23 +1,16 @@
-import React, {
-  Component
-} from 'react';
+import React, {Component} from 'react';
 
 import {
   Text,
   View,
   Alert,
-  Image,
   Platform,
   FlatList,
   StyleSheet,
   ActivityIndicator,
-  Dimensions,
 } from 'react-native';
 
-import {
-  inject,
-  observer
-} from 'mobx-react/native'
+import {inject, observer} from 'mobx-react/native';
 
 import _ from 'lodash';
 
@@ -26,9 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ConversationView from './conversation/ConversationView';
 
 import SearchView from '../common/components/SearchView';
-import { CommonStyle } from '../styles/Common';
-import { ComponentsStyle } from '../styles/Components';
-import Colors from '../styles/Colors';
+import {ComponentsStyle} from '../styles/Components';
 import MessengerTabIcon from './MessengerTabIcon';
 import ErrorLoading from '../common/components/ErrorLoading';
 import i18n from '../common/services/i18n.service';
@@ -36,24 +27,23 @@ import i18n from '../common/services/i18n.service';
 /**
  * Messenger Conversarion List Screen
  */
+export default
 @inject('messengerList')
 @observer
-export default class MessengerScreen extends Component {
+class MessengerScreen extends Component {
   state = {
     active: false,
-  }
+  };
 
   static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <MessengerTabIcon tintColor={tintColor} />
-    )
-  }
+    tabBarIcon: ({tintColor}) => <MessengerTabIcon tintColor={tintColor} />,
+  };
 
   /**
    * On component will mount
    */
   componentDidMount() {
-
+    // load list
     this.props.messengerList.loadList();
 
     // listen socket on app start
@@ -158,6 +148,7 @@ export default class MessengerScreen extends Component {
           refreshing={messengerList.refreshing}
           style={styles.listView}
           ListEmptyComponent={empty}
+          testID="MessengerList"
         />
       </View>
     );
@@ -184,40 +175,41 @@ export default class MessengerScreen extends Component {
    */
   searchChange = (search) => {
     this.searchDebouncer(search);
-  }
+  };
 
   /**
    * Clear and reload
    */
   refresh = () => {
     this.props.messengerList.refresh();
-  }
+  };
 
   /**
    * Load more rows
    */
   loadMore = () => {
-    this.props.messengerList.loadList()
-  }
+    this.props.messengerList.loadList();
+  };
 
   /**
    * render row
    * @param {object} row
    */
-  renderMessage = (row) => {
+  renderMessage = row => {
     return (
       <ConversationView
         item={row.item}
         styles={styles}
         navigation={this.props.navigation}
-        />
+        testID={row.item.username.toUpperCase()}
+      />
     );
-  }
+  };
 }
 
 // styles
 const styles = StyleSheet.create({
-	listView: {
+  listView: {
     //paddingTop: 20,
     flex: 1
   },

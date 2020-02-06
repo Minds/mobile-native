@@ -38,7 +38,7 @@ export default class ActivityActionSheet extends Component {
    */
   constructor(props) {
     super(props);
-    this.deleteOption = <Text style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>
+    this.deleteOption = <Text testID='deleteOption' style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>
   }
 
   /**
@@ -310,7 +310,7 @@ export default class ActivityActionSheet extends Component {
           onPress={() => this.showActionSheet()}
           size={26}
           style={CS.colorDarkGreyed}
-          {...testID('Activity Menu button')}
+          testID={this.props.testID}
         />
         <ActionSheet
           ref={o => this.ActionSheet = o}

@@ -157,6 +157,7 @@ class ChannelActions extends Component {
             containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
             accessibilityLabel={i18n.t('channel.subscribeMessage')}
             text={i18n.t('channel.subscribe')}
+            testID="SubscribeButton"
           />
         }
         { showMessage &&
@@ -165,6 +166,7 @@ class ChannelActions extends Component {
             containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
             accessibilityLabel={i18n.t('channel.sendMessage')}
             text={i18n.t('channel.message')}
+            testID="SendMessageButton"
           />
         }
         { showEdit &&
@@ -174,6 +176,7 @@ class ChannelActions extends Component {
             accessibilityLabel={this.props.editing ? i18n.t('channel.saveChanges') : i18n.t('channel.editChannel')}
             text={this.props.editing ? i18n.t('save') : i18n.t('edit')}
             loading={this.props.saving}
+            testID="EditButton"
           />
         }
         { showMode &&
@@ -187,6 +190,7 @@ class ChannelActions extends Component {
             textStyle={[CS.marginLeft, CS.marginRight]}
             icon="ios-flash"
             text="Wire"
+            testID="WireButton"
           >
             <Icon name='ios-flash' size={18} style={[CS.marginLeft, CS.colorPrimary]} />
           </ButtonCustom>
@@ -199,6 +203,7 @@ class ChannelActions extends Component {
             textStyle={[CS.marginLeft, CS.marginRight]}
             icon="ios-flash"
             text={i18n.t('more')}
+            testID="MoreButton"
           />
         }
         <ActionSheet

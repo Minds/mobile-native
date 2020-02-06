@@ -10,6 +10,7 @@ import {
   Platform,
   StyleSheet,
   Alert,
+  BackHandler,
   SafeAreaView,
 } from 'react-native';
 
@@ -41,6 +42,28 @@ export default class OnboardingScreen extends Component {
    */
   static navigationOptions = {
     header: null
+  }
+
+  /**
+   * Component did mount
+   */
+  componentDidMount() {
+    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  /**
+   * On component will unmount
+   */
+  componentWillUnmount() {
+    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+  }
+
+  /**
+   * On hardware back press
+   */
+  onBackPress = () => {
+    this.wizard.previous();
+    return true;
   }
 
   onFinish = async () => {

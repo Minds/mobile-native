@@ -1,10 +1,10 @@
 // @flow
 import logService from './log.service';
 import apiService from './api.service';
-import { abort, isNetworkFail } from '../helpers/abortableFetch';
+import {abort, isNetworkFail} from '../helpers/abortableFetch';
 import entitiesService from './entities.service';
 import feedsStorage from './sql/feeds.storage';
-import { showMessage } from 'react-native-flash-message';
+import {showMessage} from 'react-native-flash-message';
 import i18n from './i18n.service';
 import connectivityService from './connectivity.service';
 import Colors from '../../styles/Colors';
@@ -15,14 +15,13 @@ export type FeedRecordType = {
   owner_guid: string,
   timestamp: string,
   urn: string,
-  entity?: Object
+  entity?: Object,
 };
 
 /**
  * Feed store
  */
 export default class FeedsService {
-
   /**
    * @var {boolean}
    */
@@ -51,7 +50,7 @@ export default class FeedsService {
   /**
    * @var {Object}
    */
-  params: Object = {sync: 1}
+  params: Object = {sync: 1};
 
   /**
    * @var {Array}
@@ -74,6 +73,16 @@ export default class FeedsService {
   paginated = true;
 
   /**
+   * @var {number|null}
+   */
+  fallbackAt = null;
+
+  /**
+   * @var {number}
+   */
+  fallbackIndex = -1;
+
+  /**
    * Get entities from the current page
    */
   async getEntities(): Promise<Array<any>> {
@@ -91,9 +100,15 @@ export default class FeedsService {
 
     const feedPage = this.feed.slice(this.offset, end);
 
-    const result: Array<any> = await entitiesService.getFromFeed(feedPage, this, this.asActivities);
+    const result: Array<any> = await entitiesService.getFromFeed(
+      feedPage,
+      this,
+      this.asActivities,
+    );
 
-    if (!this.injectBoost) return result;
+    if (!this.injectBoost) {
+      return result;
+    }
 
     this.injectBoosted(3, result, end);
     this.injectBoosted(8, result, end);
@@ -114,8 +129,10 @@ export default class FeedsService {
    */
   injectBoosted(position: number, entities: Array<BaseModel>, end: number) {
     if (this.offset <= position && end >= position) {
-      const boost =  boostedContentService.fetch();
-      if (boost) entities.splice( position + this.offset, 0, boost );
+      const boost = boostedContentService.fetch();
+      if (boost) {
+        entities.splice(position + this.offset, 0, boost);
+      }
     }
   }
 
@@ -127,10 +144,11 @@ export default class FeedsService {
     this.feed.unshift({
       owner_guid: entity.owner_guid,
       timestamp: Date.now().toString(),
-      urn: entity.urn
+      urn: entity.urn,
     });
 
     this.offset++;
+    this.fallbackIndex++;
 
     const plainEntity = entity.toPlainObject();
 
@@ -144,6 +162,14 @@ export default class FeedsService {
    */
   get hasMore(): boolean {
     return this.feed.length > this.limit + this.offset;
+  }
+
+  /**
+   * Set fallback index
+   * @param {number} value
+   */
+  setFallbackIndex(value: number) {
+    this.fallbackIndex = value;
   }
 
   /**
@@ -236,22 +262,57 @@ export default class FeedsService {
   }
 
   /**
+   * Calculate the index of the fallback
+   */
+  calculateFallbackIndex = () => {
+    let index = -1;
+
+    if (this.fallbackAt) {
+      index = this.feed.findIndex(
+        r =>
+          r.entity &&
+          r.entity.time_created &&
+          parseInt(r.entity.time_created, 10) < this.fallbackAt,
+      );
+    }
+
+    if (index !== -1) {
+      this.fallbackIndex = index;
+    } else {
+      this.fallbackIndex = -1;
+    }
+  };
+
+  /**
    * Fetch
    * @param {boolean} more
    */
   async fetch(more: boolean = false): Promise<void> {
     abort(this);
 
-    const params = {...this.params, ...{ limit: 150, as_activities: this.asActivities ? 1 : 0 }};
+    const params = {
+      ...this.params,
+      ...{limit: 150, as_activities: this.asActivities ? 1 : 0},
+    };
 
-    if (this.paginated && more) params.from_timestamp = this.pagingToken;
+    if (this.paginated && more) {
+      params.from_timestamp = this.pagingToken;
+    }
     const response = await apiService.get(this.endpoint, params, this);
 
     if (response.entities && response.entities.length) {
+
       if (more) {
         this.feed = this.feed.concat(response.entities);
       } else {
         this.feed = response.entities;
+      }
+      if (response.fallback_at) {
+        this.fallbackAt = response.fallback_at;
+        this.calculateFallbackIndex();
+      } else {
+        this.fallbackAt = null;
+        this.fallbackIndex = -1;
       }
       this.pagingToken = response['load-next'];
     } else {
@@ -281,6 +342,8 @@ export default class FeedsService {
           this.pagingToken = (this.feed[this.feed.length - 1].timestamp - 1).toString();
         } else {
           this.feed = feed.feed;
+          this.fallbackAt = feed.fallbackAt;
+          this.fallbackIndex = feed.fallbackIndex;
           this.pagingToken = feed.next;
         }
         return true;
@@ -299,9 +362,13 @@ export default class FeedsService {
     const status = await this.fetchLocal();
 
     try {
-      if (!status) await this.fetch();
+      if (!status) {
+        await this.fetch();
+      }
     } catch (err) {
-      if (err.code === 'Abort') return;
+      if (err.code === 'Abort') {
+        return;
+      }
 
       if (!isNetworkFail(err)) {
         logService.exception('[FeedService]', err);
@@ -318,13 +385,15 @@ export default class FeedsService {
     try {
       await this.fetch();
     } catch (err) {
-      if (err.code === 'Abort') return;
+      if (err.code === 'Abort') {
+        return;
+      }
 
       if (!isNetworkFail(err)) {
         logService.exception('[FeedService]', err);
       }
 
-      if (!await this.fetchLocal()) {
+      if (!(await this.fetchLocal())) {
         // if there is no local data rethrow the exception
         throw err;
       }
@@ -332,14 +401,28 @@ export default class FeedsService {
       showMessage({
         floating: true,
         position: 'top',
-        message: (connectivityService.isConnected ? i18n.t('cantReachServer') : i18n.t('noInternet')),
+        message: connectivityService.isConnected
+          ? i18n.t('cantReachServer')
+          : i18n.t('noInternet'),
         description: i18n.t('showingStored'),
         duration: 1300,
         backgroundColor: '#FFDD63DD',
         color: Colors.dark,
-        type: "info",
+        type: 'info',
       });
     }
+  }
+
+  /**
+   * Remove all from owner
+   * @param {string} guid
+   */
+  async removeFromOwner(guid: string): Promise<void> {
+    let count = this.feed.length;
+    this.feed = this.feed.filter(e => !e.owner_guid || e.owner_guid !== guid);
+    count -= this.feed.length;
+    this.offset -= count;
+    await feedsStorage.save(this);
   }
 
   /**
@@ -356,8 +439,10 @@ export default class FeedsService {
   clear(): FeedsService {
     this.offset = 0;
     this.limit = 12;
+    this.fallbackAt = null;
+    this.fallbackIndex = -1;
     this.pagingToken = '';
-    this.params =  {sync: 1};
+    this.params = {sync: 1};
     this.feed = [];
     return this;
   }

@@ -14,6 +14,7 @@ exports[`Activity component renders correctly 1`] = `
       },
     ]
   }
+  testID="ActivityView"
 >
   <Pinned
     entity={
@@ -37,6 +38,7 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
+          "confirmEmail": [Function],
           "guid": "824853017709780997",
           "isOwner": [Function],
           "subtype": false,
@@ -97,6 +99,7 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
+          "confirmEmail": [Function],
           "guid": "824853017709780997",
           "isOwner": [Function],
           "subtype": false,
@@ -173,6 +176,7 @@ exports[`Activity component renders correctly 1`] = `
               "message": "Message",
               "ownerObj": UserModel {
                 "__list": null,
+                "confirmEmail": [Function],
                 "guid": "824853017709780997",
                 "isOwner": [Function],
                 "subtype": false,
@@ -217,6 +221,7 @@ exports[`Activity component renders correctly 1`] = `
             }
           }
           onTranslate={[Function]}
+          testID=""
           toggleEdit={[Function]}
         />
       </View>
@@ -277,6 +282,7 @@ exports[`Activity component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": UserModel {
             "__list": null,
+            "confirmEmail": [Function],
             "guid": "824853017709780997",
             "isOwner": [Function],
             "subtype": false,
@@ -348,6 +354,7 @@ exports[`Activity component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": UserModel {
             "__list": null,
+            "confirmEmail": [Function],
             "guid": "824853017709780997",
             "isOwner": [Function],
             "subtype": false,
@@ -415,6 +422,7 @@ exports[`Activity component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": UserModel {
             "__list": null,
+            "confirmEmail": [Function],
             "guid": "824853017709780997",
             "isOwner": [Function],
             "subtype": false,
@@ -488,6 +496,7 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
+          "confirmEmail": [Function],
           "guid": "824853017709780997",
           "isOwner": [Function],
           "subtype": false,
@@ -554,6 +563,7 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
+          "confirmEmail": [Function],
           "guid": "824853017709780997",
           "isOwner": [Function],
           "subtype": false,

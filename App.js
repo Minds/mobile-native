@@ -76,9 +76,10 @@ sqliteStorageProviderService.get();
 
 apiService.clearCookies();
 
+const mindsSettingsPromise = mindsService.getSettings();
+
 // On app login (runs if the user login or if it is already logged in)
 sessionService.onLogin(async () => {
-
   const user = sessionService.getUser();
 
   Sentry.configureScope(scope => {
@@ -88,11 +89,9 @@ sessionService.onLogin(async () => {
   logService.info('[App] Getting minds settings and onboarding progress');
 
   // load minds settings and boosted content
-  await Promise.all([mindsService.getSettings(), boostedContentService.load()]);
+  await Promise.all([mindsSettingsPromise, boostedContentService.load()]);
 
   logService.info('[App] updatting features');
-  // reload fatures on login
-  await featureService.updateFeatures();
 
   // register device token into backend on login
 
@@ -106,6 +105,7 @@ sessionService.onLogin(async () => {
   NavigationService.navigate(sessionService.initialScreen);
 
   // check onboarding progress and navigate if necessary
+  // commenting this to prevent that the app navigates to onboarding after login
   stores.onboarding.getProgress();
 
   // check update
@@ -320,7 +320,7 @@ export default class App extends Component<Props, State> {
     );
 
     const tosModal = (
-      <TosModal user={stores.user} key="tosModal"/>
+      <TosModal user={stores.user} key="tosModal" />
     )
 
     return [ app, keychainModal, blockchainTransactionModal,  tosModal];

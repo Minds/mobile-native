@@ -50,12 +50,13 @@
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https"
-                android:host="mobile.minds.com" android:path="/"/>
-            <data android:pathPattern="/channels/..*"/>
+                android:host="www.minds.com" android:path="/"/>
+                <data android:pathPattern="/email-confirmation"/>
+            <!-- <data android:pathPattern="/channels/..*"/>
             <data android:pathPattern="/newsfeed/..*"/>
             <data android:pathPattern="/groups/profile/..*"/>
             <data android:pathPattern="/wallet/..*"/>
-            <data android:pathPattern="/..*"/>
+            <data android:pathPattern="/..*"/> -->
         </intent-filter>
         <intent-filter>
             <action android:name="android.intent.action.SEND" />

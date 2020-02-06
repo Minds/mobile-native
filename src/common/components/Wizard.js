@@ -16,6 +16,8 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CommonStyle as CS } from '../../styles/Common';
 import colors from '../../styles/Colors';
+import Rectangle from './shapes/Rectangle';
+import featuresService from '../services/features.service';
 
 // types
 type Props = {
@@ -59,13 +61,13 @@ export default class Wizard extends PureComponent<Props, State>  {
       <View style={[CS.rowJustifyCenter, CS.backgroundWhite, CS.padding2x, CS.marginTop4x, CS.marginBottom4x]}>
         {first ?
           <View style={{width:50}}/> :
-          <TouchableOpacity style={[{width:50}, CS.centered]} onPress={this.previous}>
+          <TouchableOpacity style={[{width:50}, CS.centered]} onPress={this.previous} testID="wizardPrevious">
             <Icon size={34} name="keyboard-arrow-left" color={colors.primary}/>
           </TouchableOpacity>}
         <View style={[CS.flexContainer, CS.centered]}>
           <Image source={require('./../../assets/logos/bulb.png')} style={{width:35, height:60}}/>
         </View>
-        <TouchableOpacity style={[{width:50}, CS.centered]} onPress={this.next} disabled={!ready || this.state.waitingNext}>
+        <TouchableOpacity style={[{width:50}, CS.centered]} onPress={this.next} disabled={!ready || this.state.waitingNext} testID="wizardNext">
           {
             this.state.waitingNext ? <ActivityIndicator size="small"/> :
             <Icon size={34} name="keyboard-arrow-right" color={ready ? colors.primary : colors.greyed}/>
@@ -124,15 +126,24 @@ export default class Wizard extends PureComponent<Props, State>  {
    * Render
    */
   render() {
-    const {
-      steps
-    } = this.props;
+    const {steps} = this.props;
 
-    return (
-      <ScrollView style={[CS.flexContainer, CS.backgroundWhite]}>
-        {this.getHeader()}
-        {this.props.steps[this.state.current].component}
-      </ScrollView>
-    );
+    let component;
+    if (featuresService.has('onboarding-december-2019')) {
+      component = (
+        <View style={[CS.flexContainer]}>
+          {this.props.steps[this.state.current].component}
+        </View>
+      );
+    } else {
+      component = (
+        <ScrollView style={[CS.flexContainer, CS.backgroundWhite]}>
+          {this.getHeader()}
+          {this.props.steps[this.state.current].component}
+        </ScrollView>
+      );
+    }
+
+    return component;
   }
 }

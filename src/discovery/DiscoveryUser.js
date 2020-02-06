@@ -26,6 +26,29 @@ import SubscriptionButton from '../channel/subscription/SubscriptionButton';
 export default
 @observer
 class DiscoveryUser extends Component {
+  /**
+   * State
+   */
+  state = {
+    guid: null,
+  };
+
+  /**
+   * Derive state from props
+   * @param {object} nextProps
+   * @param {object} prevState
+   */
+  static getDerivedStateFromProps(nextProps, prevState) {
+
+    if (prevState.guid !== nextProps.row.item.guid) {
+      return {
+        guid: nextProps.row.item.guid,
+        source: { uri: MINDS_CDN_URI + 'icon/' + nextProps.row.item.guid + '/medium' }
+      }
+    }
+
+    return null;
+  }
 
   /**
    * Navigate To channel
@@ -40,35 +63,38 @@ class DiscoveryUser extends Component {
     }
   }
 
+  /**
+   * Render right button
+   */
   renderRightButton() {
     const channel = this.props.row.item;
 
     if (channel.isOwner() || this.props.hideButtons || (channel.isOpen() && !channel.can(FLAG_SUBSCRIBE) )) {
       return;
     }
+
+    const testID = (this.props.testID) ? `${this.props.testID}SubscriptionButton` : 'subscriptionButton';
+
     return (
       <SubscriptionButton
         channel={channel}
+        testID={testID}
       />
     )
-  }
-
-  getChannel() {
-    return this.props.row.item;
   }
 
   /**
    * Render
    */
   render() {
-    const item = this.getChannel();
-    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + item.guid + '/medium' };
+    const {row, ...otherProps} = this.props;
+
     return (
-      <TouchableOpacity style={styles.row} onPress={this._navToChannel}>
-        <Image source={avatarImg} style={styles.avatar} />
+      <TouchableOpacity style={styles.row} onPress={this._navToChannel} {...otherProps}>
+        <Image source={this.state.source} style={styles.avatar} />
         <View style={[CommonStyle.flexContainerCenter]}>
-          <Text style={[styles.body, CommonStyle.fontXL]}>{item.name}</Text>
-          <Text style={[styles.body, CommonStyle.fontS, CommonStyle.colorMedium]}>@{item.username}</Text>
+          <Text style={[styles.body, CommonStyle.fontXL]}>{row.item.name}</Text>
+          <Text style={[styles.body, CommonStyle.fontS, CommonStyle.colorMedium]}>@{row.item.username}</Text>
         </View>
         {this.renderRightButton()}
       </TouchableOpacity>

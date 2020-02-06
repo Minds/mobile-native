@@ -1,16 +1,12 @@
-import {
-  observable,
-  action,
-} from 'mobx';
+import { observable, action } from 'mobx';
 
-import hashtagService from '../services/hashtag.service'
+import hashtagService from '../services/hashtag.service';
 import settingsStore from '../../settings/SettingsStore';
 
 /**
  * Hashtag
  */
 class HashtagStore {
-
   @observable loading = false;
   @observable all = false;
   @observable hashtag = '';
@@ -29,6 +25,10 @@ class HashtagStore {
   @action
   setHashtag(hashtag) {
     this.hashtag = hashtag;
+
+    if (hashtag && !this.suggested.some(e => e.value === hashtag)) {
+      this.suggested.push({ value: hashtag, selected: false });
+    }
   }
 
   /**
@@ -89,10 +89,10 @@ class HashtagStore {
    * @param {string} tag
    */
   @action
-  create = async (tag) => {
+  create = async tag => {
     await this.select(tag);
     this.suggested.unshift(tag);
-  }
+  };
 
   /**
    * Deselect tag

@@ -1,23 +1,14 @@
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 
 import authService from './AuthService';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
-
-import { Button } from 'react-native-elements'
-
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
+import Button from '../common/components/Button';
+import Input from '../common/components/Input';
 
 /**
  * Forgot Password Form
@@ -32,7 +23,7 @@ export default class ForgotPassword extends PureComponent {
       username: '',
       sending: false,
       sent: false,
-      msg: i18n.t('auth.requestNewPassword')
+      msg: i18n.t('auth.requestNewPassword'),
     });
   }
 
@@ -41,41 +32,34 @@ export default class ForgotPassword extends PureComponent {
    */
   render() {
     return (
-      <KeyboardAvoidingView behavior='padding'>
-        <Text style={[CommonStyle.colorWhite, CommonStyle.fontM]}>{this.state.msg}</Text>
-        {!this.state.sent && <TextInput
-          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+      <SafeAreaView style={CS.flexContainer}>
+        <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop3x, CS.marginBottom3x]}>{i18n.t('auth.forgot')}</Text>
+        <Text style={[CS.subTitleText, CS.colorPrimaryText, CS.marginTop1x, CS.marginBottom3x]}>{this.state.msg}</Text>
+        {!this.state.sent && <Input
           placeholder={i18n.t('auth.username')}
           returnKeyType={'done'}
-          placeholderTextColor="white"
-          underlineColorAndroid='transparent'
           onChangeText={(value) => this.setState({ username: value })}
           autoCapitalize={'none'}
           value={this.state.username}
         />}
-        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
+        <View style={[CS.rowJustifyEnd, CS.marginTop4x]}>
           <Button
             onPress={() => this.onPressBack()}
-            title={i18n.t('goback')}
-            backgroundColor="rgba(0,0,0, 0.5)"
-            borderRadius={4}
-            containerViewStyle={ComponentsStyle.loginButton}
-            textStyle={ComponentsStyle.loginButtonText}
+            text={i18n.t('goback')}
+            containerStyle={[ComponentsStyle.loginButtonNew, CS.marginRight2x]}
+            textStyle={ComponentsStyle.loginButtonTextNew}
           />
           {!this.state.sent && <Button
             onPress={() => this.onContinuePress()}
-            title={i18n.t('continue').toUpperCase()}
-            backgroundColor="rgba(0,0,0, 0.5)"
-            hidde={this.state.sent}
-            borderRadius={4}
+            text={i18n.t('continue').toUpperCase()}
             loading={this.state.sending}
             loadingRight={true}
-            disable={this.state.sending}
-            containerViewStyle={ComponentsStyle.loginButton}
-            textStyle={ComponentsStyle.loginButtonText}
+            disable={this.state.sending || this.state.sent}
+            containerStyle={ComponentsStyle.loginButtonNew}
+            textStyle={ComponentsStyle.loginButtonTextNew}
           />}
         </View>
-      </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 

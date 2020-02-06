@@ -159,7 +159,7 @@ export default class CaptureGallery extends PureComponent {
             });
           }
         }
-        {...testID(`Gallery ${node.type}`)}
+        testID={`GalleryImage${item.index}`}
         >
         <Image
           source={{ uri : node.image.uri }}

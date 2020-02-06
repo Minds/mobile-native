@@ -23,13 +23,25 @@ import Actions from '../newsfeed/activity/Actions';
  * Blog Card
  */
 export default class BlogCard extends PureComponent {
-
   /**
    * Navigate to blog
    */
   navToBlog = () => {
-    if (!this.props.navigation || !this.props.entity.can(FLAG_VIEW, true)) return;
+    if (!this.props.navigation || !this.props.entity.can(FLAG_VIEW, true)) {
+      return;
+    }
     return this.props.navigation.push('BlogView', { blog: this.props.entity });
+  };
+
+  /**
+   * Trim and remove new line char
+   * @param {string} title
+   */
+  cleanTitle(title) {
+    if (!title) {
+      return '';
+    }
+    return title.trim().replace(/\n/gm, ' ');
   }
 
   /**
@@ -39,13 +51,14 @@ export default class BlogCard extends PureComponent {
     const blog = this.props.entity;
     const channel = this.props.entity.ownerObj;
     const image = blog.getBannerSource();
+    const title = this.cleanTitle(blog.title);
 
     return (
       <TouchableOpacity onPress={this.navToBlog} style={CS.backgroundWhite}>
         <FastImage source={image} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
         <View style={[CS.padding2x]}>
           <View style={[CS.columnAlignStart, CS.fullWidth]}>
-            <Text style={[CS.fontL, CS.fontMedium]}>{blog.title}</Text>
+            <Text style={[CS.fontL, CS.fontMedium, CS.flexContainer]} numberOfLines={2} ellipsizeMode="tail">{title}</Text>
             <View style={[CS.marginBottom2x, CS.marginTop2x, CS.rowJustifyCenter, CS.alignCenter]}>
               { channel && <Avatar
                 width={24}
@@ -73,5 +86,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 150,
     width: '100%',
-  }
+  },
 });

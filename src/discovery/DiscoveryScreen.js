@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Platform,
   Text,
-  FlatList,
   Dimensions,
   RefreshControl,
   View,
@@ -18,7 +17,6 @@ import {
 import { ListItem, Avatar } from 'react-native-elements';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Modal from 'react-native-modal'
 
 import {
   observer,
@@ -47,14 +45,15 @@ import ErrorBoundary from '../common/components/ErrorBoundary';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
 import { FLAG_VIEW } from '../common/Permissions';
+import FallbackBoundary from './FallbackBoundary';
 
 /**
  * Discovery screen
  */
-@inject('discovery', 'channel')
+export default
+@inject('discovery', 'channel', 'hashtag')
 @observer
-export default class DiscoveryScreen extends Component {
-
+class DiscoveryScreen extends Component {
   cols = 3;
   iconSize = 28;
 
@@ -62,13 +61,13 @@ export default class DiscoveryScreen extends Component {
     active: false,
     showFeed: false,
     itemHeight: 0,
-    q: ''
-  }
+    q: '',
+  };
 
   viewOptsFeed = {
     viewAreaCoveragePercentThreshold: 50,
-    minimumViewTime: 300
-  }
+    minimumViewTime: 300,
+  };
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
@@ -110,7 +109,8 @@ export default class DiscoveryScreen extends Component {
         this.setState({active: true});
         const params = this.props.navigation.state.params;
         if (params && params.query) {
-          this.setQ(params.query);
+          this.props.hashtag.setHashtag(params.query.replace('#',''));
+          this.props.discovery.reload();
           params.query = null; //clean query
         }
       }, 50);
@@ -524,14 +524,22 @@ export default class DiscoveryScreen extends Component {
    */
   navigateToFeed = ({urn}) => {
     const index = this.props.discovery.listStore.feedsService.feed.findIndex(e => e.urn === urn);
+    let fallbackIndex = this.props.discovery.listStore.fallbackIndex;
 
-    this.props.discovery.feedStore.setFeed(this.props.discovery.listStore.feedsService.feed.slice(index));
+    if (fallbackIndex !== -1 && fallbackIndex > index) {
+      fallbackIndex -= index;
+    }
+
+    this.props.discovery.feedStore.setFeed(
+      this.props.discovery.listStore.feedsService.feed.slice(index),
+      fallbackIndex,
+    );
 
     this.props.navigation.push('DiscoveryFeed', {
       'showFeed': index,
       title: _.capitalize(this.props.discovery.filters.filter) + ' ' + _.capitalize(this.props.discovery.filters.type)
-    })
-  }
+    });
+  };
 
   /**
    * Render a tile
@@ -540,12 +548,20 @@ export default class DiscoveryScreen extends Component {
     if (!this.state.active && row.item.isGif()) {
       return <View style={{ height: this.state.itemHeight, width: this.state.itemHeight }}/>;
     }
+    const boundaryText =
+      this.props.discovery.listStore.fallbackIndex === row.index
+        ? i18n.t('newsfeed.olderThan', {
+            period: this.props.discovery.filters.period,
+          })
+        : undefined;
+
     return (
       <ErrorBoundary message={this.tileError} containerStyle={[CS.centered, {width: this.state.itemHeight, height: this.state.itemHeight}]} textSmall={true}>
         <DiscoveryTile
           entity={row.item}
           size={this.state.itemHeight}
           onPress={this.navigateToFeed}
+          boundaryText={boundaryText}
         />
       </ErrorBoundary>
     );
@@ -567,8 +583,16 @@ export default class DiscoveryScreen extends Component {
    * Render activity item
    */
   renderActivity = (row) => {
+    const boundaryText =
+      this.props.discovery.listStore.fallbackIndex === row.index
+        ? i18n.t('newsfeed.olderThan', {
+            period: this.props.discovery.filters.period,
+          })
+        : undefined;
+
     return (
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
+        {boundaryText && <FallbackBoundary title={boundaryText}/>}
         <Activity entity={row.item} navigation={this.props.navigation} autoHeight={false} />
       </ErrorBoundary>
     );

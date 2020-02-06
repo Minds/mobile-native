@@ -26,10 +26,9 @@ export default class BoostPeerRejectedView extends BoostPeerAcceptedView {
     return (
       <View style={styles.bodyContents}>
         <Text onPress={() => this.navToBoostConsole({filter:'peer'})}>
-          <Text style={styles.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> {i18n.t('notification.boostPeerRejected')} <Text style={styles.bold}>{amount} {type}</Text> {description}
-          {i18n.t('notification.notCharged')}
+          <Text style={styles.bold} onPress={this.navToChannel}>@{entity.from.username}</Text> {i18n.t('notification.boostPeerRejected')} <Text style={styles.bold}>{amount} {type}</Text> {description} {i18n.t('notification.notCharged')}
         </Text>
       </View>
-    )
+    );
   }
 }

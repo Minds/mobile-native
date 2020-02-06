@@ -39,7 +39,7 @@ export default class ConversationView extends Component {
     let online = item.online ? <Icon style={styles.icons} name='md-radio-button-on' color='#2196f3' size={19} /> : null;
 
     return (
-      <TouchableOpacity style={styles.row} onPress={this._navToConversation}>
+      <TouchableOpacity style={styles.row} onPress={this._navToConversation} testID={this.props.testID}>
         <Image source={avatarImg} style={styles.avatar} />
         <Text style={styles.body}>{item.username.toUpperCase()}</Text>
         {unread}

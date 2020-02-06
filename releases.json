@@ -1,0 +1,109 @@
+{
+  "versions": [
+    {
+      "version": "3.14.0",
+      "timestamp": 1576783681,
+      "href": "https://cdn-assets.minds.com/android/minds-3_14_0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.14.0",
+      "changelog": [
+        "Updated translations",
+        "Slovak added",
+        "Bug Fixes"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "51752323a92a4a8199f2f8d716e99f2c"
+        },
+        {
+          "type": "sha256",
+          "value": "476b1f623dc8d6e6d5e86e0d4c3c865a872a3b2958ad57034e944cb5d8477064"
+        },
+        {
+          "type": "sha512",
+          "value": "f57d69ae5f25394fdeb40fbdae48001712780302c02f899a6cf9d5c481ecec59eaf8381ae0f3a8738b6cbb614a062e9fd9ad1ec1af3850fcecb3051eaac3a842"
+        }
+      ]
+    },
+    {
+      "version": "3.12.1",
+      "timestamp": 1576077180,
+      "href": "https://cdn-assets.minds.com/android/minds-3_12_1.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.12.1",
+      "changelog": [
+        "Bug Fixes"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "5113756e870324c67ce8fec8787653a7"
+        },
+        {
+          "type": "sha256",
+          "value": "feae8d372c93da18103e268a4bd192c7fd03b94f3dee8deaeb15f9442c4c7742"
+        },
+        {
+          "type": "sha512",
+          "value": "66f465155f45a837fedafa9918d6f9bcaba64e272b9d33720ae379f714ab25b3d631f0d5ff455985cc0ca4b417b8e7f054db4c548e1241cbf6655e277434043c"
+        }
+      ]
+    },
+    {
+      "version": "3.12.0",
+      "timestamp": 1575340091,
+      "href": "https://cdn-assets.minds.com/android/minds-3_12_0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.12.0",
+      "changelog": [
+        "React Native updated v0.61.4",
+        "Code clean up and performance improvements",
+        "Jitsi SDK updated",
+        "Fixed push notification router for iOS",
+        "New gathering screen",
+        "Bug Fixes"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "5f8ec4ec9b893f12505bd5e3f7392713"
+        },
+        {
+          "type": "sha256",
+          "value": "2b94fccf353c107ce1db8d74fcceec48f4de88176572fff1a69b66dbab949699"
+        },
+        {
+          "type": "sha512",
+          "value": "365a7ff04d301300cbd31d36598ce35032dd71fea74591781cb5987cfb375d80d93973e90f4efd9342ccd6546af6f1fe0be5caecac175e292fcf7cdcaec37253"
+        }
+      ]
+    },
+    {
+      "version": "3.10.1",
+      "timestamp": 1569966871,
+      "href": "https://cdn-assets.minds.com/android/minds-3_10_1.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.10.1",
+      "changelog": [
+        "Eth and credit card support on wire",
+        "Post scheduler",
+        "Bug fixes"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "c7e591eb0b532dc01ad671b12e3f571a"
+        },
+        {
+          "type": "sha256",
+          "value": "bbb976fedc0ee15569d05b106db2bd8d624f5e18e558a27be53a4d8119e4eb54"
+        },
+        {
+          "type": "sha512",
+          "value": "6eb5be8849206f45469038ca4380e407915ff4a5bd6f848ac87728dcb9496bdc32454141ca4d91132aab4fc0f93763600e2da3f04acf2d6ee04a41229da35c3f"
+        }
+      ]
+    }
+  ]
+}

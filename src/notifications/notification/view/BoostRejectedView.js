@@ -4,7 +4,7 @@ import React, {
 
 import {
   Text,
-  View
+  View,
 } from 'react-native';
 
 import BoostGiftView from './BoostGiftView';
@@ -34,6 +34,6 @@ export default class BoostRejectedView extends BoostGiftView {
       <View style={styles.bodyContents}>
         <Text onPress={this.navToBoostConsole}>{i18n.to('notification.boostRejected', {reason}, {description})}</Text>
       </View>
-    )
+    );
   }
 }

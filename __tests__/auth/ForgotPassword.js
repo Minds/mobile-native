@@ -2,8 +2,11 @@ import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
 
+
 import ForgotPassword from '../../src/auth/ForgotPassword';
 import authService from '../../src/auth/AuthService';
+import Button from '../../src/common/components/Button';
+import Input from '../../src/common/components/Input';
 
 jest.mock('../../src/auth/AuthService');
 
@@ -32,12 +35,12 @@ describe('ForgotPassword component', () => {
 
     // simulate user input
     const render = wrapper.dive();
-    render.find('TextInput').forEach(child => {
+    render.find(Input).forEach(child => {
       child.simulate('changeText', 'myFancyUsername');
     });
 
     // press send
-    await render.find('Button').at(1).simulate('press');
+    await render.find(Button).at(1).simulate('press');
 
     // expect auth service login to be called once
     expect(authService.forgot).toBeCalled();
@@ -57,7 +60,7 @@ describe('ForgotPassword component', () => {
     const render = wrapper.dive();
 
     // press go back
-    await render.find('Button').at(0).simulate('press');
+    await render.find(Button).at(0).simulate('press');
 
     // expect onLogin to be called once
     expect(mockFn).toBeCalled();

@@ -29,7 +29,7 @@ class DiscoveryFeedStore {
     this.buildListStores();
   }
 
-  setFeed(feed) {
+  setFeed(feed, fallbackIndex) {
     this.list.clear();
     this.list.viewed.clearViewed();
 
@@ -38,6 +38,8 @@ class DiscoveryFeedStore {
       .setFeed(feed)
       .setOffset(0)
       .hydratePage();
+
+    this.list.setFallbackIndex(fallbackIndex);
   }
 
   /**

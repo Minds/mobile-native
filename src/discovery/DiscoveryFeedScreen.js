@@ -31,6 +31,7 @@ import GroupsListItem from '../groups/GroupsListItem'
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
 import FeedList from '../common/components/FeedList';
+import FallbackBoundary from './FallbackBoundary';
 
 /**
  * Discovery Feed Screen
@@ -46,6 +47,34 @@ export default class DiscoveryFeedScreen extends Component {
   }
 
   /**
+   * Render activity
+   */
+  renderActivity = row => {
+    let isLast = this.props.discovery.feedStore.list.entities.length == row.index + 1;
+    const entity = row.item;
+
+    const boundaryText =
+      this.props.discovery.feedStore.list.fallbackIndex === row.index
+        ? i18n.t('newsfeed.olderThan', {
+            period: this.props.discovery.filters.period,
+          })
+        : undefined;
+
+    return (
+      <ErrorBoundary message={this.cantShowActivity} containerStyle={CS.hairLineBottom}>
+        {boundaryText && <FallbackBoundary title={boundaryText}/>}
+        <Activity
+          entity={entity}
+          newsfeed={this.props.feedStore}
+          navigation={this.props.navigation}
+          autoHeight={false}
+          isLast={isLast}
+        />
+      </ErrorBoundary>
+    )
+  }
+
+  /**
    * Render
    */
   render() {
@@ -53,6 +82,7 @@ export default class DiscoveryFeedScreen extends Component {
 
     return (
       <FeedList
+        renderActivity={this.renderActivity}
         feedStore={store}
         ListFooterComponent={this.getFooter}
         keyExtractor={this.keyExtractor}

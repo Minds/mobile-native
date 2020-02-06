@@ -10,23 +10,26 @@ import {
   ScrollView,
   Linking,
   Alert,
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native';
 
 import authService from '../auth/AuthService';
-import { CommonStyle } from '../styles/Common';
+import { CommonStyle as CS} from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 
 import { observer, inject } from 'mobx-react/native';
 
-import {
-  CheckBox,
-  Button
-} from 'react-native-elements'
+import {CheckBox} from 'react-native-elements'
 
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import delay from '../common/helpers/delay';
 import apiService from '../common/services/api.service';
+import Input from '../common/components/Input';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Button from '../common/components/Button';
+import { DISABLE_PASSWORD_INPUTS } from '../config/Config';
 
 /**
  * Register Form
@@ -65,114 +68,110 @@ export default class RegisterForm extends Component {
     this.setState({ termsAccepted: !!value, error });
   }
 
-  render() {
+  setUsername = username => this.setState({username});
+  setEmail = email => this.setState({email});
+  setPassword = password => this.setState({password});
+  setConfirmPassword = confirmPassword => this.setState({confirmPassword});
+
+  getFormBody = () => {
     return (
-      <ScrollView>
-        <View>
-          <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
-            {this.state.error.termsAcceptedError}
-          </Text>
-        </View>
-        <TextInput
-          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+      <ScrollView style={[CS.flexContainer, CS.marginTop2x]}>
+        <TouchableOpacity onPress={this.props.onBack} style={CS.marginBottom3x}>
+          <Icon size={34} name="keyboard-arrow-left" style={CS.colorSecondaryText} />
+        </TouchableOpacity>
+        <Text style={[CS.marginBottom3x, CS.textCenter, CS.titleText, CS.colorPrimaryText]}>
+          {i18n.t('auth.join')}
+        </Text>
+        <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
+          {this.state.error.termsAcceptedError}
+        </Text>
+        <Input
           placeholder={i18n.t('auth.username')}
-          placeholderTextColor="#444"
-          returnKeyType={'done'}
-          autoCapitalize={'none'}
-          underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ username: value })}
+          onChangeText={this.setUsername}
           value={this.state.username}
           editable={!this.state.inProgress}
+          testID="registerUsernameInput"
         />
-        <TextInput
-          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+        <Input
           placeholder={i18n.t('auth.email')}
-          returnKeyType={'done'}
-          autoCapitalize={'none'}
-          placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ email: value })}
+          onChangeText={this.setEmail}
           value={this.state.email}
           editable={!this.state.inProgress}
+          testID="registerEmailInput"
         />
-        <TextInput
-          style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+        <Input
           placeholder={i18n.t('auth.password')}
-          secureTextEntry={true}
-          autoCapitalize={'none'}
-          returnKeyType={'done'}
-          placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
-          onChangeText={(value) => this.setState({ password: value })}
+          secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
+          onChangeText={this.setPassword}
           value={this.state.password}
           editable={!this.state.inProgress}
+          testID="registerPasswordInput"
         />
         { this.state.password ?
-          <TextInput
-            style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
+          <Input
             placeholder={i18n.t('auth.confirmpassword')}
-            secureTextEntry={true}
-            autoCapitalize={'none'}
-            returnKeyType={'done'}
-            placeholderTextColor="#444"
-            underlineColorAndroid='transparent'
-            onChangeText={(value) => this.setState({ confirmPassword: value })}
+            secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
+            onChangeText={this.setConfirmPassword}
             value={this.state.confirmPassword}
             editable={!this.state.inProgress}
+            testID="registerPasswordConfirmInput"
           /> : null }
         <CheckBox
-          right
-          iconRight
-          containerStyle={ComponentsStyle.registerCheckbox}
-          title={<Text style={[ComponentsStyle.terms, CommonStyle.textRight]}>{`Receive exclusive promotions from Minds\n(recommended)`}</Text>}
-          checked={this.state.exclusive_promotions}
-          textStyle={[ComponentsStyle.registerCheckboxText, CommonStyle.textRight]}
-          onPress={() => { this.setState({ exclusive_promotions: !this.state.exclusive_promotions }) }}
-          disabled={this.state.inProgress}
-        />
-        <CheckBox
-          right
-          iconRight
-          containerStyle={ComponentsStyle.registerCheckbox}
-          title={<Text style={ComponentsStyle.terms}>{i18n.t('auth.accept')} <Text style={ComponentsStyle.link} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>{i18n.t('auth.termsAndConditions')}</Text></Text>}
+          containerStyle={ComponentsStyle.registerCheckboxNew}
+          title={<Text style={ComponentsStyle.termsNew}>{i18n.t('auth.accept')} <Text style={ComponentsStyle.linkNew} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>{i18n.t('auth.termsAndConditions')}</Text></Text>}
           checked={this.state.termsAccepted}
-          textStyle={ComponentsStyle.registerCheckboxText}
-          onPress={() => { this.setState({ termsAccepted: !this.state.termsAccepted }) }}
+          // textStyle={ComponentsStyle.registerCheckboxTextNew}
+          onPress={this.check}
           disabled={this.state.inProgress}
+          testID="checkbox"
         />
-        <View style={[CommonStyle.rowJustifyEnd, CommonStyle.marginTop2x]}>
-            <Button
-              onPress={() => this.onPressBack()}
-              title={i18n.t('goback')}
-              borderRadius={30}
-              backgroundColor="transparent"
-              containerViewStyle={ComponentsStyle.loginButton}
-              textStyle={ComponentsStyle.loginButtonText}
-              disabled={this.state.inProgress}
-              disabledStyle={CommonStyle.backgroundTransparent}
-            />
-            <Button
-              onPress={() => this.onPressRegister()}
-              title={i18n.t('auth.create')}
-              backgroundColor="transparent"
-              borderRadius={30}
-              containerViewStyle={ComponentsStyle.loginButton}
-              textStyle={ComponentsStyle.loginButtonText}
-              loading={this.state.inProgress}
-              loadingRight={true}
-              disabled={this.state.inProgress}
-              disabledStyle={CommonStyle.backgroundTransparent}
-            />
-        </View>
       </ScrollView>
     );
-  }
+  };
 
-  /**
-   * On press back
-   */
-  onPressBack() {
-    this.props.onBack();
+  check = () => {
+    this.setState({ termsAccepted: !this.state.termsAccepted })
+  };
+
+  getFormFooter = () => {
+    return (
+      <View style={CS.flexContainer}>
+        <Button
+          onPress={() => this.onPressRegister()}
+          borderRadius={2}
+          containerStyle={ComponentsStyle.loginButtonNew}
+          loading={this.state.inProgress}
+          loadingRight={true}
+          disabled={this.state.inProgress}
+          text={''}
+          testID="registerCreateButton"
+        >
+          <Text style={ComponentsStyle.loginButtonTextNew}>{i18n.t('auth.createChannel')}</Text>
+        </Button>
+        <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.centered, CS.marginTop2x]}>
+          {i18n.to('auth.alreadyHaveAccount', null, {
+            login: (
+              <Text style={[ComponentsStyle.linkNew, CS.fontL]} onPress={this.props.onBack}>
+                {i18n.t('auth.login')}
+              </Text>
+            ),
+          })}
+        </Text>
+      </View>
+    );
+  };
+
+  render() {
+    return (
+      <View style={[CS.flexContainerCenter]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
+          {this.getFormBody()}
+        </View>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundThemePrimary]}>
+          {this.getFormFooter()}
+        </View>
+      </View>
+    );
   }
 
   /**
@@ -205,7 +204,7 @@ export default class RegisterForm extends Component {
         exclusive_promotions: this.state.exclusive_promotions
       };
       await authService.register(params);
-      sessionService.setInitialScreen('OnboardingScreen');
+      sessionService.setInitialScreen('OnboardingScreenNew');
       await apiService.clearCookies();
       await delay(100);
       await authService.login(this.state.username ,this.state.password);

@@ -19,13 +19,15 @@ import featuresService from '../common/services/features.service';
 import { SafeAreaView } from 'react-navigation';
 import isIphoneX from '../common/helpers/isIphoneX';
 import testID from '../common/helpers/testID';
+import EmailConfirmation from './EmailConfirmation';
 
 const forceInset = isIphoneX ? {top: 32} : null
 
+export default
 @inject('user')
 @inject('wallet')
 @observer
-export default class Topbar extends Component {
+class Topbar extends Component {
 
   componentDidMount() {
     this.props.wallet.refresh();
@@ -36,9 +38,9 @@ export default class Topbar extends Component {
       <SafeAreaView style={styles.container} forceInset={forceInset}>
         <View style={styles.topbar}>
 
-          { featuresService.has('crypto') && 
-            <TouchableOpacity 
-              onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })} 
+          { featuresService.has('crypto') &&
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })}
               {...testID('boost-console button')} >
             <View style={styles.topbarLeft}>
               <Icon name="trending-up" size={22} color='#444' style={ styles.button }/>
@@ -54,10 +56,9 @@ export default class Topbar extends Component {
               width={38}
               height={38}
               onPress={() => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })}
-              {...testID('topbar avatar button')} 
+              testID="AvatarButton"
             /> }
           </View>
-
           <TouchableOpacity onPress={() => this.props.navigation.navigate('More', { navigation: this.props.navigation })} {...testID('Main menu button')}>
             <View style={styles.topbarRight}>
               <Icon name="menu" size={22} color='#444' style={ styles.button }/>
@@ -65,6 +66,7 @@ export default class Topbar extends Component {
           </TouchableOpacity>
 
         </View>
+        <EmailConfirmation user={this.props.user} />
       </SafeAreaView>
     );
   }
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
   container: {
     height: topbarHeight,
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
     backgroundColor: '#FFFFFF',

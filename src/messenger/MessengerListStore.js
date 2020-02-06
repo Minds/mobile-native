@@ -90,9 +90,7 @@ class MessengerListStore {
   @action
   touchConversation = (guid) => {
     // search conversation
-    const index = this.conversations.findIndex((conv) => {
-      return conv.guid == guid;
-    })
+    const index = this.conversations.findIndex(conv => conv.guid === guid);
 
     if (index !== -1) {
       const conv = this.conversations[index];
@@ -136,7 +134,7 @@ class MessengerListStore {
 
     try {
       // is a search?
-      if (this.search && this.newsearch) {
+      if (this.search && (this.newsearch || reload)) {
         this.newsearch = false;
         response = await messengerService.searchConversations(this.search, rows, this);
       } else {

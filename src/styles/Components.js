@@ -1,9 +1,6 @@
-import {
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 
-import colors from './Colors';
+import colors, { DARK_THEME, LIGHT_THEME } from './Colors';
 
 /**
  * Styles
@@ -13,6 +10,12 @@ export const ComponentsStyle = StyleSheet.create({
     position: 'absolute',
     right:8,
     top:22
+  },
+  loginInputIconNew: {
+    position: 'absolute',
+    right:8,
+    top: Platform.OS === 'ios' ? 33 : 37,
+    color: '#404A4E',
   },
   passwordinput: {
     borderColor: '#ECECEC',
@@ -42,18 +45,47 @@ export const ComponentsStyle = StyleSheet.create({
     height: 50,
     borderRadius: 4,
   },
+  loginInputNew: {
+    color: LIGHT_THEME.primary_text,
+    fontSize: 16,
+    padding: 10,
+    fontFamily: 'Roboto',
+    backgroundColor: 'transparent',
+    height: 50,
+    borderRadius: 2,
+    borderColor: LIGHT_THEME.button_border,
+    borderWidth: 1,
+    lineHeight: 21,
+  },
   loginButton: {
     marginRight: 0,
     marginLeft: 10,
     backgroundColor: 'transparent',
     borderColor: '#FFF',
-    borderWidth: 1
+    borderWidth: 1,
+    borderRadius: 30,
+  },
+  loginButtonNew: {
+    marginRight: 0,
+    marginLeft: 0,
+    backgroundColor: '#5DBAC0',
+    borderColor: '#5DBAC0',
+    borderWidth: 1,
+    borderRadius: 2,
+    height: 60,
   },
   loginButtonText: {
     // fontFamily: 'Roboto',
     fontSize: 16,
     fontWeight: '600',
-    letterSpacing: 1.25
+    letterSpacing: 1.25,
+    color: 'white',
+  },
+  loginButtonTextNew: {
+    // fontFamily: 'Roboto',
+    fontSize: 20,
+    fontWeight: '500',
+    color: 'white',
   },
   registerCheckboxText: {
     color: 'white'
@@ -63,6 +95,16 @@ export const ComponentsStyle = StyleSheet.create({
     borderWidth: 0,
     marginRight: 0,
     alignSelf: 'flex-end'
+  },
+  registerCheckboxTextNew: {
+    color: '#4A4A4A'
+  },
+  registerCheckboxNew: {
+    backgroundColor: 'transparent',
+    marginLeft: 0,
+    paddingLeft: 0,
+    borderWidth: 0,
+    marginTop: 15,
   },
 
   //button
@@ -126,6 +168,16 @@ export const ComponentsStyle = StyleSheet.create({
   terms: {
     color: 'white',
     paddingRight: 8
+  },
+  linkNew: {
+    color: '#0091FF',
+    fontSize: 15,
+    textDecorationLine: 'underline',
+  },
+  termsNew: {
+    color: '#AEB0B8',
+    paddingLeft: 10,
+    fontSize: 16,
   },
   preview: {
     height: 200,

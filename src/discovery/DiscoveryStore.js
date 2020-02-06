@@ -1,20 +1,8 @@
-import {
-  observable,
-  action,
-  computed,
-  extendObservable
-} from 'mobx';
+import {action} from 'mobx';
 
-import ActivityModel from '../newsfeed/ActivityModel';
-import BlogModel from '../blogs/BlogModel';
-import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
-import UserModel from '../channel/UserModel';
-import GroupModel from '../groups/GroupModel';
 import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';
 import DiscoveryFeedStore from './DiscoveryFeedStore';
-import logService from '../common/services/log.service';
-import featuresService from '../common/services/features.service';
-import boostedContentService from '../common/services/boosted-content.service';
+
 import FeedStore from '../common/stores/FeedStore';
 import appStores from '../../AppStores';
 
@@ -22,7 +10,6 @@ import appStores from '../../AppStores';
  * Discovery Store
  */
 class DiscoveryStore {
-
   /**
    * FeedStore
    */
@@ -88,14 +75,14 @@ class DiscoveryStore {
     if (this.filters.type !== 'lastchannels') {
       this.fetch();
     }
-  }
+  };
 
   /**
    * On search change
    */
   onSearchChange = (searchtext) => {
     this.fetch(true);
-  }
+  };
 
   fetch(refresh = false) {
     const hashtags = appStores.hashtag.hashtag ? encodeURIComponent(appStores.hashtag.hashtag) : '';
@@ -112,6 +99,7 @@ class DiscoveryStore {
         all,
         query: this.filters.searchtext,
         nsfw: this.filters.nsfw.concat([]),
+        period_fallback: 1,
       })
       .fetchRemoteOrLocal(refresh);
   }

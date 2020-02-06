@@ -4,15 +4,16 @@ import logService from '../services/log.service';
 import Viewed from './Viewed';
 import MetadataService from '../services/metadata.service';
 import FeedsService from '../services/feeds.service';
-import connectivityService from '../services/connectivity.service';
 import channelService from '../../channel/ChannelService';
 
 /**
  * Feed store
  */
 export default class FeedStore {
-
-  @observable scheduledCount = '';
+  /**
+   * Scheduled count
+   */
+  @observable scheduledCount = 0;
 
   /**
    * Refreshing
@@ -47,7 +48,7 @@ export default class FeedStore {
   /**
    * Viewed store
    */
-  viewed = new Viewed;
+  viewed = new Viewed();
 
   /**
    * Metadata service
@@ -57,7 +58,7 @@ export default class FeedStore {
   /**
    * @var {FeedsService}
    */
-  feedsService = new FeedsService;
+  feedsService = new FeedsService();
 
   /**
    * The offset of the list
@@ -65,12 +66,19 @@ export default class FeedStore {
   scrollOffset = 0;
 
   /**
+   * Getter fallback index
+   */
+  get fallbackIndex() {
+    return this.feedsService.fallbackIndex;
+  }
+
+  /**
    * Class constructor
    * @param {boolean} includeMetadata include a metadata service
    */
   constructor(includeMetadata = false) {
     if (includeMetadata) {
-      this.metadataService = new MetadataService;
+      this.metadataService = new MetadataService();
     }
   }
 
@@ -179,6 +187,24 @@ export default class FeedStore {
   }
 
   /**
+   * Remove the given entity from the list
+   * @param {string} guid
+   */
+  @action
+  removeFromOwner(guid) {
+    this.entities = this.entities.filter(
+      e => !e.ownerObj || e.ownerObj.guid !== guid,
+    );
+    this.feedsService.removeFromOwner(guid);
+
+    // after the filter we have less than a page of data?
+    if (this.feedsService.offset < this.feedsService.limit) {
+      // we load another page to prevent block the pagination
+      this.loadMore();
+    }
+  }
+
+  /**
    * Returns the index of the given entity
    * @param {BaseModel} entity
    */
@@ -257,6 +283,15 @@ export default class FeedStore {
    */
   setAsActivities(asActivities): FeedStore {
     this.feedsService.setAsActivities(asActivities);
+    return this;
+  }
+
+  /**
+   * Set fallback index
+   * @param {number} value
+   */
+  setFallbackIndex(value: number): FeedStore {
+    this.feedsService.setFallbackIndex(value);
     return this;
   }
 
