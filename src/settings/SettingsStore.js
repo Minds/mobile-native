@@ -1,8 +1,8 @@
-import { observable, action } from 'mobx'
+import { observable, action } from 'mobx';
 
-import logService from '../common/services/log.service';
 import storageService from '../common/services/storage.service';
 import appStore from '../../AppStores';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Store for the values held in Settings.
@@ -22,8 +22,25 @@ class SettingsStore {
    */
   @action.bound
   async init() {
-    const data  = await storageService.multiGet(['LeftHanded', 'AppLog', 'CreatorNsfw', 'ConsumerNsfw', 'UseHashtags']);
-    if (!data) return;
+    const data = await storageService.multiGet([
+      'LeftHanded',
+      'AppLog',
+      'CreatorNsfw',
+      'ConsumerNsfw',
+      'UseHashtags',
+      'Theme',
+    ]);
+
+    // store theme changes
+    ThemedStyles.onThemeChange((value) => {
+      this.setTheme(value);
+    });
+
+    if (!data) {
+      ThemedStyles.theme = 0;
+      ThemedStyles.init();
+      return;
+    }
     this.leftHanded = data[0][1];
     this.appLog = data[1][1];
     this.creatorNsfw = data[2][1] || [];
@@ -33,7 +50,19 @@ class SettingsStore {
     // set the initial value for hashtag
     appStore.hashtag.setAll(!this.useHashtags);
 
+    // theme
+    ThemedStyles.theme = data[5][1] || 0;
+    ThemedStyles.init();
+
     return this;
+  }
+
+  /**
+   * Set the theme in the stored values
+   * @param {numeric} value
+   */
+  setTheme(value) {
+    storageService.setItem('Theme', value);
   }
 
   /**

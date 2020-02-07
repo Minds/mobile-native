@@ -25,7 +25,7 @@ export default class SuggestedGroupsStepNew extends Component {
 
     this.props.discovery.init();
   }
-  
+
   componentDidMount() {
     this.props.hashtag.setAll(false);
     this.props.discovery.filters.setType('groups');
@@ -68,10 +68,10 @@ export default class SuggestedGroupsStepNew extends Component {
   render() {
     return (
       <View style={[CS.flexContainerCenter]}>
-        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>
           {this.getBody()}
         </View>
-        <View style={[CS.mindsLayoutFooter, CS.backgroundThemePrimary]}>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
           {this.getFooter()}
         </View>
       </View>

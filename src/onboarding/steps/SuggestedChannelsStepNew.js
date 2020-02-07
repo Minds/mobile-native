@@ -34,7 +34,7 @@ export default class SuggestedChannelsStepNew extends Component {
    * Component did mount
    */
   componentDidMount() {
-    
+
   }
 
   /**
@@ -83,10 +83,10 @@ export default class SuggestedChannelsStepNew extends Component {
   render() {
     return (
       <View style={[CS.flexContainerCenter]}>
-        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>
           {this.getBody()}
         </View>
-        <View style={[CS.mindsLayoutFooter, CS.backgroundThemePrimary]}>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
           {this.getFooter()}
         </View>
       </View>

@@ -4,19 +4,15 @@ import React, {
 
 import {
   Text,
-  TextInput,
-  KeyboardAvoidingView,
   View,
   ScrollView,
   Linking,
   Alert,
-  StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 
 import authService from '../auth/AuthService';
-import { CommonStyle as CS} from '../styles/Common';
-import { ComponentsStyle } from '../styles/Components';
 
 import { observer, inject } from 'mobx-react/native';
 
@@ -30,13 +26,15 @@ import Input from '../common/components/Input';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Button from '../common/components/Button';
 import { DISABLE_PASSWORD_INPUTS } from '../config/Config';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Register Form
  */
+export default
 @inject('user')
 @observer
-export default class RegisterForm extends Component {
+class RegisterForm extends Component {
   state = {
     error: {},
     password: '',
@@ -74,57 +72,87 @@ export default class RegisterForm extends Component {
   setConfirmPassword = confirmPassword => this.setState({confirmPassword});
 
   getFormBody = () => {
+    const CS = ThemedStyles.style;
     return (
-      <ScrollView style={[CS.flexContainer, CS.marginTop2x]}>
-        <TouchableOpacity onPress={this.props.onBack} style={CS.marginBottom3x}>
-          <Icon size={34} name="keyboard-arrow-left" style={CS.colorSecondaryText} />
-        </TouchableOpacity>
-        <Text style={[CS.marginBottom3x, CS.textCenter, CS.titleText, CS.colorPrimaryText]}>
-          {i18n.t('auth.join')}
-        </Text>
-        <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
-          {this.state.error.termsAcceptedError}
-        </Text>
-        <Input
-          placeholder={i18n.t('auth.username')}
-          onChangeText={this.setUsername}
-          value={this.state.username}
-          editable={!this.state.inProgress}
-          testID="registerUsernameInput"
-        />
-        <Input
-          placeholder={i18n.t('auth.email')}
-          onChangeText={this.setEmail}
-          value={this.state.email}
-          editable={!this.state.inProgress}
-          testID="registerEmailInput"
-        />
-        <Input
-          placeholder={i18n.t('auth.password')}
-          secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
-          onChangeText={this.setPassword}
-          value={this.state.password}
-          editable={!this.state.inProgress}
-          testID="registerPasswordInput"
-        />
-        { this.state.password ?
+      <ScrollView style={[CS.flexContainer, CS.marginTop2x]} contentContainerStyle={CS.paddingHorizontal4x}>
+        <SafeAreaView style={CS.flexContainer}>
+
+          <TouchableOpacity onPress={this.props.onBack} style={CS.marginBottom3x}>
+            <Icon size={34} name="keyboard-arrow-left" style={CS.colorSecondaryText} />
+          </TouchableOpacity>
+          <Text style={[CS.marginBottom3x, CS.textCenter, CS.titleText, CS.colorPrimaryText]}>
+            {i18n.t('auth.join')}
+          </Text>
+          <Text style={{color: '#F00', textAlign: 'center', paddingTop:4, paddingLeft:4}}>
+            {this.state.error.termsAcceptedError}
+          </Text>
           <Input
-            placeholder={i18n.t('auth.confirmpassword')}
-            secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
-            onChangeText={this.setConfirmPassword}
-            value={this.state.confirmPassword}
+            style={CS.marginBottom2x}
+            placeholder={i18n.t('auth.username')}
+            onChangeText={this.setUsername}
+            value={this.state.username}
             editable={!this.state.inProgress}
-            testID="registerPasswordConfirmInput"
-          /> : null }
-        <CheckBox
-          containerStyle={ComponentsStyle.registerCheckboxNew}
-          title={<Text style={ComponentsStyle.termsNew}>{i18n.t('auth.accept')} <Text style={ComponentsStyle.linkNew} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>{i18n.t('auth.termsAndConditions')}</Text></Text>}
-          checked={this.state.termsAccepted}
-          // textStyle={ComponentsStyle.registerCheckboxTextNew}
-          onPress={this.check}
-          disabled={this.state.inProgress}
-          testID="checkbox"
-        />
+            testID="registerUsernameInput"
+          />
+          <Input
+            style={CS.marginBottom2x}
+            placeholder={i18n.t('auth.email')}
+            onChangeText={this.setEmail}
+            value={this.state.email}
+            editable={!this.state.inProgress}
+            testID="registerEmailInput"
+          />
+          <Input
+            style={CS.marginBottom2x}
+            placeholder={i18n.t('auth.password')}
+            secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
+            onChangeText={this.setPassword}
+            value={this.state.password}
+            editable={!this.state.inProgress}
+            testID="registerPasswordInput"
+          />
+          { this.state.password ?
+            <Input
+              placeholder={i18n.t('auth.confirmpassword')}
+              secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
+              onChangeText={this.setConfirmPassword}
+              value={this.state.confirmPassword}
+              editable={!this.state.inProgress}
+              testID="registerPasswordConfirmInput"
+            /> : null }
+          <CheckBox
+            containerStyle={CS.checkbox}
+            title={<Text style={[CS.colorSecondaryText, CS.fontL]}>{i18n.t('auth.accept')} <Text style={CS.link} onPress={ ()=> Linking.openURL('https://www.minds.com/p/terms') }>{i18n.t('auth.termsAndConditions')}</Text></Text>}
+            checked={this.state.termsAccepted}
+            onPress={this.check}
+            disabled={this.state.inProgress}
+            testID="checkbox"
+          />
+
+
+          <View style={CS.flexContainer, CS.paddingTop2x}>
+            <Button
+              onPress={() => this.onPressRegister()}
+              borderRadius={2}
+              containerStyle={CS.button}
+              textStyle={CS.buttonText}
+              loading={this.state.inProgress}
+              loadingRight={true}
+              disabled={this.state.inProgress}
+              text={i18n.t('auth.createChannel')}
+              testID="registerCreateButton"
+            />
+            <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.centered, CS.marginTop2x]}>
+              {i18n.to('auth.alreadyHaveAccount', null, {
+                login: (
+                  <Text style={[CS.link, CS.fontL]} onPress={this.props.onBack}>
+                    {i18n.t('auth.login')}
+                  </Text>
+                ),
+              })}
+            </Text>
+          </View>
+        </SafeAreaView>
       </ScrollView>
     );
   };
@@ -133,43 +161,11 @@ export default class RegisterForm extends Component {
     this.setState({ termsAccepted: !this.state.termsAccepted })
   };
 
-  getFormFooter = () => {
-    return (
-      <View style={CS.flexContainer}>
-        <Button
-          onPress={() => this.onPressRegister()}
-          borderRadius={2}
-          containerStyle={ComponentsStyle.loginButtonNew}
-          loading={this.state.inProgress}
-          loadingRight={true}
-          disabled={this.state.inProgress}
-          text={''}
-          testID="registerCreateButton"
-        >
-          <Text style={ComponentsStyle.loginButtonTextNew}>{i18n.t('auth.createChannel')}</Text>
-        </Button>
-        <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.centered, CS.marginTop2x]}>
-          {i18n.to('auth.alreadyHaveAccount', null, {
-            login: (
-              <Text style={[ComponentsStyle.linkNew, CS.fontL]} onPress={this.props.onBack}>
-                {i18n.t('auth.login')}
-              </Text>
-            ),
-          })}
-        </Text>
-      </View>
-    );
-  };
-
   render() {
+    const CS = ThemedStyles.style;
     return (
-      <View style={[CS.flexContainerCenter]}>
-        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
-          {this.getFormBody()}
-        </View>
-        <View style={[CS.mindsLayoutFooter, CS.backgroundThemePrimary]}>
-          {this.getFormFooter()}
-        </View>
+      <View style={[CS.flexContainerCenter, CS.backgroundPrimary]}>
+        {this.getFormBody()}
       </View>
     );
   }

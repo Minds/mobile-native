@@ -21,7 +21,7 @@ export default class AllDoneStep extends Component {
       <View
         style={[
           CS.flexContainerCenter,
-          CS.backgroundThemePrimary,
+          CS.backgroundPrimary,
           CS.centered,
         ]}>
         <Text style={[CS.onboardingTitle]}>{i18n.t('boosts.tabNewsfeed')}</Text>

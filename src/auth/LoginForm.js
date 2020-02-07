@@ -1,5 +1,5 @@
 import React, {
-  Component
+  Component,
 } from 'react';
 
 import * as Animatable from 'react-native-animatable';
@@ -7,20 +7,19 @@ import * as Animatable from 'react-native-animatable';
 import {
   View,
   Text,
-  ScrollView,
+  LayoutAnimation,
   // TextInput,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import authService from './AuthService';
-import { CommonStyle as CS } from '../styles/Common';
-import { ComponentsStyle } from '../styles/Components';
 
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import Input from '../common/components/Input';
 import Button from '../common/components/Button';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Login Form
@@ -52,59 +51,62 @@ export default class LoginForm extends Component {
    * Render
    */
   render() {
+    const CS = ThemedStyles.style;
+
     const msg = this.state.msg ? (
-      <Animatable.Text animation="bounceInLeft" style={[CS.subTitleText, CS.colorSecondaryText, { textAlign: 'center' }]} testID="loginMsg">{this.state.msg}</Animatable.Text>
+      <Animatable.Text
+        animation="bounceInLeft"
+        useNativeDriver
+        style={[CS.subTitleText, CS.colorSecondaryText, CS.textCenter]}
+        testID="loginMsg">
+        {this.state.msg}
+      </Animatable.Text>
     ) : null;
 
     return (
-      <View
-        style={[CS.flexContainer]}>
-        <ScrollView style={[CS.flexContainer]}>
-          <View style={{flex:6}}>
-            <Text style={[CS.titleText, CS.colorPrimaryText]}>
-              {i18n.t('auth.login')}
-            </Text>
-            {msg}
+      <View style={[CS.flexContainer, CS.marginTop6x]}>
+          <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginBottom2x]}>
+            {i18n.t('auth.login')}
+          </Text>
+          {msg}
+          <Input
+            placeholder={i18n.t('auth.username')}
+            onChangeText={this.setUsername}
+            value={this.state.username}
+            style={CS.marginBottom2x}
+            testID="usernameInput"
+          />
+          <View>
             <Input
-              placeholder={i18n.t('auth.username')}
-              onChangeText={this.setUsername}
-              value={this.state.username}
-              testID="usernameInput"
+              placeholder={i18n.t('auth.password')}
+              secureTextEntry={this.state.hidePassword}
+              onChangeText={this.setPassword}
+              value={this.state.password}
+              style={CS.marginBottom2x}
+              testID="userPasswordInput"
             />
-            <View>
-              <Input
-                placeholder={i18n.t('auth.password')}
-                secureTextEntry={this.state.hidePassword}
-                onChangeText={this.setPassword}
-                value={this.state.password}
-                testID="userPasswordInput"
-              />
-              <Icon
-                name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
-                size={25}
-                onPress={this.toggleHidePassword}
-                style={ComponentsStyle.loginInputIconNew}
-              />
-            </View>
-          </View>
-          <View style={[{flex:6, marginTop: 30}]}>
-            <Button
-              onPress={() => this.onLoginPress()}
-              text={i18n.t('auth.login')}
-              containerStyle={ComponentsStyle.loginButtonNew}
-              textStyle={ComponentsStyle.loginButtonTextNew}
-              key={1}
-              loading={this.state.inProgress}
-              loadingRight={true}
-              disabled={this.state.inProgress}
-              disabledStyle={CS.backgroundTransparent}
-              testID="loginButton"
+            <Icon
+              name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
+              size={25}
+              onPress={this.toggleHidePassword}
+              style={CS.inputIcon}
             />
-            <View style={CS.marginTop4x}>
-              <Text style={[ComponentsStyle.linkNew]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
-            </View>
           </View>
-        </ScrollView>
+          <Button
+            onPress={() => this.onLoginPress()}
+            text={i18n.t('auth.login')}
+            containerStyle={CS.button}
+            textStyle={CS.buttonText}
+            key={1}
+            loading={this.state.inProgress}
+            loadingRight={true}
+            disabled={this.state.inProgress}
+            disabledStyle={CS.backgroundTransparent}
+            testID="loginButton"
+          />
+          <View style={CS.marginTop4x}>
+            <Text style={[CS.link, CS.fontL]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
+          </View>
       </View>
     );
   }
@@ -193,6 +195,7 @@ export default class LoginForm extends Component {
           this.props.onLogin();
         })
         .catch(errJson => {
+          LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
           if (errJson.error === 'invalid_grant' || errJson.error === 'invalid_client') {
             this.setState({ msg: i18n.t('auth.invalidGrant'), inProgress: false });
             return;

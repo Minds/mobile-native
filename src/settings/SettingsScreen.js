@@ -31,11 +31,14 @@ import logService from '../common/services/log.service';
 import storageService from '../common/services/storage.service';
 import { observer } from 'mobx-react/native';
 import ModalPicker from '../common/components/ModalPicker';
+import ThemedStyles from '../styles/ThemedStyles';
+import featuresService from '../common/services/features.service';
 
 const ICON_SIZE = 24;
 
+export default
 @observer
-export default class SettingsScreen extends Component {
+class SettingsScreen extends Component {
 
   static navigationOptions = {
     title: 'Settings',
@@ -59,6 +62,14 @@ export default class SettingsScreen extends Component {
 
   leftHandedActivate = () => {
     settingsStore.setLeftHanded(!settingsStore.leftHanded);
+  }
+
+  setDarkMode = () => {
+    if (ThemedStyles.theme) {
+      ThemedStyles.setLight();
+    } else {
+      ThemedStyles.setDark();
+    }
   }
 
   wipeEthereumKeychainAction = () => {
@@ -96,54 +107,55 @@ export default class SettingsScreen extends Component {
   };
 
   render() {
+    const CS = ThemedStyles.style;
     const languages = i18n.getSupportedLocales();
 
     const list = [
       {
         name: i18n.t('language')+` (${i18n.getCurrentLocale()})`,
-        icon: (<Icon name='flag' size={ICON_SIZE} style={ styles.icon }/>),
+        icon: (<Icon name='flag' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
         onPress: () => {
           this.showLanguages();
         }
       },
       {
         name: i18n.t('auth.password'),
-        icon: (<Icon name='security' size={ICON_SIZE} style={ styles.icon }/>),
+        icon: (<Icon name='security' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
         onPress: () => {
           this.props.navigation.navigate('SettingsPassword');
         }
       },
       {
         name: i18n.t('auth.email'),
-        icon: (<Icon name='email' size={ICON_SIZE} style={ styles.icon }/>),
+        icon: (<Icon name='email' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
         onPress: () => {
           this.props.navigation.navigate('SettingsEmail');
         }
       },
       {
         name: i18n.t('settings.pushNotification'),
-        icon: (<Icon name='notifications' size={ICON_SIZE} style={ styles.icon }/>),
+        icon: (<Icon name='notifications' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
         onPress: () => {
           this.props.navigation.navigate('NotificationsSettings');
         }
       },
       {
         name: i18n.t('settings.blockedChannels'),
-        icon: (<Icon name='block' size={ICON_SIZE} style={ styles.icon }/>),
+        icon: (<Icon name='block' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
         onPress: () => {
           this.props.navigation.navigate('SettingsBlockedChannels');
         }
       },
       {
         name: i18n.t('settings.regenerateKey'),
-        icon: (<Icon name='vpn-key' size={ICON_SIZE} style={ styles.icon }/>),
+        icon: (<Icon name='vpn-key' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
         onPress: () => {
           this.props.navigation.navigate('SettingsRekey');
         }
       },
       {
         name: i18n.t('settings.logout'),
-        icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
+        icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]} />),
         onPress: () => {
           authService.logout();
 
@@ -152,78 +164,76 @@ export default class SettingsScreen extends Component {
       },
       {
         name: i18n.t('settings.deactivate'),
-        icon: (<Icon name='warning' size={ICON_SIZE} style={ styles.icon } />),
+        icon: (<Icon name='warning' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]} />),
         onPress: () => {
           this.props.navigation.push('DeleteChannel');
         }
       },
       {
         name: i18n.t('settings.deleteBlockchain'),
-        icon: (<Icon name='warning' size={ICON_SIZE} style={ styles.icon } />),
+        icon: (<Icon name='warning' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]} />),
         onPress: this.wipeEthereumKeychainAction
       },
 
       // ListView used by log package is deprecated
       // {
       //   name: i18n.t('settings.logs'),
-      //   icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
+      //   icon: (<Icon name='list' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
       //   onPress: () => {
       //     this.props.navigation.push('Logs');
       //   }
       // },
       {
         name: i18n.t('settings.logOnlyErrors'),
-        icon: (<Icon name='list' size={ICON_SIZE} style={ styles.icon }/>),
-        switchButton: true,
+        icon: (<Icon name='list' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
+        switch: {value: !settingsStore.appLog, onValueChange: this.appLogActivate},
         hideChevron: true,
-        switched: !settingsStore.appLog,
-        onSwitch: this.appLogActivate
       },
       {
         name: i18n.t('settings.leftHandedMode'),
-        icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={ styles.icon }/>),
-        switchButton: true,
+        icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
+        switch: {value: settingsStore.leftHanded, onValueChange: this.leftHandedActivate},
         hideChevron: true,
-        switched: settingsStore.leftHanded,
-        onSwitch: this.leftHandedActivate
       },
     ];
 
+    if (featuresService.has('dark-mode')) {
+      list.push({
+        name: i18n.t('settings.darkMode'),
+        icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
+        switch: {value: !!ThemedStyles.theme, onValueChange: this.setDarkMode},
+        hideChevron: true,
+      });
+    }
+
     return (
-      <ScrollView style={styles.scrollView}>
-        <ModalPicker
-          onSelect={this.languageSelected}
-          onCancel={this.cancel}
-          show={this.state.showLanguages}
-          title={i18n.t('language')}
-          valueField="value"
-          labelField="name"
-          value={this.state.language}
-          items={languages}
-        />
-        <View style={styles.scrollViewContainer}>
-          <View style={styles.container}>
-            {
-              list.map((l, i) => (
-                <ListItem
-                  key={i}
-                  title={l.name}
-                  titleStyle={styles.listTitle}
-                  containerStyle={styles.listItem}
-                  subtitle={l.subtitle}
-                  switchButton={l.switchButton}
-                  hideChevron ={l.hideChevron}
-                  onSwitch={l.onSwitch}
-                  switched={l.switched}
-                  leftIcon={l.icon}
-                  onPress= {l.onPress}
-                  noBorder
-                />
-              ))
-            }
-          </View>
-        </View>
-      </ScrollView>
+        <ScrollView style={[styles.scrollView, CS.backgroundPrimary]}>
+          <ModalPicker
+            onSelect={this.languageSelected}
+            onCancel={this.cancel}
+            show={this.state.showLanguages}
+            title={i18n.t('language')}
+            valueField="value"
+            labelField="name"
+            value={this.state.language}
+            items={languages}
+          />
+          {
+            list.map((l, i) => (
+              <ListItem
+                key={i}
+                title={l.name}
+                titleStyle={[CS.fontL, CS.colorPrimaryText, CS.paddingVertical2x]}
+                containerStyle={styles.listItem}
+                subtitle={l.subtitle}
+                hideChevron ={l.hideChevron}
+                switch={l.switch}
+                leftIcon={l.icon}
+                onPress= {l.onPress}
+              />
+            ))
+          }
+        </ScrollView>
     );
   }
 
@@ -246,10 +256,8 @@ export default class SettingsScreen extends Component {
 
 const styles = StyleSheet.create({
   scrollView: {
-    backgroundColor: '#FFF',
     flexDirection: 'column',
-  },
-  scrollViewContainer: {
+    flex:1
   },
   container: {
     flex: 1,
@@ -258,10 +266,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
   listItem: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    paddingTop: 8,
-    paddingBottom: 8,
+    backgroundColor: 'transparent'
     //height:20
   },
   listTitle: {
@@ -269,7 +274,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
   },
   icon: {
-    color: '#455a64',
     alignSelf: 'center',
   },
 
@@ -278,7 +282,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingBottom: 8,
     textAlignVertical: 'center',
-    backgroundColor: '#f4f4f4',
+    // backgroundColor: '#f4f4f4',
     width: '100%',
     //height: 40,
     borderTopWidth: StyleSheet.hairlineWidth,
