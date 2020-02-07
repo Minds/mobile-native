@@ -2,7 +2,6 @@ import 'react-native';
 import React from 'react';
 import { Text, TouchableOpacity } from "react-native";
 import { shallow } from 'enzyme';
-import featuresService from '../../src/common/services/features.service';
 
 import LoginScreen from '../../src/auth/LoginScreen';
 
@@ -17,7 +16,7 @@ import renderer from 'react-test-renderer';
 describe('LoginScreen component', () => {
 
   beforeEach(() => {
-    featuresService.features = {'homepage-december-2019': false};
+
   });
 
   it('should renders correctly', () => {

@@ -20,9 +20,9 @@
         "scheduled": "Esta actividad esta agendada para mostrarse en"
     },
     "auth": {
-        "login": "INGRESAR",
+        "login": "Ingresar",
         "create": "CREAR UN CANAL",
-        "forgot": "OLVIDÉ MI CLAVE",
+        "forgot": "Olvidé mi clave",
         "email": "Email",
         "username": "Usuario",
         "password": "Clave",

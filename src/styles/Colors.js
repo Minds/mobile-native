@@ -23,6 +23,7 @@ export const LIGHT_THEME = {
   button_border: '#D8D8D8',
   done: '#4C92A4',
   action: '#A5A5A5',
+  link: '#0091FF',
 };
 
 export const DARK_THEME = {
@@ -35,4 +36,5 @@ export const DARK_THEME = {
   button_border: '#404A4E',
   done: '#4C92A4',
   action: '#A5A5A5',
+  link: '#0091FF',
 };

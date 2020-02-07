@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { ComponentsStyle } from '../../styles/Components';
-import { CommonStyle as CS } from '../../styles/Common';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
 import PhoneValidationComponent from './PhoneValidationComponent';
 
 import TextInput from './TextInput';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Form input
@@ -45,10 +45,14 @@ export default class Input extends Component {
    * Text input
    */
   textInput = () => {
+    const CS = ThemedStyles.style;
     return (
       <TextInput
         {...this.props}
-        style={[ComponentsStyle.loginInputNew, this.props.style]}
+        style={[
+          CS.input,
+          this.props.style,
+        ]}
         placeholderTextColor="#444"
         returnKeyType={'done'}
         autoCapitalize={'none'}
@@ -62,10 +66,11 @@ export default class Input extends Component {
    * Phone input
    */
   phoneInput = () => {
+    const CS = ThemedStyles.style;
     return (
       <PhoneValidationComponent
-        style={[ComponentsStyle.loginInputNew, this.props.style]}
-        textStyle={CS.colorWhite}
+        style={[CS.input, this.props.style]}
+        textStyle={CS.colorPrimaryText}
         onFocus={this.props.onFocus}
         onBlur={this.props.onBlur}
       />
@@ -76,11 +81,12 @@ export default class Input extends Component {
    * Date input
    */
   dateInput = () => {
+    const CS = ThemedStyles.style;
     return (
       <View>
         <TouchableOpacity
           {...this.props}
-          style={[ComponentsStyle.loginInputNew, this.props.style]}
+          style={[CS.input, this.props.style]}
           placeholderTextColor="#444"
           returnKeyType={'done'}
           autoCapitalize={'none'}
@@ -122,13 +128,14 @@ export default class Input extends Component {
    * Render
    */
   render() {
+    const CS = ThemedStyles.style;
     const optional = this.props.optional ? (
       <Text style={[styles.optional]}>{'Optional'}</Text>
     ) : null;
 
     return (
       <View style={CS.marginBottom2x}>
-        <View style={[styles.row, CS.marginBottom]}>
+        <View style={[styles.row]}>
           <View style={styles.row}>
             <Text style={[styles.label]}>{this.props.placeholder}</Text>
             {this.props.info && <InfoPopup info={this.props.info} />}
@@ -148,7 +155,9 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#AEB0B8',
-    fontSize: 14,
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom:5 ,
     fontFamily: 'Roboto',
   },
   optional: {
