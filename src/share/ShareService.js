@@ -22,6 +22,12 @@ class ShareService {
    * @param {string} url
    */
   share(title, url) {
+    
+    // added this because if tittle (activity text) is too long, causes problem in android
+    title = title.length > 50 
+      ? title.substring(0, 46) + '...'
+      : title;
+
     // added a settimeout as a workaround for ios, without it the share dialog is not shown
     setTimeout(async () => {
       try {
