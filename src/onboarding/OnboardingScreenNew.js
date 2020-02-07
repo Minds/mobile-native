@@ -34,9 +34,10 @@ import HashtagsStepNew from './steps/HashtagsStepNew';
 import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
 import SuggestedGroupsStepNew from './steps/SuggestedGroupsStepNew';
 
-@observer
+export default
 @inject('onboarding', 'hashtag', 'groupsBar', 'discovery')
-export default class OnboardingScreenNew extends Component {
+@observer
+class OnboardingScreenNew extends Component {
 
   /**
    * Disable navigation bar
