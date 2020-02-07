@@ -124,13 +124,14 @@ export default class OnboardingScreenNew extends Component {
       steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext} onBack={this.onBack}/> });
     }
 
-    if (!completed_items.some(r => r == 'suggested_groups')) {
-      steps.push({component: <SuggestedGroupsStepNew onNext={this.onNext} onBack={this.onBack}/>});
-    }
+    // TODO: enable group and channel selectors
+    // if (!completed_items.some(r => r == 'suggested_groups')) {
+    //   steps.push({component: <SuggestedGroupsStepNew onNext={this.onNext} onBack={this.onBack}/>});
+    // }
 
-    if (!completed_items.some(r => r == 'suggested_channels')) {
-      steps.push({component: <SuggestedChannelsStepNew onNext={this.onNext} onBack={this.onBack}/>});
-    }
+    // if (!completed_items.some(r => r == 'suggested_channels')) {
+    //   steps.push({component: <SuggestedChannelsStepNew onNext={this.onNext} onBack={this.onBack}/>});
+    // }
 
     return (
       <SafeAreaView style={[CS.flexContainer, CS.backgroundThemePrimary]}>
