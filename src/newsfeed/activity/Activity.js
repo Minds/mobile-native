@@ -133,19 +133,64 @@ export default class Activity extends Component {
             { overlay }
           </View>
           { this.showActions() }
-          { this.props.entity.isScheduled() &&
-            <View style={[{backgroundColor: '#ffecb3'}, CommonStyle.padding]}>
-              <Text style={[styles.scheduledText, CommonStyle.paddingLeft]}>
-                {`${i18n.t('activity.scheduled')} ${formatDate(this.props.entity.time_created)}.`}
-              </Text>
-            </View> }
-          { this.props.isLast ? <View style={styles.activitySpacer}></View> : null}
-          { !this.props.hideTabs &&
-            !this.props.entity.isScheduled() &&
-            <ActivityMetrics entity={this.props.entity}/> }
+          { this.renderScheduledMessage() }
+          { this.renderPendingMessage() }
+          { this.renderActivitySpacer() }
+          { this.renderActivityMetrics() }
         </View>
     );
   }
+
+  /**
+   * Render activity spacer
+   */
+  renderActivitySpacer = () => {
+    return this.props.isLast 
+      ? (<View style={styles.activitySpacer}></View>)
+      : null;
+  };
+
+  /**
+   * Render entity metrics
+   */
+  renderActivityMetrics = () => {
+    return ( 
+      !this.props.hideTabs &&
+      !this.props.entity.isScheduled() &&
+      !this.props.entity.isPending() 
+    ) ? (<ActivityMetrics entity={this.props.entity}/>) : null
+  };
+
+  /**
+   * Show message if entity is scheduled
+   */
+  renderScheduledMessage = () => {
+    return this.props.entity.isScheduled()
+      ? (this.renderYellowBanner(`${i18n.t('activity.scheduled')} ${formatDate(this.props.entity.time_created)}.`))
+      : null;
+  };
+
+  /**
+   * Show message if entity is awaiting moderation
+   */
+  renderPendingMessage = () => {
+    return this.props.entity.isPending()
+      ? (this.renderYellowBanner(i18n.t('activity.pendingModeration')))
+      : null;
+  };
+
+  /**
+   * Render a banner with a message bellow the activity
+   */
+  renderYellowBanner = message => {
+    return (
+      <View style={[styles.yellowBanner, CommonStyle.padding]}>
+        <Text style={[styles.yellowBannerText, CommonStyle.paddingLeft]}>
+          {message}
+        </Text>
+      </View> 
+    );
+  };
 
   /**
    * Pause video if exist
@@ -348,8 +393,11 @@ const styles = StyleSheet.create({
   blockedNoticeDesc: {
     opacity: 0.7,
   },
-  scheduledText: {
+  yellowBannerText: {
     fontSize: 11,
     color: '#000',
+  },
+  yellowBanner: {
+    backgroundColor: '#ffecb3',
   }
 });

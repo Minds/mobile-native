@@ -191,9 +191,11 @@ class CommentList extends React.Component<PropsType, StateType> {
    */
   scrollToBottom = () => {
     setTimeout(() => {
-      this.listRef.scrollToEnd();
-    }, 250); //delay to allow rendering
-  }
+      if (this.listRef) {
+        this.listRef.scrollToEnd();
+      }
+    }, 600); //delay to allow rendering
+  };
 
   /**
    * Set comment text
@@ -425,8 +427,10 @@ class CommentList extends React.Component<PropsType, StateType> {
         }, 1000);
       } else {
         if (this.listRef && this.listRef._listRef) {
-          const frame = this.listRef._listRef._getFrameMetricsApprox(index);
-          this.onCommentFocus(comment, frame.offset + frame.length);
+          setTimeout(() => {
+            const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+            this.onCommentFocus(comment, frame.offset + frame.length);
+          }, 1000);
         }
       }
     }

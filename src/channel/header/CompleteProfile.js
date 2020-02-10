@@ -25,7 +25,9 @@ export default class CompleteProfile extends Component {
    * Render
    */
   render() {
-    let onboarding = featuresService.has('onboarding-december-2019') ? 'OnboardingScreenNew' : 'OnboardingScreen';
+    let onboarding = featuresService.has('onboarding-december-2019')
+      ? 'OnboardingScreenNew'
+      : 'OnboardingScreen';
     return (
       <TouchableOpacity style={[CS.padding2x]} onPress={() => navigationService.push(onboarding)}>
         <View>
