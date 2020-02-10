@@ -22,10 +22,11 @@ import DiscoveryScreen from '../discovery/DiscoveryScreen';
 import featuresService from '../common/services/features.service';
 import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 import isIphoneX from '../common/helpers/isIphoneX';
-import { CommonStyle as CS } from '../styles/Common';
 import CapturePoster from '../capture/CapturePoster';
 import TopbarNew from '../topbar/TopbarNew';
 import MoreScreenNew from './MoreScreenNew';
+
+import ThemedStyles from '../styles/ThemedStyles';
 
 let screens = {
 
@@ -79,9 +80,8 @@ const Tabs = (
       activeTintColor: '#0091FF',
       inactiveTintColor: '#777777',
       style: {
-        ...CS.backgroundThemeSecondary,
-        marginBottom: isIphoneX ? 10 : null,
-        height: 60,
+        backgroundColor: ThemedStyles.getColor('secondary_background'),
+        height: 70,
       },
       indicatorStyle: {
         marginBottom: isIphoneX ? 10 : null,
@@ -90,26 +90,16 @@ const Tabs = (
       iconStyle: {
         height: 44,
         width: 44,
-        ...CS.centered,
+        ...ThemedStyles.style.centered,
       }
     },
     initialRouteName: 'Newsfeed',
+    navigationOptions: {
+      header: null,
+    }
   })
 );
 
 const inset = { bottom: 'always', top: 'never' };
 
-export default class TabsScreenNew extends Component {
-  // link router between tab and main stack navigator
-  static router = Tabs.router;
-
-  static navigationOptions = {
-    header: null,
-  }
-
-  render() {
-    return (
-      <Tabs navigation={this.props.navigation}/>
-    );
-  }
-}
+export default Tabs;

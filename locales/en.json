@@ -683,6 +683,12 @@
   "update": {
     "title":"Update to v{{version}}"
   },
+  "searchBar": {
+    "searchHistory":"Search History",
+    "emptySearchHistory":"You don't have search history yet",
+    "emptySuggested":"We couldn't find what you look for",
+    "clear": "Clear"
+  },
   "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
   "postCantBeShown":"This post can't be shown on apps installed via the Play Store.",
@@ -798,7 +804,7 @@
   "notAllowed":"You are not allowed",
   "undo":"Undo",
   "validate":"VALIDATE",
-  "tabTitleNewsfeed":"Newsfeed",
+  "tabTitleNewsfeed":"Home",
   "tabTitleNotifications":"Notifications",
   "tabTitleDiscovery":"Discovery"
 }

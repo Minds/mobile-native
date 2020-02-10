@@ -32,9 +32,8 @@ import i18n from '../common/services/i18n.service';
 export default class NewsfeedScreen extends Component {
 
   static navigationOptions = {
-    header: props => <TopbarNew {...props} />,
     tabBarIcon: ({ tintColor }) => (
-      featuresService.has('new-navigation-january-2020')
+      featuresService.has('navigation-2020')
       ? <TabIcon name="md-home" color={tintColor} />
       : <IonIcon name="md-home" size={24} color={tintColor} />
     ),

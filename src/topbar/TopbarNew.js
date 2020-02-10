@@ -19,9 +19,10 @@ import featuresService from '../common/services/features.service';
 import { SafeAreaView } from 'react-navigation';
 import isIphoneX from '../common/helpers/isIphoneX';
 import testID from '../common/helpers/testID';
-import { CommonStyle as CS } from '../styles/Common';
 
 import SearchComponent from './SearchComponent';
+import navigation from '../navigation/NavigationService';
+import ThemedStyles from '../styles/ThemedStyles';
 
 const forceInset = isIphoneX ? {top: 32} : null
 
@@ -37,16 +38,22 @@ export default class TopbarNew extends Component {
   listenForSearch = () => this.props.user.searching ? styles.scale0 : {};
 
   render() {
+    if (!featuresService.has('navigation-2020')) {
+      return null;
+    }
+
+    const CS = ThemedStyles.style;
+
     const user = this.props.user;
     return (
-      <SafeAreaView style={styles.container} forceInset={forceInset}>
+      <SafeAreaView style={[styles.container, CS.backgroundSecondary]} forceInset={forceInset}>
         <View style={styles.topbar}>
-            <View style={[styles.topbarLeft, this.listenForSearch()]}>
-              <Text style={[CS.titleText, CS.colorPrimaryText, {lineHeight:0}]} >{this.props.title}</Text>
+            <View style={[styles.topbarLeft, CS.marginLeft2x]}>
+              <Text style={[CS.titleText, CS.colorPrimaryText, styles.lineHeight0]} >{this.props.title}</Text>
             </View>
             <View style={styles.topbarRight}>
-              <Icon name="chat-bubble-outline" size={24} style={[styles.button, CS.colorIcon, this.listenForSearch()]}/>
-              <SearchComponent user={this.props.user} />
+              <Icon name="chat-bubble-outline" size={24} style={[styles.button, CS.colorIcon]}/>
+              <SearchComponent user={this.props.user} navigation={navigation} />
             </View>
         </View>
       </SafeAreaView>
@@ -62,13 +69,15 @@ if (Platform.OS == 'ios') {
 }
 
 const styles = StyleSheet.create({
+  lineHeight0: {
+    lineHeight:0,
+  },
   container: {
     height: topbarHeight,
     display: 'flex',
     flexDirection: 'row',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
-    ...CS.backgroundThemeSecondary,
   },
   topbar: {
     flex: 1,
@@ -77,7 +86,6 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
   },
   topbarLeft: {
-    ...CS.marginLeft2x,
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
     flexDirection: 'row'

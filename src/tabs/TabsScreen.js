@@ -90,22 +90,12 @@ const Tabs = (
       }
     },
     initialRouteName: 'Newsfeed',
+    navigationOptions: {
+      header: props => <Topbar {...props} />,
+    }
   })
 );
 
 const inset = { bottom: 'always', top: 'never' };
 
-export default class TabsScreen extends Component {
-  // link router between tab and main stack navigator
-  static router = Tabs.router;
-
-  static navigationOptions = {
-    header: props => <Topbar {...props} />,
-  }
-
-  render() {
-    return (
-      <Tabs navigation={this.props.navigation}/>
-    );
-  }
-}
+export default Tabs

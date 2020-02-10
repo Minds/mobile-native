@@ -73,6 +73,15 @@ class ThemedStylesStore {
   }
 
   /**
+   * Get color of theme based on property
+   * @param {String} prop 
+   */
+  getColor(prop) {
+    const theme = this.theme ? DARK_THEME : LIGHT_THEME;
+    return theme[prop];
+  }
+
+  /**
    * Generates the current theme
    */
   generateStyle() {
@@ -151,6 +160,9 @@ class ThemedStylesStore {
       },
       colorActionNew: {
         color: theme.action
+      },
+      colorIcon: {
+        color: theme.icon
       },
       // backgrounds
       backgroundWhite: {

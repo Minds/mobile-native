@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Image,
+  TouchableHighlight,
 } from 'react-native';
 
 import {
@@ -31,6 +32,8 @@ import TabIcon from './TabIcon';
 import abbrev from '../common/helpers/abbrev';
 import shareService from '../share/ShareService';
 import featuresService from '../common/services/features.service';
+import authService from './../auth/AuthService';
+import ThemedStyles from '../styles/ThemedStyles';
 
 const ICON_SIZE = 24;
 
@@ -61,6 +64,8 @@ class MoreScreenNew extends Component {
    * Return Options List ready to be rendered
    */
   getOptionsList = () => {
+    const CS = ThemedStyles.style;
+
     let list = [
       {
         name: i18n.t('moreScreen.helpSupport'),
@@ -133,11 +138,13 @@ class MoreScreenNew extends Component {
    * @param {Array} list 
    */
   renderList = list => {
+    const CS = ThemedStyles.style;
+
     return (
       <ScrollView 
         style={[
           styles.container,
-          CS.backgroundThemePrimary,
+          CS.backgroundPrimary,
           CS.marginTop4x,
         ]}
       >
@@ -147,7 +154,7 @@ class MoreScreenNew extends Component {
               key={i}
               title={l.name}
               titleStyle={[CS.titleText, CS.colorPrimaryText, CS.padding, CS.fontXXL]}
-              containerStyle={[styles.listItem, CS.backgroundThemePrimary]}
+              containerStyle={[styles.listItem, CS.backgroundPrimary]}
               switchButton={l.switchButton}
               hideChevron ={l.hideChevron}
               leftIcon={l.icon}
@@ -165,15 +172,19 @@ class MoreScreenNew extends Component {
     const avatar = this.getAvatar(),
           channel = this.props.user.me;
 
+    const CS = ThemedStyles.style;
+
     return (
       <SafeAreaView style={[
         CS.flexContainer,
-        CS.backgroundThemePrimary,
+        CS.backgroundPrimary,
       ]}>
 
         {/* CHANNEL DATA */}
-        <View style={styles.headerContainer}>
-          <Image source={avatar} style={[styles.wrappedAvatar]} />
+        <View style={styles.headerContainer} >
+          <TouchableOpacity onPress={this.navToChannel}>
+            <Image source={avatar} style={styles.wrappedAvatar}/>
+          </TouchableOpacity>
           <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop2x]}>{channel.name}</Text>
           <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal]}>@{channel.username}</Text>
           <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal, CS.marginTop3x]}>

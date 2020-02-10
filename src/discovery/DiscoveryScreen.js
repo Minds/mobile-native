@@ -74,7 +74,7 @@ class DiscoveryScreen extends Component {
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
-      featuresService.has('new-navigation-january-2020')
+      featuresService.has('navigation-2020')
       ? <TabIcon name="hashtag" color={tintColor} />
       : <Icon name="search" size={24} color={tintColor} />
     ),

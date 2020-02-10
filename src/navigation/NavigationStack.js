@@ -59,7 +59,7 @@ import featuresService from '../common/services/features.service';
  */
 const Stack = createStackNavigator({
   Tabs: {
-    screen: featuresService.has('new-navigation-january-2020')
+    screen: featuresService.has('navigation-2020')
       ? withErrorBoundaryScreen(TabsScreenNew)
       : withErrorBoundaryScreen(TabsScreen)
   },

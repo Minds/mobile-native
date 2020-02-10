@@ -27,7 +27,7 @@ export default class CaptureFab extends Component {
   }
 
   render() {
-    if (featuresService.has('new-navigation-january-2020')) {
+    if (featuresService.has('navigation-2020')) {
       return null;
     }
     

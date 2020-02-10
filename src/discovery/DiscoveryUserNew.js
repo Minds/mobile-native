@@ -55,6 +55,9 @@ class DiscoveryUser extends Component {
    */
   _navToChannel = () => {
     Keyboard.dismiss();
+    if (this.props.onUserTap) {
+      this.props.onUserTap(this.props.row.item);
+    }
     if (this.props.navigation) {
       if (this.props.row.item.isOpen() && !this.props.row.item.can(FLAG_VIEW, true)) {
         return;
@@ -87,8 +90,8 @@ class DiscoveryUser extends Component {
    * Render
    */
   render() {
-    const {row, ...otherProps} = this.props;
-
+    const {row, subscribe, ...otherProps} = this.props;
+    const renderRightButton = !(subscribe === false);
     return (
       <TouchableOpacity style={styles.row} onPress={this._navToChannel} {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
@@ -96,7 +99,7 @@ class DiscoveryUser extends Component {
           <Text style={[styles.body, styles.title, CS.colorPrimaryText]}>{row.item.name}</Text>
           <Text style={[styles.body, styles.subtitle, CS.colorSecondaryText]}>@{row.item.username}</Text>
         </View>
-        {this.renderRightButton()}
+        {renderRightButton && this.renderRightButton()}
       </TouchableOpacity>
     );
   }
