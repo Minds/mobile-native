@@ -45,7 +45,7 @@ export default class ChannelSetupStepNew extends Component {
 
   constructor(props) {
     super(props);
-    this.store = this.props.channel.store(sessionService.guid); 
+    this.store = this.props.channel.store(sessionService.guid);
   }
 
   changeAvatarAction = async () => {
@@ -84,7 +84,7 @@ export default class ChannelSetupStepNew extends Component {
     if (this.store.isUploading) throw new UserError('Avatar is uploading, please wait');
 
     const {phoneNumber, city, dob} = this.state;
-    
+
     const payload = {
       phoneNumber,
       city,
@@ -192,10 +192,10 @@ export default class ChannelSetupStepNew extends Component {
   render() {
     return (
       <View style={[CS.flexContainerCenter]}>
-        <View style={[CS.mindsLayoutBody, CS.backgroundThemePrimary]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>
           {this.getBody()}
         </View>
-        { this.state.showFooter && <View style={[CS.mindsLayoutFooter, CS.backgroundThemePrimary]}>
+        { this.state.showFooter && <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
           {this.getFooter()}
         </View>}
       </View>

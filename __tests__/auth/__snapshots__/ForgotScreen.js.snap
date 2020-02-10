@@ -6,12 +6,8 @@ exports[`ForgotScreen component should renders correctly 1`] = `
   style={
     Array [
       Array [
-        Object {
-          "flex": 1,
-        },
-        Object {
-          "backgroundColor": "#F5F5F5",
-        },
+        undefined,
+        undefined,
       ],
       Object {
         "paddingBottom": 0,
@@ -22,41 +18,21 @@ exports[`ForgotScreen component should renders correctly 1`] = `
   <View
     style={
       Array [
-        Object {
-          "flex": 1,
-        },
-        Object {
-          "padding": 10,
-        },
+        undefined,
+        undefined,
       ]
     }
   >
     <RCTSafeAreaView
       emulateUnlessSupported={true}
-      style={
-        Object {
-          "flex": 1,
-        }
-      }
     >
       <Text
         style={
           Array [
-            Object {
-              "fontFamily": "Roboto",
-              "fontSize": 28,
-              "fontWeight": "bold",
-              "lineHeight": 44,
-            },
-            Object {
-              "color": "#4F4F50",
-            },
-            Object {
-              "marginTop": 15,
-            },
-            Object {
-              "marginBottom": 15,
-            },
+            undefined,
+            undefined,
+            undefined,
+            undefined,
           ]
         }
       >
@@ -65,40 +41,22 @@ exports[`ForgotScreen component should renders correctly 1`] = `
       <Text
         style={
           Array [
-            Object {
-              "fontFamily": "Roboto",
-              "fontSize": 17,
-              "fontWeight": "500",
-              "lineHeight": 23,
-            },
-            Object {
-              "color": "#4F4F50",
-            },
             undefined,
-            Object {
-              "marginBottom": 15,
-            },
+            undefined,
+            undefined,
+            undefined,
           ]
         }
       >
         To request a new password, enter your username
       </Text>
-      <View
-        style={
-          Object {
-            "marginBottom": 10,
-          }
-        }
-      >
+      <View>
         <View
           style={
             Array [
               Object {
                 "flexDirection": "row",
                 "justifyContent": "space-between",
-              },
-              Object {
-                "marginBottom": 5,
               },
             ]
           }
@@ -117,7 +75,9 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                   Object {
                     "color": "#AEB0B8",
                     "fontFamily": "Roboto",
-                    "fontSize": 14,
+                    "fontSize": 16,
+                    "fontWeight": "600",
+                    "marginBottom": 5,
                   },
                 ]
               }
@@ -137,18 +97,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           returnKeyType="done"
           style={
             Array [
-              Object {
-                "backgroundColor": "transparent",
-                "borderColor": "#D8D8D8",
-                "borderRadius": 2,
-                "borderWidth": 1,
-                "color": "#4F4F50",
-                "fontFamily": "Roboto",
-                "fontSize": 16,
-                "height": 50,
-                "lineHeight": 21,
-                "padding": 10,
-              },
+              undefined,
               undefined,
             ]
           }
@@ -159,13 +108,8 @@ exports[`ForgotScreen component should renders correctly 1`] = `
       <View
         style={
           Array [
-            Object {
-              "flexDirection": "row",
-              "justifyContent": "flex-end",
-            },
-            Object {
-              "marginTop": 20,
-            },
+            undefined,
+            undefined,
           ]
         }
       >
@@ -183,16 +127,13 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           style={
             Object {
               "alignItems": "center",
-              "backgroundColor": "#5DBAC0",
-              "borderColor": "#5DBAC0",
-              "borderRadius": 2,
+              "backgroundColor": "white",
+              "borderColor": "#4690D6",
+              "borderRadius": 20,
               "borderWidth": 1,
               "flexDirection": "row",
-              "height": 60,
               "justifyContent": "center",
               "margin": 4,
-              "marginLeft": 0,
-              "marginRight": 10,
               "opacity": 1,
               "padding": 4,
             }
@@ -204,16 +145,12 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                 Object {
                   "color": "#4690D6",
                 },
-                Object {
-                  "color": "white",
-                  "fontSize": 20,
-                  "fontWeight": "500",
-                },
+                undefined,
               ]
             }
           >
              
-            GO BACK
+            Go back
              
           </Text>
         </View>
@@ -231,16 +168,13 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           style={
             Object {
               "alignItems": "center",
-              "backgroundColor": "#5DBAC0",
-              "borderColor": "#5DBAC0",
-              "borderRadius": 2,
+              "backgroundColor": "white",
+              "borderColor": "#4690D6",
+              "borderRadius": 20,
               "borderWidth": 1,
               "flexDirection": "row",
-              "height": 60,
               "justifyContent": "center",
               "margin": 4,
-              "marginLeft": 0,
-              "marginRight": 0,
               "opacity": 1,
               "padding": 4,
             }
@@ -252,16 +186,12 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                 Object {
                   "color": "#4690D6",
                 },
-                Object {
-                  "color": "white",
-                  "fontSize": 20,
-                  "fontWeight": "500",
-                },
+                undefined,
               ]
             }
           >
              
-            CONTINUE
+            Continue
              
           </Text>
         </View>

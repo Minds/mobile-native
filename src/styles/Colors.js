@@ -24,6 +24,7 @@ export const LIGHT_THEME = {
   done: '#4C92A4',
   action: '#A5A5A5',
   icon: '#777777',
+  link: '#0091FF',
 };
 
 export const DARK_THEME = {
@@ -37,4 +38,5 @@ export const DARK_THEME = {
   done: '#4C92A4',
   action: '#A5A5A5',
   icon: '#BEC0C1',
+  link: '#0091FF',
 };

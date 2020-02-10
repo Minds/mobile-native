@@ -482,7 +482,8 @@
     "confirmDeleteKeychain1":"This will delete your Ethereum keychain from this phone. Ensure you backed up the private keys. If you didn't you can lose access to all your funds. There's NO UNDO!",
     "pushNotification":"Push Notifications",
     "regenerateKey":"Regenerate messenger keys",
-    "deleteBlockchain":"Delete blockchain keychain"
+    "deleteBlockchain":"Delete blockchain keychain",
+    "darkMode":"Dark mode"
   },
   "comingSoon":{
     "try":"Try the canary app at",
@@ -693,7 +694,7 @@
   "tapCopyError":"Tap to copy the error",
   "save":"Save",
   "edit":"Edit",
-  "goback":"GO BACK",
+  "goback":"Go back",
   "copy":"Copy",
   "language":"Language",
   "categories":"Categories",
