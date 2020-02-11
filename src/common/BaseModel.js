@@ -359,6 +359,13 @@ export default class BaseModel {
     return this.time_created * 1000 > Date.now();
   }
 
+  /**
+   * Check if awaiting for moderation
+   */
+  isPending() {
+    return this.pending && this.pending !== '0'; // asking like this because front does the same
+  }
+
   static isScheduled(timeCreatedValue) {
     let response = false;
 

@@ -39,13 +39,13 @@ class OnboardingStore {
   /**
    * Get progress
    */
-  async getProgress() {
+  async getProgress(navigate = true) {
     logService.info('[OnboardingStore] getting onboarding progress');
     let onboarding = featuresService.has('onboarding-december-2019') ? 'OnboardingScreenNew' : 'OnboardingScreen';
     try {
       const progress = await onboardingService.getProgress();
       this.setProgress(progress);
-      if (progress && progress.show_onboarding) {
+      if (progress && progress.show_onboarding && navigate) {
         NavigationService.push(onboarding);
       }
       return progress;
