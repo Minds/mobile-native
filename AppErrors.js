@@ -26,6 +26,7 @@ if (process.env.JEST_WORKER_ID === undefined) {
 
       // for dev only log into the console
       if (__DEV__) {
+        console.log(hint.originalException);
         console.log('sentry', event, hint);
         return null;
       }
@@ -39,7 +40,7 @@ if (process.env.JEST_WORKER_ID === undefined) {
 onError(error => {
   console.log(error);
   logService.exception(error);
-})
+});
 
 // react-native-exception-handler global handlers
 if (!__DEV__) {

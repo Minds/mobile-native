@@ -13,7 +13,7 @@ import {
   Platform,
 } from 'react-native';
 
-import { Header } from 'react-navigation-stack';
+import { Header } from '@react-navigation/stack';
 
 import {
   observer,
@@ -149,7 +149,7 @@ export default class GroupViewScreen extends Component {
   componentWillUnmount() {
     this.props.groupView.clear();
     if (this.disposeEnter) {
-      this.disposeEnter.remove();
+      this.disposeEnter();
     }
   }
 

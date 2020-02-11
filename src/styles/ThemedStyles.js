@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import { observable, action, reaction } from 'mobx';
 
 import { DARK_THEME, LIGHT_THEME } from './Colors';
+import { DefaultTheme } from '@react-navigation/native';
 
 const repetitions = 8;
 const step = 5;
@@ -41,6 +42,8 @@ class ThemedStylesStore {
    */
   @observable theme = -1;
 
+  navTheme = null;
+
   /**
    * Style
    */
@@ -54,18 +57,38 @@ class ThemedStylesStore {
     this.generateStyle();
   }
 
+  /**
+   * Set dark theme
+   */
   @action
   setDark() {
     this.theme = 1;
     this.generateStyle();
   }
 
+  /**
+   * Set light theme
+   */
   @action
   setLight() {
     this.theme = 0;
     this.generateStyle();
   }
 
+  /**
+   * Set theme
+   * @param {number} value
+   */
+  @action
+  setTheme(value) {
+    this.theme = value;
+    this.generateStyle();
+  }
+
+  /**
+   * On theme change reaction
+   * @param {Function} fn
+   */
   onThemeChange(fn) {
     return reaction(() => [this.theme], async args => await fn(...args), {
       fireImmediately: false,
@@ -74,7 +97,7 @@ class ThemedStylesStore {
 
   /**
    * Get color of theme based on property
-   * @param {String} prop 
+   * @param {String} prop
    */
   getColor(prop) {
     const theme = this.theme ? DARK_THEME : LIGHT_THEME;
@@ -87,6 +110,11 @@ class ThemedStylesStore {
   generateStyle() {
 
     const theme = this.theme ? DARK_THEME : LIGHT_THEME;
+
+    // this.navTheme = {
+    //   ...DefaultTheme,
+    //   dark: this.theme === 1,
+    // };
 
     this.style = StyleSheet.create({
       ...dynamicStyles,

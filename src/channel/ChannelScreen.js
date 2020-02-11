@@ -102,7 +102,7 @@ class ChannelScreen extends Component {
    */
   componentWillUnmount() {
     if (this.disposeEnter) {
-      this.disposeEnter.remove();
+      this.disposeEnter();
     }
     this.props.channel.garbageCollect();
     this.props.channel.store(this.guid).markInactive();

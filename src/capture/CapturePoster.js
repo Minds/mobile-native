@@ -11,7 +11,7 @@ import { observer, inject } from 'mobx-react/native';
 import { Icon } from 'react-native-elements'
 import {
   NavigationActions
-} from 'react-navigation';
+} from '@react-navigation/native';
 
 import colors from '../styles/Colors';
 import HashtagService from '../common/services/hashtag.service'

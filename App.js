@@ -21,8 +21,11 @@ import {
 import { Provider, observer } from 'mobx-react/native';
 import RNBootSplash from 'react-native-bootsplash';
 import FlashMessage from 'react-native-flash-message';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import NavigationService from './src/navigation/NavigationService';
+import NavigationService, {
+  setTopLevelNavigator,
+} from './src/navigation/NavigationService';
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
 import NavigationStack from './src/navigation/NavigationStack';
@@ -54,6 +57,12 @@ import apiService from './src/common/services/api.service';
 import boostedContentService from './src/common/services/boosted-content.service';
 import translationService from './src/common/services/translation.service';
 import ThemedStyles from './src/styles/ThemedStyles';
+
+import {
+  NavigationContainer,
+  DarkTheme,
+  DefaultTheme,
+} from '@react-navigation/native';
 
 let deepLinkUrl = '';
 
@@ -95,7 +104,7 @@ sessionService.onLogin(async () => {
   // hide splash
   RNBootSplash.hide({ duration: 250 });
 
-  NavigationService.navigate(sessionService.initialScreen);
+  NavigationService.navigate('App', { screen: sessionService.initialScreen});
 
   // check onboarding progress and navigate if necessary
   stores.onboarding.getProgress(sessionService.initialScreen !== 'OnboardingScreenNew');
@@ -310,18 +319,20 @@ class App extends Component<Props, State> {
     }
 
     const app = (
-      <Provider key="app" {...stores}>
-        <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
-          <StatusBar barStyle={statusBarStyle} />
-          <NavigationStack
-            screenProps={ThemedStyles.theme} // force screen re-render when theme change
-            ref={navigatorRef => {
-              NavigationService.setTopLevelNavigator(navigatorRef);
-            }}
-          />
-          <FlashMessage renderCustomContent={this.renderNotification} />
-        </ErrorBoundary>
-      </Provider>
+      <SafeAreaProvider>
+        <NavigationContainer
+          ref={navigatorRef => setTopLevelNavigator(navigatorRef)}
+          theme={ThemedStyles.theme === 1 ? DarkTheme : DefaultTheme}
+        >
+          <Provider key="app" {...stores}>
+            <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
+              <StatusBar barStyle={statusBarStyle} />
+              <NavigationStack key={ThemedStyles.theme}/>
+              <FlashMessage renderCustomContent={this.renderNotification} />
+            </ErrorBoundary>
+          </Provider>
+        </NavigationContainer>
+      </SafeAreaProvider>
     );
 
     const keychainModal = (

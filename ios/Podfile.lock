@@ -207,6 +207,8 @@ PODS:
     - React
   - react-native-randombytes (3.5.3):
     - React
+  - react-native-safe-area-context (0.7.2):
+    - React
   - react-native-sqlite-storage (4.1.0):
     - React
   - react-native-video (5.0.2):
@@ -259,6 +261,8 @@ PODS:
     - React
   - RNCAsyncStorage (1.6.2):
     - React
+  - RNCMaskedView (0.1.6):
+    - React
   - RNConvertPhAsset (1.0.3):
     - React
   - RNDeviceInfo (4.0.1):
@@ -273,13 +277,13 @@ PODS:
     - React
   - RNFS (2.16.2):
     - React
-  - RNGestureHandler (1.5.0):
+  - RNGestureHandler (1.5.6):
     - React
   - RNLocalize (1.3.1):
     - React
-  - RNReanimated (1.4.0):
+  - RNReanimated (1.7.0):
     - React
-  - RNScreens (2.0.0-alpha.11):
+  - RNScreens (2.0.0-beta.2):
     - React
   - RNSentry (1.2.2):
     - React
@@ -325,6 +329,7 @@ DEPENDENCIES:
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-notifications (from `../node_modules/react-native-notifications`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
+  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-sqlite-storage (from `../node_modules/react-native-sqlite-storage`)
   - react-native-video (from `../node_modules/react-native-video`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -343,6 +348,7 @@ DEPENDENCIES:
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
+  - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNConvertPhAsset (from `../node_modules/react-native-convert-ph-asset`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNExitApp (from `../node_modules/react-native-exit-app`)
@@ -411,6 +417,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-notifications"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
+  react-native-safe-area-context:
+    :path: "../node_modules/react-native-safe-area-context"
   react-native-sqlite-storage:
     :path: "../node_modules/react-native-sqlite-storage"
   react-native-video:
@@ -445,6 +453,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
+  RNCMaskedView:
+    :path: "../node_modules/@react-native-community/masked-view"
   RNConvertPhAsset:
     :path: "../node_modules/react-native-convert-ph-asset"
   RNDeviceInfo:
@@ -501,6 +511,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: fa32a5bb986924e9be82a261c262039042dde81e
   react-native-notifications: 163ddedac6fcc8d850ea15b06abdadcacdff00f1
   react-native-randombytes: 3638d24759d67c68f6ccba60c52a7a8a8faa6a23
+  react-native-safe-area-context: 4b3d1b9ebb040a4814a222703e7434b20c95fcf5
   react-native-sqlite-storage: f06bfba10f67f989c00b6a699b9c2b80a816edbe
   react-native-video: d01ed7ff1e38fa7dcc6c15c94cf505e661b7bfd0
   react-native-webview: deb4a57eee4906e992e2f84bb087a15fd302378e
@@ -518,16 +529,17 @@ SPEC CHECKSUMS:
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   RNBootSplash: 161de9d2b5dc2af37c2777063b8e6d844ab2a6ff
   RNCAsyncStorage: 60a80e72d95bf02a01cace55d3697d9724f0d77f
+  RNCMaskedView: a88953beefbd347a29072d9eba90e42945fe291e
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
   RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
   RNFastImage: 9b0c22643872bb7494c8d87bbbb66cc4c0d9e7a2
   RNFileShareIntent: 783adf7c4386c6024dd5dfeb96cc7836948f8b47
   RNFS: 0d4191b1052bef9ce70deff00a5b4169c62bbd9b
-  RNGestureHandler: a4ddde1ffc6e590c8127b8b7eabfdade45475c74
+  RNGestureHandler: 911d3b110a7a233a34c4f800e7188a84b75319c6
   RNLocalize: 07eb7a91d10021cdf59d80061ebf3adb8a5b5688
-  RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
-  RNScreens: ad3661f864ef18d952e9a4799b6791683e33c1fc
+  RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
+  RNScreens: 5e4758109c6d35f9a009ce72af873df907548020
   RNSentry: 9cfa3717b1e6bf9ad4b124683e78e3b98b01d3af
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSVG: f6177f8d7c095fada7cfee2e4bb7388ba426064c

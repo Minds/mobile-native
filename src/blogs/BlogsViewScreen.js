@@ -23,7 +23,7 @@ import {
 
 import ActionSheet from 'react-native-actionsheet';
 
-import { Header } from 'react-navigation-stack';
+import { Header } from '@react-navigation/stack';
 
 import { inject, observer } from 'mobx-react/native';
 

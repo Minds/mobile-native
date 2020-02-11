@@ -16,15 +16,15 @@ import { Avatar } from 'react-native-elements';
 
 import { MINDS_CDN_URI } from '../config/Config';
 import featuresService from '../common/services/features.service';
-import { SafeAreaView } from 'react-navigation';
 import isIphoneX from '../common/helpers/isIphoneX';
 import testID from '../common/helpers/testID';
 
 import SearchComponent from './SearchComponent';
 import navigation from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
-const forceInset = isIphoneX ? {top: 32} : null
+const forceInset = isIphoneX ? {top: 10} : null
 
 @inject('user')
 @inject('wallet')
@@ -46,26 +46,31 @@ export default class TopbarNew extends Component {
 
     const user = this.props.user;
     return (
-      <SafeAreaView style={[styles.container, CS.backgroundSecondary]} forceInset={forceInset}>
-        <View style={styles.topbar}>
-            <View style={[styles.topbarLeft, CS.marginLeft2x]}>
-              <Text style={[CS.titleText, CS.colorPrimaryText, styles.lineHeight0]} >{this.props.title}</Text>
+      <SafeAreaConsumer>
+        {insets => (
+          <View style={[styles.container, CS.backgroundSecondary, {paddingTop: insets.top}]}>
+            <View style={styles.topbar}>
+              <View style={[styles.topbarLeft, CS.marginLeft4x]}>
+                <Text style={[CS.titleText, CS.colorPrimaryText, styles.lineHeight0]} >{this.props.title}</Text>
+              </View>
+              <View style={styles.topbarRight}>
+                <Icon name="chat-bubble-outline" size={24} style={[styles.button, CS.colorIcon]}/>
+                <SearchComponent user={this.props.user} navigation={navigation} />
+              </View>
             </View>
-            <View style={styles.topbarRight}>
-              <Icon name="chat-bubble-outline" size={24} style={[styles.button, CS.colorIcon]}/>
-              <SearchComponent user={this.props.user} navigation={navigation} />
-            </View>
-        </View>
-      </SafeAreaView>
+          </View>
+        )}
+      </SafeAreaConsumer>
+
     );
   }
 }
 
-let topbarHeight = 56;
+let topbarHeight = 100;
 let topMargin = 0;
 
 if (Platform.OS == 'ios') {
-  topbarHeight = 56;
+  topbarHeight = 100;
 }
 
 const styles = StyleSheet.create({
@@ -76,30 +81,24 @@ const styles = StyleSheet.create({
     height: topbarHeight,
     display: 'flex',
     flexDirection: 'row',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#EEE',
+    paddingBottom: 5,
   },
   topbar: {
     flex: 1,
     alignItems: 'flex-end',
     flexDirection: 'row',
-    paddingBottom: 5,
   },
   topbarLeft: {
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
     flexDirection: 'row'
   },
-  topbarCenter: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 2,
-  },
   topbarRight: {
     flex: 1,
     justifyContent: 'flex-end',
     flexDirection: 'row',
     paddingRight: 4,
+    marginRight: 5,
     paddingTop: 4,
   },
   button: {

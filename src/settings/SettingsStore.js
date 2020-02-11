@@ -51,8 +51,7 @@ class SettingsStore {
     appStore.hashtag.setAll(!this.useHashtags);
 
     // theme
-    ThemedStyles.theme = data[5][1] || 0;
-    ThemedStyles.init();
+    ThemedStyles.setTheme(data[5][1] || 0);
 
     return this;
   }

@@ -1,105 +1,109 @@
-import React, {
-    Component
-} from 'react';
+import React from 'react';
 
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import {
-  jumpTo,
-  SafeAreaView
-} from 'react-navigation';
-import {
-  Platform,
-  Dimensions,
-} from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const { height, width } = Dimensions.get('window');
-const aspectRatio = height/width;
-
+const Tab = createBottomTabNavigator();
+import { View } from 'react-native';
 
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import DiscoveryScreen from '../discovery/DiscoveryScreen';
-import featuresService from '../common/services/features.service';
-import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 import isIphoneX from '../common/helpers/isIphoneX';
-import CapturePoster from '../capture/CapturePoster';
-import TopbarNew from '../topbar/TopbarNew';
 import MoreScreenNew from './MoreScreenNew';
-
 import ThemedStyles from '../styles/ThemedStyles';
+import TabIcon from './TabIcon';
+import NotificationIcon from '../notifications/NotificationsTabIcon';
+import AppStores from '../../AppStores';
+import { MINDS_CDN_URI } from '../config/Config';
+import { Avatar } from 'react-native-elements';
 
-let screens = {
+/**
+ * Main tabs
+ * @param {Object} props
+ */
+const Tabs = function(props) {
+  return (
+    <Tab.Navigator
+      initialRouteName="Newsfeed"
+      tabBarOptions={{
+        showLabel: false,
+        showIcon: true,
+        activeTintColor: ThemedStyles.getColor('link'),
+        inactiveTintColor: ThemedStyles.getColor('icon'),
+        style: {
+          borderTopWidth: 0,
+          backgroundColor: ThemedStyles.getColor('secondary_background'),
+          height: 100,
+          paddingTop: 10
+        },
+        tabStyle: {
+          height: 66,
+          width: 66,
+          ...ThemedStyles.style.centered,
+        }
+      }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName, iconsize = 28;
 
-  Newsfeed: {
-    screen: withErrorBoundaryScreen(NewsfeedScreen),
-    navigationOptions: {
-      tabBarTestID:'Newsfeed tab button',
-      tabBarAccessibilityLabel: 'Newsfeed tab button',
-    },
-  },
-  Discovery: {
-    screen: withErrorBoundaryScreen(DiscoveryScreen),
-    navigationOptions: {
-      tabBarTestID:'Discovery tab button',
-      tabBarAccessibilityLabel: 'Discovery tab button',
-    },
-  },
-  Capture: {
-    screen: withErrorBoundaryScreen(CapturePoster),
-    navigationOptions: {
-      tabBarTestID:'Capture tab button',
-      tabBarAccessibilityLabel: 'Capture tab button',
-    },
-  },
-  Notifications: {
-    screen: withErrorBoundaryScreen(NotificationsScreen),
-    navigationOptions: {
-      tabBarTestID:'Notifications tab button',
-      tabBarAccessibilityLabel: 'Notifications tab button',
-    },
-  },
-  Menu: {
-    screen: withErrorBoundaryScreen(MoreScreenNew),
-    navigationOptions: {
-      tabBarTestID:'Menu tab button',
-      tabBarAccessibilityLabel: 'Menu tab button',
-    },
-  },
-};
+          switch (route.name) {
+            case 'Menu':
+              return (
+                <View>
+                  {focused && <View style={[styles.acitivity]}/>}
+                  <Avatar
+                    rounded
+                    source={{ uri: MINDS_CDN_URI + 'icon/' + AppStores.user.me.guid + '/medium/' +  AppStores.user.me.icontime}}
+                    width={34}
+                    height={34}
+                    testID="AvatarButton"
+                  />
+                </View>
+              )
+              break;
+            case 'Newsfeed':
+              iconName = 'home';
+              iconsize = 33;
+              break;
+            case 'Discovery':
+              iconName = 'hashtag';
+              break;
+            case 'Notifications':
+              return <NotificationIcon tintColor={color} size={iconsize} />;
+            case 'Capture':
+              iconName = 'plus';
+              iconsize = 66;
+              break;
+          }
 
-const Tabs = (
-  createMaterialTopTabNavigator(screens, {
-    tabBarPosition: 'bottom',
-    animationEnabled: false,
-    swipeEnabled: true,
-    lazy: false,
-    removeClippedSubviews: false,
-    tabBarOptions: {
-      showLabel: false,
-      showIcon: true,
-      activeTintColor: '#0091FF',
-      inactiveTintColor: '#777777',
-      style: {
-        backgroundColor: ThemedStyles.getColor('secondary_background'),
-        height: 70,
-      },
-      indicatorStyle: {
-        marginBottom: isIphoneX ? 10 : null,
-        backgroundColor: 'transparent'
-      },
-      iconStyle: {
-        height: 44,
-        width: 44,
-        ...ThemedStyles.style.centered,
-      }
-    },
-    initialRouteName: 'Newsfeed',
-    navigationOptions: {
-      header: null,
-    }
-  })
-);
+          // You can return any component that you like here!
+          return <TabIcon name={iconName} size={iconsize} color={color} />
+        },
+      })}
+    >
+      <Tab.Screen name="Newsfeed" component={NewsfeedScreen} navigationOptions={{tabBarTestID:'Menu tab button'}} options={{headerShown: false}} />
+      <Tab.Screen name="Discovery" component={DiscoveryScreen} navigationOptions={{tabBarTestID:'Discovery tab button'}} />
+      <Tab.Screen name="Capture" component={View} navigationOptions={{tabBarTestID:'Capture tab button'}} />
+      <Tab.Screen name="Notifications" component={NotificationsScreen} navigationOptions={{tabBarTestID:'Notifications tab button'}} />
+      <Tab.Screen name="Menu" component={MoreScreenNew} navigationOptions={{tabBarTestID:'Menu tab button'}} />
+    </Tab.Navigator>
+  );
+}
 
-const inset = { bottom: 'always', top: 'never' };
+const styles = {
+  acitivity: {
+    zIndex: 9990,
+    top: -5,
+    left: -5,
+    right: -5,
+    bottom: -5,
+    borderWidth: 2.5,
+    borderRadius: 35,
+    position: 'absolute',
+    borderColor: colors.primary
+  }
+}
 
 export default Tabs;
+
+

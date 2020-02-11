@@ -22,7 +22,6 @@ let FORWARD_DURATION = 7;
 
 import {observer} from 'mobx-react/native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {withNavigation} from 'react-navigation';
 import {CommonStyle as CS} from '../styles/Common';
 import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
@@ -31,6 +30,7 @@ import i18n from '../common/services/i18n.service';
 import attachmentService from '../common/services/attachment.service';
 import videoPlayerService from '../common/services/video-player.service';
 import apiService from '../common/services/api.service';
+import NavigationService from '../navigation/NavigationService';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -86,7 +86,7 @@ class MindsVideo extends Component {
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
     });
 
-    this.onScreenBlur = this.props.navigation.addListener('didBlur', () => {
+    this.onScreenBlur = NavigationService.addListener('didBlur', () => {
       this.pause();
     });
   }
@@ -95,7 +95,9 @@ class MindsVideo extends Component {
    * On component will unmount
    */
   componentWillUnmount() {
-    this.onScreenBlur.remove();
+    if (this.onScreenBlur) {
+      this.onScreenBlur();
+    }
     if (videoPlayerService.current === this) {
       videoPlayerService.clear();
     }
@@ -663,4 +665,4 @@ let styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(MindsVideo);
+export default MindsVideo;

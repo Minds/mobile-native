@@ -38,18 +38,11 @@ import ThemedStyles from '../styles/ThemedStyles';
 const ICON_SIZE = 24;
 
 /**
-* More screen, new design (menu)
-*/
+ * More screen, new design (menu)
+ */
 export default
 @inject('user')
 class MoreScreenNew extends Component {
-
-  static navigationOptions = {
-    title: 'Minds',
-    tabBarIcon: ({ tintColor }) => (
-      <TabIcon name="md-menu" size={24} color={tintColor} />
-    ),
-  };
 
   navToChannel = () => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })
 
@@ -135,13 +128,13 @@ class MoreScreenNew extends Component {
 
   /**
    * Recieve a list a return a view container with a list of items
-   * @param {Array} list 
+   * @param {Array} list
    */
   renderList = list => {
     const CS = ThemedStyles.style;
 
     return (
-      <ScrollView 
+      <ScrollView
         style={[
           styles.container,
           CS.backgroundPrimary,
