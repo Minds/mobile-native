@@ -20,6 +20,7 @@ import {
   View,
   Dimensions,
   Linking,
+  Clipboard,
 } from 'react-native';
 
 import ExplicitImage from './explicit/ExplicitImage'
@@ -36,6 +37,8 @@ import logService from '../services/log.service';
 import testID from '../helpers/testID';
 import i18n from '../services/i18n.service';
 import api from '../services/api.service';
+import { showMessage } from 'react-native-flash-message';
+import Colors from '../../styles/Colors';
 
 /**
  * Activity
@@ -144,6 +147,25 @@ export default class MediaView extends Component {
     this.setState({ imageLoadFailed: true });
   }
 
+  imageLongPress = () => {
+    if (this.props.entity.perma_url) {
+      setTimeout( async () => {
+        await Clipboard.setString(this.props.entity.perma_url);
+        showMessage({
+          floating: true,
+          position: 'top',
+          message: i18n.t('linkCopied'),
+          duration: 1300,
+          backgroundColor: '#FFDD63DD',
+          color: Colors.dark,
+          type: 'info',
+        });
+      }, 100);
+    } else {
+      this.download();
+    }
+  };
+
   /**
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
@@ -188,7 +210,7 @@ export default class MediaView extends Component {
       return (
         <TouchableOpacity
           onPress={this.navToImage}
-          onLongPress={this.download}
+          onLongPress={this.imageLongPress}
           style={[styles.imageContainer, { height }]}
           activeOpacity={1}
           {...testID('Posted Image')}
@@ -208,7 +230,7 @@ export default class MediaView extends Component {
     return autoHeight  ? (
       <TouchableOpacity
         onPress={this.navToImage}
-        onLongPress={this.download}
+        onLongPress={this.imageLongPress}
         style={styles.imageContainer}
          activeOpacity={0.8}
       >
@@ -220,7 +242,7 @@ export default class MediaView extends Component {
       ) : (
       <TouchableOpacity
         onPress={this.navToImage}
-        onLongPress={this.download}
+        onLongPress={this.imageLongPress}
         style={[styles.imageContainer, { minHeight: 200 }]}
          activeOpacity={0.8}
       >
