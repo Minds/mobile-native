@@ -1,6 +1,54 @@
 {
   "versions": [
     {
+      "version": "3.15.1",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-3-15-1.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.15.1",
+      "changelog": [
+        "New Onboarding",
+        "Bug fixes"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "cb074faeca700b836655ad0fd0d854bb"
+        },
+        {
+          "type": "sha256",
+          "value": "97e0f6721abce3fbff40ec78b6d833b08aa8e20e88ee800d286010348a61e363"
+        },
+        {
+          "type": "sha512",
+          "value": "1e2dd0fccf7b9c375e84a5ea75c040c691f34175271a644d982de3fc7d1831c9fe1ce641f1f73367959ae0ebe4da9a67d52cdf7a91cd9a5a18547cea0c131fc2"
+        }
+      ]
+    },
+    {
+      "version": "3.15.0",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-3-15-0.apk",
+      "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v3.15.0",
+      "changelog": [
+        "New login and register screens",
+        "Bug fixes"
+      ],
+      "unstable": false,
+      "hashes": [
+        {
+          "type": "md5",
+          "value": "0b41d23037645b7f3eb033c1f617da6a"
+        },
+        {
+          "type": "sha256",
+          "value": "f069afcaef9527921fff54194734b62da77756610228a7590a98e29d6f159462"
+        },
+        {
+          "type": "sha512",
+          "value": "0e6606c99855e173ddc1e62d716684a920e7cec4433bdce8495e0216fa3c0e61cb5ff1abd9dd5cb265764f81bfb6518a37764a645f02350083cc44cb19c60f43"
+        }
+      ]
+    },
+    {
       "version": "3.14.0",
       "timestamp": 1576783681,
       "href": "https://cdn-assets.minds.com/android/minds-3_14_0.apk",

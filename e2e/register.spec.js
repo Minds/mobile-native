@@ -1,7 +1,7 @@
 import deleteUser from './helpers/deleteUser';
 import sleep from '../src/common/helpers/sleep';
 
-describe('Register Flow', () => {
+describe.skip('Register Flow', () => {
   const username = 'e2euser' + ((Math.random() * 0xffffff) << 0).toString(16);
   const password = process.env.loginPass;
 

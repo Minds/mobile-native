@@ -34,9 +34,10 @@ import HashtagsStepNew from './steps/HashtagsStepNew';
 import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
 import SuggestedGroupsStepNew from './steps/SuggestedGroupsStepNew';
 
-@observer
+export default
 @inject('onboarding', 'hashtag', 'groupsBar', 'discovery')
-export default class OnboardingScreenNew extends Component {
+@observer
+class OnboardingScreenNew extends Component {
 
   /**
    * Disable navigation bar
@@ -124,13 +125,14 @@ export default class OnboardingScreenNew extends Component {
       steps.push({component: <ChannelSetupStepNew ref={r => this.channelSetup = r} onNext={this.onNext} onBack={this.onBack}/> });
     }
 
-    if (!completed_items.some(r => r == 'suggested_groups')) {
-      steps.push({component: <SuggestedGroupsStepNew onNext={this.onNext} onBack={this.onBack}/>});
-    }
+    // TODO: enable group and channel selectors
+    // if (!completed_items.some(r => r == 'suggested_groups')) {
+    //   steps.push({component: <SuggestedGroupsStepNew onNext={this.onNext} onBack={this.onBack}/>});
+    // }
 
-    if (!completed_items.some(r => r == 'suggested_channels')) {
-      steps.push({component: <SuggestedChannelsStepNew onNext={this.onNext} onBack={this.onBack}/>});
-    }
+    // if (!completed_items.some(r => r == 'suggested_channels')) {
+    //   steps.push({component: <SuggestedChannelsStepNew onNext={this.onNext} onBack={this.onBack}/>});
+    // }
 
     return (
       <SafeAreaView style={[CS.flexContainer, CS.backgroundPrimary]}>

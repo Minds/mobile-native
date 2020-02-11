@@ -39,6 +39,7 @@ export const CODE_PUSH_TOKEN = '';
  */
 export const MINDS_FEATURES = {
   crypto: Platform.OS === 'ios' ? false : true,
+  'onboarding-december-2019': true,
 };
 
 /**
