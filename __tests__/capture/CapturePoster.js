@@ -50,13 +50,13 @@ describe('cature poster component', () => {
   });
 
   it('should renders correctly', () => {
-    const screen = renderer.create(
+    const screen = shallow(
       <CapturePoster.wrappedComponent
         user={userStore}
         capture={capture}
         navigation={navigation}
       />
-    ).toJSON();
+    );
 
     expect(screen).toMatchSnapshot();
   });
@@ -131,20 +131,19 @@ describe('cature poster component', () => {
       capture.attachment.uri = paramsImage.uri;
       capture.attachment.type = paramsImage.type;
 
-      const wrapper = renderer.create(
+      const wrapper = shallow(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
           navigation={navigation}
         />
       );
+      const gallery = shallow(<CaptureGallery />);
 
-      const gallery = wrapper.root.findByType(CaptureGallery);
-
-      await gallery.instance._loadPhotos();
+      await gallery.instance()._loadPhotos();
 
       // find Capture Preview
-      const preview = wrapper.root.findByType(CapturePreview);
+      const preview = wrapper.find(CapturePreview);
 
       expect(preview).toBeDefined();
 
@@ -161,7 +160,7 @@ describe('cature poster component', () => {
       capture.attachment.uri = paramsVideo.uri;
       capture.attachment.type = paramsVideo.type;
 
-      const wrapper = renderer.create(
+      const wrapper = shallow(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
@@ -169,12 +168,12 @@ describe('cature poster component', () => {
         />
       );
 
-      const gallery = wrapper.root.findByType(CaptureGallery);
+      const gallery = shallow(<CaptureGallery />);
 
-      await gallery.instance._loadPhotos();
+      await gallery.instance()._loadPhotos();
 
       // find Capture Preview
-      const preview = wrapper.root.findByType(CapturePreview);
+      const preview = wrapper.find(CapturePreview);
 
       expect(preview).toBeDefined();
 
@@ -192,7 +191,7 @@ describe('cature poster component', () => {
       capture.attachment.uri = paramsVideo.uri;
       capture.attachment.type = paramsVideo.type;
 
-      const wrapper = renderer.create(
+      const wrapper = shallow(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
@@ -200,17 +199,16 @@ describe('cature poster component', () => {
         />
       );
 
-      const gallery = wrapper.root.findByType(CaptureGallery);
+      const gallery = shallow(<CaptureGallery />);
 
-      await gallery.instance._loadPhotos();
+      await gallery.instance()._loadPhotos();
 
       // find delete icon
-      const icon = wrapper.root.findByType(Icon);
-
-      expect(icon).toBeDefined();
+      const icon = wrapper.exists('Icon');
+      console.log(icon);
 
       // simulate press on image
-      icon.props.onPress();
+      wrapper.find('Icon').prop('onPress')()
 
       // should be called
       expect(capture.attachment.delete).toHaveBeenCalled();

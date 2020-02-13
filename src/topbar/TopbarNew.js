@@ -22,7 +22,8 @@ import testID from '../common/helpers/testID';
 
 import SearchComponent from './SearchComponent';
 import navigation from '../navigation/NavigationService';
-import ThemedStyles from '../styles/ThemedStyles';
+import { CommonStyle as CS } from '../styles/Common';
+import MessengerTabIcon from '../messenger/MessengerTabIconNew';
 
 const forceInset = isIphoneX ? {top: 32} : null
 
@@ -42,17 +43,15 @@ export default class TopbarNew extends Component {
       return null;
     }
 
-    const CS = ThemedStyles.style;
-
     const user = this.props.user;
     return (
-      <SafeAreaView style={[styles.container, CS.backgroundSecondary]} forceInset={forceInset}>
-        <View style={styles.topbar}>
+      <SafeAreaView style={[styles.container, CS.backgroundThemeSecondary]} forceInset={forceInset}>
+        <View style={[styles.topbar, Platform.OS == 'ios' ? styles.topbarEnd : styles.topbarCentered]}>
             <View style={[styles.topbarLeft, CS.marginLeft2x]}>
-              <Text style={[CS.titleText, CS.colorPrimaryText, styles.lineHeight0]} >{this.props.title}</Text>
+              <Text style={[CS.titleText, CS.colorPrimaryText, Platform.OS == 'ios' ? styles.lineHeight0 : null]} >{this.props.title}</Text>
             </View>
             <View style={styles.topbarRight}>
-              <Icon name="chat-bubble-outline" size={24} style={[styles.button, CS.colorIcon]}/>
+              <MessengerTabIcon navigation={navigation}/>
               <SearchComponent user={this.props.user} navigation={navigation} />
             </View>
         </View>
@@ -81,9 +80,15 @@ const styles = StyleSheet.create({
   },
   topbar: {
     flex: 1,
-    alignItems: 'flex-end',
     flexDirection: 'row',
     paddingBottom: 5,
+  },
+  topbarEnd: {
+    alignItems: 'flex-end',
+  },
+  topbarCentered: {
+    alignItems: 'center',
+    paddingTop: 20,
   },
   topbarLeft: {
     alignItems: 'flex-end',

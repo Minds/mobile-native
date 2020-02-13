@@ -6,7 +6,7 @@ import DiscoveryUserNew from '../discovery/DiscoveryUserNew';
 import i18n from '../common/services/i18n.service';
 import FAIcon from 'react-native-vector-icons/FontAwesome5';
 import debounce from '../common/helpers/debounce';
-import ThemedStyles from '../styles/ThemedStyles';
+import { CommonStyle as CS } from '../styles/Common';
 
 export default class SearchResultComponent extends Component {
 
@@ -78,7 +78,6 @@ export default class SearchResultComponent extends Component {
    * rendered when nothing has been typed
    */
   renderSearchHistory = () => {
-    const CS = ThemedStyles.style;
     const searchHistory = this.state.history.length === 0 
       ? (this.renderEmptyMessageHistory())
       : (
@@ -132,8 +131,6 @@ export default class SearchResultComponent extends Component {
    * Rendered when suggest comes empty
    */
   renderEmptyMessageSuggest = () => {
-    const CS = ThemedStyles.style;
-
     return (
       <View style={[CS.centered]}>
         <FAIcon 
@@ -152,8 +149,6 @@ export default class SearchResultComponent extends Component {
    * Rendered when no search history
    */
   renderEmptyMessageHistory = () => {
-    const CS = ThemedStyles.style;
-    
     return (
       <View style={[CS.centered]}>
         <FAIcon 
@@ -174,15 +169,13 @@ export default class SearchResultComponent extends Component {
   }
 
   render() {
-    const CS = ThemedStyles.style;
-
     // If have something to search, render suggested, else, search history
     const render = this.shouldShowSuggested() 
       ? this.renderSuggestedSearch()
       : this.renderSearchHistory();
     
     return (
-      <View style={[CS.backgroundPrimary]}>
+      <View style={[CS.backgroundThemePrimary]}>
         {render}
       </View>
     );

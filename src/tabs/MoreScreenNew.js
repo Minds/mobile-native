@@ -33,7 +33,6 @@ import abbrev from '../common/helpers/abbrev';
 import shareService from '../share/ShareService';
 import featuresService from '../common/services/features.service';
 import authService from './../auth/AuthService';
-import ThemedStyles from '../styles/ThemedStyles';
 
 const ICON_SIZE = 24;
 
@@ -64,7 +63,6 @@ class MoreScreenNew extends Component {
    * Return Options List ready to be rendered
    */
   getOptionsList = () => {
-    const CS = ThemedStyles.style;
 
     let list = [
       {
@@ -138,13 +136,12 @@ class MoreScreenNew extends Component {
    * @param {Array} list 
    */
   renderList = list => {
-    const CS = ThemedStyles.style;
 
     return (
       <ScrollView 
         style={[
           styles.container,
-          CS.backgroundPrimary,
+          CS.backgroundThemePrimary,
           CS.marginTop4x,
         ]}
       >
@@ -154,7 +151,7 @@ class MoreScreenNew extends Component {
               key={i}
               title={l.name}
               titleStyle={[CS.titleText, CS.colorPrimaryText, CS.padding, CS.fontXXL]}
-              containerStyle={[styles.listItem, CS.backgroundPrimary]}
+              containerStyle={[styles.listItem, CS.backgroundThemePrimary]}
               switchButton={l.switchButton}
               hideChevron ={l.hideChevron}
               leftIcon={l.icon}
@@ -172,12 +169,10 @@ class MoreScreenNew extends Component {
     const avatar = this.getAvatar(),
           channel = this.props.user.me;
 
-    const CS = ThemedStyles.style;
-
     return (
       <SafeAreaView style={[
         CS.flexContainer,
-        CS.backgroundPrimary,
+        CS.backgroundThemePrimary,
       ]}>
 
         {/* CHANNEL DATA */}

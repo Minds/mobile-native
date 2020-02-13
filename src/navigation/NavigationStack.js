@@ -53,6 +53,7 @@ import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import featuresService from '../common/services/features.service';
+import MessengerScreen from '../messenger/MessengerScreen';
 
 /**
  * Main stack navigator
@@ -206,6 +207,9 @@ const Stack = createStackNavigator({
   },
   OnboardingScreenNew: {
     screen: withErrorBoundaryScreen(OnboardingScreenNew),
+  },
+  MessengerScreen: {
+    screen: MessengerScreen
   },
 });
 

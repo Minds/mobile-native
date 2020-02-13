@@ -9,23 +9,80 @@ exports[`cature poster component should renders correctly 1`] = `
   }
   testID="capturePosterView"
 >
-  <View
-    style={
+  <inject-inject-TopbarNew-with-wallet-with-user
+    title="Poster"
+  />
+  <CaptureGallery
+    header={
+      <React.Fragment>
+        <View
+          style={
+            Object {
+              "backgroundColor": "#FFF",
+              "flexDirection": "row",
+              "minHeight": 100,
+            }
+          }
+        >
+          <AlternativeTextInput
+            editable={true}
+            multiline={true}
+            onChangeText={[Function]}
+            onSelectionChange={[Function]}
+            placeholder="Speak your mind..."
+            placeholderTextColor="#ccc"
+            selectTextOnFocus={false}
+            style={
+              Object {
+                "flex": 1,
+                "padding": 12,
+                "paddingTop": 24,
+              }
+            }
+            testID="PostInput"
+            underlineColorAndroid="transparent"
+            value=""
+          />
+        </View>
+        <React.Fragment>
+          <CapturePosterFlags
+            containerStyle={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "flex-end",
+                },
+              ]
+            }
+            hideShare={true}
+            lockValue={null}
+            matureValue={false}
+            nsfwValue={Array []}
+            onLocking={[Function]}
+            onMature={[Function]}
+            onNsfw={[Function]}
+            onScheduled={[Function]}
+            onShare={[Function]}
+            shareValue={Object {}}
+            timeCreatedValue={null}
+          />
+          <CaptureTab
+            onSelectedMedia={[Function]}
+          />
+        </React.Fragment>
+      </React.Fragment>
+    }
+    onSelected={[Function]}
+  />
+  <UserAutocomplete
+    onSelect={[Function]}
+    selection={
       Object {
-        "alignItems": "center",
-        "backgroundColor": "white",
-        "flex": 1,
-        "justifyContent": "center",
-        "minHeight": 100,
+        "end": 0,
+        "start": 0,
       }
     }
-  >
-    <ActivityIndicator
-      animating={true}
-      color="#999999"
-      hidesWhenStopped={true}
-      size="large"
-    />
-  </View>
+    text=""
+  />
 </View>
 `;

@@ -40,9 +40,10 @@ import TextInput from '../common/components/TextInput';
 import TabIcon from '../tabs/TabIcon';
 import TopbarNew from '../topbar/TopbarNew';
 
+export default
 @inject('user', 'capture')
 @observer
-export default class CapturePoster extends Component {
+class CapturePoster extends Component {
 
   /**
    * Disable navigation bar
@@ -219,7 +220,7 @@ export default class CapturePoster extends Component {
 
     return (
       <View style={CS.flexContainer} testID="capturePosterView">
-        <TopbarNew title={i18n.t('tabTitleNotifications')}/>
+        <TopbarNew title={i18n.t('tabTitleCapture')}/>
         <CaptureGallery
           onSelected={this.onAttachedMedia}
           header={this.getHeader(true)}

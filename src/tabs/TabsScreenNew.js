@@ -25,9 +25,8 @@ import isIphoneX from '../common/helpers/isIphoneX';
 import CapturePoster from '../capture/CapturePoster';
 import TopbarNew from '../topbar/TopbarNew';
 import MoreScreenNew from './MoreScreenNew';
-
-import ThemedStyles from '../styles/ThemedStyles';
-
+import { LIGHT_THEME } from '../styles/Colors';
+import { CommonStyle as CS } from '../styles/Common';
 let screens = {
 
   Newsfeed: {
@@ -80,7 +79,7 @@ const Tabs = (
       activeTintColor: '#0091FF',
       inactiveTintColor: '#777777',
       style: {
-        backgroundColor: ThemedStyles.getColor('secondary_background'),
+        backgroundColor: LIGHT_THEME.secondary_background,
         height: 70,
       },
       indicatorStyle: {
@@ -90,7 +89,7 @@ const Tabs = (
       iconStyle: {
         height: 44,
         width: 44,
-        ...ThemedStyles.style.centered,
+        ...CS.centered,
       }
     },
     initialRouteName: 'Newsfeed',
