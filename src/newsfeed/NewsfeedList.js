@@ -206,10 +206,13 @@ export default class NewsfeedList extends Component {
   /**
    * On viewable item changed
    */
-  onViewableItemsChanged = ({viewableItems}) => {
-    viewableItems.forEach((item) => {
+  onViewableItemsChanged = (change) => {
+    change.viewableItems.forEach((item) => {
       this.props.newsfeed.list.addViewed(item.item);
     });
+    change.changed.forEach(c => {
+      c.item.setVisible(c.isViewable);
+    })
   }
 
   /**
