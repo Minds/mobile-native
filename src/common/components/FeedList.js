@@ -175,10 +175,13 @@ export default class FeedList extends Component {
   /**
    * On viewable item changed
    */
-  onViewableItemsChanged = ({viewableItems}) => {
-    viewableItems.forEach((item) => {
+  onViewableItemsChanged = (change) => {
+    change.viewableItems.forEach((item) => {
       this.props.feedStore.addViewed(item.item);
     });
+    change.changed.forEach(c => {
+      c.item.setVisible(c.isViewable);
+    })
   }
 
   /**
