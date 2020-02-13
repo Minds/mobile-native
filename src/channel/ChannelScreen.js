@@ -51,18 +51,11 @@ class ChannelScreen extends Component {
   };
 
   /**
-   * Disable navigation bar
-   */
-  static navigationOptions = {
-    header: null,
-  };
-
-  /**
    * Load data on mount
    */
   async componentWillMount() {
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      const params = this.props.navigation.state.params;
+      const params = this.props.route.params;
       const store = this.props.channel.store(this.guid);
       if (params && params.prepend) {
         if (store.channel && store.channel.isOwner && store.channel.isOwner()) {
@@ -84,7 +77,7 @@ class ChannelScreen extends Component {
    * Initial load
    */
   async initialLoad() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     if (params.entity) {
       // load channel from endpoint
@@ -182,7 +175,7 @@ class ChannelScreen extends Component {
   }
 
   get guid() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     let guid = params.entity ? params.entity.guid : params.guid;
 

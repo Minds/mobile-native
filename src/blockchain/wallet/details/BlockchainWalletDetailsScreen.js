@@ -69,15 +69,15 @@ export default class BlockchainWalletDetailsScreen extends Component {
     this.setState({
       editable: false,
       importable: false,
-      address: this.props.navigation.state.params.address,
-      edit: !!this.props.navigation.state.params.edit,
-      new: this.props.navigation.state.params.new,
+      address: this.props.route.params.address,
+      edit: !!this.props.route.params.edit,
+      new: this.props.route.params.new,
       offchain: false,
       tokens: null,
       eth: null,
     });
 
-    this.load(this.props.navigation.state.params.address);
+    this.load(this.props.route.params.address);
   }
 
   componentDidMount() {

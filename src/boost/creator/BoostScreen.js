@@ -271,7 +271,7 @@ export default class BoostScreen extends Component {
   }
 
   buildAllowedTypes() {
-    const entity = this.props.navigation.state.params.entity;
+    const entity = this.props.route.params.entity;
 
     if (!entity || !entity.type) {
       this.setState({});
@@ -400,7 +400,7 @@ export default class BoostScreen extends Component {
   }
 
   async _submitBoost() {
-    const entity = this.props.navigation.state.params.entity;
+    const entity = this.props.route.params.entity;
 
     this.setState({ inProgress: true });
     let guid = null;

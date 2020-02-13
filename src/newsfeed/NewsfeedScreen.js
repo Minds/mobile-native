@@ -63,6 +63,7 @@ export default class NewsfeedScreen extends Component {
    * Load data on mount
    */
   componentDidMount() {
+
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
 
@@ -84,6 +85,7 @@ export default class NewsfeedScreen extends Component {
     // load groups after the feed
     await this.groupsBar.wrappedInstance.initialLoad();
     // load discovery after the feed is loaded
+    this.props.discovery.init();
     this.props.discovery.fetch();
   }
 

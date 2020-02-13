@@ -120,7 +120,7 @@ sessionService.onLogin(async () => {
   try {
     // handle deep link (if the app is opened by one)
     if (deepLinkUrl) {
-      deeplinkService.navigate(deepLinkUrl);
+      deeplinkService.navigate('App', { screen: deepLinkUrl});
       deepLinkUrl = '';
     }
 
@@ -215,6 +215,13 @@ class App extends Component<Props, State> {
    * On component did mount
    */
   async componentDidMount() {
+    this.appInit();
+  }
+
+  /**
+   * App initialization
+   */
+  async appInit() {
     try {
       // load app setting before start
       const results = await Promise.all([settingsStore.init(), Linking.getInitialURL()]);
@@ -233,7 +240,7 @@ class App extends Component<Props, State> {
         if (!token) {
           logService.info('[App] there is no active session');
           RNBootSplash.hide({ duration: 250 });
-          NavigationService.navigate('Login');
+          // NavigationService.navigate('Auth', { screen: 'Login'});
         } else {
           logService.info('[App] session initialized');
         }
@@ -318,16 +325,18 @@ class App extends Component<Props, State> {
       return null;
     }
 
+    const isLoggedIn = sessionService.userLoggedIn;
+
     const app = (
       <SafeAreaProvider>
         <NavigationContainer
           ref={navigatorRef => setTopLevelNavigator(navigatorRef)}
-          theme={ThemedStyles.theme === 1 ? DarkTheme : DefaultTheme}
+          theme={ThemedStyles.navTheme}
         >
           <Provider key="app" {...stores}>
             <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
               <StatusBar barStyle={statusBarStyle} />
-              <NavigationStack key={ThemedStyles.theme}/>
+              <NavigationStack key={ThemedStyles.theme} isLoggedIn={isLoggedIn}/>
               <FlashMessage renderCustomContent={this.renderNotification} />
             </ErrorBoundary>
           </Provider>

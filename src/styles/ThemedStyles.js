@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { observable, action, reaction } from 'mobx';
 
 import { DARK_THEME, LIGHT_THEME } from './Colors';
-import { DefaultTheme } from '@react-navigation/native';
+import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 
 const repetitions = 8;
 const step = 5;
@@ -43,6 +43,7 @@ class ThemedStylesStore {
   @observable theme = -1;
 
   navTheme = null;
+  defaultScreenOptions = null;
 
   /**
    * Style
@@ -111,10 +112,24 @@ class ThemedStylesStore {
 
     const theme = this.theme ? DARK_THEME : LIGHT_THEME;
 
-    // this.navTheme = {
-    //   ...DefaultTheme,
-    //   dark: this.theme === 1,
-    // };
+    const baseTheme = this.theme === 0 ? DefaultTheme : DarkTheme;
+
+    this.navTheme = {
+      ...baseTheme,
+      colors: {
+        ...baseTheme.colors,
+        background: 'transparent',
+        // card: theme.backgroundSecondary, // generates an error on ios
+        text: theme.primary_text,
+        primary: theme.icon
+      },
+    };
+
+    this.defaultScreenOptions = {
+      headerStyle: {
+        backgroundColor: theme.secondary_background,
+      },
+    };
 
     this.style = StyleSheet.create({
       ...dynamicStyles,

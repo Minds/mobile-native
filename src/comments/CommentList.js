@@ -54,6 +54,7 @@ type PropsType = {
   store: any,
   user: any,
   navigation: any,
+  route: any,
   onInputFocus?: Function,
   onCommentFocus?: Function
 };
@@ -280,7 +281,7 @@ class CommentList extends React.Component<PropsType, StateType> {
    */
   loadComments = async (loadingMore: boolean = false, descending: boolean = true): Promise<void> => {
     let guid;
-    const scrollToBottom = this.props.navigation.state.params.scrollToBottom;
+    const scrollToBottom = this.props.route.params.scrollToBottom;
 
     if (this.props.entity) {
       guid = this.props.entity.guid;
@@ -453,6 +454,7 @@ class CommentList extends React.Component<PropsType, StateType> {
         onTextInputfocus={this.onChildFocus}
         onCommentFocus={this.onCommentFocus}
         navigation={this.props.navigation}
+        route={this.props.route}
         commentFocusCall={this.commentFocusCall}
         index={row.index}
       />

@@ -22,8 +22,8 @@ export default class ForgotScreen extends Component {
    */
   render() {
     const code =
-      this.props.navigation.state.params &&
-      this.props.navigation.state.params.code;
+      this.props.route.params &&
+      this.props.route.params.code;
     const CS = ThemedStyles.style;
 
     return (

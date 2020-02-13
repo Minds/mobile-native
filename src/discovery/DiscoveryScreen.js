@@ -94,7 +94,7 @@ class DiscoveryScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.props.discovery.init();
+    // this.props.discovery.init();
 
     const params = this.props.route.params;
     if (params && params.type) {

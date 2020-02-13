@@ -40,19 +40,20 @@ import TextInput from '../common/components/TextInput';
 import TabIcon from '../tabs/TabIcon';
 import TopbarNew from '../topbar/TopbarNew';
 
+export default
 @inject('user', 'capture')
 @observer
-export default class CapturePoster extends Component {
+class CapturePoster extends Component {
 
-  /**
-   * Disable navigation bar
-   */
-  static navigationOptions = ({ navigation }) => ({
-    tabBarIcon: ({ tintColor }) => (
-      <TabIcon name="md-add-circle-outline" size={44} color={tintColor} />
-    ),
-    headerRight: navigation.state.params && navigation.state.params.headerRight
-  });
+  // /**
+  //  * Disable navigation bar
+  //  */
+  // static navigationOptions = ({ route }) => ({
+  //   tabBarIcon: ({ tintColor }) => (
+  //     <TabIcon name="md-add-circle-outline" size={44} color={tintColor} />
+  //   ),
+  //   headerRight: route && route.headerRight
+  // });
 
   state = {
     postImageUri: '',
@@ -68,26 +69,10 @@ export default class CapturePoster extends Component {
   };
 
   /**
-   * On component will mount
-   */
-  componentWillMount() {
-    const { setParams } = this.props.navigation;
-    let { params } = this.props.navigation.state;
-    if (!params) params = {};
-    setParams({
-      headerRight: <CapturePostButton
-        onPress={() => !params.isRemind ? this.submit() : this.remind()}
-        text={params.isRemind ? i18n.t('capture.remind').toUpperCase() : i18n.t('capture.post').toUpperCase()}
-        testID="CapturePostButton"
-      />
-    });
-  }
-
-  /**
    * On component did mount
    */
   componentDidMount() {
-    const { params } = this.props.navigation.state;
+    let { params } = this.props.route;
 
     if (params) {
       this.props.capture.reset();
@@ -105,6 +90,24 @@ export default class CapturePoster extends Component {
         });
       }
     }
+
+    const { setOptions } = this.props.navigation;
+    if (!params)  {
+      params = {};
+    }
+    setOptions({
+      headerRight: () => (
+        <CapturePostButton
+          onPress={() => (!params.isRemind ? this.submit() : this.remind())}
+          text={
+            params.isRemind
+              ? i18n.t('capture.remind').toUpperCase()
+              : i18n.t('capture.post').toUpperCase()
+          }
+          testID="CapturePostButton"
+        />
+      )
+    });
 
     this.loadNsfwFromPersistentStorage();
   }
@@ -130,7 +133,7 @@ export default class CapturePoster extends Component {
    * Show context
    */
   showContext () {
-    let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null;
+    let group = this.props.route.params ? this.props.route.params.group : null;
     return group? <Text style={styles.title}> {i18n.t('capture.postingIn', {group: group.name})} </Text> :null;
   }
 
@@ -140,17 +143,19 @@ export default class CapturePoster extends Component {
    */
   navToPrevious(entity, group) {
 
-    const {state, dispatch, goBack} = this.props.navigation;
+    const {dispatch, goBack} = this.props.navigation;
 
-    const params = {
+    const { params } = this.props.route;
+
+    const routeParams = {
       prepend: ActivityModel.checkOrCreate(entity),
     };
 
-    if (group) params.group = group;
+    if (group) routeParams.group = group;
 
     dispatch(NavigationActions.setParams({
-      params,
-      key: state.params.parentKey, // passed from index
+      routeParams,
+      key: params.parentKey, // passed from index
     }));
 
     goBack(null);
@@ -204,7 +209,7 @@ export default class CapturePoster extends Component {
    * Render
    */
   render() {
-    const params = this.props.navigation.state.params || {};
+    const params = this.props.route.params || {};
 
     return params.isRemind ? this.renderRemind() : this.renderNormal();
   }
@@ -215,11 +220,10 @@ export default class CapturePoster extends Component {
   renderNormal() {
     const navigation = this.props.navigation;
 
-    const params = navigation.state.params || {};
+    const params = this.props.route.params || {};
 
     return (
       <View style={CS.flexContainer} testID="capturePosterView">
-        <TopbarNew title={i18n.t('tabTitleNotifications')}/>
         <CaptureGallery
           onSelected={this.onAttachedMedia}
           header={this.getHeader(true)}
@@ -238,9 +242,6 @@ export default class CapturePoster extends Component {
    */
   renderRemind() {
     const text = this.props.capture.text;
-    const navigation = this.props.navigation;
-
-    const params = navigation.state.params || {};
 
     return (
       <View style={CS.flexContainer}>
@@ -261,9 +262,9 @@ export default class CapturePoster extends Component {
    * Get remind card
    */
   getRemind() {
-    const { params } = this.props.navigation.state;
-    const ShowComponent = params.entity.subtype == 'blog' ? BlogCard : Activity;
-    return <ShowComponent hideTabs={true} entity={params.entity} />
+    const { params } = this.props.route;
+    const ShowComponent = params.entity.subtype === 'blog' ? BlogCard : Activity;
+    return <ShowComponent hideTabs={true} entity={params.entity} />;
   }
 
   /**
@@ -311,7 +312,7 @@ export default class CapturePoster extends Component {
    */
   onAttachedMedia = async (response) => {
     const attachment = this.props.capture.attachment;
-    let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null
+    let group = this.props.route.params ? this.props.route.params.group : null
     let extra = null;
 
     if (group) {
@@ -342,7 +343,7 @@ export default class CapturePoster extends Component {
    * Create a remind
    */
   async remind() {
-    const { params } = this.props.navigation.state;
+    const { params } = this.props.route;
     const message = this.props.capture.text;
     const metadata = params.entity.getClientMetadata();
 
@@ -351,7 +352,7 @@ export default class CapturePoster extends Component {
       ...metadata
     };
 
-    let group = this.props.navigation.state.params ? this.props.navigation.state.params.group : null
+    let group = this.props.route.params ? this.props.route.params.group : null
 
     if(HashtagService.slice(message).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
       Alert.alert(i18n.t('capture.maxHashtags', {maxHashtags: HashtagService.maxHashtags}));
@@ -417,8 +418,8 @@ export default class CapturePoster extends Component {
       newPost = Object.assign(newPost, this.props.capture.embed.meta);
     }
 
-    if (this.props.navigation.state.params && this.props.navigation.state.params.group) {
-      newPost.container_guid = this.props.navigation.state.params.group.guid;
+    if (this.props.route.params && this.props.route.params.group) {
+      newPost.container_guid = this.props.route.params.group.guid;
     }
 
     if (this.props.capture.tags && this.props.capture.tags.length) {
@@ -446,8 +447,8 @@ export default class CapturePoster extends Component {
 
       if (this.props.onComplete) {
         this.props.onComplete(response.entity);
-      } else if (this.props.navigation.state.params && this.props.navigation.state.params.group) {
-        this.navToPrevious(response.entity, this.props.navigation.state.params.group);
+      } else if (this.props.route.params && this.props.route.params.group) {
+        this.navToPrevious(response.entity, this.props.route.params.group);
       } else {
         this.navToPrevious(response.entity);
       }

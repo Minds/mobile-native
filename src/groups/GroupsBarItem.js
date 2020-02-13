@@ -39,7 +39,7 @@ export default class GroupsBarItem extends Component {
   }
 
   navToGroup = () => {
-    navigationService.push('GroupView', {group: this.props.group});
+    navigationService.navigate('GroupView', {group: this.props.group});
   }
 
   render() {

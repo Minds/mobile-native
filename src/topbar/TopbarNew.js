@@ -66,22 +66,22 @@ export default class TopbarNew extends Component {
   }
 }
 
-let topbarHeight = 100;
+let topbarHeight = 50;
 let topMargin = 0;
 
 if (Platform.OS == 'ios') {
-  topbarHeight = 100;
+  topbarHeight = 80;
 }
 
 const styles = StyleSheet.create({
   lineHeight0: {
-    lineHeight:0,
+    lineHeight: 28,
   },
   container: {
     height: topbarHeight,
     display: 'flex',
     flexDirection: 'row',
-    paddingBottom: 5,
+    paddingBottom: 8,
   },
   topbar: {
     flex: 1,

@@ -46,8 +46,11 @@ class ActivityScreen extends Component {
     this.loadEntity();
   }
 
+  /**
+   * Load entity
+   */
   async loadEntity() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     if (params.entity && (params.entity.guid || params.entity.entity_guid)) {
 
@@ -141,6 +144,7 @@ class ActivityScreen extends Component {
               store={this.comments}
               navigation={this.props.navigation}
               onInputFocus={this.onFocus}
+              route={this.props.route}
             />
           :
             <View style={CS.flexColumnCentered}>

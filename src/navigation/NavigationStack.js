@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import LoadingScreen from '../LoadingScreen';
@@ -54,6 +54,8 @@ import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import featuresService from '../common/services/features.service';
+import ThemedStyles from '../styles/ThemedStyles';
+import { View } from 'react-native';
 
 
 const hideHeader = {headerShown: false};
@@ -64,9 +66,8 @@ const AppStack = function(props) {
   // const tabScreen = featuresService.has('navigation-2020')
   //   ? withErrorBoundaryScreen(TabsScreenNew)
   //   : withErrorBoundaryScreen(TabsScreen);
-
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <Stack.Screen name="Tabs" component={TabsScreenNew} options={hideHeader} />
       <Stack.Screen name="EmailConfirmation" component={EmailConfirmationScreen}/>
       <Stack.Screen name="Update" component={UpdatingScreen}/>
@@ -74,8 +75,8 @@ const AppStack = function(props) {
       <Stack.Screen name="DeleteChannel" component={DeleteChannelScreen}/>
       <Stack.Screen name="Notifications" component={NotificationsScreen}/>
       <Stack.Screen name="NotificationsSettings" component={NotificationsSettingsScreen}/>
-      <Stack.Screen name="Channel" component={ChannelScreen}/>
-      <Stack.Screen name="Capture" component={CapturePoster}/>
+      <Stack.Screen name="Channel" component={ChannelScreen} options={hideHeader}/>
+      <Stack.Screen name="Capture" component={CapturePoster} />
       <Stack.Screen name="Activity" component={ActivityScreen}/>
       <Stack.Screen name="Conversation" component={ConversationScreen}/>
       <Stack.Screen name="DiscoveryFeed" component={DiscoveryFeedScreen}/>
@@ -87,7 +88,7 @@ const AppStack = function(props) {
       <Stack.Screen name="SettingsRekey" component={RekeyScreen}/>
       <Stack.Screen name="SettingsBilling" component={BillingScreen}/>
       <Stack.Screen name="GroupsList" component={GroupsListScreen}/>
-      <Stack.Screen name="GroupView" component={GroupViewScreen}/>
+      <Stack.Screen name="GroupView" component={GroupViewScreen} options={hideHeader}/>
       <Stack.Screen name="Wallet" component={WalletScreen}/>
       <Stack.Screen name="BlogList" component={BlogsListScreen}/>
       <Stack.Screen name="BoostConsole" component={BoostConsoleScreen}/>
@@ -125,9 +126,14 @@ const AuthStack = function(props) {
 const RootStack = function(props) {
   return (
     <Stack.Navigator mode="modal" headerMode="none">
-      <Stack.Screen name="Auth" component={AuthStack} />
-      <Stack.Screen name="App" component={AppStack} />
-      <Stack.Screen name="Gathering" component={Gathering} />
+      {props.isLoggedIn ? (
+        <Fragment>
+          <Stack.Screen name="App" component={AppStack} />
+          <Stack.Screen name="Gathering" component={Gathering} />
+        </Fragment>
+      ) : (
+        <Stack.Screen name="Auth" component={AuthStack} />
+      )}
     </Stack.Navigator>
   );
 };

@@ -99,7 +99,6 @@ export default class MoreScreen extends Component {
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
           authService.logout();
-          this.props.navigation.navigate('Login');
         }
       }
     ];

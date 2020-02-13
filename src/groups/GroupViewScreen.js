@@ -85,7 +85,7 @@ export default class GroupViewScreen extends Component {
    * Load initial data
    */
   async initialLoad() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     if (params.group) {
       // load group and update async
@@ -113,13 +113,13 @@ export default class GroupViewScreen extends Component {
   }
 
   componentDidMount() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     // load data async
     this.initialLoad();
 
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      const params = this.props.navigation.state.params;
+      const params = this.props.route.params;
       if (params && params.prepend) {
         this.props.groupView.prepend(params.prepend);
         // we clear the parameter to prevent prepend it again on goBack
@@ -214,6 +214,7 @@ export default class GroupViewScreen extends Component {
             entity={group.group}
             store={this.comments}
             navigation={this.props.navigation}
+            route={this.props.route}
             keyboardVerticalOffset = {Header.HEIGHT - 65}
           />
         );

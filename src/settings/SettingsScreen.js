@@ -40,10 +40,10 @@ export default
 @observer
 class SettingsScreen extends Component {
 
-  static navigationOptions = {
-    title: 'Settings',
-    leftHandedInitial: false,
-  };
+  // static navigationOptions = {
+  //   title: 'Settings',
+  //   leftHandedInitial: false,
+  // };
 
   state = {
     showLanguages: false,
@@ -158,8 +158,6 @@ class SettingsScreen extends Component {
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]} />),
         onPress: () => {
           authService.logout();
-
-          this.props.navigation.navigate( 'Login');
         }
       },
       {

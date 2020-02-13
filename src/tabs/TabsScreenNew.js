@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
-import { View } from 'react-native';
+import { View, Platform, TouchableOpacity } from 'react-native';
 
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
@@ -21,7 +21,13 @@ import { Avatar } from 'react-native-elements';
  * Main tabs
  * @param {Object} props
  */
-const Tabs = function(props) {
+const Tabs = function({navigation}) {
+  const isIOS = Platform.OS === 'ios';
+
+  const navToCapture = useCallback(() => navigation.push('Capture'), [
+    navigation,
+  ]);
+
   return (
     <Tab.Navigator
       initialRouteName="Newsfeed"
@@ -33,33 +39,41 @@ const Tabs = function(props) {
         style: {
           borderTopWidth: 0,
           backgroundColor: ThemedStyles.getColor('secondary_background'),
-          height: 100,
-          paddingTop: 10
+          height: isIOS ? 90 : 65,
+          paddingTop: isIOS ? 20 : 2,
         },
         tabStyle: {
           height: 66,
           width: 66,
           ...ThemedStyles.style.centered,
-        }
+        },
       }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName, iconsize = 28;
+          let iconName,
+            iconsize = 28;
 
           switch (route.name) {
             case 'Menu':
               return (
                 <View>
-                  {focused && <View style={[styles.acitivity]}/>}
+                  {focused && <View style={[styles.acitivity]} />}
                   <Avatar
                     rounded
-                    source={{ uri: MINDS_CDN_URI + 'icon/' + AppStores.user.me.guid + '/medium/' +  AppStores.user.me.icontime}}
+                    source={{
+                      uri:
+                        MINDS_CDN_URI +
+                        'icon/' +
+                        AppStores.user.me.guid +
+                        '/medium/' +
+                        AppStores.user.me.icontime,
+                    }}
                     width={34}
                     height={34}
                     testID="AvatarButton"
                   />
                 </View>
-              )
+              );
               break;
             case 'Newsfeed':
               iconName = 'home';
@@ -77,18 +91,42 @@ const Tabs = function(props) {
           }
 
           // You can return any component that you like here!
-          return <TabIcon name={iconName} size={iconsize} color={color} />
+          return <TabIcon name={iconName} size={iconsize} color={color} />;
         },
-      })}
-    >
-      <Tab.Screen name="Newsfeed" component={NewsfeedScreen} navigationOptions={{tabBarTestID:'Menu tab button'}} options={{headerShown: false}} />
-      <Tab.Screen name="Discovery" component={DiscoveryScreen} navigationOptions={{tabBarTestID:'Discovery tab button'}} />
-      <Tab.Screen name="Capture" component={View} navigationOptions={{tabBarTestID:'Capture tab button'}} />
-      <Tab.Screen name="Notifications" component={NotificationsScreen} navigationOptions={{tabBarTestID:'Notifications tab button'}} />
-      <Tab.Screen name="Menu" component={MoreScreenNew} navigationOptions={{tabBarTestID:'Menu tab button'}} />
+      })}>
+      <Tab.Screen
+        name="Newsfeed"
+        component={NewsfeedScreen}
+        options={{ tabBarTestID: 'Menu tab button', headerShown: false }}
+      />
+      <Tab.Screen
+        name="Discovery"
+        component={DiscoveryScreen}
+        options={{ tabBarTestID: 'Discovery tab button' }}
+      />
+      <Tab.Screen
+        name="Capture"
+        component={View}
+        options={{
+          tabBarTestID: 'Capture tab button',
+          tabBarButton: props => (
+            <TouchableOpacity {...props} onPress={navToCapture} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{ tabBarTestID: 'Notifications tab button' }}
+      />
+      <Tab.Screen
+        name="Menu"
+        component={MoreScreenNew}
+        options={{ tabBarTestID: 'Menu tab button' }}
+      />
     </Tab.Navigator>
   );
-}
+};
 
 const styles = {
   acitivity: {
@@ -100,10 +138,8 @@ const styles = {
     borderWidth: 2.5,
     borderRadius: 35,
     position: 'absolute',
-    borderColor: colors.primary
-  }
-}
+    borderColor: colors.primary,
+  },
+};
 
 export default Tabs;
-
-
