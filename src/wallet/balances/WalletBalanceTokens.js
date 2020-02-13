@@ -44,7 +44,7 @@ export default class WalletBalanceTokens extends Component {
     // clear data to free memory
     this.wallet.ledger.list.clearList();
     if (this.disposeEnter) {
-      this.disposeEnter.remove();
+      this.disposeEnter();
     }
   }
 

@@ -1,9 +1,10 @@
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import React, { Fragment } from 'react';
+
+import { createStackNavigator } from '@react-navigation/stack';
 import LoadingScreen from '../LoadingScreen';
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
-import TabsScreen from '../tabs/TabsScreen';
+// import TabsScreen from '../tabs/TabsScreen';
 import TabsScreenNew from '../tabs/TabsScreenNew';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
@@ -53,208 +54,88 @@ import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import featuresService from '../common/services/features.service';
+import ThemedStyles from '../styles/ThemedStyles';
+import { View } from 'react-native';
 
-/**
- * Main stack navigator
- */
-const Stack = createStackNavigator({
-  Tabs: {
-    screen: featuresService.has('navigation-2020')
-      ? withErrorBoundaryScreen(TabsScreenNew)
-      : withErrorBoundaryScreen(TabsScreen)
-  },
-  EmailConfirmation: {
-    screen: withErrorBoundaryScreen(EmailConfirmationScreen)
-  },
-  // Logs: {
-  //   screen: LogsScreen
-  // },
-  Update: {
-    screen: withErrorBoundaryScreen(UpdatingScreen),
-  },
-  Boost: {
-    screen: withErrorBoundaryScreen(BoostScreen),
-    navigationOptions: {
-      gesturesEnabled: false,
-    },
-  },
-  DeleteChannel: {
-    screen: withErrorBoundaryScreen(DeleteChannelScreen),
-  },
-  Notifications: {
-    screen: withErrorBoundaryScreen(NotificationsScreen),
-  },
-  NotificationsSettings: {
-    screen: withErrorBoundaryScreen(NotificationsSettingsScreen),
-  },
-  Channel: {
-    screen: withErrorBoundaryScreen(ChannelScreen),
-    path: 'channel/:guid',
-  },
-  Capture: {
-    screen: withErrorBoundaryScreen(CapturePoster),
-  },
-  Activity: {
-    screen: withErrorBoundaryScreen(ActivityScreen),
-    path: 'activity/:guid',
-  },
-  Conversation: {
-    screen: withErrorBoundaryScreen(ConversationScreen),
-  },
-  DiscoveryFeed: {
-    screen: withErrorBoundaryScreen(DiscoveryFeedScreen),
-  },
-  Subscribers: {
-    screen: withErrorBoundaryScreen(ChannelSubscribers),
-  },
-  Settings: {
-    screen: withErrorBoundaryScreen(SettingsScreen),
-  },
-  SettingsBlockedChannels: {
-    screen: withErrorBoundaryScreen(BlockedChannelsScreen),
-  },
-  SettingsEmail: {
-    screen: withErrorBoundaryScreen(EmailScreen),
-  },
-  SettingsRekey: {
-    screen: withErrorBoundaryScreen(RekeyScreen),
-  },
-  SettingsPassword: {
-    screen: withErrorBoundaryScreen(PasswordScreen),
-  },
-  SettingsBilling: {
-    screen: withErrorBoundaryScreen(BillingScreen),
-  },
-  GroupsList: {
-    screen: withErrorBoundaryScreen(GroupsListScreen),
-  },
-  GroupView: {
-    screen: withErrorBoundaryScreen(GroupViewScreen),
-  },
-  Wallet: {
-    screen: withErrorBoundaryScreen(WalletScreen),
-  },
-  BlogList: {
-    screen: withErrorBoundaryScreen(BlogsListScreen),
-  },
-  BoostConsole: {
-    screen: withErrorBoundaryScreen(BoostConsoleScreen),
-  },
-  BlogView: {
-    screen: withErrorBoundaryScreen(BlogsViewScreen),
-    path: 'blog/view/:guid',
-  },
-  WireFab: {
-    screen: withErrorBoundaryScreen(FabScreen),
-    navigationOptions: {
-      gesturesEnabled: false,
-    },
-  },
-  WalletHistory: {
-    screen: withErrorBoundaryScreen(WalletHistoryScreen),
-  },
-  ViewImage: {
-    screen: withErrorBoundaryScreen(ViewImageScreen),
-  },
-  BlockchainWallet: {
-    screen: withErrorBoundaryScreen(BlockchainWalletScreen),
-  },
-  Contributions: {
-    screen: withErrorBoundaryScreen(ContributionsScreen),
-  },
-  Transactions: {
-    screen: withErrorBoundaryScreen(TransactionsScreen),
-  },
-  BlockchainWalletModal: {
-    screen: withErrorBoundaryScreen(BlockchainWalletModalScreen),
-    navigationOptions: {
-      gesturesEnabled: false,
-    },
-  },
-  BlockchainWalletImport: {
-    screen: withErrorBoundaryScreen(BlockchainWalletImportScreen),
-  },
-  BlockchainWalletDetails: {
-    screen: withErrorBoundaryScreen(BlockchainWalletDetailsScreen),
-  },
-  Report: {
-    screen: withErrorBoundaryScreen(ReportScreen),
-  },
-  More: {
-    screen: withErrorBoundaryScreen(MoreScreen),
-  },
-  Withdraw: {
-    screen: withErrorBoundaryScreen(WithdrawScreen),
-  },
-  WalletOnboarding: {
-    screen: withErrorBoundaryScreen(WalletOnboardingScreen),
-  },
-  ComingSoon: {
-    screen: withErrorBoundaryScreen(ComingSoonScreen),
-  },
-  NotSupported: {
-    screen: withErrorBoundaryScreen(NotSupportedScreen),
-  },
-  OnboardingScreen: {
-    screen: withErrorBoundaryScreen(OnboardingScreen),
-  },
-  IssueReport: {
-    screen: withErrorBoundaryScreen(IssueReportScreen),
-  },
-  Wizard: {
-    screen: withErrorBoundaryScreen(Wizard),
-  },
-  OnboardingScreenNew: {
-    screen: withErrorBoundaryScreen(OnboardingScreenNew),
-  },
-});
 
-/**
- * RootStack
- */
-const RootStack = createStackNavigator(
-  {
-    Main: {
-      screen: Stack,
-    },
-    // modal screen
-    Gathering: {
-      screen: Gathering,
-    },
-  },
-  {
-    mode: 'modal',
-    headerMode: 'none',
-  },
-);
+const hideHeader = {headerShown: false};
 
-/**
- * Auth Stack
- */
-const AuthStack = createStackNavigator({
-  Login: {
-    screen: withErrorBoundaryScreen(LoginScreen),
-  },
-  Forgot: {
-    screen: withErrorBoundaryScreen(ForgotScreen),
-  },
-  Register: {
-    screen: withErrorBoundaryScreen(RegisterScreen),
-  },
-});
+const Stack = createStackNavigator();
 
-/**
- * Main switch navigator
- */
-export default createAppContainer(
-  createSwitchNavigator(
-    {
-      Loading: LoadingScreen,
-      Auth: AuthStack,
-      App: RootStack,
-    },
-    {
-      initialRouteName: 'Loading',
-    },
-  ),
-);
+const AppStack = function(props) {
+  // const tabScreen = featuresService.has('navigation-2020')
+  //   ? withErrorBoundaryScreen(TabsScreenNew)
+  //   : withErrorBoundaryScreen(TabsScreen);
+  return (
+    <Stack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+      <Stack.Screen name="Tabs" component={TabsScreenNew} options={hideHeader} />
+      <Stack.Screen name="EmailConfirmation" component={EmailConfirmationScreen}/>
+      <Stack.Screen name="Update" component={UpdatingScreen}/>
+      <Stack.Screen name="Boost" component={BoostScreen} options={{gesturesEnabled: false}}/>
+      <Stack.Screen name="DeleteChannel" component={DeleteChannelScreen}/>
+      <Stack.Screen name="Notifications" component={NotificationsScreen}/>
+      <Stack.Screen name="NotificationsSettings" component={NotificationsSettingsScreen}/>
+      <Stack.Screen name="Channel" component={ChannelScreen} options={hideHeader}/>
+      <Stack.Screen name="Capture" component={CapturePoster} />
+      <Stack.Screen name="Activity" component={ActivityScreen}/>
+      <Stack.Screen name="Conversation" component={ConversationScreen}/>
+      <Stack.Screen name="DiscoveryFeed" component={DiscoveryFeedScreen}/>
+      <Stack.Screen name="Subscribers" component={ChannelSubscribers}/>
+      <Stack.Screen name="Settings" component={SettingsScreen}/>
+      <Stack.Screen name="SettingsBlockedChannels" component={BlockedChannelsScreen}/>
+      <Stack.Screen name="SettingsEmail" component={EmailScreen}/>
+      <Stack.Screen name="SettingsPassword" component={PasswordScreen}/>
+      <Stack.Screen name="SettingsRekey" component={RekeyScreen}/>
+      <Stack.Screen name="SettingsBilling" component={BillingScreen}/>
+      <Stack.Screen name="GroupsList" component={GroupsListScreen}/>
+      <Stack.Screen name="GroupView" component={GroupViewScreen} options={hideHeader}/>
+      <Stack.Screen name="Wallet" component={WalletScreen}/>
+      <Stack.Screen name="BlogList" component={BlogsListScreen}/>
+      <Stack.Screen name="BoostConsole" component={BoostConsoleScreen}/>
+      <Stack.Screen name="BlogView" component={BlogsViewScreen}/>
+      <Stack.Screen name="WireFab" component={FabScreen}/>
+      <Stack.Screen name="WalletHistory" component={WalletHistoryScreen}/>
+      <Stack.Screen name="ViewImage" component={ViewImageScreen}/>
+      <Stack.Screen name="BlockchainWallet" component={BlockchainWalletScreen}/>
+      <Stack.Screen name="Contributions" component={ContributionsScreen}/>
+      <Stack.Screen name="Transactions" component={TransactionsScreen}/>
+      <Stack.Screen name="BlockchainWalletModal" component={BlockchainWalletModalScreen} options={{gesturesEnabled: false}}/>
+      <Stack.Screen name="BlockchainWalletImport" component={BlockchainWalletImportScreen} />
+      <Stack.Screen name="BlockchainWalletDetails" component={BlockchainWalletDetailsScreen} />
+      <Stack.Screen name="Report" component={ReportScreen} />
+      <Stack.Screen name="More" component={MoreScreen} />
+      <Stack.Screen name="Withdraw" component={WithdrawScreen} />
+      <Stack.Screen name="WalletOnboarding" component={WalletOnboardingScreen} />
+      <Stack.Screen name="NotSupported" component={NotSupportedScreen} />
+      <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+      <Stack.Screen name="OnboardingScreenNew" component={OnboardingScreenNew} />
+    </Stack.Navigator>
+  );
+};
+
+const AuthStack = function(props) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Login" component={LoginScreen} options={hideHeader} />
+      <Stack.Screen name="Forgot" component={ForgotScreen} options={hideHeader}/>
+      <Stack.Screen name="Register" component={RegisterScreen} options={hideHeader} />
+    </Stack.Navigator>
+  );
+};
+
+const RootStack = function(props) {
+  return (
+    <Stack.Navigator mode="modal" headerMode="none">
+      {props.isLoggedIn ? (
+        <Fragment>
+          <Stack.Screen name="App" component={AppStack} />
+          <Stack.Screen name="Gathering" component={Gathering} />
+        </Fragment>
+      ) : (
+        <Stack.Screen name="Auth" component={AuthStack} />
+      )}
+    </Stack.Navigator>
+  );
+};
+
+export default RootStack;

@@ -1,16 +1,15 @@
-import { NavigationActions, StackActions, SwitchActions } from 'react-navigation';
+import { NavigationActions, StackActions, SwitchActions } from '@react-navigation/native';
 
-let _navigator;
+let _navigator = null;
 
 function getStateFrom(nav) {
-  let state = nav.routes[nav.index];
-  if (state.routes) {
-    state = getStateFrom(state);
+  if (nav.routes && nav.routes[nav.index].state) {
+    return getStateFrom(nav.routes[nav.index].state);
   }
-  return state;
+  return nav.routes[nav.index];
 }
 
-function setTopLevelNavigator(navigatorRef) {
+export function setTopLevelNavigator(navigatorRef) {
   _navigator = navigatorRef;
 }
 
@@ -19,24 +18,17 @@ function getState() {
 }
 
 function getCurrentState() {
-  return getStateFrom(_navigator.state.nav);
+  const root = _navigator.getRootState();
+  return getStateFrom(root);
 }
 
-function navigate(routeName, params) {
-  _navigator.dispatch(
-    NavigationActions.navigate({
-      routeName,
-      params,
-    })
-  );
+function navigate(...args) {
+  _navigator.navigate(...args);
 }
 
-function push(routeName, params) {
+function push(...args) {
   _navigator.dispatch(
-    StackActions.push({
-      routeName,
-      params,
-    })
+    StackActions.push(...args)
   );
 }
 
@@ -58,6 +50,10 @@ function reset(routeName, params) {
   _navigator.dispatch(resetAction);
 }
 
+function addListener(name, fn) {
+  return _navigator.addListener(name,fn);
+}
+
 // add other navigation functions that you need and export them
 
 export default {
@@ -68,5 +64,6 @@ export default {
   getCurrentState,
   push,
   setTopLevelNavigator,
-  goBack
+  goBack,
+  addListener,
 };

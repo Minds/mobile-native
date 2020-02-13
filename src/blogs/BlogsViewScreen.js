@@ -23,7 +23,7 @@ import {
 
 import ActionSheet from 'react-native-actionsheet';
 
-import { Header } from 'react-navigation-stack';
+import { Header } from '@react-navigation/stack';
 
 import { inject, observer } from 'mobx-react/native';
 
@@ -41,7 +41,7 @@ import ThumbDownAction from '../newsfeed/activity/actions/ThumbDownAction';
 import RemindAction from '../newsfeed/activity/actions/RemindAction';
 import CommentsAction from '../newsfeed/activity/actions/CommentsAction';
 import shareService from '../share/ShareService';
-import commentsStoreProvider from '../comments/CommentsStoreProvider';
+import Provider from '../comments/CommentsStoreProvider';
 import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import logService from '../common/services/log.service';
@@ -86,7 +86,7 @@ export default class BlogsViewScreen extends Component {
    * Component did mount
    */
   async componentDidMount() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
     try {
       if (params.blog) {
         if (params.blog._list && params.blog._list.metadataService) {
@@ -267,6 +267,7 @@ export default class BlogsViewScreen extends Component {
               entity={this.props.blogsView.blog}
               store={this.comments}
               navigation={this.props.navigation}
+              route={this.props.route}
               keyboardVerticalOffset = {Header.HEIGHT - 65}
             />
           :

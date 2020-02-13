@@ -69,7 +69,7 @@ export default class FabScreen extends Component {
   }
 
   async loadUserAndSetDefaults() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     // if there is no default data we reset the store
     if (!params || !params.default) {

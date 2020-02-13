@@ -4,8 +4,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Image,
-  FlatList,
   Platform,
+  FlatList
 } from 'react-native';
 
 import CameraRoll from '@react-native-community/cameraroll';
@@ -14,11 +14,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import CenteredLoading from '../common/components/CenteredLoading';
 import androidPermissionsService from '../common/services/android-permissions.service';
-import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
 import { CommonStyle } from '../styles/Common';
 import { View } from 'react-native-animatable';
-
 /**
  * Gallery View
  */
@@ -109,20 +107,23 @@ export default class CaptureGallery extends PureComponent {
    * Render
    */
   render() {
-    if (!this.state.imagesLoaded) {
-      return <CenteredLoading />;
-    }
-
     return (
-      <FlatList
-        ref={this.setListRef}
-        ListHeaderComponent={this.props.header}
-        data={this.state.photos}
-        renderItem={this.renderTile}
-        onEndReached={this._loadPhotos}
-        ListFooterComponent={this.state.loading ? <CenteredLoading /> : null}
-        numColumns={3}
-      />
+      <View style={[CommonStyle.backgroundWhite, CommonStyle.flexContainer]}>
+        {this.state.imagesLoaded ? (
+          <FlatList
+            ref={this.setListRef}
+            ListHeaderComponent={this.props.header}
+            data={this.state.photos}
+            renderItem={this.renderTile}
+            style={CommonStyle.flexContainer}
+            onEndReached={this._loadPhotos}
+            ListFooterComponent={this.state.loading ? <CenteredLoading /> : null}
+            numColumns={3}
+          />
+        ) : (
+          <CenteredLoading />
+        )}
+      </View>
     );
   }
 

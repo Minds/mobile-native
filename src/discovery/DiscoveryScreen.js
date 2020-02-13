@@ -72,21 +72,21 @@ class DiscoveryScreen extends Component {
     minimumViewTime: 300,
   };
 
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      featuresService.has('navigation-2020')
-      ? <TabIcon name="hashtag" color={tintColor} />
-      : <Icon name="search" size={24} color={tintColor} />
-    ),
-    tabBarOnPress: ({ navigation, defaultHandler }) => {
-      // tab button tapped again?
-      if (navigation.isFocused()) {
-        stores.discovery.reload();
-        return;
-      }
-      defaultHandler();
-    }
-  }
+  // static navigationOptions = {
+  //   tabBarIcon: ({ tintColor }) => (
+  //     featuresService.has('navigation-2020')
+  //     ? <TabIcon name="hashtag" color={tintColor} />
+  //     : <Icon name="search" size={24} color={tintColor} />
+  //   ),
+  //   tabBarOnPress: ({ navigation, defaultHandler }) => {
+  //     // tab button tapped again?
+  //     if (navigation.isFocused()) {
+  //       stores.discovery.reload();
+  //       return;
+  //     }
+  //     defaultHandler();
+  //   }
+  // }
 
   /**
    * constructor
@@ -94,9 +94,9 @@ class DiscoveryScreen extends Component {
   constructor(props) {
     super(props);
 
-    this.props.discovery.init();
+    // this.props.discovery.init();
 
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
     if (params && params.type) {
       this.props.discovery.filters.setType(params.type);
     }
@@ -134,11 +134,11 @@ class DiscoveryScreen extends Component {
    */
   componentWillUnmount() {
     if (this.disposeEnter) {
-      this.disposeEnter.remove();
+      this.disposeEnter();
     }
 
     if (this.disposeLeave) {
-      this.disposeLeave.remove();
+      this.disposeLeave();
     }
   }
 

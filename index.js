@@ -5,7 +5,7 @@ import "./global";
 import { AppRegistry, Platform } from 'react-native';
 import App from './App';
 import { useScreens } from 'react-native-screens';
-useScreens(Platform.OS !== 'ios');
+useScreens();
 
 // const modules = require.getModules();
 // const moduleIds = Object.keys(modules);

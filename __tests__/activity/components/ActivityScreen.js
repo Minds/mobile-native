@@ -43,13 +43,13 @@ describe('Activity screen component', () => {
   it('renders correctly with an entity as param', async () => {
     navigation = {
       push: jest.fn(),
-      state: {
+      route: {
         routeName: 'some',
         params: {entity: activitiesServiceFaker().load(1).activities[0]}
       }
     };
 
-    entitiesService.single.mockResolvedValue(ActivityModel.create(navigation.state.params.entity));
+    entitiesService.single.mockResolvedValue(ActivityModel.create(navigation.route.entity));
 
     screen = shallow(
       <ActivityScreen navigation={navigation}/>

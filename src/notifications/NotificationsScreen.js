@@ -89,7 +89,7 @@ export default class NotificationsScreen extends Component {
     // clear data to free memory
     this.props.notifications.list.clearList();
     if (this.disposeEnter) {
-      this.disposeEnter.remove();
+      this.disposeEnter();
     }
   }
 

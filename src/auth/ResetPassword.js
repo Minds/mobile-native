@@ -115,7 +115,7 @@ export default class ResetPassword extends PureComponent {
     if (!this.state.sent ) {
       this.setState({sending: true});
 
-      const state = navigation.getCurrentState();
+      const state = navigation.dangerouslyGetState();
 
       try {
         const data = await authService.reset(state.params.username, this.state.password, state.params.code);

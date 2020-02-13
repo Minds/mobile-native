@@ -38,18 +38,11 @@ import ThemedStyles from '../styles/ThemedStyles';
 const ICON_SIZE = 24;
 
 /**
-* More screen, new design (menu)
-*/
+ * More screen, new design (menu)
+ */
 export default
 @inject('user')
 class MoreScreenNew extends Component {
-
-  static navigationOptions = {
-    title: 'Minds',
-    tabBarIcon: ({ tintColor }) => (
-      <TabIcon name="md-menu" size={24} color={tintColor} />
-    ),
-  };
 
   navToChannel = () => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })
 
@@ -125,7 +118,6 @@ class MoreScreenNew extends Component {
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ CS.colorIcon } />),
         onPress: () => {
           authService.logout();
-          this.props.navigation.navigate('Login');
         }
       }
     ];
@@ -133,23 +125,36 @@ class MoreScreenNew extends Component {
     return list;
   }
 
-  /**
-   * Recieve a list a return a view container with a list of items
-   * @param {Array} list 
-   */
-  renderList = list => {
+  render() {
+    const avatar = this.getAvatar(),
+          channel = this.props.user.me;
+
     const CS = ThemedStyles.style;
 
     return (
-      <ScrollView 
+      <SafeAreaView style={[
+        CS.flexContainer,
+        CS.backgroundPrimary,
+      ]}>
+      <ScrollView
         style={[
-          styles.container,
+          CS.flexContainer,
           CS.backgroundPrimary,
-          CS.marginTop4x,
+          CS.marginTop11x,
         ]}
       >
+        <View style={styles.headerContainer} >
+          <TouchableOpacity onPress={this.navToChannel}>
+            <Image source={avatar} style={styles.wrappedAvatar}/>
+          </TouchableOpacity>
+          <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop2x]}>{channel.name}</Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal]}>@{channel.username}</Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal, CS.marginTop3x]}>
+            {`${abbrev(channel.subscribers_count, 0)} ${i18n.t('subscribers')}   ·   ${abbrev(channel.subscriptions_count, 0)} ${i18n.t('subscriptions')}`}
+          </Text>
+        </View>
         {
-          list.map((l, i) => (
+          this.getOptionsList().map((l, i) => (
             <ListItem
               key={i}
               title={l.name}
@@ -165,35 +170,7 @@ class MoreScreenNew extends Component {
           ))
         }
       </ScrollView>
-    )
-  }
 
-  render() {
-    const avatar = this.getAvatar(),
-          channel = this.props.user.me;
-
-    const CS = ThemedStyles.style;
-
-    return (
-      <SafeAreaView style={[
-        CS.flexContainer,
-        CS.backgroundPrimary,
-      ]}>
-
-        {/* CHANNEL DATA */}
-        <View style={styles.headerContainer} >
-          <TouchableOpacity onPress={this.navToChannel}>
-            <Image source={avatar} style={styles.wrappedAvatar}/>
-          </TouchableOpacity>
-          <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop2x]}>{channel.name}</Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal]}>@{channel.username}</Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal, CS.marginTop3x]}>
-            {`${abbrev(channel.subscribers_count, 0)} ${i18n.t('subscribers')}   ·   ${abbrev(channel.subscriptions_count, 0)} ${i18n.t('subscriptions')}`}
-          </Text>
-        </View>
-
-        {/* MENU */}
-        {this.renderList(this.getOptionsList())}
       </SafeAreaView>
     );
   }

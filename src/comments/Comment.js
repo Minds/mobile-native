@@ -120,6 +120,7 @@ class Comment extends Component {
               onInputFocus={this.onInputFocus}
               onCommentFocus={this.onCommentFocus}
               navigation={this.props.navigation}
+              route={this.props.route}
             />
           }
 
