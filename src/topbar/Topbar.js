@@ -7,6 +7,7 @@ import {
   Platform,
   TouchableOpacity,
   Dimensions,
+  SafeAreaView,
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react/native'
@@ -16,7 +17,7 @@ import { Avatar } from 'react-native-elements';
 
 import { MINDS_CDN_URI } from '../config/Config';
 import featuresService from '../common/services/features.service';
-import { SafeAreaView } from 'react-navigation';
+
 import isIphoneX from '../common/helpers/isIphoneX';
 import testID from '../common/helpers/testID';
 import EmailConfirmation from './EmailConfirmation';

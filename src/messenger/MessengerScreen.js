@@ -25,10 +25,6 @@ import ErrorLoading from '../common/components/ErrorLoading';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 
-const tabBarIcon = !featuresService.has('navigation-2020')
-  ? ({tintColor}) => <MessengerTabIcon tintColor={tintColor} />
-  : null;
-
 
 /**
  * Messenger Conversarion List Screen
@@ -42,7 +38,6 @@ class MessengerScreen extends Component {
   };
 
   static navigationOptions = {
-    tabBarIcon: tabBarIcon,
     header: null,
   };
 

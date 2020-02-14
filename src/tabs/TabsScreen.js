@@ -2,7 +2,10 @@ import React, {
     Component
 } from 'react';
 
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator();
+
 import {
   jumpTo,
   SafeAreaView
@@ -23,79 +26,85 @@ import MessengerScreen from '../messenger/MessengerScreen';
 import featuresService from '../common/services/features.service';
 import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 import isIphoneX from '../common/helpers/isIphoneX';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MessengerTabIcon from '../messenger/MessengerTabIcon';
+import NotificationIcon from '../notifications/NotificationsTabIcon';
 
-let screens = {
-
-  Discovery: {
-    screen: withErrorBoundaryScreen(DiscoveryScreen),
-    navigationOptions: {
-      tabBarTestID:'Discovery tab button',
-      tabBarAccessibilityLabel: 'Discovery tab button',
-    },
-  },
-  Newsfeed: {
-    screen: withErrorBoundaryScreen(NewsfeedScreen),
-    navigationOptions: {
-      tabBarTestID:'Newsfeed tab button',
-      tabBarAccessibilityLabel: 'Newsfeed tab button',
-    },
-  },
-  Messenger: {
-    screen: withErrorBoundaryScreen(MessengerScreen),
-    navigationOptions: {
-      tabBarTestID:'MessengerTabButton',
-      tabBarAccessibilityLabel: 'Messenger tab button',
-    },
-  },
-  Notifications: {
-    screen: withErrorBoundaryScreen(NotificationsScreen),
-    navigationOptions: {
-      tabBarTestID:'Notifications tab button',
-      tabBarAccessibilityLabel: 'Notifications tab button',
-    },
-  }
-};
-
-if (featuresService.has('crypto')) {
+const getCrypto = function() {
   const WalletScreen  = require('../wallet/WalletScreen').default;
-  screens = {
-    Wallet:{
-      screen: withErrorBoundaryScreen(WalletScreen),
-      navigationOptions: {
-        tabBarTestID:'Wallet tab button',
-        tabBarAccessibilityLabel: 'Wallet tab button',
-      },
-    },
-    ...screens
-  };
+  return (<Tab.Screen
+    name="Wallet"
+    component={WalletScreen}
+    options={{ tabBarTestID: 'Wallet tab button' }}
+  />);
 }
 
-const Tabs = (
-  createMaterialTopTabNavigator(screens, {
-    tabBarPosition: 'bottom',
-    animationEnabled: false,
-    swipeEnabled: true,
-    lazy: false,
-    removeClippedSubviews: false,
-    tabBarOptions: {
-      showLabel: false,
-      showIcon: true,
-      activeTintColor: '#FFF',
-      style: {
-        backgroundColor: '#222',
-        paddingBottom: isIphoneX ? 20 : null
-      },
-      indicatorStyle: {
-        marginBottom: isIphoneX ? 20 : null
-      }
-    },
-    initialRouteName: 'Newsfeed',
-    navigationOptions: {
-      header: props => <Topbar {...props} />,
-    }
-  })
-);
+const Tabs = function({navigation}) {
+  const isIOS = Platform.OS === 'ios';
 
-const inset = { bottom: 'always', top: 'never' };
+
+  return (
+    <Tab.Navigator
+      initialRouteName="Newsfeed"
+      tabBarOptions= {{
+        showLabel: false,
+        showIcon: true,
+        activeTintColor: '#FFF',
+        style: {
+          backgroundColor: '#222',
+          paddingBottom: isIphoneX ? 20 : null
+        },
+        indicatorStyle: {
+          marginBottom: isIphoneX ? 20 : null
+        }
+      }}
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName,
+            iconsize = 24;
+
+          switch (route.name) {
+            case 'Messenger':
+              return <MessengerTabIcon tintColor={color}/>
+            case 'Newsfeed':
+              return <IonIcon name="md-home" size={iconsize} color={color} />
+            case 'Discovery':
+              return <Icon name="search" size={iconsize} color={color} />
+            case 'Notifications':
+              return <NotificationIcon tintColor={color} size={iconsize} />
+            case 'Wallet':
+              return <CIcon name="bank" size={iconsize} color={color} />
+          }
+
+        },
+      })}>
+     {
+       featuresService.has('crypto') && getCrypto()
+     }
+     <Tab.Screen
+        name="Discovery"
+        component={DiscoveryScreen}
+        options={{ tabBarTestID: 'Discovery tab button' }}
+      />
+      <Tab.Screen
+        name="Newsfeed"
+        component={NewsfeedScreen}
+        options={{ tabBarTestID: 'Menu tab button' }}
+      />
+      <Tab.Screen
+        name="Messenger"
+        component={MessengerScreen}
+        options={{ tabBarTestID: 'Messenger tab button'}}
+      />
+      <Tab.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{ tabBarTestID: 'Notifications tab button' }}
+      />
+    </Tab.Navigator>
+  )  
+}
 
 export default Tabs

@@ -57,6 +57,7 @@ import featuresService from '../common/services/features.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { View } from 'react-native';
 import MessengerScreen from '../messenger/MessengerScreen';
+//import Topbar from '../topbar/Topbar';
 
 
 const hideHeader = {headerShown: false};
@@ -71,7 +72,15 @@ const AppStack = function(props) {
   //   : withErrorBoundaryScreen(TabsScreen);
   return (
     <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
-      <AppStackNav.Screen name="Tabs" component={TabsScreenNew} options={hideHeader} />
+      <AppStackNav.Screen 
+        name="Tabs" 
+        component={TabsScreenNew}
+        options={hideHeader}
+        /*component={TabsScreen}  
+        options={({ navigation, route }) => ({
+          header: props => <Topbar {...props} />,
+        })}*/
+      />
       <AppStackNav.Screen name="EmailConfirmation" component={EmailConfirmationScreen}/>
       <AppStackNav.Screen name="Update" component={UpdatingScreen}/>
       <AppStackNav.Screen name="Boost" component={BoostScreen} options={{gesturesEnabled: false}}/>
