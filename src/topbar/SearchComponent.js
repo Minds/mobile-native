@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react/native'
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Platform } from 'react-native';
 import i18n from '../common/services/i18n.service';
 import TextInput from '../common/components/TextInput';
 import SearchResult from './SearchResultComponent';
@@ -63,12 +63,12 @@ class SearchComponent extends Component {
           backdropOpacity={ 1 }
         >
           <SafeAreaView style={[CS.flexContainer, CS.backgroundSecondary]}>
-            <View style={[styles.header, CS.marginTop4x, CS.marginBottom4x]}>
+            <View style={[styles.header, CS.marginBottom4x, Platform.OS === 'android' ? CS.marginTop2x : CS.marginTop4x]}>
               <View style={[CS.rowJustifyStart, CS.paddingLeft2x]}>
                 <Icon 
                   name="search"
                   size={24}
-                  style={[CS.colorIcon, CS.marginRight2x]}
+                  style={[CS.colorIcon, CS.marginRight2x, Platform.OS === 'android' ? CS.centered : null]}
                 />
                 <TextInput
                   placeholder={i18n.t('discovery.search')}
@@ -82,7 +82,7 @@ class SearchComponent extends Component {
                 onPress={this.toggleSearching} 
                 name="close" 
                 size={18} 
-                style={[styles.button, CS.colorIcon]}
+                style={[styles.button, CS.colorIcon, Platform.OS === 'android' ? CS.centered : null]}
               />
             </View>
 

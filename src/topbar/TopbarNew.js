@@ -23,6 +23,7 @@ import SearchComponent from './SearchComponent';
 import navigation from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import MessengerTabIcon from '../messenger/MessengerTabIconNew';
 
 const forceInset = isIphoneX ? {top: 10} : null
 
@@ -54,7 +55,7 @@ export default class TopbarNew extends Component {
                 <Text style={[CS.titleText, CS.colorPrimaryText, styles.lineHeight0]} >{this.props.title}</Text>
               </View>
               <View style={styles.topbarRight}>
-                <Icon name="chat-bubble-outline" size={24} style={[styles.button, CS.colorIcon]}/>
+                <MessengerTabIcon navigation={navigation}/>
                 <SearchComponent user={this.props.user} navigation={navigation} />
               </View>
             </View>

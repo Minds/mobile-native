@@ -56,6 +56,7 @@ import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import featuresService from '../common/services/features.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { View } from 'react-native';
+import MessengerScreen from '../messenger/MessengerScreen';
 
 
 const hideHeader = {headerShown: false};
@@ -109,6 +110,7 @@ const AppStack = function(props) {
       <Stack.Screen name="NotSupported" component={NotSupportedScreen} />
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
       <Stack.Screen name="OnboardingScreenNew" component={OnboardingScreenNew} />
+      <Stack.Screen name="Messenger" component={MessengerScreen} />
     </Stack.Navigator>
   );
 };
