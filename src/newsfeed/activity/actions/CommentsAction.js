@@ -52,7 +52,8 @@ class CommentsAction extends Component {
   openComments = () => {
     const cantOpen = !this.props.entity.allow_comments && this.props.entity['comments:count'] == 0;
     // TODO: fix
-    if (this.props.navigation.state.routeName == 'Activity' || cantOpen) {
+    const routes = this.props.navigation.dangerouslyGetState().routes;
+    if ((routes && routes[routes.length - 1].name == 'Activity') || cantOpen) {
       return;
     }
     this.props.navigation.push('Activity', {
