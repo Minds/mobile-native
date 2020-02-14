@@ -82,8 +82,6 @@ if (Platform.OS == 'ios') {
 
 const styles = StyleSheet.create({
   container: {
-    height: topbarHeight,
-    display: 'flex',
     flexDirection: 'column',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
@@ -93,6 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
+    paddingVertical: 5,
   },
   topbarLeft: {
     width: 100,
