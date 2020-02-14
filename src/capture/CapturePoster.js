@@ -7,7 +7,7 @@ import {
   Alert
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 import { Icon } from 'react-native-elements'
 import {
   NavigationActions

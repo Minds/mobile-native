@@ -20,7 +20,7 @@ import ProgressBar from './ProgressBar';
 
 let FORWARD_DURATION = 7;
 
-import {observer} from 'mobx-react/native';
+import {observer} from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {CommonStyle as CS} from '../styles/Common';
 import colors from '../styles/Colors';

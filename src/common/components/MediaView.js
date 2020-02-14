@@ -4,7 +4,7 @@ import React, {
   Component
 } from 'react';
 
-import {observer} from "mobx-react/native";
+import {observer} from "mobx-react";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
@@ -136,7 +136,7 @@ export default class MediaView extends Component {
    * Pause video if exist
    */
   pauseVideo() {
-    this.videoPlayer && this.videoPlayer.wrappedInstance && this.videoPlayer.wrappedInstance.pause();
+    this.videoPlayer && this.videoPlayer && this.videoPlayer.pause();
   }
 
   imageError = (err) => {

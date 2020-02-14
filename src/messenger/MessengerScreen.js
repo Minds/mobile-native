@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import {inject, observer} from 'mobx-react/native';
+import {inject, observer} from 'mobx-react';
 
 import _ from 'lodash';
 

@@ -8,7 +8,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 
 @inject('wallet')
 @observer

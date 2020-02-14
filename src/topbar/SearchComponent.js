@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react/native'
+import { observer } from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StyleSheet, View, SafeAreaView, Platform } from 'react-native';
@@ -17,7 +17,7 @@ class SearchComponent extends Component {
   state = {
     searchText: '',
   }
-  
+
   /**
    * Load search history
    */
@@ -51,7 +51,7 @@ class SearchComponent extends Component {
     const CS = ThemedStyles.style;
     return (
       <View>
-        <Icon 
+        <Icon
           onPress={!this.isSearching() ? this.toggleSearching : null}
           name="search"
           size={24}
@@ -65,7 +65,7 @@ class SearchComponent extends Component {
           <SafeAreaView style={[CS.flexContainer, CS.backgroundSecondary]}>
             <View style={[styles.header, CS.marginBottom4x, Platform.OS === 'android' ? CS.marginTop2x : CS.marginTop4x]}>
               <View style={[CS.rowJustifyStart, CS.paddingLeft2x]}>
-                <Icon 
+                <Icon
                   name="search"
                   size={24}
                   style={[CS.colorIcon, CS.marginRight2x, Platform.OS === 'android' ? CS.centered : null]}
@@ -78,10 +78,10 @@ class SearchComponent extends Component {
                   style={styles.textInput}
                 />
               </View>
-              <Icon 
-                onPress={this.toggleSearching} 
-                name="close" 
-                size={18} 
+              <Icon
+                onPress={this.toggleSearching}
+                name="close"
+                size={18}
                 style={[styles.button, CS.colorIcon, Platform.OS === 'android' ? CS.centered : null]}
               />
             </View>
@@ -89,7 +89,7 @@ class SearchComponent extends Component {
             <SearchResult
               user={this.props.user}
               ref={this.handleSearchResultRef}
-              navigation={this.props.navigation} 
+              navigation={this.props.navigation}
               search={this.search}/>
 
           </SafeAreaView>

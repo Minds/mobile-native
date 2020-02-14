@@ -12,7 +12,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native';
+} from 'mobx-react';
 
 import Button from '../../common/components/Button';
 

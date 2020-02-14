@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import { View } from 'react-native';
 
@@ -83,10 +83,13 @@ export default class NewsfeedScreen extends Component {
     await this.props.newsfeed.feedStore.fetchRemoteOrLocal();
 
     // load groups after the feed
-    await this.groupsBar.wrappedInstance.initialLoad();
+    await this.groupsBar.initialLoad();
     // load discovery after the feed is loaded
-    this.props.discovery.init();
-    this.props.discovery.fetch();
+    // setTimeout(() => {
+      console.log('ahora')
+      this.props.discovery.init();
+      this.props.discovery.fetch();
+    // }, 1000)
   }
 
   /**

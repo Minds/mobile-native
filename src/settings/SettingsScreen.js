@@ -29,7 +29,7 @@ import i18n from '../common/services/i18n.service';
 import appStores from '../../AppStores';
 import logService from '../common/services/log.service';
 import storageService from '../common/services/storage.service';
-import { observer } from 'mobx-react/native';
+import { observer } from 'mobx-react';
 import ModalPicker from '../common/components/ModalPicker';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';

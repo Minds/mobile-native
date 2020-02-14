@@ -12,7 +12,7 @@ import {
 
 import {
   observer,
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CommonStyle as CS } from '../../../styles/Common';

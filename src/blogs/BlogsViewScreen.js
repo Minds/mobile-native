@@ -25,7 +25,7 @@ import ActionSheet from 'react-native-actionsheet';
 
 import { Header } from '@react-navigation/stack';
 
-import { inject, observer } from 'mobx-react/native';
+import { inject, observer } from 'mobx-react';
 
 import FastImage from 'react-native-fast-image';
 import { Icon } from 'react-native-elements';

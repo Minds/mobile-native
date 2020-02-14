@@ -10,7 +10,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 import token from "../../common/helpers/token";
 import number from "../../common/helpers/number";
 import i18n from '../../common/services/i18n.service';

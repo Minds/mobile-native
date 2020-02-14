@@ -21,7 +21,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import _ from 'lodash';
 
@@ -91,18 +91,19 @@ class DiscoveryScreen extends Component {
   /**
    * constructor
    */
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    // this.props.discovery.init();
+  //   // this.props.discovery.init();
 
-    const params = this.props.route.params;
-    if (params && params.type) {
-      this.props.discovery.filters.setType(params.type);
-    }
+  //   const params = this.props.route.params;
+  //   if (params && params.type) {
+  //     console.log('ACAACACA')
+  //     this.props.discovery.filters.setType(params.type);
+  //   }
 
-    this.tileError = i18n.t('error');
-  }
+  //   this.tileError = i18n.t('error');
+  // }
 
   /**
    * On component will mount
@@ -112,7 +113,7 @@ class DiscoveryScreen extends Component {
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       setTimeout(() => {
         this.setState({active: true});
-        const params = this.props.navigation.state.params;
+        const params = this.props.route.params;
         if (params && params.query) {
           this.props.hashtag.setHashtag(params.query.replace('#',''));
           this.props.discovery.reload();

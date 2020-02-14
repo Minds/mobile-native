@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 
-import { observer } from 'mobx-react/native';
+import { observer } from 'mobx-react';
 import { CommonStyle as CS } from '../../../styles/Common';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GOOGLE_PLAY_STORE } from '../../../config/Config';

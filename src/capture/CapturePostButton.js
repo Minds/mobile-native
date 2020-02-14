@@ -7,7 +7,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 import * as Progress from 'react-native-progress';
 import colors from '../styles/Colors';
 import { CommonStyle as CS } from '../styles/Common';

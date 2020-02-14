@@ -18,7 +18,7 @@ import QRCode from 'react-native-qrcode-svg';
 import TransparentButton from '../../../common/components/TransparentButton';
 import Touchable from '../../../common/components/Touchable';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 
 import BlockchainWalletService from '../BlockchainWalletService';
 import NavigationService from '../../../navigation/NavigationService';

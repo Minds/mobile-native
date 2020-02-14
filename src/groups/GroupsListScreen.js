@@ -13,7 +13,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 
 import { Avatar } from 'react-native-elements';

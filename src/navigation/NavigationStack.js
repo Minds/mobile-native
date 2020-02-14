@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoadingScreen from '../LoadingScreen';
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
-// import TabsScreen from '../tabs/TabsScreen';
+import TabsScreen from '../tabs/TabsScreen';
 import TabsScreenNew from '../tabs/TabsScreenNew';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
@@ -57,7 +57,7 @@ import featuresService from '../common/services/features.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { View } from 'react-native';
 import MessengerScreen from '../messenger/MessengerScreen';
-//import Topbar from '../topbar/Topbar';
+import Topbar from '../topbar/Topbar';
 
 
 const hideHeader = {headerShown: false};
@@ -72,14 +72,14 @@ const AppStack = function(props) {
   //   : withErrorBoundaryScreen(TabsScreen);
   return (
     <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
-      <AppStackNav.Screen 
-        name="Tabs" 
+      <AppStackNav.Screen
+        name="Tabs"
         component={TabsScreenNew}
         options={hideHeader}
-        /*component={TabsScreen}  
-        options={({ navigation, route }) => ({
-          header: props => <Topbar {...props} />,
-        })}*/
+        // component={TabsScreen}
+        // options={({ navigation, route }) => ({
+        //   header: props => <Topbar {...props} />,
+        // })}
       />
       <AppStackNav.Screen name="EmailConfirmation" component={EmailConfirmationScreen}/>
       <AppStackNav.Screen name="Update" component={UpdatingScreen}/>

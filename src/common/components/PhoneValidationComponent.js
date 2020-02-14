@@ -13,7 +13,7 @@ import {
 import {
   inject,
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import PhoneInput from 'react-native-phone-input'
 
@@ -187,10 +187,10 @@ export default class PhoneValidationComponent extends Component {
           />
 
           <ListItemButton disabled={!this.canConfirm()} onPress={this.confirmAction}>
-            <Icon 
-              name={'check'} 
-              size={26} 
-              style={!this.canConfirm() ? CS.colorSecondaryText : CS.colorDone} 
+            <Icon
+              name={'check'}
+              size={26}
+              style={!this.canConfirm() ? CS.colorSecondaryText : CS.colorDone}
             />
           </ListItemButton>
         </View>

@@ -17,7 +17,7 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import Button from '../../common/components/Button';
 import { CommonStyle } from '../../styles/Common';
 import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
-import { inject } from 'mobx-react/native'
+import { inject } from 'mobx-react'
 
 /**
  * Email settings screen

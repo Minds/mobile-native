@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 
 import { observable } from 'mobx';
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';

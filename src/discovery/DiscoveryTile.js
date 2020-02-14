@@ -4,7 +4,7 @@ import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 
-import {observer} from 'mobx-react/native';
+import {observer} from 'mobx-react';
 
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import {CommonStyle as CS} from '../styles/Common';

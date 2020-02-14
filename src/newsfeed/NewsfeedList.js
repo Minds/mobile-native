@@ -6,7 +6,7 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import { inject, observer } from 'mobx-react/native'
+import { inject, observer } from 'mobx-react'
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Activity from './activity/Activity';

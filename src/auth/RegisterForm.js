@@ -14,7 +14,7 @@ import {
 
 import authService from '../auth/AuthService';
 
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 
 import {CheckBox} from 'react-native-elements'
 

@@ -11,7 +11,7 @@ import {
 
 import {
   observer,
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import { Icon } from 'react-native-elements';
 import { CommonStyle } from '../styles/Common';

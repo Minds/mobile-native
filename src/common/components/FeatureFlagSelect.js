@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import featuresService from '../services/features.service';
 import {
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 /**
  * Feature Flag Select Component

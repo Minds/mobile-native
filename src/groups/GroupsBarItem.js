@@ -5,7 +5,7 @@ import React, {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import {
   Platform,

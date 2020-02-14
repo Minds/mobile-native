@@ -6,7 +6,7 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import { inject, observer } from 'mobx-react/native'
+import { inject, observer } from 'mobx-react'
 
 import Activity from '../../newsfeed/activity/Activity';
 import TileElement from '../../newsfeed/TileElement';

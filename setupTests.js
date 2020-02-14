@@ -14,7 +14,7 @@ global.XMLHttpRequest = XMLHttpRequest;
 configure({ adapter: new Adapter() });
 
 jest.mock('react-native-localize');
-jest.mock('mobx-react/native', () => require('mobx-react/custom'));
+jest.mock('mobx-react', () => require('mobx-react/custom'));
 
 jest.mock('./AppStores');
 jest.useFakeTimers();

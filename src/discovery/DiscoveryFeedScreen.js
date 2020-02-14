@@ -16,7 +16,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import DiscoveryTile from './DiscoveryTile';
 import DiscoveryUser from './DiscoveryUser';

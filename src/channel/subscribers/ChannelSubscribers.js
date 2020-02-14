@@ -15,7 +15,7 @@ import { ListItem, Avatar } from 'react-native-elements';
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/MaterialIcons';

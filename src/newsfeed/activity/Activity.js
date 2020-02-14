@@ -2,7 +2,7 @@ import React, {
   Component
 } from 'react';
 
-import {observer} from "mobx-react/native";
+import {observer} from "mobx-react";
 
 import {
   Text,
@@ -145,7 +145,7 @@ export default class Activity extends Component {
    * Render activity spacer
    */
   renderActivitySpacer = () => {
-    return this.props.isLast 
+    return this.props.isLast
       ? (<View style={styles.activitySpacer}></View>)
       : null;
   };
@@ -154,10 +154,10 @@ export default class Activity extends Component {
    * Render entity metrics
    */
   renderActivityMetrics = () => {
-    return ( 
+    return (
       !this.props.hideTabs &&
       !this.props.entity.isScheduled() &&
-      !this.props.entity.isPending() 
+      !this.props.entity.isPending()
     ) ? (<ActivityMetrics entity={this.props.entity}/>) : null
   };
 
@@ -188,7 +188,7 @@ export default class Activity extends Component {
         <Text style={[styles.yellowBannerText, CommonStyle.paddingLeft]}>
           {message}
         </Text>
-      </View> 
+      </View>
     );
   };
 

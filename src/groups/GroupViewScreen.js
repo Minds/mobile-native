@@ -18,7 +18,7 @@ import { Header } from '@react-navigation/stack';
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import ActionSheet from 'react-native-actionsheet';
 import { Icon } from 'react-native-elements';
@@ -132,13 +132,13 @@ export default class GroupViewScreen extends Component {
     }
 
     if (params.tab && this.headerRef) {
-      this.headerRef.wrappedInstance.onTabChange(params.tab)
+      this.headerRef.onTabChange(params.tab)
     }
   }
 
   componentDidUpdate() {
     if (this.moveToTab && this.headerRef) {
-      this.headerRef.wrappedInstance.onTabChange(this.moveToTab);
+      this.headerRef.onTabChange(this.moveToTab);
       this.moveToTab = '';
     }
   }

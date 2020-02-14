@@ -18,7 +18,7 @@ import { CheckBox } from 'react-native-elements'
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';

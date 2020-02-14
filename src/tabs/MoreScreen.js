@@ -18,7 +18,7 @@ import {
 
 import {
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import RNExitApp from 'react-native-exit-app';
 

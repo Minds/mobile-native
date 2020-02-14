@@ -13,7 +13,7 @@ import {
 
 import {
   observer, inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 import {debounce} from 'lodash';
 
 import FastImage from 'react-native-fast-image';

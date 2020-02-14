@@ -5,7 +5,7 @@ import React, {
 import {
   inject,
   observer
-} from "mobx-react/native";
+} from "mobx-react";
 
 import {
   Text,

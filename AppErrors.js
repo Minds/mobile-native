@@ -5,7 +5,7 @@ import {
   setJSExceptionHandler,
 } from 'react-native-exception-handler';
 
-import {onError} from 'mobx-react';
+// import {onError} from 'mobx-react';
 import logService from './src/common/services/log.service';
 import * as Sentry from '@sentry/react-native';
 import shouldReportToSentry from './src/common/helpers/errors';
@@ -36,11 +36,11 @@ if (process.env.JEST_WORKER_ID === undefined) {
   });
 }
 
-// Log Mobx global errors
-onError(error => {
-  console.log(error);
-  logService.exception(error);
-});
+// // Log Mobx global errors
+// onError(error => {
+//   console.log(error);
+//   logService.exception(error);
+// });
 
 // react-native-exception-handler global handlers
 if (!__DEV__) {

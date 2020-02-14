@@ -11,7 +11,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
@@ -36,23 +36,6 @@ import TopbarNew from '../topbar/TopbarNew';
 @inject('notifications', 'user')
 @observer
 export default class NotificationsScreen extends Component {
-
-  static navigationOptions = ({ navigation }) => ({
-    tabBarIcon: ({ tintColor }) => (
-      <NotificationsTabIcon tintColor={tintColor}/>
-    ),
-    headerRight: <Icon name="ios-options" size={18} color='#444' style={CS.padding2x} onPress={() => navigation.navigate('NotificationsSettings')} />,
-    tabBarOnPress: ({ navigation, defaultHandler }) => {
-      // tab button tapped again?
-      if (navigation.isFocused()) {
-        stores.notifications.list.clearList();
-        stores.notifications.refresh();
-        stores.notifications.setUnread(0);
-        return;
-      }
-      defaultHandler();
-    }
-  });
 
   /**
    * On component mount

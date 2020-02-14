@@ -13,7 +13,7 @@ import {
 
 import {
   observer
-} from 'mobx-react/native';
+} from 'mobx-react';
 import * as Progress from 'react-native-progress';
 
 import { CommonStyle as CS } from '../styles/Common';

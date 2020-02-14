@@ -15,7 +15,7 @@ import {
   inject,
   observer,
   Observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';

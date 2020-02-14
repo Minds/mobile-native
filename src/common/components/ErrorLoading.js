@@ -10,7 +10,7 @@ import {
 
 import {
   observer
-} from 'mobx-react/native';
+} from 'mobx-react';
 
 import connectivityService from '../services/connectivity.service';
 

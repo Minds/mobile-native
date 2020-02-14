@@ -12,7 +12,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MINDS_CDN_URI } from '../config/Config';

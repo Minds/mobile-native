@@ -15,7 +15,7 @@ import {
 
 import {
   observer, inject,
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -49,7 +49,7 @@ export default class NewsfeedFilters extends Component {
   /**
    * Set tag drawer ref
    */
-  setTagDrawerRef = (r) => this._drawer = r ? r.wrappedInstance : null;
+  setTagDrawerRef = (r) => this._drawer = r ||  null;
 
   /**
    * Show period menu
@@ -91,10 +91,10 @@ export default class NewsfeedFilters extends Component {
   /**
    * Component will react (mobx)
    */
-  componentWillReact() {
-    // animate next layout change
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-  }
+  // componentWillReact() {
+  //   // animate next layout change
+  //   LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  // }
 
   /**
    * Render

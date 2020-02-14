@@ -12,7 +12,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Switch from 'react-native-switch-pro'
 import i18n from '../common/services/i18n.service';

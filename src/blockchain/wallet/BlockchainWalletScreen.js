@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 
 import { CommonStyle } from "../../styles/Common";
 

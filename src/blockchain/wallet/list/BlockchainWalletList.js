@@ -7,7 +7,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import NavigationService from '../../../navigation/NavigationService';

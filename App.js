@@ -18,7 +18,7 @@ import {
   StatusBar,
   UIManager,
 } from 'react-native';
-import { Provider, observer } from 'mobx-react/native';
+import { Provider, observer } from 'mobx-react';
 import RNBootSplash from 'react-native-bootsplash';
 import FlashMessage from 'react-native-flash-message';
 import { SafeAreaProvider } from 'react-native-safe-area-context';

@@ -7,7 +7,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native';
+} from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {
   observer,
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import {
   View,
@@ -30,7 +30,7 @@ export default class CaptureFab extends Component {
     if (featuresService.has('navigation-2020')) {
       return null;
     }
-    
+
     return (
       <Icon
         raised

@@ -13,7 +13,7 @@ import {
 import {
   inject,
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import PhoneInput from 'react-native-phone-input'
 

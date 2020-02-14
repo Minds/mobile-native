@@ -13,7 +13,7 @@ import {
 
 import {
   observer,
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import {
   MINDS_CDN_URI

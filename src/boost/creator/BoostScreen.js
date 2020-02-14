@@ -14,7 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Divider } from 'react-native-elements'
 
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import { getRates } from '../BoostService';

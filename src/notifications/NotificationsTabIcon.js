@@ -6,7 +6,7 @@ import {
   Platform,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
