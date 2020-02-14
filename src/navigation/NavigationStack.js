@@ -61,82 +61,84 @@ import MessengerScreen from '../messenger/MessengerScreen';
 
 const hideHeader = {headerShown: false};
 
-const Stack = createStackNavigator();
+const AppStackNav = createStackNavigator();
+const AuthStackNav = createStackNavigator();
+const RootStackNav = createStackNavigator();
 
 const AppStack = function(props) {
   // const tabScreen = featuresService.has('navigation-2020')
   //   ? withErrorBoundaryScreen(TabsScreenNew)
   //   : withErrorBoundaryScreen(TabsScreen);
   return (
-    <Stack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
-      <Stack.Screen name="Tabs" component={TabsScreenNew} options={hideHeader} />
-      <Stack.Screen name="EmailConfirmation" component={EmailConfirmationScreen}/>
-      <Stack.Screen name="Update" component={UpdatingScreen}/>
-      <Stack.Screen name="Boost" component={BoostScreen} options={{gesturesEnabled: false}}/>
-      <Stack.Screen name="DeleteChannel" component={DeleteChannelScreen}/>
-      <Stack.Screen name="Notifications" component={NotificationsScreen}/>
-      <Stack.Screen name="NotificationsSettings" component={NotificationsSettingsScreen}/>
-      <Stack.Screen name="Channel" component={ChannelScreen} options={hideHeader}/>
-      <Stack.Screen name="Capture" component={CapturePoster} />
-      <Stack.Screen name="Activity" component={ActivityScreen}/>
-      <Stack.Screen name="Conversation" component={ConversationScreen}/>
-      <Stack.Screen name="DiscoveryFeed" component={DiscoveryFeedScreen}/>
-      <Stack.Screen name="Subscribers" component={ChannelSubscribers}/>
-      <Stack.Screen name="Settings" component={SettingsScreen}/>
-      <Stack.Screen name="SettingsBlockedChannels" component={BlockedChannelsScreen}/>
-      <Stack.Screen name="SettingsEmail" component={EmailScreen}/>
-      <Stack.Screen name="SettingsPassword" component={PasswordScreen}/>
-      <Stack.Screen name="SettingsRekey" component={RekeyScreen}/>
-      <Stack.Screen name="SettingsBilling" component={BillingScreen}/>
-      <Stack.Screen name="GroupsList" component={GroupsListScreen}/>
-      <Stack.Screen name="GroupView" component={GroupViewScreen} options={hideHeader}/>
-      <Stack.Screen name="Wallet" component={WalletScreen}/>
-      <Stack.Screen name="BlogList" component={BlogsListScreen}/>
-      <Stack.Screen name="BoostConsole" component={BoostConsoleScreen}/>
-      <Stack.Screen name="BlogView" component={BlogsViewScreen}/>
-      <Stack.Screen name="WireFab" component={FabScreen}/>
-      <Stack.Screen name="WalletHistory" component={WalletHistoryScreen}/>
-      <Stack.Screen name="ViewImage" component={ViewImageScreen}/>
-      <Stack.Screen name="BlockchainWallet" component={BlockchainWalletScreen}/>
-      <Stack.Screen name="Contributions" component={ContributionsScreen}/>
-      <Stack.Screen name="Transactions" component={TransactionsScreen}/>
-      <Stack.Screen name="BlockchainWalletModal" component={BlockchainWalletModalScreen} options={{gesturesEnabled: false}}/>
-      <Stack.Screen name="BlockchainWalletImport" component={BlockchainWalletImportScreen} />
-      <Stack.Screen name="BlockchainWalletDetails" component={BlockchainWalletDetailsScreen} />
-      <Stack.Screen name="Report" component={ReportScreen} />
-      <Stack.Screen name="More" component={MoreScreen} />
-      <Stack.Screen name="Withdraw" component={WithdrawScreen} />
-      <Stack.Screen name="WalletOnboarding" component={WalletOnboardingScreen} />
-      <Stack.Screen name="NotSupported" component={NotSupportedScreen} />
-      <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
-      <Stack.Screen name="OnboardingScreenNew" component={OnboardingScreenNew} />
-      <Stack.Screen name="Messenger" component={MessengerScreen} />
-    </Stack.Navigator>
+    <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+      <AppStackNav.Screen name="Tabs" component={TabsScreenNew} options={hideHeader} />
+      <AppStackNav.Screen name="EmailConfirmation" component={EmailConfirmationScreen}/>
+      <AppStackNav.Screen name="Update" component={UpdatingScreen}/>
+      <AppStackNav.Screen name="Boost" component={BoostScreen} options={{gesturesEnabled: false}}/>
+      <AppStackNav.Screen name="DeleteChannel" component={DeleteChannelScreen}/>
+      <AppStackNav.Screen name="Notifications" component={NotificationsScreen}/>
+      <AppStackNav.Screen name="NotificationsSettings" component={NotificationsSettingsScreen}/>
+      <AppStackNav.Screen name="Channel" component={ChannelScreen} options={hideHeader}/>
+      <AppStackNav.Screen name="Capture" component={CapturePoster} />
+      <AppStackNav.Screen name="Activity" component={ActivityScreen}/>
+      <AppStackNav.Screen name="Conversation" component={ConversationScreen}/>
+      <AppStackNav.Screen name="DiscoveryFeed" component={DiscoveryFeedScreen}/>
+      <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers}/>
+      <AppStackNav.Screen name="Settings" component={SettingsScreen}/>
+      <AppStackNav.Screen name="SettingsBlockedChannels" component={BlockedChannelsScreen}/>
+      <AppStackNav.Screen name="SettingsEmail" component={EmailScreen}/>
+      <AppStackNav.Screen name="SettingsPassword" component={PasswordScreen}/>
+      <AppStackNav.Screen name="SettingsRekey" component={RekeyScreen}/>
+      <AppStackNav.Screen name="SettingsBilling" component={BillingScreen}/>
+      <AppStackNav.Screen name="GroupsList" component={GroupsListScreen}/>
+      <AppStackNav.Screen name="GroupView" component={GroupViewScreen} options={hideHeader}/>
+      <AppStackNav.Screen name="Wallet" component={WalletScreen}/>
+      <AppStackNav.Screen name="BlogList" component={BlogsListScreen}/>
+      <AppStackNav.Screen name="BoostConsole" component={BoostConsoleScreen}/>
+      <AppStackNav.Screen name="BlogView" component={BlogsViewScreen}/>
+      <AppStackNav.Screen name="WireFab" component={FabScreen}/>
+      <AppStackNav.Screen name="WalletHistory" component={WalletHistoryScreen}/>
+      <AppStackNav.Screen name="ViewImage" component={ViewImageScreen}/>
+      <AppStackNav.Screen name="BlockchainWallet" component={BlockchainWalletScreen}/>
+      <AppStackNav.Screen name="Contributions" component={ContributionsScreen}/>
+      <AppStackNav.Screen name="Transactions" component={TransactionsScreen}/>
+      <AppStackNav.Screen name="BlockchainWalletModal" component={BlockchainWalletModalScreen} options={{gesturesEnabled: false}}/>
+      <AppStackNav.Screen name="BlockchainWalletImport" component={BlockchainWalletImportScreen} />
+      <AppStackNav.Screen name="BlockchainWalletDetails" component={BlockchainWalletDetailsScreen} />
+      <AppStackNav.Screen name="Report" component={ReportScreen} />
+      <AppStackNav.Screen name="More" component={MoreScreen} />
+      <AppStackNav.Screen name="Withdraw" component={WithdrawScreen} />
+      <AppStackNav.Screen name="WalletOnboarding" component={WalletOnboardingScreen} />
+      <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
+      <AppStackNav.Screen name="OnboardingScreen" component={OnboardingScreen} />
+      <AppStackNav.Screen name="OnboardingScreenNew" component={OnboardingScreenNew} />
+      <AppStackNav.Screen name="Messenger" component={MessengerScreen} />
+    </AppStackNav.Navigator>
   );
 };
 
 const AuthStack = function(props) {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} options={hideHeader} />
-      <Stack.Screen name="Forgot" component={ForgotScreen} options={hideHeader}/>
-      <Stack.Screen name="Register" component={RegisterScreen} options={hideHeader} />
-    </Stack.Navigator>
+    <AuthStackNav.Navigator>
+      <AuthStackNav.Screen name="Login" component={LoginScreen} options={hideHeader} />
+      <AuthStackNav.Screen name="Forgot" component={ForgotScreen} options={hideHeader}/>
+      <AuthStackNav.Screen name="Register" component={RegisterScreen} options={hideHeader} />
+    </AuthStackNav.Navigator>
   );
 };
 
 const RootStack = function(props) {
   return (
-    <Stack.Navigator mode="modal" headerMode="none">
+    <RootStackNav.Navigator mode="modal" headerMode="none">
       {props.isLoggedIn ? (
         <Fragment>
-          <Stack.Screen name="App" component={AppStack} />
-          <Stack.Screen name="Gathering" component={Gathering} />
+          <RootStackNav.Screen name="App" component={AppStack} />
+          <RootStackNav.Screen name="Gathering" component={Gathering} />
         </Fragment>
       ) : (
-        <Stack.Screen name="Auth" component={AuthStack} />
+        <RootStackNav.Screen name="Auth" component={AuthStack} />
       )}
-    </Stack.Navigator>
+    </RootStackNav.Navigator>
   );
 };
 
