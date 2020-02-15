@@ -27,7 +27,7 @@ import i18n from '../common/services/i18n.service';
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user', 'discovery')
+@inject('newsfeed', 'user', 'discovery', 'messengerList')
 @observer
 export default class NewsfeedScreen extends Component {
 
@@ -85,17 +85,22 @@ export default class NewsfeedScreen extends Component {
     // load groups after the feed
     await this.groupsBar.initialLoad();
     // load discovery after the feed is loaded
-    // setTimeout(() => {
-      console.log('ahora')
-      this.props.discovery.init();
-      this.props.discovery.fetch();
-    // }, 1000)
+    this.props.discovery.init();
+    this.props.discovery.fetch();
+
+    // load messenger
+    this.props.messengerList.loadList();
+
+    // listen socket on app start
+    this.props.messengerList.listen();
+
   }
 
   /**
    * Component will unmount
    */
   componentWillUnmount() {
+    this.props.messengerList.unlisten();
     if (this.disposeEnter) {
       this.disposeEnter();
     }
