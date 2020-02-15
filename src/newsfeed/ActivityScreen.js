@@ -135,7 +135,7 @@ class ActivityScreen extends Component {
     }
 
     return (
-      <View style={[CS.flexContainer, CS.backgroundWhite]}>
+      <View style={[CS.flexContainer]}>
         {
           !this.entityStore.errorLoading ?
             <CommentList

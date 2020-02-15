@@ -207,6 +207,9 @@ class ThemedStylesStore {
       colorIcon: {
         color: theme.icon
       },
+      colorSeparator: {
+        color: theme.separator
+      },
       // backgrounds
       backgroundWhite: {
         backgroundColor: 'white'
@@ -220,6 +223,13 @@ class ThemedStylesStore {
       backgroundSecondary: {
         backgroundColor: theme.secondary_background,
       },
+      backgroundButton: {
+        backgroundColor: theme.button_backgound,
+      },
+      backgroundSeparator: {
+        backgroundColor: theme.separator,
+      },
+
       // fonts
       fontXS: {
         fontSize: 10

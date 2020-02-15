@@ -23,6 +23,7 @@ import i18n from '../../../common/services/i18n.service';
 import logService from '../../../common/services/log.service';
 import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -61,7 +62,7 @@ class ThumbUpAction extends Component {
 
     const canVote = entity.can(FLAG_VOTE);
 
-    const color = canVote ? (this.voted ? CS.colorPrimary : CS.colorAction) : CS.colorLightGreyed;
+    const color = canVote ? (this.voted ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon) : CS.colorLightGreyed;
 
     return (
       <TouchableOpacityCustom

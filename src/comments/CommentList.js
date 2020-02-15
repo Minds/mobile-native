@@ -41,6 +41,7 @@ import blockListService from '../common/services/block-list.service';
 // workaround for android copy/paste issue
 import TextInput from '../common/components/TextInput';
 import { FLAG_CREATE_COMMENT } from '../common/Permissions';
+import ThemedStyles from '../styles/ThemedStyles';
 
 
 import type CommentModel from './CommentModel';
@@ -346,7 +347,7 @@ class CommentList extends React.Component<PropsType, StateType> {
             CS.rowJustifyCenter,
             CS.margin,
             CS.padding,
-            CS.backgroundWhite,
+            ThemedStyles.style.backgroundSecondary,
             CS.borderRadius12x,
             CS.borderGreyed,
             CS.borderHair,
@@ -587,7 +588,7 @@ class CommentList extends React.Component<PropsType, StateType> {
     </View>);
 
     return (
-      <View style={[CS.flexContainer, CS.backgroundWhite, paddingBottom]} onLayout={this.onLayout}>
+      <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary, paddingBottom]} onLayout={this.onLayout}>
         <KeyboardAvoidingView style={[CS.flexContainer]} behavior={Platform.OS == 'ios' ? 'padding' : null}
           keyboardVerticalOffset={this.props.keyboardVerticalOffset ? -this.props.keyboardVerticalOffset : vPadding} enabled={!this.props.parent ? (this.state.focused || this.focusedChild !== -1) : false}>
           <View style={CS.flexContainer}>
@@ -604,7 +605,7 @@ class CommentList extends React.Component<PropsType, StateType> {
               onRefresh={this.refresh}
               refreshing={this.props.store.refreshing}
               ListEmptyComponent={this.props.store.loaded && !this.props.store.refreshing ? emptyThread : <CenteredLoading/>}
-              style={[CS.flexContainer, CS.backgroundWhite]}
+              style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}
             />
             {this.renderPoster()}
             <UserAutocomplete

@@ -31,6 +31,7 @@ import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import colors from '../styles/Colors';
 import FastImage from 'react-native-fast-image';
 import CommentActionSheet from './CommentActionSheet';
+import ThemedStyles from '../styles/ThemedStyles';
 
 const DoubleTapText = DoubleTap(Text);
 
@@ -93,7 +94,7 @@ class Comment extends Component {
 
         <View style={styles.contentContainer}>
           <View style={styles.content}>
-            <View style={styles.textContainer}>
+            <View style={[styles.textContainer, ThemedStyles.style.backgroundSeparator]}>
               {
                 this.state.editing ?
                   <CommentEditor setEditing={this.setEditing} comment={comment} store={this.props.store}/>
@@ -247,8 +248,6 @@ const styles = StyleSheet.create({
     backgroundColor:'#9A9A9A'
   },
   container: {
-    borderBottomColor: '#EEE',
-    borderBottomWidth: StyleSheet.hairlineWidth,
     padding: 8,
     paddingRight: 0,
     display: 'flex',
@@ -275,7 +274,6 @@ const styles = StyleSheet.create({
     textShadowRadius: 20
   },
   textContainer: {
-    backgroundColor: '#E8E8E8',
     borderRadius: 20,
     marginHorizontal: 5,
     padding: 5,
@@ -311,7 +309,6 @@ const styles = StyleSheet.create({
     // fontWeight: '800',
     fontFamily: 'Roboto-Black',
     paddingRight: 8,
-    color: '#444',
   },
   timestamp: {
     fontSize: 10,

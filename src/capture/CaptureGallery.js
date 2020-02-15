@@ -17,6 +17,7 @@ import androidPermissionsService from '../common/services/android-permissions.se
 import logService from '../common/services/log.service';
 import { CommonStyle } from '../styles/Common';
 import { View } from 'react-native-animatable';
+import ThemedStyles from '../styles/ThemedStyles';
 /**
  * Gallery View
  */
@@ -108,14 +109,14 @@ export default class CaptureGallery extends PureComponent {
    */
   render() {
     return (
-      <View style={[CommonStyle.backgroundWhite, CommonStyle.flexContainer]}>
+      <View style={[ThemedStyles.style.backgroundSecondary, CommonStyle.flexContainer]}>
         {this.state.imagesLoaded ? (
           <FlatList
             ref={this.setListRef}
             ListHeaderComponent={this.props.header}
             data={this.state.photos}
             renderItem={this.renderTile}
-            style={CommonStyle.flexContainer}
+            style={[CommonStyle.flexContainer, ThemedStyles.style.backgroundSecondary]}
             onEndReached={this._loadPhotos}
             ListFooterComponent={this.state.loading ? <CenteredLoading /> : null}
             numColumns={3}

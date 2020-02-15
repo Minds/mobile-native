@@ -49,6 +49,7 @@ import FallbackBoundary from './FallbackBoundary';
 import TabIcon from '../tabs/TabIcon';
 import featuresService from '../common/services/features.service';
 import TopbarNew from '../topbar/TopbarNew';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Discovery screen
@@ -61,7 +62,7 @@ class DiscoveryScreen extends Component {
   iconSize = 28;
 
   state = {
-    active: false,
+    active: true,
     showFeed: false,
     itemHeight: 0,
     q: '',
@@ -244,12 +245,12 @@ class DiscoveryScreen extends Component {
         renderItem={renderRow}
         ListFooterComponent={footer}
         CollapsibleHeaderComponent={this.getHeaders()}
-        headerHeight={(GOOGLE_PLAY_STORE && discovery.filters.type !== 'channels') ? 94 : 146}
+        headerHeight={(GOOGLE_PLAY_STORE && discovery.filters.type !== 'channels') ? 94 : 144}
         ListEmptyComponent={this.getEmptyList()}
         keyExtractor={this.keyExtractor}
         onEndReached={this.loadMore}
-        initialNumToRender={this.cols == 3 ? 12 : 3}
-        style={[CS.backgroundWhite, CS.flexContainer]}
+        initialNumToRender={this.cols === 3 ? 12 : 3}
+        style={[ThemedStyles.style.backgroundSecondary, CS.flexContainer]}
         numColumns={this.cols}
         horizontal={false}
         windowSize={9}
@@ -257,12 +258,12 @@ class DiscoveryScreen extends Component {
         columnWrapperStyle={columnWrapperStyle}
         keyboardShouldPersistTaps={'handled'}
         onViewableItemsChanged={this.onViewableItemsChanged}
-        viewabilityConfig={this.cols == 3 ? undefined : this.viewOptsFeed}
+        viewabilityConfig={this.cols === 3 ? undefined : this.viewOptsFeed}
       />
     );
 
     return (
-      <View style={[CS.flexContainer, CS.backgroundWhite]}>
+      <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
         <TopbarNew title={i18n.t('tabTitleDiscovery')}/>
         {body}
         <CaptureFab navigation={this.props.navigation} />
@@ -328,67 +329,68 @@ class DiscoveryScreen extends Component {
    */
   getHeaders() {
     const filtersStore = this.props.discovery.filters;
-    const navigation = (
-      <View style={[styles.navigation]}>
 
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeActivities } underlayColor='#fff' {...testID('Discovery All')}>
+    const navigation = (
+      <View style={[styles.navigation, ThemedStyles.style.backgroundSecondary]}>
+
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeActivities } {...testID('Discovery All')}>
           <View style={CS.columnAlignCenter}>
             <IonIcon
               name="ios-infinite"
-              style={[styles.icon, filtersStore.type == 'activities' ? styles.iconActive : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'activities' ? ThemedStyles.style.colorLink : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'activities' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.all')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'activities' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.all')}</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeChannels } underlayColor='#fff' {...testID('Discovery Channels')}>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeChannels } {...testID('Discovery Channels')}>
           <View style={CS.columnAlignCenter}>
             <Icon
               name="people"
-              style={[styles.icon, filtersStore.type == 'channels' ? styles.iconActive : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'channels' ? ThemedStyles.style.colorLink : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'channels' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.channels')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'channels' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.channels')}</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeVideos } underlayColor='#fff' {...testID('Discovery Videos')}>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeVideos } {...testID('Discovery Videos')}>
           <View style={CS.columnAlignCenter}>
             <IonIcon
               name={this.state.showFeed !== false &&  filtersStore.type == 'videos' ? 'md-apps' : 'md-videocam'}
-              style={[styles.icon, filtersStore.type == 'videos' ? styles.iconActive : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'videos' ? ThemedStyles.style.colorLink : null ]}
               size={this.iconSize}
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'videos' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.videos')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'videos' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.videos')}</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeImages } underlayColor='#fff' {...testID('Discovery Images')}>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeImages } {...testID('Discovery Images')}>
           <View style={CS.columnAlignCenter}>
             <IonIcon
               name={this.state.showFeed !== false &&  filtersStore.type == 'images' ? 'md-apps' : 'md-photos'}
-              style={[styles.icon, filtersStore.type == 'images' ? styles.iconActive : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'images' ? ThemedStyles.style.colorLink : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'images' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.images')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'images' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.images')}</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeBlogs } underlayColor='#fff' {...testID('Discovery Blogs')}>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeBlogs } {...testID('Discovery Blogs')}>
           <View style={CS.columnAlignCenter}>
             <Icon
               name="subject"
-              style={[styles.icon, filtersStore.type == 'blogs' ? styles.iconActive : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'blogs' ? ThemedStyles.style.colorLink : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'blogs' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.blogs')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'blogs' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.blogs')}</Text>
           </View>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeGroups } underlayColor='#fff' {...testID('Discovery Groups')}>
+        <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeGroups } {...testID('Discovery Groups')}>
           <View style={CS.columnAlignCenter}>
             <Icon
               name="group-work"
-              style={[styles.icon, filtersStore.type == 'groups' ? styles.iconActive : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'groups' ? ThemedStyles.style.colorLink : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'groups' ? CS.colorPrimary : CS.colorDark]}>{i18n.t('discovery.groups')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'groups' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.groups')}</Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -407,7 +409,7 @@ class DiscoveryScreen extends Component {
           placeholder={i18n.t('discovery.search')}
           onChangeText={this.setQ}
           value={this.state.q}
-          containerStyle={[CS.marginTop, CS.marginBottom]}
+          containerStyle={[CS.marginTop, CS.marginBottom, ThemedStyles.style.backgroundPrimary]}
           iconRight={ iconRight }
           iconRightOnPress={this.clearSearch}
           {...testID('Discovery Search Input')}
@@ -418,7 +420,7 @@ class DiscoveryScreen extends Component {
       <Text style={[CS.fontM, CS.backgroundPrimary, CS.colorWhite, CS.textCenter, CS.padding]}>{i18n.t('discovery.recentlyVisited')}</Text>;
 
     return (
-      <View style={[CS.shadow, CS.backgroundWhite]}>
+      <View style={[CS.shadow, ThemedStyles.style.backgroundSecondary]}>
         {navigation}
         {headerBody}
       </View>
@@ -647,7 +649,6 @@ const styles = StyleSheet.create({
   },
   navigation: {
     flexDirection: 'row',
-    backgroundColor: '#FFF',
     ...Platform.select({
       android: {
         paddingTop: 2,
@@ -665,11 +666,11 @@ const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     paddingVertical: 5,
-    height: 50
+    height: 50,
+    backgroundColor: 'transparent',
   },
   icon: {
     alignSelf: 'center',
-    color: '#444',
     height: 28
   },
   iconActive: {

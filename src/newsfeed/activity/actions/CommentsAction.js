@@ -14,6 +14,7 @@ import { CommonStyle as CS } from '../../../styles/Common';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_CREATE_COMMENT } from '../../../common/Permissions';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -36,7 +37,7 @@ class CommentsAction extends Component {
 
     const canComment = this.props.entity.allow_comments && this.props.entity.can(FLAG_CREATE_COMMENT);
 
-    const color = canComment ? (this.props.entity['comments:count'] > 0 ? CS.colorPrimary : CS.colorAction) : CS.colorLightGreyed;
+    const color = canComment ? (this.props.entity['comments:count'] > 0 ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon) : CS.colorLightGreyed;
 
     return (
       <TouchableOpacityCustom style={[CS.flexContainer, CS.centered, CS.rowJustifyCenter]} onPress={this.openComments} testID={this.props.testID}>

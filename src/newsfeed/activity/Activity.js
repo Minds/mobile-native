@@ -34,6 +34,7 @@ import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import BlockedChannel from '../../common/components/BlockedChannel';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Activity
@@ -212,7 +213,7 @@ export default class Activity extends Component {
 
     return (
       <View>
-        <Text onPress={this.navToGroup} style={styles.groupNameLabel}>{this.props.entity.containerObj.name}</Text>
+        <Text onPress={this.navToGroup} style={[styles.groupNameLabel, ThemedStyles.style.colorPrimaryText]}>{this.props.entity.containerObj.name}</Text>
       </View>
     );
   }
@@ -252,18 +253,18 @@ export default class Activity extends Component {
           rightToolbar={this.props.hideTabs ? null : rightToolbar}
           >
           <TouchableOpacity onPress={() => this.navToActivity()} style={{ flexDirection: 'row' }}>
-            <Text style={[styles.timestamp, CommonStyle.paddingRight]}>{
+            <Text style={[styles.timestamp, CommonStyle.paddingRight, ThemedStyles.style.colorSecondaryText]}>{
               formatDate(this.props.entity.time_created)
             }</Text>
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
                 <Icon name="md-trending-up" style={styles.boostTagIcon}/>
-                <Text style={styles.boostTagLabel}>{i18n.t('boosted').toUpperCase()}</Text>
+                <Text style={[styles.boostTagLabel, ThemedStyles.style.colorSecondaryText]}>{i18n.t('boosted').toUpperCase()}</Text>
               </View>
             }
             { !!this.props.entity.edited &&
               <View style={styles.boostTagContainer}>
-                <Text style={styles.boostTagLabel}>· {i18n.t('edited').toUpperCase()}</Text>
+                <Text style={[styles.boostTagLabel, ThemedStyles.style.colorSecondaryText]}>· {i18n.t('edited').toUpperCase()}</Text>
               </View>
             }
           </TouchableOpacity>

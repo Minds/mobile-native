@@ -32,6 +32,7 @@ import ErrorBoundary from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
 import FeedList from '../common/components/FeedList';
 import FallbackBoundary from './FallbackBoundary';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Discovery Feed Screen
@@ -87,7 +88,7 @@ export default class DiscoveryFeedScreen extends Component {
         ListFooterComponent={this.getFooter}
         keyExtractor={this.keyExtractor}
         initialNumToRender={3}
-        style={[CS.backgroundWhite, CS.flexContainer]}
+        style={[ThemedStyles.style.backgroundSecondary, CS.flexContainer]}
         navigation={this.props.navigation}
         horizontal={false}
         maxToRenderPerBatch={3}

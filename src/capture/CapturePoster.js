@@ -13,7 +13,6 @@ import {
   NavigationActions
 } from '@react-navigation/native';
 
-import colors from '../styles/Colors';
 import HashtagService from '../common/services/hashtag.service'
 
 import CaptureGallery from './CaptureGallery';
@@ -22,14 +21,11 @@ import CapturePreview from './CapturePreview';
 import CaptureMetaPreview from './CaptureMetaPreview';
 import CapturePostButton from './CapturePostButton';
 import { CommonStyle as CS } from '../styles/Common';
-import Colors from '../styles/Colors';
 import CapturePosterFlags from './CapturePosterFlags';
 import UserAutocomplete from '../common/components/UserAutocomplete';
 import Activity from '../newsfeed/activity/Activity';
 import BlogCard from '../blogs/BlogCard';
 import ActivityModel from '../newsfeed/ActivityModel';
-import featuresService from '../common/services/features.service';
-import testID from '../common/helpers/testID';
 import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import settingsStore from '../settings/SettingsStore';
@@ -37,8 +33,7 @@ import CaptureTabs from './CaptureTabs';
 
 // workaround for android copy/paste
 import TextInput from '../common/components/TextInput';
-import TabIcon from '../tabs/TabIcon';
-import TopbarNew from '../topbar/TopbarNew';
+import ThemedStyles from '../styles/ThemedStyles';
 
 export default
 @inject('user', 'capture')
@@ -223,7 +218,7 @@ class CapturePoster extends Component {
     const params = this.props.route.params || {};
 
     return (
-      <View style={CS.flexContainer} testID="capturePosterView">
+      <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
         <CaptureGallery
           onSelected={this.onAttachedMedia}
           header={this.getHeader(true)}
@@ -244,7 +239,7 @@ class CapturePoster extends Component {
     const text = this.props.capture.text;
 
     return (
-      <View style={CS.flexContainer}>
+      <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
         <ScrollView style={styles.posterAndPreviewWrapper} keyboardShouldPersistTaps={'always'} removeClippedSubviews={false}>
           {this.getHeader()}
           {this.getRemind()}
@@ -518,13 +513,11 @@ class CapturePoster extends Component {
 
 const styles = StyleSheet.create({
   posterAndPreviewWrapper: {
-    backgroundColor: 'white',
     flex:1
   },
   posterWrapper: {
     minHeight: 100,
     flexDirection: 'row',
-    backgroundColor: '#FFF',
   },
   title: {
     margin:2,

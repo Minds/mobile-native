@@ -13,6 +13,7 @@ import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import testID from '../../../common/helpers/testID';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -23,8 +24,8 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 export default function({ entity, size = 20, vertical = false }) {
   const color = entity.can(FLAG_REMIND)
     ? entity.reminds > 0
-      ? CS.colorPrimary
-      : CS.colorAction
+      ? ThemedStyles.style.colorLink
+      : ThemedStyles.style.colorIcon
     : CS.colorLightGreyed;
 
   const route = useRoute();

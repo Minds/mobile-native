@@ -17,6 +17,7 @@ import {
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Newsfeed top bar
@@ -40,12 +41,12 @@ export default class Topbar extends Component {
   render() {
     return (
       <View>
-        <View style={[styles.container, CommonStyle.shadow]}>
+        <View style={[styles.container, CommonStyle.shadow, ThemedStyles.style.backgroundSecondary]}>
           <View style={styles.topbar}>
-            <TouchableOpacity style={[styles.tab, this.selected('subscribed')]} onPress={() => this.props.newsfeed.setFilter('subscribed')}>
+            <TouchableOpacity style={[styles.tab, {borderBottomColor: ThemedStyles.getColor('secondary_background')}, this.selected('subscribed')]} onPress={() => this.props.newsfeed.setFilter('subscribed')}>
               <Text style={CommonStyle.fontXS}>{i18n.t('newsfeed.subscribed')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.tab, this.selected('boostfeed')]} onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
+            <TouchableOpacity style={[styles.tab,  {borderBottomColor: ThemedStyles.getColor('secondary_background')}, this.selected('boostfeed')]} onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
               <Text style={CommonStyle.fontXS}>{i18n.t('newsfeed.boostfeed')}</Text>
             </TouchableOpacity>
           </View>
@@ -64,7 +65,6 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
-    backgroundColor: '#FFF',
   },
   topbar: {
     flex: 1,
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 2,
-    borderBottomColor: '#FFF',
   },
   tabSelected: {
     borderBottomColor: colors.primary,
