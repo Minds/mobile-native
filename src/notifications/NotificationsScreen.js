@@ -1,55 +1,42 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Text,
-  View,
-  FlatList,
-} from 'react-native';
+import { Text, View, FlatList } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
-import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
-import stores from '../../AppStores';
 import CaptureFab from '../capture/CaptureFab';
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import Notification from './notification/Notification';
 import NotificationsTopbar from './NotificationsTopbar';
-import NotificationsTabIcon from './NotificationsTabIcon';
 import ErrorBoundary from '../common/components/ErrorBoundary';
-import CenteredLoading from '../common/components/CenteredLoading';
 import i18n from '../common/services/i18n.service';
-import featuresService from '../common/services/features.service';
-import TabIcon from '../tabs/TabIcon';
 import TopbarNew from '../topbar/TopbarNew';
+import ThemedStyles from '../styles/ThemedStyles';
+import OnFocus from '../common/components/helper/OnFocus';
 
 /**
  * Notification Screen
  */
+export default
 @inject('notifications', 'user')
 @observer
-export default class NotificationsScreen extends Component {
+class NotificationsScreen extends Component {
+  /**
+   * On screen focus
+   */
+  onFocus = () => {
+    this.props.notifications.list.clearList();
+    this.props.notifications.refresh();
+    this.props.notifications.setUnread(0);
+  };
 
   /**
    * On component mount
    */
   componentDidMount() {
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      // ignore back navigation
-      if (s.action.type === 'Navigation/NAVIGATE' && s.action.routeName === 'Notifications') {
-        //this.props.notifications.loadList(true);
-        this.props.notifications.setUnread(0);
-        this.props.notifications.refresh();
-      }
-    });
-
     this.initialLoad();
   }
 
@@ -57,7 +44,6 @@ export default class NotificationsScreen extends Component {
    * Initial load
    */
   async initialLoad() {
-
     try {
       await this.props.notifications.readLocal();
     } finally {
@@ -71,9 +57,6 @@ export default class NotificationsScreen extends Component {
   componentWillUnmount() {
     // clear data to free memory
     this.props.notifications.list.clearList();
-    if (this.disposeEnter) {
-      this.disposeEnter();
-    }
   }
 
   /**
@@ -132,12 +115,13 @@ export default class NotificationsScreen extends Component {
         stickyHeaderIndices={[0]}
         windowSize={8}
         refreshing={list.refreshing}
-        style={[CS.backgroundWhite, CS.flexContainer]}
+        style={[ThemedStyles.style.backgroundSecondary, CS.flexContainer]}
       />
     );
 
     return (
       <View style={CS.flexContainer}>
+        <OnFocus onFocus={this.onFocus}/>
         <TopbarNew title={i18n.t('tabTitleNotifications')}/>
         {body}
         <CaptureFab navigation={this.props.navigation} />
@@ -148,21 +132,24 @@ export default class NotificationsScreen extends Component {
   /**
    * Key extractor
    */
-  keyExtractor = (item, index) => `${item.time_created}:${item.from.guid}:${item.entity ? item.entity.guid + index : index}`
+  keyExtractor = (item, index) =>
+    `${item.time_created}:${item.from.guid}:${
+      item.entity ? item.entity.guid + index : index
+    }`;
 
   /**
    * Clear and reload
    */
   refresh = () => {
     this.props.notifications.refresh();
-  }
+  };
 
   /**
    * Load more rows
    */
   loadMore = () => {
-    this.props.notifications.loadList()
-  }
+    this.props.notifications.loadList();
+  };
 
   /**
    * render row
