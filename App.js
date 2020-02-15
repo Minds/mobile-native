@@ -66,8 +66,6 @@ import {
 
 let deepLinkUrl = '';
 
-const statusBarStyle = Platform.OS === 'ios' ? 'dark-content' : 'default';
-
 // init push service
 pushService.init();
 
@@ -196,18 +194,14 @@ class App extends Component<Props, State> {
     this.setState({appState: nextState})
   }
 
-  /**
-   * contructor
-   */
   constructor(props) {
     super(props);
-
-    if (!Text.defaultProps) {
-      Text.defaultProps = {};
-    }
-    Text.defaultProps.style = {
-      fontFamily: 'Roboto',
-      color: '#444',
+    let oldRender = Text.render;
+    Text.render = function (...args) {
+        let origin = oldRender.call(this, ...args);
+        return React.cloneElement(origin, {
+            style: [ThemedStyles.style.colorPrimaryText, { fontFamily: 'Roboto'}, origin.props.style]
+        });
     };
   }
 
@@ -326,6 +320,8 @@ class App extends Component<Props, State> {
     }
 
     const isLoggedIn = sessionService.userLoggedIn;
+
+    const statusBarStyle = ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
 
     const app = (
       <SafeAreaProvider>
