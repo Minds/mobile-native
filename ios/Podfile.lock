@@ -265,6 +265,8 @@ PODS:
     - React
   - RNConvertPhAsset (1.0.3):
     - React
+  - RNDateTimePicker (2.2.2):
+    - React
   - RNDeviceInfo (4.0.1):
     - React
   - RNExitApp (1.1.0):
@@ -350,6 +352,7 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNConvertPhAsset (from `../node_modules/react-native-convert-ph-asset`)
+  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNExitApp (from `../node_modules/react-native-exit-app`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
@@ -457,6 +460,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/masked-view"
   RNConvertPhAsset:
     :path: "../node_modules/react-native-convert-ph-asset"
+  RNDateTimePicker:
+    :path: "../node_modules/@react-native-community/datetimepicker"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNExitApp:
@@ -531,6 +536,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 60a80e72d95bf02a01cace55d3697d9724f0d77f
   RNCMaskedView: a88953beefbd347a29072d9eba90e42945fe291e
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
+  RNDateTimePicker: 65eadfa62b069b415a6ac1d20a81cacfa26cb37a
   RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
   RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
   RNFastImage: c104f15f04c4f68bd65c9645cc27900bbacd9cc7

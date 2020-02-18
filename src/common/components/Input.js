@@ -82,6 +82,8 @@ export default class Input extends Component {
    */
   dateInput = () => {
     const CS = ThemedStyles.style;
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() - 13);
     return (
       <View>
         <TouchableOpacity
@@ -98,9 +100,11 @@ export default class Input extends Component {
         <DateTimePicker
           isVisible={this.state.datePickerVisible}
           onConfirm={this.confirmDatePicker}
-          date={new Date()}
+          date={maxDate}
+          maximumDate={maxDate}
           onCancel={this.dismissDatePicker}
           mode="date"
+          display="spinner"
         />
       </View>
     );
