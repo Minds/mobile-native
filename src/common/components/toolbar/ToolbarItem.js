@@ -14,6 +14,7 @@ import colors from '../../../styles/Colors';
 import { Badge } from 'react-native-elements';
 import { CommonStyle } from '../../../styles/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -37,7 +38,7 @@ export default class ToolbarItem extends PureComponent {
     const iconCmp = this.getIcon(selected);
     const textStyle = this.getTextStyle();
     const subTextStyle = this.getSubTextStyle();
-    const buttonStyle = selected ? [styles.button, styles.buttonSelected] : styles.button;
+    const buttonStyle = selected ? [styles.button, {borderBottomColor: ThemedStyles.getColor('link')}] : styles.button;
 
     return (
       <DebouncedTouchableOpacity style={buttonStyle} onPress={() => onPress(value)}>
@@ -80,10 +81,10 @@ export default class ToolbarItem extends PureComponent {
     } = this.props;
 
     if (selected) {
-      return (selectedTextStyle) ? [styles.buttonSelectedText, CommonStyle.fontXS, selectedTextStyle] : [styles.buttonSelectedText, CommonStyle.fontXS];
+      return (selectedTextStyle) ? [styles.buttonSelectedText, CommonStyle.fontS, ThemedStyles.style.colorLink, selectedTextStyle] : [styles.buttonSelectedText, CommonStyle.fontS, ThemedStyles.style.colorLink];
     }
 
-    return (textStyle) ? [styles.buttonText, CommonStyle.fontXS, textStyle] : [styles.buttonText, CommonStyle.fontXS];
+    return (textStyle) ? [styles.buttonText, CommonStyle.fontS, textStyle] : [styles.buttonText, CommonStyle.fontS];
   }
 
   /**
@@ -103,8 +104,8 @@ export default class ToolbarItem extends PureComponent {
     const size = iconSize || 18;
     const iconContainerStyle = {height: size + 4};
 
+    const style = selected ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon;
     if (!icon) {
-      const style = {color: selected ? colors.primary : color};
       return (
         <View style={iconContainerStyle}>
           <Text style={style}>{badge}</Text>
@@ -120,7 +121,7 @@ export default class ToolbarItem extends PureComponent {
 
     return (
       <View style={iconContainerStyle}>
-        <IconType name={icon} size={size || 18} color={selected ? colors.primary : color} />
+        <IconType name={icon} size={size || 18} style={style} />
       </View>
     )
   }
@@ -136,7 +137,6 @@ const styles = StyleSheet.create({
   buttonSelectedText: {
     paddingTop: 5,
     textAlign: 'center',
-    color: colors.primary
   },
   buttonText: {
     paddingTop:3,
@@ -147,10 +147,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 5,
     borderBottomWidth: 2,
-    borderBottomColor: '#FFF',
-  },
-  buttonSelected: {
-    borderBottomColor: colors.primary,
+    borderBottomColor: 'transparent',
   },
   badgeStyle: {
     backgroundColor: colors.explicit,

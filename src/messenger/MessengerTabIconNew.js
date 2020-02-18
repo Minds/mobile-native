@@ -10,8 +10,7 @@ import colors from '../styles/Colors';
 import { observer, inject } from 'mobx-react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import { CommonStyle as CS } from '../styles/Common';
+import ThemedStyles from '../styles/ThemedStyles';
 
 @inject('messengerList')
 @observer
@@ -24,9 +23,10 @@ export default class MessengerTabIconNew extends Component {
    */
   render() {
     const tintColor = this.props.tintColor;
+    const theme = ThemedStyles.style;
     return (
       <View>
-        <Icon name="chat-bubble-outline" size={24}  style={[styles.button, CS.colorIcon]} onPress={this.navToMessenger}/>
+        <Icon name="chat-bubble-outline" size={24} style={[styles.button, theme.colorIcon]} onPress={this.navToMessenger}/>
         { this.props.messengerList.unread ? <FAIcon name="circle" size={10} color='rgba(70, 144, 223, 1)' style={styles.unread} /> : null}
       </View>
     );

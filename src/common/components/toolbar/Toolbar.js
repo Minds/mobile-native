@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 
 import ToolbarItem from './ToolbarItem';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 /**
  * Toolbar component
@@ -75,7 +76,7 @@ export default class Toolbar extends PureComponent {
     });
 
     return (
-      <View style={[styles.container, calcStyle]}>
+      <View style={[styles.container, calcStyle, ThemedStyles.style.backgroundPrimary]}>
         <View style={styles.topbar}>
         {buttons}
         </View>
@@ -83,9 +84,6 @@ export default class Toolbar extends PureComponent {
     );
   }
 }
-
-const selectedcolor = '#0071ff';
-const color = '#444'
 
 const styles = StyleSheet.create({
   container: {
@@ -96,7 +94,6 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingRight: 0,
     borderBottomColor: '#EEE',
-    backgroundColor: '#FFF',
     shadowColor: 'black',
     shadowOpacity: 0.1,
     shadowRadius: StyleSheet.hairlineWidth,
@@ -104,8 +101,6 @@ const styles = StyleSheet.create({
       height: StyleSheet.hairlineWidth
     },
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#EEE',
   },
   topbar: {
     flex: 1,

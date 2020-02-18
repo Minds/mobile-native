@@ -24,6 +24,7 @@ import { MINDS_CDN_URI } from '../../config/Config';
 import crypto from '../../common/services/crypto.service';
 import Tags from '../../common/components/Tags';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Message Component
@@ -95,7 +96,7 @@ export default class Message extends PureComponent {
       return (
         <View>
           <View style={[styles.messageContainer, styles.right]}>
-            <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, CommonStyle.backgroundPrimary]}>
+            <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, ThemedStyles.style.backgroundLink]}>
               <Text selectable={true} style={[styles.message, CommonStyle.colorWhite]} onLongPress={() => this.showDate()}>
                 <Tags color={'#fff'} style={{ color: '#FFF' }} navigation={this.props.navigation}>{this.state.msg}</Tags>
               </Text>
@@ -117,7 +118,7 @@ export default class Message extends PureComponent {
           <TouchableOpacity onPress={this._navToChannel}>
             <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
           </TouchableOpacity>
-          <View style={[CommonStyle.rowJustifyCenter, styles.textContainer]}>
+          <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, , ThemedStyles.style.backgroundSeparator]}>
             <Text selectable={true} style={[styles.message]} onLongPress={() => this.showDate()}>
               <Tags style={[styles.message]} navigation={this.props.navigation}>{this.state.msg}</Tags>
             </Text>
@@ -142,16 +143,14 @@ export default class Message extends PureComponent {
 // styles
 const styles = StyleSheet.create({
   smallavatar: {
-    height: 28,
-    width: 28,
-    borderRadius: 14,
+    height: 30,
+    width: 30,
+    borderRadius: 15,
   },
   avatar: {
     height: 36,
     width: 36,
     borderRadius: 18,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#EEE',
   },
   textContainer: {
     flexWrap: 'wrap',

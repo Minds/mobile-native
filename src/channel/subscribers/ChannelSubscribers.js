@@ -28,6 +28,7 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import ErrorLoading from '../../common/components/ErrorLoading';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Discovery screen
@@ -55,7 +56,7 @@ class ChannelSubscribers extends Component {
    * Load data
    */
   _loadData() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
     if (params.guid) {
       this.props.channelSubscribersStore.setGuid(params.guid);
     }
@@ -94,7 +95,7 @@ class ChannelSubscribers extends Component {
     }
 
     return (
-      <View style={CommonStyle.flexContainer}>
+      <View style={[CommonStyle.flexContainer, ThemedStyles.style.backgroundSecondary]}>
         <View style={styles.topbar}>
           <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
             <TouchableHighlight underlayColor='transparent' onPress={() => store.setFilter('subscribers')} style={store.filter == 'subscribers'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
@@ -136,7 +137,6 @@ class ChannelSubscribers extends Component {
 
 const styles = StyleSheet.create({
 	listView: {
-    backgroundColor: '#FFF',
     flex: 1,
   },
   topbar: {

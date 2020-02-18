@@ -44,10 +44,10 @@ export default class Topbar extends Component {
         <View style={[styles.container, CommonStyle.shadow, ThemedStyles.style.backgroundSecondary]}>
           <View style={styles.topbar}>
             <TouchableOpacity style={[styles.tab, {borderBottomColor: ThemedStyles.getColor('secondary_background')}, this.selected('subscribed')]} onPress={() => this.props.newsfeed.setFilter('subscribed')}>
-              <Text style={CommonStyle.fontXS}>{i18n.t('newsfeed.subscribed')}</Text>
+              <Text style={CommonStyle.fontM}>{i18n.t('newsfeed.subscribed')}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.tab,  {borderBottomColor: ThemedStyles.getColor('secondary_background')}, this.selected('boostfeed')]} onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
-              <Text style={CommonStyle.fontXS}>{i18n.t('newsfeed.boostfeed')}</Text>
+              <Text style={CommonStyle.fontM}>{i18n.t('newsfeed.boostfeed')}</Text>
             </TouchableOpacity>
           </View>
         </View>

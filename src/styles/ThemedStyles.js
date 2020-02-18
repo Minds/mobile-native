@@ -217,6 +217,9 @@ class ThemedStylesStore {
       backgroundBlack: {
         backgroundColor: 'black'
       },
+      backgroundLink: {
+        backgroundColor: theme.link,
+      },
       backgroundPrimary: {
         backgroundColor: theme.primary_background,
       },

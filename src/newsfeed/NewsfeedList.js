@@ -16,6 +16,7 @@ import { ComponentsStyle } from '../styles/Components';
 import ErrorLoading from '../common/components/ErrorLoading';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * News feed list component
@@ -140,6 +141,7 @@ export default class NewsfeedList extends Component {
     }
 
     const footer = this.getFooter();
+    const theme = ThemedStyles.style;
 
     return (
       <ListComponent
@@ -155,7 +157,7 @@ export default class NewsfeedList extends Component {
         onEndReached={this.loadFeed}
         // onEndReachedThreshold={0}
         numColumns={newsfeed.isTiled ? 3 : 1}
-        style={styles.listView}
+        style={[theme.flexContainer, theme.backgroundSecondary]}
         initialNumToRender={6}
         windowSize={11}
         //getItemLayout={getItemLayout}
@@ -269,10 +271,3 @@ export default class NewsfeedList extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  listView: {
-    //paddingTop: 20,
-    backgroundColor: '#FFF',
-    flex: 1,
-  }
-});

@@ -258,7 +258,7 @@ export default class Activity extends Component {
             }</Text>
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
-                <Icon name="md-trending-up" style={styles.boostTagIcon}/>
+                <Icon name="md-trending-up" style={ThemedStyles.style.colorSecondaryText}/>
                 <Text style={[styles.boostTagLabel, ThemedStyles.style.colorSecondaryText]}>{i18n.t('boosted').toUpperCase()}</Text>
               </View>
             }
@@ -375,12 +375,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  boostTagIcon: {
-    color: '#777',
-  },
   boostTagLabel: {
-    color: '#777',
-    fontWeight: '200',
+    fontWeight: '400',
     marginLeft: 2,
     fontSize:10,
   },

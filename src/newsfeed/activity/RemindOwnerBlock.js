@@ -51,8 +51,8 @@ export default class RemindOwnerBlock extends PureComponent {
             </Text>
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
-                <Icon name="md-trending-up" type='ionicon' size={13} iconStyle={styles.boostTagIcon} />
-                <Text style={styles.boostTagLabel}>{i18n.t('boosted')}</Text>
+                <Icon name="md-trending-up" type='ionicon' size={13} iconStyle={ThemedStyles.style.colorSecondaryText} />
+                <Text style={[styles.boostTagLabel, ThemedStyles.style.colorSecondaryText]}>{i18n.t('boosted').toUpperCase()}</Text>
               </View>
             }
           </TouchableOpacity>
@@ -75,8 +75,7 @@ const styles = StyleSheet.create({
     color: '#777',
   },
   boostTagLabel: {
-    color: '#777',
-    fontWeight: '200',
+    fontWeight: '400',
     marginLeft: 2,
     fontSize: 9,
   },
