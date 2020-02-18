@@ -40,7 +40,7 @@ export default class MessengerSetup extends Component {
   confirm  = '';
 
   componentWillMount() {
-    const { setParams } = this.props.navigation;
+    const { setOptions } = this.props.navigation;
     let button;
 
     if (this.props.user.me.chat && !this.props.rekey) {
@@ -61,13 +61,13 @@ export default class MessengerSetup extends Component {
       );
     }
 
-    const headerRight = (
+    const headerRight = () => (
       <Observer>
         {() => this.props.messengerList.unlocking ? <ActivityIndicator style={CommonStyle.marginRight2x}/> : button }
       </Observer>
     )
 
-    setParams({ headerRight: headerRight });
+    setOptions({ headerRight: headerRight });
   }
 
   unlock = async () => {

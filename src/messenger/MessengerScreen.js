@@ -20,11 +20,9 @@ import ConversationView from './conversation/ConversationView';
 
 import SearchView from '../common/components/SearchView';
 import {ComponentsStyle} from '../styles/Components';
-import MessengerTabIcon from './MessengerTabIcon';
 import ErrorLoading from '../common/components/ErrorLoading';
 import i18n from '../common/services/i18n.service';
-import featuresService from '../common/services/features.service';
-
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Messenger Conversarion List Screen
@@ -45,13 +43,8 @@ class MessengerScreen extends Component {
    * On component will mount
    */
   componentDidMount() {
-    // load list
-    this.props.messengerList.loadList();
 
-    // listen socket on app start
-    this.props.messengerList.listen();
-
-    // load data on enter
+    // // load data on enter
     this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
       this.props.messengerList.loadList(true);
       //this.setState({ active: true });
@@ -67,7 +60,7 @@ class MessengerScreen extends Component {
    * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    this.props.messengerList.unlisten();
+    // this.props.messengerList.unlisten();
     if (this.disposeEnter) {
       this.disposeEnter();
     }
@@ -99,15 +92,11 @@ class MessengerScreen extends Component {
     const messengerList = this.props.messengerList;
     const conversations = messengerList.conversations;
     const loading = messengerList.loading;
-    let loadingCmp   = null;
+    let loadingCmp = null;
 
     if (loading && !messengerList.refreshing) {
       loadingCmp = <ActivityIndicator style={styles.loading} />
     }
-
-    //if (!this.state.active) {
-    //  return <View/>
-    //}
 
     let empty;
 
@@ -131,7 +120,7 @@ class MessengerScreen extends Component {
     const footer = this.getFooter();
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, ThemedStyles.style.backgroundSecondary]}>
         <SearchView
           placeholder={i18n.t('discovery.search')}
           onChangeText={this.searchChange}
@@ -230,7 +219,6 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
     paddingTop: 5,
-    backgroundColor: '#FFF',
   },
   body: {
     marginLeft: 8,
