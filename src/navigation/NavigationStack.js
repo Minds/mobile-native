@@ -104,7 +104,7 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="Wallet" component={WalletScreen}/>
       <AppStackNav.Screen name="BlogList" component={BlogsListScreen}/>
       <AppStackNav.Screen name="BoostConsole" component={BoostConsoleScreen}/>
-      <AppStackNav.Screen name="BlogView" component={BlogsViewScreen}/>
+      <AppStackNav.Screen name="BlogView" component={BlogsViewScreen} options={hideHeader}/>
       <AppStackNav.Screen name="WireFab" component={FabScreen}/>
       <AppStackNav.Screen name="WalletHistory" component={WalletHistoryScreen}/>
       <AppStackNav.Screen name="ViewImage" component={ViewImageScreen}/>

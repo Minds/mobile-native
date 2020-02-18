@@ -80,12 +80,14 @@ export default class NewsfeedScreen extends Component {
   }
 
   async loadFeed() {
+
+    this.props.discovery.init();
+
     await this.props.newsfeed.feedStore.fetchRemoteOrLocal();
 
     // load groups after the feed
     await this.groupsBar.initialLoad();
     // load discovery after the feed is loaded
-    this.props.discovery.init();
     this.props.discovery.fetch();
 
     // load messenger

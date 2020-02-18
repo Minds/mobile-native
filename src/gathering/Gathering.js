@@ -9,12 +9,6 @@ import gatheringService from '../common/services/gathering.service';
  * Gathering
  */
 class Gathering extends React.Component {
-  /**
-   * Remove navigation header
-   */
-  static navigationOptions = {
-    header: null,
-  };
 
   /**
    * Constructor

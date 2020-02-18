@@ -612,7 +612,7 @@ class DiscoveryScreen extends Component {
    */
   renderBlog = (row) => {
     return (
-      <View style={[CS.paddingBottom2x, CS.backgroundLight]}>
+      <View style={[CS.paddingBottom2x, ThemedStyles.style.backgroundSeparator]}>
         <ErrorBoundary containerStyle={CS.hairLineBottom}>
           <BlogCard entity={row.item} navigation={this.props.navigation} />
         </ErrorBoundary>
