@@ -41,7 +41,7 @@ class Gathering extends React.Component {
    */
   async init() {
     if (!gatheringService.isActive) {
-      const entity = this.props.navigation.getParam('entity');
+      const entity = this.props.route.params.entity;
       this.timer = setTimeout(async () => {
         const url = await gatheringService.getRoomName(entity);
         const user = sessionService.getUser();
