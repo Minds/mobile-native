@@ -216,7 +216,7 @@ PODS:
     - react-native-video/Video (= 5.0.2)
   - react-native-video/Video (5.0.2):
     - React
-  - react-native-webview (7.5.0):
+  - react-native-webview (8.1.0):
     - React
   - React-RCTActionSheet (0.61.4):
     - React-Core/RCTActionSheetHeaders (= 0.61.4)
@@ -269,7 +269,7 @@ PODS:
     - React
   - RNExitApp (1.1.0):
     - React
-  - RNFastImage (7.0.2):
+  - RNFastImage (8.0.0):
     - React
     - SDWebImage (~> 5.0)
     - SDWebImageWebPCoder (~> 0.2.3)
@@ -283,7 +283,7 @@ PODS:
     - React
   - RNReanimated (1.7.0):
     - React
-  - RNScreens (2.0.0-beta.4):
+  - RNScreens (2.0.0-beta.7):
     - React
   - RNSentry (1.2.2):
     - React
@@ -514,7 +514,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 4b3d1b9ebb040a4814a222703e7434b20c95fcf5
   react-native-sqlite-storage: f06bfba10f67f989c00b6a699b9c2b80a816edbe
   react-native-video: d01ed7ff1e38fa7dcc6c15c94cf505e661b7bfd0
-  react-native-webview: deb4a57eee4906e992e2f84bb087a15fd302378e
+  react-native-webview: 88d83b4df2e792cfc36c952b1c496e2ac01cf0b8
   React-RCTActionSheet: 7369b7c85f99b6299491333affd9f01f5a130c22
   React-RCTAnimation: d07be15b2bd1d06d89417eb0343f98ffd2b099a7
   React-RCTBlob: 8e0b23d95c9baa98f6b0e127e07666aaafd96c34
@@ -533,13 +533,13 @@ SPEC CHECKSUMS:
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
   RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
-  RNFastImage: 9b0c22643872bb7494c8d87bbbb66cc4c0d9e7a2
+  RNFastImage: c104f15f04c4f68bd65c9645cc27900bbacd9cc7
   RNFileShareIntent: 783adf7c4386c6024dd5dfeb96cc7836948f8b47
   RNFS: 0d4191b1052bef9ce70deff00a5b4169c62bbd9b
   RNGestureHandler: 911d3b110a7a233a34c4f800e7188a84b75319c6
   RNLocalize: 07eb7a91d10021cdf59d80061ebf3adb8a5b5688
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
-  RNScreens: 6053a007667bea81a69087caadf103bba04c032e
+  RNScreens: b9ea46d65967a1f74b9aaa1229d0f74f58d216b5
   RNSentry: 9cfa3717b1e6bf9ad4b124683e78e3b98b01d3af
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSVG: f6177f8d7c095fada7cfee2e4bb7388ba426064c
