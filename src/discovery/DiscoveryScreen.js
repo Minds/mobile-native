@@ -173,7 +173,7 @@ class DiscoveryScreen extends Component {
     switch (this.props.discovery.filters.type ) {
       case 'images':
         change.changed.forEach(c => {
-          if (c.item.isGif()) {
+          if (c.item.isGif && c.item.isGif()) {
             c.item.setVisible(c.isViewable);
           }
         })

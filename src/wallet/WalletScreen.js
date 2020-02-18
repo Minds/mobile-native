@@ -29,6 +29,7 @@ import { CommonStyle } from '../styles/Common';
 import FeaturesService from '../common/services/features.service';
 import shareService from "../share/ShareService";
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Wallet screen
@@ -71,7 +72,7 @@ export default class WalletScreen extends Component {
   render() {
     return (
       <View style={CommonStyle.flexContainer}>
-        <ScrollView style={ styles.mainContainer }
+        <ScrollView style={ ThemedStyles.style.backgroundSecondary }
           keyboardShouldPersistTaps='always'>
           <WalletBalanceTokens navigation={this.props.navigation}/>
           <WalletOverviewView />
@@ -80,7 +81,7 @@ export default class WalletScreen extends Component {
 
             <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Transactions')} >
               <View style={styles.iconContainer}>
-                <Icon name="history" size={24} style={ styles.icon } />
+                <Icon name="history" size={24} style={ ThemedStyles.style.colorIcon } />
               </View>
               <View style={styles.item}>
                 <Text style={styles.title}>{i18n.t('wallet.transactionsTitle')}</Text>
@@ -90,7 +91,7 @@ export default class WalletScreen extends Component {
 
             { FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Withdraw')} >
               <View style={styles.iconContainer}>
-                <Icon name="local-atm" size={24} style={ styles.icon } />
+                <Icon name="local-atm" size={24} style={ ThemedStyles.style.colorIcon } />
               </View>
               <View style={styles.item}>
                 <Text style={styles.title}>{i18n.t('wallet.withdrawTitle')}</Text>
@@ -100,7 +101,7 @@ export default class WalletScreen extends Component {
 
             <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('Contributions')} >
               <View style={styles.iconContainer}>
-                <Icon name="stars" size={24} style={ styles.icon } />
+                <Icon name="stars" size={24} style={ ThemedStyles.style.colorIcon } />
               </View>
               <View style={styles.item}>
                 <Text style={styles.title}>{i18n.t('wallet.contributionsTitle')}</Text>
@@ -110,7 +111,7 @@ export default class WalletScreen extends Component {
 
             {FeaturesService.has('crypto') && <TouchableOpacity style={styles.itemContainer} onPress={ () => this.props.navigation.navigate('BlockchainWallet') }>
               <View style={styles.iconContainer}>
-                <Icon name="settings" size={24} style={ styles.icon } />
+                <Icon name="settings" size={24} style={ ThemedStyles.style.colorIcon } />
               </View>
               <View style={styles.item}>
                 <Text style={styles.title}>{i18n.t('wallet.addressesTitle')}</Text>
@@ -120,7 +121,7 @@ export default class WalletScreen extends Component {
 
             <TouchableOpacity style={styles.itemContainer} onPress={ () => shareService.invite(this.props.user.me.guid)} >
               <View style={styles.iconContainer}>
-                <Icon name="share" size={24} style={ styles.icon } />
+                <Icon name="share" size={24} style={ ThemedStyles.style.colorIcon } />
               </View>
               <View style={styles.item}>
                 <Text style={styles.title}>{i18n.t('wallet.inviteFriend')}</Text>
@@ -140,15 +141,11 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     fontSize: 13,
     paddingTop: 20,
-    color: '#888',
   },
   iconContainer: {
     width: 36,
     flexDirection: 'column',
     justifyContent: 'center',
-  },
-  icon: {
-    color: '#455a64',
   },
   points: {
     paddingTop: 20,
@@ -159,11 +156,9 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontFamily: 'Roboto',
-    color: '#444',
   },
   subtitle: {
     fontSize: 12,
-    color: '#888'
   },
   itemContainer: {
     padding: 16,
@@ -175,8 +170,5 @@ const styles = StyleSheet.create({
   },
   datailsContainer: {
     padding: 16,
-  },
-  mainContainer: {
-    backgroundColor: '#fff'
   }
 });

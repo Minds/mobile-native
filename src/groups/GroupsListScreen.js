@@ -27,6 +27,7 @@ import GroupsListItem from './GroupsListItem';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 DebouncedGroupsListItem = withErrorBoundary(withPreventDoubleTap(GroupsListItem, "Can't show this group"));
 
@@ -107,7 +108,7 @@ export default class GroupsListScreen extends Component {
         refreshing={list.refreshing}
         onEndReached={this.loadMore}
         // onEndReachedThreshold={0}
-        style={styles.list}
+        style={[styles.list, ThemedStyles.style.backgroundSecondary]}
         initialNumToRender={12}
         removeClippedSubviews={true}
       />
@@ -141,6 +142,5 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderBottomWidth: 0,
     marginTop: 0,
-    backgroundColor: '#FFF'
   }
 });

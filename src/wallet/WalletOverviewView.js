@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
   },
   view: {
     flex: 1,
-    backgroundColor: 'white',
   },
   cell: {
     paddingTop: 8,
@@ -98,7 +97,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     // fontWeight: '800',
     fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
-    color: '#444',
     flex: 1,
   }
 });

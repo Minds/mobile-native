@@ -58,6 +58,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { View } from 'react-native';
 import MessengerScreen from '../messenger/MessengerScreen';
 import Topbar from '../topbar/Topbar';
+import i18n from '../common/services/i18n.service';
 
 
 const hideHeader = {headerShown: false};
@@ -103,7 +104,7 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="GroupView" component={GroupViewScreen} options={hideHeader}/>
       <AppStackNav.Screen name="Wallet" component={WalletScreen}/>
       <AppStackNav.Screen name="BlogList" component={BlogsListScreen}/>
-      <AppStackNav.Screen name="BoostConsole" component={BoostConsoleScreen}/>
+      <AppStackNav.Screen name="BoostConsole" component={BoostConsoleScreen} options={{title: i18n.t('boost')}}/>
       <AppStackNav.Screen name="BlogView" component={BlogsViewScreen} options={hideHeader}/>
       <AppStackNav.Screen name="WireFab" component={FabScreen}/>
       <AppStackNav.Screen name="WalletHistory" component={WalletHistoryScreen}/>
