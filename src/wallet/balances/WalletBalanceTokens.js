@@ -42,7 +42,9 @@ export default class WalletBalanceTokens extends Component {
    */
   componentWillUnmount() {
     // clear data to free memory
-    this.wallet.ledger.list.clearList();
+
+    this.props.wallet.ledger.list.clearList();
+
     if (this.disposeEnter) {
       this.disposeEnter();
     }
@@ -120,11 +122,9 @@ const styles = StyleSheet.create({
   addressesLabel: {
     fontWeight: '700',
     fontFamily: 'Roboto',
-    color: '#444',
   },
   addressesAddress: {
     fontSize: 8,
-    color: '#888',
   },
   addressesBalance: {
     textAlign: 'right',
@@ -136,7 +136,6 @@ const styles = StyleSheet.create({
   addressesEthBalance: {
     fontSize: 12,
     fontWeight: '400',
-    color: '#444'
   },
   logo: {
     width: 100,
@@ -156,6 +155,5 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '700',
     fontFamily: 'Roboto',
-    color: '#444',
   }
 });
