@@ -9,9 +9,7 @@ import {
 
 import { observer, inject } from 'mobx-react';
 import { Icon } from 'react-native-elements'
-import {
-  NavigationActions
-} from '@react-navigation/native';
+import { CommonActions } from '@react-navigation/native';
 
 import HashtagService from '../common/services/hashtag.service'
 
@@ -142,16 +140,20 @@ class CapturePoster extends Component {
 
     const { params } = this.props.route;
 
-    const routeParams = {
-      prepend: ActivityModel.checkOrCreate(entity),
-    };
+    if (params) {
 
-    if (group) routeParams.group = group;
+      const routeParams = {
+        prepend: ActivityModel.checkOrCreate(entity),
+      };
 
-    dispatch(NavigationActions.setParams({
-      routeParams,
-      key: params.parentKey, // passed from index
-    }));
+      if (group) routeParams.group = group;
+
+      dispatch(CommonActions.setParams({
+        routeParams,
+        source: params.parentKey, // passed from index
+      }));
+
+    }
 
     goBack(null);
 
