@@ -24,35 +24,9 @@ import i18n from '../common/services/i18n.service';
 
 import mindsService from '../common/services/minds.service';
 import CenteredLoading from '../common/components/CenteredLoading';
+import ThemedStyles from '../styles/ThemedStyles';
 
 export default class ReportScreen extends Component {
-
-  static navigationOptions = ({ navigation }) => ({
-    title: i18n.t('report'),
-    headerLeft: () => {
-      return <Icon name="chevron-left" size={38} color={colors.primary} onPress={
-        () => {
-          if (navigation.state.params && navigation.state.params.goBack) return navigation.state.params.goBack();
-          navigation.goBack();
-        }
-      }/>
-    },
-    headerRight: (
-      <View>
-        {
-          navigation.state.params.requireNote &&
-          <Button
-            title={i18n.t('settings.submit')}
-            onPress={navigation.state.params.confirmAndSubmit ?
-              navigation.state.params.confirmAndSubmit : () => null}
-          />
-        }
-      </View>
-    ),
-    transitionConfig: {
-      isModal: true
-    },
-  });
 
   state = {
     note: '',
@@ -65,8 +39,37 @@ export default class ReportScreen extends Component {
    * Component did mount
    */
   componentDidMount() {
+    const navigation = this.props.navigation;
+
+    navigation.setOptions({
+      title: i18n.t('report'),
+      headerLeft: () => {
+        return <Icon name="chevron-left" size={38} color={colors.primary} onPress={
+          () => {
+            if (this.props.route.params && this.props.route.params.goBack) return this.props.route.params.goBack();
+            navigation.goBack();
+          }
+        }/>
+      },
+      headerRight: () => (
+        <View>
+          {
+            this.props.route.params.requireNote &&
+            <Button
+              title={i18n.t('settings.submit')}
+              onPress={this.props.route.params.confirmAndSubmit ?
+                this.props.route.params.confirmAndSubmit : () => null}
+            />
+          }
+        </View>
+      ),
+      transitionConfig: {
+        isModal: true
+      },
+    });
+
     this.setState({
-      entity: this.props.navigation.state.params.entity,
+      entity: this.props.route.params.entity,
     });
     this.loadReasons();
     this.props.navigation.setParams({ confirmAndSubmit: this.confirmAndSubmit.bind(this) });
@@ -205,7 +208,7 @@ export default class ReportScreen extends Component {
 
     const reasonItems = reasons.map((reason, i) => {
       return (
-        <TouchableOpacity style={styles.reasonItem} key={i} onPress={ () => this.state.reason ? this.selectSubreason(reason) : this.selectReason(reason) }>
+        <TouchableOpacity style={[styles.reasonItem, ThemedStyles.backgroundTertiary]} key={i} onPress={ () => this.state.reason ? this.selectSubreason(reason) : this.selectReason(reason) }>
           <View style={styles.reasonItemLabelContainer}>
             <View style={{ flexDirection: 'row', alignItems: 'stretch' }}>
               <Text style={styles.reasonItemLabel}>{ reason.label }</Text>
@@ -247,9 +250,9 @@ export default class ReportScreen extends Component {
     );
 
     return (
-      <ScrollView style={CS.flexContainer}>
+      <ScrollView style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
         {this.state.reason && <Text style={[CS.fontM, CS.backgroundPrimary, CS.colorWhite, CS.padding]}>{this.state.reason.label}</Text>}
-        <View style={{ flex: 1 }}>
+        <View style={CS.flexContainer}>
           { !this.state.requireNote && this.renderReasons() }
 
           { this.state.requireNote && noteInput }
@@ -268,9 +271,6 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingTop: 8,
     paddingBottom: 8,
-    backgroundColor: '#FFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ececec',
   },
   reasonItemLabelContainer: {
     flex: 1,
@@ -281,7 +281,6 @@ const styles = StyleSheet.create({
   reasonItemLabel: {
     flex: 1,
     fontWeight: '600',
-    color: '#444',
     textAlign: 'left',
   },
   chevronContainer: {
