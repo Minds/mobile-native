@@ -195,10 +195,7 @@ workflows:
   version: 2
   node-ios:
     jobs:
-      - test
       - ios:
-          requires:
-            - test
           filters:
             branches:
               only:

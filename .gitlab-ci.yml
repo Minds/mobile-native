@@ -1,23 +1,22 @@
 
 stages:
-  - test
   - build
   - i18n
   - deploy
 
 # Spec test
-test:jest:
-  image: node:10.16.3
-  stage: test
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-      - .jest/cache/
-  before_script:
-    - yarn install --frozen-lockfile
-  script:
-    - yarn test
+# test:jest:
+#   image: node:10.16.3
+#   stage: test
+#   cache:
+#     key: ${CI_COMMIT_REF_SLUG}
+#     paths:
+#       - node_modules/
+#       - .jest/cache/
+#   before_script:
+#     - yarn install --frozen-lockfile
+#   script:
+#     - yarn test
 
 # Upload new terms to poeditor
 i18n:upload:
