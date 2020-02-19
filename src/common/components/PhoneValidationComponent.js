@@ -28,6 +28,7 @@ import logService from '../services/log.service';
 import ListItemButton from './ListItemButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ComponentsStyle } from '../../styles/Components';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 @inject('user', 'wallet')
 @observer
@@ -140,7 +141,7 @@ export default class PhoneValidationComponent extends Component {
               ComponentsStyle.loginInputNew,
               CS.marginRight2x,
             ]}
-            textStyle={CS.colorPrimaryText}
+            textStyle={ThemedStyles.style.colorPrimaryText}
             value={this.state.phone}
             onChangePhoneNumber={this.setPhone}
             ref="phoneInput"
