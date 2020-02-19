@@ -17,6 +17,7 @@ import {
   Clipboard,
   StatusBar,
   UIManager,
+  RefreshControl,
 } from 'react-native';
 import { Provider, observer } from 'mobx-react';
 import RNBootSplash from 'react-native-bootsplash';
@@ -203,6 +204,11 @@ class App extends Component<Props, State> {
             style: [ThemedStyles.style.colorPrimaryText, { fontFamily: 'Roboto'}, origin.props.style]
         });
     };
+
+    RefreshControl.defaultProps = {
+      tintColor: ThemedStyles.getColor('icon_active'),
+      colors: ThemedStyles.getColor('icon_active')
+    }
   }
 
   /**
