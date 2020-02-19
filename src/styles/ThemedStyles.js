@@ -27,6 +27,14 @@ for (let index = 0; index < repetitions; index++) {
   dynamicStyles[`paddingRight${post}`] = { paddingRight: value };
   dynamicStyles[`paddingBottom${post}`] = { paddingBottom: value };
   dynamicStyles[`paddingHorizontal${post}`] = { paddingHorizontal: value };
+
+  dynamicStyles[`border${post}`] = { borderWidth: index };
+  dynamicStyles[`borderLeft${post}`] = { borderLeftWidth: index };
+  dynamicStyles[`borderRight${post}`] = { borderRightWidth: index };
+  dynamicStyles[`borderTop${post}`] = { borderTopWidth: index };
+  dynamicStyles[`borderBottom${post}`] = { borderBottomWidth: index };
+  dynamicStyles[`borderRadius${post}`] = { borderRadius: index * 2 };
+
 }
 
 /**
@@ -145,6 +153,10 @@ class ThemedStylesStore {
         flex: 1,
         flexDirection: 'column',
       },
+      columnAlignCenter: {
+        alignItems: 'center',
+        flexDirection: 'column',
+      },
       flexColumnStretch: {
         flex: 1,
         flexDirection: 'column',
@@ -173,6 +185,9 @@ class ThemedStylesStore {
       rowJustifyStart: {
         flexDirection: 'row',
         justifyContent: 'flex-start'
+      },
+      alignCenter: {
+        alignItems: 'center'
       },
       centered: {
         alignContent: 'center',
@@ -231,6 +246,9 @@ class ThemedStylesStore {
       },
       backgroundSeparator: {
         backgroundColor: theme.separator,
+      },
+      backgroundTransparent: {
+        backgroundColor: 'transparent'
       },
 
       // fonts
@@ -398,6 +416,26 @@ class ThemedStylesStore {
         paddingLeft: 0,
         borderWidth: 0,
         marginTop: 15,
+      },
+
+      // borders
+      borderHair: {
+        borderWidth: StyleSheet.hairlineWidth
+      },
+      borderLeftHair: {
+        borderLeftWidth: StyleSheet.hairlineWidth
+      },
+      borderRightHair: {
+        borderRightWidth: StyleSheet.hairlineWidth
+      },
+      borderTopHair: {
+        borderTopWidth: StyleSheet.hairlineWidth
+      },
+      borderBottomHair: {
+        borderBottomWidth: StyleSheet.hairlineWidth
+      },
+      buttonBorder: {
+        borderColor: theme.button_border
       },
     });
   }
