@@ -80,8 +80,7 @@ type CommentType = {
 const isIOS = Platform.OS === 'ios';
 const vPadding = isIphoneX ? 88 : 66;
 const paddingBottom = isIphoneX ? { paddingBottom: 12 } : null;
-const inputStyle = isIOS ? { marginTop:3 } : { marginTop:2 };
-
+const inputStyle = isIOS ? { marginTop: 3, paddingVertical: 2 } : { marginTop: 2, paddingVertical: 2 };
 /**
  * Comment List Component
  */
@@ -355,10 +354,11 @@ class CommentList extends React.Component<PropsType, StateType> {
           testID={this.props.parent ? 'CommentParentView' : ''}>
           <Image source={avatarImg} style={CmpStyle.posterAvatar} />
           <TextInput
-            style={[CS.flexContainer, CS.marginLeft, inputStyle, {paddingVertical: 2}]}
+            style={[CS.flexContainer, CS.marginLeft, inputStyle, ThemedStyles.style.colorPrimaryText]}
             editable={true}
             underlineColorAndroid='transparent'
             placeholder={i18n.t('activity.typeComment')}
+            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
             onChangeText={this.setText}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
@@ -377,18 +377,18 @@ class CommentList extends React.Component<PropsType, StateType> {
               <TouchableOpacity
                 onPress={this.showAttachment}
                 style={CS.paddingRight2x}>
-                <Icon name="md-attach" size={24} style={[CS.paddingRight2x, CS.colorDarkGreyed]} />
+                <Icon name="md-attach" size={24} style={[CS.paddingRight2x, ThemedStyles.style.colorIcon]} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={comments.toggleMature}
                 style={CS.paddingRight2x}>
-                <IconMd name="explicit" size={24} style={[CS.paddingRight2x, comments.mature ? CS.colorDanger : CS.colorDarkGreyed]} />
+                <IconMd name="explicit" size={24} style={[CS.paddingRight2x, comments.mature ? ThemedStyles.style.colorAlert : ThemedStyles.style.colorIcon]} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={this.postComment}
                 style={CS.paddingRight2x}
                 testID="PostCommentButton">
-                <Icon name="md-send" size={24} style={CS.colorDarkGreyed}/>
+                <Icon name="md-send" size={24} style={ThemedStyles.style.colorIcon}/>
               </TouchableOpacity>
               </View>
           }
