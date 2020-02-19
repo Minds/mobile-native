@@ -24,7 +24,7 @@ export default class WalletBalanceTokens extends Component {
   }
 
   componentWillMount() {
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+    this.disposeEnter = this.props.navigation.addListener('focus', (s) => {
       // ignore back navigation
       if (s.action.type === 'Navigation/NAVIGATE' && s.action.routeName === 'Wallet') {
         this.triggerRender(this.props.wallet);

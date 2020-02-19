@@ -111,7 +111,7 @@ class DiscoveryScreen extends Component {
    */
   componentDidMount() {
     // load data on enter
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+    this.disposeEnter = this.props.navigation.addListener('focus', (s) => {
       setTimeout(() => {
         this.setState({active: true});
         const params = this.props.route.params;
@@ -123,8 +123,15 @@ class DiscoveryScreen extends Component {
       }, 50);
     });
 
+    this.disposeTabPress = this.props.navigation.addListener('tabPress', e => {
+      if (this.props.navigation.isFocused()) {
+        stores.discovery.reload();
+        e.preventDefault();
+      }
+    });
+
     // clear data on leave
-    this.disposeLeave = this.props.navigation.addListener('didBlur', (s) => {
+    this.disposeLeave = this.props.navigation.addListener('blur', (s) => {
       setTimeout(() => {
         this.setState({active: false});
       }, 50);
@@ -138,9 +145,11 @@ class DiscoveryScreen extends Component {
     if (this.disposeEnter) {
       this.disposeEnter();
     }
-
     if (this.disposeLeave) {
       this.disposeLeave();
+    }
+    if (this.disposeTabPress) {
+      this.disposeTabPress();
     }
   }
 

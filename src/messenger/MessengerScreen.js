@@ -45,7 +45,7 @@ class MessengerScreen extends Component {
   componentDidMount() {
 
     // // load data on enter
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+    this.disposeEnter = this.props.navigation.addListener('focus', (s) => {
       this.props.messengerList.loadList(true);
       //this.setState({ active: true });
     });

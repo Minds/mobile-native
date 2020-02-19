@@ -64,10 +64,22 @@ export default class NewsfeedScreen extends Component {
    */
   componentDidMount() {
 
+    this.disposeTabPress = this.props.navigation.addListener('tabPress', e => {
+      if (this.props.navigation.isFocused()) {
+        if (stores.newsfeed.filter == 'subscribed') {
+          stores.newsfeed.scrollToTop();
+          stores.newsfeed.feedStore.refresh(true)
+        } else {
+          stores.newsfeed.refresh();
+        }
+        e.preventDefault();
+      }
+    });
+
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
 
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+    this.disposeEnter = this.props.navigation.addListener('focus', (s) => {
       const params = this.props.navigation.state.params;
       if (params && params.prepend) {
 
@@ -105,6 +117,9 @@ export default class NewsfeedScreen extends Component {
     this.props.messengerList.unlisten();
     if (this.disposeEnter) {
       this.disposeEnter();
+    }
+    if (this.disposeTabPress) {
+      this.disposeTabPress();
     }
   }
 

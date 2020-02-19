@@ -86,7 +86,7 @@ class MindsVideo extends Component {
       onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
     });
 
-    this.onScreenBlur = NavigationService.addListener('didBlur', () => {
+    this.onScreenBlur = NavigationService.addListener('blur', () => {
       this.pause();
     });
   }

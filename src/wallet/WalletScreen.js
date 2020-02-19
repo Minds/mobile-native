@@ -54,7 +54,7 @@ export default class WalletScreen extends Component {
 
   componentWillMount() {
     if (FeaturesService.has('crypto')) {
-      this.disposeEnter = this.props.navigation.addListener('didFocus', async () => {
+      this.disposeEnter = this.props.navigation.addListener('focus', async () => {
         if ((await this.props.wallet.canShowOnboarding()) && (!this.props.user.hasRewards() || !this.props.user.hasEthWallet())) {
           setImmediate(() => {
             this.props.navigation.navigate('WalletOnboarding');

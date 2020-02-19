@@ -7,7 +7,7 @@ import {
   Text,
   View,
   LayoutAnimation,
-  TouchableHighlight,
+  TouchableOpacity,
   UIManager,
   StyleSheet,
   Platform,
@@ -110,10 +110,10 @@ class NewsfeedFilters extends Component {
 
     return (
       <View style={CS.rowJustifyStart}>
-        <TouchableHighlight
+        <TouchableOpacity
           style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x, hashActive ? CS.backgroundPrimary : themed.backgroundTertiary, {borderBottomRightRadius:25, borderTopRightRadius:25}]}
           onPress={this.showDrawer}
-          underlayColor='#fff'
+
           {...testID('Filter hashtags selector button')}
         >
           <View style={[CS.rowJustifyStart, CS.centered]}>
@@ -122,15 +122,15 @@ class NewsfeedFilters extends Component {
               style={[CS.centered, (hashActive ? themed.colorWhite : themed.colorTertiaryText), {paddingTop:2}]}
               size={ 20 }
             />
-            {this.props.hashtag.hashtag ? <Text style={[CS.colorIcon, CS.fontM]}>{this.props.hashtag.hashtag}</Text> : null}
+            {this.props.hashtag.hashtag ? <Text style={[CS.colorWhite, CS.fontM]}>{this.props.hashtag.hashtag}</Text> : null}
           </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
         <View style={[CS.rowJustifySpaceEvenly, CS.flexContainer]}>
-          <TouchableHighlight
+          <TouchableOpacity
             style={[CS.padding]}
             onPress={ () => store.setFilter('hot') }
             disabled={disableHotLatest}
-            underlayColor='#fff'
+
             {...testID('Filter hot button')}
           >
             <View style={[CS.rowJustifyCenter, CS.centered]}>
@@ -156,9 +156,9 @@ class NewsfeedFilters extends Component {
                 </Text>
               ) : null}
             </View>
-          </TouchableHighlight>
+          </TouchableOpacity>
           <View style={CS.rowJustifyCenter}>
-            <TouchableHighlight style={[CS.padding]} onPress={ () => store.setFilter('top') } underlayColor='#fff' {...testID('Filter top button')}>
+            <TouchableOpacity style={[CS.padding]} onPress={ () => store.setFilter('top') } {...testID('Filter top button')}>
               <View style={[CS.rowJustifyCenter, CS.centered]}>
                 <Icon
                   name="trending-up"
@@ -167,12 +167,12 @@ class NewsfeedFilters extends Component {
                 />
                 {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'top' ? themed.colorIconActive : themed.colorIcon, CS.paddingLeft]}>{i18n.t('newsfeedFilters.top')}</Text> : null}
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
             {store.filter == 'top' &&
               <Menu
                 ref={this.setMenuRef}
                 button={
-                  <TouchableHighlight style={[CS.padding]} onPress={this.showMenu} >
+                  <TouchableOpacity style={[CS.padding]} onPress={this.showMenu} >
                     <View style={[CS.rowJustifyCenter, CS.centered]}>
                       <Text style={[CS.fontM, store.filter == 'top' ? themed.colorIconActive : themed.colorIcon, CS.paddingLeft, CS.paddingRight]}>{store.period}</Text>
                       <IonIcon
@@ -181,7 +181,7 @@ class NewsfeedFilters extends Component {
                         size={ 22 }
                       />
                     </View>
-                  </TouchableHighlight>
+                  </TouchableOpacity>
                 }
               >
                 <MenuItem onPress={this.setPeriod12}>{i18n.t('newsfeedFilters.topPeriod12')}</MenuItem>
@@ -192,11 +192,11 @@ class NewsfeedFilters extends Component {
               </Menu>
             }
           </View>
-          <TouchableHighlight
+          <TouchableOpacity
             style={[CS.padding]}
             onPress={ () => store.setFilter('latest') }
             disabled={disableHotLatest}
-            underlayColor='#fff'
+
             {...testID('Filter latest button')}
           >
             <View style={[CS.rowJustifyCenter, CS.centered]}>
@@ -207,7 +207,7 @@ class NewsfeedFilters extends Component {
               />
               {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'latest' ? themed.colorIconActive : (disableHotLatest ? themed.colorSeparator : themed.colorIcon), CS.paddingLeft]}>{i18n.t('newsfeedFilters.latest')}</Text> : null}
             </View>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
         {(!GOOGLE_PLAY_STORE && Platform.OS !== 'ios') && <View style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x]}>
           <NsfwToggle
