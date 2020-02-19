@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import {View, Text, TouchableHighlight, StyleSheet} from 'react-native';
 import { observer, inject } from 'mobx-react';
 
-import { CommonStyle as CS } from '../../styles/Common';
 import TagSelect from '../../common/components/TagSelect';
 import i18n from '../../common/services/i18n.service';
 import { ComponentsStyle } from '../../styles/Components';
@@ -11,6 +10,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import OnboardingButtons from '../OnboardingButtons';
 import OnboardingBackButton from '../OnboardingBackButton';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 @inject('hashtag')
 @observer
@@ -24,6 +24,7 @@ export default class HashtagsStepNew extends Component {
   }
 
   getBody = () => {
+    const CS = ThemedStyles.style;
     return (
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
         <OnboardingBackButton onBack={this.props.onBack} />
@@ -58,6 +59,7 @@ export default class HashtagsStepNew extends Component {
   };
 
   render() {
+    const CS = ThemedStyles.style;
     return (
       <View style={[CS.flexContainerCenter]}>
         <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>

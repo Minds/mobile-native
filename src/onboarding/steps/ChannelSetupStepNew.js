@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import {View, Text, TouchableHighlight, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import { observer, inject } from 'mobx-react';
 
-import { CommonStyle as CS } from '../../styles/Common';
 import i18n from '../../common/services/i18n.service';
 import { ComponentsStyle } from '../../styles/Components';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -19,6 +18,7 @@ import { UserError } from '../../common/UserError';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
@@ -114,6 +114,7 @@ export default class ChannelSetupStepNew extends Component {
   toggleFooter = () => this.setState({showFooter: !this.state.showFooter});
 
   getBody = () => {
+    const CS = ThemedStyles.style;
     const hasAvatar = this.props.user.hasAvatar() || this.state.preview_avatar;
     const avatar = this.getAvatar();
     return (
@@ -130,7 +131,7 @@ export default class ChannelSetupStepNew extends Component {
             <View style={[CS.rowJustifyEnd, CS.flexContainer]}>
               <TouchableCustom
                 onPress={this.changeAvatarAction}
-                style={[styles.avatar, CS.marginLeft3x, CS.border, CS.borderButton ]}
+                style={[styles.avatar, CS.marginLeft3x, CS.border, CS.buttonBorder ]}
                 disabled={this.saving}
                 testID="selectAvatar"
               >
@@ -190,6 +191,7 @@ export default class ChannelSetupStepNew extends Component {
   };
 
   render() {
+    const CS = ThemedStyles.style;
     return (
       <View style={[CS.flexContainerCenter]}>
         <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>

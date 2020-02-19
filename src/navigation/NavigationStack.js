@@ -121,7 +121,7 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="WalletOnboarding" component={WalletOnboardingScreen} />
       <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
       <AppStackNav.Screen name="OnboardingScreen" component={OnboardingScreen} />
-      <AppStackNav.Screen name="OnboardingScreenNew" component={OnboardingScreenNew} />
+      <AppStackNav.Screen name="OnboardingScreenNew" component={OnboardingScreenNew} options={hideHeader}/>
       <AppStackNav.Screen name="Messenger" component={MessengerScreen} />
     </AppStackNav.Navigator>
   );
