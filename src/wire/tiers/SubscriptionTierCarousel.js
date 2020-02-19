@@ -6,6 +6,7 @@ import featuresService from '../../common/services/features.service';
 import { CommonStyle as CS } from '../../styles/Common';
 import viewportPercentage from '../../common/helpers/viewportPercentage';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 const {value: slideWidth, viewportHeight} = viewportPercentage(75);
 const {value: itemHorizontalMargin} = viewportPercentage(2);
@@ -89,10 +90,10 @@ export default class SubscriptionTierCarousel extends PureComponent {
     const text = recurring ? i18n.t('wire.amountMonth', {amount: amountText}) : amountText;
 
     return (
-      <View key={`rewards${row.item.amount}`} style={[CS.rowJustifyCenter, CS.backgroundLightGreyed, CS.borderRadius5x, CS.padding2x, CS.border, CS.borderGreyed]}>
+      <View key={`rewards${row.item.amount}`} style={[CS.rowJustifyCenter, ThemedStyles.style.backgroundPrimary, CS.borderRadius5x, CS.padding2x, CS.border, ThemedStyles.style.borderButton]}>
         <View style={CS.columnAlignCenter}>
-          <Text style={[CS.fontXXL, CS.fontMedium, CS.colorDark]}>{text}</Text>
-          <Text numberOfLines={5} style={[CS.fontL, CS.fontHairline, CS.colorDark]}>{row.item.description}</Text>
+          <Text style={[CS.fontXXL, CS.fontMedium]}>{text}</Text>
+          <Text numberOfLines={5} style={[CS.fontL, CS.fontMedium]}>{row.item.description}</Text>
         </View>
       </View>
     );
@@ -115,7 +116,7 @@ export default class SubscriptionTierCarousel extends PureComponent {
     let current = this.rewards.findIndex(r => r.amount == this.props.amount && r.currency == this.props.currency);
 
     return (
-      <View style={[]}>
+      <View>
         <Pagination
           dotsLength={this.rewards.length}
           activeDotIndex={current === -1 ? 0 : current}

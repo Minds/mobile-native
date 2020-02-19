@@ -36,9 +36,10 @@ import ThemedStyles from '../styles/ThemedStyles';
 /**
  * Newsfeed filters
  */
+export default
 @inject('hashtag')
 @observer
-export default class NewsfeedFilters extends Component {
+class NewsfeedFilters extends Component {
 
   sizeY = 60;
 
@@ -110,7 +111,7 @@ export default class NewsfeedFilters extends Component {
     return (
       <View style={CS.rowJustifyStart}>
         <TouchableHighlight
-          style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x, hashActive ? CS.backgroundPrimary : CS.backgroundLight, {borderBottomRightRadius:25, borderTopRightRadius:25}]}
+          style={[CS.padding, CS.paddingLeft2x, CS.paddingRight2x, hashActive ? CS.backgroundPrimary : themed.backgroundTertiary, {borderBottomRightRadius:25, borderTopRightRadius:25}]}
           onPress={this.showDrawer}
           underlayColor='#fff'
           {...testID('Filter hashtags selector button')}
@@ -118,10 +119,10 @@ export default class NewsfeedFilters extends Component {
           <View style={[CS.rowJustifyStart, CS.centered]}>
             <IconMC
               name="pound"
-              style={[CS.centered, hashActive ? CS.colorWhite : CS.colorGreyed, {paddingTop:2}]}
+              style={[CS.centered, (hashActive ? themed.colorWhite : themed.colorTertiaryText), {paddingTop:2}]}
               size={ 20 }
             />
-            {this.props.hashtag.hashtag ? <Text style={[CS.colorWhite, CS.fontM]}>{this.props.hashtag.hashtag}</Text> : null}
+            {this.props.hashtag.hashtag ? <Text style={[CS.colorIcon, CS.fontM]}>{this.props.hashtag.hashtag}</Text> : null}
           </View>
         </TouchableHighlight>
         <View style={[CS.rowJustifySpaceEvenly, CS.flexContainer]}>
@@ -135,10 +136,25 @@ export default class NewsfeedFilters extends Component {
             <View style={[CS.rowJustifyCenter, CS.centered]}>
               <Icon
                 name="whatshot"
-                style={[CS.centered, store.filter == 'hot' ? themed.colorLink : (disableHotLatest ? CS.colorGreyed : null), {paddingTop:2}  ]}
+                style={[CS.centered, store.filter == 'hot' ? themed.colorIconActive : (disableHotLatest ? themed.colorSeparator : themed.colorIcon), {paddingTop:2}  ]}
                 size={ 22 }
               />
-              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'hot' ? themed.colorLink : (disableHotLatest ? CS.colorGreyed : themed.colorIcon), CS.paddingLeft]}>{i18n.t('newsfeedFilters.hot')}</Text> : null}
+              {!this.props.hashtag.hashtag ? (
+                <Text
+                  style={[
+                    CS.fontM,
+                    store.filter === 'hot'
+                      ? themed.colorIconActive
+                      : (
+                        disableHotLatest
+                          ? themed.colorSeparator
+                          : themed.colorIcon
+                      ),
+                    CS.paddingLeft,
+                  ]}>
+                  {i18n.t('newsfeedFilters.hot')}
+                </Text>
+              ) : null}
             </View>
           </TouchableHighlight>
           <View style={CS.rowJustifyCenter}>
@@ -146,10 +162,10 @@ export default class NewsfeedFilters extends Component {
               <View style={[CS.rowJustifyCenter, CS.centered]}>
                 <Icon
                   name="trending-up"
-                  style={[CS.centered, store.filter == 'top' ? themed.colorLink : themed.colorIcon, {paddingTop:2}  ]}
+                  style={[CS.centered, store.filter == 'top' ? themed.colorIconActive : themed.colorIcon, {paddingTop:2}  ]}
                   size={ 22 }
                 />
-                {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'top' ? themed.colorLink : themed.colorIcon, CS.paddingLeft]}>{i18n.t('newsfeedFilters.top')}</Text> : null}
+                {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'top' ? themed.colorIconActive : themed.colorIcon, CS.paddingLeft]}>{i18n.t('newsfeedFilters.top')}</Text> : null}
               </View>
             </TouchableHighlight>
             {store.filter == 'top' &&
@@ -158,10 +174,10 @@ export default class NewsfeedFilters extends Component {
                 button={
                   <TouchableHighlight style={[CS.padding]} onPress={this.showMenu} >
                     <View style={[CS.rowJustifyCenter, CS.centered]}>
-                      <Text style={[CS.fontM, store.filter == 'top' ? themed.colorLink : themed.colorIcon, CS.paddingLeft, CS.paddingRight]}>{store.period}</Text>
+                      <Text style={[CS.fontM, store.filter == 'top' ? themed.colorIconActive : themed.colorIcon, CS.paddingLeft, CS.paddingRight]}>{store.period}</Text>
                       <IonIcon
                         name="ios-arrow-down"
-                        style={[CS.centered, store.filter == 'top' ? themed.colorLink : themed.colorIcon, {paddingTop:2}  ]}
+                        style={[CS.centered, store.filter == 'top' ? themed.colorIconActive : themed.colorIcon, {paddingTop:2}  ]}
                         size={ 22 }
                       />
                     </View>
@@ -186,10 +202,10 @@ export default class NewsfeedFilters extends Component {
             <View style={[CS.rowJustifyCenter, CS.centered]}>
               <Icon
                 name="timelapse"
-                style={[CS.centered, store.filter == 'latest' ? themed.colorLink : (disableHotLatest ? CS.colorGreyed : themed.colorIcon), {paddingTop:2} ]}
+                style={[CS.centered, store.filter == 'latest' ? themed.colorIconActive : (disableHotLatest ? themed.colorSeparator : themed.colorIcon), {paddingTop:2} ]}
                 size={ 22 }
               />
-              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'latest' ? themed.colorLink : (disableHotLatest ? CS.colorGreyed : themed.colorIcon), CS.paddingLeft]}>{i18n.t('newsfeedFilters.latest')}</Text> : null}
+              {!this.props.hashtag.hashtag ? <Text style={[CS.fontM, store.filter == 'latest' ? themed.colorIconActive : (disableHotLatest ? themed.colorSeparator : themed.colorIcon), CS.paddingLeft]}>{i18n.t('newsfeedFilters.latest')}</Text> : null}
             </View>
           </TouchableHighlight>
         </View>

@@ -81,7 +81,7 @@ export default class ToolbarItem extends PureComponent {
     } = this.props;
 
     if (selected) {
-      return (selectedTextStyle) ? [styles.buttonSelectedText, CommonStyle.fontS, ThemedStyles.style.colorLink, selectedTextStyle] : [styles.buttonSelectedText, CommonStyle.fontS, ThemedStyles.style.colorLink];
+      return (selectedTextStyle) ? [styles.buttonSelectedText, CommonStyle.fontS, ThemedStyles.style.colorIconActive, selectedTextStyle] : [styles.buttonSelectedText, CommonStyle.fontS, ThemedStyles.style.colorIconActive];
     }
 
     return (textStyle) ? [styles.buttonText, CommonStyle.fontS, textStyle] : [styles.buttonText, CommonStyle.fontS];
@@ -104,7 +104,7 @@ export default class ToolbarItem extends PureComponent {
     const size = iconSize || 18;
     const iconContainerStyle = {height: size + 4};
 
-    const style = selected ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon;
+    const style = selected ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon;
     if (!icon) {
       return (
         <View style={iconContainerStyle}>

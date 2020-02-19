@@ -62,7 +62,7 @@ class ThumbUpAction extends Component {
 
     const canVote = entity.can(FLAG_VOTE);
 
-    const color = canVote ? (this.voted ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon) : CS.colorLightGreyed;
+    const color = canVote ? (this.voted ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon) : CS.colorLightGreyed;
 
     return (
       <TouchableOpacityCustom

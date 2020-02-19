@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 import { ComponentsStyle } from '../../styles/Components';
-import colors from '../../styles/Colors';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Custom Button component
@@ -22,7 +22,6 @@ export default class Button extends Component {
    * Default props
    */
   static defaultProps = {
-    color: colors.primary,
     loading: false
   };
 
@@ -31,12 +30,14 @@ export default class Button extends Component {
    */
   static propTypes = {
     text: PropTypes.string.isRequired
-  }
+  };
 
   /**
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
+
     const {
       onPress,
       textColor,
@@ -51,16 +52,19 @@ export default class Button extends Component {
       ...extraProps
     } = this.props;
 
-    let background = 'white';
-    let mainColor = color;
+
+    let background = ThemedStyles.getColor('primary_button');
+    let mainColor = color || ThemedStyles.getColor('primary_text');
 
     if (inverted !== undefined) {
-      background = color;
-      mainColor = 'white';
+      background = mainColor;
+      mainColor = ThemedStyles.getColor('primary_button');
     }
 
+    const style = {backgroundColor: background, borderRadius: 2};
+
     const body = this.props.loading ?
-      <ActivityIndicator color={mainColor}/> :
+      <ActivityIndicator color={mainColor} /> :
       <Text style={[{ color: textColor || mainColor }, textStyle]}> {this.props.text} </Text>;
 
     const onButtonPress = this.props.loading ? null : onPress;
@@ -71,7 +75,7 @@ export default class Button extends Component {
         disabled={disabled}
         underlayColor='transparent'
         accessibilityLabel={accessibilityLabel}
-        style={[ComponentsStyle.commonButton, {borderColor: mainColor, backgroundColor: background}, containerStyle]}
+        style={[theme.rowJustifyCenter, theme.centered, theme.padding, style, containerStyle]}
         {...extraProps}
       >
         {children}

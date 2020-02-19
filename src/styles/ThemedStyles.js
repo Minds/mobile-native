@@ -121,7 +121,7 @@ class ThemedStylesStore {
         background: 'transparent',
         // card: theme.backgroundSecondary, // generates an error on ios
         text: theme.primary_text,
-        primary: theme.icon
+        primary: theme.icon,
       },
     };
 
@@ -149,7 +149,7 @@ class ThemedStylesStore {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'stretch'
+        alignItems: 'stretch',
       },
       flexColumnCentered: {
         flex: 1,
@@ -160,19 +160,19 @@ class ThemedStylesStore {
       },
       rowJustifyEnd: {
         flexDirection: 'row',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
       },
       rowJustifyCenter: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
       },
       rowJustifySpaceEvenly: {
         flexDirection: 'row',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
       },
       rowJustifyStart: {
         flexDirection: 'row',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
       },
       centered: {
         alignContent: 'center',
@@ -181,44 +181,59 @@ class ThemedStylesStore {
         justifyContent: 'center',
       },
       colorWhite: {
-        color: '#FFFFFF'
+        color: '#FFFFFF',
       },
       colorBlack: {
-        color: '#000000'
+        color: '#000000',
       },
       colorPrimaryText: {
-        color: theme.primary_text
+        color: theme.primary_text,
       },
       colorSecondaryText: {
-        color: theme.secondary_text
+        color: theme.secondary_text,
+      },
+      colorTertiaryText: {
+        color: theme.tertiary_text,
       },
       colorLink: {
-        color: theme.link
+        color: theme.link,
       },
       colorButton: {
-        color: theme.button_border
+        color: theme.button_border,
       },
       colorDone: {
-        color: theme.done
+        color: theme.done,
       },
       colorActionNew: {
-        color: theme.action
+        color: theme.action,
       },
       colorIcon: {
-        color: theme.icon
+        color: theme.icon,
+      },
+      colorIconActive: {
+        color: theme.icon_active,
       },
       colorSeparator: {
-        color: theme.separator
+        color: theme.separator,
+      },
+      colorAlert: {
+        color: theme.alert,
       },
       // backgrounds
       backgroundWhite: {
-        backgroundColor: 'white'
+        backgroundColor: 'white',
       },
       backgroundBlack: {
-        backgroundColor: 'black'
+        backgroundColor: 'black',
+      },
+      backgroundTransparent: {
+        backgroundColor: 'transparent',
       },
       backgroundLink: {
         backgroundColor: theme.link,
+      },
+      backgroundAlert: {
+        backgroundColor: theme.alert,
       },
       backgroundPrimary: {
         backgroundColor: theme.primary_background,
@@ -226,81 +241,98 @@ class ThemedStylesStore {
       backgroundSecondary: {
         backgroundColor: theme.secondary_background,
       },
-      backgroundButton: {
-        backgroundColor: theme.button_backgound,
+      backgroundTertiary: {
+        backgroundColor: theme.tertiary_background,
+      },
+      backgroundbButtonPrimary: {
+        backgroundColor: theme.primary_button,
+      },
+      backgroundButtonPrimary: {
+        backgroundColor: theme.primary_button,
       },
       backgroundSeparator: {
         backgroundColor: theme.separator,
       },
+      backgroundIcon: {
+        backgroundColor: theme.icon,
+      },
+      backgroundIconActive: {
+        backgroundColor: theme.icon_active,
+      },
+
+      // borders
+      borderPrimary: {
+        borderColor: theme.primary_border,
+      },
 
       // fonts
       fontXS: {
-        fontSize: 10
+        fontSize: 10,
       },
       fontS: {
-        fontSize: 12
+        fontSize: 12,
       },
       fontM: {
-        fontSize: 14
+        fontSize: 14,
       },
       fontL: {
-        fontSize: 16
+        fontSize: 16,
       },
       fontXL: {
-        fontSize: 18
+        fontSize: 18,
       },
       fontXXL: {
-        fontSize: 24
+        fontSize: 24,
       },
       fontXXXL: {
-        fontSize: 30
+        fontSize: 30,
       },
 
       // text align
       textRight: {
-        textAlign: 'right'
+        textAlign: 'right',
       },
       textLeft: {
-        textAlign: 'left'
+        textAlign: 'left',
       },
       textCenter: {
-        textAlign: 'center'
+        textAlign: 'center',
       },
       textJustify: {
-        textAlign: 'justify'
+        textAlign: 'justify',
       },
 
       fullWidth: {
-        width: '100%'
+        width: '100%',
       },
 
       halfWidth: {
-        width: '50%'
+        width: '50%',
       },
       bold: {
-        fontWeight: '700'
+        fontWeight: '700',
       },
       extraBold: {
         // fontWeight: '800'
         fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
       },
       fontThin: {
-        fontWeight: '200'
+        fontWeight: '200',
       },
       fontHairline: {
-        fontWeight: '100'
+        fontWeight: '100',
       },
       fontLight: {
-        fontWeight: '300'
+        fontWeight: '300',
       },
       fontNormal: {
-        fontWeight: '400'
+        fontWeight: '400',
       },
       fontMedium: {
-        fontWeight: '500'
+        fontWeight: '500',
       },
       fontSemibold: {
-        fontWeight: '600'
+        fontWeight: '600',
       },
       // onboarding
       onboardingTitle: {
@@ -323,7 +355,7 @@ class ThemedStylesStore {
       linkNew: {
         color: '#9B9B9B',
         fontSize: 13,
-        lineHeight: 20
+        lineHeight: 20,
       },
       mindsLayoutBody: {
         flex: 10,
@@ -363,7 +395,7 @@ class ThemedStylesStore {
         backgroundColor: 'transparent',
         height: 50,
         borderRadius: 2,
-        borderColor: theme.button_border,
+        borderColor: theme.primary_border,
         borderWidth: 1,
         lineHeight: 21,
       },

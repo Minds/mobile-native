@@ -39,6 +39,7 @@ import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import FeedList from '../common/components/FeedList';
 import { FLAG_CREATE_POST, FLAG_APPOINT_MODERATOR, FLAG_VIEW } from '../common/Permissions';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Groups view screen
@@ -221,7 +222,7 @@ export default class GroupViewScreen extends Component {
       case 'desc':
         const description = entities.decodeHTML(group.group.briefdescription).trim();
         return (
-          <ScrollView style={CS.backgroundLight}>
+          <ScrollView>
             {header}
             <View style={CS.padding2x}>
               <Tags navigation={this.props.navigation}>{description}</Tags>
@@ -356,7 +357,7 @@ export default class GroupViewScreen extends Component {
       null;
 
     return (
-      <View style={CS.flexContainer}>
+      <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
         {showPosterFab && <CaptureFab navigation={this.props.navigation} group={group} /> }
         {this.getList()}
         {memberActionSheet}
@@ -366,10 +367,6 @@ export default class GroupViewScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-	listView: {
-    backgroundColor: '#FFF',
-    flex: 1,
-  },
   gobackicon: {
     position: 'absolute',
     left: 0,

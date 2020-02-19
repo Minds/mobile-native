@@ -83,9 +83,9 @@ class GroupsListItem extends Component {
    */
   getButton = () => {
     return this.props.group['is:member'] ? (
-      <Button text="Leave" onPress={this.leave} color={colors.darkGreyed} />
+      <Button text="Leave" onPress={this.leave} />
     ) : (
-      <Button text="Join" onPress={this.join} color={colors.darkGreyed} />
+      <Button text="Join" onPress={this.join} />
     );
   };
 

@@ -17,7 +17,6 @@ import ThemedStyles from '../../styles/ThemedStyles';
  * Search Component
  */
 export default class SearchView extends PureComponent {
-
   /**
    * Default props
    */

@@ -24,7 +24,7 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 export default function({ entity, size = 20, vertical = false }) {
   const color = entity.can(FLAG_REMIND)
     ? entity.reminds > 0
-      ? ThemedStyles.style.colorLink
+      ? ThemedStyles.style.colorIconActive
       : ThemedStyles.style.colorIcon
     : CS.colorLightGreyed;
 

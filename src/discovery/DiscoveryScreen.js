@@ -245,7 +245,7 @@ class DiscoveryScreen extends Component {
         renderItem={renderRow}
         ListFooterComponent={footer}
         CollapsibleHeaderComponent={this.getHeaders()}
-        headerHeight={(GOOGLE_PLAY_STORE && discovery.filters.type !== 'channels') ? 94 : 144}
+        headerHeight={(GOOGLE_PLAY_STORE && discovery.filters.type !== 'channels' || discovery.filters.type === 'lastchannels') ? 94 : 144}
         ListEmptyComponent={this.getEmptyList()}
         keyExtractor={this.keyExtractor}
         onEndReached={this.loadMore}
@@ -337,60 +337,60 @@ class DiscoveryScreen extends Component {
           <View style={CS.columnAlignCenter}>
             <IonIcon
               name="ios-infinite"
-              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'activities' ? ThemedStyles.style.colorLink : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'activities' ? ThemedStyles.style.colorIconActive : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'activities' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.all')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'activities' ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.all')}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeChannels } {...testID('Discovery Channels')}>
           <View style={CS.columnAlignCenter}>
             <Icon
               name="people"
-              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'channels' ? ThemedStyles.style.colorLink : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'channels' ? ThemedStyles.style.colorIconActive : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'channels' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.channels')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'channels' ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.channels')}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeVideos } {...testID('Discovery Videos')}>
           <View style={CS.columnAlignCenter}>
             <IonIcon
               name={this.state.showFeed !== false &&  filtersStore.type == 'videos' ? 'md-apps' : 'md-videocam'}
-              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'videos' ? ThemedStyles.style.colorLink : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'videos' ? ThemedStyles.style.colorIconActive : null ]}
               size={this.iconSize}
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'videos' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.videos')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'videos' ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.videos')}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeImages } {...testID('Discovery Images')}>
           <View style={CS.columnAlignCenter}>
             <IonIcon
               name={this.state.showFeed !== false &&  filtersStore.type == 'images' ? 'md-apps' : 'md-photos'}
-              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'images' ? ThemedStyles.style.colorLink : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'images' ? ThemedStyles.style.colorIconActive : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'images' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.images')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'images' ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.images')}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeBlogs } {...testID('Discovery Blogs')}>
           <View style={CS.columnAlignCenter}>
             <Icon
               name="subject"
-              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'blogs' ? ThemedStyles.style.colorLink : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'blogs' ? ThemedStyles.style.colorIconActive : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'blogs' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.blogs')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'blogs' ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.blogs')}</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeGroups } {...testID('Discovery Groups')}>
           <View style={CS.columnAlignCenter}>
             <Icon
               name="group-work"
-              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'groups' ? ThemedStyles.style.colorLink : null ]}
+              style={[styles.icon, ThemedStyles.style.colorIcon, filtersStore.type == 'groups' ? ThemedStyles.style.colorIconActive : null ]}
               size={ this.iconSize }
             />
-            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'groups' ? ThemedStyles.style.colorLink : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.groups')}</Text>
+            <Text numberOfLines={1} style={[CS.fontS, filtersStore.type == 'groups' ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon]}>{i18n.t('discovery.groups')}</Text>
           </View>
         </TouchableHighlight>
       </View>
@@ -417,7 +417,7 @@ class DiscoveryScreen extends Component {
         <DiscoveryFilters store={filtersStore} onTagsChange={this.onTagSelectionChange} onSelectOne={this.onSelectOne}/>
         {/* {!discovery.searchtext && <TagsSubBar onChange={this.onTagSelectionChange}/>} */}
       </View> :
-      <Text style={[CS.fontM, CS.backgroundPrimary, CS.colorWhite, CS.textCenter, CS.padding]}>{i18n.t('discovery.recentlyVisited')}</Text>;
+      <Text style={[CS.fontXL, ThemedStyles.style.backgroundTertiary, CS.textCenter, CS.padding2x]}>{i18n.t('discovery.recentlyVisited')}</Text>;
 
     return (
       <View style={[CS.shadow, ThemedStyles.style.backgroundSecondary]}>
