@@ -80,7 +80,7 @@ export default class NewsfeedScreen extends Component {
     // this.props.newsfeed.loadBoosts();
 
     this.disposeEnter = this.props.navigation.addListener('focus', (s) => {
-      const params = this.props.navigation.state.params;
+      const params = this.props.route.params;
       if (params && params.prepend) {
 
         this.props.newsfeed.prepend(params.prepend);

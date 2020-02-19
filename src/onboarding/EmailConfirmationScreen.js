@@ -38,7 +38,7 @@ export default class EmailConfirmationScreen extends Component {
 
     const result = await sessionService
       .getUser()
-      .confirmEmail(this.props.navigation.state.params);
+      .confirmEmail(this.props.route.params);
 
     if (!result) {
       this.setState({ error: true });

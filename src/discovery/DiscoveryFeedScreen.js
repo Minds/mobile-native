@@ -41,12 +41,6 @@ import ThemedStyles from '../styles/ThemedStyles';
 @inject('discovery')
 export default class DiscoveryFeedScreen extends Component {
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      'title': navigation.state.params.title || ''
-    }
-  }
-
   /**
    * Render activity
    */

@@ -92,7 +92,11 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="Capture" component={CapturePoster} />
       <AppStackNav.Screen name="Activity" component={ActivityScreen}/>
       <AppStackNav.Screen name="Conversation" component={ConversationScreen}/>
-      <AppStackNav.Screen name="DiscoveryFeed" component={DiscoveryFeedScreen}/>
+      <AppStackNav.Screen
+        name="DiscoveryFeed"
+        component={DiscoveryFeedScreen}
+        options={({ route }) => ({ title: route.params.title || '' })}
+      />
       <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers}/>
       <AppStackNav.Screen name="Settings" component={SettingsScreen}/>
       <AppStackNav.Screen name="SettingsBlockedChannels" component={BlockedChannelsScreen}/>

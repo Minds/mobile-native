@@ -41,7 +41,7 @@ export default class OwnerBlock extends PureComponent {
     if (this.props.navigation) {
       let groupGuid;
       try {
-        groupGuid = this.props.navigation.state.params.group ? this.props.navigation.state.params.group.guid : this.props.navigation.state.params.guid;
+        groupGuid = this.props.route.params.group ? this.props.route.params.group.guid : this.props.route.params.guid;
       } catch {}
       if (groupGuid == this.props.entity.containerObj.guid) return;
 
