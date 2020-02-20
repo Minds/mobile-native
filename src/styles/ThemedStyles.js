@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { observable, action, reaction } from 'mobx';
 
 import { DARK_THEME, LIGHT_THEME } from './Colors';
@@ -137,6 +137,9 @@ class ThemedStylesStore {
       headerStyle: {
         backgroundColor: theme.secondary_background,
       },
+      contentStyle: {
+        backgroundColor: theme.secondary_background,
+      }
     };
 
     this.style = StyleSheet.create({

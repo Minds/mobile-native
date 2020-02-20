@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import LoadingScreen from '../LoadingScreen';
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
@@ -55,7 +56,6 @@ import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import featuresService from '../common/services/features.service';
 import ThemedStyles from '../styles/ThemedStyles';
-import { View } from 'react-native';
 import MessengerScreen from '../messenger/MessengerScreen';
 import Topbar from '../topbar/Topbar';
 import i18n from '../common/services/i18n.service';
@@ -63,9 +63,9 @@ import i18n from '../common/services/i18n.service';
 
 const hideHeader = {headerShown: false};
 
-const AppStackNav = createStackNavigator();
-const AuthStackNav = createStackNavigator();
-const RootStackNav = createStackNavigator();
+const AppStackNav = createNativeStackNavigator();
+const AuthStackNav = createNativeStackNavigator();
+const RootStackNav = createNativeStackNavigator();
 
 const AppStack = function(props) {
   // const tabScreen = featuresService.has('navigation-2020')
@@ -89,7 +89,7 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="Notifications" component={NotificationsScreen}/>
       <AppStackNav.Screen name="NotificationsSettings" component={NotificationsSettingsScreen}/>
       <AppStackNav.Screen name="Channel" component={ChannelScreen} options={hideHeader}/>
-      <AppStackNav.Screen name="Capture" component={CapturePoster} />
+      <AppStackNav.Screen name="Capture" component={CapturePoster} options={{title:''}}/>
       <AppStackNav.Screen name="Activity" component={ActivityScreen}/>
       <AppStackNav.Screen name="Conversation" component={ConversationScreen}/>
       <AppStackNav.Screen
@@ -142,8 +142,16 @@ const AuthStack = function(props) {
 };
 
 const RootStack = function(props) {
+
+  const initial = props.isLoggedIn ? 'App' : 'Auth';
+
   return (
-    <RootStackNav.Navigator mode="modal" headerMode="none">
+    <RootStackNav.Navigator
+      initialRouteName={initial}
+      screenOptions={{
+        headerShown: false,
+        ...ThemedStyles.defaultScreenOptions,
+      }}>
       {props.isLoggedIn ? (
         <Fragment>
           <RootStackNav.Screen name="App" component={AppStack} />

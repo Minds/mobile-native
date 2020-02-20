@@ -13,6 +13,8 @@ import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';
 import AppStores from '../../AppStores';
 import { MINDS_CDN_URI } from '../config/Config';
+import gatheringService from '../common/services/gathering.service';
+import { observer } from 'mobx-react';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,12 +22,16 @@ const Tab = createBottomTabNavigator();
  * Main tabs
  * @param {Object} props
  */
-const Tabs = function({ navigation }) {
+const Tabs = observer(function({ navigation }) {
   const isIOS = Platform.OS === 'ios';
 
   const navToCapture = useCallback(() => navigation.push('Capture'), [
     navigation,
   ]);
+
+  if (gatheringService.inGatheringScreen) {
+    return null;
+  }
 
   return (
     <Tab.Navigator
@@ -125,7 +131,7 @@ const Tabs = function({ navigation }) {
       />
     </Tab.Navigator>
   );
-};
+});
 
 const styles = {
   acitivity: {

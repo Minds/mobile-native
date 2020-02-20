@@ -27,6 +27,7 @@ class Gathering extends React.Component {
    * Component did mount
    */
   componentDidMount() {
+    gatheringService.setInGatheringScreen(true);
     this.init();
   }
 
@@ -50,6 +51,7 @@ class Gathering extends React.Component {
    * Component will unmount
    */
   componentWillUnmount() {
+    gatheringService.setInGatheringScreen(false);
     if (this.backHandler) {
       this.backHandler.remove();
       this.backHandler = null;
@@ -102,7 +104,7 @@ class Gathering extends React.Component {
           onConferenceTerminated={this.onConferenceTerminated}
           onConferenceJoined={this.onConferenceJoined}
           onConferenceWillJoin={this.onConferenceWillJoin}
-          style={CommonStyle.flexContainer}
+          style={[CommonStyle.flexContainer, CommonStyle.backgroundBlack]}
         />
       </View>
     );
