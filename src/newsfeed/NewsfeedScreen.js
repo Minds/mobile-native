@@ -137,7 +137,7 @@ export default class NewsfeedScreen extends Component {
       <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
         <TopbarNew title={i18n.t('tabTitleNewsfeed')}/>
         { feed }
-        <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
+        {/* <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/> */}
       </View>
     );
   }

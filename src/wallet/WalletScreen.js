@@ -130,7 +130,7 @@ export default class WalletScreen extends Component {
             </TouchableOpacity>
           </View>
         </ScrollView>
-        <CaptureFab navigation={this.props.navigation} />
+        {/* <CaptureFab navigation={this.props.navigation} /> */}
       </View>
     );
   }

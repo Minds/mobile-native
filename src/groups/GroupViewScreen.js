@@ -358,7 +358,7 @@ export default class GroupViewScreen extends Component {
 
     return (
       <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
-        {showPosterFab && <CaptureFab navigation={this.props.navigation} group={group} /> }
+        {showPosterFab && <CaptureFab navigation={this.props.navigation} group={group} route={this.props.route} /> }
         {this.getList()}
         {memberActionSheet}
       </View>

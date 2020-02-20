@@ -338,7 +338,7 @@ class ChannelScreen extends Component {
         <SafeAreaView style={styles.gobackicon}>
           <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={this.goBack}/>
         </SafeAreaView>
-        <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
+        <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/>
       </View>
     );
   }

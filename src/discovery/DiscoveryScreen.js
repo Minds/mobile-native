@@ -242,7 +242,7 @@ class DiscoveryScreen extends Component {
       <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
         <TopbarNew title={i18n.t('tabTitleDiscovery')}/>
         {body}
-        <CaptureFab navigation={this.props.navigation} />
+        {/* <CaptureFab navigation={this.props.navigation}  /> */}
       </View>
     );
   }
