@@ -90,7 +90,7 @@ export default class BlockchainWalletScreen extends Component {
 
   render() {
     return (
-      <View style={[ CommonStyle.flexContainer, CommonStyle.backgroundWhite ]}>
+      <View style={[ CommonStyle.flexContainer ]}>
 
         <BlockchainWalletList
           onSelect={this.detailsAction}

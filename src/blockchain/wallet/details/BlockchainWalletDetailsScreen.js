@@ -419,7 +419,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={CommonStyle.backgroundWhite}>
+      <ScrollView>
 
         <View style={[ CommonStyle.flexContainer, { flex: 1 } ]}>
 
@@ -452,7 +452,6 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
   },
   subtitle: {
-    color: colors.darkGreyed,
     fontSize: 12,
   },
 
@@ -495,7 +494,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    color: '#444',
     fontSize: 16,
     // fontWeight: '800',
     fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
