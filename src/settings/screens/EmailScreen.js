@@ -94,15 +94,14 @@ export default class EmailScreen extends Component {
     const confirmNote = showConfirmNote ? <FormValidationMessage>{i18n.t('emailConfirm.confirmNote')}</FormValidationMessage> : null;
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
-        <FormLabel labelStyle={CommonStyle.fieldLabel}>{i18n.t('settings.currentEmail')}</FormLabel>
-        <FormInput onChangeText={this.setEmail} value={email} inputStyle={CommonStyle.fieldTextInput}/>
+      <View style={[CommonStyle.flexContainer]}>
+        <Input onChangeText={this.setEmail} value={email} inputStyle={CommonStyle.fieldTextInput} label={i18n.t('settings.currentEmail')}/>
         {message}
         {confirmNote}
         <Button
           text={i18n.t('save').toUpperCase()}
           loading={this.state.saving}
-          containerStyle={[CommonStyle.marginTop3x, {alignSelf: 'center'}]}
+          containerStyle={[CommonStyle.marginTop3x, CommonStyle.padding2x, {alignSelf: 'center'}]}
           onPress={this.confirmPassword}
         />
         <ModalConfirmPassword isVisible={this.state.isVisible} onSuccess={this.save}></ModalConfirmPassword>

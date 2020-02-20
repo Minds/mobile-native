@@ -103,7 +103,7 @@ export default class MessengerSetup extends Component {
     const unlocking = this.props.messengerList.unlocking;
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x]}>
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <TextInput
             style={ComponentsStyle.passwordinput}
@@ -132,7 +132,7 @@ export default class MessengerSetup extends Component {
       i18n.t('messenger.notEncryptedMessage', {user: this.props.user.me.name});
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x]}>
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <TextInput
             style={ComponentsStyle.passwordinput}

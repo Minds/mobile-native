@@ -16,6 +16,7 @@ import {
 
 import Switch from 'react-native-switch-pro'
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 @inject('notificationsSettings')
 @observer
@@ -41,7 +42,7 @@ export default class NotificationsSettingsScreen extends Component {
 
     return (
       <ScrollView  style={styles.container}>
-        <Text style={styles.title}>{i18n.t('notificationSettings.enableDisable')}</Text>
+        <Text style={[styles.title, ThemedStyles.style.backgroundTertiary]}>{i18n.t('notificationSettings.enableDisable')}</Text>
         {Object.keys(settings).map(function (key) {
           const toggle = settings[key];
           return (
@@ -60,9 +61,8 @@ export default class NotificationsSettingsScreen extends Component {
 const styles = StyleSheet.create({
   title: {
     height:35,
-    fontSize: 12,
+    fontSize: 14,
     padding: 10,
-    backgroundColor: '#DDD',
   },
   row: {
     padding: 10,
@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   container: {
-    backgroundColor: '#FFF',
     flex: 1,
   }
 });
