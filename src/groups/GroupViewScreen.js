@@ -119,7 +119,7 @@ export default class GroupViewScreen extends Component {
     // load data async
     this.initialLoad();
 
-    this.disposeEnter = this.props.navigation.addListener('focus', (s) => {
+    this.disposeEnter = this.props.navigation.addListener('focus', () => {
       const params = this.props.route.params;
       if (params && params.prepend) {
         this.props.groupView.prepend(params.prepend);

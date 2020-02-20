@@ -54,7 +54,7 @@ class ChannelScreen extends Component {
    * Load data on mount
    */
   async componentWillMount() {
-    this.disposeEnter = this.props.navigation.addListener('focus', (s) => {
+    this.disposeEnter = this.props.navigation.addListener('focus', () => {
       const params = this.props.route.params;
       const store = this.props.channel.store(this.guid);
       if (params && params.prepend) {

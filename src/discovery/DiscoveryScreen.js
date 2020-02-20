@@ -111,7 +111,7 @@ class DiscoveryScreen extends Component {
    */
   componentDidMount() {
     // load data on enter
-    this.disposeEnter = this.props.navigation.addListener('focus', (s) => {
+    this.disposeEnter = this.props.navigation.addListener('focus', () => {
       setTimeout(() => {
         this.setState({active: true});
         const params = this.props.route.params;
