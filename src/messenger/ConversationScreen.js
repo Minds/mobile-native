@@ -119,6 +119,7 @@ export default class ConversationScreen extends Component {
       const avatarImg = participant.getAvatarSource();
 
       this.props.navigation.setOptions({
+        title: participant.name,
         headerRight: () => (
           <TouchableOpacity style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingRight2x]}  onPress={() => this.props.navigation.push('Channel', { guid: participant.guid})}>
             <Image source={avatarImg} style={styles.avatar} />
