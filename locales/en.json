@@ -806,5 +806,6 @@
   "validate":"VALIDATE",
   "tabTitleNewsfeed":"Home",
   "tabTitleNotifications":"Notifications",
-  "tabTitleDiscovery":"Discovery"
+  "tabTitleDiscovery":"Discovery",
+  "linkCopied":"Link copied to clipboard"
 }
