@@ -67,7 +67,7 @@ export default class MessengerSetup extends Component {
       </Observer>
     )
 
-    setOptions({ headerRight: headerRight });
+    setOptions({ headerRight: headerRight, title:'' });
   }
 
   unlock = async () => {
