@@ -73,39 +73,6 @@ class DiscoveryScreen extends Component {
     minimumViewTime: 300,
   };
 
-  // static navigationOptions = {
-  //   tabBarIcon: ({ tintColor }) => (
-  //     featuresService.has('navigation-2020')
-  //     ? <TabIcon name="hashtag" color={tintColor} />
-  //     : <Icon name="search" size={24} color={tintColor} />
-  //   ),
-  //   tabBarOnPress: ({ navigation, defaultHandler }) => {
-  //     // tab button tapped again?
-  //     if (navigation.isFocused()) {
-  //       stores.discovery.reload();
-  //       return;
-  //     }
-  //     defaultHandler();
-  //   }
-  // }
-
-  /**
-   * constructor
-   */
-  // constructor(props) {
-  //   super(props);
-
-  //   // this.props.discovery.init();
-
-  //   const params = this.props.route.params;
-  //   if (params && params.type) {
-  //     console.log('ACAACACA')
-  //     this.props.discovery.filters.setType(params.type);
-  //   }
-
-  //   this.tileError = i18n.t('error');
-  // }
-
   /**
    * On component will mount
    */

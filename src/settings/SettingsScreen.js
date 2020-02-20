@@ -11,11 +11,6 @@ import {
   Alert,
 } from 'react-native';
 
-import {
-  StackActions,
-  NavigationActions
-} from 'react-navigation';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 

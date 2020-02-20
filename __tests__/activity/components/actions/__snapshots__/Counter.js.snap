@@ -14,9 +14,8 @@ exports[`Owner component renders correctly 1`] = `
   <Text
     style={
       Array [
-        Object {
-          "color": "rgb(96, 125, 139)",
-        },
+        undefined,
+        undefined,
         Object {
           "fontSize": 15,
         },

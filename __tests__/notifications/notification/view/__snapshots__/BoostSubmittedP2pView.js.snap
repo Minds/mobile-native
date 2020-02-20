@@ -19,8 +19,7 @@ exports[`renders correctly 1`] = `
       <Text
         style={
           Object {
-            "color": "#444",
-            "fontWeight": "bold",
+            "fontWeight": "600",
           }
         }
       >
@@ -33,8 +32,7 @@ exports[`renders correctly 1`] = `
       onPress={[Function]}
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >

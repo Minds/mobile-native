@@ -63,7 +63,7 @@ exports[`Activity editor component renders correctly 1`] = `
         ]
       }
     >
-      <inject-CapturePosterFlags-with-capture
+      <inject-with-capture(CapturePosterFlags)
         hideHash={true}
         hideShare={true}
         lockValue={null}
@@ -88,7 +88,6 @@ exports[`Activity editor component renders correctly 1`] = `
       }
     >
       <Button
-        color="#4690D6"
         loading={false}
         onPress={[Function]}
         testID="Post editor cancel button"

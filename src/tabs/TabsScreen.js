@@ -7,10 +7,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 const Tab = createBottomTabNavigator();
 
 import {
-  jumpTo,
-  SafeAreaView
-} from 'react-navigation';
-import {
   Platform,
   Dimensions,
 } from 'react-native';
@@ -104,7 +100,7 @@ const Tabs = function({navigation}) {
         options={{ tabBarTestID: 'Notifications tab button' }}
       />
     </Tab.Navigator>
-  )  
+  )
 }
 
 export default Tabs

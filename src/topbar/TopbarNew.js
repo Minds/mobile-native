@@ -39,9 +39,6 @@ export default class TopbarNew extends Component {
   listenForSearch = () => this.props.user.searching ? styles.scale0 : {};
 
   render() {
-    if (!featuresService.has('navigation-2020')) {
-      return null;
-    }
 
     const CS = ThemedStyles.style;
 

@@ -15,50 +15,6 @@ exports[`LoginScreen component should renders correctly 1`] = `
     ]
   }
 >
-  <RCTSafeAreaView
-    emulateUnlessSupported={true}
-    style={
-      Array [
-        Object {
-          "flex": 10,
-        },
-      ]
-    }
-  >
-    <RCTScrollView>
-      <View>
-        <View
-          style={
-            Array [
-              undefined,
-              undefined,
-            ]
-          }
-        >
-          <Image
-            resizeMode="contain"
-            source={
-              Object {
-                "testUri": "../../../src/assets/logos/bulb.png",
-              }
-            }
-            style={
-              Object {
-                "alignSelf": "center",
-                "height": 80,
-                "marginTop": 10,
-                "width": 40,
-              }
-            }
-          />
-          <LoginForm
-            onForgot={[Function]}
-            onLogin={[Function]}
-          />
-        </View>
-      </View>
-    </RCTScrollView>
-  </RCTSafeAreaView>
   <View
     style={
       Array [

@@ -31,27 +31,6 @@ import i18n from '../common/services/i18n.service';
 @observer
 export default class NewsfeedScreen extends Component {
 
-  // static navigationOptions = {
-  //   tabBarIcon: ({ tintColor }) => (
-  //     featuresService.has('navigation-2020')
-  //     ? <TabIcon name="md-home" color={tintColor} />
-  //     : <IonIcon name="md-home" size={24} color={tintColor} />
-  //   ),
-  //   tabBarOnPress: ({ navigation, defaultHandler }) => {
-  //     // tab button tapped again?
-  //     if (navigation.isFocused()) {
-  //       if (stores.newsfeed.filter == 'subscribed') {
-  //         stores.newsfeed.scrollToTop();
-  //         stores.newsfeed.feedStore.refresh(true)
-  //       } else {
-  //         stores.newsfeed.refresh();
-  //       }
-  //       return;
-  //     }
-  //     defaultHandler();
-  //   }
-  // }
-
   /**
    * Nav to activity full screen
    */

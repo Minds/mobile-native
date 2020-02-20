@@ -169,16 +169,9 @@ exports[`LoginForm component should renders correctly 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "alignItems": "center",
-        "backgroundColor": "white",
-        "borderColor": "#4690D6",
-        "borderRadius": 20,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "justifyContent": "center",
-        "margin": 4,
+        "backgroundColor": "#5DBAC0",
+        "borderRadius": 2,
         "opacity": 1,
-        "padding": 4,
       }
     }
     testID="loginButton"
@@ -187,7 +180,7 @@ exports[`LoginForm component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#4690D6",
+            "color": "#FFFFFF",
           },
           undefined,
         ]

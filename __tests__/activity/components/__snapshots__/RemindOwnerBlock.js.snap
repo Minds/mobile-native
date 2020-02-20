@@ -56,6 +56,7 @@ exports[`Remind owner component renders correctly 1`] = `
     style={
       Object {
         "flex": 1,
+        "justifyContent": "center",
         "marginLeft": 8,
       }
     }
@@ -68,21 +69,20 @@ exports[`Remind owner component renders correctly 1`] = `
           Object {
             "flex": 1,
           },
-          Object {
-            "alignItems": "flex-start",
-            "flexDirection": "column",
-          },
         ]
       }
     >
       <Text
         style={
-          Object {
-            "color": "#444",
-            "fontFamily": "Roboto",
-            "fontSize": 13,
-            "fontWeight": "bold",
-          }
+          Array [
+            Object {
+              "fontFamily": "Roboto",
+              "fontSize": 13,
+              "fontWeight": "bold",
+              "lineHeight": 25,
+            },
+            undefined,
+          ]
         }
       />
     </TouchableOpacity>

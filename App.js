@@ -23,6 +23,10 @@ import { Provider, observer } from 'mobx-react';
 import RNBootSplash from 'react-native-bootsplash';
 import FlashMessage from 'react-native-flash-message';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {
+  NavigationContainer,
+} from '@react-navigation/native';
+import * as Sentry from '@sentry/react-native';
 
 import NavigationService, {
   setTopLevelNavigator,
@@ -53,17 +57,12 @@ import feedsStorage from './src/common/services/sql/feeds.storage';
 import connectivityService from './src/common/services/connectivity.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 import commentStorageService from './src/comments/CommentStorageService';
-import * as Sentry from '@sentry/react-native';
 import apiService from './src/common/services/api.service';
 import boostedContentService from './src/common/services/boosted-content.service';
 import translationService from './src/common/services/translation.service';
 import ThemedStyles from './src/styles/ThemedStyles';
 
-import {
-  NavigationContainer,
-  DarkTheme,
-  DefaultTheme,
-} from '@react-navigation/native';
+
 
 let deepLinkUrl = '';
 

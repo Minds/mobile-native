@@ -68,9 +68,7 @@ const AuthStackNav = createNativeStackNavigator();
 const RootStackNav = createNativeStackNavigator();
 
 const AppStack = function(props) {
-  // const tabScreen = featuresService.has('navigation-2020')
-  //   ? withErrorBoundaryScreen(TabsScreenNew)
-  //   : withErrorBoundaryScreen(TabsScreen);
+
   return (
     <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <AppStackNav.Screen

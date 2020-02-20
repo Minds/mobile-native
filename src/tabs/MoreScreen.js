@@ -27,11 +27,6 @@ import {
   CODE_PUSH_TOKEN
 } from '../config/Config';
 
-import {
-  StackActions,
-  NavigationActions
-} from 'react-navigation';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import authService from './../auth/AuthService';
 import { ListItem } from 'react-native-elements'

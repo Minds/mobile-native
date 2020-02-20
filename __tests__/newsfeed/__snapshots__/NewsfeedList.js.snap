@@ -219,10 +219,10 @@ exports[`newsfeed list screen component should renders correctly 1`] = `
   renderItem={[Function]}
   scrollEventThrottle={50}
   style={
-    Object {
-      "backgroundColor": "#FFF",
-      "flex": 1,
-    }
+    Array [
+      undefined,
+      undefined,
+    ]
   }
   updateCellsBatchingPeriod={50}
   user={

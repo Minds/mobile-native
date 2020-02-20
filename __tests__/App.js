@@ -17,7 +17,6 @@ BackHandler.addEventListener = jest.fn();
 jest.mock('../src/common/services/sqlite-storage-provider.service')
 jest.mock('../src/common/services/log.service', () => {});
 jest.mock('../src/common/services/push.service');
-jest.mock('react-native-gesture-handler', () => {});
 
 // use the web3 mock to prevent sintax error from node_tar
 jest.mock('web3');
@@ -25,9 +24,9 @@ jest.mock('web3');
 //mock notifications
 jest.mock('react-native-notifications');
 jest.mock('react-native-convert-ph-asset');
-jest.mock('react-navigation');
-jest.mock('react-navigation-tabs');
-jest.mock('react-navigation-stack');
+jest.mock('@react-navigation/native');
+jest.mock('@react-navigation/bottom-tabs');
+jest.mock('@react-navigation/native-stack');
 
 //mock i18n
 jest.mock('react-native-video');
