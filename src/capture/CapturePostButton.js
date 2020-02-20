@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
@@ -60,11 +61,7 @@ class CapturePostButton extends Component {
 
 const styles = StyleSheet.create({
   posterActions: {
-    flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    alignContent: 'center',
-    paddingRight: 10,
+    marginRight: Platform.OS === 'ios' ? -10 : 0,
   },
   buttonText: {
     fontSize: 16,

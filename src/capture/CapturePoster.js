@@ -40,16 +40,6 @@ export default
 @observer
 class CapturePoster extends Component {
 
-  // /**
-  //  * Disable navigation bar
-  //  */
-  // static navigationOptions = ({ route }) => ({
-  //   tabBarIcon: ({ tintColor }) => (
-  //     <TabIcon name="md-add-circle-outline" size={44} color={tintColor} />
-  //   ),
-  //   headerRight: route && route.headerRight
-  // });
-
   state = {
     postImageUri: '',
     mature: false, // @deprecated
@@ -91,6 +81,7 @@ class CapturePoster extends Component {
       params = {};
     }
     setOptions({
+      headerHideBackButton: false,
       headerRight: () => (
         <CapturePostButton
           onPress={() => (!params.isRemind ? this.submit() : this.remind())}
