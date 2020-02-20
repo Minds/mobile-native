@@ -430,8 +430,10 @@ class CommentList extends React.Component<PropsType, StateType> {
       } else {
         if (this.listRef && this.listRef._listRef) {
           setTimeout(() => {
-            const frame = this.listRef._listRef._getFrameMetricsApprox(index);
-            this.onCommentFocus(comment, frame.offset + frame.length);
+            if (this.listRef && this.listRef._listRef) {
+              const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+              this.onCommentFocus(comment, frame.offset + frame.length);
+            }
           }, 1000);
         }
       }

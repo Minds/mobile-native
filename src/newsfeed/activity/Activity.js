@@ -76,6 +76,7 @@ export default class Activity extends Component {
     if (this.props.entity.listRef) {
       const offsetToScrollTo = this.props.entity._list.scrollOffset + e.nativeEvent.layout.height;
       setTimeout(() => {
+        if (!this.props.entity.listRef) return;
         this.props.entity.listRef.scrollToOffset({
           offset: offsetToScrollTo,
           animated: true
