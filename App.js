@@ -205,10 +205,11 @@ class App extends Component<Props, State> {
         });
     };
 
-    RefreshControl.defaultProps = {
-      tintColor: ThemedStyles.getColor('icon_active'),
-      colors: ThemedStyles.getColor('icon_active')
+    if (!RefreshControl.defaultProps) {
+      RefreshControl.defaultProps = {};
     }
+    RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('icon_active');
+    RefreshControl.defaultProps.colors = [ThemedStyles.getColor('icon_active')];
   }
 
   /**
