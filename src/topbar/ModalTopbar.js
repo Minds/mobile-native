@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class ModalTopbar extends Component {

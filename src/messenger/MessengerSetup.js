@@ -15,7 +15,7 @@ import {
   inject,
   observer,
   Observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
@@ -40,7 +40,7 @@ export default class MessengerSetup extends Component {
   confirm  = '';
 
   componentWillMount() {
-    const { setParams } = this.props.navigation;
+    const { setOptions } = this.props.navigation;
     let button;
 
     if (this.props.user.me.chat && !this.props.rekey) {
@@ -61,13 +61,13 @@ export default class MessengerSetup extends Component {
       );
     }
 
-    const headerRight = (
+    const headerRight = () => (
       <Observer>
         {() => this.props.messengerList.unlocking ? <ActivityIndicator style={CommonStyle.marginRight2x}/> : button }
       </Observer>
     )
 
-    setParams({ headerRight: headerRight });
+    setOptions({ headerRight: headerRight, title:'' });
   }
 
   unlock = async () => {
@@ -103,7 +103,7 @@ export default class MessengerSetup extends Component {
     const unlocking = this.props.messengerList.unlocking;
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x]}>
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <TextInput
             style={ComponentsStyle.passwordinput}
@@ -132,7 +132,7 @@ export default class MessengerSetup extends Component {
       i18n.t('messenger.notEncryptedMessage', {user: this.props.user.me.name});
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x, CommonStyle.backgroundLight]}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.padding2x]}>
         <View style={{ flexDirection: 'column', alignItems: 'stretch' }}>
           <TextInput
             style={ComponentsStyle.passwordinput}

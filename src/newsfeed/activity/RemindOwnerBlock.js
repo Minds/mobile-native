@@ -18,6 +18,7 @@ import FastImage from 'react-native-fast-image';
 
 import { CommonStyle } from '../../styles/Common';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Remind Owner Block
@@ -44,14 +45,14 @@ export default class RemindOwnerBlock extends PureComponent {
           <FastImage source={avatarSrc} style={styles.avatar}/>
         </TouchableOpacity>
         <View style={styles.body}>
-          <TouchableOpacity onPress={this._navToChannel} style={[CommonStyle.flexContainer, CommonStyle.columnAlignStart]}>
-            <Text style={styles.username}>
+          <TouchableOpacity onPress={this._navToChannel} style={[CommonStyle.flexContainer]}>
+            <Text style={[styles.username, ThemedStyles.style.colorSecondaryText]}>
               { entity.username }
             </Text>
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
-                <Icon name="md-trending-up" type='ionicon' size={13} iconStyle={styles.boostTagIcon} />
-                <Text style={styles.boostTagLabel}>{i18n.t('boosted')}</Text>
+                <Icon name="md-trending-up" type='ionicon' size={13} iconStyle={ThemedStyles.style.colorSecondaryText} />
+                <Text style={[styles.boostTagLabel, ThemedStyles.style.colorSecondaryText]}>{i18n.t('boosted').toUpperCase()}</Text>
               </View>
             }
           </TouchableOpacity>
@@ -74,8 +75,7 @@ const styles = StyleSheet.create({
     color: '#777',
   },
   boostTagLabel: {
-    color: '#777',
-    fontWeight: '200',
+    fontWeight: '400',
     marginLeft: 2,
     fontSize: 9,
   },
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingTop: 8,
     alignItems: 'center',
+    // justifyContent: 'center',
     flexDirection: 'row',
   },
   icon: {
@@ -100,13 +101,14 @@ const styles = StyleSheet.create({
     borderColor: '#EEE',
   },
   body: {
+    justifyContent: 'center',
     marginLeft: 8,
     flex:1
   },
   username: {
     fontWeight: 'bold',
     fontFamily: 'Roboto',
-    color: '#444',
     fontSize: 13,
+    lineHeight: 25,
   },
 });

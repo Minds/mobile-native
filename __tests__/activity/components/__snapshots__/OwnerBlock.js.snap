@@ -59,11 +59,14 @@ exports[`Owner component renders correctly 1`] = `
       >
         <Text
           style={
-            Object {
-              "color": "#444",
-              "fontFamily": "Roboto",
-              "fontWeight": "bold",
-            }
+            Array [
+              Object {
+                "color": "#444",
+                "fontFamily": "Roboto",
+                "fontWeight": "bold",
+              },
+              undefined,
+            ]
           }
         />
       </PreventDoubleTap>
@@ -80,11 +83,13 @@ exports[`Owner component renders correctly 1`] = `
           lineBreakMode="tail"
           numberOfLines={1}
           style={
-            Object {
-              "color": "#888",
-              "fontFamily": "Roboto",
-              "fontWeight": "bold",
-            }
+            Array [
+              Object {
+                "fontFamily": "Roboto",
+                "fontWeight": "bold",
+              },
+              undefined,
+            ]
           }
         >
           &gt; 

@@ -8,16 +8,17 @@ import {
 } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
-import { CommonStyle as CS } from '../../styles/Common';
 import i18nService from '../../common/services/i18n.service';
 import { ComponentsStyle } from '../../styles/Components';
 import Button from '../../common/components/Button';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 @inject('user')
 @observer
 export default class WelcomeStep extends Component {
 
   getBody = () => {
+    const CS = ThemedStyles.style;
     return (
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
         <Image
@@ -39,13 +40,15 @@ export default class WelcomeStep extends Component {
         <Text style={[
           CS.subTitleText,
           CS.colorSecondaryText,
-          CS.marginBottom4x
+          CS.marginBottom4x,
+          CS.textJustify
         ]}>{i18nService.t('onboarding.welcomePrivacy')}</Text>
       </View>
     );
   };
 
   getFooter = () => {
+    const CS = ThemedStyles.style;
     return (
       <View style={CS.flexContainer}>
         <Button
@@ -65,6 +68,7 @@ export default class WelcomeStep extends Component {
    * Render
    */
   render() {
+    const CS = ThemedStyles.style;
     return (
       <View style={[CS.flexContainerCenter]} testID="artTestID">
         <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>

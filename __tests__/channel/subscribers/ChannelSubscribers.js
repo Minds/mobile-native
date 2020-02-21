@@ -15,14 +15,14 @@ jest.mock('../../../src/discovery/DiscoveryUser', () => 'DiscoveryUser');
  * Tests
  */
 describe('channel subscribers component', () => {
-
   let store;
 
   const navigation = {
     navigate: jest.fn(),
-    state: {
-      params: {guid: 1}
-    }
+  };
+
+  const route = {
+    params: { guid: 1 },
   };
 
   beforeEach(() => {
@@ -31,36 +31,56 @@ describe('channel subscribers component', () => {
   });
 
   it('should render correctly', () => {
-
     store.list.entities = [userFaker('1'), userFaker('2'), userFaker('3')];
     store.list.loaded = true;
 
-    const component = renderer.create(
-      <ChannelSubscribers.wrappedComponent channelSubscribersStore={store} navigation={navigation}/>
-    ).toJSON();
+    const component = renderer
+      .create(
+        <ChannelSubscribers.wrappedComponent
+          channelSubscribersStore={store}
+          navigation={navigation}
+          route={route}
+        />,
+      )
+      .toJSON();
     expect(component).toMatchSnapshot();
   });
 
   it('should render correctly without data', () => {
-    const component = renderer.create(
-      <ChannelSubscribers.wrappedComponent channelSubscribersStore={store} navigation={navigation}/>
-    ).toJSON();
+    const component = renderer
+      .create(
+        <ChannelSubscribers.wrappedComponent
+          channelSubscribersStore={store}
+          navigation={navigation}
+          route={route}
+        />,
+      )
+      .toJSON();
     expect(component).toMatchSnapshot();
   });
 
   it('should filter when the user tap a tab', () => {
-
     store.list.entities = [userFaker('1'), userFaker('2'), userFaker('3')];
     store.list.loaded = true;
 
     const wrapper = shallow(
-      <ChannelSubscribers.wrappedComponent channelSubscribersStore={store} navigation={navigation}/>
+      <ChannelSubscribers.wrappedComponent
+        channelSubscribersStore={store}
+        navigation={navigation}
+        route={route}
+      />,
     );
 
     // simulate press second tab
-    wrapper.find('TouchableHighlight').at(1).simulate('press');
+    wrapper
+      .find('TouchableHighlight')
+      .at(1)
+      .simulate('press');
     // simulate press first tab
-    wrapper.find('TouchableHighlight').at(0).simulate('press');
+    wrapper
+      .find('TouchableHighlight')
+      .at(0)
+      .simulate('press');
 
     expect(store.setFilter).toBeCalledWith('subscriptions');
     expect(store.setFilter).toBeCalledWith('subscribers');

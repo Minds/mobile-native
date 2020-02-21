@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {
   inject,
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import WalletOnboardingWelcomeScreen from './screens/WalletOnboardingWelcomeScreen';
 import WalletOnboardingJoinRewardsScreen from './screens/WalletOnboardingJoinRewardsScreen';

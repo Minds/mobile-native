@@ -5,7 +5,7 @@ import React, {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import {
   Platform,
@@ -39,7 +39,7 @@ export default class GroupsBarItem extends Component {
   }
 
   navToGroup = () => {
-    navigationService.push('GroupView', {group: this.props.group});
+    navigationService.navigate('GroupView', {group: this.props.group});
   }
 
   render() {

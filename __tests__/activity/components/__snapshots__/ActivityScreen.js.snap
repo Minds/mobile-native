@@ -9,9 +9,6 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
       Object {
         "flex": 1,
       },
-      Object {
-        "backgroundColor": "white",
-      },
     ]
   }
 >
@@ -120,42 +117,6 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
         navigation={
           Object {
             "push": [MockFunction],
-            "state": Object {
-              "params": Object {
-                "entity": Object {
-                  "attachment_guid": false,
-                  "blurb": false,
-                  "containerObj": undefined,
-                  "container_guid": "activityguid0",
-                  "custom_data": false,
-                  "custom_type": false,
-                  "description": "Congratulations! ",
-                  "edited": "",
-                  "guid": "activityguid0",
-                  "mature": false,
-                  "message": "Message",
-                  "ownerObj": Object {
-                    "guid": "824853017709780997",
-                    "subtype": false,
-                    "time_created": "1522036284",
-                    "type": "user",
-                  },
-                  "owner_guid": "824853017709780997",
-                  "parent_guid": "838106762591510528",
-                  "perma_url": false,
-                  "rowKey": "something0",
-                  "shouldBeBlured": [MockFunction],
-                  "thumbnail_src": false,
-                  "time_created": "1522036284",
-                  "title": "TITLE",
-                  "type": "activity",
-                  "wire_totals": Object {
-                    "tokens": 1000000000000000000,
-                  },
-                },
-              },
-              "routeName": "some",
-            },
           }
         }
       />
@@ -163,45 +124,47 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
     navigation={
       Object {
         "push": [MockFunction],
-        "state": Object {
-          "params": Object {
-            "entity": Object {
-              "attachment_guid": false,
-              "blurb": false,
-              "containerObj": undefined,
-              "container_guid": "activityguid0",
-              "custom_data": false,
-              "custom_type": false,
-              "description": "Congratulations! ",
-              "edited": "",
-              "guid": "activityguid0",
-              "mature": false,
-              "message": "Message",
-              "ownerObj": Object {
-                "guid": "824853017709780997",
-                "subtype": false,
-                "time_created": "1522036284",
-                "type": "user",
-              },
-              "owner_guid": "824853017709780997",
-              "parent_guid": "838106762591510528",
-              "perma_url": false,
-              "rowKey": "something0",
-              "shouldBeBlured": [MockFunction],
-              "thumbnail_src": false,
-              "time_created": "1522036284",
-              "title": "TITLE",
-              "type": "activity",
-              "wire_totals": Object {
-                "tokens": 1000000000000000000,
-              },
-            },
-          },
-          "routeName": "some",
-        },
       }
     }
     onInputFocus={[Function]}
+    route={
+      Object {
+        "params": Object {
+          "entity": Object {
+            "attachment_guid": false,
+            "blurb": false,
+            "containerObj": undefined,
+            "container_guid": "activityguid0",
+            "custom_data": false,
+            "custom_type": false,
+            "description": "Congratulations! ",
+            "edited": "",
+            "guid": "activityguid0",
+            "mature": false,
+            "message": "Message",
+            "ownerObj": Object {
+              "guid": "824853017709780997",
+              "subtype": false,
+              "time_created": "1522036284",
+              "type": "user",
+            },
+            "owner_guid": "824853017709780997",
+            "parent_guid": "838106762591510528",
+            "perma_url": false,
+            "rowKey": "something0",
+            "shouldBeBlured": [MockFunction],
+            "thumbnail_src": false,
+            "time_created": "1522036284",
+            "title": "TITLE",
+            "type": "activity",
+            "wire_totals": Object {
+              "tokens": 1000000000000000000,
+            },
+          },
+        },
+        "routeName": "some",
+      }
+    }
     store={
       Object {
         "attachment": Object {},

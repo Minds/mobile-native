@@ -12,7 +12,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MINDS_CDN_URI } from '../config/Config';
@@ -62,7 +62,6 @@ export default class VideoCard extends Component {
   }
 }
 
-
 const styles = StyleSheet.create({
   headertextcontainer: {
     padding: 8,
@@ -80,10 +79,10 @@ const styles = StyleSheet.create({
     flex:1,
   },
   ownerContainer: {
-    flex:1, 
+    flex:1,
     flexDirection: 'row',
-    alignSelf: 'flex-start', 
-    padding:3 , 
+    alignSelf: 'flex-start',
+    padding:3 ,
     alignItems: 'center',
     justifyContent: 'center'
   },

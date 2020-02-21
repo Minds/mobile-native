@@ -3,29 +3,39 @@
 exports[`cature poster component should renders correctly 1`] = `
 <View
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
   }
-  testID="capturePosterView"
 >
   <View
     style={
       Object {
-        "alignItems": "center",
-        "backgroundColor": "white",
         "flex": 1,
-        "justifyContent": "center",
-        "minHeight": 100,
       }
     }
   >
-    <ActivityIndicator
-      animating={true}
-      color="#999999"
-      hidesWhenStopped={true}
-      size="large"
-    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "flex": 1,
+          "justifyContent": "center",
+          "minHeight": 100,
+        }
+      }
+    >
+      <ActivityIndicator
+        animating={true}
+        color="#999999"
+        hidesWhenStopped={true}
+        size="large"
+      />
+    </View>
   </View>
 </View>
 `;

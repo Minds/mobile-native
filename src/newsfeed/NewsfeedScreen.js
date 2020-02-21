@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import { View } from 'react-native';
 
@@ -20,32 +20,16 @@ import { CommonStyle } from '../styles/Common';
 import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
 import featuresService from '../common/services/features.service';
+import TabIcon from '../tabs/TabIcon';
+import TopbarNew from '../topbar/TopbarNew';
+import i18n from '../common/services/i18n.service';
 
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user', 'discovery')
+@inject('newsfeed', 'user', 'discovery', 'messengerList')
 @observer
 export default class NewsfeedScreen extends Component {
-
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <IonIcon name="md-home" size={24} color={tintColor} />
-    ),
-    tabBarOnPress: ({ navigation, defaultHandler }) => {
-      // tab button tapped again?
-      if (navigation.isFocused()) {
-        if (stores.newsfeed.filter == 'subscribed') {
-          stores.newsfeed.scrollToTop();
-          stores.newsfeed.feedStore.refresh(true)
-        } else {
-          stores.newsfeed.refresh();
-        }
-        return;
-      }
-      defaultHandler();
-    }
-  }
 
   /**
    * Nav to activity full screen
@@ -58,11 +42,24 @@ export default class NewsfeedScreen extends Component {
    * Load data on mount
    */
   componentDidMount() {
+
+    this.disposeTabPress = this.props.navigation.addListener('tabPress', e => {
+      if (this.props.navigation.isFocused()) {
+        if (stores.newsfeed.filter == 'subscribed') {
+          stores.newsfeed.scrollToTop();
+          stores.newsfeed.feedStore.refresh(true)
+        } else {
+          stores.newsfeed.refresh();
+        }
+        e.preventDefault();
+      }
+    });
+
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
 
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      const params = this.props.navigation.state.params;
+    this.disposeEnter = this.props.navigation.addListener('focus', (s) => {
+      const params = this.props.route.params;
       if (params && params.prepend) {
 
         this.props.newsfeed.prepend(params.prepend);
@@ -74,20 +71,34 @@ export default class NewsfeedScreen extends Component {
   }
 
   async loadFeed() {
+
+    this.props.discovery.init();
+
     await this.props.newsfeed.feedStore.fetchRemoteOrLocal();
 
     // load groups after the feed
-    await this.groupsBar.wrappedInstance.initialLoad();
+    await this.groupsBar.initialLoad();
     // load discovery after the feed is loaded
     this.props.discovery.fetch();
+
+    // load messenger
+    this.props.messengerList.loadList();
+
+    // listen socket on app start
+    this.props.messengerList.listen();
+
   }
 
   /**
    * Component will unmount
    */
   componentWillUnmount() {
+    this.props.messengerList.unlisten();
     if (this.disposeEnter) {
-      this.disposeEnter.remove();
+      this.disposeEnter();
+    }
+    if (this.disposeTabPress) {
+      this.disposeTabPress();
     }
   }
 
@@ -106,28 +117,27 @@ export default class NewsfeedScreen extends Component {
       </View>
     );
 
+    let feed;
     if (newsfeed.filter == 'subscribed') {
-      return (
-        <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
-          <FeedList
-            ref={newsfeed.setListRef}
-            feedStore={newsfeed.feedStore}
-            header={header}
-            navigation={this.props.navigation}
-          />
-          <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
-        </View>
-      );
+      feed = <FeedList
+        ref={newsfeed.setListRef}
+        feedStore={newsfeed.feedStore}
+        header={header}
+        navigation={this.props.navigation}
+      />;
+    } else {
+      feed = <NewsfeedList
+        newsfeed={newsfeed}
+        header={header}
+        navigation={this.props.navigation}
+      />;
     }
 
     return (
       <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
-        <NewsfeedList
-          newsfeed={newsfeed}
-          header={header}
-          navigation={this.props.navigation}
-          />
-        <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
+        <TopbarNew title={i18n.t('tabTitleNewsfeed')}/>
+        { feed }
+        {/* <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/> */}
       </View>
     );
   }

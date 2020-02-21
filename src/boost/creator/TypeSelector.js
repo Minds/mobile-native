@@ -11,6 +11,7 @@ import {
 
 import { CommonStyle } from '../../styles/Common';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Type Selector
@@ -35,13 +36,13 @@ export default class TypeSelector extends PureComponent {
    */
   getOption(type, title, subtitle, selected) {
     const isSelected = this.props.value === type,
-      colorStyle = isSelected ? CommonStyle.colorDark : CommonStyle.colorMedium;
+      colorStyle = isSelected ? [ThemedStyles.style.colorPrimaryText, ThemedStyles.style.bold] : ThemedStyles.colorSecondaryText;
 
     return (
       <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.paddingRight]} onPress={() => this.change(type)}>
         <View>
           <Text style={[CommonStyle.fontXL, colorStyle]}>{title}</Text>
-          <Text style={[CommonStyle.fontXS, colorStyle]}>{subtitle}</Text>
+          <Text style={[CommonStyle.fontS, colorStyle]}>{subtitle}</Text>
           {isSelected && selected}
         </View>
       </TouchableOpacity>
@@ -52,7 +53,7 @@ export default class TypeSelector extends PureComponent {
    * Render
    */
   render() {
-    const selected = <Text style={[CommonStyle.fontS, CommonStyle.colorPrimary]}>{i18n.t('boosts.selected')}</Text>,
+    const selected = <Text style={[CommonStyle.fontM, CommonStyle.colorPrimary]}>{i18n.t('boosts.selected')}</Text>,
       NewsfeedPartial = this.getOption('newsfeed', i18n.t('boosts.feeds'), i18n.t('boosts.feedsDescription'), selected),
       P2pPartial = this.getOption('p2p', i18n.t('boosts.offers'), i18n.t('boosts.offersDescription'), selected),
       ContentPartial = this.getOption('content',  i18n.t('boosts.sidebars'), i18n.t('boosts.sidebarsDescription'), selected),

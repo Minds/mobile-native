@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {
   observer,
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import {
   View,
@@ -13,6 +13,7 @@ import { Icon } from 'react-native-elements'
 import testID from '../common/helpers/testID';
 import settingsService from '../settings/SettingsService'
 import settingsStore from '../settings/SettingsStore'
+import featuresService from '../common/services/features.service';
 
 @observer
 export default class CaptureFab extends Component {
@@ -21,11 +22,11 @@ export default class CaptureFab extends Component {
    * Nav to activity full screen
    */
   navToCapture = () => {
-    const { state } = this.props.navigation
-    this.props.navigation.navigate('Capture', {group: this.props.group, parentKey: state.key});
+    this.props.navigation.navigate('Capture', {group: this.props.group, parentKey: this.props.route.key});
   }
 
   render() {
+
     return (
       <Icon
         raised

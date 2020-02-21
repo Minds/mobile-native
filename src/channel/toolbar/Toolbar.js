@@ -8,7 +8,7 @@ import {
 
 import {
   observer,
-} from 'mobx-react/native';
+} from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -17,6 +17,7 @@ import FAIcon from 'react-native-vector-icons/FontAwesome5';
 import i18n from '../../common/services/i18n.service';
 import colors from '../../styles/Colors';
 import featuresService from '../../common/services/features.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 const ICON_SIZE = 22;
 
@@ -74,24 +75,26 @@ class Toolbar extends Component {
       )
     }
 
+    const theme = ThemedStyles.style;
+
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, theme.backgroundPrimary]}>
         <View style={styles.topbar}>
           <TouchableOpacity style={styles.button} onPress={this.filterFeed} testID="FeedButton">
-            <Icon name="list" size={ICON_SIZE} color={filter == 'feed' ? colors.primary : color} style={styles.icon} />
-            <Text style={[styles.buttontext, filter == 'feed' ? styles.buttontextSelected : null]}>{i18n.t('feed').toUpperCase()}</Text>
+            <Icon name="list" size={ICON_SIZE} style={[styles.icon, filter == 'feed' ? theme.colorIconActive : theme.colorIcon]} />
+            <Text style={[styles.buttontext, filter == 'feed' ? theme.colorIconActive : theme.colorIcon]}>{i18n.t('feed').toUpperCase()}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={this.filterImages} testID="ImagesButton">
-            <IonIcon name="md-image" size={ICON_SIZE} color={filter == 'images' ? colors.primary : color} style={styles.icon} />
-            <Text style={[styles.buttontext, filter == 'images' ? styles.buttontextSelected : null]}>{i18n.t('images').toUpperCase()}</Text>
+            <IonIcon name="md-image" size={ICON_SIZE} style={[styles.icon, filter == 'images' ? theme.colorIconActive : theme.colorIcon]} />
+            <Text style={[styles.buttontext, filter == 'images' ? theme.colorIconActive : theme.colorIcon]}>{i18n.t('images').toUpperCase()}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={this.filterVideos} testID="VideosButton">
-            <IonIcon name="md-videocam" size={ICON_SIZE} color={filter == 'videos' ? colors.primary : color} style={styles.icon} />
-            <Text style={[styles.buttontext, filter == 'videos' ? styles.buttontextSelected : null]}>{i18n.t('videos').toUpperCase()}</Text>
+            <IonIcon name="md-videocam" size={ICON_SIZE} style={[styles.icon, filter == 'videos' ? theme.colorIconActive : theme.colorIcon]} />
+            <Text style={[styles.buttontext, filter == 'videos' ? theme.colorIconActive : theme.colorIcon]}>{i18n.t('videos').toUpperCase()}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={this.filterBlogs} testID="BlogsButton">
-            <Icon name="subject" size={ICON_SIZE} color={filter == 'blogs' ? colors.primary : color} style={styles.icon} />
-            <Text style={[styles.buttontext, filter == 'blogs' ? styles.buttontextSelected : null]}>{i18n.t('blogs.blogs').toUpperCase()}</Text>
+            <Icon name="subject" size={ICON_SIZE} style={[styles.icon, filter == 'blogs' ? theme.colorIconActive : theme.colorIcon]} />
+            <Text style={[styles.buttontext, filter == 'blogs' ? theme.colorIconActive : theme.colorIcon]}>{i18n.t('blogs.blogs').toUpperCase()}</Text>
           </TouchableOpacity>
           {rewards}
           {subscriptionRequests}
@@ -112,10 +115,6 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     paddingRight: 0,
     paddingBottom: 5,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#EEE',
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#EEE',
   },
   icon: {
     height: 25,
@@ -126,8 +125,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttontext: {
-    paddingTop:5,
-    fontSize: 10,
+    paddingTop:3,
+    fontSize: 12,
     color: '#444',
   },
   buttontextSelected: {

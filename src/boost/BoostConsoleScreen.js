@@ -6,7 +6,7 @@ import {
   TouchableHighlight,
   Text
 } from 'react-native';
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -17,6 +17,7 @@ import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import BoostTabBar from './BoostTabBar';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * News feed list component
@@ -37,7 +38,7 @@ export default class BoostConsoleScreen extends Component {
    * On component will mount
    */
   componentWillMount() {
-    const filter = this.props.navigation.state.params.filter;
+    const filter = this.props.route.params.filter;
 
     if (filter) {
       this.props.boost.setFilter(filter);
@@ -77,19 +78,21 @@ export default class BoostConsoleScreen extends Component {
     }
 
     const tabs = (<BoostTabBar />);
-
-    return <FlatList
-              ListHeaderComponent={tabs}
-              ListEmptyComponent={empty}
-              data={this.props.boost.list.entities.slice()}
-              renderItem={this.renderBoost}
-              keyExtractor={item => item.rowKey}
-              onRefresh={this.refresh}
-              refreshing={this.props.boost.list.refreshing}
-              onEndReached={this.loadFeed}
-              onEndReachedThreshold={0}
-              style={styles.listView}
-            />
+    const theme = ThemedStyles.style;
+    return (
+      <FlatList
+        ListHeaderComponent={tabs}
+        ListEmptyComponent={empty}
+        data={this.props.boost.list.entities.slice()}
+        renderItem={this.renderBoost}
+        keyExtractor={item => item.rowKey}
+        onRefresh={this.refresh}
+        refreshing={this.props.boost.list.refreshing}
+        onEndReached={this.loadFeed}
+        onEndReachedThreshold={0}
+        style={[theme.backgroundSecondary, theme.flexContainer]}
+      />
+    );
   }
 
   /**
@@ -118,10 +121,6 @@ export default class BoostConsoleScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  listView: {
-    backgroundColor: '#FFF',
-    flex: 1,
-  },
   buttons: {
     alignItems: 'center',
   },

@@ -4,7 +4,7 @@ import i18n from '../common/services/i18n.service';
 import emailConfirmationService from '../common/services/email-confirmation.service';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { CommonStyle as CS } from '../styles/Common';
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 import isIphoneX from '../common/helpers/isIphoneX';
 
 /**
@@ -46,7 +46,7 @@ class EmailConfirmation extends Component {
 
     return (
       <View style={styles.container}>
-        
+
         <View style={styles.body}>
           <Text style={[CS.fontM, CS.colorWhite]}>
             {i18n.t('emailConfirm.confirm')}

@@ -24,8 +24,7 @@ exports[`renders correctly for activity 1`] = `
     <Text
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >
@@ -37,8 +36,7 @@ exports[`renders correctly for activity 1`] = `
     <Text
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >
@@ -72,8 +70,7 @@ exports[`renders correctly for comment 1`] = `
     <Text
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >
@@ -85,8 +82,7 @@ exports[`renders correctly for comment 1`] = `
     <Text
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >
@@ -122,8 +118,7 @@ exports[`renders correctly for object 1`] = `
     <Text
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >
@@ -135,8 +130,7 @@ exports[`renders correctly for object 1`] = `
     <Text
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >

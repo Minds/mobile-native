@@ -19,8 +19,10 @@ jest.mock('../../src/comments/CommentList', () => 'CommentList');
  * Tests
  */
 describe('blog view screen component', () => {
-
-  let store, user;
+  let store,
+    user,
+    route,
+    navigation = {};
 
   beforeEach(() => {
     NavigationService.getCurrentState.mockClear();
@@ -28,44 +30,57 @@ describe('blog view screen component', () => {
     store = new BlogsViewStore();
     user = new UserStore();
     user.me = {
-      guid: 'guidguid'
+      guid: 'guidguid',
     };
   });
 
   it('should renders correctly', () => {
-
     store.blog = BlogModel.create(blogsFaker('1'));
 
-    navigation = {state: {params : {guid:1}}};
+    route = { params: { guid: 1 } };
 
-    const component = renderer.create(
-      <BlogsViewScreen.wrappedComponent blogsView={store} navigation={navigation} user={user}/>
-    ).toJSON();
+    const component = renderer
+      .create(
+        <BlogsViewScreen.wrappedComponent
+          blogsView={store}
+          navigation={navigation}
+          route={route}
+          user={user}
+        />,
+      )
+      .toJSON();
     expect(component).toMatchSnapshot();
   });
 
   it('should load the blog by guid', () => {
-
     store.blog = BlogModel.create(blogsFaker('1'));
 
-    navigation = {state: {params : {guid: 1}}};
+    route = { params: { guid: 1 } };
 
     const component = renderer.create(
-
-      <BlogsViewScreen.wrappedComponent blogsView={store} navigation={navigation} user={user}/>
+      <BlogsViewScreen.wrappedComponent
+        blogsView={store}
+        navigation={navigation}
+        route={route}
+        user={user}
+      />,
     );
 
     expect(store.loadBlog).toBeCalledWith(1);
   });
 
   it('should set the blog from params', () => {
-
     store.blog = BlogModel.create(blogsFaker('1'));
 
-    navigation = {state: {params : {blog: store.blog}}};
+    route = { params: { blog: store.blog } };
 
     const component = renderer.create(
-      <BlogsViewScreen.wrappedComponent blogsView={store} navigation={navigation} user={user}/>
+      <BlogsViewScreen.wrappedComponent
+        blogsView={store}
+        navigation={navigation}
+        route={route}
+        user={user}
+      />,
     );
 
     expect(store.setBlog).toBeCalledWith(store.blog);

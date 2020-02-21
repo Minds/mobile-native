@@ -9,12 +9,6 @@ import gatheringService from '../common/services/gathering.service';
  * Gathering
  */
 class Gathering extends React.Component {
-  /**
-   * Remove navigation header
-   */
-  static navigationOptions = {
-    header: null,
-  };
 
   /**
    * Constructor
@@ -33,6 +27,7 @@ class Gathering extends React.Component {
    * Component did mount
    */
   componentDidMount() {
+    gatheringService.setInGatheringScreen(true);
     this.init();
   }
 
@@ -41,7 +36,7 @@ class Gathering extends React.Component {
    */
   async init() {
     if (!gatheringService.isActive) {
-      const entity = this.props.navigation.getParam('entity');
+      const entity = this.props.route.params.entity;
       this.timer = setTimeout(async () => {
         const url = await gatheringService.getRoomName(entity);
         const user = sessionService.getUser();
@@ -56,6 +51,7 @@ class Gathering extends React.Component {
    * Component will unmount
    */
   componentWillUnmount() {
+    gatheringService.setInGatheringScreen(false);
     if (this.backHandler) {
       this.backHandler.remove();
       this.backHandler = null;
@@ -108,7 +104,7 @@ class Gathering extends React.Component {
           onConferenceTerminated={this.onConferenceTerminated}
           onConferenceJoined={this.onConferenceJoined}
           onConferenceWillJoin={this.onConferenceWillJoin}
-          style={CommonStyle.flexContainer}
+          style={[CommonStyle.flexContainer, CommonStyle.backgroundBlack]}
         />
       </View>
     );

@@ -10,6 +10,7 @@ import {
 
 import { CommonStyle as CS } from '../../../styles/Common';
 import abbrev from '../../../common/helpers/abbrev';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 import type {
   TextStyleProp,
@@ -33,7 +34,6 @@ export default class Counter extends PureComponent<PropsType> {
    */
   static defaultProps = {
     size: 15,
-    style: CS.colorAction
   };
 
   /**
@@ -51,7 +51,7 @@ export default class Counter extends PureComponent<PropsType> {
     return (
       <View style={[CS.columnAlignCenter]}>
         <Text
-          style={[style, { fontSize: size}]}
+          style={[ThemedStyles.style.colorIcon, style, { fontSize: size}]}
           {...otherProps}
         >
           {count > 0 ? abbrev(count,0) : ''}

@@ -13,7 +13,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import { Icon } from 'react-native-elements';
 
@@ -51,18 +51,11 @@ class ChannelScreen extends Component {
   };
 
   /**
-   * Disable navigation bar
-   */
-  static navigationOptions = {
-    header: null,
-  };
-
-  /**
    * Load data on mount
    */
   async componentWillMount() {
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      const params = this.props.navigation.state.params;
+    this.disposeEnter = this.props.navigation.addListener('focus', () => {
+      const params = this.props.route.params;
       const store = this.props.channel.store(this.guid);
       if (params && params.prepend) {
         if (store.channel && store.channel.isOwner && store.channel.isOwner()) {
@@ -84,7 +77,7 @@ class ChannelScreen extends Component {
    * Initial load
    */
   async initialLoad() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     if (params.entity) {
       // load channel from endpoint
@@ -102,7 +95,7 @@ class ChannelScreen extends Component {
    */
   componentWillUnmount() {
     if (this.disposeEnter) {
-      this.disposeEnter.remove();
+      this.disposeEnter();
     }
     this.props.channel.garbageCollect();
     this.props.channel.store(this.guid).markInactive();
@@ -182,7 +175,7 @@ class ChannelScreen extends Component {
   }
 
   get guid() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     let guid = params.entity ? params.entity.guid : params.guid;
 
@@ -345,7 +338,7 @@ class ChannelScreen extends Component {
         <SafeAreaView style={styles.gobackicon}>
           <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={this.goBack}/>
         </SafeAreaView>
-        <CaptureFab navigation={this.props.navigation} testID="captureFab"/>
+        <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/>
       </View>
     );
   }

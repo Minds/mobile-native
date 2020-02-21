@@ -4,7 +4,7 @@ import {
   View,
   Text
 } from 'react-native';
-import { observer } from 'mobx-react/native'
+import { observer } from 'mobx-react'
 import FastImage from 'react-native-fast-image';
 
 import { CommonStyle as CS } from '../styles/Common';
@@ -46,8 +46,11 @@ class ActivityScreen extends Component {
     this.loadEntity();
   }
 
+  /**
+   * Load entity
+   */
   async loadEntity() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     if (params.entity && (params.entity.guid || params.entity.entity_guid)) {
 
@@ -132,7 +135,7 @@ class ActivityScreen extends Component {
     }
 
     return (
-      <View style={[CS.flexContainer, CS.backgroundWhite]}>
+      <View style={[CS.flexContainer]}>
         {
           !this.entityStore.errorLoading ?
             <CommentList
@@ -141,6 +144,7 @@ class ActivityScreen extends Component {
               store={this.comments}
               navigation={this.props.navigation}
               onInputFocus={this.onFocus}
+              route={this.props.route}
             />
           :
             <View style={CS.flexColumnCentered}>

@@ -38,11 +38,6 @@ exports[`Comment action component renders correctly 1`] = `
   />
   <Counter
     size={14}
-    style={
-      Object {
-        "color": "rgb(96, 125, 139)",
-      }
-    }
   />
 </PreventDoubleTap>
 `;

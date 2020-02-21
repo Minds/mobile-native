@@ -2,7 +2,7 @@ import 'react-native';
 import React from 'react';
 import { Alert } from 'react-native';
 import { shallow } from 'enzyme';
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
 import CameraRoll from '@react-native-community/cameraroll';
 
 import CapturePoster from '../../src/capture/CapturePoster';
@@ -12,7 +12,7 @@ import UserStore from '../../src/auth/UserStore';
 import CaptureStore from '../../src/capture/CaptureStore';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-import { getPhotosFaker } from '../../__mocks__/fake/CameraRollFaker';
+import { getPhotosFaker } from '../../__mocks__/fake/CameraRollFaker';
 
 jest.mock('../../src/auth/UserStore');
 jest.mock('../../src/capture/CaptureStore');
@@ -31,13 +31,18 @@ CameraRoll.getPhotos.mockResolvedValue(response);
  * Tests
  */
 describe('cature poster component', () => {
-
   let userStore, capture;
-  const navigation = { navigate: jest.fn(), dispatch: jest.fn(), setParams: jest.fn(), state: {params:{}}, goBack: jest.fn()};
+  const navigation = {
+    navigate: jest.fn(),
+    dispatch: jest.fn(),
+    setOptions: jest.fn(),
+    goBack: jest.fn(),
+  };
+  const route = { params: {} };
 
-  const paramsVideo = {uri: 'file://video.mp4', type: 'video/mp4'};
+  const paramsVideo = { uri: 'file://video.mp4', type: 'video/mp4' };
 
-  const paramsImage = {uri: 'file://image.jpg', type: 'image/jpeg'};
+  const paramsImage = { uri: 'file://image.jpg', type: 'image/jpeg' };
 
   beforeEach(() => {
     userStore = new UserStore();
@@ -45,31 +50,35 @@ describe('cature poster component', () => {
     capture.attachment.attachMedia.mockClear();
     navigation.navigate.mockClear();
     navigation.dispatch.mockClear();
-    navigation.setParams.mockClear();
+    navigation.setOptions.mockClear();
     capture.post.mockClear();
   });
 
   it('should renders correctly', () => {
-    const screen = renderer.create(
-      <CapturePoster.wrappedComponent
-        user={userStore}
-        capture={capture}
-        navigation={navigation}
-      />
-    ).toJSON();
+    const screen = renderer
+      .create(
+        <CapturePoster.wrappedComponent
+          user={userStore}
+          capture={capture}
+          navigation={navigation}
+          route={route}
+        />,
+      )
+      .toJSON();
 
     expect(screen).toMatchSnapshot();
   });
 
   it('should receive text parameters on did mount', () => {
-    navigation.state.params = {text: 'hello'};
+    route.params = { text: 'hello' };
 
     const wrapper = shallow(
       <CapturePoster.wrappedComponent
         user={userStore}
         capture={capture}
         navigation={navigation}
-      />
+        route={route}
+      />,
     );
 
     // should be called
@@ -80,15 +89,15 @@ describe('cature poster component', () => {
   });
 
   it('should receive image parameters on did mount and attach it', () => {
-
-    navigation.state.params = {image: 'file://image.jpg'};
+    route.params = { image: 'file://image.jpg' };
 
     const wrapper = shallow(
       <CapturePoster.wrappedComponent
         user={userStore}
         capture={capture}
         navigation={navigation}
-      />
+        route={route}
+      />,
     );
 
     // should be called
@@ -98,19 +107,22 @@ describe('cature poster component', () => {
     expect(capture.attachment.attachMedia.mock.calls.length).toBe(1);
 
     // should be called with the image
-    expect(capture.attachment.attachMedia.mock.calls[0][0]).toEqual({type: 'image/jpeg', uri:'file://image.jpg'} );
+    expect(capture.attachment.attachMedia.mock.calls[0][0]).toEqual({
+      type: 'image/jpeg',
+      uri: 'file://image.jpg',
+    });
   });
 
   it('should receive video parameters on did mount and attach it', () => {
-
-    navigation.state.params = {video: 'file://video.mp4'};
+    route.params = { video: 'file://video.mp4' };
 
     const wrapper = shallow(
       <CapturePoster.wrappedComponent
         user={userStore}
         capture={capture}
         navigation={navigation}
-      />
+        route={route}
+      />,
     );
 
     // should be called
@@ -120,12 +132,14 @@ describe('cature poster component', () => {
     expect(capture.attachment.attachMedia.mock.calls.length).toBe(1);
 
     // should be called with the video
-    expect(capture.attachment.attachMedia.mock.calls[0][0]).toEqual({type: 'video/mp4', uri:'file://video.mp4'} );
+    expect(capture.attachment.attachMedia.mock.calls[0][0]).toEqual({
+      type: 'video/mp4',
+      uri: 'file://video.mp4',
+    });
   });
 
-  it('should show the preview when an image is attached', async (done) => {
+  it('should show the preview when an image is attached', async done => {
     try {
-
       // emulate image attachment
       capture.attachment.hasAttachment = true;
       capture.attachment.uri = paramsImage.uri;
@@ -136,7 +150,8 @@ describe('cature poster component', () => {
           user={userStore}
           capture={capture}
           navigation={navigation}
-        />
+          route={route}
+        />,
       );
 
       const gallery = wrapper.root.findByType(CaptureGallery);
@@ -154,7 +169,7 @@ describe('cature poster component', () => {
     }
   });
 
-  it('should show the preview when a video is attached', async (done) => {
+  it('should show the preview when a video is attached', async done => {
     try {
       // emulate video attachment
       capture.attachment.hasAttachment = true;
@@ -166,7 +181,8 @@ describe('cature poster component', () => {
           user={userStore}
           capture={capture}
           navigation={navigation}
-        />
+          route={route}
+        />,
       );
 
       const gallery = wrapper.root.findByType(CaptureGallery);
@@ -184,9 +200,8 @@ describe('cature poster component', () => {
     }
   });
 
-  it('should call attachment store delete when user tap delete', async (done) => {
+  it('should call attachment store delete when user tap delete', async done => {
     try {
-
       // emulate video attachment
       capture.attachment.hasAttachment = true;
       capture.attachment.uri = paramsVideo.uri;
@@ -197,7 +212,8 @@ describe('cature poster component', () => {
           user={userStore}
           capture={capture}
           navigation={navigation}
-        />
+          route={route}
+        />,
       );
 
       const gallery = wrapper.root.findByType(CaptureGallery);
@@ -224,9 +240,8 @@ describe('cature poster component', () => {
     }
   });
 
-  it('should call attachment store delete when user leave', async (done) => {
+  it('should call attachment store delete when user leave', async done => {
     try {
-
       // emulate video attachment
       capture.attachment.hasAttachment = true;
       capture.attachment.uri = paramsVideo.uri;
@@ -237,7 +252,8 @@ describe('cature poster component', () => {
           user={userStore}
           capture={capture}
           navigation={navigation}
-        />
+          route={route}
+        />,
       );
 
       // unmount
@@ -255,9 +271,8 @@ describe('cature poster component', () => {
     }
   });
 
-  it('should return false if the user post before finish an upload', async (done) => {
+  it('should return false if the user post before finish an upload', async done => {
     try {
-
       // emulate video attachment
       capture.attachment.hasAttachment = true;
       capture.attachment.uri = paramsVideo.uri;
@@ -269,7 +284,8 @@ describe('cature poster component', () => {
           user={userStore}
           capture={capture}
           navigation={navigation}
-        />
+          route={route}
+        />,
       );
 
       // submit
@@ -284,14 +300,15 @@ describe('cature poster component', () => {
     }
   });
 
-  it('should return false if there is nothing to post', async (done) => {
+  it('should return false if there is nothing to post', async done => {
     try {
       const wrapper = shallow(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
           navigation={navigation}
-        />
+          route={route}
+        />,
       );
 
       // submit
@@ -306,19 +323,20 @@ describe('cature poster component', () => {
     }
   });
 
-  it('should call store\'s post on submit and return the response', async (done) => {
+  it("should call store's post on submit and return the response", async done => {
     try {
       const wrapper = shallow(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
           navigation={navigation}
-        />
+          route={route}
+        />,
       );
 
       wrapper.instance().setText('some awesome post');
 
-      const response = {entity:{guid:1, title: 'some awesome post'}};
+      const response = { entity: { guid: 1, title: 'some awesome post' } };
 
       capture.post.mockResolvedValue(response);
 
@@ -332,9 +350,14 @@ describe('cature poster component', () => {
       expect(capture.post.mock.calls.length).toBe(1);
 
       const entity = capture.post.mock.calls[0][0];
-      expect(capture.post.mock.calls[0][0]).toEqual({ nsfw: [], message: "some awesome post", wire_threshold: null, "time_created": entity.time_created});
+      expect(capture.post.mock.calls[0][0]).toEqual({
+        nsfw: [],
+        message: 'some awesome post',
+        wire_threshold: null,
+        time_created: entity.time_created,
+      });
 
-      expect(result).toEqual(response)
+      expect(result).toEqual(response);
 
       done();
     } catch (e) {
@@ -342,7 +365,7 @@ describe('cature poster component', () => {
     }
   });
 
-  it('should call onComplete after submit', async (done) => {
+  it('should call onComplete after submit', async done => {
     try {
       const onCompleteMock = jest.fn();
 
@@ -351,13 +374,14 @@ describe('cature poster component', () => {
           user={userStore}
           capture={capture}
           navigation={navigation}
+          route={route}
           onComplete={onCompleteMock}
-        />
+        />,
       );
 
       wrapper.instance().setText('some awesome post');
 
-      const response = {entity:{guid:1, title: 'some awesome post'}};
+      const response = { entity: { guid: 1, title: 'some awesome post' } };
 
       capture.post.mockResolvedValue(response);
 
@@ -373,22 +397,22 @@ describe('cature poster component', () => {
     }
   });
 
-  it('should add third party networks share to post', async (done) => {
+  it('should add third party networks share to post', async done => {
     try {
-
       const wrapper = shallow(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
           navigation={navigation}
-        />
+          route={route}
+        />,
       );
 
       wrapper.instance().setText('some awesome post');
       wrapper.instance().onShare('facebook');
       wrapper.instance().onShare('twitter');
 
-      const response = {entity:{guid:1, title: 'some awesome post'}};
+      const response = { entity: { guid: 1, title: 'some awesome post' } };
 
       capture.post.mockResolvedValue(response);
 
@@ -404,11 +428,11 @@ describe('cature poster component', () => {
       const entity = capture.post.mock.calls[0][0];
       expect(capture.post.mock.calls[0][0]).toEqual({
         nsfw: [],
-        message: "some awesome post",
+        message: 'some awesome post',
         wire_threshold: null,
         facebook: 1,
         twitter: 1,
-        time_created: entity.time_created
+        time_created: entity.time_created,
       });
 
       done();
@@ -417,17 +441,18 @@ describe('cature poster component', () => {
     }
   });
 
-  it('should call store\'s post with attachment guid', async (done) => {
+  it("should call store's post with attachment guid", async done => {
     try {
       const wrapper = shallow(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
           navigation={navigation}
-        />
+          route={route}
+        />,
       );
 
-        // emulate image attachment
+      // emulate image attachment
       capture.attachment.hasAttachment = true;
       capture.attachment.guid = 1000;
       capture.attachment.uri = paramsImage.uri;
@@ -436,7 +461,7 @@ describe('cature poster component', () => {
 
       wrapper.instance().setText('some awesome post');
 
-      const response = {entity:{guid:1, title: 'some awesome post'}};
+      const response = { entity: { guid: 1, title: 'some awesome post' } };
 
       capture.post.mockResolvedValue(response);
 
@@ -450,17 +475,19 @@ describe('cature poster component', () => {
       expect(capture.post).toBeCalled();
 
       const entity = capture.post.mock.calls[0][0];
+
       // should send the attachment data
       expect(capture.post.mock.calls[0][0]).toEqual({
         nsfw: [],
-        message: "some awesome post",
+        message: 'some awesome post',
         wire_threshold: null,
         attachment_guid: 1000,
         attachment_license: '',
-        time_created: entity.time_created}
-      );
+        time_created: entity.time_created,
+      });
+      console.log(result)
       // should return server response
-      expect(result).toEqual(response)
+      expect(result).toEqual(response);
 
       // should clear the attachment
       expect(capture.attachment.clear).toHaveBeenCalled();
@@ -471,14 +498,15 @@ describe('cature poster component', () => {
     }
   });
 
-  it('should alert the user on submit error', async (done) => {
+  it('should alert the user on submit error', async done => {
     try {
       const wrapper = shallow(
         <CapturePoster.wrappedComponent
           user={userStore}
           capture={capture}
           navigation={navigation}
-        />
+          route={route}
+        />,
       );
 
       wrapper.instance().setText('some awesome post');

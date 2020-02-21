@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 
 import { CommonStyle } from "../../styles/Common";
 
@@ -90,7 +90,7 @@ export default class BlockchainWalletScreen extends Component {
 
   render() {
     return (
-      <View style={[ CommonStyle.flexContainer, CommonStyle.backgroundWhite ]}>
+      <View style={[ CommonStyle.flexContainer ]}>
 
         <BlockchainWalletList
           onSelect={this.detailsAction}

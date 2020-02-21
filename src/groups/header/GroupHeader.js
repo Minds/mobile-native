@@ -13,7 +13,7 @@ import {
 
 import {
   observer, inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 import {debounce} from 'lodash';
 
 import FastImage from 'react-native-fast-image';
@@ -32,6 +32,7 @@ import colors from '../../styles/Colors';
 import i18n from '../../common/services/i18n.service';
 import featuresService from '../../common/services/features.service';
 import { FLAG_JOIN, FLAG_JOIN_GATHERING } from '../../common/Permissions';
+import Button from '../../common/components/Button';
 
 /**
  * Group Header
@@ -76,27 +77,27 @@ export default class GroupHeader extends Component {
 
     if (!group['is:member']) {
       return (
-        <TouchableHighlight
-          onPress={() => { store.join(group.guid) }}
-          underlayColor='transparent'
-          style={ComponentsStyle.bluebutton}
+        <Button
+          onPress={ () => { store.join(group.guid)  } }
           accessibilityLabel={i18n.t('groups.subscribeMessage')}
-          disabled={store.saving}
-        >
-          <Text style={CommonStyle.colorPrimary} ref="btntext"> {i18n.t('join')} </Text>
-        </TouchableHighlight>
+          containerStyle={[CommonStyle.rowJustifyCenter, CommonStyle.marginLeft]}
+          textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
+          icon="ios-flash"
+          text={i18n.t('join')}
+          loading={store.saving}
+        />
       );
     } else {
       return (
-        <TouchableHighlight
-          onPress={() => { store.leave(group.guid)  }}
-          underlayColor='transparent'
-          style={ComponentsStyle.bluebutton}
+        <Button
+          onPress={ () => { store.leave(group.guid)  } }
           accessibilityLabel={i18n.t('groups.leaveMessage')}
-          disabled={store.saving}
-        >
-          <Text style={CommonStyle.colorPrimary} ref="btntext"> {i18n.t('leave')} </Text>
-        </TouchableHighlight>
+          containerStyle={[CommonStyle.rowJustifyCenter, CommonStyle.marginLeft]}
+          textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
+          icon="ios-flash"
+          text={i18n.t('leave')}
+          loading={store.saving}
+        />
       );
     }
   }

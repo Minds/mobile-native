@@ -5,7 +5,7 @@ import {StyleSheet, Text, View, Image} from 'react-native';
 
 import {CommonStyle} from '../../styles/Common';
 import FastImage from 'react-native-fast-image';
-import {observer} from "mobx-react/native";
+import {observer} from "mobx-react";
 
 export const Icons = {
   'votes': {

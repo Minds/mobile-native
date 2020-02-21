@@ -132,6 +132,9 @@ export const CommonStyle = StyleSheet.create({
   colorActionNew: {
     color: LIGHT_THEME.action
   },
+  colorIcon: {
+    color: LIGHT_THEME.icon
+  },
   // backgrounds
   backgroundWhite: {
     backgroundColor: 'white'

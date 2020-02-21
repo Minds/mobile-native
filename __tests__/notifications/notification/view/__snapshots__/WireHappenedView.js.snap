@@ -18,8 +18,7 @@ exports[`renders correctly for not owner and not subscribed 1`] = `
       onPress={[Function]}
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >
@@ -48,8 +47,7 @@ exports[`renders correctly for owner and not subscribed 1`] = `
       onPress={[Function]}
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >
@@ -78,8 +76,7 @@ exports[`renders correctly for owner and subscribed 1`] = `
       onPress={[Function]}
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >
@@ -108,8 +105,7 @@ exports[`renders correctly for owner and subscribed 2`] = `
       onPress={[Function]}
       style={
         Object {
-          "color": "#444",
-          "fontWeight": "bold",
+          "fontWeight": "600",
         }
       }
     >

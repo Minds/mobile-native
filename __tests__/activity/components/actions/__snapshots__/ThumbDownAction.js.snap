@@ -28,9 +28,7 @@ exports[`Thumb action component renders correctly 1`] = `
     size={20}
     style={
       Array [
-        Object {
-          "color": "rgb(96, 125, 139)",
-        },
+        undefined,
         Object {
           "marginRight": 5,
         },
@@ -39,11 +37,6 @@ exports[`Thumb action component renders correctly 1`] = `
   />
   <Counter
     size={14}
-    style={
-      Object {
-        "color": "rgb(96, 125, 139)",
-      }
-    }
     testID="Thumb down count"
   />
 </PreventDoubleTap>

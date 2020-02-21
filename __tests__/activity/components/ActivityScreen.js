@@ -15,15 +15,16 @@ import ActivityModel from '../../../src/newsfeed/ActivityModel';
 jest.mock('../../../src/newsfeed/NewsfeedService');
 jest.mock('../../../src/newsfeed/activity/Activity', () => 'Activity');
 jest.mock('../../../src/comments/CommentList', () => 'CommentList');
-jest.mock('../../../src/common/components/CenteredLoading', () => 'CenteredLoading');
+jest.mock(
+  '../../../src/common/components/CenteredLoading',
+  () => 'CenteredLoading',
+);
 jest.mock('../../../src/comments/CommentsStore');
 jest.mock('../../../src/comments/CommentsStoreProvider');
 jest.mock('../../../src/common/services/entities.service');
 
-
 describe('Activity screen component', () => {
-
-  let user, comments, entity, screen, navigation;
+  let screen, navigation, route;
   beforeEach(() => {
     let mockResponse = commentsServiceFaker().load(5);
     commentsStoreProvider.get.mockReturnValue({
@@ -36,24 +37,25 @@ describe('Activity screen component', () => {
       loadComments: () => {
         return mockResponse.comments;
       },
-      attachment:{}
+      attachment: {},
     });
   });
 
   it('renders correctly with an entity as param', async () => {
     navigation = {
       push: jest.fn(),
-      state: {
-        routeName: 'some',
-        params: {entity: activitiesServiceFaker().load(1).activities[0]}
-      }
     };
 
-    entitiesService.single.mockResolvedValue(ActivityModel.create(navigation.state.params.entity));
+    route = {
+      routeName: 'some',
+      params: { entity: activitiesServiceFaker().load(1).activities[0] },
+    };
 
-    screen = shallow(
-      <ActivityScreen navigation={navigation}/>
+    entitiesService.single.mockResolvedValue(
+      ActivityModel.create(route.params.entity),
     );
+
+    screen = shallow(<ActivityScreen navigation={navigation} route={route} />);
 
     // shoul show loading
     expect(screen).toMatchSnapshot();

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,7 +10,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingBottom: 16,
     paddingRight: 8,
-    borderBottomColor: '#EEE',
+    borderBottomColor: ThemedStyles.getColor('primary_border'),
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
     width: 36,
     borderRadius: 18,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#EEE',
+    borderColor: ThemedStyles.getColor('primary_border'),
   },
   body: {
     marginLeft: 8,
@@ -31,12 +32,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   link: {
-    fontWeight: 'bold',
-    color: '#444',
+    fontWeight: '600',
   },
   timestamp: {
     fontSize: 11,
-    color: '#888',
+    color: ThemedStyles.getColor('secondary_text'),
   },
 });
 

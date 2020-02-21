@@ -2,7 +2,7 @@ import React, {
   Component
 } from 'react';
 
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 
 import {
   TouchableOpacity,
@@ -14,6 +14,7 @@ import { CommonStyle as CS } from '../../../styles/Common';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_CREATE_COMMENT } from '../../../common/Permissions';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -36,7 +37,7 @@ class CommentsAction extends Component {
 
     const canComment = this.props.entity.allow_comments && this.props.entity.can(FLAG_CREATE_COMMENT);
 
-    const color = canComment ? (this.props.entity['comments:count'] > 0 ? CS.colorPrimary : CS.colorAction) : CS.colorLightGreyed;
+    const color = canComment ? (this.props.entity['comments:count'] > 0 ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon) : CS.colorLightGreyed;
 
     return (
       <TouchableOpacityCustom style={[CS.flexContainer, CS.centered, CS.rowJustifyCenter]} onPress={this.openComments} testID={this.props.testID}>
@@ -52,7 +53,8 @@ class CommentsAction extends Component {
   openComments = () => {
     const cantOpen = !this.props.entity.allow_comments && this.props.entity['comments:count'] == 0;
     // TODO: fix
-    if (this.props.navigation.state.routeName == 'Activity' || cantOpen) {
+    const routes = this.props.navigation.dangerouslyGetState().routes;
+    if ((routes && routes[routes.length - 1].name == 'Activity') || cantOpen) {
       return;
     }
     this.props.navigation.push('Activity', {

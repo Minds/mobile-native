@@ -7,16 +7,17 @@ import {
   Platform,
   TouchableOpacity,
   Dimensions,
+  SafeAreaView,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Avatar } from 'react-native-elements';
 
 import { MINDS_CDN_URI } from '../config/Config';
 import featuresService from '../common/services/features.service';
-import { SafeAreaView } from 'react-navigation';
+
 import isIphoneX from '../common/helpers/isIphoneX';
 import testID from '../common/helpers/testID';
 import EmailConfirmation from './EmailConfirmation';
@@ -81,8 +82,6 @@ if (Platform.OS == 'ios') {
 
 const styles = StyleSheet.create({
   container: {
-    height: topbarHeight,
-    display: 'flex',
     flexDirection: 'column',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
@@ -92,6 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     flexDirection: 'row',
+    paddingVertical: 5,
   },
   topbarLeft: {
     width: 100,

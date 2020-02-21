@@ -14,7 +14,7 @@ import {
 
 import Modal from 'react-native-modal';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 import { ComponentsStyle } from '../../styles/Components';
 import { CommonStyle } from '../../styles/Common';
 import Web3Service from '../services/Web3Service';

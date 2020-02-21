@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, ScrollView } from 'react-native';
-import { inject, observer } from 'mobx-react/native';
+import { inject, observer } from 'mobx-react';
 import Switch from 'react-native-switch-pro'
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
