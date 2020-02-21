@@ -201,7 +201,7 @@ PODS:
   - react-native-jitsi-meet (2.0.1):
     - JitsiMeetSDK (= 2.4.0)
     - React
-  - react-native-netinfo (5.5.0):
+  - react-native-netinfo (4.7.0):
     - React
   - react-native-notifications (2.0.6):
     - React
@@ -513,7 +513,7 @@ SPEC CHECKSUMS:
   react-native-cameraroll: 875e31fc43d4a5d8694c85a71c53dcf42f72f608
   react-native-image-picker: fd93361c666f397bdf72f9c6c23f13d2685b9173
   react-native-jitsi-meet: becd37e8fa1c5f3321b9222c232d190a36f90880
-  react-native-netinfo: b84ff0cae1147315b5dc1daf0f65c0cc6ee71fb3
+  react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
   react-native-notifications: 163ddedac6fcc8d850ea15b06abdadcacdff00f1
   react-native-randombytes: 3638d24759d67c68f6ccba60c52a7a8a8faa6a23
   react-native-safe-area-context: 4b3d1b9ebb040a4814a222703e7434b20c95fcf5
