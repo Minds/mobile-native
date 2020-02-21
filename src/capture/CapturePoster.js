@@ -57,8 +57,9 @@ class CapturePoster extends Component {
   componentDidMount() {
     let { params } = this.props.route;
 
+    this.props.capture.reset();
+
     if (params) {
-      this.props.capture.reset();
       if (params.text) {
         this.setText(params.text);
       } else if (params.image) {
@@ -181,6 +182,7 @@ class CapturePoster extends Component {
             placeholderTextColor={ThemedStyles.getColor('secondary_text')}
             underlineColorAndroid='transparent'
             onChangeText={this.setText}
+            textAlignVertical="top"
             value={this.props.capture.text}
             multiline={true}
             selectTextOnFocus={false}
@@ -517,8 +519,9 @@ const styles = StyleSheet.create({
     paddingHorizontal:10,
   },
   poster: {
-    padding: 12,
-    paddingTop: 24,
+    alignContent: 'flex-start',
+    padding: 15,
+    paddingTop: 15,
     flex: 1,
   },
   preview: {
