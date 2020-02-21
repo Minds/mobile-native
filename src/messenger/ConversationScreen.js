@@ -90,19 +90,8 @@ export default class ConversationScreen extends Component {
     this.store.setGuid(conversation.guid);
     this.store.load()
       .then(conversation => {
-
-        let title = '';
-
-        if (conversation) {
-          title = conversation.name ? conversation.name : conversation.username;
-        }
-
         // we send the conversation to update the topbar (in case we only receive the guid)
-        conversation && this.props.navigation.setOptions({
-          title,
-          conversation,
-          headerRight: route.params && route.params.headerRight,
-        });
+        this.updateTopAvatar(conversation);
       });
   }
 
