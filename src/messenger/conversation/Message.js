@@ -36,37 +36,37 @@ export default class Message extends PureComponent {
     showDate: false
   };
 
-  /**
-   * On component will mount
-   */
-  componentWillMount() {
+  state = {
+    decrypted: false,
+    msg: i18n.t('messenger.decrypting'),
+  }
+
+  constructor(props) {
+    super(props);
+
+    const { message } = props;
+
+    if (message.decrypted) {
+      this.state = {
+        decrypted: true,
+        msg: message.message,
+      }
+    }
+  }
+
+  async componentDidMount() {
     const message = this.props.message;
-    this.setState({decrypted: message.decrypted});
-    if (!message.decrypted) {
-
-      this.setState({
-        decrypted: false,
-        msg: i18n.t('messenger.decrypting')
-      });
-
-      // we need to decrypt inside a settimeout to fix blank list until decryption ends
-      setTimeout(() => {
-        if (message.message) {
-          crypto.decrypt(message.message)
-            .then(msg => {
-                this.setState({ decrypted: true, msg });
-                message.decrypted = true;
-                message.message = msg;
-              });
-        } else {
-          message.decrypted = true;
-          message.message = '';
-          this.setState({ decrypted: true, msg:'' });
+    if (!this.state.decrypted) {
+      if (message.message) {
+        try {
+          const msg = await crypto.decrypt(message.message);
+          this.setState({ decrypted: true, msg });
+        } catch (ex) {
+          this.setState({ decrypted: true, msg:'cant decrypt' });
         }
-      }, 0);
-
-    } else {
-      this.setState({ decrypted: true, msg: message.message });
+      } else {
+        this.setState({ decrypted: true, msg:'' });
+      }
     }
   }
 
