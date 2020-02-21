@@ -175,10 +175,10 @@ class CapturePoster extends Component {
         {this.showContext()}
         <View style={styles.posterWrapper}>
           <TextInput
-            style={styles.poster}
+            style={[styles.poster, ThemedStyles.style.colorPrimaryText]}
             editable={true}
             placeholder={i18n.t('capture.placeholder')}
-            placeholderTextColor='#ccc'
+            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
             underlineColorAndroid='transparent'
             onChangeText={this.setText}
             value={this.props.capture.text}
@@ -513,9 +513,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   title: {
-    margin:2,
-    padding:4,
-    color: '#4b4b4b'
+    margin:0,
+    paddingHorizontal:10,
   },
   poster: {
     padding: 12,
