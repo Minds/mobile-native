@@ -12,7 +12,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
+  SafeAreaView
 } from 'react-native';
 
 import {
@@ -186,39 +187,41 @@ export default class ConversationScreen extends Component {
     const conversation = this.props.route.params.conversation;
     const avatarImg    = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' + this.props.user.me.icontime };
     return (
-      <KeyboardAvoidingView style={[styles.container, ThemedStyles.style.backgroundSecondary]} behavior={Platform.OS == 'ios' ? 'padding' : null} keyboardVerticalOffset={64}>
-        <FlatList
-          inverted={true}
-          data={messages}
-          ref={(c) => {this.list = c}}
-          renderItem={this.renderMessage}
-          maxToRenderPerBatch={15}
-          keyExtractor={item => item.rowKey}
-          style={styles.listView}
-          ListFooterComponent={footer}
-          windowSize={3}
-          onEndReached={this.loadMore}
-          // onEndReachedThreshold={0}
-        />
-        <Text style={styles.characterCounter}>{ this.state.text.length } / 180</Text>
-        <View style={styles.messagePoster} >
-          <Image source={avatarImg} style={styles.avatar} />
-          <TextInput
-            style={[styles.input, ThemedStyles.style.colorPrimaryText]}
-            editable={true}
-            underlineColorAndroid='transparent'
-            placeholder={i18n.t('messenger.typeYourMessage')}
-            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
-            onChangeText={(text) => this.textChanged(text)}
-            multiline={true}
-            autogrow={true}
-            maxHeight={110}
-            value={this.state.text}
-            testID='ConversationTextInput'
+      <SafeAreaView style={styles.container} >
+        <KeyboardAvoidingView style={[styles.container, ThemedStyles.style.backgroundSecondary]}  behavior={Platform.OS == 'ios' ? 'padding' : null} keyboardVerticalOffset={64}>
+          <FlatList
+            inverted={true}
+            data={messages}
+            ref={(c) => {this.list = c}}
+            renderItem={this.renderMessage}
+            maxToRenderPerBatch={15}
+            keyExtractor={item => item.rowKey}
+            style={styles.listView}
+            ListFooterComponent={footer}
+            windowSize={3}
+            onEndReached={this.loadMore}
+            // onEndReachedThreshold={0}
           />
-          <TouchableOpacity onPress={this.send} style={styles.sendicon} testID='ConversationSendButton'><Icon name="md-send" size={24} style={ThemedStyles.style.colorIcon}/></TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
+          <Text style={styles.characterCounter}>{ this.state.text.length } / 180</Text>
+          <View style={styles.messagePoster} >
+            <Image source={avatarImg} style={styles.avatar} />
+            <TextInput
+              style={[styles.input, ThemedStyles.style.colorPrimaryText]}
+              editable={true}
+              underlineColorAndroid='transparent'
+              placeholder={i18n.t('messenger.typeYourMessage')}
+              placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+              onChangeText={(text) => this.textChanged(text)}
+              multiline={true}
+              autogrow={true}
+              maxHeight={110}
+              value={this.state.text}
+              testID='ConversationTextInput'
+            />
+            <TouchableOpacity onPress={this.send} style={styles.sendicon} testID='ConversationSendButton'><Icon name="md-send" size={24} style={ThemedStyles.style.colorIcon}/></TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
     );
   }
 

@@ -62,7 +62,7 @@ export default class Message extends PureComponent {
           const msg = await crypto.decrypt(message.message);
           this.setState({ decrypted: true, msg });
         } catch (ex) {
-          this.setState({ decrypted: true, msg:'cant decrypt' });
+          this.setState({ decrypted: true, msg:'couldn\'t decrypt'});
         }
       } else {
         this.setState({ decrypted: true, msg:'' });
