@@ -19,9 +19,10 @@ import {
   MINDS_CDN_URI
 } from '../config/Config';
 
-import { CommonStyle as CS } from '../styles/Common';
+// import { CommonStyle as CS } from '../styles/Common';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButtonNew from '../channel/subscription/SubscriptionButtonNew';
+import ThemedStyles from '../styles/ThemedStyles';
 
 export default
 @observer
@@ -90,12 +91,13 @@ class DiscoveryUser extends Component {
    * Render
    */
   render() {
+    const CS = ThemedStyles.style;
     const {row, subscribe, ...otherProps} = this.props;
     const renderRightButton = !(subscribe === false);
     return (
       <TouchableOpacity style={styles.row} onPress={this._navToChannel} {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
-        <View style={[CS.flexContainerCenter]}>
+        <View style={CS.flexContainerCenter}>
           <Text style={[styles.body, styles.title, CS.colorPrimaryText]}>{row.item.name}</Text>
           <Text style={[styles.body, styles.subtitle, CS.colorSecondaryText]}>@{row.item.username}</Text>
         </View>

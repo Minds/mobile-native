@@ -72,10 +72,11 @@ class SearchComponent extends Component {
                 />
                 <TextInput
                   placeholder={i18n.t('discovery.search')}
+                  placeholderTextColor={ThemedStyles.getColor('secondary_text')}
                   onChangeText={this.search}
                   value={this.state.searchText}
                   testID="searchInput"
-                  style={styles.textInput}
+                  style={[styles.textInput, CS.colorPrimaryText]}
                 />
               </View>
               <Icon
