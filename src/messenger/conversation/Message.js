@@ -118,7 +118,7 @@ export default class Message extends PureComponent {
           <TouchableOpacity onPress={this._navToChannel}>
             <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
           </TouchableOpacity>
-          <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, , ThemedStyles.style.backgroundSeparator]}>
+          <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, , ThemedStyles.style.backgroundTertiary]}>
             <Text selectable={true} style={[styles.message]} onLongPress={() => this.showDate()}>
               <Tags style={[styles.message]} navigation={this.props.navigation}>{this.state.msg}</Tags>
             </Text>
