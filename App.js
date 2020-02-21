@@ -293,9 +293,12 @@ class App extends Component<Props, State> {
    * Handle hardware back button
    */
   onBackPress = () => {
-    const nav = NavigationService.getState();
-    NavigationService.goBack();
-    return nav !== NavigationService.getState();
+    try {
+      NavigationService.goBack();
+      return false;
+    } catch (err) {
+      return true;
+    }
   };
 
   /**

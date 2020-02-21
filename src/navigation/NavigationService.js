@@ -1,4 +1,4 @@
-import { NavigationActions, StackActions, SwitchActions } from '@react-navigation/native';
+import { CommonActions, StackActions, SwitchActions } from '@react-navigation/native';
 
 let _navigator = null;
 
@@ -11,10 +11,6 @@ function getStateFrom(nav) {
 
 export function setTopLevelNavigator(navigatorRef) {
   _navigator = navigatorRef;
-}
-
-function getState() {
-  return _navigator.state.nav;
 }
 
 function getCurrentState() {
@@ -33,7 +29,7 @@ function push(...args) {
 }
 
 function goBack() {
-  _navigator.dispatch(NavigationActions.back());
+  _navigator.dispatch(CommonActions.goBack());
 }
 
 function jumpTo(route) {
@@ -44,7 +40,7 @@ function reset(routeName, params) {
   const resetAction = StackActions.reset({
     index: 0,
     actions: [
-        NavigationActions.navigate({ routeName: routeName })
+        CommonActions.navigate({ routeName: routeName })
     ]
   });
   _navigator.dispatch(resetAction);
@@ -58,7 +54,6 @@ function addListener(name, fn) {
 
 export default {
   navigate,
-  getState,
   jumpTo,
   reset,
   getCurrentState,
