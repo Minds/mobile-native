@@ -581,7 +581,7 @@ class MindsVideo extends Component {
    * Render
    */
   render() {
-    if (!this.state.pause && this.state.active && !this.props.entity.is_visible) {
+    if (!this.props.entity.is_visible && !this.state.pause && this.state.active) {
       this.setState({pause: false, active: false, showOverlay: true});
     }
     const {error, inProgress, transcoding} = this.state;
