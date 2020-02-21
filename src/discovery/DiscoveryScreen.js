@@ -173,6 +173,11 @@ class DiscoveryScreen extends Component {
         break;
 
       case 'blogs':
+        change.viewableItems.forEach((item) => {
+          this.props.discovery.listStore.addViewed(item.item);
+        });
+        break;
+        
       case 'activities':
         change.viewableItems.forEach((item) => {
           this.props.discovery.listStore.addViewed(item.item);
