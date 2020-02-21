@@ -166,7 +166,9 @@ class DiscoveryScreen extends Component {
           this.props.discovery.listStore.addViewed(item.item);
         });
         change.changed.forEach(c => {
-          c.item.setVisible(c.isViewable);
+          if (c.item.setVisible) {
+            c.item.setVisible(c.isViewable);
+          }
         })
         break;
 
