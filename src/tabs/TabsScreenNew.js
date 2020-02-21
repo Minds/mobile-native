@@ -15,6 +15,7 @@ import AppStores from '../../AppStores';
 import { MINDS_CDN_URI } from '../config/Config';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
+import isIphoneX from '../common/helpers/isIphoneX';
 
 const Tab = createBottomTabNavigator();
 
@@ -44,8 +45,8 @@ const Tabs = observer(function({ navigation }) {
         style: {
           borderTopWidth: 0,
           backgroundColor: ThemedStyles.getColor('secondary_background'),
-          height: isIOS ? 90 : 65,
-          paddingTop: isIOS ? 20 : 2,
+          height: isIOS ? (isIphoneX ? 90 : 70) : 65,
+          paddingTop: isIOS && isIphoneX ? 20 : 2,
         },
         tabStyle: {
           height: 66,
