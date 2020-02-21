@@ -37,6 +37,7 @@ import logService from '../common/services/log.service';
 import TextInput from '../common/components/TextInput';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import isIphoneX from '../common/helpers/isIphoneX';
 
 /**
  * Messenger Conversation Screen
@@ -188,7 +189,7 @@ export default class ConversationScreen extends Component {
     const avatarImg    = { uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' + this.props.user.me.icontime };
     return (
       <SafeAreaView style={styles.container} >
-        <KeyboardAvoidingView style={[styles.container, ThemedStyles.style.backgroundSecondary]}  behavior={Platform.OS == 'ios' ? 'padding' : null} keyboardVerticalOffset={64}>
+        <KeyboardAvoidingView style={[styles.container, ThemedStyles.style.backgroundSecondary]}  behavior={Platform.OS == 'ios' ? 'padding' : null} keyboardVerticalOffset={isIphoneX ? 100 : 64}>
           <FlatList
             inverted={true}
             data={messages}
