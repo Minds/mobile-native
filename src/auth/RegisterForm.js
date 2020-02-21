@@ -14,7 +14,7 @@ import {
 
 import authService from '../auth/AuthService';
 
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 
 import {CheckBox} from 'react-native-elements'
 
@@ -134,7 +134,7 @@ class RegisterForm extends Component {
             <Button
               onPress={() => this.onPressRegister()}
               borderRadius={2}
-              containerStyle={CS.button}
+              containerStyle={[CS.button, CS.fullWidth]}
               textStyle={CS.buttonText}
               loading={this.state.inProgress}
               loadingRight={true}

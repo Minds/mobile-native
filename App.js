@@ -17,12 +17,20 @@ import {
   Clipboard,
   StatusBar,
   UIManager,
+  RefreshControl,
 } from 'react-native';
-import { Provider, observer } from 'mobx-react/native';
+import { Provider, observer } from 'mobx-react';
 import RNBootSplash from 'react-native-bootsplash';
 import FlashMessage from 'react-native-flash-message';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {
+  NavigationContainer,
+} from '@react-navigation/native';
+import * as Sentry from '@sentry/react-native';
 
-import NavigationService from './src/navigation/NavigationService';
+import NavigationService, {
+  setTopLevelNavigator,
+} from './src/navigation/NavigationService';
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
 import NavigationStack from './src/navigation/NavigationStack';
@@ -49,15 +57,14 @@ import feedsStorage from './src/common/services/sql/feeds.storage';
 import connectivityService from './src/common/services/connectivity.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 import commentStorageService from './src/comments/CommentStorageService';
-import * as Sentry from '@sentry/react-native';
 import apiService from './src/common/services/api.service';
 import boostedContentService from './src/common/services/boosted-content.service';
 import translationService from './src/common/services/translation.service';
 import ThemedStyles from './src/styles/ThemedStyles';
 
-let deepLinkUrl = '';
 
-const statusBarStyle = Platform.OS === 'ios' ? 'dark-content' : 'default';
+
+let deepLinkUrl = '';
 
 // init push service
 pushService.init();
@@ -95,7 +102,7 @@ sessionService.onLogin(async () => {
   // hide splash
   RNBootSplash.hide({ duration: 250 });
 
-  NavigationService.navigate(sessionService.initialScreen);
+  NavigationService.navigate('App', { screen: sessionService.initialScreen});
 
   // check onboarding progress and navigate if necessary
   stores.onboarding.getProgress(sessionService.initialScreen !== 'OnboardingScreenNew');
@@ -111,7 +118,7 @@ sessionService.onLogin(async () => {
   try {
     // handle deep link (if the app is opened by one)
     if (deepLinkUrl) {
-      deeplinkService.navigate(deepLinkUrl);
+      deeplinkService.navigate('App', { screen: deepLinkUrl});
       deepLinkUrl = '';
     }
 
@@ -187,25 +194,34 @@ class App extends Component<Props, State> {
     this.setState({appState: nextState})
   }
 
-  /**
-   * contructor
-   */
   constructor(props) {
     super(props);
-
-    if (!Text.defaultProps) {
-      Text.defaultProps = {};
-    }
-    Text.defaultProps.style = {
-      fontFamily: 'Roboto',
-      color: '#444',
+    let oldRender = Text.render;
+    Text.render = function (...args) {
+        let origin = oldRender.call(this, ...args);
+        return React.cloneElement(origin, {
+            style: [ThemedStyles.style.colorPrimaryText, { fontFamily: 'Roboto'}, origin.props.style]
+        });
     };
+
+    if (!RefreshControl.defaultProps) {
+      RefreshControl.defaultProps = {};
+    }
+    RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('icon_active');
+    RefreshControl.defaultProps.colors = [ThemedStyles.getColor('icon_active')];
   }
 
   /**
    * On component did mount
    */
   async componentDidMount() {
+    this.appInit();
+  }
+
+  /**
+   * App initialization
+   */
+  async appInit() {
     try {
       // load app setting before start
       const results = await Promise.all([settingsStore.init(), Linking.getInitialURL()]);
@@ -224,7 +240,7 @@ class App extends Component<Props, State> {
         if (!token) {
           logService.info('[App] there is no active session');
           RNBootSplash.hide({ duration: 250 });
-          NavigationService.navigate('Login');
+          // NavigationService.navigate('Auth', { screen: 'Login'});
         } else {
           logService.info('[App] session initialized');
         }
@@ -277,9 +293,12 @@ class App extends Component<Props, State> {
    * Handle hardware back button
    */
   onBackPress = () => {
-    const nav = NavigationService.getState();
-    NavigationService.goBack();
-    return nav !== NavigationService.getState();
+    try {
+      NavigationService.goBack();
+      return false;
+    } catch (err) {
+      return true;
+    }
   };
 
   /**
@@ -309,19 +328,25 @@ class App extends Component<Props, State> {
       return null;
     }
 
+    const isLoggedIn = sessionService.userLoggedIn;
+
+    const statusBarStyle = ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
+
     const app = (
-      <Provider key="app" {...stores}>
-        <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
-          <StatusBar barStyle={statusBarStyle} />
-          <NavigationStack
-            screenProps={ThemedStyles.theme} // force screen re-render when theme change
-            ref={navigatorRef => {
-              NavigationService.setTopLevelNavigator(navigatorRef);
-            }}
-          />
-          <FlashMessage renderCustomContent={this.renderNotification} />
-        </ErrorBoundary>
-      </Provider>
+      <SafeAreaProvider>
+        <NavigationContainer
+          ref={navigatorRef => setTopLevelNavigator(navigatorRef)}
+          theme={ThemedStyles.navTheme}
+        >
+          <Provider key="app" {...stores}>
+            <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
+              <StatusBar barStyle={statusBarStyle} />
+              <NavigationStack key={ThemedStyles.theme} isLoggedIn={isLoggedIn}/>
+              <FlashMessage renderCustomContent={this.renderNotification} />
+            </ErrorBoundary>
+          </Provider>
+        </NavigationContainer>
+      </SafeAreaProvider>
     );
 
     const keychainModal = (

@@ -13,12 +13,12 @@ import {
   Platform,
 } from 'react-native';
 
-import { Header } from 'react-navigation-stack';
+import { Header } from '@react-navigation/stack';
 
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import ActionSheet from 'react-native-actionsheet';
 import { Icon } from 'react-native-elements';
@@ -39,6 +39,7 @@ import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import FeedList from '../common/components/FeedList';
 import { FLAG_CREATE_POST, FLAG_APPOINT_MODERATOR, FLAG_VIEW } from '../common/Permissions';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Groups view screen
@@ -85,7 +86,7 @@ export default class GroupViewScreen extends Component {
    * Load initial data
    */
   async initialLoad() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     if (params.group) {
       // load group and update async
@@ -113,13 +114,13 @@ export default class GroupViewScreen extends Component {
   }
 
   componentDidMount() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     // load data async
     this.initialLoad();
 
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      const params = this.props.navigation.state.params;
+    this.disposeEnter = this.props.navigation.addListener('focus', () => {
+      const params = this.props.route.params;
       if (params && params.prepend) {
         this.props.groupView.prepend(params.prepend);
         // we clear the parameter to prevent prepend it again on goBack
@@ -132,13 +133,13 @@ export default class GroupViewScreen extends Component {
     }
 
     if (params.tab && this.headerRef) {
-      this.headerRef.wrappedInstance.onTabChange(params.tab)
+      this.headerRef.onTabChange(params.tab)
     }
   }
 
   componentDidUpdate() {
     if (this.moveToTab && this.headerRef) {
-      this.headerRef.wrappedInstance.onTabChange(this.moveToTab);
+      this.headerRef.onTabChange(this.moveToTab);
       this.moveToTab = '';
     }
   }
@@ -149,7 +150,7 @@ export default class GroupViewScreen extends Component {
   componentWillUnmount() {
     this.props.groupView.clear();
     if (this.disposeEnter) {
-      this.disposeEnter.remove();
+      this.disposeEnter();
     }
   }
 
@@ -214,13 +215,14 @@ export default class GroupViewScreen extends Component {
             entity={group.group}
             store={this.comments}
             navigation={this.props.navigation}
+            route={this.props.route}
             keyboardVerticalOffset = {Header.HEIGHT - 65}
           />
         );
       case 'desc':
         const description = entities.decodeHTML(group.group.briefdescription).trim();
         return (
-          <ScrollView style={CS.backgroundLight}>
+          <ScrollView>
             {header}
             <View style={CS.padding2x}>
               <Tags navigation={this.props.navigation}>{description}</Tags>
@@ -355,8 +357,8 @@ export default class GroupViewScreen extends Component {
       null;
 
     return (
-      <View style={CS.flexContainer}>
-        {showPosterFab && <CaptureFab navigation={this.props.navigation} group={group} /> }
+      <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
+        {showPosterFab && <CaptureFab navigation={this.props.navigation} group={group} route={this.props.route} /> }
         {this.getList()}
         {memberActionSheet}
       </View>
@@ -365,10 +367,6 @@ export default class GroupViewScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-	listView: {
-    backgroundColor: '#FFF',
-    flex: 1,
-  },
   gobackicon: {
     position: 'absolute',
     left: 0,

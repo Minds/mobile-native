@@ -11,11 +11,6 @@ import {
   Alert,
 } from 'react-native';
 
-import {
-  StackActions,
-  NavigationActions
-} from 'react-navigation';
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
@@ -29,7 +24,7 @@ import i18n from '../common/services/i18n.service';
 import appStores from '../../AppStores';
 import logService from '../common/services/log.service';
 import storageService from '../common/services/storage.service';
-import { observer } from 'mobx-react/native';
+import { observer } from 'mobx-react';
 import ModalPicker from '../common/components/ModalPicker';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
@@ -40,10 +35,10 @@ export default
 @observer
 class SettingsScreen extends Component {
 
-  static navigationOptions = {
-    title: 'Settings',
-    leftHandedInitial: false,
-  };
+  // static navigationOptions = {
+  //   title: 'Settings',
+  //   leftHandedInitial: false,
+  // };
 
   state = {
     showLanguages: false,
@@ -158,8 +153,6 @@ class SettingsScreen extends Component {
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]} />),
         onPress: () => {
           authService.logout();
-
-          this.props.navigation.navigate( 'Login');
         }
       },
       {

@@ -95,7 +95,7 @@ export default class LoginForm extends Component {
           <Button
             onPress={() => this.onLoginPress()}
             text={i18n.t('auth.login')}
-            containerStyle={CS.button}
+            containerStyle={[CS.button, CS.fullWidth]}
             textStyle={CS.buttonText}
             key={1}
             loading={this.state.inProgress}

@@ -18,7 +18,7 @@ import QRCode from 'react-native-qrcode-svg';
 import TransparentButton from '../../../common/components/TransparentButton';
 import Touchable from '../../../common/components/Touchable';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 
 import BlockchainWalletService from '../BlockchainWalletService';
 import NavigationService from '../../../navigation/NavigationService';
@@ -69,15 +69,15 @@ export default class BlockchainWalletDetailsScreen extends Component {
     this.setState({
       editable: false,
       importable: false,
-      address: this.props.navigation.state.params.address,
-      edit: !!this.props.navigation.state.params.edit,
-      new: this.props.navigation.state.params.new,
+      address: this.props.route.params.address,
+      edit: !!this.props.route.params.edit,
+      new: this.props.route.params.new,
       offchain: false,
       tokens: null,
       eth: null,
     });
 
-    this.load(this.props.navigation.state.params.address);
+    this.load(this.props.route.params.address);
   }
 
   componentDidMount() {
@@ -419,7 +419,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={CommonStyle.backgroundWhite}>
+      <ScrollView>
 
         <View style={[ CommonStyle.flexContainer, { flex: 1 } ]}>
 
@@ -452,7 +452,6 @@ const styles = StyleSheet.create({
     paddingBottom: 3,
   },
   subtitle: {
-    color: colors.darkGreyed,
     fontSize: 12,
   },
 
@@ -495,7 +494,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   label: {
-    color: '#444',
     fontSize: 16,
     // fontWeight: '800',
     fontFamily: 'Roboto-Black', // workaround android ignoring >= 800

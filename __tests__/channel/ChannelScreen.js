@@ -25,7 +25,7 @@ jest.mock('../../src/common/services/boosted-content.service');
  */
 describe('Channel screen component', () => {
 
-  let screen, channel, navigation, user, channelStore;
+  let screen, channel, navigation, user, channelStore, route;
 
   beforeEach(() => {
 
@@ -35,10 +35,10 @@ describe('Channel screen component', () => {
     activity.impressions = 20;
 
     navigation = { navigate: jest.fn(), goBack: jest.fn() };
-    navigation.state = {
-        params: {
-            entity: activity
-        }
+    route = {
+      params: {
+        entity: activity
+      }
     };
     channelStore = {
       channel: new UserModel(userFaker(1)),
@@ -57,7 +57,7 @@ describe('Channel screen component', () => {
     channel.store.mockReturnValue(channelStore);
 
     screen = shallow(
-      <ChannelScreen.wrappedComponent channel={channel} navigation={navigation} />
+      <ChannelScreen.wrappedComponent channel={channel} navigation={navigation} route={route} />
     );
 
   });

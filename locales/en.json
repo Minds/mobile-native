@@ -654,7 +654,8 @@
     "code":"Code",
     "terms":"Terms",
     "privacy":"Privacy",
-    "exit":"Exit"
+    "exit":"Exit",
+    "wallet":"Wallet"
   },
   "userTypeAhead":{
     "placeholder": "Start typing a username to search...",
@@ -681,6 +682,12 @@
   },
   "update": {
     "title":"Update to v{{version}}"
+  },
+  "searchBar": {
+    "searchHistory":"Search History",
+    "emptySearchHistory":"You don't have search history yet",
+    "emptySuggested":"We couldn't find what you look for",
+    "clear": "Clear"
   },
   "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
@@ -797,5 +804,8 @@
   "notAllowed":"You are not allowed",
   "undo":"Undo",
   "validate":"VALIDATE",
+  "tabTitleNewsfeed":"Home",
+  "tabTitleNotifications":"Notifications",
+  "tabTitleDiscovery":"Discovery",
   "linkCopied":"Link copied to clipboard"
 }

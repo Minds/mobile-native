@@ -18,6 +18,7 @@ import formatDate from '../common/helpers/date';
 import { CommonStyle as CS} from '../styles/Common';
 import { FLAG_VIEW } from '../common/Permissions';
 import Actions from '../newsfeed/activity/Actions';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Blog Card
@@ -52,9 +53,10 @@ export default class BlogCard extends PureComponent {
     const channel = this.props.entity.ownerObj;
     const image = blog.getBannerSource();
     const title = this.cleanTitle(blog.title);
+    const theme = ThemedStyles.style;
 
     return (
-      <TouchableOpacity onPress={this.navToBlog} style={CS.backgroundWhite}>
+      <TouchableOpacity onPress={this.navToBlog} style={theme.backgroundSecondary}>
         <FastImage source={image} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
         <View style={[CS.padding2x]}>
           <View style={[CS.columnAlignStart, CS.fullWidth]}>

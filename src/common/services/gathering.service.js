@@ -1,13 +1,20 @@
 import api from './../../common/services/api.service';
+import { observable, action } from 'mobx';
 
 /**
  * Gathering service
  */
 class GatheringService {
+  @observable inGatheringScreen = false;
   keepAliveInterval = null;
 
   get isActive() {
     return this.keepAliveInterval !== null;
+  }
+
+  @action
+  setInGatheringScreen(value) {
+    this.inGatheringScreen = value;
   }
   /**
    * Start keep alive pooling

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {default as WalletOverviewIcon, Icons} from './icon/WalletOverviewIcon';
 import {inject} from "mobx-react";
-import {observer} from "mobx-react/native";
+import {observer} from "mobx-react";
 
 @inject('wallet')
 @observer

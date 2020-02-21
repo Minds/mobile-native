@@ -8,6 +8,7 @@ import sessionService from '../common/services/session.service';
 import UserModel from './../channel/UserModel';
 import { MINDS_FEATURES } from '../config/Config';
 import { Alert } from 'react-native';
+import searchBarService from '../topbar/SearchBar.service';
 
 /**
  * Login Store
@@ -15,6 +16,7 @@ import { Alert } from 'react-native';
 class UserStore {
   @observable me = {};
   @observable emailConfirmMessageDismiss = false;
+  @observable searching = false;
 
   @action
   setDissmis(value) {
@@ -71,6 +73,10 @@ class UserStore {
     //}
 
     this.setUser(response.channel);
+
+    // Load search history
+    searchBarService.init(this.me.guid)
+
     if (this.me.canCrypto) {
       MINDS_FEATURES.crypto = true;
     }
@@ -86,6 +92,41 @@ class UserStore {
   reset() {
     this.me = {};
   }
+
+  @action
+  toggleSearching() {
+    this.searching = !this.searching;
+  }
+
+  /**
+   * Call onItemTap
+   */
+  searchBarItemTap(item) {
+    searchBarService.onItemTap(item.username);
+  }
+
+  /**
+   * Clear search history for user
+   */
+  searchBarClearHistory() {
+    searchBarService.clearSearchHistory();
+  }
+
+  /**
+   * Get user search history
+   */
+  async getSearchHistory() {
+    return await searchBarService.getSearchHistory();
+  }
+
+  /**
+   * Get suggested Search
+   * @param {String} search 
+   */
+  async getSuggestedSearch(search) {
+    return await searchBarService.getSuggestedSearch(search)
+  }
+  
 
 }
 

@@ -7,7 +7,6 @@ import {
   Animated,
   Text,
   TouchableOpacity,
-  SafeAreaView,
   ScrollView,
   Platform,
   KeyboardAvoidingView,
@@ -19,6 +18,7 @@ import i18nService from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 
 import ThemedStyles from '../styles/ThemedStyles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const LOGO_HEIGHT = 80;
 const LOGO_HEIGHT_SMALL = 40;
@@ -27,12 +27,6 @@ const LOGO_HEIGHT_SMALL = 40;
  * Login screen
  */
 export default class LoginScreen extends Component {
-  /**
-   * Disable navigation bar
-   */
-  static navigationOptions = {
-    header: null
-  }
 
   state = {
     keyboard: false,

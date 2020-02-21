@@ -14,7 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Divider } from 'react-native-elements'
 
-import { inject } from 'mobx-react/native';
+import { inject } from 'mobx-react';
 import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import { getRates } from '../BoostService';
@@ -34,6 +34,7 @@ import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletSer
 import FeaturesService from '../../common/services/features.service';
 import readableError from '../../common/helpers/readable-error';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 class VisibleError extends Error {
   visible = true;
@@ -78,26 +79,7 @@ export default class BoostScreen extends Component {
     allowedTypes: {}
   };
 
-  /**
-   * Modal navigation
-   */
-  static navigationOptions = ({ navigation }) => ({
-    header: (
-      <View style={[CommonStyle.backgroundLight, CommonStyle.rowJustifyStart, { paddingTop: 16 }]}>
-        <Text style={[styles.titleText, CommonStyle.flexContainer, CommonStyle.padding2x]}>{i18n.t('boost')}</Text>
-        <Icon size={36} name="ios-close" onPress={() => navigation.goBack()} style={CommonStyle.padding2x} />
-      </View>
-    ),
-    transitionConfig: {
-      isModal: true
-    }
-  });
-
-  /**
-   * On component will mount
-   */
-  componentWillMount() {
-
+  componentDidMount() {
     if (!FeaturesService.has('crypto')) {
       FeaturesService.showAlert();
       return this.props.navigation.goBack();
@@ -107,9 +89,7 @@ export default class BoostScreen extends Component {
       .then(rates => {
         this.setState({ rates });
       });
-  }
 
-  componentDidMount() {
     this.buildAllowedTypes();
   }
 
@@ -271,7 +251,7 @@ export default class BoostScreen extends Component {
   }
 
   buildAllowedTypes() {
-    const entity = this.props.navigation.state.params.entity;
+    const entity = this.props.route.params.entity;
 
     if (!entity || !entity.type) {
       this.setState({});
@@ -400,7 +380,7 @@ export default class BoostScreen extends Component {
   }
 
   async _submitBoost() {
-    const entity = this.props.navigation.state.params.entity;
+    const entity = this.props.route.params.entity;
 
     this.setState({ inProgress: true });
     let guid = null;
@@ -590,8 +570,10 @@ export default class BoostScreen extends Component {
       amountTitle = i18n.t('boosts.whatIsYourOffer');
     }
 
+    const theme = ThemedStyles.style;
+
     return (
-      <ScrollView style={[CommonStyle.flexContainer, CommonStyle.backgroundLight, CommonStyle.padding2x]}>
+      <ScrollView style={[CommonStyle.flexContainer, theme.backgroundSecondary, CommonStyle.padding2x]}>
         <Text style={[styles.subtitleText, CommonStyle.paddingBottom]}>{i18n.t('boosts.boostType')}</Text>
         <TypeSelector onChange={this.changeType} value={this.state.type} allowedTypes={this.state.allowedTypes} />
 
@@ -685,7 +667,6 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   changeTarget: {
-    color: colors.greyed,
     fontSize: 12
   },
   error: {

@@ -19,20 +19,20 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {
   inject,
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Wizard from '../common/components/Wizard';
 
 import SuggestedChannelsStepNew from './steps/SuggestedChannelsStepNew';
 import RewardsStep from './steps/RewardsStep';
 import WelcomeStepNew from './steps/WelcomeStepNew';
-import { CommonStyle as CS } from '../styles/Common';
 import navigationService from '../navigation/NavigationService';
 import i18nService from '../common/services/i18n.service';
 import CenteredLoading from '../common/components/CenteredLoading';
 import HashtagsStepNew from './steps/HashtagsStepNew';
 import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
 import SuggestedGroupsStepNew from './steps/SuggestedGroupsStepNew';
+import ThemedStyles from '../styles/ThemedStyles';
 
 export default
 @inject('onboarding', 'hashtag', 'groupsBar', 'discovery')
@@ -107,6 +107,7 @@ class OnboardingScreenNew extends Component {
   onBack = () => this.wizard.previous();
 
   render() {
+    const CS = ThemedStyles.style;
     const steps = [];
     if (!this.props.onboarding.progress) {
       return <CenteredLoading/>

@@ -14,7 +14,7 @@ import {
 import {
   inject,
   observer
-} from "mobx-react/native";
+} from "mobx-react";
 
 import { debounce } from 'lodash';
 
@@ -66,7 +66,7 @@ export default class TagsSubBar extends Component {
    * Show modal
    */
   showModal = () => {
-    this.modal.wrappedInstance.showModal();
+    this.modal.showModal();
   }
 
   /**

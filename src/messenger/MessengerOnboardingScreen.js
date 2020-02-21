@@ -13,7 +13,7 @@ import {
 import {
   inject,
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import api from './../common/services/api.service';
 

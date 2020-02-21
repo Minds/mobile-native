@@ -514,10 +514,7 @@ exports[`blog list screen component should renders correctly 1`] = `
           style={
             Array [
               Object {
-                "backgroundColor": "#FFF",
                 "borderBottomColor": "#EEE",
-                "borderBottomWidth": 0.5,
-                "borderTopColor": "#EEE",
                 "borderTopWidth": 0.5,
                 "display": "flex",
                 "flexDirection": "row",
@@ -532,6 +529,7 @@ exports[`blog list screen component should renders correctly 1`] = `
                 "shadowRadius": 0.5,
               },
               Object {},
+              undefined,
             ]
           }
         >
@@ -558,7 +556,7 @@ exports[`blog list screen component should renders correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "borderBottomColor": "#FFF",
+                  "borderBottomColor": "transparent",
                   "borderBottomWidth": 2,
                   "flex": 1,
                   "flexDirection": "column",
@@ -575,7 +573,7 @@ exports[`blog list screen component should renders correctly 1`] = `
                       "paddingTop": 3,
                     },
                     Object {
-                      "fontSize": 10,
+                      "fontSize": 12,
                     },
                   ]
                 }
@@ -597,7 +595,7 @@ exports[`blog list screen component should renders correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "borderBottomColor": "#FFF",
+                  "borderBottomColor": "transparent",
                   "borderBottomWidth": 2,
                   "flex": 1,
                   "flexDirection": "column",
@@ -614,7 +612,7 @@ exports[`blog list screen component should renders correctly 1`] = `
                       "paddingTop": 3,
                     },
                     Object {
-                      "fontSize": 10,
+                      "fontSize": 12,
                     },
                   ]
                 }

@@ -16,7 +16,7 @@ import Modal from 'react-native-modal';
 
 import i18n from '../common/services/i18n.service';
 import authService from '../auth/AuthService';
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 import { ComponentsStyle } from '../styles/Components';
 import { CommonStyle } from '../styles/Common';
 import Colors from '../styles/Colors';

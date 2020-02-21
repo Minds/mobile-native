@@ -16,7 +16,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import DiscoveryTile from './DiscoveryTile';
 import DiscoveryUser from './DiscoveryUser';
@@ -32,6 +32,7 @@ import ErrorBoundary from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
 import FeedList from '../common/components/FeedList';
 import FallbackBoundary from './FallbackBoundary';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Discovery Feed Screen
@@ -39,12 +40,6 @@ import FallbackBoundary from './FallbackBoundary';
 @observer
 @inject('discovery')
 export default class DiscoveryFeedScreen extends Component {
-
-  static navigationOptions = ({ navigation }) => {
-    return {
-      'title': navigation.state.params.title || ''
-    }
-  }
 
   /**
    * Render activity
@@ -87,7 +82,7 @@ export default class DiscoveryFeedScreen extends Component {
         ListFooterComponent={this.getFooter}
         keyExtractor={this.keyExtractor}
         initialNumToRender={3}
-        style={[CS.backgroundWhite, CS.flexContainer]}
+        style={[ThemedStyles.style.backgroundSecondary, CS.flexContainer]}
         navigation={this.props.navigation}
         horizontal={false}
         maxToRenderPerBatch={3}

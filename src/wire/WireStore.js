@@ -70,7 +70,7 @@ class WireStore {
   @action
   setOwner(owner: any) {
     this.owner = owner;
-    this.guid = owner.guid || owner.entity_guid;
+    this.guid = owner ? (owner.guid || owner.entity_guid) : null;
   }
 
   async loadUserRewards(): Promise<any> {

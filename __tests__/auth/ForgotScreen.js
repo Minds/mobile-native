@@ -1,7 +1,5 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from "react-native";
-import { shallow } from 'enzyme';
 
 import ForgotScreen from '../../src/auth/ForgotScreen';
 
@@ -11,12 +9,12 @@ jest.mock('../../src/auth/AuthService');
 import renderer from 'react-test-renderer';
 
 describe('ForgotScreen component', () => {
-
   it('should renders correctly', () => {
-    const navigation = {state: {params:{}}};
-    const forgotScreen = renderer.create(
-      <ForgotScreen navigation={navigation}/>
-    ).toJSON();
+    const navigation = {};
+    const route = { params: {} };
+    const forgotScreen = renderer
+      .create(<ForgotScreen navigation={navigation} route={route} />)
+      .toJSON();
     expect(forgotScreen).toMatchSnapshot();
   });
 });

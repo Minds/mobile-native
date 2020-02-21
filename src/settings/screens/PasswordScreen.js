@@ -15,7 +15,7 @@ import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
-import Touchable from '../../common/components/Touchable';
+import Button from '../../common/components/Button';
 
 export default class PasswordScreen extends Component {
 
@@ -53,7 +53,7 @@ export default class PasswordScreen extends Component {
   render() {
 
     return (
-      <View style={[ CommonStyle.flexContainer, {backgroundColor: colors.light} ]}>
+      <View style={CommonStyle.flexContainer}>
         <Text style={styles.title}>{i18n.t('settings.passwordTitle')}:</Text>
         <TextInput
           style={[ComponentsStyle.loginInput, CommonStyle.marginTop2x]}
@@ -91,9 +91,12 @@ export default class PasswordScreen extends Component {
           value={this.state.confirmNewPassword}
           key={3}
         />
-        <Touchable style = {[ComponentsStyle.bluebutton, CommonStyle.alignJustifyCenter, styles.button]} onPress={() => this.submit()}>
-          <Text style={{color: colors.primary}} >{i18n.t('settings.submit')}</Text>
-        </Touchable>
+        <Button
+          text={i18n.t('settings.submit')}
+          loading={this.state.saving}
+          containerStyle={[CommonStyle.marginTop3x, CommonStyle.padding2x, {alignSelf: 'center'}]}
+          onPress={() => this.submit()}
+        />
       </View>
     );
   }

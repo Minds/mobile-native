@@ -13,7 +13,7 @@ import {
 
 import {
   observer,
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import {
   MINDS_CDN_URI
@@ -22,6 +22,7 @@ import {
 import { CommonStyle } from '../styles/Common';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButton from '../channel/subscription/SubscriptionButton';
+import ThemedStyles from '../styles/ThemedStyles';
 
 export default
 @observer
@@ -90,7 +91,7 @@ class DiscoveryUser extends Component {
     const {row, ...otherProps} = this.props;
 
     return (
-      <TouchableOpacity style={styles.row} onPress={this._navToChannel} {...otherProps}>
+      <TouchableOpacity style={[styles.row, {borderBottomColor: ThemedStyles.getColor('separator')}]} onPress={this._navToChannel} {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
         <View style={[CommonStyle.flexContainerCenter]}>
           <Text style={[styles.body, CommonStyle.fontXL]}>{row.item.name}</Text>
@@ -111,7 +112,6 @@ const styles = {
     paddingLeft: 12,
     paddingBottom: 10,
     paddingRight: 12,
-    borderBottomColor: '#EEE',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   body: {

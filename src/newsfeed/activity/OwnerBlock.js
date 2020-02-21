@@ -16,6 +16,7 @@ import {
 import FastImage from 'react-native-fast-image';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
+import ThemedStyles from '../../styles/ThemedStyles';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 /**
@@ -40,7 +41,7 @@ export default class OwnerBlock extends PureComponent {
     if (this.props.navigation) {
       let groupGuid;
       try {
-        groupGuid = this.props.navigation.state.params.group ? this.props.navigation.state.params.group.guid : this.props.navigation.state.params.guid;
+        groupGuid = this.props.route.params.group ? this.props.route.params.group.guid : this.props.route.params.guid;
       } catch {}
       if (groupGuid == this.props.entity.containerObj.guid) return;
 
@@ -54,7 +55,7 @@ export default class OwnerBlock extends PureComponent {
 
     return (
       <DebouncedTouchableOpacity onPress={this._navToGroup} style={styles.groupContainer}>
-        <Text style={styles.groupName} lineBreakMode='tail' numberOfLines={1}>
+        <Text style={[styles.groupName, ThemedStyles.style.colorPrimaryText]} lineBreakMode='tail' numberOfLines={1}>
           > { this.props.entity.containerObj.name }
         </Text>
       </DebouncedTouchableOpacity>
@@ -78,7 +79,7 @@ export default class OwnerBlock extends PureComponent {
         <View style={styles.body}>
           <View style={styles.nameContainer}>
             <DebouncedTouchableOpacity onPress={this._navToChannel}>
-              <Text style={styles.username}>
+              <Text style={[styles.username, ThemedStyles.style.colorPrimaryText]}>
                 { channel.username }
               </Text>
             </DebouncedTouchableOpacity>
@@ -127,6 +128,5 @@ const styles = StyleSheet.create({
   groupName: {
     fontWeight: 'bold',
     fontFamily: 'Roboto',
-    color: '#888',
   }
 });

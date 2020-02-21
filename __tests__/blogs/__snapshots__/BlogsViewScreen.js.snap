@@ -7,9 +7,7 @@ exports[`blog view screen component should renders correctly 1`] = `
       Object {
         "flex": 1,
       },
-      Object {
-        "backgroundColor": "white",
-      },
+      undefined,
     ]
   }
 >
@@ -162,10 +160,12 @@ exports[`blog view screen component should renders correctly 1`] = `
     header={
       <View
         style={
-          Object {
-            "backgroundColor": "#FFF",
-            "flex": 1,
-          }
+          Array [
+            Object {
+              "flex": 1,
+            },
+            undefined,
+          ]
         }
       >
         <ForwardRef
@@ -189,7 +189,6 @@ exports[`blog view screen component should renders correctly 1`] = `
         <Text
           style={
             Object {
-              "color": "#444",
               "fontFamily": "Roboto-Black",
               "fontSize": 22,
               "paddingBottom": 8,
@@ -354,22 +353,17 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "wire_threshold": "",
               }
             }
-            navigation={
-              Object {
-                "state": Object {
-                  "params": Object {
-                    "guid": 1,
-                  },
-                },
-              }
-            }
+            navigation={Object {}}
           >
             <Text
               style={
-                Object {
-                  "color": "#888",
-                  "fontSize": 11,
-                }
+                Array [
+                  Object {
+                    "color": "#888",
+                    "fontSize": 11,
+                  },
+                  undefined,
+                ]
               }
             >
               Apr 27, 2018, 07:17
@@ -386,7 +380,7 @@ exports[`blog view screen component should renders correctly 1`] = `
             ]
           }
         >
-          <RemindAction
+          <_default
             entity={
               BlogModel {
                 "__list": null,
@@ -532,16 +526,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "wire_threshold": "",
               }
             }
-            navigation={
-              Object {
-                "state": Object {
-                  "params": Object {
-                    "guid": 1,
-                  },
-                },
-              }
-            }
-            size={20}
+            navigation={Object {}}
           />
           <ThumbUpAction
             entity={
@@ -913,12 +898,11 @@ exports[`blog view screen component should renders correctly 1`] = `
       </View>
     }
     keyboardVerticalOffset={15}
-    navigation={
+    navigation={Object {}}
+    route={
       Object {
-        "state": Object {
-          "params": Object {
-            "guid": 1,
-          },
+        "params": Object {
+          "guid": 1,
         },
       }
     }

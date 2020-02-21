@@ -17,6 +17,7 @@ import { CommonStyle } from '../styles/Common';
 import colors from '../styles/Colors';
 import attachmentService from '../common/services/attachment.service';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Capture tab
@@ -57,22 +58,22 @@ export default class CaptureTab extends Component {
         { this.state.screen != 'poster' ?
           <View style={{height:125}}>
             <View style={{flex:1, flexDirection:'row', paddingLeft: 1, paddingRight: 1 }}>
-              <TouchableHighlight underlayColor='#FFF' onPress={ this.gallery } style={ styles.buttons}>
+              <TouchableHighlight onPress={ this.gallery } style={ [styles.buttons, ThemedStyles.style.backgroundPrimary] }>
                 <View style={ styles.buttonsWrapper }>
-                  <Icon name="md-photos" size={36} style={ styles.icons }/>
-                  <Text style={ styles.labels }>{i18n.t('capture.gallery')}</Text>
+                  <Icon name="md-photos" size={36} style={ ThemedStyles.style.colorIcon }/>
+                  <Text style={ [styles.labels, ThemedStyles.style.colorIcon] }>{i18n.t('capture.gallery')}</Text>
                 </View>
               </TouchableHighlight>
-              <TouchableHighlight underlayColor='#FFF' onPress={ this.photo } style={ styles.buttons }>
+              <TouchableHighlight onPress={ this.photo } style={ [styles.buttons, ThemedStyles.style.backgroundPrimary] }>
                 <View style={ styles.buttonsWrapper }>
-                  <Icon name="md-camera" size={36} style={ styles.icons }/>
-                  <Text style={ styles.labels }>{i18n.t('capture.photo')}</Text>
+                  <Icon name="md-camera" size={36} style={ ThemedStyles.style.colorIcon }/>
+                  <Text style={ [styles.labels, ThemedStyles.style.colorIcon] }>{i18n.t('capture.photo')}</Text>
                 </View>
               </TouchableHighlight>
-              <TouchableHighlight underlayColor='#FFF' onPress={ this.video } style={ styles.buttons }>
+              <TouchableHighlight onPress={ this.video } style={ [styles.buttons, ThemedStyles.style.backgroundPrimary] }>
                 <View style={ styles.buttonsWrapper }>
-                  <Icon name="md-videocam" size={36} style={ styles.icons }/>
-                  <Text style={ styles.labels }>{i18n.t('capture.video')}</Text>
+                  <Icon name="md-videocam" size={36} style={ ThemedStyles.style.colorIcon }/>
+                  <Text style={ [styles.labels, ThemedStyles.style.colorIcon] }>{i18n.t('capture.video')}</Text>
                 </View>
               </TouchableHighlight>
             </View>
@@ -182,9 +183,6 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
-  icons: {
-    color: '#444',
-  },
   labels: {
     letterSpacing: 1.25,
     color: '#444',
@@ -195,9 +193,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
-    backgroundColor: '#FFF',
-    borderWidth: 1,
-    borderColor: '#ECECEC',
     margin: 1,
   },
   buttonsWrapper: {

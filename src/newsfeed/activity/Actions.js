@@ -7,7 +7,7 @@ import {
   View
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 
 import ThumbUpAction from './actions/ThumbUpAction';
 import ThumbDownAction from './actions/ThumbDownAction';

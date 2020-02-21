@@ -8,6 +8,7 @@ import testID from '../../common/helpers/testID';
 import Colors from '../../styles/Colors';
 import PaymentMethodIcon from './PaymentMethodIcon';
 import { CommonStyle as CS } from '../../styles/Common';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   button: React.Node,
@@ -68,13 +69,13 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
    * Render
    */
   render(): React.Node {
-
+    const theme = ThemedStyles.style;
     return (
       <View style={[CS.rowJustifySpaceEvenly, CS.fullWidth]}>
         {this.methods.map((method: any, i: number): React.Node  => (
           <TouchableOpacity style={[CS.alignCenter, CS.padding ]} {...testID(`PAYMENT METHOD ${method.label}`)} key={i} onPress={method.handle}>
-            <PaymentMethodIcon value={method.label} size={30} style={(method.label.toLowerCase() === this.props.value) ? styles.selected : null} />
-            <Text style={[CS.fontL, (method.label.toLowerCase() === this.props.value) ? styles.selected : null]} >
+            <PaymentMethodIcon value={method.label} size={30} style={(method.label.toLowerCase() === this.props.value) ? theme.colorIconActive : theme.colorIcon} />
+            <Text style={[CS.fontL, (method.label.toLowerCase() === this.props.value) ? theme.colorIconActive : theme.colorIcon]} >
               {method.label.toUpperCase()}
             </Text>
           </TouchableOpacity>
@@ -83,9 +84,3 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
     );
   }
 }
-
-const styles: any = StyleSheet.create({
-  selected: {
-    color: Colors.primary
-  }
-})

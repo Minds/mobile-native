@@ -4,8 +4,8 @@ import "./global";
 
 import { AppRegistry, Platform } from 'react-native';
 import App from './App';
-import { useScreens } from 'react-native-screens';
-useScreens(Platform.OS !== 'ios');
+import { enableScreens } from 'react-native-screens';
+enableScreens();
 
 // const modules = require.getModules();
 // const moduleIds = Object.keys(modules);

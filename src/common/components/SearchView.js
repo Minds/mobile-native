@@ -11,12 +11,12 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Search Component
  */
 export default class SearchView extends PureComponent {
-
   /**
    * Default props
    */
@@ -40,16 +40,17 @@ export default class SearchView extends PureComponent {
 
     return (
       <View style={[styles.container, containerStyle]}>
-        <Icon size={22} style={styles.icon} name={'md-search'} color={'#444'} />
+        <Icon size={22} style={[styles.icon, ThemedStyles.style.colorIcon]} name={'md-search'} />
         <TextInput
           onFocus={ this.props.onFocus }
           onBlur={ this.props.onBlur }
           selectTextOnFocus={true}
+          placeholderTextColor={ThemedStyles.getColor('secondary_text')}
           {...attributes}
           underlineColorAndroid={
             'transparent'
           }
-          style={styles.input}
+          style={[styles.input, ThemedStyles.style.colorPrimaryText]}
           testID="MessengerContactText"
         />
         {rIcon}
@@ -85,7 +86,6 @@ const styles = StyleSheet.create({
   container: {
     borderBottomColor: '#000',
     borderTopColor: '#000',
-    backgroundColor: '#FFF',
     justifyContent:'center',
     backgroundColor: '#f2f2f2',
     borderRadius: 50,
@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: 'transparent',
     fontSize: 14,
-    color: '#444',
     height: 42,
     ...Platform.select({
       ios: {

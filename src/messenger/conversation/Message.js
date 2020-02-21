@@ -5,7 +5,7 @@ import React, {
 import {
   inject,
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import {
   Text,
@@ -24,6 +24,7 @@ import { MINDS_CDN_URI } from '../../config/Config';
 import crypto from '../../common/services/crypto.service';
 import Tags from '../../common/components/Tags';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Message Component
@@ -35,37 +36,37 @@ export default class Message extends PureComponent {
     showDate: false
   };
 
-  /**
-   * On component will mount
-   */
-  componentWillMount() {
+  state = {
+    decrypted: false,
+    msg: i18n.t('messenger.decrypting'),
+  }
+
+  constructor(props) {
+    super(props);
+
+    const { message } = props;
+
+    if (message.decrypted) {
+      this.state = {
+        decrypted: true,
+        msg: message.message,
+      }
+    }
+  }
+
+  async componentDidMount() {
     const message = this.props.message;
-    this.setState({decrypted: message.decrypted});
-    if (!message.decrypted) {
-
-      this.setState({
-        decrypted: false,
-        msg: i18n.t('messenger.decrypting')
-      });
-
-      // we need to decrypt inside a settimeout to fix blank list until decryption ends
-      setTimeout(() => {
-        if (message.message) {
-          crypto.decrypt(message.message)
-            .then(msg => {
-                this.setState({ decrypted: true, msg });
-                message.decrypted = true;
-                message.message = msg;
-              });
-        } else {
-          message.decrypted = true;
-          message.message = '';
-          this.setState({ decrypted: true, msg:'' });
+    if (!this.state.decrypted) {
+      if (message.message) {
+        try {
+          const msg = await crypto.decrypt(message.message);
+          this.setState({ decrypted: true, msg });
+        } catch (ex) {
+          this.setState({ decrypted: true, msg:'couldn\'t decrypt'});
         }
-      }, 0);
-
-    } else {
-      this.setState({ decrypted: true, msg: message.message });
+      } else {
+        this.setState({ decrypted: true, msg:'' });
+      }
     }
   }
 
@@ -95,7 +96,7 @@ export default class Message extends PureComponent {
       return (
         <View>
           <View style={[styles.messageContainer, styles.right]}>
-            <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, CommonStyle.backgroundPrimary]}>
+            <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, ThemedStyles.style.backgroundLink]}>
               <Text selectable={true} style={[styles.message, CommonStyle.colorWhite]} onLongPress={() => this.showDate()}>
                 <Tags color={'#fff'} style={{ color: '#FFF' }} navigation={this.props.navigation}>{this.state.msg}</Tags>
               </Text>
@@ -117,7 +118,7 @@ export default class Message extends PureComponent {
           <TouchableOpacity onPress={this._navToChannel}>
             <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
           </TouchableOpacity>
-          <View style={[CommonStyle.rowJustifyCenter, styles.textContainer]}>
+          <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, , ThemedStyles.style.backgroundTertiary]}>
             <Text selectable={true} style={[styles.message]} onLongPress={() => this.showDate()}>
               <Tags style={[styles.message]} navigation={this.props.navigation}>{this.state.msg}</Tags>
             </Text>
@@ -142,16 +143,14 @@ export default class Message extends PureComponent {
 // styles
 const styles = StyleSheet.create({
   smallavatar: {
-    height: 28,
-    width: 28,
-    borderRadius: 14,
+    height: 30,
+    width: 30,
+    borderRadius: 15,
   },
   avatar: {
     height: 36,
     width: 36,
     borderRadius: 18,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#EEE',
   },
   textContainer: {
     flexWrap: 'wrap',
