@@ -50,7 +50,7 @@ export default class ActivityMetrics extends Component {
           CommonStyle.borderGreyed,
           CommonStyle.paddingLeft,
           CommonStyle.paddingRight,
-          ThemedStyles.style.backgroundSeparator,
+          ThemedStyles.style.backgroundTertiary,
           styles.container
         ]}>
           <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
