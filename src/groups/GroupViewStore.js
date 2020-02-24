@@ -15,22 +15,15 @@ import FeedStore from '../common/stores/FeedStore';
  * Groups store
  */
 class GroupViewStore {
-
   /**
    * Top members (used to display avatars on top)
    */
   @observable topMembers = [];
 
   /**
-   * List feed store
-   */
-  list = new OffsetFeedListStore('shallow', true);
-
-  /**
    * List Members
    */
   members = new OffsetListStore('shallow');
-
 
   /**
    * Feed store
@@ -67,10 +60,6 @@ class GroupViewStore {
   guid = '';
 
   constructor() {
-    this.list.getMetadataService()
-      .setSource('feed/groups')
-      .setMedium('feed');
-
     this.feed.getMetadataService()
       .setSource('feed/groups')
       .setMedium('feed');
@@ -150,7 +139,7 @@ class GroupViewStore {
   async loadGroup(defaultGroup) {
     const group = await entitiesService.single(`urn:entity:${defaultGroup.guid}`, GroupModel.checkOrCreate(defaultGroup));
     this.setGroup(group);
-    this.list.clearViewed();
+    this.feed.viewed.clearViewed();
     return group;
   }
 
@@ -274,7 +263,7 @@ class GroupViewStore {
    */
   assignRowKeys(feed) {
     feed.entities.forEach((entity, index) => {
-      entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
+      entity.rowKey = `${entity.guid}:${index}:${this.feed.entities.length}`;
     });
   }
 
@@ -285,16 +274,16 @@ class GroupViewStore {
   prepend(entity) {
     const model = ActivityModel.create(entity)
 
-    model.rowKey = `${model.guid}:0:${this.list.entities.length}`
+    model.rowKey = `${model.guid}:0:${this.feed.entities.length}`
 
-    this.list.prepend(model);
+    this.feed.prepend(model);
   }
   /**
    * clear the store to default values
    */
   @action
   clear() {
-    this.list.clearList();
+    // this.list.clearList();
     this.feed.clear();
     this.members.clearList();
     this.group = null;

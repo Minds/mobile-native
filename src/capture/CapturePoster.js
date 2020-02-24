@@ -34,10 +34,12 @@ import TextInput from '../common/components/TextInput';
 import ThemedStyles from '../styles/ThemedStyles';
 
 export default
-@inject('user', 'capture')
+@inject('user', 'capture', 'newsfeed')
 @observer
 class CapturePoster extends Component {
-
+  /**
+   * State
+   */
   state = {
     postImageUri: '',
     mature: false, // @deprecated
@@ -76,7 +78,7 @@ class CapturePoster extends Component {
     }
 
     const { setOptions } = this.props.navigation;
-    if (!params)  {
+    if (!params) {
       params = {};
     }
     setOptions({
@@ -128,27 +130,31 @@ class CapturePoster extends Component {
    */
   navToPrevious(entity, group) {
 
-    const {dispatch, goBack} = this.props.navigation;
-
+    const { goBack, dispatch } = this.props.navigation;
     const { params } = this.props.route;
 
-    if (params) {
+    const activity = ActivityModel.checkOrCreate(entity);
+
+    this.props.newsfeed.prepend(activity);
+
+    if (params && params.parentKey) {
 
       const routeParams = {
-        prepend: ActivityModel.checkOrCreate(entity),
+        prepend: activity,
       };
 
-      if (group) routeParams.group = group;
+      if (group) {
+        routeParams.group = group;
+      }
 
-      dispatch(CommonActions.setParams({
-        routeParams,
+      // this.props.navigation.navigate(params.previous, routeParams);
+      dispatch({
+        ...CommonActions.setParams(routeParams),
         source: params.parentKey, // passed from index
-      }));
-
+      });
     }
 
     goBack(null);
-
   }
 
   /**
@@ -344,7 +350,7 @@ class CapturePoster extends Component {
 
     let group = this.props.route.params ? this.props.route.params.group : null
 
-    if(HashtagService.slice(message).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
+    if (HashtagService.slice(message).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
       Alert.alert(i18n.t('capture.maxHashtags', {maxHashtags: HashtagService.maxHashtags}));
       return false;
     }
@@ -389,7 +395,6 @@ class CapturePoster extends Component {
       wire_threshold: this.state.lock,
       time_created: this.formatTimeCreated()
     };
-
 
     newPost.nsfw = this.state.nsfw || [];
 
@@ -442,9 +447,9 @@ class CapturePoster extends Component {
       } else {
         this.navToPrevious(response.entity);
       }
-
       return response;
     } catch (err) {
+      console.log(err)
       logService.exception('[CapturePoster]', err);
       Alert.alert(i18n.t('ops'), i18n.t('errorMessage'));
     }

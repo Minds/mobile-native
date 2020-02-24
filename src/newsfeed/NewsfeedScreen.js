@@ -27,27 +27,26 @@ import i18n from '../common/services/i18n.service';
 /**
  * News Feed Screen
  */
+export default
 @inject('newsfeed', 'user', 'discovery', 'messengerList')
 @observer
-export default class NewsfeedScreen extends Component {
-
+class NewsfeedScreen extends Component {
   /**
    * Nav to activity full screen
    */
   navToCapture = () => {
     this.props.navigation.navigate('Capture');
-  }
+  };
 
   /**
    * Load data on mount
    */
   componentDidMount() {
-
     this.disposeTabPress = this.props.navigation.addListener('tabPress', e => {
       if (this.props.navigation.isFocused()) {
-        if (stores.newsfeed.filter == 'subscribed') {
+        if (stores.newsfeed.filter === 'subscribed') {
           stores.newsfeed.scrollToTop();
-          stores.newsfeed.feedStore.refresh(true)
+          stores.newsfeed.feedStore.refresh(true);
         } else {
           stores.newsfeed.refresh();
         }
@@ -57,17 +56,6 @@ export default class NewsfeedScreen extends Component {
 
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
-
-    this.disposeEnter = this.props.navigation.addListener('focus', (s) => {
-      const params = this.props.route.params;
-      if (params && params.prepend) {
-
-        this.props.newsfeed.prepend(params.prepend);
-
-        // we clear the parameter to prevent prepend it again on goBack
-        this.props.navigation.setParams({prepend: null});
-      }
-    });
   }
 
   async loadFeed() {
