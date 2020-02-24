@@ -79,7 +79,7 @@ export default class LoginScreen extends Component {
     return (
       <KeyboardAvoidingView style={[CS.flexColumnStretch, CS.backgroundPrimary]} behavior={Platform.OS == 'ios' ? 'padding' : null} >
         <SafeAreaView style={[styles.flex10]}>
-          <ScrollView style={CS.flexContainer}>
+          <ScrollView style={CS.flexContainer} keyboardShouldPersistTaps={true}>
             <View style={[CS.paddingHorizontal4x, CS.flexColumnStretch]}>
               <Animated.Image
                 resizeMode="contain"
