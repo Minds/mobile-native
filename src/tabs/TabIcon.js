@@ -5,6 +5,11 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { CommonStyle as CS } from '../styles/Common';
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  icon: { width: 68, textAlign: 'center' },
+});
 
 export default class TabIcon extends Component {
   render() {
@@ -15,24 +20,24 @@ export default class TabIcon extends Component {
         return (
           <EvilIcons
             name={name}
-            style={color ? {color: color} : CS.colorIcon}
+            style={[color ? {color: color} : CS.colorIcon,  styles.icon]}
             size={size ? size : 24}
           />
-        )
+        );
       case 'home':
         return (
           <Entypo
             name={name}
-            style={color ? {color: color} : CS.colorIcon}
+            style={[color ? {color: color} : CS.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
-        )
+        );
       case 'md-notifications':
       case 'md-menu':
         icon = (
           <IonIcon
             name={name}
-            style={color ? {color: color} : CS.colorIcon}
+            style={[color ? {color: color} : CS.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
         );
@@ -41,7 +46,7 @@ export default class TabIcon extends Component {
         icon = (
           <Fontisto
             name={name}
-            style={color ? {color: color} : CS.colorIcon}
+            style={[color ? {color: color} : CS.colorIcon, styles.icon]}
             size={size ? size : 24}
           />
         );

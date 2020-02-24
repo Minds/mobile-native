@@ -34,6 +34,8 @@ const Tabs = observer(function({ navigation }) {
     return null;
   }
 
+  const height = isIOS ? (Platform.isPad ? 100 : isIphoneX ? 90 : 70) : 65;
+
   return (
     <Tab.Navigator
       initialRouteName="Newsfeed"
@@ -45,17 +47,16 @@ const Tabs = observer(function({ navigation }) {
         style: {
           borderTopWidth: 0,
           backgroundColor: ThemedStyles.getColor('secondary_background'),
-          height: isIOS ? (isIphoneX ? 90 : 70) : 65,
+          height,
           paddingTop: isIOS && isIphoneX ? 20 : 2,
         },
         tabStyle: {
-          height: 66,
-          width: 66,
+          height,
           ...ThemedStyles.style.centered,
         },
       }}
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+        tabBarIcon: ({ focused, color, size, tabStyle }) => {
           let iconName,
             iconsize = 28;
 
@@ -94,6 +95,10 @@ const Tabs = observer(function({ navigation }) {
               iconName = 'plus';
               iconsize = 66;
               break;
+          }
+
+          if (Platform.isPad) {
+            iconsize = Math.round(iconsize * 1.2)
           }
 
           // You can return any component that you like here!
