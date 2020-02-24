@@ -121,6 +121,7 @@ export default class GroupViewScreen extends Component {
 
     this.disposeEnter = this.props.navigation.addListener('focus', () => {
       const params = this.props.route.params;
+
       if (params && params.prepend) {
         this.props.groupView.prepend(params.prepend);
         // we clear the parameter to prevent prepend it again on goBack

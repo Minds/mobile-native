@@ -53,6 +53,11 @@ class LogService {
       prepend = null;
     }
 
+    // log exceptions to console on spec testing
+    if (process.env.JEST_WORKER_ID !== undefined) {
+      console.log(error);
+    }
+
     if (shouldReportToSentry(error)) {
       Sentry.captureException(error);
     }

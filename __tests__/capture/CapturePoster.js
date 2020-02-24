@@ -20,6 +20,7 @@ jest.mock('../../src/capture/CapturePostButton', () => 'CapturePostButton');
 jest.mock('../../src/capture/CapturePreview', () => 'CapturePreview');
 jest.mock('../../src/capture/CapturePosterFlags', () => 'CapturePosterFlags');
 jest.mock('../../src/common/services/translation.service');
+jest.mock('@react-navigation/native');
 
 Alert.alert = jest.fn();
 CameraRoll.getPhotos = jest.fn();
@@ -32,6 +33,11 @@ CameraRoll.getPhotos.mockResolvedValue(response);
  */
 describe('cature poster component', () => {
   let userStore, capture;
+
+  const newsfeed = {
+    prepend: jest.fn()
+  };
+
   const navigation = {
     navigate: jest.fn(),
     dispatch: jest.fn(),
@@ -62,6 +68,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       )
       .toJSON();
@@ -151,6 +158,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       );
 
@@ -182,6 +190,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       );
 
@@ -213,6 +222,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       );
 
@@ -253,6 +263,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       );
 
@@ -285,6 +296,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       );
 
@@ -308,6 +320,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       );
 
@@ -331,6 +344,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       );
 
@@ -405,6 +419,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       );
 
@@ -449,6 +464,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       );
 
@@ -468,6 +484,8 @@ describe('cature poster component', () => {
       // submit
       const result = await wrapper.instance().submit();
 
+      console.log('results',result)
+
       // should be called
       expect(capture.post).toHaveBeenCalled();
 
@@ -485,7 +503,7 @@ describe('cature poster component', () => {
         attachment_license: '',
         time_created: entity.time_created,
       });
-      console.log(result)
+
       // should return server response
       expect(result).toEqual(response);
 
@@ -506,6 +524,7 @@ describe('cature poster component', () => {
           capture={capture}
           navigation={navigation}
           route={route}
+          newsfeed={newsfeed}
         />,
       );
 
