@@ -80,7 +80,6 @@ class DiscoveryScreen extends Component {
     // load data on enter
     this.disposeEnter = this.props.navigation.addListener('focus', () => {
       setTimeout(() => {
-        this.setState({active: true});
         const params = this.props.route.params;
         if (params && params.query) {
           this.props.hashtag.setHashtag(params.query.replace('#',''));
@@ -97,12 +96,12 @@ class DiscoveryScreen extends Component {
       }
     });
 
-    // clear data on leave
-    this.disposeLeave = this.props.navigation.addListener('blur', (s) => {
-      setTimeout(() => {
-        this.setState({active: false});
-      }, 50);
-    });
+    // // clear data on leave
+    // this.disposeLeave = this.props.navigation.addListener('blur', (s) => {
+    //   setTimeout(() => {
+    //     this.setState({active: false});
+    //   }, 50);
+    // });
   }
 
   /**
@@ -112,9 +111,9 @@ class DiscoveryScreen extends Component {
     if (this.disposeEnter) {
       this.disposeEnter();
     }
-    if (this.disposeLeave) {
-      this.disposeLeave();
-    }
+    // if (this.disposeLeave) {
+    //   this.disposeLeave();
+    // }
     if (this.disposeTabPress) {
       this.disposeTabPress();
     }
@@ -160,7 +159,7 @@ class DiscoveryScreen extends Component {
           this.props.discovery.listStore.addViewed(item.item);
         });
         break;
-        
+
       case 'activities':
         change.viewableItems.forEach((item) => {
           this.props.discovery.listStore.addViewed(item.item);
