@@ -340,7 +340,7 @@ class App extends Component<Props, State> {
         >
           <Provider key="app" {...stores}>
             <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
-              <StatusBar barStyle={statusBarStyle} />
+              <StatusBar barStyle={statusBarStyle} backgroundColor={ThemedStyles.getColor('secondary_background')} />
               <NavigationStack key={ThemedStyles.theme} isLoggedIn={isLoggedIn}/>
               <FlashMessage renderCustomContent={this.renderNotification} />
             </ErrorBoundary>
