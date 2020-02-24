@@ -3,11 +3,8 @@ import React, {
 } from 'react';
 
 import {
-  View,
   ScrollView,
   StyleSheet,
-  Text,
-  Picker,
   Alert,
 } from 'react-native';
 
@@ -16,14 +13,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import authService from './../auth/AuthService';
 import { ListItem } from 'react-native-elements';
-import { FormLabel, FormInput, Button } from 'react-native-elements';
-import settingsService from './SettingsService';
 import settingsStore from './SettingsStore';
 
 import i18n from '../common/services/i18n.service';
 import appStores from '../../AppStores';
-import logService from '../common/services/log.service';
-import storageService from '../common/services/storage.service';
 import { observer } from 'mobx-react';
 import ModalPicker from '../common/components/ModalPicker';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -42,22 +35,22 @@ class SettingsScreen extends Component {
 
   state = {
     showLanguages: false,
-  }
+  };
 
   componentWillMount() {
 
     this.setState({
-      language: i18n.getCurrentLocale()
+      language: i18n.getCurrentLocale(),
     });
   }
 
   appLogActivate = () => {
     settingsStore.setAppLog(!settingsStore.appLog);
-  }
+  };
 
   leftHandedActivate = () => {
     settingsStore.setLeftHanded(!settingsStore.leftHanded);
-  }
+  };
 
   setDarkMode = () => {
     if (ThemedStyles.theme) {
@@ -65,7 +58,7 @@ class SettingsScreen extends Component {
     } else {
       ThemedStyles.setDark();
     }
-  }
+  };
 
   wipeEthereumKeychainAction = () => {
     const _confirm3 = async (confirmation) => {
@@ -193,7 +186,7 @@ class SettingsScreen extends Component {
     if (featuresService.has('dark-mode')) {
       list.push({
         name: i18n.t('settings.darkMode'),
-        icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
+        icon: (<MaterialCommunityIcons name='theme-light-dark' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
         switch: {value: !!ThemedStyles.theme, onValueChange: this.setDarkMode},
         hideChevron: true,
       });
