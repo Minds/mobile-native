@@ -93,7 +93,7 @@ class NotificationsScreen extends Component {
             {design}
             <Text
               style={ComponentsStyle.emptyComponentLink}
-              onPress={() => this.props.navigation.navigate('Capture')}
+              onPress={() => this.props.navigation.push('Capture')}
               >
               {i18n.t('createAPost')}
             </Text>

@@ -69,7 +69,7 @@ export default class BoostConsoleScreen extends Component {
             <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('boosts.youDontHaveBoosts')}</Text>
             <Text
               style={ComponentsStyle.emptyComponentLink}
-              onPress={() => this.props.navigation.navigate('Capture')}
+              onPress={() => this.props.navigation.push('Capture')}
             >
               {i18n.t('createAPost')}
             </Text>
