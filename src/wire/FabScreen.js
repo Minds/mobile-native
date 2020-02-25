@@ -275,7 +275,7 @@ class FabScreen extends Component {
   confirmSend = () => {
     // is 0 just we execute complete
     if (this.props.wire.amount == 0) {
-      const onComplete = this.props.navigation.state.params.onComplete;
+      const onComplete = this.props.route.params.onComplete;
       if (onComplete) onComplete();
       this.props.navigation.goBack();
       return;
@@ -305,7 +305,7 @@ class FabScreen extends Component {
    * Call send and go back on success
    */
   async send() {
-    const onComplete = this.props.navigation.state.params.onComplete;
+    const onComplete = this.props.route.params.onComplete;
     try {
       let done = await this.props.wire.send();
 
