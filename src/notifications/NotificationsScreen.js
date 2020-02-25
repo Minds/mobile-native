@@ -122,7 +122,7 @@ class NotificationsScreen extends Component {
     return (
       <View style={CS.flexContainer}>
         <OnFocus onFocus={this.onFocus}/>
-        <TopbarNew title={i18n.t('tabTitleNotifications')}/>
+        <TopbarNew title={i18n.t('tabTitleNotifications')} navigation={this.props.navigation}/>
         {body}
         {/* <CaptureFab navigation={this.props.navigation} /> */}
       </View>

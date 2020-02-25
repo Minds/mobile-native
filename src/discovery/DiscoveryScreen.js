@@ -65,7 +65,6 @@ class DiscoveryScreen extends Component {
     active: true,
     showFeed: false,
     itemHeight: 0,
-    q: '',
   };
 
   viewOptsFeed = {
@@ -249,7 +248,7 @@ class DiscoveryScreen extends Component {
 
     return (
       <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
-        <TopbarNew title={i18n.t('tabTitleDiscovery')}/>
+        <TopbarNew title={i18n.t('tabTitleDiscovery')} navigation={this.props.navigation}/>
         {body}
         {/* <CaptureFab navigation={this.props.navigation}  /> */}
       </View>
@@ -393,7 +392,7 @@ class DiscoveryScreen extends Component {
         {(filtersStore.type === 'channels' || !GOOGLE_PLAY_STORE) && <SearchView
           placeholder={i18n.t('discovery.search')}
           onChangeText={this.setQ}
-          value={this.state.q}
+          value={this.props.discovery.query}
           containerStyle={[CS.marginTop, CS.marginBottom, ThemedStyles.style.backgroundPrimary]}
           iconRight={ iconRight }
           iconRightOnPress={this.clearSearch}
@@ -484,7 +483,7 @@ class DiscoveryScreen extends Component {
    * Set search query
    */
   setQ = q => {
-    this.setState({ q });
+    this.props.discovery.setQuery(q)
     this.searchDebouncer(q);
   };
 

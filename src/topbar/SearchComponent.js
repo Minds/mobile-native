@@ -45,6 +45,10 @@ class SearchComponent extends Component {
     this.searchResult.input(searchText);
   }
 
+  searchSubmit = () => {
+    this.searchResult.searchDiscovery();
+  }
+
   handleSearchResultRef = ref => this.searchResult = ref;
 
   render() {
@@ -61,6 +65,7 @@ class SearchComponent extends Component {
           isVisible={this.isSearching()}
           backdropColor={ThemedStyles.getColor('secondary_background')}
           backdropOpacity={ 1 }
+          style={styles.modal}
         >
           <SafeAreaView style={[CS.flexContainer, CS.backgroundSecondary]}>
             <View style={[styles.header, CS.marginBottom4x, Platform.OS === 'android' ? CS.marginTop2x : CS.marginTop4x]}>
@@ -77,6 +82,8 @@ class SearchComponent extends Component {
                   value={this.state.searchText}
                   testID="searchInput"
                   style={[styles.textInput, CS.colorPrimaryText]}
+                  selectTextOnFocus={true}
+                  onSubmitEditing={this.searchSubmit}
                 />
               </View>
               <Icon
@@ -110,5 +117,8 @@ const styles = StyleSheet.create({
   },
   textInput: {
     width: '60%'
+  },
+  modal: {
+    margin: 0,
   }
 });

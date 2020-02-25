@@ -56,7 +56,7 @@ export default class TopbarNew extends Component {
                 </View>
                 <View style={styles.topbarRight}>
                   <MessengerTabIcon navigation={navigation}/>
-                  <SearchComponent user={this.props.user} navigation={navigation} />
+                  <SearchComponent user={this.props.user} navigation={this.props.navigation} />
                 </View>
               </View>
             </View>
