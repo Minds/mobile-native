@@ -120,7 +120,7 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="Report" component={ReportScreen} />
       <AppStackNav.Screen name="More" component={MoreScreen} />
       <AppStackNav.Screen name="Withdraw" component={WithdrawScreen} />
-      <AppStackNav.Screen name="WalletOnboarding" component={WalletOnboardingScreen} />
+      <AppStackNav.Screen name="WalletOnboarding" component={WalletOnboardingScreen} options={{title:'Wallet'}} />
       <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
       <AppStackNav.Screen name="OnboardingScreen" component={OnboardingScreen} />
       <AppStackNav.Screen name="OnboardingScreenNew" component={OnboardingScreenNew} options={hideHeader}/>

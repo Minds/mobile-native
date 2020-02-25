@@ -4,7 +4,6 @@ import { Platform } from "react-native";
 
 export default {
   header: {
-    backgroundColor: '#fff',
     padding: 10,
     paddingTop: (Platform.OS == 'ios' ? 14 : 8) + 10,
     paddingBottom: 0,
