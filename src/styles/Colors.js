@@ -16,7 +16,7 @@ export default colors = {
 export const LIGHT_THEME = {
   name: 'LIGHT',
   primary_background: '#F5F5F5',
-  secondary_background: '#EFEFEF',
+  secondary_background: '#FFFFFF',
   tertiary_background: '#E3E4E9',
   primary_text: '#4F4F50',
   secondary_text: '#7D7D82',
@@ -35,7 +35,7 @@ export const LIGHT_THEME = {
 export const DARK_THEME = {
   name: 'DARK',
   primary_background: '#252E31',
-  secondary_background: '#2D3639',
+  secondary_background: '#202527',
   tertiary_background: '#404E53',
   primary_text: '#FFFFFF',
   secondary_text: '#AEB0B8',
