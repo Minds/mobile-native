@@ -118,7 +118,7 @@ export default class NewsfeedList extends Component {
               {design}
               <Text
                 style={ComponentsStyle.emptyComponentLink}
-                onPress={() => navigation.navigate('Capture')}
+                onPress={() => navigation.push('Capture')}
               >
                 {i18n.t('createAPost')}
               </Text>
