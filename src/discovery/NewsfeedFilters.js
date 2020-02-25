@@ -170,6 +170,7 @@ class NewsfeedFilters extends Component {
             </TouchableOpacity>
             {store.filter == 'top' &&
               <Menu
+                style={themed.backgroundTertiary}
                 ref={this.setMenuRef}
                 button={
                   <TouchableOpacity style={[CS.padding]} onPress={this.showMenu} >
