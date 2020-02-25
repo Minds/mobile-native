@@ -16,6 +16,7 @@ import Button from '../../common/components/Button';
 import Colors from '../../styles/Colors';
 import SettingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Delete Channel Screen
@@ -65,8 +66,9 @@ export default class DeleteChannelScreen extends Component {
           <Text style={[CS.fontM, CS.marginTop, CS.marginBottom2x]}>{i18n.t('settings.deleteDescription')}</Text>
           {this.state.showPassword &&
             <TextInput
-              style={[CS.borderGreyed, CS.borderRadius10x, CS.border, CS.padding2x]}
+              style={[CS.borderGreyed, CS.borderRadius10x, CS.border, CS.padding2x, ThemedStyles.style.colorPrimaryText]}
               placeholder={i18n.t('auth.password')}
+              placeholderTextColor={ThemedStyles.getColor('secondary_text')}
               autoFocus={true}
               autoCapitalize={'none'}
               onChangeText={this.setPassword}
