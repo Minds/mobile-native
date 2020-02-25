@@ -24,24 +24,13 @@ import WalletOnboardingFinishedScreen from './screens/WalletOnboardingFinishedSc
 import stylesheet from '../../onboarding/stylesheet';
 import { CommonStyle as CS } from '../../styles/Common';
 
+export default
 @inject('user', 'wallet')
 @observer
-export default class WalletOnboardingScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    header: (
-      <SafeAreaView style={[style.header]}>
-        <Icon size={40} name="ios-close" style={CS.padding2x} onPress={() => navigation.goBack()} />
-
-        <View>
-          {(navigation.state.params && navigation.state.params.nextButton) && navigation.state.params.nextButton}
-        </View>
-      </SafeAreaView>
-    ),
-    transitionConfig: {
-      isModal: true
-    },
-  });
-
+class WalletOnboardingScreen extends Component {
+  /**
+   * State
+   */
   state = {
     step: 0
   }
@@ -51,7 +40,10 @@ export default class WalletOnboardingScreen extends Component {
   }
 
   setNavNext = next => {
-    this.props.navigation.setParams({ nextButton: next })
+    this.props.navigation.setOptions({
+      title: 'Wallet',
+      headerRight: () => next
+    });
   }
 
   nextStepAction = async () => {
@@ -77,7 +69,7 @@ export default class WalletOnboardingScreen extends Component {
       case 3:
         await this.props.wallet.setOnboardingComplete(true);
 
-        if (this.props.navigation.state.params && this.props.navigation.state.params.next) {
+        if (this.props.route.params && this.props.route.params.next) {
           this.props.navigation.replace('ReplaceCurrentScreen');
         } else {
           this.props.navigation.goBack();
