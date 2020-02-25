@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, ScrollView, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import CenteredLoading from '../common/components/CenteredLoading';
 import DiscoveryUserNew from '../discovery/DiscoveryUserNew';
 import i18n from '../common/services/i18n.service';
 import FAIcon from 'react-native-vector-icons/FontAwesome5';
 import debounce from '../common/helpers/debounce';
 import ThemedStyles from '../styles/ThemedStyles';
+import { inject } from 'mobx-react';
 
-export default class SearchResultComponent extends Component {
+export default
+@inject('discovery')
+class SearchResultComponent extends Component {
 
   search = '';
 
@@ -44,19 +47,45 @@ export default class SearchResultComponent extends Component {
    * List based on what user has typed
    */
   renderSuggestedSearch = () => {
+    const CS = ThemedStyles.style;
     const suggestedSearch = this.state.suggested.length === 0
       ? (
         this.state.loading
         ? <CenteredLoading />
-        : this.renderEmptyMessageSuggest()
+        : <View style={CS.flexContainerCenter}>{this.renderFindInDiscovery(false)}</View>
       )
       : (
         <ScrollView keyboardShouldPersistTaps='handled'>
           {this.state.suggested.map(this.renderUser)}
+          {this.renderFindInDiscovery()}
         </ScrollView>
       )
 
     return suggestedSearch;
+  }
+
+  searchDiscovery = () => {
+    this.props.discovery.setQuery(this.search);
+    this.props.discovery.filters.search(this.search);
+    this.props.navigation.navigate('Discovery');
+    this.searchBarItemTap(this.search);
+  }
+
+  renderFindInDiscovery = (showBorder = true) => {
+    const CS = ThemedStyles.style;
+    const borders = showBorder ? [CS.borderTopHair, CS.borderPrimary] : [];
+    return (
+      <TouchableOpacity 
+        onPress={this.searchDiscovery} 
+        style={[
+          CS.flexColumnCentered,
+          CS.padding3x,
+          ...borders
+        ]}
+      >
+        <Text style={CS.colorSecondaryText}>{`SEARCH MINDS: ${this.search}`}</Text>
+      </TouchableOpacity>
+    );
   }
 
   /**

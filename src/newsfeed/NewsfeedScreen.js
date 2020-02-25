@@ -123,7 +123,7 @@ class NewsfeedScreen extends Component {
 
     return (
       <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
-        <TopbarNew title={i18n.t('tabTitleNewsfeed')}/>
+        <TopbarNew title={i18n.t('tabTitleNewsfeed')} navigation={this.props.navigation}/>
         { feed }
         {/* <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/> */}
       </View>

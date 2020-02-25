@@ -102,7 +102,7 @@ class UserStore {
    * Call onItemTap
    */
   searchBarItemTap(item) {
-    searchBarService.onItemTap(item.username);
+    searchBarService.onItemTap(item.username || item);
   }
 
   /**

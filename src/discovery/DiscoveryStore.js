@@ -1,4 +1,4 @@
-import {action} from 'mobx';
+import {action, observable} from 'mobx';
 
 import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';
 import DiscoveryFeedStore from './DiscoveryFeedStore';
@@ -29,6 +29,8 @@ class DiscoveryStore {
    * Search change reaction disposer
    */
   onSearchChangeDisposer;
+
+  @observable query = ''
 
   constructor() {
     this.feedStore = new DiscoveryFeedStore(this.filters);
@@ -135,6 +137,11 @@ class DiscoveryStore {
       this.filters.clear();
       this.listenChanges();
     }
+  }
+
+  @action
+  setQuery(value) {
+    this.query = value;
   }
 }
 
