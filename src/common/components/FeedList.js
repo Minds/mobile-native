@@ -181,7 +181,9 @@ export default class FeedList extends Component {
       this.props.feedStore.addViewed(item.item);
     });
     change.changed.forEach(c => {
-      c.item.setVisible(c.isViewable);
+      if (c.item.setVisible) {
+        c.item.setVisible(c.isViewable);
+      }
     })
   }
 
