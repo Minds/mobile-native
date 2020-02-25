@@ -10,6 +10,8 @@ import logService from './log.service';
 
 import * as Sentry from '@sentry/react-native';
 
+import { observable, action } from 'mobx';
+
 /**
  * Api Error
  */
@@ -31,6 +33,13 @@ export const isApiForbidden = function(err) {
  * Api service
  */
 class ApiService {
+
+  @observable mustVerify = false;
+
+  @action
+  setMustVerify(value) {
+    this.mustVerify = value;
+  }
 
   async parseJSON(response) {
     try {
@@ -104,6 +113,10 @@ class ApiService {
     const error = new ApiError(err.message || err.responseText || `Request error on: ${url}`);
     if (err.status) {
       error.status = err.status;
+    }
+
+    if (isApiForbidden(error) && err.must_verify) {
+      this.setMustVerify(true);
     }
     throw error;
   }

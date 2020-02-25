@@ -25,6 +25,8 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import MessengerTabIcon from '../messenger/MessengerTabIconNew';
 
+import EmailConfirmation from './EmailConfirmation';
+
 const forceInset = isIphoneX ? {top: 10} : null
 
 @inject('user')
@@ -46,15 +48,20 @@ export default class TopbarNew extends Component {
     return (
       <SafeAreaConsumer>
         {insets => (
-          <View style={[styles.container, CS.backgroundSecondary, {paddingTop: insets.top}]}>
-            <View style={styles.topbar}>
-              <View style={[styles.topbarLeft, CS.marginLeft4x]}>
-                <Text style={[CS.titleText, CS.colorPrimaryText, styles.lineHeight0]} >{this.props.title}</Text>
+          <View>
+            <View style={[styles.container, CS.backgroundSecondary, {paddingTop: insets.top}]}>
+              <View style={styles.topbar}>
+                <View style={[styles.topbarLeft, CS.marginLeft4x]}>
+                  <Text style={[CS.titleText, CS.colorPrimaryText, styles.lineHeight0]} >{this.props.title}</Text>
+                </View>
+                <View style={styles.topbarRight}>
+                  <MessengerTabIcon navigation={navigation}/>
+                  <SearchComponent user={this.props.user} navigation={navigation} />
+                </View>
               </View>
-              <View style={styles.topbarRight}>
-                <MessengerTabIcon navigation={navigation}/>
-                <SearchComponent user={this.props.user} navigation={navigation} />
-              </View>
+            </View>
+            <View>
+              <EmailConfirmation user={this.props.user} />
             </View>
           </View>
         )}
