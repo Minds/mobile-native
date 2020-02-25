@@ -213,7 +213,9 @@ export default class NewsfeedList extends Component {
       this.props.newsfeed.list.addViewed(item.item);
     });
     change.changed.forEach(c => {
-      c.item.setVisible(c.isViewable);
+      if (c.item.setVisible) {
+        c.item.setVisible(c.isViewable);
+      }
     })
   }
 
