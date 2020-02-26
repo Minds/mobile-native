@@ -70,7 +70,10 @@ const RootStackNav = createNativeStackNavigator();
 const AppStack = function(props) {
 
   return (
-    <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+    <AppStackNav.Navigator screenOptions={{
+      title: '',
+      ...ThemedStyles.defaultScreenOptions,
+    }}>
       <AppStackNav.Screen
         name="Tabs"
         component={TabsScreenNew}
@@ -83,12 +86,16 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="EmailConfirmation" component={EmailConfirmationScreen}/>
       <AppStackNav.Screen name="Update" component={UpdatingScreen}/>
       <AppStackNav.Screen name="Boost" component={BoostScreen} options={{gesturesEnabled: false}}/>
-      <AppStackNav.Screen name="DeleteChannel" component={DeleteChannelScreen}/>
+      <AppStackNav.Screen name="DeleteChannel" component={DeleteChannelScreen} />
       <AppStackNav.Screen name="Notifications" component={NotificationsScreen}/>
-      <AppStackNav.Screen name="NotificationsSettings" component={NotificationsSettingsScreen}/>
+      <AppStackNav.Screen name="NotificationsSettings" component={NotificationsSettingsScreen} />
       <AppStackNav.Screen name="Channel" component={ChannelScreen} options={hideHeader}/>
       <AppStackNav.Screen name="Capture" component={CapturePoster} options={{title:''}}/>
-      <AppStackNav.Screen name="Activity" component={ActivityScreen}/>
+      <AppStackNav.Screen 
+        name="Activity" 
+        component={ActivityScreen}
+        options={({ route }) => ({ title: route.params.entity ? route.params.entity.ownerObj.name : '' })}
+      />
       <AppStackNav.Screen name="Conversation" component={ConversationScreen}/>
       <AppStackNav.Screen
         name="DiscoveryFeed"
@@ -97,28 +104,28 @@ const AppStack = function(props) {
       />
       <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers}/>
       <AppStackNav.Screen name="Settings" component={SettingsScreen}/>
-      <AppStackNav.Screen name="SettingsBlockedChannels" component={BlockedChannelsScreen}/>
-      <AppStackNav.Screen name="SettingsEmail" component={EmailScreen}/>
-      <AppStackNav.Screen name="SettingsPassword" component={PasswordScreen}/>
+      <AppStackNav.Screen name="SettingsBlockedChannels" component={BlockedChannelsScreen} />
+      <AppStackNav.Screen name="SettingsEmail" component={EmailScreen} />
+      <AppStackNav.Screen name="SettingsPassword" component={PasswordScreen} />
       <AppStackNav.Screen name="SettingsRekey" component={RekeyScreen}/>
       <AppStackNav.Screen name="SettingsBilling" component={BillingScreen}/>
-      <AppStackNav.Screen name="GroupsList" component={GroupsListScreen}/>
+      <AppStackNav.Screen name="GroupsList" component={GroupsListScreen} options={{title: i18n.t('discovery.groups')}}/>
       <AppStackNav.Screen name="GroupView" component={GroupViewScreen} options={hideHeader}/>
       <AppStackNav.Screen name="Wallet" component={WalletScreen}/>
-      <AppStackNav.Screen name="BlogList" component={BlogsListScreen}/>
+      <AppStackNav.Screen name="BlogList" component={BlogsListScreen} options={{title: i18n.t('blogs.blogs')}}/>
       <AppStackNav.Screen name="BoostConsole" component={BoostConsoleScreen} options={{title: i18n.t('boost')}}/>
       <AppStackNav.Screen name="BlogView" component={BlogsViewScreen} options={hideHeader}/>
       <AppStackNav.Screen name="WireFab" component={FabScreen}/>
       <AppStackNav.Screen name="WalletHistory" component={WalletHistoryScreen}/>
-      <AppStackNav.Screen name="ViewImage" component={ViewImageScreen}/>
-      <AppStackNav.Screen name="BlockchainWallet" component={BlockchainWalletScreen}/>
-      <AppStackNav.Screen name="Contributions" component={ContributionsScreen}/>
-      <AppStackNav.Screen name="Transactions" component={TransactionsScreen}/>
+      <AppStackNav.Screen name="ViewImage" component={ViewImageScreen} />
+      <AppStackNav.Screen name="BlockchainWallet" component={BlockchainWalletScreen} options={{title: i18n.t('blockchain.walletAddresses')}}/>
+      <AppStackNav.Screen name="Contributions" component={ContributionsScreen} options={{title: i18n.t('wallet.contributionsTitle')}}/>
+      <AppStackNav.Screen name="Transactions" component={TransactionsScreen} options={{title: i18n.t('wallet.transactionsTitle')}}/>
       <AppStackNav.Screen name="BlockchainWalletModal" component={BlockchainWalletModalScreen} options={{gesturesEnabled: false}}/>
       <AppStackNav.Screen name="BlockchainWalletImport" component={BlockchainWalletImportScreen} />
       <AppStackNav.Screen name="BlockchainWalletDetails" component={BlockchainWalletDetailsScreen} />
-      <AppStackNav.Screen name="Report" component={ReportScreen} />
-      <AppStackNav.Screen name="More" component={MoreScreen} />
+      <AppStackNav.Screen name="Report" component={ReportScreen} options={{title: i18n.t('report')}}/>
+      <AppStackNav.Screen name="More" component={MoreScreen} options={{title: i18n.t('report')}}/>
       <AppStackNav.Screen name="Withdraw" component={WithdrawScreen} />
       <AppStackNav.Screen name="WalletOnboarding" component={WalletOnboardingScreen} options={{title:'Wallet'}} />
       <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
