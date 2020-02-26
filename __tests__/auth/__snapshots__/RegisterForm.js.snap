@@ -10,6 +10,12 @@ exports[`RegisterForm component should renders correctly 1`] = `
   }
 >
   <RCTScrollView
+    contentContainerStyle={
+      Array [
+        undefined,
+        undefined,
+      ]
+    }
     style={
       Array [
         undefined,
@@ -73,12 +79,10 @@ exports[`RegisterForm component should renders correctly 1`] = `
         </Text>
         <Text
           style={
-            Object {
-              "color": "#F00",
-              "paddingLeft": 4,
-              "paddingTop": 4,
-              "textAlign": "center",
-            }
+            Array [
+              undefined,
+              undefined,
+            ]
           }
         />
         <View>
@@ -233,7 +237,9 @@ exports[`RegisterForm component should renders correctly 1`] = `
             allowFontScaling={true}
             autoCapitalize="none"
             editable={false}
+            onBlur={[Function]}
             onChangeText={[Function]}
+            onFocus={[Function]}
             placeholder=""
             placeholderTextColor="#444"
             rejectResponderTermination={true}
@@ -246,6 +252,63 @@ exports[`RegisterForm component should renders correctly 1`] = `
               ]
             }
             testID="registerPasswordInput"
+            underlineColorAndroid="transparent"
+            value=""
+          />
+        </View>
+        <View>
+          <View
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                },
+              ]
+            }
+          >
+            <View
+              style={
+                Object {
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#AEB0B8",
+                      "fontFamily": "Roboto",
+                      "fontSize": 16,
+                      "fontWeight": "600",
+                      "marginBottom": 5,
+                    },
+                  ]
+                }
+              >
+                Confirm Password
+              </Text>
+            </View>
+          </View>
+          <TextInput
+            allowFontScaling={true}
+            autoCapitalize="none"
+            editable={true}
+            onChangeText={[Function]}
+            placeholder=""
+            placeholderTextColor="#444"
+            rejectResponderTermination={true}
+            returnKeyType="done"
+            secureTextEntry={true}
+            style={
+              Array [
+                undefined,
+                undefined,
+              ]
+            }
+            testID="registerPasswordConfirmInput"
             underlineColorAndroid="transparent"
             value=""
           />
