@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 
-import {View, Text, TouchableHighlight, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Alert,
+} from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import i18n from '../../common/services/i18n.service';
-import { ComponentsStyle } from '../../styles/Components';
 import { ScrollView } from 'react-native-gesture-handler';
 import Input from '../../common/components/Input';
 
@@ -19,12 +25,15 @@ import { UserError } from '../../common/UserError';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
 import ThemedStyles from '../../styles/ThemedStyles';
+import { isNetworkFail } from '../../common/helpers/abortableFetch';
+import i18nService from '../../common/services/i18n.service';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
+export default
 @inject('channel', 'user')
 @observer
-export default class ChannelSetupStepNew extends Component {
+class ChannelSetupStepNew extends Component {
   state = {
     phoneNumber: '+1',
     city: '',
@@ -38,7 +47,7 @@ export default class ChannelSetupStepNew extends Component {
 
   uploads = {
     avatar: null,
-    banner: null
+    banner: null,
   };
 
   store;
@@ -61,11 +70,18 @@ export default class ChannelSetupStepNew extends Component {
 
   selectMedia(file) {
     this.setState({
-      preview_avatar: file.uri
+      preview_avatar: file.uri,
     });
 
-    this.store.uploadAvatar(file);
     this.uploads['avatar'] = file;
+
+    this.store.uploadAvatar(file).catch(e => {
+      this.setState({
+        preview_avatar: null,
+      });
+
+      this.uploads['avatar'] = null;
+    });
   }
 
   getAvatar() {
@@ -76,42 +92,48 @@ export default class ChannelSetupStepNew extends Component {
     return this.props.user.me.getAvatarSource();
   }
 
-  setPhoneNumber = phoneNumber => this.setState({phoneNumber});
-  setCity = city => this.setState({city});
-  setBirthDate = dob => this.setState({dob});
+  setPhoneNumber = phoneNumber => this.setState({ phoneNumber });
+  setCity = city => this.setState({ city });
+  setBirthDate = dob => this.setState({ dob });
 
   save = async () => {
-    if (this.store.isUploading) throw new UserError('Avatar is uploading, please wait');
+    if (this.store.isUploading) {
+      throw new UserError('Avatar is uploading, please wait');
+    }
 
-    const {phoneNumber, city, dob} = this.state;
+    const { phoneNumber, city, dob } = this.state;
 
     const payload = {
       phoneNumber,
       city,
-      dob
+      dob,
     };
 
-    this.setState({saving: true});
+    this.setState({ saving: true });
 
     const response = await this.store.save(payload);
 
     if (response === true) {
       await this.props.user.load(true);
-      this.setState({saving: false});
+      this.setState({ saving: false });
       this.uploads = {
         avatar: null,
-        banner: null
+        banner: null,
       };
     } else if (response === false) {
-      alert('Error saving channel');
-      this.setState({saving: false});
+      Alert.alert('Error saving channel');
+      this.setState({ saving: false });
     } else {
-      alert(response)
-      this.setState({saving: false});
+      if (isNetworkFail(response)) {
+        Alert.alert(i18nService.t('cantReachServer'));
+      } else {
+        Alert.alert(response && response.message ? response.message : response);
+      }
+      this.setState({ saving: false });
     }
-  }
+  };
 
-  toggleFooter = () => this.setState({showFooter: !this.state.showFooter});
+  toggleFooter = () => this.setState({ showFooter: !this.state.showFooter });
 
   getBody = () => {
     const CS = ThemedStyles.style;
@@ -121,36 +143,72 @@ export default class ChannelSetupStepNew extends Component {
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
         <OnboardingBackButton onBack={this.props.onBack} />
         <View style={[styles.textsContainer]}>
-          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>{i18n.t('onboarding.profileSetup')}</Text>
-          <Text style={[CS.titleText, CS.colorPrimaryText]}>{i18n.t('onboarding.infoTitle')}</Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>{i18n.t('onboarding.step',{step: 2, total: 4})}</Text>
+          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>
+            {i18n.t('onboarding.profileSetup')}
+          </Text>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>
+            {i18n.t('onboarding.infoTitle')}
+          </Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
+            {i18n.t('onboarding.step', { step: 2, total: 4 })}
+          </Text>
         </View>
         <ScrollView style={styles.inputContainer}>
-          <View style={[CS.padding4x, CS.flexContainer, CS.rowJustifyStart, CS.alignCenter, CS.marginBottom2x, CS.marginTop2x]}>
-            <Text style={[CS.fontXXL, CS.colorSecondaryText, CS.fontMedium]}>{i18n.t('onboarding.chooseAvatar')}</Text>
+          <View
+            style={[
+              CS.padding4x,
+              CS.flexContainer,
+              CS.rowJustifyStart,
+              CS.alignCenter,
+              CS.marginBottom2x,
+              CS.marginTop2x,
+            ]}>
+            <Text style={[CS.fontXXL, CS.colorSecondaryText, CS.fontMedium]}>
+              {i18n.t('onboarding.chooseAvatar')}
+            </Text>
             <View style={[CS.rowJustifyEnd, CS.flexContainer]}>
               <TouchableCustom
                 onPress={this.changeAvatarAction}
-                style={[styles.avatar, CS.marginLeft3x, CS.border, CS.buttonBorder ]}
+                style={[
+                  styles.avatar,
+                  CS.marginLeft3x,
+                  CS.border,
+                  CS.buttonBorder,
+                ]}
                 disabled={this.saving}
-                testID="selectAvatar"
-              >
-                {hasAvatar && <Image source={avatar} style={styles.wrappedAvatar} />}
+                testID="selectAvatar">
+                {hasAvatar && (
+                  <Image source={avatar} style={styles.wrappedAvatar} />
+                )}
 
-                <View style={[styles.tapOverlayView, hasAvatar ? null : CS.backgroundTransparent]}/>
+                <View
+                  style={[
+                    styles.tapOverlayView,
+                    hasAvatar ? null : CS.backgroundTransparent,
+                  ]}
+                />
                 <View style={[styles.overlay, CS.centered]}>
-                  <Icon name="md-cloud-upload" size={40} style={hasAvatar ? CS.colorWhite: CS.colorButton} />
+                  <Icon
+                    name="md-cloud-upload"
+                    size={40}
+                    style={hasAvatar ? CS.colorWhite : CS.colorButton}
+                  />
                 </View>
-                {(this.store.isUploading && this.store.avatarProgress) ? <View style={[styles.tapOverlayView, styles.progress]}>
-                  <Progress.Pie progress={this.store.avatarProgress} size={36} />
-                </View>: null}
+                {this.store.isUploading && this.store.avatarProgress ? (
+                  <View style={[styles.tapOverlayView, styles.progress]}>
+                    <Progress.Pie
+                      progress={this.store.avatarProgress}
+                      size={36}
+                    />
+                  </View>
+                ) : null}
               </TouchableCustom>
             </View>
           </View>
           <Input
             placeholder={i18n.t('onboarding.infoMobileNumber')}
             onChangeText={this.setPhoneNumber}
-            onEndEditing={(e) => console.log(e.nativeEvent.text)}
+            onEndEditing={e => console.log(e.nativeEvent.text)}
             value={this.state.phoneNumber}
             editable={true}
             optional={true}
@@ -184,10 +242,10 @@ export default class ChannelSetupStepNew extends Component {
   next = async () => {
     await this.save();
     this.props.onNext();
-  }
+  };
 
   getFooter = () => {
-    return <OnboardingButtons onNext={this.next} saving={this.state.saving}/>;
+    return <OnboardingButtons onNext={this.next} saving={this.state.saving} />;
   };
 
   render() {
@@ -197,9 +255,11 @@ export default class ChannelSetupStepNew extends Component {
         <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>
           {this.getBody()}
         </View>
-        { this.state.showFooter && <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
-          {this.getFooter()}
-        </View>}
+        {this.state.showFooter && (
+          <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
+            {this.getFooter()}
+          </View>
+        )}
       </View>
     );
   }
@@ -219,10 +279,10 @@ const styles = StyleSheet.create({
   avatar: {
     height: 90,
     width: 90,
-    borderRadius: 45
+    borderRadius: 45,
   },
   progress: {
-    opacity: 0.8
+    opacity: 0.8,
   },
   overlay: {
     position: 'absolute',
@@ -248,6 +308,6 @@ const styles = StyleSheet.create({
   wrappedAvatar: {
     height: 90,
     width: 90,
-    borderRadius: 45
-  }
+    borderRadius: 45,
+  },
 });
