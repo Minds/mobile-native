@@ -73,7 +73,7 @@ class SettingsScreen extends Component {
       await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
 
       Alert.alert(
-        i18n.t('settings.confirmMessage'),
+        i18n.t('confirmMessage'),
         i18n.t('settings.confirmDeleteKeychain2'),
         [
           { text: i18n.t('no'), style: 'cancel' },
@@ -84,7 +84,7 @@ class SettingsScreen extends Component {
     };
 
     Alert.alert(
-      i18n.t('settings.confirmMessage'),
+      i18n.t('confirmMessage'),
       i18n.t('settings.confirmDeleteKeychain1'),
       [
         { text: i18n.t('no'), style: 'cancel' },
