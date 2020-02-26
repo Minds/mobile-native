@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react'
+import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { StyleSheet, View, SafeAreaView, Platform } from 'react-native';
@@ -13,10 +13,9 @@ import ThemedStyles from '../styles/ThemedStyles';
 export default
 @observer
 class SearchComponent extends Component {
-
   state = {
     searchText: '',
-  }
+  };
 
   /**
    * Load search history
@@ -30,7 +29,7 @@ class SearchComponent extends Component {
    */
   toggleSearching = () => {
     this.props.user.toggleSearching();
-  }
+  };
 
   /**
    * Check if searching
@@ -41,15 +40,15 @@ class SearchComponent extends Component {
    * set search text
    */
   search = searchText => {
-    this.setState( {searchText} );
+    this.setState({ searchText });
     this.searchResult.input(searchText);
-  }
+  };
 
   searchSubmit = () => {
     this.searchResult.searchDiscovery();
-  }
+  };
 
-  handleSearchResultRef = ref => this.searchResult = ref;
+  handleSearchResultRef = ref => (this.searchResult = ref);
 
   render() {
     const CS = ThemedStyles.style;
@@ -59,47 +58,64 @@ class SearchComponent extends Component {
           onPress={!this.isSearching() ? this.toggleSearching : null}
           name="search"
           size={24}
-          style={[ styles.button, CS.colorIcon ]}
+          style={[styles.button, CS.colorIcon]}
         />
         <Modal
           isVisible={this.isSearching()}
           backdropColor={ThemedStyles.getColor('secondary_background')}
-          backdropOpacity={ 1 }
-          style={styles.modal}
-        >
-          <SafeAreaView style={[CS.flexContainer, CS.backgroundSecondary]}>
-            <View style={[styles.header, CS.marginBottom4x, Platform.OS === 'android' ? CS.marginTop2x : CS.marginTop4x]}>
-              <View style={[CS.rowJustifyStart, CS.paddingLeft2x]}>
+          backdropOpacity={0.9}
+          style={styles.modal}>
+          <SafeAreaView style={[CS.flexContainer]}>
+            <View style={[CS.backgroundSecondary, styles.body]}>
+              <View
+                style={[
+                  styles.header,
+                  Platform.OS === 'android'
+                    ? CS.marginBottom
+                    : CS.marginBottom3x,
+                  Platform.OS === 'android' ? CS.marginTop2x : CS.marginTop4x,
+                ]}>
+                <View style={[CS.rowJustifyStart, CS.paddingLeft2x]}>
+                  <Icon
+                    name="search"
+                    size={24}
+                    style={[
+                      CS.colorIcon,
+                      CS.marginRight2x,
+                      Platform.OS === 'android' ? CS.centered : null,
+                    ]}
+                  />
+                  <TextInput
+                    placeholder={i18n.t('discovery.search')}
+                    placeholderTextColor={ThemedStyles.getColor(
+                      'secondary_text',
+                    )}
+                    onChangeText={this.search}
+                    value={this.state.searchText}
+                    testID="searchInput"
+                    style={[styles.textInput, CS.colorPrimaryText]}
+                    selectTextOnFocus={true}
+                    onSubmitEditing={this.searchSubmit}
+                  />
+                </View>
                 <Icon
-                  name="search"
-                  size={24}
-                  style={[CS.colorIcon, CS.marginRight2x, Platform.OS === 'android' ? CS.centered : null]}
-                />
-                <TextInput
-                  placeholder={i18n.t('discovery.search')}
-                  placeholderTextColor={ThemedStyles.getColor('secondary_text')}
-                  onChangeText={this.search}
-                  value={this.state.searchText}
-                  testID="searchInput"
-                  style={[styles.textInput, CS.colorPrimaryText]}
-                  selectTextOnFocus={true}
-                  onSubmitEditing={this.searchSubmit}
+                  onPress={this.toggleSearching}
+                  name="close"
+                  size={18}
+                  style={[
+                    styles.button,
+                    CS.colorIcon,
+                    Platform.OS === 'android' ? CS.centered : null,
+                  ]}
                 />
               </View>
-              <Icon
-                onPress={this.toggleSearching}
-                name="close"
-                size={18}
-                style={[styles.button, CS.colorIcon, Platform.OS === 'android' ? CS.centered : null]}
+              <SearchResult
+                user={this.props.user}
+                ref={this.handleSearchResultRef}
+                navigation={this.props.navigation}
+                search={this.search}
               />
             </View>
-
-            <SearchResult
-              user={this.props.user}
-              ref={this.handleSearchResultRef}
-              navigation={this.props.navigation}
-              search={this.search}/>
-
           </SafeAreaView>
         </Modal>
       </View>
@@ -111,14 +127,16 @@ const styles = StyleSheet.create({
   button: {
     paddingHorizontal: 8,
   },
+  body: {
+    minHeight: 300,
+  },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   textInput: {
-    width: '60%'
+    width: '80%',
   },
   modal: {
     margin: 0,
-  }
+  },
 });
