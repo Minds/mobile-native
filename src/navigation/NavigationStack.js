@@ -115,7 +115,7 @@ const AppStack = function(props) {
       <AppStackNav.Screen name="BlogList" component={BlogsListScreen} options={{title: i18n.t('blogs.blogs')}}/>
       <AppStackNav.Screen name="BoostConsole" component={BoostConsoleScreen} options={{title: i18n.t('boost')}}/>
       <AppStackNav.Screen name="BlogView" component={BlogsViewScreen} options={hideHeader}/>
-      <AppStackNav.Screen name="WireFab" component={FabScreen}/>
+      <AppStackNav.Screen name="WireFab" component={FabScreen} options={hideHeader}/>
       <AppStackNav.Screen name="WalletHistory" component={WalletHistoryScreen}/>
       <AppStackNav.Screen name="ViewImage" component={ViewImageScreen} />
       <AppStackNav.Screen name="BlockchainWallet" component={BlockchainWalletScreen} options={{title: i18n.t('blockchain.walletAddresses')}}/>

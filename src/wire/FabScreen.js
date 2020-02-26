@@ -258,14 +258,14 @@ class FabScreen extends Component {
     if (this.props.wire.sending) {
       icon = <ActivityIndicator size={'large'} color={colors.primary}/>
     } else {
-      icon = <Icon size={64} name="ios-flash" style={[CS.colorPrimary, CS.paddingBottom2x]} />
+      icon = <Icon size={64} name="ios-flash" style={[ThemedStyles.style.colorIconActive, CS.paddingBottom2x]} />
     }
 
     const body = !this.props.wire.loaded ? <ActivityIndicator size={'large'} color={colors.primary}/> : this.getBody();
 
     return (
-      <ScrollView contentContainerStyle={[ThemedStyles.style.backgroundSecondary, CS.paddingLeft2x, CS.paddingRight2x, CS.columnAlignCenter, CS.alignCenter, CS.flexContainer, CS.paddingTop2x]}>
-        <Icon size={40} name="ios-close" onPress={() => this.props.navigation.goBack()} style={[CS.marginRight3x, CS.marginTop3x, CS.positionAbsoluteTopRight]}/>
+      <ScrollView contentContainerStyle={[ThemedStyles.style.backgroundSecondary, CS.paddingLeft2x, CS.paddingRight2x, CS.columnAlignCenter, CS.alignCenter, CS.flexContainer, CS.paddingTop2x]} style={CS.flexContainer}>
+        <Icon size={45} name="ios-close" onPress={() => this.props.navigation.goBack()} style={[CS.marginRight3x, CS.marginTop3x, CS.positionAbsoluteTopRight, ThemedStyles.style.colorIcon]}/>
         {icon}
         {body}
       </ScrollView>
