@@ -11,6 +11,7 @@ import logService from './log.service';
 import * as Sentry from '@sentry/react-native';
 
 import { observable, action } from 'mobx';
+import { UserError } from '../UserError';
 
 /**
  * Api Error
@@ -43,7 +44,7 @@ class ApiService {
 
   async parseJSON(response) {
     try {
-      return await response.json(); 
+      return await response.json();
     } catch (error) {
       Sentry.captureMessage(`ISSUE #1572 URL: ${response.url}, STATUS: ${response.status} STATUSTEXT: ${response.statusText}`);
       throw error;
@@ -333,7 +334,7 @@ class ApiService {
 
           resolve(data);
         } else {
-          reject('Ooops: upload error');
+          reject(new UserError('Upload failed'));
         }
       };
       xhr.onerror = function() {
