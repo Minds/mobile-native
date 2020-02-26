@@ -204,6 +204,9 @@ class ThemedStylesStore {
       colorBlack: {
         color: '#000000',
       },
+      colorGreen: {
+        color: theme.green,
+      },
       colorPrimaryText: {
         color: theme.primary_text,
       },

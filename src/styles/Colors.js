@@ -30,6 +30,7 @@ export const LIGHT_THEME = {
   icon_active: '#0085DD',
   link: '#0091FF',
   alert: '#E03C20',
+  green: 'rgb(76, 175, 80)',
 };
 
 export const DARK_THEME = {
@@ -49,4 +50,5 @@ export const DARK_THEME = {
   icon_active: '#0085DD',
   link: '#0091FF',
   alert: '#E03C20',
+  green: 'rgb(76, 175, 80)',
 };
