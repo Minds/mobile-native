@@ -36,13 +36,13 @@ exports[`Boost action component renders correctly 1`] = `
         },
         Object {
           "alignItems": "center",
-          "backgroundColor": "white",
           "borderColor": "#4690D6",
           "borderRadius": 20,
           "borderWidth": 1,
           "margin": 4,
           "padding": 4,
         },
+        undefined,
         undefined,
       ]
     }
@@ -58,9 +58,7 @@ exports[`Boost action component renders correctly 1`] = `
             "paddingLeft": 2,
             "paddingRight": 2,
           },
-          Object {
-            "color": "#4690D6",
-          },
+          undefined,
         ]
       }
     >
