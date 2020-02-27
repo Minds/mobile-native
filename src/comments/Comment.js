@@ -94,7 +94,7 @@ class Comment extends Component {
 
         <View style={styles.contentContainer}>
           <View style={styles.content}>
-            <View style={[styles.textContainer, ThemedStyles.style.backgroundSeparator]}>
+            <View style={[styles.textContainer, ThemedStyles.style.backgroundTertiary]}>
               {
                 this.state.editing ?
                   <CommentEditor setEditing={this.setEditing} comment={comment} store={this.props.store}/>
