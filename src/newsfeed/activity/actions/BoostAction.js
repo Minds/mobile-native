@@ -14,6 +14,7 @@ import { ComponentsStyle } from '../../../styles/Components';
 
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import i18n from '../../../common/services/i18n.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 // prevent double tap in touchable
 const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
@@ -34,12 +35,13 @@ export default class BoostAction extends PureComponent {
             CommonStyle.flexContainer,
             CommonStyle.rowJustifyCenter,
             ComponentsStyle.bluebutton,
-            CommonStyle.transparent
+            CommonStyle.transparent,
+            ThemedStyles.style.borderIconActive,
           ]}
           underlayColor="transparent"
           onPress={this.openBoost}
         >
-          <Text style={[styles.text, CommonStyle.colorPrimary]} numberOfLines={1} adjustsFontSizeToFit={true}>{i18n.t('boost').toUpperCase()}</Text>
+          <Text style={[styles.text, ThemedStyles.style.colorIconActive]} numberOfLines={1} adjustsFontSizeToFit={true}>{i18n.t('boost').toUpperCase()}</Text>
         </TouchableHighlightCustom>
       </View>
     );

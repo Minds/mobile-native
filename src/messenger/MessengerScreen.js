@@ -94,6 +94,8 @@ class MessengerScreen extends Component {
     const loading = messengerList.loading;
     let loadingCmp = null;
 
+    const theme = ThemedStyles.style;
+
     if (loading && !messengerList.refreshing) {
       loadingCmp = <ActivityIndicator style={styles.loading} />
     }
@@ -120,11 +122,12 @@ class MessengerScreen extends Component {
     const footer = this.getFooter();
 
     return (
-      <View style={[styles.container, ThemedStyles.style.backgroundSecondary]}>
+      <View style={[styles.container, theme.backgroundSecondary]}>
         <SearchView
           placeholder={i18n.t('discovery.search')}
           onChangeText={this.searchChange}
           iconRight={iconRight}
+          containerStyle={[theme.backgroundPrimary]}
           iconRightOnPress={this.onLogoutPress}
         />
         {loadingCmp}
@@ -235,7 +238,6 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingBottom: 16,
     paddingRight: 8,
-    borderBottomColor: '#EEE',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {

@@ -265,9 +265,6 @@ class ThemedStylesStore {
       backgroundTertiary: {
         backgroundColor: theme.tertiary_background,
       },
-      backgroundbButtonPrimary: {
-        backgroundColor: theme.primary_button,
-      },
       backgroundButtonPrimary: {
         backgroundColor: theme.primary_button,
       },
@@ -284,6 +281,9 @@ class ThemedStylesStore {
       // borders
       borderPrimary: {
         borderColor: theme.primary_border,
+      },
+      borderIconActive: {
+        borderColor: theme.icon_active,
       },
       // fonts
       fontXS: {
