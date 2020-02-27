@@ -76,6 +76,7 @@ export default class ChannelFeedStore {
     if (refresh) this.feedStore.clear();
 
     this.feedStore.setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
+      .setAsActivities(this.esFeedfilter !== 'blogs')
       .setLimit(12)
       .fetchRemoteOrLocal();
 
@@ -105,6 +106,7 @@ export default class ChannelFeedStore {
 
     this.feedStore.clear();
     this.feedStore.setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
+      .setAsActivities(this.esFeedfilter !== 'blogs')
       .setLimit(12)
       .fetchRemoteOrLocal();
 
@@ -120,6 +122,7 @@ export default class ChannelFeedStore {
 
     this.feedStore.setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
       .setIsTiled(filter === 'images' || filter === 'videos')
+      .setAsActivities(this.esFeedfilter !== 'blogs')
       .clear()
       .fetchRemoteOrLocal();
   }
