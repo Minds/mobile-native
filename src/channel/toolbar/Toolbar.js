@@ -78,7 +78,7 @@ class Toolbar extends Component {
     const theme = ThemedStyles.style;
 
     return (
-      <View style={[styles.container, theme.backgroundPrimary]}>
+      <View style={[styles.container, theme.backgroundSecondary]}>
         <View style={styles.topbar}>
           <TouchableOpacity style={styles.button} onPress={this.filterFeed} testID="FeedButton">
             <Icon name="list" size={ICON_SIZE} style={[styles.icon, filter == 'feed' ? theme.colorIconActive : theme.colorIcon]} />
