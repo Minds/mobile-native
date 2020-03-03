@@ -28,9 +28,11 @@ class NotificationsScreen extends Component {
    * On screen focus
    */
   onFocus = () => {
-    this.props.notifications.list.clearList();
-    this.props.notifications.refresh();
-    this.props.notifications.setUnread(0);
+    // when return to the screen reload only if there are new notifications
+    if (this.props.notifications.unread > 0) {
+      this.props.notifications.refresh();
+      this.props.notifications.setUnread(0);
+    }
   };
 
   /**

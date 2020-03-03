@@ -22,7 +22,6 @@ import i18n from '../common/services/i18n.service';
  * Notifications Store
  */
 class NotificationsStore {
-
   /**
    * Notification list store
    */
@@ -30,7 +29,7 @@ class NotificationsStore {
 
   last = null;
 
-  service = new NotificationsService;
+  service = new NotificationsService();
 
   /**
    * unread notifications counter
