@@ -13,6 +13,7 @@ import {
 import _ from 'lodash';
 
 import { CommonStyle as CS } from '../../styles/Common';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Tag Select Component
@@ -50,6 +51,8 @@ export default class TagSelect extends Component {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
+
     let tags = this.props.tags;
     if (!this.props.disableSort) {
       tags = tags.slice().sort((a, b) => !a.selected && b.selected ? 1 : -1);
@@ -70,14 +73,15 @@ export default class TagSelect extends Component {
                 styles.tag,
                 tagStyle,
                 tag.selected ? tagSelectedStyle : null,
-                (tag.value === this.props.hashtag.hashtag) ? [CS.borderPrimary, CS.border] : null
+                (tag.value === this.props.hashtag.hashtag) ? [CS.borderPrimary, CS.border] : null,
+                theme.backgroundPrimary,
               ]}
               key={i}
               onPress={() => this.toogle(tag)}
               onLongPress={() => this.toogleOne(tag)}
               testID={tag.value + 'TestID'}
             >
-            <Text style={[styles.tagText, textStyle, tag.selected ? [CS.colorPrimary, textSelectedStyle] : null]}>#{tag.value}</Text>
+            <Text style={[styles.tagText, textStyle, tag.selected ? [theme.colorIconSelected, textSelectedStyle] : null]}>#{tag.value}</Text>
           </TouchableOpacity>)}
         </View>
       </ScrollView>
@@ -92,7 +96,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   tag: {
-    backgroundColor: '#efefef',
     borderRadius:18,
     margin: 2,
     flexDirection: 'row',

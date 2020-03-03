@@ -64,9 +64,8 @@ export default class NsfwToggle extends Component {
       <Touchable style={this.props.containerStyle} onPress={this.showDropdown} testID="NsfwToggle">
         <MdIcon
           name="explicit"
-          color={isActive ? Colors.explicit : Colors.darkGreyed}
           size={25}
-          style={[this.props.iconStyle, isActive && this.props.iconActiveStyle]}
+          style={[this.props.iconStyle, isActive && this.props.iconActiveStyle, isActive ? themed.colorAlert : themed.colorIcon]}
         />
 
         {isActive && !this.props.hideLabel && <Text style={this.props.labelStyle}>

@@ -18,6 +18,7 @@ import {
 import {Icon} from 'react-native-elements';
 import { CommonStyle } from '../../styles/Common';
 import i18nService from '../services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Tag Input Component
@@ -74,11 +75,12 @@ export default class TagInput extends Component {
     let tags = null;
     const autoFocus = this.props.noAutofocus ? false : true;
     const ViewCmp = this.props.noScroll ? View : ScrollView;
+    const theme = ThemedStyles.style;
 
     if (!this.props.hideTags) {
       tags = <View style={styles.tagContainer}>
-        {this.props.tags.map((t,i) => <View style={styles.tag} key={i} >
-          <Text style={styles.tagText}>#{t}</Text><Icon name='ios-close' type='ionicon' size={24} onPress={() => this.delete(t)}/>
+        {this.props.tags.map((t,i) => <View style={[styles.tag, theme.backgroundPrimary]} key={i} >
+          <Text style={styles.tagText}>#{t}</Text><Icon name='ios-close' type='ionicon' iconStyle={[theme.colorIcon, theme.paddingLeft]} size={28} onPress={() => this.delete(t)}/>
         </View>
         )}
       </View>
@@ -90,7 +92,7 @@ export default class TagInput extends Component {
         <TextInput
           autoCapitalize="none"
           autoFocus={autoFocus}
-          style={styles.input}
+          style={[styles.input, theme.colorPrimaryText]}
           ref={this.setInputRef}
           value={this.state.text}
           blurOnSubmit={false}
@@ -129,16 +131,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   tag: {
-    backgroundColor: '#efefef',
     borderRadius:18,
+    // alignContent: 'center',
+    alignItems: 'center',
+    // justifyContent: 'center',
     margin: 2,
     flexDirection: 'row',
-    padding: 8,
+    padding: 3,
+    paddingHorizontal: 10,
   },
   tagText: {
     fontFamily: 'Roboto',
-    paddingTop: 4,
-    paddingRight: 5
   },
   tagContainer:{
     flex:1,

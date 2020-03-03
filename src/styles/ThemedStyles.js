@@ -289,6 +289,10 @@ class ThemedStylesStore {
       borderIconActive: {
         borderColor: theme.icon_active,
       },
+      borderIcon: {
+        borderColor: theme.icon,
+      },
+
       // fonts
       fontXS: {
         fontSize: 10,
