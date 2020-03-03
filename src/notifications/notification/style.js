@@ -10,15 +10,11 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingBottom: 16,
     paddingRight: 8,
-    borderBottomColor: ThemedStyles.getColor('primary_border'),
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
     height: 36,
     width: 36,
     borderRadius: 18,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: ThemedStyles.getColor('primary_border'),
   },
   body: {
     marginLeft: 8,
@@ -36,7 +32,6 @@ const styles = StyleSheet.create({
   },
   timestamp: {
     fontSize: 11,
-    color: ThemedStyles.getColor('secondary_text'),
   },
 });
 
