@@ -260,7 +260,13 @@ class CapturePoster extends Component {
   getRemind() {
     const { params } = this.props.route;
     const ShowComponent = params.entity.subtype === 'blog' ? BlogCard : Activity;
-    return <ShowComponent hideTabs={true} entity={params.entity} />;
+    return (
+      <ShowComponent
+        hideTabs={true}
+        entity={params.entity}
+        navigation={this.props.navigation}
+      />
+    );
   }
 
   /**
