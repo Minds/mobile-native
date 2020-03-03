@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 
 import {
-  inject
+  inject, observer
 } from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -42,9 +42,10 @@ const ICON_SIZE = 24;
  */
 export default
 @inject('user')
+@observer
 class MoreScreenNew extends Component {
 
-  navToChannel = () => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })
+  navToChannel = () => this.props.navigation.push('Channel', { guid: this.props.user.me.guid });
 
   /**
    * Get Channel Avatar
@@ -53,6 +54,16 @@ class MoreScreenNew extends Component {
     return this.props.user.me.getAvatarSource('medium');
   }
 
+  navToSubscribers = () => this.props.navigation.push('Subscribers', { guid : this.props.user.me.guid });
+
+  setDarkMode = () => {
+    if (ThemedStyles.theme) {
+      ThemedStyles.setLight();
+    } else {
+      ThemedStyles.setDark();
+    }
+  };
+
   /**
    * Return Options List ready to be rendered
    */
@@ -60,6 +71,7 @@ class MoreScreenNew extends Component {
     const CS = ThemedStyles.style;
 
     let list = [
+      /* Removed as per request in https://gitlab.com/minds/mobile-native/issues/1886
       {
         name: i18n.t('moreScreen.helpSupport'),
         icon: (<Icon name='help-outline' size={ICON_SIZE} style={ CS.colorIcon }/>),
@@ -74,6 +86,7 @@ class MoreScreenNew extends Component {
           shareService.invite(this.props.user.me.guid);
         }
       },
+      */
       {
         name: i18n.t('discovery.groups'),
         icon: (<IconFa name='users' size={ICON_SIZE} style={ CS.colorIcon }/>),
@@ -87,17 +100,17 @@ class MoreScreenNew extends Component {
       list = [
         ...list,
         {
-          name: i18n.t('boost'),
-          icon: (<CIcon name="bank" size={ICON_SIZE} style={ CS.colorIcon }/>),
+          name: i18n.t('moreScreen.wallet'),
+          icon: (<IconFa name="coins" size={ICON_SIZE} style={ CS.colorIcon }/>),
           onPress: () => {
-            this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation });
+            this.props.navigation.navigate('Wallet', {});
           }
         },
         {
-          name: i18n.t('moreScreen.wallet'),
+          name: i18n.t('boost'),
           icon: (<Icon name='trending-up' size={ICON_SIZE} style={ CS.colorIcon }/>),
           onPress: () => {
-            this.props.navigation.navigate('Wallet', {});
+            this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation });
           }
         },
       ];
@@ -112,15 +125,18 @@ class MoreScreenNew extends Component {
           this.props.navigation.navigate('Settings');
         }
       },
-      {
-        name: i18n.t('settings.logout'),
-        hideChevron: true,
-        icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ CS.colorIcon } />),
-        onPress: () => {
-          authService.logout();
-        }
-      }
     ];
+
+    if (featuresService.has('dark-mode')) {
+      const colorIcon = ThemedStyles.theme < 1 ? CS.colorIcon : CS.colorIconActive;
+      const colorText = ThemedStyles.theme < 1 ? CS.colorPrimaryText : CS.colorIconActive;
+      list.push({
+        name: i18n.t('settings.darkMode'),
+        icon: (<CIcon name='theme-light-dark' size={ICON_SIZE} style={ colorIcon } />),
+        onPress: this.setDarkMode,
+        textColor: colorText,
+      });
+    }
 
     return list;
   }
@@ -149,7 +165,7 @@ class MoreScreenNew extends Component {
           </TouchableOpacity>
           <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop2x]}>{channel.name}</Text>
           <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal]}>@{channel.username}</Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal, CS.marginTop3x]}>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal, CS.marginTop3x]} onPress={this.navToSubscribers}>
             {`${abbrev(channel.subscribers_count, 0)} ${i18n.t('subscribers')}   ·   ${abbrev(channel.subscriptions_count, 0)} ${i18n.t('subscriptions')}`}
           </Text>
         </View>
@@ -158,7 +174,7 @@ class MoreScreenNew extends Component {
             <ListItem
               key={i}
               title={l.name}
-              titleStyle={[CS.titleText, CS.colorPrimaryText, CS.padding, CS.fontXXL]}
+              titleStyle={[CS.titleText, CS.padding, CS.fontXXL, l.textColor || CS.colorPrimaryText]}
               containerStyle={[styles.listItem, CS.backgroundPrimary]}
               switchButton={l.switchButton}
               hideChevron ={l.hideChevron}
