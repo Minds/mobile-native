@@ -78,7 +78,7 @@ let topbarHeight = 50;
 let topMargin = 0;
 
 if (Platform.OS == 'ios') {
-  topbarHeight = 80;
+  topbarHeight = 90;
 }
 
 const styles = StyleSheet.create({

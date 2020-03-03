@@ -48,14 +48,20 @@ const styles = StyleSheet.create({
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: 16,
-    left: 15
+    top: Platform.select({
+      ios: 23,
+      android: 16
+    }),
+    left: 16
   },
   unread: {
     zIndex: 9999,
     opacity: 1,
     position: 'absolute',
-    top: 18,
-    left: 17
+    top: Platform.select({
+      ios: 25,
+      android: 18
+    }),
+    left: 18
   },
 });

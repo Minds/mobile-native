@@ -403,13 +403,13 @@ class ThemedStylesStore {
       },
       titleText: {
         fontFamily: 'Roboto',
-        fontSize: 28,
+        fontSize: 26,
         fontWeight: 'bold',
         lineHeight: 44,
       },
       subTitleText: {
         fontFamily: 'Roboto',
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: '500',
         lineHeight: 23,
       },

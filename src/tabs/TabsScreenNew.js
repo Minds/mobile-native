@@ -34,7 +34,7 @@ const Tabs = observer(function({ navigation }) {
     return null;
   }
 
-  const height = isIOS ? (Platform.isPad ? 100 : isIphoneX ? 90 : 70) : 65;
+  const height = isIOS ? (Platform.isPad ? 100 : isIphoneX ? 85 : 70) : 65;
 
   return (
     <Tab.Navigator
@@ -43,12 +43,14 @@ const Tabs = observer(function({ navigation }) {
         showLabel: false,
         showIcon: true,
         activeTintColor: ThemedStyles.getColor('link'),
-        inactiveTintColor: ThemedStyles.getColor('icon'),
+        inactiveTintColor: ThemedStyles.getColor('text_secondary'),
         style: {
           borderTopWidth: 0,
           backgroundColor: ThemedStyles.getColor('secondary_background'),
           height,
-          paddingTop: isIOS && isIphoneX ? 20 : 2,
+          paddingTop: isIOS && isIphoneX ? 30 : 2,
+          paddingLeft: 25,
+          paddingRight: 25,
         },
         tabStyle: {
           height,
@@ -84,7 +86,7 @@ const Tabs = observer(function({ navigation }) {
               break;
             case 'Newsfeed':
               iconName = 'home';
-              iconsize = 33;
+              iconsize = 28;
               break;
             case 'Discovery':
               iconName = 'hashtag';
@@ -93,7 +95,7 @@ const Tabs = observer(function({ navigation }) {
               return <NotificationIcon tintColor={color} size={iconsize} />;
             case 'Capture':
               iconName = 'plus';
-              iconsize = 66;
+              iconsize = 64;
               break;
           }
 
