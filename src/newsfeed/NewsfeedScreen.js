@@ -21,8 +21,8 @@ import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
 import featuresService from '../common/services/features.service';
 import TabIcon from '../tabs/TabIcon';
-import TopbarNew from '../topbar/TopbarNew';
 import i18n from '../common/services/i18n.service';
+import TopbarNewsfeed from '../topbar/TopbarNewsfeed';
 
 /**
  * News Feed Screen
@@ -123,7 +123,7 @@ class NewsfeedScreen extends Component {
 
     return (
       <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
-        <TopbarNew title={i18n.t('tabTitleNewsfeed')} navigation={this.props.navigation}/>
+        <TopbarNewsfeed title={i18n.t('tabTitleNewsfeed')} navigation={this.props.navigation}/>
         { feed }
         {/* <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/> */}
       </View>
