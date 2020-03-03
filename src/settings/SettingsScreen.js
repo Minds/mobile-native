@@ -52,14 +52,6 @@ class SettingsScreen extends Component {
     settingsStore.setLeftHanded(!settingsStore.leftHanded);
   };
 
-  setDarkMode = () => {
-    if (ThemedStyles.theme) {
-      ThemedStyles.setLight();
-    } else {
-      ThemedStyles.setDark();
-    }
-  };
-
   wipeEthereumKeychainAction = () => {
     const _confirm3 = async (confirmation) => {
       await new Promise(r => setTimeout(r, 500)); // Modals have a "cooldown"
@@ -175,22 +167,15 @@ class SettingsScreen extends Component {
         switch: {value: !settingsStore.appLog, onValueChange: this.appLogActivate},
         hideChevron: true,
       },
+      /* Removed as per request in https://gitlab.com/minds/mobile-native/issues/1886
       {
         name: i18n.t('settings.leftHandedMode'),
         icon: (<MaterialCommunityIcons name='hand' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
         switch: {value: settingsStore.leftHanded, onValueChange: this.leftHandedActivate},
         hideChevron: true,
       },
+      */
     ];
-
-    if (featuresService.has('dark-mode')) {
-      list.push({
-        name: i18n.t('settings.darkMode'),
-        icon: (<MaterialCommunityIcons name='theme-light-dark' size={ICON_SIZE} style={[styles.icon, CS.colorPrimaryText]}/>),
-        switch: {value: !!ThemedStyles.theme, onValueChange: this.setDarkMode},
-        hideChevron: true,
-      });
-    }
 
     return (
         <ScrollView style={[styles.scrollView, CS.backgroundPrimary]}>
