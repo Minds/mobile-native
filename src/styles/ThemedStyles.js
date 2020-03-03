@@ -139,7 +139,11 @@ class ThemedStylesStore {
       },
       contentStyle: {
         backgroundColor: theme.secondary_background,
-      }
+      },
+      stackAnimation: Platform.select({
+        ios: 'default',
+        android: 'fade',
+      }),
     };
 
     this.style = StyleSheet.create({

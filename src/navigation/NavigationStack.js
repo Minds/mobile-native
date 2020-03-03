@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import LoadingScreen from '../LoadingScreen';
 import LoginScreen from '../auth/LoginScreen';
@@ -267,6 +267,7 @@ const RootStack = function(props) {
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
+      mode="modal"
       screenOptions={{
         headerShown: false,
         ...ThemedStyles.defaultScreenOptions,
