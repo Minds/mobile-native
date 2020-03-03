@@ -21,19 +21,11 @@ exports[`Activity editor component renders correctly 1`] = `
     rejectResponderTermination={true}
     style={
       Array [
-        Object {
-          "borderColor": "gray",
-          "width": "100%",
-        },
-        Object {
-          "borderWidth": 0.5,
-        },
-        Object {
-          "padding": 5,
-        },
-        Object {
-          "borderRadius": 4,
-        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
       ]
     }
     testID="Post editor input"
@@ -94,9 +86,13 @@ exports[`Activity editor component renders correctly 1`] = `
         text="Cancel"
       />
       <Button
-        color="#4690D6"
+        containerStyle={
+          Array [
+            undefined,
+            undefined,
+          ]
+        }
         disabled={false}
-        inverted={true}
         loading={false}
         onPress={[Function]}
         testID="Post editor save button"

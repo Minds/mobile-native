@@ -273,7 +273,7 @@ exports[`channel header component owner should render correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#FFFFFF",
+                  "color": "white",
                 },
                 undefined,
               ]

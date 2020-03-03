@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 
-import {
-  ActivityIndicator,
-  View,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import { createImageProgress } from 'react-native-image-progress';
@@ -19,6 +14,7 @@ import Touchable from '../common/components/Touchable';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import domain from '../common/helpers/domain';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 const ProgressFastImage = createImageProgress(FastImage);
 
@@ -26,7 +22,7 @@ export default class CaptureMetaPreview extends Component {
   _currentThumbnail = void 0;
 
   state = {
-    imageLoadFailed: false
+    imageLoadFailed: false,
   };
 
   inProgress() {
@@ -42,7 +38,7 @@ export default class CaptureMetaPreview extends Component {
 
   imageError = () => {
     this.setState({ imageLoadFailed: true });
-  }
+  };
 
   getImagePartial() {
     if (!this.props.meta.thumbnail) {
@@ -50,9 +46,11 @@ export default class CaptureMetaPreview extends Component {
     } else if (this.state.imageLoadFailed) {
       return (
         <View style={style.imageLoadError}>
-          <Text
-            style={style.imageLoadErrorText}
-          >{i18n.t('capture.couldNotLoad',{domain: domain(this.props.meta.url)})}</Text>
+          <Text style={style.imageLoadErrorText}>
+            {i18n.t('capture.couldNotLoad', {
+              domain: domain(this.props.meta.url),
+            })}
+          </Text>
         </View>
       );
     }
@@ -72,34 +70,49 @@ export default class CaptureMetaPreview extends Component {
   }
 
   render() {
+    const theme = ThemedStyles.style;
+
     return (
-      <View>
-        {this.inProgress() && <View style={[style.content, style.contentLoading]}>
-          <ActivityIndicator size={'small'} />
-        </View>}
-
-        {!this.inProgress() && <View style={style.content}>
-          {this.getImagePartial()}
-
-          <View style={style.metaContainer}>
-            <Text
-              ellipsizeMode="head"
-              numberOfLines={1}
-              style={style.titleText}
-            >{this.props.meta.title}</Text>
-
-            <Text
-              ellipsizeMode="head"
-              numberOfLines={1}
-              style={style.urlText}
-            >{domain(this.props.meta.url)}</Text>
+      <View style={[theme.backgroundTertiary, theme.margin2x]}>
+        {this.inProgress() && (
+          <View style={[style.content, style.contentLoading]}>
+            <ActivityIndicator size={'small'} />
           </View>
+        )}
 
-        </View>}
+        {!this.inProgress() && (
+          <View style={style.content}>
+            {this.getImagePartial()}
 
-        {!this.inProgress() && <Touchable onPress={this.props.onRemove} style={style.removeRichEmbed}>
-          <IonIcon name="ios-close-circle" size={30} style={style.removeRichEmbedIcon} />
-        </Touchable>}
+            <View style={style.metaContainer}>
+              <Text
+                ellipsizeMode="head"
+                numberOfLines={1}
+                style={style.titleText}>
+                {this.props.meta.title}
+              </Text>
+
+              <Text
+                ellipsizeMode="head"
+                numberOfLines={1}
+                style={style.urlText}>
+                {domain(this.props.meta.url)}
+              </Text>
+            </View>
+          </View>
+        )}
+
+        {!this.inProgress() && (
+          <Touchable
+            onPress={this.props.onRemove}
+            style={style.removeRichEmbed}>
+            <IonIcon
+              name="ios-close-circle"
+              size={30}
+              style={style.removeRichEmbedIcon}
+            />
+          </Touchable>
+        )}
       </View>
     );
   }
@@ -123,17 +136,14 @@ const style = StyleSheet.create({
   metaContainer: {
     padding: 8,
     flexDirection: 'column',
-
   },
   titleText: {
     paddingBottom: 3,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 'bold',
-    color: colors.dark,
   },
   urlText: {
-    fontSize: 12,
-    color: colors.darkGreyed,
+    fontSize: 13,
   },
   removeRichEmbed: {
     position: 'absolute',
@@ -144,10 +154,10 @@ const style = StyleSheet.create({
     elevation: 2,
     shadowOffset: { width: 1, height: 1 },
     shadowColor: 'black',
-    shadowOpacity: 0.65
+    shadowOpacity: 0.65,
   },
   removeRichEmbedIcon: {
-    color: '#FFF',
+    color: 'white',
     shadowColor: '#444',
   },
   imageLoadError: {
@@ -165,5 +175,5 @@ const style = StyleSheet.create({
   },
   imageLoadErrorTextDomain: {
     fontWeight: '600',
-  }
+  },
 });

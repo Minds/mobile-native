@@ -24,7 +24,7 @@ exports[`renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#FFFFFF",
+          "color": "white",
         },
         undefined,
       ]
