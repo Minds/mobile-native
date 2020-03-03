@@ -58,19 +58,19 @@ export default class CaptureTab extends Component {
         { this.state.screen != 'poster' ?
           <View style={{height:125}}>
             <View style={{flex:1, flexDirection:'row', paddingLeft: 1, paddingRight: 1 }}>
-              <TouchableHighlight onPress={ this.gallery } style={ [styles.buttons, ThemedStyles.style.backgroundPrimary] }>
+              <TouchableHighlight onPress={ this.gallery } style={styles.buttons}>
                 <View style={ styles.buttonsWrapper }>
                   <Icon name="md-photos" size={36} style={ ThemedStyles.style.colorIcon }/>
                   <Text style={ [styles.labels, ThemedStyles.style.colorIcon] }>{i18n.t('capture.gallery')}</Text>
                 </View>
               </TouchableHighlight>
-              <TouchableHighlight onPress={ this.photo } style={ [styles.buttons, ThemedStyles.style.backgroundPrimary] }>
+              <TouchableHighlight onPress={ this.photo } style={styles.buttons}>
                 <View style={ styles.buttonsWrapper }>
                   <Icon name="md-camera" size={36} style={ ThemedStyles.style.colorIcon }/>
                   <Text style={ [styles.labels, ThemedStyles.style.colorIcon] }>{i18n.t('capture.photo')}</Text>
                 </View>
               </TouchableHighlight>
-              <TouchableHighlight onPress={ this.video } style={ [styles.buttons, ThemedStyles.style.backgroundPrimary] }>
+              <TouchableHighlight onPress={ this.video } style={styles.buttons}>
                 <View style={ styles.buttonsWrapper }>
                   <Icon name="md-videocam" size={36} style={ ThemedStyles.style.colorIcon }/>
                   <Text style={ [styles.labels, ThemedStyles.style.colorIcon] }>{i18n.t('capture.video')}</Text>

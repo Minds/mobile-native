@@ -37,17 +37,14 @@ exports[`cature tabs component should renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "alignContent": "center",
-              "alignItems": "center",
-              "flex": 1,
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "margin": 1,
-            },
-            undefined,
-          ]
+          Object {
+            "alignContent": "center",
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "margin": 1,
+          }
         }
       >
         <View
@@ -107,17 +104,14 @@ exports[`cature tabs component should renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "alignContent": "center",
-              "alignItems": "center",
-              "flex": 1,
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "margin": 1,
-            },
-            undefined,
-          ]
+          Object {
+            "alignContent": "center",
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "margin": 1,
+          }
         }
       >
         <View
@@ -177,17 +171,14 @@ exports[`cature tabs component should renders correctly 1`] = `
         onResponderTerminationRequest={[Function]}
         onStartShouldSetResponder={[Function]}
         style={
-          Array [
-            Object {
-              "alignContent": "center",
-              "alignItems": "center",
-              "flex": 1,
-              "flexDirection": "column",
-              "justifyContent": "center",
-              "margin": 1,
-            },
-            undefined,
-          ]
+          Object {
+            "alignContent": "center",
+            "alignItems": "center",
+            "flex": 1,
+            "flexDirection": "column",
+            "justifyContent": "center",
+            "margin": 1,
+          }
         }
       >
         <View
