@@ -60,7 +60,7 @@ export default class NotificationsSettingsScreen extends Component {
 // style
 const styles = StyleSheet.create({
   title: {
-    height:35,
+    height:40,
     fontSize: 14,
     padding: 10,
   },

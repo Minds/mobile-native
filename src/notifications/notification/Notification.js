@@ -54,6 +54,7 @@ import ReferralPendingView from './view/ReferralPendingView';
 import ReferralPingView from './view/ReferralPingView';
 
 import styles from './style';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Main Notification row Component
@@ -75,6 +76,26 @@ export default class Notification extends Component {
   }
 
   render() {
+    // set border for notification using themes
+    styles.container = {
+      ...styles.container,
+      ...ThemedStyles.style.borderBottomHair,
+      ...ThemedStyles.style.borderPrimary
+    }
+
+    // set color for timestamp text using themes
+    styles.timestamp = {
+      ...styles.timestamp,
+      ...ThemedStyles.style.colorSecondaryText
+    }
+
+    // set border for avatar using themes
+    styles.avatar = {
+      ...styles.avatar,
+      ...ThemedStyles.style.borderHair,
+      ...ThemedStyles.style.borderPrimary
+    }
+
     const entity = this.props.entity;
 
     const body = this.getBody(entity);
