@@ -115,9 +115,10 @@ export default class Activity extends Component {
         entity={this.props.entity}
       /> : null;
 
+    const borderBottom = this.props.isReminded ? [] : [ThemedStyles.style.borderBottomHair, ThemedStyles.style.borderPrimary];
 
     return (
-        <View style={[styles.container, this.props.isReminded ? null : CommonStyle.hairLineBottom]} onLayout={this.onLayout} testID="ActivityView">
+        <View style={[styles.container, ...borderBottom]} onLayout={this.onLayout} testID="ActivityView">
           <Pinned entity={this.props.entity}/>
           { this.showOwner() }
             { lock }
