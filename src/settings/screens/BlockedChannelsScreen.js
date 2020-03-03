@@ -121,8 +121,8 @@ export default class BlockedChannelsScreen extends Component {
           <View>
             {
               !channel._unblocked ?
-                <Button text="Unblock" color={Colors.darkGreyed} onPress={() => this.unblock(channel)} /> :
-                <Button text="Block" color={Colors.danger} onPress={() => this.block(channel)} />
+                <Button text="Unblock" onPress={() => this.unblock(channel)} /> :
+                <Button text="Block"  onPress={() => this.block(channel)} />
             }
           </View>
         </View>
