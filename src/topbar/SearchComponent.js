@@ -52,6 +52,12 @@ class SearchComponent extends Component {
 
   render() {
     const CS = ThemedStyles.style;
+
+    const border = {
+      borderBottomColor: ThemedStyles.getColor('primary_border'),
+      borderBottomWidth: 1,
+    }
+
     return (
       <View>
         <Icon
@@ -64,9 +70,14 @@ class SearchComponent extends Component {
           isVisible={this.isSearching()}
           backdropColor={ThemedStyles.getColor('secondary_background')}
           backdropOpacity={0.9}
+          useNativeDriver={true}
+          animationInTiming={100}
+          animationOutTiming={100}
+          animationOut="fadeOut"
+          animationIn="fadeIn"
           style={styles.modal}>
           <SafeAreaView style={[CS.flexContainer]}>
-            <View style={[CS.backgroundSecondary, styles.body]}>
+            <View style={[CS.backgroundSecondary, styles.body, border]}>
               <View
                 style={[
                   styles.header,
@@ -128,7 +139,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   body: {
-    minHeight: 300,
+    minHeight: 0,
   },
   header: {
     flexDirection: 'row',

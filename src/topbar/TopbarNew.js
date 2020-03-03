@@ -49,7 +49,7 @@ export default class TopbarNew extends Component {
       <SafeAreaConsumer>
         {insets => (
           <View>
-            <View style={[styles.container, CS.backgroundSecondary, {paddingTop: insets.top}]}>
+            <View style={[styles.container, CS.backgroundSecondary, {paddingTop: insets.top + 10}]}>
               <View style={styles.topbar}>
                 <View style={[styles.topbarLeft, CS.marginLeft4x]}>
                   <Text style={[CS.titleText, CS.colorPrimaryText, styles.lineHeight0]} >{this.props.title}</Text>
@@ -75,7 +75,7 @@ let topbarHeight = 50;
 let topMargin = 0;
 
 if (Platform.OS == 'ios') {
-  topbarHeight = 80;
+  topbarHeight = 90;
 }
 
 const styles = StyleSheet.create({

@@ -176,28 +176,16 @@ class SearchResultComponent extends Component {
     );
   };
 
-  /**
-   * Rendered when no search history
-   */
-  renderEmptyMessageHistory = () => {
-    const CS = ThemedStyles.style;
-
-    return (
-      <View style={[CS.centered]}>
-        <FAIcon name="history" size={36} style={[CS.colorIcon]} />
-        <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
-          {i18n.t('searchBar.emptySearchHistory')}
-        </Text>
-      </View>
-    );
-  };
-
   clearSearchHistory = async () => {
     this.props.user.searchBarClearHistory();
     this.setState({ history: [] });
   };
 
   render() {
+    if (!this.shouldShowSuggested() && this.state.history.length === 0) {
+      return null;
+    }
+
     const CS = ThemedStyles.style;
 
     // If have something to search, render suggested, else, search history
@@ -210,10 +198,6 @@ class SearchResultComponent extends Component {
         style={[
           CS.backgroundPrimary,
           CS.padding2x,
-          {
-            borderTopColor: ThemedStyles.getColor('primary_border'),
-            borderTopWidth: 1,
-          },
         ]}>
         {render}
       </View>
