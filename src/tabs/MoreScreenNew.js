@@ -128,7 +128,7 @@ class MoreScreenNew extends Component {
       const colorIcon =
         ThemedStyles.theme < 1 ? CS.colorIcon : CS.colorIconActive;
       const colorText =
-        ThemedStyles.theme < 1 ? CS.colorPrimaryText : CS.colorIconActive;
+        ThemedStyles.theme < 1 ? CS.colorSecondaryText : CS.colorIconActive;
       list.push({
         name: i18n.t('settings.darkMode'),
         icon: (
