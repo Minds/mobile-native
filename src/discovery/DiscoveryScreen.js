@@ -77,7 +77,7 @@ class DiscoveryScreen extends Component {
    */
   componentDidMount() {
     // load data on enter
-    this.disposeEnter = this.props.navigation.addListener('focus', () => {
+    this.disposeState = this.props.navigation.addListener('state', () => {
       setTimeout(() => {
         const params = this.props.route.params;
         if (params && params.query) {
@@ -107,8 +107,8 @@ class DiscoveryScreen extends Component {
    * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    if (this.disposeEnter) {
-      this.disposeEnter();
+    if (this.disposeState) {
+      this.disposeState();
     }
     // if (this.disposeLeave) {
     //   this.disposeLeave();
