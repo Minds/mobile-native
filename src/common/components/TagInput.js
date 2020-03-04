@@ -93,6 +93,7 @@ export default class TagInput extends Component {
           autoCapitalize="none"
           autoFocus={autoFocus}
           style={[styles.input, theme.colorPrimaryText]}
+          placeholderTextColor={ThemedStyles.getColor('secondary_text')}
           ref={this.setInputRef}
           value={this.state.text}
           blurOnSubmit={false}
