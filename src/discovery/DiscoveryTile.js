@@ -85,9 +85,10 @@ class DiscoveryTile extends Component {
         : this.errorRender();
     }
 
-    if (!entity.is_visible) {
-      return null;
-    }
+    // this optimization have some issues with the changes of the video auto-pause
+    // if (!entity.is_visible) {
+    //   return null;
+    // }
 
     const url = entity.getThumbSource();
 
