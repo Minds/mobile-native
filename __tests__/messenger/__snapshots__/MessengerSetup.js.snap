@@ -10,9 +10,6 @@ exports[`Messenger setup component should render correctly for setup 1`] = `
       Object {
         "padding": 10,
       },
-      Object {
-        "backgroundColor": "#f7f7f7",
-      },
     ]
   }
 >
@@ -96,9 +93,6 @@ exports[`Messenger setup component should render correctly for unlock 1`] = `
       },
       Object {
         "padding": 10,
-      },
-      Object {
-        "backgroundColor": "#f7f7f7",
       },
     ]
   }

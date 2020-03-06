@@ -1,18 +1,18 @@
-import React, {
-  Component
-} from 'react';
+import React, { PureComponent } from 'react';
 
 import {
-  View,
   Text,
   Dimensions,
   Linking,
   ActivityIndicator,
-} from "react-native";
+  View,
+} from 'react-native';
 
 import { WebView } from 'react-native-webview';
+import ThemedStyles from '../styles/ThemedStyles';
+import CenteredLoading from '../common/components/CenteredLoading';
 
-const style = `
+const style = () => `
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,800'>
   <style>
     body, html {
@@ -21,6 +21,8 @@ const style = `
       /*padding-right: 4px;*/
       font-size: 12px;
       letter-spacing: 0;
+      background-color: ${ThemedStyles.getColor('secondary_background')};
+      color: ${ThemedStyles.getColor('primary_text')};
       line-height: 20px;
     }
 
@@ -32,7 +34,7 @@ const style = `
     br, p, ul, ol {
       font-size: 16px;
       font-family: Roboto, Helvetica, Arial, sans-serif;
-      color: #6a6a6a;
+      color: ${ThemedStyles.getColor('secondary_text')};;
       font-weight: 400;
       line-height: 20px;
       text-rendering: optimizeLegibility;
@@ -49,7 +51,7 @@ const style = `
       margin-bottom: 0.58em;
       font-weight: 400;
       font-style: normal;
-      color: rgba(0,0,0,.72);
+      color: ${ThemedStyles.getColor('primary_text')};;
       margin-top: 20px;
 
 
@@ -65,7 +67,7 @@ const style = `
       font-weight: 600;
       font-family: Roboto;
       line-height: 1.1;
-      color: #444;
+      color: ${ThemedStyles.getColor('primary_text')};;
       font-size: 24px;
     }
 
@@ -129,73 +131,129 @@ const injectedJavaScript = `
   true;
 `;
 
-export default class BlogViewHTML extends Component {
+/**
+ * Render html
+ */
+const renderHTML = function(props) {
+  let html = props.html || '';
+  try {
+    //Decode to utf8
+    html = decodeURIComponent(escape(html.trim()));
+  } catch (err) {
+    html = props.html;
+  }
 
-  state = {
-    height: Dimensions.get('window').height,
+  if (html.indexOf('<iframe') >= 0) {
+    const iframeOpen = new RegExp(/\<iframe/g);
+    const iframeClose = new RegExp(/\<\/iframe\>/g);
+    const badSrc = new RegExp(/src=\"\/\//g);
+    html = html.replace(iframeOpen, '<div class="iframewrapper"><iframe');
+    html = html.replace(iframeClose, '</iframe></div>');
+    html = html.replace(badSrc, 'src="https://');
+  }
+
+  return `<!DOCTYPE html><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <html>
+      ${style()}
+      <body class="${props.bodyClass}">
+        ${html}
+      </body>
+    </html>`;
   };
 
-  onMessage = (evt) => {
-    const height = parseInt(evt.nativeEvent.data);
+/**
+ * Blog view html
+ */
+export default class BlogViewHTML extends PureComponent {
+  /**
+   * @var all allowed origins
+   */
+  all = ['*'];
 
-    if (height > this.state.height)
-      this.setState({ height });
+  /**
+   * state
+   */
+  state = {
+    style: { height: Dimensions.get('window').height, flex: 0, height: 0, opacity: 0 },
+    html: {html:''}
+  };
+
+  /**
+   * On event message =
+   */
+  onMessage = evt => {
+    let height = parseInt(evt.nativeEvent.data, 10);
+
+    height += 30;
+
+    if (height > this.state.style.height) {
+      this.setState({ style: { height, flex: 0 } });
+    }
+  };
+
+  /**
+   * Set ref
+   */
+  setRef = ref => {
+    this.webview = ref;
+  };
+
+  /**
+   * On error
+   */
+  onError = () => <Text>Sorry, failed to load. please try again</Text>;
+
+  /**
+   * On nav state change
+   */
+  onStateChange = event => {
+    if (event.url.indexOf('http') > -1) {
+      this.webview.stopLoading();
+      Linking.openURL(event.url);
+    }
+  };
+
+  /**
+   * Render loading
+   */
+  renderLoading = () => (
+    <CenteredLoading/>
+  );
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.html !== prevState.original) {
+      return {
+        html: { html: renderHTML(nextProps), basePath: '' },
+        original: nextProps.html,
+      };
+    }
+    return null;
   }
 
-  renderHTML() {
-    let width = Math.round(Dimensions.get('window').width);
-    let html = this.props.html || '';
-    try {
-      //Decode to utf8
-      html = decodeURIComponent(escape(html.trim()));
-    } catch (err) {
-      html = this.props.html;
-    }
-
-    if (html.indexOf('<iframe') >= 0) {
-      const iframeOpen = new RegExp(/\<iframe/g);
-      const iframeClose = new RegExp(/\<\/iframe\>/g);
-      const badSrc = new RegExp(/src=\"\/\//g);
-      html = html.replace(iframeOpen, '<div class="iframewrapper"><iframe');
-      html = html.replace(iframeClose, '</iframe></div>');
-      html = html.replace(badSrc, 'src="https://');
-    }
-
-    return `<!DOCTYPE html><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-      <html>
-        ${style}
-        <body class="${this.props.bodyClass}">
-          ${html}
-        </body>
-      </html>`;
-  }
-
-
+  /**
+   * Render
+   */
   render() {
     return (
       <WebView
-        originWhitelist={['*']}
-        ref={(ref) => { this.webview = ref; }}
+        originWhitelist={this.all}
+        ref={this.setRef}
         scrollEnabled={false}
-        source={{ html: this.renderHTML(), baseUrl: '' }}
-        mixedContentMode='compatibility'
-        style={{ height: this.state.height}}
+        source={this.state.html}
+        mixedContentMode="compatibility"
+        style={this.state.style}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
-        startInLoadingState={false}
+        // startInLoadingState={true}
         injectedJavaScript={injectedJavaScript}
         onMessage={this.onMessage}
-        renderLoading={() => <ActivityIndicator size={'small'} />}
-        renderError={() => (<Text>Sorry, failed to load. please try again</Text>)}
-        onNavigationStateChange={(event) => {
-          if (event.url.indexOf('http') > -1) {
-            this.webview.stopLoading();
-            Linking.openURL(event.url);
-          }
-        }}
-        >
-      </WebView>
-    )
+        // renderLoading={this.renderLoading}
+        startInLoadingState={true}
+        renderLoading={() => (<View style={{flex: 1, backgroundColor: 'green'}}/>)}
+        renderError={this.onError}
+        onNavigationStateChange={this.onStateChange}
+      />
+    );
   }
 }

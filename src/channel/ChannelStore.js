@@ -110,18 +110,30 @@ export default class ChannelStore {
   async uploadAvatar(avatar) {
     this.setIsUploading(true);
     this.avatarProgress = 0;
-    const avatarResult = await channelService.upload(this.guid, 'avatar', {
-      uri: avatar.uri,
-      type: avatar.type,
-      name: avatar.fileName || 'avatar.jpg'
-    }, e => {
-      this.setAvatarProgress(e.loaded / e.total);
-    });
 
-    this.setAvatarProgress(100);
+    let avatarResult;
 
-    this.setIsUploading(false);
-    if (avatarResult.error) return avatarResult.error;
+    try {
+      avatarResult = await channelService.upload(
+        this.guid,
+        'avatar',
+        {
+          uri: avatar.uri,
+          type: avatar.type,
+          name: avatar.fileName || 'avatar.jpg',
+        },
+        e => {
+          this.setAvatarProgress(e.loaded / e.total);
+        },
+      );
+
+      this.setAvatarProgress(100);
+    } catch (error) {
+      this.setAvatarProgress(0);
+      throw error;
+    } finally {
+      this.setIsUploading(false);
+    }
   }
 
   @action

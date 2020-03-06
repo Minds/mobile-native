@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {observer, inject} from 'mobx-react/native';
+import {observer, inject} from 'mobx-react';
 
 import {MINDS_CDN_URI} from '../config/Config';
 
@@ -11,6 +11,7 @@ import colors from '../styles/Colors';
 import i18n from '../common/services/i18n.service';
 import {CommonStyle as CS} from '../styles/Common';
 import {FLAG_JOIN} from '../common/Permissions';
+import ThemedStyles from '../styles/ThemedStyles';
 
 export default
 @inject('groupView')
@@ -53,13 +54,14 @@ class GroupsListItem extends Component {
     const button = this.getButton();
     return (
       <ListItem
-        containerStyle={CS.noBorderBottom}
+        containerStyle={[CS.noBorderBottom, ThemedStyles.style.backgroundSecondary]}
         title={this.props.group.name}
         keyExtractor={item => item.rowKey}
         leftAvatar={this.state.source}
         subtitle={i18n.t('groups.listMembersCount', {
           count: this.props.group['members:count'],
         })}
+        subtitleStyle={ThemedStyles.style.colorSecondaryText}
         onPress={this._onPress}
         hideChevron={!button}
         rightIcon={button}
@@ -81,9 +83,9 @@ class GroupsListItem extends Component {
    */
   getButton = () => {
     return this.props.group['is:member'] ? (
-      <Button text="Leave" onPress={this.leave} color={colors.darkGreyed} />
+      <Button text="Leave" onPress={this.leave} />
     ) : (
-      <Button text="Join" onPress={this.join} color={colors.darkGreyed} />
+      <Button text="Join" onPress={this.join} />
     );
   };
 

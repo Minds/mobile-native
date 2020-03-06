@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 
 import TransparentButton from '../../../common/components/TransparentButton';
 
@@ -31,7 +31,7 @@ export default class BlockchainWalletImportScreen extends Component {
   };
 
   componentWillMount() {
-    const params = this.props.navigation.state.params || {};
+    const params = this.props.route.params || {};
 
     this.setState({
       importingRemote: !!params.address,
@@ -81,7 +81,7 @@ export default class BlockchainWalletImportScreen extends Component {
   async import() {
     await this.props.blockchainWallet.import(this.state.privateKey);
 
-    const params = this.props.navigation.state.params || {};
+    const params = this.props.route.params || {};
 
     if (params.onSuccess) {
       params.onSuccess();

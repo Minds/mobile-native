@@ -7,6 +7,9 @@ import {
 } from 'react-native-gesture-handler';
 
 import Animated, { Easing } from 'react-native-reanimated';
+import FastImage from 'react-native-fast-image';
+
+const AnimatedFastImage = Animated.createAnimatedComponent(FastImage);
 
 const {
   set,
@@ -381,7 +384,7 @@ export default class ImageViewer extends Component {
               simultaneousHandlers={this.pinchRef}
               onGestureEvent={this._onPanEvent}
               onHandlerStateChange={this._onPanEvent}>
-              <Animated.Image
+              <AnimatedFastImage
                 style={[
                   styles.image,
                   {height: this.props.height, width: this.props.width},

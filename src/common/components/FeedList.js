@@ -6,7 +6,7 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import { inject, observer } from 'mobx-react/native'
+import { inject, observer } from 'mobx-react'
 
 import Activity from '../../newsfeed/activity/Activity';
 import TileElement from '../../newsfeed/TileElement';
@@ -15,6 +15,7 @@ import { ComponentsStyle } from '../../styles/Components';
 import ErrorLoading from './ErrorLoading';
 import ErrorBoundary from './ErrorBoundary';
 import i18n from '../services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * News feed list component
@@ -124,7 +125,7 @@ export default class FeedList extends Component {
         onEndReached={this.loadMore}
         // onEndReachedThreshold={0}
         numColumns={feedStore.isTiled ? 3 : 1}
-        style={styles.listView}
+        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.backgroundSecondary]}
         initialNumToRender={6}
         windowSize={11}
         // removeClippedSubviews={true}
@@ -175,10 +176,15 @@ export default class FeedList extends Component {
   /**
    * On viewable item changed
    */
-  onViewableItemsChanged = ({viewableItems}) => {
-    viewableItems.forEach((item) => {
+  onViewableItemsChanged = (change) => {
+    change.viewableItems.forEach((item) => {
       this.props.feedStore.addViewed(item.item);
     });
+    change.changed.forEach(c => {
+      if (c.item.setVisible) {
+        c.item.setVisible(c.isViewable);
+      }
+    })
   }
 
   /**
@@ -236,11 +242,3 @@ export default class FeedList extends Component {
     />;
   }
 }
-
-const styles = StyleSheet.create({
-  listView: {
-    //paddingTop: 20,
-    backgroundColor: '#FFF',
-    flex: 1,
-  }
-});

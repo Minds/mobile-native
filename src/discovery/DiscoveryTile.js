@@ -4,11 +4,12 @@ import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 
-import {observer} from 'mobx-react/native';
+import {observer} from 'mobx-react';
 
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
 import {CommonStyle as CS} from '../styles/Common';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 export default
 @observer
@@ -84,9 +85,10 @@ class DiscoveryTile extends Component {
         : this.errorRender();
     }
 
-    if (!entity.is_visible) {
-      return null;
-    }
+    // this optimization have some issues with the changes of the video auto-pause
+    // if (!entity.is_visible) {
+    //   return null;
+    // }
 
     const url = entity.getThumbSource();
 
@@ -108,7 +110,7 @@ class DiscoveryTile extends Component {
       <View
         style={[
           CS.positionAbsoluteTop,
-          CS.backgroundGreyed,
+          ThemedStyles.style.backgroundSeparator,
           CS.centered,
           styles.boundary,
         ]}>
@@ -120,7 +122,7 @@ class DiscoveryTile extends Component {
       <TouchableOpacity
         onPress={this._onPress}
         style={[this.state.style, styles.tile]}>
-        <View style={[CS.flexContainer, CS.backgroundGreyed]}>
+        <View style={[CS.flexContainer, ThemedStyles.style.backgroundSeparator]}>
           {boundary}
           <FastImage
             source={url}

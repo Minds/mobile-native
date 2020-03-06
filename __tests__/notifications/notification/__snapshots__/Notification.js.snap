@@ -5,8 +5,6 @@ exports[`notification component renders correctly for every type 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -33,9 +31,7 @@ exports[`notification component renders correctly for every type 1`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -67,8 +63,7 @@ exports[`notification component renders correctly for every type 1`] = `
           <Text
             style={
               Object {
-                "color": "#444",
-                "fontWeight": "bold",
+                "fontWeight": "600",
               }
             }
           >
@@ -81,7 +76,6 @@ exports[`notification component renders correctly for every type 1`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -97,8 +91,6 @@ exports[`notification component renders correctly for every type 2`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -125,9 +117,7 @@ exports[`notification component renders correctly for every type 2`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -159,8 +149,7 @@ exports[`notification component renders correctly for every type 2`] = `
           <Text
             style={
               Object {
-                "color": "#444",
-                "fontWeight": "bold",
+                "fontWeight": "600",
               }
             }
           >
@@ -173,7 +162,6 @@ exports[`notification component renders correctly for every type 2`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -189,8 +177,6 @@ exports[`notification component renders correctly for every type 3`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -217,9 +203,7 @@ exports[`notification component renders correctly for every type 3`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -251,8 +235,7 @@ exports[`notification component renders correctly for every type 3`] = `
           <Text
             style={
               Object {
-                "color": "#444",
-                "fontWeight": "bold",
+                "fontWeight": "600",
               }
             }
           >
@@ -265,7 +248,6 @@ exports[`notification component renders correctly for every type 3`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -281,8 +263,6 @@ exports[`notification component renders correctly for every type 4`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -309,9 +289,7 @@ exports[`notification component renders correctly for every type 4`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -368,8 +346,7 @@ exports[`notification component renders correctly for every type 4`] = `
           <Text
             style={
               Object {
-                "color": "#444",
-                "fontWeight": "bold",
+                "fontWeight": "600",
               }
             }
           >
@@ -381,7 +358,6 @@ exports[`notification component renders correctly for every type 4`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -397,8 +373,6 @@ exports[`notification component renders correctly for every type 5`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -425,9 +399,7 @@ exports[`notification component renders correctly for every type 5`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -484,8 +456,7 @@ exports[`notification component renders correctly for every type 5`] = `
           <Text
             style={
               Object {
-                "color": "#444",
-                "fontWeight": "bold",
+                "fontWeight": "600",
               }
             }
           >
@@ -499,7 +470,6 @@ exports[`notification component renders correctly for every type 5`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -515,8 +485,6 @@ exports[`notification component renders correctly for every type 6`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -543,9 +511,7 @@ exports[`notification component renders correctly for every type 6`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -601,8 +567,7 @@ exports[`notification component renders correctly for every type 6`] = `
             <Text
               style={
                 Object {
-                  "color": "#444",
-                  "fontWeight": "bold",
+                  "fontWeight": "600",
                 }
               }
             >
@@ -615,7 +580,6 @@ exports[`notification component renders correctly for every type 6`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -631,8 +595,6 @@ exports[`notification component renders correctly for every type 7`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -659,9 +621,7 @@ exports[`notification component renders correctly for every type 7`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -693,8 +653,7 @@ exports[`notification component renders correctly for every type 7`] = `
           <Text
             style={
               Object {
-                "color": "#444",
-                "fontWeight": "bold",
+                "fontWeight": "600",
               }
             }
           >
@@ -707,7 +666,6 @@ exports[`notification component renders correctly for every type 7`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -723,8 +681,6 @@ exports[`notification component renders correctly for every type 8`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -751,9 +707,7 @@ exports[`notification component renders correctly for every type 8`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -784,7 +738,6 @@ exports[`notification component renders correctly for every type 8`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -800,8 +753,6 @@ exports[`notification component renders correctly for every type 9`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -828,9 +779,7 @@ exports[`notification component renders correctly for every type 9`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -862,8 +811,7 @@ exports[`notification component renders correctly for every type 9`] = `
           <Text
             style={
               Object {
-                "color": "#444",
-                "fontWeight": "bold",
+                "fontWeight": "600",
               }
             }
           >
@@ -876,8 +824,7 @@ exports[`notification component renders correctly for every type 9`] = `
           onPress={[Function]}
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -888,7 +835,6 @@ exports[`notification component renders correctly for every type 9`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -904,8 +850,6 @@ exports[`notification component renders correctly for every type 10`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -932,9 +876,7 @@ exports[`notification component renders correctly for every type 10`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -966,8 +908,7 @@ exports[`notification component renders correctly for every type 10`] = `
           <Text
             style={
               Object {
-                "color": "#444",
-                "fontWeight": "bold",
+                "fontWeight": "600",
               }
             }
           >
@@ -980,7 +921,6 @@ exports[`notification component renders correctly for every type 10`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -996,8 +936,6 @@ exports[`notification component renders correctly for every type 11`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1024,9 +962,7 @@ exports[`notification component renders correctly for every type 11`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1061,8 +997,7 @@ exports[`notification component renders correctly for every type 11`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -1076,8 +1011,7 @@ exports[`notification component renders correctly for every type 11`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -1088,7 +1022,6 @@ exports[`notification component renders correctly for every type 11`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1104,8 +1037,6 @@ exports[`notification component renders correctly for every type 12`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1132,9 +1063,7 @@ exports[`notification component renders correctly for every type 12`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1163,7 +1092,6 @@ exports[`notification component renders correctly for every type 12`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1179,8 +1107,6 @@ exports[`notification component renders correctly for every type 13`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1207,9 +1133,7 @@ exports[`notification component renders correctly for every type 13`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1246,8 +1170,7 @@ exports[`notification component renders correctly for every type 13`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -1259,8 +1182,7 @@ exports[`notification component renders correctly for every type 13`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -1271,7 +1193,6 @@ exports[`notification component renders correctly for every type 13`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1287,8 +1208,6 @@ exports[`notification component renders correctly for every type 14`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1315,9 +1234,7 @@ exports[`notification component renders correctly for every type 14`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1345,8 +1262,7 @@ exports[`notification component renders correctly for every type 14`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -1359,7 +1275,6 @@ exports[`notification component renders correctly for every type 14`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1375,8 +1290,6 @@ exports[`notification component renders correctly for every type 15`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1403,9 +1316,7 @@ exports[`notification component renders correctly for every type 15`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1431,8 +1342,7 @@ exports[`notification component renders correctly for every type 15`] = `
         onPress={[Function]}
         style={
           Object {
-            "color": "#444",
-            "fontWeight": "bold",
+            "fontWeight": "600",
           }
         }
       >
@@ -1442,7 +1352,6 @@ exports[`notification component renders correctly for every type 15`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1458,8 +1367,6 @@ exports[`notification component renders correctly for every type 16`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1486,9 +1393,7 @@ exports[`notification component renders correctly for every type 16`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1525,8 +1430,7 @@ exports[`notification component renders correctly for every type 16`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -1540,8 +1444,7 @@ exports[`notification component renders correctly for every type 16`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -1552,7 +1455,6 @@ exports[`notification component renders correctly for every type 16`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1568,8 +1470,6 @@ exports[`notification component renders correctly for every type 17`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1596,9 +1496,7 @@ exports[`notification component renders correctly for every type 17`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1629,7 +1527,6 @@ exports[`notification component renders correctly for every type 17`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1645,8 +1542,6 @@ exports[`notification component renders correctly for every type 18`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1673,9 +1568,7 @@ exports[`notification component renders correctly for every type 18`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1706,7 +1599,6 @@ exports[`notification component renders correctly for every type 18`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1722,8 +1614,6 @@ exports[`notification component renders correctly for every type 19`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1750,9 +1640,7 @@ exports[`notification component renders correctly for every type 19`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1789,8 +1677,7 @@ exports[`notification component renders correctly for every type 19`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -1802,8 +1689,7 @@ exports[`notification component renders correctly for every type 19`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -1814,7 +1700,6 @@ exports[`notification component renders correctly for every type 19`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1830,8 +1715,6 @@ exports[`notification component renders correctly for every type 20`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1858,9 +1741,7 @@ exports[`notification component renders correctly for every type 20`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1886,8 +1767,7 @@ exports[`notification component renders correctly for every type 20`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -1900,7 +1780,6 @@ exports[`notification component renders correctly for every type 20`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1916,8 +1795,6 @@ exports[`notification component renders correctly for every type 21`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -1944,9 +1821,7 @@ exports[`notification component renders correctly for every type 21`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -1972,8 +1847,7 @@ exports[`notification component renders correctly for every type 21`] = `
         onPress={[Function]}
         style={
           Object {
-            "color": "#444",
-            "fontWeight": "bold",
+            "fontWeight": "600",
           }
         }
       >
@@ -1983,7 +1857,6 @@ exports[`notification component renders correctly for every type 21`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -1999,8 +1872,6 @@ exports[`notification component renders correctly for every type 22`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -2027,9 +1898,7 @@ exports[`notification component renders correctly for every type 22`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -2071,7 +1940,6 @@ exports[`notification component renders correctly for every type 22`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -2087,8 +1955,6 @@ exports[`notification component renders correctly for every type 23`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -2115,9 +1981,7 @@ exports[`notification component renders correctly for every type 23`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -2146,7 +2010,6 @@ exports[`notification component renders correctly for every type 23`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -2162,8 +2025,6 @@ exports[`notification component renders correctly for every type 24`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -2190,9 +2051,7 @@ exports[`notification component renders correctly for every type 24`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -2221,7 +2080,6 @@ exports[`notification component renders correctly for every type 24`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -2237,8 +2095,6 @@ exports[`notification component renders correctly for every type 25`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -2265,9 +2121,7 @@ exports[`notification component renders correctly for every type 25`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -2298,7 +2152,6 @@ exports[`notification component renders correctly for every type 25`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -2314,8 +2167,6 @@ exports[`notification component renders correctly for every type 26`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -2342,9 +2193,7 @@ exports[`notification component renders correctly for every type 26`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -2371,8 +2220,7 @@ exports[`notification component renders correctly for every type 26`] = `
         <Text
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -2384,7 +2232,6 @@ exports[`notification component renders correctly for every type 26`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -2400,8 +2247,6 @@ exports[`notification component renders correctly for every type 27`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -2428,9 +2273,7 @@ exports[`notification component renders correctly for every type 27`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -2456,8 +2299,7 @@ exports[`notification component renders correctly for every type 27`] = `
         onPress={[Function]}
         style={
           Object {
-            "color": "#444",
-            "fontWeight": "bold",
+            "fontWeight": "600",
           }
         }
       >
@@ -2467,7 +2309,6 @@ exports[`notification component renders correctly for every type 27`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }
@@ -2483,8 +2324,6 @@ exports[`notification component renders correctly for every type 28`] = `
   style={
     Object {
       "alignItems": "center",
-      "borderBottomColor": "#EEE",
-      "borderBottomWidth": 0.5,
       "flexDirection": "row",
       "flexWrap": "wrap",
       "paddingBottom": 16,
@@ -2511,9 +2350,7 @@ exports[`notification component renders correctly for every type 28`] = `
     }
     style={
       Object {
-        "borderColor": "#EEE",
         "borderRadius": 18,
-        "borderWidth": 0.5,
         "height": 36,
         "width": 36,
       }
@@ -2544,8 +2381,7 @@ exports[`notification component renders correctly for every type 28`] = `
           onPress={[Function]}
           style={
             Object {
-              "color": "#444",
-              "fontWeight": "bold",
+              "fontWeight": "600",
             }
           }
         >
@@ -2557,7 +2393,6 @@ exports[`notification component renders correctly for every type 28`] = `
     <Text
       style={
         Object {
-          "color": "#888",
           "fontSize": 11,
         }
       }

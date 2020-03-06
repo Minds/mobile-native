@@ -192,7 +192,7 @@ export default class ActivityActionSheet extends Component {
         { cancelable: false }
       );
 
-      if (this.props.navigation.state.routeName == 'Activity') {
+      if (this.props.route.routeName == 'Activity') {
         this.props.navigation.goBack();
       }
     } catch (err) {

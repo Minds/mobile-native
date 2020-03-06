@@ -4,26 +4,38 @@ exports[`LoginForm component should renders correctly 1`] = `
 <View
   style={
     Array [
-      Object {
-        "flex": 1,
-      },
+      undefined,
+      undefined,
     ]
   }
 >
-  <RCTScrollView
+  <Text
     style={
       Array [
-        Object {
-          "flex": 1,
-        },
+        undefined,
+        undefined,
+        undefined,
       ]
     }
   >
-    <View>
+    Login
+  </Text>
+  <View>
+    <View
+      style={
+        Array [
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "space-between",
+          },
+        ]
+      }
+    >
       <View
         style={
           Object {
-            "flex": 6,
+            "flexDirection": "row",
+            "justifyContent": "space-between",
           }
         }
       >
@@ -31,280 +43,166 @@ exports[`LoginForm component should renders correctly 1`] = `
           style={
             Array [
               Object {
+                "color": "#AEB0B8",
                 "fontFamily": "Roboto",
-                "fontSize": 28,
-                "fontWeight": "bold",
-                "lineHeight": 44,
-              },
-              Object {
-                "color": "#4F4F50",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "marginBottom": 5,
               },
             ]
           }
         >
-          Login
+          Username
         </Text>
-        <View
-          style={
-            Object {
-              "marginBottom": 10,
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "flexDirection": "row",
-                  "justifyContent": "space-between",
-                },
-                Object {
-                  "marginBottom": 5,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Object {
-                  "flexDirection": "row",
-                  "justifyContent": "space-between",
-                }
-              }
-            >
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#AEB0B8",
-                      "fontFamily": "Roboto",
-                      "fontSize": 14,
-                    },
-                  ]
-                }
-              >
-                Username
-              </Text>
-            </View>
-          </View>
-          <TextInput
-            allowFontScaling={true}
-            autoCapitalize="none"
-            editable={false}
-            onChangeText={[Function]}
-            placeholder=""
-            placeholderTextColor="#444"
-            rejectResponderTermination={true}
-            returnKeyType="done"
-            style={
-              Array [
-                Object {
-                  "backgroundColor": "transparent",
-                  "borderColor": "#D8D8D8",
-                  "borderRadius": 2,
-                  "borderWidth": 1,
-                  "color": "#4F4F50",
-                  "fontFamily": "Roboto",
-                  "fontSize": 16,
-                  "height": 50,
-                  "lineHeight": 21,
-                  "padding": 10,
-                },
-                undefined,
-              ]
-            }
-            testID="usernameInput"
-            underlineColorAndroid="transparent"
-            value=""
-          />
-        </View>
-        <View>
-          <View
-            style={
-              Object {
-                "marginBottom": 10,
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "space-between",
-                  },
-                  Object {
-                    "marginBottom": 5,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "flexDirection": "row",
-                    "justifyContent": "space-between",
-                  }
-                }
-              >
-                <Text
-                  style={
-                    Array [
-                      Object {
-                        "color": "#AEB0B8",
-                        "fontFamily": "Roboto",
-                        "fontSize": 14,
-                      },
-                    ]
-                  }
-                >
-                  Password
-                </Text>
-              </View>
-            </View>
-            <TextInput
-              allowFontScaling={true}
-              autoCapitalize="none"
-              editable={false}
-              onChangeText={[Function]}
-              placeholder=""
-              placeholderTextColor="#444"
-              rejectResponderTermination={true}
-              returnKeyType="done"
-              secureTextEntry={true}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderColor": "#D8D8D8",
-                    "borderRadius": 2,
-                    "borderWidth": 1,
-                    "color": "#4F4F50",
-                    "fontFamily": "Roboto",
-                    "fontSize": 16,
-                    "height": 50,
-                    "lineHeight": 21,
-                    "padding": 10,
-                  },
-                  undefined,
-                ]
-              }
-              testID="userPasswordInput"
-              underlineColorAndroid="transparent"
-              value=""
-            />
-          </View>
-          <Text
-            allowFontScaling={false}
-            onPress={[Function]}
-            style={
-              Array [
-                Object {
-                  "color": undefined,
-                  "fontSize": 25,
-                },
-                Object {
-                  "color": "#404A4E",
-                  "position": "absolute",
-                  "right": 8,
-                  "top": 33,
-                },
-                Object {
-                  "fontFamily": "Ionicons",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
       </View>
+    </View>
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      editable={false}
+      onChangeText={[Function]}
+      placeholder=""
+      placeholderTextColor="#444"
+      rejectResponderTermination={true}
+      returnKeyType="done"
+      style={
+        Array [
+          undefined,
+          undefined,
+        ]
+      }
+      testID="usernameInput"
+      underlineColorAndroid="transparent"
+      value=""
+    />
+  </View>
+  <View>
+    <View>
       <View
         style={
           Array [
             Object {
-              "flex": 6,
-              "marginTop": 30,
+              "flexDirection": "row",
+              "justifyContent": "space-between",
             },
           ]
         }
       >
         <View
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "alignItems": "center",
-              "backgroundColor": "#5DBAC0",
-              "borderColor": "#5DBAC0",
-              "borderRadius": 2,
-              "borderWidth": 1,
               "flexDirection": "row",
-              "height": 60,
-              "justifyContent": "center",
-              "margin": 4,
-              "marginLeft": 0,
-              "marginRight": 0,
-              "opacity": 1,
-              "padding": 4,
+              "justifyContent": "space-between",
             }
           }
-          testID="loginButton"
         >
           <Text
             style={
               Array [
                 Object {
-                  "color": "#4690D6",
-                },
-                Object {
-                  "color": "white",
-                  "fontSize": 20,
-                  "fontWeight": "500",
-                },
-              ]
-            }
-          >
-             
-            Login
-             
-          </Text>
-        </View>
-        <View
-          style={
-            Object {
-              "marginTop": 20,
-            }
-          }
-        >
-          <Text
-            onPress={[Function]}
-            style={
-              Array [
-                Object {
-                  "color": "#0091FF",
-                  "fontSize": 15,
-                  "textDecorationLine": "underline",
+                  "color": "#AEB0B8",
+                  "fontFamily": "Roboto",
+                  "fontSize": 16,
+                  "fontWeight": "600",
+                  "marginBottom": 5,
                 },
               ]
             }
           >
-            Forgot your password?
+            Password
           </Text>
         </View>
       </View>
+      <TextInput
+        allowFontScaling={true}
+        autoCapitalize="none"
+        editable={false}
+        onChangeText={[Function]}
+        placeholder=""
+        placeholderTextColor="#444"
+        rejectResponderTermination={true}
+        returnKeyType="done"
+        secureTextEntry={true}
+        style={
+          Array [
+            undefined,
+            undefined,
+          ]
+        }
+        testID="userPasswordInput"
+        underlineColorAndroid="transparent"
+        value=""
+      />
     </View>
-  </RCTScrollView>
+    <Text
+      allowFontScaling={false}
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "color": undefined,
+            "fontSize": 25,
+          },
+          undefined,
+          Object {
+            "fontFamily": "Ionicons",
+            "fontStyle": "normal",
+            "fontWeight": "normal",
+          },
+          Object {},
+        ]
+      }
+    >
+      
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#5DBAC0",
+        "borderRadius": 2,
+        "opacity": 1,
+      }
+    }
+    testID="loginButton"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "white",
+          },
+          undefined,
+        ]
+      }
+    >
+       
+      Login
+       
+    </Text>
+  </View>
+  <View>
+    <Text
+      onPress={[Function]}
+      style={
+        Array [
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      Forgot your password?
+    </Text>
+  </View>
 </View>
 `;

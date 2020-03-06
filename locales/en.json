@@ -482,7 +482,8 @@
     "confirmDeleteKeychain1":"This will delete your Ethereum keychain from this phone. Ensure you backed up the private keys. If you didn't you can lose access to all your funds. There's NO UNDO!",
     "pushNotification":"Push Notifications",
     "regenerateKey":"Regenerate messenger keys",
-    "deleteBlockchain":"Delete blockchain keychain"
+    "deleteBlockchain":"Delete blockchain keychain",
+    "darkMode":"Dark mode"
   },
   "comingSoon":{
     "try":"Try the canary app at",
@@ -653,7 +654,8 @@
     "code":"Code",
     "terms":"Terms",
     "privacy":"Privacy",
-    "exit":"Exit"
+    "exit":"Exit",
+    "wallet":"Wallet"
   },
   "userTypeAhead":{
     "placeholder": "Start typing a username to search...",
@@ -681,6 +683,12 @@
   "update": {
     "title":"Update to v{{version}}"
   },
+  "searchBar": {
+    "searchHistory":"Search History",
+    "emptySearchHistory":"You don't have search history yet",
+    "emptySuggested":"We couldn't find what you look for",
+    "clear": "Clear"
+  },
   "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
   "postCantBeShown":"This post can't be shown on apps installed via the Play Store.",
@@ -692,7 +700,7 @@
   "tapCopyError":"Tap to copy the error",
   "save":"Save",
   "edit":"Edit",
-  "goback":"GO BACK",
+  "goback":"Go back",
   "copy":"Copy",
   "language":"Language",
   "categories":"Categories",
@@ -795,5 +803,9 @@
   "requests":"Requests",
   "notAllowed":"You are not allowed",
   "undo":"Undo",
-  "validate":"VALIDATE"
+  "validate":"VALIDATE",
+  "tabTitleNewsfeed":"Home",
+  "tabTitleNotifications":"Notifications",
+  "tabTitleDiscovery":"Discovery",
+  "linkCopied":"Link copied to clipboard"
 }

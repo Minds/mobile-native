@@ -8,6 +8,7 @@ import Colors from '../../../styles/Colors';
 import autobind from '../../helpers/autobind';
 import testID from '../../helpers/testID';
 import i18n from '../../services/i18n.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 export default class NsfwToggle extends Component {
   constructor(props) {
@@ -57,13 +58,14 @@ export default class NsfwToggle extends Component {
 
   render() {
     const isActive = Boolean(this.props.value && this.props.value.length);
+    const themed = ThemedStyles.style;
+
     const button = (
       <Touchable style={this.props.containerStyle} onPress={this.showDropdown} testID="NsfwToggle">
         <MdIcon
           name="explicit"
-          color={isActive ? Colors.explicit : Colors.darkGreyed}
           size={25}
-          style={[this.props.iconStyle, isActive && this.props.iconActiveStyle]}
+          style={[this.props.iconStyle, isActive && this.props.iconActiveStyle, isActive ? themed.colorAlert : themed.colorIcon]}
         />
 
         {isActive && !this.props.hideLabel && <Text style={this.props.labelStyle}>
@@ -74,12 +76,15 @@ export default class NsfwToggle extends Component {
 
     return (
       <React.Fragment>
-        <Menu ref={this.menuRef} style={styles.menu} button={button}>
+        <Menu
+          ref={this.menuRef}
+          style={[styles.menu, themed.backgroundTertiary]}
+          button={button}>
           {this.reasons.map((reason, i) => (
             <MenuItem
               key={i}
               onPress={() => this.toggleDropdownOption(reason)}
-              textStyle={[styles.menuItemText, this.isReasonActive(reason) && styles.menuItemTextActive]}
+              textStyle={[this.isReasonActive(reason) && themed.colorLink]}
               testID={`NsfwReason${reason.label}`}
             >{this.isReasonActive(reason) && <MdIcon name="check" />} {reason.label}</MenuItem>
           ))}

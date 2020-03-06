@@ -13,7 +13,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native';
+} from 'mobx-react';
 
 import BlogCard from './BlogCard';
 import Toolbar from '../common/components/toolbar/Toolbar';
@@ -128,7 +128,7 @@ export default class BlogsListScreen extends Component {
     const store = this.props.blogs;
 
     const footer = this.getFooter()
-    
+
     empty = (
       <View style={ComponentsStyle.emptyComponentContainer}>
         <View style={ComponentsStyle.emptyComponent}>

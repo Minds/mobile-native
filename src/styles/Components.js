@@ -121,7 +121,6 @@ export const ComponentsStyle = StyleSheet.create({
     margin:4,
     padding:4,
     alignItems:'center',
-    backgroundColor:'white',
     borderWidth:1,
     borderRadius: 20,
     borderColor: colors.primary

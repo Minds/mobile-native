@@ -11,7 +11,7 @@ import {
 import {
   inject,
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -22,6 +22,7 @@ import colors from '../../../styles/Colors';
 import abbrev from '../../../common/helpers/abbrev';
 import token from '../../../common/helpers/token';
 import number from '../../../common/helpers/number';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 /**
  * Activity metrics component
@@ -49,15 +50,15 @@ export default class ActivityMetrics extends Component {
           CommonStyle.borderGreyed,
           CommonStyle.paddingLeft,
           CommonStyle.paddingRight,
-          CommonStyle.backgroundLight,
+          ThemedStyles.style.backgroundTertiary,
           styles.container
         ]}>
           <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
-            <Text style={styles.counter}>{abbrev(token(entity.wire_totals.tokens), 0)} <Icon name="ios-flash" color={'#777'}/></Text>
+            <Text style={styles.counter}>{abbrev(token(entity.wire_totals.tokens), 0)} <Icon name="ios-flash" /></Text>
           </View>
           <View style={[CommonStyle.rowJustifyCenter, CommonStyle.alignCenter]}>
             <Text style={[styles.counter]}> · </Text>
-            <Text style={styles.counter}>{number(entity.impressions, 0)} <McIcon name="eye" color={'#777'}/></Text>
+            <Text style={styles.counter}>{number(entity.impressions, 0)} <McIcon name="eye" /></Text>
           </View>
         </View>
       </View>
@@ -67,7 +68,6 @@ export default class ActivityMetrics extends Component {
 
 const styles = StyleSheet.create({
   counter: {
-    color: '#777',
     alignItems: 'center',
     fontSize: 11,
   },

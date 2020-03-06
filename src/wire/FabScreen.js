@@ -18,7 +18,7 @@ import { CheckBox } from 'react-native-elements'
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import McIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -37,21 +37,23 @@ import logService from '../common/services/log.service';
 import SubscriptionTierCarousel from './tiers/SubscriptionTierCarousel';
 import PaymentMethodSelector from './methods/PaymentMethodSelector';
 import BtcPayment from './methods/BtcPayment';
-import PaymentMethodIcon from './methods/PaymentMethodIcon';
 import Button from '../common/components/Button';
 import numberFromat from '../common/helpers/number';
 import StripeCardSelector from './methods/StripeCardSelector';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Wire Fab Screen
  */
-@inject('wire')
-@inject('wallet')
+export default
+@inject('wallet', 'wire')
 @observer
-export default class FabScreen extends Component {
-
-  componentWillMount() {
-
+class FabScreen extends Component {
+  /**
+   * constructor
+   */
+  constructor(props) {
+    super(props);
     this.paymethodRef = React.createRef();
 
     if (!featuresService.has('crypto')) {
@@ -69,7 +71,7 @@ export default class FabScreen extends Component {
   }
 
   async loadUserAndSetDefaults() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
 
     // if there is no default data we reset the store
     if (!params || !params.default) {
@@ -87,7 +89,7 @@ export default class FabScreen extends Component {
   }
 
   setDefaults() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
     const wire = this.props.wire;
     const owner = wire.owner;
 
@@ -105,7 +107,7 @@ export default class FabScreen extends Component {
   }
 
   getOwner() {
-    return this.props.navigation.state.params.owner;
+    return this.props.route.params.owner;
   }
 
   /**
@@ -224,7 +226,8 @@ export default class FabScreen extends Component {
               checkedColor={ colors.primary }
               uncheckedIcon="circle-o"
               uncheckedColor={ colors.greyed }
-              containerStyle={[CS.backgroundWhite, CS.noBorder]}
+              textStyle={ThemedStyles.style.colorPrimaryText}
+              containerStyle={[CS.noBorder, ThemedStyles.style.backgroundTransparent]}
             />:
             <Text style={[CS.fontM, CS.textCenter, CS.marginTop2x, CS.marginBottom2x]}>{i18n.t('wire.willNotRecur', {currency: this.props.wire.currency.toUpperCase()})}</Text>
           }
@@ -240,7 +243,7 @@ export default class FabScreen extends Component {
           disabled={buttonDisabled}
           onPress={this.confirmSend}
           textStyle={[CS.fontL, CS.padding]}
-          inverted
+
         />
       </Fragment>
     )
@@ -255,14 +258,14 @@ export default class FabScreen extends Component {
     if (this.props.wire.sending) {
       icon = <ActivityIndicator size={'large'} color={colors.primary}/>
     } else {
-      icon = <Icon size={64} name="ios-flash" style={[CS.colorPrimary, CS.paddingBottom2x]} />
+      icon = <Icon size={64} name="ios-flash" style={[ThemedStyles.style.colorIconActive, CS.paddingBottom2x]} />
     }
 
     const body = !this.props.wire.loaded ? <ActivityIndicator size={'large'} color={colors.primary}/> : this.getBody();
 
     return (
-      <ScrollView contentContainerStyle={[CS.backgroundWhite, CS.paddingLeft2x, CS.paddingRight2x, CS.columnAlignCenter, CS.alignCenter, CS.flexContainer, CS.paddingTop2x]}>
-        <Icon size={40} name="ios-close" onPress={() => this.props.navigation.goBack()} style={[CS.marginRight3x, CS.marginTop3x, CS.positionAbsoluteTopRight]}/>
+      <ScrollView contentContainerStyle={[ThemedStyles.style.backgroundSecondary, CS.paddingLeft2x, CS.paddingRight2x, CS.columnAlignCenter, CS.alignCenter, CS.flexContainer, CS.paddingTop2x]} style={CS.flexContainer}>
+        <Icon size={45} name="ios-close" onPress={() => this.props.navigation.goBack()} style={[CS.marginRight3x, CS.marginTop3x, CS.positionAbsoluteTopRight, ThemedStyles.style.colorIcon]}/>
         {icon}
         {body}
       </ScrollView>
@@ -272,7 +275,7 @@ export default class FabScreen extends Component {
   confirmSend = () => {
     // is 0 just we execute complete
     if (this.props.wire.amount == 0) {
-      const onComplete = this.props.navigation.state.params.onComplete;
+      const onComplete = this.props.route.params.onComplete;
       if (onComplete) onComplete();
       this.props.navigation.goBack();
       return;
@@ -302,7 +305,7 @@ export default class FabScreen extends Component {
    * Call send and go back on success
    */
   async send() {
-    const onComplete = this.props.navigation.state.params.onComplete;
+    const onComplete = this.props.route.params.onComplete;
     try {
       let done = await this.props.wire.send();
 

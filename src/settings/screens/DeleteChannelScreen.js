@@ -16,6 +16,7 @@ import Button from '../../common/components/Button';
 import Colors from '../../styles/Colors';
 import SettingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Delete Channel Screen
@@ -56,24 +57,25 @@ export default class DeleteChannelScreen extends Component {
    */
   render() {
     return (
-      <ScrollView style={[CS.flexContainer, CS.backgroundWhite, CS.padding2x]}>
+      <ScrollView style={[CS.flexContainer, CS.padding2x]}>
         <KeyboardAvoidingView style={[CS.flexContainer]} behavior={Platform.OS == 'ios' ? 'padding' : null}>
           <Text style={[CS.fontXXL]}>{i18n.t('settings.disableChannel')}</Text>
-          <Text style={[CS.fontM, CS.fontThin, CS.marginTop, CS.marginBottom2x]}>{i18n.t('settings.disableDescription')}</Text>
-          <Button text="Disable" color={Colors.danger} inverted onPress={this.onDisable}/>
+          <Text style={[CS.fontL, CS.marginTop, CS.marginBottom2x]}>{i18n.t('settings.disableDescription')}</Text>
+          <Button text="Disable" color={Colors.danger} textColor="white" inverted onPress={this.onDisable}/>
           <Text style={[CS.fontXXL, CS.marginTop3x]}>{i18n.t('settings.deleteChannel')}</Text>
-          <Text style={[CS.fontM, CS.fontThin, CS.marginTop, CS.marginBottom2x]}>{i18n.t('settings.deleteDescription')}</Text>
+          <Text style={[CS.fontM, CS.marginTop, CS.marginBottom2x]}>{i18n.t('settings.deleteDescription')}</Text>
           {this.state.showPassword &&
             <TextInput
-              style={[CS.borderGreyed, CS.borderRadius10x, CS.border, CS.padding2x]}
+              style={[CS.borderGreyed, CS.borderRadius10x, CS.border, CS.padding2x, ThemedStyles.style.colorPrimaryText]}
               placeholder={i18n.t('auth.password')}
+              placeholderTextColor={ThemedStyles.getColor('secondary_text')}
               autoFocus={true}
               autoCapitalize={'none'}
               onChangeText={this.setPassword}
               secureTextEntry={true}
             />
           }
-          <Button text={i18n.t('delete')} color={Colors.danger} inverted onPress={this.onDelete}/>
+          <Button text={i18n.t('delete')} color={Colors.danger} textColor="white" inverted onPress={this.onDelete}/>
         </KeyboardAvoidingView>
       </ScrollView>
     );

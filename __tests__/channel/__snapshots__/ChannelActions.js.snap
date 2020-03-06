@@ -28,16 +28,12 @@ exports[`channel actions component should renders correctly 1`] = `
     onStartShouldSetResponder={[Function]}
     style={
       Object {
-        "alignItems": "center",
-        "backgroundColor": "white",
-        "borderColor": "#4690D6",
-        "borderRadius": 20,
-        "borderWidth": 1,
+        "backgroundColor": "#5DBAC0",
+        "borderRadius": 2,
         "flexDirection": "row",
         "justifyContent": "center",
-        "margin": 4,
+        "marginLeft": 5,
         "opacity": 1,
-        "padding": 4,
       }
     }
     testID="MoreButton"
@@ -46,7 +42,7 @@ exports[`channel actions component should renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#4690D6",
+            "color": "white",
           },
           Array [
             Object {

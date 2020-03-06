@@ -1,13 +1,6 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  View,
-  ScrollView,
-  Text,
-  Alert,
-} from 'react-native';
+import { View, ScrollView, Text, Alert } from 'react-native';
 
 import { Input } from 'react-native-elements';
 import settingsService from '../SettingsService';
@@ -17,17 +10,17 @@ import CenteredLoading from '../../common/components/CenteredLoading';
 import Button from '../../common/components/Button';
 import { CommonStyle } from '../../styles/Common';
 import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
-import { inject } from 'mobx-react/native'
+import { inject } from 'mobx-react';
 
 /**
  * Email settings screen
  */
+export default
 @inject('user')
-export default class EmailScreen extends Component {
-
+class EmailScreen extends Component {
   static navigationOptions = {
-    title: 'Change Email'
-  }
+    title: 'Change Email',
+  };
 
   state = {
     email: null,
@@ -35,21 +28,21 @@ export default class EmailScreen extends Component {
     isVisible: false,
     loaded: false,
     showConfirmNote: false,
-  }
+  };
 
-  constructor(){
+  constructor() {
     super();
     settingsService.getSettings().then(({ channel }) => {
-      this.setState({email: channel.email, loaded: true});
+      this.setState({ email: channel.email, loaded: true });
     });
   }
 
   /**
    * Set email value
    */
-  setEmail = (email) => {
-    this.setState({email, showConfirmNote: true});
-  }
+  setEmail = email => {
+    this.setState({ email, showConfirmNote: true });
+  };
 
   /**
    * Save email
@@ -57,32 +50,33 @@ export default class EmailScreen extends Component {
   save = () => {
     if (!validator.email(this.state.email)) return;
 
-    this.setState({saving: true});
+    this.setState({ saving: true });
 
-    settingsService.submitSettings({email: this.state.email})
-      .then((data) => {
+    settingsService
+      .submitSettings({ email: this.state.email })
+      .then(data => {
         this.props.navigation.goBack();
       })
       .finally(() => {
-        this.setState({isVisible:false});
-        this.setState({saving: false});
+        this.setState({ isVisible: false });
+        this.setState({ saving: false });
         this.props.user.me.setEmailConfirmed(false);
       })
       .catch(() => {
         Alert.alert(i18n.t('error'), i18n.t('settings.errorSaving'));
       });
-  }
+  };
 
   confirmPassword = () => {
-    this.setState({isVisible:true});
-  }
+    this.setState({ isVisible: true });
+  };
 
   /**
    * Render
    */
   render() {
     if (this.state.saving || !this.state.loaded) {
-      return <CenteredLoading/>
+      return <CenteredLoading />;
     }
 
     const email = this.state.email;
@@ -90,22 +84,36 @@ export default class EmailScreen extends Component {
 
     // validate
     const error = validator.emailMessage(email);
-    const message = error ? <FormValidationMessage>{error}</FormValidationMessage> : null;
-    const confirmNote = showConfirmNote ? <FormValidationMessage>{i18n.t('emailConfirm.confirmNote')}</FormValidationMessage> : null;
+    const confirmNote = showConfirmNote ? (
+      <Text>
+        {i18n.t('emailConfirm.confirmNote')}
+      </Text>
+    ) : null;
 
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
-        <FormLabel labelStyle={CommonStyle.fieldLabel}>{i18n.t('settings.currentEmail')}</FormLabel>
-        <FormInput onChangeText={this.setEmail} value={email} inputStyle={CommonStyle.fieldTextInput}/>
-        {message}
+      <View style={[CommonStyle.flexContainer]}>
+        <Input
+          onChangeText={this.setEmail}
+          value={email}
+          inputStyle={CommonStyle.fieldTextInput}
+          label={i18n.t('settings.currentEmail')}
+          errorMessage={error}
+        />
         {confirmNote}
         <Button
           text={i18n.t('save').toUpperCase()}
           loading={this.state.saving}
-          containerStyle={[CommonStyle.marginTop3x, {alignSelf: 'center'}]}
+          containerStyle={[
+            CommonStyle.marginTop3x,
+            CommonStyle.padding2x,
+            { alignSelf: 'center' },
+          ]}
           onPress={this.confirmPassword}
         />
-        <ModalConfirmPassword isVisible={this.state.isVisible} onSuccess={this.save}></ModalConfirmPassword>
+        <ModalConfirmPassword
+          isVisible={this.state.isVisible}
+          onSuccess={this.save}
+        />
       </View>
     );
   }

@@ -12,7 +12,7 @@ import {
 
 import type { Node, Element } from 'react';
 import type SubscriptionRequestStore from './SubscriptionRequestStore';
-import { inject, observer } from 'mobx-react/native';
+import { inject, observer } from 'mobx-react';
 
 import SubscriptionRequest from './SubscriptionRequest';
 import i18n from '../../common/services/i18n.service';

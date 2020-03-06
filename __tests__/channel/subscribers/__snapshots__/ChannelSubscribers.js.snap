@@ -3,9 +3,12 @@
 exports[`channel subscribers component should render correctly 1`] = `
 <View
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
   }
 >
   <View
@@ -365,7 +368,6 @@ exports[`channel subscribers component should render correctly 1`] = `
     stickyHeaderIndices={Array []}
     style={
       Object {
-        "backgroundColor": "#FFF",
         "flex": 1,
       }
     }
@@ -383,11 +385,6 @@ exports[`channel subscribers component should render correctly 1`] = `
           navigation={
             Object {
               "navigate": [MockFunction],
-              "state": Object {
-                "params": Object {
-                  "guid": 1,
-                },
-              },
             }
           }
           row={
@@ -760,11 +757,6 @@ exports[`channel subscribers component should render correctly 1`] = `
           navigation={
             Object {
               "navigate": [MockFunction],
-              "state": Object {
-                "params": Object {
-                  "guid": 1,
-                },
-              },
             }
           }
           row={
@@ -1137,11 +1129,6 @@ exports[`channel subscribers component should render correctly 1`] = `
           navigation={
             Object {
               "navigate": [MockFunction],
-              "state": Object {
-                "params": Object {
-                  "guid": 1,
-                },
-              },
             }
           }
           row={
@@ -1514,9 +1501,12 @@ exports[`channel subscribers component should render correctly 1`] = `
 exports[`channel subscribers component should render correctly without data 1`] = `
 <View
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "flex": 1,
+      },
+      undefined,
+    ]
   }
 >
   <View
@@ -1607,7 +1597,7 @@ exports[`channel subscribers component should render correctly without data 1`] 
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "white",
+        "backgroundColor": "transparent",
         "flex": 1,
         "justifyContent": "center",
         "minHeight": 100,

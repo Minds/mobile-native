@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {
   inject,
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Wizard from '../common/components/Wizard';
 import HashtagsStep from './steps/HashtagsStep';
@@ -104,7 +104,7 @@ export default class OnboardingScreen extends Component {
     steps.push({
       component: <ChannelSetupStep ref={r => this.channelSetup = r}/>,
       onNext: async() => {
-        return await this.channelSetup.wrappedInstance.save();
+        return await this.channelSetup.save();
       }
     });
 

@@ -31,7 +31,7 @@ export default class ViewImageScreen extends Component {
   constructor(props) {
     super(props);
 
-    const custom_data = this.props.navigation.state.params.entity.custom_data;
+    const custom_data = this.props.route.params.entity.custom_data;
 
     const width = Dimensions.get('window').width;
 
@@ -49,7 +49,7 @@ export default class ViewImageScreen extends Component {
   }
 
   getSource() {
-    return this.props.navigation.state.params.source;
+    return this.props.route.params.source;
   }
 
   render() {

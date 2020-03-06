@@ -6,17 +6,7 @@
  * @flow
  */
 
-import React, {
-  Component,
-} from 'react';
-
-import {
-  Provider,
-} from 'mobx-react/native';  // import from mobx-react/native instead of mobx-react fix test
-
-import NavigationService from './src/navigation/NavigationService';
-import RNBootSplash from "react-native-bootsplash";
-
+import React, { Component } from 'react';
 import {
   BackHandler,
   Platform,
@@ -26,10 +16,21 @@ import {
   Alert,
   Clipboard,
   StatusBar,
+  UIManager,
+  RefreshControl,
 } from 'react-native';
-
+import { Provider, observer } from 'mobx-react';
+import RNBootSplash from 'react-native-bootsplash';
 import FlashMessage from 'react-native-flash-message';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {
+  NavigationContainer,
+} from '@react-navigation/native';
+import * as Sentry from '@sentry/react-native';
 
+import NavigationService, {
+  setTopLevelNavigator,
+} from './src/navigation/NavigationService';
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
 import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
 import NavigationStack from './src/navigation/NavigationStack';
@@ -38,13 +39,10 @@ import './AppErrors';
 import './src/common/services/socket.service';
 import pushService from './src/common/services/push.service';
 import mindsService from './src/common/services/minds.service';
-import featureService from './src/common/services/features.service';
 import receiveShare from './src/common/services/receive-share.service';
 import sessionService from './src/common/services/session.service';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import badgeService from './src/common/services/badge.service';
-import authService from './src/auth/AuthService';
-import NotificationsService from './src/notifications/NotificationsService';
 import getMaches from './src/common/helpers/getMatches';
 import { GOOGLE_PLAY_STORE } from './src/config/Config';
 import updateService from './src/common/services/update.service';
@@ -59,14 +57,14 @@ import feedsStorage from './src/common/services/sql/feeds.storage';
 import connectivityService from './src/common/services/connectivity.service';
 import sqliteStorageProviderService from './src/common/services/sqlite-storage-provider.service';
 import commentStorageService from './src/comments/CommentStorageService';
-import * as Sentry from '@sentry/react-native';
 import apiService from './src/common/services/api.service';
 import boostedContentService from './src/common/services/boosted-content.service';
 import translationService from './src/common/services/translation.service';
+import ThemedStyles from './src/styles/ThemedStyles';
+
+
 
 let deepLinkUrl = '';
-
-const statusBarStyle = Platform.OS === 'ios' ? 'dark-content' : 'default';
 
 // init push service
 pushService.init();
@@ -74,8 +72,10 @@ pushService.init();
 // fire sqlite init
 sqliteStorageProviderService.get();
 
+// clear old cookies
 apiService.clearCookies();
 
+// init settings loading
 const mindsSettingsPromise = mindsService.getSettings();
 
 // On app login (runs if the user login or if it is already logged in)
@@ -102,7 +102,7 @@ sessionService.onLogin(async () => {
   // hide splash
   RNBootSplash.hide({ duration: 250 });
 
-  NavigationService.navigate(sessionService.initialScreen);
+  NavigationService.navigate('App', { screen: sessionService.initialScreen});
 
   // check onboarding progress and navigate if necessary
   stores.onboarding.getProgress(sessionService.initialScreen !== 'OnboardingScreenNew');
@@ -118,7 +118,7 @@ sessionService.onLogin(async () => {
   try {
     // handle deep link (if the app is opened by one)
     if (deepLinkUrl) {
-      deeplinkService.navigate(deepLinkUrl);
+      deeplinkService.navigate('App', { screen: deepLinkUrl});
       deepLinkUrl = '';
     }
 
@@ -157,22 +157,31 @@ sessionService.onLogout(() => {
 // disable yellow boxes
 console.disableYellowBox = true;
 
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
 type State = {
-  appState: string
-}
+  appState: string,
+};
 
-type Props = {
-
-}
+type Props = {};
 
 /**
  * App
  */
-export default class App extends Component<Props, State> {
-
+export default
+@observer
+class App extends Component<Props, State> {
+  /**
+   * State
+   */
   state = {
-    appState: AppState.currentState || ''
-  }
+    appState: AppState.currentState || '',
+  };
 
   /**
    * Handle app state changes
@@ -185,28 +194,37 @@ export default class App extends Component<Props, State> {
     this.setState({appState: nextState})
   }
 
-  /**
-   * contructor
-   */
   constructor(props) {
     super(props);
-
-    if (!Text.defaultProps) {
-      Text.defaultProps = {};
-    }
-    Text.defaultProps.style = {
-      fontFamily: 'Roboto',
-      color: '#444',
+    let oldRender = Text.render;
+    Text.render = function (...args) {
+        let origin = oldRender.call(this, ...args);
+        return React.cloneElement(origin, {
+            style: [ThemedStyles.style.colorPrimaryText, { fontFamily: 'Roboto'}, origin.props.style]
+        });
     };
+
+    if (!RefreshControl.defaultProps) {
+      RefreshControl.defaultProps = {};
+    }
+    RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('icon_active');
+    RefreshControl.defaultProps.colors = [ThemedStyles.getColor('icon_active')];
   }
 
   /**
    * On component did mount
    */
   async componentDidMount() {
+    this.appInit();
+  }
+
+  /**
+   * App initialization
+   */
+  async appInit() {
     try {
       // load app setting before start
-      const results = await Promise.all([settingsStore.init(), await Linking.getInitialURL()]);
+      const results = await Promise.all([settingsStore.init(), Linking.getInitialURL()]);
 
       deepLinkUrl = results[1];
 
@@ -222,12 +240,12 @@ export default class App extends Component<Props, State> {
         if (!token) {
           logService.info('[App] there is no active session');
           RNBootSplash.hide({ duration: 250 });
-          NavigationService.navigate('Login');
+          // NavigationService.navigate('Auth', { screen: 'Login'});
         } else {
           logService.info('[App] session initialized');
         }
       }
-    } catch(err) {
+    } catch (err) {
       logService.exception('[App] Error initializing the app', err);
       Alert.alert(
         'Error',
@@ -243,7 +261,10 @@ export default class App extends Component<Props, State> {
    */
   handlePasswordResetDeepLink() {
     try {
-      if (deepLinkUrl && deeplinkService.cleanUrl(deepLinkUrl).startsWith('forgot-password')) {
+      if (
+        deepLinkUrl &&
+        deeplinkService.cleanUrl(deepLinkUrl).startsWith('forgot-password')
+      ) {
         const regex = /;username=(.*);code=(.*)/g;
 
         const params = getMaches(deepLinkUrl.replace(/%3B/g, ';'), regex);
@@ -253,7 +274,7 @@ export default class App extends Component<Props, State> {
         deepLinkUrl = '';
         return true;
       }
-    } catch(err) {
+    } catch (err) {
       logService.exception('[App] Error checking for password reset deep link', err);
     }
     return false;
@@ -272,9 +293,12 @@ export default class App extends Component<Props, State> {
    * Handle hardware back button
    */
   onBackPress = () => {
-    const nav = NavigationService.getState();
-    NavigationService.goBack();
-    return nav !== NavigationService.getState();
+    try {
+      NavigationService.goBack();
+      return false;
+    } catch (err) {
+      return true;
+    }
   };
 
   /**
@@ -282,31 +306,47 @@ export default class App extends Component<Props, State> {
    */
   handleOpenURL = (event) => {
     deepLinkUrl = event.url;
-    if (deepLinkUrl) this.handlePasswordResetDeepLink();
     if (deepLinkUrl) {
-      setTimeout(() => {
-        deeplinkService.navigate(deepLinkUrl);
-        deepLinkUrl = '';
-      }, 100);
+      this.handlePasswordResetDeepLink();
+
+      // the var can be cleaned so we check again
+      if (deepLinkUrl) {
+        setTimeout(() => {
+          deeplinkService.navigate(deepLinkUrl);
+          deepLinkUrl = '';
+        }, 100);
+      }
     }
-  }
+  };
 
   /**
    * Render
    */
   render() {
+    // App not shown until the theme is loaded
+    if (ThemedStyles.theme === -1) {
+      return null;
+    }
+
+    const isLoggedIn = sessionService.userLoggedIn;
+
+    const statusBarStyle = ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
+
     const app = (
-      <Provider key="app" {...stores}>
-        <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
-          <StatusBar barStyle={statusBarStyle} />
-          <NavigationStack
-            ref={navigatorRef => {
-              NavigationService.setTopLevelNavigator(navigatorRef);
-            }}
-          />
-          <FlashMessage renderCustomContent={this.renderNotification} />
-        </ErrorBoundary>
-      </Provider>
+      <SafeAreaProvider>
+        <NavigationContainer
+          ref={navigatorRef => setTopLevelNavigator(navigatorRef)}
+          theme={ThemedStyles.navTheme}
+        >
+          <Provider key="app" {...stores}>
+            <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
+              <StatusBar barStyle={statusBarStyle} backgroundColor={ThemedStyles.getColor('secondary_background')} />
+              <NavigationStack key={ThemedStyles.theme} isLoggedIn={isLoggedIn}/>
+              <FlashMessage renderCustomContent={this.renderNotification} />
+            </ErrorBoundary>
+          </Provider>
+        </NavigationContainer>
+      </SafeAreaProvider>
     );
 
     const keychainModal = (
@@ -317,15 +357,20 @@ export default class App extends Component<Props, State> {
       <BlockchainTransactionModalScreen key="blockchainTransactionModal" blockchainTransaction={ stores.blockchainTransaction } />
     );
 
-    const tosModal = (
-      <TosModal user={stores.user} key="tosModal" />
-    )
+    const tosModal = <TosModal user={stores.user} key="tosModal" />;
 
-    return [ app, keychainModal, blockchainTransactionModal,  tosModal];
+    return [app, keychainModal, blockchainTransactionModal, tosModal];
   }
 
   renderNotification = () => {
-    if (!stores.notifications.last) return null;
-    return <Notification entity={stores.notifications.last} navigation={NavigationService} />
-  }
+    if (!stores.notifications.last) {
+      return null;
+    }
+    return (
+      <Notification
+        entity={stores.notifications.last}
+        navigation={NavigationService}
+      />
+    );
+  };
 }

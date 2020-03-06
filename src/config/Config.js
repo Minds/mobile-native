@@ -12,7 +12,7 @@ import DeviceInfo from 'react-native-device-info';
 export const MINDS_URI = 'https://www.minds.com/';
 export const MINDS_API_URI = 'https://www.minds.com/';
 
-export const NETWORK_TIMEOUT = 5000;
+export const NETWORK_TIMEOUT = 15000;
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;

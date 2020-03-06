@@ -1,9 +1,12 @@
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import React, { Fragment } from 'react';
+
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+
 import LoadingScreen from '../LoadingScreen';
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
 import TabsScreen from '../tabs/TabsScreen';
+import TabsScreenNew from '../tabs/TabsScreenNew';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
@@ -44,213 +47,242 @@ import OnboardingScreen from '../onboarding/OnboardingScreen';
 import IssueReportScreen from '../issues/IssueReportScreen';
 import Wizard from '../common/components/Wizard';
 import UpdatingScreen from '../update/UpdateScreen';
-import {withErrorBoundaryScreen} from '../common/components/ErrorBoundary';
+import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
 // import LogsScreen from '../logs/LogsScreen';
 import DeleteChannelScreen from '../settings/screens/DeleteChannelScreen';
 import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
+import featuresService from '../common/services/features.service';
+import ThemedStyles from '../styles/ThemedStyles';
+import MessengerScreen from '../messenger/MessengerScreen';
+import Topbar from '../topbar/Topbar';
+import i18n from '../common/services/i18n.service';
 
-/**
- * Main stack navigator
- */
-const Stack = createStackNavigator({
-  Tabs: {
-    screen: withErrorBoundaryScreen(TabsScreen),
-  },
-  EmailConfirmation: {
-    screen: withErrorBoundaryScreen(EmailConfirmationScreen)
-  },
-  // Logs: {
-  //   screen: LogsScreen
-  // },
-  Update: {
-    screen: withErrorBoundaryScreen(UpdatingScreen),
-  },
-  Boost: {
-    screen: withErrorBoundaryScreen(BoostScreen),
-    navigationOptions: {
-      gesturesEnabled: false,
-    },
-  },
-  DeleteChannel: {
-    screen: withErrorBoundaryScreen(DeleteChannelScreen),
-  },
-  Notifications: {
-    screen: withErrorBoundaryScreen(NotificationsScreen),
-  },
-  NotificationsSettings: {
-    screen: withErrorBoundaryScreen(NotificationsSettingsScreen),
-  },
-  Channel: {
-    screen: withErrorBoundaryScreen(ChannelScreen),
-    path: 'channel/:guid',
-  },
-  Capture: {
-    screen: withErrorBoundaryScreen(CapturePoster),
-  },
-  Activity: {
-    screen: withErrorBoundaryScreen(ActivityScreen),
-    path: 'activity/:guid',
-  },
-  Conversation: {
-    screen: withErrorBoundaryScreen(ConversationScreen),
-  },
-  DiscoveryFeed: {
-    screen: withErrorBoundaryScreen(DiscoveryFeedScreen),
-  },
-  Subscribers: {
-    screen: withErrorBoundaryScreen(ChannelSubscribers),
-  },
-  Settings: {
-    screen: withErrorBoundaryScreen(SettingsScreen),
-  },
-  SettingsBlockedChannels: {
-    screen: withErrorBoundaryScreen(BlockedChannelsScreen),
-  },
-  SettingsEmail: {
-    screen: withErrorBoundaryScreen(EmailScreen),
-  },
-  SettingsRekey: {
-    screen: withErrorBoundaryScreen(RekeyScreen),
-  },
-  SettingsPassword: {
-    screen: withErrorBoundaryScreen(PasswordScreen),
-  },
-  SettingsBilling: {
-    screen: withErrorBoundaryScreen(BillingScreen),
-  },
-  GroupsList: {
-    screen: withErrorBoundaryScreen(GroupsListScreen),
-  },
-  GroupView: {
-    screen: withErrorBoundaryScreen(GroupViewScreen),
-  },
-  Wallet: {
-    screen: withErrorBoundaryScreen(WalletScreen),
-  },
-  BlogList: {
-    screen: withErrorBoundaryScreen(BlogsListScreen),
-  },
-  BoostConsole: {
-    screen: withErrorBoundaryScreen(BoostConsoleScreen),
-  },
-  BlogView: {
-    screen: withErrorBoundaryScreen(BlogsViewScreen),
-    path: 'blog/view/:guid',
-  },
-  WireFab: {
-    screen: withErrorBoundaryScreen(FabScreen),
-    navigationOptions: {
-      gesturesEnabled: false,
-    },
-  },
-  WalletHistory: {
-    screen: withErrorBoundaryScreen(WalletHistoryScreen),
-  },
-  ViewImage: {
-    screen: withErrorBoundaryScreen(ViewImageScreen),
-  },
-  BlockchainWallet: {
-    screen: withErrorBoundaryScreen(BlockchainWalletScreen),
-  },
-  Contributions: {
-    screen: withErrorBoundaryScreen(ContributionsScreen),
-  },
-  Transactions: {
-    screen: withErrorBoundaryScreen(TransactionsScreen),
-  },
-  BlockchainWalletModal: {
-    screen: withErrorBoundaryScreen(BlockchainWalletModalScreen),
-    navigationOptions: {
-      gesturesEnabled: false,
-    },
-  },
-  BlockchainWalletImport: {
-    screen: withErrorBoundaryScreen(BlockchainWalletImportScreen),
-  },
-  BlockchainWalletDetails: {
-    screen: withErrorBoundaryScreen(BlockchainWalletDetailsScreen),
-  },
-  Report: {
-    screen: withErrorBoundaryScreen(ReportScreen),
-  },
-  More: {
-    screen: withErrorBoundaryScreen(MoreScreen),
-  },
-  Withdraw: {
-    screen: withErrorBoundaryScreen(WithdrawScreen),
-  },
-  WalletOnboarding: {
-    screen: withErrorBoundaryScreen(WalletOnboardingScreen),
-  },
-  ComingSoon: {
-    screen: withErrorBoundaryScreen(ComingSoonScreen),
-  },
-  NotSupported: {
-    screen: withErrorBoundaryScreen(NotSupportedScreen),
-  },
-  OnboardingScreen: {
-    screen: withErrorBoundaryScreen(OnboardingScreen),
-  },
-  IssueReport: {
-    screen: withErrorBoundaryScreen(IssueReportScreen),
-  },
-  Wizard: {
-    screen: withErrorBoundaryScreen(Wizard),
-  },
-  OnboardingScreenNew: {
-    screen: withErrorBoundaryScreen(OnboardingScreenNew),
-  },
+const hideHeader = { headerShown: false };
+const messengerOptions = { title: 'Messenger' };
+const discoveryOptions = ({ route }) => ({ title: route.params.title || '' });
+const captureOptions = { title: '', stackAnimation: 'none' };
+const activityOptions = ({ route }) => ({
+  title: route.params.entity ? route.params.entity.ownerObj.name : '',
 });
 
-/**
- * RootStack
- */
-const RootStack = createStackNavigator(
-  {
-    Main: {
-      screen: Stack,
-    },
-    // modal screen
-    Gathering: {
-      screen: Gathering,
-    },
-  },
-  {
-    mode: 'modal',
-    headerMode: 'none',
-  },
-);
+const AppStackNav = createNativeStackNavigator();
+const AuthStackNav = createNativeStackNavigator();
+const RootStackNav = createNativeStackNavigator();
 
-/**
- * Auth Stack
- */
-const AuthStack = createStackNavigator({
-  Login: {
-    screen: withErrorBoundaryScreen(LoginScreen),
-  },
-  Forgot: {
-    screen: withErrorBoundaryScreen(ForgotScreen),
-  },
-  Register: {
-    screen: withErrorBoundaryScreen(RegisterScreen),
-  },
-});
+const AppStack = function(props) {
+  return (
+    <AppStackNav.Navigator
+      screenOptions={{
+        title: '',
+        ...ThemedStyles.defaultScreenOptions,
+      }}>
+      <AppStackNav.Screen
+        name="Tabs"
+        component={TabsScreenNew}
+        options={hideHeader}
+        // component={TabsScreen}
+        // options={({ navigation, route }) => ({
+        //   header: props => <Topbar {...props} />,
+        // })}
+      />
+      <AppStackNav.Screen
+        name="EmailConfirmation"
+        component={EmailConfirmationScreen}
+      />
+      <AppStackNav.Screen name="Update" component={UpdatingScreen} />
+      <AppStackNav.Screen
+        name="Boost"
+        component={BoostScreen}
+        options={{ gesturesEnabled: false }}
+      />
+      <AppStackNav.Screen
+        name="DeleteChannel"
+        component={DeleteChannelScreen}
+      />
+      <AppStackNav.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+      />
+      <AppStackNav.Screen
+        name="NotificationsSettings"
+        component={NotificationsSettingsScreen}
+      />
+      <AppStackNav.Screen
+        name="Channel"
+        component={ChannelScreen}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="Capture"
+        component={CapturePoster}
+        options={captureOptions}
+      />
+      <AppStackNav.Screen
+        name="Activity"
+        component={ActivityScreen}
+        options={activityOptions}
+      />
+      <AppStackNav.Screen name="Conversation" component={ConversationScreen} />
+      <AppStackNav.Screen
+        name="DiscoveryFeed"
+        component={DiscoveryFeedScreen}
+        options={discoveryOptions}
+      />
+      <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
+      <AppStackNav.Screen name="Settings" component={SettingsScreen} />
+      <AppStackNav.Screen
+        name="SettingsBlockedChannels"
+        component={BlockedChannelsScreen}
+      />
+      <AppStackNav.Screen name="SettingsEmail" component={EmailScreen} />
+      <AppStackNav.Screen name="SettingsPassword" component={PasswordScreen} />
+      <AppStackNav.Screen name="SettingsRekey" component={RekeyScreen} />
+      <AppStackNav.Screen name="SettingsBilling" component={BillingScreen} />
+      <AppStackNav.Screen
+        name="GroupsList"
+        component={GroupsListScreen}
+        options={{ title: i18n.t('discovery.groups') }}
+      />
+      <AppStackNav.Screen
+        name="GroupView"
+        component={GroupViewScreen}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen name="Wallet" component={WalletScreen} />
+      <AppStackNav.Screen
+        name="BlogList"
+        component={BlogsListScreen}
+        options={{ title: i18n.t('blogs.blogs') }}
+      />
+      <AppStackNav.Screen
+        name="BoostConsole"
+        component={BoostConsoleScreen}
+        options={{ title: i18n.t('boost') }}
+      />
+      <AppStackNav.Screen
+        name="BlogView"
+        component={BlogsViewScreen}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="WireFab"
+        component={FabScreen}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="WalletHistory"
+        component={WalletHistoryScreen}
+      />
+      <AppStackNav.Screen name="ViewImage" component={ViewImageScreen} />
+      <AppStackNav.Screen
+        name="BlockchainWallet"
+        component={BlockchainWalletScreen}
+        options={{ title: i18n.t('blockchain.walletAddresses') }}
+      />
+      <AppStackNav.Screen
+        name="Contributions"
+        component={ContributionsScreen}
+        options={{ title: i18n.t('wallet.contributionsTitle') }}
+      />
+      <AppStackNav.Screen
+        name="Transactions"
+        component={TransactionsScreen}
+        options={{ title: i18n.t('wallet.transactionsTitle') }}
+      />
+      <AppStackNav.Screen
+        name="BlockchainWalletModal"
+        component={BlockchainWalletModalScreen}
+        options={{ gesturesEnabled: false }}
+      />
+      <AppStackNav.Screen
+        name="BlockchainWalletImport"
+        component={BlockchainWalletImportScreen}
+      />
+      <AppStackNav.Screen
+        name="BlockchainWalletDetails"
+        component={BlockchainWalletDetailsScreen}
+      />
+      <AppStackNav.Screen
+        name="Report"
+        component={ReportScreen}
+        options={{ title: i18n.t('report') }}
+      />
+      <AppStackNav.Screen
+        name="More"
+        component={MoreScreen}
+        options={{ title: i18n.t('report') }}
+      />
+      <AppStackNav.Screen name="Withdraw" component={WithdrawScreen} />
+      <AppStackNav.Screen
+        name="WalletOnboarding"
+        component={WalletOnboardingScreen}
+        options={{ title: 'Wallet' }}
+      />
+      <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
+      <AppStackNav.Screen
+        name="OnboardingScreen"
+        component={OnboardingScreen}
+      />
+      <AppStackNav.Screen
+        name="OnboardingScreenNew"
+        component={OnboardingScreenNew}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="Messenger"
+        component={MessengerScreen}
+        options={messengerOptions}
+      />
+    </AppStackNav.Navigator>
+  );
+};
 
-/**
- * Main switch navigator
- */
-export default createAppContainer(
-  createSwitchNavigator(
-    {
-      Loading: LoadingScreen,
-      Auth: AuthStack,
-      App: RootStack,
-    },
-    {
-      initialRouteName: 'Loading',
-    },
-  ),
-);
+const AuthStack = function(props) {
+  return (
+    <AuthStackNav.Navigator>
+      <AuthStackNav.Screen
+        name="Login"
+        component={LoginScreen}
+        options={hideHeader}
+      />
+      <AuthStackNav.Screen
+        name="Forgot"
+        component={ForgotScreen}
+        options={hideHeader}
+      />
+      <AuthStackNav.Screen
+        name="Register"
+        component={RegisterScreen}
+        options={hideHeader}
+      />
+    </AuthStackNav.Navigator>
+  );
+};
+
+const RootStack = function(props) {
+  const initial = props.isLoggedIn ? 'App' : 'Auth';
+
+  return (
+    <RootStackNav.Navigator
+      initialRouteName={initial}
+      mode="modal"
+      screenOptions={{
+        headerShown: false,
+        ...ThemedStyles.defaultScreenOptions,
+      }}>
+      {props.isLoggedIn ? (
+        <Fragment>
+          <RootStackNav.Screen name="App" component={AppStack} />
+          <RootStackNav.Screen name="Gathering" component={Gathering} />
+        </Fragment>
+      ) : (
+        <RootStackNav.Screen name="Auth" component={AuthStack} />
+      )}
+    </RootStackNav.Navigator>
+  );
+};
+
+export default RootStack;

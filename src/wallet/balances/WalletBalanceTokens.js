@@ -10,7 +10,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react/native'
+import { observer, inject } from 'mobx-react'
 import token from "../../common/helpers/token";
 import number from "../../common/helpers/number";
 import i18n from '../../common/services/i18n.service';
@@ -24,11 +24,8 @@ export default class WalletBalanceTokens extends Component {
   }
 
   componentWillMount() {
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
-      // ignore back navigation
-      if (s.action.type === 'Navigation/NAVIGATE' && s.action.routeName === 'Wallet') {
-        this.triggerRender(this.props.wallet);
-      }
+    this.disposeEnter = this.props.navigation.addListener('focus', () => {
+      this.triggerRender(this.props.wallet);
     });
   }
 
@@ -42,9 +39,11 @@ export default class WalletBalanceTokens extends Component {
    */
   componentWillUnmount() {
     // clear data to free memory
-    this.wallet.ledger.list.clearList();
+
+    this.props.wallet.ledger.list.clearList();
+
     if (this.disposeEnter) {
-      this.disposeEnter.remove();
+      this.disposeEnter();
     }
   }
 
@@ -120,11 +119,9 @@ const styles = StyleSheet.create({
   addressesLabel: {
     fontWeight: '700',
     fontFamily: 'Roboto',
-    color: '#444',
   },
   addressesAddress: {
     fontSize: 8,
-    color: '#888',
   },
   addressesBalance: {
     textAlign: 'right',
@@ -136,7 +133,6 @@ const styles = StyleSheet.create({
   addressesEthBalance: {
     fontSize: 12,
     fontWeight: '400',
-    color: '#444'
   },
   logo: {
     width: 100,
@@ -156,6 +152,5 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '700',
     fontFamily: 'Roboto',
-    color: '#444',
   }
 });

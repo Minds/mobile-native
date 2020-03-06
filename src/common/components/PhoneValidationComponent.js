@@ -13,7 +13,7 @@ import {
 import {
   inject,
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import PhoneInput from 'react-native-phone-input'
 
@@ -28,6 +28,7 @@ import logService from '../services/log.service';
 import ListItemButton from './ListItemButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ComponentsStyle } from '../../styles/Components';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 @inject('user', 'wallet')
 @observer
@@ -140,7 +141,7 @@ export default class PhoneValidationComponent extends Component {
               ComponentsStyle.loginInputNew,
               CS.marginRight2x,
             ]}
-            textStyle={CS.colorPrimaryText}
+            textStyle={ThemedStyles.style.colorPrimaryText}
             value={this.state.phone}
             onChangePhoneNumber={this.setPhone}
             ref="phoneInput"
@@ -187,10 +188,10 @@ export default class PhoneValidationComponent extends Component {
           />
 
           <ListItemButton disabled={!this.canConfirm()} onPress={this.confirmAction}>
-            <Icon 
-              name={'check'} 
-              size={26} 
-              style={!this.canConfirm() ? CS.colorSecondaryText : CS.colorDone} 
+            <Icon
+              name={'check'}
+              size={26}
+              style={!this.canConfirm() ? CS.colorSecondaryText : CS.colorDone}
             />
           </ListItemButton>
         </View>

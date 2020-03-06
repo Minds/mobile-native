@@ -12,7 +12,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native';
+} from 'mobx-react';
 
 import Button from '../../common/components/Button';
 
@@ -27,6 +27,7 @@ import testID from '../../common/helpers/testID';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import CapturePosterFlags from '../../capture/CapturePosterFlags';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 export default class ActivityEditor extends Component {
 
@@ -134,10 +135,12 @@ export default class ActivityEditor extends Component {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
+
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.padding]}>
         <TextInput
-          style={[{ width: '100%', borderColor: 'gray'}, CommonStyle.borderHair, CommonStyle.padding, CommonStyle.borderRadius2x]}
+          style={[theme.fullWidth, theme.backgroundTertiary, theme.padding, theme.borderRadius2x, theme.colorPrimaryText]}
           multiline={true}
           numberOfLines={4}
           onChangeText={(text) => this.setState({ text })}
@@ -148,8 +151,8 @@ export default class ActivityEditor extends Component {
           {this.renderFlagsView()}
 
           <View style={[CommonStyle.rowJustifyEnd, CommonStyle.paddingTop]}>
-            <Button text={i18n.t('cancel')} onPress={this.cancel} {...testID('Post editor cancel button')}/>
-            <Button text={i18n.t('save')} color={colors.primary} inverted={true} onPress={this.update} disabled={this.state.saving} {...testID('Post editor save button')}/>
+            <Button text={i18n.t('cancel')} onPress={this.cancel} containerStyle={theme.paddingHorizontal2x} {...testID('Post editor cancel button')}/>
+            <Button text={i18n.t('save')} containerStyle={[theme.marginLeft2x, theme.paddingHorizontal2x]} onPress={this.update} disabled={this.state.saving} {...testID('Post editor save button')}/>
           </View>
         </View>
       </View>

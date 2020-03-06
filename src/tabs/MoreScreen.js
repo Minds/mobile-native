@@ -18,7 +18,7 @@ import {
 
 import {
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import RNExitApp from 'react-native-exit-app';
 
@@ -26,11 +26,6 @@ import {
   MINDS_URI,
   CODE_PUSH_TOKEN
 } from '../config/Config';
-
-import {
-  StackActions,
-  NavigationActions
-} from 'react-navigation';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import authService from './../auth/AuthService';
@@ -46,6 +41,7 @@ import colors from '../styles/Colors';
 import logService from '../common/services/log.service';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
+import TabIcon from './TabIcon';
 
 
 const ICON_SIZE = 24;
@@ -58,6 +54,9 @@ export default class MoreScreen extends Component {
 
   static navigationOptions = {
     title: 'Minds',
+    tabBarIcon: ({ tintColor }) => (
+      <TabIcon name="md-menu" size={24} color={tintColor} />
+    ),
   };
 
   state = {
@@ -95,7 +94,6 @@ export default class MoreScreen extends Component {
         icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
         onPress: () => {
           authService.logout();
-          this.props.navigation.navigate('Login');
         }
       }
     ];

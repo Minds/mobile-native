@@ -10,6 +10,9 @@ import logService from './log.service';
 
 import * as Sentry from '@sentry/react-native';
 
+import { observable, action } from 'mobx';
+import { UserError } from '../UserError';
+
 /**
  * Api Error
  */
@@ -32,9 +35,16 @@ export const isApiForbidden = function(err) {
  */
 class ApiService {
 
+  @observable mustVerify = false;
+
+  @action
+  setMustVerify(value) {
+    this.mustVerify = value;
+  }
+
   async parseJSON(response) {
     try {
-      return await response.json(); 
+      return await response.json();
     } catch (error) {
       Sentry.captureMessage(`ISSUE #1572 URL: ${response.url}, STATUS: ${response.status} STATUSTEXT: ${response.statusText}`);
       throw error;
@@ -104,6 +114,10 @@ class ApiService {
     const error = new ApiError(err.message || err.responseText || `Request error on: ${url}`);
     if (err.status) {
       error.status = err.status;
+    }
+
+    if (isApiForbidden(error) && err.must_verify) {
+      this.setMustVerify(true);
     }
     throw error;
   }
@@ -320,7 +334,7 @@ class ApiService {
 
           resolve(data);
         } else {
-          reject('Ooops: upload error');
+          reject(new UserError('Upload failed'));
         }
       };
       xhr.onerror = function() {

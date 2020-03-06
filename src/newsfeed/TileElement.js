@@ -11,7 +11,7 @@ import FastImage from 'react-native-fast-image';
 
 import {
   observer
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import { createImageProgress } from 'react-native-image-progress';
 import ProgressCircle from 'react-native-progress/Circle';

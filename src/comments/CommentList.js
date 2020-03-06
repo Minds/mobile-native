@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 
 import { observable } from 'mobx';
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 import * as Progress from 'react-native-progress';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -41,6 +41,7 @@ import blockListService from '../common/services/block-list.service';
 // workaround for android copy/paste issue
 import TextInput from '../common/components/TextInput';
 import { FLAG_CREATE_COMMENT } from '../common/Permissions';
+import ThemedStyles from '../styles/ThemedStyles';
 
 
 import type CommentModel from './CommentModel';
@@ -54,6 +55,7 @@ type PropsType = {
   store: any,
   user: any,
   navigation: any,
+  route: any,
   onInputFocus?: Function,
   onCommentFocus?: Function
 };
@@ -78,8 +80,7 @@ type CommentType = {
 const isIOS = Platform.OS === 'ios';
 const vPadding = isIphoneX ? 88 : 66;
 const paddingBottom = isIphoneX ? { paddingBottom: 12 } : null;
-const inputStyle = isIOS ? { marginTop:3 } : { marginTop:2 };
-
+const inputStyle = isIOS ? { marginTop: 3, paddingVertical: 2 } : { marginTop: 2, paddingVertical: 2 };
 /**
  * Comment List Component
  */
@@ -280,7 +281,7 @@ class CommentList extends React.Component<PropsType, StateType> {
    */
   loadComments = async (loadingMore: boolean = false, descending: boolean = true): Promise<void> => {
     let guid;
-    const scrollToBottom = this.props.navigation.state.params.scrollToBottom;
+    const scrollToBottom = this.props.route.params.scrollToBottom;
 
     if (this.props.entity) {
       guid = this.props.entity.guid;
@@ -345,7 +346,7 @@ class CommentList extends React.Component<PropsType, StateType> {
             CS.rowJustifyCenter,
             CS.margin,
             CS.padding,
-            CS.backgroundWhite,
+            ThemedStyles.style.backgroundSecondary,
             CS.borderRadius12x,
             CS.borderGreyed,
             CS.borderHair,
@@ -353,10 +354,11 @@ class CommentList extends React.Component<PropsType, StateType> {
           testID={this.props.parent ? 'CommentParentView' : ''}>
           <Image source={avatarImg} style={CmpStyle.posterAvatar} />
           <TextInput
-            style={[CS.flexContainer, CS.marginLeft, inputStyle, {paddingVertical: 2}]}
+            style={[CS.flexContainer, CS.marginLeft, inputStyle, ThemedStyles.style.colorPrimaryText]}
             editable={true}
             underlineColorAndroid='transparent'
             placeholder={i18n.t('activity.typeComment')}
+            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
             onChangeText={this.setText}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
@@ -375,18 +377,18 @@ class CommentList extends React.Component<PropsType, StateType> {
               <TouchableOpacity
                 onPress={this.showAttachment}
                 style={CS.paddingRight2x}>
-                <Icon name="md-attach" size={24} style={[CS.paddingRight2x, CS.colorDarkGreyed]} />
+                <Icon name="md-attach" size={24} style={[CS.paddingRight2x, ThemedStyles.style.colorIcon]} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={comments.toggleMature}
                 style={CS.paddingRight2x}>
-                <IconMd name="explicit" size={24} style={[CS.paddingRight2x, comments.mature ? CS.colorDanger : CS.colorDarkGreyed]} />
+                <IconMd name="explicit" size={24} style={[CS.paddingRight2x, comments.mature ? ThemedStyles.style.colorAlert : ThemedStyles.style.colorIcon]} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={this.postComment}
                 style={CS.paddingRight2x}
                 testID="PostCommentButton">
-                <Icon name="md-send" size={24} style={CS.colorDarkGreyed}/>
+                <Icon name="md-send" size={24} style={ThemedStyles.style.colorIcon}/>
               </TouchableOpacity>
               </View>
           }
@@ -428,8 +430,10 @@ class CommentList extends React.Component<PropsType, StateType> {
       } else {
         if (this.listRef && this.listRef._listRef) {
           setTimeout(() => {
-            const frame = this.listRef._listRef._getFrameMetricsApprox(index);
-            this.onCommentFocus(comment, frame.offset + frame.length);
+            if (this.listRef && this.listRef._listRef) {
+              const frame = this.listRef._listRef._getFrameMetricsApprox(index);
+              this.onCommentFocus(comment, frame.offset + frame.length);
+            }
           }, 1000);
         }
       }
@@ -453,6 +457,7 @@ class CommentList extends React.Component<PropsType, StateType> {
         onTextInputfocus={this.onChildFocus}
         onCommentFocus={this.onCommentFocus}
         navigation={this.props.navigation}
+        route={this.props.route}
         commentFocusCall={this.commentFocusCall}
         index={row.index}
       />
@@ -585,7 +590,7 @@ class CommentList extends React.Component<PropsType, StateType> {
     </View>);
 
     return (
-      <View style={[CS.flexContainer, CS.backgroundWhite, paddingBottom]} onLayout={this.onLayout}>
+      <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary, paddingBottom]} onLayout={this.onLayout}>
         <KeyboardAvoidingView style={[CS.flexContainer]} behavior={Platform.OS == 'ios' ? 'padding' : null}
           keyboardVerticalOffset={this.props.keyboardVerticalOffset ? -this.props.keyboardVerticalOffset : vPadding} enabled={!this.props.parent ? (this.state.focused || this.focusedChild !== -1) : false}>
           <View style={CS.flexContainer}>
@@ -602,7 +607,7 @@ class CommentList extends React.Component<PropsType, StateType> {
               onRefresh={this.refresh}
               refreshing={this.props.store.refreshing}
               ListEmptyComponent={this.props.store.loaded && !this.props.store.refreshing ? emptyThread : <CenteredLoading/>}
-              style={[CS.flexContainer, CS.backgroundWhite]}
+              style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}
             />
             {this.renderPoster()}
             <UserAutocomplete

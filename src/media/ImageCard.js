@@ -1,7 +1,7 @@
 import React, {
     Component
   } from 'react';
-  
+
   import {
     Text,
     Image,
@@ -9,12 +9,12 @@ import React, {
     Button,
     StyleSheet,
   } from 'react-native';
-  
+
   import {
     observer,
     inject
-  } from 'mobx-react/native'
-  
+  } from 'mobx-react'
+
   import Icon from 'react-native-vector-icons/Ionicons';
   import { MINDS_CDN_URI } from '../config/Config';
   import FastImage from 'react-native-fast-image';
@@ -22,10 +22,10 @@ import React, {
   /**
    * Channel Card
    */
-  
+
   @observer
   export default class ImageCard extends Component {
-  
+
     /**
      * Get Channel Avatar
      */
@@ -33,15 +33,15 @@ import React, {
       const channel = this.props.entity.ownerObj;
       return { uri: MINDS_CDN_URI + 'icon/' + channel.guid + '/small/' + channel.icontime };
     }
-  
+
     /**
      * Render Card
      */
     render() {
       const entity = this.props.entity;
-  
+
       const image = { uri: entity.thumbnail_src };
-  
+
       return (
         <View>
           <FastImage source={image} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
@@ -60,8 +60,8 @@ import React, {
       )
     }
   }
-  
-  
+
+
   const styles = StyleSheet.create({
     headertextcontainer: {
       padding: 8,
@@ -79,10 +79,10 @@ import React, {
       flex:1,
     },
     ownerContainer: {
-      flex:1, 
+      flex:1,
       flexDirection: 'row',
-      alignSelf: 'flex-start', 
-      padding:3 , 
+      alignSelf: 'flex-start',
+      padding:3 ,
       alignItems: 'center',
       justifyContent: 'center'
     },

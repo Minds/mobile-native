@@ -3,12 +3,11 @@ import React, { PureComponent } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 
 import authService from './AuthService';
-import { CommonStyle as CS } from '../styles/Common';
-import { ComponentsStyle } from '../styles/Components';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import Button from '../common/components/Button';
 import Input from '../common/components/Input';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Forgot Password Form
@@ -31,10 +30,27 @@ export default class ForgotPassword extends PureComponent {
    * Render
    */
   render() {
+    const CS = ThemedStyles.style;
     return (
       <SafeAreaView style={CS.flexContainer}>
-        <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop3x, CS.marginBottom3x]}>{i18n.t('auth.forgot')}</Text>
-        <Text style={[CS.subTitleText, CS.colorPrimaryText, CS.marginTop1x, CS.marginBottom3x]}>{this.state.msg}</Text>
+        <Text
+          style={[
+            CS.titleText,
+            CS.colorPrimaryText,
+            CS.marginTop3x,
+            CS.marginBottom3x,
+          ]}>
+          {i18n.t('auth.forgot')}
+        </Text>
+        <Text
+          style={[
+            CS.subTitleText,
+            CS.colorPrimaryText,
+            CS.marginTop1x,
+            CS.marginBottom3x,
+          ]}>
+          {this.state.msg}
+        </Text>
         {!this.state.sent && <Input
           placeholder={i18n.t('auth.username')}
           returnKeyType={'done'}
@@ -46,17 +62,17 @@ export default class ForgotPassword extends PureComponent {
           <Button
             onPress={() => this.onPressBack()}
             text={i18n.t('goback')}
-            containerStyle={[ComponentsStyle.loginButtonNew, CS.marginRight2x]}
-            textStyle={ComponentsStyle.loginButtonTextNew}
+            containerStyle={[CS.button, CS.marginRight2x]}
+            textStyle={CS.buttonText}
           />
           {!this.state.sent && <Button
             onPress={() => this.onContinuePress()}
-            text={i18n.t('continue').toUpperCase()}
+            text={i18n.t('continue')}
             loading={this.state.sending}
             loadingRight={true}
             disable={this.state.sending || this.state.sent}
-            containerStyle={ComponentsStyle.loginButtonNew}
-            textStyle={ComponentsStyle.loginButtonTextNew}
+            containerStyle={CS.button}
+            textStyle={CS.buttonText}
           />}
         </View>
       </SafeAreaView>

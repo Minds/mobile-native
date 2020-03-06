@@ -2,7 +2,7 @@ import React, {
   Component
 } from 'react';
 
-import {observer} from "mobx-react/native";
+import {observer} from "mobx-react";
 
 import {
   Text,
@@ -34,6 +34,7 @@ import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import BlockedChannel from '../../common/components/BlockedChannel';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Activity
@@ -75,6 +76,7 @@ export default class Activity extends Component {
     if (this.props.entity.listRef) {
       const offsetToScrollTo = this.props.entity._list.scrollOffset + e.nativeEvent.layout.height;
       setTimeout(() => {
+        if (!this.props.entity.listRef) return;
         this.props.entity.listRef.scrollToOffset({
           offset: offsetToScrollTo,
           animated: true
@@ -113,9 +115,10 @@ export default class Activity extends Component {
         entity={this.props.entity}
       /> : null;
 
+    const borderBottom = this.props.isReminded ? [] : [ThemedStyles.style.borderBottomHair, ThemedStyles.style.borderPrimary];
 
     return (
-        <View style={[styles.container, this.props.isReminded ? null : CommonStyle.hairLineBottom]} onLayout={this.onLayout} testID="ActivityView">
+        <View style={[styles.container, ...borderBottom]} onLayout={this.onLayout} testID="ActivityView">
           <Pinned entity={this.props.entity}/>
           { this.showOwner() }
             { lock }
@@ -145,7 +148,7 @@ export default class Activity extends Component {
    * Render activity spacer
    */
   renderActivitySpacer = () => {
-    return this.props.isLast 
+    return this.props.isLast
       ? (<View style={styles.activitySpacer}></View>)
       : null;
   };
@@ -154,10 +157,10 @@ export default class Activity extends Component {
    * Render entity metrics
    */
   renderActivityMetrics = () => {
-    return ( 
+    return (
       !this.props.hideTabs &&
       !this.props.entity.isScheduled() &&
-      !this.props.entity.isPending() 
+      !this.props.entity.isPending()
     ) ? (<ActivityMetrics entity={this.props.entity}/>) : null
   };
 
@@ -188,7 +191,7 @@ export default class Activity extends Component {
         <Text style={[styles.yellowBannerText, CommonStyle.paddingLeft]}>
           {message}
         </Text>
-      </View> 
+      </View>
     );
   };
 
@@ -212,7 +215,7 @@ export default class Activity extends Component {
 
     return (
       <View>
-        <Text onPress={this.navToGroup} style={styles.groupNameLabel}>{this.props.entity.containerObj.name}</Text>
+        <Text onPress={this.navToGroup} style={[styles.groupNameLabel, ThemedStyles.style.colorPrimaryText]}>{this.props.entity.containerObj.name}</Text>
       </View>
     );
   }
@@ -252,18 +255,18 @@ export default class Activity extends Component {
           rightToolbar={this.props.hideTabs ? null : rightToolbar}
           >
           <TouchableOpacity onPress={() => this.navToActivity()} style={{ flexDirection: 'row' }}>
-            <Text style={[styles.timestamp, CommonStyle.paddingRight]}>{
+            <Text style={[styles.timestamp, CommonStyle.paddingRight, ThemedStyles.style.colorSecondaryText]}>{
               formatDate(this.props.entity.time_created)
             }</Text>
             { this.props.entity.boosted &&
               <View style={styles.boostTagContainer}>
-                <Icon name="md-trending-up" style={styles.boostTagIcon}/>
-                <Text style={styles.boostTagLabel}>{i18n.t('boosted').toUpperCase()}</Text>
+                <Icon name="md-trending-up" style={ThemedStyles.style.colorSecondaryText}/>
+                <Text style={[styles.boostTagLabel, ThemedStyles.style.colorSecondaryText]}>{i18n.t('boosted').toUpperCase()}</Text>
               </View>
             }
             { !!this.props.entity.edited &&
               <View style={styles.boostTagContainer}>
-                <Text style={styles.boostTagLabel}>· {i18n.t('edited').toUpperCase()}</Text>
+                <Text style={[styles.boostTagLabel, ThemedStyles.style.colorSecondaryText]}>· {i18n.t('edited').toUpperCase()}</Text>
               </View>
             }
           </TouchableOpacity>
@@ -374,12 +377,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  boostTagIcon: {
-    color: '#777',
-  },
   boostTagLabel: {
-    color: '#777',
-    fontWeight: '200',
+    fontWeight: '400',
     marginLeft: 2,
     fontSize:10,
   },

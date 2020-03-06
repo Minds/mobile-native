@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import {inject, observer} from 'mobx-react/native';
+import {inject, observer} from 'mobx-react';
 
 import _ from 'lodash';
 
@@ -20,9 +20,9 @@ import ConversationView from './conversation/ConversationView';
 
 import SearchView from '../common/components/SearchView';
 import {ComponentsStyle} from '../styles/Components';
-import MessengerTabIcon from './MessengerTabIcon';
 import ErrorLoading from '../common/components/ErrorLoading';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Messenger Conversarion List Screen
@@ -36,21 +36,16 @@ class MessengerScreen extends Component {
   };
 
   static navigationOptions = {
-    tabBarIcon: ({tintColor}) => <MessengerTabIcon tintColor={tintColor} />,
+    header: null,
   };
 
   /**
    * On component will mount
    */
   componentDidMount() {
-    // load list
-    this.props.messengerList.loadList();
 
-    // listen socket on app start
-    this.props.messengerList.listen();
-
-    // load data on enter
-    this.disposeEnter = this.props.navigation.addListener('didFocus', (s) => {
+    // // load data on enter
+    this.disposeEnter = this.props.navigation.addListener('focus', () => {
       this.props.messengerList.loadList(true);
       //this.setState({ active: true });
     });
@@ -65,9 +60,9 @@ class MessengerScreen extends Component {
    * Dispose reactions of navigation store on unmount
    */
   componentWillUnmount() {
-    this.props.messengerList.unlisten();
+    // this.props.messengerList.unlisten();
     if (this.disposeEnter) {
-      this.disposeEnter.remove();
+      this.disposeEnter();
     }
     //this.disposeLeave();
   }
@@ -97,15 +92,13 @@ class MessengerScreen extends Component {
     const messengerList = this.props.messengerList;
     const conversations = messengerList.conversations;
     const loading = messengerList.loading;
-    let loadingCmp   = null;
+    let loadingCmp = null;
+
+    const theme = ThemedStyles.style;
 
     if (loading && !messengerList.refreshing) {
       loadingCmp = <ActivityIndicator style={styles.loading} />
     }
-
-    //if (!this.state.active) {
-    //  return <View/>
-    //}
 
     let empty;
 
@@ -129,11 +122,12 @@ class MessengerScreen extends Component {
     const footer = this.getFooter();
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, theme.backgroundSecondary]}>
         <SearchView
           placeholder={i18n.t('discovery.search')}
           onChangeText={this.searchChange}
           iconRight={iconRight}
+          containerStyle={[theme.backgroundPrimary]}
           iconRightOnPress={this.onLogoutPress}
         />
         {loadingCmp}
@@ -227,7 +221,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 5,
     paddingRight: 5,
-    backgroundColor: '#FFF',
+    paddingTop: 5,
   },
   body: {
     marginLeft: 8,
@@ -244,7 +238,6 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingBottom: 16,
     paddingRight: 8,
-    borderBottomColor: '#EEE',
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {

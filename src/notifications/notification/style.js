@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,15 +10,11 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingBottom: 16,
     paddingRight: 8,
-    borderBottomColor: '#EEE',
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
     height: 36,
     width: 36,
     borderRadius: 18,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#EEE',
   },
   body: {
     marginLeft: 8,
@@ -31,12 +28,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   link: {
-    fontWeight: 'bold',
-    color: '#444',
+    fontWeight: '600',
   },
   timestamp: {
     fontSize: 11,
-    color: '#888',
   },
 });
 

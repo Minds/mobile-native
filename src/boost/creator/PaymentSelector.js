@@ -12,6 +12,7 @@ import currency from '../../common/helpers/currency';
 import Touchable from '../../common/components/Touchable';
 import FeaturesService from '../../common/services/features.service';
 import i18n from '../../common/services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Type Selector
@@ -36,12 +37,12 @@ export default class PaymentSelector extends PureComponent {
    */
   getOption(method, text, value, selected) {
     const isSelected = this.props.value === method;
-    const colorStlye = isSelected ? CommonStyle.colorDark : CommonStyle.colorMedium;
+    const colorStlye = isSelected ? ThemedStyles.style.colorPrimaryText : ThemedStyles.colorSecondaryText;
     return (
       <Touchable style={[CommonStyle.flexContainer, CommonStyle.paddingRight]} onPress={() => this.change(method)}>
         <View>
           <Text style={[CommonStyle.fontXL, colorStlye]}>{currency(!isNaN(value) ? value : 0, method, 'prefix')}</Text>
-          <Text style={[CommonStyle.fontXS, colorStlye]}>{text}</Text>
+          <Text style={[CommonStyle.fontS, colorStlye]}>{text}</Text>
           {isSelected && false && selected}
         </View>
       </Touchable>

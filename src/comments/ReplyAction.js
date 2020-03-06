@@ -11,13 +11,13 @@ import {
 
 import {
   observer,
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import { Icon } from 'react-native-elements';
-import { CommonStyle } from '../styles/Common';
 import Counter from '../newsfeed/activity/actions/Counter';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -48,10 +48,12 @@ export default class ReplyAction extends Component {
     const color = entity.replies_count ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)';
     const textStyle = {color};
 
+    const CS = ThemedStyles.style;
+
     return (
-      <TouchableOpacityCustom style={[CommonStyle.flexContainer, CommonStyle.centered, CommonStyle.paddingRight2x, this.props.orientation == 'column' ? CommonStyle.columnAlignCenter : CommonStyle.rowJustifyCenter ]} onPress={this.toggleExpand} testID='ReplyCommentButton'>
+      <TouchableOpacityCustom style={[CS.flexContainer, CS.centered, CS.paddingRight2x, this.props.orientation == 'column' ? CS.columnAlignCenter : CS.rowJustifyCenter ]} onPress={this.toggleExpand} testID='ReplyCommentButton'>
         <Icon color={color} name={this.iconName} size={this.props.size} />
-        <Text style={textStyle}>{i18n.t('reply')}</Text>
+        <Text style={[textStyle, CS.marginRight]}>{i18n.t('reply')}</Text>
         <Counter size={this.props.size * 0.75} count={entity.replies_count} orientation={this.props.orientation}/>
       </TouchableOpacityCustom>
     );

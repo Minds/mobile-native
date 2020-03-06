@@ -9,7 +9,7 @@ import {
 
 import {
   observer,
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import i18n from '../common/services/i18n.service';
@@ -21,6 +21,7 @@ import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import { CommonStyle as CS } from '../styles/Common';
 import { FLAG_SUBSCRIBE, FLAG_MESSAGE, FLAG_EDIT_CHANNEL, FLAG_WIRE } from '../common/Permissions';
 import ChannelModeSelector from './ChannelModeSelector';
+import ThemedStyles from '../styles/ThemedStyles';
 
 const ButtonCustom = withPreventDoubleTap(Button);
 
@@ -154,7 +155,7 @@ class ChannelActions extends Component {
         { showSubscribe &&
           <ButtonCustom
             onPress={this.toggleSubscription}
-            containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
+            containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
             accessibilityLabel={i18n.t('channel.subscribeMessage')}
             text={i18n.t('channel.subscribe')}
             testID="SubscribeButton"
@@ -163,7 +164,7 @@ class ChannelActions extends Component {
         { showMessage &&
           <ButtonCustom
             onPress={ this.navToConversation }
-            containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
+            containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
             accessibilityLabel={i18n.t('channel.sendMessage')}
             text={i18n.t('channel.message')}
             testID="SendMessageButton"
@@ -172,7 +173,7 @@ class ChannelActions extends Component {
         { showEdit &&
           <ButtonCustom
             onPress={this.onEditAction}
-            containerStyle={[CS.rowJustifyCenter, CS.marginLeft0x]}
+            containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
             accessibilityLabel={this.props.editing ? i18n.t('channel.saveChanges') : i18n.t('channel.editChannel')}
             text={this.props.editing ? i18n.t('save') : i18n.t('edit')}
             loading={this.props.saving}
@@ -186,20 +187,20 @@ class ChannelActions extends Component {
           <ButtonCustom
             onPress={ this.openWire }
             accessibilityLabel="Wire Button"
-            containerStyle={[CS.rowJustifyCenter]}
+            containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
             textStyle={[CS.marginLeft, CS.marginRight]}
             icon="ios-flash"
             text="Wire"
             testID="WireButton"
           >
-            <Icon name='ios-flash' size={18} style={[CS.marginLeft, CS.colorPrimary]} />
+            <Icon name='ios-flash' size={16} style={[CS.marginLeft, ThemedStyles.style.colorPrimaryText]} />
           </ButtonCustom>
         }
         { !isOwner &&
           <ButtonCustom
             onPress={ this.showActionSheet }
             accessibilityLabel={i18n.t('more')}
-            containerStyle={[CS.rowJustifyCenter]}
+            containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
             textStyle={[CS.marginLeft, CS.marginRight]}
             icon="ios-flash"
             text={i18n.t('more')}

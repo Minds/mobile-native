@@ -6,7 +6,7 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import { inject, observer } from 'mobx-react/native'
+import { inject, observer } from 'mobx-react'
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Activity from './activity/Activity';
@@ -16,6 +16,7 @@ import { ComponentsStyle } from '../styles/Components';
 import ErrorLoading from '../common/components/ErrorLoading';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * News feed list component
@@ -117,7 +118,7 @@ export default class NewsfeedList extends Component {
               {design}
               <Text
                 style={ComponentsStyle.emptyComponentLink}
-                onPress={() => navigation.navigate('Capture')}
+                onPress={() => navigation.push('Capture')}
               >
                 {i18n.t('createAPost')}
               </Text>
@@ -140,6 +141,7 @@ export default class NewsfeedList extends Component {
     }
 
     const footer = this.getFooter();
+    const theme = ThemedStyles.style;
 
     return (
       <ListComponent
@@ -155,7 +157,7 @@ export default class NewsfeedList extends Component {
         onEndReached={this.loadFeed}
         // onEndReachedThreshold={0}
         numColumns={newsfeed.isTiled ? 3 : 1}
-        style={styles.listView}
+        style={[theme.flexContainer, theme.backgroundSecondary]}
         initialNumToRender={6}
         windowSize={11}
         //getItemLayout={getItemLayout}
@@ -206,10 +208,15 @@ export default class NewsfeedList extends Component {
   /**
    * On viewable item changed
    */
-  onViewableItemsChanged = ({viewableItems}) => {
-    viewableItems.forEach((item) => {
+  onViewableItemsChanged = (change) => {
+    change.viewableItems.forEach((item) => {
       this.props.newsfeed.list.addViewed(item.item);
     });
+    change.changed.forEach(c => {
+      if (c.item.setVisible) {
+        c.item.setVisible(c.isViewable);
+      }
+    })
   }
 
   /**
@@ -269,10 +276,3 @@ export default class NewsfeedList extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  listView: {
-    //paddingTop: 20,
-    backgroundColor: '#FFF',
-    flex: 1,
-  }
-});

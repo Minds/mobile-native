@@ -55,7 +55,6 @@ class SettingsService {
     try {
       await api.delete('api/v1/channel');
       await sessionService.logout();
-      navigationService.navigate('Login');
     } catch (e) {
       Alert.alert('Error disabling the channel');
     }
@@ -69,7 +68,6 @@ class SettingsService {
     try {
       await api.post('api/v2/settings/delete', { password });
       await sessionService.logout();
-      navigationService.navigate('Login');
     } catch (e) {
       Alert.alert('Error deleting the channel');
     }

@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import formatDate from '../common/helpers/date';
 
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 
 import IonIcon from 'react-native-vector-icons/Ionicons';
 

@@ -9,12 +9,13 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import { observer } from 'mobx-react/native'
+import { observer } from 'mobx-react'
 
 import { MINDS_CDN_URI } from '../../config/Config';
 
 import * as Sentry from '@sentry/react-native';
 import { FLAG_MESSAGE } from '../../common/Permissions';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Conversation Component
@@ -39,7 +40,7 @@ export default class ConversationView extends Component {
     let online = item.online ? <Icon style={styles.icons} name='md-radio-button-on' color='#2196f3' size={19} /> : null;
 
     return (
-      <TouchableOpacity style={styles.row} onPress={this._navToConversation} testID={this.props.testID}>
+      <TouchableOpacity style={[styles.row, {borderColor: ThemedStyles.getColor('primary_border')}]} onPress={this._navToConversation} testID={this.props.testID}>
         <Image source={avatarImg} style={styles.avatar} />
         <Text style={styles.body}>{item.username.toUpperCase()}</Text>
         {unread}

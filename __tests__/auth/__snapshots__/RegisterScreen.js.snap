@@ -4,9 +4,7 @@ exports[`RegisterScreen component should renders correctly 1`] = `
 <View
   style={
     Array [
-      Object {
-        "flex": 1,
-      },
+      undefined,
     ]
   }
 >

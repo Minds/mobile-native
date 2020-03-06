@@ -4,8 +4,9 @@ import i18n from '../common/services/i18n.service';
 import emailConfirmationService from '../common/services/email-confirmation.service';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import { CommonStyle as CS } from '../styles/Common';
-import { observer, inject } from 'mobx-react/native';
+import { observer, inject } from 'mobx-react';
 import isIphoneX from '../common/helpers/isIphoneX';
+import apiService from '../common/services/api.service';
 
 /**
  * Email Confirmation Message
@@ -30,6 +31,7 @@ class EmailConfirmation extends Component {
    */
   dismiss = () => {
     this.props.user.setDissmis(true);
+    apiService.setMustVerify(false);
   };
 
   /**
@@ -37,8 +39,9 @@ class EmailConfirmation extends Component {
    */
   render() {
     const show =
-      !this.props.user.emailConfirmMessageDismiss &&
-      this.props.user.me.email_confirmed === false;
+      (!this.props.user.emailConfirmMessageDismiss &&
+      this.props.user.me.email_confirmed === false) ||
+      apiService.mustVerify;
 
     if (!show) {
       return null;
@@ -46,7 +49,7 @@ class EmailConfirmation extends Component {
 
     return (
       <View style={styles.container}>
-        
+
         <View style={styles.body}>
           <Text style={[CS.fontM, CS.colorWhite]}>
             {i18n.t('emailConfirm.confirm')}

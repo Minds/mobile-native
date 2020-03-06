@@ -8,10 +8,8 @@ exports[`Activity component renders correctly 1`] = `
       Object {
         "overflow": "visible",
       },
-      Object {
-        "borderBottomColor": "#CCC",
-        "borderBottomWidth": 0.5,
-      },
+      undefined,
+      undefined,
     ]
   }
   testID="ActivityView"
@@ -246,6 +244,7 @@ exports[`Activity component renders correctly 1`] = `
             Object {
               "paddingRight": 5,
             },
+            undefined,
           ]
         }
       >

@@ -14,7 +14,7 @@ import {
 import {
   observer,
   inject
-} from 'mobx-react/native'
+} from 'mobx-react'
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import FastImage from 'react-native-fast-image';
@@ -38,6 +38,7 @@ import Button from '../../common/components/Button';
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import CompleteProfile from './CompleteProfile';
 import featuresService from '../../common/services/features.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 // prevent accidental double tap in touchables
 const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
@@ -221,6 +222,7 @@ class ChannelHeader extends Component {
     const isEditable = this.state.edit && !isUploading;
 
     const ImageCmp = this.state.preview_banner ? Image : FastImage;
+    const theme = ThemedStyles.style;
 
     return (
       <View>
@@ -241,13 +243,13 @@ class ChannelHeader extends Component {
           <View style={styles.countercontainer}>
             <TouchableHighlightCustom underlayColor="transparent" style={[styles.counter]} onPress={() => { this._navToSubscribers() }}>
               <View style={styles.counter} testID="SubscribersView">
-                <Text style={styles.countertitle}>{i18n.t('subscribers').toUpperCase()}</Text>
-                <Text style={styles.countervalue}>{abbrev(channel.subscribers_count, 0)}</Text>
+                <Text style={[styles.countertitle, theme.colorPrimaryText]}>{i18n.t('subscribers').toUpperCase()}</Text>
+                <Text style={[styles.countervalue, theme.colorPrimaryText]}>{abbrev(channel.subscribers_count, 0)}</Text>
               </View>
             </TouchableHighlightCustom>
             <View style={styles.counter} testID="ViewsView">
-              <Text style={styles.countertitle}>{i18n.t('views').toUpperCase()}</Text>
-              <Text style={styles.countervalue}>{abbrev(channel.impressions, 0)}</Text>
+              <Text style={[styles.countertitle, theme.colorPrimaryText]}>{i18n.t('views').toUpperCase()}</Text>
+              <Text style={[styles.countervalue, theme.colorPrimaryText]}>{abbrev(channel.impressions, 0)}</Text>
             </View>
           </View>
           <View style={styles.namecontainer}>
@@ -263,7 +265,7 @@ class ChannelHeader extends Component {
               {!isEditable &&
                 <View style={{ flexDirection: 'row', alignItems: 'center' }} testID="ChannelNameView">
                   <Text
-                    style={styles.name}
+                    style={[styles.name, theme.colorPrimaryText]}
                     ellipsizeMode='tail'
                     numberOfLines={1}
                     >

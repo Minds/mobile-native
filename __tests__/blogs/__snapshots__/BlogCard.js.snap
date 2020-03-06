@@ -14,7 +14,6 @@ exports[`blog card component should renders correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "backgroundColor": "white",
       "opacity": 1,
     }
   }

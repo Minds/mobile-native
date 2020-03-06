@@ -40,9 +40,6 @@ exports[`cature tabs component should renders correctly 1`] = `
           Object {
             "alignContent": "center",
             "alignItems": "center",
-            "backgroundColor": "#FFF",
-            "borderColor": "#ECECEC",
-            "borderWidth": 1,
             "flex": 1,
             "flexDirection": "column",
             "justifyContent": "center",
@@ -68,9 +65,7 @@ exports[`cature tabs component should renders correctly 1`] = `
                   "color": undefined,
                   "fontSize": 36,
                 },
-                Object {
-                  "color": "#444",
-                },
+                undefined,
                 Object {
                   "fontFamily": "Ionicons",
                   "fontStyle": "normal",
@@ -84,10 +79,13 @@ exports[`cature tabs component should renders correctly 1`] = `
           </Text>
           <Text
             style={
-              Object {
-                "color": "#444",
-                "letterSpacing": 1.25,
-              }
+              Array [
+                Object {
+                  "color": "#444",
+                  "letterSpacing": 1.25,
+                },
+                undefined,
+              ]
             }
           >
             Gallery
@@ -109,9 +107,6 @@ exports[`cature tabs component should renders correctly 1`] = `
           Object {
             "alignContent": "center",
             "alignItems": "center",
-            "backgroundColor": "#FFF",
-            "borderColor": "#ECECEC",
-            "borderWidth": 1,
             "flex": 1,
             "flexDirection": "column",
             "justifyContent": "center",
@@ -137,9 +132,7 @@ exports[`cature tabs component should renders correctly 1`] = `
                   "color": undefined,
                   "fontSize": 36,
                 },
-                Object {
-                  "color": "#444",
-                },
+                undefined,
                 Object {
                   "fontFamily": "Ionicons",
                   "fontStyle": "normal",
@@ -153,10 +146,13 @@ exports[`cature tabs component should renders correctly 1`] = `
           </Text>
           <Text
             style={
-              Object {
-                "color": "#444",
-                "letterSpacing": 1.25,
-              }
+              Array [
+                Object {
+                  "color": "#444",
+                  "letterSpacing": 1.25,
+                },
+                undefined,
+              ]
             }
           >
             Photo
@@ -178,9 +174,6 @@ exports[`cature tabs component should renders correctly 1`] = `
           Object {
             "alignContent": "center",
             "alignItems": "center",
-            "backgroundColor": "#FFF",
-            "borderColor": "#ECECEC",
-            "borderWidth": 1,
             "flex": 1,
             "flexDirection": "column",
             "justifyContent": "center",
@@ -206,9 +199,7 @@ exports[`cature tabs component should renders correctly 1`] = `
                   "color": undefined,
                   "fontSize": 36,
                 },
-                Object {
-                  "color": "#444",
-                },
+                undefined,
                 Object {
                   "fontFamily": "Ionicons",
                   "fontStyle": "normal",
@@ -222,10 +213,13 @@ exports[`cature tabs component should renders correctly 1`] = `
           </Text>
           <Text
             style={
-              Object {
-                "color": "#444",
-                "letterSpacing": 1.25,
-              }
+              Array [
+                Object {
+                  "color": "#444",
+                  "letterSpacing": 1.25,
+                },
+                undefined,
+              ]
             }
           >
             Video

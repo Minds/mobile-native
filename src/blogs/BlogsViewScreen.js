@@ -23,9 +23,9 @@ import {
 
 import ActionSheet from 'react-native-actionsheet';
 
-import { Header } from 'react-navigation-stack';
+import { Header } from '@react-navigation/stack';
 
-import { inject, observer } from 'mobx-react/native';
+import { inject, observer } from 'mobx-react';
 
 import FastImage from 'react-native-fast-image';
 import { Icon } from 'react-native-elements';
@@ -48,6 +48,7 @@ import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import { FLAG_VIEW } from '../common/Permissions';
+import ThemedStyles from '../styles/ThemedStyles';
 
 /**
  * Blog View Screen
@@ -86,7 +87,7 @@ export default class BlogsViewScreen extends Component {
    * Component did mount
    */
   async componentDidMount() {
-    const params = this.props.navigation.state.params;
+    const params = this.props.route.params;
     try {
       if (params.blog) {
         if (params.blog._list && params.blog._list.metadataService) {
@@ -149,6 +150,7 @@ export default class BlogsViewScreen extends Component {
    */
   getHeader() {
     const blog = this.props.blogsView.blog;
+    const theme = ThemedStyles.style;
 
     const actions = (
       <View style={[CS.rowJustifyStart]}>
@@ -166,13 +168,13 @@ export default class BlogsViewScreen extends Component {
         {actionSheet}
       </View>) : (null);
     return (
-      <View style={styles.screen}>
+      <View style={[styles.screen, theme.backgroundSecondary]}>
         <FastImage source={image} resizeMode={FastImage.resizeMode.cover} style={styles.image} />
         <Text style={styles.title}>{blog.title}</Text>
         {optMenu}
         <View style={styles.ownerBlockContainer}>
           <OwnerBlock entity={blog} navigation={this.props.navigation}>
-            <Text style={styles.timestamp}>{formatDate(blog.time_created)}</Text>
+            <Text style={[styles.timestamp, theme.colorSecondaryText]}>{formatDate(blog.time_created)}</Text>
           </OwnerBlock>
         </View>
         {actions}
@@ -245,6 +247,8 @@ export default class BlogsViewScreen extends Component {
    */
   render() {
 
+    const theme = ThemedStyles.style;
+
     if (!this.props.blogsView.blog) {
       return <CenteredLoading />;
     } else {
@@ -259,7 +263,7 @@ export default class BlogsViewScreen extends Component {
     }
 
     return (
-      <View style={[CS.flexContainer, CS.backgroundWhite]}>
+      <View style={[CS.flexContainer, theme.backgroundSecondary]}>
         {
           !this.state.error ?
             <CommentList
@@ -267,6 +271,7 @@ export default class BlogsViewScreen extends Component {
               entity={this.props.blogsView.blog}
               store={this.comments}
               navigation={this.props.navigation}
+              route={this.props.route}
               keyboardVerticalOffset = {Header.HEIGHT - 65}
             />
           :
@@ -317,8 +322,6 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingRight: 12,
     fontSize: 22,
-    color: '#444',
-    fontFamily: 'Roboto',
     // fontWeight: '800',
     fontFamily: 'Roboto-Black', // workaround android ignoring >= 800
   },
@@ -331,7 +334,6 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   screen: {
-    backgroundColor: '#FFF',
     flex:1
   },
   image: {

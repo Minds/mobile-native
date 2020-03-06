@@ -154,10 +154,24 @@ exports[`channel header component owner should render correctly 1`] = `
           style={null}
           testID="SubscribersView"
         >
-          <Text>
+          <Text
+            style={
+              Array [
+                undefined,
+                undefined,
+              ]
+            }
+          >
             SUBSCRIBERS
           </Text>
-          <Text>
+          <Text
+            style={
+              Array [
+                undefined,
+                undefined,
+              ]
+            }
+          >
             50
           </Text>
         </View>
@@ -165,10 +179,24 @@ exports[`channel header component owner should render correctly 1`] = `
       <View
         testID="ViewsView"
       >
-        <Text>
+        <Text
+          style={
+            Array [
+              undefined,
+              undefined,
+            ]
+          }
+        >
           VIEWS
         </Text>
-        <Text>
+        <Text
+          style={
+            Array [
+              undefined,
+              undefined,
+            ]
+          }
+        >
           100
         </Text>
       </View>
@@ -187,6 +215,12 @@ exports[`channel header component owner should render correctly 1`] = `
           <Text
             ellipsizeMode="tail"
             numberOfLines={1}
+            style={
+              Array [
+                undefined,
+                undefined,
+              ]
+            }
           >
             Some User
           </Text>
@@ -225,17 +259,12 @@ exports[`channel header component owner should render correctly 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
-              "alignItems": "center",
-              "backgroundColor": "white",
-              "borderColor": "#4690D6",
-              "borderRadius": 20,
-              "borderWidth": 1,
+              "backgroundColor": "#5DBAC0",
+              "borderRadius": 2,
               "flexDirection": "row",
               "justifyContent": "center",
-              "margin": 4,
-              "marginLeft": 0,
+              "marginLeft": 5,
               "opacity": 1,
-              "padding": 4,
             }
           }
           testID="EditButton"
@@ -244,7 +273,7 @@ exports[`channel header component owner should render correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#4690D6",
+                  "color": "white",
                 },
                 undefined,
               ]

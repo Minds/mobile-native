@@ -60,7 +60,7 @@ exports[`cature poster flags component should renders correctly for props false 
       style={
         Array [
           Object {
-            "color": "#777777",
+            "color": undefined,
             "fontSize": 25,
           },
           undefined,
@@ -102,7 +102,7 @@ exports[`cature poster flags component should renders correctly for props false 
       style={
         Array [
           Object {
-            "color": "#777777",
+            "color": undefined,
             "fontSize": 25,
           },
           undefined,
@@ -146,7 +146,7 @@ exports[`cature poster flags component should renders correctly for props false 
       style={
         Array [
           Object {
-            "color": "#777777",
+            "color": undefined,
             "fontSize": 30,
           },
           undefined,
@@ -363,7 +363,6 @@ exports[`cature poster flags component should renders correctly for props false 
               style={
                 Array [
                   Object {
-                    "color": "#777777",
                     "flexGrow": 1,
                     "fontFamily": "Roboto",
                     "fontSize": 13,
@@ -421,7 +420,6 @@ exports[`cature poster flags component should renders correctly for props false 
               style={
                 Array [
                   Object {
-                    "color": "#777777",
                     "flexGrow": 1,
                     "fontFamily": "Roboto",
                     "fontSize": 13,
@@ -541,11 +539,14 @@ exports[`cature poster flags component should renders correctly for props false 
       >
         <View
           style={
-            Object {
-              "backgroundColor": "#fff",
-              "borderRadius": 5,
-              "padding": 10,
-            }
+            Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderRadius": 5,
+                "padding": 10,
+              },
+              undefined,
+            ]
           }
         >
           <View
@@ -579,11 +580,7 @@ exports[`cature poster flags component should renders correctly for props false 
                     "color": undefined,
                     "fontSize": 28,
                   },
-                  Object {
-                    "alignSelf": "flex-end",
-                    "marginRight": 10,
-                    "padding": 5,
-                  },
+                  undefined,
                   Object {
                     "fontFamily": "Ionicons",
                     "fontStyle": "normal",
@@ -615,17 +612,20 @@ exports[`cature poster flags component should renders correctly for props false 
                 onChangeText={[Function]}
                 rejectResponderTermination={true}
                 style={
-                  Object {
-                    "backgroundColor": "#eee",
-                    "borderRadius": 3,
-                    "color": "#666",
-                    "flexGrow": 1,
-                    "fontSize": 16,
-                    "fontWeight": "300",
-                    "marginRight": 3,
-                    "padding": 5,
-                    "textAlign": "right",
-                  }
+                  Array [
+                    Object {
+                      "borderRadius": 3,
+                      "borderWidth": 1,
+                      "flexGrow": 1,
+                      "fontSize": 16,
+                      "fontWeight": "300",
+                      "marginRight": 3,
+                      "padding": 5,
+                      "textAlign": "right",
+                    },
+                    undefined,
+                    undefined,
+                  ]
                 }
                 underlineColorAndroid="transparent"
                 value="undefined"
@@ -633,10 +633,9 @@ exports[`cature poster flags component should renders correctly for props false 
               <Text
                 style={
                   Object {
-                    "color": "#666",
                     "fontFamily": "Roboto",
                     "fontSize": 14,
-                    "fontWeight": "300",
+                    "fontWeight": "400",
                     "letterSpacing": 1,
                   }
                 }
@@ -666,45 +665,26 @@ exports[`cature poster flags component should renders correctly for props false 
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
-                      "borderColor": "#ececec",
-                      "borderRadius": 30,
-                      "borderWidth": 1,
-                      "padding": 8,
-                    },
-                    Object {
-                      "backgroundColor": "transparent",
-                    },
-                    undefined,
-                    Object {
-                      "borderColor": "#4690D6",
-                    },
-                    false,
-                  ]
+                  Object {
+                    "backgroundColor": "#5DBAC0",
+                    "borderRadius": 2,
+                    "opacity": 1,
+                  }
                 }
               >
                 <Text
                   style={
                     Array [
                       Object {
-                        "paddingLeft": 5,
-                      },
-                      Object {
-                        "paddingRight": 5,
-                      },
-                      Object {
-                        "textAlign": "center",
+                        "color": "white",
                       },
                       undefined,
-                      Object {
-                        "color": "#4690D6",
-                      },
-                      false,
                     ]
                   }
                 >
+                   
                   Done
+                   
                 </Text>
               </View>
             </View>
@@ -815,11 +795,14 @@ exports[`cature poster flags component should renders correctly for props false 
       >
         <View
           style={
-            Object {
-              "backgroundColor": "#fff",
-              "borderRadius": 5,
-              "padding": 10,
-            }
+            Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderRadius": 5,
+                "padding": 10,
+              },
+              undefined,
+            ]
           }
         >
           <View
@@ -860,7 +843,6 @@ exports[`cature poster flags component should renders correctly for props false 
                     "borderColor": "#cccccc",
                     "borderRadius": 10,
                     "borderWidth": 1,
-                    "color": "#777777",
                     "flexGrow": 0,
                     "fontSize": 12,
                     "fontWeight": "400",
@@ -881,13 +863,9 @@ exports[`cature poster flags component should renders correctly for props false 
                 Array [
                   Object {
                     "color": undefined,
-                    "fontSize": 28,
+                    "fontSize": 35,
                   },
-                  Object {
-                    "alignSelf": "flex-end",
-                    "marginRight": 10,
-                    "padding": 5,
-                  },
+                  undefined,
                   Object {
                     "fontFamily": "Ionicons",
                     "fontStyle": "normal",
@@ -925,16 +903,20 @@ exports[`cature poster flags component should renders correctly for props false 
                 onEndEditing={[Function]}
                 onSubmitEditing={[Function]}
                 placeholder="eg. science"
+                placeholderTextColor="#AEB0B8"
                 rejectResponderTermination={true}
                 returnKeyType="next"
                 style={
-                  Object {
-                    "borderBottomWidth": 1,
-                    "borderColor": "#ccc",
-                    "height": 35,
-                    "padding": 10,
-                    "width": "100%",
-                  }
+                  Array [
+                    Object {
+                      "borderBottomWidth": 1,
+                      "borderColor": "#ccc",
+                      "height": 35,
+                      "padding": 10,
+                      "width": "100%",
+                    },
+                    undefined,
+                  ]
                 }
                 testID="tagInput"
                 underlineColorAndroid="transparent"
@@ -949,22 +931,6 @@ exports[`cature poster flags component should renders correctly for props false 
   <Modal
     animationType="none"
     hardwareAccelerated={false}
-    hideModalContentWhileAnimating={false}
-    onModalHide={[Function]}
-    onModalWillHide={[Function]}
-    onModalWillShow={[Function]}
-    onRequestClose={[Function]}
-    scrollHorizontal={false}
-    scrollOffset={0}
-    scrollOffsetMax={0}
-    scrollTo={null}
-    supportedOrientations={
-      Array [
-        "portrait",
-        "landscape",
-      ]
-    }
-    swipeThreshold={100}
     transparent={true}
     visible={false}
   >
@@ -982,189 +948,16 @@ exports[`cature poster flags component should renders correctly for props false 
         Object {
           "backgroundColor": "black",
           "bottom": 0,
-          "height": 1334,
+          "height": 2668,
           "left": 0,
           "opacity": 0,
           "position": "absolute",
           "right": 0,
           "top": 0,
-          "width": 750,
+          "width": 1500,
         }
       }
     />
-    <View
-      hideModalContentWhileAnimating={false}
-      onModalHide={[Function]}
-      onModalWillHide={[Function]}
-      onModalWillShow={[Function]}
-      pointerEvents="box-none"
-      scrollHorizontal={false}
-      scrollOffset={0}
-      scrollOffsetMax={0}
-      scrollTo={null}
-      style={
-        Object {
-          "flex": 1,
-          "justifyContent": "flex-end",
-          "margin": 10,
-          "transform": Array [
-            Object {
-              "translateY": 0,
-            },
-          ],
-        }
-      }
-      supportedOrientations={
-        Array [
-          "portrait",
-          "landscape",
-        ]
-      }
-      swipeThreshold={100}
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "borderRadius": 13,
-              "marginBottom": 8,
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "white",
-            },
-            undefined,
-          ]
-        }
-      >
-        <View
-          style={
-            Object {
-              "backgroundColor": "transparent",
-              "borderBottomColor": "#d5d5d5",
-              "borderBottomWidth": 0.5,
-              "padding": 14,
-            }
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#8f8f8f",
-                  "fontSize": 13,
-                  "textAlign": "center",
-                },
-                undefined,
-              ]
-            }
-          >
-            Pick a date
-          </Text>
-        </View>
-        <View
-          onStartShouldSetResponderCapture={[Function]}
-        >
-          <View>
-            <RCTDatePicker
-              date={1537484400000}
-              minuteInterval={1}
-              mode="datetime"
-              onChange={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "height": 216,
-                }
-              }
-            />
-          </View>
-        </View>
-        <View
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "backgroundColor": "transparent",
-              "borderColor": "#d5d5d5",
-              "borderTopWidth": 0.5,
-              "height": 57,
-              "justifyContent": "center",
-            }
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "backgroundColor": "transparent",
-                  "color": "#007ff9",
-                  "fontSize": 20,
-                  "fontWeight": "normal",
-                  "textAlign": "center",
-                },
-                undefined,
-              ]
-            }
-          >
-            Confirm
-          </Text>
-        </View>
-      </View>
-      <View
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "borderRadius": 13,
-              "height": 57,
-              "justifyContent": "center",
-              "marginBottom": 0,
-            },
-            Object {
-              "backgroundColor": "white",
-            },
-            undefined,
-          ]
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#007ff9",
-                "fontSize": 20,
-                "fontWeight": "600",
-                "padding": 10,
-                "textAlign": "center",
-              },
-              undefined,
-            ]
-          }
-        >
-          Cancel
-        </Text>
-      </View>
-    </View>
   </Modal>
 </View>
 `;
@@ -1229,7 +1022,7 @@ exports[`cature poster flags component should renders correctly for props true 1
       style={
         Array [
           Object {
-            "color": "#777777",
+            "color": undefined,
             "fontSize": 25,
           },
           undefined,
@@ -1271,7 +1064,7 @@ exports[`cature poster flags component should renders correctly for props true 1
       style={
         Array [
           Object {
-            "color": "#777777",
+            "color": undefined,
             "fontSize": 25,
           },
           undefined,
@@ -1315,7 +1108,7 @@ exports[`cature poster flags component should renders correctly for props true 1
       style={
         Array [
           Object {
-            "color": "#777777",
+            "color": undefined,
             "fontSize": 30,
           },
           undefined,
@@ -1532,7 +1325,6 @@ exports[`cature poster flags component should renders correctly for props true 1
               style={
                 Array [
                   Object {
-                    "color": "#777777",
                     "flexGrow": 1,
                     "fontFamily": "Roboto",
                     "fontSize": 13,
@@ -1590,7 +1382,6 @@ exports[`cature poster flags component should renders correctly for props true 1
               style={
                 Array [
                   Object {
-                    "color": "#777777",
                     "flexGrow": 1,
                     "fontFamily": "Roboto",
                     "fontSize": 13,
@@ -1710,11 +1501,14 @@ exports[`cature poster flags component should renders correctly for props true 1
       >
         <View
           style={
-            Object {
-              "backgroundColor": "#fff",
-              "borderRadius": 5,
-              "padding": 10,
-            }
+            Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderRadius": 5,
+                "padding": 10,
+              },
+              undefined,
+            ]
           }
         >
           <View
@@ -1748,11 +1542,7 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "color": undefined,
                     "fontSize": 28,
                   },
-                  Object {
-                    "alignSelf": "flex-end",
-                    "marginRight": 10,
-                    "padding": 5,
-                  },
+                  undefined,
                   Object {
                     "fontFamily": "Ionicons",
                     "fontStyle": "normal",
@@ -1784,17 +1574,20 @@ exports[`cature poster flags component should renders correctly for props true 1
                 onChangeText={[Function]}
                 rejectResponderTermination={true}
                 style={
-                  Object {
-                    "backgroundColor": "#eee",
-                    "borderRadius": 3,
-                    "color": "#666",
-                    "flexGrow": 1,
-                    "fontSize": 16,
-                    "fontWeight": "300",
-                    "marginRight": 3,
-                    "padding": 5,
-                    "textAlign": "right",
-                  }
+                  Array [
+                    Object {
+                      "borderRadius": 3,
+                      "borderWidth": 1,
+                      "flexGrow": 1,
+                      "fontSize": 16,
+                      "fontWeight": "300",
+                      "marginRight": 3,
+                      "padding": 5,
+                      "textAlign": "right",
+                    },
+                    undefined,
+                    undefined,
+                  ]
                 }
                 underlineColorAndroid="transparent"
                 value="undefined"
@@ -1802,10 +1595,9 @@ exports[`cature poster flags component should renders correctly for props true 1
               <Text
                 style={
                   Object {
-                    "color": "#666",
                     "fontFamily": "Roboto",
                     "fontSize": 14,
-                    "fontWeight": "300",
+                    "fontWeight": "400",
                     "letterSpacing": 1,
                   }
                 }
@@ -1835,45 +1627,26 @@ exports[`cature poster flags component should renders correctly for props true 1
                 onResponderTerminationRequest={[Function]}
                 onStartShouldSetResponder={[Function]}
                 style={
-                  Array [
-                    Object {
-                      "borderColor": "#ececec",
-                      "borderRadius": 30,
-                      "borderWidth": 1,
-                      "padding": 8,
-                    },
-                    Object {
-                      "backgroundColor": "transparent",
-                    },
-                    undefined,
-                    Object {
-                      "borderColor": "#4690D6",
-                    },
-                    false,
-                  ]
+                  Object {
+                    "backgroundColor": "#5DBAC0",
+                    "borderRadius": 2,
+                    "opacity": 1,
+                  }
                 }
               >
                 <Text
                   style={
                     Array [
                       Object {
-                        "paddingLeft": 5,
-                      },
-                      Object {
-                        "paddingRight": 5,
-                      },
-                      Object {
-                        "textAlign": "center",
+                        "color": "white",
                       },
                       undefined,
-                      Object {
-                        "color": "#4690D6",
-                      },
-                      false,
                     ]
                   }
                 >
+                   
                   Done
+                   
                 </Text>
               </View>
             </View>
@@ -1984,11 +1757,14 @@ exports[`cature poster flags component should renders correctly for props true 1
       >
         <View
           style={
-            Object {
-              "backgroundColor": "#fff",
-              "borderRadius": 5,
-              "padding": 10,
-            }
+            Array [
+              Object {
+                "backgroundColor": "#fff",
+                "borderRadius": 5,
+                "padding": 10,
+              },
+              undefined,
+            ]
           }
         >
           <View
@@ -2029,7 +1805,6 @@ exports[`cature poster flags component should renders correctly for props true 1
                     "borderColor": "#cccccc",
                     "borderRadius": 10,
                     "borderWidth": 1,
-                    "color": "#777777",
                     "flexGrow": 0,
                     "fontSize": 12,
                     "fontWeight": "400",
@@ -2050,13 +1825,9 @@ exports[`cature poster flags component should renders correctly for props true 1
                 Array [
                   Object {
                     "color": undefined,
-                    "fontSize": 28,
+                    "fontSize": 35,
                   },
-                  Object {
-                    "alignSelf": "flex-end",
-                    "marginRight": 10,
-                    "padding": 5,
-                  },
+                  undefined,
                   Object {
                     "fontFamily": "Ionicons",
                     "fontStyle": "normal",
@@ -2094,16 +1865,20 @@ exports[`cature poster flags component should renders correctly for props true 1
                 onEndEditing={[Function]}
                 onSubmitEditing={[Function]}
                 placeholder="eg. science"
+                placeholderTextColor="#AEB0B8"
                 rejectResponderTermination={true}
                 returnKeyType="next"
                 style={
-                  Object {
-                    "borderBottomWidth": 1,
-                    "borderColor": "#ccc",
-                    "height": 35,
-                    "padding": 10,
-                    "width": "100%",
-                  }
+                  Array [
+                    Object {
+                      "borderBottomWidth": 1,
+                      "borderColor": "#ccc",
+                      "height": 35,
+                      "padding": 10,
+                      "width": "100%",
+                    },
+                    undefined,
+                  ]
                 }
                 testID="tagInput"
                 underlineColorAndroid="transparent"
@@ -2118,22 +1893,6 @@ exports[`cature poster flags component should renders correctly for props true 1
   <Modal
     animationType="none"
     hardwareAccelerated={false}
-    hideModalContentWhileAnimating={false}
-    onModalHide={[Function]}
-    onModalWillHide={[Function]}
-    onModalWillShow={[Function]}
-    onRequestClose={[Function]}
-    scrollHorizontal={false}
-    scrollOffset={0}
-    scrollOffsetMax={0}
-    scrollTo={null}
-    supportedOrientations={
-      Array [
-        "portrait",
-        "landscape",
-      ]
-    }
-    swipeThreshold={100}
     transparent={true}
     visible={false}
   >
@@ -2151,189 +1910,16 @@ exports[`cature poster flags component should renders correctly for props true 1
         Object {
           "backgroundColor": "black",
           "bottom": 0,
-          "height": 1334,
+          "height": 2668,
           "left": 0,
           "opacity": 0,
           "position": "absolute",
           "right": 0,
           "top": 0,
-          "width": 750,
+          "width": 1500,
         }
       }
     />
-    <View
-      hideModalContentWhileAnimating={false}
-      onModalHide={[Function]}
-      onModalWillHide={[Function]}
-      onModalWillShow={[Function]}
-      pointerEvents="box-none"
-      scrollHorizontal={false}
-      scrollOffset={0}
-      scrollOffsetMax={0}
-      scrollTo={null}
-      style={
-        Object {
-          "flex": 1,
-          "justifyContent": "flex-end",
-          "margin": 10,
-          "transform": Array [
-            Object {
-              "translateY": 0,
-            },
-          ],
-        }
-      }
-      supportedOrientations={
-        Array [
-          "portrait",
-          "landscape",
-        ]
-      }
-      swipeThreshold={100}
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "borderRadius": 13,
-              "marginBottom": 8,
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "white",
-            },
-            undefined,
-          ]
-        }
-      >
-        <View
-          style={
-            Object {
-              "backgroundColor": "transparent",
-              "borderBottomColor": "#d5d5d5",
-              "borderBottomWidth": 0.5,
-              "padding": 14,
-            }
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#8f8f8f",
-                  "fontSize": 13,
-                  "textAlign": "center",
-                },
-                undefined,
-              ]
-            }
-          >
-            Pick a date
-          </Text>
-        </View>
-        <View
-          onStartShouldSetResponderCapture={[Function]}
-        >
-          <View>
-            <RCTDatePicker
-              date={1537484400000}
-              minuteInterval={1}
-              mode="datetime"
-              onChange={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "height": 216,
-                }
-              }
-            />
-          </View>
-        </View>
-        <View
-          accessible={true}
-          focusable={true}
-          isTVSelectable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "backgroundColor": "transparent",
-              "borderColor": "#d5d5d5",
-              "borderTopWidth": 0.5,
-              "height": 57,
-              "justifyContent": "center",
-            }
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "backgroundColor": "transparent",
-                  "color": "#007ff9",
-                  "fontSize": 20,
-                  "fontWeight": "normal",
-                  "textAlign": "center",
-                },
-                undefined,
-              ]
-            }
-          >
-            Confirm
-          </Text>
-        </View>
-      </View>
-      <View
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "borderRadius": 13,
-              "height": 57,
-              "justifyContent": "center",
-              "marginBottom": 0,
-            },
-            Object {
-              "backgroundColor": "white",
-            },
-            undefined,
-          ]
-        }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "backgroundColor": "transparent",
-                "color": "#007ff9",
-                "fontSize": 20,
-                "fontWeight": "600",
-                "padding": 10,
-                "textAlign": "center",
-              },
-              undefined,
-            ]
-          }
-        >
-          Cancel
-        </Text>
-      </View>
-    </View>
   </Modal>
 </View>
 `;
