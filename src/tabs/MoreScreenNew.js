@@ -41,7 +41,9 @@ class MoreScreenNew extends Component {
    * Get Channel Avatar
    */
   getAvatar() {
-    return this.props.user.me.getAvatarSource('medium');
+    return this.props.user.me && this.props.user.me.getAvatarSource
+      ? this.props.user.me.getAvatarSource('medium')
+      : {};
   }
 
   navToSubscribers = () =>
