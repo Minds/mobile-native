@@ -483,7 +483,8 @@
     "pushNotification":"Push Notifications",
     "regenerateKey":"Regenerate messenger keys",
     "deleteBlockchain":"Delete blockchain keychain",
-    "darkMode":"Dark mode"
+    "darkMode":"Dark mode",
+    "lightMode":"Light mode"
   },
   "comingSoon":{
     "try":"Try the canary app at",
