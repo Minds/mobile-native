@@ -3,6 +3,7 @@ import {isNetworkFail} from './helpers/abortableFetch';
 import i18nService from './services/i18n.service';
 import {Alert} from 'react-native';
 import { isApiError } from './services/api.service';
+import { isUserError } from './UserError';
 
 /**
  * Remote action with auto and manual retry
@@ -13,7 +14,7 @@ import { isApiError } from './services/api.service';
  */
 async function remoteAction(action, actionName = '', retries = 1) {
   try {
-    await action();
+    return await action();
   } catch (error) {
     let message;
 
@@ -25,7 +26,7 @@ async function remoteAction(action, actionName = '', retries = 1) {
       message = connectivityService.isConnected
         ? i18nService.t('cantReachServer')
         : i18nService.t('noInternet');
-    } else if (isApiError(error)) {
+    } else if (isApiError(error) || isUserError(error)) {
       message = error.message;
     } else {
       message = i18nService.t('errorMessage');

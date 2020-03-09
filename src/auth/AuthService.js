@@ -49,7 +49,8 @@ class AuthService {
     };
     try {
       const data = await api.post('api/v2/oauth/token', params);
-      session.login(data);
+
+      session.login(data, false);
       return data.access_token;
     } catch (err) {
       logService.exception('[AuthService] error claiming refresh token', err);

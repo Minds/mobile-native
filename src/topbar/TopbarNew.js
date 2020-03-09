@@ -60,9 +60,7 @@ export default class TopbarNew extends Component {
                 </View>
               </View>
             </View>
-            <View>
-              <EmailConfirmation user={this.props.user} />
-            </View>
+            <EmailConfirmation user={this.props.user} />
           </View>
         )}
       </SafeAreaConsumer>

@@ -88,8 +88,8 @@ class ThumbUpAction extends Component {
       return;
     }
 
-    remoteAction(async () => {
-      await this.props.entity.toggleVote(this.direction);
+    remoteAction(() => {
+      return this.props.entity.toggleVote(this.direction);
     });
   };
 }

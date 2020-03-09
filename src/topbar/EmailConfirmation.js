@@ -39,9 +39,9 @@ class EmailConfirmation extends Component {
    */
   render() {
     const show =
+      apiService.mustVerify ||
       (!this.props.user.emailConfirmMessageDismiss &&
-      this.props.user.me.email_confirmed === false) ||
-      apiService.mustVerify;
+        this.props.user.me.email_confirmed === false);
 
     if (!show) {
       return null;
@@ -49,10 +49,9 @@ class EmailConfirmation extends Component {
 
     return (
       <View style={styles.container}>
-
         <View style={styles.body}>
           <Text style={[CS.fontM, CS.colorWhite]}>
-            {i18n.t('emailConfirm.confirm')}
+            {i18n.t('emailConfirm.confirm')} {i18n.t('emailConfirm.didntGetit')}
           </Text>
           <Text style={[CS.bold, CS.colorWhite]} onPress={this.send}>
             {i18n.t('emailConfirm.sendAgain')}
@@ -64,17 +63,19 @@ class EmailConfirmation extends Component {
   }
 }
 
-const topPosition = Platform.OS === 'ios' ? (isIphoneX ? 40 : 30) : 0;
+const topPosition = Platform.OS === 'ios' ? (isIphoneX ? 38 : 30) : 0;
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#4690df',
-    height: 70,
+    height: 95,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    padding: 4,
     position: 'absolute',
+    overflow: 'visible',
     width: '100%',
+    left: 0,
     top: topPosition,
     zIndex: 999,
   },
