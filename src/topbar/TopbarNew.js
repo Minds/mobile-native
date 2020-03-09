@@ -26,6 +26,7 @@ import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import MessengerTabIcon from '../messenger/MessengerTabIconNew';
 
 import EmailConfirmation from './EmailConfirmation';
+import BannerInfo from './BannerInfo';
 
 const forceInset = isIphoneX ? {top: 10} : null
 
@@ -62,6 +63,7 @@ export default class TopbarNew extends Component {
             </View>
             <View>
               <EmailConfirmation user={this.props.user} />
+              <BannerInfo user={this.props.user} logged={true} />
             </View>
           </View>
         )}

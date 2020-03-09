@@ -20,6 +20,8 @@ import sessionService from '../common/services/session.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import BannerInfo from '../topbar/BannerInfo';
+
 const LOGO_HEIGHT = 80;
 const LOGO_HEIGHT_SMALL = 40;
 
@@ -79,6 +81,7 @@ export default class LoginScreen extends Component {
     return (
       <KeyboardAvoidingView style={[CS.flexColumnStretch, CS.backgroundPrimary]} behavior={Platform.OS == 'ios' ? 'padding' : null} >
         <SafeAreaView style={[styles.flex10]}>
+          <BannerInfo logged={false} />
           <ScrollView style={CS.flexContainer} keyboardShouldPersistTaps={true}>
             <View style={[CS.paddingHorizontal4x, CS.flexColumnStretch]}>
               <Animated.Image
