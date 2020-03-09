@@ -17,6 +17,16 @@ class UserStore {
   @observable me = {};
   @observable emailConfirmMessageDismiss = false;
   @observable searching = false;
+  @observable bannerInfoDismiss = false;
+
+  /**
+   * Dissmis Message Banner
+   * @param {*} value 
+   */
+  @action
+  setDissmisBanner(value) {
+    this.bannerInfoDismiss = value;
+  }
 
   @action
   setDissmis(value) {
