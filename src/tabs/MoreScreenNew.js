@@ -186,10 +186,13 @@ class MoreScreenNew extends Component {
             <TouchableOpacity onPress={this.navToChannel}>
               <Image source={avatar} style={styles.wrappedAvatar} />
             </TouchableOpacity>
-            <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop]}>
+            <Text
+              style={[CS.titleText, CS.colorPrimaryText, CS.marginTop]}
+              onPress={this.navToChannel}>
               {channel.name}
             </Text>
             <Text
+              onPress={this.navToChannel}
               style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal]}>
               @{channel.username}
             </Text>
