@@ -32,6 +32,7 @@ import CaptureTabs from './CaptureTabs';
 // workaround for android copy/paste
 import TextInput from '../common/components/TextInput';
 import ThemedStyles from '../styles/ThemedStyles';
+import remoteAction from '../common/RemoteAction';
 
 export default
 @inject('user', 'capture', 'newsfeed')
@@ -427,7 +428,7 @@ class CapturePoster extends Component {
       newPost.tags = this.props.capture.allTags;
     }
 
-    try {
+    return await remoteAction(async () => {
       let response = await this.props.capture.post(newPost);
 
       if (this.props.reset) {
@@ -454,11 +455,7 @@ class CapturePoster extends Component {
         this.navToPrevious(response.entity);
       }
       return response;
-    } catch (err) {
-      console.log(err)
-      logService.exception('[CapturePoster]', err);
-      Alert.alert(i18n.t('ops'), i18n.t('errorMessage'));
-    }
+    });
   }
 
   /**

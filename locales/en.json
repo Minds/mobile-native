@@ -630,7 +630,8 @@
   },
   "emailConfirm": {
     "confirmed":"Email address confirmed!",
-    "confirm":"Please confirm your email address. Didn't get it?",
+    "didntGetit": "Didn't get it?",
+    "confirm":"Please confirm your email address.",
     "sendAgain": "Click here to send again.",
     "confirmNote": "Note: If you change your email address, it will need to be confirmed again.",
     "sent":"Email sent"

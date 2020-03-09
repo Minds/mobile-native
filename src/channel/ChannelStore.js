@@ -142,7 +142,7 @@ export default class ChannelStore {
 
     try {
       if (avatar) {
-        this.uploadAvatar(avatar);
+        await this.uploadAvatar(avatar);
       }
 
       if (banner) {
@@ -170,10 +170,9 @@ export default class ChannelStore {
 
       return success;
     } catch (e) {
-      logService.exception(e);
-      return e;
+      throw e;
     } finally {
-      this.isUploading = false;
+      this.setIsUploading(false);
     }
   }
 

@@ -2,7 +2,7 @@ import Cancelable from 'promise-cancelable';
 import { NativeModules } from 'react-native';
 
 import session from './session.service';
-import { MINDS_API_URI, MINDS_URI_SETTINGS, NETWORK_TIMEOUT } from '../../config/Config';
+import { MINDS_API_URI, NETWORK_TIMEOUT } from '../../config/Config';
 
 import abortableFetch from '../helpers/abortableFetch';
 import { Version } from '../../config/Version';
@@ -12,6 +12,7 @@ import * as Sentry from '@sentry/react-native';
 
 import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
+import i18n from './i18n.service';
 
 /**
  * Api Error
@@ -27,14 +28,13 @@ export const isApiError = function(err) {
 };
 
 export const isApiForbidden = function(err) {
-  return err instanceof ApiError && err.status == 403;
-}
+  return err.status === 403;
+};
 
 /**
  * Api service
  */
 class ApiService {
-
   @observable mustVerify = false;
 
   @action
@@ -42,13 +42,41 @@ class ApiService {
     this.mustVerify = value;
   }
 
-  async parseJSON(response) {
-    try {
-      return await response.json();
-    } catch (error) {
-      Sentry.captureMessage(`ISSUE #1572 URL: ${response.url}, STATUS: ${response.status} STATUSTEXT: ${response.statusText}`);
-      throw error;
+  async parseResponse(response) {
+    // check status
+    if (response.status) {
+      if (response.status === 401) {
+        session.logout();
+        throw Error('Session lost');
+      }
     }
+
+    let data;
+
+    try {
+      // Convert from JSON
+      data = await response.json();
+    } catch (err) {
+      Sentry.captureMessage(
+        `Server Error: ${response.url}, STATUS: ${
+          response.status
+        } STATUSTEXT: ${response.statusText}\n${response.text()}`,
+      );
+      throw new UserError(i18n.t('errorMessage'));
+    }
+
+    if (isApiForbidden(response) && data.must_verify) {
+      this.setMustVerify(true);
+      throw new ApiError(i18n.t('emailConfirm.confirm'));
+    }
+
+    // Failed on API side
+    if (data && data.status && data.status !== 'success') {
+      const msg = data && data.message ? data.message : 'Server error';
+      throw new ApiError(msg);
+    }
+
+    return data;
   }
 
   /**
@@ -66,8 +94,8 @@ class ApiService {
   buildHeaders() {
     const headers = {
       'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Pragma': 'no-cache',
-      'App-Version': Version.VERSION
+      Pragma: 'no-cache',
+      'App-Version': Version.VERSION,
     };
 
     if (session.token) {
@@ -92,34 +120,15 @@ class ApiService {
     const paramsString = this.getParamsString(params);
     const sep = url.indexOf('?') > -1 ? '&' : '?';
 
-    return `${url}${sep}${paramsString}`
+    return `${url}${sep}${paramsString}`;
   }
-
 
   getParamsString(params) {
-    return Object.keys(params).map(k => {
-      return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
-    }).join('&');
-  }
-
-  /**
-   * Throw an error
-   * @param {any} err
-   * @param {string} url
-   */
-  _throwError(err, url) {
-    if (err instanceof Error) {
-      throw err;
-    }
-    const error = new ApiError(err.message || err.responseText || `Request error on: ${url}`);
-    if (err.status) {
-      error.status = err.status;
-    }
-
-    if (isApiForbidden(error) && err.must_verify) {
-      this.setMustVerify(true);
-    }
-    throw error;
+    return Object.keys(params)
+      .map(k => {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+      })
+      .join('&');
   }
 
   /**
@@ -129,96 +138,42 @@ class ApiService {
    * @param {mixed} tag
    */
   async get(url, params = {}, tag) {
+    // build headers
     const headers = this.buildHeaders();
-    try {
-      const response = await abortableFetch(MINDS_API_URI + this.buildUrl(url, params), { headers, timeout: NETWORK_TIMEOUT },  tag);
 
-      // Bad response
-      if (!response.ok) {
-        throw response;
-      }
+    const response = await abortableFetch(
+      MINDS_API_URI + this.buildUrl(url, params),
+      { headers, timeout: NETWORK_TIMEOUT },
+      tag,
+    );
 
-      // Convert from JSON
-      const data = await this.parseJSON(response);
-
-      // Failed on API side
-      if (data.status != 'success') {
-        throw data;
-      }
-      return data;
-    } catch (err) {
-      // Bad authorization
-      if (err.status && err.status == 401) {
-        const refreshed = await session.badAuthorization(); //not actually a logout
-        if (refreshed) {
-          return await this.get(url, params, tag);
-        }
-        session.logout();
-      }
-      this._throwError(err, url);
-    }
+    return await this.parseResponse(response);
   }
 
-  async post(url, body={}) {
+  async post(url, body = {}) {
     const headers = this.buildHeaders();
 
-    try {
-      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'POST', body: JSON.stringify(body), headers, timeout: NETWORK_TIMEOUT });
+    let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers,
+      timeout: NETWORK_TIMEOUT,
+    });
 
-      if (!response.ok) {
-        throw response;
-      }
-
-      // Convert from JSON
-      const data = await this.parseJSON(response);
-
-      // Failed on API side
-      if (data.status != 'success') {
-        throw data;
-      }
-      return data;
-    } catch(err) {
-      if (err.status && err.status == 401) {
-        const refreshed = await session.badAuthorization(); //not actually a logout
-        if (refreshed) {
-          return await this.post(url, body);
-        }
-        logService.log('[ApiService] Token refresh failed: logout');
-        session.logout();
-      }
-      this._throwError(err, url);
-    }
+    return await this.parseResponse(response);
   }
 
-  async put(url, body={}) {
+  async put(url, body = {}) {
     const headers = this.buildHeaders();
 
-    try {
-      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'PUT', body: JSON.stringify(body), headers, timeout: NETWORK_TIMEOUT });
+    let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
+      method: 'PUT',
+      body: JSON.stringify(body),
+      headers,
+      timeout: NETWORK_TIMEOUT,
+    });
 
-      if (!response.ok) {
-        throw response;
-      }
-
-      // Convert from JSON
-      const data = await this.parseJSON(response);
-
-      // Failed on API side
-      if (data.status === 'error') {
-        throw data;
-      }
-      return data;
-    } catch(err) {
-      if (err.status && err.status == 401) {
-        const refreshed = await session.badAuthorization(); //not actually a logout
-        if (refreshed) {
-          return await this.put(url, body);
-        }
-        logService.log('[ApiService] Token refresh failed: logout');
-        session.logout();
-      }
-      this._throwError(err, url);
-    }
+    return await this.parseResponse(response);
   }
 
   /**
@@ -228,25 +183,23 @@ class ApiService {
    * @param {function} progress
    */
   uploadToS3(lease, file, progress) {
-
     return new Cancelable((resolve, reject, onCancel) => {
-
       let xhr = new XMLHttpRequest();
 
       // handle cancel
-      onCancel((cb) => {
+      onCancel(cb => {
         xhr.abort();
         cb();
       });
 
       if (progress) {
-        xhr.upload.addEventListener("progress", progress);
+        xhr.upload.addEventListener('progress', progress);
       }
       const url = lease.presigned_url;
       xhr.open('PUT', url);
       xhr.setRequestHeader('Content-Type', file.type);
       xhr.onload = () => {
-        if (xhr.status == 200) {
+        if (xhr.status === 200) {
           resolve(true);
         } else {
           reject('Ooops: upload error');
@@ -254,11 +207,10 @@ class ApiService {
       };
       xhr.onerror = function() {
         reject(new TypeError('Network request failed'));
-      }
+      };
 
       xhr.send(file);
-    })
-    .catch( error => {
+    }).catch(error => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;
@@ -266,38 +218,22 @@ class ApiService {
     });
   }
 
-  async delete(url, body={}) {
+  async delete(url, body = {}) {
     const headers = this.buildHeaders();
 
-    try {
-      let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), { method: 'DELETE', body: JSON.stringify(body), headers, timeout: NETWORK_TIMEOUT });
+    let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
+      method: 'DELETE',
+      body: JSON.stringify(body),
+      headers,
+      timeout: NETWORK_TIMEOUT,
+    });
 
-      if (!response.ok) {
-        throw response;
-      }
+    console.log(response)
 
-      // Convert from JSON
-      const data = await this.parseJSON(response);
-
-      // Failed on API side
-      if (data.status === 'error') {
-        throw data;
-      }
-      return data;
-    } catch(err) {
-      if (err.status && err.status == 401) {
-        const refreshed = await session.badAuthorization(); //not actually a logout
-        if (refreshed) {
-          return await this.delete(url, body);
-        }
-        logService.log('[ApiService] Token refresh failed: logout');
-        session.logout();
-      }
-      this._throwError(err, url);
-    }
+    return await this.parseResponse(response);
   }
 
-  upload(url, file, data=null, progress) {
+  upload(url, file, data = null, progress) {
     var formData = new FormData();
     formData.append('file', file);
     for (var key in data) {
@@ -305,33 +241,32 @@ class ApiService {
     }
 
     return new Cancelable((resolve, reject, onCancel) => {
-
       let xhr = new XMLHttpRequest();
 
       // handle cancel
-      onCancel((cb) => {
+      onCancel(cb => {
         xhr.abort();
         cb();
       });
 
       if (progress) {
-        xhr.upload.addEventListener("progress", progress);
+        xhr.upload.addEventListener('progress', progress);
       }
       xhr.open('POST', MINDS_API_URI + this.buildUrl(url));
       xhr.setRequestHeader('Authorization', `Bearer ${session.token}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.onload = () => {
-        if (xhr.status == 200) {
-          let data = {'status': null}
+        if (xhr.status === 200) {
+          let data = { status: null };
           try {
             data = JSON.parse(xhr.responseText);
-          } catch(e) {
-            data.status = 'error'
+          } catch (e) {
+            data = { status: 'error' };
           }
-          if (data.status == 'error')
+          if (data.status === 'error') {
             return reject(data);
-
+          }
           resolve(data);
         } else {
           reject(new UserError('Upload failed'));
@@ -339,11 +274,10 @@ class ApiService {
       };
       xhr.onerror = function() {
         reject(new TypeError('Network request failed'));
-      }
+      };
 
       xhr.send(formData);
-    })
-    .catch( error => {
+    }).catch(error => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;
