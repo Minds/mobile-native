@@ -27,6 +27,7 @@ import * as Progress from 'react-native-progress';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { isNetworkFail } from '../../common/helpers/abortableFetch';
 import i18nService from '../../common/services/i18n.service';
+import remoteAction from '../../common/RemoteAction';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
@@ -111,26 +112,25 @@ class ChannelSetupStepNew extends Component {
 
     this.setState({ saving: true });
 
-    const response = await this.store.save(payload);
-
-    if (response === true) {
-      await this.props.user.load(true);
-      this.setState({ saving: false });
-      this.uploads = {
-        avatar: null,
-        banner: null,
-      };
-    } else if (response === false) {
-      Alert.alert('Error saving channel');
-      this.setState({ saving: false });
-    } else {
-      if (isNetworkFail(response)) {
-        Alert.alert(i18nService.t('cantReachServer'));
-      } else {
-        Alert.alert(response && response.message ? response.message : response);
-      }
-      this.setState({ saving: false });
-    }
+    await remoteAction(
+      async () => {
+        const response = await this.store.save(payload);
+        if (response === true) {
+          await this.props.user.load(true);
+          this.setState({ saving: false });
+          this.uploads = {
+            avatar: null,
+            banner: null,
+          };
+        } else if (response === false) {
+          Alert.alert('Error saving channel');
+          this.setState({ saving: false });
+        }
+      },
+      '',
+      0,
+      false,
+    );
   };
 
   toggleFooter = () => this.setState({ showFooter: !this.state.showFooter });

@@ -57,11 +57,13 @@ class ApiService {
       // Convert from JSON
       data = await response.json();
     } catch (err) {
-      Sentry.captureMessage(
-        `Server Error: ${response.url}, STATUS: ${
-          response.status
-        } STATUSTEXT: ${response.statusText}\n${response.text()}`,
-      );
+      if (response.ok && !__DEV__) {
+        Sentry.captureMessage(
+          `Server Error: ${response.url}, STATUS: ${
+            response.status
+          } STATUSTEXT: ${response.statusText}\n${response.text()}`,
+        );
+      }
       throw new UserError(i18n.t('errorMessage'));
     }
 
@@ -228,7 +230,6 @@ class ApiService {
       timeout: NETWORK_TIMEOUT,
     });
 
-    console.log(response)
 
     return await this.parseResponse(response);
   }
