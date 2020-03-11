@@ -94,7 +94,7 @@ class CapturePoster extends Component {
           }
           testID="CapturePostButton"
         />
-      )
+      ),
     });
 
     this.loadNsfwFromPersistentStorage();
@@ -357,18 +357,23 @@ class CapturePoster extends Component {
 
     let group = this.props.route.params ? this.props.route.params.group : null
 
-    if (HashtagService.slice(message).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
-      Alert.alert(i18n.t('capture.maxHashtags', {maxHashtags: HashtagService.maxHashtags}));
+    // if hashtag count greater than 5
+    if (HashtagService.slice(message).length > HashtagService.maxHashtags) {
+      Alert.alert(
+        i18n.t('capture.maxHashtags', {
+          maxHashtags: HashtagService.maxHashtags,
+        }),
+      );
       return false;
     }
 
-    try {
-      const response = await this.props.capture.remind(params.entity.guid, post);
+    return await remoteAction(async () => {
+      const response = await this.props.capture.remind(
+        params.entity.guid,
+        post,
+      );
       this.navToPrevious(response.entity, group);
-    } catch (err) {
-      logService.exception('[CapturePoster]', err);
-      Alert.alert(i18n.t('ops'), i18n.t('errorMessage'));
-    }
+    });
   }
 
   /**
