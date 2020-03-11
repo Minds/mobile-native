@@ -187,5 +187,4 @@ export default class ChannelStore {
     this.active = false;
     this.isUploading = false;
   }
-
 }

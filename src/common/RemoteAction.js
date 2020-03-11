@@ -1,7 +1,7 @@
 import connectivityService from './services/connectivity.service';
-import {isNetworkFail} from './helpers/abortableFetch';
+import { isNetworkFail } from './helpers/abortableFetch';
 import i18nService from './services/i18n.service';
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 import { isApiError } from './services/api.service';
 import { isUserError } from './UserError';
 
@@ -11,8 +11,14 @@ import { isUserError } from './UserError';
  * @param {function} action async function that runs the action
  * @param {string} actionName translation term (optional)
  * @param {number} retries number of auto-retries (0 for no auto retry)
+ * @param {boolean} showRetry show retry button on error
  */
-async function remoteAction(action, actionName = '', retries = 1) {
+async function remoteAction(
+  action,
+  actionName = '',
+  retries = 1,
+  showRetry = true,
+) {
   try {
     return await action();
   } catch (error) {
@@ -20,13 +26,12 @@ async function remoteAction(action, actionName = '', retries = 1) {
 
     if (isNetworkFail(error)) {
       if (retries > 0) {
-        remoteAction(action, actionName, --retries);
-        return;
+        return await remoteAction(action, actionName, --retries);
       }
       message = connectivityService.isConnected
         ? i18nService.t('cantReachServer')
         : i18nService.t('noInternet');
-    } else if (isApiError(error) || isUserError(error)) {
+    } else if (isApiError(error) || isUserError(error) || error.message) {
       message = error.message;
     } else {
       message = i18nService.t('errorMessage');
@@ -36,18 +41,14 @@ async function remoteAction(action, actionName = '', retries = 1) {
       message = i18nService.t(actionName) + '\n' + message;
     }
 
-    Alert.alert(
-      i18nService.t('sorry'),
-      message,
-      [
-        {text: i18nService.t('ok')},
-        {
-          text: i18nService.t('tryAgain'),
-          onPress: () => remoteAction(action, actionName, retries),
-        },
-      ],
-      {cancelable: true},
-    );
+    const options = [{ text: i18nService.t('ok') }];
+    if (showRetry) {
+      options.push({
+        text: i18nService.t('tryAgain'),
+        onPress: () => remoteAction(action, actionName, retries),
+      });
+    }
+    Alert.alert(i18nService.t('sorry'), message, options, { cancelable: true });
   }
 }
 
