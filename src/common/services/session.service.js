@@ -1,8 +1,4 @@
-import {
-  observable,
-  action,
-  reaction
-} from 'mobx'
+import { observable, action, reaction } from 'mobx';
 
 import sessionStorage from './session.storage.service';
 import AuthService from '../../auth/AuthService';
@@ -14,7 +10,6 @@ import logService from './log.service';
  * Session service
  */
 class SessionService {
-
   @observable userLoggedIn = false;
 
   /**
@@ -57,8 +52,11 @@ class SessionService {
    */
   async init() {
     try {
-
-      const [accessToken, refreshToken, user] = await this.sessionStorage.getAll();
+      const [
+        accessToken,
+        refreshToken,
+        user,
+      ] = await this.sessionStorage.getAll();
 
       // if there is no session active we clean up and return;
       if (!accessToken) {
@@ -73,12 +71,14 @@ class SessionService {
       this.setRefreshToken(refresh_token);
       this.setToken(access_token);
 
-      if (!access_token) return null;
+      if (!access_token) {
+        return null;
+      }
 
       if (
-        access_token_expires * 1000 < Date.now()
-        && refresh_token
-        && refresh_token_expires * 1000 > Date.now()
+        access_token_expires * 1000 < Date.now() &&
+        refresh_token &&
+        refresh_token_expires * 1000 > Date.now()
       ) {
         logService.info('[SessionService] refreshing token');
         return await AuthService.refreshToken();
@@ -86,6 +86,9 @@ class SessionService {
 
       // ensure user loaded before activate the session
       await this.loadUser(user);
+
+      // refresh the token
+      await AuthService.refreshToken();
 
       this.setLoggedIn(true);
 
@@ -174,32 +177,35 @@ class SessionService {
     this.refreshToken = token;
   }
 
-
   /**
    * Login
    * @param {string} token
-   * @param {string} guid
+   * @param {boolean} loadUser
    */
   @action
-  async login(tokens) {
+  async login(tokens, loadUser = true) {
     this.setToken(tokens.access_token);
     this.setRefreshToken(tokens.refresh_token);
 
     // ensure user loaded before activate the session
-    await this.loadUser();
+    if (loadUser) {
+      await this.loadUser();
+    }
 
     this.setLoggedIn(true);
 
     const token_expire = this.getTokenExpiration(tokens.access_token);
-    const token_refresh_expire = token_expire + (60 * 60 * 24 * 30);
+    const token_refresh_expire = token_expire + 60 * 60 * 24 * 30;
 
     this.sessionStorage.setAccessToken(tokens.access_token, token_expire);
-    this.sessionStorage.setRefreshToken(tokens.refresh_token, token_refresh_expire);
+    this.sessionStorage.setRefreshToken(
+      tokens.refresh_token,
+      token_refresh_expire,
+    );
   }
 
   async badAuthorization() {
-    if (this.refreshingTokens || !this.token || !this.refreshToken)
-      return;
+    if (this.refreshingTokens || !this.token || !this.refreshToken) return;
     this.refreshingTokens = true;
     this.setToken(null);
     try {
@@ -255,7 +261,7 @@ class SessionService {
           logService.exception('[SessionService]', error);
         }
       },
-      { fireImmediately: true }
+      { fireImmediately: true },
     );
   }
 
@@ -266,7 +272,7 @@ class SessionService {
    */
   onLogin(fn) {
     return reaction(
-      () => this.userLoggedIn ? this.token : null,
+      () => (this.userLoggedIn ? this.token : null),
       async token => {
         if (token) {
           try {
@@ -276,7 +282,7 @@ class SessionService {
           }
         }
       },
-      { fireImmediately: true }
+      { fireImmediately: true },
     );
   }
 
@@ -287,7 +293,7 @@ class SessionService {
    */
   onLogout(fn) {
     return reaction(
-      () => this.userLoggedIn ? this.token : null,
+      () => (this.userLoggedIn ? this.token : null),
       async token => {
         if (!token) {
           try {
@@ -297,7 +303,7 @@ class SessionService {
           }
         }
       },
-      { fireImmediately: false }
+      { fireImmediately: false },
     );
   }
 

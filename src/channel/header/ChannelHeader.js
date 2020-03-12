@@ -39,6 +39,7 @@ import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import CompleteProfile from './CompleteProfile';
 import featuresService from '../../common/services/features.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import remoteAction from '../../common/RemoteAction';
 
 // prevent accidental double tap in touchables
 const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
@@ -116,22 +117,26 @@ class ChannelHeader extends Component {
 
       this.setState({saving: true});
 
-      const response = await this.props.store.save(payload);
+      await remoteAction(async () => {
+        let response;
 
-      if (response === true) {
-        this.props.user.load();
-        this.setState({saving: false, edit: false});
-        this.uploads = {
-          avatar: null,
-          banner: null
-        };
-      } else if (response === false) {
-        alert(i18n.t('channel.errorSaving'));
-        this.setState({saving: false});
-      } else {
-        alert(response)
-        this.setState({saving: false});
-      }
+        try {
+          response = await this.props.store.save(payload);
+        } finally {
+          this.setState({ saving: false });
+        }
+
+        if (response === true) {
+          this.props.user.load();
+          this.setState({ saving: false, edit: false });
+          this.uploads = {
+            avatar: null,
+            banner: null,
+          };
+        } else {
+          this.setState({ saving: false });
+        }
+      });
     } else {
       this.setState({
         edit: true,

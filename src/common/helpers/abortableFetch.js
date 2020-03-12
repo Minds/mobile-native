@@ -5,8 +5,8 @@
 
 export class Abort extends Error {
   constructor(...args) {
-      super(...args)
-      this.code = 'Abort'
+    super(...args);
+    this.code = 'Abort';
   }
 }
 
@@ -24,20 +24,23 @@ function remove(xhr) {
 
 function headers(xhr) {
   const head = new Headers();
-  const pairs = xhr.getAllResponseHeaders().trim().split('\n');
+  const pairs = xhr
+    .getAllResponseHeaders()
+    .trim()
+    .split('\n');
   pairs.forEach(function(header) {
     const split = header.trim().split(':');
     const key = split.shift().trim();
     const value = split.join(':').trim();
     head.append(key, value);
-  })
+  });
   return head;
 }
 
 // Fetch
 export default function(input, init, tag) {
   return new Promise(function(resolve, reject) {
-    let request
+    let request;
     if (Request.prototype.isPrototypeOf(input) && !init) {
       request = input;
     } else {
@@ -69,32 +72,34 @@ export default function(input, init, tag) {
     }
 
     xhr.ontimeout = function() {
-      reject(new TypeError('Network request failed'))
-    }
+      reject(new TypeError('Network request failed'));
+    };
 
     xhr.onload = function() {
+      const status = xhr.status === 1223 ? 204 : xhr.status;
 
-      const status = (xhr.status === 1223) ? 204 : xhr.status
       if (status < 100 || status > 599) {
-        remove(xhr)
-        reject(new TypeError('Network request failed'))
-        return
+        remove(xhr);
+        reject(new TypeError('Network request failed'));
+        return;
       }
+
       const options = {
         status: status,
         statusText: xhr.statusText,
         headers: headers(xhr),
-        url: responseURL()
-      }
+        url: responseURL(),
+      };
+
       const body = 'response' in xhr ? xhr.response : xhr.responseText;
       remove(xhr);
       resolve(new Response(body, options));
-    }
+    };
 
     xhr.onerror = function() {
       remove(xhr);
       reject(new TypeError('Network request failed'));
-    }
+    };
 
     xhr.open(request.method, request.url, true);
 
@@ -113,27 +118,29 @@ export default function(input, init, tag) {
 
     request.headers.forEach(function(value, name) {
       xhr.setRequestHeader(name, value);
-    })
+    });
 
-    xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit);
-  })
+    xhr.send(
+      typeof request._bodyInit === 'undefined' ? null : request._bodyInit,
+    );
+  });
 }
 
 export const abort = function(tag) {
   for (var i = _xhrs.length - 1; i > -1; i--) {
-    var xhr = _xhrs[i]
+    var xhr = _xhrs[i];
     if (xhr.tag === tag) {
       _xhrs.splice(i, 1);
       clearTimeout(xhr.timer);
       xhr.abort();
     }
   }
-}
+};
 
-export const isNetworkFail = function (err) {
-  return (err instanceof TypeError && err.message === 'Network request failed')
-}
+export const isNetworkFail = function(err) {
+  return err instanceof TypeError && err.message === 'Network request failed';
+};
 
 export const isAbort = function(err) {
   return err instanceof Abort;
-}
+};
