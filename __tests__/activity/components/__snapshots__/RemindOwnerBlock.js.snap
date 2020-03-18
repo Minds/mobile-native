@@ -37,7 +37,7 @@ exports[`Remind owner component renders correctly 1`] = `
             "Cache-Control": "no-cache, no-store, must-revalidate",
             "Pragma": "no-cache",
           },
-          "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
+          "uri": "https://epic-compose-25.minds.io/icon/824853017709780997/medium/undefined",
         }
       }
       style={

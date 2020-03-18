@@ -26,7 +26,7 @@ exports[`notification component renders correctly for every type 1`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -112,7 +112,7 @@ exports[`notification component renders correctly for every type 2`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -198,7 +198,7 @@ exports[`notification component renders correctly for every type 3`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -284,7 +284,7 @@ exports[`notification component renders correctly for every type 4`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -394,7 +394,7 @@ exports[`notification component renders correctly for every type 5`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -506,7 +506,7 @@ exports[`notification component renders correctly for every type 6`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -616,7 +616,7 @@ exports[`notification component renders correctly for every type 7`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -702,7 +702,7 @@ exports[`notification component renders correctly for every type 8`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -774,7 +774,7 @@ exports[`notification component renders correctly for every type 9`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -871,7 +871,7 @@ exports[`notification component renders correctly for every type 10`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -957,7 +957,7 @@ exports[`notification component renders correctly for every type 11`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1058,7 +1058,7 @@ exports[`notification component renders correctly for every type 12`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1128,7 +1128,7 @@ exports[`notification component renders correctly for every type 13`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1229,7 +1229,7 @@ exports[`notification component renders correctly for every type 14`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1311,7 +1311,7 @@ exports[`notification component renders correctly for every type 15`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1388,7 +1388,7 @@ exports[`notification component renders correctly for every type 16`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1491,7 +1491,7 @@ exports[`notification component renders correctly for every type 17`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1563,7 +1563,7 @@ exports[`notification component renders correctly for every type 18`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1635,7 +1635,7 @@ exports[`notification component renders correctly for every type 19`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1736,7 +1736,7 @@ exports[`notification component renders correctly for every type 20`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1816,7 +1816,7 @@ exports[`notification component renders correctly for every type 21`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1893,7 +1893,7 @@ exports[`notification component renders correctly for every type 22`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -1976,7 +1976,7 @@ exports[`notification component renders correctly for every type 23`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -2046,7 +2046,7 @@ exports[`notification component renders correctly for every type 24`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -2116,7 +2116,7 @@ exports[`notification component renders correctly for every type 25`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -2188,7 +2188,7 @@ exports[`notification component renders correctly for every type 26`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -2268,7 +2268,7 @@ exports[`notification component renders correctly for every type 27`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={
@@ -2345,7 +2345,7 @@ exports[`notification component renders correctly for every type 28`] = `
     onStartShouldSetResponder={[Function]}
     source={
       Object {
-        "uri": "https://cdn.minds.com/icon/undefined/medium",
+        "uri": "https://epic-compose-25.minds.io/icon/undefined/medium",
       }
     }
     style={

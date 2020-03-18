@@ -38,7 +38,7 @@ exports[`channel header component owner should render correctly 1`] = `
               "Cache-Control": "no-cache, no-store, must-revalidate",
               "Pragma": "no-cache",
             },
-            "uri": "https://cdn.minds.com/fs/v1/banners/1/fat/1523515420",
+            "uri": "https://epic-compose-25.minds.io/fs/v1/banners/1/fat/1523515420",
           }
         }
         style={
