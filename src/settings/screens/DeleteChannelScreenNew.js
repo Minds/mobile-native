@@ -21,20 +21,11 @@ import ThemedStyles from '../../styles/ThemedStyles';
 /**
  * Delete Channel Screen
  */
-export default class DeleteChannelScreenNew extends Component {
+export default class DeleteChannelScreen extends Component {
 
   state = {
     showPassword: false,
     password: ''
-  }
-
-  onDisable = () => {
-    Alert.alert(
-      i18n.t('attention'),
-      i18n.t('settings.disableChannelConfirm'),
-      [{ text: i18n.t('yes'), onPress: () => SettingsService.disable()}, { text: i18n.t('no')}],
-      { cancelable: false }
-    );
   }
 
   onDelete = () => {
@@ -59,9 +50,6 @@ export default class DeleteChannelScreenNew extends Component {
     return (
       <ScrollView style={[CS.flexContainer, CS.padding2x]}>
         <KeyboardAvoidingView style={[CS.flexContainer]} behavior={Platform.OS == 'ios' ? 'padding' : null}>
-          <Text style={[CS.fontXXL]}>{i18n.t('settings.disableChannel')}</Text>
-          <Text style={[CS.fontL, CS.marginTop, CS.marginBottom2x]}>{i18n.t('settings.disableDescription')}</Text>
-          <Button text="Disable" color={Colors.danger} textColor="white" inverted onPress={this.onDisable}/>
           <Text style={[CS.fontXXL, CS.marginTop3x]}>{i18n.t('settings.deleteChannel')}</Text>
           <Text style={[CS.fontM, CS.marginTop, CS.marginBottom2x]}>{i18n.t('settings.deleteDescription')}</Text>
           {this.state.showPassword &&

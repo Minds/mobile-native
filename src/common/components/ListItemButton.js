@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
 
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import { CommonStyle as CS } from '../../styles/Common';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 export default class ListItemButton extends Component {
+
   render() {
+    const CS = ThemedStyles.style;
     return (
         <TouchableOpacity
           {...this.props}
           borderRadius={2}
-          style={[styles.container, CS.borderButton, CS.centered]}>
+          style={[styles.container, CS.borderPrimary, CS.centered, this.props.style]}>
             {this.props.children}
         </TouchableOpacity>
     );

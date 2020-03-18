@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { View, ScrollView, Text, Alert } from 'react-native';
 
-import { Input } from 'react-native-elements';
 import settingsService from '../SettingsService';
 import i18n from '../../common/services/i18n.service';
 import validator from '../../common/services/validator.service';
@@ -11,6 +10,8 @@ import Button from '../../common/components/Button';
 import { CommonStyle } from '../../styles/Common';
 import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
 import { inject } from 'mobx-react';
+import Input from '../../common/components/Input';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Email settings screen
@@ -34,6 +35,23 @@ class EmailScreen extends Component {
     super();
     settingsService.getSettings().then(({ channel }) => {
       this.setState({ email: channel.email, loaded: true });
+    });
+
+    
+  }
+
+  componentDidMount() {
+    const { setOptions } = this.props.navigation;
+    const CS = ThemedStyles.style;
+
+    setOptions({ 
+      headerRight: () => (
+        <Text onPress={this.confirmPassword} style={[
+          CS.colorLink,
+          CS.fontL,
+          CS.bold,
+        ]}>{i18n.t('save')}</Text>
+      )
     });
   }
 
@@ -71,10 +89,16 @@ class EmailScreen extends Component {
     this.setState({ isVisible: true });
   };
 
+  dismissModal = () => {
+    this.setState({ isVisible: false });
+  };
+
   /**
    * Render
    */
   render() {
+    const CS = ThemedStyles.style;
+
     if (this.state.saving || !this.state.loaded) {
       return <CenteredLoading />;
     }
@@ -85,36 +109,38 @@ class EmailScreen extends Component {
     // validate
     const error = validator.emailMessage(email);
     const confirmNote = showConfirmNote ? (
-      <Text>
+      <Text style={[CS.colorSecondaryText, CS.fontM, CS.paddingHorizontal2x, CS.centered, CS.marginTop3x]}>
         {i18n.t('emailConfirm.confirmNote')}
       </Text>
     ) : null;
 
     return (
-      <View style={[CommonStyle.flexContainer]}>
-        <Input
-          onChangeText={this.setEmail}
-          value={email}
-          inputStyle={CommonStyle.fieldTextInput}
-          label={i18n.t('settings.currentEmail')}
-          errorMessage={error}
-        />
+      <View style={[CS.flexContainer, CS.paddingTop3x, CS.backgroundPrimary]}>
+        <View style={[CS.paddingLeft3x, CS.paddingTop3x, CS.backgroundSecondary, CS.border, CS.borderPrimary]}>
+          <Input
+            style={[CS.border0x, styles.inputHeight]}
+            labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
+            placeholder={i18n.t('settings.currentEmail')}
+            onChangeText={this.setEmail}
+            value={email}
+            editable={!this.state.inProgress}
+            testID="emailScreenInput"
+            selectTextOnFocus={true}
+          />
+        </View>
         {confirmNote}
-        <Button
-          text={i18n.t('save').toUpperCase()}
-          loading={this.state.saving}
-          containerStyle={[
-            CommonStyle.marginTop3x,
-            CommonStyle.padding2x,
-            { alignSelf: 'center' },
-          ]}
-          onPress={this.confirmPassword}
-        />
         <ModalConfirmPassword
           isVisible={this.state.isVisible}
           onSuccess={this.save}
+          close={this.dismissModal}
         />
       </View>
     );
   }
 }
+
+const styles = {
+  inputHeight: {
+    height: 40,
+  },
+};

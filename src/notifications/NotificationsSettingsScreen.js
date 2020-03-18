@@ -37,16 +37,17 @@ export default class NotificationsSettingsScreen extends Component {
    * Render
    */
   render() {
+    const CS = ThemedStyles.style;
     const settings = this.props.notificationsSettings.settings;
     const notificationsSettings = this.props.notificationsSettings
 
     return (
       <ScrollView  style={styles.container}>
-        <Text style={[styles.title, ThemedStyles.style.backgroundTertiary]}>{i18n.t('notificationSettings.enableDisable')}</Text>
+        <Text style={[styles.title, CS.backgroundTertiary]}>{i18n.t('notificationSettings.enableDisable')}</Text>
         {Object.keys(settings).map(function (key) {
           const toggle = settings[key];
           return (
-            <View style={styles.row} key={key}>
+            <View style={[styles.row, CS.borderPrimary, CS.borderBottomHair]} key={key}>
               <Text>{i18n.t('notificationSettings.'+key)}</Text>
               <Switch value={toggle} onSyncPress={(val) => notificationsSettings.saveSetting(key, val)}></Switch>
             </View>
@@ -69,8 +70,6 @@ const styles = StyleSheet.create({
     height:40,
     justifyContent: 'space-between',
     flexDirection: 'row',
-    borderBottomColor: '#AAA',
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   container: {
     flex: 1,
