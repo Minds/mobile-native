@@ -63,9 +63,7 @@ export default class TopbarNewsfeed extends Component {
                 </View>
               </View>
             </View>
-            <View>
-              <EmailConfirmation user={this.props.user} />
-            </View>
+            <EmailConfirmation user={this.props.user} />
           </View>
         )}
       </SafeAreaConsumer>

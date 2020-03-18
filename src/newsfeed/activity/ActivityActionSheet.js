@@ -21,6 +21,7 @@ import featuresService from '../../common/services/features.service';
 import translationService from '../../common/services/translation.service';
 import { FLAG_EDIT_POST, FLAG_DELETE_POST } from '../../common/Permissions';
 import sessionService from '../../common/services/session.service';
+import NavigationService from '../../navigation/NavigationService';
 
 /**
  * Activity Actions Component
@@ -183,16 +184,9 @@ export default class ActivityActionSheet extends Component {
     try {
       await this.props.entity.deleteEntity();
 
-      Alert.alert(
-        i18n.t('success'),
-        i18n.t('newsfeed.successRemoving'),
-        [
-          {text: i18n.t('ok'), onPress: () => {}},
-        ],
-        { cancelable: false }
-      );
+      const state = NavigationService.getCurrentState();
 
-      if (this.props.route.routeName == 'Activity') {
+      if (state && state.name === 'Activity') {
         this.props.navigation.goBack();
       }
     } catch (err) {

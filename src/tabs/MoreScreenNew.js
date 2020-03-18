@@ -14,7 +14,6 @@ import { inject, observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconFa from 'react-native-vector-icons/FontAwesome5';
-import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ListItem } from 'react-native-elements';
 
 import testID from '../common/helpers/testID';
@@ -25,7 +24,7 @@ import abbrev from '../common/helpers/abbrev';
 import featuresService from '../common/services/features.service';
 import ThemedStyles from '../styles/ThemedStyles';
 
-const ICON_SIZE = 24;
+const ICON_SIZE = 23;
 
 /**
  * More screen, new design (menu)
@@ -41,7 +40,9 @@ class MoreScreenNew extends Component {
    * Get Channel Avatar
    */
   getAvatar() {
-    return this.props.user.me.getAvatarSource('medium');
+    return this.props.user.me && this.props.user.me.getAvatarSource
+      ? this.props.user.me.getAvatarSource('medium')
+      : {};
   }
 
   navToSubscribers = () =>
@@ -82,7 +83,13 @@ class MoreScreenNew extends Component {
       */
       {
         name: i18n.t('discovery.groups'),
-        icon: <IconFa name="users" size={ICON_SIZE} style={CS.colorIcon} />,
+        icon: (
+          <IconFa
+            name="users"
+            size={ICON_SIZE - 4}
+            style={[CS.colorIcon, styles.icon]}
+          />
+        ),
         onPress: () => {
           this.props.navigation.navigate('GroupsList');
         },
@@ -94,7 +101,13 @@ class MoreScreenNew extends Component {
         ...list,
         {
           name: i18n.t('moreScreen.wallet'),
-          icon: <IconFa name="coins" size={ICON_SIZE} style={CS.colorIcon} />,
+          icon: (
+            <IconFa
+              name="coins"
+              size={ICON_SIZE}
+              style={[CS.colorIcon, styles.icon]}
+            />
+          ),
           onPress: () => {
             this.props.navigation.navigate('Wallet', {});
           },
@@ -102,7 +115,11 @@ class MoreScreenNew extends Component {
         {
           name: i18n.t('boost'),
           icon: (
-            <Icon name="trending-up" size={ICON_SIZE} style={CS.colorIcon} />
+            <Icon
+              name="trending-up"
+              size={ICON_SIZE}
+              style={[CS.colorIcon, styles.icon]}
+            />
           ),
           onPress: () => {
             this.props.navigation.navigate('BoostConsole', {
@@ -117,7 +134,13 @@ class MoreScreenNew extends Component {
       ...list,
       {
         name: i18n.t('moreScreen.settings'),
-        icon: <Icon name="settings" size={ICON_SIZE} style={CS.colorIcon} />,
+        icon: (
+          <Icon
+            name="settings"
+            size={ICON_SIZE}
+            style={[CS.colorIcon, styles.icon]}
+          />
+        ),
         onPress: () => {
           this.props.navigation.navigate('Settings');
         },
@@ -125,17 +148,24 @@ class MoreScreenNew extends Component {
     ];
 
     if (featuresService.has('dark-mode')) {
-      const colorIcon =
-        ThemedStyles.theme < 1 ? CS.colorIcon : CS.colorIconActive;
-      const colorText =
-        ThemedStyles.theme < 1 ? CS.colorSecondaryText : CS.colorIconActive;
+      const name = ThemedStyles.theme
+        ? i18n.t('settings.lightMode')
+        : i18n.t('settings.darkMode');
+
+      const icon = ThemedStyles.theme ? 'wb-sunny' : 'moon';
+
+      const IconCmp = ThemedStyles.theme ? Icon : IconFa;
+
       list.push({
-        name: i18n.t('settings.darkMode'),
+        name,
         icon: (
-          <CIcon name="theme-light-dark" size={ICON_SIZE} style={colorIcon} />
+          <IconCmp
+            name={icon}
+            size={ICON_SIZE}
+            style={[CS.colorIcon, styles.icon]}
+          />
         ),
         onPress: this.setDarkMode,
-        textColor: colorText,
       });
     }
 
@@ -156,14 +186,18 @@ class MoreScreenNew extends Component {
             <TouchableOpacity onPress={this.navToChannel}>
               <Image source={avatar} style={styles.wrappedAvatar} />
             </TouchableOpacity>
-            <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginTop]}>
+            <Text
+              style={[CS.titleText, CS.colorPrimaryText, CS.marginTop]}
+              onPress={this.navToChannel}>
               {channel.name}
             </Text>
             <Text
+              onPress={this.navToChannel}
               style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal]}>
               @{channel.username}
             </Text>
             <Text
+              onPress={this.navToSubscribers}
               style={[
                 CS.subTitleText,
                 CS.colorTertiaryText,
@@ -180,14 +214,16 @@ class MoreScreenNew extends Component {
           <View style={styles.body}>
             {this.getOptionsList().map((l, i) => (
               <ListItem
+                Component={TouchableOpacity}
                 key={i}
                 title={l.name}
-                titleStyle={[styles.menuText, l.textColor || CS.colorSecondaryText]}
-                containerStyle={[
-                  styles.listItem,
-                  CS.backgroundPrimary,
+                titleStyle={[
+                  styles.menuText,
+                  l.textColor || CS.colorSecondaryText,
                 ]}
+                containerStyle={styles.listItem}
                 switchButton={l.switchButton}
+                pad={5}
                 hideChevron={l.hideChevron}
                 leftIcon={l.icon}
                 onPress={l.onPress}
@@ -212,6 +248,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#CCC',
   },
+  icon: {
+    width: 30,
+  },
   menuText: {
     fontSize: 24,
     fontWeight: '700',
@@ -233,7 +272,7 @@ const styles = StyleSheet.create({
   },
   listItem: {
     borderBottomWidth: 0,
-    borderBottomColor: '#ddd',
+    backgroundColor: 'transparent',
     paddingTop: 0,
     paddingBottom: 37,
     //height:20

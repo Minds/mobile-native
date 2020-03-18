@@ -214,9 +214,9 @@ export default class ActivityModel extends BaseModel {
   @action
   async deleteEntity() {
     try {
-      await deleteItem(this.guid)
+      await deleteItem(this.guid);
       this.removeFromList();
-      entitiesService.deleteFromCache(this.urn)
+      entitiesService.deleteFromCache(this.urn);
     } catch (err) {
       logService.exception('[ActivityModel]', err);
       throw err;

@@ -202,7 +202,7 @@ export default class BaseModel {
    */
   @action
   async toggleVote(direction) {
-    const voted = direction == 'up' ? this.votedUp : this.votedDown;
+    const voted = direction === 'up' ? this.votedUp : this.votedDown;
     const delta = voted ? -1 : 1;
 
     const guids = this['thumbs:' + direction + ':user_guids'] || [];
