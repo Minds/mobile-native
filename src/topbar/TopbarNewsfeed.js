@@ -1,55 +1,39 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  Platform,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import { StyleSheet, Image, View, Platform } from 'react-native';
 
-import { observer, inject } from 'mobx-react'
-import FAIcon from 'react-native-vector-icons/FontAwesome';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Avatar } from 'react-native-elements';
-
-import { MINDS_CDN_URI } from '../config/Config';
-import featuresService from '../common/services/features.service';
-import isIphoneX from '../common/helpers/isIphoneX';
-import testID from '../common/helpers/testID';
-
+import { observer, inject } from 'mobx-react';
 import SearchComponent from './SearchComponent';
 import navigation from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import MessengerTabIcon from '../messenger/MessengerTabIconNew';
-
 import EmailConfirmation from './EmailConfirmation';
+import BannerInfo from './BannerInfo';
 
-const forceInset = isIphoneX ? {top: 10} : null
-
+export default
 @inject('user')
 @inject('wallet')
 @observer
-export default class TopbarNewsfeed extends Component {
-
+class TopbarNewsfeed extends Component {
   componentDidMount() {
     this.props.wallet.refresh();
   }
 
-  listenForSearch = () => this.props.user.searching ? styles.scale0 : {};
+  listenForSearch = () => (this.props.user.searching ? styles.scale0 : {});
 
   render() {
-
     const CS = ThemedStyles.style;
 
-    const user = this.props.user;
     return (
       <SafeAreaConsumer>
         {insets => (
           <View>
-            <View style={[styles.container, CS.backgroundSecondary, {paddingTop: insets.top}]}>
+            <View
+              style={[
+                styles.container,
+                CS.backgroundSecondary,
+                { paddingTop: insets.top },
+              ]}>
               <View style={styles.topbar}>
                 <View style={[styles.topbarLeft, CS.marginLeft4x]}>
                   <Image
@@ -58,22 +42,24 @@ export default class TopbarNewsfeed extends Component {
                   />
                 </View>
                 <View style={styles.topbarRight}>
-                  <MessengerTabIcon navigation={navigation}/>
-                  <SearchComponent user={this.props.user} navigation={this.props.navigation} />
+                  <MessengerTabIcon navigation={navigation} />
+                  <SearchComponent
+                    user={this.props.user}
+                    navigation={this.props.navigation}
+                  />
                 </View>
               </View>
             </View>
             <EmailConfirmation user={this.props.user} />
+            <BannerInfo user={this.props.user} />
           </View>
         )}
       </SafeAreaConsumer>
-
     );
   }
 }
 
 let topbarHeight = 50;
-let topMargin = 0;
 
 if (Platform.OS == 'ios') {
   topbarHeight = 90;
@@ -117,6 +103,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   scale0: {
-    transform: [{ scale: 0 }]
-  }
+    transform: [{ scale: 0 }],
+  },
 });
