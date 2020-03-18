@@ -18,6 +18,7 @@ import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
 import { CommonStyle } from '../../../styles/Common';
 import i18n from '../../services/i18n.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 @observer
 export default class ExplicitText extends Component {
@@ -57,8 +58,11 @@ export default class ExplicitText extends Component {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     const entity = this.props.entity;
-    let message = entities.decodeHTML(this.props.entity.text).trim();
+
+    let title = entities.decodeHTML(entity.title).trim();
+    let message = entities.decodeHTML(entity.message).trim();
 
     let body = null;
     let moreLess = null;
@@ -76,9 +80,15 @@ export default class ExplicitText extends Component {
           <Text style={styles.mature}>{message}</Text> :
           <Tags navigation={this.props.navigation} style={this.props.style}>{message}</Tags>
     }
+    if (title) {
+      title = <Tags navigation={this.props.navigation} style={[this.props.style, theme.fontL, theme.marginBottom]}>{title}</Tags>
+    } else {
+      title = null;
+    }
 
     return (
       <View style={styles.container}>
+        { title }
         { body }
         { moreLess }
         { explicitToggle }

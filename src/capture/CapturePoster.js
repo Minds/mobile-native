@@ -242,7 +242,10 @@ class CapturePoster extends Component {
 
     return (
       <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
-        <ScrollView style={styles.posterAndPreviewWrapper} keyboardShouldPersistTaps={'always'} removeClippedSubviews={false}>
+        <ScrollView
+          style={styles.posterAndPreviewWrapper}
+          keyboardShouldPersistTaps={'always'}
+          removeClippedSubviews={false}>
           {this.getHeader()}
           {this.getRemind()}
         </ScrollView>

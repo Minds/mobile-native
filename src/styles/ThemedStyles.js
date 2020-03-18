@@ -138,7 +138,7 @@ class ThemedStylesStore {
         backgroundColor: theme.secondary_background,
       },
       contentStyle: {
-        backgroundColor: theme.secondary_background,
+        backgroundColor: theme.primary_background,
       },
       stackAnimation: Platform.select({
         ios: 'default',
@@ -202,7 +202,10 @@ class ThemedStylesStore {
         flexDirection: 'row',
       },
       alignCenter: {
-        alignItems: 'center'
+        alignItems: 'center',
+      },
+      alignEnd: {
+        alignItems: 'flex-end',
       },
       centered: {
         alignContent: 'center',

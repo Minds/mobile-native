@@ -31,7 +31,7 @@ class TopbarNewsfeed extends Component {
             <View
               style={[
                 styles.container,
-                CS.backgroundSecondary,
+                CS.backgroundPrimary,
                 { paddingTop: insets.top },
               ]}>
               <View style={styles.topbar}>

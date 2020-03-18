@@ -52,7 +52,7 @@ export default class NewsfeedService {
    * Fetch boosted content
    * @param {String} offset
    * @param {Number} limit
-  */
+   */
   async getBoosts(offset, limit = 15, rating) {
 
     abort(this);

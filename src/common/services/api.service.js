@@ -42,7 +42,7 @@ class ApiService {
     this.mustVerify = value;
   }
 
-  async parseResponse(response) {
+  async parseResponse(response, url) {
     // check status
     if (response.status) {
       if (response.status === 401) {
@@ -64,6 +64,7 @@ class ApiService {
           } STATUSTEXT: ${response.statusText}\n${response.text()}`,
         );
       }
+      console.log(url, err, response);
       throw new UserError(i18n.t('errorMessage'));
     }
 
@@ -149,9 +150,14 @@ class ApiService {
       tag,
     );
 
-    return await this.parseResponse(response);
+    return await this.parseResponse(response, url);
   }
 
+  /**
+   * Api post
+   * @param {string} url
+   * @param {object} body
+   */
   async post(url, body = {}) {
     const headers = this.buildHeaders();
 
@@ -162,9 +168,14 @@ class ApiService {
       timeout: NETWORK_TIMEOUT,
     });
 
-    return await this.parseResponse(response);
+    return await this.parseResponse(response, url);
   }
 
+  /**
+   * Api put
+   * @param {string} url
+   * @param {object} body
+   */
   async put(url, body = {}) {
     const headers = this.buildHeaders();
 
@@ -175,7 +186,25 @@ class ApiService {
       timeout: NETWORK_TIMEOUT,
     });
 
-    return await this.parseResponse(response);
+    return await this.parseResponse(response, url);
+  }
+
+  /**
+   * Api delete
+   * @param {string} url
+   * @param {object} body
+   */
+  async delete(url, body = {}) {
+    const headers = this.buildHeaders();
+
+    let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
+      method: 'DELETE',
+      body: JSON.stringify(body),
+      headers,
+      timeout: NETWORK_TIMEOUT,
+    });
+
+    return await this.parseResponse(response, url);
   }
 
   /**
@@ -220,20 +249,13 @@ class ApiService {
     });
   }
 
-  async delete(url, body = {}) {
-    const headers = this.buildHeaders();
-
-    let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
-      method: 'DELETE',
-      body: JSON.stringify(body),
-      headers,
-      timeout: NETWORK_TIMEOUT,
-    });
-
-
-    return await this.parseResponse(response);
-  }
-
+  /**
+   * Upload file
+   * @param {string} url
+   * @param {object} file
+   * @param {object} data
+   * @param {Function} progress
+   */
   upload(url, file, data = null, progress) {
     var formData = new FormData();
     formData.append('file', file);

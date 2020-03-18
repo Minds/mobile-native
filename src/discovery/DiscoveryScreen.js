@@ -234,7 +234,7 @@ class DiscoveryScreen extends Component {
         keyExtractor={this.keyExtractor}
         onEndReached={this.loadMore}
         initialNumToRender={this.cols === 3 ? 12 : 3}
-        style={[ThemedStyles.style.backgroundSecondary, CS.flexContainer]}
+        style={[ThemedStyles.style.backgroundPrimary, CS.flexContainer]}
         numColumns={this.cols}
         horizontal={false}
         windowSize={9}
@@ -247,7 +247,7 @@ class DiscoveryScreen extends Component {
     );
 
     return (
-      <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
+      <View style={[CS.flexContainer, ThemedStyles.style.backgroundPrimary]}>
         <TopbarNew title={i18n.t('tabTitleDiscovery')} navigation={this.props.navigation}/>
         {body}
         {/* <CaptureFab navigation={this.props.navigation}  /> */}
@@ -315,7 +315,7 @@ class DiscoveryScreen extends Component {
     const filtersStore = this.props.discovery.filters;
 
     const navigation = (
-      <View style={[styles.navigation, ThemedStyles.style.backgroundSecondary]}>
+      <View style={[styles.navigation, ThemedStyles.style.backgroundPrimary]}>
 
         <TouchableHighlight style={styles.iconContainer} onPress={ this.setTypeActivities } {...testID('Discovery All')}>
           <View style={CS.columnAlignCenter}>
@@ -393,7 +393,7 @@ class DiscoveryScreen extends Component {
           placeholder={i18n.t('discovery.search')}
           onChangeText={this.setQ}
           value={this.props.discovery.query}
-          containerStyle={[CS.marginTop, CS.marginBottom, ThemedStyles.style.backgroundPrimary]}
+          containerStyle={[CS.marginTop, CS.marginBottom, ThemedStyles.style.backgroundSecondary]}
           iconRight={ iconRight }
           iconRightOnPress={this.clearSearch}
           {...testID('Discovery Search Input')}
@@ -404,7 +404,7 @@ class DiscoveryScreen extends Component {
       <Text style={[CS.fontXL, ThemedStyles.style.backgroundTertiary, CS.textCenter, CS.padding2x]}>{i18n.t('discovery.recentlyVisited')}</Text>;
 
     return (
-      <View style={[CS.shadow, ThemedStyles.style.backgroundSecondary]}>
+      <View style={[CS.shadow, ThemedStyles.style.backgroundPrimary]}>
         {navigation}
         {headerBody}
       </View>

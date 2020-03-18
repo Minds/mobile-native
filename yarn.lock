@@ -1048,6 +1048,11 @@
     eslint-plugin-react-native "3.6.0"
     prettier "1.16.4"
 
+"@react-native-community/hooks@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@react-native-community/hooks/-/hooks-2.4.3.tgz#101c61125504725aa194764f694dca5a20fd6c0a"
+  integrity sha512-CFx7UG8Jg70NBb0U4WPn634x/D+KnIwPWDO79Bne027S9K6UGT+RtV7ZuyE4knX5cVAvLtA+PVIchOHx+l56OA==
+
 "@react-native-community/masked-view@^0.1.7":
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.7.tgz#a65ce0702f55cb67fd777995de6fc7b3e5781903"
@@ -7928,6 +7933,13 @@ react-native-bootsplash@^1.0.3:
   resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-1.0.3.tgz#c0fbf46ba333b7bba880a430f4449aad0c04953a"
   integrity sha512-YQ1sBlx+m5p41f0RPAbZ8v3i1YpbCylUbjLXeXWpi2mwmG5FE3NN6IO+GN1MTZWiqD7CtuucCp/dYBxmdL5Y2g==
 
+react-native-camera@^3.18.0:
+  version "3.18.0"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-3.18.0.tgz#aa046a86ea8a691f25fd579b8abcbda1503e13fa"
+  integrity sha512-rLjLKJDEnI0E0nN7ZfK3GKEP37cYURh6QV2DCI1BRs9FWcETwDcgVYtQSfFEibWcGazPtsAqVDTg5LUYMFPjCA==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-collapsible-header-views@^1.0.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/react-native-collapsible-header-views/-/react-native-collapsible-header-views-1.1.2.tgz#1eb671e6317698755d49d075c45e6101df6ea908"
@@ -8064,9 +8076,10 @@ react-native-gesture-handler@^1.6.0:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-image-picker@algera/react-native-image-picker#8cc7fc453c3b5f0f8d7b2cb6cf25690008740d0e:
-  version "0.28.1"
-  resolved "https://codeload.github.com/algera/react-native-image-picker/tar.gz/8cc7fc453c3b5f0f8d7b2cb6cf25690008740d0e"
+react-native-image-picker@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-2.3.1.tgz#1977b65e07793d2c0b2d1976fb675c5f75ad7f11"
+  integrity sha512-c/a2h7/T7yBo5KlNQhcSn4xf4+6Li6LfJ59+GZT1ZzzWrj/6X8DiJ/TJBOlOZMC5tJriZKuRkWSsr74k6z+brw==
 
 react-native-image-progress@^1.1.1:
   version "1.1.1"
@@ -8125,6 +8138,11 @@ react-native-modal@^11.4.0:
     prop-types "^15.6.2"
     react-native-animatable "1.3.3"
 
+react-native-navigation-bar-color@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.1.tgz#ee2be25cc37105f7da355717b0a9a32c9c059ae6"
+  integrity sha512-1kE/oxWt+HYjRxdZdvke9tJ365xaee5n3+euOQA1En8zQuSbOxiE4SYEGM7TeaWnmLJ0l37mRnPHaB2H4mGh0A==
+
 react-native-notifications@Minds/react-native-notifications#333e376f866a805f250cc68706d97ace503b948a:
   version "2.0.6"
   resolved "https://codeload.github.com/Minds/react-native-notifications/tar.gz/333e376f866a805f250cc68706d97ace503b948a"
@@ -8176,15 +8194,27 @@ react-native-read-more-text@devbelieve365/react-native-read-more-text:
   version "1.0.0"
   resolved "https://codeload.github.com/devbelieve365/react-native-read-more-text/tar.gz/7828b78bd632feeb3f5f6bb3fa1b61021ded900f"
 
+react-native-reanimated-hooks@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated-hooks/-/react-native-reanimated-hooks-2.0.0.tgz#de4f14734a8fe3a0a0e1e37ca3b2f764c4a53f3e"
+  integrity sha512-Lb1E8KarzABOyEXWFP7SFIzq8Lb/kPm+0D9BT6Z917iSBNa2WL2RPwyUFWm5Dq2mFEmoXiNYT8alZtbHiSccmQ==
+
+react-native-reanimated-indicators@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated-indicators/-/react-native-reanimated-indicators-2.0.0.tgz#eabf33e39b914afb554beef4db5db5ac4e47269b"
+  integrity sha512-pW0HkLrXjHvN9bf8vrmVD4Cy3l2Hoe8ypb3p/8ha2ayxwQTQpEl6lA3N6XO8hovVc9GgZCQm1PG4CA3N7XwEdQ==
+  dependencies:
+    react-native-reanimated-hooks "^2.0.0"
+
 react-native-reanimated@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-1.7.0.tgz#896db2576552ac59d288a1f6c7f00afc171f240c"
   integrity sha512-FQWSqP605eQVJumuK2HpR+7heF0ZI+qfy4jNguv3Xv8nPFHeIgZaRTXHCEQL2AcuSIj50zy8jGJf5l134QMQWQ==
 
-react-native-redash@^8.6.0:
-  version "8.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-8.6.0.tgz#a99f1e714f076816b17f44cbe77661a915079feb"
-  integrity sha512-Hjaz+rcyK/8w84/cPgJVajcE/86y8njw/OVp74qXRnnzhEo+n4O5UGcmP+WyVxCZ2mtgfYJevoqGP5GczEzM8Q==
+react-native-redash@^9.6.0:
+  version "9.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-9.6.0.tgz#4fde2075c52b2dd0646436d50a326fd9989f4393"
+  integrity sha512-0Q0YppSQQ7LJlYcSzb2GGYtKvZFVOfzYeJc/cE1smXNisXyanFmFLrWZ1L4OuZyCas+cl3nELYeQi55ys3h6bg==
   dependencies:
     abs-svg-path "^0.1.1"
     normalize-svg-path "^1.0.1"
@@ -8410,6 +8440,11 @@ realpath-native@^1.1.0:
   integrity sha512-wlgPA6cCIIg9gKz0fgAPjnzh4yR/LnXovwuo9hvyGvx3h8nX4+/iLZplfUWasXpqD8BdnGnP5njOFjkUwPzvjA==
   dependencies:
     util.promisify "^1.0.0"
+
+reanimated-bottom-sheet@^1.0.0-alpha.19:
+  version "1.0.0-alpha.19"
+  resolved "https://registry.yarnpkg.com/reanimated-bottom-sheet/-/reanimated-bottom-sheet-1.0.0-alpha.19.tgz#94ea79e7b2896b8f489547415d15d15c99ac44ba"
+  integrity sha512-Q0sGUHYdr5h2n/AY7pKQty35zcUAxxYM1nCl+luSQAyqiY6a5Kf8IBQRsOVvs60sDzqXxtbwxHgM5mkwaiQC4Q==
 
 reflect.ownkeys@^0.2.0:
   version "0.2.0"

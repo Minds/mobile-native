@@ -157,7 +157,7 @@ export default class NewsfeedList extends Component {
         onEndReached={this.loadFeed}
         // onEndReachedThreshold={0}
         numColumns={newsfeed.isTiled ? 3 : 1}
-        style={[theme.flexContainer, theme.backgroundSecondary]}
+        style={[theme.flexContainer, theme.backgroundPrimary]}
         initialNumToRender={6}
         windowSize={11}
         //getItemLayout={getItemLayout}

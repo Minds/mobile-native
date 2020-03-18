@@ -193,6 +193,7 @@
     "hold":"Hold to select only one"
   },
   "capture":{
+    "tagsDescription":"Tagging your post will make your content more easily discoverable.",
     "couldNotLoad":"The media from {{domain}} could not be loaded.",
     "maxHashtags":"Sorry, your post cannot contain more than {{maxHashtags}} hashtags.",
     "post":"Post",
@@ -208,7 +209,9 @@
     "tokens":"TOKENS",
     "gallery":"Gallery",
     "photo":"Photo",
-    "video":"Video"
+    "video":"Video",
+    "text":"Text",
+    "retake":"Retake"
   },
   "channel":{
     "modeClosed":"Closed",
@@ -870,5 +873,6 @@
   "tabTitleNotifications":"Notifications",
   "tabTitleDiscovery":"Discovery",
   "linkCopied":"Link copied to clipboard",
-  "close":"Close"
+  "close":"Close",
+  "title":"Title"
 }
