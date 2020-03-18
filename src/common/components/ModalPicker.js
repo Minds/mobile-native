@@ -12,6 +12,7 @@ import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import Button from '../../common/components/Button';
 import i18nService from '../services/i18n.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 const height = Platform.OS === 'ios' ? 300 : 150;
 
@@ -85,16 +86,18 @@ export default class ModalPicker extends PureComponent {
       props
     } = this.props;
 
+    const CS = ThemedStyles.style;
+
     return (
       <Modal isVisible={this.props.show}>
-        <View style={[CommonStyle.backgroundWhite, { height, paddingBottom: 8 }]}>
-          <Text style={[CommonStyle.fontL, CommonStyle.textCenter, CommonStyle.backgroundPrimary, CommonStyle.padding2x, CommonStyle.colorWhite]}>{title}</Text>
-          <View style={[CommonStyle.flexContainer]}>
-            <Picker {...props} onValueChange={this.select} selectedValue={this.state.value} style={CommonStyle.flexContainer} itemStyle={CommonStyle.fontM}>
-              {items.map((item, i) => <Picker.Item key={i} label={item[labelField]} value={item[valueField]} /> )}
+        <View style={[CS.backgroundTertiary, { height, paddingBottom: 8 }]}>
+          <Text style={[CS.fontL, CS.textCenter, CS.padding2x, CS.colorPrimaryText, CS.backgroundTertiary]}>{title}</Text>
+          <View style={[CS.flexContainer]}>
+            <Picker {...props} onValueChange={this.select} selectedValue={this.state.value} style={CS.flexContainer} itemStyle={[CS.fontM, CS.colorPrimaryText, CS.backgroundTertiary]}>
+              {items.map((item, i) => <Picker.Item key={i} label={item[labelField]} value={item[valueField]} style={[CS.fontM, CS.colorPrimaryText, CS.backgroundTertiary]}/> )}
             </Picker>
-            <View style={[CommonStyle.rowJustifyCenter]}>
-              <Button text={i18nService.t('cancel')} onPress={this.cancel} color={colors.darkGreyed}/>
+            <View style={[CS.rowJustifySpaceEvenly]}>
+              <Button text={i18nService.t('cancel')} onPress={this.cancel} />
               <Button text={i18nService.t('ok')} onPress={this.ok}/>
             </View>
           </View>

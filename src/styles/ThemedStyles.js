@@ -193,6 +193,14 @@ class ThemedStylesStore {
         flexDirection: 'row',
         justifyContent: 'flex-start',
       },
+      rowJustifySpaceBetween: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      },
+      rowStretch: {
+        alignItems: 'stretch',
+        flexDirection: 'row',
+      },
       alignCenter: {
         alignItems: 'center'
       },

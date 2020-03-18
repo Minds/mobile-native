@@ -16,8 +16,12 @@ import { MINDS_CDN_URI } from '../config/Config';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
 import isIphoneX from '../common/helpers/isIphoneX';
+import MenuStack from '../settings/SettingsNavigation';
 
 const Tab = createBottomTabNavigator();
+
+const hideHeader = { headerShown: false };
+
 
 /**
  * Main tabs
@@ -134,7 +138,7 @@ const Tabs = observer(function({ navigation }) {
       />
       <Tab.Screen
         name="Menu"
-        component={MoreScreenNew}
+        component={MenuStack}
         options={{ tabBarTestID: 'Menu tab button' }}
       />
     </Tab.Navigator>

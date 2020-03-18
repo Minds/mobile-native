@@ -39,6 +39,23 @@ class AuthService {
     }
   }
 
+  async logoutAll() {
+    try {
+      const resp = await api.delete('api/v1/authenticate/all');
+      console.log('delete all sessions', resp);
+      await api.delete('api/v2/oauth/token');
+      session.logout();
+
+      // Fixes autosubscribe issue on register
+      await api.clearCookies();
+
+      return true;
+    } catch (err) {
+      logService.exception('[AuthService] logout', err);
+      return false;
+    }
+  }
+
   async refreshToken() {
     logService.info('[AuthService] Refreshing token');
     let params = {

@@ -484,7 +484,67 @@
     "regenerateKey":"Regenerate messenger keys",
     "deleteBlockchain":"Delete blockchain keychain",
     "darkMode":"Dark mode",
-    "lightMode":"Light mode"
+    "lightMode":"Light mode",
+    "other":"Other",
+    "account":"Account",
+    "security":"Security",
+    "billing":"Billing",
+    "invalidPassword":"Incorrect password",
+    "passwordsNotMatch":"Passwords should match",
+    "passwordFormat":"Min 8 characters, alpha-numeric, mixed-case, etc.",
+    "matureContent":"Mature Content",
+    "showMatureContent":"Always show mature content (+18)",
+    "TFA":"Two-factor authentication",
+    "TFAdescription":"Add an extra layer of security to your account by enabling 2FA",
+    "TFAEnabled":"You may disable 2FA at any point. If you’ve change mobile number, you will need to disable and re-enable 2FA",
+    "TFADisable":"Disable 2FA",
+    "sessionsOpened":"You currently have {{amount}} opened sessions",
+    "closeSessions":"CLOSE ALL SESSIONS",
+    "subscriptionListEmpty":"You don't have any recurring subscription",
+    "reportedContent": {
+      "reviewPending":"REVIEW PENDING",
+      "reviewAppealed":"APPEALED",
+      "reviewApproved":"APPROVED",
+      "reviewRejected":"REJECTED",
+      "actionTaken":"Action taken",
+      "actionMessage":"&{actionTaken}&: This {{entityType}} has been &{action}& for &{reason}&",
+      "entityPost":"post",
+      "entityComment":"comment",
+      "actionNSFW":"marked NSFW",
+      "actionStrike":"given a strike",
+      "noteType":"Please type in this box if you wish to appeal this decision, explaining your reasons",
+      "appeal":"Appeal",
+      "appealNote":"Appeal Note",
+      "postNotFound":"Post not found",
+      "seeReportedContent":"Reported Content",
+      "noAppealData":" Sorry, something went wrong!"
+    },
+    "accountOptions": {
+      "1":"Email Address",
+      "2":"Display Language",
+      "3":"Password",
+      "4":"Notifications",
+      "5":"NSFW Content"
+    },
+    "securityOptions": {
+      "1":"Two-factor authentication (2FA)",
+      "2":"Your Devices"
+    },
+    "billingOptions": {
+      "1":"Payment Methods",
+      "2":"Recurring Payments"
+    },
+    "otherOptions": {
+      "a":"CONTENT ADMIN",
+      "a1":"Reported Content",
+      "b":"PAID CONTENT",
+      "b1":"Subscription Tier Management",
+      "b2":"Post Preview",
+      "c":"ACCOUNT",
+      "c2":"Delete Account",
+      "d":"INFO",
+      "d1":"App"
+    }
   },
   "comingSoon":{
     "try":"Try the canary app at",
@@ -809,5 +869,6 @@
   "tabTitleNewsfeed":"Home",
   "tabTitleNotifications":"Notifications",
   "tabTitleDiscovery":"Discovery",
-  "linkCopied":"Link copied to clipboard"
+  "linkCopied":"Link copied to clipboard",
+  "close":"Close"
 }
