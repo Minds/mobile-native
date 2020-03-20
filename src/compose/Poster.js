@@ -27,7 +27,17 @@ import RemindPreview from './RemindPreview';
 import PosterOptions from './PosterOptions';
 import TopBar from './TopBar';
 
-const windowWidth = Dimensions.get('window').width;
+const { width, height } = Dimensions.get('window');
+
+const videoPreviewStyle = {
+  height: width,
+  width: width,
+  maxHeight: Math.round(height / 2) - 30,
+};
+
+const imagePreviewStyle = {
+  maxHeight: Math.round(height / 2) - 30,
+};
 
 /**
  * Poster Screen
@@ -89,29 +99,34 @@ export default observer(function(props) {
             store={props.store}
           />
           {props.store.attachment.hasAttachment && (
-            <View>
-              <TouchableOpacity
-                onPress={props.store.attachment.cancelOrDelete}
-                style={[styles.removeMedia, theme.backgroundSecondary]}>
-                <IonIcon name="ios-close" size={28} style={styles.icon} />
-              </TouchableOpacity>
+            <>
               {isImage ? (
-                <ImagePreview
-                  image={props.store.mediaToConfirm}
-                  minRatio={previewRatio}
-                />
+                <View style={imagePreviewStyle}>
+                  <TouchableOpacity
+                    onPress={props.store.attachment.cancelOrDelete}
+                    style={[styles.removeMedia, theme.backgroundSecondary]}>
+                    <IonIcon name="ios-close" size={28} style={styles.icon} />
+                  </TouchableOpacity>
+                  <ImagePreview
+                    image={props.store.mediaToConfirm}
+                    minRatio={previewRatio}
+                    style={imagePreviewStyle}
+                  />
+                </View>
               ) : (
-                <MindsVideo
-                  video={{ uri: props.store.mediaToConfirm.uri }}
-                  containerStyle={{
-                    height: windowWidth,
-                  }}
-                />
+                <View style={videoPreviewStyle}>
+                  <TouchableOpacity
+                    onPress={props.store.attachment.cancelOrDelete}
+                    style={[styles.removeMedia, theme.backgroundSecondary]}>
+                    <IonIcon name="ios-close" size={28} style={styles.icon} />
+                  </TouchableOpacity>
+                  <MindsVideo video={{ uri: props.store.mediaToConfirm.uri }} />
+                </View>
               )}
               {props.store.attachment.uploading && (
                 <Progress.Bar
                   progress={props.store.attachment.progress}
-                  width={windowWidth}
+                  width={width}
                   color={ThemedStyles.getColor('green')}
                   borderWidth={0}
                   borderRadius={0}
@@ -119,7 +134,7 @@ export default observer(function(props) {
                 />
               )}
               <TitleInput store={props.store} />
-            </View>
+            </>
           )}
           <View style={theme.flexContainer}>
             <TextInput
@@ -141,7 +156,9 @@ export default observer(function(props) {
               testID="PostInput"
             />
           </View>
-          {props.store.isRemind && <RemindPreview entity={props.store.entity} />}
+          {props.store.isRemind && (
+            <RemindPreview entity={props.store.entity} />
+          )}
           {showEmbed && (
             <MetaPreview
               meta={props.store.embed.meta}
@@ -158,11 +175,12 @@ export default observer(function(props) {
 const styles = StyleSheet.create({
   input: {
     minHeight: 100,
+    textAlignVertical: 'top',
   },
   remindPreview: {
     marginHorizontal: 10,
-    width: windowWidth - 20,
-    height: windowWidth / 3,
+    width: width - 20,
+    height: width / 3,
   },
   topBar: {
     width: '100%',

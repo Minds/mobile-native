@@ -1,6 +1,8 @@
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import { Platform } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 /**
  * Image preview with max and min aspect ratio support
@@ -20,20 +22,21 @@ export default function(props) {
     aspectRatio = props.maxRatio;
   }
 
-
   if (props.minRatio && props.minRatio > aspectRatio) {
     aspectRatio = props.minRatio;
   }
 
+  let imageHeight = Math.round(width / aspectRatio);
+
   const imageStyle = {
-    aspectRatio,
+    height: imageHeight,
     width: '100%',
   };
 
   return (
     <FastImage
       source={{ uri: props.image.uri }}
-      style={imageStyle}
+      style={[imageStyle, props.style]}
       resizeMode={FastImage.resizeMode.cover}
     />
   );

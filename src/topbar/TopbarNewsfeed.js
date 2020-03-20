@@ -24,6 +24,11 @@ class TopbarNewsfeed extends Component {
   render() {
     const CS = ThemedStyles.style;
 
+    const logo =
+      ThemedStyles.theme === 0
+        ? require('./../assets/logos/logo.png')
+        : require('./../assets/logos/logo-white.png');
+
     return (
       <SafeAreaConsumer>
         {insets => (
@@ -37,7 +42,7 @@ class TopbarNewsfeed extends Component {
               <View style={styles.topbar}>
                 <View style={styles.topbarLeft}>
                   <Image
-                    source={require('./../assets/logos/logo-white.png')}
+                    source={logo}
                     style={styles.bulb}
                     resizeMode="contain"
                   />
