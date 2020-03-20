@@ -197,7 +197,8 @@ export default class ActivityActionSheet extends Component {
   /**
    * Show an error message
    */
-  showError() {
+  showError(err) {
+    console.log(err)
     Alert.alert(
       i18n.t('sorry'),
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
@@ -240,7 +241,7 @@ export default class ActivityActionSheet extends Component {
           await this.props.entity.toggleExplicit();
           // this.reloadOptions();
         } catch (err) {
-          this.showError();
+          this.showError(err);
         }
         break;
       case i18n.t('channel.block'):
@@ -250,7 +251,7 @@ export default class ActivityActionSheet extends Component {
             userBlocked: true,
           });
         } catch (err) {
-          this.showError();
+          this.showError(err);
         }
         break;
       case i18n.t('channel.unblock'):
@@ -260,7 +261,7 @@ export default class ActivityActionSheet extends Component {
             userBlocked: false,
           });
         } catch (err) {
-          this.showError();
+          this.showError(err);
         }
         break;
       case i18n.t('follow'):
@@ -269,7 +270,7 @@ export default class ActivityActionSheet extends Component {
           await this.props.entity.toggleFollow();
           // this.reloadOptions();
         } catch (err) {
-          this.showError();
+          this.showError(err);
         }
         break;
       case i18n.t('share'):
@@ -287,7 +288,7 @@ export default class ActivityActionSheet extends Component {
         try {
           await this.props.entity.toggleAllowComments();
         } catch (err) {
-          this.showError();
+          this.showError(err);
         }
         break;
     }

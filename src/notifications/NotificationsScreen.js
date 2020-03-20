@@ -117,7 +117,7 @@ class NotificationsScreen extends Component {
         stickyHeaderIndices={[0]}
         windowSize={8}
         refreshing={list.refreshing}
-        style={[ThemedStyles.style.backgroundSecondary, CS.flexContainer]}
+        style={[ThemedStyles.style.backgroundPrimary, CS.flexContainer]}
       />
     );
 

@@ -73,10 +73,12 @@ export default class BlogCard extends PureComponent {
             </View>
           </View>
         </View>
-        <Actions
-          entity={blog}
-          navigation={this.props.navigation}
-        />
+        {!this.props.hideTabs && (
+          <Actions
+            entity={blog}
+            navigation={this.props.navigation}
+          />
+        )}
       </TouchableOpacity>
     )
   }

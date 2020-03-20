@@ -278,6 +278,7 @@ decorate(ActivityModel, {
   'pinned': observable,
   'edited': observable,
   'message': observable,
+  'title': observable,
   'thumbs:down:user_guids': observable,
-  'thumbs:up:user_guids': observable
+  'thumbs:up:user_guids': observable,
 });

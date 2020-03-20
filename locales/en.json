@@ -193,8 +193,18 @@
     "hold":"Hold to select only one"
   },
   "capture":{
+    "licenseDescription":"Select your desired license type. This can be changed at any time after posting.",
+    "pupularLicenses":"Popular licenses",
+    "otherLicenses":"Other Licenses",
+    "paywallLabel":"Min monthly contribution ({{currency}})",
+    "paywallDescription":"Motetize post by making it available to your users who support your channel.",
+    "paywall":"Enable paywall",
+    "noPaywall":"No paywall",
+    "customTime":"Custom time",
+    "tagsDescription":"Tagging your post will make your content more easily discoverable.",
     "couldNotLoad":"The media from {{domain}} could not be loaded.",
     "maxHashtags":"Sorry, your post cannot contain more than {{maxHashtags}} hashtags.",
+    "schedule":"Schedule Post",
     "post":"Post",
     "remind":"Remind",
     "postingIn":"(Posting in {{group}})",
@@ -208,7 +218,9 @@
     "tokens":"TOKENS",
     "gallery":"Gallery",
     "photo":"Photo",
-    "video":"Video"
+    "video":"Video",
+    "text":"Text",
+    "retake":"Retake"
   },
   "channel":{
     "modeClosed":"Closed",
@@ -724,7 +736,13 @@
     "noResults": "No results for {{query}}"
   },
   "nsfw":{
+    "safe": "Safe",
+    "notSafe": "Not Safe",
+    "categories": "NSFW Categories",
+    "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
+    "description2": "See guidelines for further information.",
     "button":"NSFW",
+    "0":"Safe for work",
     "1":"Nudity",
     "2":"Pornography",
     "3":"Profanity",
@@ -751,6 +769,7 @@
     "emptySuggested":"We couldn't find what you look for",
     "clear": "Clear"
   },
+  "monetize":"Monetize",
   "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
   "postCantBeShown":"This post can't be shown on apps installed via the Play Store.",
@@ -870,5 +889,7 @@
   "tabTitleNotifications":"Notifications",
   "tabTitleDiscovery":"Discovery",
   "linkCopied":"Link copied to clipboard",
-  "close":"Close"
+  "close":"Close",
+  "now":"Now",
+  "title":"Title"
 }

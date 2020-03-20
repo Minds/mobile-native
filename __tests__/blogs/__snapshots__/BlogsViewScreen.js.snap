@@ -909,6 +909,7 @@ exports[`blog view screen component should renders correctly 1`] = `
     store={
       CommentsStore {
         "attachment": AttachmentStore {
+          "cancelOrDelete": [Function],
           "fileName": null,
           "guid": "",
           "transcoding": false,

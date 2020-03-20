@@ -138,6 +138,17 @@ export default class AttachmentStore {
   }
 
   /**
+   * Cancel the upload or delete the attachment if it is finished
+   */
+  cancelOrDelete = () => {
+    if (this.uploading) {
+      this.cancelCurrentUpload();
+    } else {
+      this.delete();
+    }
+  };
+
+  /**
    * Delete the uploaded attachment
    */
   async delete() {

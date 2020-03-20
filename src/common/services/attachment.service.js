@@ -1,6 +1,7 @@
 import api from './api.service';
 import imagePicker from './image-picker.service';
 import Cancelable from 'promise-cancelable';
+import { Platform } from 'react-native';
 
 /**
  * Attacment service
@@ -118,7 +119,7 @@ class AttachmentService {
         uri: response.uri,
         path: response.path,
         type: 'image/jpeg',
-        fileName: 'image.jpg'
+        fileName: 'image.jpg',
       }
     }
 
@@ -133,13 +134,30 @@ class AttachmentService {
 
     const response = await imagePicker.launchImageLibrary(mediaType);
 
-    if (!response) return response;
-
-    if (!response.type && !response.width) {
-      response.type = 'video/mp4';
+    if (!response) {
+      return null;
     }
 
-    return response;
+    if (response.didCancel) {
+      return null;
+    } else if (response.error) {
+      alert(response.error);
+      return null;
+    } else {
+      if (!response.type) {
+        if (!response.width) {
+          response.type = 'video/mp4';
+        } else if (response.uri.includes('.gif')) {
+          response.type = 'image/gif';
+        }
+      }
+      // if (Platform.OS === 'ios') {
+      //   response.uri =
+      //     '~' + response.uri.substring(response.uri.indexOf('/Documents'));
+      // }
+
+      return response;
+    }
   }
 }
 

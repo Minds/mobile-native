@@ -125,7 +125,7 @@ export default class FeedList extends Component {
         onEndReached={this.loadMore}
         // onEndReachedThreshold={0}
         numColumns={feedStore.isTiled ? 3 : 1}
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.backgroundSecondary]}
+        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.backgroundPrimary]}
         initialNumToRender={6}
         windowSize={11}
         // removeClippedSubviews={true}
