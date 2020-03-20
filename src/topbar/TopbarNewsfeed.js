@@ -35,10 +35,11 @@ class TopbarNewsfeed extends Component {
                 { paddingTop: insets.top },
               ]}>
               <View style={styles.topbar}>
-                <View style={[styles.topbarLeft, CS.marginLeft4x]}>
+                <View style={styles.topbarLeft}>
                   <Image
-                    source={require('./../assets/logos/bulb.png')}
+                    source={require('./../assets/logos/logo-white.png')}
                     style={styles.bulb}
+                    resizeMode="contain"
                   />
                 </View>
                 <View style={styles.topbarRight}>
@@ -76,9 +77,9 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   bulb: {
-    width: 18,
-    height: 30,
-    alignSelf: 'center',
+    width: 100,
+    height: 35,
+    alignSelf: 'flex-start',
   },
   topbar: {
     flex: 1,
@@ -86,9 +87,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   topbarLeft: {
+    marginLeft: Platform.select({ ios: 15, android: 10 }),
     flex: 1,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
     flexDirection: 'row',
   },
   topbarRight: {
