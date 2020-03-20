@@ -588,7 +588,7 @@ class MindsVideo extends Component {
 
     const overlay = this.renderOverlay();
     return (
-      <View style={[CS.flexContainer, CS.backgroundBlack]}>
+      <View style={[CS.flexContainer, CS.backgroundBlack, this.props.containerStyle]}>
         <TouchableWithoutFeedback
           style={CS.flexContainer}
           onPress={this.openControlOverlay}>

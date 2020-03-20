@@ -10,7 +10,8 @@ import DeviceInfo from 'react-native-device-info';
 // remember to update deeplink uri on AndroidManifest.xml !!!
 // export const MINDS_URI = 'http://172.16.2.61:8080/';
 export const MINDS_URI = 'https://www.minds.com/';
-export const MINDS_API_URI = 'https://www.minds.com/';
+export const MINDS_API_URI = 'https://epic-compose-25.minds.io/';
+// export const MINDS_API_URI = 'https://www.minds.com/';
 
 export const NETWORK_TIMEOUT = 15000;
 
@@ -40,6 +41,7 @@ export const CODE_PUSH_TOKEN = '';
 export const MINDS_FEATURES = {
   crypto: Platform.OS === 'ios' ? false : true,
   'onboarding-december-2019': true,
+  compose: true,
 };
 
 /**

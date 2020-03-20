@@ -44,7 +44,6 @@ class BoostedContentService {
         await this.update();
       } else {
         this.boosts = this.cleanBoosts(await this.feedsService.getEntities());
-
         this.update();
       }
     } catch (err) {

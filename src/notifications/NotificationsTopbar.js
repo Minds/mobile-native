@@ -28,10 +28,10 @@ export default class NotificacionsTopbar extends Component {
   render() {
     const filter = this.props.notifications.filter;
 
-    const bstyle = {borderBottomColor: ThemedStyles.getColor('secondary_background')};
+    const bstyle = {borderBottomColor: ThemedStyles.getColor('primary_background')};
 
     return (
-      <View style={[styles.container, CommonStyle.shadow, ThemedStyles.style.backgroundSecondary]}>
+      <View style={[styles.container, CommonStyle.shadow, ThemedStyles.style.backgroundPrimaryy]}>
         <View style={styles.topbar}>
           <View style={[styles.tab, bstyle, this.selected('all')]}>
             <Icon name="bell" size={22} style={[styles.button, filter=='all' ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon]} onPress={()=> this.props.notifications.setFilter('all')} />

@@ -76,4 +76,8 @@ sessionService.onLogout(() => {
   }
 });
 
+export const useStores = function() {
+  return stores;
+};
+
 export default stores;

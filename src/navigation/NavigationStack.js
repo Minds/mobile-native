@@ -51,11 +51,22 @@ import ThemedStyles from '../styles/ThemedStyles';
 import MessengerScreen from '../messenger/MessengerScreen';
 import Topbar from '../topbar/Topbar';
 import i18n from '../common/services/i18n.service';
+import ComposeScreen from '../compose/ComposeScreen';
+import TagSelector from '../compose/TagSelector';
+import NsfwSelector from '../compose/NsfwSelector';
+import ScheduleSelector from '../compose/ScheduleSelector';
+import MonetizeSelector from '../compose/MonetizeSelector';
+import LicenseSelector from '../compose/LicenseSelector';
 
 const hideHeader = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
 const discoveryOptions = ({ route }) => ({ title: route.params.title || '' });
-const captureOptions = { title: '', stackAnimation: 'none' };
+const captureOptions = {
+  title: '',
+  stackAnimation: 'fade',
+  headerShown: false,
+};
+
 const activityOptions = ({ route }) => ({
   title: route.params.entity ? route.params.entity.ownerObj.name : '',
 });
@@ -67,6 +78,16 @@ const RootStackNav = createNativeStackNavigator();
 
 
 const AppStack = function(props) {
+
+  let CurrentComposeScreen;
+
+  // if (featuresService.has('compose')) {
+    CurrentComposeScreen = ComposeScreen;
+  // } else {
+  //   CurrentComposeScreen = CapturePoster;
+  //   captureOptions.headerShown = true;
+  // }
+
   return (
     <AppStackNav.Navigator
       screenOptions={{
@@ -81,6 +102,31 @@ const AppStack = function(props) {
         // options={({ navigation, route }) => ({
         //   header: props => <Topbar {...props} />,
         // })}
+      />
+      <AppStackNav.Screen
+        name="TagSelector"
+        component={TagSelector}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="NsfwSelector"
+        component={NsfwSelector}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="ScheduleSelector"
+        component={ScheduleSelector}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="MonetizeSelector"
+        component={MonetizeSelector}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="LicenseSelector"
+        component={LicenseSelector}
+        options={hideHeader}
       />
       <AppStackNav.Screen
         name="EmailConfirmation"
@@ -103,7 +149,7 @@ const AppStack = function(props) {
       />
       <AppStackNav.Screen
         name="Capture"
-        component={CapturePoster}
+        component={CurrentComposeScreen}
         options={captureOptions}
       />
       <AppStackNav.Screen

@@ -1,4 +1,4 @@
-import { observable, action, extendObservable } from 'mobx'
+import { observable, action, extendObservable, isObservable } from 'mobx';
 import RichEmbedService from '../services/rich-embed.service';
 import Util from '../helpers/util';
 import logService from '../services/log.service';
@@ -18,7 +18,7 @@ export default class RichEmbedStore {
    * Richembed check
    */
   @action
-  richEmbedCheck = (text) => {
+  richEmbedCheck = text => {
     const matches = Util.urlReSingle.exec(text);
 
     if (this._richEmbedFetchTimer) {
@@ -26,13 +26,22 @@ export default class RichEmbedStore {
     }
 
     if (matches) {
-      const url = (!(matches[0].startsWith('https://') || matches[0].startsWith('http://')) ? 'https://' : '') + matches[0];
+      const url =
+        (!(
+          matches[0].startsWith('https://') || matches[0].startsWith('http://')
+        )
+          ? 'https://'
+          : '') + matches[0];
 
       if (
         !this.hasRichEmbed ||
-        (this.hasRichEmbed && url.toLowerCase() !== this.richEmbedUrl.toLowerCase())
+        (this.hasRichEmbed &&
+          url.toLowerCase() !== this.richEmbedUrl.toLowerCase())
       ) {
-        this._richEmbedFetchTimer = setTimeout(() => this.setRichEmbedPromise = this.setRichEmbed(url), 750);
+        this._richEmbedFetchTimer = setTimeout(
+          () => (this.setRichEmbedPromise = this.setRichEmbed(url)),
+          750,
+        );
       }
     }
   };
@@ -52,11 +61,11 @@ export default class RichEmbedStore {
    * Clear rich embed
    */
   @action
-  clearRichEmbed() {
+  clearRichEmbed = () => {
     this.hasRichEmbed = false;
     this.richEmbedUrl = '';
     this.meta = null;
-  }
+  };
 
   /**
    * Set rich embed
@@ -64,6 +73,7 @@ export default class RichEmbedStore {
    */
   @action
   async setRichEmbed(url) {
+
     this.hasRichEmbed = true;
     this.richEmbedUrl = url;
     this.meta = null;
@@ -78,5 +88,4 @@ export default class RichEmbedStore {
       logService.exception('[RichEmbedStore]', e);
     }
   }
-
 }

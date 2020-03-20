@@ -34,6 +34,7 @@ async function remoteAction(
     } else if (isApiError(error) || isUserError(error) || error.message) {
       message = error.message;
     } else {
+      console.log('[RemoteAction]', error);
       message = i18nService.t('errorMessage');
     }
 

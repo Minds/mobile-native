@@ -10,7 +10,6 @@ import {
   Platform,
 } from 'react-native';
 
-import ActionSheet from 'react-native-actionsheet';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { CommonStyle } from '../styles/Common';
@@ -41,17 +40,6 @@ export default class CaptureTab extends Component {
    * Render
    */
   render() {
-    let actionsheet = null;
-
-    if (Platform.OS != 'ios') {
-      actionsheet = <ActionSheet
-        ref={o => this.actionSheet = o}
-        options={[i18n.t('cancel'), i18n.t('images'), i18n.t('videos')]}
-        onPress={this._selectMediaType}
-        cancelButtonIndex={0}
-      />
-    }
-
     return (
       <View style={CommonStyle.flexContainer}>
 
@@ -80,7 +68,6 @@ export default class CaptureTab extends Component {
           </View> :
           <View></View>
         }
-        {actionsheet}
       </View>
     );
   }
@@ -107,35 +94,10 @@ export default class CaptureTab extends Component {
    * Open gallery
    */
   gallery = async () => {
-    if (Platform.OS == 'ios') {
-      try {
-        const response = await attachmentService.gallery('mixed');
-        if (response) this.props.onSelectedMedia(response);
-      } catch (e) {
-        alert(e);
-      }
-    } else {
-      this.actionSheet.show()
-    }
-  }
-
-  /**
-   * On media type select
-   */
-  _selectMediaType = async (i) => {
     try {
-      let response;
-      switch (i) {
-        case 1:
-          response = await attachmentService.gallery('photo');
-          break;
-        case 2:
-          response = await attachmentService.gallery('video');
-          break;
-      }
-
+      const response = await attachmentService.gallery('mixed');
       if (response) this.props.onSelectedMedia(response);
-    } catch(e) {
+    } catch (e) {
       alert(e);
     }
   }

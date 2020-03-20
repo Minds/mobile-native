@@ -41,12 +41,12 @@ export default class Topbar extends Component {
   render() {
     return (
       <View>
-        <View style={[styles.container, CommonStyle.shadow, ThemedStyles.style.backgroundSecondary]}>
+        <View style={[styles.container, CommonStyle.shadow, ThemedStyles.style.backgroundPrimary]}>
           <View style={styles.topbar}>
-            <TouchableOpacity style={[styles.tab, {borderBottomColor: ThemedStyles.getColor('secondary_background')}, this.selected('subscribed')]} onPress={() => this.props.newsfeed.setFilter('subscribed')}>
+            <TouchableOpacity style={[styles.tab, {borderBottomColor: ThemedStyles.getColor('primary_background')}, this.selected('subscribed')]} onPress={() => this.props.newsfeed.setFilter('subscribed')}>
               <Text style={CommonStyle.fontM}>{i18n.t('newsfeed.subscribed')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.tab,  {borderBottomColor: ThemedStyles.getColor('secondary_background')}, this.selected('boostfeed')]} onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
+            <TouchableOpacity style={[styles.tab,  {borderBottomColor: ThemedStyles.getColor('primary_background')}, this.selected('boostfeed')]} onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
               <Text style={CommonStyle.fontM}>{i18n.t('newsfeed.boostfeed')}</Text>
             </TouchableOpacity>
           </View>

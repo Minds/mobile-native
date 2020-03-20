@@ -7,7 +7,7 @@ const { Value, useCode, set } = Animated;
 
 export default function(props) {
   const animation = new Value(0);
-  useCode(
+  useCode(() => {
     set(
       animation,
       loop({
@@ -15,9 +15,8 @@ export default function(props) {
         duration: 1000,
         easing: Easing.in(Easing.ease),
       }),
-    ),
-    [animation],
-  );
+    );
+  }, [animation]);
   const scale = bInterpolate(animation, 1, 1.3);
   const opacity = bInterpolate(animation, 1, 0);
   const pulseMaxSize = Math.round(1.3 * props.size);
