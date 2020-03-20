@@ -104,7 +104,7 @@ export async function setViewed(entity, extra = {}) {
   // ignore if there is no internet
   if (!connectivityService.isConnected) return;
 
-  if (entity.boosted) {
+  if (entity.boosted_guid) {
     data = await api.post('api/v2/analytics/views/boost/' + entity.boosted_guid, extra );
   } else {
     data = await api.post('api/v2/analytics/views/entity/' + entity.guid, extra);
