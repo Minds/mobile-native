@@ -6,6 +6,7 @@ import {
   View,
   Alert,
   Text,
+  StyleSheet,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -22,6 +23,7 @@ import translationService from '../../common/services/translation.service';
 import { FLAG_EDIT_POST, FLAG_DELETE_POST } from '../../common/Permissions';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Activity Actions Component
@@ -197,8 +199,7 @@ export default class ActivityActionSheet extends Component {
   /**
    * Show an error message
    */
-  showError(err) {
-    console.log(err)
+  showError() {
     Alert.alert(
       i18n.t('sorry'),
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
@@ -241,7 +242,7 @@ export default class ActivityActionSheet extends Component {
           await this.props.entity.toggleExplicit();
           // this.reloadOptions();
         } catch (err) {
-          this.showError(err);
+          this.showError();
         }
         break;
       case i18n.t('channel.block'):
@@ -251,7 +252,7 @@ export default class ActivityActionSheet extends Component {
             userBlocked: true,
           });
         } catch (err) {
-          this.showError(err);
+          this.showError();
         }
         break;
       case i18n.t('channel.unblock'):
@@ -261,7 +262,7 @@ export default class ActivityActionSheet extends Component {
             userBlocked: false,
           });
         } catch (err) {
-          this.showError(err);
+          this.showError();
         }
         break;
       case i18n.t('follow'):
@@ -270,7 +271,7 @@ export default class ActivityActionSheet extends Component {
           await this.props.entity.toggleFollow();
           // this.reloadOptions();
         } catch (err) {
-          this.showError(err);
+          this.showError();
         }
         break;
       case i18n.t('share'):
@@ -288,7 +289,7 @@ export default class ActivityActionSheet extends Component {
         try {
           await this.props.entity.toggleAllowComments();
         } catch (err) {
-          this.showError(err);
+          this.showError();
         }
         break;
     }
@@ -298,13 +299,43 @@ export default class ActivityActionSheet extends Component {
    * Render Header
    */
   render() {
+    const CS = ThemedStyles.style;
+
+    const styles = {
+      body: {
+        flex: 1,
+        alignSelf: 'flex-end',
+        backgroundColor: ThemedStyles.getColor('primary_background')
+      },
+      titleBox: {
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: ThemedStyles.getColor('primary_background'),
+      },
+      buttonBox: {
+        height: 50,
+        marginTop: StyleSheet.hairlineWidth,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: ThemedStyles.getColor('secondary_background'),
+      },
+      cancelButtonBox: {
+        height: 50,
+        marginTop: 6,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: ThemedStyles.getColor('secondary_background')
+      },
+    };
+
     return (
       <View style={[CS.flexContainer, CS.centered]}>
         <Icon
           name="more-vert"
           onPress={() => this.showActionSheet()}
           size={26}
-          style={CS.colorDarkGreyed}
+          style={CS.colorSecondaryText}
           testID={this.props.testID}
         />
         <ActionSheet
@@ -313,6 +344,7 @@ export default class ActivityActionSheet extends Component {
           options={this.state.options}
           onPress={this.handleSelection}
           cancelButtonIndex={0}
+          styles={styles}
         />
       </View>
     )
