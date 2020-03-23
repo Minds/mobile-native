@@ -25,6 +25,11 @@ export default function() {
   const currentPasswordFocus = useCallback(() => setCurrentPassword(''), []);
   const newPasswordFocus = useCallback(() => setNewPassword(''), []);
   const confirmationPasswordFocus = useCallback(() => setConfirmationPassword(''), []);
+  const clearInputs = useCallback(() => {
+    setCurrentPassword('');
+    setNewPassword('');
+    setConfirmationPassword('');
+  }, [setCurrentPassword, setNewPassword, setConfirmationPassword]);
 
   let currentPasswordInput = '';
   let newPasswordInput = '';
@@ -61,15 +66,13 @@ export default function() {
 
     try {
       await settingsService.submitSettings(params);
+      clearInputs();
       Alert.alert(i18n.t('success'), i18n.t('settings.passwordChanged'));
-      currentPassword = '';
-      newPassword = '';
-      confirmationPassword = '';
     } catch (err) {
       Alert.alert('Error', err.message);
     }
 
-  }, [currentPassword, newPassword, confirmationPassword]);
+  }, [currentPassword, newPassword, confirmationPassword, clearInputs]);
 
   /**
    * Set save button on header right
