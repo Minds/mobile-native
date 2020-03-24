@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react'
 import { View, Text, Linking } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';

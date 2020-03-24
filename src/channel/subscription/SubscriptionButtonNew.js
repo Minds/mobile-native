@@ -1,13 +1,11 @@
-// @flow
 import React, {
   Component
 } from 'react';
 
 import { Alert } from 'react-native';
-import type { Node } from 'react';
 import { observer } from 'mobx-react';
 
-import type UserModel from '../UserModel';
+import UserModel from '../UserModel';
 
 import Button from '../../common/components/Button';
 import i18n from '../../common/services/i18n.service';

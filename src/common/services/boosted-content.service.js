@@ -1,4 +1,3 @@
-// @flow
 import FeedsService from "./feeds.service";
 import logService from "./log.service";
 import blockListService from "./block-list.service";

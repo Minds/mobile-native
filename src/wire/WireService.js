@@ -1,4 +1,3 @@
-// @flow
 import api from './../common/services/api.service';
 import i18n from '../common/services/i18n.service';
 import BlockchainWireService from '../blockchain/services/BlockchainWireService';
