@@ -62,7 +62,7 @@ type PropsType = {
 type StateType = {
   focused: boolean,
   hideInput: boolean,
-  guid: ?string,
+  guid?: string,
   selection: {
     start: number,
     end: number
@@ -89,8 +89,8 @@ export default
 @observer
 class CommentList extends React.Component<PropsType, StateType> {
   listRef: FlatList<any>;
-  actionAttachmentSheetRef: ?ActionSheet;
-  actionSheetRef: ?ActionSheet;
+  actionAttachmentSheetRef?: ActionSheet;
+  actionSheetRef?: ActionSheet;
   keyboardDidShowListener: any;
   keyboardDidHideListener: any;
   focusedChild: number = -1;

@@ -26,7 +26,7 @@ type PropsType = {
  */
 export default class StripeCardCarousel extends React.PureComponent<PropsType> {
 
-  carouselRef: ?React.ElementRef<Carousel>;
+  carouselRef?: React.ElementRef<Carousel>;
 
   /**
    * Constructor

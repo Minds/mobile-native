@@ -73,7 +73,7 @@ class BoostedContentService {
   /**
    * Fetch one boost
    */
-  fetch(): ?ActivityModel {
+  fetch(): ActivityModel | null {
     this.offset++;
 
     if (this.offset >= this.boosts.length) {

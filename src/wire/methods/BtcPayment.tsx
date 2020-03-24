@@ -10,7 +10,7 @@ import i18nService from '../../common/services/i18n.service';
 type PropsType = {
   address: string,
   amount: number,
-  onCancel: ?Function
+  onCancel?: Function
 };
 
 /**

@@ -9,7 +9,7 @@ import i18nService from '../../common/services/i18n.service';
 import StripeCardCarousel from './StripeCardCarousel';
 
 type PropsType = {
-  onCardSelected: ?Function
+  onCardSelected?: Function
 };
 
 type StateType = {
