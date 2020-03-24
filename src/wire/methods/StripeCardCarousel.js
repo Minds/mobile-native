@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 
 import { Text, View, StyleSheet, Alert } from 'react-native';

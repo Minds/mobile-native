@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import type { ViewLayoutEvent } from 'react-native/Libraries/Components/View/ViewPropTypes';
 

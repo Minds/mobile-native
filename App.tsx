@@ -3,7 +3,6 @@
  * https://www.minds.com
  *
  * @format
- * @flow
  */
 
 import React, { Component } from 'react';
@@ -61,8 +60,6 @@ import apiService from './src/common/services/api.service';
 import boostedContentService from './src/common/services/boosted-content.service';
 import translationService from './src/common/services/translation.service';
 import ThemedStyles from './src/styles/ThemedStyles';
-
-
 
 let deepLinkUrl = '';
 
@@ -175,7 +172,7 @@ type Props = {};
  */
 export default
 @observer
-class App extends Component<Props, State> {
+class App extends Component<Props, State>{
   /**
    * State
    */

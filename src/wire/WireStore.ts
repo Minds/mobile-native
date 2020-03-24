@@ -1,4 +1,3 @@
-// @flow
 import {
   observable,
   action
@@ -6,6 +5,7 @@ import {
 
 import wireService from './WireService';
 import i18n from '../common/services/i18n.service';
+import UserModel from 'src/channel/UserModel';
 
 /**
  * Wire store
@@ -14,16 +14,16 @@ class WireStore {
   @observable currency = 'tokens';
   @observable amount = 1;
   @observable sending = false;
-  @observable.shallow owner = null;
+  @observable.shallow owner: UserModel | null = null;
   @observable recurring = false;
   @observable showBtc = false;
   @observable showCardselector = false;
   @observable loaded = false;
-  @observable errors = [];
+  @observable errors: Array<string> = [];
 
-  @observable paymentMethodId: ?string = null;
+  @observable paymentMethodId: string | null = null;
 
-  guid: ?string;
+  guid: string | null = null;
 
   @action
   setShowBtc = (value: boolean) => {
@@ -73,7 +73,8 @@ class WireStore {
     this.guid = owner ? (owner.guid || owner.entity_guid) : null;
   }
 
-  async loadUserRewards(): Promise<any> {
+  async loadUserRewards(): Promise<UserModel | null> {
+    if (!this.owner || !this.owner.guid) return null;
     const owner = await wireService.userRewards(this.owner.guid);
     const { merchant, eth_wallet, wire_rewards, sums } = owner;
 
@@ -193,7 +194,7 @@ class WireStore {
   @action
   reset() {
     this.paymentMethodId = null,
-    this.guid = undefined;
+    this.guid = null;
     this.amount = 1;
     this.showBtc = false;
     this.showCardselector = false;
