@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 
-import {observer} from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import ExplicitOverlay from '../common/components/explicit/ExplicitOverlay';
-import {CommonStyle as CS} from '../styles/Common';
-import i18n from '../common/services/i18n.service';
+import { CommonStyle as CS } from '../styles/Common';
 import ThemedStyles from '../styles/ThemedStyles';
+import ConnectivityAwareSmartImage from '../common/components/ConnectivityAwareSmartImage';
 
 export default
 @observer
@@ -27,7 +27,7 @@ class DiscoveryTile extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (prevState.size !== nextProps.size) {
       return {
-        style: {width: nextProps.size, height: nextProps.size},
+        style: { width: nextProps.size, height: nextProps.size },
       };
     }
 
@@ -43,32 +43,11 @@ class DiscoveryTile extends Component {
     }
   };
 
-  errorRender = () => {
-    return (
-      <View style={CS.centered}>
-        <Text styles={[CS.colorWhite, CS.fontS, CS.textCenter]}>
-          {i18n.t('discovery.imageError')}
-        </Text>
-      </View>
-    );
-  };
-
-  errorRenderVideo = () => {
-    return (
-      <TouchableOpacity
-        onPress={this._onPress}
-        style={[this.state.style, styles.tile]}>
-        <View style={[CS.flexContainer, CS.backgroundBlack]} />
-      </TouchableOpacity>
-    );
-  };
-
   setError = () => {
-    this.setState({error: true});
+    this.setState({ error: true });
   };
 
   setActive = () => {
-    this.setState({ready: true});
     // bubble event up
     this.props.onLoadEnd && this.props.onLoadEnd();
   };
@@ -78,12 +57,6 @@ class DiscoveryTile extends Component {
    */
   render() {
     const entity = this.props.entity;
-
-    if (this.state.error) {
-      return entity.custom_type && entity.custom_type === 'video'
-        ? this.errorRenderVideo()
-        : this.errorRender();
-    }
 
     // this optimization have some issues with the changes of the video auto-pause
     // if (!entity.is_visible) {
@@ -122,9 +95,10 @@ class DiscoveryTile extends Component {
       <TouchableOpacity
         onPress={this._onPress}
         style={[this.state.style, styles.tile]}>
-        <View style={[CS.flexContainer, ThemedStyles.style.backgroundSeparator]}>
+        <View
+          style={[CS.flexContainer, ThemedStyles.style.backgroundSeparator]}>
           {boundary}
-          <FastImage
+          <ConnectivityAwareSmartImage
             source={url}
             style={CS.positionAbsolute}
             onLoadEnd={this.setActive}
