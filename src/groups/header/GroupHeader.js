@@ -141,7 +141,7 @@ export default class GroupHeader extends Component {
       { text: i18n.t('members').toUpperCase(), badge: abbrev(group['members:count'], 0), value: 'members' }
     ]
 
-    if (!featuresService.has('allow-disabling-groups-conversations') || group.conversationDisabled !== 1) {
+    if (group.conversationDisabled !== 1) {
       typeOptions.push(conversation);
     }
 
@@ -173,10 +173,12 @@ export default class GroupHeader extends Component {
     switch (tab) {
       case 'feed':
         // clear list without mark loaded flag
-        this.props.store.refresh(group.guid);
-        this.props.groupsBar.markAsRead(group, 'activity');
+        if (this.props.store.list) {
+          this.props.store.refresh(group.guid);
+          this.props.groupsBar.markAsRead(group, 'activity');
+        }
       case 'desc':
-        this.props.store.list.clearList(false);
+        this.props.store.list && this.props.store.list.clearList(false);
         break;
       case 'members':
         this.props.store.loadMembers();
