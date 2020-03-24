@@ -319,7 +319,7 @@ export default function(props) {
           this.setPosting(true);
           let response;
           try {
-            response = await api.post('api/v1/newsfeed', newPost);
+            response = await api.post('api/v2/newsfeed', newPost);
           } finally {
             this.setPosting(false);
           }
