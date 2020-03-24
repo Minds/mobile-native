@@ -117,7 +117,7 @@
     "react-dom": "^16.6.3",
     "react-test-renderer": "16.9.0",
     "ts-node": "^8.4.1",
-    "typescript": "^3.8.3"
+    "typescript": "~3.7.5"
   },
   "detox": {
     "configurations": {
