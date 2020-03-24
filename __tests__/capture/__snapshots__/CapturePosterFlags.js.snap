@@ -948,13 +948,13 @@ exports[`cature poster flags component should renders correctly for props false 
         Object {
           "backgroundColor": "black",
           "bottom": 0,
-          "height": 1334,
+          "height": 2668,
           "left": 0,
           "opacity": 0,
           "position": "absolute",
           "right": 0,
           "top": 0,
-          "width": 750,
+          "width": 1500,
         }
       }
     />
@@ -1910,13 +1910,13 @@ exports[`cature poster flags component should renders correctly for props true 1
         Object {
           "backgroundColor": "black",
           "bottom": 0,
-          "height": 1334,
+          "height": 2668,
           "left": 0,
           "opacity": 0,
           "position": "absolute",
           "right": 0,
           "top": 0,
-          "width": 750,
+          "width": 1500,
         }
       }
     />
