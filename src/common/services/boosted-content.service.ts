@@ -1,4 +1,3 @@
-// @flow
 import FeedsService from "./feeds.service";
 import logService from "./log.service";
 import blockListService from "./block-list.service";
@@ -73,7 +72,7 @@ class BoostedContentService {
   /**
    * Fetch one boost
    */
-  fetch(): ?ActivityModel {
+  fetch(): ActivityModel | null {
     this.offset++;
 
     if (this.offset >= this.boosts.length) {

@@ -1,4 +1,3 @@
-// @flow
 import _ from 'lodash';
 
 import apiService, { isApiForbidden } from "./api.service";
@@ -38,7 +37,7 @@ class EntitiesService {
    * @param {string} urn
    * @param {boolean} updateLast
    */
-  getFromCache(urn: string, updateLast: boolean = true): ?BaseModel {
+  getFromCache(urn: string, updateLast: boolean = true): BaseModel | null {
     const record = this.entities.get(urn)
     if (record && updateLast) record.last = Date.now() / 1000;
     return record ? record.entity : null;

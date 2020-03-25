@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 
 import { Text, View, StyleSheet, Alert } from 'react-native';
@@ -27,7 +26,7 @@ type PropsType = {
  */
 export default class StripeCardCarousel extends React.PureComponent<PropsType> {
 
-  carouselRef: ?React.ElementRef<Carousel>;
+  carouselRef?: React.ElementRef<Carousel>;
 
   /**
    * Constructor

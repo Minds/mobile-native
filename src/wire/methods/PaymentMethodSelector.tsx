@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react'
 
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
@@ -21,7 +20,6 @@ type PropsType = {
  */
 export default class PaymentMethodSelector extends React.PureComponent<PropsType> {
   methods: Array<any>;
-  menuRef: ?React.ElementRef<Menu>;
 
   /**
    * @param {PropsType} props
@@ -39,8 +37,6 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
     } else {
       this.methods = [{label: 'Tokens', handle: (): any => this.onSelect('tokens')}];
     }
-
-    this.menuRef = React.createRef();
   }
 
   /**
@@ -50,18 +46,6 @@ export default class PaymentMethodSelector extends React.PureComponent<PropsType
   onSelect(method: any) {
     if (this.props.onSelect) {
       this.props.onSelect(method);
-    }
-    if (this.menuRef && this.menuRef.current) {
-      this.menuRef.current.hide();
-    }
-  }
-
-  /**
-   * Show menu
-   */
-  show() {
-    if (this.menuRef && this.menuRef.current) {
-      this.menuRef.current.show();
     }
   }
 

@@ -16,6 +16,14 @@ export const USER_MODE_CLOSED = 2;
  * User model
  */
 export default class UserModel extends BaseModel {
+
+  guid?: string;
+  merchant;
+  eth_wallet;
+  wire_rewards;
+  sums;
+  btc_address?: string;
+
   /**
    * @var {boolean}
    */

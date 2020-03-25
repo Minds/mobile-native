@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react'
 import { View, Text, Linking } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
@@ -11,7 +10,7 @@ import i18nService from '../../common/services/i18n.service';
 type PropsType = {
   address: string,
   amount: number,
-  onCancel: ?Function
+  onCancel?: Function
 };
 
 /**

@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react'
 import { View, ActivityIndicator, Alert } from 'react-native';
 
@@ -10,7 +9,7 @@ import i18nService from '../../common/services/i18n.service';
 import StripeCardCarousel from './StripeCardCarousel';
 
 type PropsType = {
-  onCardSelected: ?Function
+  onCardSelected?: Function
 };
 
 type StateType = {

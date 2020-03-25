@@ -1,10 +1,8 @@
-// @flow
 import React, {
   Component
 } from 'react';
 
 import { Alert } from 'react-native';
-import type { Node } from 'react';
 import { observer } from 'mobx-react';
 
 import type UserModel from '../UserModel';
@@ -51,7 +49,7 @@ class SubscriptionButton extends Component<PropsType> {
   /**
    * Render
    */
-  render(): Node {
+  render() {
     const {
       channel,
       ...otherProps
