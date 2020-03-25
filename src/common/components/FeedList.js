@@ -141,7 +141,9 @@ export default class FeedList extends Component {
   /**
    * Key extractor for list items
    */
-  keyExtractor = item => item.urn;
+  keyExtractor = (item, index) => {
+    return item.boosted ? `${item.urn}:${index}` : item.urn;
+  }
 
   /**
    * Get footer
