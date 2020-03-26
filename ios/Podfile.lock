@@ -265,7 +265,7 @@ PODS:
     - React
   - ReactNativeExceptionHandler (2.10.8):
     - React
-  - RNBootSplash (1.0.3):
+  - RNBootSplash (2.1.0):
     - React
   - RNCAsyncStorage (1.8.0):
     - React
@@ -544,7 +544,7 @@ SPEC CHECKSUMS:
   ReactCommon: a6a294e7028ed67b926d29551aa9394fd989c24c
   ReactNativeART: c580fba2f7d188d8fa4418ce78db8130654ed10f
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
-  RNBootSplash: 161de9d2b5dc2af37c2777063b8e6d844ab2a6ff
+  RNBootSplash: fbf76a4bf1c03e9acd1dd08ce064847f26d6d8bf
   RNCAsyncStorage: 5d83b49070d41fd72906a116c5e7bdac4ea3a814
   RNCMaskedView: 76c40a1d41c3e2535df09246a2b5487f04de0814
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
