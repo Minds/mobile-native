@@ -173,10 +173,12 @@ export default class GroupHeader extends Component {
     switch (tab) {
       case 'feed':
         // clear list without mark loaded flag
-        this.props.store.refresh(group.guid);
-        this.props.groupsBar.markAsRead(group, 'activity');
+        if (this.props.store.list) {
+          this.props.store.refresh(group.guid);
+          this.props.groupsBar.markAsRead(group, 'activity');
+        }
       case 'desc':
-        this.props.store.list.clearList(false);
+        this.props.store.list && this.props.store.list.clearList(false);
         break;
       case 'members':
         this.props.store.loadMembers();
