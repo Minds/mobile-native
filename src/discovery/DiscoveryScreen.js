@@ -72,6 +72,13 @@ class DiscoveryScreen extends Component {
     minimumViewTime: 300,
   };
 
+  refreshDiscovery = (e) => {
+    if (this.props.navigation.isFocused()) {
+      stores.discovery.reload();
+      e && e.preventDefault();
+    }
+  }
+
   /**
    * On component will mount
    */
@@ -88,12 +95,7 @@ class DiscoveryScreen extends Component {
       }, 50);
     });
 
-    this.disposeTabPress = this.props.navigation.addListener('tabPress', e => {
-      if (this.props.navigation.isFocused()) {
-        stores.discovery.reload();
-        e.preventDefault();
-      }
-    });
+    this.disposeTabPress = this.props.navigation.addListener('tabPress', this.refreshDiscovery);
 
     // // clear data on leave
     // this.disposeLeave = this.props.navigation.addListener('blur', (s) => {
@@ -248,7 +250,7 @@ class DiscoveryScreen extends Component {
 
     return (
       <View style={[CS.flexContainer, ThemedStyles.style.backgroundPrimary]}>
-        <TopbarNew title={i18n.t('tabTitleDiscovery')} navigation={this.props.navigation}/>
+        <TopbarNew title={i18n.t('tabTitleDiscovery')} navigation={this.props.navigation} refreshFeed={this.refreshDiscovery}/>
         {body}
         {/* <CaptureFab navigation={this.props.navigation}  /> */}
       </View>
