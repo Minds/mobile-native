@@ -273,7 +273,9 @@ export default class ConversationScreen extends Component {
     }
     this.setState({text: ''})
     setTimeout(() => {
-      this.list.scrollToOffset({ offset: 0, animated: false });
+      if (this.list && this.list.scrollToOffset) {
+        this.list.scrollToOffset({ offset: 0, animated: false });
+      }
     }, 100);
   }
 
