@@ -23,22 +23,28 @@ import ReportedContentScreen from '../report/ReportedContentScreen';
 import i18n from '../common/services/i18n.service';
 import NSFWScreen from './screens/NSFWScreen';
 import AppInfoScreen from './screens/AppInfoScreen';
+import { useStores } from '../../AppStores';
 
 const MenuStackNav = createNativeStackNavigator();
 
 const hideHeader = { headerShown: false };
 
-const MenuStack = function({ navigation }) {
+const MenuStack = function({ navigation, route }) {
 
+  const { user } = useStores();
   /**
    * Add tabPress event to navigate to main when user tap in menu tab
    */
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', () => {
-      navigation.navigate('Main');
+      if (route.state && route.state.index >= 1) {
+        navigation.navigate('Main');
+      } else {
+        navigation.push('Channel', { guid: user.me.guid });
+      }
     });
     return unsubscribe;
-  }, [navigation]);
+  }, [navigation, route, user]);
 
   return (
     <MenuStackNav.Navigator

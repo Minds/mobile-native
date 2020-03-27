@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, View, Platform } from 'react-native';
+import { StyleSheet, Image, View, Platform, TouchableOpacity } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import SearchComponent from './SearchComponent';
@@ -27,7 +27,7 @@ class TopbarNewsfeed extends Component {
       ThemedStyles.theme === 0
         ? require('./../assets/logos/logo.png')
         : require('./../assets/logos/logo-white.png');
-
+    const refreshFeed = this.props.refreshFeed ?? (() => false);
     return (
       <SafeAreaConsumer>
         {insets => (
@@ -40,11 +40,13 @@ class TopbarNewsfeed extends Component {
               ]}>
               <View style={styles.topbar}>
                 <View style={styles.topbarLeft}>
-                  <Image
-                    source={logo}
-                    style={styles.bulb}
-                    resizeMode="contain"
-                  />
+                  <TouchableOpacity onPress={refreshFeed}>
+                    <Image
+                      source={logo}
+                      style={styles.bulb}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
                 </View>
                 <View style={styles.topbarRight}>
                   <MessengerTabIcon navigation={navigation} />

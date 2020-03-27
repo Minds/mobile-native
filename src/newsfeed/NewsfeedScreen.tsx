@@ -27,21 +27,26 @@ class NewsfeedScreen extends Component {
     this.props.navigation.navigate('Capture');
   };
 
+  refreshNewsfeed = e => {
+    if (this.props.navigation.isFocused()) {
+      if (stores.newsfeed.filter === 'subscribed') {
+        stores.newsfeed.scrollToTop();
+        stores.newsfeed.feedStore.refresh(true);
+      } else {
+        stores.newsfeed.refresh();
+      }
+      e && e.preventDefault();
+    }
+  };
+
   /**
    * Load data on mount
    */
   componentDidMount() {
-    this.disposeTabPress = this.props.navigation.addListener('tabPress', e => {
-      if (this.props.navigation.isFocused()) {
-        if (getStores().newsfeed.filter === 'subscribed') {
-          getStores().newsfeed.scrollToTop();
-          getStores().newsfeed.feedStore.refresh(true);
-        } else {
-          getStores().newsfeed.refresh();
-        }
-        e.preventDefault();
-      }
-    });
+    this.disposeTabPress = this.props.navigation.addListener(
+      'tabPress',
+      this.refreshNewsfeed,
+    );
 
     this.loadFeed();
     // this.props.newsfeed.loadBoosts();
@@ -122,6 +127,7 @@ class NewsfeedScreen extends Component {
         <TopbarNewsfeed
           title={i18n.t('tabTitleNewsfeed')}
           navigation={this.props.navigation}
+          refreshFeed={this.refreshNewsfeed}
         />
         {feed}
         {/* <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/> */}

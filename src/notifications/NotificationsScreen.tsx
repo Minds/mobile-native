@@ -135,6 +135,7 @@ class NotificationsScreen extends Component {
         <TopbarNew
           title={i18n.t('tabTitleNotifications')}
           navigation={this.props.navigation}
+          refreshFeed={this.onFocus}
         />
         {body}
         {/* <CaptureFab navigation={this.props.navigation} /> */}

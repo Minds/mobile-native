@@ -42,7 +42,8 @@ class TopbarNew extends Component {
                       CS.titleText,
                       CS.colorPrimaryText,
                       styles.lineHeight0,
-                    ]}>
+                    ]}
+                    onPress={this.props.refreshFeed ?? (() => false)}>
                     {this.props.title}
                   </Text>
                 </View>
