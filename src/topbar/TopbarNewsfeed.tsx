@@ -10,7 +10,6 @@ import MessengerTabIcon from '../messenger/MessengerTabIconNew';
 import EmailConfirmation from './EmailConfirmation';
 import BannerInfo from './BannerInfo';
 
-export default
 @inject('user')
 @inject('wallet')
 @observer
@@ -64,6 +63,8 @@ class TopbarNewsfeed extends Component {
     );
   }
 }
+
+export default TopbarNewsfeed;
 
 let topbarHeight = 50;
 

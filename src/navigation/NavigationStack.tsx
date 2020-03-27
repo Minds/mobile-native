@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
-import LoadingScreen from '../LoadingScreen';
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
 import TabsScreen from '../tabs/TabsScreen';

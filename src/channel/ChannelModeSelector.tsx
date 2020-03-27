@@ -12,7 +12,6 @@ import Button from '../common/components/Button'
 /**
  * Channel mode selector
  */
-export default
 @observer
 class ChannelModeSelector extends Component {
 
@@ -92,6 +91,8 @@ class ChannelModeSelector extends Component {
     );
   }
 }
+
+export default ChannelModeSelector;
 
 const styles = StyleSheet.create({
   menu: {

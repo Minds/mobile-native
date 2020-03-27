@@ -12,7 +12,6 @@ import ThemedStyles from '../styles/ThemedStyles';
 /**
  * Newsfeed top bar
  */
-export default
 @inject('boost')
 @observer
 class BoostTabBar extends Component {
@@ -47,6 +46,8 @@ class BoostTabBar extends Component {
     );
   }
 }
+
+export default BoostTabBar;
 
 //TODO: move to common style
 const styles = StyleSheet.create({

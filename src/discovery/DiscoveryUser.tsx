@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   TouchableOpacity,
@@ -8,25 +6,28 @@ import {
   StyleSheet,
   Keyboard,
   Text,
-  View
+  View,
 } from 'react-native';
 
-import {
-  observer,
-} from 'mobx-react'
+import { observer } from 'mobx-react';
 
-import {
-  MINDS_CDN_URI
-} from '../config/Config';
+import { MINDS_CDN_URI } from '../config/Config';
 
 import { CommonStyle } from '../styles/Common';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButton from '../channel/subscription/SubscriptionButton';
 import ThemedStyles from '../styles/ThemedStyles';
 
-export default
+type PropsType = {
+  row: any;
+};
+
+type StateType = {
+  guid: string | null;
+};
+
 @observer
-class DiscoveryUser extends Component {
+class DiscoveryUser<T extends PropsType> extends Component<T, StateType> {
   /**
    * State
    */
@@ -40,12 +41,13 @@ class DiscoveryUser extends Component {
    * @param {object} prevState
    */
   static getDerivedStateFromProps(nextProps, prevState) {
-
     if (prevState.guid !== nextProps.row.item.guid) {
       return {
         guid: nextProps.row.item.guid,
-        source: { uri: MINDS_CDN_URI + 'icon/' + nextProps.row.item.guid + '/medium' }
-      }
+        source: {
+          uri: MINDS_CDN_URI + 'icon/' + nextProps.row.item.guid + '/medium',
+        },
+      };
     }
 
     return null;
@@ -57,12 +59,15 @@ class DiscoveryUser extends Component {
   _navToChannel = () => {
     Keyboard.dismiss();
     if (this.props.navigation) {
-      if (this.props.row.item.isOpen() && !this.props.row.item.can(FLAG_VIEW, true)) {
+      if (
+        this.props.row.item.isOpen() &&
+        !this.props.row.item.can(FLAG_VIEW, true)
+      ) {
         return;
       }
       this.props.navigation.push('Channel', { entity: this.props.row.item });
     }
-  }
+  };
 
   /**
    * Render right button
@@ -70,38 +75,50 @@ class DiscoveryUser extends Component {
   renderRightButton() {
     const channel = this.props.row.item;
 
-    if (channel.isOwner() || this.props.hideButtons || (channel.isOpen() && !channel.can(FLAG_SUBSCRIBE) )) {
+    if (
+      channel.isOwner() ||
+      this.props.hideButtons ||
+      (channel.isOpen() && !channel.can(FLAG_SUBSCRIBE))
+    ) {
       return;
     }
 
-    const testID = (this.props.testID) ? `${this.props.testID}SubscriptionButton` : 'subscriptionButton';
+    const testID = this.props.testID
+      ? `${this.props.testID}SubscriptionButton`
+      : 'subscriptionButton';
 
-    return (
-      <SubscriptionButton
-        channel={channel}
-        testID={testID}
-      />
-    )
+    return <SubscriptionButton channel={channel} testID={testID} />;
   }
 
   /**
    * Render
    */
   render() {
-    const {row, ...otherProps} = this.props;
+    const { row, ...otherProps } = this.props;
 
     return (
-      <TouchableOpacity style={[styles.row, {borderBottomColor: ThemedStyles.getColor('separator')}]} onPress={this._navToChannel} {...otherProps}>
+      <TouchableOpacity
+        style={[
+          styles.row,
+          { borderBottomColor: ThemedStyles.getColor('separator') },
+        ]}
+        onPress={this._navToChannel}
+        {...otherProps}>
         <Image source={this.state.source} style={styles.avatar} />
         <View style={[CommonStyle.flexContainerCenter]}>
           <Text style={[styles.body, CommonStyle.fontXL]}>{row.item.name}</Text>
-          <Text style={[styles.body, CommonStyle.fontS, CommonStyle.colorMedium]}>@{row.item.username}</Text>
+          <Text
+            style={[styles.body, CommonStyle.fontS, CommonStyle.colorMedium]}>
+            @{row.item.username}
+          </Text>
         </View>
         {this.renderRightButton()}
       </TouchableOpacity>
     );
   }
 }
+
+export default DiscoveryUser;
 
 const styles = {
   row: {
@@ -125,5 +142,5 @@ const styles = {
     borderRadius: 29,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#EEE',
-  }
-}
+  },
+};

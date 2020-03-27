@@ -1,23 +1,7 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  StyleSheet,
-  Image,
-  View,
-  Platform,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import { Text, StyleSheet, View, Platform } from 'react-native';
 
-import { observer, inject } from 'mobx-react'
-import FAIcon from 'react-native-vector-icons/FontAwesome';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Avatar } from 'react-native-elements';
-
-import { MINDS_CDN_URI } from '../config/Config';
-import featuresService from '../common/services/features.service';
-import isIphoneX from '../common/helpers/isIphoneX';
-import testID from '../common/helpers/testID';
+import { observer, inject } from 'mobx-react';
 
 import SearchComponent from './SearchComponent';
 import navigation from '../navigation/NavigationService';
@@ -28,17 +12,15 @@ import MessengerTabIcon from '../messenger/MessengerTabIconNew';
 import EmailConfirmation from './EmailConfirmation';
 import BannerInfo from './BannerInfo';
 
-export default
 @inject('user')
 @inject('wallet')
 @observer
 class TopbarNew extends Component {
-
   componentDidMount() {
     this.props.wallet.refresh();
   }
 
-  listenForSearch = () => this.props.user.searching ? styles.scale0 : {};
+  listenForSearch = () => (this.props.user.searching ? styles.scale0 : {});
 
   render() {
     const CS = ThemedStyles.style;
@@ -47,28 +29,43 @@ class TopbarNew extends Component {
       <SafeAreaConsumer>
         {insets => (
           <View>
-            <View style={[styles.container, CS.backgroundPrimary, {paddingTop: insets.top + 10}]}>
+            <View
+              style={[
+                styles.container,
+                CS.backgroundPrimary,
+                { paddingTop: insets.top + 10 },
+              ]}>
               <View style={styles.topbar}>
                 <View style={[styles.topbarLeft, CS.marginLeft4x]}>
-                  <Text style={[CS.titleText, CS.colorPrimaryText, styles.lineHeight0]} >{this.props.title}</Text>
+                  <Text
+                    style={[
+                      CS.titleText,
+                      CS.colorPrimaryText,
+                      styles.lineHeight0,
+                    ]}>
+                    {this.props.title}
+                  </Text>
                 </View>
                 <View style={styles.topbarRight}>
-                  <MessengerTabIcon navigation={navigation}/>
-                  <SearchComponent user={this.props.user} navigation={this.props.navigation} />
+                  <MessengerTabIcon navigation={navigation} />
+                  <SearchComponent
+                    user={this.props.user}
+                    navigation={this.props.navigation}
+                  />
                 </View>
               </View>
             </View>
 
             <EmailConfirmation user={this.props.user} />
             <BannerInfo user={this.props.user} />
-
           </View>
         )}
       </SafeAreaConsumer>
-
     );
   }
 }
+
+export default TopbarNew;
 
 let topbarHeight = 50;
 
@@ -94,7 +91,7 @@ const styles = StyleSheet.create({
   topbarLeft: {
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   topbarRight: {
     flex: 1,
@@ -108,6 +105,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
   },
   scale0: {
-    transform: [{ scale: 0 }]
-  }
+    transform: [{ scale: 0 }],
+  },
 });

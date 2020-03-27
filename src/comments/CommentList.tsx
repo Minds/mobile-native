@@ -83,8 +83,6 @@ const inputStyle = isIOS ? { marginTop: 3, paddingVertical: 2 } : { marginTop: 2
 /**
  * Comment List Component
  */
-
-export default
 @inject('user')
 @observer
 class CommentList extends React.Component<PropsType, StateType> {
@@ -628,3 +626,5 @@ class CommentList extends React.Component<PropsType, StateType> {
     );
   }
 }
+
+export default CommentList;

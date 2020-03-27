@@ -22,7 +22,6 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 /**
  * Comments Action Component
  */
-export default
 @observer
 class CommentsAction extends Component {
 
@@ -63,3 +62,5 @@ class CommentsAction extends Component {
     });
   }
 }
+
+export default CommentsAction;

@@ -31,9 +31,9 @@ import NavigationService, {
   setTopLevelNavigator,
 } from './src/navigation/NavigationService';
 import KeychainModalScreen from './src/keychain/KeychainModalScreen';
-import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
+// import BlockchainTransactionModalScreen from './src/blockchain/transaction-modal/BlockchainTransactionModalScreen';
 import NavigationStack from './src/navigation/NavigationStack';
-import stores from './AppStores';
+import { getStores } from './AppStores';
 import './AppErrors';
 import './src/common/services/socket.service';
 import pushService from './src/common/services/push.service';
@@ -61,6 +61,7 @@ import boostedContentService from './src/common/services/boosted-content.service
 import translationService from './src/common/services/translation.service';
 import ThemedStyles from './src/styles/ThemedStyles';
 
+const stores = getStores();
 let deepLinkUrl = '';
 
 // init push service
@@ -102,7 +103,7 @@ sessionService.onLogin(async () => {
   NavigationService.navigate('App', { screen: sessionService.initialScreen});
 
   // check onboarding progress and navigate if necessary
-  stores.onboarding.getProgress(sessionService.initialScreen !== 'OnboardingScreenNew');
+  getStores().onboarding.getProgress(sessionService.initialScreen !== 'OnboardingScreenNew');
 
   // check update
   if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
@@ -146,8 +147,8 @@ sessionService.onLogout(() => {
   // clear offline cache
   entitiesStorage.removeAll();
   feedsStorage.removeAll();
-  stores.notifications.clearLocal();
-  stores.groupsBar.clearLocal();
+  getStores().notifications.clearLocal();
+  getStores().groupsBar.clearLocal();
   translationService.purgeLanguagesCache();
 });
 
@@ -170,7 +171,6 @@ type Props = {};
 /**
  * App
  */
-export default
 @observer
 class App extends Component<Props, State>{
   /**
@@ -350,9 +350,7 @@ class App extends Component<Props, State>{
       <KeychainModalScreen key="keychainModal" keychain={ stores.keychain } />
     );
 
-    const blockchainTransactionModal = (
-      <BlockchainTransactionModalScreen key="blockchainTransactionModal" blockchainTransaction={ stores.blockchainTransaction } />
-    );
+    const blockchainTransactionModal = null;
 
     const tosModal = <TosModal user={stores.user} key="tosModal" />;
 
@@ -371,3 +369,5 @@ class App extends Component<Props, State>{
     );
   };
 }
+
+export default App;

@@ -25,7 +25,6 @@ type PropsType = {
 /**
  * Subscription list
  */
-export default
 @inject('subscriptionRequest')
 @observer
 class SubscriptionRequestList extends Component<PropsType> {
@@ -89,3 +88,5 @@ class SubscriptionRequestList extends Component<PropsType> {
     )
   }
 }
+
+export default SubscriptionRequestList;

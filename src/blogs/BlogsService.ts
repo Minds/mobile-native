@@ -1,5 +1,5 @@
 import api from './../common/services/api.service';
-import stores from '../../AppStores';
+import { getStores } from '../../AppStores';
 
 /**
  * Blogs Service
@@ -12,7 +12,7 @@ class BlogsService {
   async loadList(filter, offset) {
 
     let endpoint = (filter === 'suggested') ?
-     'api/v2/entities/suggested/blogs' + (stores.hashtag.all ? '/all' : '' ) :
+     'api/v2/entities/suggested/blogs' + (getStores().hashtag.all ? '/all' : '' ) :
      'api/v1/blog/' + filter;
 
     const data = await api.get(endpoint, { limit: 12, offset: offset });

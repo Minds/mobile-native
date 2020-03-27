@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import {
   Text,
@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import {inject, observer} from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 
 import _ from 'lodash';
 
@@ -19,7 +19,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ConversationView from './conversation/ConversationView';
 
 import SearchView from '../common/components/SearchView';
-import {ComponentsStyle} from '../styles/Components';
+import { ComponentsStyle } from '../styles/Components';
 import ErrorLoading from '../common/components/ErrorLoading';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -27,7 +27,6 @@ import ThemedStyles from '../styles/ThemedStyles';
 /**
  * Messenger Conversarion List Screen
  */
-export default
 @inject('messengerList')
 @observer
 class MessengerScreen extends Component {
@@ -43,7 +42,6 @@ class MessengerScreen extends Component {
    * On component will mount
    */
   componentDidMount() {
-
     // // load data on enter
     this.disposeEnter = this.props.navigation.addListener('focus', () => {
       this.props.messengerList.loadList(true);
@@ -67,7 +65,7 @@ class MessengerScreen extends Component {
     //this.disposeLeave();
   }
 
-  searchDebouncer = _.debounce((search) => {
+  searchDebouncer = _.debounce(search => {
     this.props.messengerList.setSearch(search);
   }, 200);
 
@@ -75,15 +73,11 @@ class MessengerScreen extends Component {
    * On logout
    */
   onLogoutPress = () => {
-    Alert.alert(
-      i18n.t('confirm'),
-      i18n.t('messenger.logoutMessage'),
-      [
-        { text: i18n.t('no'), style: 'cancel' },
-        { text: i18n.t('yes'), onPress: () => this.props.messengerList.logout() }
-      ]
-    );
-  }
+    Alert.alert(i18n.t('confirm'), i18n.t('messenger.logoutMessage'), [
+      { text: i18n.t('no'), style: 'cancel' },
+      { text: i18n.t('yes'), onPress: () => this.props.messengerList.logout() },
+    ]);
+  };
 
   /**
    * Render component
@@ -97,28 +91,34 @@ class MessengerScreen extends Component {
     const theme = ThemedStyles.style;
 
     if (loading && !messengerList.refreshing) {
-      loadingCmp = <ActivityIndicator style={styles.loading} />
+      loadingCmp = <ActivityIndicator style={styles.loading} />;
     }
 
     let empty;
 
     if (messengerList.loaded && !messengerList.refreshing) {
       empty = (
-      <View style={ComponentsStyle.emptyComponentContainer}>
-        <View style={ComponentsStyle.emptyComponent}>
-          <Icon name="person-add" size={72} color='#444' />
-          <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('messenger.noMessages')}</Text>
-          <Text
-            style={ComponentsStyle.emptyComponentLink}
-            onPress={() => this.props.navigation.navigate('Discovery', { type: 'channels' })}
-          >
-            {i18n.t('findChannels')}
-          </Text>
+        <View style={ComponentsStyle.emptyComponentContainer}>
+          <View style={ComponentsStyle.emptyComponent}>
+            <Icon name="person-add" size={72} color="#444" />
+            <Text style={ComponentsStyle.emptyComponentMessage}>
+              {i18n.t('messenger.noMessages')}
+            </Text>
+            <Text
+              style={ComponentsStyle.emptyComponentLink}
+              onPress={() =>
+                this.props.navigation.navigate('Discovery', {
+                  type: 'channels',
+                })
+              }>
+              {i18n.t('findChannels')}
+            </Text>
+          </View>
         </View>
-      </View>);
+      );
     }
 
-    const iconRight = messengerList.configured ? 'md-unlock': null;
+    const iconRight = messengerList.configured ? 'md-unlock' : null;
     const footer = this.getFooter();
 
     return (
@@ -156,18 +156,18 @@ class MessengerScreen extends Component {
 
     if (!messengerList.errorLoading) return null;
 
-    const message = messengerList.conversations.length ?
-    i18n.t('cantLoadMore') :
-    i18n.t('cantLoad');
+    const message = messengerList.conversations.length
+      ? i18n.t('cantLoadMore')
+      : i18n.t('cantLoad');
 
-    return <ErrorLoading message={message} tryAgain={this.loadMore}/>
+    return <ErrorLoading message={message} tryAgain={this.loadMore} />;
   }
 
   /**
    * Search change
    * We debounce to prevent a fetch to the server on every key pressed
    */
-  searchChange = (search) => {
+  searchChange = search => {
     this.searchDebouncer(search);
   };
 
@@ -201,11 +201,13 @@ class MessengerScreen extends Component {
   };
 }
 
+export default MessengerScreen;
+
 // styles
 const styles = StyleSheet.create({
   listView: {
     //paddingTop: 20,
-    flex: 1
+    flex: 1,
   },
   loading: {
     position: 'absolute',

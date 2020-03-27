@@ -21,7 +21,6 @@ import BaseModel from '../common/BaseModel';
 import ThemedStyles from '../styles/ThemedStyles';
 import Button from '../common/components/Button';
 
-export default
 @inject('capture')
 @observer
 class CapturePosterFlags extends Component {
@@ -486,6 +485,8 @@ class CapturePosterFlags extends Component {
     );
   }
 }
+
+export default CapturePosterFlags;
 
 const styles = StyleSheet.create({
   view: {

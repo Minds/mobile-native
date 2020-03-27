@@ -10,7 +10,6 @@ import SearchResult from './SearchResultComponent';
 import Modal from 'react-native-modal';
 import ThemedStyles from '../styles/ThemedStyles';
 
-export default
 @observer
 class SearchComponent extends Component {
   state = {
@@ -133,6 +132,8 @@ class SearchComponent extends Component {
     );
   }
 }
+
+export default SearchComponent;
 
 const styles = StyleSheet.create({
   button: {

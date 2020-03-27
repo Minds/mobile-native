@@ -4,7 +4,7 @@ import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';
 import DiscoveryFeedStore from './DiscoveryFeedStore';
 
 import FeedStore from '../common/stores/FeedStore';
-import appStores from '../../AppStores';
+import { getStores } from '../../AppStores';
 
 /**
  * Discovery Store
@@ -87,8 +87,8 @@ class DiscoveryStore {
   };
 
   fetch(refresh = false) {
-    const hashtags = appStores.hashtag.hashtag ? encodeURIComponent(appStores.hashtag.hashtag) : '';
-    const all = appStores.hashtag.all ? '1' : '';
+    const hashtags = getStores().hashtag.hashtag ? encodeURIComponent(getStores().hashtag.hashtag) : '';
+    const all = getStores().hashtag.all ? '1' : '';
 
     this.listStore
       .setEndpoint(`api/v2/feeds/global/${this.filters.filter}/${this.filters.type}`)

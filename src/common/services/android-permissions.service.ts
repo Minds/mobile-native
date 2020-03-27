@@ -134,7 +134,6 @@ class AndroidPermissionsService {
       return err;
     }
   }
-
 }
 
-export default new AndroidPermissionsService();
+export default AndroidPermissionsService;

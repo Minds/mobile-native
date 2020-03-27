@@ -24,7 +24,6 @@ import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButtonNew from '../channel/subscription/SubscriptionButtonNew';
 import ThemedStyles from '../styles/ThemedStyles';
 
-export default
 @observer
 class DiscoveryUser extends Component {
   /**
@@ -106,6 +105,8 @@ class DiscoveryUser extends Component {
     );
   }
 }
+
+export default DiscoveryUser;
 
 const styles = {
   row: {

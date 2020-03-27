@@ -1,19 +1,17 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
-import {MINDS_CDN_URI} from '../config/Config';
+import { MINDS_CDN_URI } from '../config/Config';
 
-import {ListItem} from 'react-native-elements';
+import { ListItem } from 'react-native-elements';
 
 import Button from '../common/components/Button';
-import colors from '../styles/Colors';
 import i18n from '../common/services/i18n.service';
-import {CommonStyle as CS} from '../styles/Common';
-import {FLAG_JOIN} from '../common/Permissions';
+import { CommonStyle as CS } from '../styles/Common';
+import { FLAG_JOIN } from '../common/Permissions';
 import ThemedStyles from '../styles/ThemedStyles';
 
-export default
 @inject('groupView')
 @observer
 class GroupsListItem extends Component {
@@ -54,7 +52,10 @@ class GroupsListItem extends Component {
     const button = this.getButton();
     return (
       <ListItem
-        containerStyle={[CS.noBorderBottom, ThemedStyles.style.backgroundSecondary]}
+        containerStyle={[
+          CS.noBorderBottom,
+          ThemedStyles.style.backgroundSecondary,
+        ]}
         title={this.props.group.name}
         keyExtractor={item => item.rowKey}
         leftAvatar={this.state.source}
@@ -105,3 +106,5 @@ class GroupsListItem extends Component {
     this.props.groupView.leave(this.props.group.guid);
   };
 }
+
+export default GroupsListItem;

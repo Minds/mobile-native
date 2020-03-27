@@ -7,11 +7,11 @@ import { CommonStyle as CS } from '../styles/Common';
 import { observer, inject } from 'mobx-react';
 import isIphoneX from '../common/helpers/isIphoneX';
 import apiService from '../common/services/api.service';
+import BannerInfo from './BannerInfo';
 
 /**
  * Email Confirmation Message
  */
-export default
 @inject('user')
 @observer
 class EmailConfirmation extends Component {
@@ -66,6 +66,8 @@ class EmailConfirmation extends Component {
     );
   }
 }
+
+export default BannerInfo;
 
 const styles = StyleSheet.create({
   container: {

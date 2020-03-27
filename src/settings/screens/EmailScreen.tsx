@@ -16,7 +16,6 @@ import ThemedStyles from '../../styles/ThemedStyles';
 /**
  * Email settings screen
  */
-export default
 @inject('user')
 class EmailScreen extends Component {
   static navigationOptions = {
@@ -37,14 +36,14 @@ class EmailScreen extends Component {
       this.setState({ email: channel.email, loaded: true });
     });
 
-    
+
   }
 
   componentDidMount() {
     const { setOptions } = this.props.navigation;
     const CS = ThemedStyles.style;
 
-    setOptions({ 
+    setOptions({
       headerRight: () => (
         <Text onPress={this.confirmPassword} style={[
           CS.colorLink,
@@ -138,6 +137,8 @@ class EmailScreen extends Component {
     );
   }
 }
+
+export default EmailScreen;
 
 const styles = {
   inputHeight: {

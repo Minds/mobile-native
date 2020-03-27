@@ -15,7 +15,6 @@ import ThemedStyles from '../../styles/ThemedStyles';
 /**
  * Tag Opt in Drawer
  */
-export default
 @inject('hashtag')
 @observer
 class TagOptinDrawer extends Component {
@@ -151,6 +150,8 @@ class TagOptinDrawer extends Component {
     );
   }
 }
+
+export default TagOptinDrawer;
 
 /**
  * Styles

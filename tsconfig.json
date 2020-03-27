@@ -31,11 +31,7 @@
         ".jest",
         "./react-native.config.js",
         "./setupTests.js",
-        "./tasks/generate_release_json.js",
-        "./tasks/poeditor.js",
-        "./tasks/unused-locales.js",
-        "./tasks/update-settings.js",
-        "./tasks/validate-locales.js",
-        "./tests-helpers/component-or-wrapped-component.js",
+        "tasks",
+        "tests-helpers",
     ]
   }

@@ -12,52 +12,62 @@ import { observer, inject } from 'mobx-react';
 import * as Progress from 'react-native-progress';
 import colors from '../styles/Colors';
 import { CommonStyle as CS } from '../styles/Common';
-import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
 import connectivityService from '../common/services/connectivity.service';
 
-export default
 @inject('capture')
 @observer
 class CapturePostButton extends Component {
-
   /**
    * Render
    */
   render() {
     const attachment = this.props.capture.attachment;
     const isPosting = this.props.capture.isPosting;
-    const text = connectivityService.isConnected ? (this.props.text || i18n.t('capture.post')) : i18n.t('offline');
+    const text = connectivityService.isConnected
+      ? this.props.text || i18n.t('capture.post')
+      : i18n.t('offline');
 
     return (
       <View style={styles.posterActions}>
-        {attachment.uploading ?
-          <Progress.Pie progress={attachment.progress} color={colors.primary} size={36} />
-        : isPosting ?
+        {attachment.uploading ? (
+          <Progress.Pie
+            progress={attachment.progress}
+            color={colors.primary}
+            size={36}
+          />
+        ) : isPosting ? (
           <ActivityIndicator size={'large'} />
-          :
-            <TouchableOpacity
-              onPress={this.props.onPress}
-              disabled={!connectivityService.isConnected}
+        ) : (
+          <TouchableOpacity
+            onPress={this.props.onPress}
+            disabled={!connectivityService.isConnected}
+            style={[
+              styles.button,
+              CS.borderRadius10x,
+              connectivityService.isConnected
+                ? CS.borderPrimary
+                : CS.borderGreyed,
+              CS.border,
+            ]}
+            testID={this.props.testID}>
+            <Text
               style={[
-                styles.button,
-                CS.borderRadius10x,
+                styles.buttonText,
                 connectivityService.isConnected
-                  ? CS.borderPrimary
-                  : CS.borderGreyed,
-                CS.border,
-              ]}
-              testID={this.props.testID}
-            >
-              <Text style={[styles.buttonText, connectivityService.isConnected ? CS.colorPrimary : CS.colorGreyed]}>{text}</Text>
-            </TouchableOpacity>
-
-        }
+                  ? CS.colorPrimary
+                  : CS.colorGreyed,
+              ]}>
+              {text}
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
-    )
+    );
   }
 }
 
+export default CapturePostButton;
 
 const styles = StyleSheet.create({
   posterActions: {
@@ -76,5 +86,5 @@ const styles = StyleSheet.create({
     //backgroundColor: 'white',
     //borderWidth: 1,
     //borderColor: colors.primary,
-  }
+  },
 });

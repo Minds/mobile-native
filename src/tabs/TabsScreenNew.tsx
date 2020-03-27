@@ -11,7 +11,7 @@ import MoreScreenNew from './MoreScreenNew';
 import ThemedStyles from '../styles/ThemedStyles';
 import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';
-import AppStores from '../../AppStores';
+import { getStores } from '../../AppStores';
 import { MINDS_CDN_URI } from '../config/Config';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
@@ -77,9 +77,9 @@ const Tabs = observer(function({ navigation }) {
                       uri:
                         MINDS_CDN_URI +
                         'icon/' +
-                        AppStores.user.me.guid +
+                        getStores().user.me.guid +
                         '/medium/' +
-                        AppStores.user.me.icontime,
+                        getStores().user.me.icontime,
                     }}
                     width={34}
                     height={34}

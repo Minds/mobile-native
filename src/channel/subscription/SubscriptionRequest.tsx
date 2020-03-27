@@ -19,7 +19,6 @@ type PropsType = {
 /**
  * Subscription Request
  */
-export default
 @observer
 class SubscriptionRequest extends DiscoveryUser<PropsType> {
 
@@ -74,3 +73,5 @@ class SubscriptionRequest extends DiscoveryUser<PropsType> {
     )
   }
 }
+
+export default SubscriptionRequest;

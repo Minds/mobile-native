@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Text,
-  Alert
-} from 'react-native';
+import { StyleSheet, View, ScrollView, Text, Alert } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
 import { CommonActions } from '@react-navigation/native';
 
-import HashtagService from '../common/services/hashtag.service'
+import HashtagService from '../common/services/hashtag.service';
 
 import CaptureGallery from './CaptureGallery';
 import CapturePreview from './CapturePreview';
@@ -34,7 +28,6 @@ import TextInput from '../common/components/TextInput';
 import ThemedStyles from '../styles/ThemedStyles';
 import remoteAction from '../common/RemoteAction';
 
-export default
 @inject('user', 'capture', 'newsfeed')
 @observer
 class CapturePoster extends Component {
@@ -48,8 +41,8 @@ class CapturePoster extends Component {
     share: {},
     lock: null,
     selection: {
-      start:0,
-      end: 0
+      start: 0,
+      end: 0,
     },
     time_created: null,
   };
@@ -68,12 +61,12 @@ class CapturePoster extends Component {
       } else if (params.image) {
         this.onAttachedMedia({
           type: 'image/jpeg',
-          uri: params.image
+          uri: params.image,
         });
       } else if (params.video) {
         this.onAttachedMedia({
           type: 'video/mp4',
-          uri: params.video
+          uri: params.video,
         });
       }
     }
@@ -120,17 +113,20 @@ class CapturePoster extends Component {
   /**
    * Show context
    */
-  showContext () {
+  showContext() {
     let group = this.props.route.params ? this.props.route.params.group : null;
-    return group? <Text style={styles.title}> {i18n.t('capture.postingIn', {group: group.name})} </Text> :null;
+    return group ? (
+      <Text style={styles.title}>
+        {' '}
+        {i18n.t('capture.postingIn', { group: group.name })}{' '}
+      </Text>
+    ) : null;
   }
-
 
   /**
    * Nav to group
    */
   navToPrevious(entity, group) {
-
     const { goBack, dispatch } = this.props.navigation;
     const { params } = this.props.route;
 
@@ -139,7 +135,6 @@ class CapturePoster extends Component {
     this.props.newsfeed.prepend(activity);
 
     if (params && params.parentKey) {
-
       const routeParams = {
         prepend: activity,
       };
@@ -161,16 +156,16 @@ class CapturePoster extends Component {
   /**
    * On tag selected in the autocomplete
    */
-  onSelectTag = (text) => {
+  onSelectTag = text => {
     this.setText(text);
-  }
+  };
 
   /**
    * Set the state with cursor position
    */
-  onSelectionChanges = (event) => {
-    this.setState({selection: event.nativeEvent.selection});
-  }
+  onSelectionChanges = event => {
+    this.setState({ selection: event.nativeEvent.selection });
+  };
 
   /**
    * Get header
@@ -187,7 +182,7 @@ class CapturePoster extends Component {
             editable={true}
             placeholder={i18n.t('capture.placeholder')}
             placeholderTextColor={ThemedStyles.getColor('secondary_text')}
-            underlineColorAndroid='transparent'
+            underlineColorAndroid="transparent"
             onChangeText={this.setText}
             textAlignVertical="top"
             value={this.props.capture.text}
@@ -199,7 +194,7 @@ class CapturePoster extends Component {
         </View>
         {showAttachmentFeatures && this.getAttachFeature()}
       </React.Fragment>
-    )
+    );
   }
 
   /**
@@ -263,7 +258,8 @@ class CapturePoster extends Component {
    */
   getRemind() {
     const { params } = this.props.route;
-    const ShowComponent = params.entity.subtype === 'blog' ? BlogCard : Activity;
+    const ShowComponent =
+      params.entity.subtype === 'blog' ? BlogCard : Activity;
     return (
       <ShowComponent
         hideTabs={true}
@@ -280,11 +276,14 @@ class CapturePoster extends Component {
     const attachment = this.props.capture.attachment;
     return (
       <React.Fragment>
-        {(this.props.capture.embed.meta || this.props.capture.embed.metaInProgress) && <CaptureMetaPreview
-          meta={this.props.capture.embed.meta}
-          inProgress={this.props.capture.embed.metaInProgress}
-          onRemove={this.props.capture.embed.clearRichEmbedAction}
-        />}
+        {(this.props.capture.embed.meta ||
+          this.props.capture.embed.metaInProgress) && (
+          <CaptureMetaPreview
+            meta={this.props.capture.embed.meta}
+            inProgress={this.props.capture.embed.metaInProgress}
+            onRemove={this.props.capture.embed.clearRichEmbedAction}
+          />
+        )}
 
         <CapturePosterFlags
           containerStyle={[CS.rowJustifyEnd]}
@@ -301,13 +300,22 @@ class CapturePoster extends Component {
           onScheduled={this.onScheduled}
         />
 
-        {attachment.hasAttachment && <View style={styles.preview}>
-          <CapturePreview
-            uri={attachment.uri}
-            type={attachment.type}
-          />
-          <Icon raised reverse name="md-close" type="ionicon" color='#4690DF' size={18} containerStyle={styles.deleteAttachment} onPress={() => this.deleteAttachment()} testID="AttachmentDeleteButton" />
-        </View>}
+        {attachment.hasAttachment && (
+          <View style={styles.preview}>
+            <CapturePreview uri={attachment.uri} type={attachment.type} />
+            <Icon
+              raised
+              reverse
+              name="md-close"
+              type="ionicon"
+              color="#4690DF"
+              size={18}
+              containerStyle={styles.deleteAttachment}
+              onPress={() => this.deleteAttachment()}
+              testID="AttachmentDeleteButton"
+            />
+          </View>
+        )}
         <CaptureTabs onSelectedMedia={this.onAttachedMedia} />
       </React.Fragment>
     );
@@ -316,22 +324,22 @@ class CapturePoster extends Component {
   /**
    * Attach Media
    */
-  onAttachedMedia = async (response) => {
+  onAttachedMedia = async response => {
     const attachment = this.props.capture.attachment;
-    let group = this.props.route.params ? this.props.route.params.group : null
+    let group = this.props.route.params ? this.props.route.params.group : null;
     let extra = null;
 
     if (group) {
-      extra = {container_guid: group.guid};
+      extra = { container_guid: group.guid };
     }
 
     try {
       const result = await attachment.attachMedia(response, extra);
-    } catch(err) {
+    } catch (err) {
       logService.exception(err);
       Alert.alert(i18n.t('capture.uploadError'));
     }
-  }
+  };
 
   /**
    * Delete attachment
@@ -355,10 +363,10 @@ class CapturePoster extends Component {
 
     const post = {
       message,
-      ...metadata
+      ...metadata,
     };
 
-    let group = this.props.route.params ? this.props.route.params.group : null
+    let group = this.props.route.params ? this.props.route.params.group : null;
 
     // if hashtag count greater than 5
     if (HashtagService.slice(message).length > HashtagService.maxHashtags) {
@@ -400,15 +408,20 @@ class CapturePoster extends Component {
       return false;
     }
 
-    if (HashtagService.slice(text).length > HashtagService.maxHashtags){ //if hashtag count greater than 5
-      Alert.alert(i18n.t('capture.maxHashtags', {maxHashtags: HashtagService.maxHashtags}));
+    if (HashtagService.slice(text).length > HashtagService.maxHashtags) {
+      //if hashtag count greater than 5
+      Alert.alert(
+        i18n.t('capture.maxHashtags', {
+          maxHashtags: HashtagService.maxHashtags,
+        }),
+      );
       return false;
     }
 
     let newPost = {
       message: text,
       wire_threshold: this.state.lock,
-      time_created: this.formatTimeCreated()
+      time_created: this.formatTimeCreated(),
     };
 
     newPost.nsfw = this.state.nsfw || [];
@@ -470,7 +483,7 @@ class CapturePoster extends Component {
    * Set text
    * @param {string} text
    */
-  setText = (text) => {
+  setText = text => {
     this.props.capture.setText(text);
     this.props.capture.embed.richEmbedCheck(text);
   };
@@ -481,7 +494,7 @@ class CapturePoster extends Component {
   onMature = () => {
     const mature = !this.state.mature;
     this.setState({ mature });
-  }
+  };
 
   /**
    * On nsfw value change
@@ -489,7 +502,7 @@ class CapturePoster extends Component {
   onNsfw = values => {
     const nsfw = [...values];
     this.setState({ nsfw });
-  }
+  };
 
   onShare = network => {
     const share = Object.assign({}, this.state.share);
@@ -501,15 +514,15 @@ class CapturePoster extends Component {
     }
 
     this.setState({ share });
-  }
+  };
 
   onLocking = lock => {
     this.setState({ lock });
-  }
+  };
 
   onScheduled = timeCreated => {
-    this.setState({ time_created: timeCreated })
-  }
+    this.setState({ time_created: timeCreated });
+  };
 
   formatTimeCreated = () => {
     let time_created;
@@ -519,20 +532,22 @@ class CapturePoster extends Component {
       time_created = Date.now();
     }
     return Math.floor(time_created / 1000);
-  }
+  };
 }
+
+export default CapturePoster;
 
 const styles = StyleSheet.create({
   posterAndPreviewWrapper: {
-    flex:1
+    flex: 1,
   },
   posterWrapper: {
     minHeight: 100,
     flexDirection: 'row',
   },
   title: {
-    margin:0,
-    paddingHorizontal:10,
+    margin: 0,
+    paddingHorizontal: 10,
   },
   poster: {
     alignContent: 'flex-start',
@@ -556,5 +571,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 8,
     top: 0,
-  }
+  },
 });

@@ -20,7 +20,6 @@ import OnFocus from '../common/components/helper/OnFocus';
 /**
  * Notification Screen
  */
-export default
 @inject('notifications', 'user')
 @observer
 class NotificationsScreen extends Component {
@@ -75,32 +74,41 @@ class NotificationsScreen extends Component {
       let design = null;
 
       if (this.props.notifications.filter != 'all') {
-        filter = this.props.notifications.filter.substr(0, this.props.notifications.filter.length - 1);
+        filter = this.props.notifications.filter.substr(
+          0,
+          this.props.notifications.filter.length - 1,
+        );
       }
 
-      if (me && me.hasBanner && !me.hasBanner()) { //TODO: check for avatar too
-        design = <Text
-          style={ComponentsStyle.emptyComponentLink}
-          onPress={() => this.props.navigation.push('Channel', { username: 'me' })}
-          >
-          {i18n.t('newsfeed.designYourChannel')}
-        </Text>
+      if (me && me.hasBanner && !me.hasBanner()) {
+        //TODO: check for avatar too
+        design = (
+          <Text
+            style={ComponentsStyle.emptyComponentLink}
+            onPress={() =>
+              this.props.navigation.push('Channel', { username: 'me' })
+            }>
+            {i18n.t('newsfeed.designYourChannel')}
+          </Text>
+        );
       }
 
       empty = (
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
-            <MIcon name="notifications" size={72} color='#444' />
-            <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('notification.dontHave')}</Text>
+            <MIcon name="notifications" size={72} color="#444" />
+            <Text style={ComponentsStyle.emptyComponentMessage}>
+              {i18n.t('notification.dontHave')}
+            </Text>
             {design}
             <Text
               style={ComponentsStyle.emptyComponentLink}
-              onPress={() => this.props.navigation.push('Capture')}
-              >
+              onPress={() => this.props.navigation.push('Capture')}>
               {i18n.t('createAPost')}
             </Text>
           </View>
-        </View>);
+        </View>
+      );
     }
 
     body = (
@@ -111,7 +119,7 @@ class NotificationsScreen extends Component {
         onRefresh={this.refresh}
         onEndReached={this.loadMore}
         ListEmptyComponent={empty}
-        ListHeaderComponent={<NotificationsTopbar/>}
+        ListHeaderComponent={<NotificationsTopbar />}
         // onEndReachedThreshold={0.05}
         initialNumToRender={12}
         stickyHeaderIndices={[0]}
@@ -123,8 +131,11 @@ class NotificationsScreen extends Component {
 
     return (
       <View style={CS.flexContainer}>
-        <OnFocus onFocus={this.onFocus}/>
-        <TopbarNew title={i18n.t('tabTitleNotifications')} navigation={this.props.navigation}/>
+        <OnFocus onFocus={this.onFocus} />
+        <TopbarNew
+          title={i18n.t('tabTitleNotifications')}
+          navigation={this.props.navigation}
+        />
         {body}
         {/* <CaptureFab navigation={this.props.navigation} /> */}
       </View>
@@ -157,12 +168,16 @@ class NotificationsScreen extends Component {
    * render row
    * @param {object} row
    */
-  renderRow = (row) => {
+  renderRow = row => {
     const entity = row.item;
     return (
-      <ErrorBoundary message="Can't show this notification" containerStyle={CS.hairLineBottom}>
-        <Notification entity={entity} navigation={this.props.navigation}/>
+      <ErrorBoundary
+        message="Can't show this notification"
+        containerStyle={CS.hairLineBottom}>
+        <Notification entity={entity} navigation={this.props.navigation} />
       </ErrorBoundary>
     );
-  }
+  };
 }
+
+export default NotificationsScreen;

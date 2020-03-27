@@ -29,7 +29,6 @@ const ICON_SIZE = 23;
 /**
  * More screen, new design (menu)
  */
-export default
 @inject('user')
 @observer
 class MoreScreenNew extends Component {
@@ -237,6 +236,8 @@ class MoreScreenNew extends Component {
     );
   }
 }
+
+export default MoreScreenNew;
 
 const styles = StyleSheet.create({
   headerContainer: {

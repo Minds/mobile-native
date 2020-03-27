@@ -1,26 +1,14 @@
-import React, {
-    Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
-    StyleSheet,
-    Platform,
-    Text,
-    FlatList,
-    View,
-    TouchableHighlight,
+  StyleSheet,
+  Text,
+  FlatList,
+  View,
+  TouchableHighlight,
 } from 'react-native';
-import { ListItem, Avatar } from 'react-native-elements';
 
-import {
-  observer,
-  inject
-} from 'mobx-react'
-
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import Modal from 'react-native-modal'
+import { observer, inject } from 'mobx-react';
 
 import i18n from '../../common/services/i18n.service';
 import DiscoveryUser from '../../discovery/DiscoveryUser';
@@ -33,11 +21,9 @@ import ThemedStyles from '../../styles/ThemedStyles';
 /**
  * Discovery screen
  */
-export default
 @inject('channelSubscribersStore')
 @observer
 class ChannelSubscribers extends Component {
-
   /**
    * On component will mount
    */
@@ -95,13 +81,32 @@ class ChannelSubscribers extends Component {
     }
 
     return (
-      <View style={[CommonStyle.flexContainer, ThemedStyles.style.backgroundSecondary]}>
+      <View
+        style={[
+          CommonStyle.flexContainer,
+          ThemedStyles.style.backgroundSecondary,
+        ]}>
         <View style={styles.topbar}>
-          <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
-            <TouchableHighlight underlayColor='transparent' onPress={() => store.setFilter('subscribers')} style={store.filter == 'subscribers'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter]}>
+          <View
+            style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={() => store.setFilter('subscribers')}
+              style={
+                store.filter == 'subscribers'
+                  ? [styles.selectedButton, CommonStyle.flexContainerCenter]
+                  : [styles.buttons, CommonStyle.flexContainerCenter]
+              }>
               <Text>{i18n.t('subscribers')}</Text>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor='transparent' onPress={() => store.setFilter('subscriptions')} style={store.filter == 'subscriptions'? [styles.selectedButton, CommonStyle.flexContainerCenter]: [styles.buttons, CommonStyle.flexContainerCenter ]}>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={() => store.setFilter('subscriptions')}
+              style={
+                store.filter == 'subscriptions'
+                  ? [styles.selectedButton, CommonStyle.flexContainerCenter]
+                  : [styles.buttons, CommonStyle.flexContainerCenter]
+              }>
               <Text>{i18n.t('subscriptions')}</Text>
             </TouchableHighlight>
           </View>
@@ -116,34 +121,39 @@ class ChannelSubscribers extends Component {
    */
   loadFeed = () => {
     this.props.channelSubscribersStore.loadList(this.props.guid);
-  }
+  };
 
   /**
    * Refresh subs data
    */
   refresh = () => {
-    this.props.channelSubscribersStore.refresh(this.props.guid)
-  }
+    this.props.channelSubscribersStore.refresh(this.props.guid);
+  };
 
   /**
    * Render user row
    */
-  renderRow = (row) => {
+  renderRow = row => {
     return (
-      <DiscoveryUser store={this.props.channelSubscribersStore} row={row} navigation={this.props.navigation} />
+      <DiscoveryUser
+        store={this.props.channelSubscribersStore}
+        row={row}
+        navigation={this.props.navigation}
+      />
     );
-  }
+  };
 }
 
+export default ChannelSubscribers;
+
 const styles = StyleSheet.create({
-	listView: {
+  listView: {
     flex: 1,
   },
   topbar: {
-    height:35,
+    height: 35,
     justifyContent: 'center',
     flexDirection: 'row',
-
   },
 
   buttons: {
@@ -151,7 +161,7 @@ const styles = StyleSheet.create({
   },
   selectedButton: {
     alignItems: 'center',
-    borderBottomWidth:3,
-    borderColor: colors.primary
+    borderBottomWidth: 3,
+    borderColor: colors.primary,
   },
 });

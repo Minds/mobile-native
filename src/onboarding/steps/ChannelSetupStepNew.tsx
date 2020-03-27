@@ -25,13 +25,10 @@ import { UserError } from '../../common/UserError';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { isNetworkFail } from '../../common/helpers/abortableFetch';
-import i18nService from '../../common/services/i18n.service';
 import remoteAction from '../../common/RemoteAction';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
-export default
 @inject('channel', 'user')
 @observer
 class ChannelSetupStepNew extends Component {
@@ -264,6 +261,8 @@ class ChannelSetupStepNew extends Component {
     );
   }
 }
+
+export default ChannelSetupStepNew;
 
 const styles = StyleSheet.create({
   containerButton: {

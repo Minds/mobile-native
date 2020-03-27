@@ -19,7 +19,6 @@ type PropsType = {
 /**
  * Subscription request
  */
-export default
 @observer
 class SubscriptionButton extends Component<PropsType> {
 
@@ -75,3 +74,5 @@ class SubscriptionButton extends Component<PropsType> {
     )
   }
 }
+
+export default SubscriptionButton;

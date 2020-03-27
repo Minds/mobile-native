@@ -1,7 +1,7 @@
 import { InteractionManagerStatic } from 'react-native';
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
-import stores from '../../AppStores';
+import { getStores } from '../../AppStores';
 import featuresService from '../common/services/features.service';
 import entitiesService from '../common/services/entities.service';
 
@@ -16,7 +16,7 @@ class GroupsService {
   async loadList(filter, offset) {
 
     let endpoint = (filter === 'suggested') ?
-      'api/v2/entities/suggested/groups' + (stores.hashtag.all ? '/all' : '' ) :
+      'api/v2/entities/suggested/groups' + (getStores().hashtag.all ? '/all' : '' ) :
       'api/v1/groups/' + filter;
 
     // abort previous call

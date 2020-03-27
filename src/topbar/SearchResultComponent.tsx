@@ -15,7 +15,6 @@ import debounce from '../common/helpers/debounce';
 import ThemedStyles from '../styles/ThemedStyles';
 import { inject } from 'mobx-react';
 
-export default
 @inject('discovery')
 class SearchResultComponent extends Component {
   search = '';
@@ -204,6 +203,8 @@ class SearchResultComponent extends Component {
     );
   }
 }
+
+export default SearchResultComponent;
 
 const styles = StyleSheet.create({
   row: {

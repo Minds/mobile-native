@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import {
-  Text,
   StyleSheet,
-  Image,
   View,
   Platform,
   TouchableOpacity,
-  Dimensions,
   SafeAreaView,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react'
-import FAIcon from 'react-native-vector-icons/FontAwesome';
+import { observer, inject } from 'mobx-react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Avatar } from 'react-native-elements';
 
@@ -23,14 +19,12 @@ import testID from '../common/helpers/testID';
 import EmailConfirmation from './EmailConfirmation';
 import BannerInfo from './BannerInfo';
 
-const forceInset = isIphoneX ? {top: 32} : null
+const forceInset = isIphoneX ? { top: 32 } : null;
 
-export default
 @inject('user')
 @inject('wallet')
 @observer
 class Topbar extends Component {
-
   componentDidMount() {
     this.props.wallet.refresh();
   }
@@ -39,34 +33,61 @@ class Topbar extends Component {
     return (
       <SafeAreaView style={styles.container} forceInset={forceInset}>
         <View style={styles.topbar}>
-
-          { featuresService.has('crypto') &&
+          {featuresService.has('crypto') && (
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('BoostConsole', { navigation: this.props.navigation })}
-              {...testID('boost-console button')} >
-            <View style={styles.topbarLeft}>
-              <Icon name="trending-up" size={22} color='#444' style={ styles.button }/>
-            </View>
-          </TouchableOpacity>}
+              onPress={() =>
+                this.props.navigation.navigate('BoostConsole', {
+                  navigation: this.props.navigation,
+                })
+              }
+              {...testID('boost-console button')}>
+              <View style={styles.topbarLeft}>
+                <Icon
+                  name="trending-up"
+                  size={22}
+                  color="#444"
+                  style={styles.button}
+                />
+              </View>
+            </TouchableOpacity>
+          )}
 
-          { !featuresService.has('crypto') && <View style={styles.topbarLeft} />}
+          {!featuresService.has('crypto') && <View style={styles.topbarLeft} />}
 
           <View style={styles.topbarCenter}>
-            { this.props.user.me && <Avatar
-              rounded
-              source={{ uri: MINDS_CDN_URI + 'icon/' + this.props.user.me.guid + '/medium/' +  this.props.user.me.icontime}}
-              width={38}
-              height={38}
-              onPress={() => this.props.navigation.push('Channel', { guid: this.props.user.me.guid })}
-              testID="AvatarButton"
-            /> }
+            {this.props.user.me && (
+              <Avatar
+                rounded
+                source={{
+                  uri:
+                    MINDS_CDN_URI +
+                    'icon/' +
+                    this.props.user.me.guid +
+                    '/medium/' +
+                    this.props.user.me.icontime,
+                }}
+                width={38}
+                height={38}
+                onPress={() =>
+                  this.props.navigation.push('Channel', {
+                    guid: this.props.user.me.guid,
+                  })
+                }
+                testID="AvatarButton"
+              />
+            )}
           </View>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('More', { navigation: this.props.navigation })} {...testID('Main menu button')}>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('More', {
+                navigation: this.props.navigation,
+              })
+            }
+            {...testID('Main menu button')}>
             <View style={styles.topbarRight}>
-              <Icon name="menu" size={22} color='#444' style={ styles.button }/>
+              <Icon name="menu" size={22} color="#444" style={styles.button} />
             </View>
           </TouchableOpacity>
-
         </View>
         <EmailConfirmation user={this.props.user} />
         <BannerInfo user={this.props.user} logged={true} />
@@ -74,6 +95,8 @@ class Topbar extends Component {
     );
   }
 }
+
+export default Topbar;
 
 let topbarHeight = 56;
 let topMargin = 0;
@@ -99,7 +122,7 @@ const styles = StyleSheet.create({
     width: 100,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   topbarCenter: {
     flex: 1,
@@ -107,13 +130,13 @@ const styles = StyleSheet.create({
     padding: 2,
   },
   topbarRight: {
-    width:100,
+    width: 100,
     alignItems: 'center',
     justifyContent: 'flex-end',
     flexDirection: 'row',
-    paddingRight: 4
+    paddingRight: 4,
   },
   button: {
     paddingHorizontal: 8,
-  }
+  },
 });

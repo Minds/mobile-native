@@ -30,7 +30,6 @@ import validatePassword from '../common/helpers/validatePassword';
 /**
  * Register Form
  */
-export default
 @inject('user')
 @observer
 class RegisterForm extends Component {
@@ -259,3 +258,5 @@ class RegisterForm extends Component {
     this.setState({ inProgress: false });
   }
 }
+
+export default RegisterForm;

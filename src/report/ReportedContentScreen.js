@@ -1,47 +1,28 @@
-import React, {
-    Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
-    StyleSheet,
-    Platform,
-    Text,
-    FlatList,
-    View,
-    TouchableHighlight,
+  StyleSheet,
+  Text,
+  FlatList,
+  View,
+  TouchableHighlight,
 } from 'react-native';
-import { ListItem, Avatar } from 'react-native-elements';
 
-import {
-  observer,
-  inject
-} from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import Modal from 'react-native-modal'
 import ErrorLoading from '../common/components/ErrorLoading';
 import CenteredLoading from '../common/components/CenteredLoading';
 import ThemedStyles from '../styles/ThemedStyles';
-import reportService from './ReportService';
 import i18n from '../common/services/i18n.service';
-import Input from '../common/components/Input';
-import Button from '../common/components/Button';
 import ReportedContentRow from './ReportedContentRow';
 import { ComponentsStyle } from '../styles/Components';
-
-
-
 
 /**
  * Discovery screen
  */
-export default
 @inject('reportstore')
 @observer
 class ReportedContentScreen extends Component {
-
   /**
    * On component will mount
    */
@@ -49,25 +30,25 @@ class ReportedContentScreen extends Component {
     this.props.reportstore.loadList();
   }
 
-  renderRow = (row) => {
-    return (<ReportedContentRow appeal={row.item}/>)
-  }
+  renderRow = row => {
+    return <ReportedContentRow appeal={row.item} />;
+  };
 
   /**
    * On tab change
    */
-  onTabChange = (value) => {
+  onTabChange = value => {
     this.props.reportstore.setFilter(value);
     this.props.reportstore.reload();
-  }
+  };
 
-   /**
+  /**
    * Load data
    */
   loadMore = () => {
     if (this.props.reportstore.list.errorLoading) return;
     this.props.blogs.loadList();
-  }
+  };
 
   /**
    * Render
@@ -83,15 +64,26 @@ class ReportedContentScreen extends Component {
       <ErrorLoading message={i18n.t('cantLoad')} tryAgain={store.loadList} />
     ) : null;
 
-    if (!store.list.loaded && !store.list.refreshing && !store.list.errorLoading) {
+    if (
+      !store.list.loaded &&
+      !store.list.refreshing &&
+      !store.list.errorLoading
+    ) {
       body = <CenteredLoading />;
     } else {
       const empty = (
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
-            <Text style={[ComponentsStyle.emptyComponentMessage, CS.colorSecondaryText]}>{i18n.t('blogs.blogListEmpty')}</Text>
+            <Text
+              style={[
+                ComponentsStyle.emptyComponentMessage,
+                CS.colorSecondaryText,
+              ]}>
+              {i18n.t('blogs.blogListEmpty')}
+            </Text>
           </View>
-        </View>);
+        </View>
+      );
 
       body = (
         <FlatList
@@ -104,7 +96,9 @@ class ReportedContentScreen extends Component {
           initialNumToRender={12}
           style={styles.listView}
           ListFooterComponent={footerCmp}
-          ListEmptyComponent={!store.list.loaded && !stores.list.refreshing? null : empty}
+          ListEmptyComponent={
+            !store.list.loaded && !stores.list.refreshing ? null : empty
+          }
         />
       );
     }
@@ -115,27 +109,59 @@ class ReportedContentScreen extends Component {
       ...CS.borderPrimary,
     };
 
-    const headerStyle = [
-      CS.colorSecondaryText,
-      CS.fontM,
-      CS.textCenter
-    ]
+    const headerStyle = [CS.colorSecondaryText, CS.fontM, CS.textCenter];
 
     return (
       <View style={[CS.flexContainer, CS.backgroundSecondary]}>
         <View style={styles.topbar}>
           <View style={[CS.flexContainer, CS.rowJustifyCenter]}>
-            <TouchableHighlight underlayColor='transparent' onPress={() => store.setFilter('review')} style={store.filter == 'review'? [selectedButton, CS.flexContainerCenter]: [styles.buttons, CS.flexContainerCenter]}>
-              <Text style={headerStyle}>{i18n.t('settings.reportedContent.reviewPending')}</Text>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={() => store.setFilter('review')}
+              style={
+                store.filter == 'review'
+                  ? [selectedButton, CS.flexContainerCenter]
+                  : [styles.buttons, CS.flexContainerCenter]
+              }>
+              <Text style={headerStyle}>
+                {i18n.t('settings.reportedContent.reviewPending')}
+              </Text>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor='transparent' onPress={() => store.setFilter('pending')} style={store.filter == 'pending'? [selectedButton, CS.flexContainerCenter]: [styles.buttons, CS.flexContainerCenter ]}>
-              <Text style={headerStyle}>{i18n.t('settings.reportedContent.reviewAppealed')}</Text>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={() => store.setFilter('pending')}
+              style={
+                store.filter == 'pending'
+                  ? [selectedButton, CS.flexContainerCenter]
+                  : [styles.buttons, CS.flexContainerCenter]
+              }>
+              <Text style={headerStyle}>
+                {i18n.t('settings.reportedContent.reviewAppealed')}
+              </Text>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor='transparent' onPress={() => store.setFilter('approved')} style={store.filter == 'approved'? [selectedButton, CS.flexContainerCenter]: [styles.buttons, CS.flexContainerCenter ]}>
-              <Text style={headerStyle}>{i18n.t('settings.reportedContent.reviewApproved')}</Text>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={() => store.setFilter('approved')}
+              style={
+                store.filter == 'approved'
+                  ? [selectedButton, CS.flexContainerCenter]
+                  : [styles.buttons, CS.flexContainerCenter]
+              }>
+              <Text style={headerStyle}>
+                {i18n.t('settings.reportedContent.reviewApproved')}
+              </Text>
             </TouchableHighlight>
-            <TouchableHighlight underlayColor='transparent' onPress={() => store.setFilter('rejected')} style={store.filter == 'rejected'? [selectedButton, CS.flexContainerCenter]: [styles.buttons, CS.flexContainerCenter ]}>
-              <Text style={headerStyle}>{i18n.t('settings.reportedContent.reviewRejected')}</Text>
+            <TouchableHighlight
+              underlayColor="transparent"
+              onPress={() => store.setFilter('rejected')}
+              style={
+                store.filter == 'rejected'
+                  ? [selectedButton, CS.flexContainerCenter]
+                  : [styles.buttons, CS.flexContainerCenter]
+              }>
+              <Text style={headerStyle}>
+                {i18n.t('settings.reportedContent.reviewRejected')}
+              </Text>
             </TouchableHighlight>
           </View>
         </View>
@@ -149,27 +175,28 @@ class ReportedContentScreen extends Component {
    */
   loadFeed = () => {
     this.props.reportstore.loadList();
-  }
+  };
 
   /**
    * Refresh subs data
    */
   refresh = () => {
-    this.props.reportstore.refresh()
-  }
+    this.props.reportstore.refresh();
+  };
 }
+
+export default ReportedContentScreen;
 
 const styles = StyleSheet.create({
   listView: {
     flex: 1,
   },
   topbar: {
-    height:35,
+    height: 35,
     justifyContent: 'center',
     flexDirection: 'row',
-
   },
   buttons: {
     alignItems: 'center',
-  }
+  },
 });

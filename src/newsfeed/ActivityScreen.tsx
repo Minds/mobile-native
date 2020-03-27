@@ -19,7 +19,6 @@ import { FLAG_VIEW } from '../common/Permissions';
 /**
  * Activity screen
  */
-export default
 @observer
 class ActivityScreen extends Component {
   /**
@@ -164,3 +163,5 @@ class ActivityScreen extends Component {
     );
   }
 }
+
+export default ActivityScreen;

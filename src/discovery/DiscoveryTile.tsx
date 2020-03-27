@@ -11,7 +11,6 @@ import {CommonStyle as CS} from '../styles/Common';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
 
-export default
 @observer
 class DiscoveryTile extends Component {
   state = {
@@ -136,6 +135,8 @@ class DiscoveryTile extends Component {
     );
   }
 }
+
+export default DiscoveryTile;
 
 const styles = StyleSheet.create({
   boundary: {

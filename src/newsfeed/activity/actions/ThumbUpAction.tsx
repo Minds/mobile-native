@@ -31,7 +31,6 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 /**
  * Thumb Up Action Component
  */
-export default
 @observer
 class ThumbUpAction extends Component {
 
@@ -93,3 +92,5 @@ class ThumbUpAction extends Component {
     });
   };
 }
+
+export default ThumbUpAction;

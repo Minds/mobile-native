@@ -33,36 +33,7 @@ import reportStore from './src/report/ReportStore';
 /**
  * App stores
  */
-const stores = {
-  subscriptionRequest: new SubscriptionRequestStore(),
-  newsfeed: new newsfeed(),
-  notifications: new notifications(),
-  notificationsSettings: new notificationsSettings(),
-  messengerList: new messengerList(),
-  //messengerConversation: new messengerConversation(),
-  channel: new channel(),
-  user: new user(),
-  discovery: new discovery(),
-  blogs: new blogs(),
-  blogsView: new blogsView(),
-  wallet: new wallet(),
-  walletHistory: new walletHistory(),
-  wire: new wire(),
-  boost: new boost(),
-  groups: new groups(),
-  groupView: new groupView(),
-  keychain: new keychain(),
-  blockchainTransaction: new blockchainTransaction(),
-  blockchainWallet: new blockchainWallet(),
-  blockchainWalletSelector: new blockchainWalletSelector(),
-  channelSubscribersStore: new channelSubscribersStore(),
-  capture: new capture(),
-  withdraw: new withdraw(),
-  hashtag: new hashtag(),
-  onboarding: new onboarding(),
-  groupsBar: new groupsBar(),
-  reportstore: new reportStore(),
-};
+let stores = null;
 
 /**
  * Clear stores on session log out
@@ -76,8 +47,42 @@ sessionService.onLogout(() => {
   }
 });
 
-export const useStores = function() {
+export const getStores = function() {
+  if (!stores) {
+    stores = {
+      subscriptionRequest: new SubscriptionRequestStore(),
+      newsfeed: new newsfeed(),
+      notifications: new notifications(),
+      notificationsSettings: new notificationsSettings(),
+      messengerList: new messengerList(),
+      //messengerConversation: new messengerConversation(),
+      channel: new channel(),
+      user: new user(),
+      discovery: new discovery(),
+      blogs: new blogs(),
+      blogsView: new blogsView(),
+      wallet: new wallet(),
+      walletHistory: new walletHistory(),
+      wire: new wire(),
+      boost: new boost(),
+      groups: new groups(),
+      groupView: new groupView(),
+      keychain: new keychain(),
+      blockchainTransaction: new blockchainTransaction(),
+      blockchainWallet: new blockchainWallet(),
+      blockchainWalletSelector: new blockchainWalletSelector(),
+      channelSubscribersStore: new channelSubscribersStore(),
+      capture: new capture(),
+      withdraw: new withdraw(),
+      hashtag: new hashtag(),
+      onboarding: new onboarding(),
+      groupsBar: new groupsBar(),
+      reportstore: new reportStore(),
+    };
+  }
   return stores;
 };
 
-export default stores;
+export const useStores = function() {
+  return getStores();
+};

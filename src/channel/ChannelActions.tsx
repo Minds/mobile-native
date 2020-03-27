@@ -1,15 +1,8 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  View,
-  ActivityIndicator
-} from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
-import {
-  observer,
-} from 'mobx-react'
+import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import i18n from '../common/services/i18n.service';
@@ -19,7 +12,12 @@ import sessionService from '../common/services/session.service';
 import Button from '../common/components/Button';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import { CommonStyle as CS } from '../styles/Common';
-import { FLAG_SUBSCRIBE, FLAG_MESSAGE, FLAG_EDIT_CHANNEL, FLAG_WIRE } from '../common/Permissions';
+import {
+  FLAG_SUBSCRIBE,
+  FLAG_MESSAGE,
+  FLAG_EDIT_CHANNEL,
+  FLAG_WIRE,
+} from '../common/Permissions';
 import ChannelModeSelector from './ChannelModeSelector';
 import ThemedStyles from '../styles/ThemedStyles';
 
@@ -28,11 +26,9 @@ const ButtonCustom = withPreventDoubleTap(Button);
 /**
  * Channel Actions
  */
-export default
 @observer
 class ChannelActions extends Component {
-
-  state = {}
+  state = {};
 
   componentDidMount() {
     this.getScheduledCount();
@@ -40,29 +36,28 @@ class ChannelActions extends Component {
 
   showActionSheet = () => {
     this.ActionSheet.show();
-  }
+  };
 
-  handleSelection = (index) => {
+  handleSelection = index => {
     this.executeAction(index);
-  }
+  };
 
   getOptions() {
-    let options = [ i18n.t('cancel') ];
+    let options = [i18n.t('cancel')];
 
-    if (this.props.store.channel.isSubscribed()){
-      options.push( i18n.t('channel.unsubscribe') );
+    if (this.props.store.channel.isSubscribed()) {
+      options.push(i18n.t('channel.unsubscribe'));
     }
 
     if (!this.props.store.channel.blocked) {
-      options.push( i18n.t('channel.block') );
+      options.push(i18n.t('channel.block'));
     } else {
-      options.push( i18n.t('channel.unblock') );
+      options.push(i18n.t('channel.unblock'));
     }
 
-    options.push( i18n.t('channel.report') );
+    options.push(i18n.t('channel.report'));
 
     return options;
-
   }
 
   executeAction(option) {
@@ -79,80 +74,100 @@ class ChannelActions extends Component {
         this.props.store.channel.toggleBlock();
         break;
       case i18n.t('channel.report'):
-        this.props.navigation.push('Report', { entity: this.props.store.channel });
+        this.props.navigation.push('Report', {
+          entity: this.props.store.channel,
+        });
         break;
     }
   }
 
   toggleSubscription = () => {
     this.props.store.channel.toggleSubscription();
-  }
+  };
 
   /**
    * Navigate To conversation
    */
   navToConversation = () => {
     if (this.props.navigation) {
-      this.props.navigation.push('Conversation', { conversation: { guid : this.props.store.channel.guid + ':' + sessionService.guid } });
+      this.props.navigation.push('Conversation', {
+        conversation: {
+          guid: this.props.store.channel.guid + ':' + sessionService.guid,
+        },
+      });
     }
-  }
+  };
 
   openWire = () => {
-    this.props.navigation.navigate('WireFab', { owner: this.props.store.channel});
-  }
+    this.props.navigation.navigate('WireFab', {
+      owner: this.props.store.channel,
+    });
+  };
 
   onEditAction = () => {
     this.props.onEditAction();
-  }
+  };
 
   onViewScheduledAction = async () => {
     this.props.onViewScheduledAction();
-  }
+  };
 
   getScheduledCount = async () => {
     if (featuresService.has('post-scheduler')) {
       await this.props.store.feedStore.getScheduledCount();
     }
-  }
+  };
 
   shouldRenderScheduledButton = () => {
     return featuresService.has('post-scheduler') && !this.state.edit;
-  }
+  };
 
-  setSheetRef = o => this.ActionSheet = o;
+  setSheetRef = o => (this.ActionSheet = o);
 
   /**
    * Render Header
    */
   render() {
-
     const channel = this.props.store.channel;
     const isOwner = channel.isOwner();
-    const showWire = !channel.blocked && !isOwner && featuresService.has('crypto') && channel.can(FLAG_WIRE);
-    const showScheduled = featuresService.has('post-scheduler') && !this.state.edit && isOwner;
-    const showSubscribe = !isOwner && !channel.isSubscribed() && channel.can(FLAG_SUBSCRIBE);
-    const showMessage = !isOwner && channel.isSubscribed() && channel.can(FLAG_MESSAGE);
+    const showWire =
+      !channel.blocked &&
+      !isOwner &&
+      featuresService.has('crypto') &&
+      channel.can(FLAG_WIRE);
+    const showScheduled =
+      featuresService.has('post-scheduler') && !this.state.edit && isOwner;
+    const showSubscribe =
+      !isOwner && !channel.isSubscribed() && channel.can(FLAG_SUBSCRIBE);
+    const showMessage =
+      !isOwner && channel.isSubscribed() && channel.can(FLAG_MESSAGE);
     const showEdit = isOwner && channel.can(FLAG_EDIT_CHANNEL);
-    const showMode = isOwner && featuresService.has('permissions') && this.props.editing;
+    const showMode =
+      isOwner && featuresService.has('permissions') && this.props.editing;
 
     if (this.props.store.isUploading) {
-      return (
-        <ActivityIndicator size="small" />
-      )
+      return <ActivityIndicator size="small" />;
     }
 
     return (
       <View style={[CS.rowJustifyEnd, CS.marginTop2x]}>
-        { showScheduled &&
+        {showScheduled && (
           <ButtonCustom
             onPress={this.onViewScheduledAction}
             accessibilityLabel={i18n.t('channel.viewScheduled')}
-            text={`${i18n.t('channel.viewScheduled')}: ${this.props.store.feedStore.feedStore.scheduledCount}`}
+            text={`${i18n.t('channel.viewScheduled')}: ${
+              this.props.store.feedStore.feedStore.scheduledCount
+            }`}
             loading={this.state.saving}
-            inverted={this.props.store.feedStore.endpoint == this.props.store.feedStore.scheduledEndpoint ? true : undefined}
+            inverted={
+              this.props.store.feedStore.endpoint ==
+              this.props.store.feedStore.scheduledEndpoint
+                ? true
+                : undefined
+            }
           />
-        }
-        { showSubscribe &&
+        )}
+        {showSubscribe && (
           <ButtonCustom
             onPress={this.toggleSubscription}
             containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
@@ -160,45 +175,50 @@ class ChannelActions extends Component {
             text={i18n.t('channel.subscribe')}
             testID="SubscribeButton"
           />
-        }
-        { showMessage &&
+        )}
+        {showMessage && (
           <ButtonCustom
-            onPress={ this.navToConversation }
+            onPress={this.navToConversation}
             containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
             accessibilityLabel={i18n.t('channel.sendMessage')}
             text={i18n.t('channel.message')}
             testID="SendMessageButton"
           />
-        }
-        { showEdit &&
+        )}
+        {showEdit && (
           <ButtonCustom
             onPress={this.onEditAction}
             containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
-            accessibilityLabel={this.props.editing ? i18n.t('channel.saveChanges') : i18n.t('channel.editChannel')}
+            accessibilityLabel={
+              this.props.editing
+                ? i18n.t('channel.saveChanges')
+                : i18n.t('channel.editChannel')
+            }
             text={this.props.editing ? i18n.t('save') : i18n.t('edit')}
             loading={this.props.saving}
             testID="EditButton"
           />
-        }
-        { showMode &&
-          <ChannelModeSelector channel={channel} />
-        }
-        { showWire &&
+        )}
+        {showMode && <ChannelModeSelector channel={channel} />}
+        {showWire && (
           <ButtonCustom
-            onPress={ this.openWire }
+            onPress={this.openWire}
             accessibilityLabel="Wire Button"
             containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
             textStyle={[CS.marginLeft, CS.marginRight]}
             icon="ios-flash"
             text="Wire"
-            testID="WireButton"
-          >
-            <Icon name='ios-flash' size={16} style={[CS.marginLeft, ThemedStyles.style.colorPrimaryText]} />
+            testID="WireButton">
+            <Icon
+              name="ios-flash"
+              size={16}
+              style={[CS.marginLeft, ThemedStyles.style.colorPrimaryText]}
+            />
           </ButtonCustom>
-        }
-        { !isOwner &&
+        )}
+        {!isOwner && (
           <ButtonCustom
-            onPress={ this.showActionSheet }
+            onPress={this.showActionSheet}
             accessibilityLabel={i18n.t('more')}
             containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
             textStyle={[CS.marginLeft, CS.marginRight]}
@@ -206,7 +226,7 @@ class ChannelActions extends Component {
             text={i18n.t('more')}
             testID="MoreButton"
           />
-        }
+        )}
         <ActionSheet
           ref={this.setSheetRef}
           title={i18n.t('actions')}
@@ -215,6 +235,8 @@ class ChannelActions extends Component {
           cancelButtonIndex={0}
         />
       </View>
-    )
+    );
   }
 }
+
+export default ChannelActions;

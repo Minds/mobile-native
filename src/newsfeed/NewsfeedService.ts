@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
-import stores from '../../AppStores';
+import { getStores } from '../../AppStores';
 import blockListService from '../common/services/block-list.service';
 import logService from '../common/services/log.service';
 import connectivityService from '../common/services/connectivity.service';
@@ -35,7 +35,7 @@ export default class NewsfeedService {
    * @param {Number} limit
    */
   async getFeedSuggested(offset, limit = 12) {
-    return this._getFeed('api/v2/entities/suggested/activities' + (stores.hashtag.all ? '/all' : ''), offset, limit);
+    return this._getFeed('api/v2/entities/suggested/activities' + (getStores().hashtag.all ? '/all' : ''), offset, limit);
   }
 
   /**

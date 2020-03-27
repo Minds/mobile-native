@@ -1,20 +1,10 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  SafeAreaView,
-} from 'react-native';
+import { View, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {
-  inject,
-  observer
-} from 'mobx-react'
+import { inject, observer } from 'mobx-react';
 
 import WalletOnboardingWelcomeScreen from './screens/WalletOnboardingWelcomeScreen';
 import WalletOnboardingJoinRewardsScreen from './screens/WalletOnboardingJoinRewardsScreen';
@@ -24,7 +14,6 @@ import WalletOnboardingFinishedScreen from './screens/WalletOnboardingFinishedSc
 import stylesheet from '../../onboarding/stylesheet';
 import { CommonStyle as CS } from '../../styles/Common';
 
-export default
 @inject('user', 'wallet')
 @observer
 class WalletOnboardingScreen extends Component {
@@ -32,8 +21,8 @@ class WalletOnboardingScreen extends Component {
    * State
    */
   state = {
-    step: 0
-  }
+    step: 0,
+  };
 
   componentDidMount() {
     this.props.wallet.setOnboardingShown(true);
@@ -42,9 +31,9 @@ class WalletOnboardingScreen extends Component {
   setNavNext = next => {
     this.props.navigation.setOptions({
       title: 'Wallet',
-      headerRight: () => next
+      headerRight: () => next,
     });
-  }
+  };
 
   nextStepAction = async () => {
     switch (this.state.step) {
@@ -53,14 +42,14 @@ class WalletOnboardingScreen extends Component {
           this.setState({ step: 1 });
           break;
         }
-        /* no break on purpose */
+      /* no break on purpose */
 
       case 1:
         if (!this.props.user.hasEthWallet()) {
           this.setState({ step: 2 });
           break;
         }
-        /* no break on purpose */
+      /* no break on purpose */
 
       case 2:
         this.setState({ step: 3 });
@@ -82,29 +71,39 @@ class WalletOnboardingScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={style.view} keyboardShouldPersistTaps='always'>
-        {this.state.step === 0 && <WalletOnboardingWelcomeScreen
-          onNext={this.nextStepAction}
-          onSetNavNext={this.setNavNext}
-        />}
+      <ScrollView style={style.view} keyboardShouldPersistTaps="always">
+        {this.state.step === 0 && (
+          <WalletOnboardingWelcomeScreen
+            onNext={this.nextStepAction}
+            onSetNavNext={this.setNavNext}
+          />
+        )}
 
-        {this.state.step === 1 && <WalletOnboardingJoinRewardsScreen
-          onNext={this.nextStepAction}
-          onSetNavNext={this.setNavNext}
-        />}
+        {this.state.step === 1 && (
+          <WalletOnboardingJoinRewardsScreen
+            onNext={this.nextStepAction}
+            onSetNavNext={this.setNavNext}
+          />
+        )}
 
-        {this.state.step === 2 && <WalletOnboardingOnChainSetupScreen
-          onNext={this.nextStepAction}
-          onSetNavNext={this.setNavNext}
-        />}
+        {this.state.step === 2 && (
+          <WalletOnboardingOnChainSetupScreen
+            onNext={this.nextStepAction}
+            onSetNavNext={this.setNavNext}
+          />
+        )}
 
-        {this.state.step === 3 && <WalletOnboardingFinishedScreen
-          onNext={this.nextStepAction}
-          onSetNavNext={this.setNavNext}
-        />}
+        {this.state.step === 3 && (
+          <WalletOnboardingFinishedScreen
+            onNext={this.nextStepAction}
+            onSetNavNext={this.setNavNext}
+          />
+        )}
       </ScrollView>
     );
   }
 }
+
+export default WalletOnboardingScreen;
 
 const style = StyleSheet.create(stylesheet);

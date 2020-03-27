@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 
 import storageService from '../common/services/storage.service';
-import appStore from '../../AppStores';
+import { getStores } from '../../AppStores';
 import ThemedStyles from '../styles/ThemedStyles';
 
 /**
@@ -48,7 +48,7 @@ class SettingsStore {
     this.useHashtags = data[4][1] === null ? true : data[4][1];
 
     // set the initial value for hashtag
-    appStore.hashtag.setAll(!this.useHashtags);
+    getStores().hashtag.setAll(!this.useHashtags);
 
     // theme
     ThemedStyles.setTheme(data[5][1] || 0);

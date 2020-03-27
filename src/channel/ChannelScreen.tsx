@@ -39,7 +39,6 @@ import SubscriptionRequestList from './subscription/SubscriptionRequestList';
 /**
  * Channel Screen
  */
-export default
 @inject('channel', 'subscriptionRequest')
 @observer
 class ChannelScreen extends Component {
@@ -343,6 +342,8 @@ class ChannelScreen extends Component {
     );
   }
 }
+
+export default ChannelScreen;
 
 // style
 const styles = StyleSheet.create({

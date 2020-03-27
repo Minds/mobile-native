@@ -3,7 +3,7 @@ import { observable, action, reaction } from 'mobx';
 import sessionStorage from './session.storage.service';
 import AuthService from '../../auth/AuthService';
 import NavigationService from '../../navigation/NavigationService';
-import appStores from '../../../AppStores';
+import { getStores } from '../../../AppStores';
 import logService from './log.service';
 
 /**
@@ -103,13 +103,13 @@ class SessionService {
 
   async loadUser(user) {
     if (user) {
-      appStores.user.setUser(user);
+      getStores().user.setUser(user);
       // we update the user without wait
-      appStores.user.load(true).then(user => {
+      getStores().user.load(true).then(user => {
         if (user) sessionStorage.setUser(user);
       });
     } else {
-      user = await appStores.user.load();
+      user = await getStores().user.load();
       sessionStorage.setUser(user);
     }
 
@@ -120,7 +120,7 @@ class SessionService {
    * Return current user
    */
   getUser() {
-    return appStores.user.me;
+    return getStores().user.me;
   }
 
   /**

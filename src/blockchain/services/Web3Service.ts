@@ -4,7 +4,7 @@ const Web3 = require('web3');
 
 import { BLOCKCHAIN_URI } from "../../config/Config";
 
-import appStores from '../../../AppStores';
+import { getStores } from '../../../AppStores';
 import logService from '../../common/services/log.service';
 import mindsService from '../../common/services/minds.service';
 
@@ -98,7 +98,7 @@ class Web3Service {
       logService.exception('[Web3Service]', e);
     }
 
-    const sendOptions = await appStores.blockchainTransaction.waitForApproval(method, message, baseOptions, Math.ceil(estimatedGas * 1.5), value);
+    const sendOptions = await getStores().blockchainTransaction.waitForApproval(method, message, baseOptions, Math.ceil(estimatedGas * 1.5), value);
     await this.wait(); // Modals have a "cooldown"
 
     if (sendOptions) {
