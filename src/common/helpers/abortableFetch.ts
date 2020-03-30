@@ -3,14 +3,19 @@
  * based on https://github.com/apentle/react-native-cancelable-fetch/blob/master/index.js
  */
 
+interface TaggedRequest {
+  tag: any;
+}
+
 export class Abort extends Error {
+  code: string;
   constructor(...args) {
     super(...args);
     this.code = 'Abort';
   }
 }
 
-const _xhrs = [];
+const _xhrs: Array<any> = [];
 
 function remove(xhr) {
   if (xhr.tag !== undefined) {
@@ -24,11 +29,8 @@ function remove(xhr) {
 
 function headers(xhr) {
   const head = new Headers();
-  const pairs = xhr
-    .getAllResponseHeaders()
-    .trim()
-    .split('\n');
-  pairs.forEach(function(header) {
+  const pairs = xhr.getAllResponseHeaders().trim().split('\n');
+  pairs.forEach(function (header) {
     const split = header.trim().split(':');
     const key = split.shift().trim();
     const value = split.join(':').trim();
@@ -38,8 +40,8 @@ function headers(xhr) {
 }
 
 // Fetch
-export default function(input, init, tag) {
-  return new Promise(function(resolve, reject) {
+export default function (input, init, tag = undefined) {
+  return new Promise(function (resolve, reject) {
     let request;
     if (Request.prototype.isPrototypeOf(input) && !init) {
       request = input;
@@ -47,7 +49,7 @@ export default function(input, init, tag) {
       request = new Request(input, init);
     }
 
-    const xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest() as XMLHttpRequest & TaggedRequest;
 
     if (init && init.timeout) {
       xhr.timeout = init.timeout;
@@ -71,11 +73,11 @@ export default function(input, init, tag) {
       return;
     }
 
-    xhr.ontimeout = function() {
+    xhr.ontimeout = function () {
       reject(new TypeError('Network request failed'));
     };
 
-    xhr.onload = function() {
+    xhr.onload = function () {
       const status = xhr.status === 1223 ? 204 : xhr.status;
 
       if (status < 100 || status > 599) {
@@ -96,7 +98,7 @@ export default function(input, init, tag) {
       resolve(new Response(body, options));
     };
 
-    xhr.onerror = function() {
+    xhr.onerror = function () {
       remove(xhr);
       reject(new TypeError('Network request failed'));
     };
@@ -116,7 +118,7 @@ export default function(input, init, tag) {
       xhr.responseType = 'blob';
     }
 
-    request.headers.forEach(function(value, name) {
+    request.headers.forEach(function (value, name) {
       xhr.setRequestHeader(name, value);
     });
 
@@ -126,7 +128,7 @@ export default function(input, init, tag) {
   });
 }
 
-export const abort = function(tag) {
+export const abort = function (tag) {
   for (var i = _xhrs.length - 1; i > -1; i--) {
     var xhr = _xhrs[i];
     if (xhr.tag === tag) {
@@ -137,10 +139,10 @@ export const abort = function(tag) {
   }
 };
 
-export const isNetworkFail = function(err) {
+export const isNetworkFail = function (err) {
   return err instanceof TypeError && err.message === 'Network request failed';
 };
 
-export const isAbort = function(err) {
+export const isAbort = function (err) {
   return err instanceof Abort;
 };

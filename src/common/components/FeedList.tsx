@@ -1,12 +1,6 @@
 import React, { Component } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
-import { inject, observer } from 'mobx-react'
+import { FlatList, View, Text, ActivityIndicator } from 'react-native';
+import { observer } from 'mobx-react';
 
 import Activity from '../../newsfeed/activity/Activity';
 import TileElement from '../../newsfeed/TileElement';
@@ -16,21 +10,34 @@ import ErrorLoading from './ErrorLoading';
 import ErrorBoundary from './ErrorBoundary';
 import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import type FeedStore from '../stores/FeedStore';
+import type ActivityModel from '../../newsfeed/ActivityModel';
+
+type PropsType = {
+  feedStore: FeedStore;
+  renderTileActivity?: Function;
+  renderActivity?: Function;
+  emptyMessage?: React.ReactNode;
+  header: React.ReactNode;
+  listComponent: React.ComponentType;
+  navigation: any;
+};
 
 /**
  * News feed list component
  */
 @observer
-export default class FeedList extends Component {
-
+export default class FeedList<T> extends Component<PropsType> {
+  listRef?: FlatList<T>;
+  cantShowActivity: string = '';
   viewOpts = {
     viewAreaCoveragePercentThreshold: 50,
-    minimumViewTime: 300
-  }
+    minimumViewTime: 300,
+  };
   state = {
     itemHeight: 0,
-    viewed: []
-  }
+    viewed: [],
+  };
 
   /**
    * On list mount
@@ -42,27 +49,29 @@ export default class FeedList extends Component {
   /**
    * Adjust tiles to 1/cols size
    */
-  onLayout = e => {
+  onLayout = (e: { nativeEvent: { layout: { width: any } } }) => {
     const width = e.nativeEvent.layout.width;
     this.setState({
       itemHeight: width / 3,
     });
-  }
+  };
 
   /**
    * Scroll to top
    * @param {boolean} animated
    */
   scrollToTop(animated = true) {
-    this.listRef.scrollToOffset({animated, offset:0});
+    if (this.listRef) {
+      this.listRef.scrollToOffset({ animated, offset: 0 });
+    }
   }
 
   /**
    * Set list reference
    */
-  setListRef = (r) => this.listRef = r;
+  setListRef = (r: FlatList<T> | undefined) => (this.listRef = r);
 
-  onScroll = e => {
+  onScroll = (e: { nativeEvent: { contentOffset: { y: number } } }) => {
     this.props.feedStore.scrollOffset = e.nativeEvent.contentOffset.y;
   };
 
@@ -70,23 +79,20 @@ export default class FeedList extends Component {
    * Render component
    */
   render() {
-    let renderRow,
-    design,
-    empty = null;
+    let renderRow: Function;
+    let empty: React.ReactNode = null;
 
     const {
       feedStore,
-      me,
       renderTileActivity,
       renderActivity,
       emptyMessage,
-      navigation,
       header,
       listComponent,
       ...passThroughProps
     } = this.props;
 
-    const ListComponent = listComponent || FlatList;
+    const ListComponent: React.ComponentType<any> = listComponent || FlatList;
 
     if (feedStore.isTiled) {
       renderRow = renderTileActivity || this.renderTileActivity;
@@ -102,9 +108,12 @@ export default class FeedList extends Component {
         empty = (
           <View style={ComponentsStyle.emptyComponentContainer}>
             <View style={ComponentsStyle.emptyComponent}>
-              <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('newsfeed.empty')}</Text>
+              <Text style={ComponentsStyle.emptyComponentMessage}>
+                {i18n.t('newsfeed.empty')}
+              </Text>
             </View>
-          </View>);
+          </View>
+        );
       }
     }
 
@@ -113,7 +122,7 @@ export default class FeedList extends Component {
     return (
       <ListComponent
         ref={this.setListRef}
-        key={(feedStore.isTiled ? 't' : 'f')}
+        key={feedStore.isTiled ? 't' : 'f'}
         onLayout={this.onLayout}
         ListHeaderComponent={header}
         ListFooterComponent={footer}
@@ -125,7 +134,10 @@ export default class FeedList extends Component {
         onEndReached={this.loadMore}
         // onEndReachedThreshold={0}
         numColumns={feedStore.isTiled ? 3 : 1}
-        style={[ThemedStyles.style.flexContainer, ThemedStyles.style.backgroundPrimary]}
+        style={[
+          ThemedStyles.style.flexContainer,
+          ThemedStyles.style.backgroundPrimary,
+        ]}
         initialNumToRender={6}
         windowSize={11}
         // removeClippedSubviews={true}
@@ -141,18 +153,19 @@ export default class FeedList extends Component {
   /**
    * Key extractor for list items
    */
-  keyExtractor = (item, index) => {
+  keyExtractor = (item: { boosted: any; urn: any }, index: any) => {
     return item.boosted ? `${item.urn}:${index}` : item.urn;
-  }
+  };
 
   /**
    * Get footer
    */
   getFooter() {
-
-    if (this.props.feedStore.loading && !this.props.feedStore.refreshing){
+    if (this.props.feedStore.loading && !this.props.feedStore.refreshing) {
       return (
-        <View style={[CS.centered, CS.padding3x]} testID="ActivityIndicatorView">
+        <View
+          style={[CS.centered, CS.padding3x]}
+          testID="ActivityIndicatorView">
           <ActivityIndicator size={'large'} />
         </View>
       );
@@ -166,28 +179,32 @@ export default class FeedList extends Component {
   /**
    * Get error loading component
    */
-  getErrorLoading()
-  {
-    const message = this.props.feedStore.entities.length ?
-    i18n.t('cantLoadMore') :
-    i18n.t('cantLoad');
+  getErrorLoading() {
+    const message = this.props.feedStore.entities.length
+      ? i18n.t('cantLoadMore')
+      : i18n.t('cantLoad');
 
-    return <ErrorLoading message={message} tryAgain={this.loadFeedForce}/>
+    return <ErrorLoading message={message} tryAgain={this.loadFeedForce} />;
   }
 
   /**
    * On viewable item changed
    */
-  onViewableItemsChanged = (change) => {
-    change.viewableItems.forEach((item) => {
+  onViewableItemsChanged = (change: {
+    viewableItems: any[];
+    changed: any[];
+  }) => {
+    change.viewableItems.forEach((item: { item: any }) => {
       this.props.feedStore.addViewed(item.item);
     });
-    change.changed.forEach(c => {
-      if (c.item.setVisible) {
-        c.item.setVisible(c.isViewable);
-      }
-    })
-  }
+    change.changed.forEach(
+      (c: { item: { setVisible: (arg0: any) => void }; isViewable: any }) => {
+        if (c.item.setVisible) {
+          c.item.setVisible(c.isViewable);
+        }
+      },
+    );
+  };
 
   /**
    * Load feed data
@@ -195,31 +212,33 @@ export default class FeedList extends Component {
   loadMore = () => {
     if (this.props.feedStore.errorLoading) return;
     this.props.feedStore.loadMore();
-  }
+  };
 
   /**
    * Force feed load
    */
   loadFeedForce = () => {
     this.props.feedStore.reload();
-  }
+  };
 
   /**
    * Refresh feed data
    */
   refresh = () => {
-    this.props.feedStore.refresh(true)
-  }
+    this.props.feedStore.refresh();
+  };
 
   /**
    * Render activity
    */
-  renderActivity = (row) => {
-    let isLast = this.props.feedStore.entities.length == row.index + 1;
+  renderActivity = (row: { index: number; item: ActivityModel }) => {
+    let isLast = this.props.feedStore.entities.length === row.index + 1;
     const entity = row.item;
 
     return (
-      <ErrorBoundary message={this.cantShowActivity} containerStyle={CS.hairLineBottom}>
+      <ErrorBoundary
+        message={this.cantShowActivity}
+        containerStyle={CS.hairLineBottom}>
         <Activity
           entity={entity}
           newsfeed={this.props.feedStore}
@@ -228,19 +247,21 @@ export default class FeedList extends Component {
           isLast={isLast}
         />
       </ErrorBoundary>
-    )
-  }
+    );
+  };
 
   /**
    * Render tile
    */
-  renderTileActivity = (row) => {
+  renderTileActivity = (row: { item: any }) => {
     const entity = row.item;
-    return <TileElement
-      size={this.state.itemHeight}
-      newsfeed={this.props.feedStore}
-      entity={entity}
-      navigation={this.props.navigation}
-    />;
-  }
+    return (
+      <TileElement
+        size={this.state.itemHeight}
+        newsfeed={this.props.feedStore}
+        entity={entity}
+        navigation={this.props.navigation}
+      />
+    );
+  };
 }

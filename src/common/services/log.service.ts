@@ -8,39 +8,46 @@ import shouldReportToSentry from '../helpers/errors';
  * Log service
  */
 class LogService {
-
   /**
    * Init service
    */
-  init = async() => {
+  init = async () => {
     this._init();
-  }
+  };
 
   _init = () => {
     console.log('[LogService] init', settingsStore.appLog);
     deviceLog.init(AsyncStorage, {
-      logToConsole : __DEV__,
-      logRNErrors : true,
+      logToConsole: __DEV__,
+      logRNErrors: true,
       logAppState: settingsStore.appLog,
       logConnection: settingsStore.appLog,
-      maxNumberToRender : 500, // 0 or undefined == unlimited
-      maxNumberToPersist : 500 // 0 or undefined == unlimited
+      maxNumberToRender: 500, // 0 or undefined == unlimited
+      maxNumberToPersist: 500, // 0 or undefined == unlimited
     });
-  }
+  };
 
   log(...args) {
-    if (!settingsStore.appLog) return;
+    if (!settingsStore.appLog) {
+      return;
+    }
     deviceLog.log(...args);
   }
 
   info(...args) {
-    if (__DEV__) console.log(...args);
-    if (!settingsStore.appLog) return;
+    if (__DEV__) {
+      console.log(...args);
+    }
+    if (!settingsStore.appLog) {
+      return;
+    }
     deviceLog.info(...args);
   }
 
   warn(...args) {
-    if (!settingsStore.appLog) return;
+    if (!settingsStore.appLog) {
+      return;
+    }
     deviceLog.warn(...args);
   }
 
@@ -48,7 +55,7 @@ class LogService {
     deviceLog.error(...args);
   }
 
-  exception(prepend, error) {
+  exception(prepend, error = undefined) {
     if (!error) {
       error = prepend;
       prepend = null;

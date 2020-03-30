@@ -1,0 +1,1 @@
+export type ThumbSize = 'small' | 'medium' | 'large' | 'xlarge';

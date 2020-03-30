@@ -7,18 +7,31 @@ import { CommonStyle as CS } from '../../styles/Common';
 import viewportPercentage from '../../common/helpers/viewportPercentage';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import type { Currency, Reward } from '../WireTypes';
 
-const {value: slideWidth, viewportHeight} = viewportPercentage(75);
-const {value: itemHorizontalMargin} = viewportPercentage(2);
+const { value: slideWidth, viewportHeight } = viewportPercentage(75);
+const { value: itemHorizontalMargin } = viewportPercentage(2);
 
 const itemWidth = slideWidth + itemHorizontalMargin * 2;
+
+type PropsType = {
+  amount: number;
+  rewards: Array<Reward>;
+  currency: Currency;
+  recurring: boolean;
+  onTierSelected: Function;
+};
+
+type MethodCurrencyMapper = {
+  method: string;
+  currency: Currency;
+};
 
 /**
  * Subscriptions Tier Carousel
  */
-export default class SubscriptionTierCarousel extends PureComponent {
-
-  rewards = [];
+export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
+  rewards: Array<Reward> = [];
 
   /**
    * Get Pluralized currency
@@ -42,11 +55,16 @@ export default class SubscriptionTierCarousel extends PureComponent {
    * Get rewards
    */
   getRewards() {
-    const rewards = [{
-      amount: 0,
-      description: i18n.t('wire.customDonation'),
-    }];
-    const methodsMap = [{ method: 'tokens', currency: 'tokens' }];
+    const rewards: Array<Reward> = [
+      {
+        currency: 'tokens',
+        amount: 0,
+        description: i18n.t('wire.customDonation'),
+      },
+    ];
+    const methodsMap: Array<MethodCurrencyMapper> = [
+      { method: 'tokens', currency: 'tokens' } as MethodCurrencyMapper,
+    ];
 
     if (featuresService.has('wire-multi-currency')) {
       methodsMap.push({ method: 'money', currency: 'usd' });
@@ -55,7 +73,7 @@ export default class SubscriptionTierCarousel extends PureComponent {
     for (const { method, currency } of methodsMap) {
       if (this.props.rewards[method]) {
         for (const reward of this.props.rewards[method]) {
-          const amount = parseInt(reward.amount);
+          const amount = parseInt(reward.amount, 10);
           rewards.push({
             amount,
             description: reward.description,
@@ -69,35 +87,39 @@ export default class SubscriptionTierCarousel extends PureComponent {
   }
 
   /**
-   * Set tier
-   */
-  setTier = (tier) => {
-    if (this.props.setTier) {
-      this.props.setTier(tier);
-    }
-    this.toggleModal();
-  }
-
-  /**
    * Renders a tier
    */
   _renderItem = (row) => {
     const amount = row.item.amount || this.props.amount;
     const currency = row.item.currency || this.props.currency;
     const recurring = this.props.recurring;
-    const amountText = amount + ' ' + this.getPluralizedCurrency(currency, row.item.amount);
+    const amountText =
+      amount + ' ' + this.getPluralizedCurrency(currency, row.item.amount);
 
-    const text = recurring ? i18n.t('wire.amountMonth', {amount: amountText}) : amountText;
+    const text = recurring
+      ? i18n.t('wire.amountMonth', { amount: amountText })
+      : amountText;
 
     return (
-      <View key={`rewards${row.item.amount}`} style={[CS.rowJustifyCenter, ThemedStyles.style.backgroundPrimary, CS.borderRadius5x, CS.padding2x, CS.border, ThemedStyles.style.borderButton]}>
+      <View
+        key={`rewards${row.item.amount}`}
+        style={[
+          CS.rowJustifyCenter,
+          ThemedStyles.style.backgroundPrimary,
+          CS.borderRadius5x,
+          CS.padding2x,
+          CS.border,
+          ThemedStyles.style.borderButton,
+        ]}>
         <View style={CS.columnAlignCenter}>
           <Text style={[CS.fontXXL, CS.fontMedium]}>{text}</Text>
-          <Text numberOfLines={5} style={[CS.fontL, CS.fontMedium]}>{row.item.description}</Text>
+          <Text numberOfLines={5} style={[CS.fontL, CS.fontMedium]}>
+            {row.item.description}
+          </Text>
         </View>
       </View>
     );
-  }
+  };
 
   /**
    * Tier Selected
@@ -106,14 +128,17 @@ export default class SubscriptionTierCarousel extends PureComponent {
     if (this.props.onTierSelected) {
       this.props.onTierSelected(this.rewards[index]);
     }
-  }
+  };
 
   /**
    * Render
    */
   render() {
     this.rewards = this.getRewards();
-    let current = this.rewards.findIndex(r => r.amount == this.props.amount && r.currency == this.props.currency);
+    let current = this.rewards.findIndex(
+      (r) =>
+        r.amount === this.props.amount && r.currency === this.props.currency,
+    );
 
     return (
       <View>
@@ -129,9 +154,7 @@ export default class SubscriptionTierCarousel extends PureComponent {
           onSnapToItem={this.onSelected}
           containerCustomStyle={styles.carousel}
           enableSnap={true}
-          // layout={'tinder'}
-          layoutCardOffset={`10`}
-          ref={(c) => { this._carousel = c; }}
+          layoutCardOffset="10"
           data={this.rewards}
           firstItem={current}
           renderItem={this._renderItem}
@@ -140,9 +163,8 @@ export default class SubscriptionTierCarousel extends PureComponent {
           sliderWidth={viewportHeight}
           itemWidth={itemWidth}
         />
-
       </View>
-    )
+    );
   }
 }
 
@@ -151,13 +173,13 @@ const styles = StyleSheet.create({
     flexGrow: 0,
   },
   paginatorContainer: {
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   dot: {
     width: 10,
     height: 10,
     borderRadius: 5,
     marginHorizontal: 0,
-    backgroundColor: 'rgba(46, 46, 46, 0.92)'
-  }
-})
+    backgroundColor: 'rgba(46, 46, 46, 0.92)',
+  },
+});

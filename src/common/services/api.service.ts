@@ -14,6 +14,11 @@ import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
 
+export interface ApiResponse {
+  status: 'success' | 'error';
+  message?: string;
+}
+
 /**
  * Api Error
  */
@@ -23,11 +28,11 @@ export class ApiError extends Error {
   }
 }
 
-export const isApiError = function(err) {
+export const isApiError = function (err) {
   return err instanceof ApiError;
 };
 
-export const isApiForbidden = function(err) {
+export const isApiForbidden = function (err) {
   return err.status === 403;
 };
 
@@ -42,7 +47,7 @@ class ApiService {
     this.mustVerify = value;
   }
 
-  async parseResponse(response, url) {
+  async parseResponse<T extends ApiResponse>(response, url): Promise<T> {
     // check status
     if (response.status) {
       if (response.status === 401) {
@@ -86,7 +91,7 @@ class ApiService {
    * Clear cookies
    */
   clearCookies() {
-    return new Promise(success => {
+    return new Promise((success) => {
       NativeModules.Networking.clearCookies(success);
     });
   }
@@ -95,7 +100,7 @@ class ApiService {
    * Build headers
    */
   buildHeaders() {
-    const headers = {
+    const headers: any = {
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       Pragma: 'no-cache',
       'App-Version': Version.VERSION,
@@ -128,7 +133,7 @@ class ApiService {
 
   getParamsString(params) {
     return Object.keys(params)
-      .map(k => {
+      .map((k) => {
         return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
       })
       .join('&');
@@ -140,7 +145,11 @@ class ApiService {
    * @param {object} params
    * @param {mixed} tag
    */
-  async get(url, params = {}, tag) {
+  async get<T extends ApiResponse>(
+    url: string,
+    params: object = {},
+    tag: any = null,
+  ): Promise<T> {
     // build headers
     const headers = this.buildHeaders();
 
@@ -150,7 +159,7 @@ class ApiService {
       tag,
     );
 
-    return await this.parseResponse(response, url);
+    return await this.parseResponse<T>(response, url);
   }
 
   /**
@@ -158,7 +167,10 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async post(url, body = {}) {
+  async post<T extends ApiResponse>(
+    url: string,
+    body: object = {},
+  ): Promise<T> {
     const headers = this.buildHeaders();
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
@@ -168,7 +180,7 @@ class ApiService {
       timeout: NETWORK_TIMEOUT,
     });
 
-    return await this.parseResponse(response, url);
+    return await this.parseResponse<T>(response, url);
   }
 
   /**
@@ -176,7 +188,7 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async put(url, body = {}) {
+  async put<T extends ApiResponse>(url: string, body: object = {}): Promise<T> {
     const headers = this.buildHeaders();
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
@@ -186,7 +198,7 @@ class ApiService {
       timeout: NETWORK_TIMEOUT,
     });
 
-    return await this.parseResponse(response, url);
+    return await this.parseResponse<T>(response, url);
   }
 
   /**
@@ -194,7 +206,10 @@ class ApiService {
    * @param {string} url
    * @param {object} body
    */
-  async delete(url, body = {}) {
+  async delete<T extends ApiResponse>(
+    url: string,
+    body: object = {},
+  ): Promise<T> {
     const headers = this.buildHeaders();
 
     let response = await abortableFetch(MINDS_API_URI + this.buildUrl(url), {
@@ -204,7 +219,7 @@ class ApiService {
       timeout: NETWORK_TIMEOUT,
     });
 
-    return await this.parseResponse(response, url);
+    return await this.parseResponse<T>(response, url);
   }
 
   /**
@@ -213,12 +228,16 @@ class ApiService {
    * @param {any} file
    * @param {function} progress
    */
-  uploadToS3(lease, file, progress) {
+  uploadToS3(
+    lease: { presigned_url: string },
+    file: any,
+    progress: (event: Event) => any,
+  ) {
     return new Cancelable((resolve, reject, onCancel) => {
       let xhr = new XMLHttpRequest();
 
       // handle cancel
-      onCancel(cb => {
+      onCancel((cb) => {
         xhr.abort();
         cb();
       });
@@ -236,12 +255,12 @@ class ApiService {
           reject('Ooops: upload error');
         }
       };
-      xhr.onerror = function() {
+      xhr.onerror = function () {
         reject(new TypeError('Network request failed'));
       };
 
       xhr.send(file);
-    }).catch(error => {
+    }).catch((error) => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;
@@ -256,7 +275,12 @@ class ApiService {
    * @param {object} data
    * @param {Function} progress
    */
-  upload(url, file, data = null, progress) {
+  upload(
+    url: string,
+    file: any,
+    data: object | null = null,
+    progress: (event: Event) => any,
+  ) {
     var formData = new FormData();
     formData.append('file', file);
     for (var key in data) {
@@ -267,7 +291,7 @@ class ApiService {
       let xhr = new XMLHttpRequest();
 
       // handle cancel
-      onCancel(cb => {
+      onCancel((cb) => {
         xhr.abort();
         cb();
       });
@@ -281,26 +305,29 @@ class ApiService {
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.onload = () => {
         if (xhr.status === 200) {
-          let data = { status: null };
+          let response: ApiResponse;
           try {
-            data = JSON.parse(xhr.responseText);
+            response = JSON.parse(xhr.responseText);
           } catch (e) {
-            data = { status: 'error' };
+            response = {
+              status: 'error',
+              message: 'Error parsing server response',
+            };
           }
-          if (data.status === 'error') {
-            return reject(data);
+          if (response.status === 'error') {
+            return reject(response);
           }
-          resolve(data);
+          resolve(response);
         } else {
           reject(new UserError('Upload failed'));
         }
       };
-      xhr.onerror = function() {
+      xhr.onerror = function () {
         reject(new TypeError('Network request failed'));
       };
 
       xhr.send(formData);
-    }).catch(error => {
+    }).catch((error) => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;

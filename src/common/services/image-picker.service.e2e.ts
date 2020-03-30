@@ -4,7 +4,6 @@ import CameraRoll from '@react-native-community/cameraroll';
  * Image picker service e2e mock
  */
 class ImagePickerService {
-
   /**
    * Show image picker selector
    *
@@ -14,8 +13,7 @@ class ImagePickerService {
    * @param {string} title
    * @param {string} type   photo or video
    */
-  async show(title, type='photo') {
-
+  async show(title, type = 'photo') {
     const params = {
       first: 30,
       assetType: 'All',
@@ -30,7 +28,7 @@ class ImagePickerService {
       duration: result.edges[0].node.image.playableDuration,
       width: result.edges[0].node.image.width,
       height: result.edges[0].node.image.height,
-    }
+    };
   }
 }
 

@@ -5,6 +5,7 @@ import AuthService from '../../auth/AuthService';
 import NavigationService from '../../navigation/NavigationService';
 import { getStores } from '../../../AppStores';
 import logService from './log.service';
+import type UserModel from '../../channel/UserModel';
 
 /**
  * Session service
@@ -119,7 +120,7 @@ class SessionService {
   /**
    * Return current user
    */
-  getUser() {
+  getUser(): UserModel {
     return getStores().user.me;
   }
 

@@ -1,35 +1,69 @@
-import { runInAction, action, observable, decorate, toJS } from 'mobx';
+import { runInAction, action, observable, decorate } from 'mobx';
+import FastImage from 'react-native-fast-image';
+import { FlatList, Alert } from 'react-native';
 
-import FastImage from 'react-native-fast-image'
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
 import wireService from '../wire/WireService';
-import { thumbActivity } from './activity/ActionsService';
 import sessionService from '../common/services/session.service';
-import { setPinPost, deleteItem, unfollow, follow, update } from '../newsfeed/NewsfeedService';
+import {
+  setPinPost,
+  deleteItem,
+  unfollow,
+  follow,
+  update,
+} from '../newsfeed/NewsfeedService';
 import api from '../common/services/api.service';
 
-import {
-  GOOGLE_PLAY_STORE,
-  MINDS_CDN_URI,
-  MINDS_URI
-} from '../config/Config';
+import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
+import type { ThumbSize } from '../types/Common';
+
+type Thumbs = Record<ThumbSize, string>;
 
 /**
  * Activity model
  */
 export default class ActivityModel extends BaseModel {
+  // Observable properties
+  @observable pinned: boolean = false;
+  @observable time_created: number = 0;
+  @observable message: string = '';
+  @observable title: string = '';
+  @observable mature: boolean = false;
+  @observable edited: '0' | '1' = '0';
 
-  // add an extra observable properties
-  @observable mature_visibility = false;
+  // decorated observables
+  'thumbs:down:count': number;
+  'thumbs:up:count': number;
+  'comments:count': number;
+  'thumbs:down:user_guids': Array<number>;
+  'thumbs:up:user_guids': Array<number>;
+
+  remind_object?: ActivityModel;
+  ownerObj!: UserModel;
+  listRef?: FlatList<any>;
+  thumbnails?: Thumbs;
+  paywall: boolean = false;
+  paywall_unlocked: boolean = false;
+  guid: string = '';
+  entity_guid: string = '';
+  custom_type: string = '';
+  custom_data?: Array<any> | any;
+  nsfw?: Array<number>;
+  flags?: any;
+
+  /**
+   * Mature visibility flag
+   */
+  @observable mature_visibility: boolean = false;
 
   /**
    * Is visible in flat list
    */
-  @observable is_visible = true;
+  @observable is_visible: boolean = true;
 
   /**
    *  List reference setter
@@ -53,7 +87,7 @@ export default class ActivityModel extends BaseModel {
   toPlainObject() {
     const plainEntity = super.toPlainObject();
     if (plainEntity.remind_object && plainEntity.remind_object.__list) {
-      delete(plainEntity.remind_object.__list);
+      delete plainEntity.remind_object.__list;
     }
 
     return plainEntity;
@@ -65,8 +99,8 @@ export default class ActivityModel extends BaseModel {
   childModels() {
     return {
       ownerObj: UserModel,
-      remind_object: ActivityModel
-    }
+      remind_object: ActivityModel,
+    };
   }
 
   /**
@@ -74,45 +108,59 @@ export default class ActivityModel extends BaseModel {
    * {uri: 'http...'}
    * @param {string} size
    */
-  getThumbSource(size = 'medium') {
+  getThumbSource(size: ThumbSize = 'medium') {
     // for gif use always the same size to take adventage of the cache (they are not resized)
-    if (this.isGif()) size = 'medium';
+    if (this.isGif()) {
+      size = 'medium';
+    }
 
     if (this.thumbnails && this.thumbnails[size]) {
-      return {uri: this.thumbnails[size], headers: api.buildHeaders() };
+      return { uri: this.thumbnails[size], headers: api.buildHeaders() };
     }
 
     // fallback to old behavior
     if (this.paywall || this.paywall_unlocked) {
-      return { uri: MINDS_URI + 'fs/v1/thumbnail/' + this.entity_guid, headers: api.buildHeaders() };
+      return {
+        uri: MINDS_URI + 'fs/v1/thumbnail/' + this.entity_guid,
+        headers: api.buildHeaders(),
+      };
     }
-    if (this.custom_type == 'batch') {
-      return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.entity_guid + '/' + size, headers: api.buildHeaders() };
+    if (this.custom_type === 'batch') {
+      return {
+        uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.entity_guid + '/' + size,
+        headers: api.buildHeaders(),
+      };
     }
-    return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.guid + '/' + size, headers: api.buildHeaders() };
+    return {
+      uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.guid + '/' + size,
+      headers: api.buildHeaders(),
+    };
   }
 
-  isGif() {
-    if (this.custom_data && this.custom_data[0] && this.custom_data[0].gif) return true;
-    return false;
+  isGif(): boolean {
+    return this.custom_data && this.custom_data[0] && this.custom_data[0].gif;
   }
 
   /**
    * Preload thumb on image cache
    */
-  preloadThumb(size = 'medium') {
+  preloadThumb(size: ThumbSize = 'medium') {
     FastImage.preload([this.getThumbSource(size)]);
   }
 
-  shouldBeBlured() {
-
+  shouldBeBlured(): boolean {
     const user = sessionService.getUser();
 
-    if (user && user.mature) return false;
+    if (user && user.mature) {
+      return false;
+    }
 
-    if (typeof this.nsfw !== 'undefined') {
-      let res = [ 1, 2, 4 ].filter(nsfw => this.nsfw.indexOf(nsfw) > -1).length;
-      if (res) return true;
+    if (this.nsfw !== undefined) {
+      let res = [1, 2, 4].filter((nsfw) => this.nsfw!.indexOf(nsfw) > -1)
+        .length;
+      if (res) {
+        return true;
+      }
     }
 
     if (typeof this.flags !== 'undefined') {
@@ -123,11 +171,14 @@ export default class ActivityModel extends BaseModel {
       return !!this.mature;
     }
 
-    if (typeof this.custom_data !== 'undefined' && typeof this.custom_data[0] !== 'undefined') {
+    if (
+      typeof this.custom_data !== 'undefined' &&
+      typeof this.custom_data[0] !== 'undefined'
+    ) {
       return !!this.custom_data[0].mature;
     }
 
-    if (typeof this.custom_data !== 'undefined') {
+    if (this.custom_data !== undefined) {
       return !!this.custom_data.mature;
     }
 
@@ -143,10 +194,12 @@ export default class ActivityModel extends BaseModel {
 
   @action
   toggleMatureVisibility() {
-    if (GOOGLE_PLAY_STORE) return;
+    if (GOOGLE_PLAY_STORE) {
+      return;
+    }
     this.mature_visibility = !this.mature_visibility;
 
-    if (this.get('remind_object.mature')) {
+    if (this.remind_object && this.remind_object.mature) {
       this.remind_object.mature_visibility = this.mature_visibility;
     }
   }
@@ -176,27 +229,28 @@ export default class ActivityModel extends BaseModel {
    * Unlock the activity and update data on success
    */
   @action
-  async unlock(ignoreError=false) {
+  async unlock(ignoreError = false) {
     try {
-      result = await wireService.unlock(this.guid);
+      const result: object | false = await wireService.unlock(this.guid);
       if (result) {
         // all changes should be atomic (trigger render only once)
         runInAction(() => {
           // create a new model because we need the child models
-          const model = ActivityModel.create(result);
+          const model: ActivityModel = ActivityModel.create(result);
           Object.assign(this, model);
         });
       }
       return result;
-    } catch(err) {
-      if (!ignoreError) alert(err.message);
+    } catch (err) {
+      if (!ignoreError) {
+        Alert.alert(err.message);
+      }
       return false;
     }
   }
 
   @action
   async togglePin() {
-
     // allow owners only
     if (!this.isOwner()) {
       return;
@@ -204,10 +258,10 @@ export default class ActivityModel extends BaseModel {
 
     try {
       this.pinned = !this.pinned;
-      const success = await setPinPost(this.guid, this.pinned);
-    } catch(e) {
+      await setPinPost(this.guid, this.pinned);
+    } catch (e) {
       this.pinned = !this.pinned;
-      alert(i18n.t('errorPinnedPost'));
+      Alert.alert(i18n.t('errorPinnedPost'));
     }
   }
 
@@ -227,7 +281,7 @@ export default class ActivityModel extends BaseModel {
   async toggleFollow() {
     const method = this['is:following'] ? unfollow : follow;
     try {
-      await method(this.guid)
+      await method(this.guid);
       runInAction(() => {
         this['is:following'] = !this['is:following'];
       });
@@ -258,27 +312,19 @@ export default class ActivityModel extends BaseModel {
 
   @action
   setEdited(message) {
-    this.message = message
-    this.edited  = 1;
+    this.message = message;
+    this.edited = '1';
   }
-
 }
 
 /**
  * Define model observables
  */
 decorate(ActivityModel, {
+  //@ts-ignore
   'thumbs:down:count': observable,
   'thumbs:up:count': observable,
   'comments:count': observable,
-  'custom_data': observable,
-  'time_created': observable,
-  'paywall': observable,
-  'mature': observable,
-  'pinned': observable,
-  'edited': observable,
-  'message': observable,
-  'title': observable,
   'thumbs:down:user_guids': observable,
   'thumbs:up:user_guids': observable,
 });

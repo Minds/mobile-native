@@ -8,17 +8,12 @@ import groupsService from './GroupsService';
 export default class GroupModel extends BaseModel {
   @observable conversationDisabled = false;
 
-  /**
-   * Constructor
-   */
-  constructor(data) {
-    data.name = String(data.name);
-    super(data);
-  }
-
   @action
   async toggleConversationDisabled() {
-    await groupsService.toggleConversationDisabled(this.guid, !this.conversationDisabled);
+    await groupsService.toggleConversationDisabled(
+      this.guid,
+      !this.conversationDisabled,
+    );
     this.conversationDisabled = !this.conversationDisabled;
   }
 }
@@ -27,8 +22,9 @@ export default class GroupModel extends BaseModel {
  * Define model observables
  */
 decorate(GroupModel, {
-  'briefdescription': observable,
-  'name': observable,
+  //@ts-ignore
+  briefdescription: observable,
+  name: observable,
   'is:member': observable,
   'members:count': observable,
 });

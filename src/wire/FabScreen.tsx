@@ -9,10 +9,10 @@ import {
   Alert,
 } from 'react-native';
 
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
 import { CheckBox } from 'react-native-elements';
-
 import { observer, inject } from 'mobx-react';
-
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import colors from '../styles/Colors';
@@ -27,22 +27,36 @@ import Button from '../common/components/Button';
 import StripeCardSelector from './methods/StripeCardSelector';
 import ThemedStyles from '../styles/ThemedStyles';
 
+import type { RootStackParamList } from '../navigation/NavigationTypes';
+import type WalletStore from '../wallet/WalletStore';
+import type WireStore from '../wire/WireStore';
+
+type FabScreenRouteProp = RouteProp<RootStackParamList, 'Fab'>;
+type FabcreenNavigationProp = StackNavigationProp<RootStackParamList, 'Fab'>;
+
+type Props = {
+  navigation: FabcreenNavigationProp;
+  wallet: WalletStore;
+  wire: WireStore;
+  route: FabScreenRouteProp;
+};
+
 /**
  * Wire Fab Screen
  */
 @inject('wallet', 'wire')
 @observer
-class FabScreen extends Component {
+class FabScreen extends Component<Props> {
   /**
    * constructor
    */
   constructor(props) {
     super(props);
-    this.paymethodRef = React.createRef();
 
     if (!featuresService.has('crypto')) {
       featuresService.showAlert();
-      return this.props.navigation.goBack();
+      this.props.navigation.goBack();
+      return;
     }
 
     this.loadUserAndSetDefaults();
@@ -81,6 +95,7 @@ class FabScreen extends Component {
 
       if (
         !params.disableThresholdCheck &&
+        owner &&
         owner.sums &&
         owner.sums[params.default.type]
       ) {
@@ -99,27 +114,11 @@ class FabScreen extends Component {
     return this.props.route.params.owner;
   }
 
-  /**
-   * Modal navigation
-   */
-  static navigationOptions = ({ navigation }) => ({
-    header: null,
-    transitionConfig: {
-      isModal: true,
-    },
-  });
-
-  selectMethod = () => {
-    if (this.paymethodRef.current) {
-      this.paymethodRef.current.show();
-    }
-  };
-
   onCancelBtc = () => {
     this.props.wire.setShowBtc(false);
   };
 
-  onSelectCard = card => {
+  onSelectCard = (card) => {
     this.props.wire.setPaymentMethodId(card.id);
   };
 
@@ -131,7 +130,15 @@ class FabScreen extends Component {
     const buttonDisabled =
       this.props.wire.sending || this.props.wire.errors.length > 0;
 
-    if (this.props.wire.showBtc) {
+    if (!this.props.wire.owner) {
+      return null;
+    }
+
+    if (
+      this.props.wire.showBtc &&
+      this.props.wire.owner &&
+      this.props.wire.owner.btc_address
+    ) {
       return (
         <BtcPayment
           amount={this.props.wire.amount}
@@ -176,7 +183,7 @@ class FabScreen extends Component {
 
     const owner = this.getOwner();
     const txtAmount = this.getTextAmount();
-    const amount = this.props.wire.amount.toString();
+    const amount = this.props.wire.amount;
 
     return (
       <Fragment>
@@ -207,13 +214,12 @@ class FabScreen extends Component {
         </View>
 
         <View style={(CS.marginTop3x, CS.marginBottom2x)}>
-          {this.props.wire.errors.map(e => (
+          {this.props.wire.errors.map((e) => (
             <Text style={[CS.colorDanger, CS.fontM, CS.textCenter]}>{e}</Text>
           ))}
         </View>
 
         <PaymentMethodSelector
-          ref={this.paymethodRef}
           value={this.props.wire.currency}
           onSelect={this.props.wire.setCurrency}
         />
@@ -227,7 +233,6 @@ class FabScreen extends Component {
             CS.alignCenter,
           ]}>
           <TextInput
-            ref="input"
             onChangeText={this.changeInput}
             style={[
               CS.field,
@@ -241,7 +246,7 @@ class FabScreen extends Component {
               CS.borderLightGreyed,
             ]}
             underlineColorAndroid="transparent"
-            value={amount}
+            value={amount.toString()}
             keyboardType="numeric"
           />
         </View>
@@ -252,6 +257,7 @@ class FabScreen extends Component {
               title={i18n.t('wire.repeatMessage')}
               checked={this.props.wire.recurring}
               onPress={() => this.props.wire.toggleRecurring()}
+              //@ts-ignore
               left
               checkedIcon="check-circle-o"
               checkedColor={colors.primary}
@@ -281,12 +287,10 @@ class FabScreen extends Component {
         {this.props.wire.owner.wire_rewards &&
           this.props.wire.owner.wire_rewards.length && (
             <View>
-              <Text style={styles.rewards}>
-                {i18n.t('wire.nameReward', { name: owner.username })}
-              </Text>
-              <Text style={styles.lastmonth}>
+              <Text>{i18n.t('wire.nameReward', { name: owner.username })}</Text>
+              <Text>
                 {i18n.to('wire.youHaveSent', null, {
-                  amount: <Text style={styles.bold}>{txtAmount}</Text>,
+                  amount: <Text style={CS.bold}>{txtAmount}</Text>,
                 })}
               </Text>
             </View>
@@ -294,7 +298,7 @@ class FabScreen extends Component {
 
         <Button
           text={
-            this.props.wire.amount == 0
+            this.props.wire.amount === 0
               ? i18n.t('ok').toUpperCase()
               : i18n.t('send').toUpperCase()
           }
@@ -380,6 +384,11 @@ class FabScreen extends Component {
       return this.props.wire.setShowCardselector(true);
     }
 
+    if (!this.props.wire.owner) {
+      Alert.alert('Receiver user is undefined');
+      return;
+    }
+
     Alert.alert(
       i18n.t('confirmMessage'),
       i18n.t('wire.confirmMessage', {
@@ -426,10 +435,13 @@ class FabScreen extends Component {
    * Get formated amount of last month sum
    */
   getTextAmount() {
+    if (!this.props.wire.owner) {
+      return '0';
+    }
     return this.props.wire.formatAmount(this.props.wire.owner.sums.tokens);
   }
 
-  changeInput = val => {
+  changeInput = (val) => {
     if (val !== '') {
       val = val.replace(',', '.');
       val = val.replace('..', '.');
@@ -440,6 +452,3 @@ class FabScreen extends Component {
 }
 
 export default FabScreen;
-
-const selectedcolor = '#4690D6';
-const color = '#444';

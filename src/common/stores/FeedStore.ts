@@ -53,7 +53,7 @@ export default class FeedStore {
   /**
    * Metadata service
    */
-  metadataService = null;
+  metadataService: MetadataService | null = null;
 
   /**
    * @var {FeedsService}

@@ -1,47 +1,44 @@
-import {
-  observable,
-  action
-} from 'mobx'
+import { observable, action } from 'mobx';
 
 import wireService from './WireService';
 import i18n from '../common/services/i18n.service';
-import UserModel from 'src/channel/UserModel';
+import UserModel from '../channel/UserModel';
+
+import type { Currency } from './WireTypes';
 
 /**
  * Wire store
  */
 class WireStore {
-  @observable currency = 'tokens';
-  @observable amount = 1;
-  @observable sending = false;
-  @observable.shallow owner: UserModel | null = null;
-  @observable recurring = false;
-  @observable showBtc = false;
-  @observable showCardselector = false;
-  @observable loaded = false;
+  @observable currency: Currency = 'tokens';
+  @observable amount: number = 1;
+  @observable sending: boolean = false;
+  @observable.shallow owner?: UserModel;
+  @observable recurring: boolean = false;
+  @observable showBtc: boolean = false;
+  @observable showCardselector: boolean = false;
+  @observable loaded: boolean = false;
   @observable errors: Array<string> = [];
-
-  @observable paymentMethodId: string | null = null;
-
+  @observable paymentMethodId: string = '';
   guid: string | null = null;
 
   @action
   setShowBtc = (value: boolean) => {
     this.showBtc = value;
-  }
+  };
 
   @action
   setShowCardselector = (value: boolean) => {
-    this.paymentMethodId = null;
+    this.paymentMethodId = '';
     this.showCardselector = value;
-  }
+  };
 
   setPaymentMethodId(value: string) {
     this.paymentMethodId = value;
   }
 
   @action
-  setCurrency = (value: string) => {
+  setCurrency = (value: Currency) => {
     this.currency = value;
 
     // only tokens and usd can be recurring
@@ -49,7 +46,7 @@ class WireStore {
       this.recurring = false;
     }
     this.validate();
-  }
+  };
 
   @action
   setAmount(val: number) {
@@ -65,12 +62,12 @@ class WireStore {
     } else {
       this.validate();
     }
-  }
+  };
 
   @action
   setOwner(owner: any) {
     this.owner = owner;
-    this.guid = owner ? (owner.guid || owner.entity_guid) : null;
+    this.guid = owner ? owner.guid || owner.entity_guid : null;
   }
 
   async loadUserRewards(): Promise<UserModel | null> {
@@ -119,17 +116,20 @@ class WireStore {
     switch (this.currency) {
       case 'btc':
         if (this.owner && !this.owner.btc_address) {
-          this.errors.push(i18n.t('wire.noAddress', {type: 'Bitcoin'}));
+          this.errors.push(i18n.t('wire.noAddress', { type: 'Bitcoin' }));
         }
         break;
       case 'eth':
         if (this.owner && !this.owner.eth_wallet) {
-          this.errors.push(i18n.t('wire.noAddress', {type: 'ETH'}));
+          this.errors.push(i18n.t('wire.noAddress', { type: 'ETH' }));
         }
         break;
       case 'usd':
-        if (this.owner && (!this.owner.merchant || this.owner.merchant.service !== 'stripe')) {
-          this.errors.push(i18n.t('wire.noAddress', {type: 'USD'}));
+        if (
+          this.owner &&
+          (!this.owner.merchant || this.owner.merchant.service !== 'stripe')
+        ) {
+          this.errors.push(i18n.t('wire.noAddress', { type: 'USD' }));
         }
         break;
     }
@@ -168,14 +168,16 @@ class WireStore {
     try {
       this.sending = true;
 
-      done = await wireService.send({
-        amount: this.amount,
-        guid: this.guid,
-        owner: this.owner,
-        recurring: this.recurring,
-        currency: this.currency,
-        paymentMethodId: this.paymentMethodId
-      });
+      if (this.guid && this.owner) {
+        done = await wireService.send({
+          amount: this.amount,
+          guid: this.guid,
+          owner: this.owner,
+          recurring: this.recurring,
+          currency: this.currency,
+          paymentMethodId: this.paymentMethodId,
+        });
+      }
 
       this.stopSending();
     } catch (e) {
@@ -193,19 +195,18 @@ class WireStore {
 
   @action
   reset() {
-    this.paymentMethodId = null,
-    this.guid = null;
+    this.paymentMethodId = '';
+    this.guid = '';
     this.amount = 1;
     this.showBtc = false;
     this.showCardselector = false;
     this.currency = 'tokens';
     this.sending = false;
-    this.owner = null;
+    this.owner = undefined;
     this.recurring = false;
     this.loaded = false;
     this.errors = [];
   }
-
 }
 
 export default WireStore;

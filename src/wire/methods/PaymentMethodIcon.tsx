@@ -1,16 +1,18 @@
-import * as React from 'react'
+import * as React from 'react';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 type PropsType = {
-  value: string
+  value: string;
+  size?: number;
+  style: any;
 };
 
 /**
  * Payment method selector
  */
 export default class PaymentMethodIcon extends React.PureComponent<PropsType> {
-  render(): React.Node {
+  render(): React.ReactNode {
     const { value, ...other } = this.props;
     let icon: string = '';
     switch (value.toLowerCase()) {
@@ -28,6 +30,6 @@ export default class PaymentMethodIcon extends React.PureComponent<PropsType> {
         break;
     }
 
-    return <Icon name={icon} {...other} />
+    return <Icon name={icon} {...other} />;
   }
 }

@@ -1,7 +1,9 @@
-import { Dimensions } from "react-native";
+import { Dimensions } from 'react-native';
 
 export default function (percentage) {
-  const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+  const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
+    'window',
+  );
   const value = (percentage * viewportWidth) / 100;
-  return {value: Math.round(value), viewportWidth, viewportHeight};
+  return { value: Math.round(value), viewportWidth, viewportHeight };
 }

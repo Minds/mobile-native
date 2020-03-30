@@ -1,35 +1,38 @@
-import React, {
-  Component
-} from 'react';
-
-import PropTypes from 'prop-types';
-
+import React, { Component } from 'react';
 import {
   Text,
   ActivityIndicator,
   TouchableOpacity,
+  TextStyle,
+  ViewStyle,
+  GestureResponderEvent,
 } from 'react-native';
 
-import { ComponentsStyle } from '../../styles/Components';
 import ThemedStyles from '../../styles/ThemedStyles';
+
+type PropsType = {
+  text: string;
+  loading?: boolean;
+  onPress?: (ev: GestureResponderEvent) => void;
+  textColor?: string;
+  color?: string;
+  children?: React.ReactNode;
+  containerStyle?: ViewStyle;
+  accessibilityLabel?: string;
+  textStyle?: TextStyle | Array<TextStyle>;
+  disabled?: boolean;
+  inverted?: boolean;
+};
 
 /**
  * Custom Button component
  */
-export default class Button extends Component {
-
+export default class Button extends Component<PropsType> {
   /**
    * Default props
    */
   static defaultProps = {
-    loading: false
-  };
-
-  /**
-   * Prop types
-   */
-  static propTypes = {
-    text: PropTypes.string.isRequired
+    loading: false,
   };
 
   /**
@@ -52,7 +55,6 @@ export default class Button extends Component {
       ...extraProps
     } = this.props;
 
-
     let background = ThemedStyles.getColor('primary_button');
     let mainColor = color || 'white';
 
@@ -61,26 +63,35 @@ export default class Button extends Component {
       mainColor = ThemedStyles.getColor('primary_button');
     }
 
-    const style = {backgroundColor: background, borderRadius: 2};
+    const style = { backgroundColor: background, borderRadius: 2 };
 
-    const body = this.props.loading ?
-      <ActivityIndicator color={mainColor} /> :
-      <Text style={[{ color: textColor || mainColor }, textStyle]}> {this.props.text} </Text>;
+    const body = loading ? (
+      <ActivityIndicator color={mainColor} />
+    ) : (
+      <Text style={[{ color: textColor || mainColor }, textStyle]}>
+        {' '}
+        {this.props.text}{' '}
+      </Text>
+    );
 
-    const onButtonPress = this.props.loading ? null : onPress;
+    const onButtonPress = loading ? undefined : onPress;
 
     return (
       <TouchableOpacity
         onPress={onButtonPress}
         disabled={disabled}
-        underlayColor='transparent'
         accessibilityLabel={accessibilityLabel}
-        style={[theme.rowJustifyCenter, theme.centered, theme.padding, style, containerStyle]}
-        {...extraProps}
-      >
+        style={[
+          theme.rowJustifyCenter,
+          theme.centered,
+          theme.padding,
+          style,
+          containerStyle,
+        ]}
+        {...extraProps}>
         {children}
         {body}
       </TouchableOpacity>
-    )
+    );
   }
 }

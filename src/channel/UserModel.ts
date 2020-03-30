@@ -1,6 +1,6 @@
-import {observable, action, runInAction} from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 
-import {MINDS_CDN_URI, GOOGLE_PLAY_STORE} from '../config/Config';
+import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
 import ChannelService from './ChannelService';
@@ -16,13 +16,21 @@ export const USER_MODE_CLOSED = 2;
  * User model
  */
 export default class UserModel extends BaseModel {
-
-  guid?: string;
   merchant;
-  eth_wallet;
+  /**
+   * Eth wallet
+   */
+  eth_wallet: string = '';
   wire_rewards;
   sums;
   btc_address?: string;
+  username: string = '';
+  icontime!: string;
+  admin: boolean = false;
+  plus: boolean = false;
+  verified: boolean = false;
+  founder: boolean = false;
+  carousels?: Array<any>;
 
   /**
    * @var {boolean}
@@ -68,7 +76,7 @@ export default class UserModel extends BaseModel {
    * Confirm email
    * @param {Object} params
    */
-  confirmEmail = async params => {
+  confirmEmail = async (params) => {
     // call any api endpoint with the param
     try {
       await apiService.get('api/v2/entities/', { urn: this.urn, ...params });
@@ -82,7 +90,7 @@ export default class UserModel extends BaseModel {
   /**
    * Get the user icon time
    */
-  getOwnerIcontime() {
+  getOwnerIcontime(): string {
     if (sessionService.getUser().guid === this.guid) {
       return sessionService.getUser().icontime;
     } else {
@@ -113,7 +121,7 @@ export default class UserModel extends BaseModel {
   }
 
   @action
-  async toggleBlock(value = null) {
+  async toggleBlock(value: boolean | null = null) {
     value = value === null ? !this.blocked : value;
 
     try {
@@ -151,9 +159,8 @@ export default class UserModel extends BaseModel {
 
   /**
    * Get banner source
-   * @param {string} size
    */
-  getBannerSource(size = 'medium') {
+  getBannerSource() {
     if (this.carousels) {
       return {
         uri: this.carousels[0].src,

@@ -1,6 +1,7 @@
 import Web3Service from './Web3Service';
 import BlockchainTokenService from './BlockchainTokenService';
 import i18n from '../../common/services/i18n.service';
+import type { TransactionResponse } from './BlockchainServicesTypes';
 
 class BlockchainWireService {
   async getContract() {
@@ -10,22 +11,28 @@ class BlockchainWireService {
   /**
    * Create an onchain tokens wireß
    * @param {string} receiver
-   * @param {string} tokensAmount
+   * @param {number} tokensAmount
    * @param {string} message
    */
-  async create(receiver, tokensAmount, message = '') {
+  async create(
+    receiver: string,
+    tokensAmount: number,
+    message = '',
+  ): Promise<string> {
     const token = await BlockchainTokenService.getContract(),
       wireAddress = (await this.getContract()).options.address;
 
     const tokenApproveAndCallWire = await token.methods.approveAndCall(
       wireAddress,
       Web3Service.web3.utils.toWei(tokensAmount.toString(), 'ether'),
-      BlockchainTokenService.encodeParams([ { type: 'address', value: receiver } ])
+      BlockchainTokenService.encodeParams([
+        { type: 'address', value: receiver },
+      ]),
     );
 
-    const result = await Web3Service.sendSignedContractMethod(
+    const result: TransactionResponse = await Web3Service.sendSignedContractMethod(
       tokenApproveAndCallWire,
-      i18n.t('blockchain.wire',{tokensAmount, receiver, message}).trim()
+      i18n.t('blockchain.wire', { tokensAmount, receiver, message }).trim(),
     );
 
     return result.transactionHash;
@@ -34,14 +41,10 @@ class BlockchainWireService {
   /**
    * Create a eth wire
    * @param {string} receiver
-   * @param {string} tokensAmount
+   * @param {number} tokensAmount
    */
-  async createEth(receiver, tokensAmount) {
-
-    const result = await Web3Service.sendEth(
-      receiver,
-      tokensAmount
-    );
+  async createEth(receiver: string, tokensAmount: number) {
+    const result = await Web3Service.sendEth(receiver, tokensAmount);
 
     return result.transactionHash;
   }

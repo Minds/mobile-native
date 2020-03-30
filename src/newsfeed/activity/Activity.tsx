@@ -1,26 +1,16 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {observer} from "mobx-react";
+import { observer } from 'mobx-react';
 
-import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Dimensions,
-  Linking
-} from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import ExplicitText from '../../common/components/explicit/ExplicitText'
+import ExplicitText from '../../common/components/explicit/ExplicitText';
 import OwnerBlock from './OwnerBlock';
 import RemindOwnerBlock from './RemindOwnerBlock';
 import Actions from './Actions';
 import formatDate from '../../common/helpers/date';
-import domain from '../../common/helpers/domain';
 import ActivityActionSheet from './ActivityActionSheet';
 import ActivityEditor from './ActivityEditor';
 import ActivityMetrics from './metrics/ActivityMetrics';
@@ -36,20 +26,33 @@ import ActivityModel from '../ActivityModel';
 import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
 
+type PropsType = {
+  entity: ActivityModel;
+  navigation: any;
+  hydrateOnNav?: boolean;
+  onLayout?: Function;
+};
+
+type StateType = {
+  editing: boolean;
+};
+
 /**
  * Activity
  */
 @observer
-export default class Activity extends Component {
-
+export default class Activity extends Component<PropsType, StateType> {
+  /**
+   * initial state
+   */
   state = {
-    editing: false
-  }
+    editing: false,
+  } as StateType;
   /**
    * Nav to activity full screen
    */
   navToActivity = () => {
-    const navOpts = { entity: this.props.entity };
+    const navOpts = { entity: this.props.entity, hydrate: false };
 
     if (this.props.entity.remind_object || this.props.hydrateOnNav) {
       navOpts.hydrate = true;
@@ -61,30 +64,32 @@ export default class Activity extends Component {
   /**
    * Navigate To channel
    */
-  navToChannel = () => {
+  navToRemindChannel = () => {
     // only active if receive the navigation property
-    if (this.props.navigation) {
-      this.props.navigation.push('Channel', { guid:this.props.entity.remind_object.ownerObj.guid});
+    if (this.props.navigation && this.props.entity.remind_object) {
+      this.props.navigation.push('Channel', {
+        guid: this.props.entity.remind_object.ownerObj.guid,
+      });
     }
-  }
+  };
 
   onLayout = (e) => {
     if (this.props.onLayout) {
       this.props.onLayout(e);
     }
 
-    if (this.props.entity.listRef) {
-      const offsetToScrollTo = this.props.entity._list.scrollOffset + e.nativeEvent.layout.height;
+    if (this.props.entity.listRef && this.props.entity._list) {
+      const offsetToScrollTo =
+        this.props.entity._list.scrollOffset + e.nativeEvent.layout.height;
       setTimeout(() => {
-        if (!this.props.entity.listRef) return;
-        this.props.entity.listRef.scrollToOffset({
+        this.props.entity.listRef?.scrollToOffset({
           offset: offsetToScrollTo,
-          animated: true
+          animated: true,
         });
-        this.props.entity.listRef = null;
+        this.props.entity.listRef = undefined;
       }, 1000);
     }
-  }
+  };
 
   /**
    * Render
@@ -93,54 +98,80 @@ export default class Activity extends Component {
     const entity = ActivityModel.checkOrCreate(this.props.entity);
 
     if (blockListService.blocked.has(entity.ownerObj.guid)) {
-      return (<BlockedChannel entity={entity} navigation={this.props.navigation}/>);
+      return (
+        <BlockedChannel entity={entity} navigation={this.props.navigation} />
+      );
     }
 
     const hasText = !!entity.text;
-    const lock = (entity.paywall && entity.paywall !== '0')? <Lock entity={entity} navigation={this.props.navigation}/> : null;
+    const lock =
+      entity.paywall && entity.paywall !== '0' ? (
+        <Lock entity={entity} navigation={this.props.navigation} />
+      ) : null;
 
-    const message = this.state.editing ?
-      (
-        //Passing the store in newsfeed (could be channel also)
-        <ActivityEditor entity={entity} toggleEdit={this.toggleEdit} />
-      ):(
-        <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
-          {hasText ? <ExplicitText entity={entity} navigation={this.props.navigation} style={styles.message} /> : null}
-          {hasText ? <Translate ref={r => this.translate=r} entity={entity} style={styles.message}/> : null}
-        </View>
-      );
+    const message = this.state.editing ? (
+      //Passing the store in newsfeed (could be channel also)
+      <ActivityEditor entity={entity} toggleEdit={this.toggleEdit} />
+    ) : (
+      <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
+        {hasText ? (
+          <ExplicitText
+            entity={entity}
+            navigation={this.props.navigation}
+            style={styles.message}
+          />
+        ) : null}
+        {hasText ? (
+          <Translate
+            ref={(r) => (this.translate = r)}
+            entity={entity}
+            style={styles.message}
+          />
+        ) : null}
+      </View>
+    );
 
-    const show_overlay = (entity.shouldBeBlured() && !entity.is_parent_mature) && !(entity.shouldBeBlured() && entity.is_parent_mature);
-    const overlay = (show_overlay) ? <ExplicitOverlay
-        entity={this.props.entity}
-      /> : null;
+    const show_overlay =
+      entity.shouldBeBlured() &&
+      !entity.is_parent_mature &&
+      !(entity.shouldBeBlured() && entity.is_parent_mature);
+    const overlay = show_overlay ? (
+      <ExplicitOverlay entity={this.props.entity} />
+    ) : null;
 
-    const borderBottom = this.props.isReminded ? [] : [ThemedStyles.style.borderBottomHair, ThemedStyles.style.borderPrimary];
+    const borderBottom = this.props.isReminded
+      ? []
+      : [ThemedStyles.style.borderBottomHair, ThemedStyles.style.borderPrimary];
 
     return (
-        <View style={[styles.container, ...borderBottom]} onLayout={this.onLayout} testID="ActivityView">
-          <Pinned entity={this.props.entity}/>
-          { this.showOwner() }
-            { lock }
-            { message }
-          <View>
-            { this.showRemind() }
+      <View
+        style={[styles.container, ...borderBottom]}
+        onLayout={this.onLayout}
+        testID="ActivityView">
+        <Pinned entity={this.props.entity} />
+        {this.showOwner()}
+        {lock}
+        {message}
+        <View>
+          {this.showRemind()}
 
-            <MediaView
-              ref={o => {this.mediaView = o}}
-              entity={ entity }
-              navigation={this.props.navigation}
-              style={ styles.media }
-              autoHeight={ this.props.autoHeight }
-              />
-            { overlay }
-          </View>
-          { this.showActions() }
-          { this.renderScheduledMessage() }
-          { this.renderPendingMessage() }
-          { this.renderActivitySpacer() }
-          { this.renderActivityMetrics() }
+          <MediaView
+            ref={(o) => {
+              this.mediaView = o;
+            }}
+            entity={entity}
+            navigation={this.props.navigation}
+            style={styles.media}
+            autoHeight={this.props.autoHeight}
+          />
+          {overlay}
         </View>
+        {this.showActions()}
+        {this.renderScheduledMessage()}
+        {this.renderPendingMessage()}
+        {this.renderActivitySpacer()}
+        {this.renderActivityMetrics()}
+      </View>
     );
   }
 
@@ -148,20 +179,20 @@ export default class Activity extends Component {
    * Render activity spacer
    */
   renderActivitySpacer = () => {
-    return this.props.isLast
-      ? (<View style={styles.activitySpacer}></View>)
-      : null;
+    return this.props.isLast ? (
+      <View style={styles.activitySpacer}></View>
+    ) : null;
   };
 
   /**
    * Render entity metrics
    */
   renderActivityMetrics = () => {
-    return (
-      !this.props.hideTabs &&
+    return !this.props.hideTabs &&
       !this.props.entity.isScheduled() &&
-      !this.props.entity.isPending()
-    ) ? (<ActivityMetrics entity={this.props.entity}/>) : null
+      !this.props.entity.isPending() ? (
+      <ActivityMetrics entity={this.props.entity} />
+    ) : null;
   };
 
   /**
@@ -169,7 +200,11 @@ export default class Activity extends Component {
    */
   renderScheduledMessage = () => {
     return this.props.entity.isScheduled()
-      ? (this.renderYellowBanner(`${i18n.t('activity.scheduled')} ${formatDate(this.props.entity.time_created)}.`))
+      ? this.renderYellowBanner(
+          `${i18n.t('activity.scheduled')} ${formatDate(
+            this.props.entity.time_created,
+          )}.`,
+        )
       : null;
   };
 
@@ -178,14 +213,14 @@ export default class Activity extends Component {
    */
   renderPendingMessage = () => {
     return this.props.entity.isPending()
-      ? (this.renderYellowBanner(i18n.t('activity.pendingModeration')))
+      ? this.renderYellowBanner(i18n.t('activity.pendingModeration'))
       : null;
   };
 
   /**
    * Render a banner with a message bellow the activity
    */
-  renderYellowBanner = message => {
+  renderYellowBanner = (message) => {
     return (
       <View style={[styles.yellowBanner, CommonStyle.padding]}>
         <Text style={[styles.yellowBannerText, CommonStyle.paddingLeft]}>
@@ -204,18 +239,21 @@ export default class Activity extends Component {
 
   toggleEdit = (value) => {
     this.setState({ editing: value });
-  }
+  };
 
   /**
    * Show group
    */
   showContainer() {
-    if(!this.props.entity.containerObj)
-      return null;
+    if (!this.props.entity.containerObj) return null;
 
     return (
       <View>
-        <Text onPress={this.navToGroup} style={[styles.groupNameLabel, ThemedStyles.style.colorPrimaryText]}>{this.props.entity.containerObj.name}</Text>
+        <Text
+          onPress={this.navToGroup}
+          style={[styles.groupNameLabel, ThemedStyles.style.colorPrimaryText]}>
+          {this.props.entity.containerObj.name}
+        </Text>
       </View>
     );
   }
@@ -230,7 +268,7 @@ export default class Activity extends Component {
     } else {
       if (this.remind) this.remind.showTranslate();
     }
-  }
+  };
 
   /**
    * Show Owner
@@ -244,53 +282,81 @@ export default class Activity extends Component {
             entity={this.props.entity}
             navigation={this.props.navigation}
             onTranslate={this.showTranslate}
-            testID={this.props.entity.text==='e2eTest' ? 'ActivityMoreButton' : ''}
+            testID={
+              this.props.entity.text === 'e2eTest' ? 'ActivityMoreButton' : ''
+            }
           />
-       </View>
-      )
+        </View>
+      );
       return (
         <OwnerBlock
           entity={this.props.entity}
           navigation={this.props.navigation}
-          rightToolbar={this.props.hideTabs ? null : rightToolbar}
-          >
-          <TouchableOpacity onPress={() => this.navToActivity()} style={{ flexDirection: 'row' }}>
-            <Text style={[styles.timestamp, CommonStyle.paddingRight, ThemedStyles.style.colorSecondaryText]}>{
-              formatDate(this.props.entity.time_created)
-            }</Text>
-            { this.props.entity.boosted &&
+          rightToolbar={this.props.hideTabs ? null : rightToolbar}>
+          <TouchableOpacity
+            onPress={() => this.navToActivity()}
+            style={{ flexDirection: 'row' }}>
+            <Text
+              style={[
+                styles.timestamp,
+                CommonStyle.paddingRight,
+                ThemedStyles.style.colorSecondaryText,
+              ]}>
+              {formatDate(this.props.entity.time_created)}
+            </Text>
+            {this.props.entity.boosted && (
               <View style={styles.boostTagContainer}>
-                <Icon name="md-trending-up" style={ThemedStyles.style.colorSecondaryText}/>
-                <Text style={[styles.boostTagLabel, ThemedStyles.style.colorSecondaryText]}>{i18n.t('boosted').toUpperCase()}</Text>
+                <Icon
+                  name="md-trending-up"
+                  style={ThemedStyles.style.colorSecondaryText}
+                />
+                <Text
+                  style={[
+                    styles.boostTagLabel,
+                    ThemedStyles.style.colorSecondaryText,
+                  ]}>
+                  {i18n.t('boosted').toUpperCase()}
+                </Text>
               </View>
-            }
-            { !!this.props.entity.edited &&
+            )}
+            {!!this.props.entity.edited && (
               <View style={styles.boostTagContainer}>
-                <Text style={[styles.boostTagLabel, ThemedStyles.style.colorSecondaryText]}>· {i18n.t('edited').toUpperCase()}</Text>
+                <Text
+                  style={[
+                    styles.boostTagLabel,
+                    ThemedStyles.style.colorSecondaryText,
+                  ]}>
+                  · {i18n.t('edited').toUpperCase()}
+                </Text>
               </View>
-            }
+            )}
           </TouchableOpacity>
         </OwnerBlock>
       );
     } else {
-      return  (
+      return (
         <View>
           <RemindOwnerBlock
             entity={this.props.entity}
             navigation={this.props.navigation}
-            />
+          />
           <View style={styles.rightToolbar}>
-            {!this.props.hideTabs && <ActivityActionSheet
-              toggleEdit={this.toggleEdit}
-              entity={this.props.entity}
-              navigation={this.props.navigation}
-              onTranslate={this.showTranslate}
-              testID={this.props.entity.text==='e2eTest' ? 'ActivityMoreButton' : ''}
-            />}
+            {!this.props.hideTabs && (
+              <ActivityActionSheet
+                toggleEdit={this.toggleEdit}
+                entity={this.props.entity}
+                navigation={this.props.navigation}
+                onTranslate={this.showTranslate}
+                testID={
+                  this.props.entity.text === 'e2eTest'
+                    ? 'ActivityMoreButton'
+                    : ''
+                }
+              />
+            )}
           </View>
         </View>
       );
-
     }
   }
 
@@ -303,10 +369,21 @@ export default class Activity extends Component {
     if (remind_object) {
       if (blockListService.has(remind_object.owner_guid)) {
         return (
-          <View style={[styles.blockedNoticeView, CommonStyle.margin2x, CommonStyle.borderRadius2x, CommonStyle.padding2x]}>
+          <View
+            style={[
+              styles.blockedNoticeView,
+              CommonStyle.margin2x,
+              CommonStyle.borderRadius2x,
+              CommonStyle.padding2x,
+            ]}>
             <Text style={[CommonStyle.textCenter, styles.blockedNoticeDesc]}>
               {i18n.t('activity.remindBlocked')}
-              <Text onPress={() => this.navToChannel()} style={[CommonStyle.bold]}> @{remind_object.ownerObj.username}</Text>
+              <Text
+                onPress={() => this.navToRemindChannel()}
+                style={[CommonStyle.bold]}>
+                {' '}
+                @{remind_object.ownerObj.username}
+              </Text>
             </Text>
           </View>
         );
@@ -319,13 +396,13 @@ export default class Activity extends Component {
       return (
         <View style={styles.remind}>
           <Activity
-            ref={r => this.remind = r}
+            ref={(r) => (this.remind = r)}
             hideTabs={true}
             entity={remind_object}
             navigation={this.props.navigation}
             isReminded={true}
             hydrateOnNav={true}
-            />
+          />
         </View>
       );
     }
@@ -336,10 +413,12 @@ export default class Activity extends Component {
    */
   showActions() {
     if (!this.props.hideTabs) {
-      return <Actions
-                entity={this.props.entity}
-                navigation={this.props.navigation}
-                />
+      return (
+        <Actions
+          entity={this.props.entity}
+          navigation={this.props.navigation}
+        />
+      );
     }
   }
 }
@@ -355,7 +434,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
   },
   emptyMessage: {
-    padding: 0
+    padding: 0,
   },
   media: {
     flex: 1,
@@ -365,13 +444,13 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   remind: {
-  //  flex:1,
+    //  flex:1,
   },
   rightToolbar: {
     alignSelf: 'flex-end',
     position: 'absolute',
     right: 10,
-    top: 6
+    top: 6,
   },
   boostTagContainer: {
     flexDirection: 'row',
@@ -380,11 +459,11 @@ const styles = StyleSheet.create({
   boostTagLabel: {
     fontWeight: '400',
     marginLeft: 2,
-    fontSize:10,
+    fontSize: 10,
   },
   activitySpacer: {
-    flex:1,
-    height: 70
+    flex: 1,
+    height: 70,
   },
   blockedNoticeView: {
     backgroundColor: '#eee',
@@ -398,5 +477,5 @@ const styles = StyleSheet.create({
   },
   yellowBanner: {
     backgroundColor: '#ffecb3',
-  }
+  },
 });

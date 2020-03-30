@@ -3,7 +3,7 @@
         "baseUrl": "./",
         "noImplicitAny": false,
         "allowJs": true,
-        "checkJs": true,
+        "checkJs": false,
         "declaration": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,

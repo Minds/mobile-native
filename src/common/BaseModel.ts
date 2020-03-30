@@ -1,21 +1,32 @@
-import {observable, action, computed, toJS} from 'mobx';
+import { observable, action, computed, toJS } from 'mobx';
 import _ from 'lodash';
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 import EventEmitter from 'eventemitter3';
 
 import sessionService from './services/session.service';
-import {vote} from './services/votes.service';
-import {toggleExplicit} from '../newsfeed/NewsfeedService';
+import { vote } from './services/votes.service';
+import { toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';
-import {revokeBoost, acceptBoost, rejectBoost} from '../boost/BoostService';
-import {toggleAllowComments as toggleAllow} from '../comments/CommentsService';
+import { revokeBoost, acceptBoost, rejectBoost } from '../boost/BoostService';
+import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
 import i18n from './services/i18n.service';
 import featuresService from './services/features.service';
+import type UserModel from '../channel/UserModel';
+import type FeedStore from './stores/FeedStore';
 
 /**
  * Base model
  */
 export default class BaseModel {
+  username: string = '';
+  guid: string = '';
+  ownerObj!: UserModel;
+  mature: boolean = false;
+  pending?: '0' | '1';
+  state?: 'rejected' | 'accepted' | 'revoked';
+  time_created!: number;
+  urn: string = '';
+
   /**
    * Event emitter
    */
@@ -29,13 +40,13 @@ export default class BaseModel {
   /**
    * Entity permissions
    */
-  @observable.ref permissions = {};
+  @observable.ref permissions: any = {};
 
   /**
    * List reference (if the entity belongs to one)
    * @var {OffsetListStore}
    */
-  __list = null;
+  __list: FeedStore | null = null;
 
   /**
    *  List reference setter
@@ -47,14 +58,14 @@ export default class BaseModel {
   /**
    *  List reference getter
    */
-  get _list() {
+  get _list(): FeedStore | null {
     return this.__list;
   }
 
   @action
   removeFromList() {
     if (this._list) {
-      this._list.remove(this);
+      this._list!.remove(this);
     }
   }
 
@@ -77,13 +88,18 @@ export default class BaseModel {
   /**
    * Constructor
    */
-  constructor(data) {
-    Object.assign(this, data);
-
+  constructor(data: any) {
     // Some users have a number as username and engine return them as a number
-    if (this.username) {
-      this.username = this.username.toString();
+    if (data.username) {
+      data.username = String(data.username);
     }
+
+    // some blogs has numeric name
+    if (data.name) {
+      data.name = String(data.name);
+    }
+
+    Object.assign(this, data);
 
     // create childs instances
     const childs = this.childModels();
@@ -109,7 +125,7 @@ export default class BaseModel {
   update(data) {
     const childs = this.childModels();
 
-    Object.getOwnPropertyNames(this).forEach(key => {
+    Object.getOwnPropertyNames(this).forEach((key) => {
       if (data[key] !== undefined) {
         if (childs[key] && this[key] && this[key].update) {
           // we update the child model
@@ -126,20 +142,28 @@ export default class BaseModel {
    * Create an instance
    * @param {object} data
    */
-  static create(data) {
-    return new this(data);
+  static create<T extends typeof BaseModel>(
+    this: T,
+    data: object,
+  ): InstanceType<T> {
+    return new this(data) as InstanceType<T>;
   }
 
   /**
    * Create an array of instances
    * @param {array} arrayData
    */
-  static createMany(arrayData) {
-    const collection = [];
-    if (!arrayData) return collection;
+  static createMany<T extends typeof BaseModel>(
+    this: T,
+    arrayData: Array<object>,
+  ): Array<InstanceType<T>> {
+    const collection: Array<InstanceType<T>> = [];
+    if (!arrayData) {
+      return collection;
+    }
 
-    arrayData.forEach(data => {
-      collection.push(new this(data));
+    arrayData.forEach((data) => {
+      collection.push(new this(data) as InstanceType<T>);
     });
 
     return collection;
@@ -150,9 +174,12 @@ export default class BaseModel {
    * returns a new instance
    * @param {object} data
    */
-  static checkOrCreate(data) {
+  static checkOrCreate<T extends typeof BaseModel>(
+    this: T,
+    data,
+  ): InstanceType<T> {
     if (data instanceof this) {
-      return data;
+      return data as InstanceType<T>;
     }
     return this.create(data);
   }
@@ -208,7 +235,7 @@ export default class BaseModel {
     const guids = this['thumbs:' + direction + ':user_guids'] || [];
 
     if (voted) {
-      this['thumbs:' + direction + ':user_guids'] = guids.filter(function(
+      this['thumbs:' + direction + ':user_guids'] = guids.filter(function (
         item,
       ) {
         return item !== sessionService.guid;
@@ -229,7 +256,7 @@ export default class BaseModel {
       await vote(this.guid, direction, params);
     } catch (err) {
       if (!voted) {
-        this['thumbs:' + direction + ':user_guids'] = guids.filter(function(
+        this['thumbs:' + direction + ':user_guids'] = guids.filter(function (
           item,
         ) {
           return item !== sessionService.guid;
@@ -248,7 +275,7 @@ export default class BaseModel {
 
   getClientMetadata() {
     return this._list && this._list.metadataService
-      ? this._list.metadataService.getEntityMeta(this)
+      ? this._list.metadataService!.getEntityMeta(this)
       : {};
   }
 
@@ -316,7 +343,7 @@ export default class BaseModel {
 
   @action
   async toggleAllowComments() {
-    const data = await toggleAllow(this.guid, !this.allow_comments);
+    await toggleAllow(this.guid, !this.allow_comments);
     this.allow_comments = !this.allow_comments;
   }
 
@@ -327,11 +354,11 @@ export default class BaseModel {
 
   /**
    * Check if the current user can perform an action with the entity
-   * @param {string} action
+   * @param {string} actionName
    * @param {boolean} showAlert Show an alert message if the action is not allowed
    * @returns {boolean}
    */
-  can(action, showAlert = false) {
+  can(actionName: string, showAlert = false) {
     // TODO: clean up permissions feature flag
     if (!featuresService.has('permissions')) return true;
 
@@ -340,13 +367,15 @@ export default class BaseModel {
     if (!this.permissions || !this.permissions.permissions) {
       allowed = false;
     } else {
-      allowed = this.permissions.permissions.some(item => item === action);
+      allowed = this.permissions.permissions.some(
+        (item) => item === actionName,
+      );
     }
 
     if (showAlert && !allowed) {
       Alert.alert(
         i18n.t('sorry'),
-        i18n.t(`permissions.notAllowed.${action}`, {
+        i18n.t(`permissions.notAllowed.${actionName}`, {
           defaultValue: i18n.t('notAllowed'),
         }),
       );

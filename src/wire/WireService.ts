@@ -3,18 +3,24 @@ import i18n from '../common/services/i18n.service';
 import BlockchainWireService from '../blockchain/services/BlockchainWireService';
 import BlockchainTokenService from '../blockchain/services/BlockchainTokenService';
 import BlockchainWalletService from '../blockchain/wallet/BlockchainWalletService';
+import type {
+  WireRequest,
+  Payload,
+  PayloadOnchain,
+  TransactionPayload,
+} from './WireTypes';
 
 /**
  * Wire Service
  */
 class WireService {
-
   /**
    * Unlock an activity
    * @param {string} guid
    */
   unlock(guid: string): Promise<any> {
-    return api.get(`api/v1/wire/threshold/${guid}`)
+    return api
+      .get(`api/v1/wire/threshold/${guid}`)
       .then((response: any): any => {
         if (response.hasOwnProperty('activity')) {
           return response.activity;
@@ -37,7 +43,7 @@ class WireService {
    * Get user rewards
    * @param {string} guid
    */
-  userRewards(guid: string): Promise<any>{
+  userRewards(guid: string): Promise<any> {
     return api.get(`api/v1/wire/rewards/${guid}/entity`);
   }
 
@@ -45,52 +51,52 @@ class WireService {
    * Get rewards
    * @param {string} guid
    */
-  rewards(guid: string): Promise<any>{
-    return api.get(`api/v1/wire/rewards/${guid}`)
-      .then((rewards: any): any=> {
-        rewards = (rewards.wire_rewards) ? rewards.wire_rewards.rewards : null
-        if (rewards) {
-          // map types
-          for (let type in rewards) {
-            rewards[type] = rewards[type].map((reward): any => {
-              reward.type = type;
-              return reward;
-            });
-          }
+  rewards(guid: string): Promise<any> {
+    return api.get(`api/v1/wire/rewards/${guid}`).then((rewards: any): any => {
+      rewards = rewards.wire_rewards ? rewards.wire_rewards.rewards : null;
+      if (rewards) {
+        // map types
+        for (let type in rewards) {
+          rewards[type] = rewards[type].map((reward): any => {
+            reward.type = type;
+            return reward;
+          });
         }
-        return rewards;
-      });
+      }
+      return rewards;
+    });
   }
 
   /**
    * Send wire
    * @param {object} opts
    */
-  async send(opts: Object): Promise<any> {
+  async send(opts: WireRequest): Promise<any> {
     const payload = await this.getTransactionPayloads(opts);
 
     if (!payload) {
       return;
     }
 
-    return await api.post(`api/v2/wire/${opts.guid}`, {
-      payload,
-      method: payload.method,
-      amount: opts.amount,
-      recurring: !!opts.recurring
-    }).then((result: any): any => {
-      result.payload = payload;
-      return result;
-    });
+    return await api
+      .post(`api/v2/wire/${opts.guid}`, {
+        payload,
+        method: payload.method,
+        amount: opts.amount,
+        recurring: !!opts.recurring,
+      })
+      .then((result: any): any => {
+        result.payload = payload;
+        return result;
+      });
   }
 
   /**
    * Get transaction payloads
    * @param {object} opts
    */
-  async getTransactionPayloads(opts: Object): any {
-
-    let payload: Object;
+  async getTransactionPayloads(opts: WireRequest): Promise<TransactionPayload> {
+    let payload: Payload | PayloadOnchain | null = null;
 
     switch (opts.currency) {
       case 'tokens':
@@ -101,17 +107,17 @@ class WireService {
             signable: true,
             offchain: opts.currency === 'tokens',
             confirmTokenExchange: opts.amount,
-            currency: opts.currency
-          }
+            currency: opts.currency,
+          },
         );
-      break;
+        break;
       case 'usd':
-        payload = {type: 'usd'};
-      break;
+        payload = { type: 'usd' };
+        break;
     }
 
     if (!payload || payload.cancelled) {
-      return;
+      return null;
     }
 
     switch (payload.type) {
@@ -119,13 +125,13 @@ class WireService {
         return {
           method: payload.type,
           address: 'offchain',
-          token: payload.token
+          token: payload.token,
         };
 
       case 'offchain':
         return {
           method: 'offchain',
-          address: 'offchain'
+          address: 'offchain',
         };
 
       case 'onchain':
@@ -137,15 +143,18 @@ class WireService {
           await BlockchainTokenService.increaseApproval(
             (await BlockchainWireService.getContract()).options.address,
             opts.amount * 11,
-            i18n.t('wire.preApproveMessage')
+            i18n.t('wire.preApproveMessage'),
           );
         }
 
         return {
           method: payload.type,
-          address: payload.wallet.address,
+          address: (payload as PayloadOnchain).wallet.address,
           receiver: opts.owner.eth_wallet,
-          txHash: await BlockchainWireService.create(opts.owner.eth_wallet, opts.amount)
+          txHash: await BlockchainWireService.create(
+            opts.owner.eth_wallet,
+            opts.amount,
+          ),
         };
 
       case 'eth':
@@ -155,16 +164,19 @@ class WireService {
 
         return {
           method: payload.type,
-          address: payload.wallet.address,
+          address: (payload as PayloadOnchain).wallet.address,
           receiver: opts.owner.eth_wallet,
-          txHash: await BlockchainWireService.createEth(opts.owner.eth_wallet, opts.amount)
+          txHash: await BlockchainWireService.createEth(
+            opts.owner.eth_wallet,
+            opts.amount,
+          ),
         };
 
       case 'usd':
         return {
           method: payload.type,
-          paymentMethodId: opts.paymentMethodId
-        }
+          paymentMethodId: opts.paymentMethodId,
+        };
     }
 
     throw new Error('Unknown type');
