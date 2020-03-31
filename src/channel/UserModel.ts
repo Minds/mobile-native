@@ -30,6 +30,8 @@ export default class UserModel extends BaseModel {
   plus: boolean = false;
   verified: boolean = false;
   founder: boolean = false;
+  rewards: boolean = false;
+  last_accepted_tos: number = 0;
   carousels?: Array<any>;
 
   /**

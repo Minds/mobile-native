@@ -24,7 +24,7 @@ export default class BaseModel {
   mature: boolean = false;
   pending?: '0' | '1';
   state?: 'rejected' | 'accepted' | 'revoked';
-  time_created!: number;
+  time_created!: string;
   urn: string = '';
 
   /**
@@ -385,7 +385,7 @@ export default class BaseModel {
   }
 
   isScheduled() {
-    return this.time_created * 1000 > Date.now();
+    return parseInt(this.time_created, 10) * 1000 > Date.now();
   }
 
   /**

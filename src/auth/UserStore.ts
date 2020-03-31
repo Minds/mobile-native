@@ -1,48 +1,42 @@
-import {
-  observable,
-  action
-} from 'mobx';
+import { observable, action } from 'mobx';
 
 import channelService from './../channel/ChannelService';
-import sessionService from '../common/services/session.service';
 import UserModel from './../channel/UserModel';
-import { MINDS_FEATURES } from '../config/Config';
-import { Alert } from 'react-native';
 import searchBarService from '../topbar/SearchBar.service';
 
 /**
  * Login Store
  */
 class UserStore {
-  @observable me = {};
+  @observable me: UserModel = new UserModel({});
   @observable emailConfirmMessageDismiss = false;
   @observable searching = false;
   @observable bannerInfoDismiss = false;
 
   /**
    * Dissmis Message Banner
-   * @param {*} value 
    */
   @action
-  setDissmisBanner(value) {
+  setDissmisBanner(value: boolean): void {
     this.bannerInfoDismiss = value;
   }
 
   @action
-  setDissmis(value) {
+  setDissmis(value: boolean): void {
     this.emailConfirmMessageDismiss = value;
   }
 
   @action
-  setUser(user) {
-    if (!user || !user.guid)
-      return
+  setUser(user: { guid?: string }): void {
+    if (!user || !user.guid) {
+      return;
+    }
     this.me = UserModel.create(user);
   }
 
   @action
-  setRewards(value) {
-    this.me.rewards = !!value;
+  setRewards(value: boolean) {
+    this.me.rewards = value;
   }
 
   @action
@@ -69,38 +63,31 @@ class UserStore {
 
   @action
   clearUser() {
-    this.me = {};
+    this.me = new UserModel({});
   }
 
   @action
   async load(refresh = false) {
-    if (!refresh) this.me = {};
+    if (!refresh) {
+      this.clearUser();
+    }
 
     let response = await channelService.load('me');
-
-    //if (!response.channel) {
-    //  return sessionService.setToken(null);
-    //}
 
     this.setUser(response.channel);
 
     // Load search history
-    searchBarService.init(this.me.guid)
+    searchBarService.init(this.me.guid);
 
-    if (this.me.canCrypto) {
-      MINDS_FEATURES.crypto = true;
-    }
     return this.me;
-
   }
 
   isAdmin() {
     return this.me.isAdmin();
   }
 
-  @action
   reset() {
-    this.me = {};
+    this.clearUser();
   }
 
   @action
@@ -131,13 +118,11 @@ class UserStore {
 
   /**
    * Get suggested Search
-   * @param {String} search 
+   * @param {String} search
    */
   async getSuggestedSearch(search) {
-    return await searchBarService.getSuggestedSearch(search)
+    return await searchBarService.getSuggestedSearch(search);
   }
-  
-
 }
 
 export default UserStore;
