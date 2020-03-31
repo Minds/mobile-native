@@ -27,6 +27,8 @@ import ThemedStyles from '../styles/ThemedStyles';
 import PasswordValidator from '../common/components/PasswordValidator';
 import validatePassword from '../common/helpers/validatePassword';
 
+import type { registerParams } from '../auth/AuthService';
+
 /**
  * Register Form
  */
@@ -245,7 +247,7 @@ class RegisterForm extends Component {
         email: this.state.email,
         password: this.state.password,
         exclusive_promotions: this.state.exclusive_promotions,
-      };
+      } as registerParams;
       await authService.register(params);
       sessionService.setInitialScreen('OnboardingScreenNew');
       await apiService.clearCookies();
