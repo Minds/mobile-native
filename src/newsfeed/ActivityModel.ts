@@ -29,13 +29,14 @@ type Thumbs = Record<ThumbSize, string>;
 export default class ActivityModel extends BaseModel {
   // Observable properties
   @observable pinned: boolean = false;
-  @observable time_created: number = 0;
+  @observable time_created: string = '';
   @observable message: string = '';
   @observable title: string = '';
   @observable mature: boolean = false;
   @observable edited: '0' | '1' = '0';
 
   // decorated observables
+  'is:following': boolean;
   'thumbs:down:count': number;
   'thumbs:up:count': number;
   'comments:count': number;
@@ -50,10 +51,13 @@ export default class ActivityModel extends BaseModel {
   paywall_unlocked: boolean = false;
   guid: string = '';
   entity_guid: string = '';
+  owner_guid: string = '';
   custom_type: string = '';
   custom_data?: Array<any> | any;
   nsfw?: Array<number>;
   flags?: any;
+  reminds: number = 0;
+  impressions: number = 0;
 
   /**
    * Mature visibility flag
@@ -205,7 +209,7 @@ export default class ActivityModel extends BaseModel {
   }
 
   @action
-  setVisible(value) {
+  setVisible(value: boolean) {
     this.is_visible = value;
   }
 
@@ -292,8 +296,8 @@ export default class ActivityModel extends BaseModel {
   }
 
   @action
-  async updateActivity(data = {}) {
-    const entity = this.toPlainObject();
+  async updateActivity(data: any = {}) {
+    const entity: any = this.toPlainObject();
 
     if (data) {
       for (const field in data) {
@@ -311,7 +315,7 @@ export default class ActivityModel extends BaseModel {
   }
 
   @action
-  setEdited(message) {
+  setEdited(message: string) {
     this.message = message;
     this.edited = '1';
   }

@@ -1,55 +1,48 @@
-import React, {
-  Component
-} from 'react';
-
-import {
-  Text,
-  StyleSheet,
-  View,
-  Alert,
-  TouchableOpacity,
-} from 'react-native';
-
-import {
-  observer,
-} from 'mobx-react'
+import React, { Component } from 'react';
+import { TouchableOpacity } from 'react-native';
+import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { CommonStyle as CS } from '../../../styles/Common';
 import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import testID from '../../../common/helpers/testID';
-import i18n from '../../../common/services/i18n.service';
-import logService from '../../../common/services/log.service';
 import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import type ActivityModel from 'src/newsfeed/ActivityModel';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+
+type PropsType = {
+  entity: ActivityModel;
+  size: number;
+  orientation: 'column' | 'row';
+};
 
 /**
  * Thumb Up Action Component
  */
 @observer
-class ThumbUpAction extends Component {
-
+class ThumbUpAction extends Component<PropsType> {
   /**
    * Default Props
    */
   static defaultProps = {
     size: 20,
+    orientation: 'row',
   };
 
   /**
    * Thumb direction
    */
-  direction = 'up';
+  direction: 'up' | 'down' = 'up';
 
   /**
    * Action Icon
    */
-  iconName = 'thumb-up';
+  iconName: string = 'thumb-up';
 
   /**
    * Render
@@ -57,20 +50,38 @@ class ThumbUpAction extends Component {
   render() {
     const entity = this.props.entity;
 
+    //@ts-ignore
     const count = entity[`thumbs:${this.direction}:count`];
 
     const canVote = entity.can(FLAG_VOTE);
 
-    const color = canVote ? (this.voted ? ThemedStyles.style.colorIconActive : ThemedStyles.style.colorIcon) : CS.colorLightGreyed;
+    const color = canVote
+      ? this.voted
+        ? ThemedStyles.style.colorIconActive
+        : ThemedStyles.style.colorIcon
+      : CS.colorLightGreyed;
 
     return (
       <TouchableOpacityCustom
-        style={[CS.flexContainer, CS.centered, this.props.orientation == 'column' ? CS.columnAlignCenter : CS.rowJustifyCenter ]}
+        style={[
+          CS.flexContainer,
+          CS.centered,
+          this.props.orientation === 'column'
+            ? CS.columnAlignCenter
+            : CS.rowJustifyCenter,
+        ]}
         onPress={this.toggleThumb}
-        {...testID(`Thumb ${this.direction} activity button`)}
-      >
-        <Icon style={[color, CS.marginRight]} name={this.iconName} size={this.props.size} />
-        <Counter size={this.props.size * 0.70} count={count} orientation={this.props.orientation} {...testID(`Thumb ${this.direction} count`)}/>
+        {...testID(`Thumb ${this.direction} activity button`)}>
+        <Icon
+          style={[color, CS.marginRight]}
+          name={this.iconName}
+          size={this.props.size}
+        />
+        <Counter
+          size={this.props.size * 0.7}
+          count={count}
+          testID={`Thumb ${this.direction} count`}
+        />
       </TouchableOpacityCustom>
     );
   }

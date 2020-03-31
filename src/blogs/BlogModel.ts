@@ -12,6 +12,8 @@ import { LICENSES } from '../common/services/list-options.service';
 export default class BlogModel extends BaseModel {
   thumbnail_src?: string;
   license: string = '';
+  reminds: number = 0;
+  impressions: number = 0;
 
   /**
    * Get banner source

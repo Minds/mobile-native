@@ -26,6 +26,9 @@ export default class BaseModel {
   state?: 'rejected' | 'accepted' | 'revoked';
   time_created!: string;
   urn: string = '';
+  wire_totals?: {
+    [name: string]: number;
+  };
 
   /**
    * Event emitter
