@@ -2,4 +2,24 @@
     "editor.tabSize": 2,
     "flow.useNPMPackagedFlow": true,
     "javascript.validate.enable": false,
+    "files.watcherExclude": {
+        "**/android/app/build/**": true,
+        "**/android/build/**": true,
+        "**/ios/build/**": true,
+        "**/node_modules/**": false,
+        "/node_modules": true
+    },
+    "files.exclude": {
+        "**/android/app/build/**": true,
+        "**/android/build/**": true,
+        "**/ios/build/**": true,
+        "/node_modules": true
+    },
+    "search.exclude": {
+        "**/android/app/build/**": true,
+        "**/android/build/**": true,
+        "**/ios/build/**": true,
+        "**/node_modules": false,
+        "/node_modules": true
+    },
 }
