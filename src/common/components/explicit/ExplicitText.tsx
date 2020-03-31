@@ -1,49 +1,58 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {observer} from "mobx-react";
+import { observer } from 'mobx-react';
 import * as entities from 'entities';
 import {
   Text,
   StyleSheet,
   View,
-  TouchableOpacity,
   Dimensions,
-  Platform
+  Platform,
+  TextStyle,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Tags from '../../../common/components/Tags';
 import colors from '../../../styles/Colors';
-import { CommonStyle } from '../../../styles/Common';
 import i18n from '../../services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import type ActivityModel from 'src/newsfeed/ActivityModel';
+
+type PropsType = {
+  entity: ActivityModel;
+  navigation: any;
+  style?: TextStyle | Array<TextStyle>;
+};
+
+type StateType = {
+  more: boolean;
+  width: number;
+  height: number;
+};
 
 @observer
-export default class ExplicitText extends Component {
+export default class ExplicitText extends Component<PropsType, StateType> {
   needTruncate = false;
 
   state = {
     more: false,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-  }
+  };
 
   /**
    * Handle dimensions changes
    */
   dimensionChange = () => {
     this.setState({
-      width: Dimensions.get('window').width
+      width: Dimensions.get('window').width,
     });
-  }
+  };
 
   /**
    * On component will mount
    */
   componentWillMount() {
-    Dimensions.addEventListener("change", this.dimensionChange);
+    Dimensions.addEventListener('change', this.dimensionChange);
   }
 
   /**
@@ -51,7 +60,7 @@ export default class ExplicitText extends Component {
    */
   componentWillUnmount() {
     // allways remove listeners on unmount
-    Dimensions.removeEventListener("change", this.dimensionChange);
+    Dimensions.removeEventListener('change', this.dimensionChange);
   }
 
   /**
@@ -61,14 +70,18 @@ export default class ExplicitText extends Component {
     const theme = ThemedStyles.style;
     const entity = this.props.entity;
 
-    let title = entity.title ? entities.decodeHTML(entity.title).trim() : null;
-    let message = entity.message ? entities.decodeHTML(entity.message).trim() : '';
+    let title: string = entity.title
+      ? entities.decodeHTML(entity.title).trim()
+      : '';
+    let message = entity.message
+      ? entities.decodeHTML(entity.message).trim()
+      : '';
 
     let body = null;
     let moreLess = null;
     let explicitToggle = null;
 
-    if (message != '') {
+    if (message !== '') {
       const truncated = this.truncate(message);
       // truncate if necessary
       if (message.length > truncated.length) {
@@ -76,44 +89,52 @@ export default class ExplicitText extends Component {
         moreLess = this.getMoreLess();
       }
 
-      body = (entity.shouldBeBlured() && !entity.mature_visibility) ?
-        <Text style={styles.mature}>{message}</Text> :
-        <Tags navigation={this.props.navigation} style={this.props.style}>{message}</Tags>
+      body =
+        entity.shouldBeBlured() && !entity.mature_visibility ? (
+          <Text style={styles.mature}>{message}</Text>
+        ) : (
+          <Tags navigation={this.props.navigation} style={this.props.style}>
+            {message}
+          </Tags>
+        );
     }
 
-    if (title) {
-      title = <Tags navigation={this.props.navigation} style={[this.props.style, theme.fontL, theme.marginBottom]}>{title}</Tags>
-    }
+    const titleCmp: React.ReactNode = title ? (
+      <Tags
+        navigation={this.props.navigation}
+        style={[this.props.style, theme.fontL, theme.marginBottom]}>
+        {title}
+      </Tags>
+    ) : null;
 
     return (
       <View style={styles.container}>
-        { title }
-        { body }
-        { moreLess }
-        { explicitToggle }
+        {titleCmp}
+        {body}
+        {moreLess}
+        {explicitToggle}
       </View>
     );
   }
 
   /**
    * Truncate text
-   * @param {string} message
    */
-  truncate(message) {
+  truncate(message: string) {
     const limit = this.getTextLimit();
 
     let truncated = false;
-    let lines = message.split('\n');
+    let lines: Array<string> = message.split('\n');
     if (lines.length > 20) {
-      lines = lines.slice(0,20);
+      lines = lines.slice(0, 20);
       truncated = true;
     }
 
-    lines = lines.join('\n');
-    if (lines.length > limit) {
-      return lines.substr(0, limit) + '...';
+    const strLines = lines.join('\n');
+    if (strLines.length > limit) {
+      return strLines.substr(0, limit) + '...';
     }
-    return lines + (truncated ? '...':'');
+    return strLines + (truncated ? '...' : '');
   }
 
   /**
@@ -127,25 +148,29 @@ export default class ExplicitText extends Component {
    * Returns more or less button
    */
   getMoreLess() {
-    const msg = (this.state.more) ? i18n.t('showLess') : i18n.t('readMore');
-    return <Text style={styles.readmore} onPress={this.toggleReadMore}>{msg}</Text>
+    const msg = this.state.more ? i18n.t('showLess') : i18n.t('readMore');
+    return (
+      <Text style={styles.readmore} onPress={this.toggleReadMore}>
+        {msg}
+      </Text>
+    );
   }
 
   /**
    * Toggle read more
    */
   toggleReadMore = () => {
-    this.setState({more: !this.state.more});
-  }
+    this.setState({ more: !this.state.more });
+  };
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   readmore: {
     color: colors.primary,
-    marginTop: 5
+    marginTop: 5,
   },
   mature: {
     ...Platform.select({
@@ -155,15 +180,15 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
         shadowRadius: 2,
         shadowOffset: {
-          height: -1
+          height: -1,
         },
       },
       android: {
-        color:'transparent',
+        color: 'transparent',
         textShadowColor: 'rgba(107, 107, 107, 0.5)',
-        textShadowOffset: {width: -1, height: 1},
-        textShadowRadius: 20
-      }
-    })
-  }
+        textShadowOffset: { width: -1, height: 1 },
+        textShadowRadius: 20,
+      },
+    }),
+  },
 });

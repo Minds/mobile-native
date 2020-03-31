@@ -17,7 +17,7 @@ type PropsType = {
   textColor?: string;
   color?: string;
   children?: React.ReactNode;
-  containerStyle?: ViewStyle;
+  containerStyle?: ViewStyle | Array<ViewStyle>;
   accessibilityLabel?: string;
   textStyle?: TextStyle | Array<TextStyle>;
   disabled?: boolean;

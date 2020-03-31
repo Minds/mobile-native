@@ -1,26 +1,29 @@
+//@ts-ignore
 import _ from 'lodash';
 
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
-import {
-  Text,
-} from 'react-native';
+import { Text, TextStyle } from 'react-native';
 
 import colors from '../../styles/Colors';
 import openUrlService from '../services/open-url.service';
+
+type PropsType = {
+  color?: string;
+  navigation: any;
+  style?: TextStyle | Array<TextStyle>;
+};
 
 /**
  * Tags component
  *
  * Generate text with links
  */
-export default class Tags extends PureComponent {
-
+export default class Tags extends PureComponent<PropsType> {
+  index: number = 0;
   styles = {
-    color: colors.primary
-  }
+    color: colors.primary,
+  };
 
   /**
    * On component will mount
@@ -43,10 +46,18 @@ export default class Tags extends PureComponent {
       const chunks = _.chunk(tags, 50);
 
       return chunks.map((data, i) => {
-        return <Text selectable={true} style={this.props.style} key={i}>{data}</Text>
+        return (
+          <Text selectable={true} style={this.props.style} key={i}>
+            {data}
+          </Text>
+        );
       });
     } else {
-      return <Text selectable={true} style={this.props.style}>{tags}</Text>
+      return (
+        <Text selectable={true} style={this.props.style}>
+          {tags}
+        </Text>
+      );
     }
   }
 
@@ -75,9 +86,18 @@ export default class Tags extends PureComponent {
     const url = /(^|\s)(\b(?:https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { this.navToURL(content);}}>{content}</Text>
+      return (
+        <Text
+          key={i}
+          style={[this.props.style, this.styles]}
+          onPress={() => {
+            this.navToURL(content);
+          }}>
+          {content}
+        </Text>
+      );
     });
-  }
+  };
 
   /**
    * url .com .org .net
@@ -86,9 +106,18 @@ export default class Tags extends PureComponent {
     const url = /(^|\s)([-A-Z0-9+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { this.navToURL(content);}}>{content}</Text>
+      return (
+        <Text
+          key={i}
+          style={[this.props.style, this.styles]}
+          onPress={() => {
+            this.navToURL(content);
+          }}>
+          {content}
+        </Text>
+      );
     });
-  }
+  };
 
   /**
    * url starting with www
@@ -97,9 +126,18 @@ export default class Tags extends PureComponent {
     const url = /(^|\s)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
-      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { this.navToURL('http://'+content);}}>{content}</Text>
+      return (
+        <Text
+          key={i}
+          style={[this.props.style, this.styles]}
+          onPress={() => {
+            this.navToURL('http://' + content);
+          }}>
+          {content}
+        </Text>
+      );
     });
-  }
+  };
 
   /**
    * #tags
@@ -108,9 +146,18 @@ export default class Tags extends PureComponent {
     const hash = /(^|\s)\#(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
-      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { this.navToDiscovery(`#${content}`) }}>#{content}</Text>
+      return (
+        <Text
+          key={i}
+          style={[this.props.style, this.styles]}
+          onPress={() => {
+            this.navToDiscovery(`#${content}`);
+          }}>
+          #{content}
+        </Text>
+      );
     });
-  }
+  };
 
   /**
    * @tags
@@ -119,27 +166,36 @@ export default class Tags extends PureComponent {
     const hash = /(^|\s)\@(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
-      return <Text key={i} style={[this.props.style,this.styles]} onPress={() => { this.navToChannel(content) }}>@{content}</Text>
+      return (
+        <Text
+          key={i}
+          style={[this.props.style, this.styles]}
+          onPress={() => {
+            this.navToChannel(content);
+          }}>
+          @{content}
+        </Text>
+      );
     });
-  }
+  };
 
   /**
    * Navigate to discovery
    */
   navToDiscovery = (q) => {
-    this.props.navigation.navigate('Discovery', {query : q});
-  }
+    this.props.navigation.navigate('Discovery', { query: q });
+  };
 
   /**
    * Navigate to discovery
    */
   navToChannel = (q) => {
-    this.props.navigation.push('Channel', {username : q});
-  }
+    this.props.navigation.push('Channel', { username: q });
+  };
 
   navToURL = (q) => {
     openUrlService.open(q);
-  }
+  };
 
   /**
    * Apply fn to an array or string
@@ -155,7 +211,7 @@ export default class Tags extends PureComponent {
           if (Array.isArray(child)) {
             return this.parseArrayOrString(child, fn);
           }
-          return child
+          return child;
         }
       });
     }
@@ -180,5 +236,4 @@ export default class Tags extends PureComponent {
 
     return result.filter((d) => d != '');
   }
-
 }

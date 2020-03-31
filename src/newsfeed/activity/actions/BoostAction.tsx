@@ -1,13 +1,6 @@
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableHighlight,
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
 import { CommonStyle } from '../../../styles/Common';
 import { ComponentsStyle } from '../../../styles/Components';
@@ -15,33 +8,42 @@ import { ComponentsStyle } from '../../../styles/Components';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import ActivityModel from 'src/newsfeed/ActivityModel';
 
 // prevent double tap in touchable
 const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);
 
+type PropsType = {
+  navigation: any;
+  entity: ActivityModel;
+};
+
 /**
  * Boost Action Component
  */
-export default class BoostAction extends PureComponent {
-
+export default class BoostAction extends PureComponent<PropsType> {
   /**
    * Render
    */
   render() {
     return (
-      <View style={[ CommonStyle.flexContainer, CommonStyle.rowJustifyCenter ]}>
+      <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
         <TouchableHighlightCustom
           style={[
             CommonStyle.flexContainer,
             CommonStyle.rowJustifyCenter,
             ComponentsStyle.bluebutton,
-            CommonStyle.transparent,
+            CommonStyle.backgroundTransparent,
             ThemedStyles.style.borderIconActive,
           ]}
           underlayColor="transparent"
-          onPress={this.openBoost}
-        >
-          <Text style={[styles.text, ThemedStyles.style.colorIconActive]} numberOfLines={1} adjustsFontSizeToFit={true}>{i18n.t('boost').toUpperCase()}</Text>
+          onPress={this.openBoost}>
+          <Text
+            style={[styles.text, ThemedStyles.style.colorIconActive]}
+            numberOfLines={1}
+            adjustsFontSizeToFit={true}>
+            {i18n.t('boost').toUpperCase()}
+          </Text>
         </TouchableHighlightCustom>
       </View>
     );
@@ -52,7 +54,7 @@ export default class BoostAction extends PureComponent {
    */
   openBoost = () => {
     this.props.navigation.push('Boost', { entity: this.props.entity });
-  }
+  };
 }
 
 const styles = StyleSheet.create({
@@ -60,6 +62,6 @@ const styles = StyleSheet.create({
     paddingLeft: 2,
     paddingRight: 2,
     fontFamily: 'Roboto',
-    fontSize: 12
+    fontSize: 12,
   },
 });

@@ -17,8 +17,8 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
-  size: number;
-  vertical: boolean;
+  size?: number;
+  vertical?: boolean;
 };
 
 /**

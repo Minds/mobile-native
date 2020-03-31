@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Text, View, StyleSheet, Alert } from 'react-native';
+//@ts-ignore
 import Carousel from 'react-native-snap-carousel';
 
 import { CommonStyle as CS } from '../../styles/Common';
@@ -165,7 +166,6 @@ export default class StripeCardCarousel extends React.PureComponent<PropsType> {
 
   /**
    * Card Selected
-   * @param {number} index
    */
   onSelected = (index: number) => {
     if (this.props.onCardSelected) {

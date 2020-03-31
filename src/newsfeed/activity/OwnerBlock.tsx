@@ -1,18 +1,5 @@
-import React, {
-  PureComponent
-} from 'react';
-
-import {
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  View
-} from 'react-native';
-
-import {
-  MINDS_CDN_URI
-} from '../../config/Config';
-
+import React, { PureComponent } from 'react';
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
@@ -23,16 +10,18 @@ const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
  * Owner Block Component
  */
 export default class OwnerBlock extends PureComponent {
-
   /**
    * Navigate To channel
    */
   _navToChannel = () => {
     // only active if receive the navigation property
     if (this.props.navigation) {
-      this.props.navigation.push('Channel', { guid:this.props.entity.ownerObj.guid, entity: this.props.entity.ownerObj });
+      this.props.navigation.push('Channel', {
+        guid: this.props.entity.ownerObj.guid,
+        entity: this.props.entity.ownerObj,
+      });
     }
-  }
+  };
 
   /**
    * Navigate To group
@@ -41,22 +30,30 @@ export default class OwnerBlock extends PureComponent {
     if (this.props.navigation) {
       let groupGuid;
       try {
-        groupGuid = this.props.route.params.group ? this.props.route.params.group.guid : this.props.route.params.guid;
+        groupGuid = this.props.route.params.group
+          ? this.props.route.params.group.guid
+          : this.props.route.params.guid;
       } catch {}
       if (groupGuid == this.props.entity.containerObj.guid) return;
 
-      this.props.navigation.push('GroupView', { group: this.props.entity.containerObj });
+      this.props.navigation.push('GroupView', {
+        group: this.props.entity.containerObj,
+      });
     }
   };
 
   get group() {
-    if(!this.props.entity.containerObj)
-      return null;
+    if (!this.props.entity.containerObj) return null;
 
     return (
-      <DebouncedTouchableOpacity onPress={this._navToGroup} style={styles.groupContainer}>
-        <Text style={[styles.groupName, ThemedStyles.style.colorPrimaryText]} lineBreakMode='tail' numberOfLines={1}>
-          > { this.props.entity.containerObj.name }
+      <DebouncedTouchableOpacity
+        onPress={this._navToGroup}
+        style={styles.groupContainer}>
+        <Text
+          style={[styles.groupName, ThemedStyles.style.colorPrimaryText]}
+          lineBreakMode="tail"
+          numberOfLines={1}>
+          > {this.props.entity.containerObj.name}
         </Text>
       </DebouncedTouchableOpacity>
     );
@@ -67,23 +64,24 @@ export default class OwnerBlock extends PureComponent {
    */
   render() {
     const channel = this.props.entity.ownerObj;
-    const rightToolbar = this.props.rightToolbar||null;
+    const rightToolbar = this.props.rightToolbar || null;
 
     const avatarSrc = channel.getAvatarSource();
 
     return (
       <View style={styles.container}>
         <DebouncedTouchableOpacity onPress={this._navToChannel}>
-          <FastImage source={avatarSrc} style={styles.avatar}/>
+          <FastImage source={avatarSrc} style={styles.avatar} />
         </DebouncedTouchableOpacity>
         <View style={styles.body}>
           <View style={styles.nameContainer}>
             <DebouncedTouchableOpacity onPress={this._navToChannel}>
-              <Text style={[styles.username, ThemedStyles.style.colorPrimaryText]}>
-                { channel.username }
+              <Text
+                style={[styles.username, ThemedStyles.style.colorPrimaryText]}>
+                {channel.username}
               </Text>
             </DebouncedTouchableOpacity>
-            { this.group }
+            {this.group}
           </View>
           {this.props.children}
         </View>
@@ -128,5 +126,5 @@ const styles = StyleSheet.create({
   groupName: {
     fontWeight: 'bold',
     fontFamily: 'Roboto',
-  }
+  },
 });

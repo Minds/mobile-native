@@ -30,11 +30,12 @@ import ThemedStyles from '../styles/ThemedStyles';
 import type { RootStackParamList } from '../navigation/NavigationTypes';
 import type WalletStore from '../wallet/WalletStore';
 import type WireStore from '../wire/WireStore';
+import type { StripeCard } from './WireTypes';
 
 type FabScreenRouteProp = RouteProp<RootStackParamList, 'Fab'>;
 type FabcreenNavigationProp = StackNavigationProp<RootStackParamList, 'Fab'>;
 
-type Props = {
+type PropsType = {
   navigation: FabcreenNavigationProp;
   wallet: WalletStore;
   wire: WireStore;
@@ -46,11 +47,11 @@ type Props = {
  */
 @inject('wallet', 'wire')
 @observer
-class FabScreen extends Component<Props> {
+class FabScreen extends Component<PropsType> {
   /**
    * constructor
    */
-  constructor(props) {
+  constructor(props: PropsType) {
     super(props);
 
     if (!featuresService.has('crypto')) {
@@ -118,7 +119,7 @@ class FabScreen extends Component<Props> {
     this.props.wire.setShowBtc(false);
   };
 
-  onSelectCard = (card) => {
+  onSelectCard = (card: StripeCard) => {
     this.props.wire.setPaymentMethodId(card.id);
   };
 
@@ -441,13 +442,13 @@ class FabScreen extends Component<Props> {
     return this.props.wire.formatAmount(this.props.wire.owner.sums.tokens);
   }
 
-  changeInput = (val) => {
+  changeInput = (val: string) => {
     if (val !== '') {
       val = val.replace(',', '.');
       val = val.replace('..', '.');
       val = val.replace('/(?<=w).(?=w+.)|Gw+K./g', '');
     }
-    this.props.wire.setAmount(val);
+    this.props.wire.setAmount(parseFloat(val));
   };
 }
 

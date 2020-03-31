@@ -1,15 +1,22 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 
-import {CommonStyle as CS} from '../../styles/Common';
+import { CommonStyle as CS } from '../../styles/Common';
 import i18n from '../services/i18n.service';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type BlogModel from 'src/blogs/BlogModel';
+
+type PropsType = {
+  entity: ActivityModel | BlogModel;
+  navigation: any;
+};
 
 /**
  * Blocked Channel
  */
-export default class BlockedChannel extends Component {
+export default class BlockedChannel extends Component<PropsType> {
   /**
    * Navigate To channel
    */
@@ -62,4 +69,3 @@ export default class BlockedChannel extends Component {
     );
   }
 }
-

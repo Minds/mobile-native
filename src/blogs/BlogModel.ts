@@ -14,6 +14,11 @@ export default class BlogModel extends BaseModel {
   license: string = '';
   reminds: number = 0;
   impressions: number = 0;
+  'thumbs:down:count': number;
+  'thumbs:up:count': number;
+  'comments:count': number;
+  'thumbs:down:user_guids': Array<number>;
+  'thumbs:up:user_guids': Array<number>;
 
   /**
    * Get banner source
@@ -68,8 +73,8 @@ export default class BlogModel extends BaseModel {
 /**
  * Define model observables
  */
+//@ts-ignore
 decorate(BlogModel, {
-  //@ts-ignore
   'thumbs:down:count': observable,
   'thumbs:up:count': observable,
   'thumbs:down:user_guids': observable,

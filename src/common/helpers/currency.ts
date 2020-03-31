@@ -1,9 +1,13 @@
 import number from './number';
 
-export default function currency(value, currency, affix = true) {
+export default function currency(
+  value: number,
+  currencyName: string,
+  affix: 'prefix' | 'suffix' | boolean = true,
+): string {
   let output;
 
-  switch (currency) {
+  switch (currencyName) {
     case 'usd':
     case 'money':
       output = number(value, 2, 2);
@@ -14,17 +18,21 @@ export default function currency(value, currency, affix = true) {
         return `${output} USD`;
       }
 
-      return affix === true ? `$ ${output} USD` : output;
+      return affix === true ? `$ ${output} USD` : `${output}`;
 
     case 'tokens':
       output = number(value, 0, 4);
-      return affix === true || affix === 'suffix' ? `${output} tokens` : output;
+      return affix === true || affix === 'suffix'
+        ? `${output} tokens`
+        : `${output}`;
 
     case 'rewards':
       output = number(value, 0, 4);
-      return affix === true || affix === 'suffix' ? `${output} rewards` : output;
+      return affix === true || affix === 'suffix'
+        ? `${output} rewards`
+        : `${output}`;
 
     default:
       return `${number(value)}`;
   }
-};
+}

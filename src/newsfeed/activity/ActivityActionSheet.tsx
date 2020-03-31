@@ -1,19 +1,11 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  View,
-  Alert,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import { View, Alert, Text, StyleSheet } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet'
+import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
 
 import { MINDS_URI } from '../../config/Config';
-import testID from '../../common/helpers/testID';
 import { isFollowing } from '../NewsfeedService';
 import { CommonStyle as CS } from '../../styles/Common';
 import shareService from '../../share/ShareService';
@@ -29,11 +21,10 @@ import ThemedStyles from '../../styles/ThemedStyles';
  * Activity Actions Component
  */
 export default class ActivityActionSheet extends Component {
-
   state = {
     options: [],
-    userBlocked: false
-  }
+    userBlocked: false,
+  };
 
   /**
    * Constructor
@@ -41,7 +32,11 @@ export default class ActivityActionSheet extends Component {
    */
   constructor(props) {
     super(props);
-    this.deleteOption = <Text testID='deleteOption' style={[CS.colorDanger, CS.fontXL]}>{i18n.t('delete')}</Text>
+    this.deleteOption = (
+      <Text testID="deleteOption" style={[CS.colorDanger, CS.fontXL]}>
+        {i18n.t('delete')}
+      </Text>
+    );
   }
 
   /**
@@ -49,10 +44,12 @@ export default class ActivityActionSheet extends Component {
    */
   async showActionSheet() {
     if (this.props.entity['is:following'] === undefined) {
-      this.props.entity['is:following'] = await isFollowing(this.props.entity.guid);
+      this.props.entity['is:following'] = await isFollowing(
+        this.props.entity.guid,
+      );
     }
 
-    this.setState({options: this.getOptions()}, () => {
+    this.setState({ options: this.getOptions() }, () => {
       this.ActionSheet.show();
     });
   }
@@ -64,60 +61,64 @@ export default class ActivityActionSheet extends Component {
   handleSelection = (index) => {
     if (!this.state.options[index]) return;
     this.executeAction(this.state.options[index], index);
-  }
+  };
 
   /**
    * Get the options array based on the permissions
    */
   getOptions() {
-    let options = [ i18n.t('cancel') ];
+    let options = [i18n.t('cancel')];
     const entity = this.props.entity;
 
     // TODO: remove feature flag
     if (featuresService.has('permissions')) {
       // if can edit
       if (entity.can(FLAG_EDIT_POST)) {
-        options.push( i18n.t('edit') );
+        options.push(i18n.t('edit'));
 
         if (!entity.mature) {
-          options.push( i18n.t('setExplicit') );
+          options.push(i18n.t('setExplicit'));
         } else {
-          options.push( i18n.t('removeExplicit') );
+          options.push(i18n.t('removeExplicit'));
         }
 
         if (!entity.dontPin) {
           if (!entity.pinned) {
-            options.push( i18n.t('pin') );
+            options.push(i18n.t('pin'));
           } else {
-            options.push( i18n.t('unpin') );
+            options.push(i18n.t('unpin'));
           }
         }
         if (featuresService.has('allow-comments-toggle')) {
-          options.push( entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+          options.push(
+            entity.allow_comments
+              ? i18n.t('disableComments')
+              : i18n.t('enableComments'),
+          );
         }
       }
 
       if (translationService.isTranslatable(entity)) {
-        options.push( i18n.t('translate.translate') );
+        options.push(i18n.t('translate.translate'));
       }
 
       // if is not the owner
       if (!entity.isOwner()) {
-        options.push( i18n.t('report') );
+        options.push(i18n.t('report'));
 
         if (this.state && this.state.userBlocked) {
-          options.push( i18n.t('channel.unblock') );
+          options.push(i18n.t('channel.unblock'));
         } else {
-          options.push( i18n.t('channel.block') );
+          options.push(i18n.t('channel.block'));
         }
       }
 
-      options.push( i18n.t('share') );
+      options.push(i18n.t('share'));
 
       if (!entity['is:following']) {
-        options.push( i18n.t('follow') );
+        options.push(i18n.t('follow'));
       } else {
-        options.push( i18n.t('unfollow') );
+        options.push(i18n.t('unfollow'));
       }
 
       // if can delete
@@ -127,47 +128,51 @@ export default class ActivityActionSheet extends Component {
     } else {
       // if can edit
       if (entity.isOwner()) {
-        options.push( i18n.t('edit') );
+        options.push(i18n.t('edit'));
 
         if (!entity.mature) {
-          options.push( i18n.t('setExplicit') );
+          options.push(i18n.t('setExplicit'));
         } else {
-          options.push( i18n.t('removeExplicit') );
+          options.push(i18n.t('removeExplicit'));
         }
 
         if (!entity.dontPin) {
           if (!entity.pinned) {
-            options.push( i18n.t('pin') );
+            options.push(i18n.t('pin'));
           } else {
-            options.push( i18n.t('unpin') );
+            options.push(i18n.t('unpin'));
           }
         }
         if (featuresService.has('allow-comments-toggle')) {
-          options.push( entity.allow_comments ? i18n.t('disableComments') : i18n.t('enableComments'));
+          options.push(
+            entity.allow_comments
+              ? i18n.t('disableComments')
+              : i18n.t('enableComments'),
+          );
         }
       }
 
       if (translationService.isTranslatable(entity)) {
-        options.push( i18n.t('translate.translate') );
+        options.push(i18n.t('translate.translate'));
       }
 
       // if is not the owner
       if (!entity.isOwner()) {
-        options.push( i18n.t('report') );
+        options.push(i18n.t('report'));
 
         if (this.state && this.state.userBlocked) {
-          options.push( i18n.t('channel.unblock') );
+          options.push(i18n.t('channel.unblock'));
         } else {
-          options.push( i18n.t('channel.block') );
+          options.push(i18n.t('channel.block'));
         }
       }
 
-      options.push( i18n.t('share') );
+      options.push(i18n.t('share'));
 
       if (!entity['is:following']) {
-        options.push( i18n.t('follow') );
+        options.push(i18n.t('follow'));
       } else {
-        options.push( i18n.t('unfollow') );
+        options.push(i18n.t('unfollow'));
       }
 
       // if can delete
@@ -203,10 +208,8 @@ export default class ActivityActionSheet extends Component {
     Alert.alert(
       i18n.t('sorry'),
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
-      [
-        {text: i18n.t('ok'), onPress: () => {}},
-      ],
-      { cancelable: false }
+      [{ text: i18n.t('ok'), onPress: () => {} }],
+      { cancelable: false },
     );
   }
 
@@ -222,10 +225,10 @@ export default class ActivityActionSheet extends Component {
             i18n.t('delete'),
             i18n.t('confirmNoUndo'),
             [
-              {text: i18n.t('cancel'), style: 'cancel'},
-              {text: i18n.t('ok'), onPress: () => this.deleteEntity()},
+              { text: i18n.t('cancel'), style: 'cancel' },
+              { text: i18n.t('ok'), onPress: () => this.deleteEntity() },
             ],
-            { cancelable: false }
+            { cancelable: false },
           );
           return;
         }, 300);
@@ -275,7 +278,10 @@ export default class ActivityActionSheet extends Component {
         }
         break;
       case i18n.t('share'):
-        shareService.share(this.props.entity.text, MINDS_URI + 'newsfeed/' + this.props.entity.guid);
+        shareService.share(
+          this.props.entity.text,
+          MINDS_URI + 'newsfeed/' + this.props.entity.guid,
+        );
         break;
       case i18n.t('pin'):
       case i18n.t('unpin'):
@@ -305,7 +311,7 @@ export default class ActivityActionSheet extends Component {
       body: {
         flex: 1,
         alignSelf: 'flex-end',
-        backgroundColor: ThemedStyles.getColor('primary_background')
+        backgroundColor: ThemedStyles.getColor('primary_background'),
       },
       titleBox: {
         height: 40,
@@ -325,7 +331,7 @@ export default class ActivityActionSheet extends Component {
         marginTop: 6,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: ThemedStyles.getColor('secondary_background')
+        backgroundColor: ThemedStyles.getColor('secondary_background'),
       },
     };
 
@@ -339,7 +345,7 @@ export default class ActivityActionSheet extends Component {
           testID={this.props.testID}
         />
         <ActionSheet
-          ref={o => this.ActionSheet = o}
+          ref={(o) => (this.ActionSheet = o)}
           title={i18n.t('actions')}
           options={this.state.options}
           onPress={this.handleSelection}
@@ -347,6 +353,6 @@ export default class ActivityActionSheet extends Component {
           styles={styles}
         />
       </View>
-    )
+    );
   }
 }

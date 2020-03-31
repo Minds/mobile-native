@@ -20,6 +20,7 @@ import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
 import type { ThumbSize } from '../types/Common';
+import type GroupModel from 'src/groups/GroupModel';
 
 type Thumbs = Record<ThumbSize, string>;
 
@@ -43,13 +44,15 @@ export default class ActivityModel extends BaseModel {
   'thumbs:down:user_guids': Array<number>;
   'thumbs:up:user_guids': Array<number>;
 
+  containerObj?: GroupModel;
   remind_object?: ActivityModel;
   ownerObj!: UserModel;
   listRef?: FlatList<any>;
   thumbnails?: Thumbs;
-  paywall: boolean = false;
+  paywall: '1' | '' = '';
   paywall_unlocked: boolean = false;
   guid: string = '';
+  subtype: string = '';
   entity_guid: string = '';
   owner_guid: string = '';
   custom_type: string = '';
@@ -58,6 +61,18 @@ export default class ActivityModel extends BaseModel {
   flags?: any;
   reminds: number = 0;
   impressions: number = 0;
+  perma_url?: string;
+  cinemr_guid?: string;
+  thumbnail_src?: string;
+  wire_threshold?: {
+    type: 'token' | 'money';
+    min: number;
+  } | null;
+  _preview?: boolean;
+  /**
+   * Set programatically to indicate that the parent is marked as mature
+   */
+  is_parent_mature?: boolean;
 
   /**
    * Mature visibility flag

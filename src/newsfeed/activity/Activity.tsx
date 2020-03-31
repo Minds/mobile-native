@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
 
-import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  LayoutChangeEvent,
+} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -30,6 +36,10 @@ type PropsType = {
   entity: ActivityModel;
   navigation: any;
   hydrateOnNav?: boolean;
+  isReminded?: boolean;
+  autoHeight?: boolean;
+  isLast?: boolean;
+  hideTabs?: boolean;
   onLayout?: Function;
 };
 
@@ -42,6 +52,21 @@ type StateType = {
  */
 @observer
 export default class Activity extends Component<PropsType, StateType> {
+  /**
+   * Translate reference
+   */
+  translate: Translate | null = null;
+
+  /**
+   * Remind reference
+   */
+  remind: Activity | null = null;
+
+  /**
+   * Remind reference
+   */
+  mediaView: MediaView | null = null;
+
   /**
    * initial state
    */
@@ -73,7 +98,10 @@ export default class Activity extends Component<PropsType, StateType> {
     }
   };
 
-  onLayout = (e) => {
+  /**
+   * On layout
+   */
+  onLayout = (e: LayoutChangeEvent) => {
     if (this.props.onLayout) {
       this.props.onLayout(e);
     }
@@ -105,7 +133,7 @@ export default class Activity extends Component<PropsType, StateType> {
 
     const hasText = !!entity.text;
     const lock =
-      entity.paywall && entity.paywall !== '0' ? (
+      entity.paywall && entity.paywall === '1' ? (
         <Lock entity={entity} navigation={this.props.navigation} />
       ) : null;
 
@@ -179,9 +207,7 @@ export default class Activity extends Component<PropsType, StateType> {
    * Render activity spacer
    */
   renderActivitySpacer = () => {
-    return this.props.isLast ? (
-      <View style={styles.activitySpacer}></View>
-    ) : null;
+    return this.props.isLast ? <View style={styles.activitySpacer} /> : null;
   };
 
   /**
@@ -234,29 +260,12 @@ export default class Activity extends Component<PropsType, StateType> {
    * Pause video if exist
    */
   pauseVideo() {
-    this.mediaView.pauseVideo();
+    this.mediaView?.pauseVideo();
   }
 
   toggleEdit = (value) => {
     this.setState({ editing: value });
   };
-
-  /**
-   * Show group
-   */
-  showContainer() {
-    if (!this.props.entity.containerObj) return null;
-
-    return (
-      <View>
-        <Text
-          onPress={this.navToGroup}
-          style={[styles.groupNameLabel, ThemedStyles.style.colorPrimaryText]}>
-          {this.props.entity.containerObj.name}
-        </Text>
-      </View>
-    );
-  }
 
   /**
    * Show translation

@@ -24,8 +24,9 @@ export default class UserModel extends BaseModel {
   wire_rewards;
   sums;
   btc_address?: string;
-  username: string = '';
   icontime!: string;
+  username: string = '';
+  name: string = '';
   admin: boolean = false;
   plus: boolean = false;
   verified: boolean = false;
