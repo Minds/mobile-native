@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { PureComponent } from 'react';
 
 import { View, Text, SafeAreaView } from 'react-native';

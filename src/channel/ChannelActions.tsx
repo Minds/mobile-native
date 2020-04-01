@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react';
 
 import { View, ActivityIndicator } from 'react-native';

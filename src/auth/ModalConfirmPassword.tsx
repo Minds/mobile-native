@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react';
 import {
   Text,
@@ -57,7 +58,7 @@ export default class ModalConfirmPassword extends Component {
               {msg}
               <View style={styles.textCotainer}>
                 <Text>{i18n.t('auth.confirmpassword')}</Text>
-                <Text 
+                <Text
                   style={[CS.colorSecondaryText, CS.textRight]}
                   onPress={this.props.close}
                 >{i18n.t('close')}</Text>

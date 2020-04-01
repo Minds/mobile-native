@@ -8,6 +8,7 @@ import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import logService from '../common/services/log.service';
 
+//@ts-nocheck
 export const USER_MODE_OPEN = 0;
 export const USER_MODE_MODERATED = 1;
 export const USER_MODE_CLOSED = 2;

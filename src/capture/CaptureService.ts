@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Platform } from 'react-native';
 
 import api from '../common/services/api.service';

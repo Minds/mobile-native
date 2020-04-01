@@ -72,7 +72,7 @@ class UserStore {
       this.clearUser();
     }
 
-    let response = await channelService.load('me');
+    let response: any = await channelService.load('me');
 
     this.setUser(response.channel);
 

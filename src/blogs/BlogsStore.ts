@@ -1,9 +1,9 @@
-import { observable, action } from 'mobx'
+//@ts-nocheck
+import { observable, action } from 'mobx';
 
 import blogService from './BlogsService';
 import BlogModel from './BlogModel';
 import OffsetListStore from '../common/stores/OffsetListStore';
-import { MINDS_FEATURES } from '../config/Config';
 import logService from '../common/services/log.service';
 import { isNetworkFail } from '../common/helpers/abortableFetch';
 

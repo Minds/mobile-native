@@ -1,10 +1,10 @@
+//@ts-nocheck
 import React, { PureComponent } from 'react';
 
 import {
   Text,
   Dimensions,
   Linking,
-  ActivityIndicator,
   View,
 } from 'react-native';
 

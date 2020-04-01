@@ -1,3 +1,4 @@
+//@ts-nocheck
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import blockListService from '../common/services/block-list.service';

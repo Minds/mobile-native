@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Image, Platform } from 'react-native';
 

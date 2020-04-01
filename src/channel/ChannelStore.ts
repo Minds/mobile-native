@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {observable, action} from 'mobx';
 import {cloneDeep} from 'lodash';
 

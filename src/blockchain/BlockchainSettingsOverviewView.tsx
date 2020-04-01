@@ -1,14 +1,7 @@
-import React, {
-  Component
-} from 'react';
-
-import {
-  View,
-  Text,
-  StyleSheet
-} from 'react-native';
-
-import { observer, inject } from 'mobx-react'
+//@ts-nocheck
+import React, { Component } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { observer, inject } from 'mobx-react';
 
 @inject('wallet')
 @observer
@@ -19,10 +12,10 @@ export default class BlockchainSettingsOverviewView extends Component {
 
   render() {
     return (
-      <View style={ styles.view }>
+      <View style={styles.view}>
         <View>
-          <Text style={ styles.amount }>{ this.props.wallet.tokensFormatted }</Text>
-          <Text style={ styles.currency }>COINS</Text>
+          <Text style={styles.amount}>{this.props.wallet.tokensFormatted}</Text>
+          <Text style={styles.currency}>COINS</Text>
         </View>
       </View>
     );
@@ -41,11 +34,11 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 30,
     fontWeight: '700',
-    color: '#fff'
+    color: '#fff',
   },
   currency: {
     fontSize: 15,
     fontWeight: '300',
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 });

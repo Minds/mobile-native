@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { getStores } from '../../../AppStores';
 import StorageService from '../../common/services/storage.service';
 import Web3Service from '../services/Web3Service';

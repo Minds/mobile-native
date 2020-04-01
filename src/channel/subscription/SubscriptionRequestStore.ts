@@ -1,4 +1,5 @@
 
+//@ts-nocheck
 import { observable, action, extendObservable } from "mobx";
 import api from "../../common/services/api.service";
 import logService from "../../common/services/log.service";
