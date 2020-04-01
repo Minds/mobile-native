@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {action, observable} from 'mobx';
 
 import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { observable, action, extendObservable } from 'mobx';
 import MetadataService from '../services/metadata.service';
 import Viewed from './Viewed';

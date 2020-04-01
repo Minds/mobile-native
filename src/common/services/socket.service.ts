@@ -1,3 +1,4 @@
+//@ts-nocheck
 import SocketIOClient from 'socket.io-client';
 
 import { SOCKET_URI } from '../../config/Config';

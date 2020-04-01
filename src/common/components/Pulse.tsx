@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Animated, { Easing } from "react-native-reanimated";

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import push from './push.service';
 
 /**

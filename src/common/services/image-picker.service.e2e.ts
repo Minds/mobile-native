@@ -1,3 +1,4 @@
+//@ts-nocheck
 import CameraRoll from '@react-native-community/cameraroll';
 
 /**

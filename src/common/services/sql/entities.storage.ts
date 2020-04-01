@@ -1,3 +1,4 @@
+//@ts-nocheck
 import sqliteStorageProviderService from "../sqlite-storage-provider.service";
 import logService from "../log.service";
 import moment from "moment";

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { observable, action } from 'mobx';
 
 import logService from '../services/log.service';

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { StyleSheet, Platform } from 'react-native';
 
 export interface ThemedStyle {

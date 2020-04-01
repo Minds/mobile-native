@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useCallback, useState } from 'react';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';

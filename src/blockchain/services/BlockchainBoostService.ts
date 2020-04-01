@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Web3Service from './Web3Service';
 import BlockchainTokenService from './BlockchainTokenService';
 import MindsService from '../../common/services/minds.service';

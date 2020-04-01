@@ -1,3 +1,4 @@
+//@ts-nocheck
 import BlockchainWalletService from '../wallet/BlockchainWalletService';
 
 const Web3 = require('web3');

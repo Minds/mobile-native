@@ -1,3 +1,4 @@
+//@ts-nocheck
 import api from './api.service';
 import version from '../../config/Version';
 import { MINDS_GITLAB_ID, MINDS_GITLAB_TOKEN } from '../../config/Config';

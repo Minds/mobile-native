@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react';
 
 import { Text, View, FlatList } from 'react-native';

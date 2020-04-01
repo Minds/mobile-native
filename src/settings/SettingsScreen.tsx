@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useCallback } from 'react';
 import { View, FlatList } from 'react-native';
 import SettingsItem from './SettingsItem';

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import ThumbUpAction from './ThumbUpAction';
 
 /**

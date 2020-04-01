@@ -1,3 +1,4 @@
+//@ts-nocheck
 import apiService from "../../common/services/api.service";
 import BlockchainWithdrawService from "../../blockchain/services/BlockchainWithdrawService";
 import i18n from "../../common/services/i18n.service";

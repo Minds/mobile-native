@@ -19,5 +19,5 @@ export type AuthStackParamList = {
   Forgot: {
     code?: string;
   };
-  Register: {}:
+  Register: {};
 }

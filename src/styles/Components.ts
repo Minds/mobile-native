@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { StyleSheet, Dimensions, Platform } from 'react-native';
 
 import colors, { DARK_THEME, LIGHT_THEME } from './Colors';

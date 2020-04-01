@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { NotificationsAndroid, PendingNotifications } from 'react-native-notifications';
 import AbstractPlatform from './abstract-platform';
 import logService from '../log.service';

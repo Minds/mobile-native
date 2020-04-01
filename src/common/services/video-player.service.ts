@@ -1,3 +1,4 @@
+//@ts-nocheck
 /**
  * Video Player Service
  */

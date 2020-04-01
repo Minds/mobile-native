@@ -1,3 +1,4 @@
+//@ts-nocheck
 import SQLite from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-community/async-storage';
 import logService from './log.service';

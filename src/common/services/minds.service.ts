@@ -1,3 +1,4 @@
+//@ts-nocheck
 import api from './api.service';
 import AsyncStorage from '@react-native-community/async-storage';
 import featuresService from './features.service';

@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default function isNsfw(entity) {
   return Boolean(entity && (isEntityNsfw(entity) || entity.is_parent_mature));
 }

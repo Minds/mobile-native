@@ -1,3 +1,4 @@
+//@ts-nocheck
 import {observable, action} from 'mobx';
 import {Alert, Platform} from 'react-native';
 import RNConvertPhAsset from 'react-native-convert-ph-asset';

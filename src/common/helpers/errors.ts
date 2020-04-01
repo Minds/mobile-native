@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { isApiError } from '../services/api.service';
 import { isAbort, isNetworkFail } from './abortableFetch';
 import { isUserError } from '../UserError';

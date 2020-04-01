@@ -1,3 +1,4 @@
+//@ts-nocheck
 import RNFileShareIntent from 'react-native-file-share-intent';
 import navigationService from '../../navigation/NavigationService';
 

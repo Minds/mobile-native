@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { inject, observer } from 'mobx-react';

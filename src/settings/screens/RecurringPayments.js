@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useCallback, useState, useEffect } from 'react';
 import paymentService from '../../common/services/payment.service';
 import CenteredLoading from '../../common/components/CenteredLoading';

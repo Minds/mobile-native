@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react';
 import { View, BackHandler } from 'react-native';
 import JitsiMeet, { JitsiMeetView } from 'react-native-jitsi-meet';

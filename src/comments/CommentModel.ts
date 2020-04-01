@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { computed, action, observable, decorate } from 'mobx';
 
 import ActivityModel from '../newsfeed/ActivityModel';

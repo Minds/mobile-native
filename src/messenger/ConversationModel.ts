@@ -1,3 +1,4 @@
+//@ts-nocheck
 import BaseModel from '../common/BaseModel';
 import {observable} from 'mobx';
 

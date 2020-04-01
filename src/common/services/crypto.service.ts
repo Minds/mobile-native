@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Encryption from 'react-native-minds-encryption';
 
 /**

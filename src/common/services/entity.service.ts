@@ -1,3 +1,4 @@
+//@ts-nocheck
 import api from './api.service';
 import logService from './log.service';
 import i18n from './i18n.service';

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import NotificationsIOS from 'react-native-notifications';
 import AbstractPlatform from './abstract-platform';
 import logService from '../log.service';

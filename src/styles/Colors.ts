@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default colors = {
   primary     : '#4690D6',
   secondary   : '#FFDD63',

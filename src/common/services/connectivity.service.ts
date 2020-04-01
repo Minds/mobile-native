@@ -1,3 +1,4 @@
+//@ts-nocheck
 import NetInfo from "@react-native-community/netinfo";
 import {
   observable,

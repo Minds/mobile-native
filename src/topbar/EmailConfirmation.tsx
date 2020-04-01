@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react';
 import { Text, StyleSheet, View, Alert, Platform } from 'react-native';
 import i18n from '../common/services/i18n.service';

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, {Component} from 'react';
 
 import {Linking, Text, View} from 'react-native';

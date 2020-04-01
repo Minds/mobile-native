@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useCallback } from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';

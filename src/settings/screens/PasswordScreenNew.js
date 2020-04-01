@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useCallback, useState } from 'react';
 import { View, Text } from 'react-native-animatable';
 import Input from '../../common/components/Input';

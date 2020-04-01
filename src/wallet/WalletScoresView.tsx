@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, {Component} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {default as WalletOverviewIcon, Icons} from './icon/WalletOverviewIcon';

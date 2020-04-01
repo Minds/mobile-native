@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Pulse from './Pulse';

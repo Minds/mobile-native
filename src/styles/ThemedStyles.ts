@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { StyleSheet, Platform } from 'react-native';
 import { observable, action, reaction } from 'mobx';
 

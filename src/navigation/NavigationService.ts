@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { CommonActions, StackActions, SwitchActions } from '@react-navigation/native';
 
 let _navigator = null;

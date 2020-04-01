@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { observable, action, reaction } from 'mobx';
 
 import sessionStorage from './session.storage.service';

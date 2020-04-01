@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { action } from 'mobx';
 
 import { setViewed } from '../../newsfeed/NewsfeedService';

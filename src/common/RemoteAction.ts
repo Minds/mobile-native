@@ -1,3 +1,4 @@
+//@ts-nocheck
 import connectivityService from './services/connectivity.service';
 import { isNetworkFail } from './helpers/abortableFetch';
 import i18nService from './services/i18n.service';

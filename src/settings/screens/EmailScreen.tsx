@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react';
 
 import { View, ScrollView, Text, Alert } from 'react-native';

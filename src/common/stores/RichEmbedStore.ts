@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { observable, action, extendObservable, isObservable } from 'mobx';
 import RichEmbedService from '../services/rich-embed.service';
 import Util from '../helpers/util';

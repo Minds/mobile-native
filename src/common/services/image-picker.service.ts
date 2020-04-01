@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Platform, Alert } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 

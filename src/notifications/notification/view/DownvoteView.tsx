@@ -1,3 +1,4 @@
+//@ts-nocheck
 import LikeView from './LikeView';
 import i18n from '../../../common/services/i18n.service';
 

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import ReactNativeAPK from "rn-apk";
 import {
   Alert,

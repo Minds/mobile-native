@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default function throttle(callback, wait, context = this) {
   let timeout = null
   let callbackArgs = null

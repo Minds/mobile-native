@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { setViewed } from "../../newsfeed/NewsfeedService";
 import { isNetworkFail } from "../helpers/abortableFetch";
 

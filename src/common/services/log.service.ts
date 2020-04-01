@@ -1,3 +1,4 @@
+//@ts-nocheck
 import deviceLog from 'react-native-device-log';
 import AsyncStorage from '@react-native-community/async-storage';
 import settingsStore from '../../settings/SettingsStore';

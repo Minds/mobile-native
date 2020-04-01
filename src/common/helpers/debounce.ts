@@ -1,3 +1,4 @@
+//@ts-nocheck
 let timeout;
 export default function debounce(func, wait, immediate=false) {
   return function () {

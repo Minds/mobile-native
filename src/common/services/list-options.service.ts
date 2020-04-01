@@ -1,3 +1,4 @@
+//@ts-nocheck
 export const LICENSES = [
   {value:'all-rights-reserved', text:'All rights reserved'},
   {value:'attribution-cc', text:'Attribution CC BY'},

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import sessionService from "../common/services/session.service";
 import storageService from "../common/services/storage.service";
 import apiService from "../common/services/api.service";

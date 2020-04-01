@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Colors from "../styles/Colors";
 
 import { Platform } from "react-native";

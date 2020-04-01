@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Share from 'react-native-share';
 
 /**

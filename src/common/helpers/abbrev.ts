@@ -1,4 +1,4 @@
-
+//@ts-nocheck
 const units = ["k", "m", "b", "t"];
 
 export default function abbrev(number, decimals=2){

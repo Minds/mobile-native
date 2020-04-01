@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { MINDS_DEEPLINK } from '../../config/Config';
 import navigationService from '../../navigation/NavigationService';
 

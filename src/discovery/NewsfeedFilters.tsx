@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react';
 
 import { Text, View, TouchableOpacity, Platform } from 'react-native';

@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default function getMatches(str, regex) {
   let m;
   const matches = [];

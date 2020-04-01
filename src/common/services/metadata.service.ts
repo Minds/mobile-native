@@ -1,3 +1,4 @@
+//@ts-nocheck
 import moment from 'moment';
 import sessionService from './session.service';
 import hashCode from '../helpers/hash-code';

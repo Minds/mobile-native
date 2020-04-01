@@ -1,3 +1,4 @@
+//@ts-nocheck
 import api from './api.service';
 import imagePicker from './image-picker.service';
 import Cancelable from 'promise-cancelable';

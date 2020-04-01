@@ -1,3 +1,4 @@
+//@ts-nocheck
 import stripe from 'tipsi-stripe';
 import mindsService from './minds.service';
 

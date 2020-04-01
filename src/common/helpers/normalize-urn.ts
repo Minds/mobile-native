@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default function normalizeUrn(urnOrGuid) {
   if (!isNaN(urnOrGuid)) {
     urnOrGuid = `urn:entity:${urnOrGuid}`;

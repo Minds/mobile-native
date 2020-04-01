@@ -1,3 +1,4 @@
+//@ts-nocheck
 import api from '../../services/api.service';
 import logService from '../../services/log.service';
 

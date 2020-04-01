@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { MINDS_CDN_URI } from "../../config/Config";
 
 export default function mediaProxyUrl(url, size = 1024) {

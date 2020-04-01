@@ -1,3 +1,4 @@
+//@ts-nocheck
 const migrations = [
   "DROP TABLE IF EXISTS users;",
   "DROP TABLE IF EXISTS entities;",

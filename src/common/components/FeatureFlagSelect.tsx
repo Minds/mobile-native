@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { Component } from 'react';
 import featuresService from '../services/features.service';
 import {

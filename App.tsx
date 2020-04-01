@@ -1,3 +1,4 @@
+//@ts-nocheck
 /**
  * Minds mobile app
  * https://www.minds.com

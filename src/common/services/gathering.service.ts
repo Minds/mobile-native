@@ -1,3 +1,4 @@
+//@ts-nocheck
 import api from './../../common/services/api.service';
 import { observable, action } from 'mobx';
 

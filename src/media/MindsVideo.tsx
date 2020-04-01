@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, {Component} from 'react';
 
 // workaround to fix tooltips on android

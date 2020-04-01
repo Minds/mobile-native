@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { PermissionsAndroid } from 'react-native';
 import i18nService from './i18n.service';
 

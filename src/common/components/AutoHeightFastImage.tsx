@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { PureComponent } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';

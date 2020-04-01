@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { observable, action, toJS } from "mobx";
 import groupsService from "./GroupsService";
 import socketService from '../common/services/socket.service';

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Dimensions, Platform } from 'react-native';
 
 // See https://mydevice.io/devices/ for device dimensions

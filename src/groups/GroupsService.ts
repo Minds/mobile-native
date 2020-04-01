@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { InteractionManagerStatic } from 'react-native';
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';

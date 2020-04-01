@@ -1,4 +1,4 @@
-
+//@ts-nocheck
 import navigation from '../../../navigation/NavigationService'
 import session from '../session.service'
 import featuresService from '../features.service';

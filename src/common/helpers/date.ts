@@ -1,3 +1,4 @@
+//@ts-nocheck
 import moment from 'moment-timezone';
 
 function pad(n, width, z) {

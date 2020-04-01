@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { MINDS_URI } from '../../config/Config';
 import { Linking } from 'react-native';
 import deeplinksRouterService from './deeplinks-router.service';

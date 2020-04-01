@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { observable, action, computed, extendObservable } from 'mobx'
 import onboardingService from './OnboardingService';
 import number from '../common/helpers/number';
