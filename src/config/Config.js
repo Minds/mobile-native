@@ -1,6 +1,4 @@
-import {
-  Platform
-} from 'react-native';
+import { Platform } from 'react-native';
 
 import DeviceInfo from 'react-native-device-info';
 
@@ -38,7 +36,7 @@ export const CODE_PUSH_TOKEN = '';
  * Plataform dependant or fixed features
  */
 export const MINDS_FEATURES = {
-  crypto: Platform.OS === 'ios' ? false : true,
+  crypto: true,
   'onboarding-december-2019': true,
 };
 
@@ -64,4 +62,5 @@ export const MINDS_DEEPLINK = [
 export const DISABLE_PASSWORD_INPUTS = false;
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
-export const GOOGLE_PLAY_STORE = DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS == 'android';
+export const GOOGLE_PLAY_STORE =
+  DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS === 'android';
