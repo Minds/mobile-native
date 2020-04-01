@@ -10,4 +10,6 @@ export type RootStackParamList = {
       type: string;
     };
   };
+  Newsfeed: {};
+  Capture: {};
 };

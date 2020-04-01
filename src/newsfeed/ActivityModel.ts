@@ -55,7 +55,7 @@ export default class ActivityModel extends BaseModel {
   subtype: string = '';
   entity_guid: string = '';
   owner_guid: string = '';
-  custom_type: string = '';
+  custom_type?: string;
   custom_data?: Array<any> | any;
   nsfw?: Array<number>;
   flags?: any;
@@ -64,6 +64,8 @@ export default class ActivityModel extends BaseModel {
   perma_url?: string;
   cinemr_guid?: string;
   thumbnail_src?: string;
+  dontPin?: boolean;
+  boosted?: boolean;
   wire_threshold?: {
     type: 'token' | 'money';
     min: number;

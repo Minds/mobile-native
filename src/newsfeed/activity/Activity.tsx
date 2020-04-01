@@ -284,7 +284,7 @@ export default class Activity extends Component<PropsType, StateType> {
    */
   showOwner() {
     if (!this.props.entity.remind_object) {
-      const rightToolbar = (
+      const rightToolbar: React.ReactNode = (
         <View style={styles.rightToolbar}>
           <ActivityActionSheet
             toggleEdit={this.toggleEdit}
@@ -304,7 +304,7 @@ export default class Activity extends Component<PropsType, StateType> {
           rightToolbar={this.props.hideTabs ? null : rightToolbar}>
           <TouchableOpacity
             onPress={() => this.navToActivity()}
-            style={{ flexDirection: 'row' }}>
+            style={ThemedStyles.style.rowJustifyStart}>
             <Text
               style={[
                 styles.timestamp,
@@ -423,6 +423,7 @@ export default class Activity extends Component<PropsType, StateType> {
   showActions() {
     if (!this.props.hideTabs) {
       return (
+        //@ts-ignore user store is injected
         <Actions
           entity={this.props.entity}
           navigation={this.props.navigation}

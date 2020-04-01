@@ -19,7 +19,7 @@ type PropsType = {
   renderActivity?: Function;
   emptyMessage?: React.ReactNode;
   header: React.ReactNode;
-  listComponent: React.ComponentType;
+  listComponent?: React.ComponentType;
   navigation: any;
 };
 

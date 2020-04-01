@@ -7,7 +7,7 @@ class CommentsStoreProvider {
   /**
    * Return a new instance of CommentStore
    */
-  static get() {
+  static get(): CommentsStore {
     return new CommentsStore();
   }
 }

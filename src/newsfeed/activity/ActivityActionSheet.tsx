@@ -16,12 +16,31 @@ import { FLAG_EDIT_POST, FLAG_DELETE_POST } from '../../common/Permissions';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
+import type ActivityModel from '../ActivityModel';
+
+type PropsType = {
+  entity: ActivityModel;
+  onTranslate: Function;
+  toggleEdit: Function;
+  testID?: string;
+  navigation: any;
+};
+
+type StateType = {
+  options: Array<any>;
+  userBlocked: boolean;
+};
 
 /**
  * Activity Actions Component
  */
-export default class ActivityActionSheet extends Component {
-  state = {
+export default class ActivityActionSheet extends Component<
+  PropsType,
+  StateType
+> {
+  ActionSheet: ActionSheet | null;
+  deleteOption: React.ReactNode;
+  state: StateType = {
     options: [],
     userBlocked: false,
   };
@@ -58,9 +77,11 @@ export default class ActivityActionSheet extends Component {
    * Handle selection by index
    * @param {number} index
    */
-  handleSelection = (index) => {
-    if (!this.state.options[index]) return;
-    this.executeAction(this.state.options[index], index);
+  handleSelection = (index: number) => {
+    if (!this.state.options[index]) {
+      return;
+    }
+    this.executeAction(this.state.options[index]);
   };
 
   /**

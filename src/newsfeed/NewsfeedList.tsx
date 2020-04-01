@@ -1,12 +1,7 @@
+//@ts-nocheck
 import React, { Component } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  View,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
-import { inject, observer } from 'mobx-react'
+import { FlatList, View, Text, ActivityIndicator } from 'react-native';
+import { inject, observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 import Activity from './activity/Activity';
@@ -17,23 +12,30 @@ import ErrorLoading from '../common/components/ErrorLoading';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import type NewsfeedStore from './NewsfeedStore';
+
+type PropsType = {
+  newsfeed: NewsfeedStore;
+  header?: React.ReactNode;
+  navigation: any;
+};
 
 /**
  * News feed list component
  */
 @inject('user')
 @observer
-export default class NewsfeedList extends Component {
-
+export default class NewsfeedList extends Component<PropsType> {
   nextBoostedId = 1;
+  cantShowActivity: string = '';
   viewOpts = {
     viewAreaCoveragePercentThreshold: 50,
-    minimumViewTime: 300
-  }
+    minimumViewTime: 300,
+  };
   state = {
     itemHeight: 0,
-    viewed: []
-  }
+    viewed: [],
+  };
 
   get boostedId() {
     return this.nextBoostedId++;
@@ -50,12 +52,12 @@ export default class NewsfeedList extends Component {
   /**
    * Adjust tiles to 1/cols size
    */
-  onLayout = e => {
+  onLayout = (e) => {
     const width = e.nativeEvent.layout.width;
     this.setState({
       itemHeight: width / 3,
     });
-  }
+  };
 
   /**
    * Calculate item layout for better performance on tiles
@@ -63,16 +65,16 @@ export default class NewsfeedList extends Component {
   getItemLayout = (data, index) => {
     const { itemHeight } = this.state;
     return { length: itemHeight, offset: itemHeight * index, index };
-  }
+  };
 
   /**
    * Render component
    */
   render() {
     let renderRow,
-    getItemLayout,
-    design,
-    empty = null;
+      // getItemLayout,
+      design,
+      empty = null;
 
     const {
       newsfeed,
@@ -90,10 +92,10 @@ export default class NewsfeedList extends Component {
 
     if (newsfeed.isTiled) {
       renderRow = renderTileActivity || this.renderTileActivity;
-      getItemLayout  = this.getItemLayout;
+      // getItemLayout = this.getItemLayout;
     } else {
       renderRow = renderActivity || this.renderActivity;
-      getItemLayout  = null;
+      // getItemLayout = null;
     }
 
     // empty view
@@ -101,42 +103,50 @@ export default class NewsfeedList extends Component {
       if (emptyMessage) {
         empty = emptyMessage;
       } else if (newsfeed.filter == 'subscribed') {
-        if (me && me.hasBanner && !me.hasBanner()) { //TODO: check for avatar too
-          design = <Text
-            style={ComponentsStyle.emptyComponentLink}
-            onPress={() => navigation.push('Channel', { username: 'me' })}
-            >
-           {i18n.t('newsfeed.designYourChannel')}
-          </Text>
+        if (me && me.hasBanner && !me.hasBanner()) {
+          //TODO: check for avatar too
+          design = (
+            <Text
+              style={ComponentsStyle.emptyComponentLink}
+              onPress={() => navigation.push('Channel', { username: 'me' })}>
+              {i18n.t('newsfeed.designYourChannel')}
+            </Text>
+          );
         }
 
         empty = (
           <View style={ComponentsStyle.emptyComponentContainer}>
             <View style={ComponentsStyle.emptyComponent}>
-              <MIcon name="home" size={72} color='#444' />
-              <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('newsfeed.empty')}</Text>
+              <MIcon name="home" size={72} color="#444" />
+              <Text style={ComponentsStyle.emptyComponentMessage}>
+                {i18n.t('newsfeed.empty')}
+              </Text>
               {design}
               <Text
                 style={ComponentsStyle.emptyComponentLink}
-                onPress={() => navigation.push('Capture')}
-              >
+                onPress={() => navigation.push('Capture')}>
                 {i18n.t('createAPost')}
               </Text>
               <Text
                 style={ComponentsStyle.emptyComponentLink}
-                onPress={() => navigation.navigate('Discovery', { type: 'channels' })}
-              >
+                onPress={() =>
+                  navigation.navigate('Discovery', { type: 'channels' })
+                }>
                 {i18n.t('findChannels')}
               </Text>
             </View>
-          </View>);
+          </View>
+        );
       } else {
         empty = (
           <View style={ComponentsStyle.emptyComponentContainer}>
             <View style={ComponentsStyle.emptyComponent}>
-              <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('newsfeed.empty')}</Text>
+              <Text style={ComponentsStyle.emptyComponentMessage}>
+                {i18n.t('newsfeed.empty')}
+              </Text>
             </View>
-          </View>);
+          </View>
+        );
       }
     }
 
@@ -145,7 +155,7 @@ export default class NewsfeedList extends Component {
 
     return (
       <ListComponent
-        key={(newsfeed.isTiled ? 't' : 'f')}
+        key={newsfeed.isTiled ? 't' : 'f'}
         onLayout={this.onLayout}
         ListHeaderComponent={header}
         ListFooterComponent={footer}
@@ -173,14 +183,13 @@ export default class NewsfeedList extends Component {
   /**
    * Key extractor for list items
    */
-  keyExtractor = item => item.rowKey;
+  keyExtractor = (item) => item.rowKey;
 
   /**
    * Get footer
    */
   getFooter() {
-
-    if (this.props.newsfeed.loading && !this.props.newsfeed.list.refreshing){
+    if (this.props.newsfeed.loading && !this.props.newsfeed.list.refreshing) {
       return (
         <View style={[CS.centered, CS.padding3x]}>
           <ActivityIndicator size={'large'} />
@@ -196,13 +205,12 @@ export default class NewsfeedList extends Component {
   /**
    * Get error loading component
    */
-  getErrorLoading()
-  {
-    const message = this.props.newsfeed.list.entities.length ?
-    i18n.t('cantLoadMore') :
-    i18n.t('cantLoad');
+  getErrorLoading() {
+    const message = this.props.newsfeed.list.entities.length
+      ? i18n.t('cantLoadMore')
+      : i18n.t('cantLoad');
 
-    return <ErrorLoading message={message} tryAgain={this.loadFeedForce}/>
+    return <ErrorLoading message={message} tryAgain={this.loadFeedForce} />;
   }
 
   /**
@@ -212,12 +220,12 @@ export default class NewsfeedList extends Component {
     change.viewableItems.forEach((item) => {
       this.props.newsfeed.list.addViewed(item.item);
     });
-    change.changed.forEach(c => {
+    change.changed.forEach((c) => {
       if (c.item.setVisible) {
         c.item.setVisible(c.isViewable);
       }
-    })
-  }
+    });
+  };
 
   /**
    * Load feed data
@@ -225,22 +233,22 @@ export default class NewsfeedList extends Component {
   loadFeed = () => {
     if (this.props.newsfeed.list.errorLoading) return;
     this.props.newsfeed.loadFeed();
-  }
+  };
 
   /**
    * Force feed load
    */
   loadFeedForce = () => {
     this.props.newsfeed.loadFeed();
-  }
+  };
 
   /**
    * Refresh feed data
    */
   refresh = () => {
     this.nextBoostedId = 1;
-    this.props.newsfeed.refresh(true)
-  }
+    this.props.newsfeed.refresh(true);
+  };
 
   /**
    * Render activity
@@ -250,7 +258,9 @@ export default class NewsfeedList extends Component {
     const entity = row.item;
 
     return (
-      <ErrorBoundary message={this.cantShowActivity} containerStyle={CS.hairLineBottom}>
+      <ErrorBoundary
+        message={this.cantShowActivity}
+        containerStyle={CS.hairLineBottom}>
         <Activity
           entity={entity}
           newsfeed={this.props.newsfeed}
@@ -259,20 +269,21 @@ export default class NewsfeedList extends Component {
           isLast={isLast}
         />
       </ErrorBoundary>
-    )
-  }
+    );
+  };
 
   /**
    * Render tile
    */
   renderTileActivity = (row) => {
     const entity = row.item;
-    return <TileElement
-      size={this.state.itemHeight}
-      newsfeed={this.props.newsfeed}
-      entity={entity}
-      navigation={this.props.navigation}
-    />;
-  }
+    return (
+      <TileElement
+        size={this.state.itemHeight}
+        newsfeed={this.props.newsfeed}
+        entity={entity}
+        navigation={this.props.navigation}
+      />
+    );
+  };
 }
-

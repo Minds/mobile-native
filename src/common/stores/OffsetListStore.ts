@@ -1,8 +1,5 @@
-import { observable, action, extendObservable } from 'mobx'
-import channelService from '../../channel/ChannelService';
-import { revokeBoost, rejectBoost, acceptBoost} from '../../boost/BoostService';
-import logService from '../services/log.service';
-import metadataService from '../services/metadata.service';
+import { observable, action, extendObservable } from 'mobx';
+import MetadataService from '../services/metadata.service';
 import Viewed from './Viewed';
 
 /**
@@ -33,35 +30,43 @@ export default class OffsetListStore {
   /**
    * Metadata service
    */
-  metadataService = null;
+  metadataService: MetadataService | null = null;
 
   /**
    * Viewed store
    */
-  viewed = new Viewed;
+  viewed = new Viewed();
 
   /**
    * Constructor
    * @param {string} type 'shallow'|'ref'|null
    * @param {boolean} includeMetadata
    */
-  constructor(type = null, includeMetadata = false) {
+  constructor(type: 'shallow' | null = null, includeMetadata = false) {
     if (type) {
-      extendObservable(this,{
-        entities: [],
-      },{
-        entities: observable[type],
-      });
+      extendObservable(
+        this,
+        {
+          entities: [],
+        },
+        {
+          entities: observable[type],
+        },
+      );
     } else {
-      extendObservable(this,{
-        entities: [],
-      }, {
-       entities: observable
-      });
+      extendObservable(
+        this,
+        {
+          entities: [],
+        },
+        {
+          entities: observable,
+        },
+      );
     }
 
     if (includeMetadata) {
-      this.metadataService = new metadataService;
+      this.metadataService = new MetadataService();
     }
   }
 
@@ -81,7 +86,6 @@ export default class OffsetListStore {
   @action
   setList(list, replace = false) {
     if (list.entities) {
-
       if (replace) {
         list.entities.forEach((entity) => {
           entity._list = this;
@@ -116,19 +120,19 @@ export default class OffsetListStore {
   }
 
   remove(entity) {
-    const index = this.entities.findIndex(e => e === entity);
+    const index = this.entities.findIndex((e) => e === entity);
     if (index < 0) return;
     this.removeIndex(index);
   }
 
   getIndex(entity) {
-    return this.entities.findIndex(e => e === entity);
+    return this.entities.findIndex((e) => e === entity);
   }
 
   @action
   async clearList(updateLoaded = true) {
     this.entities = [];
-    this.offset   = '';
+    this.offset = '';
     this.errorLoading = false;
     if (updateLoaded) {
       this.loaded = false;

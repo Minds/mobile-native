@@ -1,20 +1,21 @@
-import {observable, action} from 'mobx';
+import { observable, action } from 'mobx';
 
 import NewsfeedService from './NewsfeedService';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import ActivityModel from './ActivityModel';
 import logService from '../common/services/log.service';
-import boostedContentService from '../common/services/boosted-content.service';
 
 import FeedStore from '../common/stores/FeedStore';
-import {isNetworkFail} from '../common/helpers/abortableFetch';
+import { isNetworkFail } from '../common/helpers/abortableFetch';
 import UserModel from '../channel/UserModel';
 
 /**
  * News feed store
  */
 class NewsfeedStore {
-  feedStore = new FeedStore(true);
+  list!: OffsetFeedListStore;
+  feedStore: FeedStore = new FeedStore(true);
+  loaded: boolean = false;
 
   /**
    * List reference
@@ -65,18 +66,18 @@ class NewsfeedStore {
   /**
    * Set FeedList reference
    */
-  setListRef = r => (this.listRef = r);
+  setListRef = (r) => (this.listRef = r);
 
   buildStores() {
     this.list = new OffsetFeedListStore('shallow', true);
 
     this.feedStore
-      .getMetadataService()
+      .getMetadataService()! // we ignore because the metadata is defined
       .setSource('feed/subscribed')
       .setMedium('feed');
 
     this.list
-      .getMetadataService()
+      .getMetadataService()!
       .setSource('feed/boosts')
       .setMedium('featured-content');
 
@@ -128,6 +129,7 @@ class NewsfeedStore {
    */
   assignRowKeys(feed) {
     feed.entities.forEach((entity, index) => {
+      //@ts-ignore
       entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
     });
   }
@@ -140,7 +142,7 @@ class NewsfeedStore {
   setFilter(filter) {
     this.filter = filter;
     this.list.clearList();
-    this.loadFeed(true, false);
+    this.loadFeed(true);
   }
 
   /**
@@ -149,7 +151,7 @@ class NewsfeedStore {
   loadBoosts(rating) {
     // get first 15 boosts
     this.loadingBoost = true;
-    this.service.getBoosts('', 15, rating).then(boosts => {
+    this.service.getBoosts('', 15, rating).then((boosts) => {
       this.loadingBoost = false;
       this.boosts = boosts.entities;
     });

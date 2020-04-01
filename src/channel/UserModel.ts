@@ -25,8 +25,8 @@ export default class UserModel extends BaseModel {
   sums;
   btc_address?: string;
   icontime!: string;
-  username: string = '';
-  name: string = '';
+  username!: string;
+  name!: string;
   admin: boolean = false;
   plus: boolean = false;
   verified: boolean = false;

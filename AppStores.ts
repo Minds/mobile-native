@@ -33,13 +33,13 @@ import reportStore from './src/report/ReportStore';
 /**
  * App stores
  */
-let stores = null;
+let stores: any | null = null;
 
 /**
  * Clear stores on session log out
  */
 sessionService.onLogout(() => {
-  for (id in stores) {
+  for (const id in stores) {
     if (stores[id].reset) {
       logService.info(`Reseting store ${id}`);
       stores[id].reset();
@@ -47,7 +47,7 @@ sessionService.onLogout(() => {
   }
 });
 
-export const getStores = function() {
+export const getStores = function () {
   if (!stores) {
     stores = {
       subscriptionRequest: new SubscriptionRequestStore(),
@@ -83,6 +83,6 @@ export const getStores = function() {
   return stores;
 };
 
-export const useStores = function() {
+export const useStores = function () {
   return getStores();
 };

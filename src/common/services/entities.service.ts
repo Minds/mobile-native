@@ -1,17 +1,17 @@
 import _ from 'lodash';
 
-import apiService, { isApiForbidden } from "./api.service";
-import sessionService from "./session.service";
-import blockListService from "./block-list.service";
-import GroupModel from "../../groups/GroupModel";
-import UserModel from "../../channel/UserModel";
-import BlogModel from "../../blogs/BlogModel";
-import ActivityModel from "../../newsfeed/ActivityModel";
-import entitiesStorage from "./sql/entities.storage";
+import apiService, { isApiForbidden } from './api.service';
+import sessionService from './session.service';
+import blockListService from './block-list.service';
+import GroupModel from '../../groups/GroupModel';
+import UserModel from '../../channel/UserModel';
+import BlogModel from '../../blogs/BlogModel';
+import ActivityModel from '../../newsfeed/ActivityModel';
+import entitiesStorage from './sql/entities.storage';
 
 // types
-import type { FeedRecordType } from "./feeds.service";
-import type BaseModel from "../BaseModel";
+import type { FeedRecordType } from './feeds.service';
+import type BaseModel from '../BaseModel';
 
 const CACHE_TTL_MINUTES = 15;
 
@@ -19,7 +19,6 @@ const CACHE_TTL_MINUTES = 15;
  * Entities services
  */
 class EntitiesService {
-
   /**
    * @var {Map} entities
    */
@@ -38,7 +37,7 @@ class EntitiesService {
    * @param {boolean} updateLast
    */
   getFromCache(urn: string, updateLast: boolean = true): BaseModel | null {
-    const record = this.entities.get(urn)
+    const record = this.entities.get(urn);
     if (record && updateLast) record.last = Date.now() / 1000;
     return record ? record.entity : null;
   }
@@ -47,15 +46,14 @@ class EntitiesService {
    * Garbage collector
    */
   garbageCollector = () => {
-
-    const boundary = (Date.now() / 1000) - 60 * CACHE_TTL_MINUTES;
+    const boundary = Date.now() / 1000 - 60 * CACHE_TTL_MINUTES;
 
     for (const [key, record] of this.entities.entries()) {
       if (record.last < boundary) {
         this.entities.delete(key);
       }
     }
-  }
+  };
 
   /**
    * Delete an entity from the cache
@@ -81,8 +79,11 @@ class EntitiesService {
    * @param {Mixed} abortTag
    * @param {boolean} asActivities
    */
-  async getFromFeed(feed: Array<FeedRecordType>, abortTag: any, asActivities: boolean = false): Promise<Array<BaseModel>> {
-
+  async getFromFeed(
+    feed: Array<FeedRecordType>,
+    abortTag: any,
+    asActivities: boolean = false,
+  ): Promise<Array<BaseModel>> {
     if (!feed || !feed.length) {
       return [];
     }
@@ -93,7 +94,6 @@ class EntitiesService {
 
     for (const feedItem of feed) {
       if (feedItem.entity) {
-
         // fix entity urn is different than feed urn
         feedItem.entity.urn = feedItem.urn;
 
@@ -117,7 +117,7 @@ class EntitiesService {
         // we add to resync list
         localEntities.forEach((entity: any) => {
           urnsToResync.push(entity.urn);
-          this.addEntity(entity, false)
+          this.addEntity(entity, false);
         });
       }
     }
@@ -129,7 +129,7 @@ class EntitiesService {
         await this.fetch(urnsToFetch, abortTag, asActivities);
       } catch (err) {
         // we ignore the fetch error if there are local entities to show
-        if (urnsToResync.length === 0 || err.code === 'Abort') throw err;
+        if (urnsToResync.length === 0 || err.code === 'Abort') throw err;
       }
     }
 
@@ -140,11 +140,11 @@ class EntitiesService {
 
     for (const feedItem of feed) {
       if (!blockListService.has(feedItem.owner_guid)) {
-        const entity = this.getFromCache(feedItem.urn, false)
+        const entity = this.getFromCache(feedItem.urn, false);
         if (entity) {
           entities.push(entity);
         } else {
-          console.log('ENTITY MISSINNG ' + feedItem.urn )
+          console.log('ENTITY MISSINNG ' + feedItem.urn);
         }
       }
     }
@@ -159,8 +159,13 @@ class EntitiesService {
    * @param {boolean} asActivities
    * @return Object
    */
-  async single(urn: string, defaultEntity: BaseModel, asActivities: boolean = false): BaseModel {
-    if (!urn.startsWith('urn:')) { // not a urn, so treat as a guid
+  async single(
+    urn: string,
+    defaultEntity: BaseModel | null = null,
+    asActivities: boolean = false,
+  ): BaseModel {
+    if (!urn.startsWith('urn:')) {
+      // not a urn, so treat as a guid
       urn = `urn:activity:${urn}`; // and assume activity
     }
 
@@ -177,7 +182,10 @@ class EntitiesService {
       } else {
         if (defaultEntity) {
           // if there not exist in memory or sql we use the default entity and we update it later
-          this.entities.set(urn, {entity: defaultEntity, last: Date.now() / 1000});
+          this.entities.set(urn, {
+            entity: defaultEntity,
+            last: Date.now() / 1000,
+          });
           entity = defaultEntity;
         } else {
           // we fetch from the server
@@ -187,7 +195,7 @@ class EntitiesService {
       }
     }
 
-    if (entity) this.fetch([ urn ], null, asActivities); // Update in the background
+    if (entity) this.fetch([urn], null, asActivities); // Update in the background
 
     return entity;
   }
@@ -199,10 +207,17 @@ class EntitiesService {
    * @param {boolean} asActivities
    * @return []
    */
-  async fetch(urns: Array<string>, abortTag: any, asActivities: boolean = false): Promise<void> {
-
+  async fetch(
+    urns: Array<string>,
+    abortTag: any,
+    asActivities: boolean = false,
+  ): Promise<void> {
     try {
-      const response: any = await apiService.get('api/v2/entities/', { urns, as_activities: asActivities ? 1 : 0}, abortTag);
+      const response: any = await apiService.get(
+        'api/v2/entities/',
+        { urns, as_activities: asActivities ? 1 : 0 },
+        abortTag,
+      );
 
       for (const entity of response.entities) {
         this.addEntity(entity);
@@ -210,7 +225,6 @@ class EntitiesService {
 
       return response.entities;
     } catch (err) {
-
       // if the server response is a 403
       if (isApiForbidden(err)) {
         // if the entity exists in the cache, remove the permissions to force the UI update
@@ -219,11 +233,11 @@ class EntitiesService {
 
           if (cache) {
             // remove permissions
-            cache.entity.setPermissions({permissions:[]});
+            cache.entity.setPermissions({ permissions: [] });
             // if the entity is attached to a list we remove if from the list
             cache.entity.removeFromList();
           }
-        })
+        });
         // remove it from memory and local storage
         this.deleteManyFromCache(urns);
         return;
@@ -238,7 +252,6 @@ class EntitiesService {
    * @param {boolean} store
    */
   addEntity(entity: Object, store: boolean = true) {
-
     this.cleanEntity(entity);
 
     const storedEntity = this.getFromCache(entity.urn);
@@ -246,9 +259,12 @@ class EntitiesService {
     if (storedEntity) {
       storedEntity.update(entity);
     } else {
-      this.entities.set(entity.urn, {entity: this.mapToModel(entity), last: Date.now() / 1000});
+      this.entities.set(entity.urn, {
+        entity: this.mapToModel(entity),
+        last: Date.now() / 1000,
+      });
     }
-    if (store) entitiesStorage.save(entity)
+    if (store) entitiesStorage.save(entity);
   }
 
   /**
@@ -256,12 +272,22 @@ class EntitiesService {
    * @param {Object} entity
    */
   cleanEntity(entity: Object) {
-    if (entity['thumbs:up:user_guids'] && Array.isArray(entity['thumbs:up:user_guids'])) {
-      entity['thumbs:up:user_guids'] = entity['thumbs:up:user_guids'].filter((guid: string): boolean => guid == sessionService.guid);
+    if (
+      entity['thumbs:up:user_guids'] &&
+      Array.isArray(entity['thumbs:up:user_guids'])
+    ) {
+      entity['thumbs:up:user_guids'] = entity['thumbs:up:user_guids'].filter(
+        (guid: string): boolean => guid == sessionService.guid,
+      );
     }
 
-    if (entity['thumbs:down:user_guids'] && Array.isArray(entity['thumbs:down:user_guids'])) {
-      entity['thumbs:down:user_guids'] = entity['thumbs:down:user_guids'].filter((guid: string): boolean => guid == sessionService.guid);
+    if (
+      entity['thumbs:down:user_guids'] &&
+      Array.isArray(entity['thumbs:down:user_guids'])
+    ) {
+      entity['thumbs:down:user_guids'] = entity[
+        'thumbs:down:user_guids'
+      ].filter((guid: string): boolean => guid == sessionService.guid);
     }
   }
 
@@ -272,11 +298,11 @@ class EntitiesService {
   mapToModel(entity: Object): BaseModel {
     switch (entity.type) {
       case 'activity':
-        return ActivityModel.create(entity)
+        return ActivityModel.create(entity);
       case 'user':
         return UserModel.create(entity);
       case 'group':
-        return GroupModel.create(entity)
+        return GroupModel.create(entity);
       case 'object':
         switch (entity.subtype) {
           case 'blog':
@@ -286,7 +312,7 @@ class EntitiesService {
             return ActivityModel.create(entity);
         }
     }
-    return ActivityModel.create(entity)
+    return ActivityModel.create(entity);
   }
 }
 

@@ -7,6 +7,7 @@ import groupsService from './GroupsService';
  */
 export default class GroupModel extends BaseModel {
   @observable conversationDisabled = false;
+  name!: string;
 
   @action
   async toggleConversationDisabled() {

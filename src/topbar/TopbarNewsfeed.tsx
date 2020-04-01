@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, View, Platform, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Image,
+  View,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import SearchComponent from './SearchComponent';
@@ -10,10 +16,16 @@ import MessengerTabIcon from '../messenger/MessengerTabIconNew';
 import EmailConfirmation from './EmailConfirmation';
 import BannerInfo from './BannerInfo';
 
+type PropsType = {
+  title: string;
+  navigation: any;
+  refreshFeed: Function;
+};
+
 @inject('user')
 @inject('wallet')
 @observer
-class TopbarNewsfeed extends Component {
+class TopbarNewsfeed extends Component<PropsType> {
   componentDidMount() {
     this.props.wallet.refresh();
   }
@@ -30,7 +42,7 @@ class TopbarNewsfeed extends Component {
     const refreshFeed = this.props.refreshFeed ?? (() => false);
     return (
       <SafeAreaConsumer>
-        {insets => (
+        {(insets) => (
           <View>
             <View
               style={[

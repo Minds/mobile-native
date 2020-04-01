@@ -1,38 +1,32 @@
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  inject,
-  observer
-} from "mobx-react";
+import { inject, observer } from 'mobx-react';
 
-import {
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  View
-} from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 
 import { CommonStyle } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
+import type NewsfeedStore from '../NewsfeedStore';
+
+type PropsType = {
+  newsfeed: NewsfeedStore;
+};
 
 /**
  * Newsfeed top bar
  */
 @inject('newsfeed')
 @observer
-export default class Topbar extends Component {
-
+export default class Topbar extends Component<PropsType> {
   /**
    * Selected
    * @param {string} txt
    */
   selected(txt) {
     const filter = this.props.newsfeed.filter;
-    return filter == txt ? styles.tabSelected : null;
+    return filter === txt ? styles.tabSelected : null;
   }
 
   /**
@@ -41,18 +35,47 @@ export default class Topbar extends Component {
   render() {
     return (
       <View>
-        <View style={[styles.container, CommonStyle.shadow, ThemedStyles.style.backgroundPrimary]}>
+        <View
+          style={[
+            styles.container,
+            CommonStyle.shadow,
+            ThemedStyles.style.backgroundPrimary,
+          ]}>
           <View style={styles.topbar}>
-            <TouchableOpacity style={[styles.tab, {borderBottomColor: ThemedStyles.getColor('primary_background')}, this.selected('subscribed')]} onPress={() => this.props.newsfeed.setFilter('subscribed')}>
-              <Text style={CommonStyle.fontM}>{i18n.t('newsfeed.subscribed')}</Text>
+            <TouchableOpacity
+              style={[
+                styles.tab,
+                {
+                  borderBottomColor: ThemedStyles.getColor(
+                    'primary_background',
+                  ),
+                },
+                this.selected('subscribed'),
+              ]}
+              onPress={() => this.props.newsfeed.setFilter('subscribed')}>
+              <Text style={CommonStyle.fontM}>
+                {i18n.t('newsfeed.subscribed')}
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.tab,  {borderBottomColor: ThemedStyles.getColor('primary_background')}, this.selected('boostfeed')]} onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
-              <Text style={CommonStyle.fontM}>{i18n.t('newsfeed.boostfeed')}</Text>
+            <TouchableOpacity
+              style={[
+                styles.tab,
+                {
+                  borderBottomColor: ThemedStyles.getColor(
+                    'primary_background',
+                  ),
+                },
+                this.selected('boostfeed'),
+              ]}
+              onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
+              <Text style={CommonStyle.fontM}>
+                {i18n.t('newsfeed.boostfeed')}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
-    )
+    );
   }
 }
 
@@ -82,5 +105,5 @@ const styles = StyleSheet.create({
   },
   tabSelected: {
     borderBottomColor: colors.primary,
-  }
+  },
 });

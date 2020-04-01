@@ -4,12 +4,21 @@ import FastImage from 'react-native-fast-image';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
+import type ActivityModel from '../ActivityModel';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
+
+type PropsType = {
+  entity: ActivityModel;
+  rightToolbar?: React.ReactNode;
+  navigation: any;
+  route?: any;
+  children?: React.ReactNode;
+};
 
 /**
  * Owner Block Component
  */
-export default class OwnerBlock extends PureComponent {
+export default class OwnerBlock extends PureComponent<PropsType> {
   /**
    * Navigate To channel
    */
@@ -34,7 +43,12 @@ export default class OwnerBlock extends PureComponent {
           ? this.props.route.params.group.guid
           : this.props.route.params.guid;
       } catch {}
-      if (groupGuid == this.props.entity.containerObj.guid) return;
+      if (
+        this.props.entity.containerObj &&
+        groupGuid === this.props.entity.containerObj.guid
+      ) {
+        return;
+      }
 
       this.props.navigation.push('GroupView', {
         group: this.props.entity.containerObj,
@@ -43,7 +57,9 @@ export default class OwnerBlock extends PureComponent {
   };
 
   get group() {
-    if (!this.props.entity.containerObj) return null;
+    if (!this.props.entity.containerObj) {
+      return null;
+    }
 
     return (
       <DebouncedTouchableOpacity

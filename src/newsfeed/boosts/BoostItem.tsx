@@ -1,8 +1,4 @@
-import React, {
-  PureComponent
-} from 'react';
-
-import { View } from 'react-native';
+import React, { PureComponent } from 'react';
 
 import Activity from '../activity/Activity';
 
@@ -22,7 +18,7 @@ export default class BoostItem extends PureComponent {
     if (!this.height) {
       this.height = event.nativeEvent.layout.height;
     }
-  }
+  };
 
   /**
    * Render
@@ -35,6 +31,6 @@ export default class BoostItem extends PureComponent {
         navigation={this.props.navigation}
         disableProgress={true}
       />
-    )
+    );
   }
 }

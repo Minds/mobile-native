@@ -3,18 +3,15 @@ import { Platform } from 'react-native';
 import api from './../common/services/api.service';
 import { abort } from '../common/helpers/abortableFetch';
 import { getStores } from '../../AppStores';
-import blockListService from '../common/services/block-list.service';
 import logService from '../common/services/log.service';
 import connectivityService from '../common/services/connectivity.service';
 
 export default class NewsfeedService {
-
   async _getFeed(endpoint, offset, limit) {
-
     // abort previous fetchs
     abort(this);
 
-    const data = await api.get(endpoint, { offset, limit }, this);
+    const data: any = await api.get(endpoint, { offset, limit }, this);
     return {
       entities: data.activity || data.entities,
       offset: data['load-next'],
@@ -35,7 +32,12 @@ export default class NewsfeedService {
    * @param {Number} limit
    */
   async getFeedSuggested(offset, limit = 12) {
-    return this._getFeed('api/v2/entities/suggested/activities' + (getStores().hashtag.all ? '/all' : ''), offset, limit);
+    return this._getFeed(
+      'api/v2/entities/suggested/activities' +
+        (getStores().hashtag.all ? '/all' : ''),
+      offset,
+      limit,
+    );
   }
 
   /**
@@ -53,31 +55,33 @@ export default class NewsfeedService {
    * @param {String} offset
    * @param {Number} limit
    */
-  async getBoosts(offset, limit = 15, rating) {
-
+  async getBoosts(offset, limit = 15, rating = 1) {
     abort(this);
 
-    const data = await api.get('api/v1/boost/fetch/newsfeed', {
-      limit: limit || '',
-      offset: offset || '',
-      rating: rating || 1,
-      platform: Platform.OS === 'ios' ? 'ios' : 'other'
-    }, this);
+    const data: any = await api.get(
+      'api/v1/boost/fetch/newsfeed',
+      {
+        limit: limit || '',
+        offset: offset || '',
+        rating: rating,
+        platform: Platform.OS === 'ios' ? 'ios' : 'other',
+      },
+      this,
+    );
 
     return {
       entities: data.boosts || [],
       offset: data['load-next'],
-    }
+    };
   }
 }
 
 export function update(post) {
-  return api.post('api/v1/newsfeed/' + post.guid, post)
-    .then((data) => {
-      return {
-        entity: data.activity,
-      }
-    });
+  return api.post('api/v1/newsfeed/' + post.guid, post).then((data: any) => {
+    return {
+      entity: data.activity,
+    };
+  });
 }
 
 /**
@@ -105,9 +109,15 @@ export async function setViewed(entity, extra = {}) {
   if (!connectivityService.isConnected) return;
 
   if (entity.boosted_guid) {
-    data = await api.post('api/v2/analytics/views/boost/' + entity.boosted_guid, extra );
+    data = await api.post(
+      'api/v2/analytics/views/boost/' + entity.boosted_guid,
+      extra,
+    );
   } else {
-    data = await api.post('api/v2/analytics/views/entity/' + entity.guid, extra);
+    data = await api.post(
+      'api/v2/analytics/views/entity/' + entity.guid,
+      extra,
+    );
   }
   return data;
 }
@@ -119,58 +129,62 @@ export async function setViewed(entity, extra = {}) {
  */
 
 export function toggleMuteNotifications(guid, value) {
-  let action = value ? 'mute' : 'unmute'
-  return api.post('api/v1/entities/notifications/' + guid + '/' + action)
+  let action = value ? 'mute' : 'unmute';
+  return api
+    .post('api/v1/entities/notifications/' + guid + '/' + action)
     .then((data) => {
       return data;
     })
-    .catch(err => {
+    .catch((err) => {
       logService.exception('[NewsfeedService]', err);
-      throw "Oops, an error occurred muting notifications.";
-    })
+      throw 'Oops, an error occurred muting notifications.';
+    });
 }
 
 export function follow(guid) {
-  return api.put(`api/v2/notifications/follow/${guid}`)
+  return api
+    .put(`api/v2/notifications/follow/${guid}`)
     .then((data) => {
       return data;
     })
-    .catch(err => {
+    .catch((err) => {
       logService.exception('[NewsfeedService]', err);
-      throw "Ooops";
-    })
+      throw 'Ooops';
+    });
 }
 
 export function unfollow(guid) {
-  return api.delete(`api/v2/notifications/follow/${guid}`)
+  return api
+    .delete(`api/v2/notifications/follow/${guid}`)
     .then((data) => {
       return data;
     })
-    .catch(err => {
+    .catch((err) => {
       logService.exception('[NewsfeedService]', err);
-      throw "Oops, an error has occurred whilst unfollowing.";
-    })
+      throw 'Oops, an error has occurred whilst unfollowing.';
+    });
 }
 
 export async function isFollowing(guid) {
   try {
-    const result = await api.get(`api/v2/notifications/follow/${guid}`);
+    const result: any = await api.get(`api/v2/notifications/follow/${guid}`);
     return result.postSubscription.following;
-  } catch (e) {
+  } catch (err) {
     logService.exception('[NewsfeedService]', err);
     return false;
   }
 }
 
 export function toggleExplicit(guid, value) {
-  return api.post('api/v1/entities/explicit/' + guid, {value : value})
+  return api
+    .post('api/v1/entities/explicit/' + guid, { value: value })
     .then((data) => {
-      return { data }
+      return { data };
     })
-    .catch(err => {
+    .catch((err) => {
       logService.exception('[NewsfeedService]', err);
-      throw "Oops, an error has occurred toggling explicit content";
-    })
+      throw 'Oops, an error has occurred toggling explicit content';
+    });
 }
 
 export function toggleFeatured(guid, value, category) {
@@ -183,7 +197,7 @@ export function toggleFeatured(guid, value, category) {
 
 export function monetize(guid, value) {
   if (!value) {
-    return api.put('api/v1/monetize/' + guid );
+    return api.put('api/v1/monetize/' + guid);
   } else {
     return api.delete('api/v1/monetize/' + guid);
   }
@@ -194,14 +208,14 @@ export function deleteItem(guid) {
 }
 
 export async function getSingle(guid) {
-  const result = await api.get('api/v2/entities',{
+  const result: any = await api.get('api/v2/entities', {
     urns: `urn:entity:${guid}`,
     as_activities: 1,
   });
 
   if (!result || !result.entities || !result.entities.length) throw 'Not found';
 
-  return {activity: result.entities[0]};
+  return { activity: result.entities[0] };
 }
 
 /**

@@ -15,16 +15,25 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import { FLAG_VIEW } from '../common/Permissions';
+import type CommentsStore from 'src/comments/CommentsStore';
+
+type PropsType = {
+  route: any;
+  navigation: any;
+};
 
 /**
  * Activity screen
  */
 @observer
-class ActivityScreen extends Component {
+class ActivityScreen extends Component<PropsType> {
+  comments: CommentsStore;
+  activity: Activity | null = null;
+
   /**
    * Store
    */
-  entityStore = new SingleEntityStore();
+  entityStore: SingleEntityStore<ActivityModel> = new SingleEntityStore();
 
   /**
    * Constructor
@@ -65,7 +74,7 @@ class ActivityScreen extends Component {
       const urn = 'urn:entity:' + params.guid;
       await this.entityStore.loadEntity(urn);
 
-      if (!this.entityStore.entity.can(FLAG_VIEW, true)) {
+      if (!this.entityStore.entity?.can(FLAG_VIEW, true)) {
         this.props.navigation.goBack();
         return;
       }
@@ -119,7 +128,7 @@ class ActivityScreen extends Component {
    * On comment input focus
    */
   onFocus = () => {
-    this.activity.pauseVideo();
+    this.activity?.pauseVideo();
   };
 
   /**
@@ -130,7 +139,7 @@ class ActivityScreen extends Component {
       return <CenteredLoading />;
     }
 
-    if (!this.entityStore.entity.can(FLAG_VIEW, true)) {
+    if (!this.entityStore.entity?.can(FLAG_VIEW, true)) {
       this.props.navigation.goBack();
       return null;
     }
@@ -138,6 +147,7 @@ class ActivityScreen extends Component {
     return (
       <View style={[CS.flexContainer]}>
         {!this.entityStore.errorLoading ? (
+          //@ts-ignore user store is injected
           <CommentList
             header={this.getHeader()}
             entity={this.entityStore.entity}
