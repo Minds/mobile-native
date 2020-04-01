@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useCallback, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated from "react-native-reanimated";

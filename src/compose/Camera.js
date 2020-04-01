@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ThemedStyles from '../styles/ThemedStyles';
-import RecordButton from '../capture/RecordButton';
+import RecordButton from './RecordButton';
 import { observer, useLocalStore } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
 import mindsService from '../common/services/minds.service';
