@@ -13,3 +13,11 @@ export type RootStackParamList = {
   Newsfeed: {};
   Capture: {};
 };
+
+export type AuthStackParamList = {
+  Login: {};
+  Forgot: {
+    code?: string;
+  };
+  Register: {}:
+}

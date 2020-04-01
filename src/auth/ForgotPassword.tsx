@@ -10,10 +10,14 @@ import Button from '../common/components/Button';
 import Input from '../common/components/Input';
 import ThemedStyles from '../styles/ThemedStyles';
 
+type PropsType = {
+  onBack: Function;
+};
+
 /**
  * Forgot Password Form
  */
-export default class ForgotPassword extends PureComponent {
+export default class ForgotPassword extends PureComponent<PropsType> {
 
   /**
    * Component will mount
@@ -97,6 +101,7 @@ export default class ForgotPassword extends PureComponent {
 
       try {
         const data = await authService.forgot(this.state.username);
+        console.log(data);
         this.setState({ sent: true, msg: i18n.t('auth.requestNewPasswordSuccess') });
       } catch (err) {
         alert('Oops. Please try again.');

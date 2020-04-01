@@ -22,10 +22,15 @@ import Input from '../common/components/Input';
 import Button from '../common/components/Button';
 import ThemedStyles from '../styles/ThemedStyles';
 
+type PropsType = {
+  onLogin: Function;
+  onForgot: Function;
+};
+
 /**
  * Login Form
  */
-export default class LoginForm extends Component {
+export default class LoginForm extends Component<PropsType> {
   /**
    * State
    */
@@ -43,7 +48,7 @@ export default class LoginForm extends Component {
   /**
    * Constructor
    */
-  constructor(props) {
+  constructor(props: PropsType) {
     super(props);
     this.state.language = i18n.getCurrentLocale();
   }

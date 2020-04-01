@@ -2,6 +2,7 @@ import api, { ApiResponse } from './../common/services/api.service';
 import session from './../common/services/session.service';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
+import type UserModel from '../channel/UserModel';
 
 interface LoginResponse extends ApiResponse {
   access_token: string;
@@ -9,6 +10,17 @@ interface LoginResponse extends ApiResponse {
 }
 
 interface TFAResponse extends ApiResponse {}
+
+export interface RegisterResponse extends ApiResponse {
+  guid: string;
+  user: UserModel;
+}
+
+interface ForgotResponse extends ApiResponse {}
+
+interface ValidateResponse extends ApiResponse {}
+
+interface ResetResponse extends ApiResponse {}
 
 type tfaParams = {
   token: string;
@@ -28,6 +40,20 @@ export type registerParams = {
   email: string;
   password: string;
   exclusive_promotions: boolean;
+};
+
+type resetParams = {
+  username: string;
+  code: string;
+  password: string;
+};
+
+type forgotParams = {
+  username: string;
+};
+
+type validateParams = {
+  password: string;
 };
 
 /**
@@ -136,25 +162,43 @@ class AuthService {
 
     return data;
   }
-
-  register(params: registerParams) {
-    return api.post('api/v1/register', params);
+  /**
+   * Register user and returns UserModel
+   * @param params 
+   */
+  register(params: registerParams): Promise<RegisterResponse> {
+    return api.post<RegisterResponse>('api/v1/register', params);
   }
-
-  forgot(username) {
-    return api.post('api/v1/forgotpassword/request', { username });
+  /**
+   * Request to reset password, returns suceed or fail
+   * @param username 
+   */
+  forgot(username: string): Promise<ForgotResponse> {
+    const params = { username } as forgotParams;
+    return api.post('api/v1/forgotpassword/request', params);
   }
-
-  reset(username, password, code) {
-    return api.post('api/v1/forgotpassword/reset', {
+  /**
+   * Set new password validating with code
+   * @param username 
+   * @param password 
+   * @param code 
+   */
+  reset(username: string, password: string, code: string): Promise<ResetResponse> {
+    const params = {
       username,
       code,
       password,
-    });
-  }
+    } as resetParams;
 
-  validatePassword(password) {
-    return api.post('api/v2/settings/password/validate', { password });
+    return api.post('api/v1/forgotpassword/reset', params);
+  }
+  /**
+   * Validate Password, return succeed or fail
+   * @param password 
+   */
+  validatePassword(password: string): Promise<ValidateResponse> {
+    const params = { password } as validateParams;
+    return api.post('api/v2/settings/password/validate', params);
   }
 }
 
