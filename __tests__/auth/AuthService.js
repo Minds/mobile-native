@@ -60,8 +60,6 @@ describe('auth service login', () => {
     try {
       const promise = authService.login('user', 'pass');
 
-      jest.runAllTimers();
-
       const res = await promise;
     } catch(err) {
       // assert on the response

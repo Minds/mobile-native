@@ -1,9 +1,7 @@
 //@ts-nocheck
-import navigation from '../../../navigation/NavigationService'
-import session from '../session.service'
+import navigation from '../../../navigation/NavigationService';
 import featuresService from '../features.service';
 import logService from '../log.service';
-import entitiesService from '../entities.service';
 
 /**
  * Push Router
@@ -92,6 +90,7 @@ export default class Router {
    * @param {Object} data
    */
   async navigateToActivityOrGroup(data) {
+    const entitiesService = require('../entities.service');
     try {
       const entity = await entitiesService.single('urn:entity:' + data.json.parent_guid);
 

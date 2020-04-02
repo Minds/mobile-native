@@ -6,18 +6,14 @@ import i18nService from './i18n.service';
  * Android permissions service
  */
 class AndroidPermissionsService {
-
   /**
    * Request external storage read permission
    */
   readExternalStorage() {
-    return this._request(
-      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-      {
-        'title': 'Minds',
-        'message': i18nService.t('permissions.externalStorage')
-      }
-    );
+    return this._request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE, {
+      title: 'Minds',
+      message: i18nService.t('permissions.externalStorage'),
+    });
   }
 
   /**
@@ -26,11 +22,11 @@ class AndroidPermissionsService {
   async checkReadExternalStorage() {
     try {
       const granted = await PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
       );
       return granted;
     } catch (err) {
-      console.warn(err)
+      console.warn(err);
       return err;
     }
   }
@@ -39,13 +35,10 @@ class AndroidPermissionsService {
    * Request read sms permission
    */
   readSms() {
-    return this._request(
-      PermissionsAndroid.PERMISSIONS.READ_SMS,
-      {
-        'title': 'Minds',
-        'message': i18nService.t('permissions.sms')
-      }
-    );
+    return this._request(PermissionsAndroid.PERMISSIONS.READ_SMS, {
+      title: 'Minds',
+      message: i18nService.t('permissions.sms'),
+    });
   }
 
   /**
@@ -54,11 +47,11 @@ class AndroidPermissionsService {
   async checkReadSms() {
     try {
       const granted = await PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.READ_SMS
+        PermissionsAndroid.PERMISSIONS.READ_SMS,
       );
       return granted;
     } catch (err) {
-      console.warn(err)
+      console.warn(err);
       return err;
     }
   }
@@ -70,9 +63,9 @@ class AndroidPermissionsService {
     return this._request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
       {
-        'title': 'Minds',
-        'message': i18nService.t('permissions.writeExternalStorage')
-      }
+        title: 'Minds',
+        message: i18nService.t('permissions.writeExternalStorage'),
+      },
     );
   }
 
@@ -82,11 +75,11 @@ class AndroidPermissionsService {
   async checkWriteExternalStorage() {
     try {
       const granted = await PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+        PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
       );
       return granted;
     } catch (err) {
-      console.warn(err)
+      console.warn(err);
       return err;
     }
   }
@@ -95,12 +88,10 @@ class AndroidPermissionsService {
    * Request camera permission
    */
   camera() {
-    return this._request(PermissionsAndroid.PERMISSIONS.CAMERA,
-      {
-        'title': 'Minds',
-        'message': i18nService.t('permissions.camera')
-      }
-    );
+    return this._request(PermissionsAndroid.PERMISSIONS.CAMERA, {
+      title: 'Minds',
+      message: i18nService.t('permissions.camera'),
+    });
   }
 
   /**
@@ -109,11 +100,11 @@ class AndroidPermissionsService {
   async checkCamera() {
     try {
       const granted = await PermissionsAndroid.check(
-        PermissionsAndroid.PERMISSIONS.CAMERA
+        PermissionsAndroid.PERMISSIONS.CAMERA,
       );
       return granted;
     } catch (err) {
-      console.warn(err)
+      console.warn(err);
       return err;
     }
   }
@@ -123,7 +114,7 @@ class AndroidPermissionsService {
    * @param {string} permission
    * @param {object} opt
    */
-  async _request(permission, opt={}) {
+  async _request(permission, opt = {}) {
     try {
       const granted = await PermissionsAndroid.request(permission, opt);
 
@@ -131,10 +122,9 @@ class AndroidPermissionsService {
 
       return granted === PermissionsAndroid.RESULTS.GRANTED;
     } catch (err) {
-      console.warn(err);
       return err;
     }
   }
 }
 
-export default AndroidPermissionsService;
+export default new AndroidPermissionsService();

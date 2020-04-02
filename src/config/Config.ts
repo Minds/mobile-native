@@ -39,7 +39,7 @@ export const CODE_PUSH_TOKEN = '';
  * Plataform dependant or fixed features
  */
 export const MINDS_FEATURES = {
-  crypto: Platform.OS === 'ios' ? false : false,
+  crypto: true,
   'onboarding-december-2019': true,
   compose: true,
 };

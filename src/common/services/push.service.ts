@@ -1,8 +1,5 @@
 //@ts-nocheck
-import {
-  Platform,
-} from 'react-native';
-import { platform } from 'os';
+import { Platform } from 'react-native';
 
 import Router from './push/router';
 import logService from './log.service';
@@ -10,7 +7,7 @@ import logService from './log.service';
 /**
  * Push Service
  */
-class PushService {
+export class PushService {
   push;
   router;
 
@@ -19,10 +16,11 @@ class PushService {
    */
   constructor() {
     // build platform instance
-    const platform = (Platform.OS == 'ios') ? require('./push/ios-platform').default : require('./push/android-platform').default;
+    const platform =
+      Platform.OS === 'ios'
+        ? require('./push/ios-platform').default
+        : require('./push/android-platform').default;
     this.push = new platform();
-
-    this.router = new Router();
 
     this.push.setOnNotificationOpened((notification) => {
       // get notification data
@@ -30,8 +28,7 @@ class PushService {
       if (data.json) data.json = JSON.parse(data.json);
       // navigate
       this.router.navigate(data);
-
-    })
+    });
 
     this.push.setOnInitialNotification((notification) => {
       // get notification data
@@ -41,18 +38,21 @@ class PushService {
       setTimeout(() => {
         this.router.navigate(data);
       }, 100);
-
-    })
+    });
   }
 
   /**
    * Init
    */
   init() {
+    this.router = new Router();
     try {
       this.push.init();
-    } catch(err) {
-      logService.exception('[PushService] Error on push notification initialization', err);
+    } catch (err) {
+      logService.exception(
+        '[PushService] Error on push notification initialization',
+        err,
+      );
     }
   }
 

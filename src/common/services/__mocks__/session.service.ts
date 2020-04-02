@@ -4,5 +4,6 @@ export default {
   isLoggedIn: jest.fn(),
   setInitialScreen: jest.fn(),
   onLogin: jest.fn(),
-  onSession: jest.fn()
+  onSession: jest.fn(),
+  getUser: jest.fn(),
 }

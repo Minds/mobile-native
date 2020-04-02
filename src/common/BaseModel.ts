@@ -89,9 +89,10 @@ export default class BaseModel {
   }
 
   /**
-   * Constructor
+   * Assign values to obj
+   * @param data any
    */
-  constructor(data: any) {
+  assign(data: any) {
     // Some users have a number as username and engine return them as a number
     if (data.username) {
       data.username = String(data.username);
@@ -101,7 +102,6 @@ export default class BaseModel {
     if (data.name) {
       data.name = String(data.name);
     }
-
     Object.assign(this, data);
 
     // create childs instances
@@ -149,7 +149,9 @@ export default class BaseModel {
     this: T,
     data: object,
   ): InstanceType<T> {
-    return new this(data) as InstanceType<T>;
+    const obj: InstanceType<T> = new this() as InstanceType<T>;
+    obj.assign(data);
+    return obj;
   }
 
   /**
@@ -166,7 +168,9 @@ export default class BaseModel {
     }
 
     arrayData.forEach((data) => {
-      collection.push(new this(data) as InstanceType<T>);
+      const obj: InstanceType<T> = new this() as InstanceType<T>;
+      obj.assign(data);
+      collection.push(obj);
     });
 
     return collection;

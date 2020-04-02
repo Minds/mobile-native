@@ -35,18 +35,6 @@ import reportStore from './src/report/ReportStore';
  */
 let stores: any | null = null;
 
-/**
- * Clear stores on session log out
- */
-sessionService.onLogout(() => {
-  for (const id in stores) {
-    if (stores[id].reset) {
-      logService.info(`Reseting store ${id}`);
-      stores[id].reset();
-    }
-  }
-});
-
 export const getStores = function () {
   if (!stores) {
     stores = {
@@ -79,6 +67,17 @@ export const getStores = function () {
       groupsBar: new groupsBar(),
       reportstore: new reportStore(),
     };
+    /**
+     * Clear stores on session log out
+     */
+    sessionService.onLogout(() => {
+      for (const id in stores) {
+        if (stores[id].reset) {
+          logService.info(`Reseting store ${id}`);
+          stores[id].reset();
+        }
+      }
+    });
   }
   return stores;
 };

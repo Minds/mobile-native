@@ -32,8 +32,6 @@ describe('WithdrawScreen', () => {
     screen = shallow(
       <WithdrawScreen.wrappedComponent user={user} withdraw={withdraw} />
     );
-
-    jest.runAllTimers();
   });
 
   it('renders correctly', () => {

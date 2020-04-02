@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity } from 'react-native';
 import { shallow } from 'enzyme';
 
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
@@ -15,10 +15,8 @@ import ActivityModel from '../../../../src/newsfeed/ActivityModel';
 jest.mock('../../../../src/auth/UserStore');
 
 describe('Thumb action component', () => {
-
   let screen, entity;
   beforeEach(() => {
-
     const TouchableOpacityCustom = <TouchableOpacity onPress={this.onPress} />;
 
     const navigation = { navigate: jest.fn() };
@@ -26,9 +24,7 @@ describe('Thumb action component', () => {
 
     entity = ActivityModel.create(activityResponse.activities[0]);
 
-    screen = shallow(
-      <ThumbUpAction entity={entity} navigation={navigation} />
-    );
+    screen = shallow(<ThumbUpAction entity={entity} navigation={navigation} />);
   });
 
   it('renders correctly', async () => {
@@ -36,32 +32,25 @@ describe('Thumb action component', () => {
     expect(screen).toMatchSnapshot();
   });
 
-
   it('should have A boost button', async () => {
     screen.update();
-    expect(screen.find('Icon')).toHaveLength(1)
+    expect(screen.find('Icon')).toHaveLength(1);
   });
 
   it('should navigate a thumb on press ', () => {
-
-
     const navigation = {
-      navigate: jest.fn()
+      navigate: jest.fn(),
     };
 
     entity.toggleVote = jest.fn();
 
-    screen = shallow(
-      <ThumbUpAction entity={entity} navigation={navigation}/>
-    );
+    screen = shallow(<ThumbUpAction entity={entity} navigation={navigation} />);
     screen.update();
-    let touchables = screen.find('PreventDoubleTap');
+    let touchables = screen.find('preventDoubleTap(TouchableOpacity)');
     touchables.at(0).props().onPress();
 
     expect(entity.toggleVote).toHaveBeenCalled();
 
-    expect(screen.find('PreventDoubleTap')).toHaveLength(1);
-
+    expect(touchables).toHaveLength(1);
   });
-
 });

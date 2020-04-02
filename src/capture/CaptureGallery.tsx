@@ -44,7 +44,7 @@ export default class CaptureGallery extends PureComponent {
   /**
    * Load Photos
    */
-  async loadPhotos() {
+  loadPhotos = async () => {
     let allowed = true;
     if (Platform.OS !== 'ios') {
       allowed = await androidPermissionsService.checkReadExternalStorage();
@@ -56,7 +56,7 @@ export default class CaptureGallery extends PureComponent {
     if (allowed === true) {
       this._loadPhotos();
     }
-  }
+  };
 
   /**
    * Load photos

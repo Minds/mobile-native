@@ -19,7 +19,7 @@ class BoostedContentService {
    * Feed service
    * @var {FeedsService}
    */
-  feedsService: FeedsService = new FeedsService();
+  feedsService?: FeedsService;
 
   /**
    * Boosts
@@ -31,6 +31,7 @@ class BoostedContentService {
    * Reload boosts list
    */
   load = async (): Promise<any> => {
+    this.init();
     try {
       const done = await this.feedsService
         .setLimit(12)
@@ -49,6 +50,15 @@ class BoostedContentService {
       logService.exception('[BoostedContentService]', err);
     }
   };
+
+  /**
+   * Initialize if necessary
+   */
+  init() {
+    if (!this.feedsService) {
+      this.feedsService = new FeedsService();
+    }
+  }
 
   /**
    * Remove blocked channel's boosts and sets boosted to true

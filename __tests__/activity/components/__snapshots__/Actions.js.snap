@@ -54,11 +54,6 @@ exports[`Activity component renders correctly 1`] = `
           },
         }
       }
-      me={
-        Object {
-          "guid": "guidguid",
-        }
-      }
     />
     <ThumbDownAction
       entity={
@@ -92,11 +87,6 @@ exports[`Activity component renders correctly 1`] = `
           "wire_totals": Object {
             "tokens": 1000000000000000000,
           },
-        }
-      }
-      me={
-        Object {
-          "guid": "guidguid",
         }
       }
     />

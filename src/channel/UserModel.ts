@@ -28,7 +28,7 @@ export default class UserModel extends BaseModel {
   icontime!: string;
   username!: string;
   name!: string;
-  admin: boolean = false;
+  admin = false;
   plus: boolean = false;
   verified: boolean = false;
   founder: boolean = false;
@@ -151,7 +151,7 @@ export default class UserModel extends BaseModel {
    * Is admin
    */
   isAdmin() {
-    return !!this.admin;
+    return this.admin;
   }
 
   /**

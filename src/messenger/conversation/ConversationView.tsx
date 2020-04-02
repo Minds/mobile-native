@@ -14,7 +14,6 @@ import { observer } from 'mobx-react'
 
 import { MINDS_CDN_URI } from '../../config/Config';
 
-import * as Sentry from '@sentry/react-native';
 import { FLAG_MESSAGE } from '../../common/Permissions';
 import ThemedStyles from '../../styles/ThemedStyles';
 
