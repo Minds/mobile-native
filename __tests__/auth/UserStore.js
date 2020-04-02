@@ -37,7 +37,7 @@ describe('user store', () => {
 
     try {
       // me must be empty before call load
-      expect(store.me.guid).toEqual(undefined);
+      expect(store.me.guid).toEqual('');
 
       const res = await store.load();
 
@@ -66,7 +66,7 @@ describe('user store', () => {
 
     try {
       // me must be empty before call load
-      expect(store.me.guid).toEqual(undefined);
+      expect(store.me.guid).toEqual('');
 
       const res = store.setUser(fakeUser);
 
@@ -137,7 +137,7 @@ describe('user store', () => {
       // me observable should be updated with the new user
       whenWithTimeout(
         () => store.me.guid !== 1,
-        () => expect(store.me.guid).toEqual(undefined),
+        () => expect(store.me.guid).toEqual(''),
         200,
         () => done.fail("store didn't set me observable"),
       );
@@ -164,7 +164,7 @@ describe('user store', () => {
       // me observable should be updated with the new user
       whenWithTimeout(
         () => store.me.guid !== 1,
-        () => expect(store.me.guid).toEqual(undefined),
+        () => expect(store.me.guid).toEqual(''),
         200,
         () => done.fail("store didn't set me observable"),
       );

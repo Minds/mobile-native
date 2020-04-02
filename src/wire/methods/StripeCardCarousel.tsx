@@ -32,7 +32,7 @@ type Row = {
  * Stripe card Carousel
  */
 export default class StripeCardCarousel extends React.PureComponent<PropsType> {
-  carouselRef?: React.ElementRef<Carousel>;
+  carouselRef?: any;
 
   /**
    * Constructor

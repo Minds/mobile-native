@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { PureComponent } from 'react';
 
 import { Text, View, Alert, TextStyle } from 'react-native';

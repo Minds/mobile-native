@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default {
   init: jest.fn(),
   log: jest.fn(),

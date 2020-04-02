@@ -154,7 +154,7 @@ export default class SubscriptionTierCarousel extends PureComponent<PropsType> {
           onSnapToItem={this.onSelected}
           containerCustomStyle={styles.carousel}
           enableSnap={true}
-          layoutCardOffset="10"
+          layoutCardOffset={10}
           data={this.rewards}
           firstItem={current}
           renderItem={this._renderItem}

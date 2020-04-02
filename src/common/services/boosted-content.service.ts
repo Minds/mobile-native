@@ -33,8 +33,7 @@ class BoostedContentService {
   load = async (): Promise<any> => {
     this.init();
     try {
-      const done = await this.feedsService
-        .setLimit(12)
+      const done = await this.feedsService!.setLimit(12)
         .setOffset(0)
         .setPaginated(false)
         .setEndpoint('api/v2/boost/feed')
@@ -43,7 +42,7 @@ class BoostedContentService {
       if (!done) {
         await this.update();
       } else {
-        this.boosts = this.cleanBoosts(await this.feedsService.getEntities());
+        this.boosts = this.cleanBoosts(await this.feedsService!.getEntities());
         this.update();
       }
     } catch (err) {
@@ -75,8 +74,8 @@ class BoostedContentService {
    * Update boosted content from server
    */
   async update() {
-    await this.feedsService.fetch();
-    this.boosts = this.cleanBoosts(await this.feedsService.getEntities());
+    await this.feedsService!.fetch();
+    this.boosts = this.cleanBoosts(await this.feedsService!.getEntities());
   }
 
   /**

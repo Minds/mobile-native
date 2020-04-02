@@ -1,3 +1,4 @@
+//@ts-nocheck
 import apiService, { isApiForbidden } from "./api.service";
 
 import UserModel from "../../channel/UserModel";

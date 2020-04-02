@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default {
   getSecret: jest.fn(),
   setSecretIfEmpty: jest.fn(),

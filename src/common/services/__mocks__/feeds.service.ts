@@ -1,3 +1,4 @@
+//@ts-nocheck
 const feedService = function() {
   this.getEntities = jest.fn();
   this.prepend = jest.fn();

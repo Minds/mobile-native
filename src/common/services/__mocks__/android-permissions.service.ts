@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default {
   readExternalStorage: jest.fn(),
   checkReadExternalStorage: jest.fn(),

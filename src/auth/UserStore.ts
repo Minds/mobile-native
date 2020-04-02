@@ -8,11 +8,15 @@ import searchBarService from '../topbar/SearchBar.service';
  * Login Store
  */
 class UserStore {
-  @observable me: UserModel = {};
+  @observable me: UserModel;
   @observable emailConfirmMessageDismiss = false;
   @observable searching = false;
   @observable bannerInfoDismiss = false;
   @observable rewards: any = false;
+
+  constructor() {
+    this.me = UserModel.create({});
+  }
 
   /**
    * Dissmis Message Banner
@@ -64,7 +68,7 @@ class UserStore {
 
   @action
   clearUser() {
-    this.me = {};
+    this.me = UserModel.create({});
   }
 
   @action

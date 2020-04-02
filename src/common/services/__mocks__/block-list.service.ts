@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default {
   has: jest.fn(),
   getList: jest.fn(),

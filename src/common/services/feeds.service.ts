@@ -1,3 +1,4 @@
+//@ts-nocheck
 import logService from './log.service';
 import apiService from './api.service';
 import {abort, isNetworkFail} from '../helpers/abortableFetch';

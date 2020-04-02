@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default {
   login: jest.fn(),
   logout: jest.fn(),

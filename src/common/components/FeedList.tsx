@@ -241,7 +241,6 @@ export default class FeedList<T> extends Component<PropsType> {
         containerStyle={CS.hairLineBottom}>
         <Activity
           entity={entity}
-          newsfeed={this.props.feedStore}
           navigation={this.props.navigation}
           autoHeight={false}
           isLast={isLast}
@@ -258,7 +257,6 @@ export default class FeedList<T> extends Component<PropsType> {
     return (
       <TileElement
         size={this.state.itemHeight}
-        newsfeed={this.props.feedStore}
         entity={entity}
         navigation={this.props.navigation}
       />

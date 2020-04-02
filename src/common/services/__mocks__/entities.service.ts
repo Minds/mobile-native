@@ -1,3 +1,4 @@
+//@ts-nocheck
 export default {
     getFromCache : jest.fn(),
     garbageCollector : jest.fn(),

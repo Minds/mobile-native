@@ -1,3 +1,4 @@
+//@ts-nocheck
 const service = {
   getLanguages: jest.fn(),
   getUserDefaultLanguage: jest.fn(),
