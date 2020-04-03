@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useCallback, useState, useEffect } from 'react';
 import { View, Text } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';

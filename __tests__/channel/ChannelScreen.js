@@ -3,51 +3,62 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import ChannelScreen from '../../src/channel/ChannelScreen';
 import { activitiesServiceFaker } from '../../__mocks__/fake/ActivitiesFaker';
-import userFaker from '../../__mocks__/fake/channel/UserFactory'
-import UserModel, { USER_MODE_CLOSED, USER_MODE_OPEN } from '../../src/channel/UserModel';
+import userFaker from '../../__mocks__/fake/channel/UserFactory';
+import UserModel, {
+  USER_MODE_CLOSED,
+  USER_MODE_OPEN,
+} from '../../src/channel/UserModel';
 import featuresService from '../../src/common/services/features.service';
+import session from '../../src/common/services/session.service';
 
 jest.mock('../../src/common/helpers/abortableFetch');
 jest.mock('../../src/newsfeed/ActivityModel');
-jest.mock('../../src/channel/carousel/RewardsCarousel', () => 'RewardsCarousel');
+jest.mock(
+  '../../src/channel/carousel/RewardsCarousel',
+  () => 'RewardsCarousel',
+);
 jest.mock('../../src/channel/header/ChannelHeader', () => 'ChannelHeader');
 jest.mock('../../src/channel/toolbar/Toolbar', () => 'Toolbar');
-jest.mock('../../src/common/components/CenteredLoading', () => 'CenteredLoading');
+jest.mock(
+  '../../src/common/components/CenteredLoading',
+  () => 'CenteredLoading',
+);
 jest.mock('../../src/common/components/Button', () => 'Button');
 jest.mock('../../src/common/components/FeedList', () => 'FeedList');
 jest.mock('../../src/capture/CaptureFab', () => 'CaptureFab');
 jest.mock('../../src/blogs/BlogCard', () => 'BlogCard');
 jest.mock('../../src/common/components/Touchable', () => 'Touchable');
 jest.mock('../../src/common/services/boosted-content.service');
+jest.mock('../../src/common/services/session.service');
 
 /**
  * Tests
  */
 describe('Channel screen component', () => {
-
   let screen, channel, navigation, user, channelStore, route;
 
-  beforeEach(() => {
+  session.getUser.mockReturnValue(UserModel.create(userFaker(1)));
 
+  beforeEach(() => {
     let activityResponse = activitiesServiceFaker().load(1);
     let activity = activityResponse.activities[0];
-    activity.wire_totals = { tokens: 20};
+    activity.wire_totals = { tokens: 20 };
     activity.impressions = 20;
 
     navigation = { navigate: jest.fn(), goBack: jest.fn() };
     route = {
       params: {
-        entity: activity
-      }
+        entity: activity,
+      },
     };
     channelStore = {
-      channel: new UserModel(userFaker(1)),
+      channel: UserModel.create(userFaker(1)),
       setChannel: jest.fn(),
       feedStore: {
         setChannel: jest.fn(),
       },
       rewards: {
-        merged: []
+        merged: [],
       },
       load: jest.fn(),
     };
@@ -57,9 +68,12 @@ describe('Channel screen component', () => {
     channel.store.mockReturnValue(channelStore);
 
     screen = shallow(
-      <ChannelScreen.wrappedComponent channel={channel} navigation={navigation} route={route} />
+      <ChannelScreen.wrappedComponent
+        channel={channel}
+        navigation={navigation}
+        route={route}
+      />,
     );
-
   });
 
   it('should renders correctly', () => {
@@ -68,7 +82,6 @@ describe('Channel screen component', () => {
   });
 
   it('should have the expected components while loading, also check newsfeed', async () => {
-
     expect(screen.find('FeedList')).toHaveLength(1);
     let render = screen.dive();
     expect(render.find('CenteredLoading')).toHaveLength(0);
@@ -76,7 +89,6 @@ describe('Channel screen component', () => {
   });
 
   it('should have the expected components while loading, also check flatlist for blocked', async () => {
-
     channelStore.channel.blocked = true;
 
     await screen.update();
@@ -88,7 +100,6 @@ describe('Channel screen component', () => {
   });
 
   it('should show closed channel message', async () => {
-
     channelStore.channel.blocked = false;
     channelStore.channel.mode = USER_MODE_CLOSED;
 
@@ -97,20 +108,16 @@ describe('Channel screen component', () => {
     expect(screen).toMatchSnapshot();
   });
 
-
   it('should navigate back if the the VIEW permissions are removed', async () => {
-
     channelStore.channel.mode = USER_MODE_OPEN;
 
     // force permissions feature flag
-    featuresService.features = {permissions: true};
+    featuresService.features = { permissions: true };
 
-    channelStore.channel.setPermissions({permissions:[]});
+    channelStore.channel.setPermissions({ permissions: [] });
 
     await screen.update();
 
     expect(navigation.goBack).toBeCalled();
-
   });
-
 });

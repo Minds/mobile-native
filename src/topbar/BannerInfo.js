@@ -7,7 +7,6 @@ import featuresService from '../common/services/features.service';
 /**
  * Email Confirmation Message
  */
-export default
 @inject('user')
 @observer
 class BannerInfo extends Component {
@@ -53,6 +52,8 @@ class BannerInfo extends Component {
     );
   }
 }
+
+export default BannerInfo;
 
 const styles = StyleSheet.create({
   container: {

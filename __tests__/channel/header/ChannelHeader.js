@@ -9,25 +9,32 @@ import UserModel from '../../../src/channel/UserModel';
 import session from '../../../src/common/services/session.service';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-import appStores from '../../../AppStores';
+import { getStores } from '../../../AppStores';
 
 jest.mock('../../../src/auth/UserStore');
-jest.mock('../../../AppStores');
 jest.mock('../../../src/channel/ChannelStore');
 jest.mock('../../../src/common/services/boosted-content.service');
+
+const appStores = {
+  user: {
+    me: {},
+    load: jest.fn(),
+    setUser: jest.fn(),
+  },
+};
+getStores.mockReturnValue(appStores);
 
 /**
  * Tests
  */
 describe('channel header component owner', () => {
-
   let store, userStore, component;
 
   const navigation = {
     navigate: jest.fn(),
     state: {
-      params: {guid: 1}
-    }
+      params: { guid: 1 },
+    },
   };
 
   beforeEach(() => {
@@ -42,8 +49,13 @@ describe('channel header component owner', () => {
     store.loaded = true;
 
     component = renderer.create(
-      <ChannelHeader.wrappedComponent store={store} user={userStore} navigation={navigation} styles={{}}/>
-    )
+      <ChannelHeader.wrappedComponent
+        store={store}
+        user={userStore}
+        navigation={navigation}
+        styles={{}}
+      />,
+    );
   });
 
   it('should render correctly', () => {
@@ -51,7 +63,6 @@ describe('channel header component owner', () => {
   });
 
   it('should enable edit, save and disable', async () => {
-
     const instance = component.getInstance();
 
     // run onEdit

@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Thumb action component renders correctly 1`] = `
-<PreventDoubleTap
+<preventDoubleTap(TouchableOpacity)
   onPress={[Function]}
   style={
     Array [
@@ -39,5 +39,5 @@ exports[`Thumb action component renders correctly 1`] = `
     size={14}
     testID="Thumb up count"
   />
-</PreventDoubleTap>
+</preventDoubleTap(TouchableOpacity)>
 `;

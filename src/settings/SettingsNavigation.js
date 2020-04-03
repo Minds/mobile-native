@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useCallback } from 'react';
 
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';

@@ -11,7 +11,7 @@ exports[`Owner component renders correctly 1`] = `
     }
   }
 >
-  <PreventDoubleTap
+  <preventDoubleTap(TouchableOpacity)
     onPress={[Function]}
   >
     <FastImage
@@ -36,7 +36,7 @@ exports[`Owner component renders correctly 1`] = `
         }
       }
     />
-  </PreventDoubleTap>
+  </preventDoubleTap(TouchableOpacity)>
   <View
     style={
       Object {
@@ -54,7 +54,7 @@ exports[`Owner component renders correctly 1`] = `
         }
       }
     >
-      <PreventDoubleTap
+      <preventDoubleTap(TouchableOpacity)
         onPress={[Function]}
       >
         <Text
@@ -69,8 +69,8 @@ exports[`Owner component renders correctly 1`] = `
             ]
           }
         />
-      </PreventDoubleTap>
-      <PreventDoubleTap
+      </preventDoubleTap(TouchableOpacity)>
+      <preventDoubleTap(TouchableOpacity)
         onPress={[Function]}
         style={
           Object {
@@ -95,7 +95,7 @@ exports[`Owner component renders correctly 1`] = `
           &gt; 
           group
         </Text>
-      </PreventDoubleTap>
+      </preventDoubleTap(TouchableOpacity)>
     </View>
   </View>
 </View>

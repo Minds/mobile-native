@@ -341,6 +341,7 @@ exports[`blog card component should renders correctly 1`] = `
         "ownerObj": UserModel {
           "__list": null,
           "access_id": "2",
+          "admin": false,
           "allow_comments": true,
           "banned": "no",
           "blocked": false,
@@ -389,6 +390,7 @@ exports[`blog card component should renders correctly 1`] = `
           "impressions": 100,
           "isOwner": [Function],
           "language": "en",
+          "last_accepted_tos": 0,
           "legacy_guid": false,
           "mature": "1",
           "mature_channel": "0",
@@ -425,6 +427,7 @@ exports[`blog card component should renders correctly 1`] = `
           "time_created": "1468113204",
           "time_updated": false,
           "type": "user",
+          "urn": "",
           "username": "someusermane",
           "verified": true,
           "website": "",
@@ -461,6 +464,8 @@ exports[`blog card component should renders correctly 1`] = `
         "time_updated": "1524862542",
         "title": "Some Title",
         "type": "object",
+        "urn": "",
+        "username": "",
         "wire_threshold": "",
       }
     }

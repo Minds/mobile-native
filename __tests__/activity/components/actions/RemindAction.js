@@ -7,7 +7,6 @@ import RemindAction from '../../../../src/newsfeed/activity/actions/RemindAction
 import ActivityModel from '../../../../src/newsfeed/ActivityModel';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
-
 describe('Thumb action component', () => {
   let screen, entity;
 
@@ -25,7 +24,7 @@ describe('Thumb action component', () => {
   });
 
   it('should have a remind button', async () => {
-    expect(screen.find('PreventDoubleTap')).toHaveLength(1);
+    expect(screen.find('preventDoubleTap(TouchableOpacity)')).toHaveLength(1);
   });
 
   it('should navigate a thumb on press ', () => {
@@ -39,16 +38,10 @@ describe('Thumb action component', () => {
     entity.toggleVote = jest.fn();
     entity['thumbs:up:user_guids'] = ['1'];
 
-
-    screen = shallow(
-      <RemindAction entity={entity} navigation={navigation} />,
-    );
+    screen = shallow(<RemindAction entity={entity} navigation={navigation} />);
     screen.update();
-    let touchables = screen.find('PreventDoubleTap');
-    touchables
-      .at(0)
-      .props()
-      .onPress();
+    let touchables = screen.find('preventDoubleTap(TouchableOpacity)');
+    touchables.at(0).props().onPress();
 
     expect(navigation.push).toBeCalled();
   });
