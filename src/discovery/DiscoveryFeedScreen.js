@@ -89,6 +89,7 @@ export default class DiscoveryFeedScreen extends Component {
         windowSize={11}
         removeClippedSubviews={false}
         keyboardShouldPersistTaps={'handled'}
+        onRefresh={undefined}
       />
     )
   }
