@@ -31,6 +31,7 @@ import type { RootStackParamList } from '../navigation/NavigationTypes';
 import type WalletStore from '../wallet/WalletStore';
 import type WireStore from '../wire/WireStore';
 import type { StripeCard } from './WireTypes';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 type FabScreenRouteProp = RouteProp<RootStackParamList, 'Fab'>;
 type FabcreenNavigationProp = StackNavigationProp<RootStackParamList, 'Fab'>;
@@ -336,31 +337,35 @@ class FabScreen extends Component<PropsType> {
     );
 
     return (
-      <ScrollView
-        contentContainerStyle={[
-          ThemedStyles.style.backgroundSecondary,
-          CS.paddingLeft2x,
-          CS.paddingRight2x,
-          CS.columnAlignCenter,
-          CS.alignCenter,
-          CS.flexContainer,
-          CS.paddingTop2x,
-        ]}
-        style={CS.flexContainer}>
-        <Icon
-          size={45}
-          name="ios-close"
-          onPress={() => this.props.navigation.goBack()}
-          style={[
-            CS.marginRight3x,
-            CS.marginTop3x,
-            CS.positionAbsoluteTopRight,
-            ThemedStyles.style.colorIcon,
-          ]}
-        />
-        {icon}
-        {body}
-      </ScrollView>
+      <SafeAreaConsumer>
+        {(insets) => (
+          <ScrollView
+            contentContainerStyle={[
+              ThemedStyles.style.backgroundSecondary,
+              CS.paddingLeft2x,
+              CS.paddingRight2x,
+              CS.columnAlignCenter,
+              CS.alignCenter,
+              CS.flexContainer,
+              CS.paddingTop2x,
+            ]}
+            style={[CS.flexContainer, { paddingTop: insets!.top }]}>
+            <Icon
+              size={45}
+              name="ios-close"
+              onPress={() => this.props.navigation.goBack()}
+              style={[
+                CS.marginRight3x,
+                CS.marginTop3x,
+                CS.positionAbsoluteTopRight,
+                ThemedStyles.style.colorIcon,
+              ]}
+            />
+            {icon}
+            {body}
+          </ScrollView>
+        )}
+      </SafeAreaConsumer>
     );
   }
 

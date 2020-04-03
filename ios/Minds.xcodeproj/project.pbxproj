@@ -445,7 +445,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export SENTRY_PROPERTIES=sentry.properties\nexport NODE_BINARY=node\n../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    export SENTRY_PROPERTIES=sentry.properties\n    export NODE_BINARY=node\n    ../node_modules/@sentry/cli/bin/sentry-cli react-native xcode ../node_modules/react-native/scripts/react-native-xcode.sh\nfi\n";
 		};
 		296731C110F3A1661160366F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -607,7 +607,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export SENTRY_PROPERTIES=sentry.properties\n../node_modules/@sentry/cli/bin/sentry-cli upload-dsym";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    export SENTRY_PROPERTIES=sentry.properties\n    ../node_modules/@sentry/cli/bin/sentry-cli upload-dsym\nfi\n";
 		};
 		EE1FBE1E19E04057462F7A48 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

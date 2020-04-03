@@ -185,7 +185,7 @@ export default class BlockchainTransactionModalScreen extends Component {
               </Text>}
 
               { this.props.blockchainTransaction.funds && this.props.blockchainTransaction.funds.eth === '0' && <Text style={[styles.error]}>
-                {i18n.t('blockchain.notEnoughGas')} <Text style={styles.link} onPress={this.linkToCoinbase}>{i18n.t('blockchain.buyEther')}</Text>
+                {i18n.t('blockchain.notEnoughGas')} {Platform.OS == 'ios' && <Text style={styles.link} onPress={this.linkToCoinbase}>{i18n.t('blockchain.buyEther')}</Text>}
               </Text>}
 
               {this.getGasLimit() < this.props.blockchainTransaction.estimateGasLimit && <Text style={[styles.warning]}>
