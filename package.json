@@ -13,7 +13,7 @@
     "test": "jest",
     "locale": "ts-node tasks/poeditor.js",
     "preinstall": "git config core.hooksPath .githooks",
-    "postinstall": "jetify",
+    "postinstall": "jetify; patch-package;",
     "release-json": "node tasks/generate_release_json.js"
   },
   "dependencies": {
@@ -41,6 +41,8 @@
     "mobx-utils": "^5.4.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.27",
+    "patch-package": "^6.2.1",
+    "postinstall-postinstall": "^2.1.0",
     "promise-cancelable": "^2.1.1",
     "react": "16.9.0",
     "react-native": "0.61.5",
