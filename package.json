@@ -31,7 +31,7 @@
     "@sentry/react-native": "^1.2.2",
     "@types/react-native-vector-icons": "^6.4.5",
     "crypto-js": "^3.1.9-1",
-    "detox": "^14.8.1",
+    "detox": "^16.0.1",
     "entities": "^2.0.0",
     "ethjs-signer": "^0.1.1",
     "i18n-js": "^3.2.2",
@@ -112,7 +112,6 @@
     "@typescript-eslint/parser": "^2.12.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
-    "detox": "^14.7.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "enzyme-to-json": "^3.4.0",
@@ -149,19 +148,18 @@
       "android.emu.debug": {
         "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
         "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
-        "type": "android.attached",
+        "type": "android.emulator",
         "device": {
-          "name": "ZY2234PLHJ"
+          "avdName": "Nexus_6_API_29"
+        },
+        "android.emu.release": {
+          "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
+          "build": "cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ..",
+          "type": "android.emulator",
+          "device": {
+            "avdName": "Nexus_6_API_29"
+          }
         }
-      },
-      "android.emu.release": {
-        "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
-        "build": "cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ..",
-        "type": "android.attached",
-        "device": {
-          "name": "ZY2234PLHJ"
-        }
-      }
     },
     "test-runner": "jest"
   }

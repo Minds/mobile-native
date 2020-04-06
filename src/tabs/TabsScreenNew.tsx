@@ -140,7 +140,7 @@ const Tabs = observer(function({ navigation }) {
       <Tab.Screen
         name="Menu"
         component={MenuStack}
-        options={{ tabBarTestID: 'Menu tab button' }}
+        options={{ tabBarTestID: 'MenuTabButton' }}
       />
     </Tab.Navigator>
   );

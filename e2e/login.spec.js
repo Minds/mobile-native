@@ -22,11 +22,11 @@ describe('Login Flow', () => {
     // wait for the message
     await waitFor(element(by.id('loginMsg')))
       .toBeVisible()
-      .withTimeout(2000);
+      .withTimeout(10000);
 
     // it should show the error message
     // according to the detox docs it should be toHaveText but it only works with toHaveLabel
-    await expect(element(by.id('loginMsg'))).toHaveLabel('The user credentials were incorrect.');
+    await expect(element(by.id('loginMsg'))).toHaveText('The user credentials were incorrect.');
   });
 
   it('should login successfully', async () => {

@@ -27,7 +27,7 @@ export default class MessengerTabIconNew extends Component {
     const theme = ThemedStyles.style;
     return (
       <View>
-        <Icon name="chat-bubble-outline" size={24} style={[styles.button, theme.colorIcon]} onPress={this.navToMessenger}/>
+        <Icon name="chat-bubble-outline" size={24} style={[styles.button, theme.colorIcon]} onPress={this.navToMessenger} testID="MessengerButton"/>
         { this.props.messengerList.unread ? <FAIcon name="circle" size={10} color='rgba(70, 144, 223, 1)' style={styles.unread} /> : null}
       </View>
     );

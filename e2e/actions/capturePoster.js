@@ -5,7 +5,8 @@ export const capturePoster = async () => {
   await waitForElement(by.id('usernameInput'));
   await login(process.env.loginUser, process.env.loginPass);
   await waitForElement(by.id('NewsfeedScreen'));
-  await tapElement(by.id('captureFab'));
+  await waitForAndTap(by.id('Capture tab button'));
+  await waitForAndTap(by.id('CaptureTextButton'));
 }
 
 export const deletePost = async () => {
