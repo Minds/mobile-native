@@ -14,7 +14,7 @@ import ThemedStyles from '../styles/ThemedStyles';
  * Display an error message to the user.
  * @param {string} message
  */
-const showError = message => {
+const showError = (message) => {
   showMessage({
     position: 'top',
     message: message,
@@ -28,10 +28,12 @@ const showError = message => {
 /**
  * Composer store
  */
-export default function(props) {
+export default function (props) {
   // is reminds?
   const isRemind = props.route.params && props.route.params.isRemind;
   const entity = props.route.params ? props.route.params.entity : null;
+  const propsMode = props.route.params ? props.route.params.mode : null;
+  const mode = propsMode ? propsMode : isRemind ? 'text' : 'photo';
 
   return {
     isRemind,
@@ -44,7 +46,7 @@ export default function(props) {
     },
     embed: new RichEmbedStore(),
     posting: false,
-    mode: isRemind ? 'text' : 'photo',
+    mode,
     text: '',
     title: '',
     mediaToConfirm: null,
@@ -96,7 +98,7 @@ export default function(props) {
       if (this.tags.length === hashtagService.maxHashtags) {
         return;
       }
-      if (this.tags.some(t => t === tag)) {
+      if (this.tags.some((t) => t === tag)) {
         return;
       }
 
@@ -185,12 +187,14 @@ export default function(props) {
     },
     /**
      * On media
-     * @param {object} image
+     * @param {object} media
      * @param {string} mode
      */
-    onMedia(image, mode = 'confirm') {
-      this.mediaToConfirm = image;
-      this.mode = mode;
+    onMedia(media, mode = 'confirm') {
+      setTimeout(() => {
+        this.mediaToConfirm = media;
+        this.mode = mode;
+      }, 100);
     },
     /**
      * Reject acptured image

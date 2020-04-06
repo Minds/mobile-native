@@ -29,21 +29,11 @@ import TopBar from './TopBar';
 
 const { width, height } = Dimensions.get('window');
 
-const videoPreviewStyle = {
-  height: width,
-  width: width,
-  maxHeight: Math.round(height / 2) - 30,
-};
-
-const imagePreviewStyle = {
-  maxHeight: Math.round(height / 2) - 30,
-};
-
 /**
  * Poster Screen
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const keyboard = useKeyboard();
   const isImage =
@@ -70,6 +60,18 @@ export default observer(function(props) {
     }
   }, [props.store]);
 
+  const videoPreviewStyle = {
+    height: keyboard.keyboardShown ? width / 2.5 : width,
+    width: width,
+    maxHeight: Math.round(height / 2) - 30,
+    padding: keyboard.keyboardShown ? 5 : 0,
+  };
+
+  const imagePreviewStyle = {
+    maxHeight: Math.round(height / 2) - 30,
+    padding: keyboard.keyboardShown ? 5 : 0,
+  };
+
   const previewRatio = keyboard.keyboardShown ? 2.5 : 1;
   const showEmbed = props.store.embed.hasRichEmbed && props.store.embed.meta;
 
@@ -82,6 +84,12 @@ export default observer(function(props) {
     ? i18n.t('description')
     : i18n.t('capture.placeholder');
 
+  const rightButton = props.store.attachment.uploading
+    ? undefined
+    : props.store.isRemind
+    ? i18n.t('capture.remind')
+    : i18n.t('capture.post');
+
   return (
     <TouchableWithoutFeedback
       onPress={Keyboard.dismiss}
@@ -89,11 +97,7 @@ export default observer(function(props) {
       <KeyboardAvoidingView style={styles.container} behavior="height">
         <View style={styles.bodyContainer}>
           <TopBar
-            rightText={
-              props.store.isRemind
-                ? i18n.t('capture.remind')
-                : i18n.t('capture.post')
-            }
+            rightText={rightButton}
             onPressRight={onPost}
             onPressBack={onPressBack}
             store={props.store}
@@ -120,7 +124,10 @@ export default observer(function(props) {
                     style={[styles.removeMedia, theme.backgroundSecondary]}>
                     <IonIcon name="ios-close" size={28} style={styles.icon} />
                   </TouchableOpacity>
-                  <MindsVideo video={{ uri: props.store.mediaToConfirm.uri }} />
+                  <MindsVideo
+                    video={props.store.mediaToConfirm}
+                    resizeMode={keyboard.keyboardShown ? 'cover' : 'contain'}
+                  />
                 </View>
               )}
               {props.store.attachment.uploading && (

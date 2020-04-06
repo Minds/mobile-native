@@ -56,6 +56,8 @@ export default function(props) {
       ) : (
         <MindsVideo
           video={{ uri: props.store.mediaToConfirm.uri }}
+          pause={false}
+          repeat={true}
           containerStyle={{ marginBottom: insets.bottom }}
         />
       )}

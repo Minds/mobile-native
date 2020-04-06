@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,14 +10,17 @@ import { observer, useLocalStore } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
 import mindsService from '../common/services/minds.service';
 import attachmentService from '../common/services/attachment.service';
+import VideoClock from './VideoClock';
+import { useRoute } from '@react-navigation/native';
 
 /**
  * Camera
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const ref = useRef();
+  const route = useRoute();
 
   const insets = useSafeArea();
   const cleanTop = { marginTop: insets.top || 0 };
@@ -42,7 +45,7 @@ export default observer(function(props) {
           ? RNCamera.Constants.Type.front
           : RNCamera.Constants.Type.back;
     },
-    setRecording: value => {
+    setRecording: (value) => {
       store.recording = value;
     },
     async recordVideo() {
@@ -83,12 +86,35 @@ export default observer(function(props) {
       }
     } else {
       const result = await store.recordVideo();
-      console.log(result);
+
       if (result && props.onMedia) {
         props.onMedia({ type: 'video/mp4', ...result });
       }
     }
   }, [props, store]);
+
+  // capture long press handler
+  const onLongPress = useCallback(async () => {
+    if (!store.recording) {
+      props.onForceVideo();
+      const result = await store.recordVideo();
+
+      if (result && props.onMedia) {
+        props.onMedia({ type: 'video/mp4', ...result });
+      }
+    }
+  }, [props, store]);
+
+  // use effect
+  useEffect(() => {
+    let t;
+    if (route.params && route.params.start) {
+      t = setTimeout(() => {
+        onPress();
+      }, 100);
+    }
+    return () => t && clearTimeout(t);
+  }, [onPress, route.params]);
 
   let flashIconName;
   switch (store.flashMode) {
@@ -126,6 +152,7 @@ export default observer(function(props) {
           console.log(barcodes);
         }}
       />
+      {store.recording && <VideoClock style={[styles.clock, cleanTop]} />}
       <View style={styles.buttonContainer}>
         <View style={styles.galleryIconContainer}>
           <MCIcon
@@ -135,7 +162,12 @@ export default observer(function(props) {
             onPress={store.selectFromGallery}
           />
         </View>
-        <RecordButton size={70} store={store} onPress={onPress} />
+        <RecordButton
+          size={70}
+          store={store}
+          onLongPress={onLongPress}
+          onPressOut={onPress}
+        />
       </View>
       <View style={[styles.buttonTopContainer, cleanTop]}>
         <Icon
@@ -156,6 +188,14 @@ export default observer(function(props) {
 });
 
 const styles = StyleSheet.create({
+  clock: {
+    position: 'absolute',
+    width: '100%',
+    top: 20,
+    left: 0,
+    color: 'white',
+    textAlign: 'center',
+  },
   buttonTopContainer: {
     position: 'absolute',
     right: 15,
@@ -199,5 +239,5 @@ const styles = StyleSheet.create({
     bottom: 25,
     width: '100%',
     alignItems: 'center',
-  }
+  },
 });

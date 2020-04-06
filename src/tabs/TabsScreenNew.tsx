@@ -23,17 +23,21 @@ const Tab = createBottomTabNavigator();
 
 const hideHeader = { headerShown: false };
 
-
 /**
  * Main tabs
  * @param {Object} props
  */
-const Tabs = observer(function({ navigation }) {
+const Tabs = observer(function ({ navigation }) {
   const isIOS = Platform.OS === 'ios';
 
   const navToCapture = useCallback(() => navigation.push('Capture'), [
     navigation,
   ]);
+
+  const navToVideoCapture = useCallback(
+    () => navigation.push('Capture', { mode: 'video', start: true }),
+    [navigation],
+  );
 
   if (gatheringService.inGatheringScreen) {
     return null;
@@ -105,7 +109,7 @@ const Tabs = observer(function({ navigation }) {
           }
 
           if (Platform.isPad) {
-            iconsize = Math.round(iconsize * 1.2)
+            iconsize = Math.round(iconsize * 1.2);
           }
 
           // You can return any component that you like here!
@@ -127,8 +131,12 @@ const Tabs = observer(function({ navigation }) {
         component={View}
         options={{
           tabBarTestID: 'Capture tab button',
-          tabBarButton: props => (
-            <TouchableOpacity {...props} onPress={navToCapture} />
+          tabBarButton: (props) => (
+            <TouchableOpacity
+              {...props}
+              onPress={navToCapture}
+              onLongPress={navToVideoCapture}
+            />
           ),
         }}
       />
