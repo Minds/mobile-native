@@ -185,7 +185,7 @@ export default class BlogsViewScreen extends Component {
             <CenteredLoading/>}
         </View>
         <View style={styles.moreInformation}>
-          { blog.getLicenseText() &&
+          { Boolean(blog.getLicenseText()) &&
               <Icon color={colors.medium} size={18} name='public'/>
           }
           <Text style={[CS.fontXS, CS.paddingLeft, CS.colorMedium, CS.paddingRight2x]}>{blog.getLicenseText()}</Text>
