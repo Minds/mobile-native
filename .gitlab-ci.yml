@@ -38,7 +38,7 @@ e2e:detox:
     - echo y | ${ANDROID_HOME}/tools/bin/sdkmanager "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86"
     - echo y | ${ANDROID_HOME}/tools/bin/sdkmanager --update
     - echo no | ${ANDROID_HOME}/tools/bin/avdmanager create avd -k "system-images;android-${ANDROID_COMPILE_SDK};google_apis_playstore;x86" -n test
-    - echo emulator -list-avds
+    - echo y | emulator -list-avds
     - ${ANDROID_HOME}/tools/emulator -avd test -no-window -no-audio 
     - ./android-wait-for-emulator
     - yarn global add detox-cli
