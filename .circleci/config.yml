@@ -46,8 +46,8 @@ jobs:
 
   e2e:
     working_directory: ~/mobile-native
-    docker:
-      - image: circleci/node:10
+    macos:
+      xcode: "11.1.0"
     steps:
       - checkout
 
