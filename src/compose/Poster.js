@@ -43,7 +43,7 @@ const imagePreviewStyle = {
  * Poster Screen
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const keyboard = useKeyboard();
   const isImage =
@@ -166,7 +166,7 @@ export default observer(function(props) {
             />
           )}
         </View>
-        <PosterOptions store={props.store} />
+        {!keyboard.keyboardShown && <PosterOptions store={props.store} />}
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
