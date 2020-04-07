@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,12 +10,14 @@ import { observer, useLocalStore } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
 import mindsService from '../common/services/minds.service';
 import attachmentService from '../common/services/attachment.service';
+import { useTransition } from 'react-native-redash';
+import Animated from 'react-native-reanimated';
 
 /**
  * Camera
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const ref = useRef();
 
@@ -27,6 +29,14 @@ export default observer(function(props) {
     cameraType: RNCamera.Constants.Type.back,
     flashMode: RNCamera.Constants.FlashMode.off,
     recording: false,
+    show: false,
+    ready: false,
+    showCam() {
+      store.show = true;
+    },
+    isReady() {
+      store.ready = true;
+    },
     toggleFlash: () => {
       if (store.flashMode === RNCamera.Constants.FlashMode.on) {
         store.flashMode = RNCamera.Constants.FlashMode.off;
@@ -42,7 +52,7 @@ export default observer(function(props) {
           ? RNCamera.Constants.Type.front
           : RNCamera.Constants.Type.back;
     },
-    setRecording: value => {
+    setRecording: (value) => {
       store.recording = value;
     },
     async recordVideo() {
@@ -73,6 +83,15 @@ export default observer(function(props) {
       });
     },
   }));
+
+  useEffect(() => {
+    const t = setTimeout(() => {
+      store.showCam();
+    }, 150);
+    return () => clearTimeout(t);
+  }, [store]);
+
+  const opacity = useTransition(store.ready);
 
   // capture press handler
   const onPress = useCallback(async () => {
@@ -105,27 +124,29 @@ export default observer(function(props) {
 
   return (
     <View style={theme.flexContainer}>
-      <RNCamera
-        ref={ref}
-        style={theme.flexContainer}
-        type={store.cameraType}
-        flashMode={store.flashMode}
-        androidCameraPermissionOptions={{
-          title: 'Permission to use camera',
-          message: 'We need your permission to use your camera',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}
-        androidRecordAudioPermissionOptions={{
-          title: 'Permission to use audio recording',
-          message: 'We need your permission to use your audio',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}
-        onGoogleVisionBarcodesDetected={({ barcodes }) => {
-          console.log(barcodes);
-        }}
-      />
+      <Animated.View style={[theme.flexContainer, { opacity }]}>
+        {store.show && (
+          <RNCamera
+            ref={ref}
+            style={theme.flexContainer}
+            type={store.cameraType}
+            flashMode={store.flashMode}
+            androidCameraPermissionOptions={{
+              title: 'Permission to use camera',
+              message: 'We need your permission to use your camera',
+              buttonPositive: 'Ok',
+              buttonNegative: 'Cancel',
+            }}
+            androidRecordAudioPermissionOptions={{
+              title: 'Permission to use audio recording',
+              message: 'We need your permission to use your audio',
+              buttonPositive: 'Ok',
+              buttonNegative: 'Cancel',
+            }}
+            onCameraReady={store.isReady}
+          />
+        )}
+      </Animated.View>
       <View style={styles.buttonContainer}>
         <View style={styles.galleryIconContainer}>
           <MCIcon
@@ -199,5 +220,5 @@ const styles = StyleSheet.create({
     bottom: 25,
     width: '100%',
     alignItems: 'center',
-  }
+  },
 });
