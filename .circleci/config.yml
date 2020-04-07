@@ -56,8 +56,16 @@ jobs:
 
       - restore_cache:
           key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+      
+      - restore_cache:
+          key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
 
       - run: yarn install
+
+      - run:
+          name: Install CocoaPods
+          command: pod install --verbose
+          working_directory: ios
 
       - save_cache:
           key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
@@ -69,6 +77,11 @@ jobs:
           paths:
             - node_modules
 
+      - save_cache:
+          key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
+          paths:
+            - ios/Pods
+
       - run:
           name: Install detox
           command:
@@ -76,9 +89,9 @@ jobs:
               HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew
               HOMEBREW_NO_AUTO_UPDATE=1 brew install --HEAD applesimutils
               yarn global add detox-cli
-              cd ios && pod install && cd ..
-      - run: detox build -c ios.sim.release
-      - run: detox test -c ios.sim.release --cleanup
+
+      - run: detox build -c ios.sim.debug
+      - run: detox test -c ios.sim.debug --cleanup
 
   ios:
     macos:
