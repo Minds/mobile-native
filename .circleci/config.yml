@@ -77,9 +77,8 @@ jobs:
               HOMEBREW_NO_AUTO_UPDATE=1 brew install --HEAD applesimutils
               yarn global add detox-cli
               cd ios && pod install && cd ..
-              yarn install
-      - run: detox build -c ios.sim.debug
-      - run: detox test -c ios.sim.debug --cleanup
+      - run: detox build -c ios.sim.release
+      - run: detox test -c ios.sim.release --cleanup
 
   ios:
     macos:
