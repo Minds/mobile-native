@@ -43,7 +43,7 @@ export default class LoginScreen extends Component {
 
   componentDidMount() {
     // Setting this here because if user register, then onboarding then logout and login again, will go to onboarding again
-    sessionService.setInitialScreen('Tabs');
+    sessionService.setInitialScreen('Capture');
     this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
     this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
   }
