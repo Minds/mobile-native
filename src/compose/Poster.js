@@ -173,7 +173,7 @@ export default observer(function (props) {
             />
           )}
         </View>
-        <PosterOptions store={props.store} />
+        {!keyboard.keyboardShown && <PosterOptions store={props.store} />}
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
