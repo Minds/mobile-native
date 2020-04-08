@@ -226,37 +226,17 @@ class GroupViewStore {
 
   /**
    * Join group
-   * @param {string} guid
    */
-  join(guid) {
-    this.setSaving(true);
-    this.group['is:member'] = true
-    return groupsService.join(guid)
-      .then(() => {
-        this.setSaving(false);
-      })
-      .catch(action( e => {
-        this.group['is:member'] = false
-        this.setSaving(false);
-      }))
-  }
+  join = () => {
+    return this.group.join();
+  };
 
   /**
    * Leave group
-   * @param {string} guid
    */
-  leave(guid) {
-    this.setSaving(true);
-    this.group['is:member'] = false
-    return groupsService.leave(guid)
-      .then(() => {
-        this.setSaving(false);
-      })
-      .catch(action( e => {
-        this.group['is:member'] = true
-        this.setSaving(false);
-      }))
-  }
+  leave = () => {
+    return this.group.leave();
+  };
 
   /**
    * Generate a unique Id for use with list views

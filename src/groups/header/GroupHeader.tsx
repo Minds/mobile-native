@@ -79,7 +79,7 @@ export default class GroupHeader extends Component {
     if (!group['is:member']) {
       return (
         <Button
-          onPress={ () => { store.join(group.guid)  } }
+          onPress={store.join}
           accessibilityLabel={i18n.t('groups.subscribeMessage')}
           containerStyle={[CommonStyle.rowJustifyCenter, CommonStyle.marginLeft]}
           textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
@@ -91,7 +91,7 @@ export default class GroupHeader extends Component {
     } else {
       return (
         <Button
-          onPress={ () => { store.leave(group.guid)  } }
+          onPress={store.leave}
           accessibilityLabel={i18n.t('groups.leaveMessage')}
           containerStyle={[CommonStyle.rowJustifyCenter, CommonStyle.marginLeft]}
           textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
