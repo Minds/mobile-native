@@ -47,7 +47,7 @@ class MindsVideo extends Component {
   constructor(props, context, ...args) {
     super(props, context, ...args);
     this.state = {
-      paused: true,
+      paused: props.pause !== undefined ? props.pause : true,
       volume: 1,
       loaded: true,
       active: !props.entity,
@@ -456,9 +456,10 @@ class MindsVideo extends Component {
           ignoreSilentSwitch={'obey'}
           source={this.state.video}
           paused={paused}
+          repeat={this.props.repeat || false}
           fullscreen={this.state.fullScreen}
           onFullscreenPlayerDidDismiss={this.onFullscreenPlayerDidDismiss}
-          resizeMode={'contain'}
+          resizeMode={this.props.resizeMode || 'contain'}
           controls={false}
           style={CS.flexContainer}
         />

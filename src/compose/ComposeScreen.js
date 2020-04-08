@@ -11,7 +11,7 @@ import Poster from './Poster';
 import useComposeStore from './useComposeStore';
 import MediaConfirm from './MediaConfirm';
 import i18nService from '../common/services/i18n.service';
-import { CommonActions } from '@react-navigation/native';
+import { CommonActions, useRoute } from '@react-navigation/native';
 import { useStores } from '../../AppStores';
 
 /**
@@ -66,6 +66,7 @@ export default observer(function(props) {
           <Camera
             onMedia={store.onMedia}
             mode={store.mode}
+            onForceVideo={store.setModeVideo}
             onMediaFromGallery={store.onMediaFromGallery}
           />
           <View

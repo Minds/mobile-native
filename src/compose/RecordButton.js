@@ -1,8 +1,8 @@
 //@ts-nocheck
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
-import Animated from "react-native-reanimated";
-import { bInterpolate, useTransition, useTimingTransition } from "react-native-redash";
+import Animated from 'react-native-reanimated';
+import { bInterpolate, useTransition } from 'react-native-redash';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { observer } from 'mobx-react';
 
@@ -11,8 +11,7 @@ import { observer } from 'mobx-react';
  *
  * @param {Object} props
  */
-export default observer(function(props) {
-
+export default observer(function (props) {
   // base the animation on the recording prop
   const transition = useTransition(props.store.recording);
 
@@ -25,6 +24,8 @@ export default observer(function(props) {
   return (
     <TouchableOpacity
       onPress={props.onPress}
+      onLongPress={props.onLongPress}
+      onPressOut={props.onPressOut}
       style={[
         styles.circleWrapper,
         {
@@ -34,11 +35,10 @@ export default observer(function(props) {
           borderWidth: 3,
           borderColor: 'white',
         },
-      ]}
-    >
+      ]}>
       <Animated.View
         style={{
-          transform: [{scale}],
+          transform: [{ scale }],
           backgroundColor: '#E03C20',
           borderRadius: borderRadiusInternal,
           width: internalSize,

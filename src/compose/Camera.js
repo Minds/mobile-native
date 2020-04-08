@@ -10,6 +10,8 @@ import { observer, useLocalStore } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
 import mindsService from '../common/services/minds.service';
 import attachmentService from '../common/services/attachment.service';
+import VideoClock from './VideoClock';
+import { useRoute } from '@react-navigation/native';
 import { useTransition } from 'react-native-redash';
 import Animated from 'react-native-reanimated';
 
@@ -20,6 +22,7 @@ import Animated from 'react-native-reanimated';
 export default observer(function (props) {
   const theme = ThemedStyles.style;
   const ref = useRef();
+  const route = useRoute();
 
   const insets = useSafeArea();
   const cleanTop = { marginTop: insets.top || 0 };
@@ -102,12 +105,35 @@ export default observer(function (props) {
       }
     } else {
       const result = await store.recordVideo();
-      console.log(result);
+
       if (result && props.onMedia) {
         props.onMedia({ type: 'video/mp4', ...result });
       }
     }
   }, [props, store]);
+
+  // capture long press handler
+  const onLongPress = useCallback(async () => {
+    if (!store.recording) {
+      props.onForceVideo();
+      const result = await store.recordVideo();
+
+      if (result && props.onMedia) {
+        props.onMedia({ type: 'video/mp4', ...result });
+      }
+    }
+  }, [props, store]);
+
+  // use effect
+  useEffect(() => {
+    let t;
+    if (route.params && route.params.start) {
+      t = setTimeout(() => {
+        onPress();
+      }, 100);
+    }
+    return () => t && clearTimeout(t);
+  }, [onPress, route.params]);
 
   let flashIconName;
   switch (store.flashMode) {
@@ -147,6 +173,7 @@ export default observer(function (props) {
           />
         )}
       </Animated.View>
+      {store.recording && <VideoClock style={[styles.clock, cleanTop]} />}
       <View style={styles.buttonContainer}>
         <View style={styles.galleryIconContainer}>
           <MCIcon
@@ -156,7 +183,12 @@ export default observer(function (props) {
             onPress={store.selectFromGallery}
           />
         </View>
-        <RecordButton size={70} store={store} onPress={onPress} />
+        <RecordButton
+          size={70}
+          store={store}
+          onLongPress={onLongPress}
+          onPressOut={onPress}
+        />
       </View>
       <View style={[styles.buttonTopContainer, cleanTop]}>
         <Icon
@@ -177,6 +209,14 @@ export default observer(function (props) {
 });
 
 const styles = StyleSheet.create({
+  clock: {
+    position: 'absolute',
+    width: '100%',
+    top: 20,
+    left: 0,
+    color: 'white',
+    textAlign: 'center',
+  },
   buttonTopContainer: {
     position: 'absolute',
     right: 15,
