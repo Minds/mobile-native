@@ -265,6 +265,9 @@
     "recentlyVisited":"Recently visited"
   },
   "groups":{
+    "ongoingGathering":"Ongoing gathering",
+    "joinGathering":"Join Gathering",
+    "gotoGroup":"Go to group",
     "subscribeMessage":"Subscribe to this group",
     "leaveMessage":"Leave from this group",
     "banConfirm":"Are you sure? You want to ban this user?",
