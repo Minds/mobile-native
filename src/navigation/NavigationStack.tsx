@@ -95,6 +95,11 @@ const AppStack = function(props) {
         ...ThemedStyles.defaultScreenOptions,
       }}>
       <AppStackNav.Screen
+        name="Capture"
+        component={CurrentComposeScreen}
+        options={captureOptions}
+      />
+      <AppStackNav.Screen
         name="Tabs"
         component={TabsScreenNew}
         options={hideHeader}
@@ -147,11 +152,7 @@ const AppStack = function(props) {
         component={ChannelScreen}
         options={hideHeader}
       />
-      <AppStackNav.Screen
-        name="Capture"
-        component={CurrentComposeScreen}
-        options={captureOptions}
-      />
+
       <AppStackNav.Screen
         name="Activity"
         component={ActivityScreen}
