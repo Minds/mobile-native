@@ -14,7 +14,7 @@ import Notification from './notification/Notification';
 import NotificationsTopbar from './NotificationsTopbar';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
-import TopbarNew from '../topbar/TopbarNew';
+import Topbar from '../topbar/Topbar';
 import ThemedStyles from '../styles/ThemedStyles';
 import OnFocus from '../common/components/helper/OnFocus';
 
@@ -133,7 +133,7 @@ class NotificationsScreen extends Component {
     return (
       <View style={CS.flexContainer}>
         <OnFocus onFocus={this.onFocus} />
-        <TopbarNew
+        <Topbar
           title={i18n.t('tabTitleNotifications')}
           navigation={this.props.navigation}
           refreshFeed={this.onFocus}
