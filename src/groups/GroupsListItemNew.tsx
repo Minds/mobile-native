@@ -110,14 +110,14 @@ class GroupsListItemNew extends Component {
   join = () => {
     if (!this.props.group.can(FLAG_JOIN, true)) return;
     this.props.groupView.setGroup(this.props.group);
-    this.props.groupView.join(this.props.group.guid);
+    this.props.groupView.join();
   };
   /**
    * Leave the group
    */
   leave = () => {
     this.props.groupView.setGroup(this.props.group);
-    this.props.groupView.leave(this.props.group.guid);
+    this.props.groupView.leave();
   };
 }
 
