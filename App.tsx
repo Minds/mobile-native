@@ -358,9 +358,9 @@ class App extends Component<Props, State>{
     return [app, keychainModal, blockchainTransactionModal, tosModal];
   }
 
-  renderNotification = () => {
+  renderNotification = (message) => {
     if (!stores.notifications.last) {
-      return null;
+      return message.renderCustomContent ? message.renderCustomContent() : null;
     }
     return (
       <Notification

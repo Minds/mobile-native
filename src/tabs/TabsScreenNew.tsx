@@ -8,7 +8,6 @@ import { Avatar } from 'react-native-elements';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import DiscoveryScreen from '../discovery/DiscoveryScreen';
-import MoreScreenNew from './MoreScreenNew';
 import ThemedStyles from '../styles/ThemedStyles';
 import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';
@@ -20,8 +19,6 @@ import isIphoneX from '../common/helpers/isIphoneX';
 import MenuStack from '../settings/SettingsNavigation';
 
 const Tab = createBottomTabNavigator();
-
-const hideHeader = { headerShown: false };
 
 /**
  * Main tabs
@@ -58,8 +55,8 @@ const Tabs = observer(function ({ navigation }) {
           backgroundColor: ThemedStyles.getColor('secondary_background'),
           height,
           paddingTop: isIOS && isIphoneX ? 30 : 2,
-          paddingLeft: 25,
-          paddingRight: 25,
+          paddingLeft: 18,
+          paddingRight: 18,
         },
         tabStyle: {
           height,
