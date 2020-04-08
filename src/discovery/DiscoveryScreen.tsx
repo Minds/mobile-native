@@ -36,7 +36,7 @@ import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
 import { FLAG_VIEW } from '../common/Permissions';
 import FallbackBoundary from './FallbackBoundary';
-import TopbarNew from '../topbar/TopbarNew';
+import Topbar from '../topbar/Topbar';
 import ThemedStyles from '../styles/ThemedStyles';
 
 /**
@@ -249,7 +249,7 @@ class DiscoveryScreen extends Component {
 
     return (
       <View style={[CS.flexContainer, ThemedStyles.style.backgroundPrimary]}>
-        <TopbarNew
+        <Topbar
           title={i18n.t('tabTitleDiscovery')}
           navigation={this.props.navigation}
           refreshFeed={this.refreshDiscovery}
