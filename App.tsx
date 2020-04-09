@@ -101,7 +101,7 @@ sessionService.onLogin(async () => {
   // hide splash
   RNBootSplash.hide({ duration: 250 });
 
-  // NavigationService.navigate('App', { screen: sessionService.initialScreen});
+  NavigationService.navigate('App', { screen: sessionService.initialScreen});
 
   // check onboarding progress and navigate if necessary
   getStores().onboarding.getProgress(sessionService.initialScreen !== 'OnboardingScreenNew');

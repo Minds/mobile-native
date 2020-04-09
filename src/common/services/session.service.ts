@@ -37,7 +37,7 @@ class SessionService {
   /**
    * Initial screen
    */
-  initialScreen = 'Capture';
+  initialScreen = 'Tabs';
 
   @observable refreshingTokens = false;
 

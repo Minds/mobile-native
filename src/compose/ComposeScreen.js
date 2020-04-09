@@ -13,7 +13,6 @@ import MediaConfirm from './MediaConfirm';
 import i18nService from '../common/services/i18n.service';
 import { CommonActions, useRoute } from '@react-navigation/native';
 import { useStores } from '../../AppStores';
-import { useBackHandler } from '@react-native-community/hooks';
 
 /**
  * Compose Screen
@@ -23,26 +22,6 @@ export default observer(function(props) {
   const store = useComposeStore(props);
   const insets = useSafeArea();
   const stores = useStores();
-
-  const goBackHandler = useCallback(() => {
-    const { goBack, reset } = props.navigation;
-
-    // go back if there is history
-    if (props.navigation.dangerouslyGetState().index > 0) {
-      goBack();
-    } else {
-      // reset navigation to tabs otherway
-      reset({
-        index: 0,
-        routes: [{ name: 'Tabs' }],
-      });
-    }
-  }, [props.navigation]);
-
-  useBackHandler(() => {
-    goBackHandler();
-    return true;
-  });
 
   /**
    * On post
@@ -134,7 +113,7 @@ export default observer(function(props) {
             size={45}
             name="chevron-left"
             style={[styles.backIcon, inconStyle]}
-            onPress={goBackHandler}
+            onPress={props.navigation.goBack}
           />
         </>
       ) : store.mode === 'confirm' ? (
