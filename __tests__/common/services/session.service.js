@@ -13,7 +13,7 @@ describe('Session service', () => {
     getStores.mockReturnValue(appStores);
 
     const now = Date.now() + 3600;
-    expect(service.initialScreen).toEqual('Capture');
+    expect(service.initialScreen).toEqual('Tabs');
     expect(service.token).toEqual('');
     sessionStorage.getAll.mockResolvedValue([
       { access_token: '1111', access_token_expires: now },

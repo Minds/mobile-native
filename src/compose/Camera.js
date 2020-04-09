@@ -26,6 +26,7 @@ export default observer(function (props) {
 
   const insets = useSafeArea();
   const cleanTop = { marginTop: insets.top || 0 };
+  const cleanBottom = { paddingBottom: insets.bottom + 50 };
 
   // local store
   const store = useLocalStore(() => ({
@@ -174,7 +175,7 @@ export default observer(function (props) {
         )}
       </Animated.View>
       {store.recording && <VideoClock style={[styles.clock, cleanTop]} />}
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, cleanBottom]}>
         <View style={styles.galleryIconContainer}>
           <MCIcon
             size={40}

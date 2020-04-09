@@ -11,44 +11,24 @@ import Poster from './Poster';
 import useComposeStore from './useComposeStore';
 import MediaConfirm from './MediaConfirm';
 import i18nService from '../common/services/i18n.service';
-import { CommonActions, useRoute } from '@react-navigation/native';
+import { CommonActions, useIsFocused } from '@react-navigation/native';
 import { useStores } from '../../AppStores';
-import { useBackHandler } from '@react-native-community/hooks';
 
 /**
  * Compose Screen
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const store = useComposeStore(props);
   const insets = useSafeArea();
   const stores = useStores();
-
-  const goBackHandler = useCallback(() => {
-    const { goBack, reset } = props.navigation;
-
-    // go back if there is history
-    if (props.navigation.dangerouslyGetState().index > 0) {
-      goBack();
-    } else {
-      // reset navigation to tabs otherway
-      reset({
-        index: 0,
-        routes: [{ name: 'Tabs' }],
-      });
-    }
-  }, [props.navigation]);
-
-  useBackHandler(() => {
-    goBackHandler();
-    return true;
-  });
+  const focused = useIsFocused();
 
   /**
    * On post
    */
   const onPost = useCallback(
-    entity => {
+    (entity) => {
       const { goBack, dispatch } = props.navigation;
       const { params } = props.route;
 
@@ -81,28 +61,28 @@ export default observer(function(props) {
 
   return (
     <View style={theme.flexContainer}>
-      <StatusBar animated={true} hidden={true} />
+      {focused && <StatusBar animated={true} hidden={true} />}
       {showCamera ? (
         <>
-          <Camera
-            onMedia={store.onMedia}
-            mode={store.mode}
-            onForceVideo={store.setModeVideo}
-            onMediaFromGallery={store.onMediaFromGallery}
-          />
+          {focused ? (
+            <Camera
+              onMedia={store.onMedia}
+              mode={store.mode}
+              onForceVideo={store.setModeVideo}
+              onMediaFromGallery={store.onMediaFromGallery}
+            />
+          ) : (
+            <View style={theme.flexContainer} />
+          )}
           <View
-            style={[
-              styles.tabContainer,
-              theme.backgroundSecondary,
-              theme.paddingVertical5x,
-              tabStyle,
-            ]}>
+            style={[styles.tabContainer, theme.paddingVertical5x, tabStyle]}>
             <View style={styles.tabs}>
               <Text
                 style={[
                   theme.fontXL,
                   theme.flexContainer,
                   theme.textCenter,
+                  styles.tabText,
                   store.mode === 'photo' ? theme.colorIconActive : null,
                 ]}
                 onPress={store.setModePhoto}>
@@ -113,6 +93,7 @@ export default observer(function(props) {
                   theme.fontXL,
                   theme.flexContainer,
                   theme.textCenter,
+                  styles.tabText,
                   store.mode === 'video' ? theme.colorIconActive : null,
                 ]}
                 onPress={store.setModeVideo}>
@@ -123,6 +104,7 @@ export default observer(function(props) {
                   theme.fontXL,
                   theme.flexContainer,
                   theme.textCenter,
+                  styles.tabText,
                   store.mode === 'text' ? theme.colorIconActive : null,
                 ]}
                 onPress={store.setModeText}>
@@ -134,7 +116,7 @@ export default observer(function(props) {
             size={45}
             name="chevron-left"
             style={[styles.backIcon, inconStyle]}
-            onPress={goBackHandler}
+            onPress={props.navigation.goBack}
           />
         </>
       ) : store.mode === 'confirm' ? (
@@ -148,7 +130,17 @@ export default observer(function(props) {
 
 const styles = StyleSheet.create({
   tabContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: '100%',
     paddingHorizontal: 50,
+  },
+  tabText: {
+    shadowOpacity: 0.6,
+    textShadowRadius: 5,
+    textShadowOffset: { width: 1, height: 1 },
+    elevation: 5,
   },
   tabs: {
     flexDirection: 'row',
