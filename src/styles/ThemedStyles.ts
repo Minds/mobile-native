@@ -108,6 +108,7 @@ class ThemedStylesStore {
     };
 
     this.defaultScreenOptions = {
+      title: '',
       headerStyle: {
         backgroundColor: theme.secondary_background,
       },

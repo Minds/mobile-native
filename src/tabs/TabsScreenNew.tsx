@@ -27,12 +27,12 @@ const Tab = createBottomTabNavigator();
 const Tabs = observer(function ({ navigation }) {
   const isIOS = Platform.OS === 'ios';
 
-  const navToCapture = useCallback(() => navigation.push('Capture'), [
+  const navToCapture = useCallback(() => navigation.jumpTo('Capture'), [
     navigation,
   ]);
 
   const navToVideoCapture = useCallback(
-    () => navigation.push('Capture', { mode: 'video', start: true }),
+    () => navigation.jumpTo('Capture', { mode: 'video', start: true }),
     [navigation],
   );
 

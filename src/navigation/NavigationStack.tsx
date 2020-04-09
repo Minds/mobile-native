@@ -5,13 +5,11 @@ import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
-import TabsScreen from '../tabs/TabsScreen';
 import TabsScreenNew from '../tabs/TabsScreenNew';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
 import ChannelScreen from '../channel/ChannelScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
-import CapturePoster from '../capture/CapturePoster';
 import RegisterScreen from '../auth/RegisterScreen';
 import ConversationScreen from '../messenger/ConversationScreen';
 import GroupsListScreen from '../groups/GroupsListScreen';
@@ -34,22 +32,15 @@ import ReportScreen from '../report/ReportScreen';
 import MoreScreen from '../tabs/MoreScreen';
 import WithdrawScreen from '../wallet/tokens/WithdrawScreen';
 import WalletOnboardingScreen from '../wallet/onboarding/WalletOnboardingScreen';
-import ComingSoonScreen from '../static-views/ComingSoonScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import OnboardingScreen from '../onboarding/OnboardingScreen';
-import IssueReportScreen from '../issues/IssueReportScreen';
-import Wizard from '../common/components/Wizard';
 import UpdatingScreen from '../update/UpdateScreen';
-import { withErrorBoundaryScreen } from '../common/components/ErrorBoundary';
-// import LogsScreen from '../logs/LogsScreen';
 import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
-import featuresService from '../common/services/features.service';
 import ThemedStyles from '../styles/ThemedStyles';
 import MessengerScreen from '../messenger/MessengerScreen';
-import Topbar from '../topbar/Topbar';
 import i18n from '../common/services/i18n.service';
 import ComposeScreen from '../compose/ComposeScreen';
 import TagSelector from '../compose/TagSelector';
@@ -57,6 +48,7 @@ import NsfwSelector from '../compose/NsfwSelector';
 import ScheduleSelector from '../compose/ScheduleSelector';
 import MonetizeSelector from '../compose/MonetizeSelector';
 import LicenseSelector from '../compose/LicenseSelector';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 const hideHeader = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -74,39 +66,42 @@ const activityOptions = ({ route }) => ({
 const AppStackNav = createNativeStackNavigator();
 const AuthStackNav = createNativeStackNavigator();
 const RootStackNav = createNativeStackNavigator();
+const MainSwiper = createMaterialTopTabNavigator();
 
-
-
-const AppStack = function(props) {
-
-  let CurrentComposeScreen;
-
-  // if (featuresService.has('compose')) {
-    CurrentComposeScreen = ComposeScreen;
-  // } else {
-  //   CurrentComposeScreen = CapturePoster;
-  //   captureOptions.headerShown = true;
-  // }
-
+// Main navigation swiper
+const MainSwiperScreen = () => {
   return (
-    <AppStackNav.Navigator
-      screenOptions={{
-        title: '',
-        ...ThemedStyles.defaultScreenOptions,
-      }}>
-      <AppStackNav.Screen
+    <MainSwiper.Navigator
+      initialRouteName="Tabs"
+      lazy={true}
+      tabBar={() => null}
+      screenOptions={ThemedStyles.defaultScreenOptions}>
+      <MainSwiper.Screen
         name="Capture"
-        component={CurrentComposeScreen}
+        component={ComposeScreen}
         options={captureOptions}
       />
-      <AppStackNav.Screen
+      <MainSwiper.Screen
         name="Tabs"
         component={TabsScreenNew}
         options={hideHeader}
-        // component={TabsScreen}
-        // options={({ navigation, route }) => ({
-        //   header: props => <Topbar {...props} />,
-        // })}
+      />
+      <MainSwiper.Screen
+        name="Messenger"
+        component={MessengerScreen}
+        options={messengerOptions}
+      />
+    </MainSwiper.Navigator>
+  );
+};
+
+const AppStack = function (props) {
+  return (
+    <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+      <AppStackNav.Screen
+        name="Main"
+        component={MainSwiperScreen}
+        options={hideHeader}
       />
       <AppStackNav.Screen
         name="TagSelector"
@@ -255,16 +250,12 @@ const AppStack = function(props) {
         component={OnboardingScreenNew}
         options={hideHeader}
       />
-      <AppStackNav.Screen
-        name="Messenger"
-        component={MessengerScreen}
-        options={messengerOptions}
-      />
+
     </AppStackNav.Navigator>
   );
 };
 
-const AuthStack = function(props) {
+const AuthStack = function (props) {
   return (
     <AuthStackNav.Navigator>
       <AuthStackNav.Screen
@@ -286,7 +277,7 @@ const AuthStack = function(props) {
   );
 };
 
-const RootStack = function(props) {
+const RootStack = function (props) {
   const initial = props.isLoggedIn ? 'App' : 'Auth';
 
   return (
