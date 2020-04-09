@@ -11,9 +11,10 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import mindsService from '../common/services/minds.service';
 import attachmentService from '../common/services/attachment.service';
 import VideoClock from './VideoClock';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { useTransition } from 'react-native-redash';
 import Animated from 'react-native-reanimated';
+import { when } from 'mobx';
 
 /**
  * Camera
@@ -23,6 +24,7 @@ export default observer(function (props) {
   const theme = ThemedStyles.style;
   const ref = useRef();
   const route = useRoute();
+  const navigation = useNavigation();
 
   const insets = useSafeArea();
   const cleanTop = { marginTop: insets.top || 0 };
@@ -91,8 +93,26 @@ export default observer(function (props) {
     const t = setTimeout(() => {
       store.showCam();
     }, 150);
-    return () => clearTimeout(t);
-  }, [store]);
+
+    let unlisten;
+
+    if (route.params && route.params.start) {
+      unlisten = when(
+        () => store.ready,
+        () => {
+          setTimeout(() => {
+            onPress && onPress();
+            navigation.setParams({ start: false });
+          }, 100);
+        },
+      );
+    }
+
+    return () => {
+      clearTimeout(t);
+      unlisten && unlisten();
+    };
+  }, [store, onPress, route.params, navigation]);
 
   const opacity = useTransition(store.ready);
 
@@ -123,17 +143,6 @@ export default observer(function (props) {
       }
     }
   }, [props, store]);
-
-  // use effect
-  useEffect(() => {
-    let t;
-    if (route.params && route.params.start) {
-      t = setTimeout(() => {
-        onPress();
-      }, 100);
-    }
-    return () => t && clearTimeout(t);
-  }, [onPress, route.params]);
 
   let flashIconName;
   switch (store.flashMode) {
