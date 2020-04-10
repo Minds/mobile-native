@@ -51,12 +51,13 @@ const Tabs = observer(function ({ navigation }) {
         activeTintColor: ThemedStyles.getColor('link'),
         inactiveTintColor: ThemedStyles.getColor('text_secondary'),
         style: {
-          borderTopWidth: 0,
+          borderTopWidth: 1,
+          borderTopColor: ThemedStyles.getColor('primary_border'),
           backgroundColor: ThemedStyles.getColor('secondary_background'),
           height,
           paddingTop: isIOS && isIphoneX ? 30 : 2,
-          paddingLeft: 18,
-          paddingRight: 18,
+          paddingLeft: isIphoneX ? 20 : 0,
+          paddingRight: isIphoneX ? 20 : 0,
         },
         tabStyle: {
           height,
@@ -96,6 +97,7 @@ const Tabs = observer(function ({ navigation }) {
               break;
             case 'Discovery':
               iconName = 'hashtag';
+              iconsize = 24;
               break;
             case 'Notifications':
               return <NotificationIcon tintColor={color} size={iconsize} />;

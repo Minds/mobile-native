@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
   },
   body: {
     paddingLeft: 24,
-    paddingTop: 52,
+    paddingTop: 40,
   },
   container: {
     borderTopWidth: 0,

@@ -7,13 +7,13 @@ import Input from '../../common/components/Input';
 import twoFactorAuthenticationService from '../../common/services/two-factor-authentication.service';
 import CenteredLoading from '../../common/components/CenteredLoading';
 
-export default function() {
+export default function () {
   const CS = ThemedStyles.style;
 
   const [loading, setLoading] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState();
   const [TFAConfirmed, setTFAConfirmed] = useState(false);
- 
+
   useEffect(() => {
     async function get2FA() {
       const { telno } = await twoFactorAuthenticationService.has();
@@ -21,37 +21,45 @@ export default function() {
         setPhoneNumber(telno);
         setTFAConfirmed(true);
       }
-      
+
       setLoading(false);
     }
     get2FA();
   }, [setPhoneNumber, setTFAConfirmed, setLoading]);
 
-  const component = loading 
-    ? <CenteredLoading />
-    : (
-      <View style={[CS.flexContainer, CS.backgroundPrimary]}>
-      <Text style={[CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>{i18n.t('settings.TFAdescription')}</Text>
-      <View style={[CS.paddingTop4x, CS.paddingHorizontal2x]}>
+  const component = loading ? (
+    <CenteredLoading />
+  ) : (
+    <View
+      style={[
+        CS.flexContainer,
+        CS.backgroundPrimary,
+        CS.paddingTop4x,
+        CS.paddingHorizontal3x,
+      ]}>
+      <Text style={[CS.colorSecondaryText, CS.fontM]}>
+        {i18n.t('settings.TFAdescription')}
+      </Text>
+      <View style={[CS.paddingTop4x]}>
         <Input
-            placeholder={i18n.t('onboarding.infoMobileNumber')}
-            onChangeText={setPhoneNumber}
-            value={phoneNumber}
-            info={i18n.t('onboarding.phoneNumberTooltip')}
-            editable={true}
-            inputType={'phoneInput'}
-            TFA={true}
-            TFAConfirmed={TFAConfirmed}
-          />
+          placeholder={i18n.t('onboarding.infoMobileNumber')}
+          onChangeText={setPhoneNumber}
+          value={phoneNumber}
+          info={i18n.t('onboarding.phoneNumberTooltip')}
+          editable={true}
+          inputType={'phoneInput'}
+          TFA={true}
+          TFAConfirmed={TFAConfirmed}
+        />
       </View>
     </View>
-    );
-  return (component);
+  );
+  return component;
 }
 
 const styles = {
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  }
-}
+  },
+};

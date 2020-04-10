@@ -71,9 +71,10 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const theme = ThemedStyles.style;
     const entity = this.props.entity;
 
-    let title: string = entity.title
-      ? entities.decodeHTML(entity.title).trim()
-      : '';
+    let title: string =
+      entity.title && !entity.perma_url
+        ? entities.decodeHTML(entity.title).trim()
+        : '';
     let message = entity.message
       ? entities.decodeHTML(entity.message).trim()
       : '';
@@ -103,7 +104,11 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const titleCmp: React.ReactNode = title ? (
       <Tags
         navigation={this.props.navigation}
-        style={[this.props.style, theme.fontL, theme.marginBottom]}>
+        style={[
+          this.props.style,
+          theme.marginBottom,
+          message ? styles.titleHasMessage : null,
+        ]}>
         {title}
       </Tags>
     ) : null;
@@ -191,5 +196,8 @@ const styles = StyleSheet.create({
         textShadowRadius: 20,
       },
     }),
+  },
+  titleHasMessage: {
+    fontWeight: 'bold',
   },
 });

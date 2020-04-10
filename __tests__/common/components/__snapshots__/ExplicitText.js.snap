@@ -13,7 +13,9 @@ exports[`Explicit text component renders correctly 1`] = `
       Array [
         undefined,
         undefined,
-        undefined,
+        Object {
+          "fontWeight": "bold",
+        },
       ]
     }
   >

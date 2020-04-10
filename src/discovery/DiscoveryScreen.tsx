@@ -59,7 +59,7 @@ class DiscoveryScreen extends Component {
     minimumViewTime: 300,
   };
 
-  refreshDiscovery = e => {
+  refreshDiscovery = (e) => {
     if (this.props.navigation.isFocused()) {
       stores.discovery.reload();
       e && e.preventDefault();
@@ -113,7 +113,7 @@ class DiscoveryScreen extends Component {
   /**
    * Adjust tiles to 1/cols size
    */
-  onLayout = e => {
+  onLayout = (e) => {
     // calculate the itemHeight for 3 cols only
     if (this.cols === 3) {
       const width = Dimensions.get('window').width;
@@ -134,10 +134,10 @@ class DiscoveryScreen extends Component {
   /**
    * On viewable items change in the list
    */
-  onViewableItemsChanged = change => {
+  onViewableItemsChanged = (change) => {
     switch (this.props.discovery.filters.type) {
       case 'images':
-        change.changed.forEach(c => {
+        change.changed.forEach((c) => {
           if (c.item.isGif && c.item.isGif()) {
             c.item.setVisible(c.isViewable);
           }
@@ -145,16 +145,16 @@ class DiscoveryScreen extends Component {
         break;
 
       case 'blogs':
-        change.viewableItems.forEach(item => {
+        change.viewableItems.forEach((item) => {
           this.props.discovery.listStore.addViewed(item.item);
         });
         break;
 
       case 'activities':
-        change.viewableItems.forEach(item => {
+        change.viewableItems.forEach((item) => {
           this.props.discovery.listStore.addViewed(item.item);
         });
-        change.changed.forEach(c => {
+        change.changed.forEach((c) => {
           if (c.item.setVisible) {
             c.item.setVisible(c.isViewable);
           }
@@ -235,7 +235,7 @@ class DiscoveryScreen extends Component {
         keyExtractor={this.keyExtractor}
         onEndReached={this.loadMore}
         initialNumToRender={this.cols === 3 ? 12 : 3}
-        style={[ThemedStyles.style.backgroundPrimary, CS.flexContainer]}
+        style={[ThemedStyles.style.backgroundSecondary, CS.flexContainer]}
         numColumns={this.cols}
         horizontal={false}
         windowSize={9}
@@ -248,7 +248,7 @@ class DiscoveryScreen extends Component {
     );
 
     return (
-      <View style={[CS.flexContainer, ThemedStyles.style.backgroundPrimary]}>
+      <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
         <Topbar
           title={i18n.t('tabTitleDiscovery')}
           navigation={this.props.navigation}
@@ -260,7 +260,7 @@ class DiscoveryScreen extends Component {
     );
   }
 
-  keyExtractor = item => item.urn;
+  keyExtractor = (item) => item.urn;
 
   /**
    * Get empty list
@@ -333,7 +333,7 @@ class DiscoveryScreen extends Component {
     const filtersStore = this.props.discovery.filters;
 
     const navigation = (
-      <View style={[styles.navigation, ThemedStyles.style.backgroundPrimary]}>
+      <View style={[styles.navigation, ThemedStyles.style.backgroundSecondary]}>
         <TouchableHighlight
           style={styles.iconContainer}
           onPress={this.setTypeActivities}
@@ -526,7 +526,7 @@ class DiscoveryScreen extends Component {
 
     const headerBody =
       filtersStore.type != 'lastchannels' ? (
-        <View style={CS.marginBottom}>
+        <View style={[ThemedStyles.style.backgroundSecondary]}>
           {(filtersStore.type === 'channels' || !GOOGLE_PLAY_STORE) && (
             <SearchView
               placeholder={i18n.t('discovery.search')}
@@ -535,7 +535,7 @@ class DiscoveryScreen extends Component {
               containerStyle={[
                 CS.marginTop,
                 CS.marginBottom,
-                ThemedStyles.style.backgroundSecondary,
+                ThemedStyles.style.backgroundPrimary,
               ]}
               iconRight={iconRight}
               iconRightOnPress={this.clearSearch}
@@ -576,7 +576,7 @@ class DiscoveryScreen extends Component {
     this.props.discovery.reload();
   };
 
-  onSelectOne = tag => {
+  onSelectOne = (tag) => {
     this.props.discovery.reload();
   };
 
@@ -638,14 +638,14 @@ class DiscoveryScreen extends Component {
   /**
    * Search debouncer
    */
-  searchDebouncer = _.debounce(text => {
+  searchDebouncer = _.debounce((text) => {
     this.props.discovery.filters.search(text);
   }, 350);
 
   /**
    * Set search query
    */
-  setQ = q => {
+  setQ = (q) => {
     this.props.discovery.setQuery(q);
     this.searchDebouncer(q);
   };
@@ -679,7 +679,7 @@ class DiscoveryScreen extends Component {
    */
   navigateToFeed = ({ urn }) => {
     const index = this.props.discovery.listStore.feedsService.feed.findIndex(
-      e => e.urn === urn,
+      (e) => e.urn === urn,
     );
     let fallbackIndex = this.props.discovery.listStore.fallbackIndex;
 
@@ -704,7 +704,7 @@ class DiscoveryScreen extends Component {
   /**
    * Render a tile
    */
-  renderTile = row => {
+  renderTile = (row) => {
     if (!this.state.active && row.item.isGif()) {
       return (
         <View
@@ -743,7 +743,7 @@ class DiscoveryScreen extends Component {
   /**
    * Render user row
    */
-  renderUser = row => {
+  renderUser = (row) => {
     return (
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
         <DiscoveryUser
@@ -758,7 +758,7 @@ class DiscoveryScreen extends Component {
   /**
    * Render activity item
    */
-  renderActivity = row => {
+  renderActivity = (row) => {
     const boundaryText =
       this.props.discovery.listStore.fallbackIndex === row.index
         ? i18n.t('newsfeed.olderThan', {
@@ -781,7 +781,7 @@ class DiscoveryScreen extends Component {
   /**
    * Render blog item
    */
-  renderBlog = row => {
+  renderBlog = (row) => {
     return (
       <View
         style={[CS.paddingBottom2x, ThemedStyles.style.backgroundSeparator]}>
@@ -795,7 +795,7 @@ class DiscoveryScreen extends Component {
   /**
    * Render group item
    */
-  renderGroup = row => {
+  renderGroup = (row) => {
     const item = row.item;
     return (
       <ErrorBoundary containerStyle={CS.hairLineBottom}>
@@ -804,7 +804,7 @@ class DiscoveryScreen extends Component {
     );
   };
 
-  navigateToGroup = group => {
+  navigateToGroup = (group) => {
     if (!group.can(FLAG_VIEW, true)) {
       return;
     }

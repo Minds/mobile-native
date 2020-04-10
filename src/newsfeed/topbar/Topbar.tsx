@@ -39,7 +39,7 @@ export default class Topbar extends Component<PropsType> {
           style={[
             styles.container,
             CommonStyle.shadow,
-            ThemedStyles.style.backgroundPrimary,
+            ThemedStyles.style.backgroundSecondary,
           ]}>
           <View style={styles.topbar}>
             <TouchableOpacity
@@ -53,7 +53,7 @@ export default class Topbar extends Component<PropsType> {
                 this.selected('subscribed'),
               ]}
               onPress={() => this.props.newsfeed.setFilter('subscribed')}>
-              <Text style={CommonStyle.fontM}>
+              <Text style={[CommonStyle.fontM, styles.label]}>
                 {i18n.t('newsfeed.subscribed')}
               </Text>
             </TouchableOpacity>
@@ -68,7 +68,7 @@ export default class Topbar extends Component<PropsType> {
                 this.selected('boostfeed'),
               ]}
               onPress={() => this.props.newsfeed.setFilter('boostfeed')}>
-              <Text style={CommonStyle.fontM}>
+              <Text style={[CommonStyle.fontM, styles.label]}>
                 {i18n.t('newsfeed.boostfeed')}
               </Text>
             </TouchableOpacity>
@@ -82,28 +82,35 @@ export default class Topbar extends Component<PropsType> {
 //TODO: move to common style
 const styles = StyleSheet.create({
   container: {
-    height: 30,
+    //height: 30,
     display: 'flex',
     flexDirection: 'row',
-    paddingTop: 5,
+    paddingTop: 0,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#EEE',
   },
   topbar: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     flexDirection: 'row',
+    paddingHorizontal: 10,
   },
   button: {
     padding: 8,
   },
   tab: {
-    flex: 1,
+    // flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomWidth: 2,
+    borderBottomWidth: 3,
+    marginRight: 10,
+    paddingVertical: 5,
   },
   tabSelected: {
     borderBottomColor: colors.primary,
+  },
+  label: {
+    textTransform: 'capitalize',
+    fontSize: 15,
   },
 });

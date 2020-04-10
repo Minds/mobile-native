@@ -29,7 +29,7 @@ exports[`channel actions component should renders correctly 1`] = `
     style={
       Object {
         "backgroundColor": "#5DBAC0",
-        "borderRadius": 2,
+        "borderRadius": 36,
         "flexDirection": "row",
         "justifyContent": "center",
         "marginLeft": 5,

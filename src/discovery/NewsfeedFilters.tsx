@@ -31,12 +31,12 @@ class NewsfeedFilters extends Component {
   /**
    * Set menu reference
    */
-  setMenuRef = r => (this._menu = r);
+  setMenuRef = (r) => (this._menu = r);
 
   /**
    * Set tag drawer ref
    */
-  setTagDrawerRef = r => (this._drawer = r || null);
+  setTagDrawerRef = (r) => (this._drawer = r || null);
 
   /**
    * Show period menu

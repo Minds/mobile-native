@@ -110,7 +110,7 @@ export default class OwnerBlock extends PureComponent<PropsType> {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    padding: 8,
+    padding: 10,
     alignItems: 'center',
     flexDirection: 'row',
   },
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     color: '#444',
+    fontSize: 16,
   },
   groupContainer: {
     marginLeft: 4,

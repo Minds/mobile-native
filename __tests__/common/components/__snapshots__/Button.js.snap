@@ -15,7 +15,7 @@ exports[`renders correctly 1`] = `
   style={
     Object {
       "backgroundColor": "#5DBAC0",
-      "borderRadius": 2,
+      "borderRadius": 36,
       "opacity": 1,
     }
   }

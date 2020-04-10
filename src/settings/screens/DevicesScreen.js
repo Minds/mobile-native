@@ -3,14 +3,14 @@ import React, { useCallback, useState, useEffect } from 'react';
 import { View, Text } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import Switch from 'react-native-switch-pro'
+import Switch from 'react-native-switch-pro';
 import settingsService from '../SettingsService';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import Button from '../../common/components/Button';
 import authService from '../../auth/AuthService';
 import { Alert } from 'react-native';
 
-export default function() {
+export default function () {
   const CS = ThemedStyles.style;
 
   const [openedSessions, setOpenedSessions] = useState();
@@ -41,19 +41,32 @@ export default function() {
     setLoading(false);
   }, [setLoading]);
 
-  const component = loading ? (<CenteredLoading />) : (
-    <View style={[CS.flexContainer, CS.backgroundPrimary]}>
-      <View style={[styles.row, CS.backgroundSecondary, CS.paddingVertical2x, CS.paddingHorizontal3x, CS.borderPrimary, CS.borderHair]}>
-        <Text style={[styles.text, CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>{i18n.t('settings.sessionsOpened', {amount: openedSessions})}</Text>
+  const component = loading ? (
+    <CenteredLoading />
+  ) : (
+    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.paddingTop4x]}>
+      <View
+        style={[
+          styles.row,
+          CS.backgroundSecondary,
+          CS.paddingVertical3x,
+          CS.paddingHorizontal3x,
+          CS.borderPrimary,
+          CS.borderHair,
+        ]}>
+        <Text
+          style={[styles.text, CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>
+          {i18n.t('settings.sessionsOpened', { amount: openedSessions })}
+        </Text>
         <Button
           onPress={closeSessions}
           text={i18n.t('settings.closeSessions')}
         />
       </View>
     </View>
-  )
+  );
 
-  return (component);
+  return component;
 }
 
 const styles = {
@@ -64,5 +77,5 @@ const styles = {
   },
   text: {
     width: '50%',
-  }
-}
+  },
+};

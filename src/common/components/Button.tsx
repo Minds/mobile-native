@@ -86,8 +86,10 @@ export default class Button extends Component<PropsType> {
           theme.rowJustifyCenter,
           theme.centered,
           theme.padding,
+          theme.paddingHorizontal2x,
           style,
           containerStyle,
+          { borderRadius: 36 },
         ]}
         {...extraProps}>
         {children}

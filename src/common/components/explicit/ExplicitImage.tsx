@@ -1,16 +1,9 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
 
-import {
-  findNodeHandle,
-  Platform,
-  Image,
-  View
-} from 'react-native';
+import { findNodeHandle, Platform, Image, View } from 'react-native';
 
 import FastImage from 'react-native-fast-image';
 import { createImageProgress } from 'react-native-image-progress';
@@ -23,35 +16,48 @@ const ProgressImage = createImageProgress(Image);
 
 @observer
 export default class ExplicitImage extends Component {
-
   state = {
-    ready: false
-  }
+    ready: false,
+  };
 
   imageError = (event) => {
     // bubble event up
     this.props.onError && this.props.onError(event.nativeEvent.error);
-  }
+  };
 
   setActive = () => {
-    this.setState({ready: true});
+    this.setState({ ready: true });
     // bubble event up
     this.props.onLoadEnd && this.props.onLoadEnd();
-  }
+  };
 
   render() {
     const loadingIndicator = this.props.loadingIndicator;
 
     // do not show image if it is mature
-    if (this.props.entity.shouldBeBlured() && !this.props.entity.mature_visibility) {
+    if (
+      this.props.entity.shouldBeBlured() &&
+      !this.props.entity.mature_visibility
+    ) {
       return (
         <View
-          style={[CommonStyle.positionAbsolute, this.props.imageStyle, CommonStyle.blackOverlay]}
+          style={[
+            CommonStyle.positionAbsolute,
+            this.props.imageStyle,
+            CommonStyle.blackOverlay,
+          ]}
         />
       );
     }
 
-    switch(loadingIndicator) {
+    if (
+      !this.props.source ||
+      !this.props.source.uri ||
+      this.props.source.uri.indexOf('//') < 0
+    )
+      return <View></View>;
+
+    switch (loadingIndicator) {
       case undefined:
         return (
           <FastImage

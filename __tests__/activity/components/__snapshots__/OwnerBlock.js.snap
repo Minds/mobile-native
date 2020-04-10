@@ -7,7 +7,7 @@ exports[`Owner component renders correctly 1`] = `
       "alignItems": "center",
       "display": "flex",
       "flexDirection": "row",
-      "padding": 8,
+      "padding": 10,
     }
   }
 >
@@ -63,6 +63,7 @@ exports[`Owner component renders correctly 1`] = `
               Object {
                 "color": "#444",
                 "fontFamily": "Roboto",
+                "fontSize": 16,
                 "fontWeight": "bold",
               },
               undefined,

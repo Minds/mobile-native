@@ -1,13 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  TextInput,
-  Image,
-  TouchableHighlight,
-} from 'react-native';
+import { View, Text, TextInput, Image, TouchableHighlight } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -151,12 +145,12 @@ class ChannelHeader extends Component {
   changeBannerAction = async () => {
     imagePicker
       .show(i18n.t('channel.selectBanner'), 'photo')
-      .then(response => {
+      .then((response) => {
         if (response) {
           this.selectMedia('banner', response);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   };
@@ -165,12 +159,12 @@ class ChannelHeader extends Component {
     if (!this.state.edit) return;
     imagePicker
       .show(i18n.t('channel.selectAvatar'), 'photo')
-      .then(response => {
+      .then((response) => {
         if (response) {
           this.selectMedia('avatar', response);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   };
@@ -183,13 +177,14 @@ class ChannelHeader extends Component {
     this.uploads[type] = file;
   }
 
-  setBriefdescription = briefdescription => this.setState({ briefdescription });
-  setName = name => this.setState({ name });
+  setBriefdescription = (briefdescription) =>
+    this.setState({ briefdescription });
+  setName = (name) => this.setState({ name });
 
   /**
    * Truncated footer render for description
    */
-  _renderTruncatedFooter = handlePress => {
+  _renderTruncatedFooter = (handlePress) => {
     return (
       <Text
         style={[
@@ -205,7 +200,7 @@ class ChannelHeader extends Component {
   /**
    * Revealed footer render for description
    */
-  _renderRevealedFooter = handlePress => {
+  _renderRevealedFooter = (handlePress) => {
     return (
       <Text
         style={[
@@ -265,7 +260,7 @@ class ChannelHeader extends Component {
           style={{ position: 'absolute', right: 5, top: 160 }}
         />
 
-        <View style={styles.headertextcontainer}>
+        <View style={[styles.headertextcontainer, theme.backgroundSecondary]}>
           <View style={styles.countercontainer}>
             <TouchableHighlightCustom
               underlayColor="transparent"
