@@ -1,19 +1,14 @@
 //@ts-nocheck
-import React, {
-    Component
-} from 'react';
+import React, { Component } from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
-import {
-  Platform,
-  Dimensions,
-} from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 
 const { height, width } = Dimensions.get('window');
-const aspectRatio = height/width;
+const aspectRatio = height / width;
 
 import Topbar from '../topbar/Topbar';
 import NewsfeedScreen from '../newsfeed/NewsfeedScreen';
@@ -29,33 +24,34 @@ import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MessengerTabIcon from '../messenger/MessengerTabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';
 
-const getCrypto = function() {
-  const WalletScreen  = require('../wallet/WalletScreen').default;
-  return (<Tab.Screen
-    name="Wallet"
-    component={WalletScreen}
-    options={{ tabBarTestID: 'Wallet tab button' }}
-  />);
-}
+const getCrypto = function () {
+  const WalletScreen = require('../wallet/WalletScreen').default;
+  return (
+    <Tab.Screen
+      name="Wallet"
+      component={WalletScreen}
+      options={{ tabBarTestID: 'Wallet tab button' }}
+    />
+  );
+};
 
-const Tabs = function({navigation}) {
+const Tabs = function ({ navigation }) {
   const isIOS = Platform.OS === 'ios';
-
 
   return (
     <Tab.Navigator
       initialRouteName="Newsfeed"
-      tabBarOptions= {{
+      tabBarOptions={{
         showLabel: false,
         showIcon: true,
         activeTintColor: '#FFF',
         style: {
           backgroundColor: '#222',
-          paddingBottom: isIphoneX ? 20 : null
+          paddingBottom: isIphoneX ? 20 : null,
         },
         indicatorStyle: {
-          marginBottom: isIphoneX ? 20 : null
-        }
+          marginBottom: isIphoneX ? 20 : null,
+        },
       }}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
@@ -64,23 +60,20 @@ const Tabs = function({navigation}) {
 
           switch (route.name) {
             case 'Messenger':
-              return <MessengerTabIcon tintColor={color}/>
+              return <MessengerTabIcon tintColor={color} />;
             case 'Newsfeed':
-              return <IonIcon name="md-home" size={iconsize} color={color} />
+              return <IonIcon name="md-home" size={iconsize} color={color} />;
             case 'Discovery':
-              return <Icon name="search" size={iconsize} color={color} />
+              return <Icon name="search" size={iconsize} color={color} />;
             case 'Notifications':
-              return <NotificationIcon tintColor={color} size={iconsize} />
+              return <NotificationIcon tintColor={color} size={iconsize} />;
             case 'Wallet':
-              return <CIcon name="bank" size={iconsize} color={color} />
+              return <CIcon name="bank" size={iconsize} color={color} />;
           }
-
         },
       })}>
-     {
-       featuresService.has('crypto') && getCrypto()
-     }
-     <Tab.Screen
+      {featuresService.has('crypto') && getCrypto()}
+      <Tab.Screen
         name="Discovery"
         component={DiscoveryScreen}
         options={{ tabBarTestID: 'Discovery tab button' }}
@@ -93,7 +86,7 @@ const Tabs = function({navigation}) {
       <Tab.Screen
         name="Messenger"
         component={MessengerScreen}
-        options={{ tabBarTestID: 'Messenger tab button'}}
+        options={{ tabBarTestID: 'Messenger tab button' }}
       />
       <Tab.Screen
         name="Notifications"
@@ -101,7 +94,7 @@ const Tabs = function({navigation}) {
         options={{ tabBarTestID: 'Notifications tab button' }}
       />
     </Tab.Navigator>
-  )
-}
+  );
+};
 
-export default Tabs
+export default Tabs;

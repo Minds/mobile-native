@@ -28,12 +28,12 @@ class Topbar extends Component {
 
     return (
       <SafeAreaConsumer>
-        {insets => (
+        {(insets) => (
           <View>
             <View
               style={[
                 styles.container,
-                CS.backgroundPrimary,
+                CS.backgroundSecondary,
                 { paddingTop: insets.top + 10 },
               ]}>
               <View style={styles.topbar}>
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     height: topbarHeight,
     display: 'flex',
     flexDirection: 'row',
-    paddingBottom: 8,
+    paddingBottom: 10,
   },
   topbar: {
     flex: 1,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     paddingTop: 4,
   },
   button: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
   },
   scale0: {
     transform: [{ scale: 0 }],

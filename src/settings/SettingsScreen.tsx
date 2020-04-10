@@ -6,7 +6,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import Topbar from '../topbar/Topbar';
 
-export default function({ navigation }) {
+export default function ({ navigation }) {
   const CS = ThemedStyles.style;
 
   const navToAccount = useCallback(() => navigation.push('Account'), [
@@ -21,10 +21,7 @@ export default function({ navigation }) {
     navigation,
   ]);
 
-
-  const navToOther = useCallback(() => navigation.push('Other'), [
-    navigation,
-  ]);
+  const navToOther = useCallback(() => navigation.push('Other'), [navigation]);
 
   const keyExtractor = useCallback((item, index) => index.toString());
 
@@ -42,22 +39,33 @@ export default function({ navigation }) {
       onPress: navToBilling,
     },
     {
-      title:i18n.t('settings.other'),
+      title: i18n.t('settings.other'),
       onPress: navToOther,
     },
-  ]
+  ];
 
   return (
     <View style={[CS.flexContainer, CS.backgroundPrimary]}>
-      <Topbar title={i18n.t('moreScreen.settings')} navigation={navigation} renderBack background={CS.backgroundPrimary} />
-      <View style={[CS.borderTopHair, CS.borderBottomHair, CS.borderPrimary, CS.paddingTop4x]}>
+      <Topbar
+        title={i18n.t('moreScreen.settings')}
+        navigation={navigation}
+        renderBack
+        background={CS.backgroundPrimary}
+      />
+      <View
+        style={[
+          CS.borderTopHair,
+          CS.borderBottomHair,
+          CS.borderPrimary,
+          { flex: 1 },
+        ]}>
         <FlatList
           data={list}
           renderItem={SettingsItem}
-          style={[CS.backgroundPrimary]}
+          style={[CS.backgroundPrimary, CS.paddingTop4x]}
           keyExtractor={keyExtractor}
         />
       </View>
     </View>
-  )
+  );
 }

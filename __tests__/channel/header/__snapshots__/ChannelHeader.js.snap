@@ -131,7 +131,14 @@ exports[`channel header component owner should render correctly 1`] = `
       
     </Text>
   </View>
-  <View>
+  <View
+    style={
+      Array [
+        undefined,
+        undefined,
+      ]
+    }
+  >
     <View>
       <View
         accessible={true}
@@ -260,7 +267,7 @@ exports[`channel header component owner should render correctly 1`] = `
           style={
             Object {
               "backgroundColor": "#5DBAC0",
-              "borderRadius": 2,
+              "borderRadius": 36,
               "flexDirection": "row",
               "justifyContent": "center",
               "marginLeft": 5,

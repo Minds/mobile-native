@@ -278,7 +278,7 @@ export default class MediaView extends Component<PropsType> {
     return (
       <View style={this.props.style}>
         {media}
-        {!!this.props.entity.license && this.getLicense()}
+        {!!this.props.entity.license && false && this.getLicense()}
       </View>
     );
   }

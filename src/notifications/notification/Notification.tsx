@@ -1,14 +1,7 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Text,
-  TouchableWithoutFeedback,
-  Image,
-  View
-} from 'react-native';
+import { Text, TouchableWithoutFeedback, Image, View } from 'react-native';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import formatDate from '../../common/helpers/date';
@@ -55,6 +48,7 @@ import ReferralPendingView from './view/ReferralPendingView';
 import ReferralPingView from './view/ReferralPingView';
 
 import styles from './style';
+import { CommonStyle as CS } from '../../styles/Common';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
@@ -67,9 +61,11 @@ export default class Notification extends Component {
   navToChannel = () => {
     // only active if receive the navigation property
     if (this.props.navigation) {
-      this.props.navigation.push('Channel', { guid: this.props.entity.fromObj.guid });
+      this.props.navigation.push('Channel', {
+        guid: this.props.entity.fromObj.guid,
+      });
     }
-  }
+  };
 
   // Notifications are stateless, therefore they don't need to be rendered more than once
   shouldComponentUpdate(nextProps, nextState) {
@@ -81,36 +77,41 @@ export default class Notification extends Component {
     styles.container = {
       ...styles.container,
       ...ThemedStyles.style.borderBottomHair,
-      ...ThemedStyles.style.borderPrimary
-    }
+      ...ThemedStyles.style.borderPrimary,
+      ...ThemedStyles.style.backgroundSecondary,
+    };
 
     // set color for timestamp text using themes
     styles.timestamp = {
       ...styles.timestamp,
-      ...ThemedStyles.style.colorSecondaryText
-    }
+      ...ThemedStyles.style.colorSecondaryText,
+    };
 
     // set border for avatar using themes
     styles.avatar = {
       ...styles.avatar,
       ...ThemedStyles.style.borderHair,
-      ...ThemedStyles.style.borderPrimary
-    }
+      ...ThemedStyles.style.borderPrimary,
+    };
 
     const entity = this.props.entity;
 
     const body = this.getBody(entity);
 
-    const avatarSrc = { uri: MINDS_CDN_URI + 'icon/' + this.props.entity.fromObj.guid + '/medium'};
+    const avatarSrc = {
+      uri: MINDS_CDN_URI + 'icon/' + this.props.entity.fromObj.guid + '/medium',
+    };
 
     return (
       <View style={styles.container}>
         <TouchableWithoutFeedback onPress={this.navToChannel}>
-          <Image source={avatarSrc} style={styles.avatar}/>
+          <Image source={avatarSrc} style={styles.avatar} />
         </TouchableWithoutFeedback>
         <View style={styles.body}>
-          { body }
-          <Text style={styles.timestamp}>{formatDate(this.props.entity.time_created)}</Text>
+          {body}
+          <Text style={styles.timestamp}>
+            {formatDate(this.props.entity.time_created)}
+          </Text>
         </View>
       </View>
     );
@@ -122,134 +123,375 @@ export default class Notification extends Component {
    */
   getBody(entity) {
     switch (entity.notification_view) {
+      case 'boost_accepted':
+        return (
+          <BoostAcceptedView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "boost_accepted":
-        return <BoostAcceptedView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'boost_completed':
+        return (
+          <BoostCompletedView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "boost_completed":
-        return <BoostCompletedView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'boost_gift':
+        return (
+          <BoostGiftView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "boost_gift":
-        return <BoostGiftView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'boost_peer_accepted':
+        return (
+          <BoostPeerAcceptedView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "boost_peer_accepted":
-        return <BoostPeerAcceptedView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'boost_peer_rejected':
+        return (
+          <BoostPeerRejectedView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "boost_peer_rejected":
-        return <BoostPeerRejectedView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'boost_peer_request':
+        return (
+          <BoostPeerRequestView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "boost_peer_request":
-        return <BoostPeerRequestView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'boost_rejected':
+        return (
+          <BoostRejectedView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "boost_rejected":
-        return <BoostRejectedView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'boost_revoked':
+        return (
+          <BoostRevokedView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "boost_revoked":
-        return <BoostRevokedView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'boost_submitted_p2p':
+        return (
+          <BoostSubmittedP2pView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "boost_submitted_p2p":
-        return <BoostSubmittedP2pView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'boost_submitted':
+        return (
+          <BoostSubmittedView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "boost_submitted":
-        return <BoostSubmittedView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'comment':
+        return (
+          <CommentView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "comment":
-        return <CommentView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'custom_message':
+        return (
+          <CustomMessageView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "custom_message":
-        return <CustomMessageView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'downvote':
+        return (
+          <DownvoteView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "downvote":
-        return <DownvoteView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'feature':
+        return (
+          <FeatureView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "feature":
-        return <FeatureView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'friends':
+        return (
+          <FriendsView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "friends":
-        return <FriendsView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'group_activity':
+        return (
+          <GroupActivityView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "group_activity":
-        return <GroupActivityView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'group_invite':
+        return (
+          <GroupInviteView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "group_invite":
-        return <GroupInviteView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'group_kick':
+        return (
+          <GroupKickView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "group_kick":
-        return <GroupKickView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'group_queue_add':
+        return (
+          <GroupQueueAddView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "group_queue_add":
-        return <GroupQueueAddView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'group_queue_approve':
+        return (
+          <GroupQueueApproveView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "group_queue_approve":
-        return <GroupQueueApproveView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'group_queue_reject':
+        return (
+          <GroupQueueRejectView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "group_queue_reject":
-        return <GroupQueueRejectView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'like':
+        return (
+          <LikeView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "like":
-        return <LikeView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'messenger_invite':
+        return (
+          <MessengerInviteView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "messenger_invite":
-        return <MessengerInviteView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'missed_call':
+        return (
+          <MissedCallView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "missed_call":
-        return <MissedCallView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'remind':
+        return (
+          <RemindView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "remind":
-        return <RemindView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'tag':
+        return (
+          <TagView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "tag":
-        return <TagView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'welcome_boost':
+        return (
+          <WelcomeBoostView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "welcome_boost":
-        return <WelcomeBoostView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'welcome_chat':
+        return (
+          <WelcomeChatView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "welcome_chat":
-        return <WelcomeChatView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'welcome_discover':
+        return (
+          <WelcomeDiscoverView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "welcome_discover":
-        return <WelcomeDiscoverView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'welcome_points':
+        return (
+          <WelcomePointsView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "welcome_points":
-        return <WelcomePointsView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'welcome_post':
+        return (
+          <WelcomePostView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "welcome_post":
-        return <WelcomePostView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'wire_happened':
+        return (
+          <WireHappenedView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "wire_happened":
-        return <WireHappenedView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'referral_complete':
+        return (
+          <ReferralCompleteView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "referral_complete":
-        return <ReferralCompleteView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'referral_pending':
+        return (
+          <ReferralPendingView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "referral_pending":
-        return <ReferralPendingView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'referral_ping':
+        return (
+          <ReferralPingView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "referral_ping":
-        return <ReferralPingView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'report_actioned':
+        return (
+          <ReportActionedView
+            entity={entity}
+            navigation={this.props.navigation}
+            styles={styles}
+          />
+        );
 
-      case "report_actioned":
-        return <ReportActionedView entity={entity} navigation={this.props.navigation} styles={styles} />
+      case 'rewards_state_increase':
+        return (
+          <RewardsStateIncreaseView
+            navigation={this.props.navigation}
+            styles={styles}
+            state={entity.params.state}
+            multiplier={entity.params.reward_factor}
+          />
+        );
 
-      case "rewards_state_increase":
-        return <RewardsStateIncreaseView navigation={this.props.navigation} styles={styles} state={entity.params.state} multiplier={entity.params.reward_factor}/>
+      case 'rewards_state_decrease':
+        return (
+          <RewardsStateDecreaseView
+            navigation={this.props.navigation}
+            styles={styles}
+            state={entity.params.state}
+            multiplier={entity.params.reward_factor}
+          />
+        );
 
-      case "rewards_state_decrease":
-        return <RewardsStateDecreaseView navigation={this.props.navigation} styles={styles} state={entity.params.state} multiplier={entity.params.reward_factor}/>
+      case 'rewards_state_decrease_today':
+        return (
+          <RewardsStateDecreaseTodayView
+            navigation={this.props.navigation}
+            styles={styles}
+            state={entity.params.state}
+            multiplier={entity.params.reward_factor}
+          />
+        );
 
-      case "rewards_state_decrease_today":
-        return <RewardsStateDecreaseTodayView navigation={this.props.navigation} styles={styles} state={entity.params.state} multiplier={entity.params.reward_factor}/>
-
-      case "rewards_summary":
-        return <RewardsSummaryView navigation={this.props.navigation} styles={styles} amount={entity.params.amount}/>
+      case 'rewards_summary':
+        return (
+          <RewardsSummaryView
+            navigation={this.props.navigation}
+            styles={styles}
+            amount={entity.params.amount}
+          />
+        );
 
       default:
         return (
           <View style={styles.bodyContents}>
             <Text>Could not load notification {entity.notification_view}</Text>
           </View>
-        )
+        );
     }
   }
-
 }

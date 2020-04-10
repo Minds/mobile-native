@@ -36,8 +36,6 @@ class EmailScreen extends Component {
     settingsService.getSettings().then(({ channel }) => {
       this.setState({ email: channel.email, loaded: true });
     });
-
-
   }
 
   componentDidMount() {
@@ -46,19 +44,19 @@ class EmailScreen extends Component {
 
     setOptions({
       headerRight: () => (
-        <Text onPress={this.confirmPassword} style={[
-          CS.colorLink,
-          CS.fontL,
-          CS.bold,
-        ]}>{i18n.t('save')}</Text>
-      )
+        <Text
+          onPress={this.confirmPassword}
+          style={[CS.colorLink, CS.fontL, CS.bold]}>
+          {i18n.t('save')}
+        </Text>
+      ),
     });
   }
 
   /**
    * Set email value
    */
-  setEmail = email => {
+  setEmail = (email) => {
     this.setState({ email, showConfirmNote: true });
   };
 
@@ -72,7 +70,7 @@ class EmailScreen extends Component {
 
     settingsService
       .submitSettings({ email: this.state.email })
-      .then(data => {
+      .then((data) => {
         this.props.navigation.goBack();
       })
       .finally(() => {
@@ -109,14 +107,28 @@ class EmailScreen extends Component {
     // validate
     const error = validator.emailMessage(email);
     const confirmNote = showConfirmNote ? (
-      <Text style={[CS.colorSecondaryText, CS.fontM, CS.paddingHorizontal2x, CS.centered, CS.marginTop3x]}>
+      <Text
+        style={[
+          CS.colorSecondaryText,
+          CS.fontM,
+          CS.paddingHorizontal2x,
+          CS.centered,
+          CS.marginTop3x,
+        ]}>
         {i18n.t('emailConfirm.confirmNote')}
       </Text>
     ) : null;
 
     return (
       <View style={[CS.flexContainer, CS.paddingTop3x, CS.backgroundPrimary]}>
-        <View style={[CS.paddingLeft3x, CS.paddingTop3x, CS.backgroundSecondary, CS.border, CS.borderPrimary]}>
+        <View
+          style={[
+            CS.paddingLeft3x,
+            CS.paddingTop3x,
+            CS.backgroundSecondary,
+            CS.border,
+            CS.borderPrimary,
+          ]}>
           <Input
             style={[CS.border0x, styles.inputHeight]}
             labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}

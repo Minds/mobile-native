@@ -31,6 +31,7 @@ import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
+import Colors from 'src/styles/Colors';
 
 type PropsType = {
   entity: ActivityModel;
@@ -173,7 +174,11 @@ export default class Activity extends Component<PropsType, StateType> {
 
     return (
       <View
-        style={[styles.container, ...borderBottom]}
+        style={[
+          styles.container,
+          ...borderBottom,
+          ThemedStyles.style.backgroundSecondary,
+        ]}
         onLayout={this.onLayout}
         testID="ActivityView">
         <Pinned entity={this.props.entity} />
@@ -311,7 +316,7 @@ export default class Activity extends Component<PropsType, StateType> {
                 CommonStyle.paddingRight,
                 ThemedStyles.style.colorSecondaryText,
               ]}>
-              {formatDate(this.props.entity.time_created)}
+              {formatDate(this.props.entity.time_created, 'friendly')}
             </Text>
             {this.props.entity.boosted && (
               <View style={styles.boostTagContainer}>
@@ -438,10 +443,12 @@ const styles = StyleSheet.create({
     overflow: 'visible',
   },
   messageContainer: {
-    padding: 8,
+    padding: 10,
+    paddingTop: 0,
   },
   message: {
     fontFamily: 'Roboto',
+    fontSize: 15,
   },
   emptyMessage: {
     padding: 0,
@@ -450,7 +457,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   timestamp: {
-    fontSize: 11,
+    fontSize: 12,
     color: '#888',
   },
   remind: {
@@ -460,7 +467,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     position: 'absolute',
     right: 10,
-    top: 6,
+    top: 20,
   },
   boostTagContainer: {
     flexDirection: 'row',

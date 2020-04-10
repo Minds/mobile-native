@@ -10,6 +10,7 @@ exports[`Activity component renders correctly 1`] = `
       },
       undefined,
       undefined,
+      undefined,
     ]
   }
   testID="ActivityView"
@@ -182,7 +183,7 @@ exports[`Activity component renders correctly 1`] = `
             "alignSelf": "flex-end",
             "position": "absolute",
             "right": 10,
-            "top": 6,
+            "top": 20,
           }
         }
       >
@@ -285,7 +286,7 @@ exports[`Activity component renders correctly 1`] = `
           Array [
             Object {
               "color": "#888",
-              "fontSize": 11,
+              "fontSize": 12,
             },
             Object {
               "paddingRight": 5,
@@ -294,14 +295,15 @@ exports[`Activity component renders correctly 1`] = `
           ]
         }
       >
-        Mar 25, 2018, 20:51
+        2y ago
       </Text>
     </TouchableOpacity>
   </OwnerBlock>
   <View
     style={
       Object {
-        "padding": 8,
+        "padding": 10,
+        "paddingTop": 0,
       }
     }
   >
@@ -391,6 +393,7 @@ exports[`Activity component renders correctly 1`] = `
       style={
         Object {
           "fontFamily": "Roboto",
+          "fontSize": 15,
         }
       }
     />
@@ -474,6 +477,7 @@ exports[`Activity component renders correctly 1`] = `
       style={
         Object {
           "fontFamily": "Roboto",
+          "fontSize": 15,
         }
       }
     />

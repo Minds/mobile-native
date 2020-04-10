@@ -195,7 +195,15 @@ const AppStack = function (props) {
         name="WalletHistory"
         component={WalletHistoryScreen}
       />
-      <AppStackNav.Screen name="ViewImage" component={ViewImageScreen} />
+      <AppStackNav.Screen
+        name="ViewImage"
+        component={ViewImageScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: '#000',
+          },
+        }}
+      />
       <AppStackNav.Screen
         name="BlockchainWallet"
         component={BlockchainWalletScreen}
@@ -250,7 +258,6 @@ const AppStack = function (props) {
         component={OnboardingScreenNew}
         options={hideHeader}
       />
-
     </AppStackNav.Navigator>
   );
 };

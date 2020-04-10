@@ -18,6 +18,7 @@ import { CommonStyle } from '../styles/Common';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButton from '../channel/subscription/SubscriptionButton';
 import ThemedStyles from '../styles/ThemedStyles';
+import { CommonStyle as CS } from '../styles/Common';
 
 type PropsType = {
   row: any;
@@ -101,7 +102,8 @@ class DiscoveryUser<T extends PropsType> extends Component<T, StateType> {
       <TouchableOpacity
         style={[
           styles.row,
-          { borderBottomColor: ThemedStyles.getColor('separator') },
+          ThemedStyles.style.borderPrimary,
+          ThemedStyles.style.borderBottomHair,
         ]}
         onPress={this._navToChannel}
         {...otherProps}>
@@ -130,7 +132,6 @@ const styles = {
     paddingLeft: 12,
     paddingBottom: 10,
     paddingRight: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   body: {
     marginLeft: 8,

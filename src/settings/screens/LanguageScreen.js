@@ -5,7 +5,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import ModalPicker from '../../common/components/ModalPicker';
 
-export default function() {
+export default function () {
   const CS = ThemedStyles.style;
 
   const [showLanguages, setShowLanguages] = useState(false);
@@ -16,19 +16,34 @@ export default function() {
 
   const cancel = useCallback(() => setShowLanguages(false), []);
 
-  const languageSelected = useCallback((language) => {
-    setLanguage(language);
-    setShowLanguages(false);
-    i18n.setLocale(language);
-  }, [setLanguage, setShowLanguages])
+  const languageSelected = useCallback(
+    (language) => {
+      setLanguage(language);
+      setShowLanguages(false);
+      i18n.setLocale(language);
+    },
+    [setLanguage, setShowLanguages],
+  );
 
   const languages = i18n.getSupportedLocales();
 
   return (
-    <View style={[CS.flexContainer, CS.backgroundPrimary]}>
-      <View style={[styles.row, CS.backgroundSecondary, CS.paddingVertical2x, CS.paddingHorizontal3x, CS.borderPrimary, CS.borderHair]}>
-        <Text style={[CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>{i18n.t('settings.accountOptions.2')}</Text>
-        <Text style={[CS.colorPrimaryText, CS.fontM]} onPress={showModal}>{i18n.getCurrentLanguageName()}</Text>
+    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.paddingTop4x]}>
+      <View
+        style={[
+          styles.row,
+          CS.backgroundSecondary,
+          CS.paddingVertical3x,
+          CS.paddingHorizontal3x,
+          CS.borderPrimary,
+          CS.borderHair,
+        ]}>
+        <Text style={[CS.marginLeft, CS.colorSecondaryText, CS.fontM]}>
+          {i18n.t('settings.accountOptions.2')}
+        </Text>
+        <Text style={[CS.colorPrimaryText, CS.fontM]} onPress={showModal}>
+          {i18n.getCurrentLanguageName()}
+        </Text>
       </View>
       <ModalPicker
         onSelect={languageSelected}
@@ -41,12 +56,12 @@ export default function() {
         items={languages}
       />
     </View>
-  )
+  );
 }
 
 const styles = {
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  }
-}
+  },
+};

@@ -210,7 +210,7 @@ export default class ActivityModel extends BaseModel {
    * Get activity text
    */
   get text() {
-    return this.message || this.title || '';
+    return this.message || '';
   }
 
   @action

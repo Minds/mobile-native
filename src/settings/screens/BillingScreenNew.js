@@ -6,7 +6,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import i18n from '../../common/services/i18n.service';
 
-export default function() {
+export default function () {
   const CS = ThemedStyles.style;
   const navigation = useNavigation();
 
@@ -14,9 +14,10 @@ export default function() {
     navigation,
   ]);
 
-  const navToSubscriptions = useCallback(() => navigation.push('RecurringPayments'), [
-    navigation,
-  ]);
+  const navToSubscriptions = useCallback(
+    () => navigation.push('RecurringPayments'),
+    [navigation],
+  );
 
   const keyExtractor = useCallback((item, index) => index.toString());
 
@@ -29,11 +30,19 @@ export default function() {
       title: i18n.t('settings.billingOptions.2'),
       onPress: navToSubscriptions,
     },
-  ]
+  ];
 
   return (
     <ScrollView style={CS.flexContainer}>
-      <View style={[CS.flexContainer, CS.backgroundPrimary, CS.borderTopHair, CS.borderBottomHair, CS.borderPrimary]}>
+      <View
+        style={[
+          CS.flexContainer,
+          CS.backgroundPrimary,
+          CS.borderTopHair,
+          CS.borderBottomHair,
+          CS.borderPrimary,
+          CS.paddingTop4x,
+        ]}>
         <FlatList
           data={list}
           renderItem={SettingsItem}
@@ -42,5 +51,5 @@ export default function() {
         />
       </View>
     </ScrollView>
-  )
+  );
 }

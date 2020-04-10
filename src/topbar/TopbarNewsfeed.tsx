@@ -48,7 +48,7 @@ class TopbarNewsfeed extends Component<PropsType> {
             <View
               style={[
                 styles.container,
-                CS.backgroundPrimary,
+                CS.backgroundSecondary,
                 { paddingTop: insets.top },
               ]}>
               <View style={styles.topbar}>
@@ -84,7 +84,7 @@ export default TopbarNewsfeed;
 let topbarHeight = 50;
 
 if (Platform.OS == 'ios') {
-  topbarHeight = 90;
+  topbarHeight = 100;
 }
 
 const styles = StyleSheet.create({

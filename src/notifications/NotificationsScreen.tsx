@@ -119,7 +119,7 @@ class NotificationsScreen extends Component {
         keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
         onEndReached={this.loadMore}
-        ListEmptyComponent={empty}
+        ListEmptyComponent={list.loading ? null : empty}
         ListHeaderComponent={<NotificationsTopbar />}
         // onEndReachedThreshold={0.05}
         initialNumToRender={12}
@@ -170,7 +170,7 @@ class NotificationsScreen extends Component {
    * render row
    * @param {object} row
    */
-  renderRow = row => {
+  renderRow = (row) => {
     const entity = row.item;
     return (
       <ErrorBoundary
