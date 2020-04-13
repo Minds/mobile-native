@@ -6,10 +6,17 @@ import { observer, inject } from 'mobx-react';
 import FAIcon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../styles/ThemedStyles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { MainSwiperParamList } from '../navigation/NavigationTypes';
+
+interface Props {
+  navigation: StackNavigationProp<MainSwiperParamList>;
+  tintColor?: string;
+}
 
 @inject('messengerList')
 @observer
-export default class MessengerTabIconNew extends Component {
+export default class MessengerTabIconNew extends Component<Props> {
   /**
    * Navigate to messenger screen
    */

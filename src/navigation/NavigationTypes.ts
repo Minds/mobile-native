@@ -1,4 +1,10 @@
-import type UserModel from '../channel/UserModel';
+import UserModel from '../channel/UserModel';
+
+export type MainSwiperParamList = {
+  Capture: {};
+  Tabs: {};
+  Messenger: {};
+};
 
 export type RootStackParamList = {
   Fab: {
@@ -12,6 +18,9 @@ export type RootStackParamList = {
   };
   Newsfeed: {};
   Capture: {};
+  App: {};
+  Gathering: {};
+  Auth: {};
 };
 
 export type AuthStackParamList = {
@@ -20,4 +29,45 @@ export type AuthStackParamList = {
     code?: string;
   };
   Register: {};
-}
+};
+
+export type AppStackParamList = {
+  Main: {};
+  TagSelector: {};
+  NsfwSelector: {};
+  ScheduleSelector: {};
+  MonetizeSelector: {};
+  LicenseSelector: {};
+  EmailConfirmation: {};
+  Update: {};
+  Boost: {};
+  Notifications: {};
+  Channel: {};
+  Activity: {};
+  Conversation: {};
+  DiscoveryFeed: {};
+  DiscoverySearch: { query: string };
+  Subscribers: {};
+  GroupsList: {};
+  GroupView: {};
+  Wallet: {};
+  BlogList: {};
+  BoostConsole: {};
+  BlogView: {};
+  WireFab: {};
+  WalletHistory: {};
+  ViewImage: {};
+  BlockchainWallet: {};
+  Contributions: {};
+  Transactions: {};
+  BlockchainWalletModal: {};
+  BlockchainWalletImport: {};
+  BlockchainWalletDetails: {};
+  Report: {};
+  More: {};
+  Withdraw: {};
+  WalletOnboarding: {};
+  NotSupported: {};
+  OnboardingScreen: {};
+  OnboardingScreenNew: {};
+};

@@ -7,6 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "static-analysis": "tsc",
     "validate-locales": "node tasks/validate-locales.js",
     "unused-locales": "ts-node tasks/unused-locales.js",
     "update-settings": "ts-node tasks/update-settings.js",

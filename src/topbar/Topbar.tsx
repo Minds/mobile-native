@@ -1,6 +1,12 @@
-//@ts-nocheck
-import React, { Component } from 'react';
-import { Text, StyleSheet, View, Platform } from 'react-native';
+import React, { Component, useEffect } from 'react';
+import {
+  Text,
+  StyleSheet,
+  View,
+  Platform,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 
@@ -12,60 +18,64 @@ import MessengerTabIcon from '../messenger/MessengerTabIconNew';
 
 import EmailConfirmation from './EmailConfirmation';
 import BannerInfo from './BannerInfo';
+import { useLegacyStores } from '../common/hooks/use-stores';
 
-@inject('user')
-@inject('wallet')
-@observer
-class Topbar extends Component {
-  componentDidMount() {
-    this.props.wallet.refresh();
-  }
+interface Props {
+  title: string;
+  style?: StyleProp<ViewStyle>;
+  refreshFeed?: Function;
+  navigation: any;
+}
 
-  listenForSearch = () => (this.props.user.searching ? styles.scale0 : {});
+export const Topbar = observer((props: Props) => {
+  const { wallet, user } = useLegacyStores();
 
-  render() {
-    const CS = ThemedStyles.style;
+  useEffect(() => {
+    wallet.refresh();
+  }, []);
 
-    return (
-      <SafeAreaConsumer>
-        {(insets) => (
-          <View>
-            <View
-              style={[
-                styles.container,
-                CS.backgroundSecondary,
-                { paddingTop: insets.top + 10 },
-              ]}>
-              <View style={styles.topbar}>
-                <View style={[styles.topbarLeft, CS.marginLeft4x]}>
-                  <Text
-                    style={[
-                      CS.titleText,
-                      CS.colorPrimaryText,
-                      styles.lineHeight0,
-                    ]}
-                    onPress={this.props.refreshFeed ?? (() => false)}>
-                    {this.props.title}
-                  </Text>
-                </View>
-                <View style={styles.topbarRight}>
-                  <MessengerTabIcon navigation={navigation} />
-                  <SearchComponent
-                    user={this.props.user}
-                    navigation={this.props.navigation}
-                  />
-                </View>
+  const listenForSearch = () => (user.searching ? styles.scale0 : {});
+
+  const CS = ThemedStyles.style;
+
+  return (
+    <SafeAreaConsumer>
+      {(insets) => (
+        <View>
+          <View
+            style={[
+              styles.container,
+              CS.backgroundSecondary,
+              { paddingTop: insets!.top + 10 },
+            ]}>
+            <View style={styles.topbar}>
+              <View style={[styles.topbarLeft, CS.marginLeft4x]}>
+                <Text
+                  style={[
+                    CS.titleText,
+                    CS.colorPrimaryText,
+                    styles.lineHeight0,
+                  ]}
+                  onPress={() =>
+                    props.refreshFeed ? props.refreshFeed : () => {}
+                  }>
+                  {props.title}
+                </Text>
+              </View>
+              <View style={styles.topbarRight}>
+                <MessengerTabIcon navigation={props.navigation} />
+                <SearchComponent user={user} navigation={props.navigation} />
               </View>
             </View>
-
-            <EmailConfirmation user={this.props.user} />
-            <BannerInfo user={this.props.user} />
           </View>
-        )}
-      </SafeAreaConsumer>
-    );
-  }
-}
+
+          <EmailConfirmation user={user} />
+          <BannerInfo user={user} />
+        </View>
+      )}
+    </SafeAreaConsumer>
+  );
+});
 
 export default Topbar;
 

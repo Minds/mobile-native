@@ -11,20 +11,32 @@ import DiscoveryScreen from '../discovery/DiscoveryScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';
-import { getStores } from '../../AppStores';
 import { MINDS_CDN_URI } from '../config/Config';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
 import isIphoneX from '../common/helpers/isIphoneX';
 import MenuStack from '../settings/SettingsNavigation';
+import featuresService from '../common/services/features.service';
+import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
+import { useLegacyStores } from '../common/hooks/use-stores';
+import { TLegacyStores } from 'src/common/contexts';
 
-const Tab = createBottomTabNavigator();
+export type TabParamList = {
+  Newsfeed: {};
+  Discovery: {};
+  Notifications: {};
+  Capture: {};
+  Menu: {};
+};
+
+const Tab = createBottomTabNavigator<TabParamList>();
 
 /**
  * Main tabs
  * @param {Object} props
  */
 const Tabs = observer(function ({ navigation }) {
+  const { user } = useLegacyStores();
   const isIOS = Platform.OS === 'ios';
 
   const navToCapture = useCallback(() => navigation.jumpTo('Capture'), [
@@ -80,9 +92,9 @@ const Tabs = observer(function ({ navigation }) {
                       uri:
                         MINDS_CDN_URI +
                         'icon/' +
-                        getStores().user.me.guid +
+                        user.me.guid +
                         '/medium/' +
-                        getStores().user.me.icontime,
+                        user.me.icontime,
                     }}
                     width={34}
                     height={34}
@@ -122,7 +134,11 @@ const Tabs = observer(function ({ navigation }) {
       />
       <Tab.Screen
         name="Discovery"
-        component={DiscoveryScreen}
+        component={
+          featuresService.has('mobile-discovery')
+            ? DiscoveryV2Screen
+            : DiscoveryScreen
+        }
         options={{ tabBarTestID: 'Discovery tab button' }}
       />
       <Tab.Screen

@@ -10,9 +10,15 @@ import SearchResult from './SearchResultComponent';
 
 import Modal from 'react-native-modal';
 import ThemedStyles from '../styles/ThemedStyles';
+import UserStore from '../auth/UserStore';
+
+interface Props {
+  user: UserStore;
+  navigation: any;
+}
 
 @observer
-class SearchComponent extends Component {
+class SearchComponent extends Component<Props> {
   state = {
     searchText: '',
   };
@@ -39,7 +45,7 @@ class SearchComponent extends Component {
   /**
    * set search text
    */
-  search = searchText => {
+  search = (searchText) => {
     this.setState({ searchText });
     this.searchResult.input(searchText);
   };
@@ -48,7 +54,7 @@ class SearchComponent extends Component {
     this.searchResult.searchDiscovery();
   };
 
-  handleSearchResultRef = ref => (this.searchResult = ref);
+  handleSearchResultRef = (ref) => (this.searchResult = ref);
 
   render() {
     const CS = ThemedStyles.style;
@@ -56,7 +62,7 @@ class SearchComponent extends Component {
     const border = {
       borderBottomColor: ThemedStyles.getColor('primary_border'),
       borderBottomWidth: 1,
-    }
+    };
 
     return (
       <View>

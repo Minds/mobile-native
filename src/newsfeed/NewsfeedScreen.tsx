@@ -81,7 +81,7 @@ class NewsfeedScreen extends Component<PropsType> {
     await this.props.newsfeed.feedStore.fetchRemoteOrLocal();
 
     // load groups after the feed
-    await this.groupsBar?.initialLoad();
+    if (this.groupsBar) await this.groupsBar.initialLoad();
     // load discovery after the feed is loaded
     this.props.discovery.fetch();
 

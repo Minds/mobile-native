@@ -23,9 +23,7 @@ import { Provider, observer } from 'mobx-react';
 import RNBootSplash from 'react-native-bootsplash';
 import FlashMessage from 'react-native-flash-message';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import {
-  NavigationContainer,
-} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 
 import NavigationService, {
@@ -61,6 +59,7 @@ import apiService from './src/common/services/api.service';
 import boostedContentService from './src/common/services/boosted-content.service';
 import translationService from './src/common/services/translation.service';
 import ThemedStyles from './src/styles/ThemedStyles';
+import { StoresProvider } from './src/common/hooks/use-stores';
 
 const stores = getStores();
 let deepLinkUrl = '';
@@ -81,8 +80,8 @@ const mindsSettingsPromise = mindsService.getSettings();
 sessionService.onLogin(async () => {
   const user = sessionService.getUser();
 
-  Sentry.configureScope(scope => {
-    scope.setUser({id: user.guid});
+  Sentry.configureScope((scope) => {
+    scope.setUser({ id: user.guid });
   });
 
   logService.info('[App] Getting minds settings and onboarding progress');
@@ -96,15 +95,20 @@ sessionService.onLogin(async () => {
 
   pushService.registerToken();
 
-  logService.info('[App] navigating to initial screen', sessionService.initialScreen);
+  logService.info(
+    '[App] navigating to initial screen',
+    sessionService.initialScreen,
+  );
 
   // hide splash
   RNBootSplash.hide({ duration: 250 });
 
-  NavigationService.navigate('App', { screen: sessionService.initialScreen});
+  NavigationService.navigate('App', { screen: sessionService.initialScreen });
 
   // check onboarding progress and navigate if necessary
-  getStores().onboarding.getProgress(sessionService.initialScreen !== 'OnboardingScreenNew');
+  getStores().onboarding.getProgress(
+    sessionService.initialScreen !== 'OnboardingScreenNew',
+  );
 
   // check update
   if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
@@ -117,7 +121,7 @@ sessionService.onLogin(async () => {
   try {
     // handle deep link (if the app is opened by one)
     if (deepLinkUrl) {
-      deeplinkService.navigate('App', { screen: deepLinkUrl});
+      deeplinkService.navigate('App', { screen: deepLinkUrl });
       deepLinkUrl = '';
     }
 
@@ -134,7 +138,6 @@ sessionService.onLogin(async () => {
       feedsStorage.removeOlderThan(30);
       commentStorageService.removeOlderThan(30);
     }, 30000);
-
   } catch (err) {
     logService.exception(err);
   }
@@ -164,7 +167,7 @@ if (
 }
 
 type State = {
-  appState: string,
+  appState: string;
 };
 
 type Props = {};
@@ -173,7 +176,7 @@ type Props = {};
  * App
  */
 @observer
-class App extends Component<Props, State>{
+class App extends Component<Props, State> {
   /**
    * State
    */
@@ -186,26 +189,36 @@ class App extends Component<Props, State>{
    */
   handleAppStateChange = (nextState) => {
     // if the app turns active we check for shared
-    if (this.state.appState && this.state.appState.match(/inactive|background/) && nextState === 'active') {
+    if (
+      this.state.appState &&
+      this.state.appState.match(/inactive|background/) &&
+      nextState === 'active'
+    ) {
       receiveShare.handle();
     }
-    this.setState({appState: nextState})
-  }
+    this.setState({ appState: nextState });
+  };
 
   constructor(props) {
     super(props);
     let oldRender = Text.render;
     Text.render = function (...args) {
-        let origin = oldRender.call(this, ...args);
-        return React.cloneElement(origin, {
-            style: [ThemedStyles.style.colorPrimaryText, { fontFamily: 'Roboto'}, origin.props.style]
-        });
+      let origin = oldRender.call(this, ...args);
+      return React.cloneElement(origin, {
+        style: [
+          ThemedStyles.style.colorPrimaryText,
+          { fontFamily: 'Roboto' },
+          origin.props.style,
+        ],
+      });
     };
 
     if (!RefreshControl.defaultProps) {
       RefreshControl.defaultProps = {};
     }
-    RefreshControl.defaultProps.tintColor = ThemedStyles.getColor('icon_active');
+    RefreshControl.defaultProps.tintColor = ThemedStyles.getColor(
+      'icon_active',
+    );
     RefreshControl.defaultProps.colors = [ThemedStyles.getColor('icon_active')];
   }
 
@@ -222,11 +235,14 @@ class App extends Component<Props, State>{
   async appInit() {
     try {
       // load app setting before start
-      const results = await Promise.all([settingsStore.init(), Linking.getInitialURL()]);
+      const results = await Promise.all([
+        settingsStore.init(),
+        Linking.getInitialURL(),
+      ]);
 
       deepLinkUrl = results[1];
 
-      BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+      BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
       Linking.addEventListener('url', this.handleOpenURL);
       AppState.addEventListener('change', this.handleAppStateChange);
 
@@ -248,8 +264,11 @@ class App extends Component<Props, State>{
       Alert.alert(
         'Error',
         'There was an error initializing the app.\n Do you want to copy the stack trace.',
-        [{ text: 'Yes', onPress: () => Clipboard.setString(err.stack)}, { text: 'No'}],
-        { cancelable: false }
+        [
+          { text: 'Yes', onPress: () => Clipboard.setString(err.stack) },
+          { text: 'No' },
+        ],
+        { cancelable: false },
       );
     }
   }
@@ -268,12 +287,18 @@ class App extends Component<Props, State>{
         const params = getMaches(deepLinkUrl.replace(/%3B/g, ';'), regex);
 
         //sessionService.logout();
-        NavigationService.navigate('Forgot', {username: params[1], code: params[2]});
+        NavigationService.navigate('Forgot', {
+          username: params[1],
+          code: params[2],
+        });
         deepLinkUrl = '';
         return true;
       }
     } catch (err) {
-      logService.exception('[App] Error checking for password reset deep link', err);
+      logService.exception(
+        '[App] Error checking for password reset deep link',
+        err,
+      );
     }
     return false;
   }
@@ -282,7 +307,7 @@ class App extends Component<Props, State>{
    * On component will unmount
    */
   componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
     Linking.removeEventListener('url', this.handleOpenURL);
     AppState.removeEventListener('change', this.handleAppStateChange);
   }
@@ -328,27 +353,39 @@ class App extends Component<Props, State>{
 
     const isLoggedIn = sessionService.userLoggedIn;
 
-    const statusBarStyle = ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
+    const statusBarStyle =
+      ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
 
     const app = (
       <SafeAreaProvider>
         <NavigationContainer
-          ref={navigatorRef => setTopLevelNavigator(navigatorRef)}
-          theme={ThemedStyles.navTheme}
-        >
-          <Provider key="app" {...stores}>
-            <ErrorBoundary message="An error occurred" containerStyle={CS.centered}>
-              <StatusBar barStyle={statusBarStyle} backgroundColor={ThemedStyles.getColor('secondary_background')} />
-              <NavigationStack key={ThemedStyles.theme} isLoggedIn={isLoggedIn}/>
-              <FlashMessage renderCustomContent={this.renderNotification} />
-            </ErrorBoundary>
-          </Provider>
+          ref={(navigatorRef) => setTopLevelNavigator(navigatorRef)}
+          theme={ThemedStyles.navTheme}>
+          <StoresProvider>
+            <Provider key="app" {...stores}>
+              <ErrorBoundary
+                message="An error occurred"
+                containerStyle={CS.centered}>
+                <StatusBar
+                  barStyle={statusBarStyle}
+                  backgroundColor={ThemedStyles.getColor(
+                    'secondary_background',
+                  )}
+                />
+                <NavigationStack
+                  key={ThemedStyles.theme}
+                  isLoggedIn={isLoggedIn}
+                />
+                <FlashMessage renderCustomContent={this.renderNotification} />
+              </ErrorBoundary>
+            </Provider>
+          </StoresProvider>
         </NavigationContainer>
       </SafeAreaProvider>
     );
 
     const keychainModal = (
-      <KeychainModalScreen key="keychainModal" keychain={ stores.keychain } />
+      <KeychainModalScreen key="keychainModal" keychain={stores.keychain} />
     );
 
     const blockchainTransactionModal = null;
