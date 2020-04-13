@@ -12,7 +12,7 @@ import useComposeStore from './useComposeStore';
 import MediaConfirm from './MediaConfirm';
 import i18nService from '../common/services/i18n.service';
 import { CommonActions, useIsFocused } from '@react-navigation/native';
-import { useStores } from '../../AppStores';
+import { useLegacyStores } from '../common/hooks/use-stores';
 
 /**
  * Compose Screen
@@ -21,7 +21,7 @@ import { useStores } from '../../AppStores';
 export default observer(function (props) {
   const store = useComposeStore(props);
   const insets = useSafeArea();
-  const stores = useStores();
+  const stores = useLegacyStores();
   const focused = useIsFocused();
 
   /**

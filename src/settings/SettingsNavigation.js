@@ -24,15 +24,14 @@ import ReportedContentScreen from '../report/ReportedContentScreen';
 import i18n from '../common/services/i18n.service';
 import NSFWScreen from './screens/NSFWScreen';
 import AppInfoScreen from './screens/AppInfoScreen';
-import { useStores } from '../../AppStores';
+import { useLegacyStores } from '../common/hooks/use-stores';
 
 const MenuStackNav = createNativeStackNavigator();
 
 const hideHeader = { headerShown: false };
 
-const MenuStack = function({ navigation, route }) {
-
-  const { user } = useStores();
+const MenuStack = function ({ navigation, route }) {
+  const { user } = useLegacyStores();
   /**
    * Add tabPress event to navigate to main when user tap in menu tab
    */
@@ -83,78 +82,76 @@ const MenuStack = function({ navigation, route }) {
         component={OtherScreen}
         options={{ title: i18n.t('settings.other') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="SettingsEmail"
         component={EmailScreen}
         options={{ title: i18n.t('settings.accountOptions.1') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="SettingsPassword"
         component={PasswordScreenNew}
         options={{ title: i18n.t('settings.accountOptions.3') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="SettingsNotifications"
         component={NotificationsSettingsScreen}
         options={{ title: i18n.t('settings.pushNotification') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="BlockedChannels"
         component={BlockedChannelsScreen}
         options={{ title: i18n.t('settings.blockedChannels') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="DeleteChannel"
         component={DeleteChannelScreenNew}
         options={{ title: i18n.t('settings.otherOptions.c2') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="DeactivateChannel"
         component={DeactivateChannelScreen}
         options={{ title: i18n.t('settings.deactivate') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="LanguageScreen"
         component={LanguageScreen}
         options={{ title: i18n.t('settings.accountOptions.2') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="NSFWScreen"
         component={NSFWScreen}
         options={{ title: i18n.t('settings.accountOptions.5') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="TFAScreen"
         component={TFAScreen}
         options={{ title: i18n.t('settings.TFA') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="DevicesScreen"
         component={DevicesScreen}
         options={{ title: i18n.t('settings.securityOptions.2') }}
       />
-      {
-        Platform.OS !== 'ios' && ( 
-        <MenuStackNav.Screen 
+      {Platform.OS !== 'ios' && (
+        <MenuStackNav.Screen
           name="PaymentMethods"
           component={PaymentMethods}
           options={{ title: i18n.t('settings.billingOptions.1') }}
-        />)
-      }
-      {
-        Platform.OS !== 'ios' && ( 
-        <MenuStackNav.Screen 
+        />
+      )}
+      {Platform.OS !== 'ios' && (
+        <MenuStackNav.Screen
           name="RecurringPayments"
           component={RecurringPayments}
           options={{ title: i18n.t('settings.billingOptions.2') }}
-        />)
-      }
-      <MenuStackNav.Screen 
+        />
+      )}
+      <MenuStackNav.Screen
         name="ReportedContent"
         component={ReportedContentScreen}
         options={{ title: i18n.t('settings.otherOptions.a1') }}
       />
-      <MenuStackNav.Screen 
+      <MenuStackNav.Screen
         name="AppInfo"
         component={AppInfoScreen}
         options={hideHeader}

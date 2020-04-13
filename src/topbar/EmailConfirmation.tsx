@@ -6,13 +6,18 @@ import emailConfirmationService from '../common/services/email-confirmation.serv
 import { CommonStyle as CS } from '../styles/Common';
 import { observer, inject } from 'mobx-react';
 import apiService from '../common/services/api.service';
+import UserStore from '../auth/UserStore';
+
+interface Props {
+  user: UserStore;
+}
 
 /**
  * Email Confirmation Message
  */
 @inject('user')
 @observer
-class EmailConfirmation extends Component {
+class EmailConfirmation extends Component<Props> {
   /**
    * Send confirmation email
    */

@@ -1,7 +1,9 @@
-//@ts-nocheck
 import React, { Fragment } from 'react';
 
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+} from 'react-native-screens/native-stack';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
@@ -36,6 +38,7 @@ import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
 import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
+import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
 import Gathering from '../gathering/Gathering';
 import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
@@ -49,8 +52,14 @@ import ScheduleSelector from '../compose/ScheduleSelector';
 import MonetizeSelector from '../compose/MonetizeSelector';
 import LicenseSelector from '../compose/LicenseSelector';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import {
+  RootStackParamList,
+  AuthStackParamList,
+  AppStackParamList,
+  MainSwiperParamList,
+} from './NavigationTypes';
 
-const hideHeader = { headerShown: false };
+const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
 const discoveryOptions = ({ route }) => ({ title: route.params.title || '' });
 const captureOptions = {
@@ -63,10 +72,10 @@ const activityOptions = ({ route }) => ({
   title: route.params.entity ? route.params.entity.ownerObj.name : '',
 });
 
-const AppStackNav = createNativeStackNavigator();
-const AuthStackNav = createNativeStackNavigator();
-const RootStackNav = createNativeStackNavigator();
-const MainSwiper = createMaterialTopTabNavigator();
+const AppStackNav = createNativeStackNavigator<AppStackParamList>();
+const AuthStackNav = createNativeStackNavigator<AuthStackParamList>();
+const RootStackNav = createNativeStackNavigator<RootStackParamList>();
+const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
 
 // Main navigation swiper
 const MainSwiperScreen = () => {
@@ -136,7 +145,7 @@ const AppStack = function (props) {
       <AppStackNav.Screen
         name="Boost"
         component={BoostScreen}
-        options={{ gesturesEnabled: false }}
+        options={{ gestureEnabled: false }}
       />
       <AppStackNav.Screen
         name="Notifications"
@@ -158,6 +167,10 @@ const AppStack = function (props) {
         name="DiscoveryFeed"
         component={DiscoveryFeedScreen}
         options={discoveryOptions}
+      />
+      <AppStackNav.Screen
+        name="DiscoverySearch"
+        component={DiscoverySearchScreen}
       />
       <AppStackNav.Screen name="Subscribers" component={ChannelSubscribers} />
       <AppStackNav.Screen
@@ -222,7 +235,7 @@ const AppStack = function (props) {
       <AppStackNav.Screen
         name="BlockchainWalletModal"
         component={BlockchainWalletModalScreen}
-        options={{ gesturesEnabled: false }}
+        options={{ gestureEnabled: false }}
       />
       <AppStackNav.Screen
         name="BlockchainWalletImport"
@@ -290,7 +303,7 @@ const RootStack = function (props) {
   return (
     <RootStackNav.Navigator
       initialRouteName={initial}
-      mode="modal"
+      // mode="modal"
       screenOptions={{
         headerShown: false,
         ...ThemedStyles.defaultScreenOptions,
