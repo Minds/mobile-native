@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import {
   StyleSheet,
@@ -26,7 +26,6 @@ import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
-import { getStores } from '../../AppStores';
 import { GOOGLE_PLAY_STORE } from '../config/Config';
 import ErrorLoading from '../common/components/ErrorLoading';
 import GroupsListItem from '../groups/GroupsListItem';
@@ -61,7 +60,7 @@ class DiscoveryScreen extends Component {
 
   refreshDiscovery = (e) => {
     if (this.props.navigation.isFocused()) {
-      stores.discovery.reload();
+      this.props.discovery.reload();
       e && e.preventDefault();
     }
   };
