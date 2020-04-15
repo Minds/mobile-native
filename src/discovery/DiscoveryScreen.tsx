@@ -234,7 +234,7 @@ class DiscoveryScreen extends Component {
         keyExtractor={this.keyExtractor}
         onEndReached={this.loadMore}
         initialNumToRender={this.cols === 3 ? 12 : 3}
-        style={[ThemedStyles.style.backgroundSecondary, CS.flexContainer]}
+        style={ThemedStyles.style.backgroundSecondary}
         numColumns={this.cols}
         horizontal={false}
         windowSize={9}
@@ -525,7 +525,11 @@ class DiscoveryScreen extends Component {
 
     const headerBody =
       filtersStore.type != 'lastchannels' ? (
-        <View style={[ThemedStyles.style.backgroundSecondary]}>
+        <View
+          style={[
+            ThemedStyles.style.backgroundSecondary,
+            ThemedStyles.style.marginBottom,
+          ]}>
           {(filtersStore.type === 'channels' || !GOOGLE_PLAY_STORE) && (
             <SearchView
               placeholder={i18n.t('discovery.search')}
