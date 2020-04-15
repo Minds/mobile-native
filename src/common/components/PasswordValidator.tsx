@@ -4,8 +4,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { View, Text } from 'react-native';
 import ThemedStyle from '../../styles/ThemedStyles';
 import validatePassword from '../helpers/validatePassword';
+import i18n from '../services/i18n.service';
 
-const checked = value => {
+const checked = (value) => {
   if (value) {
     return (
       <Icon
@@ -25,7 +26,7 @@ const checked = value => {
  * Password validation component
  * @param {Object} props
  */
-export default function(props) {
+export default function (props) {
   const theme = ThemedStyle.style;
 
   const val = validatePassword(props.password);
@@ -35,29 +36,31 @@ export default function(props) {
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         {checked(val.lengthCheck)}
         <Text style={[theme.fontL, theme.paddingLeft2x]}>
-          8 or more characters
+          {i18n.t('settings.passwordFormatMinCharacters')}
         </Text>
       </View>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         {checked(val.specialCharCheck)}
         <Text style={[theme.fontL, theme.paddingLeft2x]}>
-          At least 1 special character
+          {i18n.t('settings.passwordFormatSpecialCharacters')}
         </Text>
       </View>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         {checked(val.mixedCaseCheck)}
-        <Text style={[theme.fontL, theme.paddingLeft2x]}>Mixed case</Text>
+        <Text style={[theme.fontL, theme.paddingLeft2x]}>
+          {i18n.t('settings.passwordFormatMixedCase')}
+        </Text>
       </View>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         {checked(val.numbersCheck)}
         <Text style={[theme.fontL, theme.paddingLeft2x]}>
-          At least 1 number
+          {i18n.t('settings.passwordFormatNumber')}
         </Text>
       </View>
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         {checked(val.spacesCheck)}
         <Text style={[theme.fontL, theme.paddingLeft2x]}>
-          Doesn't have spaces
+          {i18n.t('settings.passwordFormatNoSpaces')}
         </Text>
       </View>
     </View>
