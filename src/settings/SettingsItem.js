@@ -6,22 +6,35 @@ import ThemedStyles from '../styles/ThemedStyles';
 import { Icon } from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function ({ item, i }) {
-  const CS = ThemedStyles.style;
+  const theme = ThemedStyles.style;
+
+  // ListItem Container Style
+  const containerStyle = [
+    theme.backgroundSecondary,
+    theme.borderTopHair,
+    theme.borderBottomHair,
+    theme.borderPrimary,
+    styles.containerPadding,
+  ];
+
+  // ListItem Title Style
+  const titleStyle = [
+    theme.colorSecondaryText,
+    { fontSize: 17 },
+    theme.paddingLeft,
+  ];
+
+  // ListItem Chevron Style
+  const chevronStyle = { ...theme.colorIcon, size: 24, ...item.icon };
 
   return (
     <ListItem
       key={i}
       title={item.title}
       onPress={item.onPress}
-      containerStyle={[
-        CS.backgroundSecondary,
-        CS.borderTopHair,
-        CS.borderBottomHair,
-        CS.borderPrimary,
-        styles.containerPadding,
-      ]}
-      titleStyle={[CS.colorSecondaryText, { fontSize: 17 }, CS.paddingLeft]}
-      chevron={{ ...CS.colorIcon, size: 24 }}
+      containerStyle={containerStyle}
+      titleStyle={titleStyle}
+      chevron={chevronStyle}
     />
   );
 }

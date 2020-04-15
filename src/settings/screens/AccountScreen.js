@@ -10,8 +10,6 @@ export default function () {
   const CS = ThemedStyles.style;
   const navigation = useNavigation();
 
-  const navToOther = useCallback(() => navigation.push('Other'), [navigation]);
-
   const navToEmailScreen = useCallback(() => navigation.push('SettingsEmail'), [
     navigation,
   ]);
@@ -35,7 +33,7 @@ export default function () {
     navigation,
   ]);
 
-  const keyExtractor = useCallback((item, index) => index.toString());
+  const keyExtractor = (item, index) => index.toString();
 
   const list = [
     {
