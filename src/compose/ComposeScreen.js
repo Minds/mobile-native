@@ -11,7 +11,11 @@ import Poster from './Poster';
 import useComposeStore from './useComposeStore';
 import MediaConfirm from './MediaConfirm';
 import i18nService from '../common/services/i18n.service';
-import { CommonActions, useIsFocused } from '@react-navigation/native';
+import {
+  CommonActions,
+  useIsFocused,
+  useFocusEffect,
+} from '@react-navigation/native';
 import { useLegacyStores } from '../common/hooks/use-stores';
 
 /**
@@ -23,6 +27,9 @@ export default observer(function (props) {
   const insets = useSafeArea();
   const stores = useLegacyStores();
   const focused = useIsFocused();
+
+  // on focus
+  useFocusEffect(store.onScreenFocused);
 
   /**
    * On post

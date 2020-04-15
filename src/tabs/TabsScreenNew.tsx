@@ -113,7 +113,7 @@ const Tabs = observer(function ({ navigation }) {
               break;
             case 'Notifications':
               return <NotificationIcon tintColor={color} size={iconsize} />;
-            case 'Capture':
+            case 'CaptureTab':
               iconName = 'plus';
               iconsize = 64;
               break;
@@ -142,7 +142,7 @@ const Tabs = observer(function ({ navigation }) {
         options={{ tabBarTestID: 'Discovery tab button' }}
       />
       <Tab.Screen
-        name="Capture"
+        name="CaptureTab"
         component={View}
         options={{
           tabBarTestID: 'Capture tab button',
