@@ -28,7 +28,7 @@ class ChannelSubscribers extends Component {
   /**
    * On component will mount
    */
-  componentWillMount() {
+  componentDidMount() {
     this._loadData();
   }
 
@@ -44,6 +44,12 @@ class ChannelSubscribers extends Component {
    */
   _loadData() {
     const params = this.props.route.params;
+    if (params.filter) {
+      this.props.channelSubscribersStore.setFilter(params.filter)
+    } else {
+      this.props.channelSubscribersStore.setFilter('subscribers')
+    }
+
     if (params.guid) {
       this.props.channelSubscribersStore.setGuid(params.guid);
     }

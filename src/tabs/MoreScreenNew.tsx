@@ -50,6 +50,12 @@ class MoreScreenNew extends Component {
       guid: this.props.user.me.guid,
     });
 
+  navToSubscriptions = () =>
+    this.props.navigation.push('Subscribers', {
+      guid: this.props.user.me.guid,
+      filter: 'subscriptions',
+    });
+
   setDarkMode = () => {
     if (ThemedStyles.theme) {
       ThemedStyles.setLight();
@@ -62,20 +68,20 @@ class MoreScreenNew extends Component {
    * Return Options List ready to be rendered
    */
   getOptionsList = () => {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
 
     let list = [
       /* Removed as per request in https://gitlab.com/minds/mobile-native/issues/1886
       {
         name: i18n.t('moreScreen.helpSupport'),
-        icon: (<Icon name='help-outline' size={ICON_SIZE} style={ CS.colorIcon }/>),
+        icon: (<Icon name='help-outline' size={ICON_SIZE} style={ theme.colorIcon }/>),
         onPress: () => {
           this.props.navigation.push('GroupView', { guid: '100000000000000681'});
         }
       },
       {
         name: i18n.t('moreScreen.invite'),
-        icon: (<Icon name='share' size={ICON_SIZE} style={ CS.colorIcon }/>),
+        icon: (<Icon name='share' size={ICON_SIZE} style={ theme.colorIcon }/>),
         onPress: () => {
           shareService.invite(this.props.user.me.guid);
         }
@@ -87,7 +93,7 @@ class MoreScreenNew extends Component {
           <IconFa
             name="users"
             size={ICON_SIZE - 4}
-            style={[CS.colorIcon, styles.icon]}
+            style={[theme.colorIcon, styles.icon]}
           />
         ),
         onPress: () => {
@@ -105,7 +111,7 @@ class MoreScreenNew extends Component {
             <IconFa
               name="coins"
               size={ICON_SIZE}
-              style={[CS.colorIcon, styles.icon]}
+              style={[theme.colorIcon, styles.icon]}
             />
           ),
           onPress: () => {
@@ -118,7 +124,7 @@ class MoreScreenNew extends Component {
             <Icon
               name="trending-up"
               size={ICON_SIZE}
-              style={[CS.colorIcon, styles.icon]}
+              style={[theme.colorIcon, styles.icon]}
             />
           ),
           onPress: () => {
@@ -138,7 +144,7 @@ class MoreScreenNew extends Component {
           <Icon
             name="settings"
             size={ICON_SIZE}
-            style={[CS.colorIcon, styles.icon]}
+            style={[theme.colorIcon, styles.icon]}
           />
         ),
         onPress: () => {
@@ -162,7 +168,7 @@ class MoreScreenNew extends Component {
           <IconCmp
             name={icon}
             size={ICON_SIZE}
-            style={[CS.colorIcon, styles.icon]}
+            style={[theme.colorIcon, styles.icon]}
           />
         ),
         onPress: this.setDarkMode,
@@ -176,39 +182,53 @@ class MoreScreenNew extends Component {
     const avatar = this.getAvatar(),
       channel = this.props.user.me;
 
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
+
+    const subscribersStyle = [
+      theme.subTitleText,
+      theme.colorTertiaryText,
+      theme.fontNormal,
+      theme.marginTop3x,
+    ]
 
     return (
-      <SafeAreaView style={[CS.flexContainer, CS.backgroundPrimary]}>
+      <SafeAreaView style={[theme.flexContainer, theme.backgroundPrimary]}>
         <ScrollView
-          style={[CS.flexContainer, CS.backgroundPrimary, CS.marginTop11x]}>
+          style={[
+            theme.flexContainer,
+            theme.backgroundPrimary,
+            theme.marginTop11x,
+          ]}>
           <View style={styles.headerContainer}>
             <TouchableOpacity onPress={this.navToChannel}>
               <Image source={avatar} style={styles.wrappedAvatar} />
             </TouchableOpacity>
             <Text
-              style={[CS.titleText, CS.colorPrimaryText, CS.marginTop]}
+              style={[theme.titleText, theme.colorPrimaryText, theme.marginTop]}
               onPress={this.navToChannel}>
               {channel.name}
             </Text>
             <Text
               onPress={this.navToChannel}
-              style={[CS.subTitleText, CS.colorSecondaryText, CS.fontNormal]}>
+              style={[
+                theme.subTitleText,
+                theme.colorSecondaryText,
+                theme.fontNormal,
+              ]}>
               @{channel.username}
             </Text>
-            <Text
-              onPress={this.navToSubscribers}
-              style={[
-                CS.subTitleText,
-                CS.colorTertiaryText,
-                CS.fontNormal,
-                CS.marginTop3x,
-              ]}>
-              {`${abbrev(channel.subscribers_count, 0)} ${i18n.t(
-                'subscribers',
-              )}   ·   ${abbrev(channel.subscriptions_count, 0)} ${i18n.t(
-                'subscriptions',
-              )}`}
+            <Text style={subscribersStyle}>
+              <Text onPress={this.navToSubscribers} style={subscribersStyle}>
+                {`${abbrev(channel.subscribers_count, 0)} ${i18n.t(
+                  'subscribers',
+                )}`}
+              </Text>
+              {'   ·   '}
+              <Text onPress={this.navToSubscriptions} style={subscribersStyle}>
+                {`${abbrev(channel.subscriptions_count, 0)} ${i18n.t(
+                  'subscriptions',
+                )}`}
+              </Text>
             </Text>
           </View>
           <View style={styles.body}>
@@ -219,7 +239,7 @@ class MoreScreenNew extends Component {
                 title={l.name}
                 titleStyle={[
                   styles.menuText,
-                  l.textColor || CS.colorSecondaryText,
+                  l.textColor || theme.colorSecondaryText,
                 ]}
                 containerStyle={styles.listItem}
                 switchButton={l.switchButton}
