@@ -24,6 +24,7 @@ import { ComponentsStyle } from '../styles/Components';
 import ErrorLoading from '../common/components/ErrorLoading';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 /**
  * Messenger Conversarion List Screen
@@ -123,12 +124,12 @@ class MessengerScreen extends Component {
     const footer = this.getFooter();
 
     return (
-      <View style={[styles.container, theme.backgroundSecondary]}>
+      <SafeAreaView style={[styles.container, theme.backgroundSecondary]}>
         <SearchView
           placeholder={i18n.t('discovery.search')}
           onChangeText={this.searchChange}
           iconRight={iconRight}
-          containerStyle={[theme.backgroundPrimary]}
+          containerStyle={[theme.backgroundPrimary, theme.marginTop2x]}
           iconRightOnPress={this.onLogoutPress}
         />
         {loadingCmp}
@@ -145,7 +146,7 @@ class MessengerScreen extends Component {
           ListEmptyComponent={empty}
           testID="MessengerList"
         />
-      </View>
+      </SafeAreaView>
     );
   }
 
@@ -224,7 +225,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 5,
     paddingRight: 5,
-    paddingTop: 5,
   },
   body: {
     marginLeft: 8,
