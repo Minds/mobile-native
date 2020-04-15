@@ -731,7 +731,19 @@ exports[`channel subscribers component should render correctly 1`] = `
               "loadList": [MockFunction],
               "refresh": [MockFunction],
               "reset": [MockFunction],
-              "setFilter": [MockFunction],
+              "setFilter": [MockFunction] {
+                "calls": Array [
+                  Array [
+                    "subscribers",
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                ],
+              },
               "setGuid": [MockFunction] {
                 "calls": Array [
                   Array [
@@ -1103,7 +1115,19 @@ exports[`channel subscribers component should render correctly 1`] = `
               "loadList": [MockFunction],
               "refresh": [MockFunction],
               "reset": [MockFunction],
-              "setFilter": [MockFunction],
+              "setFilter": [MockFunction] {
+                "calls": Array [
+                  Array [
+                    "subscribers",
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                ],
+              },
               "setGuid": [MockFunction] {
                 "calls": Array [
                   Array [
@@ -1475,7 +1499,19 @@ exports[`channel subscribers component should render correctly 1`] = `
               "loadList": [MockFunction],
               "refresh": [MockFunction],
               "reset": [MockFunction],
-              "setFilter": [MockFunction],
+              "setFilter": [MockFunction] {
+                "calls": Array [
+                  Array [
+                    "subscribers",
+                  ],
+                ],
+                "results": Array [
+                  Object {
+                    "type": "return",
+                    "value": undefined,
+                  },
+                ],
+              },
               "setGuid": [MockFunction] {
                 "calls": Array [
                   Array [
