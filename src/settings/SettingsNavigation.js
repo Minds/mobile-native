@@ -105,12 +105,10 @@ const MenuStack = function ({ navigation, route }) {
       <MenuStackNav.Screen
         name="DeleteChannel"
         component={DeleteChannelScreenNew}
-        options={{ title: i18n.t('settings.otherOptions.c2') }}
       />
       <MenuStackNav.Screen
         name="DeactivateChannel"
         component={DeactivateChannelScreen}
-        options={{ title: i18n.t('settings.deactivate') }}
       />
       <MenuStackNav.Screen
         name="LanguageScreen"
