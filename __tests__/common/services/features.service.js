@@ -7,7 +7,6 @@ describe('Feature service', () => {
   it('should return features', async () => {
     let features = {
       crypto: true,
-      'onboarding-december-2019': true,
       compose: true,
     };
     expect(service.features).toEqual(features);

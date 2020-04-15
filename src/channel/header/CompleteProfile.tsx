@@ -1,41 +1,45 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
-
-import {
-  Text,
-  View,
-  ActivityIndicator,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useCallback } from 'react';
+import { Text, TouchableOpacity } from 'react-native';
 import * as Progress from 'react-native-progress';
-
-import { CommonStyle as CS } from '../../styles/Common';
 import colors from '../../styles/Colors';
 import navigationService from '../../navigation/NavigationService';
-import i18nService from '../../common/services/i18n.service';
+import i18n from '../../common/services/i18n.service';
 import featuresService from '../../common/services/features.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * Complete Profile
  */
-export default class CompleteProfile extends Component {
+export default function ({ progress }) {
+  const theme = ThemedStyles.style;
+  const textStyle = [
+    theme.fontS,
+    theme.paddingTop2x,
+    theme.textCenter,
+    theme.colorSecondaryText,
+  ];
 
-  /**
-   * Render
-   */
-  render() {
-    let onboarding = featuresService.has('onboarding-december-2019')
-      ? 'OnboardingScreenNew'
-      : 'OnboardingScreen';
+  const getProgressBar = useCallback(() => {
+    const percent = {
+      amount: <Text style={theme.bold}>{Math.round(progress * 100)}%</Text>,
+    };
     return (
-      <TouchableOpacity style={[CS.padding2x]} onPress={() => navigationService.push(onboarding)}>
-        <View>
-          <Progress.Bar progress={this.props.progress} width={null} color={colors.greyed} />
-          <Text style={[CS.fontS, CS.paddingTop2x, CS.textCenter, CS.colorMedium]}>You have completed <Text style={CS.bold}>{Math.round(this.props.progress * 100)}%</Text> of your profile </Text>
-        </View>
+      <TouchableOpacity
+        style={[theme.padding2x, theme.backgroundSecondary]}
+        onPress={() => navigationService.push(onboarding)}>
+        <Progress.Bar progress={progress} width={null} color={colors.greyed} />
+        <Text style={textStyle}>
+          {progress < 1
+            ? i18n.to('onboarding.haveCompleted', null, percent)
+            : i18n.t('onboarding.editProfile')}
+        </Text>
       </TouchableOpacity>
     );
-  }
+  }, []);
+
+  let onboarding = 'OnboardingScreen';
+
+  return getProgressBar();
+
 }

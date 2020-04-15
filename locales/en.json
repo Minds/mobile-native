@@ -639,7 +639,9 @@
     "numberConfirmed":"Your number has beed validated",
     "phoneNumberTooltip":"Your mobile number may be used for additional account security, unique identification and to help your friends find you. This data is private and encrypted.",
     "dateofBirthTooltip":"Please enter your birth date to confirm your age and help us improve our recommendations.",
-    "locationTooltip":"Please enter your city to help us connect you with channels in your area. We do not track your exact location."
+    "locationTooltip":"Please enter your city to help us connect you with channels in your area. We do not track your exact location.",
+    "haveCompleted":"Your profile is &{amount}& complete",
+    "editProfile": "Edit your profile"
   },
   "wallet": {
     "inviteFriend":"Invite a Friend",
