@@ -516,6 +516,8 @@
     "sessionsOpened":"You currently have {{amount}} opened sessions",
     "closeSessions":"CLOSE ALL SESSIONS",
     "subscriptionListEmpty":"You don't have any recurring subscription",
+    "enterDark":"Enter Dark Mode",
+    "enterLight":"Enter Light Mode",
     "reportedContent": {
       "reviewPending":"REVIEW PENDING",
       "reviewAppealed":"APPEALED",

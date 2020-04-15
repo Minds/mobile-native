@@ -4,26 +4,29 @@ import { View, FlatList, Text } from 'react-native';
 import SettingsItem from '../SettingsItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import authService from '../../auth/AuthService';
 
-export default function({ navigation }) {
-  const CS = ThemedStyles.style;
+export default function ({ navigation }) {
+  const theme = ThemedStyles.style;
 
-  const navToBlockedChannels = useCallback(() => navigation.push('BlockedChannels'), [
-    navigation,
-  ]);
+  const navToBlockedChannels = useCallback(
+    () => navigation.push('BlockedChannels'),
+    [navigation],
+  );
 
-  const navToReportedContent = useCallback(() => navigation.push('ReportedContent'), [
-    navigation,
-  ]);
+  const navToReportedContent = useCallback(
+    () => navigation.push('ReportedContent'),
+    [navigation],
+  );
 
-  const navToDeleteChannel = useCallback(() => navigation.push('DeleteChannel'), [
-    navigation,
-  ]);
+  const navToDeleteChannel = useCallback(
+    () => navigation.push('DeleteChannel'),
+    [navigation],
+  );
 
-  const navToDeactivateChannel = useCallback(() => navigation.push('DeactivateChannel'), [
-    navigation,
-  ]);
+  const navToDeactivateChannel = useCallback(
+    () => navigation.push('DeactivateChannel'),
+    [navigation],
+  );
 
   const navToAppInfo = useCallback(() => navigation.push('AppInfo'), [
     navigation,
@@ -60,10 +63,6 @@ export default function({ navigation }) {
       title: i18n.t('settings.otherOptions.c2'),
       onPress: navToDeleteChannel,
     },
-    {
-      title: i18n.t('settings.logout'),
-      onPress: authService.logout,
-    },
   ];
 
   const info = [
@@ -73,28 +72,44 @@ export default function({ navigation }) {
     },
   ];
 
-  const subTitle = [
-    CS.colorTertiaryText, 
-    CS.fontM,
-    CS.paddingLeft3x,
-  ];
-
+  const subTitle = [theme.colorTertiaryText, theme.fontM, theme.paddingLeft3x];
 
   return (
-    <View style={[CS.flexContainer, CS.backgroundPrimary, CS.borderTopHair, CS.borderBottomHair, CS.borderPrimary]}>
+    <View
+      style={[
+        theme.flexContainer,
+        theme.backgroundPrimary,
+        theme.borderTopHair,
+        theme.borderBottomHair,
+        theme.borderPrimary,
+      ]}>
+      <Text style={[subTitle, styles.subTitle]}>
+        {i18n.t('settings.otherOptions.a')}
+      </Text>
+      {contentAdmin.map((item, i) => (
+        <SettingsItem item={item} i={i} />
+      ))}
 
-      <Text style={[subTitle, styles.subTitle]} >{i18n.t('settings.otherOptions.a')}</Text>
-      {contentAdmin.map((item, i) => (<SettingsItem item={item} i={i} />))}
+      <Text style={[subTitle, styles.subTitle]}>
+        {i18n.t('settings.otherOptions.b')}
+      </Text>
+      {paidContent.map((item, i) => (
+        <SettingsItem item={item} i={i} />
+      ))}
 
-      <Text style={[subTitle, styles.subTitle]} >{i18n.t('settings.otherOptions.b')}</Text>
-      {paidContent.map((item, i) => (<SettingsItem item={item} i={i} />))}
+      <Text style={[subTitle, styles.subTitle]}>
+        {i18n.t('settings.otherOptions.c')}
+      </Text>
+      {account.map((item, i) => (
+        <SettingsItem item={item} i={i} />
+      ))}
 
-      <Text style={[subTitle, styles.subTitle]} >{i18n.t('settings.otherOptions.c')}</Text>
-      {account.map((item, i) => (<SettingsItem item={item} i={i} />))}
-
-      <Text style={[subTitle, styles.subTitle]} >{i18n.t('settings.otherOptions.d')}</Text>
-      {info.map((item, i) => (<SettingsItem item={item} i={i} />))}
-
+      <Text style={[subTitle, styles.subTitle]}>
+        {i18n.t('settings.otherOptions.d')}
+      </Text>
+      {info.map((item, i) => (
+        <SettingsItem item={item} i={i} />
+      ))}
     </View>
   )
 }

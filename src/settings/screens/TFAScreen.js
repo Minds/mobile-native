@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -56,10 +56,3 @@ export default function () {
   );
   return component;
 }
-
-const styles = {
-  row: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-};
