@@ -29,15 +29,9 @@ const showError = (message) => {
  * Composer store
  */
 export default function (props) {
-  // is reminds?
-  const isRemind = props.route.params && props.route.params.isRemind;
-  const entity = props.route.params ? props.route.params.entity : null;
-  const propsMode = props.route.params ? props.route.params.mode : null;
-  const mode = propsMode ? propsMode : isRemind ? 'text' : 'photo';
-
   return {
-    isRemind,
-    entity,
+    isRemind: false,
+    entity: null,
     attachment: new AttachmentStore(),
     nsfw: [],
     wire_threshold: {
@@ -46,12 +40,21 @@ export default function (props) {
     },
     embed: new RichEmbedStore(),
     posting: false,
-    mode,
+    mode: 'photo',
     text: '',
     title: '',
     mediaToConfirm: null,
     time_created: null,
     extra: null,
+    onScreenFocused() {
+      this.isRemind = props.route.params && props.route.params.isRemind;
+      this.entity = props.route.params ? props.route.params.entity : null;
+      const propsMode = props.route.params ? props.route.params.mode : null;
+      this.mode = propsMode ? propsMode : this.isRemind ? 'text' : 'photo';
+
+      // clear when the screen lose focus
+      return this.clear;
+    },
     setTokenThreshold(value) {
       value = parseFloat(value);
       if (isNaN(value) || value < 0) {
@@ -184,6 +187,12 @@ export default function (props) {
       this.nsfw = [];
       this.time_created = null;
       this.wire_threshold = 0;
+      // clear params to avoid repetition
+      props.navigation.setParams({
+        media: undefined,
+        entity: undefined,
+        isRemind: undefined,
+      });
     },
     /**
      * On media

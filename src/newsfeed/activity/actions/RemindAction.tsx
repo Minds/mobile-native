@@ -44,7 +44,7 @@ export default function ({ entity, size = 20, vertical = false }: PropsTypes) {
     }
 
     const { key } = route;
-    navigation.push('Capture', { isRemind: true, entity, parentKey: key });
+    navigation.navigate('Capture', { isRemind: true, entity, parentKey: key });
   }, [route, entity, navigation]);
 
   return (

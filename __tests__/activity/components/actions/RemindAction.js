@@ -11,7 +11,7 @@ describe('Thumb action component', () => {
   let screen, entity;
 
   beforeEach(() => {
-    const navigation = { push: jest.fn(), state: { key: 1 } };
+    const navigation = { navigate: jest.fn(), state: { key: 1 } };
     let activityResponse = activitiesServiceFaker().load(1);
 
     entity = ActivityModel.create(activityResponse.activities[0]);
@@ -29,7 +29,7 @@ describe('Thumb action component', () => {
 
   it('should navigate a thumb on press ', () => {
     const navigation = {
-      push: jest.fn(),
+      navigate: jest.fn(),
     };
 
     useRoute.mockReturnValue({ key: 1 });
@@ -43,6 +43,6 @@ describe('Thumb action component', () => {
     let touchables = screen.find('preventDoubleTap(TouchableOpacity)');
     touchables.at(0).props().onPress();
 
-    expect(navigation.push).toBeCalled();
+    expect(navigation.navigate).toBeCalled();
   });
 });
