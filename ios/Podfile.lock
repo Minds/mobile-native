@@ -202,7 +202,7 @@ PODS:
     - React
   - react-native-camera/RN (3.21.0):
     - React
-  - react-native-cameraroll (1.5.2):
+  - react-native-cameraroll (1.4.0):
     - React
   - react-native-image-picker (2.3.1):
     - React
@@ -522,7 +522,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-camera: 4e12e877b8fef60b0914a49c942a0f32479e5b50
-  react-native-cameraroll: 4360c9faab50dc6844f56d222c2d0c7ef5f1fe92
+  react-native-cameraroll: dbda741db5dadcdcf738e55a1fd565c307943bca
   react-native-image-picker: 6a850c41f57f0848d918c2a77aedd7aa272ffa30
   react-native-jitsi-meet: becd37e8fa1c5f3321b9222c232d190a36f90880
   react-native-netinfo: ddaca8bbb9e6e914b1a23787ccb879bc642931c9
