@@ -1,5 +1,6 @@
 //@ts-nocheck
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
+import { observer, useLocalStore } from 'mobx-react';
 import { View, Text } from 'react-native-animatable';
 import Input from '../../common/components/Input';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -12,139 +13,194 @@ import settingsService from '../SettingsService';
 import { KeyboardAvoidingView, Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import isIphoneX from '../../common/helpers/isIphoneX';
+import PasswordValidator from '../../common/components/PasswordValidator';
 
-export default function() {
-  const CS = ThemedStyles.style;
+export default observer(function () {
+  const theme = ThemedStyles.style;
 
   const navigation = useNavigation();
 
-  const [currentPassword, setCurrentPassword] = useState('12345678');
-  const [newPassword, setNewPassword] = useState('12345678');
-  const [confirmationPassword, setConfirmationPassword] = useState('12345678');
-  const [error, setError] = useState(false);
-
-  const currentPasswordFocus = useCallback(() => setCurrentPassword(''), []);
-  const newPasswordFocus = useCallback(() => setNewPassword(''), []);
-  const confirmationPasswordFocus = useCallback(() => setConfirmationPassword(''), []);
-  const clearInputs = useCallback(() => {
-    setCurrentPassword('');
-    setNewPassword('');
-    setConfirmationPassword('');
-  }, [setCurrentPassword, setNewPassword, setConfirmationPassword]);
+  const store = useLocalStore(() => ({
+    currentPassword: '',
+    newPassword: '',
+    confirmationPassword: '',
+    passwordFocused: false,
+    error: false,
+    setCurrentPassword(password) {
+      store.currentPassword = password;
+    },
+    setNewPassword(password) {
+      store.newPassword = password;
+    },
+    setConfirmationPassword(password) {
+      store.confirmationPassword = password;
+    },
+    setPasswordFocused(value) {
+      store.passwordFocused = value;
+    },
+    setError(password) {
+      store.currentPassword = password;
+    },
+    clearInputs() {
+      store.setCurrentPassword('');
+      store.setNewPassword('');
+      store.setConfirmationPassword('');
+    },
+    currentPasswordFocus() {
+      store.setCurrentPassword('');
+    },
+    newPasswordBlurred(){
+      store.setPasswordFocused(false);
+    },
+    confirmationPasswordFocus() {
+      store.setConfirmationPassword('');
+    },
+    newPasswordFocus() {
+      store.setNewPassword('');
+      store.setPasswordFocused(true);
+    },
+  }));
 
   let currentPasswordInput = '';
   let newPasswordInput = '';
 
   const confirmPassword = useCallback(async () => {
     // missing data
-    if (!currentPassword || !newPassword || !confirmationPassword) {
+    if (
+      !store.currentPassword ||
+      !store.newPassword ||
+      !store.confirmationPassword
+    ) {
       return;
     }
 
     // current password doesn't match
     try {
-      await authService.validatePassword(currentPassword);
-    } catch(err) {
+      await authService.validatePassword(store.currentPassword);
+    } catch (err) {
       currentPasswordInput.showError();
       return;
     }
 
     // password format is invalid
-    if (!validatePassword(newPassword).all) {
-      setError(true);
+    if (!validatePassword(store.newPassword).all) {
+      store.setError(true);
       return;
     }
 
     // passwords not matching
-    if (newPassword !== confirmationPassword) {
+    if (store.newPassword !== store.confirmationPassword) {
       newPasswordInput.showError();
     }
 
     const params = {
-      password: currentPassword,
-      new_password: newPassword
+      password: store.currentPassword,
+      new_password: store.newPassword,
     }
 
     try {
       await settingsService.submitSettings(params);
-      clearInputs();
+      store.clearInputs();
       Alert.alert(i18n.t('success'), i18n.t('settings.passwordChanged'));
     } catch (err) {
       Alert.alert('Error', err.message);
     }
-
-  }, [currentPassword, newPassword, confirmationPassword, clearInputs]);
+  }, [store, currentPasswordInput, newPasswordInput]);
 
   /**
    * Set save button on header right
    */
-  navigation.setOptions({ 
+  navigation.setOptions({
     headerRight: () => (
-      <Text onPress={confirmPassword} style={[
-        CS.colorLink,
-        CS.fontL,
-        CS.bold,
-      ]}>{i18n.t('save')}</Text>
-    )
+      <Text
+        onPress={confirmPassword}
+        style={[theme.colorLink, theme.fontL, theme.bold]}>
+        {i18n.t('save')}
+      </Text>
+    ),
   });
 
-  return (
-    <ScrollView style={[CS.flexContainer, CS.backgroundPrimary]}>
-    <KeyboardAvoidingView style={[CS.flexContainer, CS.paddingTop3x]} behavior="position" keyboardVerticalOffset={isIphoneX ? 100 : 64}>
-      <View style={[CS.paddingLeft3x, CS.paddingTop3x, CS.backgroundSecondary, CS.border, CS.borderPrimary]}>
-        <Input
-          style={[CS.border0x, styles.inputHeight]}
-          labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
-          placeholder={i18n.t('settings.currentPassword')}
-          onChangeText={setCurrentPassword}
-          value={currentPassword}
-          //editable={!this.state.inProgress}
-          testID="currentPasswordInput"
-          clearTextOnFocus={true}
-          secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
-          //editable={!this.state.inProgress}
-          onFocus={currentPasswordFocus}
-          onError={i18n.t('settings.invalidPassword')}
-          ref={(input) => currentPasswordInput = input}
-          //onBlur={this.blurPassword}
-        />
-      </View>
-      <View style={[CS.paddingLeft3x, CS.paddingTop3x, CS.backgroundSecondary, CS.border, CS.borderPrimary, CS.marginTop7x]}>
-        <Input
-          style={[CS.border0x, styles.inputHeight]}
-          labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
-          placeholder={i18n.t('settings.newPassword')}
-          onChangeText={setNewPassword}
-          value={newPassword}
-          testID="newPasswordInput"
-          clearTextOnFocus={true}
-          secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
-          onFocus={newPasswordFocus}
-          onError={i18n.t('settings.passwordsNotMatch')}
-          ref={(input) => newPasswordInput = input}
-        />
-      </View>
-      <View style={[CS.paddingLeft3x, CS.paddingTop3x, CS.backgroundSecondary, CS.border, CS.borderPrimary]}>
-        <Input
-          style={[CS.border0x, styles.inputHeight]}
-          labelStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
-          placeholder={i18n.t('settings.confirmNewPassword')}
-          onChangeText={setConfirmationPassword}
-          value={confirmationPassword}
-          testID="confirmationPasswordPasswordInput"
-          clearTextOnFocus={true}
-          secureTextEntry={!DISABLE_PASSWORD_INPUTS} // e2e workaround
-          onFocus={confirmationPasswordFocus}
-        />
-      </View>
+  const getInput = useCallback(
+    (props) => {
+      const wrapperStyle = [
+        theme.paddingLeft3x,
+        theme.paddingTop3x,
+        theme.backgroundSecondary,
+        theme.border,
+        theme.borderPrimary,
+      ];
 
-      <View style={[CS.paddingLeft3x, CS.paddingTop3x]}>
-        <Text style={[error ? CS.colorAlert : CS.colorSecondaryText, CS.fontL]}>{i18n.t('settings.passwordFormat')}</Text>
-      </View>
-    </KeyboardAvoidingView>
+      const labelStyle = [
+        theme.colorSecondaryText,
+        theme.fontL,
+        theme.paddingLeft,
+      ];
+
+      return (
+        <View style={wrapperStyle}>
+          <Input
+            style={[theme.border0x, styles.inputHeight]}
+            labelStyle={labelStyle}
+            placeholder={props.placeholder}
+            onChangeText={props.onChangeText}
+            value={props.value}
+            testID={props.testID}
+            clearTextOnFocus={true}
+            secureTextEntry={!DISABLE_PASSWORD_INPUTS}
+            onFocus={props.onFocus}
+            onBlur={props.onBlur ?? (() => {})}
+            onError={props.onError ?? (() => {})}
+            ref={props.ref ?? (() => {})}
+          />
+        </View>
+      );
+    },
+    [theme],
+  );
+
+  return (
+    <ScrollView style={[theme.flexContainer, theme.backgroundPrimary]}>
+      <KeyboardAvoidingView
+        style={[theme.flexContainer, theme.paddingTop3x]}
+        behavior="position"
+        keyboardVerticalOffset={isIphoneX ? 100 : 64}>
+        {store.passwordFocused ? (
+          <View style={[theme.paddingLeft3x]}>
+            <PasswordValidator password={store.newPassword} />
+          </View>
+        ) : (
+          getInput({
+            placeholder: i18n.t('settings.currentPassword'),
+            onChangeText: store.setCurrentPassword,
+            value: store.currentPassword,
+            testID: 'currentPasswordInput',
+            onFocus: store.currentPasswordFocus,
+            onError: i18n.t('settings.invalidPassword'),
+            ref: (input) => (currentPasswordInput = input),
+          })
+        )}
+        {getInput({
+          placeholder: i18n.t('settings.newPassword'),
+          onChangeText: store.setNewPassword,
+          value: store.newPassword,
+          testID: 'newPasswordInput',
+          onFocus: store.newPasswordFocus,
+          onBlur: store.newPasswordBlurred,
+          onError: i18n.t('settings.passwordsNotMatch'),
+          ref: (input) => (newPasswordInput = input)
+        })}
+        {getInput({
+          placeholder: i18n.t('settings.confirmNewPassword'),
+          onChangeText: store.setConfirmationPassword,
+          value: store.confirmationPassword,
+          testID: 'confirmationPasswordPasswordInput',
+          onFocus: store.confirmationPasswordFocus,
+          onBlur: store.newPasswordBlurred,
+        })}
+      </KeyboardAvoidingView>
     </ScrollView>
   );
-}
+});
 
 const styles = {
   inputHeight: {
