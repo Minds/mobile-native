@@ -83,7 +83,7 @@ export default class Tags extends PureComponent<PropsType> {
    * full url
    */
   parseUrl = (str) => {
-    const url = /(^|\s)(\b(?:https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    const url = /(^|\b)(\b(?:https?|http|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;\(\)]*[-A-Z0-9+&@#\/%=~_|])/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -103,7 +103,7 @@ export default class Tags extends PureComponent<PropsType> {
    * url .com .org .net
    */
   parseShortUrl = (str) => {
-    const url = /(^|\s)([-A-Z0-9+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
+    const url = /(^|\b)([-A-Z0-9+&@#\/%?=~_|!:,.;]+\.(?:com|org|net)\/[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -123,7 +123,7 @@ export default class Tags extends PureComponent<PropsType> {
    * url starting with www
    */
   parseWwwUrl = (str) => {
-    const url = /(^|\s)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
+    const url = /(^|\b)(www\.[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|\(\)]*)/gim;
 
     return this.replaceRegular(str, url, (i, content) => {
       return (
@@ -143,7 +143,7 @@ export default class Tags extends PureComponent<PropsType> {
    * #tags
    */
   parseHash = (str) => {
-    const hash = /(^|\s)\#(\w*[a-zA-Z_]+\w*)/gim;
+    const hash = /(^|\s|\B)#(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
       return (
@@ -163,7 +163,7 @@ export default class Tags extends PureComponent<PropsType> {
    * @tags
    */
   parseUser = (str) => {
-    const hash = /(^|\s)\@(\w*[a-zA-Z_]+\w*)/gim;
+    const hash = /(^|\s|\B)@(\w*[a-zA-Z_]+\w*)/gim;
 
     return this.replaceRegular(str, hash, (i, content) => {
       return (
