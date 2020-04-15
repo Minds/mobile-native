@@ -84,8 +84,9 @@ class ChannelHeader extends Component {
 
   componentDidMount() {
     const isOwner = session.guid === this.props.store.channel.guid;
-    if (isOwner && !featuresService.has('onboarding-december-2019'))
+    if (isOwner) {
       this.props.onboarding.getProgress();
+    }
   }
 
   onEditAction = async () => {
@@ -382,11 +383,9 @@ class ChannelHeader extends Component {
             </View>
           ) : null}
         </TouchableCustom>
-        {isOwner &&
-        !featuresService.has('onboarding-december-2019') &&
-        this.props.onboarding.percentage < 1 ? (
+        {isOwner && (
           <CompleteProfile progress={this.props.onboarding.percentage} />
-        ) : null}
+        )}
       </View>
     );
   }

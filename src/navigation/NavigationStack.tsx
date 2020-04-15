@@ -37,7 +37,6 @@ import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
 import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import Gathering from '../gathering/Gathering';
-import OnboardingScreenNew from '../onboarding/OnboardingScreenNew';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import MessengerScreen from '../messenger/MessengerScreen';
@@ -252,10 +251,6 @@ const AppStack = function (props) {
       <AppStackNav.Screen
         name="OnboardingScreen"
         component={OnboardingScreen}
-      />
-      <AppStackNav.Screen
-        name="OnboardingScreenNew"
-        component={OnboardingScreenNew}
         options={hideHeader}
       />
     </AppStackNav.Navigator>

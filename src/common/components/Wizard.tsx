@@ -130,20 +130,11 @@ export default class Wizard extends PureComponent<Props, State>  {
     const {steps} = this.props;
 
     let component;
-    if (featuresService.has('onboarding-december-2019')) {
-      component = (
-        <View style={[CS.flexContainer]}>
-          {this.props.steps[this.state.current].component}
-        </View>
-      );
-    } else {
-      component = (
-        <ScrollView style={[CS.flexContainer, CS.backgroundWhite]}>
-          {this.getHeader()}
-          {this.props.steps[this.state.current].component}
-        </ScrollView>
-      );
-    }
+    component = (
+      <View style={[CS.flexContainer]}>
+        {this.props.steps[this.state.current].component}
+      </View>
+    );
 
     return component;
   }

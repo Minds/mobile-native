@@ -250,7 +250,7 @@ class RegisterForm extends Component {
         exclusive_promotions: this.state.exclusive_promotions,
       } as registerParams;
       await authService.register(params);
-      sessionService.setInitialScreen('OnboardingScreenNew');
+      sessionService.setInitialScreen('OnboardingScreen');
       await apiService.clearCookies();
       await delay(100);
       await authService.login(this.state.username, this.state.password);
