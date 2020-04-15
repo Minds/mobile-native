@@ -16,13 +16,18 @@ type MediaEvent = {
  * Receive Share Service
  */
 class ReceiveShareService {
-  subscription: EmitterSubscription;
+  subscription!: EmitterSubscription;
 
   constructor() {
-    const eventEmitter = new NativeEventEmitter(ModuleWithEmitter);
-    this.subscription = eventEmitter.addListener('FileShareIntent', (event) => {
-      setTimeout(() => this.handleMedia(event), 200);
-    });
+    if (process.env.JEST_WORKER_ID === undefined) {
+      const eventEmitter = new NativeEventEmitter(ModuleWithEmitter);
+      this.subscription = eventEmitter.addListener(
+        'FileShareIntent',
+        (event) => {
+          setTimeout(() => this.handleMedia(event), 200);
+        },
+      );
+    }
   }
 
   /**
