@@ -1,6 +1,5 @@
 import { observable, action, computed, toJS } from 'mobx';
 import _ from 'lodash';
-import { Alert } from 'react-native';
 import EventEmitter from 'eventemitter3';
 
 import sessionService from './services/session.service';
@@ -13,6 +12,7 @@ import i18n from './services/i18n.service';
 import featuresService from './services/features.service';
 import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
+import { showNotification } from '../../AppMessages';
 
 /**
  * Base model
@@ -380,11 +380,11 @@ export default class BaseModel {
     }
 
     if (showAlert && !allowed) {
-      Alert.alert(
-        i18n.t('sorry'),
+      showNotification(
         i18n.t(`permissions.notAllowed.${actionName}`, {
           defaultValue: i18n.t('notAllowed'),
         }),
+        'warning',
       );
     }
 
