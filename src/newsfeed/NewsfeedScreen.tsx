@@ -17,6 +17,7 @@ import type MessengerListStore from 'src/messenger/MessengerListStore';
 import type DiscoveryStore from 'src/discovery/DiscoveryStore';
 import type UserStore from 'src/auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
+import type NotificationsStore from 'src/notifications/NotificationsStore';
 
 type NewsfeedScreenRouteProp = RouteProp<RootStackParamList, 'Newsfeed'>;
 type NewsfeedcreenNavigationProp = StackNavigationProp<
@@ -29,6 +30,7 @@ type PropsType = {
   discovery: DiscoveryStore;
   user: UserStore;
   messengerList: MessengerListStore;
+  notifications: NotificationsStore;
   newsfeed: NewsfeedStore;
   route: NewsfeedScreenRouteProp;
 };
@@ -36,7 +38,7 @@ type PropsType = {
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user', 'discovery', 'messengerList')
+@inject('newsfeed', 'user', 'discovery', 'messengerList', 'notifications')
 @observer
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
@@ -82,6 +84,7 @@ class NewsfeedScreen extends Component<PropsType> {
 
     // load groups after the feed
     if (this.groupsBar) await this.groupsBar.initialLoad();
+
     // load discovery after the feed is loaded
     this.props.discovery.fetch();
 
@@ -90,6 +93,13 @@ class NewsfeedScreen extends Component<PropsType> {
 
     // listen socket on app start
     this.props.messengerList.listen();
+
+    // load notifications
+    try {
+      await this.props.notifications.readLocal();
+    } finally {
+      this.props.notifications.loadList(true);
+    }
   }
 
   /**

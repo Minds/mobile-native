@@ -7,7 +7,6 @@ import { observer, inject } from 'mobx-react';
 
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 
-import CaptureFab from '../capture/CaptureFab';
 import { CommonStyle as CS } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
 import Notification from './notification/Notification';
@@ -17,6 +16,7 @@ import i18n from '../common/services/i18n.service';
 import Topbar from '../topbar/Topbar';
 import ThemedStyles from '../styles/ThemedStyles';
 import OnFocus from '../common/components/helper/OnFocus';
+import CenteredLoading from '../common/components/CenteredLoading';
 
 /**
  * Notification Screen
@@ -24,6 +24,8 @@ import OnFocus from '../common/components/helper/OnFocus';
 @inject('notifications', 'user')
 @observer
 class NotificationsScreen extends Component {
+  headerIndex = [0];
+
   /**
    * On screen focus
    */
@@ -39,7 +41,8 @@ class NotificationsScreen extends Component {
    * On component mount
    */
   componentDidMount() {
-    this.initialLoad();
+    // initial load moved to newsfeed did mount
+    // this.initialLoad();
   }
 
   /**
@@ -65,21 +68,12 @@ class NotificationsScreen extends Component {
    * Render screen
    */
   render() {
-    let body;
     const me = this.props.user.me;
     const list = this.props.notifications.list;
     let empty = null;
 
     if (list.loaded && !list.refreshing) {
-      let filter = '';
       let design = null;
-
-      if (this.props.notifications.filter != 'all') {
-        filter = this.props.notifications.filter.substr(
-          0,
-          this.props.notifications.filter.length - 1,
-        );
-      }
 
       if (me && me.hasBanner && !me.hasBanner()) {
         //TODO: check for avatar too
@@ -112,24 +106,6 @@ class NotificationsScreen extends Component {
       );
     }
 
-    body = (
-      <FlatList
-        data={list.entities.slice()}
-        renderItem={this.renderRow}
-        keyExtractor={this.keyExtractor}
-        onRefresh={this.refresh}
-        onEndReached={this.loadMore}
-        ListEmptyComponent={list.loading ? null : empty}
-        ListHeaderComponent={<NotificationsTopbar />}
-        // onEndReachedThreshold={0.05}
-        initialNumToRender={12}
-        stickyHeaderIndices={[0]}
-        windowSize={8}
-        refreshing={list.refreshing}
-        style={[ThemedStyles.style.backgroundPrimary, CS.flexContainer]}
-      />
-    );
-
     return (
       <View style={CS.flexContainer}>
         <OnFocus onFocus={this.onFocus} />
@@ -138,8 +114,24 @@ class NotificationsScreen extends Component {
           navigation={this.props.navigation}
           refreshFeed={this.onFocus}
         />
-        {body}
-        {/* <CaptureFab navigation={this.props.navigation} /> */}
+        <FlatList
+          data={list.entities.slice()}
+          renderItem={this.renderRow}
+          keyExtractor={this.keyExtractor}
+          onRefresh={this.refresh}
+          onEndReached={this.loadMore}
+          ListEmptyComponent={this.props.notifications.loading ? null : empty}
+          ListHeaderComponent={<NotificationsTopbar />}
+          ListFooterComponent={
+            this.props.notifications.loading ? <CenteredLoading /> : null
+          }
+          // onEndReachedThreshold={0.05}
+          initialNumToRender={12}
+          stickyHeaderIndices={this.headerIndex}
+          windowSize={8}
+          refreshing={list.refreshing || this.props.notifications.loading}
+          style={[ThemedStyles.style.backgroundPrimary, CS.flexContainer]}
+        />
       </View>
     );
   }
