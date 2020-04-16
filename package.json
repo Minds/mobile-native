@@ -60,7 +60,7 @@
     "react-native-exception-handler": "^2.10.8",
     "react-native-exit-app": "wumke/react-native-exit-app",
     "react-native-fast-image": "DylanVann/react-native-fast-image#e94e6fee66e1c60c6e8602eee20d7d5456b79a41",
-    "react-native-file-share-intent": "Minds/react-native-file-share-intent",
+    "react-native-file-share-intent": "Minds/react-native-file-share-intent#316072d2d7ef7cb861048eae22c4b6614213a0d2",
     "react-native-file-type": "^0.0.8",
     "react-native-flash-message": "^0.1.15",
     "react-native-fs": "^2.16.1",

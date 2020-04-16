@@ -51,8 +51,18 @@ export default function (props) {
       this.entity = props.route.params ? props.route.params.entity : null;
       const propsMode = props.route.params ? props.route.params.mode : null;
       this.mode = propsMode ? propsMode : this.isRemind ? 'text' : 'photo';
+      const mediaToConfirm =
+        props.route.params && props.route.params.media
+          ? props.route.params.media
+          : null;
 
-      // clear when the screen lose focus
+      if (mediaToConfirm) {
+        this.mode = 'text';
+        this.mediaToConfirm = mediaToConfirm;
+        this.attachment.attachMedia(mediaToConfirm);
+      }
+
+      // when the screen unmounts clear the state.
       return this.clear;
     },
     setTokenThreshold(value) {
@@ -163,7 +173,7 @@ export default function (props) {
     /**
      * Clear the store to the initial values
      */
-    clear() {
+    clear(deleteMedia = true) {
       if (this.mediaToConfirm) {
         this.mediaToConfirm = null;
       }
@@ -171,7 +181,9 @@ export default function (props) {
         if (this.attachment.uploading) {
           this.attachment.cancelCurrentUpload();
         } else {
-          this.attachment.delete();
+          if (deleteMedia) {
+            this.attachment.delete();
+          }
         }
         this.attachment.clear();
       }
@@ -337,7 +349,8 @@ export default function (props) {
             this.setPosting(false);
           }
 
-          if (response.activity) {
+          if (response && response.activity) {
+            this.clear(false);
             return ActivityModel.create(response.activity);
           }
           return false;
