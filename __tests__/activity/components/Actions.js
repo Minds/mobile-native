@@ -1,8 +1,7 @@
 import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity } from 'react-native';
 import { shallow } from 'enzyme';
-
 
 import ActionSheet from 'react-native-actionsheet';
 import * as Progress from 'react-native-progress';
@@ -22,16 +21,30 @@ import UserStore from '../../../src/auth/UserStore';
 
 import featuresService from '../../../src/common/services/features.service';
 
-jest.mock('../../../src/newsfeed/activity/actions/ThumbUpAction', () => 'ThumbUpAction');
-jest.mock('../../../src/newsfeed/activity/actions/WireAction', () => 'WireAction');
-jest.mock('../../../src/newsfeed/activity/actions/CommentsAction', () => 'CommentsAction');
+jest.mock(
+  '../../../src/newsfeed/activity/actions/ThumbUpAction',
+  () => 'ThumbUpAction',
+);
+jest.mock(
+  '../../../src/newsfeed/activity/actions/WireAction',
+  () => 'WireAction',
+);
+jest.mock(
+  '../../../src/newsfeed/activity/actions/CommentsAction',
+  () => 'CommentsAction',
+);
 jest.mock('../../../src/auth/UserStore');
 jest.mock('../../../src/common/services/features.service');
-jest.mock('../../../src/newsfeed/activity/actions/RemindAction', () => 'RemindAction');
-jest.mock('../../../src/newsfeed/activity/actions/ThumbDownAction', () => 'ThumbDownAction');
+jest.mock(
+  '../../../src/newsfeed/activity/actions/RemindAction',
+  () => 'RemindAction',
+);
+jest.mock(
+  '../../../src/newsfeed/activity/actions/ThumbDownAction',
+  () => 'ThumbDownAction',
+);
 
 describe('Activity component', () => {
-
   let user, comments, entity, screen, activity;
   beforeEach(() => {
     featuresService.has.mockReturnValue(true);
@@ -40,13 +53,14 @@ describe('Activity component', () => {
     activity = activityResponse.activities[0];
     user = new UserStore();
     user.me = {
-      guid: 'guidguid'
+      guid: 'guidguid',
     };
     screen = shallow(
-      <Actions.wrappedComponent entity={activityResponse.activities[0]} user={user} />
+      <Actions.wrappedComponent
+        entity={activityResponse.activities[0]}
+        user={user}
+      />,
     );
-
-    jest.runAllTimers();
   });
 
   it('renders correctly', async () => {
@@ -54,7 +68,6 @@ describe('Activity component', () => {
     const render = screen.dive();
     expect(render).toMatchSnapshot();
   });
-
 
   it('should have the expectedComponents', async () => {
     screen.update();
@@ -66,9 +79,8 @@ describe('Activity component', () => {
     expect(screen.find('RemindAction')).toHaveLength(1);
   });
 
-
   it('should show hide elements accordingly to ownership (not owner)', () => {
-    screen.update()
+    screen.update();
     let instance = screen.instance();
 
     expect(featuresService.has).toHaveBeenCalled();
@@ -81,18 +93,19 @@ describe('Activity component', () => {
     activity = activityResponse.activities[0];
     user = new UserStore();
     user.me = {
-      guid: '824853017709780997'
+      guid: '824853017709780997',
     };
     screen = shallow(
-      <Actions.wrappedComponent entity={activityResponse.activities[0]} user={user} />
+      <Actions.wrappedComponent
+        entity={activityResponse.activities[0]}
+        user={user}
+      />,
     );
 
-    jest.runAllTimers();
     screen.update();
     expect(screen.find('BoostAction')).toHaveLength(1);
     expect(featuresService.has).toHaveBeenCalled();
   });
-
 
   it('should show hide elements accordingly to ownership (owner) but featureService gives false', () => {
     featuresService.has.mockReturnValue(false);
@@ -101,17 +114,17 @@ describe('Activity component', () => {
     activity = activityResponse.activities[0];
     user = new UserStore();
     user.me = {
-      guid: '824853017709780997'
+      guid: '824853017709780997',
     };
     screen = shallow(
-      <Actions.wrappedComponent entity={activityResponse.activities[0]} user={user} />
+      <Actions.wrappedComponent
+        entity={activityResponse.activities[0]}
+        user={user}
+      />,
     );
 
-    jest.runAllTimers();
     screen.update();
     expect(screen.find('BoostAction')).toHaveLength(0);
     expect(featuresService.has).toHaveBeenCalled();
   });
-
-
 });

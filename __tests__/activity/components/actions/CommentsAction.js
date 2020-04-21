@@ -12,8 +12,6 @@ describe('Comment action component', () => {
 
   let screen, navigatorStore, navigation;
   beforeEach(() => {
-
-    const TouchableOpacityCustom = <TouchableOpacity onPress={this.onPress} />;
     navigation = { push: jest.fn(), state: {routeName: 'some'}, dangerouslyGetState: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
     screen = shallow(
@@ -33,17 +31,17 @@ describe('Comment action component', () => {
 
     screen.update();
 
-    expect(screen.find('PreventDoubleTap')).toHaveLength(1)
+    expect(screen.find('preventDoubleTap(TouchableOpacity)')).toHaveLength(1)
   });
 
   it('should navigate a thumb on press ', async () => {
     navigation.dangerouslyGetState.mockReturnValue({routes: null})
 
     screen.update();
-    let touchables = screen.find('PreventDoubleTap');
+    let touchables = screen.find('preventDoubleTap(TouchableOpacity)');
     touchables.at(0).props().onPress();
     expect(navigation.push).toHaveBeenCalled();
-    expect(screen.find('PreventDoubleTap')).toHaveLength(1);
+    expect(screen.find('preventDoubleTap(TouchableOpacity)')).toHaveLength(1);
 
   });
 

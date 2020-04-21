@@ -29,6 +29,8 @@ jobs:
           name: jest tests
           command: |
             mkdir -p test-results/jest
+            yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"
+            yarn tsc
             yarn run test --maxWorkers=2
           environment:
             JEST_JUNIT_OUTPUT: test-results/jest/junit.xml

@@ -1,11 +1,11 @@
 import 'react-native';
 import React from 'react';
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform, TouchableOpacity } from 'react-native';
 import { shallow, render } from 'enzyme';
 import CameraRoll from '@react-native-community/cameraroll';
 
 import androidPermission from '../../src/common/services/android-permissions.service';
-import { getPhotosFaker } from '../../__mocks__/fake/CameraRollFaker';
+import { getPhotosFaker } from '../../__mocks__/fake/CameraRollFaker';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 
@@ -27,25 +27,19 @@ describe('cature gallery component', () => {
     androidPermission.readExternalStorage.mockClear();
   });
 
-  it('should renders correctly', async() => {
-    const galley = renderer.create(
-      <CaptureGallery />
-    ).toJSON();
+  it('should renders correctly', async () => {
+    const galley = renderer.create(<CaptureGallery />).toJSON();
     expect(galley).toMatchSnapshot();
   });
 
   it('should load photos on mount', () => {
-    const spyWillMount = jest.spyOn(CaptureGallery.prototype, 'loadPhotos');
-
     Platform.OS = 'ios';
 
-    const wrapper = shallow(
-      <CaptureGallery  />
-    );
-
-    // the call is dalayed (setTimeout) so we fast-forward timers
-    jest.runAllTimers();
-
+    const wrapper = shallow(<CaptureGallery />);
+    const instance = wrapper.instance();
+    const spyWillMount = jest.spyOn(instance, 'loadPhotos');
+    jest.advanceTimersByTime(1000);
+    instance.componentDidMount();
     expect(spyWillMount).toHaveBeenCalled();
   });
 
@@ -55,9 +49,7 @@ describe('cature gallery component', () => {
 
     Platform.OS = 'android';
 
-    const wrapper = shallow(
-      <CaptureGallery  />
-    );
+    const wrapper = shallow(<CaptureGallery />);
 
     // load phoyos
     await wrapper.instance().loadPhotos();
@@ -73,9 +65,7 @@ describe('cature gallery component', () => {
 
     Platform.OS = 'android';
 
-    const wrapper = shallow(
-      <CaptureGallery  />
-    );
+    const wrapper = shallow(<CaptureGallery />);
 
     // load phoyos
     await wrapper.instance().loadPhotos();
@@ -83,17 +73,16 @@ describe('cature gallery component', () => {
     expect(readExternalStorage).toHaveBeenCalled();
   });
 
-  it('should calls onSelected when the user select an image', async(done) => {
-
+  it('should calls onSelected when the user select an image', async (done) => {
     const mockFn = jest.fn();
 
     try {
-      const wrapper = renderer.create(<CaptureGallery onSelected={mockFn}/>);
+      const wrapper = renderer.create(<CaptureGallery onSelected={mockFn} />);
 
       // load phoyos
       await wrapper.getInstance()._loadPhotos();
 
-      expect( CameraRoll.getPhotos).toBeCalled();
+      expect(CameraRoll.getPhotos).toBeCalled();
 
       // find TouchableOpacity (rendered images in lists)
       const images = wrapper.root.findAllByType(TouchableOpacity);
@@ -103,16 +92,16 @@ describe('cature gallery component', () => {
       // expect fn to be called once
       expect(mockFn).toBeCalled();
       done();
-    } catch(e) {
+    } catch (e) {
       done.fail(e);
     }
   });
 
-  it('should show loaded images', async(done) => {
+  it('should show loaded images', async (done) => {
     const mockFn = jest.fn();
 
     try {
-      const wrapper = renderer.create(<CaptureGallery onSelected={mockFn}/>);
+      const wrapper = renderer.create(<CaptureGallery onSelected={mockFn} />);
 
       // load phoyos
       await wrapper.getInstance()._loadPhotos();
@@ -123,9 +112,8 @@ describe('cature gallery component', () => {
       // expect 5 images rendered
       expect(images.length).toEqual(5);
       done();
-    } catch(e) {
+    } catch (e) {
       done.fail(e);
     }
   });
 });
-

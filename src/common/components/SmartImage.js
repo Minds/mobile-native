@@ -5,12 +5,12 @@ import FastImage from 'react-native-fast-image';
  * A fast image wrapper that add retry functionality
  * @param {Object} props
  */
-export default function(props) {
+export default function (props) {
   const { onError, ...otherProps } = props;
   const [retries, setRetries] = useState(0);
 
   const errorHandler = useCallback(
-    error => {
+    (error) => {
       const maxRetries = props.retry || 3;
       if (retries < maxRetries) {
         setRetries(retries + 1);

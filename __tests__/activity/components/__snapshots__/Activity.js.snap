@@ -10,6 +10,7 @@ exports[`Activity component renders correctly 1`] = `
       },
       undefined,
       undefined,
+      undefined,
     ]
   }
   testID="ActivityView"
@@ -28,7 +29,9 @@ exports[`Activity component renders correctly 1`] = `
         "custom_type": false,
         "description": "Congratulations! ",
         "edited": "",
+        "entity_guid": "",
         "guid": "activityguid0",
+        "impressions": 0,
         "isOwner": [Function],
         "is_visible": true,
         "mature": false,
@@ -36,19 +39,31 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
+          "admin": false,
           "confirmEmail": [Function],
+          "eth_wallet": "",
+          "founder": false,
           "guid": "824853017709780997",
           "isOwner": [Function],
+          "last_accepted_tos": 0,
+          "mature": false,
+          "plus": false,
+          "rewards": false,
           "subtype": false,
           "time_created": "1522036284",
           "type": "user",
+          "urn": "",
+          "username": "",
+          "verified": false,
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
-        "paywall": undefined,
+        "paywall": "",
+        "paywall_unlocked": false,
         "perma_url": false,
         "permissions": Object {},
-        "pinned": undefined,
+        "pinned": false,
+        "reminds": 0,
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction] {
           "calls": Array [
@@ -61,6 +76,7 @@ exports[`Activity component renders correctly 1`] = `
             },
           ],
         },
+        "subtype": "",
         "thumbnail_src": false,
         "thumbs:down:count": undefined,
         "thumbs:down:user_guids": undefined,
@@ -69,6 +85,8 @@ exports[`Activity component renders correctly 1`] = `
         "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
+        "urn": "",
+        "username": "",
         "wire_totals": Object {
           "tokens": 1000000000000000000,
         },
@@ -89,7 +107,9 @@ exports[`Activity component renders correctly 1`] = `
         "custom_type": false,
         "description": "Congratulations! ",
         "edited": "",
+        "entity_guid": "",
         "guid": "activityguid0",
+        "impressions": 0,
         "isOwner": [Function],
         "is_visible": true,
         "mature": false,
@@ -97,19 +117,31 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
+          "admin": false,
           "confirmEmail": [Function],
+          "eth_wallet": "",
+          "founder": false,
           "guid": "824853017709780997",
           "isOwner": [Function],
+          "last_accepted_tos": 0,
+          "mature": false,
+          "plus": false,
+          "rewards": false,
           "subtype": false,
           "time_created": "1522036284",
           "type": "user",
+          "urn": "",
+          "username": "",
+          "verified": false,
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
-        "paywall": undefined,
+        "paywall": "",
+        "paywall_unlocked": false,
         "perma_url": false,
         "permissions": Object {},
-        "pinned": undefined,
+        "pinned": false,
+        "reminds": 0,
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction] {
           "calls": Array [
@@ -122,6 +154,7 @@ exports[`Activity component renders correctly 1`] = `
             },
           ],
         },
+        "subtype": "",
         "thumbnail_src": false,
         "thumbs:down:count": undefined,
         "thumbs:down:user_guids": undefined,
@@ -130,6 +163,8 @@ exports[`Activity component renders correctly 1`] = `
         "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
+        "urn": "",
+        "username": "",
         "wire_totals": Object {
           "tokens": 1000000000000000000,
         },
@@ -148,7 +183,7 @@ exports[`Activity component renders correctly 1`] = `
             "alignSelf": "flex-end",
             "position": "absolute",
             "right": 10,
-            "top": 6,
+            "top": 20,
           }
         }
       >
@@ -166,7 +201,9 @@ exports[`Activity component renders correctly 1`] = `
               "custom_type": false,
               "description": "Congratulations! ",
               "edited": "",
+              "entity_guid": "",
               "guid": "activityguid0",
+              "impressions": 0,
               "isOwner": [Function],
               "is_visible": true,
               "mature": false,
@@ -174,19 +211,31 @@ exports[`Activity component renders correctly 1`] = `
               "message": "Message",
               "ownerObj": UserModel {
                 "__list": null,
+                "admin": false,
                 "confirmEmail": [Function],
+                "eth_wallet": "",
+                "founder": false,
                 "guid": "824853017709780997",
                 "isOwner": [Function],
+                "last_accepted_tos": 0,
+                "mature": false,
+                "plus": false,
+                "rewards": false,
                 "subtype": false,
                 "time_created": "1522036284",
                 "type": "user",
+                "urn": "",
+                "username": "",
+                "verified": false,
               },
               "owner_guid": "824853017709780997",
               "parent_guid": "838106762591510528",
-              "paywall": undefined,
+              "paywall": "",
+              "paywall_unlocked": false,
               "perma_url": false,
               "permissions": Object {},
-              "pinned": undefined,
+              "pinned": false,
+              "reminds": 0,
               "rowKey": "something0",
               "shouldBeBlured": [MockFunction] {
                 "calls": Array [
@@ -199,6 +248,7 @@ exports[`Activity component renders correctly 1`] = `
                   },
                 ],
               },
+              "subtype": "",
               "thumbnail_src": false,
               "thumbs:down:count": undefined,
               "thumbs:down:user_guids": undefined,
@@ -207,6 +257,8 @@ exports[`Activity component renders correctly 1`] = `
               "time_created": "1522036284",
               "title": "TITLE",
               "type": "activity",
+              "urn": "",
+              "username": "",
               "wire_totals": Object {
                 "tokens": 1000000000000000000,
               },
@@ -228,18 +280,13 @@ exports[`Activity component renders correctly 1`] = `
     <TouchableOpacity
       activeOpacity={0.2}
       onPress={[Function]}
-      style={
-        Object {
-          "flexDirection": "row",
-        }
-      }
     >
       <Text
         style={
           Array [
             Object {
               "color": "#888",
-              "fontSize": 11,
+              "fontSize": 12,
             },
             Object {
               "paddingRight": 5,
@@ -248,14 +295,15 @@ exports[`Activity component renders correctly 1`] = `
           ]
         }
       >
-        Mar 25, 2018, 20:51
+        2y ago
       </Text>
     </TouchableOpacity>
   </OwnerBlock>
   <View
     style={
       Object {
-        "padding": 8,
+        "padding": 10,
+        "paddingTop": 0,
       }
     }
   >
@@ -273,7 +321,9 @@ exports[`Activity component renders correctly 1`] = `
           "custom_type": false,
           "description": "Congratulations! ",
           "edited": "",
+          "entity_guid": "",
           "guid": "activityguid0",
+          "impressions": 0,
           "isOwner": [Function],
           "is_visible": true,
           "mature": false,
@@ -281,19 +331,31 @@ exports[`Activity component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": UserModel {
             "__list": null,
+            "admin": false,
             "confirmEmail": [Function],
+            "eth_wallet": "",
+            "founder": false,
             "guid": "824853017709780997",
             "isOwner": [Function],
+            "last_accepted_tos": 0,
+            "mature": false,
+            "plus": false,
+            "rewards": false,
             "subtype": false,
             "time_created": "1522036284",
             "type": "user",
+            "urn": "",
+            "username": "",
+            "verified": false,
           },
           "owner_guid": "824853017709780997",
           "parent_guid": "838106762591510528",
-          "paywall": undefined,
+          "paywall": "",
+          "paywall_unlocked": false,
           "perma_url": false,
           "permissions": Object {},
-          "pinned": undefined,
+          "pinned": false,
+          "reminds": 0,
           "rowKey": "something0",
           "shouldBeBlured": [MockFunction] {
             "calls": Array [
@@ -306,6 +368,7 @@ exports[`Activity component renders correctly 1`] = `
               },
             ],
           },
+          "subtype": "",
           "thumbnail_src": false,
           "thumbs:down:count": undefined,
           "thumbs:down:user_guids": undefined,
@@ -314,6 +377,8 @@ exports[`Activity component renders correctly 1`] = `
           "time_created": "1522036284",
           "title": "TITLE",
           "type": "activity",
+          "urn": "",
+          "username": "",
           "wire_totals": Object {
             "tokens": 1000000000000000000,
           },
@@ -328,6 +393,7 @@ exports[`Activity component renders correctly 1`] = `
       style={
         Object {
           "fontFamily": "Roboto",
+          "fontSize": 15,
         }
       }
     />
@@ -345,7 +411,9 @@ exports[`Activity component renders correctly 1`] = `
           "custom_type": false,
           "description": "Congratulations! ",
           "edited": "",
+          "entity_guid": "",
           "guid": "activityguid0",
+          "impressions": 0,
           "isOwner": [Function],
           "is_visible": true,
           "mature": false,
@@ -353,19 +421,31 @@ exports[`Activity component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": UserModel {
             "__list": null,
+            "admin": false,
             "confirmEmail": [Function],
+            "eth_wallet": "",
+            "founder": false,
             "guid": "824853017709780997",
             "isOwner": [Function],
+            "last_accepted_tos": 0,
+            "mature": false,
+            "plus": false,
+            "rewards": false,
             "subtype": false,
             "time_created": "1522036284",
             "type": "user",
+            "urn": "",
+            "username": "",
+            "verified": false,
           },
           "owner_guid": "824853017709780997",
           "parent_guid": "838106762591510528",
-          "paywall": undefined,
+          "paywall": "",
+          "paywall_unlocked": false,
           "perma_url": false,
           "permissions": Object {},
-          "pinned": undefined,
+          "pinned": false,
+          "reminds": 0,
           "rowKey": "something0",
           "shouldBeBlured": [MockFunction] {
             "calls": Array [
@@ -378,6 +458,7 @@ exports[`Activity component renders correctly 1`] = `
               },
             ],
           },
+          "subtype": "",
           "thumbnail_src": false,
           "thumbs:down:count": undefined,
           "thumbs:down:user_guids": undefined,
@@ -386,6 +467,8 @@ exports[`Activity component renders correctly 1`] = `
           "time_created": "1522036284",
           "title": "TITLE",
           "type": "activity",
+          "urn": "",
+          "username": "",
           "wire_totals": Object {
             "tokens": 1000000000000000000,
           },
@@ -394,6 +477,7 @@ exports[`Activity component renders correctly 1`] = `
       style={
         Object {
           "fontFamily": "Roboto",
+          "fontSize": 15,
         }
       }
     />
@@ -413,7 +497,9 @@ exports[`Activity component renders correctly 1`] = `
           "custom_type": false,
           "description": "Congratulations! ",
           "edited": "",
+          "entity_guid": "",
           "guid": "activityguid0",
+          "impressions": 0,
           "isOwner": [Function],
           "is_visible": true,
           "mature": false,
@@ -421,19 +507,31 @@ exports[`Activity component renders correctly 1`] = `
           "message": "Message",
           "ownerObj": UserModel {
             "__list": null,
+            "admin": false,
             "confirmEmail": [Function],
+            "eth_wallet": "",
+            "founder": false,
             "guid": "824853017709780997",
             "isOwner": [Function],
+            "last_accepted_tos": 0,
+            "mature": false,
+            "plus": false,
+            "rewards": false,
             "subtype": false,
             "time_created": "1522036284",
             "type": "user",
+            "urn": "",
+            "username": "",
+            "verified": false,
           },
           "owner_guid": "824853017709780997",
           "parent_guid": "838106762591510528",
-          "paywall": undefined,
+          "paywall": "",
+          "paywall_unlocked": false,
           "perma_url": false,
           "permissions": Object {},
-          "pinned": undefined,
+          "pinned": false,
+          "reminds": 0,
           "rowKey": "something0",
           "shouldBeBlured": [MockFunction] {
             "calls": Array [
@@ -446,6 +544,7 @@ exports[`Activity component renders correctly 1`] = `
               },
             ],
           },
+          "subtype": "",
           "thumbnail_src": false,
           "thumbs:down:count": undefined,
           "thumbs:down:user_guids": undefined,
@@ -454,6 +553,8 @@ exports[`Activity component renders correctly 1`] = `
           "time_created": "1522036284",
           "title": "TITLE",
           "type": "activity",
+          "urn": "",
+          "username": "",
           "wire_totals": Object {
             "tokens": 1000000000000000000,
           },
@@ -487,7 +588,9 @@ exports[`Activity component renders correctly 1`] = `
         "custom_type": false,
         "description": "Congratulations! ",
         "edited": "",
+        "entity_guid": "",
         "guid": "activityguid0",
+        "impressions": 0,
         "isOwner": [Function],
         "is_visible": true,
         "mature": false,
@@ -495,19 +598,31 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
+          "admin": false,
           "confirmEmail": [Function],
+          "eth_wallet": "",
+          "founder": false,
           "guid": "824853017709780997",
           "isOwner": [Function],
+          "last_accepted_tos": 0,
+          "mature": false,
+          "plus": false,
+          "rewards": false,
           "subtype": false,
           "time_created": "1522036284",
           "type": "user",
+          "urn": "",
+          "username": "",
+          "verified": false,
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
-        "paywall": undefined,
+        "paywall": "",
+        "paywall_unlocked": false,
         "perma_url": false,
         "permissions": Object {},
-        "pinned": undefined,
+        "pinned": false,
+        "reminds": 0,
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction] {
           "calls": Array [
@@ -520,6 +635,7 @@ exports[`Activity component renders correctly 1`] = `
             },
           ],
         },
+        "subtype": "",
         "thumbnail_src": false,
         "thumbs:down:count": undefined,
         "thumbs:down:user_guids": undefined,
@@ -528,6 +644,8 @@ exports[`Activity component renders correctly 1`] = `
         "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
+        "urn": "",
+        "username": "",
         "wire_totals": Object {
           "tokens": 1000000000000000000,
         },
@@ -554,7 +672,9 @@ exports[`Activity component renders correctly 1`] = `
         "custom_type": false,
         "description": "Congratulations! ",
         "edited": "",
+        "entity_guid": "",
         "guid": "activityguid0",
+        "impressions": 0,
         "isOwner": [Function],
         "is_visible": true,
         "mature": false,
@@ -562,19 +682,31 @@ exports[`Activity component renders correctly 1`] = `
         "message": "Message",
         "ownerObj": UserModel {
           "__list": null,
+          "admin": false,
           "confirmEmail": [Function],
+          "eth_wallet": "",
+          "founder": false,
           "guid": "824853017709780997",
           "isOwner": [Function],
+          "last_accepted_tos": 0,
+          "mature": false,
+          "plus": false,
+          "rewards": false,
           "subtype": false,
           "time_created": "1522036284",
           "type": "user",
+          "urn": "",
+          "username": "",
+          "verified": false,
         },
         "owner_guid": "824853017709780997",
         "parent_guid": "838106762591510528",
-        "paywall": undefined,
+        "paywall": "",
+        "paywall_unlocked": false,
         "perma_url": false,
         "permissions": Object {},
-        "pinned": undefined,
+        "pinned": false,
+        "reminds": 0,
         "rowKey": "something0",
         "shouldBeBlured": [MockFunction] {
           "calls": Array [
@@ -587,6 +719,7 @@ exports[`Activity component renders correctly 1`] = `
             },
           ],
         },
+        "subtype": "",
         "thumbnail_src": false,
         "thumbs:down:count": undefined,
         "thumbs:down:user_guids": undefined,
@@ -595,6 +728,8 @@ exports[`Activity component renders correctly 1`] = `
         "time_created": "1522036284",
         "title": "TITLE",
         "type": "activity",
+        "urn": "",
+        "username": "",
         "wire_totals": Object {
           "tokens": 1000000000000000000,
         },

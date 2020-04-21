@@ -10,7 +10,8 @@ exports[`renders correctly 1`] = `
   }
 >
   <Text>
-    Welcome to Minds. We have given you 
+    Welcome to Minds. We have given you
+     
     <Text
       style={
         Object {

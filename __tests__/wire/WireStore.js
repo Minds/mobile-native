@@ -2,7 +2,6 @@ import { when } from 'mobx';
 import wireService from '../../src/wire/WireService';
 import WireStore from '../../src/wire/WireStore';
 
-
 jest.mock('../../src/wire/WireService');
 
 /**
@@ -13,12 +12,13 @@ describe('wire store', () => {
 
   beforeEach(() => {
     store = new WireStore();
+    wireService.userRewards.mockClear();
   });
 
   it('should set the owner', () => {
-    const owner = {name: 'someone', guid: '123123'}
+    const owner = { name: 'someone', guid: '123123' };
     // should have a default null
-    expect(store.owner).toBe(null);
+    expect(store.owner).toBe(undefined);
 
     store.setOwner(owner);
 
@@ -28,16 +28,15 @@ describe('wire store', () => {
 
   it('should set the guid of the owner', () => {
     // should have a default null
-    const owner = {guid: '123123'};
+    const owner = { guid: '123123' };
 
-    expect(store.guid).toBe(undefined);
+    expect(store.guid).toBe(null);
 
     store.setOwner(owner);
 
     // should change to the new value
     expect(store.guid).toBe('123123');
   });
-
 
   it('should set the amount', () => {
     // should have a default 1
@@ -60,7 +59,6 @@ describe('wire store', () => {
   });
 
   it('should set sending in false', () => {
-
     store.sending = true;
 
     store.stopSending();
@@ -80,11 +78,11 @@ describe('wire store', () => {
     store.toggleRecurring();
     // should toggle to false
     expect(store.recurring).toBe(false);
-  })
+  });
 
   it('should load the user rewards from the service', async (done) => {
-    const fakeOwner = {name: 'someone', guid: '123123'};
-    const fakeOwnerResponse = {name: 'someone', guid: '123123'};
+    const fakeOwner = { name: 'someone', guid: '123123' };
+    const fakeOwnerResponse = { name: 'someone', guid: '123123' };
 
     wireService.userRewards.mockResolvedValue(fakeOwnerResponse);
 
@@ -102,7 +100,8 @@ describe('wire store', () => {
   });
 
   it('should not set the owner if load rewards fails', async (done) => {
-
+    store.setOwner({ guid: '123123', name: 'someone' });
+    wireService.userRewards = jest.fn();
     wireService.userRewards.mockRejectedValue(new Error('fakeError'));
 
     try {
@@ -110,7 +109,7 @@ describe('wire store', () => {
       done.fail();
     } catch (e) {
       // should not set the owner
-      expect(store.owner).toEqual(null);
+      expect(store.owner).toEqual({ guid: '123123', name: 'someone' });
       done();
     }
   });
@@ -130,7 +129,6 @@ describe('wire store', () => {
   });
 
   it('should reset the obvservable values', () => {
-
     store.amount = 2;
     store.currency = 'usd';
     store.sending = true;
@@ -140,7 +138,7 @@ describe('wire store', () => {
     store.showBtc = true;
     store.showCardselector = true;
     store.loaded = true;
-    store.errors = [{message:'error'}];
+    store.errors = [{ message: 'error' }];
 
     store.reset();
 
@@ -150,11 +148,11 @@ describe('wire store', () => {
     expect(store.showBtc).toEqual(false);
     expect(store.showCardselector).toEqual(false);
     expect(store.loaded).toEqual(false);
-    expect(store.owner).toEqual(null);
+    expect(store.owner).toEqual(undefined);
     expect(store.currency).toEqual('tokens');
     expect(store.errors).toEqual([]);
     expect(store.recurring).toEqual(false);
-    expect(store.guid).toEqual(undefined);
+    expect(store.guid).toEqual('');
   });
 
   it('should return if already sending', () => {
@@ -162,20 +160,19 @@ describe('wire store', () => {
     return expect(store.send()).resolves.toBeUndefined();
   });
 
-  it('should send a wire', async(done) => {
-    const fakeDone = {done: true};
+  it('should send a wire', async (done) => {
+    const fakeDone = { done: true };
     wireService.send.mockResolvedValue(fakeDone);
 
     expect.assertions(4);
     try {
-
       // should set sending in true
       when(
         () => store.sending,
-        () => expect(store.sending).toEqual(true)
+        () => expect(store.sending).toEqual(true),
       );
 
-      store.setOwner({guid: '123123', name: 'someone'});
+      store.setOwner({ guid: '123123', name: 'someone' });
 
       const result = await store.send();
 
@@ -192,7 +189,7 @@ describe('wire store', () => {
         guid: store.guid,
         owner: store.owner,
         recurring: store.recurring,
-        paymentMethodId: null
+        paymentMethodId: '',
       });
 
       done();
@@ -201,25 +198,26 @@ describe('wire store', () => {
     }
   });
 
-  it('should throw on send a wire', async(done) => {
-    const fakeDone = {done: true};
+  it('should throw on send a wire', async (done) => {
+    const fakeDone = { done: true };
     wireService.send.mockRejectedValue(fakeDone);
 
     expect.assertions(3);
     try {
-
       // should set sending in true
       when(
         () => store.sending,
-        () => expect(store.sending).toEqual(true)
+        () => expect(store.sending).toEqual(true),
       );
 
-      store.setOwner({guid: '123123', name: 'someone'});
+      store.setOwner({ guid: '123123', name: 'someone' });
 
       await store.send();
 
       done.fail('should fail');
     } catch (e) {
+      // should set sending in false on finish
+      expect(store.sending).toEqual(false);
       // should call the service
       expect(wireService.send).toBeCalledWith({
         currency: 'tokens',
@@ -227,11 +225,8 @@ describe('wire store', () => {
         guid: store.guid,
         owner: store.owner,
         recurring: store.recurring,
-        paymentMethodId: null
+        paymentMethodId: '',
       });
-
-      // should set sending in false on finish
-      expect(store.sending).toEqual(false);
       done();
     }
   });
