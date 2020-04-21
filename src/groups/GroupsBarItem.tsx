@@ -61,6 +61,7 @@ export default class GroupsBarItem extends Component {
           </Text>
         </View>
       ),
+      color: ThemedStyles.getColor('primary_text'),
       titleStyle: ThemedStyles.style.fontXL,
       backgroundColor: ThemedStyles.getColor('tertiary_background'),
       type: 'default',
