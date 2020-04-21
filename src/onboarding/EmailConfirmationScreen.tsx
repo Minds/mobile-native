@@ -11,7 +11,6 @@ import sessionService from '../common/services/session.service';
  * Email confirmation screen
  */
 export default class EmailConfirmationScreen extends Component {
-
   static navigationOptions = {
     title: 'Email confirm',
   };

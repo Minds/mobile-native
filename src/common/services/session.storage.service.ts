@@ -1,21 +1,26 @@
 //@ts-nocheck
-import storageService from "./storage.service";
+import storageService from './storage.service';
 
 /**
  * Session service
  */
 class SessionStorageService {
-
   /**
    * Get tokens of the current user
    */
   async getAll() {
     try {
-      const data = await storageService.multiGet(['access_token', 'refresh_token', 'logged_in_user']);
+      const data = await storageService.multiGet([
+        'access_token',
+        'refresh_token',
+        'logged_in_user',
+      ]);
 
-      const accessToken = data[0][1], refreshToken = data[1][1], user = data[2][1];
+      const accessToken = data[0][1],
+        refreshToken = data[1][1],
+        user = data[2][1];
 
-      return [accessToken ,refreshToken, user];
+      return [accessToken, refreshToken, user];
     } catch (err) {
       return null;
     }
@@ -35,7 +40,7 @@ class SessionStorageService {
   setAccessToken(token, expires) {
     return storageService.setItem('access_token', {
       access_token: token,
-      access_token_expires: expires
+      access_token_expires: expires,
     });
   }
 
@@ -69,7 +74,7 @@ class SessionStorageService {
   setRefreshToken(token, expires) {
     return storageService.setItem('refresh_token', {
       refresh_token: token,
-      refresh_token_expires: expires
+      refresh_token_expires: expires,
     });
   }
 
@@ -99,7 +104,12 @@ class SessionStorageService {
    * Clear all session data (logout)
    */
   async clear() {
-    await storageService.multiRemove(['access_token', 'refresh_token', 'private_key', 'logged_in_user']);
+    await storageService.multiRemove([
+      'access_token',
+      'refresh_token',
+      'private_key',
+      'logged_in_user',
+    ]);
   }
 }
 

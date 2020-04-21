@@ -3,9 +3,7 @@ import { computed, action, observable, decorate } from 'mobx';
 
 import ActivityModel from '../newsfeed/ActivityModel';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
-import {
-  MINDS_CDN_URI
-} from '../config/Config';
+import { MINDS_CDN_URI } from '../config/Config';
 
 import api from '../common/services/api.service';
 
@@ -13,7 +11,6 @@ import api from '../common/services/api.service';
  * Comment model
  */
 export default class CommentModel extends ActivityModel {
-
   @observable expanded = false;
 
   /**
@@ -47,14 +44,28 @@ export default class CommentModel extends ActivityModel {
    */
   getThumbSource(size = 'medium') {
     if (this.thumbnails && this.thumbnails[size]) {
-      return {uri: this.thumbnails[size], headers: api.buildHeaders() };
+      return { uri: this.thumbnails[size], headers: api.buildHeaders() };
     }
     // for gif use always the same size to take adventage of the cache (they are not resized)
     if (this.isGif()) size = 'medium';
     if (this.custom_type == 'batch') {
-      return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + (this.attachment_guid || this.entity_guid) + '/' + size };
+      return {
+        uri:
+          MINDS_CDN_URI +
+          'fs/v1/thumbnail/' +
+          (this.attachment_guid || this.entity_guid) +
+          '/' +
+          size,
+      };
     }
-    return { uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + (this.attachment_guid || this.guid)  + '/' + size };
+    return {
+      uri:
+        MINDS_CDN_URI +
+        'fs/v1/thumbnail/' +
+        (this.attachment_guid || this.guid) +
+        '/' +
+        size,
+    };
   }
 }
 
@@ -62,5 +73,5 @@ export default class CommentModel extends ActivityModel {
  * Define model observables
  */
 decorate(CommentModel, {
-  'replies_count': observable,
+  replies_count: observable,
 });

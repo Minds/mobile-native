@@ -1,10 +1,10 @@
 //@ts-nocheck
-import fbjsPerformanceNow from 'fbjs/lib/performanceNow'
+import fbjsPerformanceNow from 'fbjs/lib/performanceNow';
 const performanceNow = global.nativePerformanceNow || fbjsPerformanceNow;
 
-export default function() {
-  const start = performanceNow()
+export default function () {
+  const start = performanceNow();
   return {
-    timing: () => performanceNow() - start
-  }
+    timing: () => performanceNow() - start,
+  };
 }

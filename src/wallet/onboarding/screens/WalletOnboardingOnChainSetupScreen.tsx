@@ -1,16 +1,8 @@
 //@ts-nocheck
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Alert,
-} from 'react-native';
+import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 
 import keychainService from '../../../common/services/keychain.service';
 
@@ -85,7 +77,7 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   }
 
   showEphemeralWarning() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const message =
         i18n.t('onboarding.ensureYouExportKey') +
         '\n' +
@@ -94,8 +86,8 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
       Alert.alert(
         i18n.t('headsUp'),
         message,
-        [{text: i18n.t('iUnderstand'), onPress: () => resolve()}],
-        {cancelable: false},
+        [{ text: i18n.t('iUnderstand'), onPress: () => resolve() }],
+        { cancelable: false },
       );
     });
   }
@@ -113,23 +105,30 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   }
 
   canConfirm() {
-    return this.state.alreadyHasPin ||
-      (this.validatePin(this.state.pin) && this.matchPins());
+    return (
+      this.state.alreadyHasPin ||
+      (this.validatePin(this.state.pin) && this.matchPins())
+    );
   }
 
-  setPin = pin => {
-    const error = this.validatePin(pin) ? '' : i18n.t('onboarding.passwordInvalid');
+  setPin = (pin) => {
+    const error = this.validatePin(pin)
+      ? ''
+      : i18n.t('onboarding.passwordInvalid');
     this.setState({ pin, error });
-  }
+  };
 
   getPin() {
     return this.state.pin;
   }
 
-  setPinConfirmation = pinConfirmation => {
-    const error = pinConfirmation == this.state.pin ? '' : i18n.t('auth.confirmPasswordError');
+  setPinConfirmation = (pinConfirmation) => {
+    const error =
+      pinConfirmation == this.state.pin
+        ? ''
+        : i18n.t('auth.confirmPasswordError');
     this.setState({ pinConfirmation, error });
-  }
+  };
 
   getPinConfirmation() {
     return this.state.pinConfirmation;
@@ -148,13 +147,20 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
             i18n.t('onboarding.6digitDescription1')}
         </Text>
 
-        {!!this.state.error && <View>
-          <Text style={style.error}>{this.state.error}</Text>
-        </View>}
+        {!!this.state.error && (
+          <View>
+            <Text style={style.error}>{this.state.error}</Text>
+          </View>
+        )}
 
         <View style={[style.cols, style.form]}>
           <TextInput
-            style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
+            style={[
+              style.col,
+              style.colFirst,
+              style.textInput,
+              style.textInputCentered,
+            ]}
             value={this.getPin()}
             onChangeText={this.setPin}
             placeholder={i18n.t('auth.password')}
@@ -164,7 +170,11 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
           <Button
             text={i18n.t('create').toUpperCase()}
             onPress={this.createAction}
-            containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
+            containerStyle={[
+              style.col,
+              style.colLazy,
+              { margin: 0, justifyContent: 'center' },
+            ]}
             disabled={!this.canCreate()}
           />
         </View>
@@ -175,17 +185,22 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   getConfirmPinFormPartial() {
     return (
       <View>
-        <Text style={style.p}>
-          {i18n.t('onboarding.6digitConfirm')}
-        </Text>
+        <Text style={style.p}>{i18n.t('onboarding.6digitConfirm')}</Text>
 
-        {!!this.state.error && <View>
-          <Text style={style.error}>{this.state.error}</Text>
-        </View>}
+        {!!this.state.error && (
+          <View>
+            <Text style={style.error}>{this.state.error}</Text>
+          </View>
+        )}
 
         <View style={[style.cols, style.form]}>
           <TextInput
-            style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
+            style={[
+              style.col,
+              style.colFirst,
+              style.textInput,
+              style.textInputCentered,
+            ]}
             value={this.getPinConfirmation()}
             onChangeText={this.setPinConfirmation}
             placeholder={i18n.t('auth.confirmpassword')}
@@ -196,14 +211,22 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
           <Button
             text={i18n.t('retry').toUpperCase()}
             onPress={this.retryAction}
-            containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
+            containerStyle={[
+              style.col,
+              style.colLazy,
+              { margin: 0, justifyContent: 'center' },
+            ]}
           />
 
           <Button
             text={i18n.t('confirm').toUpperCase()}
             onPress={this.confirmAction}
             loading={this.state.inProgress}
-            containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
+            containerStyle={[
+              style.col,
+              style.colLazy,
+              { margin: 0, justifyContent: 'center' },
+            ]}
             disabled={!this.canConfirm()}
           />
         </View>
@@ -214,21 +237,24 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
   getAlreadyHasPinFormPartial() {
     return (
       <View>
-        <Text style={style.p}>
-          {i18n.t('onboarding.6digitAlreadySetup')}
-        </Text>
+        <Text style={style.p}>{i18n.t('onboarding.6digitAlreadySetup')}</Text>
 
         <View style={[style.cols, style.colsCenter, style.form]}>
-          {this.state.alreadyHasPin && <Text
-            style={[style.col, style.colFirst, style.primaryLegendUppercase]}
-          >
-            {i18n.t('onboarding.pinAlreadySetup')}
-          </Text>}
+          {this.state.alreadyHasPin && (
+            <Text
+              style={[style.col, style.colFirst, style.primaryLegendUppercase]}>
+              {i18n.t('onboarding.pinAlreadySetup')}
+            </Text>
+          )}
 
           <Button
             text={i18n.t('create').toUpperCase()}
             onPress={this.confirmAction}
-            containerStyle={[style.col, style.colLazy, {margin: 0, justifyContent: 'center'}]}
+            containerStyle={[
+              style.col,
+              style.colLazy,
+              { margin: 0, justifyContent: 'center' },
+            ]}
             disabled={!this.canConfirm()}
           />
         </View>
@@ -240,7 +266,9 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
     if (!this.state.confirmingPin) {
       return this.getPinFormPartial();
     } else {
-      return this.state.alreadyHasPin ? this.getAlreadyHasPinFormPartial() : this.getConfirmPinFormPartial();
+      return this.state.alreadyHasPin
+        ? this.getAlreadyHasPinFormPartial()
+        : this.getConfirmPinFormPartial();
     }
   }
 
@@ -259,21 +287,13 @@ export default class WalletOnboardingOnChainSetupScreen extends Component {
       <View>
         <Text style={style.h1}>{i18n.t('onboarding.setupOnchianAddress')}</Text>
 
-        <Text style={style.p}>
-          {i18n.t('onboarding.onchainDescription1')}
-        </Text>
+        <Text style={style.p}>{i18n.t('onboarding.onchainDescription1')}</Text>
 
-        <Text style={style.p}>
-          {i18n.t('onboarding.onchainDescription2')}
-        </Text>
+        <Text style={style.p}>{i18n.t('onboarding.onchainDescription2')}</Text>
 
-        <Text style={style.p}>
-          {i18n.t('onboarding.onchainDescription3')}
-        </Text>
+        <Text style={style.p}>{i18n.t('onboarding.onchainDescription3')}</Text>
 
-        <View>
-          {this.getFormPartial()}
-        </View>
+        <View>{this.getFormPartial()}</View>
       </View>
     );
   }

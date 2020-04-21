@@ -1,9 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 import featuresService from '../services/features.service';
-import {
-  observer
-} from 'mobx-react'
+import { observer } from 'mobx-react';
 
 /**
  * Feature Flag Select Component
@@ -12,7 +10,6 @@ import {
  * @param {string} flag
  */
 export default (Wrapped, Fallback, flag) => {
-
   @observer
   class FeatureFlagSelect extends Component {
     /**
@@ -31,4 +28,4 @@ export default (Wrapped, Fallback, flag) => {
   }
 
   return FeatureFlagSelect;
-}
+};

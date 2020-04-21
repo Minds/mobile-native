@@ -21,7 +21,7 @@ export default class CapturePreview extends PureComponent {
         body = (
           <Image
             resizeMode="contain"
-            source={{uri: this.props.uri}}
+            source={{ uri: this.props.uri }}
             style={styles.preview}
           />
         );
@@ -32,7 +32,7 @@ export default class CapturePreview extends PureComponent {
       case 'video':
         body = (
           <View style={styles.preview}>
-            <MindsVideo video={{uri: this.props.uri}} />
+            <MindsVideo video={{ uri: this.props.uri }} />
           </View>
         );
         break;
@@ -40,7 +40,6 @@ export default class CapturePreview extends PureComponent {
 
     return <View style={styles.wrapper}>{body}</View>;
   }
-
 }
 
 const styles = StyleSheet.create({

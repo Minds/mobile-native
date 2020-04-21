@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
@@ -12,10 +10,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import JoinView from './JoinView';
 
@@ -45,26 +40,21 @@ export default class WithdrawScreen extends Component {
   };
 
   static navigationOptions = {
-    title: 'Withdraw'
+    title: 'Withdraw',
   };
 
   async componentWillMount() {
-    return await Promise.all([
-      this.load(),
-      this.loadLedger()
-    ]);
+    return await Promise.all([this.load(), this.loadLedger()]);
   }
 
   async load() {
     try {
       this.setState({ inProgress: true });
 
-      await Promise.all([
-        this.checkPreviousWithdrawals(),
-        this.getBalance()
-      ]);
+      await Promise.all([this.checkPreviousWithdrawals(), this.getBalance()]);
     } catch (e) {
-      const error = (e && e.message) || i18n.t('wallet.withdraw.errorReadingStatus');
+      const error =
+        (e && e.message) || i18n.t('wallet.withdraw.errorReadingStatus');
       this.setState({ error });
     } finally {
       this.setState({ inProgress: false });
@@ -99,21 +89,27 @@ export default class WithdrawScreen extends Component {
   }
 
   canWithdraw() {
-    return !this.state.hasWithdrawnToday &&
+    return (
+      !this.state.hasWithdrawnToday &&
       !this.state.inProgress &&
       parseFloat(this.state.amount) > 0 &&
-      parseFloat(this.state.amount) <= this.state.available;
+      parseFloat(this.state.amount) <= this.state.available
+    );
   }
 
   async withdraw() {
     this.setState({ inProgress: true, error: '' });
 
     try {
-      await this.props.withdraw.withdraw(this.props.user.me.guid, parseFloat(this.state.amount));
+      await this.props.withdraw.withdraw(
+        this.props.user.me.guid,
+        parseFloat(this.state.amount),
+      );
       this.setState({ amount: '0' });
     } catch (e) {
       if (!e || e.message !== 'E_CANCELLED') {
-        const error = (e && e.message) || i18n.t('wallet.withdraw.errorWithdrawing');
+        const error =
+          (e && e.message) || i18n.t('wallet.withdraw.errorWithdrawing');
         this.setState({ error: readableError(error) });
       }
     } finally {
@@ -123,14 +119,20 @@ export default class WithdrawScreen extends Component {
 
   withdrawAction = () => this.withdraw();
 
-  setAmount = amount => {
+  setAmount = (amount) => {
     if (typeof amount === 'string') {
       amount = amount.replace(/,/g, '');
     }
 
-    if (typeof amount === 'string' && amount.substring(amount.length - 1) === '.') {
+    if (
+      typeof amount === 'string' &&
+      amount.substring(amount.length - 1) === '.'
+    ) {
       // Nothing, since we're inputting numbers, let's keep the dot
-    } else if (typeof amount === 'string' && !isNaN(+amount - parseFloat(amount))) {
+    } else if (
+      typeof amount === 'string' &&
+      !isNaN(+amount - parseFloat(amount))
+    ) {
       amount = `${+amount}`;
     }
 
@@ -143,7 +145,10 @@ export default class WithdrawScreen extends Component {
     }
 
     let withDot = false;
-    if (typeof this.state.amount === 'string' && this.state.amount.substring(this.state.amount.length - 1) === '.') {
+    if (
+      typeof this.state.amount === 'string' &&
+      this.state.amount.substring(this.state.amount.length - 1) === '.'
+    ) {
       withDot = true;
     }
 
@@ -158,35 +163,38 @@ export default class WithdrawScreen extends Component {
     let withdrawButonContent = 'WITHDRAW';
 
     if (this.state.inProgress) {
-      withdrawButonContent = <ActivityIndicator size="small" color={Colors.primary} />;
+      withdrawButonContent = (
+        <ActivityIndicator size="small" color={Colors.primary} />
+      );
     }
 
     return (
       <View style={style.formWrapperView}>
         <Text style={style.legendText}>
-          {
-            i18n.to('wallet.withdraw.youCanRequest1',
-              {
-                amount: this.getAmount()
-              },
-              {
-                onchain: <Text style={CommonStyle.bold}>OnChain</Text>
-              }
-            )
-          }
+          {i18n.to(
+            'wallet.withdraw.youCanRequest1',
+            {
+              amount: this.getAmount(),
+            },
+            {
+              onchain: <Text style={CommonStyle.bold}>OnChain</Text>,
+            },
+          )}
           {'\n'}
-          <Text style={{fontSize: 11}}>
-            {i18n.to('wallet.withdraw.youCanRequest2',
-              null,
-              {
-                approval: <Text style={CommonStyle.bold}>{i18n.t('wallet.withdraw.youCanRequest3')}</Text>
-              },
-            )}
+          <Text style={{ fontSize: 11 }}>
+            {i18n.to('wallet.withdraw.youCanRequest2', null, {
+              approval: (
+                <Text style={CommonStyle.bold}>
+                  {i18n.t('wallet.withdraw.youCanRequest3')}
+                </Text>
+              ),
+            })}
           </Text>
-          {
-            !!this.state.withholding ?
-            i18n.t('wallet.withdraw.holdingMessage',{amount: number(this.state.withholding, 0, 4)})  : ''
-          }
+          {!!this.state.withholding
+            ? i18n.t('wallet.withdraw.holdingMessage', {
+                amount: number(this.state.withholding, 0, 4),
+              })
+            : ''}
         </Text>
 
         <View style={style.formView}>
@@ -210,19 +218,25 @@ export default class WithdrawScreen extends Component {
           />
         </View>
 
-        {!!this.state.error && <Text style={style.errorText}>
-          {this.state.error}
-        </Text>}
+        {!!this.state.error && (
+          <Text style={style.errorText}>{this.state.error}</Text>
+        )}
       </View>
     );
-  }
+  };
 
   getLedgerItemPartial = ({ item }) => {
     return (
       <View style={style.ledgerItem}>
         <View style={style.ledgerItemMeta}>
-          <Text style={style.ledgerItemDate}>{formatDate(item.timestamp, 'date')}</Text>
-          <Text style={style.ledgerItemStatus}>{item.completed ? i18n.t('completed').toUpperCase() : i18n.t('pending').toUpperCase()}</Text>
+          <Text style={style.ledgerItemDate}>
+            {formatDate(item.timestamp, 'date')}
+          </Text>
+          <Text style={style.ledgerItemStatus}>
+            {item.completed
+              ? i18n.t('completed').toUpperCase()
+              : i18n.t('pending').toUpperCase()}
+          </Text>
         </View>
 
         <Text style={style.ledgerItemAmount}>
@@ -232,7 +246,7 @@ export default class WithdrawScreen extends Component {
     );
   };
 
-  ledgerKeyExtractor = item => `${item.timestamp}_${item.tx}`;
+  ledgerKeyExtractor = (item) => `${item.timestamp}_${item.tx}`;
 
   render() {
     const ledger = this.props.withdraw.ledger,
@@ -274,7 +288,7 @@ const style = StyleSheet.create({
   },
   formView: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   amountTextInput: {
     flexGrow: 1,
@@ -306,7 +320,7 @@ const style = StyleSheet.create({
   ledgerItemDate: {
     fontWeight: '500',
     letterSpacing: 0.5,
-    marginBottom: 3
+    marginBottom: 3,
   },
   ledgerItemStatus: {
     fontSize: 11,
@@ -317,5 +331,5 @@ const style = StyleSheet.create({
     fontSize: 24,
     fontWeight: '700',
     color: 'green',
-  }
+  },
 });

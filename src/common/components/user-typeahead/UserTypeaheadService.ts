@@ -3,7 +3,7 @@ import api from '../../services/api.service';
 import logService from '../../services/log.service';
 
 class UserTypeaheadService {
-  async search(query, limit=8) {
+  async search(query, limit = 8) {
     if (!query || query.length < 2) {
       return [];
     }
@@ -12,7 +12,7 @@ class UserTypeaheadService {
       let result = await api.get('api/v2/search/suggest/user', {
         q: query,
         limit,
-        hydrate: 1
+        hydrate: 1,
       });
 
       if (!result) {

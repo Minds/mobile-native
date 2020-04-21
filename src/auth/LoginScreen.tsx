@@ -30,10 +30,9 @@ const LOGO_HEIGHT_SMALL = 40;
  * Login screen
  */
 export default class LoginScreen extends Component {
-
   state = {
     keyboard: false,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -44,8 +43,14 @@ export default class LoginScreen extends Component {
   componentDidMount() {
     // Setting this here because if user register, then onboarding then logout and login again, will go to onboarding again
     sessionService.setInitialScreen('Tabs');
-    this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow);
-    this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide);
+    this.keyboardWillShowSub = Keyboard.addListener(
+      'keyboardDidShow',
+      this.keyboardWillShow,
+    );
+    this.keyboardWillHideSub = Keyboard.addListener(
+      'keyboardDidHide',
+      this.keyboardWillHide,
+    );
   }
 
   componentWillUnmount() {
@@ -80,7 +85,9 @@ export default class LoginScreen extends Component {
     const CS = ThemedStyles.style;
 
     return (
-      <KeyboardAvoidingView style={[CS.flexColumnStretch, CS.backgroundPrimary]} behavior={Platform.OS == 'ios' ? 'padding' : null} >
+      <KeyboardAvoidingView
+        style={[CS.flexColumnStretch, CS.backgroundPrimary]}
+        behavior={Platform.OS == 'ios' ? 'padding' : null}>
         <SafeAreaView style={[styles.flex10]}>
           <BannerInfo logged={false} />
           <ScrollView style={CS.flexContainer} keyboardShouldPersistTaps={true}>
@@ -97,11 +104,22 @@ export default class LoginScreen extends Component {
             </View>
           </ScrollView>
         </SafeAreaView>
-        <View style={[CS.paddingVertical2x, CS.backgroundSecondary, CS.mindsLayoutFooter]}>
-          <TouchableOpacity onPress={this.onPressRegister} testID="registerButton">
+        <View
+          style={[
+            CS.paddingVertical2x,
+            CS.backgroundSecondary,
+            CS.mindsLayoutFooter,
+          ]}>
+          <TouchableOpacity
+            onPress={this.onPressRegister}
+            testID="registerButton">
             <View style={CS.flexColumnCentered}>
-              <Text style={[CS.subTitleText, CS.colorSecondaryText]}>{i18nService.t('auth.haveAccount')}</Text>
-              <Text style={[CS.titleText, CS.colorPrimaryText]}>{i18nService.t('auth.createChannel')}</Text>
+              <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
+                {i18nService.t('auth.haveAccount')}
+              </Text>
+              <Text style={[CS.titleText, CS.colorPrimaryText]}>
+                {i18nService.t('auth.createChannel')}
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -114,14 +132,14 @@ export default class LoginScreen extends Component {
    */
   onPressForgot = () => {
     this.props.navigation.push('Forgot');
-  }
+  };
 
   /**
    * On press register
    */
   onPressRegister = () => {
     this.props.navigation.push('Register');
-  }
+  };
 
   /**
    * On login successful
@@ -139,6 +157,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 67,
     alignSelf: 'center',
-    marginTop: 10
+    marginTop: 10,
   },
 });

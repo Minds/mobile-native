@@ -1,7 +1,5 @@
 //@ts-nocheck
-import {
-  Platform
-} from 'react-native';
+import { Platform } from 'react-native';
 
 import DeviceInfo from 'react-native-device-info';
 
@@ -64,4 +62,5 @@ export const MINDS_DEEPLINK = [
 export const DISABLE_PASSWORD_INPUTS = false;
 
 // IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
-export const GOOGLE_PLAY_STORE = DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS == 'android';
+export const GOOGLE_PLAY_STORE =
+  DeviceInfo.getBuildNumber() < 1050000000 && Platform.OS == 'android';

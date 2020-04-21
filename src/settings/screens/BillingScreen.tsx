@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
@@ -20,18 +18,25 @@ import StripeCardSelector from '../../wire/methods/StripeCardSelector';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 export default class BillingScreen extends Component {
-
   onSelectCard = (card) => {
     return;
-  }
+  };
 
   render() {
     const CS = ThemedStyles.style;
     return (
       <View style={CS.columnAlignCenter}>
-        <Text style={[CS.marginTop2x, CS.fontHairline, CS.fontXL, CS.marginBottom2x]}>{i18n.t('wire.selectCredit')}</Text>
-        <StripeCardSelector onCardSelected={this.onSelectCard}/>
-    </View>
+        <Text
+          style={[
+            CS.marginTop2x,
+            CS.fontHairline,
+            CS.fontXL,
+            CS.marginBottom2x,
+          ]}>
+          {i18n.t('wire.selectCredit')}
+        </Text>
+        <StripeCardSelector onCardSelected={this.onSelectCard} />
+      </View>
     );
   }
 }

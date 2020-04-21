@@ -16,12 +16,12 @@ export default class NsfwToggle extends Component {
     super(props);
 
     this.reasons = [
-      { value: 1, label: i18n.t('nsfw.1')},
-      { value: 2, label: i18n.t('nsfw.2')},
-      { value: 3, label: i18n.t('nsfw.3')},
-      { value: 4, label: i18n.t('nsfw.4')},
-      { value: 5, label: i18n.t('nsfw.5')},
-      { value: 6, label: i18n.t('nsfw.6')},
+      { value: 1, label: i18n.t('nsfw.1') },
+      { value: 2, label: i18n.t('nsfw.2') },
+      { value: 3, label: i18n.t('nsfw.3') },
+      { value: 4, label: i18n.t('nsfw.4') },
+      { value: 5, label: i18n.t('nsfw.5') },
+      { value: 6, label: i18n.t('nsfw.6') },
     ];
 
     this.menuRef = React.createRef();
@@ -62,16 +62,23 @@ export default class NsfwToggle extends Component {
     const themed = ThemedStyles.style;
 
     const button = (
-      <Touchable style={this.props.containerStyle} onPress={this.showDropdown} testID="NsfwToggle">
+      <Touchable
+        style={this.props.containerStyle}
+        onPress={this.showDropdown}
+        testID="NsfwToggle">
         <MdIcon
           name="explicit"
           size={25}
-          style={[this.props.iconStyle, isActive && this.props.iconActiveStyle, isActive ? themed.colorAlert : themed.colorIcon]}
+          style={[
+            this.props.iconStyle,
+            isActive && this.props.iconActiveStyle,
+            isActive ? themed.colorAlert : themed.colorIcon,
+          ]}
         />
 
-        {isActive && !this.props.hideLabel && <Text style={this.props.labelStyle}>
-          {i18n.t('nsfw.button')}
-        </Text>}
+        {isActive && !this.props.hideLabel && (
+          <Text style={this.props.labelStyle}>{i18n.t('nsfw.button')}</Text>
+        )}
       </Touchable>
     );
 
@@ -86,8 +93,10 @@ export default class NsfwToggle extends Component {
               key={i}
               onPress={() => this.toggleDropdownOption(reason)}
               textStyle={[this.isReasonActive(reason) && themed.colorLink]}
-              testID={`NsfwReason${reason.label}`}
-            >{this.isReasonActive(reason) && <MdIcon name="check" />} {reason.label}</MenuItem>
+              testID={`NsfwReason${reason.label}`}>
+              {this.isReasonActive(reason) && <MdIcon name="check" />}{' '}
+              {reason.label}
+            </MenuItem>
           ))}
         </Menu>
       </React.Fragment>

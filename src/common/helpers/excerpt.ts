@@ -4,5 +4,5 @@ export default function excerpt(str, max) {
     return str;
   }
 
-  return str.substr(0, max-3) + '...';
+  return str.substr(0, max - 3) + '...';
 }

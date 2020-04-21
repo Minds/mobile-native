@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-    Component,
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   StyleSheet,
@@ -28,14 +26,14 @@ export default class CaptureTab extends Component {
     imageUri: '',
     attachmentGuid: '',
     attachmentDone: false,
-  }
+  };
 
   static navigationOptions = {
     header: null,
     tabBarIcon: ({ tintColor }) => (
       <Icon name="md-radio-button-on" size={24} color={tintColor} />
-    )
-  }
+    ),
+  };
 
   /**
    * Render
@@ -43,32 +41,56 @@ export default class CaptureTab extends Component {
   render() {
     return (
       <View style={CommonStyle.flexContainer}>
-
-        { this.state.screen != 'poster' ?
-          <View style={{height:125}}>
-            <View style={{flex:1, flexDirection:'row', paddingLeft: 1, paddingRight: 1 }}>
-              <TouchableHighlight onPress={ this.gallery } style={styles.buttons}>
-                <View style={ styles.buttonsWrapper }>
-                  <Icon name="md-photos" size={36} style={ ThemedStyles.style.colorIcon }/>
-                  <Text style={ [styles.labels, ThemedStyles.style.colorIcon] }>{i18n.t('capture.gallery')}</Text>
+        {this.state.screen != 'poster' ? (
+          <View style={{ height: 125 }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                paddingLeft: 1,
+                paddingRight: 1,
+              }}>
+              <TouchableHighlight onPress={this.gallery} style={styles.buttons}>
+                <View style={styles.buttonsWrapper}>
+                  <Icon
+                    name="md-photos"
+                    size={36}
+                    style={ThemedStyles.style.colorIcon}
+                  />
+                  <Text style={[styles.labels, ThemedStyles.style.colorIcon]}>
+                    {i18n.t('capture.gallery')}
+                  </Text>
                 </View>
               </TouchableHighlight>
-              <TouchableHighlight onPress={ this.photo } style={styles.buttons}>
-                <View style={ styles.buttonsWrapper }>
-                  <Icon name="md-camera" size={36} style={ ThemedStyles.style.colorIcon }/>
-                  <Text style={ [styles.labels, ThemedStyles.style.colorIcon] }>{i18n.t('capture.photo')}</Text>
+              <TouchableHighlight onPress={this.photo} style={styles.buttons}>
+                <View style={styles.buttonsWrapper}>
+                  <Icon
+                    name="md-camera"
+                    size={36}
+                    style={ThemedStyles.style.colorIcon}
+                  />
+                  <Text style={[styles.labels, ThemedStyles.style.colorIcon]}>
+                    {i18n.t('capture.photo')}
+                  </Text>
                 </View>
               </TouchableHighlight>
-              <TouchableHighlight onPress={ this.video } style={styles.buttons}>
-                <View style={ styles.buttonsWrapper }>
-                  <Icon name="md-videocam" size={36} style={ ThemedStyles.style.colorIcon }/>
-                  <Text style={ [styles.labels, ThemedStyles.style.colorIcon] }>{i18n.t('capture.video')}</Text>
+              <TouchableHighlight onPress={this.video} style={styles.buttons}>
+                <View style={styles.buttonsWrapper}>
+                  <Icon
+                    name="md-videocam"
+                    size={36}
+                    style={ThemedStyles.style.colorIcon}
+                  />
+                  <Text style={[styles.labels, ThemedStyles.style.colorIcon]}>
+                    {i18n.t('capture.video')}
+                  </Text>
                 </View>
               </TouchableHighlight>
             </View>
-          </View> :
+          </View>
+        ) : (
           <View></View>
-        }
+        )}
       </View>
     );
   }
@@ -77,19 +99,19 @@ export default class CaptureTab extends Component {
     try {
       const response = await attachmentService.video();
       if (response) this.props.onSelectedMedia(response);
-    } catch(e) {
+    } catch (e) {
       alert(e);
     }
-  }
+  };
 
   photo = async () => {
     try {
       const response = await attachmentService.photo();
       if (response) this.props.onSelectedMedia(response);
-    } catch(e) {
+    } catch (e) {
       alert(e);
     }
-  }
+  };
 
   /**
    * Open gallery
@@ -101,23 +123,23 @@ export default class CaptureTab extends Component {
     } catch (e) {
       alert(e);
     }
-  }
+  };
 
   /**
    * Return tab style
    * @param {string} value
    */
   tabButtonStyle(value) {
-    if(value === this.state.screen) {
+    if (value === this.state.screen) {
       return {
         flex: 1,
-        borderRadius:0
-      }
+        borderRadius: 0,
+      };
     } else {
       return {
         flex: 1,
-        borderRadius:0
-      }
+        borderRadius: 0,
+      };
     }
   }
 
@@ -137,9 +159,8 @@ export default class CaptureTab extends Component {
    * Move to capture screen
    */
   moveToCaptureScreen() {
-    this.setState({screen:'captureImage'});
+    this.setState({ screen: 'captureImage' });
   }
-
 }
 
 const styles = StyleSheet.create({
@@ -151,7 +172,7 @@ const styles = StyleSheet.create({
     color: '#444',
   },
   buttons: {
-    flex:1,
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -165,12 +186,12 @@ const styles = StyleSheet.create({
     alignContent: 'center',
   },
   selectedButton: {
-    flex:1,
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    borderBottomWidth:3,
+    borderBottomWidth: 3,
     backgroundColor: '#FFF',
     borderColor: colors.primary,
-  }
+  },
 });

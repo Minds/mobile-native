@@ -22,27 +22,27 @@ export default class Input extends Component {
   };
 
   showError = () => {
-    this.setState({error: true});
-  }
+    this.setState({ error: true });
+  };
 
   /**
    * Show date picker
    */
   showDatePicker = () => {
-    this.setState({datePickerVisible: true});
+    this.setState({ datePickerVisible: true });
   };
 
   /**
    * Dismiss date picker
    */
   dismissDatePicker = () => {
-    this.setState({datePickerVisible: false});
+    this.setState({ datePickerVisible: false });
   };
 
   /**
    * Confirm date picker
    */
-  confirmDatePicker = date => {
+  confirmDatePicker = (date) => {
     this.props.onChangeText(date.toLocaleDateString());
     this.dismissDatePicker();
   };
@@ -55,10 +55,7 @@ export default class Input extends Component {
     return (
       <TextInput
         {...this.props}
-        style={[
-          CS.input,
-          this.props.style,
-        ]}
+        style={[CS.input, this.props.style]}
         placeholderTextColor="#444"
         returnKeyType={'done'}
         autoCapitalize={'none'}
@@ -149,9 +146,17 @@ export default class Input extends Component {
       <View style={CS.marginBottom2x}>
         <View style={[styles.row]}>
           <View style={styles.row}>
-            <Text style={[styles.label, this.props.labelStyle]}>{this.props.placeholder}</Text>
+            <Text style={[styles.label, this.props.labelStyle]}>
+              {this.props.placeholder}
+            </Text>
             {this.props.info && <InfoPopup info={this.props.info} />}
-            {this.props.onError && this.state.error && <View style={styles.errorContainer}><Text style={[CS.colorAlert, CS.fontL, CS.textRight]}>{this.props.onError}</Text></View>}
+            {this.props.onError && this.state.error && (
+              <View style={styles.errorContainer}>
+                <Text style={[CS.colorAlert, CS.fontL, CS.textRight]}>
+                  {this.props.onError}
+                </Text>
+              </View>
+            )}
           </View>
           {optional}
         </View>
@@ -170,12 +175,12 @@ const styles = StyleSheet.create({
     color: '#AEB0B8',
     fontSize: 16,
     fontWeight: '600',
-    marginBottom:5 ,
+    marginBottom: 5,
     fontFamily: 'Roboto',
   },
   errorContainer: {
-    alignContent:'flex-end',
-    width:'65%',
+    alignContent: 'flex-end',
+    width: '65%',
   },
   optional: {
     color: '#AEB0B8',
@@ -183,7 +188,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Italic',
   },
   shadow: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 1,

@@ -10,7 +10,7 @@ import i18n from '../services/i18n.service';
 /**
  * Local attachment store hook
  */
-export default function() {
+export default function () {
   const store = useLocalStore(() => ({
     hasAttachment: false,
     uploading: false,
@@ -90,7 +90,7 @@ export default function() {
         const uploadPromise = attachmentService.attachMedia(
           media,
           extra,
-          pct => {
+          (pct) => {
             store.setProgress(pct);
           },
         );

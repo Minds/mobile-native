@@ -111,7 +111,7 @@ export default function ({ navigation }) {
         <SettingsItem item={item} i={i} />
       ))}
     </View>
-  )
+  );
 }
 
 const styles = {

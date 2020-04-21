@@ -9,15 +9,13 @@ import React from 'react';
  * @param {Component} WrappedComponent
  */
 export default (Wrapped, delay = 300) => {
-
   class DoubleTap extends React.PureComponent {
-
     lastTap = null;
     interval = null;
 
     handleOnPress = () => {
       const now = Date.now();
-      if (this.lastTap && (now - this.lastTap) < delay) {
+      if (this.lastTap && now - this.lastTap < delay) {
         this.props.onDoubleTap();
         clearTimeout(this.interval);
       } else {
@@ -30,7 +28,7 @@ export default (Wrapped, delay = 300) => {
           }, delay);
         }
       }
-    }
+    };
 
     fireOnPress() {
       if (this.props.onPress) {
@@ -47,4 +45,4 @@ export default (Wrapped, delay = 300) => {
   }
 
   return DoubleTap;
-}
+};

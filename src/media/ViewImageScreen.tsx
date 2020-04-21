@@ -1,14 +1,7 @@
 //@ts-nocheck
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Platform,
-} from 'react-native';
+import { View, StyleSheet, Dimensions, Platform } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -22,11 +15,10 @@ import ImageViewer from '../common/components/ImageViewer';
  * Full screen image viewer
  */
 export default class ViewImageScreen extends Component {
-
   static navigationOptions = ({ navigation }) => ({
     transitionConfig: {
-      isModal: true
-    }
+      isModal: true,
+    },
   });
 
   constructor(props) {
@@ -54,18 +46,22 @@ export default class ViewImageScreen extends Component {
   }
 
   render() {
-
     const source = this.getSource();
 
     return (
-      <View style={[CommonStyle.flexContainerCenter, CommonStyle.alignCenter, CommonStyle.backgroundBlack]}>
+      <View
+        style={[
+          CommonStyle.flexContainerCenter,
+          CommonStyle.alignCenter,
+          CommonStyle.backgroundBlack,
+        ]}>
         <ImageViewer
           source={source}
           width={this.state.width}
           height={this.state.height}
         />
       </View>
-    )
+    );
   }
 }
 

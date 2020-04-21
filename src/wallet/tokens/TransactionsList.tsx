@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   Text,
@@ -12,15 +10,12 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
 import { CommonStyle } from '../../styles/Common';
 import { ComponentsStyle } from '../../styles/Components';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import token from "../../common/helpers/token";
+import token from '../../common/helpers/token';
 import i18n from '../../common/services/i18n.service';
 import DateRangePicker from '../../common/components/DateRangePicker';
 import Colors from '../../styles/Colors';
@@ -35,7 +30,6 @@ import navigationService from '../../navigation/NavigationService';
 @inject('wallet', 'user')
 @observer
 export default class TransactionsList extends Component {
-
   /**
    * On component will unmount
    */
@@ -51,18 +45,21 @@ export default class TransactionsList extends Component {
     this.props.wallet.ledger.list.clearList();
 
     const end = new Date();
-    const start   = new Date();
+    const start = new Date();
 
     end.setHours(23, 59, 59);
     start.setMonth(start.getMonth() - 1);
     start.setHours(0, 0, 0);
 
-    this.setState({
-      from: start,
-      to: end
-    }, () => {
-      this.loadMore();
-    });
+    this.setState(
+      {
+        from: start,
+        to: end,
+      },
+      () => {
+        this.loadMore();
+      },
+    );
   }
 
   /**
@@ -77,24 +74,33 @@ export default class TransactionsList extends Component {
     empty = (
       <View style={ComponentsStyle.emptyComponentContainer}>
         <View style={ComponentsStyle.emptyComponent}>
-          <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('wallet.transactionsEmpty')}</Text>
+          <Text style={ComponentsStyle.emptyComponentMessage}>
+            {i18n.t('wallet.transactionsEmpty')}
+          </Text>
         </View>
-      </View>);
+      </View>
+    );
 
     return (
       <FlatList
         data={entities.slice()}
         renderItem={this.renderRow}
-        keyExtractor={(item, index) => (item.timestamp+index).toString()}
+        keyExtractor={(item, index) => (item.timestamp + index).toString()}
         onRefresh={this.refresh}
         refreshing={wallet.ledger.list.refreshing}
         onEndReached={this.loadMore}
         // onEndReachedThreshold={0}
-        ListEmptyComponent={!wallet.ledger.list.loaded && !wallet.ledger.list.refreshing? <CenteredLoading /> : empty}
+        ListEmptyComponent={
+          !wallet.ledger.list.loaded && !wallet.ledger.list.refreshing ? (
+            <CenteredLoading />
+          ) : (
+            empty
+          )
+        }
         //ListHeaderComponent={header}
         style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}
       />
-    )
+    );
   }
 
   /**
@@ -108,33 +114,33 @@ export default class TransactionsList extends Component {
         onToChange={this.setTo}
         onFromChange={this.setFrom}
       />
-    )
+    );
   }
 
   /**
    * Set to date
    */
   setTo = (value) => {
-    this.setState({toVisible: false, to: value}, () => {
+    this.setState({ toVisible: false, to: value }, () => {
       this.refresh();
     });
-  }
+  };
 
   /**
    * Set from date
    */
   setFrom = (value) => {
-    this.setState({fromVisible: false, from: value}, () => {
+    this.setState({ fromVisible: false, from: value }, () => {
       this.refresh();
     });
-  }
+  };
 
   /**
    * Load more data
    */
   loadMore = () => {
     this.props.wallet.ledger.loadList(this.state.from, this.state.to);
-  }
+  };
 
   //
 
@@ -144,7 +150,7 @@ export default class TransactionsList extends Component {
     return {
       avatar: channelAvatarUrl(user),
       username: user.username,
-    }
+    };
   }
 
   getOther(transaction) {
@@ -157,7 +163,7 @@ export default class TransactionsList extends Component {
       username: user.username,
       guid: user.guid,
       isSender,
-    }
+    };
   }
 
   isP2p(transaction) {
@@ -169,56 +175,91 @@ export default class TransactionsList extends Component {
   }
 
   getNormalizedContractName(contractName) {
-    return contractName.indexOf('offchain:') > -1 ? contractName.substr(9) : contractName;
+    return contractName.indexOf('offchain:') > -1
+      ? contractName.substr(9)
+      : contractName;
   }
 
-  navToChannel = guid => {
+  navToChannel = (guid) => {
     navigationService.navigate('Channel', { guid });
-  }
+  };
 
   /**
    * Render list's rows
    */
   renderRow = (row) => {
     const item = row.item,
-      Sep = (<Text style={styles.rowColumnCellSep}>|</Text>),
+      Sep = <Text style={styles.rowColumnCellSep}>|</Text>,
       negative = item.amount < 0;
 
     return (
       <View style={[styles.row]}>
         <View style={[styles.rowColumn, styles.rowColumnAmount]}>
-          <Text style={[styles.count, !negative && styles.positive, negative && styles.negative]}>
+          <Text
+            style={[
+              styles.count,
+              !negative && styles.positive,
+              negative && styles.negative,
+            ]}>
             {negative ? '-' : '+'} {Math.abs(token(item.amount)).toFixed(3)}
           </Text>
 
-          {this.isP2p(item) && <View style={styles.rowColumn}>
-            <Touchable onPress={() => this.navToChannel(this.getSelf().guid)}>
-              <Image source={{ uri: this.getSelf().avatar }} style={[styles.rowColumnCellAvatar, styles.rowColumnCellSpacing]} />
-            </Touchable>
+          {this.isP2p(item) && (
+            <View style={styles.rowColumn}>
+              <Touchable onPress={() => this.navToChannel(this.getSelf().guid)}>
+                <Image
+                  source={{ uri: this.getSelf().avatar }}
+                  style={[
+                    styles.rowColumnCellAvatar,
+                    styles.rowColumnCellSpacing,
+                  ]}
+                />
+              </Touchable>
 
-            <MdIcon style={styles.rowColumnCellSpacing} name={this.getOther(item).isSender ? 'arrow-back' : 'arrow-forward'} size={20} color="#555" />
+              <MdIcon
+                style={styles.rowColumnCellSpacing}
+                name={
+                  this.getOther(item).isSender ? 'arrow-back' : 'arrow-forward'
+                }
+                size={20}
+                color="#555"
+              />
 
-            <Touchable onPress={() => this.navToChannel(this.getOther(item).guid)}>
-              <Image source={{ uri: this.getOther(item).avatar }} style={[styles.rowColumnCellAvatar, styles.rowColumnCellSpacing]} />
-            </Touchable>
-          </View>}
+              <Touchable
+                onPress={() => this.navToChannel(this.getOther(item).guid)}>
+                <Image
+                  source={{ uri: this.getOther(item).avatar }}
+                  style={[
+                    styles.rowColumnCellAvatar,
+                    styles.rowColumnCellSpacing,
+                  ]}
+                />
+              </Touchable>
+            </View>
+          )}
         </View>
 
         <View style={styles.rowColumn}>
-          <Text style={[styles.subtext, styles.rowColumnCell]}>{this.getNormalizedContractName(item.contract).toUpperCase()} {Sep}</Text>
-          <Text style={[styles.subtext, styles.rowColumnCell]}>{item.wallet_address} {Sep}</Text>
-          <Text style={[styles.subtext, styles.rowColumnCellRight]}>{i18n.l('datetime.formats.small', item.timestamp * 1000)}</Text>
+          <Text style={[styles.subtext, styles.rowColumnCell]}>
+            {this.getNormalizedContractName(item.contract).toUpperCase()} {Sep}
+          </Text>
+          <Text style={[styles.subtext, styles.rowColumnCell]}>
+            {item.wallet_address} {Sep}
+          </Text>
+          <Text style={[styles.subtext, styles.rowColumnCellRight]}>
+            {i18n.l('datetime.formats.small', item.timestamp * 1000)}
+          </Text>
         </View>
       </View>
-    )
-  }
+    );
+  };
 
   /**
    * Refresh list
    */
   refresh = () => {
     this.props.wallet.ledger.refresh(this.state.from, this.state.to);
-  }
+  };
 }
 
 const styles = StyleSheet.create({
@@ -279,5 +320,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontSize: 14,
     color: '#555',
-  }
+  },
 });

@@ -1,9 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action,
-  observe
-} from 'mobx'
+import { observable, action, observe } from 'mobx';
 
 let unlockingSecretDispose;
 
@@ -11,7 +7,6 @@ let unlockingSecretDispose;
  * Keychain Store
  */
 class KeychainStore {
-
   @observable isUnlocking = false;
   @observable unlockingKeychain = '';
   @observable unlockingSecret = void 0;
@@ -29,25 +24,29 @@ class KeychainStore {
     this.unlockingExisting = existing;
     this.unlockingAttempts = attempts;
 
-    return await new Promise(resolve => {
+    return await new Promise((resolve) => {
       if (unlockingSecretDispose) {
         unlockingSecretDispose();
         unlockingSecretDispose = void 0;
       }
 
-      unlockingSecretDispose = observe(this, 'unlockingSecret', action(change => {
-        unlockingSecretDispose();
+      unlockingSecretDispose = observe(
+        this,
+        'unlockingSecret',
+        action((change) => {
+          unlockingSecretDispose();
 
-        this.isUnlocking = false;
-        this.unlockingKeychain = '';
-        this.unlockingSecret = void 0;
-        this.unlockingExisting = false;
-        this.unlockingAttempts = 0;
+          this.isUnlocking = false;
+          this.unlockingKeychain = '';
+          this.unlockingSecret = void 0;
+          this.unlockingExisting = false;
+          this.unlockingAttempts = 0;
 
-        if (typeof change.newValue !== 'undefined') {
-          resolve(change.newValue);
-        }
-      }));
+          if (typeof change.newValue !== 'undefined') {
+            resolve(change.newValue);
+          }
+        }),
+      );
     });
   }
 
@@ -75,7 +74,6 @@ class KeychainStore {
     this.unlockingExisting = false;
     this.unlockingAttempts = 0;
   }
-
 }
 
-export default KeychainStore
+export default KeychainStore;

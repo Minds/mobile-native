@@ -15,15 +15,18 @@ class BlockchainWithdrawService {
       gas = gasPrice * gasLimit, // TODO: make this dynamic
       gasEther = Web3Service.web3.utils.fromWei(`${gas}`, 'ether');
 
-    const withdrawRequest = await withdraw.methods.request(
-      guid,
-      weiAmount
-    );
+    const withdrawRequest = await withdraw.methods.request(guid, weiAmount);
 
     const result = await Web3Service.sendSignedContractMethodWithValue(
       withdrawRequest,
       gas,
-      i18n.t('blockchain.withdraw',{tokensAmount, 'gasEther': gasEther.toString(), message}).trim()
+      i18n
+        .t('blockchain.withdraw', {
+          tokensAmount,
+          gasEther: gasEther.toString(),
+          message,
+        })
+        .trim(),
     );
 
     return {

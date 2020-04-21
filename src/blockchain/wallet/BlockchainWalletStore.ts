@@ -1,15 +1,10 @@
 //@ts-nocheck
-import {
-  observable,
-  computed,
-  action,
-} from 'mobx'
+import { observable, computed, action } from 'mobx';
 
 import BlockchainApiService from '../BlockchainApiService';
 import BlockchainWalletService from './BlockchainWalletService';
 
 class BlockchainWalletStore {
-
   @observable inProgress = false;
   @observable loaded = false;
   @observable wallets = [];
@@ -19,19 +14,21 @@ class BlockchainWalletStore {
   }
 
   @computed get signableWallets() {
-    return this.wallets
-      .filter(wallet => !!wallet.privateKey);
+    return this.wallets.filter((wallet) => !!wallet.privateKey);
   }
 
   getList(signableOnly, allowOffchain) {
-    const wallets = (signableOnly ? this.signableWallets : this.wallets).slice();
+    const wallets = (signableOnly
+      ? this.signableWallets
+      : this.wallets
+    ).slice();
 
     if (allowOffchain) {
       wallets.push({
         address: 'offchain',
         alias: 'OffChain Wallet',
-        offchain: true
-      })
+        offchain: true,
+      });
     }
 
     return wallets;
@@ -48,14 +45,16 @@ class BlockchainWalletStore {
     let remoteWallet,
       wallets = [];
 
-    wallets.push(...await BlockchainWalletService.getAll());
+    wallets.push(...(await BlockchainWalletService.getAll()));
 
     try {
       remoteWallet = await BlockchainApiService.getWallet();
-    } catch (e) { }
+    } catch (e) {}
 
     if (remoteWallet) {
-      let existingServerWalletIndex = wallets.findIndex(item => item.address.toLowerCase() === remoteWallet.toLowerCase());
+      let existingServerWalletIndex = wallets.findIndex(
+        (item) => item.address.toLowerCase() === remoteWallet.toLowerCase(),
+      );
 
       if (existingServerWalletIndex > -1) {
         wallets[existingServerWalletIndex].remote = true;

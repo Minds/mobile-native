@@ -1,18 +1,11 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  View,
-  TouchableHighlight,
-  Text,
-  StyleSheet
-} from 'react-native';
+import { View, TouchableHighlight, Text, StyleSheet } from 'react-native';
 import Video from 'react-native-video';
 
 export default class VideoBackground extends Component {
-    
   render() {
-  
     return (
       <View style={styles.container}>
         <Video
@@ -29,7 +22,6 @@ export default class VideoBackground extends Component {
         <View style={styles.overlay}></View>
       </View>
     );
-
   }
 }
 
@@ -55,5 +47,5 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
-  }
+  },
 });

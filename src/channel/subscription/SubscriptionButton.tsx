@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import { Alert } from 'react-native';
 import { observer } from 'mobx-react';
@@ -14,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { CommonStyle } from '../../styles/Common';
 
 type PropsType = {
-  channel: UserModel
+  channel: UserModel;
 };
 
 /**
@@ -22,7 +20,6 @@ type PropsType = {
  */
 @observer
 class SubscriptionButton extends Component<PropsType> {
-
   /**
    * On press
    */
@@ -31,11 +28,13 @@ class SubscriptionButton extends Component<PropsType> {
 
     if (channel.isOpen() || channel.subscribed) {
       if (channel.subscribed) {
-        Alert.alert(
-          i18n.t('attention'),
-          i18n.t('channel.confirmUnsubscribe'),
-          [{ text: i18n.t('yesImSure'), onPress: () => channel.toggleSubscription() }, { text: i18n.t('no')}]
-        );
+        Alert.alert(i18n.t('attention'), i18n.t('channel.confirmUnsubscribe'), [
+          {
+            text: i18n.t('yesImSure'),
+            onPress: () => channel.toggleSubscription(),
+          },
+          { text: i18n.t('no') },
+        ]);
       } else {
         channel.toggleSubscription();
       }
@@ -44,35 +43,43 @@ class SubscriptionButton extends Component<PropsType> {
     } else {
       channel.subscribeRequest();
     }
-  }
+  };
 
   /**
    * Render
    */
   render() {
-    const {
-      channel,
-      ...otherProps
-    } = this.props;
+    const { channel, ...otherProps } = this.props;
 
-    let text, icon = null;
+    let text,
+      icon = null;
 
     if (channel.isOpen()) {
-      text = channel.subscribed ? i18n.t('channel.unsubscribe') : i18n.t('channel.subscribe');
+      text = channel.subscribed
+        ? i18n.t('channel.unsubscribe')
+        : i18n.t('channel.subscribe');
     } else {
-      text = channel.subscribed ? i18n.t('channel.unsubscribe') : (!channel.pending_subscribe ? i18n.t('channel.requestSubscription') : i18n.t('pending'));
+      text = channel.subscribed
+        ? i18n.t('channel.unsubscribe')
+        : !channel.pending_subscribe
+        ? i18n.t('channel.requestSubscription')
+        : i18n.t('pending');
       if (channel.pending_subscribe) {
-        icon = <Icon name="ios-close" style={[CommonStyle.colorPrimary, CommonStyle.paddingLeft]} size={23}/>
+        icon = (
+          <Icon
+            name="ios-close"
+            style={[CommonStyle.colorPrimary, CommonStyle.paddingLeft]}
+            size={23}
+          />
+        );
       }
     }
 
     return (
-      <Button
-        text={text}
-        onPress={this.onPress}
-        {...otherProps}
-      >{icon}</Button>
-    )
+      <Button text={text} onPress={this.onPress} {...otherProps}>
+        {icon}
+      </Button>
+    );
   }
 }
 

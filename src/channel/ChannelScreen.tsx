@@ -1,20 +1,9 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  Alert,
-  SafeAreaView,
-} from 'react-native';
+import { StyleSheet, Text, View, Alert, SafeAreaView } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
 import { Icon } from 'react-native-elements';
 
@@ -62,7 +51,7 @@ class ChannelScreen extends Component {
           store.feedStore.feedStore.prepend(params.prepend);
         }
         // we clear the parameter to prevent prepend it again on goBack
-        this.props.navigation.setParams({prepend: null});
+        this.props.navigation.setParams({ prepend: null });
       }
     });
 
@@ -82,7 +71,6 @@ class ChannelScreen extends Component {
     if (params.entity) {
       // load channel from endpoint
       this.loadChannel(params.entity);
-
     } else if (params.username) {
       await this.loadByUsername(params.username);
     } else if (params.guid) {
@@ -120,12 +108,11 @@ class ChannelScreen extends Component {
         this.props.channel.addVisited(channel);
       }
     } catch (err) {
-
       Alert.alert(
         'Attention',
         err.message || 'Error loading channel, please try again later.',
         [{ text: 'OK', onPress: () => this.props.navigation.goBack() }],
-        { cancelable: false }
+        { cancelable: false },
       );
       return false;
     }
@@ -140,7 +127,7 @@ class ChannelScreen extends Component {
   checkCanView(channel) {
     // if the channel obj doesn't have the permissions loaded return true
     if (channel.isClosed() || !channel.permissions.permissions) {
-      return true
+      return true;
     }
 
     if (!channel.can(FLAG_VIEW, true)) {
@@ -153,7 +140,6 @@ class ChannelScreen extends Component {
   //TODO: make a reverse map so we can cache usernames
   async loadByUsername(username) {
     try {
-
       // get store by name and load channel
       const store = await this.props.channel.storeByName(username);
       this.setState({ guid: store.channel.guid });
@@ -163,13 +149,12 @@ class ChannelScreen extends Component {
 
       // load feed now
       store.feedStore.loadFeed();
-
     } catch (err) {
       Alert.alert(
         i18n.t('attention'),
         i18n.t('channel.notFound'),
         [{ text: i18n.t('ok'), onPress: () => this.props.navigation.goBack() }],
-        { cancelable: false }
+        { cancelable: false },
       );
     }
   }
@@ -187,13 +172,14 @@ class ChannelScreen extends Component {
    */
   createPost = () => {
     this.props.navigation.navigate('Capture');
-  }
+  };
 
   getHeader(store) {
-    const feed    = store.feedStore;
+    const feed = store.feedStore;
     const channel = store.channel;
     const rewards = store.rewards;
-    const showClosed = channel.isClosed() && !channel.subscribed && !channel.isOwner();
+    const showClosed =
+      channel.isClosed() && !channel.subscribed && !channel.isOwner();
 
     return (
       <View>
@@ -203,30 +189,34 @@ class ChannelScreen extends Component {
           navigation={this.props.navigation}
         />
 
-        {!channel.blocked && !showClosed &&
+        {!channel.blocked && !showClosed && (
           <Toolbar
             feed={feed}
             subscriptionRequest={this.props.subscriptionRequest}
             channel={channel}
             hasRewards={rewards.merged && rewards.merged.length}
           />
-        }
+        )}
 
-        {!!channel.blocked &&
+        {!!channel.blocked && (
           <View style={styles.blockView}>
-            <Text style={styles.blockText}>{i18n.t('channel.blocked',{username: channel.username})}</Text>
+            <Text style={styles.blockText}>
+              {i18n.t('channel.blocked', { username: channel.username })}
+            </Text>
 
             <Touchable onPress={this.toggleBlock}>
-              <Text style={styles.blockTextLink}>{i18n.t('channel.tapUnblock')}</Text>
+              <Text style={styles.blockTextLink}>
+                {i18n.t('channel.tapUnblock')}
+              </Text>
             </Touchable>
           </View>
-        }
-        {!!showClosed && !channel.blocked  &&
+        )}
+        {!!showClosed && !channel.blocked && (
           <View style={styles.blockView}>
             <Text style={styles.blockText}>{i18n.t('channel.isClosed')}</Text>
             <SubscriptionButton channel={channel} />
           </View>
-        }
+        )}
       </View>
     );
   }
@@ -236,26 +226,23 @@ class ChannelScreen extends Component {
    */
   toggleBlock = () => {
     this.props.channel.store(this.guid).channel.toggleBlock();
-  }
+  };
 
   /**
    * Nav to prev screen
    */
   goBack = () => {
     this.props.navigation.goBack();
-  }
+  };
 
   /**
    * Render
    */
   render() {
-
     const store = this.props.channel.store(this.guid);
 
     if (!this.guid || !store.channel.guid) {
-      return (
-        <CenteredLoading />
-      );
+      return <CenteredLoading />;
     }
 
     /**
@@ -265,31 +252,40 @@ class ChannelScreen extends Component {
      */
     if (!this.checkCanView(store.channel)) return null;
 
-    const feed    = store.feedStore;
+    const feed = store.feedStore;
     const channel = store.channel;
     const rewards = store.rewards;
-    const guid    = this.guid;
+    const guid = this.guid;
     const isOwner = guid == session.guid;
-    const isClosed = channel.isClosed() && !channel.subscribed && !channel.isOwner();
+    const isClosed =
+      channel.isClosed() && !channel.subscribed && !channel.isOwner();
 
     let emptyMessage = null;
 
     if (channel.is_mature && !channel.mature_visibility) {
       return (
         <View style={[CommonStyle.flexColumnCentered]}>
-          <Text style={[CommonStyle.centered, CommonStyle.colorDarkGreyed, CommonStyle.fontXL]}>
+          <Text
+            style={[
+              CommonStyle.centered,
+              CommonStyle.colorDarkGreyed,
+              CommonStyle.fontXL,
+            ]}>
             {i18n.t('channel.mature')}
           </Text>
-          <View style={[CommonStyle.rowJustifyCenter, CommonStyle.paddingTop2x]}>
+          <View
+            style={[CommonStyle.rowJustifyCenter, CommonStyle.paddingTop2x]}>
             <Button
               text={i18n.t('goback')}
               onPress={() => this.props.navigation.goBack()}
             />
-            {!GOOGLE_PLAY_STORE && <Button
-              inverted={true}
-              text={i18n.t('view')}
-              onPress={() => channel.toggleMatureVisibility()}
-            />}
+            {!GOOGLE_PLAY_STORE && (
+              <Button
+                inverted={true}
+                text={i18n.t('view')}
+                onPress={() => channel.toggleMatureVisibility()}
+              />
+            )}
           </View>
         </View>
       );
@@ -298,47 +294,68 @@ class ChannelScreen extends Component {
     // channel header
     const header = this.getHeader(store);
 
-    let renderActivity = null, body = null;
+    let renderActivity = null,
+      body = null;
 
     // is a blog? use blog card to render
-    if(feed.filter == 'blogs') {
+    if (feed.filter == 'blogs') {
       renderActivity = (row) => {
-        return <BlogCard entity={row.item} navigation={this.props.navigation}/>
-      }
+        return (
+          <BlogCard entity={row.item} navigation={this.props.navigation} />
+        );
+      };
     }
 
     // is owner? show custom empty message
     if (isOwner) {
       emptyMessage = (
         <View style={CommonStyle.centered}>
-          <Text style={[CommonStyle.fontXL, CommonStyle.textCenter, CommonStyle.padding2x]}>
-           {i18n.t('channel.createFirstPost')}
+          <Text
+            style={[
+              CommonStyle.fontXL,
+              CommonStyle.textCenter,
+              CommonStyle.padding2x,
+            ]}>
+            {i18n.t('channel.createFirstPost')}
           </Text>
           <Button text={i18n.t('create')} onPress={this.createPost} />
         </View>
       );
     }
 
-    body = feed.filter != 'requests' ?
-      <FeedList
-        feedStore={feed.feedStore}
-        renderActivity={renderActivity}
-        header={header}
-        navigation={this.props.navigation}
-        emptyMessage={emptyMessage}
-      /> :
-      <SubscriptionRequestList
-        ListHeaderComponent={header}
-        style={[CommonStyle.flexContainer]}
-      />
+    body =
+      feed.filter != 'requests' ? (
+        <FeedList
+          feedStore={feed.feedStore}
+          renderActivity={renderActivity}
+          header={header}
+          navigation={this.props.navigation}
+          emptyMessage={emptyMessage}
+        />
+      ) : (
+        <SubscriptionRequestList
+          ListHeaderComponent={header}
+          style={[CommonStyle.flexContainer]}
+        />
+      );
 
     return (
       <View style={CommonStyle.flexContainer} testID="ChannelScreen">
-        { (!channel.blocked && !isClosed) ? body : header }
+        {!channel.blocked && !isClosed ? body : header}
         <SafeAreaView style={styles.gobackicon}>
-          <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={this.goBack}/>
+          <Icon
+            raised
+            color={colors.primary}
+            size={22}
+            name="arrow-back"
+            onPress={this.goBack}
+          />
         </SafeAreaView>
-        <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/>
+        <CaptureFab
+          navigation={this.props.navigation}
+          route={this.props.route}
+          testID="captureFab"
+        />
       </View>
     );
   }
@@ -351,7 +368,7 @@ const styles = StyleSheet.create({
   gobackicon: {
     position: 'absolute',
     left: 0,
-    top: 16
+    top: 16,
   },
   headertextcontainer: {
     padding: 8,
@@ -366,18 +383,18 @@ const styles = StyleSheet.create({
   },
   namecontainer: {
     flexDirection: 'row',
-    flex:1,
+    flex: 1,
   },
   buttonscol: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
     //width: 150,
-    alignSelf:'flex-start'
+    alignSelf: 'flex-start',
   },
   carouselcontainer: {
     flex: 1,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   banner: {
     flexDirection: 'row',
@@ -393,7 +410,7 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 14,
-    color: '#999'
+    color: '#999',
   },
   name: {
     fontWeight: '700',
@@ -439,7 +456,7 @@ const styles = StyleSheet.create({
   },
   countertitle: {
     color: '#666',
-    fontSize: 10
+    fontSize: 10,
   },
   countervalue: {
     paddingTop: 5,
@@ -449,12 +466,12 @@ const styles = StyleSheet.create({
   countercontainer: {
     paddingLeft: 130,
     height: 60,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   counter: {
     flexDirection: 'column',
     alignItems: 'center',
-    flex: 1
+    flex: 1,
   },
   avatar: {
     position: 'absolute',
@@ -462,12 +479,12 @@ const styles = StyleSheet.create({
     top: 135,
     height: 110,
     width: 110,
-    borderRadius: 55
+    borderRadius: 55,
   },
   wrappedAvatar: {
     height: 110,
     width: 110,
-    borderRadius: 55
+    borderRadius: 55,
   },
   wrappedAvatarOverlayView: {
     borderRadius: 55,
@@ -475,7 +492,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   bluebutton: {
     marginRight: 8,
@@ -509,6 +526,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     letterSpacing: 1,
-    color: colors.primary
+    color: colors.primary,
   },
 });

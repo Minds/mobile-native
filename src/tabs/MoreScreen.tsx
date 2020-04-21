@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
@@ -17,20 +15,15 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {
-  inject
-} from 'mobx-react'
+import { inject } from 'mobx-react';
 
 import RNExitApp from 'react-native-exit-app';
 
-import {
-  MINDS_URI,
-  CODE_PUSH_TOKEN
-} from '../config/Config';
+import { MINDS_URI, CODE_PUSH_TOKEN } from '../config/Config';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import authService from './../auth/AuthService';
-import { ListItem } from 'react-native-elements'
+import { ListItem } from 'react-native-elements';
 import FastImage from 'react-native-fast-image';
 
 import { ComponentsStyle } from '../styles/Components';
@@ -44,15 +37,13 @@ import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
 import TabIcon from './TabIcon';
 
-
 const ICON_SIZE = 24;
 
 /**
-* More screen (menu)
-*/
+ * More screen (menu)
+ */
 @inject('user')
 export default class MoreScreen extends Component {
-
   static navigationOptions = {
     title: 'Minds',
     tabBarIcon: ({ tintColor }) => (
@@ -63,117 +54,176 @@ export default class MoreScreen extends Component {
   state = {
     active: false,
     activities: [],
-    refreshing: false
-  }
+    refreshing: false,
+  };
 
   render() {
     const list = [
       {
         name: i18n.t('moreScreen.helpSupport'),
-        icon: (<Icon name='help-outline' size={ICON_SIZE} style={ styles.icon }/>),
+        icon: <Icon name="help-outline" size={ICON_SIZE} style={styles.icon} />,
         onPress: () => {
-          this.props.navigation.push('GroupView', { guid: '100000000000000681'});
-        }
+          this.props.navigation.push('GroupView', {
+            guid: '100000000000000681',
+          });
+        },
       },
       {
         name: i18n.t('moreScreen.invite'),
-        icon: (<Icon name='share' size={ICON_SIZE} style={ styles.icon }/>),
+        icon: <Icon name="share" size={ICON_SIZE} style={styles.icon} />,
         onPress: () => {
           shareService.invite(this.props.user.me.guid);
-        }
+        },
       },
       {
         name: i18n.t('moreScreen.settings'),
-        icon: (<Icon name='settings' size={ICON_SIZE} style={ styles.icon }/>),
+        icon: <Icon name="settings" size={ICON_SIZE} style={styles.icon} />,
         onPress: () => {
           this.props.navigation.navigate('Settings');
-        }
+        },
       },
       {
         name: i18n.t('settings.logout'),
         hideChevron: true,
-        icon: (<Icon name='power-settings-new' size={ICON_SIZE} style={ styles.icon } />),
+        icon: (
+          <Icon
+            name="power-settings-new"
+            size={ICON_SIZE}
+            style={styles.icon}
+          />
+        ),
         onPress: () => {
           authService.logout();
-        }
-      }
+        },
+      },
     ];
 
-    const links1 = [{
+    const links1 = [
+      {
         name: i18n.t('moreScreen.faq'),
-        icon: (<Icon name='open-in-new' size={16} style={ styles.icon }/>),
+        icon: <Icon name="open-in-new" size={16} style={styles.icon} />,
         hideChevron: true,
         onPress: () => {
           Linking.openURL(MINDS_URI + 'faq');
-        }
-      }, {
+        },
+      },
+      {
         name: i18n.t('moreScreen.code'),
-        icon: (<Icon name='open-in-new' size={16} style={ styles.icon }/>),
+        icon: <Icon name="open-in-new" size={16} style={styles.icon} />,
         hideChevron: true,
         onPress: () => {
           Linking.openURL('https://gitlab.com/Minds');
-        }
-      }
+        },
+      },
     ];
-    const links2 = [{
+    const links2 = [
+      {
         name: i18n.t('moreScreen.terms'),
-        icon: (<Icon name='open-in-new' size={16} style={ styles.icon }/>),
+        icon: <Icon name="open-in-new" size={16} style={styles.icon} />,
         hideChevron: true,
         onPress: () => {
           Linking.openURL(MINDS_URI + 'p/terms');
-        }
-      }, {
+        },
+      },
+      {
         name: i18n.t('moreScreen.privacy'),
-        icon: (<Icon name='open-in-new' size={16} style={ styles.icon }/>),
+        icon: <Icon name="open-in-new" size={16} style={styles.icon} />,
         hideChevron: true,
         onPress: () => {
           Linking.openURL(MINDS_URI + 'p/privacy');
-        }
-      }
+        },
+      },
     ];
 
     // if it is enabled
-    if (mindsService.settings && mindsService.settings.features.mobile_bug_report) {
+    if (
+      mindsService.settings &&
+      mindsService.settings.features.mobile_bug_report
+    ) {
       list.push({
         name: i18n.t('moreScreen.reportBug'),
-        icon: (<Icon name='bug-report' size={ICON_SIZE} style={ styles.icon } />),
+        icon: <Icon name="bug-report" size={ICON_SIZE} style={styles.icon} />,
         onPress: () => {
           this.props.navigation.navigate('IssueReport');
-        }
+        },
       });
     }
 
     list.push({
       name: i18n.t('moreScreen.exit'),
       hideChevron: true,
-      icon: (<Icon name='close' size={ICON_SIZE} style={ styles.icon } />),
+      icon: <Icon name="close" size={ICON_SIZE} style={styles.icon} />,
       onPress: () => {
         RNExitApp.exitApp();
-      }
+      },
     });
 
     return (
       <ScrollView style={styles.scrollView}>
-        <ImageBackground source={require('../assets/bg-1.jpg')} style={{width: '100%'}}>
-          <View style={{backgroundColor: 'rgba(255, 255, 255, 0.66)'}}>
-            <View style={[CS.rowJustifySpaceEvenly, CS.flexContainer, CS.paddingTop3x, CS.paddingBottom3x, CS.borderBottomHair, CS.borderDarkGreyed]}>
+        <ImageBackground
+          source={require('../assets/bg-1.jpg')}
+          style={{ width: '100%' }}>
+          <View style={{ backgroundColor: 'rgba(255, 255, 255, 0.66)' }}>
+            <View
+              style={[
+                CS.rowJustifySpaceEvenly,
+                CS.flexContainer,
+                CS.paddingTop3x,
+                CS.paddingBottom3x,
+                CS.borderBottomHair,
+                CS.borderDarkGreyed,
+              ]}>
               <TouchableOpacity
-                style={[CS.borderRadius5x, CS.shadow, CS.backgroundPrimary, CS.padding2x, styles.button]}
-                onPress={() => {this.props.navigation.navigate('BlogList')}}>
-                <Icon name='subject' size={35} style={ [CS.colorWhite, CS.textCenter] }/>
-                <Text style={[CS.colorWhite, CS.textCenter]}>{i18n.t('blogs.blogs')}</Text>
+                style={[
+                  CS.borderRadius5x,
+                  CS.shadow,
+                  CS.backgroundPrimary,
+                  CS.padding2x,
+                  styles.button,
+                ]}
+                onPress={() => {
+                  this.props.navigation.navigate('BlogList');
+                }}>
+                <Icon
+                  name="subject"
+                  size={35}
+                  style={[CS.colorWhite, CS.textCenter]}
+                />
+                <Text style={[CS.colorWhite, CS.textCenter]}>
+                  {i18n.t('blogs.blogs')}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[CS.borderRadius5x, CS.shadow, CS.backgroundPrimary, CS.padding2x, styles.button]}
-                onPress={() => {this.props.navigation.navigate('GroupsList')}}>
-                <Icon name='group-work' size={35} style={ [CS.colorWhite, CS.textCenter] }/>
-                <Text style={[CS.colorWhite, CS.textCenter]}>{i18n.t('groups.myGroups')}</Text>
+                style={[
+                  CS.borderRadius5x,
+                  CS.shadow,
+                  CS.backgroundPrimary,
+                  CS.padding2x,
+                  styles.button,
+                ]}
+                onPress={() => {
+                  this.props.navigation.navigate('GroupsList');
+                }}>
+                <Icon
+                  name="group-work"
+                  size={35}
+                  style={[CS.colorWhite, CS.textCenter]}
+                />
+                <Text style={[CS.colorWhite, CS.textCenter]}>
+                  {i18n.t('groups.myGroups')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
         </ImageBackground>
         {this.getList(list)}
-        <View style={[CS.rowJustifyCenter, CS.marginTop1x, CS.borderTopHair, CS.borderDarkGreyed]}>
+        <View
+          style={[
+            CS.rowJustifyCenter,
+            CS.marginTop1x,
+            CS.borderTopHair,
+            CS.borderDarkGreyed,
+          ]}>
           {this.getList(links1)}
           {this.getList(links2)}
         </View>
@@ -184,7 +234,9 @@ export default class MoreScreen extends Component {
             source={require('../assets/logos/logo.png')}
           />
           <View style={styles.footer}>
-            <Text style={styles.version} textAlign={'center'}>v{Version.VERSION} ({Version.BUILD})</Text>
+            <Text style={styles.version} textAlign={'center'}>
+              v{Version.VERSION} ({Version.BUILD})
+            </Text>
           </View>
         </View>
       </ScrollView>
@@ -193,43 +245,41 @@ export default class MoreScreen extends Component {
 
   onPressSettings = () => {
     this.props.navigation.navigate('Settings');
-  }
+  };
 
   getList(list) {
     return (
       <View style={styles.container}>
-        {
-          list.map((l, i) => (
-            <ListItem
-              key={i}
-              title={l.name}
-              titleStyle={styles.listTitle}
-              containerStyle={styles.listItem}
-              switchButton={l.switchButton}
-              hideChevron ={l.hideChevron}
-              leftIcon={l.icon}
-              onPress= {l.onPress}
-              noBorder
-              {...testID(l.name)}
-            />
-          ))
-        }
+        {list.map((l, i) => (
+          <ListItem
+            key={i}
+            title={l.name}
+            titleStyle={styles.listTitle}
+            containerStyle={styles.listItem}
+            switchButton={l.switchButton}
+            hideChevron={l.hideChevron}
+            leftIcon={l.icon}
+            onPress={l.onPress}
+            noBorder
+            {...testID(l.name)}
+          />
+        ))}
       </View>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   logo: {
     height: 85,
-    width: 230
+    width: 230,
   },
   scrollView: {
     backgroundColor: '#FFF',
     flexDirection: 'column',
   },
   button: {
-    width: 100
+    width: 100,
   },
   container: {
     flex: 1,
@@ -242,7 +292,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 16,
     paddingBottom: 20,
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   screen: {
     //paddingTop: 20,
@@ -262,7 +312,7 @@ const styles = StyleSheet.create({
     //height:20
   },
   listTitle: {
-    padding:8,
+    padding: 8,
     color: '#455a64',
     fontFamily: 'Roboto',
   },
@@ -272,7 +322,7 @@ const styles = StyleSheet.create({
   },
   footercol: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   version: {
     marginTop: 16,
@@ -280,6 +330,6 @@ const styles = StyleSheet.create({
     padding: 8,
     textAlign: 'center',
     fontWeight: '200',
-    color: '#444'
-  }
+    color: '#444',
+  },
 });

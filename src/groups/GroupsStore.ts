@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { observable, action } from 'mobx'
+import { observable, action } from 'mobx';
 
 import groupsService from './GroupsService';
 import { MINDS_FEATURES } from '../config/Config';
@@ -12,7 +12,6 @@ import { isNetworkFail } from '../common/helpers/abortableFetch';
  * Groups store
  */
 class GroupsStore {
-
   /**
    * List store
    */
@@ -68,10 +67,9 @@ class GroupsStore {
   @action
   refresh() {
     this.list.refresh();
-    this.loadList()
-      .finally(() => {
-        this.list.refreshDone();
-      });
+    this.loadList().finally(() => {
+      this.list.refreshDone();
+    });
   }
 
   @action
@@ -80,7 +78,6 @@ class GroupsStore {
     this.loading = false;
     this.filter = 'member';
   }
-
 }
 
 export default GroupsStore;

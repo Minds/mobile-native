@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {View, Text, TouchableHighlight, StyleSheet} from 'react-native';
+import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import TagSelect from '../../common/components/TagSelect';
@@ -16,10 +16,9 @@ import ThemedStyles from '../../styles/ThemedStyles';
 @inject('hashtag')
 @observer
 export default class HashtagsStepNew extends Component {
-
   componentDidMount() {
     this.props.hashtag.setAll(true);
-    this.props.hashtag.loadSuggested().catch(err => {
+    this.props.hashtag.loadSuggested().catch((err) => {
       logService.exception(err);
     });
   }
@@ -30,15 +29,24 @@ export default class HashtagsStepNew extends Component {
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
         <OnboardingBackButton onBack={this.props.onBack} />
         <View style={styles.textsContainer}>
-          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>{i18n.t('onboarding.profileSetup')}</Text>
-          <Text style={[CS.titleText, CS.colorPrimaryText]}>{i18n.t('onboarding.hashtagTitle')}</Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>{i18n.t('onboarding.step',{step: 1, total: 4})}</Text>
-          <Text style={[
-            CS.subTitleText,
-            CS.colorSecondaryText,
-            CS.marginBottom4x,
-            CS.marginTop4x
-          ]}>{i18n.t('onboarding.hashtagInterest')}</Text>
+          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>
+            {i18n.t('onboarding.profileSetup')}
+          </Text>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>
+            {i18n.t('onboarding.hashtagTitle')}
+          </Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
+            {i18n.t('onboarding.step', { step: 1, total: 4 })}
+          </Text>
+          <Text
+            style={[
+              CS.subTitleText,
+              CS.colorSecondaryText,
+              CS.marginBottom4x,
+              CS.marginTop4x,
+            ]}>
+            {i18n.t('onboarding.hashtagInterest')}
+          </Text>
         </View>
         <TagSelect
           tagStyle={styles.hashtag}
@@ -88,9 +96,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   textSelected: {
-    color: '#5DBAC0'
+    color: '#5DBAC0',
   },
   tagSelected: {
-    borderColor: '#5DBAC0'
-  }
+    borderColor: '#5DBAC0',
+  },
 });

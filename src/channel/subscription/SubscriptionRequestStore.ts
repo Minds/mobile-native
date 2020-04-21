@@ -1,11 +1,10 @@
-
 //@ts-nocheck
-import { observable, action, extendObservable } from "mobx";
-import api from "../../common/services/api.service";
-import logService from "../../common/services/log.service";
-import UserModel from "../UserModel";
-import sessionService from "../../common/services/session.service";
-import { FLAG_APPROVE_SUBSCRIBER } from "../../common/Permissions";
+import { observable, action, extendObservable } from 'mobx';
+import api from '../../common/services/api.service';
+import logService from '../../common/services/log.service';
+import UserModel from '../UserModel';
+import sessionService from '../../common/services/session.service';
+import { FLAG_APPROVE_SUBSCRIBER } from '../../common/Permissions';
 
 /**
  * Subscription request store
@@ -39,7 +38,6 @@ export default class SubscriptionRequestStore {
    * @param {any} request
    */
   async accept(request: any): Promise<void> {
-
     if (!sessionService.getUser().can(FLAG_APPROVE_SUBSCRIBER, true)) {
       return;
     }
@@ -47,7 +45,7 @@ export default class SubscriptionRequestStore {
     try {
       this.setInProgress(request, true);
       await api.put(
-        `api/v2/subscriptions/incoming/${request.subscriber.guid}/accept`
+        `api/v2/subscriptions/incoming/${request.subscriber.guid}/accept`,
       );
       this.setStatus(request, 'requestAccepted');
     } catch (err) {
@@ -62,7 +60,6 @@ export default class SubscriptionRequestStore {
    * @param {any} request
    */
   async decline(request: any): Promise<void> {
-
     if (!sessionService.getUser().can(FLAG_APPROVE_SUBSCRIBER, true)) {
       return;
     }
@@ -70,7 +67,7 @@ export default class SubscriptionRequestStore {
     try {
       this.setInProgress(request, true);
       await api.put(
-        `api/v2/subscriptions/incoming/${request.subscriber.guid}/decline`
+        `api/v2/subscriptions/incoming/${request.subscriber.guid}/decline`,
       );
       this.setStatus(request, 'requestRejected');
     } catch (err) {
@@ -96,7 +93,7 @@ export default class SubscriptionRequestStore {
   setRequest(requests: Array<any>) {
     this.requests = requests;
     this.requests.forEach((r: any): any => {
-      extendObservable(r, {inProgress: false, status: '' });
+      extendObservable(r, { inProgress: false, status: '' });
       r.subscriber = UserModel.create(r.subscriber);
     });
   }
@@ -128,7 +125,7 @@ export default class SubscriptionRequestStore {
   @action
   setStatus(request: any, value: string) {
     request.status = value;
-    console.log('SETTNIG REQUEST', request)
+    console.log('SETTNIG REQUEST', request);
   }
 
   /**

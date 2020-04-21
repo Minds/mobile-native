@@ -14,7 +14,7 @@ type PropsType = {
 
 type StateType = {
   hasError: boolean;
-}
+};
 
 /**
  * Error boundary

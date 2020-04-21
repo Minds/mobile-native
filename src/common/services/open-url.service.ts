@@ -7,7 +7,6 @@ import deeplinksRouterService from './deeplinks-router.service';
  * Open url service
  */
 class OpenURLService {
-
   /**
    * Open url
    * @param {string} url

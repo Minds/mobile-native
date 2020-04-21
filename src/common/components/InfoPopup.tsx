@@ -1,14 +1,13 @@
 //@ts-nocheck
-import React, {Component} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text } from 'react-native';
 import IconMC from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ScrollView } from 'react-native-gesture-handler';
 
 // workaround for android
-import Tooltip from "rne-modal-tooltip";
+import Tooltip from 'rne-modal-tooltip';
 
 export default class InfoPopup extends Component {
-
   render() {
     return (
       <Tooltip
@@ -17,7 +16,12 @@ export default class InfoPopup extends Component {
         pointerColor={'#4A90E2'}
         popover={<Text style={styles.textTooltip}>{this.props.info}</Text>}
         containerStyle={styles.tooltip}>
-        <IconMC name="information-variant" size={16} onPress={this.showPopup} color="#AEB0B8"/>
+        <IconMC
+          name="information-variant"
+          size={16}
+          onPress={this.showPopup}
+          color="#AEB0B8"
+        />
       </Tooltip>
     );
   }

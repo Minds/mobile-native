@@ -1,9 +1,9 @@
-import FeedsService from "./feeds.service";
-import logService from "./log.service";
-import blockListService from "./block-list.service";
+import FeedsService from './feeds.service';
+import logService from './log.service';
+import blockListService from './block-list.service';
 
 // types
-import type ActivityModel from "../../newsfeed/ActivityModel";
+import type ActivityModel from '../../newsfeed/ActivityModel';
 
 /**
  * Boosted content service

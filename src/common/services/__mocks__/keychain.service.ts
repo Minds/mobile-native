@@ -5,4 +5,4 @@ export default {
   storeToCache: jest.fn(),
   hasSecret: jest.fn(),
   _DANGEROUS_wipe: jest.fn(),
-}
+};

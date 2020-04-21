@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   Text,
@@ -11,10 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
 import { CommonStyle } from '../../styles/Common';
 import TransactionsList from './TransactionsList';
@@ -25,10 +20,9 @@ import TransactionsList from './TransactionsList';
 @inject('user')
 @observer
 export default class TokensRewardsScreen extends Component {
-
   static navigationOptions = {
-    title: 'Transactions'
-  }
+    title: 'Transactions',
+  };
 
   /**
    * Render
@@ -36,15 +30,14 @@ export default class TokensRewardsScreen extends Component {
   render() {
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
-        <TransactionsList/>
+        <TransactionsList />
       </View>
-    )
+    );
   }
 
   onChange = (value) => {
     this.setState({
-      option: value
-    })
-  }
-
+      option: value,
+    });
+  };
 }

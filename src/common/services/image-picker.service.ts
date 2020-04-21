@@ -10,12 +10,10 @@ import i18n from './i18n.service';
  * Image picker service
  */
 class ImagePickerService {
-
   showMessage(message) {
-    setTimeout(() => { // without settimeout alert is not shown
-      Alert.alert(
-        message
-      );
+    setTimeout(() => {
+      // without settimeout alert is not shown
+      Alert.alert(message);
     }, 100);
   }
 
@@ -77,10 +75,10 @@ class ImagePickerService {
 
     if (!allowed) return false;
 
-    const opt = this.buildOptions('', type)
+    const opt = this.buildOptions('', type);
 
     return new Promise((resolve, reject) => {
-      ImagePicker.launchCamera(opt, response => {
+      ImagePicker.launchCamera(opt, (response) => {
         if (response.didCancel) {
           resolve(null);
         } else if (response.error) {
@@ -105,10 +103,10 @@ class ImagePickerService {
 
     if (!allowed) return false;
 
-    const opt = this.buildOptions('', type)
+    const opt = this.buildOptions('', type);
 
     return new Promise((resolve, reject) => {
-      ImagePicker.launchImageLibrary(opt, response => {
+      ImagePicker.launchImageLibrary(opt, (response) => {
         if (response.didCancel) {
           resolve(null);
         } else if (response.error) {
@@ -128,16 +126,16 @@ class ImagePickerService {
    * @param {string} title
    * @param {string} type   photo or video
    */
-  async show(title, type='photo') {
+  async show(title, type = 'photo') {
     // check or ask for permissions
     const allowed = this.checkPermissions();
 
     if (!allowed) return false;
 
-    const opt = this.buildOptions(title, type)
+    const opt = this.buildOptions(title, type);
 
     return new Promise((resolve, reject) => {
-      ImagePicker.showImagePicker(opt, response => {
+      ImagePicker.showImagePicker(opt, (response) => {
         if (response.didCancel) {
           resolve(null);
         } else if (response.error) {
@@ -168,7 +166,7 @@ class ImagePickerService {
         cameraRoll: true,
         waitUntilSaved: true,
       },
-    }
+    };
   }
 }
 

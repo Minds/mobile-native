@@ -1,5 +1,4 @@
 module.exports = {
-  "prettier.printWidth": 100,
   bracketSpacing: false,
   jsxBracketSameLine: true,
   singleQuote: true,

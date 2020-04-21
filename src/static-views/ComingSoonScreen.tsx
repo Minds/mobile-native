@@ -1,14 +1,7 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-  Linking,
-} from 'react-native';
+import { View, Text, StyleSheet, Linking } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,11 +17,16 @@ export default class ComingSoonScreen extends Component {
     ),
     header: (
       <View style={style.header}>
-        <Icon style={style.close} size={28} name="ios-close" onPress={() => navigation.goBack()} />
+        <Icon
+          style={style.close}
+          size={28}
+          name="ios-close"
+          onPress={() => navigation.goBack()}
+        />
       </View>
     ),
     transitionConfig: {
-      isModal: true
+      isModal: true,
     },
   });
 

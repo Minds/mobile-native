@@ -19,7 +19,7 @@ import NavigationService from '../navigation/NavigationService';
  * Nsfw Option
  * @param {Object} props
  */
-const NsfwOption = props => {
+const NsfwOption = (props) => {
   const onSelect = useCallback(() => {
     props.store.toggleNsfw(props.option.value);
   }, [props.store, props.option.value]);
@@ -46,13 +46,14 @@ const NsfwOption = props => {
 /**
  * NSFW selector
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const store = props.route.params.store;
 
-  const options = _.times(7, i => ({
+  const options = _.times(7, (i) => ({
     value: i,
-    selected: i === 0 ? store.nsfw.length === 0 : store.nsfw.some(o => i === o),
+    selected:
+      i === 0 ? store.nsfw.length === 0 : store.nsfw.some((o) => i === o),
     label: i18n.t(`nsfw.${i}`),
   }));
 
@@ -98,7 +99,7 @@ export default observer(function(props) {
           {i18n.t('nsfw.categories').toUpperCase()}
         </Text>
         <View style={styles.optsContainer}>
-          {options.slice(1).map(o => (
+          {options.slice(1).map((o) => (
             <NsfwOption option={o} store={store} />
           ))}
         </View>

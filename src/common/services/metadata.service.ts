@@ -78,8 +78,8 @@ class MetadataService {
   entityMapper = (entity) => ({
     position: entity._list ? entity._list.getIndex(entity) + 1 : 0,
     medium: entity.boosted ? 'featured-content' : 'feed',
-    campaign: entity.boosted_guid ? entity.urn : ''
-  })
+    campaign: entity.boosted_guid ? entity.urn : '',
+  });
 
   /**
    * Init delta timer
@@ -113,7 +113,9 @@ class MetadataService {
    */
   setSource(source) {
     this.source = source;
-    this.salt = (Math.random()).toString(36).replace(/[^a-z]+/g, '');
+    this.salt = Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, '');
     return this;
   }
 
@@ -197,7 +199,6 @@ class MetadataService {
    * @param {Object} overrides
    */
   build(overrides = {}) {
-
     return {
       platform: 'mobile',
       page_token: this.buildPageToken(),
@@ -206,7 +207,7 @@ class MetadataService {
       medium: this.medium,
       campaign: this.campaign,
       position: this.position,
-      ...overrides
+      ...overrides,
     };
   }
 }

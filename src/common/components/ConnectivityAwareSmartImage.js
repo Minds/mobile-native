@@ -13,7 +13,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
  * Fast-image wrapper with retry and connectivity awareness
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const { onError, ...otherProps } = props;
 
   const store = useLocalStore(() => ({

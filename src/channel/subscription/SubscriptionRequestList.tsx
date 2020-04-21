@@ -1,14 +1,7 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  FlatList,
-  ActivityIndicator,
-  Text,
-  View
-} from 'react-native';
+import { FlatList, ActivityIndicator, Text, View } from 'react-native';
 
 import type { Node, Element } from 'react';
 import type SubscriptionRequestStore from './SubscriptionRequestStore';
@@ -20,7 +13,7 @@ import { CommonStyle as CS } from '../../styles/Common';
 import ErrorLoading from '../../common/components/ErrorLoading';
 
 type PropsType = {
-  subscriptionRequest: SubscriptionRequestStore
+  subscriptionRequest: SubscriptionRequestStore;
 };
 
 /**
@@ -29,7 +22,6 @@ type PropsType = {
 @inject('subscriptionRequest')
 @observer
 class SubscriptionRequestList extends Component<PropsType> {
-
   /**
    * Render item
    */
@@ -41,41 +33,44 @@ class SubscriptionRequestList extends Component<PropsType> {
         onReject={this.onReject}
         subscriptionRequest={this.props.subscriptionRequest}
       />
-    )
-  }
+    );
+  };
 
-  onAccept = (row: any) => {
+  onAccept = (row: any) => {};
 
-  }
-
-  onReject = (row: any) => {
-
-  }
+  onReject = (row: any) => {};
 
   reload = () => {
     this.props.subscriptionRequest.load();
-  }
+  };
 
   /**
    * Render
    */
   render(): Node {
-    const {
-      subscriptionRequest,
-      ...otherProps
-    } = this.props;
+    const { subscriptionRequest, ...otherProps } = this.props;
 
-    let footerCmp = null, emptyCmp = null;
+    let footerCmp = null,
+      emptyCmp = null;
 
     if (subscriptionRequest.errorLoading) {
-      footerCmp = <ErrorLoading message={i18n.t('cantLoad')} tryAgain={this.reload}/>
+      footerCmp = (
+        <ErrorLoading message={i18n.t('cantLoad')} tryAgain={this.reload} />
+      );
     } else {
+      const message = subscriptionRequest.loading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <Text style={[CS.fontM, CS.fontHairline]}>
+          {i18n.t('discovery.nothingToShow')}
+        </Text>
+      );
 
-      const message = subscriptionRequest.loading ?
-        <ActivityIndicator size="large"/> :
-        <Text style={[CS.fontM, CS.fontHairline]}>{i18n.t('discovery.nothingToShow')}</Text>
-
-      emptyCmp = <View style={[CS.flexColumnCentered, CS.marginTop4x, CS.paddingTop2x]}>{message}</View>
+      emptyCmp = (
+        <View style={[CS.flexColumnCentered, CS.marginTop4x, CS.paddingTop2x]}>
+          {message}
+        </View>
+      );
     }
 
     return (
@@ -86,7 +81,7 @@ class SubscriptionRequestList extends Component<PropsType> {
         ListFooterComponent={footerCmp}
         {...otherProps}
       />
-    )
+    );
   }
 }
 

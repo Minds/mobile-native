@@ -12,7 +12,6 @@ import KeychainService from './keychain.service';
  * Storage service
  */
 class StorageService {
-
   /**
    * Get item
    *
@@ -39,17 +38,21 @@ class StorageService {
    */
   async _decryptIfNeeded(value, key) {
     if (value.startsWith(CRYPTO_AES_PREFIX)) {
-      const keychain = await AsyncStorage.getItem(`${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`);
+      const keychain = await AsyncStorage.getItem(
+        `${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`,
+      );
 
       let output = null;
       try {
         let secret = await KeychainService.getSecret(keychain);
 
         if (secret) {
-          output = CryptoJS.AES.decrypt(value.substr(CRYPTO_AES_PREFIX.length), secret)
-            .toString(CryptoJS.enc.Utf8);
+          output = CryptoJS.AES.decrypt(
+            value.substr(CRYPTO_AES_PREFIX.length),
+            secret,
+          ).toString(CryptoJS.enc.Utf8);
         }
-      } catch (e) { }
+      } catch (e) {}
 
       if (!output) {
         throw new Error('E_INVALID_STORAGE_PASSWORD');
@@ -81,10 +84,13 @@ class StorageService {
         throw new Error('E_NO_SECRET');
       }
 
-      rawValue = CRYPTO_AES_PREFIX + CryptoJS.AES.encrypt(rawValue, secret)
-        .toString();
+      rawValue =
+        CRYPTO_AES_PREFIX + CryptoJS.AES.encrypt(rawValue, secret).toString();
 
-      await AsyncStorage.setItem(`${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`, keychain);
+      await AsyncStorage.setItem(
+        `${STORAGE_KEY_KEYCHAIN_PREFIX}${key}`,
+        keychain,
+      );
     }
 
     await AsyncStorage.setItem(`${STORAGE_KEY_PREFIX}${key}`, rawValue);
@@ -124,7 +130,9 @@ class StorageService {
    * @param {Array<string>} keys
    */
   async multiRemove(keys) {
-    return await AsyncStorage.multiRemove(keys.map(k => `${STORAGE_KEY_PREFIX}${k}`));
+    return await AsyncStorage.multiRemove(
+      keys.map((k) => `${STORAGE_KEY_PREFIX}${k}`),
+    );
   }
 
   /**
@@ -134,11 +142,13 @@ class StorageService {
    * @returns {Array<any>}
    */
   async multiGet(keys) {
-    const values = await AsyncStorage.multiGet(keys.map(k => `${STORAGE_KEY_PREFIX}${k}`));
+    const values = await AsyncStorage.multiGet(
+      keys.map((k) => `${STORAGE_KEY_PREFIX}${k}`),
+    );
 
-    return values.map(value => {
+    return values.map((value) => {
       try {
-        value[1] = JSON.parse(value[1])
+        value[1] = JSON.parse(value[1]);
       } catch (err) {
         value[1] = null;
       }
@@ -157,8 +167,8 @@ class StorageService {
     }
 
     return (await AsyncStorage.getAllKeys())
-      .filter(key => key.indexOf(`${STORAGE_KEY_PREFIX}${prefix}`) === 0)
-      .map(key => key.substr(STORAGE_KEY_PREFIX.length));
+      .filter((key) => key.indexOf(`${STORAGE_KEY_PREFIX}${prefix}`) === 0)
+      .map((key) => key.substr(STORAGE_KEY_PREFIX.length));
   }
 }
 

@@ -1,7 +1,7 @@
 //@ts-nocheck
-import { Platform } from "react-native";
+import { Platform } from 'react-native';
 
-import Colors from "../styles/Colors";
+import Colors from '../styles/Colors';
 
 export default {
   header: {
@@ -31,6 +31,6 @@ export default {
     lineHeight: 24,
   },
   link: {
-    color: Colors.primary
-  }
-}
+    color: Colors.primary,
+  },
+};

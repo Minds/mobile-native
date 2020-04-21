@@ -8,14 +8,13 @@ import MdIcon from 'react-native-vector-icons/MaterialIcons';
 import Colors from '../styles/Colors';
 import testID from '../common/helpers/testID';
 import i18n from '../common/services/i18n.service';
-import Button from '../common/components/Button'
+import Button from '../common/components/Button';
 
 /**
  * Channel mode selector
  */
 @observer
 class ChannelModeSelector extends Component {
-
   /**
    * Constructor
    */
@@ -23,9 +22,21 @@ class ChannelModeSelector extends Component {
     super(props);
 
     this.modes = [
-      { value: 0, label: i18n.t('channel.modeOpen'), handler: () => this.setMode(0)},
-      { value: 1, label: i18n.t('channel.modeModerated'), handler: () => this.setMode(1)},
-      { value: 2, label: i18n.t('channel.modeClosed'), handler: () => this.setMode(2)},
+      {
+        value: 0,
+        label: i18n.t('channel.modeOpen'),
+        handler: () => this.setMode(0),
+      },
+      {
+        value: 1,
+        label: i18n.t('channel.modeModerated'),
+        handler: () => this.setMode(1),
+      },
+      {
+        value: 2,
+        label: i18n.t('channel.modeClosed'),
+        handler: () => this.setMode(2),
+      },
     ];
 
     this.menuRef = React.createRef();
@@ -52,27 +63,20 @@ class ChannelModeSelector extends Component {
     }
 
     menu.show();
-  }
+  };
 
   /**
    * Render
    */
   render() {
-
     const channel = this.props.channel;
 
     const button = (
       <Button
         onPress={this.showDropdown}
         text={this.modes[channel.mode].label}
-        {...testID('Channel mode button')}
-
-      >
-        <MdIcon
-          name="keyboard-arrow-down"
-          color={Colors.primary}
-          size={18}
-        />
+        {...testID('Channel mode button')}>
+        <MdIcon name="keyboard-arrow-down" color={Colors.primary} size={18} />
       </Button>
     );
 
@@ -83,9 +87,13 @@ class ChannelModeSelector extends Component {
             <MenuItem
               key={i}
               onPress={mode.handler}
-              textStyle={[styles.menuItemText, channel.mode === i && styles.menuItemTextActive]}
-              {...testID(`Channel ${mode.label}`)}
-            >{mode.label}</MenuItem>
+              textStyle={[
+                styles.menuItemText,
+                channel.mode === i && styles.menuItemTextActive,
+              ]}
+              {...testID(`Channel ${mode.label}`)}>
+              {mode.label}
+            </MenuItem>
           ))}
         </Menu>
       </React.Fragment>
@@ -105,5 +113,5 @@ const styles = StyleSheet.create({
   },
   menuItemTextActive: {
     color: Colors.primary,
-  }
+  },
 });

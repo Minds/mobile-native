@@ -12,7 +12,7 @@ import { TextInput } from 'react-native-gesture-handler';
 /**
  * NSFW selector
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const store = props.route.params.store;
 

@@ -49,7 +49,7 @@ function dragDiff(value, updating) {
   return cond(
     updating,
     [set(tmp, sub(value, prev)), set(prev, value), tmp],
-    set(prev, 0)
+    set(prev, 0),
   );
 }
 
@@ -61,7 +61,7 @@ function friction(value) {
   const MAX_VALUE = 100;
   return max(
     1,
-    min(MAX_FRICTION, add(1, multiply(value, (MAX_FRICTION - 1) / MAX_VALUE)))
+    min(MAX_FRICTION, add(1, multiply(value, (MAX_FRICTION - 1) / MAX_VALUE))),
   );
 }
 
@@ -78,7 +78,7 @@ function scaleRest(value) {
   return cond(
     lessThan(value, MIN_SCALE),
     MIN_SCALE,
-    cond(lessThan(MAX_SCALE, value), MAX_SCALE, value)
+    cond(lessThan(MAX_SCALE, value), MAX_SCALE, value),
   );
 }
 
@@ -89,12 +89,12 @@ function scaleFriction(value, rest, delta) {
   const howFar = abs(sub(rest, value));
   const friction = max(
     1,
-    min(MAX_FRICTION, add(1, multiply(howFar, (MAX_FRICTION - 1) / MAX_VALUE)))
+    min(MAX_FRICTION, add(1, multiply(howFar, (MAX_FRICTION - 1) / MAX_VALUE))),
   );
   return cond(
     lessThan(0, howFar),
     multiply(value, add(1, divide(add(delta, -1), friction))),
-    res
+    res,
   );
 }
 
@@ -159,7 +159,7 @@ function bouncyPinch(
   focalX,
   displacementX,
   focalY,
-  displacementY
+  displacementY,
 ) {
   const clock = new Clock();
 
@@ -168,12 +168,12 @@ function bouncyPinch(
   const focalXRest = cond(
     lessThan(value, 1),
     0,
-    sub(displacementX, multiply(focalX, add(-1, divide(rest, value))))
+    sub(displacementX, multiply(focalX, add(-1, divide(rest, value)))),
   );
   const focalYRest = cond(
     lessThan(value, 1),
     0,
-    sub(displacementY, multiply(focalY, add(-1, divide(rest, value))))
+    sub(displacementY, multiply(focalY, add(-1, divide(rest, value)))),
   );
   const nextScale = new Value(1);
 
@@ -184,11 +184,11 @@ function bouncyPinch(
       set(nextScale, scaleFriction(value, rest, delta)),
       set(
         displacementX,
-        sub(displacementX, multiply(focalX, add(-1, divide(nextScale, value))))
+        sub(displacementX, multiply(focalX, add(-1, divide(nextScale, value)))),
       ),
       set(
         displacementY,
-        sub(displacementY, multiply(focalY, add(-1, divide(nextScale, value))))
+        sub(displacementY, multiply(focalY, add(-1, divide(nextScale, value)))),
       ),
       nextScale,
     ],
@@ -199,8 +199,8 @@ function bouncyPinch(
         set(displacementY, runTiming(clock, displacementY, focalYRest, false)),
         runTiming(clock, value, rest),
       ],
-      value
-    )
+      value,
+    ),
   );
 }
 
@@ -210,7 +210,7 @@ function bouncy(
   gestureActive,
   lowerBound,
   upperBound,
-  friction
+  friction,
 ) {
   const timingClock = new Clock();
   const decayClock = new Clock();
@@ -220,13 +220,13 @@ function bouncy(
   // did value go beyond the limits (lower, upper)
   const isOutOfBounds = or(
     lessThan(value, lowerBound),
-    lessThan(upperBound, value)
+    lessThan(upperBound, value),
   );
   // position to snap to (upper or lower is beyond or the current value elsewhere)
   const rest = cond(
     lessThan(value, lowerBound),
     lowerBound,
-    cond(lessThan(upperBound, value), upperBound, value)
+    cond(lessThan(upperBound, value), upperBound, value),
   );
   // how much the value exceeds the bounds, this is used to calculate friction
   const outOfBounds = abs(sub(rest, value));
@@ -244,9 +244,9 @@ function bouncy(
       cond(
         or(clockRunning(decayClock), lessThan(5, abs(velocity))),
         runDecay(decayClock, value, velocity),
-        value
-      )
-    )
+        value,
+      ),
+    ),
   );
 }
 
@@ -286,12 +286,12 @@ export default class ImageViewer extends Component {
     this._focalDisplacementX = new Value(0);
     const relativeFocalX = sub(
       pinchFocalX,
-      add(panTransX, this._focalDisplacementX)
+      add(panTransX, this._focalDisplacementX),
     );
     this._focalDisplacementY = new Value(0);
     const relativeFocalY = sub(
       pinchFocalY,
-      add(panTransY, this._focalDisplacementY)
+      add(panTransY, this._focalDisplacementY),
     );
     this._scale = set(
       scale,
@@ -302,8 +302,8 @@ export default class ImageViewer extends Component {
         relativeFocalX,
         this._focalDisplacementX,
         relativeFocalY,
-        this._focalDisplacementY
-      )
+        this._focalDisplacementY,
+      ),
     );
 
     // PAN
@@ -321,15 +321,18 @@ export default class ImageViewer extends Component {
     ]);
 
     const panActive = eq(panState, State.ACTIVE);
-    const panFriction = value => friction(value);
+    const panFriction = (value) => friction(value);
 
     // X
     const panUpX = cond(
       lessThan(this._scale, 1),
       0,
-      multiply(-1, this._focalDisplacementX)
+      multiply(-1, this._focalDisplacementX),
     );
-    const panLowX = add(panUpX, multiply(-this.props.width, add(max(1, this._scale), -1)));
+    const panLowX = add(
+      panUpX,
+      multiply(-this.props.width, add(max(1, this._scale), -1)),
+    );
     this._panTransX = set(
       panTransX,
       bouncy(
@@ -338,19 +341,19 @@ export default class ImageViewer extends Component {
         or(panActive, pinchActive),
         panLowX,
         panUpX,
-        panFriction
-      )
+        panFriction,
+      ),
     );
 
     // Y
     const panUpY = cond(
       lessThan(this._scale, 1),
       0,
-      multiply(-1, this._focalDisplacementY)
+      multiply(-1, this._focalDisplacementY),
     );
     const panLowY = add(
       panUpY,
-      multiply(-this.props.height, add(max(1, this._scale), -1))
+      multiply(-this.props.height, add(max(1, this._scale), -1)),
     );
     this._panTransY = set(
       panTransY,
@@ -360,16 +363,22 @@ export default class ImageViewer extends Component {
         or(panActive, pinchActive),
         panLowY,
         panUpY,
-        panFriction
-      )
+        panFriction,
+      ),
     );
   }
   render() {
     // The below two animated values makes it so that scale appears to be done
     // from the top left corner of the image view instead of its center. This
     // is required for the "scale focal point" math to work correctly
-    const scaleTopLeftFixX = divide(multiply(this.props.width, add(this._scale, -1)), 2);
-    const scaleTopLeftFixY = divide(multiply(this.props.height, add(this._scale, -1)), 2);
+    const scaleTopLeftFixX = divide(
+      multiply(this.props.width, add(this._scale, -1)),
+      2,
+    );
+    const scaleTopLeftFixY = divide(
+      multiply(this.props.height, add(this._scale, -1)),
+      2,
+    );
     return (
       <View style={styles.wrapper}>
         <PinchGestureHandler
@@ -388,7 +397,7 @@ export default class ImageViewer extends Component {
               <AnimatedFastImage
                 style={[
                   styles.image,
-                  {height: this.props.height, width: this.props.width},
+                  { height: this.props.height, width: this.props.width },
                   {
                     transform: [
                       { translateX: this._panTransX },

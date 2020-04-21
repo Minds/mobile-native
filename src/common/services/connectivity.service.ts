@@ -1,26 +1,21 @@
 //@ts-nocheck
-import NetInfo from "@react-native-community/netinfo";
-import {
-  observable,
-  action,
-  computed,
-} from 'mobx'
+import NetInfo from '@react-native-community/netinfo';
+import { observable, action, computed } from 'mobx';
 
 import {
   CONECTIVITY_CHECK_INTERVAL,
-  CONECTIVITY_CHECK_URI
+  CONECTIVITY_CHECK_URI,
 } from '../../config/Config';
 
 /**
  * Connectivity service
  */
 class ConnectivityService {
-
   @observable isInternetReachable = true;
 
   @observable connectionInfo = {
     type: 'unknown',
-    isConnected: false
+    isConnected: false,
   };
 
   /**
@@ -35,9 +30,7 @@ class ConnectivityService {
    */
   constructor() {
     // add listener
-    NetInfo.addEventListener(
-      this.handleConnectivityChange
-    );
+    NetInfo.addEventListener(this.handleConnectivityChange);
   }
 
   /**
@@ -53,7 +46,7 @@ class ConnectivityService {
     console.log('Initial connection, type: ' + connectionInfo.type);
 
     return connectionInfo;
-  }
+  };
 
   /**
    * Connectivity changes handler
@@ -69,7 +62,7 @@ class ConnectivityService {
     }
 
     console.log('Connection change, type: ' + connectionInfo.type);
-  }
+  };
 
   @action
   setisInternetReachable(value) {
@@ -83,7 +76,7 @@ class ConnectivityService {
     // clear previous interval
     this.stopConnectivityCheck();
     // create interval
-    this.checkInterval = setInterval( async() => {
+    this.checkInterval = setInterval(async () => {
       this.setisInternetReachable(await this.checkInternet());
     }, CONECTIVITY_CHECK_INTERVAL);
     // check immediately
@@ -109,12 +102,12 @@ class ConnectivityService {
         xhr.onload = function () {
           resolve(true);
         };
-        xhr.onerror = function() {
+        xhr.onerror = function () {
           resolve(false);
-        }
-        xhr.ontimeout = function() {
+        };
+        xhr.ontimeout = function () {
           resolve(false);
-        }
+        };
         xhr.send(null);
       } catch (e) {
         resolve(false);

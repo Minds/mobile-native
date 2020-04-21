@@ -8,7 +8,7 @@ class ValidatorService {
   rules = {
     number: /^(([0-9]*)|(([0-9]*)\.([0-9]*)))$/,
     email: /^(\w)+(\.\w+)*@(\w)+((\.\w{2,20}){1,3})$/,
-  }
+  };
 
   /**
    * Validate value using rule

@@ -189,7 +189,7 @@ class MoreScreenNew extends Component {
       theme.colorTertiaryText,
       theme.fontNormal,
       theme.marginTop3x,
-    ]
+    ];
 
     return (
       <SafeAreaView style={[theme.flexContainer, theme.backgroundPrimary]}>

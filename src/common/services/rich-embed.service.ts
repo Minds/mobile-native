@@ -24,7 +24,11 @@ class RichEmbedService {
       meta.title = url;
     }
 
-    if (response.links && response.links.thumbnail && response.links.thumbnail[0]) {
+    if (
+      response.links &&
+      response.links.thumbnail &&
+      response.links.thumbnail[0]
+    ) {
       meta.thumbnail = response.links.thumbnail[0].href;
     }
 

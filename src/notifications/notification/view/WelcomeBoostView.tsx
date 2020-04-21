@@ -1,12 +1,7 @@
 //@ts-nocheck
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
-import {
-  Text,
-  View
-} from 'react-native';
+import { Text, View } from 'react-native';
 
 import i18n from '../../../common/services/i18n.service';
 
@@ -14,7 +9,6 @@ import i18n from '../../../common/services/i18n.service';
  * Welcome Boost Notification Component
  */
 export default class WelcomeBoostView extends PureComponent {
-
   render() {
     const styles = this.props.styles;
 
@@ -22,6 +16,6 @@ export default class WelcomeBoostView extends PureComponent {
       <View style={styles.bodyContents}>
         <Text>{i18n.t('notification.welcomeBoost')}</Text>
       </View>
-    )
+    );
   }
 }

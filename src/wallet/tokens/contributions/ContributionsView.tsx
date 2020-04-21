@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   Text,
@@ -11,14 +9,11 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
 import { CommonStyle } from '../../../styles/Common';
 import CenteredLoading from '../../../common/components/CenteredLoading';
-import token from "../../../common/helpers/token";
+import token from '../../../common/helpers/token';
 import i18n from '../../../common/services/i18n.service';
 import DateRangePicker from '../../../common/components/DateRangePicker';
 import ContributionRow from './ContributionRow';
@@ -29,7 +24,6 @@ import ContributionRow from './ContributionRow';
 @inject('wallet')
 @observer
 export default class ContributionsView extends Component {
-
   /**
    * On component will unmount
    */
@@ -51,12 +45,15 @@ export default class ContributionsView extends Component {
     start.setDate(start.getDate() - 7);
     start.setHours(0, 0, 0);
 
-    this.setState({
-      from: start,
-      to: end
-    }, () => {
-      this.loadMore();
-    });
+    this.setState(
+      {
+        from: start,
+        to: end,
+      },
+      () => {
+        this.loadMore();
+      },
+    );
   }
 
   /**
@@ -66,7 +63,7 @@ export default class ContributionsView extends Component {
     const wallet = this.props.wallet;
     const entities = wallet.ledger.list.entities;
 
-    let empty = (<CenteredLoading />);
+    let empty = <CenteredLoading />;
 
     const header = this.getHeader();
 
@@ -80,10 +77,12 @@ export default class ContributionsView extends Component {
         onEndReached={this.loadMore}
         // onEndReachedThreshold={0}
         ListHeaderComponent={header}
-        ListEmptyComponent={(!wallet.ledger.list.loaded || !this.state.to) ? empty : <View />}
+        ListEmptyComponent={
+          !wallet.ledger.list.loaded || !this.state.to ? empty : <View />
+        }
         style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}
       />
-    )
+    );
   }
 
   /**
@@ -101,9 +100,15 @@ export default class ContributionsView extends Component {
     return (
       <View style={styles.header}>
         <View style={[CommonStyle.rowJustifyStart, styles.row]}>
-          <Text style={[CommonStyle.flexContainer, styles.text]}>{i18n.t('wallet.contributions.date')}</Text>
-          <Text style={[CommonStyle.flexContainer, styles.text]}>{i18n.t('wallet.contributions.score')}</Text>
-          <Text style={[CommonStyle.flexContainer, styles.text]}>{i18n.t('wallet.contributions.share')}</Text>
+          <Text style={[CommonStyle.flexContainer, styles.text]}>
+            {i18n.t('wallet.contributions.date')}
+          </Text>
+          <Text style={[CommonStyle.flexContainer, styles.text]}>
+            {i18n.t('wallet.contributions.score')}
+          </Text>
+          <Text style={[CommonStyle.flexContainer, styles.text]}>
+            {i18n.t('wallet.contributions.share')}
+          </Text>
         </View>
       </View>
     );
@@ -116,7 +121,7 @@ export default class ContributionsView extends Component {
     this.setState({ toVisible: false, to: value }, () => {
       this.refresh();
     });
-  }
+  };
 
   /**
    * Set from date
@@ -125,31 +130,29 @@ export default class ContributionsView extends Component {
     this.setState({ fromVisible: false, from: value }, () => {
       this.refresh();
     });
-  }
+  };
 
   /**
    * Load more data
    */
   loadMore = () => {
     this.props.wallet.ledger.loadList(this.state.from, this.state.to);
-  }
+  };
 
   /**
    * Render list's rows
    */
   renderRow = (row, i) => {
     const item = row.item;
-    return (
-      <ContributionRow item={item} key={i} />
-    )
-  }
+    return <ContributionRow item={item} key={i} />;
+  };
 
   /**
    * Refresh list
    */
   refresh = () => {
     this.props.wallet.ledger.refresh(this.state.from, this.state.to);
-  }
+  };
 }
 
 const styles = StyleSheet.create({

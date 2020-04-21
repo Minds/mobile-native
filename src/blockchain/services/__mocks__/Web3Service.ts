@@ -1,4 +1,3 @@
-
 export default {
   web3: {
     utils: {
@@ -6,11 +5,11 @@ export default {
       toWei: jest.fn(),
       isAddress: jest.fn(),
     },
-    eth:{
+    eth: {
       abi: {
-        encodeParameters: jest.fn()
-      }
-    }
+        encodeParameters: jest.fn(),
+      },
+    },
   },
   createWallet: jest.fn(),
   getAddressFromPK: jest.fn(),
@@ -19,5 +18,5 @@ export default {
   getContract: jest.fn(),
   getTransactionOptions: jest.fn(),
   sendSignedContractMethod: jest.fn(),
-  sendSignedContractMethodWithValue: jest.fn()
-}
+  sendSignedContractMethodWithValue: jest.fn(),
+};

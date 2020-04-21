@@ -22,7 +22,6 @@ import OnboardingBackButton from '../OnboardingBackButton';
 @inject('discovery')
 @observer
 export default class SuggestedChannelsStepNew extends Component {
-
   constructor(props) {
     super(props);
 
@@ -34,20 +33,20 @@ export default class SuggestedChannelsStepNew extends Component {
   /**
    * Component did mount
    */
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   /**
    * Render user
    */
   renderUser = (user, index) => {
-    return <DiscoveryUserNew
-      row={{item: user}}
-      key={user.guid}
-      testID={`suggestedUser${index}`}
-    />
-  }
+    return (
+      <DiscoveryUserNew
+        row={{ item: user }}
+        key={user.guid}
+        testID={`suggestedUser${index}`}
+      />
+    );
+  };
 
   getBody = () => {
     const discovery = this.props.discovery;
@@ -56,27 +55,38 @@ export default class SuggestedChannelsStepNew extends Component {
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
         <OnboardingBackButton onBack={this.props.onBack} />
         <View style={styles.textsContainer}>
-          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>{i18n.t('onboarding.profileSetup')}</Text>
-          <Text style={[CS.titleText, CS.colorPrimaryText]}>{i18n.t('onboarding.suggestedChannels')}</Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>{i18n.t('onboarding.step',{step: 4, total: 4})}</Text>
-          <Text style={[
-            CS.subTitleText,
-            CS.colorPrimaryText,
-            CS.marginBottom4x,
-            CS.marginTop4x
-          ]}>{i18n.t('onboarding.suggestedChannelsDescription')}</Text>
+          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>
+            {i18n.t('onboarding.profileSetup')}
+          </Text>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>
+            {i18n.t('onboarding.suggestedChannels')}
+          </Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
+            {i18n.t('onboarding.step', { step: 4, total: 4 })}
+          </Text>
+          <Text
+            style={[
+              CS.subTitleText,
+              CS.colorPrimaryText,
+              CS.marginBottom4x,
+              CS.marginTop4x,
+            ]}>
+            {i18n.t('onboarding.suggestedChannelsDescription')}
+          </Text>
         </View>
         <ScrollView style={styles.channelContainer}>
-        {!discovery.listStore.loaded && <ActivityIndicator />}
-        {discovery.listStore.entities.slice().map((user, i) => this.renderUser(user, i))}
+          {!discovery.listStore.loaded && <ActivityIndicator />}
+          {discovery.listStore.entities
+            .slice()
+            .map((user, i) => this.renderUser(user, i))}
         </ScrollView>
       </View>
     );
-  }
+  };
 
   getFooter = () => {
     return <OnboardingButtons onNext={this.props.onNext} />;
-  }
+  };
 
   /**
    * Render

@@ -1,14 +1,12 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import {
   TouchableOpacity,
   Text,
   StyleSheet,
   ScrollView,
-  View
+  View,
 } from 'react-native';
 
 import _ from 'lodash';
@@ -22,16 +20,15 @@ import ThemedStyles from '../../styles/ThemedStyles';
 @inject('hashtag')
 @observer
 export default class TagSelect extends Component {
-
   /**
    * Remove tag
    * @param {string} tag
    */
   async toogle(tag) {
     if (tag.selected) {
-      await this.props.onTagDeleted(tag)
+      await this.props.onTagDeleted(tag);
     } else {
-      await this.props.onTagAdded(tag)
+      await this.props.onTagAdded(tag);
     }
     this.onChange();
   }
@@ -45,8 +42,9 @@ export default class TagSelect extends Component {
 
   toogleOne = (tag) => {
     const hashstore = this.props.hashtag;
-    this.props.onSelectOne && this.props.onSelectOne(hashstore.hashtag !== tag.value ? tag.value : '');
-  }
+    this.props.onSelectOne &&
+      this.props.onSelectOne(hashstore.hashtag !== tag.value ? tag.value : '');
+  };
 
   /**
    * Render
@@ -56,34 +54,46 @@ export default class TagSelect extends Component {
 
     let tags = this.props.tags;
     if (!this.props.disableSort) {
-      tags = tags.slice().sort((a, b) => !a.selected && b.selected ? 1 : -1);
+      tags = tags.slice().sort((a, b) => (!a.selected && b.selected ? 1 : -1));
     }
     const {
       containerStyle,
       tagStyle,
       tagSelectedStyle,
       textStyle,
-      textSelectedStyle
+      textSelectedStyle,
     } = this.props;
 
     return (
       <ScrollView>
         <View style={[styles.tagContainer, containerStyle]}>
-          {tags.map((tag,i) => <TouchableOpacity
+          {tags.map((tag, i) => (
+            <TouchableOpacity
               style={[
                 styles.tag,
                 tagStyle,
                 tag.selected ? tagSelectedStyle : null,
-                (tag.value === this.props.hashtag.hashtag) ? [CS.borderPrimary, CS.border] : null,
+                tag.value === this.props.hashtag.hashtag
+                  ? [CS.borderPrimary, CS.border]
+                  : null,
                 theme.backgroundPrimary,
               ]}
               key={i}
               onPress={() => this.toogle(tag)}
               onLongPress={() => this.toogleOne(tag)}
-              testID={tag.value + 'TestID'}
-            >
-            <Text style={[styles.tagText, textStyle, tag.selected ? [theme.colorIconSelected, textSelectedStyle] : null]}>#{tag.value}</Text>
-          </TouchableOpacity>)}
+              testID={tag.value + 'TestID'}>
+              <Text
+                style={[
+                  styles.tagText,
+                  textStyle,
+                  tag.selected
+                    ? [theme.colorIconSelected, textSelectedStyle]
+                    : null,
+                ]}>
+                #{tag.value}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
     );
@@ -97,20 +107,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   tag: {
-    borderRadius:18,
+    borderRadius: 18,
     margin: 2,
     flexDirection: 'row',
     padding: 8,
   },
   tagText: {
     fontFamily: 'Roboto',
-    paddingRight: 5
+    paddingRight: 5,
   },
-  tagContainer:{
-    flex:1,
+  tagContainer: {
+    flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    display: 'flex'
-  }
+    display: 'flex',
+  },
 });

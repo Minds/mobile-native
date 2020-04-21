@@ -1,17 +1,12 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  Alert,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, Alert, StyleSheet } from 'react-native';
 
-import { observer, inject } from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
 import TransparentButton from '../../../common/components/TransparentButton';
 
-import { CommonStyle } from "../../../styles/Common";
+import { CommonStyle } from '../../../styles/Common';
 import Web3Service from '../../services/Web3Service';
 import { ComponentsStyle } from '../../../styles/Components';
 import i18n from '../../../common/services/i18n.service';
@@ -28,7 +23,7 @@ export default class BlockchainWalletImportScreen extends Component {
   state = {
     importingRemote: false,
     remoteAddress: '',
-    privateKey: ''
+    privateKey: '',
   };
 
   componentWillMount() {
@@ -37,7 +32,7 @@ export default class BlockchainWalletImportScreen extends Component {
     this.setState({
       importingRemote: !!params.address,
       remoteAddress: params.address || '',
-      privateKey: ''
+      privateKey: '',
     });
   }
 
@@ -54,11 +49,11 @@ export default class BlockchainWalletImportScreen extends Component {
     ) {
       Alert.alert(
         i18n.t('import'),
-        i18n.t('blockchain.privateNotBelongToAddress',{address: addressExcerpt(this.state.remoteAddress)}),
-        [
-          {text: i18n.t('ok')},
-        ],
-        { cancelable: false }
+        i18n.t('blockchain.privateNotBelongToAddress', {
+          address: addressExcerpt(this.state.remoteAddress),
+        }),
+        [{ text: i18n.t('ok') }],
+        { cancelable: false },
       );
 
       return;
@@ -66,12 +61,14 @@ export default class BlockchainWalletImportScreen extends Component {
 
     Alert.alert(
       i18n.t('import'),
-      i18n.t('blockchain.importUsingPrivate',{address:addressExcerpt(address)}),
+      i18n.t('blockchain.importUsingPrivate', {
+        address: addressExcerpt(address),
+      }),
       [
         { text: i18n.t('no'), style: 'cancel' },
         { text: i18n.t('yes'), onPress: () => this.import() },
       ],
-      { cancelable: false }
+      { cancelable: false },
     );
   };
 
@@ -93,9 +90,24 @@ export default class BlockchainWalletImportScreen extends Component {
 
   render() {
     return (
-      <View style={[ CommonStyle.flexContainer, CommonStyle.screen, CommonStyle.backgroundWhite ]}>
-        {this.state.importingRemote && <Text style={CommonStyle.modalTitle}>{i18n.t('blockchain.importWalletFor', {address: addressExcerpt(this.state.remoteAddress)})}</Text>}
-        {!this.state.importingRemote && <Text style={CommonStyle.modalTitle}>{i18n.t('blockchain.importWallet')}</Text>}
+      <View
+        style={[
+          CommonStyle.flexContainer,
+          CommonStyle.screen,
+          CommonStyle.backgroundWhite,
+        ]}>
+        {this.state.importingRemote && (
+          <Text style={CommonStyle.modalTitle}>
+            {i18n.t('blockchain.importWalletFor', {
+              address: addressExcerpt(this.state.remoteAddress),
+            })}
+          </Text>
+        )}
+        {!this.state.importingRemote && (
+          <Text style={CommonStyle.modalTitle}>
+            {i18n.t('blockchain.importWallet')}
+          </Text>
+        )}
 
         <Text style={styles.note}>
           {i18n.t('blockchain.enterPrivateBelow')}
@@ -103,8 +115,8 @@ export default class BlockchainWalletImportScreen extends Component {
 
         <View style={CommonStyle.field}>
           <TextInput
-            style={[ ComponentsStyle.input, styles.addressTextInput ]}
-            onChangeText={privateKey => this.setState({ privateKey })}
+            style={[ComponentsStyle.input, styles.addressTextInput]}
+            onChangeText={(privateKey) => this.setState({ privateKey })}
             value={this.state.privateKey}
             placeholder="1234567890abcdef…"
             multiline={true}
@@ -149,7 +161,7 @@ const styles = StyleSheet.create({
   actionBar: {
     flexDirection: 'row',
     alignItems: 'stretch',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   actionButton: {
     marginLeft: 5,

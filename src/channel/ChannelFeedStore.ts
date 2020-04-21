@@ -1,8 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action,
-} from 'mobx'
+import { observable, action } from 'mobx';
 
 import FeedStore from '../common/stores/FeedStore';
 
@@ -10,7 +7,6 @@ import FeedStore from '../common/stores/FeedStore';
  * Channel Feed store
  */
 export default class ChannelFeedStore {
-
   feedsEndpoint = 'feeds/container';
   scheduledEndpoint = 'feeds/scheduled';
 
@@ -35,12 +31,16 @@ export default class ChannelFeedStore {
     this.feedStore = new FeedStore(true);
   }
 
-  get esFeedfilter () {
+  get esFeedfilter() {
     switch (this.filter) {
-      case 'feed': return 'activities';
-      case 'images': return 'images';
-      case 'videos': return 'videos';
-      case 'blogs': return 'blogs';
+      case 'feed':
+        return 'activities';
+      case 'images':
+        return 'images';
+      case 'videos':
+        return 'videos';
+      case 'blogs':
+        return 'blogs';
     }
   }
 
@@ -73,10 +73,10 @@ export default class ChannelFeedStore {
    * @param {boolean} refresh
    */
   async loadFeed(refresh = false) {
-
     if (refresh) this.feedStore.clear();
 
-    this.feedStore.setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
+    this.feedStore
+      .setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
       .setAsActivities(this.esFeedfilter !== 'blogs')
       .setLimit(12)
       .fetchRemoteOrLocal();
@@ -93,7 +93,7 @@ export default class ChannelFeedStore {
 
   @action
   clearFeed() {
-    this.filter      = 'feed';
+    this.filter = 'feed';
     this.showrewards = false;
     this.feedStore.clear();
   }
@@ -106,13 +106,13 @@ export default class ChannelFeedStore {
     }
 
     this.feedStore.clear();
-    this.feedStore.setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
+    this.feedStore
+      .setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
       .setAsActivities(this.esFeedfilter !== 'blogs')
       .setLimit(12)
       .fetchRemoteOrLocal();
 
     return;
-
   }
 
   @action
@@ -121,8 +121,9 @@ export default class ChannelFeedStore {
 
     if (filter == 'requests' || filter == 'rewards') return;
 
-    this.feedStore.setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
-      .setIsTiled(filter === 'images' || filter === 'videos')
+    this.feedStore
+      .setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
+      .setIsTiled(filter === 'images' || filter === 'videos')
       .setAsActivities(this.esFeedfilter !== 'blogs')
       .clear()
       .fetchRemoteOrLocal();
@@ -130,7 +131,10 @@ export default class ChannelFeedStore {
 
   @action
   toggleScheduled() {
-    this.endpoint = this.endpoint == this.feedsEndpoint ? this.scheduledEndpoint : this.feedsEndpoint;
+    this.endpoint =
+      this.endpoint == this.feedsEndpoint
+        ? this.scheduledEndpoint
+        : this.feedsEndpoint;
     this.setFilter(this.filter);
   }
 }

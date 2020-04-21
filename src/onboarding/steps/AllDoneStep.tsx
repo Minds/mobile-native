@@ -19,12 +19,7 @@ export default class AllDoneStep extends Component {
    */
   render() {
     return (
-      <View
-        style={[
-          CS.flexContainerCenter,
-          CS.backgroundPrimary,
-          CS.centered,
-        ]}>
+      <View style={[CS.flexContainerCenter, CS.backgroundPrimary, CS.centered]}>
         <Text style={[CS.onboardingTitle]}>{i18n.t('boosts.tabNewsfeed')}</Text>
       </View>
     );

@@ -1,8 +1,7 @@
 //@ts-nocheck
-import api from "./api.service";
+import api from './api.service';
 
 class TwoFactorAuthenticationService {
-  
   /**
    * request endpoint to ask if user has twofactor activated
    */
@@ -12,7 +11,7 @@ class TwoFactorAuthenticationService {
 
   /**
    * Call to twofactor endpoint
-   * @param {String} number 
+   * @param {String} number
    */
   async authenticate(tel) {
     const params = { tel };
@@ -22,20 +21,20 @@ class TwoFactorAuthenticationService {
 
   /**
    * Check if the code corresponds to telno and secret
-   * @param {String} telno 
-   * @param {String} code 
-   * @param {String} secret 
+   * @param {String} telno
+   * @param {String} code
+   * @param {String} secret
    */
   async check(telno, code, secret) {
-    return await api.post('api/v1/twofactor/check', {telno, code, secret});
+    return await api.post('api/v1/twofactor/check', { telno, code, secret });
   }
 
   /**
    * Deactivate 2FA
-   * @param {String} password 
+   * @param {String} password
    */
   async remove(password) {
-    return await api.post('api/v1/twofactor/remove', {password});
+    return await api.post('api/v1/twofactor/remove', { password });
   }
 }
 

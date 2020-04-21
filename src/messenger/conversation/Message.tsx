@@ -1,20 +1,9 @@
 //@ts-nocheck
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
-import {
-  inject,
-  observer
-} from 'mobx-react'
+import { inject, observer } from 'mobx-react';
 
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -32,15 +21,14 @@ import ThemedStyles from '../../styles/ThemedStyles';
  */
 @inject('user')
 export default class Message extends PureComponent {
-
   stats = {
-    showDate: false
+    showDate: false,
   };
 
   state = {
     decrypted: false,
     msg: i18n.t('messenger.decrypting'),
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -51,7 +39,7 @@ export default class Message extends PureComponent {
       this.state = {
         decrypted: true,
         msg: message.message,
-      }
+      };
     }
   }
 
@@ -63,10 +51,10 @@ export default class Message extends PureComponent {
           const msg = await crypto.decrypt(message.message);
           this.setState({ decrypted: true, msg });
         } catch (ex) {
-          this.setState({ decrypted: true, msg:'couldn\'t decrypt'});
+          this.setState({ decrypted: true, msg: "couldn't decrypt" });
         }
       } else {
-        this.setState({ decrypted: true, msg:'' });
+        this.setState({ decrypted: true, msg: '' });
       }
     }
   }
@@ -83,32 +71,61 @@ export default class Message extends PureComponent {
   _navToChannel = () => {
     // only active if receive the navigation property
     if (this.props.navigation) {
-      this.props.navigation.push('Channel', { guid: this.props.message.owner.guid });
+      this.props.navigation.push('Channel', {
+        guid: this.props.message.owner.guid,
+      });
     }
-  }
+  };
 
   /**
    * Render
    */
   render() {
     const message = this.props.message;
-    const avatarImg = { uri: MINDS_CDN_URI + 'icon/' + message.owner.guid + '/small' + this.getIcontime(message.owner)};
+    const avatarImg = {
+      uri:
+        MINDS_CDN_URI +
+        'icon/' +
+        message.owner.guid +
+        '/small' +
+        this.getIcontime(message.owner),
+    };
     if (this.props.right) {
       return (
         <View>
           <View style={[styles.messageContainer, styles.right]}>
-            <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, ThemedStyles.style.backgroundLink]}>
-              <Text selectable={true} style={[styles.message, CommonStyle.colorWhite]} onLongPress={() => this.showDate()}>
-                <Tags color={'#fff'} style={{ color: '#FFF' }} navigation={this.props.navigation}>{this.state.msg}</Tags>
+            <View
+              style={[
+                CommonStyle.rowJustifyCenter,
+                styles.textContainer,
+                ThemedStyles.style.backgroundLink,
+              ]}>
+              <Text
+                selectable={true}
+                style={[styles.message, CommonStyle.colorWhite]}
+                onLongPress={() => this.showDate()}>
+                <Tags
+                  color={'#fff'}
+                  style={{ color: '#FFF' }}
+                  navigation={this.props.navigation}>
+                  {this.state.msg}
+                </Tags>
               </Text>
             </View>
             <TouchableOpacity onPress={this._navToChannel}>
-              <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
+              <Image
+                source={avatarImg}
+                style={[styles.avatar, styles.smallavatar]}
+              />
             </TouchableOpacity>
           </View>
-          { this.state.showDate ?
-            <Text selectable={true} style={[styles.messagedate, styles.rightText]}>{formatDate(this.props.message.time_created)}</Text>
-            : null }
+          {this.state.showDate ? (
+            <Text
+              selectable={true}
+              style={[styles.messagedate, styles.rightText]}>
+              {formatDate(this.props.message.time_created)}
+            </Text>
+          ) : null}
         </View>
       );
     }
@@ -117,29 +134,43 @@ export default class Message extends PureComponent {
       <View>
         <View style={styles.messageContainer}>
           <TouchableOpacity onPress={this._navToChannel}>
-            <Image source={avatarImg} style={[styles.avatar, styles.smallavatar]} />
+            <Image
+              source={avatarImg}
+              style={[styles.avatar, styles.smallavatar]}
+            />
           </TouchableOpacity>
-          <View style={[CommonStyle.rowJustifyCenter, styles.textContainer, , ThemedStyles.style.backgroundTertiary]}>
-            <Text selectable={true} style={[styles.message]} onLongPress={() => this.showDate()}>
-              <Tags style={[styles.message]} navigation={this.props.navigation}>{this.state.msg}</Tags>
+          <View
+            style={[
+              CommonStyle.rowJustifyCenter,
+              styles.textContainer,
+              ,
+              ThemedStyles.style.backgroundTertiary,
+            ]}>
+            <Text
+              selectable={true}
+              style={[styles.message]}
+              onLongPress={() => this.showDate()}>
+              <Tags style={[styles.message]} navigation={this.props.navigation}>
+                {this.state.msg}
+              </Tags>
             </Text>
           </View>
         </View>
-        { this.state.showDate ?
-          <Text selectable={true} style={styles.messagedate}>{formatDate(this.props.message.time_created)}</Text>
-          : null }
+        {this.state.showDate ? (
+          <Text selectable={true} style={styles.messagedate}>
+            {formatDate(this.props.message.time_created)}
+          </Text>
+        ) : null}
       </View>
     );
   }
 
   showDate() {
     this.setState({
-      showDate: !this.state.showDate
+      showDate: !this.state.showDate,
     });
   }
-
 }
-
 
 // styles
 const styles = StyleSheet.create({
@@ -155,8 +186,8 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flexWrap: 'wrap',
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     backgroundColor: '#EEE',
     borderRadius: 15,
     padding: 12,
@@ -186,6 +217,6 @@ const styles = StyleSheet.create({
     fontSize: 9,
     marginTop: 2,
     marginLeft: 38,
-    marginRight: 38
-  }
+    marginRight: 38,
+  },
 });

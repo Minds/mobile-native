@@ -9,12 +9,12 @@ import colors, { DARK_THEME, LIGHT_THEME } from './Colors';
 export const ComponentsStyle = StyleSheet.create({
   loginInputIcon: {
     position: 'absolute',
-    right:8,
-    top:22
+    right: 8,
+    top: 22,
   },
   loginInputIconNew: {
     position: 'absolute',
-    right:8,
+    right: 8,
     top: Platform.OS === 'ios' ? 33 : 37,
     color: '#404A4E',
   },
@@ -89,16 +89,16 @@ export const ComponentsStyle = StyleSheet.create({
     color: 'white',
   },
   registerCheckboxText: {
-    color: 'white'
+    color: 'white',
   },
   registerCheckbox: {
     backgroundColor: 'transparent',
     borderWidth: 0,
     marginRight: 0,
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
   registerCheckboxTextNew: {
-    color: '#4A4A4A'
+    color: '#4A4A4A',
   },
   registerCheckboxNew: {
     backgroundColor: 'transparent',
@@ -119,20 +119,20 @@ export const ComponentsStyle = StyleSheet.create({
     padding: 4,
   },
   bluebutton: {
-    margin:4,
-    padding:4,
-    alignItems:'center',
-    borderWidth:1,
+    margin: 4,
+    padding: 4,
+    alignItems: 'center',
+    borderWidth: 1,
     borderRadius: 20,
-    borderColor: colors.primary
+    borderColor: colors.primary,
   },
   redbutton: {
     margin: 4,
     padding: 4,
-    alignItems:'center',
+    alignItems: 'center',
     borderRadius: 20,
-    backgroundColor:'white',
-    borderWidth:1,
+    backgroundColor: 'white',
+    borderWidth: 1,
     borderColor: colors.danger,
   },
 
@@ -160,14 +160,14 @@ export const ComponentsStyle = StyleSheet.create({
     width: 200,
     height: 84,
     marginBottom: 30,
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   link: {
     fontWeight: 'bold',
   },
   terms: {
     color: 'white',
-    paddingRight: 8
+    paddingRight: 8,
   },
   linkNew: {
     color: '#0091FF',

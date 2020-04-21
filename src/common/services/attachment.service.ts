@@ -18,7 +18,7 @@ class AttachmentService {
       uri: media.uri,
       path: media.path || null,
       type: media.type,
-      name: media.fileName || 'test'
+      name: media.fileName || 'test',
     };
 
     const progress = (e) => {
@@ -47,27 +47,31 @@ class AttachmentService {
    * @param {any} file
    * @param {function} progress
    */
-  uploadToS3(file, progress){
+  uploadToS3(file, progress) {
     // Prepare media and wait for lease => {media_type, guid}
     let lease;
 
     return new Cancelable(async (resolve, reject, onCancel) => {
       const response = await api.put(`api/v2/media/upload/prepare/video`);
       // upload file to s3
-      const uploadPromise = api.uploadToS3(response.lease, file, progress).then(async () => {
-        // complete upload and wait for status
-        const {status} = await api.put(`api/v2/media/upload/complete/${response.lease.media_type}/${response.lease.guid}`);
+      const uploadPromise = api
+        .uploadToS3(response.lease, file, progress)
+        .then(async () => {
+          // complete upload and wait for status
+          const { status } = await api.put(
+            `api/v2/media/upload/complete/${response.lease.media_type}/${response.lease.guid}`,
+          );
 
-        // if false is returned, upload fails message will be showed
-        return status === 'success' ? {guid: response.lease.guid} : false;
-      });
+          // if false is returned, upload fails message will be showed
+          return status === 'success' ? { guid: response.lease.guid } : false;
+        });
       // handle cancel
       onCancel((cb) => {
         uploadPromise.cancel();
         cb();
       });
       resolve(uploadPromise);
-    }).catch( error => {
+    }).catch((error) => {
       if (error.name !== 'CancelationError') {
         logService.exception('[ApiService] upload', error);
         throw error;
@@ -121,7 +125,7 @@ class AttachmentService {
         path: response.path,
         type: 'image/jpeg',
         fileName: 'image.jpg',
-      }
+      };
     }
 
     return response;
@@ -132,7 +136,6 @@ class AttachmentService {
    * @param {string} mediaType photo or video (or mixed only ios)
    */
   async gallery(mediaType = 'photo') {
-
     const response = await imagePicker.launchImageLibrary(mediaType);
 
     if (!response) {

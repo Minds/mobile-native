@@ -56,7 +56,9 @@ class RegisterForm extends Component {
       error.confirmPasswordError = '';
     }
 
-    error.invalidPasswordError = !validatePassword(value).all ? i18n.t('auth.invalidPassword') : '';
+    error.invalidPasswordError = !validatePassword(value).all
+      ? i18n.t('auth.invalidPassword')
+      : '';
 
     this.setState({ error });
   }
@@ -71,10 +73,10 @@ class RegisterForm extends Component {
     this.setState({ termsAccepted: !!value, error });
   }
 
-  setUsername = username => this.setState({ username });
-  setEmail = email => this.setState({ email });
-  setPassword = password => this.setState({ password });
-  setConfirmPassword = confirmPassword => this.setState({ confirmPassword });
+  setUsername = (username) => this.setState({ username });
+  setEmail = (email) => this.setState({ email });
+  setPassword = (password) => this.setState({ password });
+  setConfirmPassword = (confirmPassword) => this.setState({ confirmPassword });
 
   getFormBody = () => {
     const CS = ThemedStyles.style;
@@ -104,7 +106,7 @@ class RegisterForm extends Component {
           <Text style={[CS.colorAlert, CS.textCenter]}>
             {this.state.error.termsAcceptedError}
           </Text>
-          { this.state.passwordFocused ? (
+          {this.state.passwordFocused ? (
             <PasswordValidator password={this.state.password} />
           ) : (
             <>
@@ -213,12 +215,12 @@ class RegisterForm extends Component {
   }
 
   focusPassword = () => {
-    this.setState({passwordFocused: true});
+    this.setState({ passwordFocused: true });
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
 
   blurPassword = () => {
-    this.setState({passwordFocused: false});
+    this.setState({ passwordFocused: false });
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
 

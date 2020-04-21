@@ -1,10 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action,
-  computed,
-  extendObservable
-} from 'mobx';
+import { observable, action, computed, extendObservable } from 'mobx';
 
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
@@ -18,7 +13,6 @@ import FeedStore from '../common/stores/FeedStore';
  * Discovery Feed Store
  */
 class DiscoveryFeedStore {
-
   /**
    * Lists stores
    */
@@ -34,11 +28,7 @@ class DiscoveryFeedStore {
     this.list.clear();
     this.list.viewed.clearViewed();
 
-    this.list
-      .setPaginated(false)
-      .setFeed(feed)
-      .setOffset(0)
-      .hydratePage();
+    this.list.setPaginated(false).setFeed(feed).setOffset(0).hydratePage();
 
     this.list.setFallbackIndex(fallbackIndex);
   }
@@ -49,7 +39,8 @@ class DiscoveryFeedStore {
   buildListStores() {
     this.list = new FeedStore(true);
 
-    this.list.getMetadataService()
+    this.list
+      .getMetadataService()
       .setSource('feed/discovery')
       .setMedium('feed');
   }

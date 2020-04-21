@@ -1,8 +1,9 @@
 //@ts-nocheck
 let timeout;
-export default function debounce(func, wait, immediate=false) {
+export default function debounce(func, wait, immediate = false) {
   return function () {
-    const context = this, args = arguments;
+    const context = this,
+      args = arguments;
     const later = function () {
       timeout = null;
       if (!immediate) func.apply(context, args);
@@ -12,4 +13,4 @@ export default function debounce(func, wait, immediate=false) {
     timeout = setTimeout(later, wait);
     if (callNow) func.apply(context, args);
   };
-};
+}

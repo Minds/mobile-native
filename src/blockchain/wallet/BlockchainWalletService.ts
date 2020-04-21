@@ -36,7 +36,12 @@ async function fetchPrivateKeyFromStorage(address) {
 }
 
 async function savePrivateKeyToStorage(address, privateKey) {
-  return await StorageService.setItem(privateKeyStorageKey(address), privateKey, true, 'wallet');
+  return await StorageService.setItem(
+    privateKeyStorageKey(address),
+    privateKey,
+    true,
+    'wallet',
+  );
 }
 
 async function fetchCurrentWalletAddressFromStorage() {
@@ -44,7 +49,10 @@ async function fetchCurrentWalletAddressFromStorage() {
 }
 
 async function saveCurrentWalletAddressToStorage(address) {
-  return await StorageService.setItem(storageKey('currentWalletAddress'), address);
+  return await StorageService.setItem(
+    storageKey('currentWalletAddress'),
+    address,
+  );
 }
 
 const CACHE_TTL = 15 * 60 * 1000; // 15 minutes
@@ -92,7 +100,11 @@ export class BlockchainWalletService {
   isValidPrivateKey(privateKey) {
     try {
       privateKey = this.normalizePrivateKey(privateKey);
-      return !!privateKey && privateKey.length === 66 && !!Web3Service.getAddressFromPK(privateKey)
+      return (
+        !!privateKey &&
+        privateKey.length === 66 &&
+        !!Web3Service.getAddressFromPK(privateKey)
+      );
     } catch (e) {
       return false;
     }
@@ -102,12 +114,14 @@ export class BlockchainWalletService {
 
   async getAll() {
     const wallets = await fetchListFromStorage(),
-    current = this.current && this.current.address;
+      current = this.current && this.current.address;
 
     for (let i = 0; i < wallets.length; i++) {
       wallets[i] = Object.assign({}, wallets[i], {
-        current: !!current && wallets[i].address.toLowerCase() === current.toLowerCase(),
-        privateKey: await hasPrivateKeyInStorage(wallets[i].address)
+        current:
+          !!current &&
+          wallets[i].address.toLowerCase() === current.toLowerCase(),
+        privateKey: await hasPrivateKeyInStorage(wallets[i].address),
       });
     }
 
@@ -119,10 +133,11 @@ export class BlockchainWalletService {
       return null;
     }
 
-    const wallets = await this.getAll() || [];
+    const wallets = (await this.getAll()) || [];
 
-    return wallets
-      .find(wallet => wallet.address.toLowerCase() === address.toLowerCase());
+    return wallets.find(
+      (wallet) => wallet.address.toLowerCase() === address.toLowerCase(),
+    );
   }
 
   // Storage
@@ -133,7 +148,9 @@ export class BlockchainWalletService {
     }
 
     const wallets = await fetchListFromStorage(),
-      i = wallets.findIndex(wallet => wallet.address.toLowerCase() === address.toLowerCase());
+      i = wallets.findIndex(
+        (wallet) => wallet.address.toLowerCase() === address.toLowerCase(),
+      );
 
     if (i < 0) {
       throw new Error('E_ADDRESS_NOT_FOUND');
@@ -152,7 +169,9 @@ export class BlockchainWalletService {
     }
 
     const wallets = await fetchListFromStorage(),
-      i = wallets.findIndex(wallet => wallet.address.toLowerCase() === address.toLowerCase());
+      i = wallets.findIndex(
+        (wallet) => wallet.address.toLowerCase() === address.toLowerCase(),
+      );
 
     if (i < 0) {
       throw new Error('E_ADDRESS_NOT_FOUND');
@@ -168,7 +187,10 @@ export class BlockchainWalletService {
 
   async getCurrent(onlyWithPrivateKey = false) {
     if (!this.current || (!this.current.privateKey && onlyWithPrivateKey)) {
-      const payload = await this.selectCurrent(i18n.t('blockchain.selectTheWallet'), { signable: onlyWithPrivateKey, offchain: false});
+      const payload = await this.selectCurrent(
+        i18n.t('blockchain.selectTheWallet'),
+        { signable: onlyWithPrivateKey, offchain: false },
+      );
 
       if (payload && payload.type === 'onchain') {
         this.current = payload.wallet;
@@ -195,14 +217,17 @@ export class BlockchainWalletService {
   }
 
   async selectCurrent(message = '', opts = {}) {
-    const payload = await getStores().blockchainWalletSelector.waitForSelect(message, opts);
+    const payload = await getStores().blockchainWalletSelector.waitForSelect(
+      message,
+      opts,
+    );
 
     if (!payload) {
       this.current = null;
 
       return {
         type: '',
-        cancelled: true
+        cancelled: true,
       };
     }
 
@@ -299,9 +324,10 @@ export class BlockchainWalletService {
       return this.fundsCache[address];
     }
 
-    const result = address.toLowerCase() !== 'offchain' ?
-      await this.getOnchainFunds(address) :
-      await this.getOffchainFunds(address);
+    const result =
+      address.toLowerCase() !== 'offchain'
+        ? await this.getOnchainFunds(address)
+        : await this.getOffchainFunds(address);
 
     this.fundsCache[address] = Object.assign({}, result);
 
@@ -312,7 +338,7 @@ export class BlockchainWalletService {
     return {
       tokens: await BlockchainTokenService.balanceOf(address),
       eth: await Web3Service.getBalance(address),
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
   }
 
@@ -321,18 +347,21 @@ export class BlockchainWalletService {
       let response = await api.get(`api/v2/blockchain/wallet/balance`);
 
       return {
-        tokens: Web3Service.web3.utils.fromWei(noExponents(response.addresses[1].balance), 'ether'),
+        tokens: Web3Service.web3.utils.fromWei(
+          noExponents(response.addresses[1].balance),
+          'ether',
+        ),
         eth: 0,
-        timestamp: Date.now()
-      }
+        timestamp: Date.now(),
+      };
     } catch (e) {
       logService.exception(e);
 
       return {
         tokens: 'N/A',
         eth: 0,
-        timestamp: Date.now()
-      }
+        timestamp: Date.now(),
+      };
     }
   }
 

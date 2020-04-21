@@ -9,16 +9,16 @@ class EntitiesService {
    * @param {guid} string
    */
   getEntity(guid) {
-    return api.get('api/v1/entities/entity/' + guid )
+    return api
+      .get('api/v1/entities/entity/' + guid)
       .then((data) => {
         return data.entity;
       })
-      .catch(err => {
+      .catch((err) => {
         logService.exception('[EntitiesService]', err);
         throw new Error(i18n.t('errorMessage'));
       });
   }
-
 }
 
 export default new EntitiesService();

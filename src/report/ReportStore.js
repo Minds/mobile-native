@@ -1,8 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action
-} from 'mobx'
+import { observable, action } from 'mobx';
 
 import ReportListStore from './ReportListStore';
 import reportService from './ReportService';
@@ -19,12 +16,11 @@ export default class ReportStore {
    * Load list
    */
   async loadList() {
-
     this.setLoading(true);
     this.list.setErrorLoading(false);
 
     try {
-      const response = await reportService.get(this.filter, this.list.offset)
+      const response = await reportService.get(this.filter, this.list.offset);
 
       if (response.appeals) {
         if (this.list.offset) {
@@ -35,7 +31,6 @@ export default class ReportStore {
 
       return response;
     } catch (err) {
-
       if (!isNetworkFail(err)) {
         logService.exception('[ReportStore] loadList', err);
       }
@@ -45,7 +40,7 @@ export default class ReportStore {
     }
   }
 
-    /**
+  /**
    * Reload list
    */
   async reload() {
@@ -84,6 +79,4 @@ export default class ReportStore {
     this.list.clearList();
     this.filter = 'network';
   }
-
 }
-

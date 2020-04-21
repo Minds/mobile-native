@@ -1,9 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  computed,
-  action
-} from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 import apiService from '../../common/services/api.service';
 import WithdrawService from './WithdrawService';
@@ -22,10 +18,13 @@ class WithdrawStore {
 
     this.ledger = [];
 
-    const response = await apiService.get(`api/v2/blockchain/transactions/withdrawals`, {
-      from: Math.floor(+startDate / 1000),
-      to: Math.floor(+endDate / 1000)
-    });
+    const response = await apiService.get(
+      `api/v2/blockchain/transactions/withdrawals`,
+      {
+        from: Math.floor(+startDate / 1000),
+        to: Math.floor(+endDate / 1000),
+      },
+    );
 
     this.ledger = response.withdrawals || [];
   }

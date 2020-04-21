@@ -1,12 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  Text,
-  View,
-  FlatList,
-  StyleSheet
-} from 'react-native';
+import { Text, View, FlatList, StyleSheet } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -23,7 +18,6 @@ import i18n from '../../../common/services/i18n.service';
 @inject('blockchainWallet')
 @observer
 export default class BlockchainWalletList extends Component {
-
   componentDidMount() {
     this.props.blockchainWallet.load();
   }
@@ -47,16 +41,22 @@ export default class BlockchainWalletList extends Component {
   EmptyPartial = () => {
     return (
       <View style={style.emptyView}>
-        <Text style={style.emptyViewText}>{i18n.t('blockchain.noWalletsAvailable')}</Text>
+        <Text style={style.emptyViewText}>
+          {i18n.t('blockchain.noWalletsAvailable')}
+        </Text>
 
-        {!this.props.disableCreation && <Touchable onPress={this.createWalletAction}>
-          <Text style={style.emptyViewTappableText}>{i18n.t('blockchain.tapToCreate')}</Text>
-        </Touchable>}
+        {!this.props.disableCreation && (
+          <Touchable onPress={this.createWalletAction}>
+            <Text style={style.emptyViewTappableText}>
+              {i18n.t('blockchain.tapToCreate')}
+            </Text>
+          </Touchable>
+        )}
       </View>
     );
   };
 
-  keyExtractor = item => item.address;
+  keyExtractor = (item) => item.address;
 
   render() {
     const wallets = this.props.blockchainWallet.getList(
@@ -77,7 +77,7 @@ export default class BlockchainWalletList extends Component {
 
 const style = StyleSheet.create({
   emptyView: {
-    marginTop: 30
+    marginTop: 30,
   },
   emptyViewText: {
     marginBottom: 10,
@@ -89,5 +89,5 @@ const style = StyleSheet.create({
     fontSize: 16,
     color: colors.primary,
     textAlign: 'center',
-  }
+  },
 });

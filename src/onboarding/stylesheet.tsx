@@ -1,7 +1,7 @@
 //@ts-nocheck
-import Colors from "../styles/Colors";
+import Colors from '../styles/Colors';
 
-import { Platform } from "react-native";
+import { Platform } from 'react-native';
 
 export default {
   header: {
@@ -28,7 +28,7 @@ export default {
     alignItems: 'center',
   },
   colsVCenter: {
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   col: {
     flexBasis: 0,
@@ -91,7 +91,7 @@ export default {
   },
 
   form: {
-    marginTop: 20
+    marginTop: 20,
   },
   textInput: {
     borderWidth: 1,
@@ -140,18 +140,18 @@ export default {
     marginBottom: 10,
   },
   vertButtonBar: {
-    marginTop: 10
+    marginTop: 10,
   },
 
   nextButtonBar: {
     marginTop: 20,
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
 
   error: {
     fontSize: 13,
     color: '#c00',
     textAlign: 'center',
-  }
+  },
 };
