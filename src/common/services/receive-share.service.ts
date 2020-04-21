@@ -1,5 +1,10 @@
 import RNFileShareIntent from 'react-native-file-share-intent';
-import { NativeEventEmitter, NativeModules, Image } from 'react-native';
+import {
+  NativeEventEmitter,
+  NativeModules,
+  Image,
+  Platform,
+} from 'react-native';
 const { ModuleWithEmitter } = NativeModules;
 import type { EmitterSubscription } from 'react-native';
 
@@ -19,7 +24,7 @@ class ReceiveShareService {
   subscription!: EmitterSubscription;
 
   constructor() {
-    if (process.env.JEST_WORKER_ID === undefined) {
+    if (process.env.JEST_WORKER_ID === undefined && Platform.OS === 'android') {
       const eventEmitter = new NativeEventEmitter(ModuleWithEmitter);
       this.subscription = eventEmitter.addListener(
         'FileShareIntent',
