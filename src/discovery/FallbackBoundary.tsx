@@ -1,8 +1,8 @@
 //@ts-nocheck
 import React from 'react';
-import {View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 
-import {CommonStyle as CS} from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 
 /**
  * Fallback boundary for feed views

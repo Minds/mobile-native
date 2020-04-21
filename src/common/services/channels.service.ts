@@ -1,21 +1,19 @@
 //@ts-nocheck
-import apiService, { isApiForbidden } from "./api.service";
+import apiService, { isApiForbidden } from './api.service';
 
-import UserModel from "../../channel/UserModel";
-import { abort } from "../helpers/abortableFetch";
-import entitiesStorage from "./sql/entities.storage";
+import UserModel from '../../channel/UserModel';
+import { abort } from '../helpers/abortableFetch';
+import entitiesStorage from './sql/entities.storage';
 
 /**
  * Channels services
  */
 class ChannelsService {
-
   /**
    * Get one channel
    * @param {string} guid
    */
   async get(guid: string, defaultChannel) {
-
     const urn = `urn:channels:${guid}`;
 
     const local = await entitiesStorage.read(urn);
@@ -61,7 +59,7 @@ class ChannelsService {
       if (isApiForbidden(err)) {
         // remove the permissions to force the UI update\
         if (channel) {
-          channel.setPermissions({permissions:[]});
+          channel.setPermissions({ permissions: [] });
         }
         // remove it from local storage
         this.removeFromCache(channel);
@@ -87,7 +85,7 @@ class ChannelsService {
    */
   removeFromCache(channel) {
     const urn = `urn:channels:${channel.guid}`;
-    entitiesStorage.remove( urn );
+    entitiesStorage.remove(urn);
   }
 }
 

@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
@@ -16,15 +14,12 @@ import {
 
 import { Header } from '@react-navigation/stack';
 
-import {
-  observer,
-  inject
-} from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
 import ActionSheet from 'react-native-actionsheet';
 import { Icon } from 'react-native-elements';
 
-import {truncate} from 'lodash';
+import { truncate } from 'lodash';
 
 import * as entities from 'entities';
 import GroupUser from './GroupUser';
@@ -39,7 +34,11 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
 import featuresService from '../common/services/features.service';
 import FeedList from '../common/components/FeedList';
-import { FLAG_CREATE_POST, FLAG_APPOINT_MODERATOR, FLAG_VIEW } from '../common/Permissions';
+import {
+  FLAG_CREATE_POST,
+  FLAG_APPOINT_MODERATOR,
+  FLAG_VIEW,
+} from '../common/Permissions';
 import ThemedStyles from '../styles/ThemedStyles';
 
 /**
@@ -48,7 +47,6 @@ import ThemedStyles from '../styles/ThemedStyles';
 @inject('groupView', 'user')
 @observer
 export default class GroupViewScreen extends Component {
-
   /**
    * Indicate if the screen should change to a tab after the first render
    */
@@ -65,14 +63,14 @@ export default class GroupViewScreen extends Component {
   state = {
     memberActions: null,
     member: null,
-  }
+  };
 
   /**
    * Disable navigation bar
    */
   static navigationOptions = {
     header: null,
-  }
+  };
 
   /**
    * Constructor
@@ -126,7 +124,7 @@ export default class GroupViewScreen extends Component {
       if (params && params.prepend) {
         this.props.groupView.prepend(params.prepend);
         // we clear the parameter to prevent prepend it again on goBack
-        this.props.navigation.setParams({prepend: null});
+        this.props.navigation.setParams({ prepend: null });
       }
     });
 
@@ -135,7 +133,7 @@ export default class GroupViewScreen extends Component {
     }
 
     if (params.tab && this.headerRef) {
-      this.headerRef.onTabChange(params.tab)
+      this.headerRef.onTabChange(params.tab);
     }
   }
 
@@ -161,35 +159,47 @@ export default class GroupViewScreen extends Component {
    */
   loadMembers = () => {
     this.props.groupView.loadMembers();
-  }
+  };
 
   /**
    * Refresh subs data
    */
   refresh = () => {
     this.props.groupView.memberRefresh();
-  }
+  };
 
-  headerRefHandler = ref => this.headerRef = ref;
+  headerRefHandler = (ref) => (this.headerRef = ref);
 
   getList() {
     const group = this.props.groupView;
 
     const header = (
       <View>
-        <GroupHeader store={this.props.groupView} me={this.props.user.me} styles={styles} ref={this.headerRefHandler} navigation={this.props.navigation}/>
+        <GroupHeader
+          store={this.props.groupView}
+          me={this.props.user.me}
+          styles={styles}
+          ref={this.headerRefHandler}
+          navigation={this.props.navigation}
+        />
         <SafeAreaView style={styles.gobackicon}>
-          <Icon raised color={colors.primary} size={22} name='arrow-back' onPress={() => this.props.navigation.goBack()}/>
+          <Icon
+            raised
+            color={colors.primary}
+            size={22}
+            name="arrow-back"
+            onPress={() => this.props.navigation.goBack()}
+          />
         </SafeAreaView>
       </View>
-    )
+    );
     switch (group.tab) {
       case 'feed':
         return (
           <FeedList
-            feedStore={ group.feed }
-            header={ header }
-            navigation={ this.props.navigation }
+            feedStore={group.feed}
+            header={header}
+            navigation={this.props.navigation}
           />
         );
         break;
@@ -199,7 +209,7 @@ export default class GroupViewScreen extends Component {
             ListHeaderComponent={header}
             data={group.members.entities.slice()}
             renderItem={this.renderRow}
-            keyExtractor={item => item.guid}
+            keyExtractor={(item) => item.guid}
             onRefresh={this.refresh}
             refreshing={group.members.refreshing}
             onEndReached={this.loadMembers}
@@ -218,11 +228,13 @@ export default class GroupViewScreen extends Component {
             store={this.comments}
             navigation={this.props.navigation}
             route={this.props.route}
-            keyboardVerticalOffset = {Header.HEIGHT - 65}
+            keyboardVerticalOffset={Header.HEIGHT - 65}
           />
         );
       case 'desc':
-        const description = entities.decodeHTML(group.group.briefdescription).trim();
+        const description = entities
+          .decodeHTML(group.group.briefdescription)
+          .trim();
         return (
           <ScrollView>
             {header}
@@ -239,39 +251,45 @@ export default class GroupViewScreen extends Component {
    * Member menu on press
    */
   memberMenuPress = (member) => {
-
     const group = this.props.groupView.group;
-    const memberActions = [ i18n.t('cancel') ];
+    const memberActions = [i18n.t('cancel')];
     const imOwner = group['is:owner'];
     const imModerator = group['is:moderator'];
 
     if (imOwner) {
       if (member['is:owner']) {
-        memberActions.push( i18n.t('groups.removeOwner') );
+        memberActions.push(i18n.t('groups.removeOwner'));
       } else if (!member['is:moderator']) {
-        memberActions.push( i18n.t('groups.makeOwner') );
+        memberActions.push(i18n.t('groups.makeOwner'));
         if (group.can(FLAG_APPOINT_MODERATOR)) {
-          memberActions.push( i18n.t('groups.makeModerator') );
+          memberActions.push(i18n.t('groups.makeModerator'));
         }
       } else {
         if (group.can(FLAG_APPOINT_MODERATOR)) {
-          memberActions.push( i18n.t('groups.removeModerator') );
+          memberActions.push(i18n.t('groups.removeModerator'));
         }
       }
     }
 
-    if ((imOwner || imModerator) && !member['is:owner'] && !member['is:moderator']) {
-      memberActions.push( i18n.t('groups.kick') );
-      memberActions.push( i18n.t('groups.ban') );
+    if (
+      (imOwner || imModerator) &&
+      !member['is:owner'] &&
+      !member['is:moderator']
+    ) {
+      memberActions.push(i18n.t('groups.kick'));
+      memberActions.push(i18n.t('groups.ban'));
     }
 
-    this.setState({
-      memberActions,
-      member
-    }, () => {
-      this.ActionSheet.show();
-    })
-  }
+    this.setState(
+      {
+        memberActions,
+        member,
+      },
+      () => {
+        this.ActionSheet.show();
+      },
+    );
+  };
 
   /**
    * Render user row
@@ -286,32 +304,30 @@ export default class GroupViewScreen extends Component {
         isOwner={this.props.groupView.group['is:owner']}
         isModerator={this.props.groupView.group['is:moderator']}
       />
-     );
-  }
+    );
+  };
 
   handleSelection = (option) => {
     let selected = this.state.memberActions[option];
 
     switch (selected) {
       case i18n.t('groups.ban'):
-        Alert.alert(
-          i18n.t('confirm'),
-          i18n.t('groups.banConfirm'),
-          [
-            { text: i18n.t('no'), style: 'cancel' },
-            { text: i18n.t('yes'), onPress: () => this.props.groupView.ban(this.state.member) }
-          ]
-        );
+        Alert.alert(i18n.t('confirm'), i18n.t('groups.banConfirm'), [
+          { text: i18n.t('no'), style: 'cancel' },
+          {
+            text: i18n.t('yes'),
+            onPress: () => this.props.groupView.ban(this.state.member),
+          },
+        ]);
         break;
       case i18n.t('groups.kick'):
-        Alert.alert(
-          i18n.t('confirm'),
-          i18n.t('groups.confirmKick'),
-          [
-            { text: i18n.t('no'), style: 'cancel' },
-            { text: i18n.t('yes'), onPress: () => this.props.groupView.kick(this.state.member) }
-          ]
-        );
+        Alert.alert(i18n.t('confirm'), i18n.t('groups.confirmKick'), [
+          { text: i18n.t('no'), style: 'cancel' },
+          {
+            text: i18n.t('yes'),
+            onPress: () => this.props.groupView.kick(this.state.member),
+          },
+        ]);
 
         break;
       case i18n.t('groups.makeOwner'):
@@ -327,7 +343,7 @@ export default class GroupViewScreen extends Component {
         this.props.groupView.revokeModerator(this.state.member);
         break;
     }
-  }
+  };
 
   /**
    * Render
@@ -335,9 +351,8 @@ export default class GroupViewScreen extends Component {
   render() {
     const group = this.props.groupView.group;
 
-
     if (!group) {
-      return <CenteredLoading/>
+      return <CenteredLoading />;
     }
 
     // check async update of permissions
@@ -346,21 +361,28 @@ export default class GroupViewScreen extends Component {
       return null;
     }
 
-    const showPosterFab = this.props.groupView.tab === 'feed' && group.can(FLAG_CREATE_POST);
+    const showPosterFab =
+      this.props.groupView.tab === 'feed' && group.can(FLAG_CREATE_POST);
 
-    const memberActionSheet = this.state.memberActions ?
+    const memberActionSheet = this.state.memberActions ? (
       <ActionSheet
-        ref={o => this.ActionSheet = o}
-        title={truncate(this.state.member.name, {'length': 25, 'separator': ' '})}
+        ref={(o) => (this.ActionSheet = o)}
+        title={truncate(this.state.member.name, { length: 25, separator: ' ' })}
         options={this.state.memberActions}
         onPress={this.handleSelection}
         cancelButtonIndex={0}
-      /> :
-      null;
+      />
+    ) : null;
 
     return (
       <View style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}>
-        {showPosterFab && <CaptureFab navigation={this.props.navigation} group={group} route={this.props.route} /> }
+        {showPosterFab && (
+          <CaptureFab
+            navigation={this.props.navigation}
+            group={group}
+            route={this.props.route}
+          />
+        )}
         {this.getList()}
         {memberActionSheet}
       </View>
@@ -385,22 +407,22 @@ const styles = StyleSheet.create({
   },
   namecol: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   namecontainer: {
     flexDirection: 'row',
-    flex: 1
+    flex: 1,
   },
   buttonscol: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
     width: 100,
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
   carouselcontainer: {
     flex: 1,
-    paddingBottom: 20
+    paddingBottom: 20,
   },
   banner: {
     flexDirection: 'row',
@@ -412,7 +434,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     paddingTop: 25,
     paddingBottom: 20,
-    color: '#919191'
+    color: '#919191',
   },
   headercontainer: {
     flex: 1,
@@ -425,7 +447,7 @@ const styles = StyleSheet.create({
   },
   countertitle: {
     color: '#666',
-    fontSize: 10
+    fontSize: 10,
   },
   countervalue: {
     paddingTop: 5,
@@ -434,7 +456,7 @@ const styles = StyleSheet.create({
   avatarContainer: {
     paddingLeft: 115,
     height: 60,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   avatar: {
     position: 'absolute',
@@ -442,12 +464,12 @@ const styles = StyleSheet.create({
     top: 135,
     height: 110,
     width: 110,
-    borderRadius: 55
+    borderRadius: 55,
   },
   userAvatar: {
     borderRadius: 15,
     height: 30,
     width: 30,
-    margin: 4
-  }
+    margin: 4,
+  },
 });

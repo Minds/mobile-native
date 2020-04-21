@@ -1,13 +1,7 @@
 //@ts-nocheck
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
-import {
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 import i18n from '../../../common/services/i18n.service';
 
@@ -15,13 +9,15 @@ import i18n from '../../../common/services/i18n.service';
  * Group Activity Notification Component
  */
 export default class GroupActivityView extends PureComponent {
-
   /**
    * Navigate to group
    */
   navToGroup = () => {
-    this.props.navigation.push('Activity', { entity: this.props.entity.entityObj, hydrate: true });
-  }
+    this.props.navigation.push('Activity', {
+      entity: this.props.entity.entityObj,
+      hydrate: true,
+    });
+  };
 
   render() {
     const entity = this.props.entity;
@@ -35,6 +31,6 @@ export default class GroupActivityView extends PureComponent {
           <Text style={styles.link}>{entity.params.group.name}</Text>
         </Text>
       </TouchableOpacity>
-    )
+    );
   }
 }

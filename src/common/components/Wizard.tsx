@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -23,29 +21,28 @@ import featuresService from '../services/features.service';
 // types
 type Props = {
   // header?: any,
-  steps: any,
+  steps: any;
   // onNext?: Function,
   // onPrevious?: Function,
-  onFinish?: Function
+  onFinish?: Function;
 };
 
 type State = {
-  current: number,
-  waitingNext: boolean
-}
+  current: number;
+  waitingNext: boolean;
+};
 
 /**
  * Wizar component
  */
-export default class Wizard extends PureComponent<Props, State>  {
-
+export default class Wizard extends PureComponent<Props, State> {
   /**
    * state
    */
   state = {
     current: 0,
-    waitingNext: false
-  }
+    waitingNext: false,
+  };
 
   /**
    * Get header
@@ -59,39 +56,63 @@ export default class Wizard extends PureComponent<Props, State>  {
     if (step.ready && !step.ready()) ready = false;
 
     return (
-      <View style={[CS.rowJustifyCenter, CS.backgroundWhite, CS.padding2x, CS.marginTop4x, CS.marginBottom4x]}>
-        {first ?
-          <View style={{width:50}}/> :
-          <TouchableOpacity style={[{width:50}, CS.centered]} onPress={this.previous} testID="wizardPrevious">
-            <Icon size={34} name="keyboard-arrow-left" color={colors.primary}/>
-          </TouchableOpacity>}
+      <View
+        style={[
+          CS.rowJustifyCenter,
+          CS.backgroundWhite,
+          CS.padding2x,
+          CS.marginTop4x,
+          CS.marginBottom4x,
+        ]}>
+        {first ? (
+          <View style={{ width: 50 }} />
+        ) : (
+          <TouchableOpacity
+            style={[{ width: 50 }, CS.centered]}
+            onPress={this.previous}
+            testID="wizardPrevious">
+            <Icon size={34} name="keyboard-arrow-left" color={colors.primary} />
+          </TouchableOpacity>
+        )}
         <View style={[CS.flexContainer, CS.centered]}>
-          <Image source={require('./../../assets/logos/bulb.png')} style={{width:35, height:60}}/>
+          <Image
+            source={require('./../../assets/logos/bulb.png')}
+            style={{ width: 35, height: 60 }}
+          />
         </View>
-        <TouchableOpacity style={[{width:50}, CS.centered]} onPress={this.next} disabled={!ready || this.state.waitingNext} testID="wizardNext">
-          {
-            this.state.waitingNext ? <ActivityIndicator size="small"/> :
-            <Icon size={34} name="keyboard-arrow-right" color={ready ? colors.primary : colors.greyed}/>
-          }
+        <TouchableOpacity
+          style={[{ width: 50 }, CS.centered]}
+          onPress={this.next}
+          disabled={!ready || this.state.waitingNext}
+          testID="wizardNext">
+          {this.state.waitingNext ? (
+            <ActivityIndicator size="small" />
+          ) : (
+            <Icon
+              size={34}
+              name="keyboard-arrow-right"
+              color={ready ? colors.primary : colors.greyed}
+            />
+          )}
         </TouchableOpacity>
       </View>
-    )
+    );
   }
 
   /**
    * Return to previous step
    */
   previous = () => {
-    if (this.state.current === 0 ) return;
+    if (this.state.current === 0) return;
 
     const nextStep = this.props.steps[this.state.current - 1];
     if (nextStep.skip && nextStep.skip() && this.state.current > 1) {
-      this.setState({current: this.state.current - 1}, () => this.previous());
+      this.setState({ current: this.state.current - 1 }, () => this.previous());
       return;
     }
 
-    this.setState({current: this.state.current - 1});
-  }
+    this.setState({ current: this.state.current - 1 });
+  };
 
   /**
    * Move to next step
@@ -105,29 +126,29 @@ export default class Wizard extends PureComponent<Props, State>  {
     const step = this.props.steps[this.state.current];
 
     if (nextStep.skip && nextStep.skip()) {
-      this.setState({current: this.state.current + 1}, () => this.next());
+      this.setState({ current: this.state.current + 1 }, () => this.next());
       return;
     }
 
     if (step.onNext) {
-      this.setState({waitingNext: true});
+      this.setState({ waitingNext: true });
       try {
         await step.onNext();
       } catch (err) {
-        throw(err);
+        throw err;
       } finally {
-        this.setState({waitingNext: false});
+        this.setState({ waitingNext: false });
       }
     }
 
-    this.setState({current: this.state.current + 1});
-  }
+    this.setState({ current: this.state.current + 1 });
+  };
 
   /**
    * Render
    */
   render() {
-    const {steps} = this.props;
+    const { steps } = this.props;
 
     let component;
     component = (

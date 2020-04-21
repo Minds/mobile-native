@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { observable, action } from 'mobx'
+import { observable, action } from 'mobx';
 
 import groupsService from './GroupsService';
 
@@ -61,9 +61,7 @@ class GroupViewStore {
   guid = '';
 
   constructor() {
-    this.feed.getMetadataService()
-      .setSource('feed/groups')
-      .setMedium('feed');
+    this.feed.getMetadataService().setSource('feed/groups').setMedium('feed');
   }
 
   /**
@@ -109,16 +107,20 @@ class GroupViewStore {
    * Load Members
    */
   async loadMembers() {
-
     if (this.members.cantLoadMore() || this.loading) {
       return;
     }
 
     this.setLoading(true);
 
-    const serviceFetch = this.memberSearch ?
-      groupsService.searchMembers(this.guid, this.members.offset, 21, this.memberSearch) :
-      groupsService.loadMembers(this.guid, this.members.offset);
+    const serviceFetch = this.memberSearch
+      ? groupsService.searchMembers(
+          this.guid,
+          this.members.offset,
+          21,
+          this.memberSearch,
+        )
+      : groupsService.loadMembers(this.guid, this.members.offset);
 
     try {
       const data = await serviceFetch;
@@ -127,7 +129,7 @@ class GroupViewStore {
       this.members.setList(data);
       this.assignRowKeys(data);
     } catch (err) {
-      logService.exception(err)
+      logService.exception(err);
     } finally {
       this.setLoading(false);
     }
@@ -138,7 +140,10 @@ class GroupViewStore {
    * @param {string} guid
    */
   async loadGroup(defaultGroup) {
-    const group = await entitiesService.single(`urn:entity:${defaultGroup.guid}`, GroupModel.checkOrCreate(defaultGroup));
+    const group = await entitiesService.single(
+      `urn:entity:${defaultGroup.guid}`,
+      GroupModel.checkOrCreate(defaultGroup),
+    );
     this.setGroup(group);
     this.feed.viewed.clearViewed();
     return group;
@@ -185,7 +190,10 @@ class GroupViewStore {
    * @param {object} user
    */
   async makeModerator(user) {
-    const result = await groupsService.makeModerator(this.group.guid, user.guid);
+    const result = await groupsService.makeModerator(
+      this.group.guid,
+      user.guid,
+    );
     if (!!result.done) {
       user['is:moderator'] = true;
     }
@@ -196,7 +204,10 @@ class GroupViewStore {
    * @param {object} user
    */
   async revokeModerator(user) {
-    const result = await groupsService.revokeModerator(this.group.guid, user.guid);
+    const result = await groupsService.revokeModerator(
+      this.group.guid,
+      user.guid,
+    );
     if (!!result.done) {
       user['is:moderator'] = false;
     }
@@ -253,9 +264,9 @@ class GroupViewStore {
    * @param {object} entity
    */
   prepend(entity) {
-    const model = ActivityModel.create(entity)
+    const model = ActivityModel.create(entity);
 
-    model.rowKey = `${model.guid}:0:${this.feed.entities.length}`
+    model.rowKey = `${model.guid}:0:${this.feed.entities.length}`;
 
     this.feed.prepend(model);
   }
@@ -297,10 +308,9 @@ class GroupViewStore {
   @action
   refresh() {
     this.list.refresh();
-    this.loadFeed(this.guid)
-      .finally(() => {
-        this.list.refreshDone();
-      });
+    this.loadFeed(this.guid).finally(() => {
+      this.list.refreshDone();
+    });
   }
 
   /**
@@ -309,10 +319,9 @@ class GroupViewStore {
   @action
   memberRefresh() {
     this.members.refresh();
-    this.loadMembers(this.guid)
-      .finally(() => {
-        this.members.refreshDone();
-      });
+    this.loadMembers(this.guid).finally(() => {
+      this.members.refreshDone();
+    });
   }
 
   @action
@@ -324,7 +333,6 @@ class GroupViewStore {
     this.saving = false;
     this.loading = false;
   }
-
 }
 
 export default GroupViewStore;

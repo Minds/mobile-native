@@ -1,8 +1,6 @@
 //@ts-nocheck
 
-import {
-  Alert
-} from 'react-native';
+import { Alert } from 'react-native';
 
 import { MINDS_FEATURES } from '../../config/Config';
 import mindsService from './minds.service';
@@ -59,8 +57,10 @@ class FeaturesService {
    * @param {string} feature
    */
   has(feature) {
-    return this.features[feature] === true ||
-      (this.features[feature] === 'canary' && sessionService.getUser().canary);
+    return (
+      this.features[feature] === true ||
+      (this.features[feature] === 'canary' && sessionService.getUser().canary)
+    );
   }
 }
 

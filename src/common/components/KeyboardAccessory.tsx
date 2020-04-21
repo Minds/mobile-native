@@ -6,7 +6,7 @@ import {
   Keyboard,
   UIManager,
   StyleSheet,
-  LayoutAnimation
+  LayoutAnimation,
 } from 'react-native';
 
 import isIphoneX from '../helpers/isIphoneX';
@@ -19,8 +19,8 @@ const SAFE_AREA_BOTTOM_HEIGHT = 34;
  */
 export default class KeyboardAccessory extends PureComponent {
   static defaultProps = {
-    backgroundColor: '#f6f6f6'
-  }
+    backgroundColor: '#f6f6f6',
+  };
 
   constructor(props) {
     super(props);
@@ -46,8 +46,12 @@ export default class KeyboardAccessory extends PureComponent {
         keyboardHideEvent = 'keyboardDidHide';
       }
 
-      this.keyboardShowListener = Keyboard.addListener(keyboardShowEvent, (e) => this.keyboardShow(e));
-      this.keyboardHideListener = Keyboard.addListener(keyboardHideEvent, (e) => this.keyboardHide(e));
+      this.keyboardShowListener = Keyboard.addListener(keyboardShowEvent, (e) =>
+        this.keyboardShow(e),
+      );
+      this.keyboardHideListener = Keyboard.addListener(keyboardHideEvent, (e) =>
+        this.keyboardHide(e),
+      );
     }
   }
 
@@ -66,7 +70,9 @@ export default class KeyboardAccessory extends PureComponent {
     if (Platform.OS === 'android') {
       bottom = 0;
     } else {
-      bottom = isIphoneX ? (e.endCoordinates.height - SAFE_AREA_BOTTOM_HEIGHT) : e.endCoordinates.height;
+      bottom = isIphoneX
+        ? e.endCoordinates.height - SAFE_AREA_BOTTOM_HEIGHT
+        : e.endCoordinates.height;
     }
 
     if (this.state.bottom != bottom) {
@@ -81,7 +87,7 @@ export default class KeyboardAccessory extends PureComponent {
   keyboardHide(e) {
     LayoutAnimation.easeInEaseOut();
     this.setState({
-      bottom: 0
+      bottom: 0,
     });
   }
 
@@ -93,20 +99,18 @@ export default class KeyboardAccessory extends PureComponent {
     let { children, backgroundColor } = this.props;
 
     if (!children) {
-      throw new Error('`children` Missing. You should wrap at least one component into <KeyboardAccessory />.');
+      throw new Error(
+        '`children` Missing. You should wrap at least one component into <KeyboardAccessory />.',
+      );
     }
 
     if (!this.props.show) return null;
 
-    const containerStyle = this.props.noFloat ?
-      { backgroundColor, bottom }:
-      [styles.container, { backgroundColor, bottom }];
+    const containerStyle = this.props.noFloat
+      ? { backgroundColor, bottom }
+      : [styles.container, { backgroundColor, bottom }];
 
-    return (
-      <View style={containerStyle}>
-        {this.props.children}
-      </View>
-    );
+    return <View style={containerStyle}>{this.props.children}</View>;
   }
 }
 
@@ -116,5 +120,5 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-  }
+  },
 });

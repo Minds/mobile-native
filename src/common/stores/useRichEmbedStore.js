@@ -6,7 +6,7 @@ import { useLocalStore } from 'mobx-react';
 /**
  * Local embed store hook
  */
-export default function() {
+export default function () {
   const store = useLocalStore(() => ({
     hasRichEmbed: false,
     metaInProgress: false,
@@ -18,7 +18,7 @@ export default function() {
     /**
      * Richembed check
      */
-    check: text => {
+    check: (text) => {
       const matches = Util.urlReSingle.exec(text);
 
       if (store._richEmbedFetchTimer) {

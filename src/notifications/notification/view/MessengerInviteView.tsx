@@ -1,24 +1,20 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Text,
-  View
-} from 'react-native';
+import { Text, View } from 'react-native';
 
 /**
  * Messenger Invite Notification Component
  */
 export default class MessengerInviteView extends Component {
-
   /**
    * Navigate to chat
    */
   navToChat = () => {
-    this.props.navigation.navigate('Conversation', { target: this.props.entity.fromObj.guid });
-  }
+    this.props.navigation.navigate('Conversation', {
+      target: this.props.entity.fromObj.guid,
+    });
+  };
 
   /**
    * Render
@@ -29,8 +25,11 @@ export default class MessengerInviteView extends Component {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToChat}><Text style={styles.link}>{entity.fromObj.name}</Text> wants to chat with you!</Text>
+        <Text onPress={this.navToChat}>
+          <Text style={styles.link}>{entity.fromObj.name}</Text> wants to chat
+          with you!
+        </Text>
       </View>
-    )
+    );
   }
 }

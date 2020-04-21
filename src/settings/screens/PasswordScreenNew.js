@@ -49,7 +49,7 @@ export default observer(function () {
     currentPasswordFocus() {
       store.setCurrentPassword('');
     },
-    newPasswordBlurred(){
+    newPasswordBlurred() {
       store.setPasswordFocused(false);
     },
     confirmationPasswordFocus() {
@@ -96,7 +96,7 @@ export default observer(function () {
     const params = {
       password: store.currentPassword,
       new_password: store.newPassword,
-    }
+    };
 
     try {
       await settingsService.submitSettings(params);
@@ -187,7 +187,7 @@ export default observer(function () {
           onFocus: store.newPasswordFocus,
           onBlur: store.newPasswordBlurred,
           onError: i18n.t('settings.passwordsNotMatch'),
-          ref: (input) => (newPasswordInput = input)
+          ref: (input) => (newPasswordInput = input),
         })}
         {getInput({
           placeholder: i18n.t('settings.confirmNewPassword'),

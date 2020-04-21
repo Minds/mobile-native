@@ -23,7 +23,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 export default class DeleteChannelScreen extends Component {
   state = {
     showPassword: false,
-    password: ''
+    password: '',
   };
 
   onDelete = () => {

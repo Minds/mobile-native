@@ -1,10 +1,10 @@
 //@ts-nocheck
 import { Platform } from 'react-native';
 
-export default function(name) {
+export default function (name) {
   if (Platform.OS === 'ios') {
-    return {testID: name};
+    return { testID: name };
   } else {
-    return {accessibilityLabel: name}
+    return { accessibilityLabel: name };
   }
 }

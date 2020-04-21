@@ -2216,7 +2216,8 @@ exports[`notification component renders correctly for every type 26`] = `
       }
     >
       <Text>
-        Welcome to Minds. We have given you 
+        Welcome to Minds. We have given you
+         
         <Text
           style={
             Object {

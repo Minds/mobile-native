@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 
 import * as Animatable from 'react-native-animatable';
 
@@ -71,48 +69,50 @@ export default class LoginForm extends Component<PropsType> {
 
     return (
       <View style={[CS.flexContainer, CS.marginTop6x]}>
-          <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginBottom2x]}>
-            {i18n.t('auth.login')}
-          </Text>
-          {msg}
+        <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginBottom2x]}>
+          {i18n.t('auth.login')}
+        </Text>
+        {msg}
+        <Input
+          placeholder={i18n.t('auth.username')}
+          onChangeText={this.setUsername}
+          value={this.state.username}
+          style={CS.marginBottom2x}
+          testID="usernameInput"
+        />
+        <View>
           <Input
-            placeholder={i18n.t('auth.username')}
-            onChangeText={this.setUsername}
-            value={this.state.username}
+            placeholder={i18n.t('auth.password')}
+            secureTextEntry={this.state.hidePassword}
+            onChangeText={this.setPassword}
+            value={this.state.password}
             style={CS.marginBottom2x}
-            testID="usernameInput"
+            testID="userPasswordInput"
           />
-          <View>
-            <Input
-              placeholder={i18n.t('auth.password')}
-              secureTextEntry={this.state.hidePassword}
-              onChangeText={this.setPassword}
-              value={this.state.password}
-              style={CS.marginBottom2x}
-              testID="userPasswordInput"
-            />
-            <Icon
-              name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
-              size={25}
-              onPress={this.toggleHidePassword}
-              style={CS.inputIcon}
-            />
-          </View>
-          <Button
-            onPress={() => this.onLoginPress()}
-            text={i18n.t('auth.login')}
-            containerStyle={[CS.button, CS.fullWidth]}
-            textStyle={CS.buttonText}
-            key={1}
-            loading={this.state.inProgress}
-            loadingRight={true}
-            disabled={this.state.inProgress}
-            disabledStyle={CS.backgroundTransparent}
-            testID="loginButton"
+          <Icon
+            name={this.state.hidePassword ? 'md-eye' : 'md-eye-off'}
+            size={25}
+            onPress={this.toggleHidePassword}
+            style={CS.inputIcon}
           />
-          <View style={CS.marginTop4x}>
-            <Text style={[CS.link, CS.fontL]} onPress={this.onForgotPress}>{i18n.t('auth.forgot')}</Text>
-          </View>
+        </View>
+        <Button
+          onPress={() => this.onLoginPress()}
+          text={i18n.t('auth.login')}
+          containerStyle={[CS.button, CS.fullWidth]}
+          textStyle={CS.buttonText}
+          key={1}
+          loading={this.state.inProgress}
+          loadingRight={true}
+          disabled={this.state.inProgress}
+          disabledStyle={CS.backgroundTransparent}
+          testID="loginButton"
+        />
+        <View style={CS.marginTop4x}>
+          <Text style={[CS.link, CS.fontL]} onPress={this.onForgotPress}>
+            {i18n.t('auth.forgot')}
+          </Text>
+        </View>
       </View>
     );
   }
@@ -121,14 +121,14 @@ export default class LoginForm extends Component<PropsType> {
    * Show languages
    */
   showLanguages = () => {
-    this.setState({showLanguages: true});
+    this.setState({ showLanguages: true });
   };
 
   /**
    * Language selected
    */
   languageSelected = (language) => {
-    this.setState({language, showLanguages: false});
+    this.setState({ language, showLanguages: false });
     i18n.setLocale(language);
   };
 
@@ -136,34 +136,34 @@ export default class LoginForm extends Component<PropsType> {
    * Cancel language selection
    */
   cancel = () => {
-    this.setState({showLanguages: false});
+    this.setState({ showLanguages: false });
   };
 
   /**
    * Set two factor
    * @param {string} value
    */
-  setTwoFactor = value => {
+  setTwoFactor = (value) => {
     const twoFactorCode = String(value).trim();
-    this.setState({twoFactorCode});
+    this.setState({ twoFactorCode });
   };
 
   /**
    * Set two factor
    * @param {string} value
    */
-  setUsername = value => {
+  setUsername = (value) => {
     const username = String(value).trim();
-    this.setState({username});
+    this.setState({ username });
   };
 
   /**
    * Set two factor
    * @param {string} value
    */
-  setPassword = value => {
+  setPassword = (value) => {
     const password = String(value).trim();
-    this.setState({password});
+    this.setState({ password });
   };
 
   /**
@@ -171,7 +171,7 @@ export default class LoginForm extends Component<PropsType> {
    * @param {string} value
    */
   toggleHidePassword = () => {
-    this.setState({hidePassword: !this.state.hidePassword});
+    this.setState({ hidePassword: !this.state.hidePassword });
   };
 
   /**
@@ -185,35 +185,49 @@ export default class LoginForm extends Component<PropsType> {
    * On login press
    */
   onLoginPress() {
-    this.setState({ msg: '', inProgress: true});
+    this.setState({ msg: '', inProgress: true });
     // is two factor auth
     if (this.state.twoFactorToken) {
-      authService.twoFactorAuth(this.state.twoFactorToken, this.state.twoFactorCode)
-        .then(data => {
+      authService
+        .twoFactorAuth(this.state.twoFactorToken, this.state.twoFactorCode)
+        .then((data) => {
           this.props.onLogin();
         })
-        .catch(err => {
+        .catch((err) => {
           logService.exception('[LoginForm]', err);
         });
     } else {
-      authService.login(this.state.username, this.state.password)
-        .then(data => {
+      authService
+        .login(this.state.username, this.state.password)
+        .then((data) => {
           this.props.onLogin();
         })
-        .catch(errJson => {
+        .catch((errJson) => {
           LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-          if (errJson.error === 'invalid_grant' || errJson.error === 'invalid_client') {
-            this.setState({ msg: i18n.t('auth.invalidGrant'), inProgress: false });
+          if (
+            errJson.error === 'invalid_grant' ||
+            errJson.error === 'invalid_client'
+          ) {
+            this.setState({
+              msg: i18n.t('auth.invalidGrant'),
+              inProgress: false,
+            });
             return;
           }
 
           //TODO implement on backend and edit
           if (errJson.error === 'two_factor') {
-            this.setState({ twoFactorToken: errJson.message, inProgress: false });
+            this.setState({
+              twoFactorToken: errJson.message,
+              inProgress: false,
+            });
             return;
           }
 
-          this.setState({ msg: errJson.message || 'Unknown error', inProgress: false });
+          this.setState({
+            msg: errJson.message || 'Unknown error',
+            inProgress: false,
+          });
         });
     }
   }

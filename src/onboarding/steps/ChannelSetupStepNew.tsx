@@ -74,7 +74,7 @@ class ChannelSetupStepNew extends Component {
 
     this.uploads['avatar'] = file;
 
-    this.store.uploadAvatar(file).catch(e => {
+    this.store.uploadAvatar(file).catch((e) => {
       this.setState({
         preview_avatar: null,
       });
@@ -91,9 +91,9 @@ class ChannelSetupStepNew extends Component {
     return this.props.user.me.getAvatarSource();
   }
 
-  setPhoneNumber = phoneNumber => this.setState({ phoneNumber });
-  setCity = city => this.setState({ city });
-  setBirthDate = dob => this.setState({ dob });
+  setPhoneNumber = (phoneNumber) => this.setState({ phoneNumber });
+  setCity = (city) => this.setState({ city });
+  setBirthDate = (dob) => this.setState({ dob });
 
   save = async () => {
     if (this.store.isUploading) {
@@ -206,7 +206,7 @@ class ChannelSetupStepNew extends Component {
           <Input
             placeholder={i18n.t('onboarding.infoMobileNumber')}
             onChangeText={this.setPhoneNumber}
-            onEndEditing={e => console.log(e.nativeEvent.text)}
+            onEndEditing={(e) => console.log(e.nativeEvent.text)}
             value={this.state.phoneNumber}
             editable={true}
             optional={true}

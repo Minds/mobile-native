@@ -4,4 +4,4 @@ export default {
   checkReadExternalStorage: jest.fn(),
   camera: jest.fn(),
   checkCamera: jest.fn(),
-}
+};

@@ -13,8 +13,8 @@ import { CommonStyle as CS } from '../../styles/Common';
 import { observer } from 'mobx-react';
 
 type PropsType = {
-  row: any,
-  subscriptionRequest: SubscriptionRequestStore
+  row: any;
+  subscriptionRequest: SubscriptionRequestStore;
 };
 
 /**
@@ -22,7 +22,6 @@ type PropsType = {
  */
 @observer
 class SubscriptionRequest extends DiscoveryUser<PropsType> {
-
   /**
    * Get the channel from the props
    */
@@ -34,27 +33,33 @@ class SubscriptionRequest extends DiscoveryUser<PropsType> {
    * Accept the request
    */
   onAccept = () => {
-    this.props.subscriptionRequest.accept(this.props.row.item)
-  }
+    this.props.subscriptionRequest.accept(this.props.row.item);
+  };
 
   /**
    * reject the request
    */
   onReject = () => {
-    this.props.subscriptionRequest.decline(this.props.row.item)
-  }
+    this.props.subscriptionRequest.decline(this.props.row.item);
+  };
 
   /**
    * Render Right buttons
    */
   renderRightButton(): Node {
-
     if (this.props.row.item.status) {
       return (
         <View style={[CS.rowJustifyEnd]}>
-          <Text style={[this.props.row.item.status != 'requestAccepted' ? CS.colorDanger: CS.colorPrimary]}>{i18nService.t(`channel.${this.props.row.item.status}`)}</Text>
+          <Text
+            style={[
+              this.props.row.item.status != 'requestAccepted'
+                ? CS.colorDanger
+                : CS.colorPrimary,
+            ]}>
+            {i18nService.t(`channel.${this.props.row.item.status}`)}
+          </Text>
         </View>
-      )
+      );
     }
 
     return (
@@ -71,7 +76,7 @@ class SubscriptionRequest extends DiscoveryUser<PropsType> {
           onPress={this.onReject}
         />
       </View>
-    )
+    );
   }
 }
 

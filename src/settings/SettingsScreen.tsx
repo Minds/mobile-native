@@ -32,7 +32,7 @@ export default function ({ navigation }) {
     } else {
       ThemedStyles.setDark();
     }
-  }
+  };
 
   const list = [
     {

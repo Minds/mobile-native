@@ -13,7 +13,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 /**
  * NSFW selector
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const store = props.route.params.store;
   const localStore = useLocalStore(() => ({

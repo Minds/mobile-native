@@ -6,6 +6,6 @@ const service = {
   translate: jest.fn(),
   isTranslatable: jest.fn(),
   getLanguageName: jest.fn(),
-}
+};
 
 export default service;

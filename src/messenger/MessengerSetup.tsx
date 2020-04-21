@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   Text,
@@ -12,11 +10,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import {
-  inject,
-  observer,
-  Observer
-} from 'mobx-react'
+import { inject, observer, Observer } from 'mobx-react';
 
 import { CommonStyle } from '../styles/Common';
 import { ComponentsStyle } from '../styles/Components';
@@ -32,13 +26,12 @@ import i18n from '../common/services/i18n.service';
 @inject('messengerList', 'user')
 @observer
 export default class MessengerSetup extends Component {
-
   /**
    * password
    * (don't use state to prevent render the component when password change)
    */
   password = '';
-  confirm  = '';
+  confirm = '';
 
   componentWillMount() {
     const { setOptions } = this.props.navigation;
@@ -64,23 +57,31 @@ export default class MessengerSetup extends Component {
 
     const headerRight = () => (
       <Observer>
-        {() => this.props.messengerList.unlocking ? <ActivityIndicator style={CommonStyle.marginRight2x}/> : button }
+        {() =>
+          this.props.messengerList.unlocking ? (
+            <ActivityIndicator style={CommonStyle.marginRight2x} />
+          ) : (
+            button
+          )
+        }
       </Observer>
-    )
+    );
 
-    setOptions({ headerRight: headerRight, title:'' });
+    setOptions({ headerRight: headerRight, title: '' });
   }
 
   unlock = async () => {
     try {
-      const response = await this.props.messengerList.getCryptoKeys(this.password)
+      const response = await this.props.messengerList.getCryptoKeys(
+        this.password,
+      );
       this.handleOnDone(response);
     } catch (err) {
-      logService.exception('[MessengerSetup]', err)
-    };
-  }
+      logService.exception('[MessengerSetup]', err);
+    }
+  };
 
-  setup = async() => {
+  setup = async () => {
     if (this.password !== this.confirm) {
       Alert.alert(i18n.t('auth.confirmPasswordError'));
       return;
@@ -92,7 +93,7 @@ export default class MessengerSetup extends Component {
       logService.exception('[MessengerSetup]', err);
       alert(i18n.t('errorMessage'));
     }
-  }
+  };
 
   handleOnDone(resp) {
     if (this.props.onDone) {
@@ -109,28 +110,37 @@ export default class MessengerSetup extends Component {
           <TextInput
             style={ComponentsStyle.passwordinput}
             editable={true}
-            underlineColorAndroid='transparent'
+            underlineColorAndroid="transparent"
             placeholder={i18n.t('passwordPlaceholder')}
             secureTextEntry={true}
-            onChangeText={(password) => this.password = password}
+            onChangeText={(password) => (this.password = password)}
             testID="MessengerSetupText"
           />
         </View>
 
         <View style={{ paddingTop: 32 }}>
-          <Text style={styles.infoText}>· {i18n.t('messenger.setupMessage1')}</Text>
-          <Text style={styles.infoText}>· {i18n.t('messenger.setupMessage2')}</Text>
-          <Text style={styles.infoText}>· {i18n.t('messenger.setupMessage3')}</Text>
+          <Text style={styles.infoText}>
+            · {i18n.t('messenger.setupMessage1')}
+          </Text>
+          <Text style={styles.infoText}>
+            · {i18n.t('messenger.setupMessage2')}
+          </Text>
+          <Text style={styles.infoText}>
+            · {i18n.t('messenger.setupMessage3')}
+          </Text>
         </View>
       </View>
-    )
+    );
   }
 
   renderOnboarding() {
     const unlocking = this.props.messengerList.unlocking;
 
-    const text = this.props.user.me.chat ? i18n.t('messenger.changeKeyMessage') :
-      i18n.t('messenger.notEncryptedMessage', {user: this.props.user.me.name});
+    const text = this.props.user.me.chat
+      ? i18n.t('messenger.changeKeyMessage')
+      : i18n.t('messenger.notEncryptedMessage', {
+          user: this.props.user.me.name,
+        });
 
     return (
       <View style={[CommonStyle.flexContainer, CommonStyle.padding2x]}>
@@ -138,18 +148,18 @@ export default class MessengerSetup extends Component {
           <TextInput
             style={ComponentsStyle.passwordinput}
             editable={true}
-            underlineColorAndroid='transparent'
+            underlineColorAndroid="transparent"
             placeholder={i18n.t('passwordPlaceholder')}
             secureTextEntry={true}
-            onChangeText={(password) => this.password = password}
+            onChangeText={(password) => (this.password = password)}
           />
           <TextInput
             style={[ComponentsStyle.passwordinput, CommonStyle.marginTop2x]}
             editable={true}
-            underlineColorAndroid='transparent'
+            underlineColorAndroid="transparent"
             placeholder={i18n.t('passwordConmfirmPlaceholder')}
             secureTextEntry={true}
-            onChangeText={(password) => this.confirm = password}
+            onChangeText={(password) => (this.confirm = password)}
           />
         </View>
 
@@ -164,7 +174,6 @@ export default class MessengerSetup extends Component {
    * Render
    */
   render() {
-
     if (this.props.user.me.chat && !this.props.rekey) {
       return this.renderUnlock();
     } else {
@@ -174,7 +183,7 @@ export default class MessengerSetup extends Component {
 }
 
 const styles = StyleSheet.create({
-	infoText: {
+  infoText: {
     marginBottom: 16,
     color: '#BBB',
   },

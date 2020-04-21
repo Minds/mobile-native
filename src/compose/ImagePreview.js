@@ -8,7 +8,7 @@ const { width } = Dimensions.get('window');
  * Image preview with max and min aspect ratio support
  * @param {Object} props
  */
-export default function(props) {
+export default function (props) {
   // calculate the aspect ratio
   let aspectRatio = Platform.select({
     ios: props.image.width / props.image.height,

@@ -157,14 +157,14 @@ class CapturePoster extends Component {
   /**
    * On tag selected in the autocomplete
    */
-  onSelectTag = text => {
+  onSelectTag = (text) => {
     this.setText(text);
   };
 
   /**
    * Set the state with cursor position
    */
-  onSelectionChanges = event => {
+  onSelectionChanges = (event) => {
     this.setState({ selection: event.nativeEvent.selection });
   };
 
@@ -325,7 +325,7 @@ class CapturePoster extends Component {
   /**
    * Attach Media
    */
-  onAttachedMedia = async response => {
+  onAttachedMedia = async (response) => {
     const attachment = this.props.capture.attachment;
     let group = this.props.route.params ? this.props.route.params.group : null;
     let extra = null;
@@ -484,7 +484,7 @@ class CapturePoster extends Component {
    * Set text
    * @param {string} text
    */
-  setText = text => {
+  setText = (text) => {
     this.props.capture.setText(text);
     this.props.capture.embed.richEmbedCheck(text);
   };
@@ -500,12 +500,12 @@ class CapturePoster extends Component {
   /**
    * On nsfw value change
    */
-  onNsfw = values => {
+  onNsfw = (values) => {
     const nsfw = [...values];
     this.setState({ nsfw });
   };
 
-  onShare = network => {
+  onShare = (network) => {
     const share = Object.assign({}, this.state.share);
 
     if (share[network]) {
@@ -517,11 +517,11 @@ class CapturePoster extends Component {
     this.setState({ share });
   };
 
-  onLocking = lock => {
+  onLocking = (lock) => {
     this.setState({ lock });
   };
 
-  onScheduled = timeCreated => {
+  onScheduled = (timeCreated) => {
     this.setState({ time_created: timeCreated });
   };
 

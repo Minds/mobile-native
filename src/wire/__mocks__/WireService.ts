@@ -5,4 +5,4 @@ export default {
   rewards: jest.fn(),
   send: jest.fn(),
   getTransactionPayloads: jest.fn(),
-}
+};

@@ -23,23 +23,21 @@ import { UserError } from '../../common/UserError';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
-
 @inject('channel', 'user')
 @observer
 export default class ChannelSetupStep extends Component {
-
   state = {
     preview_avatar: null,
     preview_banner: null,
     briefdescription: '',
     name: '',
     saving: false,
-    dirty: false
+    dirty: false,
   };
 
   uploads = {
     avatar: null,
-    banner: null
+    banner: null,
   };
 
   /**
@@ -49,8 +47,8 @@ export default class ChannelSetupStep extends Component {
     this.store = this.props.channel.store(sessionService.guid);
     this.setState({
       briefdescription: this.props.user.me.briefdescription,
-      name: this.props.user.me.name
-    })
+      name: this.props.user.me.name,
+    });
   }
 
   changeAvatarAction = async () => {
@@ -66,7 +64,7 @@ export default class ChannelSetupStep extends Component {
 
   selectMedia(file) {
     this.setState({
-      preview_avatar: file.uri
+      preview_avatar: file.uri,
     });
 
     this.store.uploadAvatar(file);
@@ -74,7 +72,8 @@ export default class ChannelSetupStep extends Component {
   }
 
   save = async () => {
-    if (this.store.isUploading) throw new UserError('Avatar is uploading, please wait');
+    if (this.store.isUploading)
+      throw new UserError('Avatar is uploading, please wait');
     if (!this.state.dirty) return;
     payload = {
       briefdescription: this.state.briefdescription,
@@ -82,25 +81,25 @@ export default class ChannelSetupStep extends Component {
       // avatar: this.uploads.avatar,
     };
 
-    this.setState({saving: true});
+    this.setState({ saving: true });
 
     const response = await this.store.save(payload);
 
     if (response === true) {
       await this.props.user.load(true);
-      this.setState({saving: false, edit: false});
+      this.setState({ saving: false, edit: false });
       this.uploads = {
         avatar: null,
-        banner: null
+        banner: null,
       };
     } else if (response === false) {
       alert('Error saving channel');
-      this.setState({saving: false});
+      this.setState({ saving: false });
     } else {
-      alert(response)
-      this.setState({saving: false});
+      alert(response);
+      this.setState({ saving: false });
     }
-  }
+  };
 
   /**
    * Get Channel Avatar
@@ -113,8 +112,9 @@ export default class ChannelSetupStep extends Component {
     return this.props.user.me.getAvatarSource();
   }
 
-  setBriefdescription = briefdescription => this.setState({ briefdescription, dirty: true });
-  setName = name => this.setState({ name, dirty: true });
+  setBriefdescription = (briefdescription) =>
+    this.setState({ briefdescription, dirty: true });
+  setName = (name) => this.setState({ name, dirty: true });
 
   /**
    * Render
@@ -125,40 +125,88 @@ export default class ChannelSetupStep extends Component {
 
     return (
       <View style={CS.marginBottom3x}>
-        <View style={[CS.padding4x, CS.flexContainer, CS.rowJustifyStart, CS.alignCenter]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>{i18n.t('onboarding.chooseAvatar')}</Text>
+        <View
+          style={[
+            CS.padding4x,
+            CS.flexContainer,
+            CS.rowJustifyStart,
+            CS.alignCenter,
+          ]}>
+          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
+            {i18n.t('onboarding.chooseAvatar')}
+          </Text>
           <View style={[CS.rowJustifyEnd, CS.flexContainer]}>
             <TouchableCustom
               onPress={this.changeAvatarAction}
-              style={[styles.avatar, CS.marginLeft3x, CS.border, CS.borderGreyed ]}
+              style={[
+                styles.avatar,
+                CS.marginLeft3x,
+                CS.border,
+                CS.borderGreyed,
+              ]}
               disabled={this.saving}
-              testID="selectAvatar"
-            >
-              {hasAvatar && <Image source={avatar} style={styles.wrappedAvatar} />}
+              testID="selectAvatar">
+              {hasAvatar && (
+                <Image source={avatar} style={styles.wrappedAvatar} />
+              )}
 
-              <View style={[styles.tapOverlayView, hasAvatar ? null : CS.backgroundTransparent]}/>
+              <View
+                style={[
+                  styles.tapOverlayView,
+                  hasAvatar ? null : CS.backgroundTransparent,
+                ]}
+              />
               <View style={[styles.overlay, CS.centered]}>
-                <Icon name="md-cloud-upload" size={40} color={hasAvatar ? '#FFF': '#444'} />
+                <Icon
+                  name="md-cloud-upload"
+                  size={40}
+                  color={hasAvatar ? '#FFF' : '#444'}
+                />
               </View>
-              {(this.store.isUploading && this.store.avatarProgress) ? <View style={[styles.tapOverlayView, styles.progress]}>
-                <Progress.Pie progress={this.store.avatarProgress} size={36} />
-              </View>: null}
+              {this.store.isUploading && this.store.avatarProgress ? (
+                <View style={[styles.tapOverlayView, styles.progress]}>
+                  <Progress.Pie
+                    progress={this.store.avatarProgress}
+                    size={36}
+                  />
+                </View>
+              ) : null}
             </TouchableCustom>
           </View>
         </View>
         <View style={[CS.padding4x, CS.flexContainer]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>{i18n.t('onboarding.chooseName')}</Text>
+          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
+            {i18n.t('onboarding.chooseName')}
+          </Text>
           <TextInput
-            style={[CS.borderHair, CS.borderDarkGreyed, CS.borderRadius10x, CS.fontXL, CS.padding2x, CS.fontHairline, CS.marginTop4x]}
+            style={[
+              CS.borderHair,
+              CS.borderDarkGreyed,
+              CS.borderRadius10x,
+              CS.fontXL,
+              CS.padding2x,
+              CS.fontHairline,
+              CS.marginTop4x,
+            ]}
             placeholder="eg. John Smith"
             value={this.state.name}
             onChangeText={this.setName}
           />
         </View>
         <View style={[CS.padding4x, CS.flexContainer]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>{i18n.t('onboarding.describeChannel')}</Text>
+          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
+            {i18n.t('onboarding.describeChannel')}
+          </Text>
           <TextInput
-            style={[CS.borderHair, CS.borderDarkGreyed, CS.borderRadius10x, CS.fontXL, CS.padding2x, CS.fontHairline, CS.marginTop4x]}
+            style={[
+              CS.borderHair,
+              CS.borderDarkGreyed,
+              CS.borderRadius10x,
+              CS.fontXL,
+              CS.padding2x,
+              CS.fontHairline,
+              CS.marginTop4x,
+            ]}
             placeholder="eg. Independent Journalist"
             value={this.state.briefdescription}
             onChangeText={this.setBriefdescription}
@@ -169,16 +217,15 @@ export default class ChannelSetupStep extends Component {
   }
 }
 
-
 // style
 const styles = StyleSheet.create({
   avatar: {
     height: 90,
     width: 90,
-    borderRadius: 45
+    borderRadius: 45,
   },
   progress: {
-    opacity: 0.8
+    opacity: 0.8,
   },
   overlay: {
     position: 'absolute',
@@ -204,6 +251,6 @@ const styles = StyleSheet.create({
   wrappedAvatar: {
     height: 90,
     width: 90,
-    borderRadius: 45
-  }
+    borderRadius: 45,
+  },
 });

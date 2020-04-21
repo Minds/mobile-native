@@ -1,8 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action
-} from 'mobx';
+import { observable, action } from 'mobx';
 
 import channelService from './ChannelService';
 import ChannelStore from './ChannelStore';
@@ -16,7 +13,6 @@ import UserModel from './UserModel';
  * Channel Stores
  */
 class ChannelStores {
-
   lastVisited = new ModelStorageList('lastchannels', 30);
   stores = {};
 
@@ -76,7 +72,6 @@ class ChannelStores {
     this.lastVisited.clear();
     this.stores = {};
   }
-
 }
 
 export default ChannelStores;

@@ -5,26 +5,24 @@ import logService from '../common/services/log.service';
 import i18n from '../common/services/i18n.service';
 
 export default class BoostService {
-
   async getBoosts(offset, filter, peer_filter) {
-
     // abort previous call
     abort(this);
 
     try {
-      const data = await api.get('api/v2/boost/' + filter + '/' + peer_filter,
+      const data = await api.get(
+        'api/v2/boost/' + filter + '/' + peer_filter,
         {
           offset: offset,
-          limit: 15
+          limit: 15,
         },
-        this
+        this,
       );
 
       return {
         entities: data.boosts,
         offset: data['load-next'],
-      }
-
+      };
     } catch (err) {
       if (!isNetworkFail(err)) {
         logService.exception('[BoostService]', err);
@@ -32,7 +30,6 @@ export default class BoostService {
       throw new Error(i18n.t('boosts.errorGet'));
     }
   }
-
 }
 
 export function revokeBoost(guid, filter) {

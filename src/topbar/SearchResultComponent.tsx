@@ -36,7 +36,7 @@ class SearchResultComponent extends Component {
    */
   shouldShowSuggested = () => this.search.length > 2;
 
-  input = async search => {
+  input = async (search) => {
     this.search = search;
     if (this.shouldShowSuggested()) {
       this.setState({ loading: true });
@@ -86,9 +86,8 @@ class SearchResultComponent extends Component {
       <TouchableOpacity
         onPress={this.searchDiscovery}
         style={[CS.flexColumnCentered, CS.padding3x, ...borders]}>
-        <Text style={CS.colorSecondaryText}>{`SEARCH MINDS: ${
-          this.search
-        }`}</Text>
+        <Text
+          style={CS.colorSecondaryText}>{`SEARCH MINDS: ${this.search}`}</Text>
       </TouchableOpacity>
     );
   };
@@ -120,7 +119,7 @@ class SearchResultComponent extends Component {
         this.renderEmptyMessageHistory()
       ) : (
         <ScrollView keyboardShouldPersistTaps="handled">
-          {this.state.history.map(item => (
+          {this.state.history.map((item) => (
             <Text
               onPress={() => this.props.search(item)}
               style={[
@@ -154,7 +153,7 @@ class SearchResultComponent extends Component {
   /**
    * nav to taped channel and clean the search
    */
-  searchBarItemTap = item => {
+  searchBarItemTap = (item) => {
     this.props.search('');
     this.props.user.toggleSearching();
     this.props.user.searchBarItemTap(item);
@@ -193,15 +192,7 @@ class SearchResultComponent extends Component {
       ? this.renderSuggestedSearch()
       : this.renderSearchHistory();
 
-    return (
-      <View
-        style={[
-          CS.backgroundPrimary,
-          CS.padding2x,
-        ]}>
-        {render}
-      </View>
-    );
+    return <View style={[CS.backgroundPrimary, CS.padding2x]}>{render}</View>;
   }
 }
 

@@ -1,18 +1,12 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  Button,
-  StyleSheet,
-  BackHandler,
-} from 'react-native';
+import { Text, View, Button, StyleSheet, BackHandler } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { toJS } from 'mobx';
 
-import { observer, inject } from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
 import BlockchainWalletList from '../list/BlockchainWalletList';
 
@@ -38,7 +32,7 @@ export default class BlockchainWalletModalScreen extends Component {
 
     if (opts.offchain && wallet.address == 'offchain') {
       payload = {
-        type: 'offchain'
+        type: 'offchain',
       };
     } else {
       if (opts.signable && !wallet.privateKey) {
@@ -47,7 +41,7 @@ export default class BlockchainWalletModalScreen extends Component {
 
       let type;
 
-      switch(opts.currency) {
+      switch (opts.currency) {
         case 'tokens':
           type = 'onchain';
           break;
@@ -55,13 +49,15 @@ export default class BlockchainWalletModalScreen extends Component {
           type = 'eth';
           break;
         default:
-          throw new Error('BlockchainWalletModal: currency not supported '+ opts.currency);
+          throw new Error(
+            'BlockchainWalletModal: currency not supported ' + opts.currency,
+          );
       }
 
       payload = {
         type,
-        wallet: toJS(wallet)
-      }
+        wallet: toJS(wallet),
+      };
     }
 
     this.props.blockchainWalletSelector.select(payload);
@@ -71,17 +67,17 @@ export default class BlockchainWalletModalScreen extends Component {
     this.props.blockchainWalletSelector.cancel();
   }
 
-  onBackPress = e => {
+  onBackPress = (e) => {
     this.cancel();
     return true;
   };
 
   componentDidMount() {
-    BackHandler.addEventListener("hardwareBackPress", this.onBackPress);
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener("hardwareBackPress", this.onBackPress);
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
   }
 
   /**
@@ -90,28 +86,32 @@ export default class BlockchainWalletModalScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     header: (
       <View style={CommonStyle.backgroundWhite}>
-        <Icon size={36} name="ios-close" onPress={() => getStores().blockchainWalletSelector.cancel()} style={styles.navHeaderIcon}/>
+        <Icon
+          size={36}
+          name="ios-close"
+          onPress={() => getStores().blockchainWalletSelector.cancel()}
+          style={styles.navHeaderIcon}
+        />
       </View>
     ),
     transitionConfig: {
-      isModal: true
-    }
+      isModal: true,
+    },
   });
 
-  selectAction = wallet => this.select(wallet);
+  selectAction = (wallet) => this.select(wallet);
 
   render() {
     const opts = this.props.blockchainWalletSelector.opts;
 
     return (
-      <View style={[ CommonStyle.flexContainer, CommonStyle.backgroundWhite ]}>
-
+      <View style={[CommonStyle.flexContainer, CommonStyle.backgroundWhite]}>
         <View style={{ paddingLeft: 16, paddingRight: 16 }}>
-          <Text style={CommonStyle.modalTitle}>{
-            this.props.blockchainWalletSelector.selectMessage ?
-              this.props.blockchainWalletSelector.selectMessage :
-              i18n.t('blockchain.selectWallet')
-          }</Text>
+          <Text style={CommonStyle.modalTitle}>
+            {this.props.blockchainWalletSelector.selectMessage
+              ? this.props.blockchainWalletSelector.selectMessage
+              : i18n.t('blockchain.selectWallet')}
+          </Text>
         </View>
 
         <BlockchainWalletList
@@ -119,7 +119,6 @@ export default class BlockchainWalletModalScreen extends Component {
           signableOnly={opts.signable}
           allowOffchain={opts.offchain}
         />
-
       </View>
     );
   }
@@ -128,6 +127,6 @@ export default class BlockchainWalletModalScreen extends Component {
 const styles = StyleSheet.create({
   navHeaderIcon: {
     alignSelf: 'flex-end',
-    padding: 10
+    padding: 10,
   },
 });

@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
   TouchableHighlight,
-  Text
+  Text,
 } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
@@ -26,14 +26,13 @@ import ThemedStyles from '../styles/ThemedStyles';
 @inject('boost')
 @observer
 export default class BoostConsoleScreen extends Component {
-
   static navigationOptions = {
     title: 'Boost Console',
   };
 
   state = {
-    screen: 'gallery'
-  }
+    screen: 'gallery',
+  };
 
   /**
    * On component will mount
@@ -48,7 +47,6 @@ export default class BoostConsoleScreen extends Component {
     this.props.boost.loadList(this.props.guid);
   }
 
-
   createPost() {
     this.props.navigation.navigate('Capture');
   }
@@ -59,26 +57,28 @@ export default class BoostConsoleScreen extends Component {
     let empty;
 
     if (this.props.boost.loading) {
-      empty = (<CenteredLoading/>);
+      empty = <CenteredLoading />;
     }
 
     if (this.props.boost.list.loaded && !this.props.boost.list.refreshing) {
       empty = (
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
-            <Icon name="trending-up" size={72} color='#444' />
-            <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('boosts.youDontHaveBoosts')}</Text>
+            <Icon name="trending-up" size={72} color="#444" />
+            <Text style={ComponentsStyle.emptyComponentMessage}>
+              {i18n.t('boosts.youDontHaveBoosts')}
+            </Text>
             <Text
               style={ComponentsStyle.emptyComponentLink}
-              onPress={() => this.props.navigation.push('Capture')}
-            >
+              onPress={() => this.props.navigation.push('Capture')}>
               {i18n.t('createAPost')}
             </Text>
           </View>
-        </View>);
+        </View>
+      );
     }
 
-    const tabs = (<BoostTabBar />);
+    const tabs = <BoostTabBar />;
     const theme = ThemedStyles.style;
     return (
       <FlatList
@@ -86,7 +86,7 @@ export default class BoostConsoleScreen extends Component {
         ListEmptyComponent={empty}
         data={this.props.boost.list.entities.slice()}
         renderItem={this.renderBoost}
-        keyExtractor={item => item.rowKey}
+        keyExtractor={(item) => item.rowKey}
         onRefresh={this.refresh}
         refreshing={this.props.boost.list.refreshing}
         onEndReached={this.loadFeed}
@@ -101,24 +101,22 @@ export default class BoostConsoleScreen extends Component {
    */
   loadFeed = () => {
     this.props.boost.loadList(this.props.guid);
-  }
+  };
 
   /**
    * Refresh feed data
    */
   refresh = () => {
-    this.props.boost.refresh(this.props.guid)
-  }
+    this.props.boost.refresh(this.props.guid);
+  };
 
   /**
    * Render row
    */
   renderBoost = (row) => {
     const boost = row.item;
-    return (
-      <Boost boost={boost} navigation={this.props.navigation} />
-    );
-  }
+    return <Boost boost={boost} navigation={this.props.navigation} />;
+  };
 }
 
 const styles = StyleSheet.create({
@@ -127,10 +125,10 @@ const styles = StyleSheet.create({
   },
   selectedButton: {
     alignItems: 'center',
-    borderBottomWidth:3,
-    borderColor: 'yellow'
+    borderBottomWidth: 3,
+    borderColor: 'yellow',
   },
   buttonBar: {
-    height:35
-  }
+    height: 35,
+  },
 });

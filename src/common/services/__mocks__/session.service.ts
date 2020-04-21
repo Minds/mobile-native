@@ -7,4 +7,4 @@ export default {
   onLogin: jest.fn(),
   onSession: jest.fn(),
   getUser: jest.fn(),
-}
+};

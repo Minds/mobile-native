@@ -5,14 +5,13 @@ import api from './../common/services/api.service';
  * Messenger Service
  */
 class MessengerService {
-
   /**
    * Get Crypto Keys from server
    * @param {string} password
    */
   async getCryptoKeys(password) {
     const response = await api.get('api/v2/messenger/keys', {
-      password: password
+      password: password,
     });
     if (response.key) {
       return response.key;
@@ -25,7 +24,10 @@ class MessengerService {
    * @param {string} password
    */
   async doSetup(password) {
-    const response = await api.post('api/v2/messenger/keys/setup', { password: password, download: false })
+    const response = await api.post('api/v2/messenger/keys/setup', {
+      password: password,
+      download: false,
+    });
     if (response.password) {
       return response.password;
     }
@@ -37,18 +39,17 @@ class MessengerService {
    * @param {number} limit
    * @param {string} offset
    */
-  async getConversations(limit, offset = "", refresh=false, tag) {
-
+  async getConversations(limit, offset = '', refresh = false, tag) {
     const params = { limit: limit, offset: offset };
-    if ( refresh ) {
-      params.refresh = true
+    if (refresh) {
+      params.refresh = true;
     }
 
-    const data = await api.get('api/v2/messenger/conversations', params, tag)
+    const data = await api.get('api/v2/messenger/conversations', params, tag);
 
     return {
       entities: data.conversations || [],
-      offset:   data['load-next']  || '',
+      offset: data['load-next'] || '',
     };
   }
 
@@ -58,11 +59,15 @@ class MessengerService {
    * @param {string} offset
    */
   async searchConversations(q, limit, tag) {
-    const data = await api.get('api/v2/messenger/search', {q: q, limit: limit, offset: ''}, tag)
+    const data = await api.get(
+      'api/v2/messenger/search',
+      { q: q, limit: limit, offset: '' },
+      tag,
+    );
 
     return {
       entities: data.conversations || [],
-      offset:   data['load-next']  || '',
+      offset: data['load-next'] || '',
     };
   }
 
@@ -72,12 +77,15 @@ class MessengerService {
    * @param {string} guid
    * @param {string} offset
    */
-  async getConversationFromRemote(limit, guid, offset = "") {
-    const conversation = await api.get('api/v2/messenger/conversations/' + guid, {
-      limit: 8,
-      offset: offset,
-      finish: '',
-    });
+  async getConversationFromRemote(limit, guid, offset = '') {
+    const conversation = await api.get(
+      'api/v2/messenger/conversations/' + guid,
+      {
+        limit: 8,
+        offset: offset,
+        finish: '',
+      },
+    );
     conversation.messages = conversation.messages || [];
     return conversation;
   }
@@ -90,10 +98,10 @@ class MessengerService {
   send(guid, messages) {
     let data = {};
     for (var index in messages) {
-      data["message:" + index] = messages[index];
+      data['message:' + index] = messages[index];
     }
 
-    return api.post('api/v2/messenger/conversations/' + guid, data)
+    return api.post('api/v2/messenger/conversations/' + guid, data);
   }
 
   /**

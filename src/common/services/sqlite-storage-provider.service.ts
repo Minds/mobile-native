@@ -1,5 +1,5 @@
 //@ts-nocheck
-import SqliteService from "./sqlite.service";
+import SqliteService from './sqlite.service';
 
 /**
  * Sqlite storage provider service

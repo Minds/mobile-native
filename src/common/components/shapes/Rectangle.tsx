@@ -1,11 +1,9 @@
 //@ts-nocheck
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 
-import {View, Image, StyleSheet, Dimensions} from 'react-native';
+import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import TriangleCorner from './TriangleCorner';
-import {CommonStyle} from '../../../styles/Common';
+import { CommonStyle } from '../../../styles/Common';
 import TriangleCornerYellow from './TriangleCornerYellow';
 
 const wHeight = Dimensions.get('window').height,
@@ -34,7 +32,7 @@ export default class Rectangle extends Component {
 
 const styles = StyleSheet.create({
   shadow: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 0,
@@ -51,7 +49,7 @@ const styles = StyleSheet.create({
   triangleTop: {
     top: wHeight * -0.01,
     right: 2.5,
-    transform: [{rotate: '180deg'}],
+    transform: [{ rotate: '180deg' }],
   },
   triangleBottom: {
     top: wHeight * 0.01,

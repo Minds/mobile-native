@@ -122,7 +122,7 @@ class ActivityScreen extends Component<PropsType> {
    * Set ref
    * @param {NodeRef}
    */
-  setRef = o => (this.activity = o);
+  setRef = (o) => (this.activity = o);
 
   /**
    * On comment input focus

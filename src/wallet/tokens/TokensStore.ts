@@ -1,9 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  computed,
-  action
-} from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 import walletService from '../WalletService';
 import OffsetListStore from '../../common/stores/OffsetListStore';
@@ -31,19 +27,20 @@ export default class TokensStore {
     }
     this.loading = true;
 
-    fetchFn = (this.mode == 'transactions') ? walletService.getTransactionsLedger : walletService.getContributions;
+    fetchFn =
+      this.mode == 'transactions'
+        ? walletService.getTransactionsLedger
+        : walletService.getContributions;
 
     return fetchFn(from, to, this.list.offset)
-      .then(
-        feed => {
-          this.list.setList(feed);
-          this.loaded = true;
-        }
-      )
+      .then((feed) => {
+        this.list.setList(feed);
+        this.loaded = true;
+      })
       .finally(() => {
         this.loading = false;
       })
-      .catch(err => {
+      .catch((err) => {
         logService.exception('[TokensStore]', err);
       });
   }
@@ -51,9 +48,8 @@ export default class TokensStore {
   @action
   refresh(from, to) {
     this.list.refresh();
-    this.loadList(from, to)
-      .finally(() => {
-        this.list.refreshDone();
-      });
+    this.loadList(from, to).finally(() => {
+      this.list.refreshDone();
+    });
   }
 }

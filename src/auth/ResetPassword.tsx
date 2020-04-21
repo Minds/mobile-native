@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
 import {
   View,
@@ -27,7 +25,6 @@ import apiService from '../common/services/api.service';
  * Reset Password Form
  */
 export default class ResetPassword extends PureComponent {
-
   /**
    * Component will mount
    */
@@ -37,7 +34,7 @@ export default class ResetPassword extends PureComponent {
       confirmation: '',
       sending: false,
       sent: false,
-      msg: 'Please enter your new password'
+      msg: 'Please enter your new password',
     });
   }
 
@@ -46,25 +43,33 @@ export default class ResetPassword extends PureComponent {
    */
   render() {
     return (
-      <KeyboardAvoidingView behavior='padding'>
+      <KeyboardAvoidingView behavior="padding">
         <Text style={[CS.colorWhite, CS.fontM]}>{this.state.msg}</Text>
         <TextInput
-          style={[ComponentsStyle.loginInput, CS.marginTop2x, CS.marginBottom2x]}
+          style={[
+            ComponentsStyle.loginInput,
+            CS.marginTop2x,
+            CS.marginBottom2x,
+          ]}
           placeholder={i18n.t('auth.password')}
           returnKeyType={'done'}
           placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
+          underlineColorAndroid="transparent"
           onChangeText={(value) => this.setState({ password: value })}
           autoCapitalize={'none'}
           value={this.state.password}
           secureTextEntry={true}
         />
         <TextInput
-          style={[ComponentsStyle.loginInput, CS.marginTop2x, CS.marginBottom2x]}
+          style={[
+            ComponentsStyle.loginInput,
+            CS.marginTop2x,
+            CS.marginBottom2x,
+          ]}
           placeholder={i18n.t('auth.confirmpassword')}
           returnKeyType={'done'}
           placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
+          underlineColorAndroid="transparent"
           onChangeText={(value) => this.setState({ confirmation: value })}
           autoCapitalize={'none'}
           value={this.state.confirmation}
@@ -78,7 +83,7 @@ export default class ResetPassword extends PureComponent {
             containerStyle={ComponentsStyle.loginButton}
             titleStyle={ComponentsStyle.loginButtonText}
           />
-          {!this.state.sent &&
+          {!this.state.sent && (
             <Button
               onPress={() => this.onContinuePress()}
               title={i18n.t('continue')}
@@ -88,9 +93,13 @@ export default class ResetPassword extends PureComponent {
               hidde={this.state.sent}
               loading={this.state.sending}
               loadingRight={true}
-              disable={this.state.sending || !this.state.password || !this.state.confirmation}
+              disable={
+                this.state.sending ||
+                !this.state.password ||
+                !this.state.confirmation
+              }
             />
-          }
+          )}
         </View>
       </KeyboardAvoidingView>
     );
@@ -99,29 +108,32 @@ export default class ResetPassword extends PureComponent {
   /**
    * On press back
    */
-  onPressBack = () =>  {
+  onPressBack = () => {
     navigation.navigate('Login');
-  }
+  };
 
   /**
    * On continue press
    */
   async onContinuePress() {
-
     if (this.state.confirmation !== this.state.password) {
       alert('Passwords should match');
       return;
     }
 
-    if (!this.state.sent ) {
-      this.setState({sending: true});
+    if (!this.state.sent) {
+      this.setState({ sending: true });
 
       const state = navigation.dangerouslyGetState();
 
       try {
-        const data = await authService.reset(state.params.username, this.state.password, state.params.code);
+        const data = await authService.reset(
+          state.params.username,
+          this.state.password,
+          state.params.code,
+        );
         // clear the cookies (fix future issues with calls)
-        await apiService.clearCookies();;
+        await apiService.clearCookies();
 
         if (data.status === 'success') {
           await delay(100);
@@ -155,5 +167,4 @@ export default class ResetPassword extends PureComponent {
   //       })
 
   //   }
-
 }

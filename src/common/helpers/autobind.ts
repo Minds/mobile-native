@@ -38,7 +38,7 @@ function boundClass(target) {
     }
   }
 
-  keys.forEach(key => {
+  keys.forEach((key) => {
     // Ignore special case target method
     if (key === 'constructor') {
       return;
@@ -48,7 +48,11 @@ function boundClass(target) {
 
     // Only methods need binding
     if (typeof descriptor.value === 'function') {
-      Object.defineProperty(target.prototype, key, boundMethod(target, key, descriptor));
+      Object.defineProperty(
+        target.prototype,
+        key,
+        boundMethod(target, key, descriptor),
+      );
     }
   });
   return target;
@@ -63,7 +67,9 @@ function boundMethod(target, key, descriptor) {
   let fn = descriptor.value;
 
   if (typeof fn !== 'function') {
-    throw new Error(`@autobind decorator can only be applied to methods not: ${typeof fn}`);
+    throw new Error(
+      `@autobind decorator can only be applied to methods not: ${typeof fn}`,
+    );
   }
 
   // In IE11 calling Object.defineProperty has a side-effect of evaluating the
@@ -74,7 +80,11 @@ function boundMethod(target, key, descriptor) {
   return {
     configurable: true,
     get() {
-      if (definingProperty || this === target.prototype || this.hasOwnProperty(key)) {
+      if (
+        definingProperty ||
+        this === target.prototype ||
+        this.hasOwnProperty(key)
+      ) {
         return this.hasOwnProperty(key) ? this[key] : fn;
       }
 
@@ -83,10 +93,10 @@ function boundMethod(target, key, descriptor) {
       Object.defineProperty(this, key, {
         value: boundFn,
         configurable: true,
-        writable: true
+        writable: true,
       });
       definingProperty = false;
       return boundFn;
-    }
+    },
   };
 }

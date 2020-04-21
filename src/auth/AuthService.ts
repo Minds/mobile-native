@@ -164,14 +164,14 @@ class AuthService {
   }
   /**
    * Register user and returns UserModel
-   * @param params 
+   * @param params
    */
   register(params: registerParams): Promise<RegisterResponse> {
     return api.post<RegisterResponse>('api/v1/register', params);
   }
   /**
    * Request to reset password, returns suceed or fail
-   * @param username 
+   * @param username
    */
   forgot(username: string): Promise<ForgotResponse> {
     const params = { username } as forgotParams;
@@ -179,11 +179,15 @@ class AuthService {
   }
   /**
    * Set new password validating with code
-   * @param username 
-   * @param password 
-   * @param code 
+   * @param username
+   * @param password
+   * @param code
    */
-  reset(username: string, password: string, code: string): Promise<ResetResponse> {
+  reset(
+    username: string,
+    password: string,
+    code: string,
+  ): Promise<ResetResponse> {
     const params = {
       username,
       code,
@@ -194,7 +198,7 @@ class AuthService {
   }
   /**
    * Validate Password, return succeed or fail
-   * @param password 
+   * @param password
    */
   validatePassword(password: string): Promise<ValidateResponse> {
     const params = { password } as validateParams;

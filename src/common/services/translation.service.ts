@@ -9,7 +9,6 @@ const storageNamespace = 'translation';
  * Translaction service
  */
 class TranslationService {
-
   defaultLanguage = 'en';
   languagesReady = null;
 
@@ -28,18 +27,28 @@ class TranslationService {
    */
   async getLanguages() {
     if (!this.languagesReady) {
-      let cached = await storage.getItem(`${storageNamespace}:languages:${this.defaultLanguage}`);
+      let cached = await storage.getItem(
+        `${storageNamespace}:languages:${this.defaultLanguage}`,
+      );
       if (cached && cached.length > 0) {
         this.languagesReady = cached;
         return cached;
       } else {
         try {
-          const response = await api.get(`api/v1/translation/languages`, { target: this.defaultLanguage });
+          const response = await api.get(`api/v1/translation/languages`, {
+            target: this.defaultLanguage,
+          });
           if (!response.languages) {
             throw new Error('No languages array');
           }
-          await storage.setItem(`${storageNamespace}:languages:${this.defaultLanguage}`, response.languages);
-          await storage.setItem(`${storageNamespace}:userDefault`, response.userDefault);
+          await storage.setItem(
+            `${storageNamespace}:languages:${this.defaultLanguage}`,
+            response.languages,
+          );
+          await storage.setItem(
+            `${storageNamespace}:userDefault`,
+            response.userDefault,
+          );
           return response.languages;
         } catch (e) {
           logService.exception('[TranslationService]', e);
@@ -63,7 +72,10 @@ class TranslationService {
    */
   async purgeLanguagesCache() {
     this.languagesReady = void 0;
-    await storage.setItem(`${storageNamespace}:languages:${this.defaultLanguage}`, '');
+    await storage.setItem(
+      `${storageNamespace}:languages:${this.defaultLanguage}`,
+      '',
+    );
     await storage.setItem(`${storageNamespace}:userDefault`, null);
   }
 
@@ -78,7 +90,7 @@ class TranslationService {
 
     const languages = await this.getLanguages();
 
-    const language = languages.find(lang => lang.language === query);
+    const language = languages.find((lang) => lang.language === query);
 
     if (language) {
       return language.name;
@@ -103,10 +115,8 @@ class TranslationService {
       return true;
     } else if (
       entity.custom_type &&
-      (
-        (typeof entity.title !== 'undefined' && entity.title) ||
-        (typeof entity.blurb !== 'undefined' && entity.blurb)
-      )
+      ((typeof entity.title !== 'undefined' && entity.title) ||
+        (typeof entity.blurb !== 'undefined' && entity.blurb))
     ) {
       return true;
     }
@@ -122,8 +132,12 @@ class TranslationService {
    * @param {string} language
    */
   async translate(guid, language) {
-    const response = await api.get(`api/v1/translation/translate/${guid}`, { target: language });
-    const defaultLanguage = await storage.getItem(`${storageNamespace}:userDefault`);
+    const response = await api.get(`api/v1/translation/translate/${guid}`, {
+      target: language,
+    });
+    const defaultLanguage = await storage.getItem(
+      `${storageNamespace}:userDefault`,
+    );
 
     if (!defaultLanguage !== language) {
       // update it async

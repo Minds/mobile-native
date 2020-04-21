@@ -1,18 +1,9 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Text,
-  StyleSheet,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
 
-import {
-  observer,
-} from 'mobx-react'
+import { observer } from 'mobx-react';
 
 import { Icon } from 'react-native-elements';
 import Counter from '../newsfeed/activity/actions/Counter';
@@ -28,7 +19,6 @@ const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
  */
 @observer
 export default class ReplyAction extends Component {
-
   /**
    * Default Props
    */
@@ -46,16 +36,32 @@ export default class ReplyAction extends Component {
    */
   render() {
     const entity = this.props.entity;
-    const color = entity.replies_count ? 'rgb(70, 144, 214)' : 'rgb(96, 125, 139)';
-    const textStyle = {color};
+    const color = entity.replies_count
+      ? 'rgb(70, 144, 214)'
+      : 'rgb(96, 125, 139)';
+    const textStyle = { color };
 
     const CS = ThemedStyles.style;
 
     return (
-      <TouchableOpacityCustom style={[CS.flexContainer, CS.centered, CS.paddingRight2x, this.props.orientation == 'column' ? CS.columnAlignCenter : CS.rowJustifyCenter ]} onPress={this.toggleExpand} testID='ReplyCommentButton'>
+      <TouchableOpacityCustom
+        style={[
+          CS.flexContainer,
+          CS.centered,
+          CS.paddingRight2x,
+          this.props.orientation == 'column'
+            ? CS.columnAlignCenter
+            : CS.rowJustifyCenter,
+        ]}
+        onPress={this.toggleExpand}
+        testID="ReplyCommentButton">
         <Icon color={color} name={this.iconName} size={this.props.size} />
         <Text style={[textStyle, CS.marginRight]}>{i18n.t('reply')}</Text>
-        <Counter size={this.props.size * 0.75} count={entity.replies_count} orientation={this.props.orientation}/>
+        <Counter
+          size={this.props.size * 0.75}
+          count={entity.replies_count}
+          orientation={this.props.orientation}
+        />
       </TouchableOpacityCustom>
     );
   }
@@ -65,5 +71,5 @@ export default class ReplyAction extends Component {
    */
   toggleExpand = () => {
     this.props.toggleExpand();
-  }
+  };
 }

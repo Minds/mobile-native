@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   Text,
@@ -12,10 +10,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MINDS_CDN_URI } from '../../config/Config';
@@ -28,7 +23,6 @@ import FastImage from 'react-native-fast-image';
  */
 @observer
 export default class ChannelCard extends Component {
-
   subscribe() {
     this.props.entity.toggleSubscription();
   }
@@ -37,14 +31,17 @@ export default class ChannelCard extends Component {
    * Render Header
    */
   render() {
-
     const channel = this.props.entity;
-    const avatar  = channel.getAvatarSource();
-    const iurl    = channel.getBannerSource();
+    const avatar = channel.getAvatarSource();
+    const iurl = channel.getBannerSource();
 
     return (
       <View>
-        <FastImage source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
+        <FastImage
+          source={iurl}
+          style={styles.banner}
+          resizeMode={FastImage.resizeMode.cover}
+        />
         <View style={styles.headertextcontainer}>
           <View style={styles.namecontainer}>
             <View style={styles.namecol}>
@@ -55,10 +52,9 @@ export default class ChannelCard extends Component {
         </View>
         <Image source={avatar} style={styles.avatar} />
       </View>
-    )
+    );
   }
 }
-
 
 const styles = StyleSheet.create({
   headertextcontainer: {
@@ -70,11 +66,11 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   namecol: {
-    flex:1
+    flex: 1,
   },
   namecontainer: {
     flexDirection: 'row',
-    flex:1,
+    flex: 1,
     paddingLeft: 120,
   },
   banner: {
@@ -90,7 +86,7 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 10,
-    color: '#999'
+    color: '#999',
   },
   name: {
     fontWeight: 'bold',
@@ -99,7 +95,7 @@ const styles = StyleSheet.create({
   countercontainer: {
     paddingLeft: 130,
     height: 60,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   avatar: {
     position: 'absolute',
@@ -107,11 +103,11 @@ const styles = StyleSheet.create({
     top: 50,
     height: 100,
     width: 100,
-    borderRadius: 55
+    borderRadius: 55,
   },
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#FFF'
-  }
+    backgroundColor: '#FFF',
+  },
 });

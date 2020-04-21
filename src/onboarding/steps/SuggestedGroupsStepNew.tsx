@@ -20,7 +20,6 @@ import OnboardingBackButton from '../OnboardingBackButton';
 @inject('discovery', 'hashtag')
 @observer
 export default class SuggestedGroupsStepNew extends Component {
-
   constructor(props) {
     super(props);
 
@@ -34,8 +33,8 @@ export default class SuggestedGroupsStepNew extends Component {
   }
 
   renderGroup = (group, i) => {
-    return  <GroupsListItemNew key={group.guid} group={group} index={i} />
-  }
+    return <GroupsListItemNew key={group.guid} group={group} index={i} />;
+  };
 
   getBody = () => {
     const discovery = this.props.discovery;
@@ -44,19 +43,30 @@ export default class SuggestedGroupsStepNew extends Component {
       <View style={[CS.flexContainer, CS.columnAlignCenter]}>
         <OnboardingBackButton onBack={this.props.onBack} />
         <View style={styles.textsContainer}>
-          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>{i18n.t('onboarding.profileSetup')}</Text>
-          <Text style={[CS.titleText, CS.colorPrimaryText]}>{i18n.t('onboarding.groupTitle')}</Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>{i18n.t('onboarding.step',{step: 3, total: 4})}</Text>
-          <Text style={[
-            CS.subTitleText,
-            CS.colorPrimaryText,
-            CS.marginBottom4x,
-            CS.marginTop4x
-          ]}>{i18n.t('onboarding.suggestedGroupsDescription')}</Text>
+          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>
+            {i18n.t('onboarding.profileSetup')}
+          </Text>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>
+            {i18n.t('onboarding.groupTitle')}
+          </Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
+            {i18n.t('onboarding.step', { step: 3, total: 4 })}
+          </Text>
+          <Text
+            style={[
+              CS.subTitleText,
+              CS.colorPrimaryText,
+              CS.marginBottom4x,
+              CS.marginTop4x,
+            ]}>
+            {i18n.t('onboarding.suggestedGroupsDescription')}
+          </Text>
         </View>
         <ScrollView style={styles.groupContainer}>
           {!discovery.listStore.loaded && <ActivityIndicator />}
-          {discovery.listStore.entities.slice().map((group, i) => this.renderGroup(group, i))}
+          {discovery.listStore.entities
+            .slice()
+            .map((group, i) => this.renderGroup(group, i))}
         </ScrollView>
       </View>
     );

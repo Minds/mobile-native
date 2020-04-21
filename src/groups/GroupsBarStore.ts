@@ -1,11 +1,11 @@
 //@ts-nocheck
-import { observable, action, toJS } from "mobx";
-import groupsService from "./GroupsService";
+import { observable, action, toJS } from 'mobx';
+import groupsService from './GroupsService';
 import socketService from '../common/services/socket.service';
-import logService from "../common/services/log.service";
-import GroupModel from "./GroupModel";
-import storageService from "../common/services/storage.service";
-import { isNetworkFail } from "../common/helpers/abortableFetch";
+import logService from '../common/services/log.service';
+import GroupModel from './GroupModel';
+import storageService from '../common/services/storage.service';
+import { isNetworkFail } from '../common/helpers/abortableFetch';
 
 /**
  * Groups bar store
@@ -27,7 +27,7 @@ class GroupsBarStore {
   @action
   setGroups(groups, replace = false, listen = true) {
     if (replace) this.groups = [];
-    groups.forEach(group => {
+    groups.forEach((group) => {
       if (listen) this.listenMarkers(group);
       this.groups.push(GroupModel.checkOrCreate(group));
     });
@@ -61,7 +61,7 @@ class GroupsBarStore {
    */
   async loadMarkers() {
     const markers = await groupsService.loadGroupMarkers();
-    markers.forEach(m => this.handleMarker(m, false));
+    markers.forEach((m) => this.handleMarker(m, false));
   }
 
   /**
@@ -70,11 +70,11 @@ class GroupsBarStore {
    * @param {Boolean} bringToFront
    */
   handleMarker(marker, bringToFront = true) {
-    this.groups.forEach(group => {
+    this.groups.forEach((group) => {
       if (group.guid == marker.entity_guid) {
-        this.setGroupMarker(group, marker, bringToFront)
+        this.setGroupMarker(group, marker, bringToFront);
       }
-    })
+    });
   }
 
   /**
@@ -91,7 +91,7 @@ class GroupsBarStore {
    * @param {Object} group
    */
   unlistenMarkers(group) {
-    socketService.unsubscribe(`marker:${group.guid}`, this.handleMessage)
+    socketService.unsubscribe(`marker:${group.guid}`, this.handleMessage);
     socketService.leave(`marker:${group.guid}`);
   }
 
@@ -99,7 +99,7 @@ class GroupsBarStore {
    * Unlisten all groups for markers
    */
   unlistenAll() {
-    this.groups.forEach(g => this.unlistenMarkers(g));
+    this.groups.forEach((g) => this.unlistenMarkers(g));
   }
 
   /**
@@ -107,8 +107,8 @@ class GroupsBarStore {
    * @param {Object} marker
    */
   handleMessage = (marker) => {
-    this.handleMarker(JSON.parse(marker))
-  }
+    this.handleMarker(JSON.parse(marker));
+  };
 
   /**
    * Mark a group as readed
@@ -117,9 +117,13 @@ class GroupsBarStore {
    */
   @action
   async markAsRead(group, markerType) {
-    const myGroup = this.groups.find(g => g.guid === group.guid);
+    const myGroup = this.groups.find((g) => g.guid === group.guid);
     if (!myGroup) return;
-    await groupsService.markAsRead({entity_guid: group.guid, marker: markerType, entity_type: 'group'});
+    await groupsService.markAsRead({
+      entity_guid: group.guid,
+      marker: markerType,
+      entity_type: 'group',
+    });
     myGroup[`marker_${markerType}`] = false;
   }
 
@@ -132,20 +136,26 @@ class GroupsBarStore {
   @action
   setGroupMarker(group, marker, bringToFront) {
     if (!group.markers) group.markers = {};
-    if (!marker.read_timestamp || (marker.read_timestamp < marker.updated_timestamp)) {
+    if (
+      !marker.read_timestamp ||
+      marker.read_timestamp < marker.updated_timestamp
+    ) {
       if (marker.marker === 'gathering-heartbeat') {
         // is the first one?
         if (group.marker_gathering_hartbeat) {
           clearInterval(group.marker_gathering_hartbeat);
         }
-        group.marker_gathering_hartbeat = setTimeout(this.finishGathering.bind(group), 10000);
+        group.marker_gathering_hartbeat = setTimeout(
+          this.finishGathering.bind(group),
+          10000,
+        );
       }
       group[`marker_${marker.marker}`] = true;
     }
     group.markers_muted = marker.disabled;
 
     if (bringToFront) {
-      const index = this.groups.findIndex(g => g === group);
+      const index = this.groups.findIndex((g) => g === group);
 
       // move to the first place
       this.groups.unshift(this.groups.splice(index, 1)[0]);
@@ -164,7 +174,6 @@ class GroupsBarStore {
    * Load groups
    */
   async loadGroups() {
-
     if (this.loading || this.cantLoadMore()) return;
 
     this.setLoading(true);

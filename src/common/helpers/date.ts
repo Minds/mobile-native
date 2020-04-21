@@ -32,10 +32,14 @@ function frendlyTime(date) {
     return `${diff.minutes()}m ago`;
   }
 
-  return `${diff.seconds()}s ago`
+  return `${diff.seconds()}s ago`;
 }
 
-export default function formatDate(timestamp, format = 'datetime', timezone='') {
+export default function formatDate(
+  timestamp,
+  format = 'datetime',
+  timezone = '',
+) {
   let options;
 
   let date = moment(timestamp * 1000);

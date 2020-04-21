@@ -1,13 +1,12 @@
 //@ts-nocheck
-import sqliteStorageProviderService from "../sqlite-storage-provider.service";
-import logService from "../log.service";
-import moment from "moment";
+import sqliteStorageProviderService from '../sqlite-storage-provider.service';
+import logService from '../log.service';
+import moment from 'moment';
 
 /**
  * Feeds Storage
  */
 export class EntitiesStorage {
-
   /**
    * @var {SqliteService}
    */
@@ -18,14 +17,16 @@ export class EntitiesStorage {
    * @param {Object} entity
    */
   async save(entity) {
-
     if (!entity.urn) {
       return;
     }
 
     try {
       await this.getDb();
-      await this.db.executeSql('REPLACE INTO entities (urn, data, updated) values (?,?,?)', [entity.urn, JSON.stringify(entity), Math.floor(Date.now() / 1000)]);
+      await this.db.executeSql(
+        'REPLACE INTO entities (urn, data, updated) values (?,?,?)',
+        [entity.urn, JSON.stringify(entity), Math.floor(Date.now() / 1000)],
+      );
     } catch (err) {
       logService.exception('[EntitiesStorage]', err);
     }
@@ -39,7 +40,11 @@ export class EntitiesStorage {
     await this.getDb();
 
     try {
-      const [result] = await this.db.executeSql('SELECT * FROM entities WHERE urn=?;', [urn]);
+      const [
+        result,
+      ] = await this.db.executeSql('SELECT * FROM entities WHERE urn=?;', [
+        urn,
+      ]);
 
       const rows = result.rows.raw();
 
@@ -62,13 +67,15 @@ export class EntitiesStorage {
     try {
       const urnsIn = "('" + urns.join("','") + "')";
 
-      const [result] = await this.db.executeSql('SELECT * FROM entities WHERE urn IN ' + urnsIn);
+      const [result] = await this.db.executeSql(
+        'SELECT * FROM entities WHERE urn IN ' + urnsIn,
+      );
 
       const rows = result.rows.raw();
 
       const entities = [];
 
-      rows.forEach(row => {
+      rows.forEach((row) => {
         entities.push(JSON.parse(row.data));
       });
 
@@ -94,7 +101,9 @@ export class EntitiesStorage {
    */
   async removeMany(urns) {
     const urnsIn = "('" + urns.join("','") + "')";
-    return await this.db.executeSql('DELETE FROM entities WHERE urn IN ' + urnsIn);
+    return await this.db.executeSql(
+      'DELETE FROM entities WHERE urn IN ' + urnsIn,
+    );
   }
 
   /**
@@ -112,7 +121,9 @@ export class EntitiesStorage {
   async removeOlderThan(days) {
     await this.getDb();
     const when = moment().subtract(days, 'days');
-    this.db.executeSql('DELETE FROM entities WHERE updated < ?', [when.format("X")]);
+    this.db.executeSql('DELETE FROM entities WHERE updated < ?', [
+      when.format('X'),
+    ]);
   }
 
   /**
@@ -126,4 +137,4 @@ export class EntitiesStorage {
   }
 }
 
-export default new EntitiesStorage;
+export default new EntitiesStorage();

@@ -10,7 +10,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 /**
  * Compose Top bar
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
   const insets = useSafeArea();
   const menuStyle = { paddingTop: insets.top || 5 };
@@ -23,11 +23,7 @@ export default observer(function(props) {
         style={[styles.backIcon, theme.colorWhite]}
         onPress={props.onPressBack}
       />
-      {props.leftText && (
-        <Text style={styles.leftText}>
-          {props.leftText}
-        </Text>
-      )}
+      {props.leftText && <Text style={styles.leftText}>{props.leftText}</Text>}
       <View style={theme.flexContainer} />
       {props.store.posting ? (
         <DotIndicator
@@ -69,4 +65,3 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
 });
-

@@ -86,7 +86,7 @@ class OnboardingScreen extends Component {
     this.props.discovery.reset();
   };
 
-  handleWizarRef = ref => {
+  handleWizarRef = (ref) => {
     this.wizard = ref;
   };
 
@@ -102,7 +102,7 @@ class OnboardingScreen extends Component {
     }
     const completed_items = []; //this.props.onboarding.progress.completed_items;
 
-    if (!completed_items.some(r => r == 'creator_frequency')) {
+    if (!completed_items.some((r) => r == 'creator_frequency')) {
       steps.push({
         component: (
           <WelcomeStepNew onNext={this.onNext} onFinish={this.onFinish} />
@@ -111,7 +111,7 @@ class OnboardingScreen extends Component {
       });
     }
 
-    if (!completed_items.some(r => r == 'suggested_hashtags')) {
+    if (!completed_items.some((r) => r == 'suggested_hashtags')) {
       steps.push({
         component: (
           <HashtagsStepNew onNext={this.onNext} onBack={this.onBack} />
@@ -119,11 +119,11 @@ class OnboardingScreen extends Component {
       });
     }
 
-    if (!completed_items.some(r => r == 'tokens_verification')) {
+    if (!completed_items.some((r) => r == 'tokens_verification')) {
       steps.push({
         component: (
           <ChannelSetupStepNew
-            ref={r => (this.channelSetup = r)}
+            ref={(r) => (this.channelSetup = r)}
             onNext={this.onNext}
             onBack={this.onBack}
           />

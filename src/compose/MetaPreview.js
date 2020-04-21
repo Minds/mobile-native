@@ -22,7 +22,7 @@ const thumbSize = PixelRatio.getPixelSizeForLayoutSize(imgSize);
  * Meta Preview
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const theme = ThemedStyles.style;
 
   const source = { uri: mediaProxyUrl(props.meta.thumbnail, thumbSize) };

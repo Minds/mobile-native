@@ -10,10 +10,10 @@ import { observer } from 'mobx-react';
  * Title input
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
   const [open, setOpen] = useState(false);
   const onpress = useCallback(() => {
-    setOpen(old => {
+    setOpen((old) => {
       if (old === true) {
         props.store.setTitle('');
       }

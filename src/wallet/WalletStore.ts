@@ -1,25 +1,19 @@
 //@ts-nocheck
-import {
-  observable,
-  computed,
-  action
-} from 'mobx';
+import { observable, computed, action } from 'mobx';
 
 import moment from 'moment';
 import walletService from './WalletService';
-import abbrev from "../common/helpers/abbrev";
-import token from "../common/helpers/token";
-import number from "../common/helpers/number";
+import abbrev from '../common/helpers/abbrev';
+import token from '../common/helpers/token';
+import number from '../common/helpers/number';
 import TokensStore from './tokens/TokensStore';
 import storageService from '../common/services/storage.service';
 import web3Service from '../blockchain/services/Web3Service';
-
 
 /**
  * Wallet store
  */
 class WalletStore {
-
   @observable balance = -1;
   @observable addresses = [];
   @observable overview = {};
@@ -47,8 +41,11 @@ class WalletStore {
     const { balance, addresses } = await walletService.getBalances();
 
     if (addresses && addresses.length > 0) {
-      addresses.forEach(async address => {
-        if (address.label.toLowerCase() != 'offchain' && address.address !== '') {
+      addresses.forEach(async (address) => {
+        if (
+          address.label.toLowerCase() != 'offchain' &&
+          address.address !== ''
+        ) {
           address.ethBalance = await web3Service.getBalance(address.address);
         }
       });
@@ -69,7 +66,7 @@ class WalletStore {
   }
 
   @computed get formattedBalance() {
-    return this.balance > -1 ? number(token(this.balance, 18), 3) : '…'
+    return this.balance > -1 ? number(token(this.balance, 18), 3) : '…';
   }
 
   /**
@@ -78,7 +75,7 @@ class WalletStore {
    * @param {boolean} retry
    */
   join(number, retry) {
-    return walletService.join(number, retry)
+    return walletService.join(number, retry);
   }
 
   /**
@@ -105,8 +102,8 @@ class WalletStore {
         referrals: 50,
         referrals_welcome: 50,
         checkin: 2,
-        jury_duty: 25
-      }
+        jury_duty: 25,
+      },
     };
     this.onboardingShown = false;
     this.ledger = new TokensStore();
@@ -119,7 +116,10 @@ class WalletStore {
   // Onboarding
 
   async canShowOnboarding() {
-    return !this.isOnboardingShown && !(await storageService.getItem('walletOnboardingComplete'));
+    return (
+      !this.isOnboardingShown &&
+      !(await storageService.getItem('walletOnboardingComplete'))
+    );
   }
 
   @action setOnboardingShown(value) {

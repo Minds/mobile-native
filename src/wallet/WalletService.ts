@@ -5,19 +5,19 @@ import api from './../common/services/api.service';
  * Wallet Service
  */
 class WalletService {
-
   async getCount() {
     return (await api.get('api/v1/wallet/count')).count;
   }
 
   getHistory(offset) {
-    return api.get('api/v1/wallet/transactions', { offset: offset, limit: 12 })
+    return api
+      .get('api/v1/wallet/transactions', { offset: offset, limit: 12 })
       .then((response) => {
         return {
           entities: response.transactions,
           offset: response['load-next'],
         };
-      })
+      });
   }
 
   /**
@@ -54,7 +54,7 @@ class WalletService {
     return api.post('api/v2/blockchain/rewards/confirm', {
       number,
       code,
-      secret
+      secret,
     });
   }
 
@@ -68,16 +68,17 @@ class WalletService {
     startDate.setHours(0, 0, 0);
     endDate.setHours(23, 59, 59);
 
-    return api.get(`api/v2/blockchain/transactions/ledger`, {
+    return api
+      .get(`api/v2/blockchain/transactions/ledger`, {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
-        offset: offset
+        offset: offset,
       })
       .then((data) => {
         return {
-          entities: data.transactions||[],
+          entities: data.transactions || [],
           offset: data['load-next'],
-        }
+        };
       });
   }
 
@@ -85,16 +86,17 @@ class WalletService {
     startDate.setHours(0, 0, 0);
     endDate.setHours(23, 59, 59);
 
-    return api.get(`api/v2/blockchain/contributions`, {
+    return api
+      .get(`api/v2/blockchain/contributions`, {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
-        offset: offset
+        offset: offset,
       })
       .then((data) => {
         return {
           entities: data.contributions || [],
           offset: data['load-next'],
-        }
+        };
       });
   }
 }

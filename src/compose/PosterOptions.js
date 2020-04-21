@@ -28,7 +28,7 @@ const height = Platform.select({ android: 80, ios: 90 });
 /**
  * Header
  */
-const Header = props => (
+const Header = (props) => (
   <Touchable
     onPress={props.onPress}
     style={[
@@ -51,7 +51,7 @@ const Header = props => (
 /**
  * Item
  */
-const Item = props => {
+const Item = (props) => {
   return (
     <Touchable
       style={[styles.row, ThemedStyles.style.borderPrimary]}
@@ -81,7 +81,7 @@ function useNavCallback(screen, props) {
  * Options
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
   // dereference observables to listen to his changes
   const nsfw = props.store.nsfw.slice();
   const tags = props.store.tags;
@@ -135,7 +135,7 @@ export default observer(function(props) {
     <View style={ThemedStyles.style.backgroundPrimary}>
       <Item
         title="Tag"
-        description={tags.slice(0, 4).map(t => `#${t} `)}
+        description={tags.slice(0, 4).map((t) => `#${t} `)}
         onPress={onTagPress}
       />
       <Item

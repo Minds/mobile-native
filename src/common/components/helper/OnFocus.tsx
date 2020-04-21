@@ -16,8 +16,8 @@ export default function OnFocus({ onFocus }) {
       if (unsubscribe instanceof Function) {
         return () => unsubscribe();
       }
-    }, [onFocus])
+    }, [onFocus]),
   );
 
   return null;
-};
+}

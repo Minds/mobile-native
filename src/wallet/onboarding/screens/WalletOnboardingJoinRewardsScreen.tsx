@@ -1,8 +1,6 @@
 //@ts-nocheck
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
@@ -12,12 +10,9 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import {
-  inject,
-  observer
-} from 'mobx-react'
+import { inject, observer } from 'mobx-react';
 
-import PhoneInput from 'react-native-phone-input'
+import PhoneInput from 'react-native-phone-input';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -26,7 +21,7 @@ import NavNextButton from '../../../common/components/NavNextButton';
 
 import Colors from '../../../styles/Colors';
 import stylesheet from '../../../onboarding/stylesheet';
-import { CommonStyle } from '../../../styles/Common';
+import { CommonStyle } from '../../../styles/Common';
 import i18n from '../../../common/services/i18n.service';
 
 @inject('user', 'wallet')
@@ -41,8 +36,8 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
     secret: '',
     code: '',
     error: '',
-    wait: 60
-  }
+    wait: 60,
+  };
 
   componentDidMount() {
     this.props.onSetNavNext(this.getNextButton());
@@ -55,7 +50,12 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
       return;
     }
 
-    this.setState({ inProgress: true, error: '',confirming: false, confirmFailed: false });
+    this.setState({
+      inProgress: true,
+      error: '',
+      confirming: false,
+      confirmFailed: false,
+    });
 
     try {
       let { secret } = await this.props.wallet.join(this.state.phone, retry);
@@ -65,7 +65,6 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
         confirming: true,
         inProgress: false,
       });
-
     } catch (e) {
       const error = (e && e.message) || 'Unknown server error';
       this.setState({ error, inProgress: false });
@@ -74,7 +73,6 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
   }
 
   async confirm() {
-
     if (this.state.inProgress || !this.canConfirm()) {
       return;
     }
@@ -82,7 +80,11 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
     this.setState({ inProgress: true, error: '' });
 
     try {
-      await this.props.wallet.confirm(this.state.phone, this.state.code, this.state.secret);
+      await this.props.wallet.confirm(
+        this.state.phone,
+        this.state.code,
+        this.state.secret,
+      );
       this.props.user.setRewards(true);
       this.props.onNext({ rewards: true });
     } catch (e) {
@@ -96,12 +98,12 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
 
   //
 
-  setPhone = phone => this.setState({ phone });
+  setPhone = (phone) => this.setState({ phone });
 
-  setCode = code => this.setState({ code });
+  setCode = (code) => this.setState({ code });
 
   canJoin() {
-    return this.refs.phoneInput && this.refs.phoneInput.isValidNumber()
+    return this.refs.phoneInput && this.refs.phoneInput.isValidNumber();
   }
 
   joinAction = () => this.join();
@@ -117,22 +119,26 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
   //
 
   getInputNumberPartial() {
-    let joinButtonContent = i18n.t('join').toUpperCase();;
+    let joinButtonContent = i18n.t('join').toUpperCase();
 
     if (this.state.inProgress) {
-      joinButtonContent = <ActivityIndicator size="small" color={Colors.primary} />;
+      joinButtonContent = (
+        <ActivityIndicator size="small" color={Colors.primary} />
+      );
     }
 
     return (
       <View>
-        <Text style={style.p}>
-          {i18n.t('onboarding.startEarning')}
-        </Text>
+        <Text style={style.p}>{i18n.t('onboarding.startEarning')}</Text>
 
         <View style={[style.cols, style.form]}>
           <PhoneInput
             disabled={this.state.inProgress}
-            style={{ ...stylesheet.col, ...stylesheet.colFirst, ...stylesheet.phoneInput }}
+            style={{
+              ...stylesheet.col,
+              ...stylesheet.colFirst,
+              ...stylesheet.phoneInput,
+            }}
             textStyle={stylesheet.phoneTextInput}
             value={this.state.phone}
             onChangePhoneNumber={this.setPhone}
@@ -156,17 +162,24 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
     let confirmButtonContent = i18n.t('confirm').toUpperCase();
 
     if (this.state.inProgress) {
-      confirmButtonContent = <ActivityIndicator size="small" color={Colors.primary} />;
+      confirmButtonContent = (
+        <ActivityIndicator size="small" color={Colors.primary} />
+      );
     }
 
     return (
       <View>
         <Text style={style.p}>
-          {i18n.t('onboarding.weJustSentCode', {phone: this.state.phone})}
+          {i18n.t('onboarding.weJustSentCode', { phone: this.state.phone })}
         </Text>
         <View style={[style.cols, style.form]}>
           <TextInput
-            style={[style.col, style.colFirst, style.textInput, style.textInputCentered]}
+            style={[
+              style.col,
+              style.colFirst,
+              style.textInput,
+              style.textInputCentered,
+            ]}
             value={this.state.code}
             onChangeText={this.setCode}
             placeholder={i18n.t('onboarding.confirmationCode')}
@@ -186,10 +199,8 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
   }
 
   getFormPartial() {
-    if (!this.state.confirming)
-      return this.getInputNumberPartial();
-    else
-      return this.getConfirmNumberPartial();
+    if (!this.state.confirming) return this.getInputNumberPartial();
+    else return this.getConfirmNumberPartial();
   }
 
   getNextButton = () => {
@@ -200,7 +211,7 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
         color={Colors.darkGreyed}
       />
     );
-  }
+  };
 
   render() {
     return (
@@ -212,13 +223,13 @@ export default class WalletOnboardingJoinRewardsScreen extends Component {
           {i18n.t('onboarding.rewardsDescription1')}
         </Text>
 
-        <View>
-          {this.getFormPartial()}
-        </View>
+        <View>{this.getFormPartial()}</View>
 
-        {!!this.state.error && <View>
-          <Text style={style.error}>{this.state.error}</Text>
-        </View>}
+        {!!this.state.error && (
+          <View>
+            <Text style={style.error}>{this.state.error}</Text>
+          </View>
+        )}
 
         <Text style={[style.p, style.note]}>
           {i18n.t('onboarding.rewardsNote')}

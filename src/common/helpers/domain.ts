@@ -1,7 +1,6 @@
 //@ts-nocheck
 export default function domain(value) {
-  if (!value)
-    return value;
+  if (!value) return value;
 
   var matches,
     output = value,
@@ -9,11 +8,9 @@ export default function domain(value) {
 
   matches = urls.exec(value);
 
-  if (matches !== null)
-    output = matches[1];
+  if (matches !== null) output = matches[1];
 
-  if (output.indexOf('www.') > -1)
-    output = output.split('www.').pop();
+  if (output.indexOf('www.') > -1) output = output.split('www.').pop();
 
   return output;
 }

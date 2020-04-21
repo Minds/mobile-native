@@ -1,9 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action,
-  observe
-} from 'mobx';
+import { observable, action, observe } from 'mobx';
 
 import NavigationService from '../../navigation/NavigationService';
 
@@ -32,27 +28,31 @@ export default class ModalControllerStore {
 
     NavigationService.navigate(this.route);
 
-    return await new Promise(resolve => {
+    return await new Promise((resolve) => {
       if (dispose) {
         dispose();
         dispose = void 0;
       }
 
-      dispose = observe(this, 'payload', action(change => {
-        if (typeof change.newValue !== 'undefined') {
-          dispose();
-          dispose = void 0;
+      dispose = observe(
+        this,
+        'payload',
+        action((change) => {
+          if (typeof change.newValue !== 'undefined') {
+            dispose();
+            dispose = void 0;
 
-          this.reset();
-          this.payload = void 0;
+            this.reset();
+            this.payload = void 0;
 
-          resolve(change.newValue);
+            resolve(change.newValue);
 
-          if (change.newValue !== null) {
-            NavigationService.goBack();
+            if (change.newValue !== null) {
+              NavigationService.goBack();
+            }
           }
-        }
-      }));
+        }),
+      );
     });
   }
 

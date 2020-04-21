@@ -12,7 +12,7 @@ const height = Dimensions.get('screen').height;
  * Remind Preview
  * @param {Object} props
  */
-export default function(props) {
+export default function (props) {
   const keyboard = useKeyboard();
   const style = {
     maxHeight: height / 2 - keyboard.keyboardHeight,

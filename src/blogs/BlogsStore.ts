@@ -11,7 +11,6 @@ import { isNetworkFail } from '../common/helpers/abortableFetch';
  * Blogs store
  */
 class BlogsStore {
-
   list = new OffsetListStore();
   @observable loading = false;
   @observable filter = 'network';
@@ -20,12 +19,14 @@ class BlogsStore {
    * Load list
    */
   async loadList() {
-
     this.setLoading(true);
     this.list.setErrorLoading(false);
 
     try {
-      const response = await blogService.loadList(this.filter, this.list.offset)
+      const response = await blogService.loadList(
+        this.filter,
+        this.list.offset,
+      );
 
       if (response.entities) {
         if (this.list.offset) {
@@ -37,7 +38,6 @@ class BlogsStore {
 
       return response;
     } catch (err) {
-
       if (!isNetworkFail(err)) {
         logService.exception('[BlogStore] loadList', err);
       }

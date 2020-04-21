@@ -1,8 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action
-} from 'mobx';
+import { observable, action } from 'mobx';
 
 import { getSettings, setSetting } from './NotificationsService';
 
@@ -10,7 +7,7 @@ import { getSettings, setSetting } from './NotificationsService';
  * Notifications Settings Store
  */
 class NotificationsSettingsStore {
-  @observable settings = {}
+  @observable settings = {};
 
   constructor() {
     this.reset();
@@ -27,7 +24,7 @@ class NotificationsSettingsStore {
       this.setSetting(name, value);
       const result = setSetting(name, value);
       return true;
-    } catch(err) {
+    } catch (err) {
       this.setSetting(name, !value);
       console.error(err);
       alert('Error saving setting');
@@ -39,7 +36,7 @@ class NotificationsSettingsStore {
   async load() {
     const settings = await getSettings();
 
-    Object.keys(settings.toggles).forEach(key => {
+    Object.keys(settings.toggles).forEach((key) => {
       const toggle = settings.toggles[key];
       this.setSetting(key, toggle);
     });
@@ -48,26 +45,25 @@ class NotificationsSettingsStore {
   @action
   reset() {
     this.settings = {
-      'comment': true,
-      'like': true,
-      'tag': true,
-      'friends': true,
-      'remind': true,
-      'boost_request': true,
-      'boost_rejected': true,
-      'boost_completed': true,
-      'rewards_reminder': true,
-      'rewards_summary': true,
-      'messenger_invite': true,
-      'message': true,
-      'group_invite': true,
-      'daily': true,
-      'boost_gift': true,
-      'boost_accepted': true,
-      'boost_revoked': true,
+      comment: true,
+      like: true,
+      tag: true,
+      friends: true,
+      remind: true,
+      boost_request: true,
+      boost_rejected: true,
+      boost_completed: true,
+      rewards_reminder: true,
+      rewards_summary: true,
+      messenger_invite: true,
+      message: true,
+      group_invite: true,
+      daily: true,
+      boost_gift: true,
+      boost_accepted: true,
+      boost_revoked: true,
     };
   }
-
 }
 
 export default NotificationsSettingsStore;

@@ -58,7 +58,7 @@ class GroupsListItem extends Component {
           ThemedStyles.style.backgroundSecondary,
         ]}
         title={this.props.group.name}
-        keyExtractor={item => item.rowKey}
+        keyExtractor={(item) => item.rowKey}
         leftAvatar={this.state.source}
         subtitle={i18n.t('groups.listMembersCount', {
           count: this.props.group['members:count'],

@@ -1,8 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action,
-} from 'mobx';
+import { observable, action } from 'mobx';
 
 import messengerService from './MessengerService';
 import crypto from './../common/services/crypto.service';
@@ -23,7 +20,7 @@ class MessengerConversationStore {
   @observable invited = false;
   @observable errorLoading = false;
 
-  @observable offset = ''
+  @observable offset = '';
   socketRoomName = null;
   participants = null;
   invitable = null;
@@ -39,18 +36,21 @@ class MessengerConversationStore {
     this.setErrorLoading(false);
 
     try {
-      const conversation = await messengerService.getConversationFromRemote(12, this.guid, this.offset)
+      const conversation = await messengerService.getConversationFromRemote(
+        12,
+        this.guid,
+        this.offset,
+      );
 
       // offset to scroll
       this.offset = conversation['load-previous'];
       // invitable
       this.invitable = conversation.invitable || null;
       // set public keys for encryption
-      crypto.setPublicKeys( conversation.publickeys );
+      crypto.setPublicKeys(conversation.publickeys);
 
       // remove repeated message
-      if (this.messages.length)
-       conversation.messages.pop();
+      if (this.messages.length) conversation.messages.pop();
 
       if (!this.offset || !conversation.messages.length) {
         this.moreData = false;
@@ -103,7 +103,7 @@ class MessengerConversationStore {
 
   @action
   setMessages(msgs) {
-    msgs.forEach(m => this.messages.push(m));
+    msgs.forEach((m) => this.messages.push(m));
   }
 
   @action
@@ -125,13 +125,12 @@ class MessengerConversationStore {
       message: text,
       decrypted: true,
       owner: { guid: myGuid },
-      time_created: Date.now() / 1000
+      time_created: Date.now() / 1000,
     });
 
-    return this._encryptMessage(text)
-      .then(encrypted => {
-        return messengerService.send(this.guid, encrypted)
-      })
+    return this._encryptMessage(text).then((encrypted) => {
+      return messengerService.send(this.guid, encrypted);
+    });
   }
 
   @action
@@ -141,7 +140,7 @@ class MessengerConversationStore {
     }
 
     this.invited = true;
-    this.invitable.forEach(participant => {
+    this.invitable.forEach((participant) => {
       messengerService.invite(participant.guid);
     });
   }
@@ -154,17 +153,17 @@ class MessengerConversationStore {
     const encrypted = {};
     const publickeys = crypto.getPublicKeys();
 
-    if (!Object.keys(publickeys).length) return Promise.reject('No public keys to encrypt')
+    if (!Object.keys(publickeys).length)
+      return Promise.reject('No public keys to encrypt');
 
     return new Promise((resolve, reject) => {
       for (let guid in publickeys) {
-        crypto.encrypt(message, guid)
-          .then(success => {
-            encrypted[guid] = success;
-            if (Object.keys(encrypted).length == Object.keys(publickeys).length) {
-              resolve(encrypted);
-            }
-          });
+        crypto.encrypt(message, guid).then((success) => {
+          encrypted[guid] = success;
+          if (Object.keys(encrypted).length == Object.keys(publickeys).length) {
+            resolve(encrypted);
+          }
+        });
       }
     });
   }
@@ -176,18 +175,22 @@ class MessengerConversationStore {
   clear() {
     // unlisten socket
     this.unlisten();
-    this.socketRoomName  = null;
-    this.participants    = null;
-    this.guid            = null;
-    this.invitable       = null;
-    this.moreData        = true;
-    this.invited         = false;
-    this.messages        = [];
-    this.offset          = '';
-    this.loading         = false;
+    this.socketRoomName = null;
+    this.participants = null;
+    this.guid = null;
+    this.invitable = null;
+    this.moreData = true;
+    this.invited = false;
+    this.messages = [];
+    this.offset = '';
+    this.loading = false;
     if (this.lastMessageGuid) {
       // on leave set all messages as readed
-      messengerService.getConversationFromRemote(1, this.guid, this.lastMessageGuid);
+      messengerService.getConversationFromRemote(
+        1,
+        this.guid,
+        this.lastMessageGuid,
+      );
       this.lastMessageGuid = null;
     }
   }
@@ -207,7 +210,6 @@ class MessengerConversationStore {
     const fromSelf = session.guid == message.ownerObj.guid;
 
     if (!fromSelf) {
-
       //const index =
 
       for (let index in message.messages) {
@@ -217,8 +219,7 @@ class MessengerConversationStore {
           message.decrypted = true;
           // break on correct decryption
 
-          if (message.message)
-            break;
+          if (message.message) break;
         } catch (err) {}
       }
 
@@ -231,7 +232,7 @@ class MessengerConversationStore {
   @action
   clearConversation = (guid, actor) => {
     this.messages = [];
-  }
+  };
 
   unlisten() {
     socket.leave(this.socketRoomName);

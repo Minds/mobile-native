@@ -194,7 +194,7 @@ class Comment extends Component {
   /**
    * Set editing
    */
-  setEditing = value => {
+  setEditing = (value) => {
     this.setState({ editing: value });
   };
 
@@ -213,7 +213,7 @@ class Comment extends Component {
   /**
    * Handle action on comment
    */
-  onSelection = action => {
+  onSelection = (action) => {
     switch (action) {
       case i18n.t('edit'):
         this.setState({ editing: true });
@@ -229,13 +229,13 @@ class Comment extends Component {
               onPress: () => {
                 this.props.store
                   .delete(this.props.comment.guid)
-                  .then(result => {
+                  .then((result) => {
                     Alert.alert(
                       i18n.t('success'),
                       i18n.t('comments.successRemoving'),
                     );
                   })
-                  .catch(err => {
+                  .catch((err) => {
                     Alert.alert(
                       i18n.t('error'),
                       i18n.t('comments.errorRemoving'),
@@ -251,12 +251,12 @@ class Comment extends Component {
       case i18n.t('setExplicit'):
         this.props.store
           .commentToggleExplicit(this.props.comment.guid)
-          .then(result => {});
+          .then((result) => {});
         break;
       case i18n.t('removeExplicit'):
         this.props.store
           .commentToggleExplicit(this.props.comment.guid)
-          .then(result => {});
+          .then((result) => {});
         break;
       case i18n.t('report'):
         this.props.navigation.push('Report', { entity: this.props.comment });

@@ -15,7 +15,7 @@ class DeeplinksRouter {
    * Constructor
    */
   constructor() {
-    MINDS_DEEPLINK.forEach(r => this.add(r[0], r[1]));
+    MINDS_DEEPLINK.forEach((r) => this.add(r[0], r[1]));
   }
 
   /**
@@ -46,14 +46,14 @@ class DeeplinksRouter {
    * @param {string} screen  name of the screen
    */
   add(url, screen) {
-    const re = /:(\w+)/gi
+    const re = /:(\w+)/gi;
 
-    const params = (url.match(re) || []).map(s => s.substr(1));
+    const params = (url.match(re) || []).map((s) => s.substr(1));
 
     this.routes.push({
       screen,
       params,
-      re: new RegExp('^' + url.replace(re, '([^\/]+?)') + '(\/?$|\/?\\?)')
+      re: new RegExp('^' + url.replace(re, '([^/]+?)') + '(/?$|/?\\?)'),
     });
   }
 
@@ -79,7 +79,6 @@ class DeeplinksRouter {
    * @param {string} url
    */
   _getUrlRoute(url) {
-
     const surl = this.cleanUrl(url);
 
     for (var i = 0; i < this.routes.length; i++) {
@@ -87,10 +86,10 @@ class DeeplinksRouter {
       const match = route.re.exec(surl);
       if (match) {
         const params = {};
-        route.params.forEach((v, i) => params[v] = match[i + 1]);
+        route.params.forEach((v, i) => (params[v] = match[i + 1]));
         const urlParams = this.parseQueryParams(url);
 
-        return { screen: route.screen, params: {...params, ...urlParams}}
+        return { screen: route.screen, params: { ...params, ...urlParams } };
       }
     }
     return null;

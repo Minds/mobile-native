@@ -1,18 +1,12 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Text,
-  View
-} from 'react-native';
+import { Text, View } from 'react-native';
 
 /**
  * Custom Message Notification Component
  */
 export default class CustomMessageView extends Component {
-
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
@@ -21,6 +15,6 @@ export default class CustomMessageView extends Component {
       <View style={styles.bodyContents}>
         <Text>{entity.params.message}</Text>
       </View>
-    )
+    );
   }
 }

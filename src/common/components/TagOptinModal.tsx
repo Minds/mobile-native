@@ -14,24 +14,23 @@ import i18n from '../services/i18n.service';
 @inject('hashtag')
 @observer
 export default class TagOptinModal extends Component {
-
   state = {
-    showModal: false
+    showModal: false,
   };
 
   /**
    * Show modal
    */
   showModal = () => {
-    this.setState({showModal: true});
-  }
+    this.setState({ showModal: true });
+  };
 
   /**
    * Hide modal
    */
   dismissModal = () => {
-    this.setState({showModal: false});
-  }
+    this.setState({ showModal: false });
+  };
 
   /**
    * Render
@@ -44,8 +43,7 @@ export default class TagOptinModal extends Component {
         avoidKeyboard={true}
         animationInTiming={150}
         onBackButtonPress={this.dismissModal}
-        onBackdropPress={this.dismissModal}
-      >
+        onBackdropPress={this.dismissModal}>
         <View style={styles.modalView}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>{i18n.t('hashtags.title')}</Text>
@@ -56,17 +54,17 @@ export default class TagOptinModal extends Component {
               onPress={this.dismissModal}
             />
           </View>
-            <TagInput
-             hideTags={true}
-             tags={this.props.hashtag.suggested.map(m => m.value)}
-             onTagDeleted={this.props.hashtag.deselect}
-             onTagAdded={this.props.hashtag.create}
-            />
-            <TagSelect
-              onTagDeleted={this.props.hashtag.deselect}
-              onTagAdded={this.props.hashtag.select}
-              tags={this.props.hashtag.suggested}
-            />
+          <TagInput
+            hideTags={true}
+            tags={this.props.hashtag.suggested.map((m) => m.value)}
+            onTagDeleted={this.props.hashtag.deselect}
+            onTagAdded={this.props.hashtag.create}
+          />
+          <TagSelect
+            onTagDeleted={this.props.hashtag.deselect}
+            onTagAdded={this.props.hashtag.select}
+            tags={this.props.hashtag.suggested}
+          />
         </View>
       </Modal>
     );
@@ -95,5 +93,5 @@ const styles = StyleSheet.create({
     padding: 5,
     marginRight: 10,
     alignSelf: 'flex-end',
-  }
+  },
 });

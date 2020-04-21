@@ -1,13 +1,7 @@
 //@ts-nocheck
-import {
-  observable,
-  action,
-  computed
-} from 'mobx';
+import { observable, action, computed } from 'mobx';
 
-import {
-  Alert
-} from 'react-native';
+import { Alert } from 'react-native';
 
 import messengerService from './MessengerService';
 import session from './../common/services/session.service';
@@ -23,7 +17,6 @@ import ConversationModel from './ConversationModel';
  * Messenger Conversation List Store
  */
 class MessengerListStore {
-
   /**
    * @var {array} conversations
    */
@@ -64,22 +57,21 @@ class MessengerListStore {
    */
   @observable unlocking = false;
 
-  offset     = '';
-  newsearch  = true;
+  offset = '';
+  newsearch = true;
 
   @computed get unread() {
-    const count = this.conversations.filter(conv => conv.unread).length;
+    const count = this.conversations.filter((conv) => conv.unread).length;
     badge.setUnreadConversations(count);
     return count;
   }
 
   constructor() {
-    session.sessionStorage.getPrivateKey()
-      .then((privateKey) => {
-        if (privateKey) {
-          this.setPrivateKey(privateKey);
-        }
-      });
+    session.sessionStorage.getPrivateKey().then((privateKey) => {
+      if (privateKey) {
+        this.setPrivateKey(privateKey);
+      }
+    });
   }
 
   @action
@@ -91,7 +83,7 @@ class MessengerListStore {
   @action
   touchConversation = (guid) => {
     // search conversation
-    const index = this.conversations.findIndex(conv => conv.guid === guid);
+    const index = this.conversations.findIndex((conv) => conv.guid === guid);
 
     if (index !== -1) {
       const conv = this.conversations[index];
@@ -122,7 +114,6 @@ class MessengerListStore {
    * Load conversations list
    */
   async loadList(reload = false) {
-
     const rows = 24;
 
     // abort if we have a previous call
@@ -137,14 +128,22 @@ class MessengerListStore {
       // is a search?
       if (this.search && (this.newsearch || reload)) {
         this.newsearch = false;
-        response = await messengerService.searchConversations(this.search, rows, this);
+        response = await messengerService.searchConversations(
+          this.search,
+          rows,
+          this,
+        );
       } else {
-
         if (this.loaded && !this.offset && !reload) {
           return;
         }
         if (reload) this.offset = '';
-        response = await messengerService.getConversations(rows, this.offset, this.newsearch, this);
+        response = await messengerService.getConversations(
+          rows,
+          this.offset,
+          this.newsearch,
+          this,
+        );
       }
       if (reload) this.clearConversations();
       this.offset = response.offset;
@@ -171,8 +170,9 @@ class MessengerListStore {
    */
   getCryptoKeys(password) {
     this.setUnlocking(true);
-    return messengerService.getCryptoKeys(password)
-      .then(privateKey => {
+    return messengerService
+      .getCryptoKeys(password)
+      .then((privateKey) => {
         if (privateKey) {
           session.sessionStorage.setPrivateKey(privateKey);
           this.setPrivateKey(privateKey);
@@ -183,11 +183,9 @@ class MessengerListStore {
         Alert.alert(
           i18n.t('sorry'),
           i18n.t('messenger.checkCredentials'),
-          [
-            { text: i18n.t('tryAgain')},
-          ],
-          { cancelable: false }
-        )
+          [{ text: i18n.t('tryAgain') }],
+          { cancelable: false },
+        );
       })
       .finally(() => {
         this.setUnlocking(false);
@@ -207,11 +205,9 @@ class MessengerListStore {
       Alert.alert(
         i18n.t('sorry'),
         i18n.t('messenger.errorCreatingKeys'),
-        [
-          { text: i18n.t('tryAgain')},
-        ],
-        { cancelable: false }
-      )
+        [{ text: i18n.t('tryAgain') }],
+        { cancelable: false },
+      );
     } finally {
       this.setUnlocking(false);
     }
@@ -245,11 +241,11 @@ class MessengerListStore {
 
   @action
   setSearch(search) {
-    this.search        = search;
-    this.newsearch     = search != '';
-    this.loaded        = false;
+    this.search = search;
+    this.newsearch = search != '';
+    this.loaded = false;
     this.conversations = [];
-    this.offset        = '';
+    this.offset = '';
 
     this.loadList();
   }
@@ -262,7 +258,7 @@ class MessengerListStore {
   @action
   pushConversations(conversations) {
     conversations = ConversationModel.createMany(conversations);
-    this.conversations = [... this.conversations, ...conversations];
+    this.conversations = [...this.conversations, ...conversations];
   }
 
   @action
@@ -274,17 +270,16 @@ class MessengerListStore {
   refresh() {
     if (this.loading) return;
 
-    this.refreshing    = true;
-    this.loaded        = false;
+    this.refreshing = true;
+    this.loaded = false;
     this.conversations = [];
-    this.offset        = '';
+    this.offset = '';
 
     if (this.search) this.newsearch = true;
 
-    this.loadList()
-      .finally(() => {
-        this.setRefreshing(false);
-      });
+    this.loadList().finally(() => {
+      this.setRefreshing(false);
+    });
   }
 
   @action
@@ -300,7 +295,6 @@ class MessengerListStore {
     this.loading = false;
     this.errorLoading = false;
   }
-
 }
 
 export default MessengerListStore;

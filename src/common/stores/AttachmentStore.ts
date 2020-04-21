@@ -1,6 +1,6 @@
 //@ts-nocheck
-import {observable, action} from 'mobx';
-import {Alert, Platform} from 'react-native';
+import { observable, action } from 'mobx';
+import { Alert, Platform } from 'react-native';
 import RNConvertPhAsset from 'react-native-convert-ph-asset';
 
 import attachmentService from '../services/attachment.service';
@@ -47,7 +47,7 @@ export default class AttachmentStore {
       }
     }
 
-    if (!await this.validate(media)) {
+    if (!(await this.validate(media))) {
       return;
     }
 
@@ -89,9 +89,13 @@ export default class AttachmentStore {
     this.fileName = media.fileName;
 
     try {
-      const uploadPromise = attachmentService.attachMedia(media, extra, pct => {
-        this.setProgress(pct);
-      });
+      const uploadPromise = attachmentService.attachMedia(
+        media,
+        extra,
+        (pct) => {
+          this.setProgress(pct);
+        },
+      );
 
       // we need to defer the set because a cenceled promise could set it to false
       setTimeout(() => this.setUploading(true), 0);
@@ -119,7 +123,9 @@ export default class AttachmentStore {
     if (media.duration && media.duration > settings.max_video_length * 1000) {
       Alert.alert(
         i18n.t('sorry'),
-        i18n.t('attachment.tooLong', {minutes: settings.max_video_length / 60}),
+        i18n.t('attachment.tooLong', {
+          minutes: settings.max_video_length / 60,
+        }),
       );
       return false;
     }

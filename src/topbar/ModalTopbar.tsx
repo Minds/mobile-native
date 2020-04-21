@@ -6,14 +6,13 @@ import {
   Image,
   View,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class ModalTopbar extends Component {
-
   static defaultProps = {
     closeButtonStyle: {},
     style: {},
@@ -23,8 +22,13 @@ export default class ModalTopbar extends Component {
     return (
       <View style={[styles.container, this.props.style]}>
         <View style={styles.topbar}>
-          <View style={{flex:1}} />
-          <Icon size={24} name="close" onPress={() => this.props.navigation.goBack()} style={[styles.close, this.props.closeButtonStyle]}/>
+          <View style={{ flex: 1 }} />
+          <Icon
+            size={24}
+            name="close"
+            onPress={() => this.props.navigation.goBack()}
+            style={[styles.close, this.props.closeButtonStyle]}
+          />
         </View>
       </View>
     );
@@ -33,7 +37,7 @@ export default class ModalTopbar extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: (Platform.OS === 'ios') ? 65 : 56,
+    height: Platform.OS === 'ios' ? 65 : 56,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
   },
   close: {
     alignSelf: 'flex-end',
-    padding: (Platform.OS === 'ios') ? 12 : 8,
-    color: '#444'
-  }
+    padding: Platform.OS === 'ios' ? 12 : 8,
+    color: '#444',
+  },
 });

@@ -1,14 +1,7 @@
 //@ts-nocheck
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 import { CommonStyle } from '../../styles/Common';
 import i18n from '../../common/services/i18n.service';
@@ -37,27 +30,50 @@ export default class TypeSelector extends PureComponent {
    */
   getOption(type, title, subtitle, selected) {
     const isSelected = this.props.value === type,
-      colorStyle = isSelected ? [ThemedStyles.style.colorPrimaryText, ThemedStyles.style.bold] : ThemedStyles.colorSecondaryText;
+      colorStyle = isSelected
+        ? [ThemedStyles.style.colorPrimaryText, ThemedStyles.style.bold]
+        : ThemedStyles.colorSecondaryText;
 
     return (
-      <TouchableOpacity style={[CommonStyle.flexContainer, CommonStyle.paddingRight]} onPress={() => this.change(type)}>
+      <TouchableOpacity
+        style={[CommonStyle.flexContainer, CommonStyle.paddingRight]}
+        onPress={() => this.change(type)}>
         <View>
           <Text style={[CommonStyle.fontXL, colorStyle]}>{title}</Text>
           <Text style={[CommonStyle.fontS, colorStyle]}>{subtitle}</Text>
           {isSelected && selected}
         </View>
       </TouchableOpacity>
-    )
+    );
   }
 
   /**
    * Render
    */
   render() {
-    const selected = <Text style={[CommonStyle.fontM, CommonStyle.colorPrimary]}>{i18n.t('boosts.selected')}</Text>,
-      NewsfeedPartial = this.getOption('newsfeed', i18n.t('boosts.feeds'), i18n.t('boosts.feedsDescription'), selected),
-      P2pPartial = this.getOption('p2p', i18n.t('boosts.offers'), i18n.t('boosts.offersDescription'), selected),
-      ContentPartial = this.getOption('content',  i18n.t('boosts.sidebars'), i18n.t('boosts.sidebarsDescription'), selected),
+    const selected = (
+        <Text style={[CommonStyle.fontM, CommonStyle.colorPrimary]}>
+          {i18n.t('boosts.selected')}
+        </Text>
+      ),
+      NewsfeedPartial = this.getOption(
+        'newsfeed',
+        i18n.t('boosts.feeds'),
+        i18n.t('boosts.feedsDescription'),
+        selected,
+      ),
+      P2pPartial = this.getOption(
+        'p2p',
+        i18n.t('boosts.offers'),
+        i18n.t('boosts.offersDescription'),
+        selected,
+      ),
+      ContentPartial = this.getOption(
+        'content',
+        i18n.t('boosts.sidebars'),
+        i18n.t('boosts.sidebarsDescription'),
+        selected,
+      ),
       allowedTypes = this.props.allowedTypes;
 
     return (
@@ -66,6 +82,6 @@ export default class TypeSelector extends PureComponent {
         {allowedTypes.p2p && P2pPartial}
         {allowedTypes.content && ContentPartial}
       </View>
-    )
+    );
   }
 }

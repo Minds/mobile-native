@@ -1,14 +1,8 @@
 //@ts-nocheck
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  View,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -33,16 +27,14 @@ export default class WalletOnboardingWelcomeScreen extends Component {
         color={Colors.primary}
       />
     );
-  }
+  };
 
   render() {
     return (
       <View>
         <Text style={style.h1}>{i18n.t('onboarding.welcomToWallet')}</Text>
 
-        <Text style={style.p}>
-          {i18n.t('onboarding.tokensDescription')}
-        </Text>
+        <Text style={style.p}>{i18n.t('onboarding.tokensDescription')}</Text>
 
         <View style={style.rows}>
           <View style={[style.row, style.rowFirst]}>

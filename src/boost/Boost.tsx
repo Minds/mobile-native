@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import BoostActionBar from './BoostActionBar';
 import ChannelCard from '../channel/card/ChannelCard';
@@ -9,14 +7,9 @@ import BlogCard from '../blogs/BlogCard';
 import VideoCard from '../media/VideoCard';
 import ImageCard from '../media/ImageCard';
 
+import { Text, StyleSheet, View } from 'react-native';
 
-import {
-  Text,
-  StyleSheet,
-  View
-} from 'react-native';
-
-import Activity from '../newsfeed/activity/Activity'
+import Activity from '../newsfeed/activity/Activity';
 import FastImage from 'react-native-fast-image';
 import ActivityModel from '../newsfeed/ActivityModel';
 import BlogModel from '../blogs/BlogModel';
@@ -28,21 +21,20 @@ import GroupModel from '../groups/GroupModel';
  * Boost console item
  */
 export default class Boost extends Component {
-
   /**
    * Render
    */
   render() {
     return (
-        <View style={styles.container}>
-          { this.renderEntity() }
-          { this.showBoostActionBar() }
-        </View>
+      <View style={styles.container}>
+        {this.renderEntity()}
+        {this.showBoostActionBar()}
+      </View>
     );
   }
 
   showBoostActionBar() {
-    return <BoostActionBar entity={this.props.boost} />
+    return <BoostActionBar entity={this.props.boost} />;
   }
 
   renderEntity() {
@@ -54,23 +46,57 @@ export default class Boost extends Component {
 
     switch (entity.type) {
       case 'activity':
-        return <Activity entity={ActivityModel.create(entity)} hideTabs={true} navigation={this.props.navigation} />;
+        return (
+          <Activity
+            entity={ActivityModel.create(entity)}
+            hideTabs={true}
+            navigation={this.props.navigation}
+          />
+        );
       case 'user':
-        return <ChannelCard entity={UserModel.create(entity)} navigation={this.props.navigation} />;
+        return (
+          <ChannelCard
+            entity={UserModel.create(entity)}
+            navigation={this.props.navigation}
+          />
+        );
       case 'group':
-        return <GroupCard entity={GroupModel.create(entity)} navigation={this.props.navigation} />;
+        return (
+          <GroupCard
+            entity={GroupModel.create(entity)}
+            navigation={this.props.navigation}
+          />
+        );
       case 'object':
-
         switch (entity.subtype) {
           case 'blog':
-            return <BlogCard entity={BlogModel.create(entity)} navigation={this.props.navigation} />;
+            return (
+              <BlogCard
+                entity={BlogModel.create(entity)}
+                navigation={this.props.navigation}
+              />
+            );
           case 'image':
-            return <ImageCard entity={ActivityModel.create(entity)} navigation={this.props.navigation} />;
+            return (
+              <ImageCard
+                entity={ActivityModel.create(entity)}
+                navigation={this.props.navigation}
+              />
+            );
           case 'video':
-            return <VideoCard entity={ActivityModel.create(entity)} navigation={this.props.navigation} />
+            return (
+              <VideoCard
+                entity={ActivityModel.create(entity)}
+                navigation={this.props.navigation}
+              />
+            );
         }
     }
-    return <Text>Entity {entity.type} {entity.subtype} not supported</Text>
+    return (
+      <Text>
+        Entity {entity.type} {entity.subtype} not supported
+      </Text>
+    );
   }
 }
 

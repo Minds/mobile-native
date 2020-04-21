@@ -1,8 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component,
-  Fragment
-} from 'react';
+import React, { Component, Fragment } from 'react';
 
 import {
   Platform,
@@ -14,10 +11,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react'
+import { observer, inject } from 'mobx-react';
 
 import DiscoveryTile from './DiscoveryTile';
 import DiscoveryUser from './DiscoveryUser';
@@ -28,7 +22,7 @@ import { ComponentsStyle } from '../styles/Components';
 import colors from '../styles/Colors';
 import BlogCard from '../blogs/BlogCard';
 import ErrorLoading from '../common/components/ErrorLoading';
-import GroupsListItem from '../groups/GroupsListItem'
+import GroupsListItem from '../groups/GroupsListItem';
 import ErrorBoundary from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
 import FeedList from '../common/components/FeedList';
@@ -41,12 +35,12 @@ import ThemedStyles from '../styles/ThemedStyles';
 @observer
 @inject('discovery')
 export default class DiscoveryFeedScreen extends Component {
-
   /**
    * Render activity
    */
-  renderActivity = row => {
-    let isLast = this.props.discovery.feedStore.list.entities.length == row.index + 1;
+  renderActivity = (row) => {
+    let isLast =
+      this.props.discovery.feedStore.list.entities.length == row.index + 1;
     const entity = row.item;
 
     const boundaryText =
@@ -57,8 +51,10 @@ export default class DiscoveryFeedScreen extends Component {
         : undefined;
 
     return (
-      <ErrorBoundary message={this.cantShowActivity} containerStyle={CS.hairLineBottom}>
-        {boundaryText && <FallbackBoundary title={boundaryText}/>}
+      <ErrorBoundary
+        message={this.cantShowActivity}
+        containerStyle={CS.hairLineBottom}>
+        {boundaryText && <FallbackBoundary title={boundaryText} />}
         <Activity
           entity={entity}
           newsfeed={this.props.feedStore}
@@ -67,8 +63,8 @@ export default class DiscoveryFeedScreen extends Component {
           isLast={isLast}
         />
       </ErrorBoundary>
-    )
-  }
+    );
+  };
 
   /**
    * Render
@@ -91,18 +87,25 @@ export default class DiscoveryFeedScreen extends Component {
         removeClippedSubviews={false}
         keyboardShouldPersistTaps={'handled'}
       />
-    )
+    );
   }
 
   /**
    * Get empty list
    */
   getEmptyList() {
-    if (!this.props.discovery.list.loaded || this.props.discovery.loading || this.props.discovery.list.errorLoading) return null;
+    if (
+      !this.props.discovery.list.loaded ||
+      this.props.discovery.loading ||
+      this.props.discovery.list.errorLoading
+    )
+      return null;
     return (
       <View style={ComponentsStyle.emptyComponentContainer}>
         <View style={ComponentsStyle.emptyComponent}>
-          <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('discovery.nothingToShow')}</Text>
+          <Text style={ComponentsStyle.emptyComponentMessage}>
+            {i18n.t('discovery.nothingToShow')}
+          </Text>
         </View>
       </View>
     );
@@ -111,7 +114,7 @@ export default class DiscoveryFeedScreen extends Component {
   /**
    * Key extractor
    */
-  keyExtractor = item => item.urn;
+  keyExtractor = (item) => item.urn;
 
   /**
    * Get list footer
@@ -129,19 +132,19 @@ export default class DiscoveryFeedScreen extends Component {
 
     if (!store.list.errorLoading) return null;
 
-    const message = store.list.entities.length ?
-      i18n.t('cantLoadMore') :
-      i18n.t('cantLoad');
+    const message = store.list.entities.length
+      ? i18n.t('cantLoadMore')
+      : i18n.t('cantLoad');
 
-    return <ErrorLoading message={message} tryAgain={this.tryAgain}/>
-  }
+    return <ErrorLoading message={message} tryAgain={this.tryAgain} />;
+  };
 
   /**
    * Try Again
    */
   tryAgain = () => {
     this.loadFeed(null, true);
-  }
+  };
 
   /**
    * Load feed data
@@ -152,6 +155,5 @@ export default class DiscoveryFeedScreen extends Component {
     }
 
     this.props.discovery.feedStore.loadList(false, false, 12);
-  }
+  };
 }
-
