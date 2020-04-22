@@ -10,7 +10,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import Button from '../../common/components/Button';
 
 export default function () {
-  const CS = ThemedStyles.style;
+  const theme = ThemedStyles.style;
 
   const [subscriptions, setSubscriptions] = useState();
   const [loading, setLoading] = useState(true);
@@ -67,7 +67,7 @@ export default function () {
       }
 
       const title = (
-        <View style={CS.rowJustifySpaceBetween}>
+        <View style={theme.rowJustifySpaceBetween}>
           <Text>{`${item.plan_id} @${username} ${amount} ${payment}`}</Text>
           <Button text={i18n.t('cancel')} onPress={() => cancel(item.id)} />
         </View>
@@ -77,12 +77,16 @@ export default function () {
           key={item.id}
           title={title}
           containerStyle={[
-            CS.backgroundSecondary,
-            CS.borderHair,
-            CS.borderPrimary,
+            theme.backgroundSecondary,
+            theme.borderHair,
+            theme.borderPrimary,
             styles.containerPadding,
           ]}
-          titleStyle={[CS.colorSecondaryText, CS.fontL, CS.paddingLeft]}
+          titleStyle={[
+            theme.colorSecondaryText,
+            theme.fontL,
+            theme.paddingLeft,
+          ]}
         />
       );
     },
@@ -90,7 +94,7 @@ export default function () {
   );
 
   const empty = (
-    <Text style={[CS.fontM, CS.colorSecondaryText, CS.textCenter]}>
+    <Text style={[theme.fontM, theme.colorSecondaryText, theme.textCenter]}>
       {i18n.t('settings.subscriptionListEmpty')}
     </Text>
   );
@@ -98,13 +102,13 @@ export default function () {
   const component = loading ? (
     <CenteredLoading />
   ) : (
-    <ScrollView style={[CS.flexContainer, CS.padding4x]}>
+    <ScrollView style={[theme.flexContainer, theme.padding4x]}>
       <FlatList
         data={subscriptions.slice()}
         renderItem={renderRow}
         keyExtractor={keyExtractor}
         ListEmptyComponent={empty}
-        style={[CS.backgroundSecondary, CS.flexContainer]}
+        style={[theme.backgroundSecondary, theme.flexContainer]}
       />
     </ScrollView>
   );

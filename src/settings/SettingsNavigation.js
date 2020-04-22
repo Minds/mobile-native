@@ -51,6 +51,10 @@ const MenuStack = function ({ navigation, route }) {
       screenOptions={{
         title: '',
         ...ThemedStyles.defaultScreenOptions,
+        headerStyle: {
+          backgroundColor: ThemedStyles.getColor('primary_background'),
+        },
+        headerHideShadow: true,
       }}>
       <MenuStackNav.Screen
         name="Main"

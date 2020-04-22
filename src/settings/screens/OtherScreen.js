@@ -79,7 +79,6 @@ export default function ({ navigation }) {
       style={[
         theme.flexContainer,
         theme.backgroundPrimary,
-        theme.borderTopHair,
         theme.borderBottomHair,
         theme.borderPrimary,
       ]}>
