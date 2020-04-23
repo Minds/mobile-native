@@ -15,7 +15,7 @@ import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
 import OffsetFeedListStore from '../common/stores/OffsetFeedListStore';
 import { FLAG_VIEW } from '../common/Permissions';
-import type CommentsStore from 'src/comments/CommentsStore';
+import type CommentsStore from '../comments/CommentsStore';
 
 type PropsType = {
   route: any;

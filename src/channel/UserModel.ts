@@ -27,6 +27,8 @@ export default class UserModel extends BaseModel {
   btc_address?: string;
   icontime!: string;
   username!: string;
+  briefdescription!: string;
+  city!: string;
   name!: string;
   admin = false;
   plus: boolean = false;
@@ -34,6 +36,7 @@ export default class UserModel extends BaseModel {
   founder: boolean = false;
   rewards: boolean = false;
   last_accepted_tos: number = 0;
+  subscriptions_count: number = 0;
   carousels?: Array<any>;
 
   /**
@@ -109,9 +112,10 @@ export default class UserModel extends BaseModel {
   }
 
   @action
-  async toggleSubscription() {
+  toggleSubscription = async () => {
     const value = !this.subscribed;
     this.subscribed = value;
+
     try {
       const metadata = this.getClientMetadata();
       await ChannelService.toggleSubscription(this.guid, value, metadata);
@@ -122,7 +126,7 @@ export default class UserModel extends BaseModel {
       });
       throw err;
     }
-  }
+  };
 
   @action
   async toggleBlock(value: boolean | null = null) {

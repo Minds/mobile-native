@@ -20,7 +20,7 @@ import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
 import type { ThumbSize } from '../types/Common';
-import type GroupModel from 'src/groups/GroupModel';
+import type GroupModel from '../groups/GroupModel';
 
 type Thumbs = Record<ThumbSize, string>;
 

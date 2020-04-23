@@ -31,7 +31,6 @@ import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Colors from 'src/styles/Colors';
 
 type PropsType = {
   entity: ActivityModel;

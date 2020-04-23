@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { View, StyleSheet, ViewStyle } from 'react-native';
+import { View, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -10,6 +10,7 @@ type PropsType = {
   channel: UserModel;
   size?: number;
   style?: ViewStyle;
+  iconStyle?: TextStyle;
 };
 
 /**
@@ -30,7 +31,7 @@ export default class ChannelBadges extends PureComponent<PropsType> {
         <Icon
           name="add-circle-outline"
           size={size}
-          style={styles.icon}
+          style={[styles.icon, this.props.iconStyle]}
           key={1}
         />,
       );
@@ -38,13 +39,23 @@ export default class ChannelBadges extends PureComponent<PropsType> {
 
     if (channel.verified) {
       badges.push(
-        <Icon name="verified-user" size={size} style={styles.icon} key={2} />,
+        <Icon
+          name="verified-user"
+          size={size}
+          style={[styles.icon, this.props.iconStyle]}
+          key={2}
+        />,
       );
     }
 
     if (channel.founder) {
       badges.push(
-        <Icon name="flight-takeoff" size={size} style={styles.icon} key={3} />,
+        <Icon
+          name="flight-takeoff"
+          size={size}
+          style={[styles.icon, this.props.iconStyle]}
+          key={3}
+        />,
       );
     }
 
@@ -64,6 +75,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35,
     marginLeft: 5,
     textShadowRadius: 5,
-    paddingBottom: 5,
   },
 });

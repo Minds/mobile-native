@@ -7,7 +7,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import { CommonStyle } from '../../../styles/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type UserModel from 'src/channel/UserModel';
+import type UserModel from '../../../channel/UserModel';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);

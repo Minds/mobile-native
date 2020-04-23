@@ -1,4 +1,4 @@
-import React, { Component, Fragment, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
@@ -12,7 +12,7 @@ import Topbar from '../../topbar/Topbar';
 import { TopbarTabbar } from './topbar/TopbarTabbar';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/core';
-import { TabParamList } from 'src/tabs/TabsScreenNew';
+import { TabParamList } from '../../tabs/TabsScreenNew';
 import { useStores } from '../../common/hooks/use-stores';
 import ThemedStyles from '../../styles/ThemedStyles';
 

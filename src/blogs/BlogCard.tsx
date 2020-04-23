@@ -11,11 +11,17 @@ import { CommonStyle as CS } from '../styles/Common';
 import { FLAG_VIEW } from '../common/Permissions';
 import Actions from '../newsfeed/activity/Actions';
 import ThemedStyles from '../styles/ThemedStyles';
+import type BlogModel from './BlogModel';
+
+type PropsType = {
+  entity: BlogModel;
+  navigation: any;
+};
 
 /**
  * Blog Card
  */
-export default class BlogCard extends PureComponent {
+export default class BlogCard extends PureComponent<PropsType> {
   /**
    * Navigate to blog
    */
