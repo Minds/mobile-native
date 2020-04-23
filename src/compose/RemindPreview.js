@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import BlogCard from '../blogs/BlogCard';
 import Activity from '../newsfeed/activity/Activity';
@@ -20,14 +19,9 @@ export default function (props) {
     overflow: 'scroll', // IMPORTANT! the activities and blogs are not rendered correctly without this!
   };
   const ShowComponent = props.entity.subtype === 'blog' ? BlogCard : Activity;
-  const navigation = useNavigation();
   return (
     <View style={style}>
-      <ShowComponent
-        hideTabs={true}
-        entity={props.entity}
-        navigation={navigation}
-      />
+      <ShowComponent hideTabs={true} entity={props.entity} />
     </View>
   );
 }
