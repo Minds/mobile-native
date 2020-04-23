@@ -12,7 +12,7 @@ import Button from '../../common/components/Button';
 import { MINDS_ASSETS_CDN_URI, MINDS_CDN_URI } from '../../config/Config';
 
 import i18n from '../../common/services/i18n.service';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../newsfeed/ActivityModel';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {

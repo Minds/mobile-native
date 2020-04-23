@@ -229,7 +229,7 @@
     "isClosed":"This is a closed channel",
     "errorSaving":"Error saving channel",
     "saveChanges":"Save your changes",
-    "editChannel":"Edit your channel settings",
+    "editChannel":"Edit Channel",
     "sendMessage":"Send a message to this channel",
     "message":"Message",
     "mature":"This channel contains mature content",
@@ -904,5 +904,6 @@
   "linkCopied":"Link copied to clipboard",
   "close":"Close",
   "now":"Now",
-  "title":"Title"
+  "title":"Title",
+  "filter":"Filter"
 }

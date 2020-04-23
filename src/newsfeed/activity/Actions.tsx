@@ -15,7 +15,7 @@ import { CommonStyle } from '../../styles/Common';
 import featuresService from '../../common/services/features.service';
 import BaseModel from '../../common/BaseModel';
 import type ActivityModel from '../ActivityModel';
-import type UserStore from 'src/auth/UserStore';
+import type UserStore from '../../auth/UserStore';
 
 type PropsType = {
   entity: ActivityModel;

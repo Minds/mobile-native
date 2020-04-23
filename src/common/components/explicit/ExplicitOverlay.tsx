@@ -14,7 +14,7 @@ import { CommonStyle as CS } from '../../../styles/Common';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { GOOGLE_PLAY_STORE } from '../../../config/Config';
 import i18n from '../../services/i18n.service';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
 
 type PropsType = {
   entity: ActivityModel;

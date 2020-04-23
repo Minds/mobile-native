@@ -15,7 +15,7 @@ import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/core';
 import { RouteProp } from '@react-navigation/native';
-import { AppStackParamList } from 'src/navigation/NavigationTypes';
+import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useStores } from '../../../common/hooks/use-stores';
 import { Icon } from 'react-native-elements';

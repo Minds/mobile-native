@@ -4,6 +4,7 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from 'react-native-screens/native-stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
@@ -50,13 +51,15 @@ import NsfwSelector from '../compose/NsfwSelector';
 import ScheduleSelector from '../compose/ScheduleSelector';
 import MonetizeSelector from '../compose/MonetizeSelector';
 import LicenseSelector from '../compose/LicenseSelector';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import ChannelScreenV2 from '../channel/v2/ChannelScreen';
+
 import {
   RootStackParamList,
   AuthStackParamList,
   AppStackParamList,
   MainSwiperParamList,
 } from './NavigationTypes';
+import featuresService from '../common/services/features.service';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -152,7 +155,9 @@ const AppStack = function (props) {
       />
       <AppStackNav.Screen
         name="Channel"
-        component={ChannelScreen}
+        component={
+          featuresService.has('channel') ? ChannelScreenV2 : ChannelScreen
+        }
         options={hideHeader}
       />
 

@@ -62,7 +62,9 @@ export default class ChannelFeedStore {
    * @param {object} feed
    */
   assignRowKeys(feed) {
-    if (!feed.entities) return;
+    if (!feed.entities) {
+      return;
+    }
     feed.entities.forEach((entity, index) => {
       entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
     });
@@ -73,7 +75,9 @@ export default class ChannelFeedStore {
    * @param {boolean} refresh
    */
   async loadFeed(refresh = false) {
-    if (refresh) this.feedStore.clear();
+    if (refresh) {
+      this.feedStore.clear();
+    }
 
     this.feedStore
       .setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
@@ -101,7 +105,7 @@ export default class ChannelFeedStore {
   @action
   async refresh() {
     // ignore refresh on rewards or requests view
-    if (this.filter == 'rewards' || this.filter == 'request') {
+    if (this.filter === 'rewards' || this.filter === 'request') {
       return;
     }
 
@@ -119,7 +123,9 @@ export default class ChannelFeedStore {
   setFilter(filter) {
     this.filter = filter;
 
-    if (filter == 'requests' || filter == 'rewards') return;
+    if (filter === 'requests' || filter === 'rewards') {
+      return;
+    }
 
     this.feedStore
       .setEndpoint(`api/v2/${this.endpoint}/${this.guid}/${this.esFeedfilter}`)
@@ -132,7 +138,7 @@ export default class ChannelFeedStore {
   @action
   toggleScheduled() {
     this.endpoint =
-      this.endpoint == this.feedsEndpoint
+      this.endpoint === this.feedsEndpoint
         ? this.scheduledEndpoint
         : this.feedsEndpoint;
     this.setFilter(this.filter);

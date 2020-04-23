@@ -43,7 +43,11 @@ export interface ThemedStyle {
   backgroundSeparator: any;
   backgroundIcon: any;
   backgroundIconActive: any;
+  borderBackgroundPrimary: any;
+  borderBackgroundSecondary: any;
+  borderBackgroundTertiary: any;
   borderPrimary: any;
+  borderLink: any;
   borderIconActive: any;
   borderIcon: any;
   fontXS: any;
@@ -94,7 +98,7 @@ const step = 5;
 
 const dynamicStyles = {};
 
-for (let index = 0; index < repetitions; index++) {
+for (let index = 0; index <= repetitions; index++) {
   let value = step * index;
   const post = index === 1 ? '' : `${index}x`;
   dynamicStyles[`margin${post}`] = { margin: value };
@@ -269,6 +273,18 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
 
   // borders
+  borderBackgroundPrimary: {
+    borderColor: theme.primary_background,
+  },
+  borderBackgroundSecondary: {
+    borderColor: theme.secondary_background,
+  },
+  borderBackgroundTertiary: {
+    borderColor: theme.tertiary_background,
+  },
+  borderLink: {
+    borderColor: theme.link,
+  },
   borderPrimary: {
     borderColor: theme.primary_border,
   },

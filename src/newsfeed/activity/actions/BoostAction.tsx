@@ -8,7 +8,7 @@ import { ComponentsStyle } from '../../../styles/Components';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import ActivityModel from 'src/newsfeed/ActivityModel';
+import ActivityModel from '../../../newsfeed/ActivityModel';
 
 // prevent double tap in touchable
 const TouchableHighlightCustom = withPreventDoubleTap(TouchableHighlight);

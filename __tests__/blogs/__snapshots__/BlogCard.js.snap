@@ -169,7 +169,7 @@ exports[`blog card component should renders correctly 1`] = `
             accessibilityIgnoresInvertColors={true}
             style={
               Object {
-                "backgroundColor": "#bdbdbd",
+                "backgroundColor": "transparent",
                 "borderRadius": 17,
                 "flex": 1,
                 "overflow": "hidden",
@@ -232,6 +232,7 @@ exports[`blog card component should renders correctly 1`] = `
                   },
                 }
               }
+              transition={true}
             />
             <View
               accessibilityElementsHidden={false}
@@ -423,6 +424,7 @@ exports[`blog card component should renders correctly 1`] = `
           "subscribed": false,
           "subscriber": true,
           "subscribers_count": 50,
+          "subscriptions_count": 0,
           "subtype": false,
           "time_created": "1468113204",
           "time_updated": false,
