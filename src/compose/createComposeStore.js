@@ -47,6 +47,10 @@ export default function (props) {
     time_created: null,
     extra: null,
     onScreenFocused() {
+      if (!props.route.params) {
+        return;
+      }
+
       this.isRemind = props.route.params && props.route.params.isRemind;
       this.entity = props.route.params ? props.route.params.entity : null;
       const propsMode = props.route.params ? props.route.params.mode : null;
@@ -62,8 +66,10 @@ export default function (props) {
         this.attachment.attachMedia(mediaToConfirm);
       }
 
-      // when the screen unmounts clear the state.
-      return this.clear;
+      // clear params to avoid repetition
+      if (props.route.params) {
+        props.navigation.setParams(undefined);
+      }
     },
     setTokenThreshold(value) {
       value = parseFloat(value);
@@ -199,12 +205,6 @@ export default function (props) {
       this.nsfw = [];
       this.time_created = null;
       this.wire_threshold = 0;
-      // clear params to avoid repetition
-      props.navigation.setParams({
-        media: undefined,
-        entity: undefined,
-        isRemind: undefined,
-      });
     },
     /**
      * On media
