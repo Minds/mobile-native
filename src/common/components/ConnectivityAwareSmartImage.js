@@ -21,6 +21,10 @@ export default observer(function (props) {
     retries: 0,
     setError(error) {
       store.error = true;
+
+      if (props.onError) {
+        props.onError(error);
+      }
     },
     clearError() {
       store.error = false;
