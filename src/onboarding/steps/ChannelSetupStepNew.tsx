@@ -151,7 +151,9 @@ class ChannelSetupStepNew extends Component {
             {i18n.t('onboarding.step', { step: 2, total: 4 })}
           </Text>
         </View>
-        <ScrollView style={styles.inputContainer}>
+        <ScrollView
+          style={styles.inputContainer}
+          keyboardShouldPersistTaps={true}>
           <View
             style={[
               CS.padding4x,
