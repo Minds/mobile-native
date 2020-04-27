@@ -47,18 +47,16 @@ export default function (props) {
     time_created: null,
     extra: null,
     onScreenFocused() {
-      if (!props.route.params) {
+      const params = props.route.params;
+      if (!params || (!params.entity && !params.mode && !params.media)) {
         return;
       }
 
-      this.isRemind = props.route.params && props.route.params.isRemind;
-      this.entity = props.route.params ? props.route.params.entity : null;
-      const propsMode = props.route.params ? props.route.params.mode : null;
+      this.isRemind = params.isRemind;
+      this.entity = params.entity || null;
+      const propsMode = params.mode || null;
       this.mode = propsMode ? propsMode : this.isRemind ? 'text' : 'photo';
-      const mediaToConfirm =
-        props.route.params && props.route.params.media
-          ? props.route.params.media
-          : null;
+      const mediaToConfirm = params.media || null;
 
       if (mediaToConfirm) {
         this.mode = 'text';
@@ -67,9 +65,12 @@ export default function (props) {
       }
 
       // clear params to avoid repetition
-      if (props.route.params) {
-        props.navigation.setParams(undefined);
-      }
+      props.navigation.setParams({
+        entity: undefined,
+        media: undefined,
+        mode: undefined,
+        isRemind: undefined,
+      });
     },
     setTokenThreshold(value) {
       value = parseFloat(value);
@@ -201,7 +202,9 @@ export default function (props) {
       this.extra = null;
       this.mediaToConfirm = null;
       this.posting = false;
+      this.entity = null;
       this.mode = 'photo';
+      this.isRemind = false;
       this.nsfw = [];
       this.time_created = null;
       this.wire_threshold = 0;
