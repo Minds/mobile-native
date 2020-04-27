@@ -90,6 +90,10 @@ export default observer(function (props) {
     ? i18n.t('capture.remind')
     : i18n.t('capture.post');
 
+  const showOptions = !(
+    keyboard.keyboardShown && props.store.attachment.hasAttachment
+  );
+
   return (
     <TouchableWithoutFeedback
       onPress={Keyboard.dismiss}
@@ -173,7 +177,7 @@ export default observer(function (props) {
             />
           )}
         </View>
-        {!keyboard.keyboardShown && <PosterOptions store={props.store} />}
+        {showOptions && <PosterOptions store={props.store} />}
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
