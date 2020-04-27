@@ -59,6 +59,8 @@ export interface ThemedStyle {
   textJustify: any;
   fullWidth: any;
   halfWidth: any;
+  fullHeight: any;
+  halfHeight: any;
   bold: any;
   extraBold: any;
   fontThin: any;
@@ -322,6 +324,14 @@ export const buildStyle = (theme): ThemedStyle => ({
 
   halfWidth: {
     width: '50%',
+  },
+
+  fullHeight: {
+    height: '100%',
+  },
+
+  halfHeight: {
+    height: '50%',
   },
   bold: {
     fontWeight: '700',

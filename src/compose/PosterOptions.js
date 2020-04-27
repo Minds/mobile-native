@@ -82,6 +82,7 @@ function useNavCallback(screen, props) {
  * @param {Object} props
  */
 export default observer(function (props) {
+  const theme = ThemedStyles.style;
   // dereference observables to listen to his changes
   const nsfw = props.store.nsfw.slice();
   const tags = props.store.tags;
@@ -132,7 +133,7 @@ export default observer(function (props) {
   }, [keyboard.keyboardShown]);
 
   const renderInner = () => (
-    <View style={ThemedStyles.style.backgroundPrimary}>
+    <View style={[theme.backgroundPrimary, theme.fullHeight]}>
       <Item
         title="Tag"
         description={tags.slice(0, 4).map((t) => `#${t} `)}
@@ -167,10 +168,10 @@ export default observer(function (props) {
         />
       )}
       {/* <Item
-        title="Visibility"
-        description="Public"
-        onPress={onMonetizePress}
-      /> */}
+          title="Visibility"
+          description="Public"
+          onPress={onMonetizePress}
+        /> */}
     </View>
   );
 
@@ -184,6 +185,7 @@ export default observer(function (props) {
       )}
       enabledInnerScrolling={true}
       enabledContentTapInteraction={true}
+      style={ThemedStyles.style.backgroundPrimary}
       onOpenEnd={onOpenEnd}
       onCloseEnd={onCloseEnd}
     />

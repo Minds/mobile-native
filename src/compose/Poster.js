@@ -54,6 +54,7 @@ export default observer(function (props) {
   // On press back
   const onPressBack = useCallback(() => {
     if (props.store.isRemind) {
+      props.store.clear();
       NavigationService.goBack();
     } else {
       props.store.setModePhoto();
