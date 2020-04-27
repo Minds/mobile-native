@@ -78,6 +78,9 @@ export default class Activity extends Component<PropsType, StateType> {
    * Nav to activity full screen
    */
   navToActivity = () => {
+    if (!this.props.navigation) {
+      return;
+    }
     const navOpts = { entity: this.props.entity, hydrate: false };
 
     if (this.props.entity.remind_object || this.props.hydrateOnNav) {
