@@ -88,10 +88,10 @@ export default class Lock extends PureComponent<PropsType> {
           <Button
             loading={this.state.unlocking}
             text={i18n.t('unlock').toUpperCase()}
-            color="#4caf50"
+            color="white"
             containerStyle={CommonStyle.rowJustifyCenter}
             onPress={this.unlock}>
-            <Icon name="ios-flash" type="ionicon" size={22} color="#4caf50" />
+            <Icon name="ios-flash" type="ionicon" size={22} color="white" />
           </Button>
         </View>
         <FastImage source={imageUri} style={imageStyle} />
