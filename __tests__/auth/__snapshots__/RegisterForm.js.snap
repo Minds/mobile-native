@@ -16,6 +16,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
         undefined,
       ]
     }
+    keyboardShouldPersistTaps="handled"
     style={
       Array [
         undefined,
@@ -397,6 +398,9 @@ exports[`RegisterForm component should renders correctly 1`] = `
             </Text>
           </View>
         </View>
+        <Captcha
+          onResult={[Function]}
+        />
         <View>
           <View
             accessible={true}

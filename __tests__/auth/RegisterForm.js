@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import { Alert } from "react-native";
+import { Alert } from 'react-native';
 import { shallow } from 'enzyme';
 import { Button, CheckBox } from 'react-native-elements';
 
@@ -9,7 +9,7 @@ import authService from '../../src/auth/AuthService';
 
 jest.mock('../../src/auth/AuthService');
 jest.mock('../../src/auth/UserStore');
-
+jest.mock('../../src/common/components/Captcha', () => 'Captcha');
 
 Alert.alert = jest.fn();
 
@@ -25,21 +25,26 @@ describe('RegisterForm component', () => {
 
   it('should renders correctly', () => {
     const userStore = new UserStore();
-    const registerForm = renderer.create(
-      <RegisterForm user={userStore} />
-    ).toJSON();
+    const registerForm = renderer
+      .create(<RegisterForm user={userStore} />)
+      .toJSON();
     expect(registerForm).toMatchSnapshot();
   });
 
   it('should call auth services register', async () => {
-
     authService.register.mockResolvedValue();
 
     const userStore = new UserStore();
 
-    const wrapper = shallow(
-      <RegisterForm user={userStore} />
-    );
+    const wrapper = shallow(<RegisterForm.wrappedComponent user={userStore} />);
+
+    const instance = wrapper.instance();
+
+    instance.captcha.current = {
+      show: () => {
+        instance.onCaptchResult('captchastring');
+      },
+    };
 
     const render = wrapper.dive();
 
@@ -68,15 +73,12 @@ describe('RegisterForm component', () => {
 
     // expect auth service register to be called once
     expect(authService.register).toBeCalled();
-
   });
 
   it('should warn the user if the password confirmation is different', async () => {
     const userStore = new UserStore();
 
-    const wrapper = shallow(
-      <RegisterForm user={userStore} />
-    );
+    const wrapper = shallow(<RegisterForm user={userStore} />);
 
     const render = wrapper.dive();
 
@@ -106,15 +108,15 @@ describe('RegisterForm component', () => {
     expect(Alert.alert).toBeCalled();
 
     // with error message
-    expect(Alert.alert.mock.calls[0][1]).toEqual('You should accept the terms and conditions');
+    expect(Alert.alert.mock.calls[0][1]).toEqual(
+      'You should accept the terms and conditions',
+    );
   });
 
   it('should warn the user if the terms and conditions are not accepted', async () => {
     const userStore = new UserStore();
 
-    const wrapper = shallow(
-      <RegisterForm user={userStore}/>
-    );
+    const wrapper = shallow(<RegisterForm user={userStore} />);
 
     const render = wrapper.dive();
 
@@ -144,6 +146,8 @@ describe('RegisterForm component', () => {
     expect(Alert.alert).toBeCalled();
 
     // with error message
-    expect(Alert.alert.mock.calls[0][1]).toEqual('You should accept the terms and conditions');
+    expect(Alert.alert.mock.calls[0][1]).toEqual(
+      'You should accept the terms and conditions',
+    );
   });
 });

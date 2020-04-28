@@ -889,6 +889,7 @@
   "rememberTomorrow":"Remind me later",
   "enableComments": "Enable comments",
   "disableComments": "Disable comments",
+  "captcha":"Enter the characters above",
   "noInternet":"No Internet Connection",
   "offline":"Offline",
   "cantReachServer":"Can't reach the server",

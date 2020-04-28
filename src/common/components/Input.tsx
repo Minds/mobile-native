@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { ComponentsStyle } from '../../styles/Components';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
 import PhoneValidationComponent from './PhoneValidationComponent';
