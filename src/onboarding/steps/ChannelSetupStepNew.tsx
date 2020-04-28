@@ -58,7 +58,7 @@ class ChannelSetupStepNew extends Component {
 
   changeAvatarAction = async () => {
     try {
-      const response = await imagePicker.show('Select avatar', 'photo');
+      const response = await imagePicker.show('Select avatar', 'photo', true);
       if (response) {
         this.selectMedia(response);
       }
