@@ -25,6 +25,7 @@ import colors from '../../../styles/Colors';
 import abbrev from '../../helpers/abbrev';
 import logService from '../../services/log.service';
 import i18nService from '../../services/i18n.service';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 export default class UserTypeahead extends PureComponent {
   textInput = void 0;
@@ -45,7 +46,6 @@ export default class UserTypeahead extends PureComponent {
     },
     itemAvatar: {
       borderWidth: 1,
-      borderColor: '#999',
       height: 40,
       width: 40,
       borderRadius: 20,
@@ -86,7 +86,6 @@ export default class UserTypeahead extends PureComponent {
     },
     headerTextInput: {
       flexGrow: 1,
-      borderColor: '#000',
       fontSize: 16,
     },
 
@@ -95,7 +94,6 @@ export default class UserTypeahead extends PureComponent {
     },
     emptyText: {
       textAlign: 'center',
-      color: '#999',
       fontSize: 12,
     },
   });
@@ -156,7 +154,10 @@ export default class UserTypeahead extends PureComponent {
         />
 
         <TextInput
-          style={this.styles.headerTextInput}
+          style={[
+            this.styles.headerTextInput,
+            ThemedStyles.style.colorPrimaryText,
+          ]}
           autoCorrect={false}
           autoCapitalize="none"
           onChangeText={this.setText}
@@ -182,6 +183,8 @@ export default class UserTypeahead extends PureComponent {
       return null;
     }
 
+    const theme = ThemedStyles.style;
+
     return (
       <Touchable onPress={() => this.onSelect(item)}>
         <View style={this.styles.itemView}>
@@ -195,16 +198,14 @@ export default class UserTypeahead extends PureComponent {
             <MdIcon
               name="check-circle"
               size={20}
-              color="#000"
-              style={this.styles.itemIcon}
+              style={[this.styles.itemIcon, theme.colorIcon]}
             />
           )}
           {!!item.rewards && (
             <MdIcon
               name="donut-large"
               size={20}
-              color="#000"
-              style={this.styles.itemIcon}
+              style={[this.styles.itemIcon, theme.colorIcon]}
             />
           )}
 
@@ -215,8 +216,7 @@ export default class UserTypeahead extends PureComponent {
             <Icon
               name="md-people"
               size={16}
-              color="#000"
-              style={this.styles.itemIconWithText}
+              style={[this.styles.itemIconWithText, theme.colorIcon]}
             />,
           ]}
 
@@ -227,8 +227,7 @@ export default class UserTypeahead extends PureComponent {
             <Icon
               name="md-eye"
               size={16}
-              color="#000"
-              style={this.styles.itemIconWithText}
+              style={[this.styles.itemIconWithText, theme.colorIcon]}
             />,
           ]}
         </View>
@@ -257,7 +256,7 @@ export default class UserTypeahead extends PureComponent {
     return (
       <Modal
         isVisible={this.props.isModalVisible}
-        backdropColor="white"
+        backdropColor={ThemedStyles.getColor('primary_background')}
         backdropOpacity={1}
         onModalShow={this.onModalShow}
         onModalHide={this.onModalHide}>
@@ -268,6 +267,7 @@ export default class UserTypeahead extends PureComponent {
           ListEmptyComponent={this.EmptyPartial}
           renderItem={this.ItemPartial}
           keyExtractor={this.keyExtractor}
+          style={ThemedStyles.style.backgroundPrimary}
         />
         {/* TODO: Fix double tapping needed to select an item when a TextInput is active */}
       </Modal>
