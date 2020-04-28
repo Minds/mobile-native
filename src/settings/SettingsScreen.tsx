@@ -1,12 +1,11 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { View, FlatList, StatusBar } from 'react-native';
+import { View, FlatList } from 'react-native';
 import SettingsItem from './SettingsItem';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import Topbar from '../topbar/Topbar';
 import authService from '../auth/AuthService';
-import { useFocusEffect } from '@react-navigation/native';
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
@@ -75,16 +74,6 @@ export default function ({ navigation }) {
     ),
     onPress: setDarkMode,
   };
-
-  const statusBarStyle =
-    ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
-
-  useFocusEffect(
-    React.useCallback(() => {
-      StatusBar.setBarStyle(statusBarStyle);
-      StatusBar.setBackgroundColor(ThemedStyles.getColor('primary_background'));
-    }, []),
-  );
 
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
