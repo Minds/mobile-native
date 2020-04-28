@@ -41,8 +41,11 @@ class NotificationsScreen extends Component {
    * On component mount
    */
   componentDidMount() {
-    // initial load moved to newsfeed did mount
-    // this.initialLoad();
+    this.disposeTabPress = this.props.navigation.addListener(
+      //@ts-ignore
+      'tabPress',
+      this.refresh,
+    );
   }
 
   /**
@@ -62,6 +65,10 @@ class NotificationsScreen extends Component {
   componentWillUnmount() {
     // clear data to free memory
     this.props.notifications.list.clearList();
+
+    if (this.disposeTabPress) {
+      this.disposeTabPress();
+    }
   }
 
   /**
@@ -123,7 +130,9 @@ class NotificationsScreen extends Component {
           ListEmptyComponent={this.props.notifications.loading ? null : empty}
           ListHeaderComponent={<NotificationsTopbar />}
           ListFooterComponent={
-            this.props.notifications.loading ? <CenteredLoading /> : null
+            this.props.notifications.loading && !list.refreshing ? (
+              <CenteredLoading />
+            ) : null
           }
           // onEndReachedThreshold={0.05}
           initialNumToRender={12}
