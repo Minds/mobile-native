@@ -96,9 +96,9 @@ class UserStore {
   }
 
   @action
-  toggleSearching() {
+  toggleSearching = () => {
     this.searching = !this.searching;
-  }
+  };
 
   /**
    * Call onItemTap
