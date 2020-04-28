@@ -75,7 +75,7 @@ exports[`RegisterForm component should renders correctly 1`] = `
             ]
           }
         >
-          Join the Revolution
+          Create a channel
         </Text>
         <Text
           style={
