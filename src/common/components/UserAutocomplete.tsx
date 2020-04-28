@@ -1,25 +1,15 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import {
-  TouchableHighlight,
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  ImageBackground,
-  StatusBar,
-} from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import KeyboardAccessory from './KeyboardAccessory';
 import { Icon } from 'react-native-elements';
 
-import { ComponentsStyle } from '../../styles/Components';
-import { CommonStyle } from '../../styles/Common';
-import colors from '../../styles/Colors';
 import debounce from '../helpers/debounce';
 import UserTypeahead from './user-typeahead/UserTypeahead';
 import userTypeaheadService from './user-typeahead/UserTypeaheadService';
 import logService from '../services/log.service';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * User autocomplete component
@@ -56,13 +46,13 @@ export default class UserAutocomplete extends PureComponent {
    * @param {object} prevState
    */
   static getDerivedStateFromProps(nextProps, prevState) {
-    state = {};
+    const state = {};
 
     if (
-      nextProps.text != prevState.text ||
-      nextProps.selection.end != prevState.selection.end
+      nextProps.text !== prevState.text ||
+      nextProps.selection.end !== prevState.selection.end
     ) {
-      if (nextProps.selection.start == nextProps.selection.end) {
+      if (nextProps.selection.start === nextProps.selection.end) {
         state.tag = UserAutocomplete.parseTag(
           nextProps.text,
           nextProps.selection,
@@ -97,23 +87,26 @@ export default class UserAutocomplete extends PureComponent {
    * Render users
    */
   renderUsers() {
+    const theme = ThemedStyles.style;
     const users = this.state.users
       ? this.state.users.map((user, i) => {
           return (
-            <View style={style.tags} key={i}>
+            <View style={[style.tags, theme.backgroundTertiary]} key={i}>
               <Text onPress={() => this.selectTag(user)}>@{user.username}</Text>
             </View>
           );
         })
       : null;
 
-    if (!users) return null;
+    if (!users) {
+      return null;
+    }
 
     return (
       <ScrollView
         horizontal={true}
         keyboardShouldPersistTaps="always"
-        style={{ marginRight: 40 }}>
+        style={theme.marginRight8x}>
         {users}
       </ScrollView>
     );
@@ -151,8 +144,10 @@ export default class UserAutocomplete extends PureComponent {
 
     // search end of word
     if (text.length > selection.end) {
-      endword = text.substr(selection.end).match(/^([a-zA-Z0-9])+\b/);
-      if (endword) matchText += endword[0];
+      const endword = text.substr(selection.end).match(/^([a-zA-Z0-9])+\b/);
+      if (endword) {
+        matchText += endword[0];
+      }
     }
 
     const isTag = matchText.match(/\@[a-zA-Z0-9]{2,}$/);
@@ -201,13 +196,15 @@ export default class UserAutocomplete extends PureComponent {
    * Render
    */
   render() {
-    if (!this.state.tag) return null;
+    if (!this.state.tag) {
+      return null;
+    }
 
     const users = this.renderUsers();
 
     return (
       <KeyboardAccessory
-        backgroundColor="rgba(180, 180, 180, 0.8)"
+        backgroundColor={ThemedStyles.getColor('primary_background')}
         show={this.state.tag}
         noFloat={this.props.noFloat}>
         <UserTypeahead
@@ -222,7 +219,7 @@ export default class UserAutocomplete extends PureComponent {
             <Icon
               containerStyle={style.searchIcon}
               name="search"
-              color="white"
+              iconStyle={ThemedStyles.style.colorIcon}
               size={30}
               onPress={this.showSearch}
             />
@@ -248,7 +245,6 @@ const style = StyleSheet.create({
   tags: {
     margin: 2,
     padding: 9,
-    backgroundColor: '#efefef',
     borderRadius: 18,
   },
 });
