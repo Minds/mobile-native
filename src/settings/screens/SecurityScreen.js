@@ -36,7 +36,6 @@ export default function () {
       style={[
         CS.flexContainer,
         CS.backgroundPrimary,
-        CS.borderTopHair,
         CS.borderBottomHair,
         CS.borderPrimary,
         CS.paddingTop4x,
