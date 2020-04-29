@@ -41,7 +41,6 @@ class ChannelSetupStepNew extends Component {
     preview_banner: null,
     saving: false,
     dirty: false,
-    showFooter: true,
   };
 
   uploads = {
@@ -78,8 +77,8 @@ class ChannelSetupStepNew extends Component {
       this.setState({
         preview_avatar: null,
       });
-
       this.uploads['avatar'] = null;
+      console.log(e);
     });
   }
 
@@ -131,49 +130,49 @@ class ChannelSetupStepNew extends Component {
     );
   };
 
-  toggleFooter = () => this.setState({ showFooter: !this.state.showFooter });
-
   getBody = () => {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     const hasAvatar = this.props.user.hasAvatar() || this.state.preview_avatar;
     const avatar = this.getAvatar();
     return (
-      <View style={[CS.flexContainer, CS.columnAlignCenter]}>
+      <View style={[theme.flexContainer, theme.columnAlignCenter]}>
         <OnboardingBackButton onBack={this.props.onBack} />
         <View style={[styles.textsContainer]}>
-          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>
+          <Text style={[theme.onboardingTitle, theme.marginBottom2x]}>
             {i18n.t('onboarding.profileSetup')}
           </Text>
-          <Text style={[CS.titleText, CS.colorPrimaryText]}>
+          <Text style={[theme.titleText, theme.colorPrimaryText]}>
             {i18n.t('onboarding.infoTitle')}
           </Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
+          <Text style={[theme.subTitleText, theme.colorSecondaryText]}>
             {i18n.t('onboarding.step', { step: 2, total: 4 })}
           </Text>
         </View>
-        <ScrollView
-          style={styles.inputContainer}
-          keyboardShouldPersistTaps={true}>
+        <View style={theme.fullWidth}>
           <View
             style={[
-              CS.padding4x,
-              CS.flexContainer,
-              CS.rowJustifyStart,
-              CS.alignCenter,
-              CS.marginBottom2x,
-              CS.marginTop2x,
+              theme.padding4x,
+              theme.flexContainer,
+              theme.rowJustifyStart,
+              theme.alignCenter,
+              theme.marginVertical1x,
             ]}>
-            <Text style={[CS.fontXXL, CS.colorSecondaryText, CS.fontMedium]}>
+            <Text
+              style={[
+                theme.fontXXL,
+                theme.colorSecondaryText,
+                theme.fontMedium,
+              ]}>
               {i18n.t('onboarding.chooseAvatar')}
             </Text>
-            <View style={[CS.rowJustifyEnd, CS.flexContainer]}>
+            <View style={[theme.rowJustifyEnd, theme.flexContainer]}>
               <TouchableCustom
                 onPress={this.changeAvatarAction}
                 style={[
                   styles.avatar,
-                  CS.marginLeft3x,
-                  CS.border,
-                  CS.buttonBorder,
+                  theme.marginLeft3x,
+                  theme.border,
+                  theme.buttonBorder,
                 ]}
                 disabled={this.saving}
                 testID="selectAvatar">
@@ -184,14 +183,14 @@ class ChannelSetupStepNew extends Component {
                 <View
                   style={[
                     styles.tapOverlayView,
-                    hasAvatar ? null : CS.backgroundTransparent,
+                    hasAvatar ? null : theme.backgroundTransparent,
                   ]}
                 />
-                <View style={[styles.overlay, CS.centered]}>
+                <View style={[styles.overlay, theme.centered]}>
                   <Icon
                     name="md-cloud-upload"
                     size={40}
-                    style={hasAvatar ? CS.colorWhite : CS.colorButton}
+                    style={hasAvatar ? theme.colorWhite : theme.colorButton}
                   />
                 </View>
                 {this.store.isUploading && this.store.avatarProgress ? (
@@ -213,8 +212,6 @@ class ChannelSetupStepNew extends Component {
             editable={true}
             optional={true}
             info={i18n.t('onboarding.phoneNumberTooltip')}
-            onFocus={this.toggleFooter}
-            onBlur={this.toggleFooter}
             inputType={'phoneInput'}
           />
           <Input
@@ -234,7 +231,7 @@ class ChannelSetupStepNew extends Component {
             info={i18n.t('onboarding.dateofBirthTooltip')}
             inputType={'dateInput'}
           />
-        </ScrollView>
+        </View>
       </View>
     );
   };
@@ -249,18 +246,20 @@ class ChannelSetupStepNew extends Component {
   };
 
   render() {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
+    const containersStyle = [
+      theme.rowJustifyCenter,
+      theme.backgroundPrimary,
+      theme.paddingHorizontal4x,
+      theme.paddingVertical4x,
+    ];
     return (
-      <View style={[CS.flexContainerCenter]}>
-        <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>
-          {this.getBody()}
-        </View>
-        {this.state.showFooter && (
-          <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
-            {this.getFooter()}
-          </View>
-        )}
-      </View>
+      <ScrollView
+        style={styles.inputContainer}
+        keyboardShouldPersistTaps={true}>
+        <View style={containersStyle}>{this.getBody()}</View>
+        <View style={containersStyle}>{this.getFooter()}</View>
+      </ScrollView>
     );
   }
 }
