@@ -383,9 +383,9 @@ class ChannelHeader extends Component {
             </View>
           ) : null}
         </TouchableCustom>
-        {isOwner && (
+        {/* {isOwner && (
           <CompleteProfile progress={this.props.onboarding.percentage} />
-        )}
+        )} */}
       </View>
     );
   }
