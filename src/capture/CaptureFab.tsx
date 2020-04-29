@@ -2,14 +2,10 @@
 import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
-
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { Icon } from 'react-native-elements';
-import testID from '../common/helpers/testID';
-import settingsService from '../settings/SettingsService';
 import settingsStore from '../settings/SettingsStore';
-import featuresService from '../common/services/features.service';
 
 @observer
 export default class CaptureFab extends Component {
@@ -17,7 +13,7 @@ export default class CaptureFab extends Component {
    * Nav to activity full screen
    */
   navToCapture = () => {
-    this.props.navigation.navigate('Capture', {
+    this.props.navigation.push('StackCapture', {
       group: this.props.group,
       parentKey: this.props.route.key,
     });

@@ -332,7 +332,9 @@ export default function (props) {
       }
 
       if (props.route.params && props.route.params.group) {
-        newPost.container_guid = this.props.route.params.group.guid;
+        newPost.container_guid = props.route.params.group.guid;
+        // remove the group to avoid reuse it on future posts
+        props.navigation.setParams({ group: undefined });
       }
 
       if (this.tags.length) {

@@ -32,6 +32,7 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  StackCapture: {};
   Main: {};
   TagSelector: {};
   NsfwSelector: {};
