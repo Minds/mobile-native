@@ -73,7 +73,8 @@
     "join":"Join the Revolution",
     "createChannel":"Join Minds Now",
     "haveAccount":"Don't have an account?",
-    "alreadyHaveAccount":"Already have an account? &{login}&"
+    "alreadyHaveAccount":"Already have an account? &{login}&",
+    "failedToLoginNewAccount":"The login with your new account has failed, please try to log in the login screen"
   },
   "blockchain": {
     "boostCreate": "Network Boost for {{tokensAmount}} Minds Tokens. {{message}}",
