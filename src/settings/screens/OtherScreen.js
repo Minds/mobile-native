@@ -33,10 +33,10 @@ export default function ({ navigation }) {
   ]);
 
   const contentAdmin = [
-    {
+    /*{
       title: i18n.t('settings.otherOptions.a1'),
       onPress: navToReportedContent,
-    },
+    },*/
     {
       title: i18n.t('settings.blockedChannels'),
       onPress: navToBlockedChannels,
@@ -90,12 +90,14 @@ export default function ({ navigation }) {
         <SettingsItem item={item} i={i} />
       ))}
 
+      {/*
       <Text style={[subTitle, styles.subTitle]}>
         {i18n.t('settings.otherOptions.b')}
       </Text>
       {paidContent.map((item, i) => (
         <SettingsItem item={item} i={i} />
       ))}
+      */}
 
       <Text style={[subTitle, styles.subTitle]}>
         {i18n.t('settings.otherOptions.c')}
