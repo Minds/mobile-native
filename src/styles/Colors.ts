@@ -32,6 +32,10 @@ export const LIGHT_THEME = {
   link: '#0091FF',
   alert: '#E03C20',
   green: 'rgb(76, 175, 80)',
+  info_background: '#5A91BB',
+  success_background: '#59A05E',
+  danger_background: '#CA4A34',
+  warning_background: '#D49538',
 };
 
 export const DARK_THEME = {
@@ -52,4 +56,8 @@ export const DARK_THEME = {
   link: '#0091FF',
   alert: '#E03C20',
   green: 'rgb(76, 175, 80)',
+  info_background: '#5A91BB',
+  success_background: '#59A05E',
+  danger_background: '#CA4A34',
+  warning_background: '#D49538',
 };

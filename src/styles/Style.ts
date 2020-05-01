@@ -31,7 +31,10 @@ export interface ThemedStyle {
   colorIconActive: any;
   colorSeparator: any;
   colorAlert: any;
-  backgroundWhite: any;
+  backgroundInfo: any;
+  backgroundSuccess: any;
+  backgroundDanger: any;
+  backgroundWarning: any;
   backgroundBlack: any;
   backgroundTransparent: any;
   backgroundLink: any;
@@ -231,6 +234,18 @@ export const buildStyle = (theme): ThemedStyle => ({
     color: theme.alert,
   },
   // backgrounds
+  backgroundInfo: {
+    backgroundColor: theme.info_background,
+  },
+  backgroundSuccess: {
+    backgroundColor: theme.success_background,
+  },
+  backgroundDanger: {
+    backgroundColor: theme.danger_background,
+  },
+  backgroundWarning: {
+    backgroundColor: theme.warning_background,
+  },
   backgroundWhite: {
     backgroundColor: 'white',
   },
