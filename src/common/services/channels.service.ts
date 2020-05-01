@@ -15,12 +15,13 @@ class ChannelsService {
   async get(
     guidOrUsername: string,
     defaultChannel?: UserModel | object = undefined,
+    forceUpdate: boolean = false,
   ): Promise<UserModel> {
     const urn = `urn:channels:${guidOrUsername}`;
 
     const local = await entitiesStorage.read(urn);
 
-    if (!local && !defaultChannel) {
+    if ((!local && !defaultChannel) || forceUpdate) {
       // we fetch from the server
       return await this.fetch(guidOrUsername);
     }

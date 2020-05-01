@@ -7,8 +7,8 @@ import {
   Dimensions,
 } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
-import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { observer } from 'mobx-react';
 
 import type { ChannelStoreType } from './createChannelStore';
 import { Image } from 'react-native-animatable';
@@ -21,6 +21,9 @@ import ChannelHeaderTabs from './ChannelHeaderTabs';
 import FeedFilter from '../../common/components/FeedFilter';
 import { useSafeArea } from 'react-native-safe-area-context';
 import ChannelBadges from '../badges/ChannelBadges';
+import SmallCircleButton from '../../common/components/SmallCircleButton';
+import { FLAG_EDIT_CHANNEL } from '../../common/Permissions';
+import * as Progress from 'react-native-progress';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -44,8 +47,18 @@ const ChannelHeader = observer((props: PropsType) => {
   const insets = useSafeArea();
   const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
+  const canEdit = channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
+
   return (
     <View style={[styles.container, cleanTop]}>
+      <View>
+        <MIcon
+          size={28}
+          name="chevron-left"
+          style={[styles.backIcon, theme.colorIcon]}
+          onPress={props.navigation.goBack}
+        />
+      </View>
       <ImageBackground
         style={styles.banner}
         source={channel.getBannerSource()}
@@ -56,18 +69,39 @@ const ChannelHeader = observer((props: PropsType) => {
             source={channel.getAvatarSource()}
             resizeMode="cover"
           />
+          {canEdit && (
+            <SmallCircleButton
+              name="camera"
+              style={[styles.avatarSmallButton]}
+              onPress={() => props.store.upload('avatar')}
+            />
+          )}
+          {props.store.uploading && props.store.avatarProgress ? (
+            <View
+              style={[styles.tapOverlayView, styles.wrappedAvatarOverlayView]}>
+              <Progress.Pie progress={props.store.avatarProgress} size={36} />
+            </View>
+          ) : null}
         </View>
         <ChannelButtons
           channel={channel}
-          onEditPress={() => console.log('enter edit mode')}
+          onEditPress={() =>
+            props.navigation.push('EditChannel', { store: props.store })
+          }
         />
+        {props.store.uploading && props.store.bannerProgress ? (
+          <View style={styles.tapOverlayView}>
+            <Progress.Pie progress={props.store.bannerProgress} size={36} />
+          </View>
+        ) : null}
       </ImageBackground>
-      <MIcon
-        size={45}
-        name="chevron-left"
-        style={[styles.backIcon, theme.colorWhite]}
-        onPress={props.navigation.goBack}
-      />
+      {canEdit && (
+        <SmallCircleButton
+          name="camera"
+          style={[styles.bannerSmallButton]}
+          onPress={() => props.store.upload('banner')}
+        />
+      )}
       <View
         style={[theme.rowJustifyCenter, theme.alignCenter, theme.paddingTop8x]}>
         <Text style={styles.name} numberOfLines={1}>
@@ -137,9 +171,16 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
     textShadowOffset: { width: 0, height: 0 },
     elevation: 4,
+  },
+  bannerSmallButton: {
     position: 'absolute',
-    top: 5,
+    top: 33,
     left: 5,
+  },
+  avatarSmallButton: {
+    position: 'absolute',
+    top: -5,
+    right: 5,
   },
   description: {
     height: 120,
@@ -193,6 +234,20 @@ const styles = StyleSheet.create({
     width: avatarSize,
     height: avatarSize,
     borderRadius: 50,
+  },
+  tapOverlayView: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundColor: '#000',
+    opacity: 0.65,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  wrappedAvatarOverlayView: {
+    borderRadius: 55,
   },
 });
 

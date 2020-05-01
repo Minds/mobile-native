@@ -1,13 +1,10 @@
 //@ts-nocheck
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import ThemedStyles from '../styles/ThemedStyles';
 import MoreScreenNew from '../tabs/MoreScreenNew';
 import SettingsScreen from './SettingsScreen';
-import AccountScreen from './screens/AccountScreen';
-import SecurityScreen from './screens/SecurityScreen';
-import BillingScreenNew from './screens/BillingScreenNew';
 import OtherScreen from './screens/OtherScreen';
 import EmailScreen from './screens/EmailScreen';
 import PasswordScreenNew from './screens/PasswordScreenNew';
@@ -25,10 +22,57 @@ import i18n from '../common/services/i18n.service';
 import NSFWScreen from './screens/NSFWScreen';
 import AppInfoScreen from './screens/AppInfoScreen';
 import { useLegacyStores } from '../common/hooks/use-stores';
+import OptionsDrawer from '../common/components/OptionsDrawer';
+import { Platform } from 'react-native';
 
 const MenuStackNav = createNativeStackNavigator();
 
 const hideHeader = { headerShown: false };
+
+const AccountScreenOptions = (navigation) => [
+  {
+    title: i18n.t('settings.accountOptions.1'),
+    onPress: () => navigation.push('SettingsEmail'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.2'),
+    onPress: () => navigation.push('LanguageScreen'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.3'),
+    onPress: () => navigation.push('SettingsPassword'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.4'),
+    onPress: () => navigation.push('SettingsNotifications'),
+  },
+  {
+    title: i18n.t('settings.accountOptions.5'),
+    onPress: () => navigation.push('NSFWScreen'),
+  },
+];
+
+const SecurityScreenOptions = (navigation) => [
+  {
+    title: i18n.t('settings.securityOptions.1'),
+    onPress: () => navigation.push('TFAScreen'),
+  },
+  {
+    title: i18n.t('settings.securityOptions.2'),
+    onPress: () => navigation.push('DevicesScreen'),
+  },
+];
+
+const BillingScreenOptions = (navigation) => [
+  {
+    title: i18n.t('settings.billingOptions.1'),
+    onPress: () => navigation.push('PaymentMethods'),
+  },
+  {
+    title: i18n.t('settings.billingOptions.2'),
+    onPress: () => navigation.push('RecurringPayments'),
+  },
+];
 
 const MenuStack = function ({ navigation, route }) {
   const { user } = useLegacyStores();
@@ -40,7 +84,7 @@ const MenuStack = function ({ navigation, route }) {
       if (route.state && route.state.index >= 1) {
         navigation.navigate('Main');
       } else {
-        navigation.push('Channel', { guid: user.me.guid });
+        navigation.push('Channel', { username: 'me' });
       }
     });
     return unsubscribe;
@@ -68,18 +112,21 @@ const MenuStack = function ({ navigation, route }) {
       />
       <MenuStackNav.Screen
         name="Account"
-        component={AccountScreen}
+        component={OptionsDrawer}
         options={{ title: i18n.t('settings.account') }}
+        initialParams={{ options: AccountScreenOptions }}
       />
       <MenuStackNav.Screen
         name="Security"
-        component={SecurityScreen}
+        component={OptionsDrawer}
         options={{ title: i18n.t('settings.security') }}
+        initialParams={{ options: SecurityScreenOptions }}
       />
       <MenuStackNav.Screen
         name="Billing"
-        component={BillingScreenNew}
+        component={OptionsDrawer}
         options={{ title: i18n.t('settings.billing') }}
+        initialParams={{ options: BillingScreenOptions }}
       />
       <MenuStackNav.Screen
         name="Other"

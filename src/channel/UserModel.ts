@@ -38,6 +38,7 @@ export default class UserModel extends BaseModel {
   last_accepted_tos: number = 0;
   subscriptions_count: number = 0;
   carousels?: Array<any>;
+  dob?: string;
 
   /**
    * @var {boolean}
@@ -186,9 +187,7 @@ export default class UserModel extends BaseModel {
    */
   getAvatarSource(size = 'medium') {
     return {
-      uri: `${MINDS_CDN_URI}icon/${
-        this.guid
-      }/${size}/${this.getOwnerIcontime()}`,
+      uri: `${MINDS_CDN_URI}icon/${this.guid}/${size}/${this.icontime}`,
       headers: api.buildHeaders(),
     };
   }

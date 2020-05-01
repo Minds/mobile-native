@@ -43,6 +43,7 @@ export type AppStackParamList = {
   Boost: {};
   Notifications: {};
   Channel: {};
+  EditChannel: {};
   Activity: {};
   Conversation: {};
   DiscoveryFeed: {};
