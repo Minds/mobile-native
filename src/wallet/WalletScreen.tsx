@@ -4,19 +4,15 @@ import React, { Component } from 'react';
 import {
   Text,
   ScrollView,
-  ListView,
   View,
   StyleSheet,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 
 import { inject, observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import CIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import CaptureFab from '../capture/CaptureFab';
 import WalletOverviewView from './WalletOverviewView';
 import WalletBalanceTokens from './balances/WalletBalanceTokens';
 import WalletScoresView from './WalletScoresView';

@@ -60,6 +60,7 @@ import {
   MainSwiperParamList,
 } from './NavigationTypes';
 import featuresService from '../common/services/features.service';
+import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -160,7 +161,11 @@ const AppStack = function (props) {
         }
         options={hideHeader}
       />
-
+      <AppStackNav.Screen
+        name="EditChannel"
+        component={EditChannelStack}
+        options={hideHeader}
+      />
       <AppStackNav.Screen
         name="Activity"
         component={ActivityScreen}

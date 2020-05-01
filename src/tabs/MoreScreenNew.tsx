@@ -34,7 +34,7 @@ const ICON_SIZE = 23;
 @observer
 class MoreScreenNew extends Component {
   navToChannel = () =>
-    this.props.navigation.push('Channel', { guid: this.props.user.me.guid });
+    this.props.navigation.push('Channel', { username: 'me' });
 
   /**
    * Get Channel Avatar

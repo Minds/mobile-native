@@ -42,8 +42,8 @@ export default class Input extends Component {
    * Confirm date picker
    */
   confirmDatePicker = (date) => {
-    this.props.onChangeText(date.toLocaleDateString());
     this.dismissDatePicker();
+    this.props.onChangeText(date.toLocaleDateString());
   };
 
   /**

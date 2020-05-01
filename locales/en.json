@@ -249,7 +249,17 @@
     "blockedNav":"You have blocked &{username}&",
     "tapUnblock":"Tap to unblock",
     "notFound":"Channel not found",
-    "viewScheduled":"Scheduled"
+    "viewScheduled":"Scheduled",
+    "edit":{
+      "channel":"Edit Channel",
+      "bio":"Bio",
+      "about":"About Info",
+      "hashtags":"Hashtags",
+      "links":"Social Links",
+      "displayName":"Display Name",
+      "location":"Location",
+      "dob":"Date of Birth"
+    }
   },
   "discovery":{
     "search":"Search...",

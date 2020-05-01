@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { Text, ScrollView } from 'react-native';
 import SettingsItem from '../SettingsItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -75,13 +75,7 @@ export default function ({ navigation }) {
   const subTitle = [theme.colorTertiaryText, theme.fontM, theme.paddingLeft3x];
 
   return (
-    <View
-      style={[
-        theme.flexContainer,
-        theme.backgroundPrimary,
-        theme.borderBottomHair,
-        theme.borderPrimary,
-      ]}>
+    <ScrollView style={[theme.flexContainer, theme.backgroundPrimary]}>
       <Text style={[subTitle, styles.subTitle]}>
         {i18n.t('settings.otherOptions.a')}
       </Text>
@@ -109,7 +103,7 @@ export default function ({ navigation }) {
       {info.map((item, i) => (
         <SettingsItem item={item} i={i} />
       ))}
-    </View>
+    </ScrollView>
   );
 }
 

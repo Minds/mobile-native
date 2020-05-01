@@ -1,6 +1,13 @@
 import type UserModel from '../UserModel';
 import channelsService from '../../common/services/channels.service';
 import FeedStore from '../../common/stores/FeedStore';
+import ChannelService from '../ChannelService';
+import imagePickerService from '../../common/services/image-picker.service';
+import type {
+  CustomImage,
+  customImagePromise,
+} from '../../common/services/image-picker.service';
+import sessionService from '../../common/services/session.service';
 
 type InitialLoadParams = {
   entity?: { guid: string } | UserModel;
@@ -9,6 +16,15 @@ type InitialLoadParams = {
 };
 
 type FilterType = 'all' | 'images' | 'videos' | 'blogs';
+
+type channelMediaType = 'avatar' | 'banner';
+
+type payloadType = {
+  briefdescription?: string;
+  name?: string;
+  city?: string;
+  dob?: string;
+};
 
 /**
  * Channel store generator
@@ -24,6 +40,9 @@ const createChannelStore = () => {
     filter: 'all' as FilterType,
     feedStore: new FeedStore(true),
     showScheduled: false,
+    uploading: false,
+    bannerProgress: 0,
+    avatarProgress: 0,
     get esFeedfilter() {
       switch (this.filter) {
         case 'all':
@@ -132,6 +151,97 @@ const createChannelStore = () => {
       const channel = await channelsService.get(guidOrUsername);
       this.setChannel(channel);
       this.loadFeed();
+    },
+    async updateFromRemote(guidOrUsername: string) {
+      const channel = await channelsService.get(
+        guidOrUsername,
+        undefined,
+        true,
+      );
+      this.setChannel(channel);
+      await sessionService.loadUser(channel);
+    },
+    setIsUploading(uploading: boolean) {
+      this.uploading = uploading;
+    },
+    /**
+     * Set percent progress for either avatar or banner
+     * @param progress
+     * @param type
+     */
+    setProgress(progress: number, type: channelMediaType) {
+      if (type === 'avatar') {
+        this.avatarProgress = progress;
+      } else {
+        this.bannerProgress = progress;
+      }
+    },
+    /**
+     * Upload Banner or Avatar
+     * @param file
+     * @param mediaType
+     */
+    async upload(type: channelMediaType) {
+      if (!this.channel) {
+        return;
+      }
+
+      try {
+        imagePickerService
+          .show('', 'photo', type === 'avatar')
+          .then(async (response: customImagePromise) => {
+            let file: CustomImage;
+            if (response !== false && !Array.isArray(response)) {
+              file = response;
+            } else {
+              return false;
+            }
+            this.setIsUploading(true);
+            this.setProgress(0, type);
+            await ChannelService.upload(
+              null,
+              type,
+              {
+                uri: file.uri,
+                type: file.type,
+                name: file.filename || `${type}.jpg`,
+              },
+              (e) => {
+                this.setProgress(e.loaded / e.total, type);
+              },
+            );
+
+            if (this.channel) {
+              await this.updateFromRemote('me');
+            }
+            this.setProgress(0, type);
+            this.setIsUploading(false);
+          })
+          .catch((err) => {
+            throw err;
+          });
+      } catch (error) {
+        this.setProgress(0, type);
+        this.setIsUploading(false);
+        throw error;
+      }
+    },
+    /**
+     * Save channel info
+     */
+    async save(payload: payloadType) {
+      const result = await ChannelService.save(payload);
+      const success = result && result.status === 'success';
+
+      if (success && this.channel) {
+        const channel = this.channel;
+        channel.name = payload.name ?? this.channel.name;
+        channel.briefdescription =
+          payload.briefdescription ?? this.channel.briefdescription;
+        channel.city = payload.city ?? this.channel.city;
+        channel.dob = payload.dob ?? this.channel.dob;
+        this.loadFromEntity(channel);
+      }
     },
   };
   return store;

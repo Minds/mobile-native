@@ -18,9 +18,11 @@ import {
 } from '../../common/Permissions';
 import ChannelMoreMenu from './ChannelMoreMenu';
 
+import type { GestureResponderEvent } from 'react-native';
+
 type PropsType = {
   channel: UserModel;
-  onEditPress: Function;
+  onEditPress: (ev: GestureResponderEvent) => void;
 };
 
 const isIos = Platform.OS === 'ios';
@@ -75,13 +77,7 @@ const ChannelButtons = observer((props: PropsType) => {
     props.channel.isOwner() && props.channel.can(FLAG_EDIT_CHANNEL);
 
   return (
-    <View
-      style={[
-        theme.rowJustifyEnd,
-        theme.marginTop,
-        theme.marginRight2x,
-        styles.container,
-      ]}>
+    <View style={[theme.rowJustifyEnd, theme.marginTop, theme.marginRight2x]}>
       {showEdit ? (
         <Button
           color={ThemedStyles.getColor('secondary_background')}
@@ -89,7 +85,7 @@ const ChannelButtons = observer((props: PropsType) => {
           textStyle={theme.fontL}
           containerStyle={styles.button}
           textColor="white"
-          onPress={props.channel.toggleSubscription}
+          onPress={props.onEditPress}
           inverted
         />
       ) : (

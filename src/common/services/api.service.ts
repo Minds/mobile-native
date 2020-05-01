@@ -69,7 +69,6 @@ class ApiService {
           } STATUSTEXT: ${response.statusText}\n${response.text()}`,
         );
       }
-      console.log(url, err, response);
       throw new UserError(i18n.t('errorMessage'));
     }
 

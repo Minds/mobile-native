@@ -10,6 +10,7 @@ export interface CustomImage extends Image {
 
 type mediaType = 'photo' | 'video' | 'any';
 type imagePromise = false | Image | Image[];
+export type customImagePromise = false | CustomImage | CustomImage[];
 
 /**
  * Image picker service
@@ -68,7 +69,7 @@ class ImagePickerService {
    *
    * @param {string} type photo or video
    */
-  async launchCamera(type: mediaType = 'photo'): Promise<imagePromise> {
+  async launchCamera(type: mediaType = 'photo'): Promise<customImagePromise> {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
 
@@ -86,7 +87,9 @@ class ImagePickerService {
    *
    * @param {string} type photo or video
    */
-  async launchImageLibrary(type: mediaType = 'photo'): Promise<imagePromise> {
+  async launchImageLibrary(
+    type: mediaType = 'photo',
+  ): Promise<customImagePromise> {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
 
@@ -108,7 +111,7 @@ class ImagePickerService {
     title: string,
     type: mediaType = 'photo',
     cropperCircleOverlay: boolean = false,
-  ): Promise<imagePromise> {
+  ): Promise<customImagePromise> {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
 
@@ -125,7 +128,7 @@ class ImagePickerService {
 
   async returnCustom(
     promise: Promise<imagePromise>,
-  ): Promise<false | CustomImage | CustomImage[]> {
+  ): Promise<customImagePromise> {
     try {
       const response = await promise;
 
