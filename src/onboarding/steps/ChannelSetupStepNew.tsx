@@ -27,6 +27,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
 import ThemedStyles from '../../styles/ThemedStyles';
 import remoteAction from '../../common/RemoteAction';
+import LocationAutoSuggest from '../../common/components/LocationAutoSuggest';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
@@ -214,13 +215,14 @@ class ChannelSetupStepNew extends Component {
             info={i18n.t('onboarding.phoneNumberTooltip')}
             inputType={'phoneInput'}
           />
-          <Input
+          <LocationAutoSuggest
             placeholder={i18n.t('onboarding.infoLocation')}
             onChangeText={this.setCity}
             value={this.state.city}
             editable={true}
             optional={true}
             info={i18n.t('onboarding.locationTooltip')}
+            inputStyle={'inputAlone'}
           />
           <Input
             placeholder={i18n.t('onboarding.infoDateBirth')}

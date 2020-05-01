@@ -25,7 +25,7 @@ type onEditFn = (onEdit: boolean) => boolean;
 type propsType = {
   value: string;
   onChangeText: Function;
-  onEdit: onEditFn;
+  onEdit?: onEditFn;
   inputStyle?: 'inputAlone' | 'withWraper';
 };
 
@@ -35,7 +35,6 @@ interface GeolocationResponse extends ApiResponse {
 
 const createLocationAutoSuggestStore = () => {
   const locations: Array<locationType> = [];
-  const edit = (onEdit: boolean) => onEdit;
   const store = {
     isFocused: false,
     loading: false,
@@ -43,8 +42,8 @@ const createLocationAutoSuggestStore = () => {
     error: false,
     value: '',
     locations: locations,
-    onEdit: edit,
-    initialLoad(value: string, onEdit: onEditFn) {
+    onEdit: undefined as onEditFn | undefined,
+    initialLoad(value: string, onEdit?: onEditFn) {
       this.value = value;
       this.onEdit = onEdit;
       this.isFocused = true;
@@ -55,7 +54,9 @@ const createLocationAutoSuggestStore = () => {
       this.setError(false);
       if (doQuery && this.value.length >= 3) {
         this.setLoading(true);
-        this.onEdit(true);
+        if (this.onEdit) {
+          this.onEdit(true);
+        }
         this.query();
       }
     },
@@ -114,7 +115,9 @@ const LocationAutoSuggest = observer((props: propsType) => {
       store.setValue(value, false);
       store.setTapped(true);
       props.onChangeText(value);
-      props.onEdit(false);
+      if (props.onEdit) {
+        props.onEdit(false);
+      }
     },
     [store, props],
   );
@@ -156,8 +159,9 @@ const LocationAutoSuggest = observer((props: propsType) => {
                   }
                   style={[
                     theme.paddingLeft5x,
-                    theme.paddingBottom2x,
+                    theme.paddingVertical2x,
                     theme.colorSecondaryText,
+                    theme.fontL,
                   ]}>
                   {`${value.address.town ?? ''}${value.address.city ?? ''}, ${
                     value.address.state ?? ''
