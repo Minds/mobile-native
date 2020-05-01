@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import {
   TouchableWithoutFeedback,
   TouchableOpacity,
@@ -15,8 +15,6 @@ import * as Progress from 'react-native-progress';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 import ThemedStyles from '../styles/ThemedStyles';
-// workaround for android copy/paste
-// import TextInput from '../common/components/TextInput';
 import i18n from '../common/services/i18n.service';
 import MetaPreview from './MetaPreview';
 import ImagePreview from './ImagePreview';
@@ -36,6 +34,7 @@ const { width, height } = Dimensions.get('window');
 export default observer(function (props) {
   const theme = ThemedStyles.style;
   const keyboard = useKeyboard();
+  const inputRef = useRef(null);
   const isImage =
     props.store.mediaToConfirm &&
     props.store.mediaToConfirm.type.startsWith('image');
@@ -89,6 +88,12 @@ export default observer(function (props) {
     : props.store.isRemind
     ? i18n.t('capture.remind')
     : i18n.t('capture.post');
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [inputRef]);
 
   return (
     <TouchableWithoutFeedback
@@ -152,6 +157,7 @@ export default observer(function (props) {
                 theme.paddingHorizontal4x,
                 styles.input,
               ]}
+              ref={inputRef}
               placeholder={placeholder}
               placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
               onChangeText={props.store.setText}
