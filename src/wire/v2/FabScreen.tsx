@@ -73,7 +73,7 @@ const createFabScreenStore = () => {
         if (this.onComplete) {
           this.onComplete();
         }
-        if (this.goBack){
+        if (this.goBack) {
           this.goBack();
         }
         return;
