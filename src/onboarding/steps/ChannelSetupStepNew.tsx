@@ -27,7 +27,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
 import ThemedStyles from '../../styles/ThemedStyles';
 import remoteAction from '../../common/RemoteAction';
-import LocationAutoSuggest from '../../common/components/LocationAutoSuggest';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
@@ -42,8 +41,6 @@ class ChannelSetupStepNew extends Component {
     preview_banner: null,
     saving: false,
     dirty: false,
-    showFooter: true,
-    editingCity: false,
   };
 
   uploads = {
@@ -60,7 +57,7 @@ class ChannelSetupStepNew extends Component {
 
   changeAvatarAction = async () => {
     try {
-      const response = await imagePicker.show('Select avatar', 'photo', true);
+      const response = await imagePicker.show('Select avatar', 'photo');
       if (response) {
         this.selectMedia(response);
       }
@@ -76,12 +73,12 @@ class ChannelSetupStepNew extends Component {
 
     this.uploads['avatar'] = file;
 
-    this.store.uploadAvatar(file).catch(() => {
+    this.store.uploadAvatar(file).catch((e) => {
       this.setState({
         preview_avatar: null,
       });
-
       this.uploads['avatar'] = null;
+      console.log(e);
     });
   }
 
@@ -96,7 +93,6 @@ class ChannelSetupStepNew extends Component {
   setPhoneNumber = (phoneNumber) => this.setState({ phoneNumber });
   setCity = (city) => this.setState({ city });
   setBirthDate = (dob) => this.setState({ dob });
-  setEditingCity = (editingCity) => this.setState({ editingCity });
 
   save = async () => {
     if (this.store.isUploading) {
@@ -134,117 +130,108 @@ class ChannelSetupStepNew extends Component {
     );
   };
 
-  toggleFooter = () => this.setState({ showFooter: !this.state.showFooter });
-
   getBody = () => {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
     const hasAvatar = this.props.user.hasAvatar() || this.state.preview_avatar;
     const avatar = this.getAvatar();
     return (
-      <View style={[CS.flexContainer, CS.columnAlignCenter]}>
+      <View style={[theme.flexContainer, theme.columnAlignCenter]}>
         <OnboardingBackButton onBack={this.props.onBack} />
         <View style={[styles.textsContainer]}>
-          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>
+          <Text style={[theme.onboardingTitle, theme.marginBottom2x]}>
             {i18n.t('onboarding.profileSetup')}
           </Text>
-          <Text style={[CS.titleText, CS.colorPrimaryText]}>
+          <Text style={[theme.titleText, theme.colorPrimaryText]}>
             {i18n.t('onboarding.infoTitle')}
           </Text>
-          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
+          <Text style={[theme.subTitleText, theme.colorSecondaryText]}>
             {i18n.t('onboarding.step', { step: 2, total: 4 })}
           </Text>
         </View>
-        <ScrollView
-          style={styles.inputContainer}
-          keyboardShouldPersistTaps={true}>
-          {!this.state.editingCity && (
-            <View
+        <View style={theme.fullWidth}>
+          <View
+            style={[
+              theme.padding4x,
+              theme.flexContainer,
+              theme.rowJustifyStart,
+              theme.alignCenter,
+              theme.marginVertical1x,
+            ]}>
+            <Text
               style={[
-                CS.padding4x,
-                CS.flexContainer,
-                CS.rowJustifyStart,
-                CS.alignCenter,
-                CS.marginBottom2x,
-                CS.marginTop2x,
+                theme.fontXXL,
+                theme.colorSecondaryText,
+                theme.fontMedium,
               ]}>
-              <Text style={[CS.fontXXL, CS.colorSecondaryText, CS.fontMedium]}>
-                {i18n.t('onboarding.chooseAvatar')}
-              </Text>
-              <View style={[CS.rowJustifyEnd, CS.flexContainer]}>
-                <TouchableCustom
-                  onPress={this.changeAvatarAction}
-                  style={[
-                    styles.avatar,
-                    CS.marginLeft3x,
-                    CS.border,
-                    CS.buttonBorder,
-                  ]}
-                  disabled={this.saving}
-                  testID="selectAvatar">
-                  {hasAvatar && (
-                    <Image source={avatar} style={styles.wrappedAvatar} />
-                  )}
+              {i18n.t('onboarding.chooseAvatar')}
+            </Text>
+            <View style={[theme.rowJustifyEnd, theme.flexContainer]}>
+              <TouchableCustom
+                onPress={this.changeAvatarAction}
+                style={[
+                  styles.avatar,
+                  theme.marginLeft3x,
+                  theme.border,
+                  theme.buttonBorder,
+                ]}
+                disabled={this.saving}
+                testID="selectAvatar">
+                {hasAvatar && (
+                  <Image source={avatar} style={styles.wrappedAvatar} />
+                )}
 
-                  <View
-                    style={[
-                      styles.tapOverlayView,
-                      hasAvatar ? null : CS.backgroundTransparent,
-                    ]}
+                <View
+                  style={[
+                    styles.tapOverlayView,
+                    hasAvatar ? null : theme.backgroundTransparent,
+                  ]}
+                />
+                <View style={[styles.overlay, theme.centered]}>
+                  <Icon
+                    name="md-cloud-upload"
+                    size={40}
+                    style={hasAvatar ? theme.colorWhite : theme.colorButton}
                   />
-                  <View style={[styles.overlay, CS.centered]}>
-                    <Icon
-                      name="md-cloud-upload"
-                      size={40}
-                      style={hasAvatar ? CS.colorWhite : CS.colorButton}
+                </View>
+                {this.store.isUploading && this.store.avatarProgress ? (
+                  <View style={[styles.tapOverlayView, styles.progress]}>
+                    <Progress.Pie
+                      progress={this.store.avatarProgress}
+                      size={36}
                     />
                   </View>
-                  {this.store.isUploading && this.store.avatarProgress ? (
-                    <View style={[styles.tapOverlayView, styles.progress]}>
-                      <Progress.Pie
-                        progress={this.store.avatarProgress}
-                        size={36}
-                      />
-                    </View>
-                  ) : null}
-                </TouchableCustom>
-              </View>
+                ) : null}
+              </TouchableCustom>
             </View>
-          )}
-          {!this.state.editingCity && (
-            <Input
-              placeholder={i18n.t('onboarding.infoMobileNumber')}
-              onChangeText={this.setPhoneNumber}
-              value={this.state.phoneNumber}
-              editable={true}
-              optional={true}
-              info={i18n.t('onboarding.phoneNumberTooltip')}
-              onFocus={this.toggleFooter}
-              onBlur={this.toggleFooter}
-              inputType={'phoneInput'}
-            />
-          )}
-          <LocationAutoSuggest
+          </View>
+          <Input
+            placeholder={i18n.t('onboarding.infoMobileNumber')}
+            onChangeText={this.setPhoneNumber}
+            onEndEditing={(e) => console.log(e.nativeEvent.text)}
+            value={this.state.phoneNumber}
+            editable={true}
+            optional={true}
+            info={i18n.t('onboarding.phoneNumberTooltip')}
+            inputType={'phoneInput'}
+          />
+          <Input
             placeholder={i18n.t('onboarding.infoLocation')}
             onChangeText={this.setCity}
             value={this.state.city}
             editable={true}
             optional={true}
             info={i18n.t('onboarding.locationTooltip')}
-            inputStyle={'inputAlone'}
-            onEdit={this.setEditingCity}
           />
-          {!this.state.editingCity && (
-            <Input
-              placeholder={i18n.t('onboarding.infoDateBirth')}
-              onChangeText={this.setBirthDate}
-              value={this.state.dob}
-              editable={true}
-              optional={true}
-              info={i18n.t('onboarding.dateofBirthTooltip')}
-              inputType={'dateInput'}
-            />
-          )}
-        </ScrollView>
+          <Input
+            placeholder={i18n.t('onboarding.infoDateBirth')}
+            onChangeText={this.setBirthDate}
+            value={this.state.dob}
+            editable={true}
+            optional={true}
+            info={i18n.t('onboarding.dateofBirthTooltip')}
+            inputType={'dateInput'}
+          />
+        </View>
       </View>
     );
   };
@@ -259,19 +246,20 @@ class ChannelSetupStepNew extends Component {
   };
 
   render() {
-    const CS = ThemedStyles.style;
-    const showFooter = this.state.showFooter && !this.state.editingCity;
+    const theme = ThemedStyles.style;
+    const containersStyle = [
+      theme.rowJustifyCenter,
+      theme.backgroundPrimary,
+      theme.paddingHorizontal4x,
+      theme.paddingVertical4x,
+    ];
     return (
-      <View style={[CS.flexContainerCenter]}>
-        <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>
-          {this.getBody()}
-        </View>
-        {showFooter && (
-          <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
-            {this.getFooter()}
-          </View>
-        )}
-      </View>
+      <ScrollView
+        style={styles.inputContainer}
+        keyboardShouldPersistTaps={true}>
+        <View style={containersStyle}>{this.getBody()}</View>
+        <View style={containersStyle}>{this.getFooter()}</View>
+      </ScrollView>
     );
   }
 }

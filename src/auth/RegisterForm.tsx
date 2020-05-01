@@ -30,6 +30,7 @@ import validatePassword from '../common/helpers/validatePassword';
 
 import type { registerParams } from '../auth/AuthService';
 import Captcha from '../common/components/Captcha';
+import logService from '../common/services/log.service';
 
 /**
  * Register Form
@@ -269,9 +270,19 @@ class RegisterForm extends Component {
       sessionService.setInitialScreen('OnboardingScreen');
       await apiService.clearCookies();
       await delay(100);
-      await authService.login(this.state.username, this.state.password);
+      try {
+        await authService.login(this.state.username, this.state.password);
+      } catch (err) {
+        try {
+          await authService.login(this.state.username, this.state.password);
+        } catch (error) {
+          Alert.alert(i18n.t('ops'), i18n.t('auth.failedToLoginNewAccount'));
+          logService.exception(error);
+        }
+      }
     } catch (err) {
       Alert.alert(i18n.t('ops'), err.message);
+      logService.exception(err);
     }
 
     this.setState({ inProgress: false });

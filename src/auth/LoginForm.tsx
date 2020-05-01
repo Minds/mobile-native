@@ -228,6 +228,8 @@ export default class LoginForm extends Component<PropsType> {
             msg: errJson.message || 'Unknown error',
             inProgress: false,
           });
+
+          logService.exception('[LoginForm]', errJson);
         });
     }
   }

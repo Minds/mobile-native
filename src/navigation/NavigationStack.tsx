@@ -69,7 +69,7 @@ const captureOptions = {
   title: '',
   stackAnimation: 'fade',
   headerShown: false,
-};
+} as NativeStackNavigationOptions;
 
 const activityOptions = ({ route }) => ({
   title: route.params.entity ? route.params.entity.ownerObj.name : '',
@@ -107,13 +107,18 @@ const MainSwiperScreen = () => {
   );
 };
 
-const AppStack = function (props) {
+const AppStack = function () {
   return (
     <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <AppStackNav.Screen
         name="Main"
         component={MainSwiperScreen}
         options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="StackCapture"
+        component={ComposeScreen}
+        options={captureOptions}
       />
       <AppStackNav.Screen
         name="TagSelector"
@@ -280,7 +285,7 @@ const AppStack = function (props) {
   );
 };
 
-const AuthStack = function (props) {
+const AuthStack = function () {
   return (
     <AuthStackNav.Navigator>
       <AuthStackNav.Screen

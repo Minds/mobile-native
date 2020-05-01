@@ -323,6 +323,9 @@ export default class MediaView extends Component<PropsType> {
     if (this.props.entity.perma_url) {
       this.openLink();
     } else {
+      if (!this.props.navigation) {
+        return;
+      }
       const source = this.props.entity.getThumbSource('xlarge');
       this.props.navigation.push('ViewImage', {
         source,

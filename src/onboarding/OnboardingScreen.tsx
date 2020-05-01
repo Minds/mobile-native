@@ -31,6 +31,12 @@ class OnboardingScreen extends Component {
     header: null,
   };
 
+  state = {
+    loading: false,
+  };
+
+  setLoading = (loading: boolean) => this.setState({ loading });
+
   /**
    * Component did mount
    */
@@ -55,13 +61,16 @@ class OnboardingScreen extends Component {
 
   onFinish = async () => {
     try {
+      this.setLoading(true);
       await this.props.onboarding.setShown(true);
       //await this.props.onboarding.getProgress();
       this.props.hashtag.setAll(false);
       await this.loadJoinedGroups();
       await this.clearDiscovery();
+      this.setLoading(false);
       navigationService.navigate('Tabs');
     } catch (err) {
+      this.setLoading(false);
       Alert.alert(
         i18nService.t('error'),
         i18n.t('errorMessage') + '\n' + i18n.t('tryAgain'),
@@ -95,6 +104,9 @@ class OnboardingScreen extends Component {
   onBack = () => this.wizard.previous();
 
   render() {
+    if (this.state.loading) {
+      return <CenteredLoading />;
+    }
     const CS = ThemedStyles.style;
     const steps = [];
     if (!this.props.onboarding.progress) {
@@ -148,7 +160,8 @@ class OnboardingScreen extends Component {
           <Wizard
             steps={steps}
             onFinish={this.onFinish}
-            ref={this.handleWizarRef}></Wizard>
+            ref={this.handleWizarRef}
+          />
         </KeyboardAvoidingView>
       </SafeAreaView>
     );

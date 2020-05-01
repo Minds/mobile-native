@@ -53,6 +53,7 @@ export default observer(function (props) {
   // On press back
   const onPressBack = useCallback(() => {
     if (props.store.isRemind) {
+      props.store.clear();
       NavigationService.goBack();
     } else {
       props.store.setModePhoto();
@@ -94,6 +95,10 @@ export default observer(function (props) {
       inputRef.current.focus();
     }
   }, [inputRef]);
+
+  const showOptions = !(
+    keyboard.keyboardShown && props.store.attachment.hasAttachment
+  );
 
   return (
     <TouchableWithoutFeedback
@@ -179,7 +184,7 @@ export default observer(function (props) {
             />
           )}
         </View>
-        {!keyboard.keyboardShown && <PosterOptions store={props.store} />}
+        {showOptions && <PosterOptions store={props.store} />}
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
