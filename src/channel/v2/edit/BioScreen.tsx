@@ -6,19 +6,12 @@ import { ScrollView, KeyboardAvoidingView, Text } from 'react-native';
 import isIphoneX from '../../../common/helpers/isIphoneX';
 import SettingInput from '../../../common/components/SettingInput';
 import CenteredLoading from '../../../common/components/CenteredLoading';
-import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
-
-import type { EditChannelStackParamList } from './EditChannelStack';
 import type { ChannelStoreType } from '../createChannelStore';
 import SaveButton from '../../../common/components/SaveButton';
-
-type BioScreenRouteProp = RouteProp<EditChannelStackParamList, 'Bio'>;
-
-type BioScreenNavigationProp = StackNavigationProp<
-  EditChannelStackParamList,
-  'Bio'
->;
+import {
+  BioScreenRouteProp,
+  BioScreenNavigationProp,
+} from '../../../navigation/NavigationTypes';
 
 type PropsType = {
   route: BioScreenRouteProp;

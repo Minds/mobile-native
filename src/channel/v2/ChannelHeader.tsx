@@ -86,7 +86,7 @@ const ChannelHeader = observer((props: PropsType) => {
         <ChannelButtons
           channel={channel}
           onEditPress={() =>
-            props.navigation.push('EditChannel', { store: props.store })
+            props.navigation.push('EditChannelScreen', { store: props.store })
           }
         />
         {props.store.uploading && props.store.bannerProgress ? (
