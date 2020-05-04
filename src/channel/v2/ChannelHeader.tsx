@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   avatarSmallButton: {
     position: 'absolute',
     top: -5,
-    right: 5,
+    right: -10,
   },
   description: {
     height: 120,
