@@ -11,15 +11,19 @@ import apiService from '../../../src/common/services/api.service';
 jest.mock('../../../src/common/services/api.service');
 
 describe('Activity editor component', () => {
-
   let user, comments, entity, screen, newsfeed, toggleEdit, activity;
   beforeEach(() => {
     const navigation = { navigate: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
-    activity = new ActivityModel(activityResponse.activities[0])
+    activity = ActivityModel.create(activityResponse.activities[0]);
     toggleEdit = jest.fn();
     screen = shallow(
-      <ActivityEditor entity={activity} toggleEdit={toggleEdit} navigation={navigation} newsfeed={newsfeed}/>
+      <ActivityEditor
+        entity={activity}
+        toggleEdit={toggleEdit}
+        navigation={navigation}
+        newsfeed={newsfeed}
+      />,
     );
 
     //jest.runAllTimers();
@@ -36,11 +40,10 @@ describe('Activity editor component', () => {
     expect(screen.find('TextInput')).toHaveLength(1);
   });
 
-  it('should set the default value when init, call toggle and submit',async () => {
-
+  it('should set the default value when init, call toggle and submit', async () => {
     screen.update();
 
-    apiService.post.mockResolvedValue({activity: {}});
+    apiService.post.mockResolvedValue({ activity: {} });
 
     let instance = screen.instance();
     expect(instance.state.text).toBe('Message');
@@ -50,9 +53,8 @@ describe('Activity editor component', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should set the default value when init, call toggle and cancel',async () => {
-
-    screen.update()
+  it('should set the default value when init, call toggle and cancel', async () => {
+    screen.update();
     let instance = screen.instance();
     expect(instance.state.text).toBe('Message');
     const spy = jest.spyOn(instance.props, 'toggleEdit');
@@ -60,15 +62,12 @@ describe('Activity editor component', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-
-
-  it('should set the default value when init, call toggle and cancel',async () => {
-
-    screen.update()
+  it('should set the text', async () => {
+    screen.update();
     let instance = screen.instance();
     expect(instance.state.text).toBe('Message');
 
-    screen.find('TextInput').forEach(child => {
+    screen.find('TextInput').forEach((child) => {
       child.simulate('changeText', 'data');
     });
 
@@ -77,6 +76,4 @@ describe('Activity editor component', () => {
     expect(spy).toHaveBeenCalled();
     expect(instance.state.text).toBe('data');
   });
-
-
 });

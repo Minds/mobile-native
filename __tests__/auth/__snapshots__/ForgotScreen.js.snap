@@ -79,6 +79,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
                     "fontWeight": "600",
                     "marginBottom": 5,
                   },
+                  undefined,
                 ]
               }
             >
@@ -127,7 +128,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           style={
             Object {
               "backgroundColor": "#5DBAC0",
-              "borderRadius": 2,
+              "borderRadius": 36,
               "opacity": 1,
             }
           }
@@ -161,7 +162,7 @@ exports[`ForgotScreen component should renders correctly 1`] = `
           style={
             Object {
               "backgroundColor": "#5DBAC0",
-              "borderRadius": 2,
+              "borderRadius": 36,
               "opacity": 1,
             }
           }

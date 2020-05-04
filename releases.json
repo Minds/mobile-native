@@ -71,7 +71,7 @@
     },
     {
       "version": "4.0.0",
-      "href": "https://cdn-assets.minds.com/mobile/Minds-test-4-0-0-rc4.apk",
+      "href": "https://cdn-assets.minds.com/mobile/Minds-stable-4-0-0.apk",
       "sourceHref": "https://gitlab.com/minds/mobile-native/commits/v4.0.0",
       "changelog": [
         "Dark theme",

@@ -136,7 +136,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode Integer.parseInt(project.versionCode)
         versionName project.versionName
-        missingDimensionStrategy "RNNotifications.reactNativeVersion", "reactNative60"
+        missingDimensionStrategy "react-native-camera", "general", "RNNotifications.reactNativeVersion", "reactNative60"
         testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
@@ -249,7 +249,7 @@ dependencies {
         exclude group: "com.android.support", module: "annotations"
     }
 
-    androidTestImplementation('com.wix:detox:+') { transitive = true } 
+    androidTestImplementation('com.wix:detox:+') { transitive = true }
     androidTestImplementation 'junit:junit:4.12'
 }
 

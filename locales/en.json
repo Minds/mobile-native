@@ -73,7 +73,8 @@
     "join":"Join the Revolution",
     "createChannel":"Join Minds Now",
     "haveAccount":"Don't have an account?",
-    "alreadyHaveAccount":"Already have an account? &{login}&"
+    "alreadyHaveAccount":"Already have an account? &{login}&",
+    "failedToLoginNewAccount":"The login with your new account has failed, please try to log in the login screen"
   },
   "blockchain": {
     "boostCreate": "Network Boost for {{tokensAmount}} Minds Tokens. {{message}}",
@@ -193,8 +194,18 @@
     "hold":"Hold to select only one"
   },
   "capture":{
+    "licenseDescription":"Select your desired license type. This can be changed at any time after posting.",
+    "pupularLicenses":"Popular licenses",
+    "otherLicenses":"Other Licenses",
+    "paywallLabel":"Min monthly contribution ({{currency}})",
+    "paywallDescription":"Motetize post by making it available to your users who support your channel.",
+    "paywall":"Enable paywall",
+    "noPaywall":"No paywall",
+    "customTime":"Custom time",
+    "tagsDescription":"Tagging your post will make your content more easily discoverable.",
     "couldNotLoad":"The media from {{domain}} could not be loaded.",
     "maxHashtags":"Sorry, your post cannot contain more than {{maxHashtags}} hashtags.",
+    "schedule":"Schedule Post",
     "post":"Post",
     "remind":"Remind",
     "postingIn":"(Posting in {{group}})",
@@ -208,7 +219,9 @@
     "tokens":"TOKENS",
     "gallery":"Gallery",
     "photo":"Photo",
-    "video":"Video"
+    "video":"Video",
+    "text":"Text",
+    "retake":"Retake"
   },
   "channel":{
     "modeClosed":"Closed",
@@ -253,6 +266,9 @@
     "recentlyVisited":"Recently visited"
   },
   "groups":{
+    "ongoingGathering":"Ongoing gathering",
+    "joinGathering":"Join Gathering",
+    "gotoGroup":"Go to group",
     "subscribeMessage":"Subscribe to this group",
     "leaveMessage":"Leave from this group",
     "banConfirm":"Are you sure? You want to ban this user?",
@@ -459,9 +475,11 @@
     "disableChannelConfirm":"Your account will be disabled. Are you sure you want to proceed?",
     "deleteChannelConfirm":"Your account and all data related to it will be deleted permanently. Are you sure you want to proceed?",
     "newPassword":"New Password",
-    "disableChannel":"Disable Channel",
-    "deleteChannel":"Delete Channel",
-    "disableDescription":"Disabling your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.",
+    "disableChannel":"Deactivate Account",
+    "disableChannelButton":"Deactivate my account",
+    "deleteChannelButton":"Delete my account",
+    "deleteChannel":"Delete Account",
+    "disableDescription":"Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.",
     "deleteDescription":"Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable. Your username will be released back to the public.",
     "confirmNewPassword":"Confirm New Password",
     "currentEmail":"Current Email",
@@ -472,7 +490,7 @@
     "logOnlyErrors":"Log only errors",
     "leftHandedMode":"Left Handed Mode",
     "recurringPayments":"Recurring Payments",
-    "deactivate":"Deactivate",
+    "deactivate":"Deactivate Account",
     "logout":"Logout",
     "errorSaving":"Error saving setting, please try again",
     "passwordChanged":"Password changed succesfully.",
@@ -484,7 +502,73 @@
     "regenerateKey":"Regenerate messenger keys",
     "deleteBlockchain":"Delete blockchain keychain",
     "darkMode":"Dark mode",
-    "lightMode":"Light mode"
+    "lightMode":"Light mode",
+    "other":"Other",
+    "account":"Account",
+    "security":"Security",
+    "billing":"Billing",
+    "invalidPassword":"Incorrect password",
+    "passwordsNotMatch":"Passwords should match",
+    "passwordFormatMinCharacters":"8 or more characters",
+    "passwordFormatSpecialCharacters":"At least 1 special character",
+    "passwordFormatMixedCase":"Mixed case",
+    "passwordFormatNumber":"At least 1 number",
+    "passwordFormatNoSpaces":"Doesn't have spaces",
+    "matureContent":"Mature Content",
+    "showMatureContent":"Always show mature content (+18)",
+    "TFA":"Two-factor authentication",
+    "TFAdescription":"Add an extra layer of security to your account by enabling 2FA",
+    "TFAEnabled":"You may disable 2FA at any point. If you’ve change mobile number, you will need to disable and re-enable 2FA",
+    "TFADisable":"Disable 2FA",
+    "sessionsOpened":"You currently have {{amount}} opened sessions",
+    "closeSessions":"CLOSE ALL SESSIONS",
+    "subscriptionListEmpty":"You don't have any recurring subscription",
+    "enterDark":"Enter Dark Mode",
+    "enterLight":"Enter Light Mode",
+    "reportedContent": {
+      "reviewPending":"REVIEW PENDING",
+      "reviewAppealed":"APPEALED",
+      "reviewApproved":"APPROVED",
+      "reviewRejected":"REJECTED",
+      "actionTaken":"Action taken",
+      "actionMessage":"&{actionTaken}&: This {{entityType}} has been &{action}& for &{reason}&",
+      "entityPost":"post",
+      "entityComment":"comment",
+      "actionNSFW":"marked NSFW",
+      "actionStrike":"given a strike",
+      "noteType":"Please type in this box if you wish to appeal this decision, explaining your reasons",
+      "appeal":"Appeal",
+      "appealNote":"Appeal Note",
+      "postNotFound":"Post not found",
+      "seeReportedContent":"Reported Content",
+      "noAppealData":" Sorry, something went wrong!"
+    },
+    "accountOptions": {
+      "1":"Email Address",
+      "2":"Display Language",
+      "3":"Password",
+      "4":"Notifications",
+      "5":"NSFW Content"
+    },
+    "securityOptions": {
+      "1":"Two-factor authentication (2FA)",
+      "2":"Your Devices"
+    },
+    "billingOptions": {
+      "1":"Payment Methods",
+      "2":"Recurring Payments"
+    },
+    "otherOptions": {
+      "a":"CONTENT ADMIN",
+      "a1":"Reported Content",
+      "b":"PAID CONTENT",
+      "b1":"Subscription Tier Management",
+      "b2":"Post Preview",
+      "c":"ACCOUNT",
+      "c2":"Delete Account",
+      "d":"INFO",
+      "d1":"App"
+    }
   },
   "comingSoon":{
     "try":"Try the canary app at",
@@ -556,7 +640,9 @@
     "numberConfirmed":"Your number has beed validated",
     "phoneNumberTooltip":"Your mobile number may be used for additional account security, unique identification and to help your friends find you. This data is private and encrypted.",
     "dateofBirthTooltip":"Please enter your birth date to confirm your age and help us improve our recommendations.",
-    "locationTooltip":"Please enter your city to help us connect you with channels in your area. We do not track your exact location."
+    "locationTooltip":"Please enter your city to help us connect you with channels in your area. We do not track your exact location.",
+    "haveCompleted":"Your profile is &{amount}& complete",
+    "editProfile": "Edit your profile"
   },
   "wallet": {
     "inviteFriend":"Invite a Friend",
@@ -664,7 +750,13 @@
     "noResults": "No results for {{query}}"
   },
   "nsfw":{
+    "safe": "Safe",
+    "notSafe": "Not Safe",
+    "categories": "NSFW Categories",
+    "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
+    "description2": "See guidelines for further information.",
     "button":"NSFW",
+    "0":"Safe for work",
     "1":"Nudity",
     "2":"Pornography",
     "3":"Profanity",
@@ -691,6 +783,7 @@
     "emptySuggested":"We couldn't find what you look for",
     "clear": "Clear"
   },
+  "monetize":"Monetize",
   "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
   "postCantBeShown":"This post can't be shown on apps installed via the Play Store.",
@@ -809,5 +902,8 @@
   "tabTitleNewsfeed":"Home",
   "tabTitleNotifications":"Notifications",
   "tabTitleDiscovery":"Discovery",
-  "linkCopied":"Link copied to clipboard"
+  "linkCopied":"Link copied to clipboard",
+  "close":"Close",
+  "now":"Now",
+  "title":"Title"
 }

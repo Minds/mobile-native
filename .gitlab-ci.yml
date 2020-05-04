@@ -17,6 +17,8 @@ test:jest:
   before_script:
     - yarn install --frozen-lockfile
   script:
+    - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
+    - yarn tsc
     - yarn test
 
 # Upload new terms to poeditor

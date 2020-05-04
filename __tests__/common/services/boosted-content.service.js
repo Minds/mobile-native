@@ -14,6 +14,7 @@ describe('Boosted content service', () => {
 
   beforeEach(() => {
     blockListService.has.mockClear();
+    boostedContentService.init();
   });
 
   it('should fetch the boosts from the server', async () => {
