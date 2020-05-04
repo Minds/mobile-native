@@ -579,6 +579,10 @@
       "c2":"Delete Account",
       "d":"INFO",
       "d1":"App"
+    },
+    "youtubeImporter": {
+      "description": "Transferring your video content from YouTube to Minds doesn’t need to be ordeal. Using our transfer tool, you can quickly and easily migrate your content to Minds, and increase your audience even more.",
+      "connect": "Connect to YouTube"
     }
   },
   "comingSoon":{

@@ -24,6 +24,7 @@ import AppInfoScreen from './screens/AppInfoScreen';
 import { useLegacyStores } from '../common/hooks/use-stores';
 import OptionsDrawer from '../common/components/OptionsDrawer';
 import { Platform } from 'react-native';
+import YoutubeImporter from './screens/YoutubeImporterScreen';
 
 const MenuStackNav = createNativeStackNavigator();
 
@@ -204,6 +205,11 @@ const MenuStack = function ({ navigation, route }) {
         name="AppInfo"
         component={AppInfoScreen}
         options={hideHeader}
+      />
+      <MenuStackNav.Screen
+        name="YoutubeImporter"
+        component={YoutubeImporter}
+        options={{ title: i18n.t('settings.otherOptions.a2') }}
       />
     </MenuStackNav.Navigator>
   );
