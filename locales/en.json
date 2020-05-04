@@ -571,6 +571,7 @@
     "otherOptions": {
       "a":"CONTENT ADMIN",
       "a1":"Reported Content",
+      "a2":"Youtube Importer",
       "b":"PAID CONTENT",
       "b1":"Subscription Tier Management",
       "b2":"Post Preview",

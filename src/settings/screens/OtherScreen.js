@@ -41,6 +41,10 @@ export default function ({ navigation }) {
       title: i18n.t('settings.blockedChannels'),
       onPress: navToBlockedChannels,
     },
+    {
+      title: i18n.t('settings.otherOptions.a2'),
+      onPress: () => navigation.push('YoutubeImporter'),
+    },
   ];
 
   const paidContent = [
