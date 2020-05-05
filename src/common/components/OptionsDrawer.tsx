@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import SettingsItem from '../../settings/SettingsItem';
+import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 
 export default function ({ navigation, route }) {
@@ -19,7 +19,7 @@ export default function ({ navigation, route }) {
       <View style={innerWrapper}>
         <FlatList
           data={list}
-          renderItem={SettingsItem}
+          renderItem={MenuItem}
           style={[theme.backgroundPrimary, theme.paddingTop4x]}
           keyExtractor={(item, index) => index.toString()}
         />

@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
 import { View, FlatList } from 'react-native';
-import SettingsItem from './SettingsItem';
+import MenuItem from '../common/components/menus/MenuItem';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18n from '../common/services/i18n.service';
 import Topbar from '../topbar/Topbar';
@@ -86,14 +86,14 @@ export default function ({ navigation }) {
       <View style={innerWrapper}>
         <FlatList
           data={list}
-          renderItem={SettingsItem}
+          renderItem={MenuItem}
           style={[theme.backgroundPrimary, theme.paddingTop4x]}
           keyExtractor={keyExtractor}
         />
       </View>
       <View style={[innerWrapper, theme.marginTop7x]}>
-        <SettingsItem item={themeChange} i={4} />
-        <SettingsItem item={logOut} i={5} />
+        <MenuItem item={themeChange} i={4} />
+        <MenuItem item={logOut} i={5} />
       </View>
     </View>
   );

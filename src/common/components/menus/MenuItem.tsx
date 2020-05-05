@@ -1,11 +1,19 @@
-//@ts-nocheck
 import React from 'react';
 
 import { ListItem } from 'react-native-elements';
-import ThemedStyles from '../styles/ThemedStyles';
-import { Icon } from 'react-native-vector-icons/MaterialCommunityIcons';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
-export default function ({ item, i }) {
+export type MenuItemPropsType = {
+  item: {
+    onPress: () => void;
+    title: string;
+    icon?: any;
+    noIcon?: boolean;
+  };
+  i: number;
+};
+
+export default function ({ item, i }: MenuItemPropsType) {
   const theme = ThemedStyles.style;
 
   // ListItem Container Style
@@ -14,18 +22,21 @@ export default function ({ item, i }) {
     theme.borderTopHair,
     theme.borderBottomHair,
     theme.borderPrimary,
-    styles.containerPadding,
+    theme.padding0x,
+    theme.paddingHorizontal4x,
   ];
 
   // ListItem Title Style
   const titleStyle = [
-    theme.colorSecondaryText,
+    theme.colorPrimaryText,
+    theme.paddingVertical3x,
     { fontSize: 17 },
-    theme.paddingLeft,
   ];
 
   // ListItem Chevron Style
-  const chevronStyle = { ...theme.colorIcon, size: 24, ...item.icon };
+  const chevronStyle = item.noIcon
+    ? undefined
+    : { ...theme.colorIcon, size: 24, ...item.icon };
 
   return (
     <ListItem
@@ -38,10 +49,3 @@ export default function ({ item, i }) {
     />
   );
 }
-
-const styles = {
-  containerPadding: {
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-  },
-};

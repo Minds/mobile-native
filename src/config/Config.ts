@@ -34,7 +34,7 @@ export const MINDS_LINK_URI = 'https://www.minds.com/';
 export const CODE_PUSH_TOKEN = '';
 
 /**
- * Plataform dependant or fixed features
+ * Platform dependant or fixed features
  */
 export const MINDS_FEATURES = {
   crypto: true,

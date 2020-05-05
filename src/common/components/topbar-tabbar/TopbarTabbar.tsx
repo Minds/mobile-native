@@ -1,72 +1,73 @@
-import React, { Component, ReactChildren, Children, useEffect } from 'react';
-
-import { inject, observer, useLocalStore } from 'mobx-react';
-
-import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import React from 'react';
 import {
-  useTopbarBarStore,
-  storesContext,
-  createStore,
-} from './TopbarTabbarContext';
-import type TopbarTabbarItem from './TopbarTabbarItem';
+  View,
+  Text,
+  TouchableOpacity,
+  StyleProp,
+  TextStyle,
+  StyleSheet,
+} from 'react-native';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
-interface Props {
-  activeTabId: string;
-  onTabChange: (tabId: string) => void;
-  children: typeof TopbarTabbarItem[] | any;
-}
+export type TabType<T> = {
+  id: T;
+  title: string;
+  subtitle?: string;
+};
+
+type PropsType<T> = {
+  tabs: Array<TabType<T>>;
+  current: T;
+  onChange: (id: T) => void;
+  titleStyle?: StyleProp<TextStyle>;
+  subtitleStyle?: StyleProp<TextStyle>;
+};
 
 /**
- * Topbar Tabbar
+ * Tab bar
  */
-export const TopbarTabbar = observer((props: Props) => {
-  const store = useLocalStore(createStore);
-
-  useEffect(() => {
-    store.setActiveTabId(props.activeTabId);
-  }, [props.activeTabId]);
-
-  useEffect(() => {
-    if (store.activeTabId && props.activeTabId !== store.activeTabId)
-      props.onTabChange(store.activeTabId);
-  }, [store.activeTabId]);
+function TopbarTabbar<T>(props: PropsType<T>) {
+  const theme = ThemedStyles.style;
+  const tabStyle = [
+    theme.paddingVertical,
+    theme.marginHorizontal4x,
+    theme.borderBottom4x,
+  ];
 
   return (
-    <View>
-      <storesContext.Provider value={store}>
-        <View
+    <View
+      style={[theme.rowJustifyStart, theme.borderBottom, theme.borderPrimary]}>
+      {props.tabs.map((tab) => (
+        <TouchableOpacity
+          onPress={() => props.onChange(tab.id)}
           style={[
-            styles.container,
-            ThemedStyles.style.borderBottomHair,
-            ThemedStyles.style.borderPrimary,
-            ThemedStyles.style.backgroundSecondary,
+            tabStyle,
+            tab.id === props.current
+              ? theme.borderTab
+              : theme.borderTransparent,
           ]}>
-          <View style={styles.topbar}>{props.children}</View>
-        </View>
-      </storesContext.Provider>
+          <Text style={[theme.fontL, props.titleStyle]}>{tab.title}</Text>
+          {!!tab.subtitle && (
+            <Text
+              style={[
+                theme.fontL,
+                theme.colorSecondaryText,
+                styles.subtitle,
+                props.subtitleStyle,
+              ]}>
+              {tab.subtitle}
+            </Text>
+          )}
+        </TouchableOpacity>
+      ))}
     </View>
   );
-});
+}
 
 export default TopbarTabbar;
 
-//TODO: move to common style
 const styles = StyleSheet.create({
-  container: {
-    height: 42,
-    display: 'flex',
-    flexDirection: 'row',
-    paddingTop: 0,
-  },
-  topbar: {
-    flex: 1,
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  button: {
-    padding: 8,
+  subtitle: {
+    paddingVertical: 2,
   },
 });

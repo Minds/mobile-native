@@ -33,6 +33,7 @@
     "@react-navigation/stack": "^5.1.0",
     "@sentry/react-native": "^1.2.2",
     "@types/react-native-vector-icons": "^6.4.5",
+    "bn.js": "^5.1.1",
     "crypto-js": "^3.1.9-1",
     "detox": "^14.8.1",
     "entities": "^2.0.0",
