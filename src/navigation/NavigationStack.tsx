@@ -23,6 +23,7 @@ import BoostConsoleScreen from '../boost/BoostConsoleScreen';
 import BlogsListScreen from '../blogs/BlogsListScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
 import FabScreen from '../wire/FabScreen';
+import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
 import BoostScreen from '../boost/creator/BoostScreen';
 import ContributionsScreen from '../wallet/tokens/ContributionsScreen';
@@ -108,6 +109,7 @@ const MainSwiperScreen = () => {
 };
 
 const AppStack = function () {
+  const EditChannelScreens = EditChannelStack(AppStackNav);
   return (
     <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <AppStackNav.Screen
@@ -166,11 +168,7 @@ const AppStack = function () {
         }
         options={hideHeader}
       />
-      <AppStackNav.Screen
-        name="EditChannel"
-        component={EditChannelStack}
-        options={hideHeader}
-      />
+      {EditChannelScreens}
       <AppStackNav.Screen
         name="Activity"
         component={ActivityScreen}
@@ -217,7 +215,7 @@ const AppStack = function () {
       />
       <AppStackNav.Screen
         name="WireFab"
-        component={FabScreen}
+        component={featuresService.has('pay') ? FabScreenV2 : FabScreen}
         options={hideHeader}
       />
       <AppStackNav.Screen
