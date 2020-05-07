@@ -224,7 +224,7 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="BlockchainWallet"
         component={BlockchainWalletScreen}
-        options={{ title: i18n.t('blockchain.walletAddresses') }}
+        options={BlockchainWalletScreen.navigationOptions}
       />
       <AppStackNav.Screen
         name="Contributions"
