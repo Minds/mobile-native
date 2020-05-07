@@ -109,6 +109,7 @@ const MainSwiperScreen = () => {
 };
 
 const AppStack = function () {
+  const EditChannelScreens = EditChannelStack(AppStackNav);
   return (
     <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
       <AppStackNav.Screen
@@ -167,11 +168,7 @@ const AppStack = function () {
         }
         options={hideHeader}
       />
-      <AppStackNav.Screen
-        name="EditChannel"
-        component={EditChannelStack}
-        options={hideHeader}
-      />
+      {EditChannelScreens}
       <AppStackNav.Screen
         name="Activity"
         component={ActivityScreen}

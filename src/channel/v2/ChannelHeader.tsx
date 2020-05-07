@@ -86,7 +86,7 @@ const ChannelHeader = observer((props: PropsType) => {
         <ChannelButtons
           channel={channel}
           onEditPress={() =>
-            props.navigation.push('EditChannel', { store: props.store })
+            props.navigation.push('EditChannelScreen', { store: props.store })
           }
         />
         {props.store.uploading && props.store.bannerProgress ? (
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   avatarSmallButton: {
     position: 'absolute',
     top: -5,
-    right: 5,
+    right: -10,
   },
   description: {
     height: 120,

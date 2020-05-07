@@ -6,19 +6,12 @@ import { ScrollView, KeyboardAvoidingView, Text } from 'react-native';
 import isIphoneX from '../../../common/helpers/isIphoneX';
 import SettingInput from '../../../common/components/SettingInput';
 import CenteredLoading from '../../../common/components/CenteredLoading';
-import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
-
-import type { EditChannelStackParamList } from './EditChannelStack';
 import type { ChannelStoreType } from '../createChannelStore';
 import LocationAutoSuggest from '../../../common/components/LocationAutoSuggest';
-
-type AboutScreenRouteProp = RouteProp<EditChannelStackParamList, 'About'>;
-
-type AboutScreenNavigationProp = StackNavigationProp<
-  EditChannelStackParamList,
-  'About'
->;
+import type {
+  AboutScreenRouteProp,
+  AboutScreenNavigationProp,
+} from '../../../navigation/NavigationTypes';
 
 type PropsType = {
   route: AboutScreenRouteProp;
