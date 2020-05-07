@@ -195,7 +195,9 @@ const AppStack = function () {
         component={GroupViewScreen}
         options={hideHeader}
       />
-      <AppStackNav.Screen name="Wallet" component={WalletScreen} />
+      {!featuresService.has('wallet') && (
+        <AppStackNav.Screen name="Wallet" component={WalletScreen} />
+      )}
       <AppStackNav.Screen
         name="BlogList"
         component={BlogsListScreen}

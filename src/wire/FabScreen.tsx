@@ -27,14 +27,14 @@ import Button from '../common/components/Button';
 import StripeCardSelector from './methods/StripeCardSelector';
 import ThemedStyles from '../styles/ThemedStyles';
 
-import type { RootStackParamList } from '../navigation/NavigationTypes';
+import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type WalletStore from '../wallet/WalletStore';
 import type WireStore from '../wire/WireStore';
 import type { StripeCard } from './WireTypes';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
-type FabScreenRouteProp = RouteProp<RootStackParamList, 'Fab'>;
-type FabcreenNavigationProp = StackNavigationProp<RootStackParamList, 'Fab'>;
+type FabScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
+type FabcreenNavigationProp = StackNavigationProp<AppStackParamList, 'Fab'>;
 
 type PropsType = {
   navigation: FabcreenNavigationProp;

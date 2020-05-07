@@ -10,20 +10,9 @@ export type MainSwiperParamList = {
 };
 
 export type RootStackParamList = {
-  Fab: {
-    disableThresholdCheck?: boolean;
-    owner: UserModel;
-    onComplete?: Function;
-    default: {
-      min: number;
-      type: string;
-    };
-  };
-  Newsfeed: {};
-  Capture: {};
   App: {};
-  Gathering: {};
   Auth: {};
+  Gathering: {};
 };
 
 export type AuthStackParamList = {
@@ -35,6 +24,17 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  Fab: {
+    disableThresholdCheck?: boolean;
+    owner: UserModel;
+    onComplete?: Function;
+    default: {
+      min: number;
+      type: string;
+    };
+  };
+  Newsfeed: {};
+  Capture: {};
   StackCapture: {};
   Main: {};
   TagSelector: {};

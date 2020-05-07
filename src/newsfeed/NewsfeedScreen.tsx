@@ -12,21 +12,21 @@ import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
 import i18n from '../common/services/i18n.service';
 import TopbarNewsfeed from '../topbar/TopbarNewsfeed';
-import type { RootStackParamList } from '../navigation/NavigationTypes';
+import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type MessengerListStore from '../messenger/MessengerListStore';
 import type DiscoveryStore from '../discovery/DiscoveryStore';
 import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
 import type NotificationsStore from '../notifications/NotificationsStore';
 
-type NewsfeedScreenRouteProp = RouteProp<RootStackParamList, 'Newsfeed'>;
-type NewsfeedcreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
+type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
+type NewsfeedScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
   'Newsfeed'
 >;
 
 type PropsType = {
-  navigation: NewsfeedcreenNavigationProp;
+  navigation: NewsfeedScreenNavigationProp;
   discovery: DiscoveryStore;
   user: UserStore;
   messengerList: MessengerListStore;

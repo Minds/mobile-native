@@ -441,7 +441,7 @@ export default class BlockchainWalletDetailsScreen extends Component {
   render() {
     return (
       <ScrollView>
-        <View style={[CommonStyle.flexContainer, { flex: 1 }]}>
+        <View style={CommonStyle.flexContainer}>
           {this.state.editable && this.labelItem()}
 
           {!this.state.edit && this.qrCode()}

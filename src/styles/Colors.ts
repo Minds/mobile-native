@@ -32,6 +32,7 @@ export const LIGHT_THEME = {
   link: '#0091FF',
   alert: '#E03C20',
   green: '#5AC36F',
+  tab_border: '#4A90E2',
 };
 
 export const DARK_THEME = {
@@ -52,4 +53,5 @@ export const DARK_THEME = {
   link: '#0091FF',
   alert: '#E03C20',
   green: '#5AC36F',
+  tab_border: '#4A90E2',
 };

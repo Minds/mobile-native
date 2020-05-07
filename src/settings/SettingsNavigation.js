@@ -24,6 +24,8 @@ import AppInfoScreen from './screens/AppInfoScreen';
 import { useLegacyStores } from '../common/hooks/use-stores';
 import OptionsDrawer from '../common/components/OptionsDrawer';
 import { Platform } from 'react-native';
+import WalletScreen from '../wallet/v2/WalletScreen';
+import featuresService from '../common/services/features.service';
 
 const MenuStackNav = createNativeStackNavigator();
 
@@ -205,6 +207,13 @@ const MenuStack = function ({ navigation, route }) {
         component={AppInfoScreen}
         options={hideHeader}
       />
+      {featuresService.has('wallet') && (
+        <MenuStackNav.Screen
+          name="Wallet"
+          component={WalletScreen}
+          options={hideHeader}
+        />
+      )}
     </MenuStackNav.Navigator>
   );
 };
