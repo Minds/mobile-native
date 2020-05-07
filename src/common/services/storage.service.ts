@@ -70,7 +70,12 @@ class StorageService {
    * @param {boolean} encrypt
    * @param {string} keychain
    */
-  async setItem(key, value = null, encrypt = false, keychain = '') {
+  async setItem(
+    key: string,
+    value: any | null = null,
+    encrypt: boolean = false,
+    keychain: string = '',
+  ) {
     let rawValue = JSON.stringify(value);
 
     if (encrypt) {

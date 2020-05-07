@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { Component } from 'react';
+import React, { Component, Props } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import InfoPopup from './InfoPopup';
@@ -8,10 +8,20 @@ import PhoneValidationComponent from './PhoneValidationComponent';
 import TextInput from './TextInput';
 import ThemedStyles from '../../styles/ThemedStyles';
 
+type propsType = {
+  TFA: any;
+  TFAConfirmed: boolean;
+  inputType: string;
+  optional: boolean;
+  labelStyle: any;
+  info: any;
+  onError: any;
+} & Props;
+
 /**
  * Form input
  */
-export default class Input extends Component {
+export default class Input extends Component<propsType> {
   /**
    * State
    */
