@@ -49,7 +49,7 @@ export default observer(function () {
     currentPasswordFocus() {
       store.setCurrentPassword('');
     },
-    newPasswordBlurred(){
+    newPasswordBlurred() {
       store.setPasswordFocused(false);
     },
     confirmationPasswordFocus() {
@@ -96,7 +96,7 @@ export default observer(function () {
     const params = {
       password: store.currentPassword,
       new_password: store.newPassword,
-    }
+    };
 
     try {
       await settingsService.submitSettings(params);
@@ -126,7 +126,7 @@ export default observer(function () {
         theme.paddingLeft3x,
         theme.paddingTop3x,
         theme.backgroundSecondary,
-        theme.border,
+        props.wrapperBorder,
         theme.borderPrimary,
       ];
 
@@ -158,17 +158,15 @@ export default observer(function () {
     [theme],
   );
 
+  const subContainer = !store.passwordFocused ? [theme.paddingTop7x] : [];
+
   return (
     <ScrollView style={[theme.flexContainer, theme.backgroundPrimary]}>
       <KeyboardAvoidingView
         style={[theme.flexContainer, theme.paddingTop3x]}
         behavior="position"
         keyboardVerticalOffset={isIphoneX ? 100 : 64}>
-        {store.passwordFocused ? (
-          <View style={[theme.paddingLeft3x]}>
-            <PasswordValidator password={store.newPassword} />
-          </View>
-        ) : (
+        {!store.passwordFocused &&
           getInput({
             placeholder: i18n.t('settings.currentPassword'),
             onChangeText: store.setCurrentPassword,
@@ -177,26 +175,35 @@ export default observer(function () {
             onFocus: store.currentPasswordFocus,
             onError: i18n.t('settings.invalidPassword'),
             ref: (input) => (currentPasswordInput = input),
-          })
-        )}
-        {getInput({
-          placeholder: i18n.t('settings.newPassword'),
-          onChangeText: store.setNewPassword,
-          value: store.newPassword,
-          testID: 'newPasswordInput',
-          onFocus: store.newPasswordFocus,
-          onBlur: store.newPasswordBlurred,
-          onError: i18n.t('settings.passwordsNotMatch'),
-          ref: (input) => (newPasswordInput = input)
-        })}
-        {getInput({
-          placeholder: i18n.t('settings.confirmNewPassword'),
-          onChangeText: store.setConfirmationPassword,
-          value: store.confirmationPassword,
-          testID: 'confirmationPasswordPasswordInput',
-          onFocus: store.confirmationPasswordFocus,
-          onBlur: store.newPasswordBlurred,
-        })}
+            wrapperBorder: theme.border,
+          })}
+        <View style={subContainer}>
+          {store.passwordFocused && (
+            <View style={[theme.paddingLeft3x]}>
+              <PasswordValidator password={store.newPassword} />
+            </View>
+          )}
+          {getInput({
+            placeholder: i18n.t('settings.newPassword'),
+            onChangeText: store.setNewPassword,
+            value: store.newPassword,
+            testID: 'newPasswordInput',
+            onFocus: store.newPasswordFocus,
+            onBlur: store.newPasswordBlurred,
+            onError: i18n.t('settings.passwordsNotMatch'),
+            ref: (input) => (newPasswordInput = input),
+            wrapperBorder: theme.borderTop,
+          })}
+          {getInput({
+            placeholder: i18n.t('settings.confirmNewPassword'),
+            onChangeText: store.setConfirmationPassword,
+            value: store.confirmationPassword,
+            testID: 'confirmationPasswordPasswordInput',
+            onFocus: store.confirmationPasswordFocus,
+            onBlur: store.newPasswordBlurred,
+            wrapperBorder: [theme.borderBottom, theme.borderTop],
+          })}
+        </View>
       </KeyboardAvoidingView>
     </ScrollView>
   );

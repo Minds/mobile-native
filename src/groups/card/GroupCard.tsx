@@ -1,14 +1,7 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Text,
-  Image,
-  View,
-  StyleSheet,
-} from 'react-native';
+import { Text, Image, View, StyleSheet } from 'react-native';
 
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
@@ -20,13 +13,19 @@ import i18n from '../../common/services/i18n.service';
  * Group Card
  */
 export default class GroupCard extends Component {
-
   /**
    * Get Group Banner
    */
   getBannerFromGroup() {
     const group = this.props.entity;
-    return {uri: MINDS_CDN_URI + 'fs/v1/banners/' + group.guid + '/fat/' + group.icontime};
+    return {
+      uri:
+        MINDS_CDN_URI +
+        'fs/v1/banners/' +
+        group.guid +
+        '/fat/' +
+        group.icontime,
+    };
   }
 
   /**
@@ -34,34 +33,61 @@ export default class GroupCard extends Component {
    */
   getAvatar() {
     const group = this.props.entity;
-    return {uri: `${MINDS_CDN_URI}fs/v1/avatars/${group.guid}/large`};
+    return { uri: `${MINDS_CDN_URI}fs/v1/avatars/${group.guid}/large` };
   }
 
   /**
    * Render
    */
   render() {
-
     const group = this.props.entity;
     const avatar = this.getAvatar();
     const iurl = this.getBannerFromGroup();
 
     return (
       <View>
-        <FastImage source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
+        <FastImage
+          source={iurl}
+          style={styles.banner}
+          resizeMode={FastImage.resizeMode.cover}
+        />
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
-            <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
-              <Text style={styles.countertitle}>{i18n.t('members').toUpperCase()}</Text>
-              <Text style={styles.countervalue}>{abbrev(group['members:count'], 0)}</Text>
+            <View
+              style={[
+                CommonStyle.columnAlignCenter,
+                CommonStyle.flexContainer,
+              ]}>
+              <Text style={styles.countertitle}>
+                {i18n.t('members').toUpperCase()}
+              </Text>
+              <Text style={styles.countervalue}>
+                {abbrev(group['members:count'], 0)}
+              </Text>
             </View>
-            <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
-              <Text style={styles.countertitle}>{i18n.t('feed').toUpperCase()}</Text>
-              <Text style={styles.countervalue}>{abbrev(group['activity:count'], 0)}</Text>
+            <View
+              style={[
+                CommonStyle.columnAlignCenter,
+                CommonStyle.flexContainer,
+              ]}>
+              <Text style={styles.countertitle}>
+                {i18n.t('feed').toUpperCase()}
+              </Text>
+              <Text style={styles.countervalue}>
+                {abbrev(group['activity:count'], 0)}
+              </Text>
             </View>
-            <View style={[CommonStyle.columnAlignCenter, CommonStyle.flexContainer]}>
-              <Text style={styles.countertitle}>{i18n.t('comments.comments').toUpperCase()}</Text>
-              <Text style={styles.countervalue}>{abbrev(group['comments:count'], 0)}</Text>
+            <View
+              style={[
+                CommonStyle.columnAlignCenter,
+                CommonStyle.flexContainer,
+              ]}>
+              <Text style={styles.countertitle}>
+                {i18n.t('comments.comments').toUpperCase()}
+              </Text>
+              <Text style={styles.countervalue}>
+                {abbrev(group['comments:count'], 0)}
+              </Text>
             </View>
           </View>
           <View style={[CommonStyle.rowJustifyCenter]}>
@@ -72,10 +98,9 @@ export default class GroupCard extends Component {
         </View>
         <Image source={avatar} style={styles.avatar} />
       </View>
-    )
+    );
   }
 }
-
 
 const styles = StyleSheet.create({
   headertextcontainer: {
@@ -88,7 +113,7 @@ const styles = StyleSheet.create({
   },
   countertitle: {
     color: '#666',
-    fontSize: 10
+    fontSize: 10,
   },
   countervalue: {
     paddingTop: 5,
@@ -96,7 +121,7 @@ const styles = StyleSheet.create({
   },
   namecol: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   banner: {
     flexDirection: 'row',
@@ -107,12 +132,12 @@ const styles = StyleSheet.create({
   name: {
     fontWeight: 'bold',
     fontSize: 16,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   countercontainer: {
     paddingLeft: 130,
     height: 60,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   avatar: {
     position: 'absolute',
@@ -120,6 +145,6 @@ const styles = StyleSheet.create({
     top: 100,
     height: 100,
     width: 100,
-    borderRadius: 55
-  }
+    borderRadius: 55,
+  },
 });

@@ -47,13 +47,30 @@ export default function (props) {
     time_created: null,
     extra: null,
     onScreenFocused() {
-      this.isRemind = props.route.params && props.route.params.isRemind;
-      this.entity = props.route.params ? props.route.params.entity : null;
-      const propsMode = props.route.params ? props.route.params.mode : null;
-      this.mode = propsMode ? propsMode : this.isRemind ? 'text' : 'photo';
+      const params = props.route.params;
+      if (!params || (!params.entity && !params.mode && !params.media)) {
+        return;
+      }
 
-      // clear when the screen lose focus
-      return this.clear;
+      this.isRemind = params.isRemind;
+      this.entity = params.entity || null;
+      const propsMode = params.mode || null;
+      this.mode = propsMode ? propsMode : this.isRemind ? 'text' : 'photo';
+      const mediaToConfirm = params.media || null;
+
+      if (mediaToConfirm) {
+        this.mode = 'text';
+        this.mediaToConfirm = mediaToConfirm;
+        this.attachment.attachMedia(mediaToConfirm);
+      }
+
+      // clear params to avoid repetition
+      props.navigation.setParams({
+        entity: undefined,
+        media: undefined,
+        mode: undefined,
+        isRemind: undefined,
+      });
     },
     setTokenThreshold(value) {
       value = parseFloat(value);
@@ -163,7 +180,7 @@ export default function (props) {
     /**
      * Clear the store to the initial values
      */
-    clear() {
+    clear(deleteMedia = true) {
       if (this.mediaToConfirm) {
         this.mediaToConfirm = null;
       }
@@ -171,7 +188,9 @@ export default function (props) {
         if (this.attachment.uploading) {
           this.attachment.cancelCurrentUpload();
         } else {
-          this.attachment.delete();
+          if (deleteMedia) {
+            this.attachment.delete();
+          }
         }
         this.attachment.clear();
       }
@@ -183,16 +202,12 @@ export default function (props) {
       this.extra = null;
       this.mediaToConfirm = null;
       this.posting = false;
+      this.entity = null;
       this.mode = 'photo';
+      this.isRemind = false;
       this.nsfw = [];
       this.time_created = null;
       this.wire_threshold = 0;
-      // clear params to avoid repetition
-      props.navigation.setParams({
-        media: undefined,
-        entity: undefined,
-        isRemind: undefined,
-      });
     },
     /**
      * On media
@@ -317,7 +332,9 @@ export default function (props) {
       }
 
       if (props.route.params && props.route.params.group) {
-        newPost.container_guid = this.props.route.params.group.guid;
+        newPost.container_guid = props.route.params.group.guid;
+        // remove the group to avoid reuse it on future posts
+        props.navigation.setParams({ group: undefined });
       }
 
       if (this.tags.length) {
@@ -337,7 +354,8 @@ export default function (props) {
             this.setPosting(false);
           }
 
-          if (response.activity) {
+          if (response && response.activity) {
+            this.clear(false);
             return ActivityModel.create(response.activity);
           }
           return false;

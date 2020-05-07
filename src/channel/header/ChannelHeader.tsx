@@ -159,7 +159,7 @@ class ChannelHeader extends Component {
   changeAvatarAction = async () => {
     if (!this.state.edit) return;
     imagePicker
-      .show(i18n.t('channel.selectAvatar'), 'photo')
+      .show(i18n.t('channel.selectAvatar'), 'photo', true)
       .then((response) => {
         if (response) {
           this.selectMedia('avatar', response);
@@ -383,9 +383,9 @@ class ChannelHeader extends Component {
             </View>
           ) : null}
         </TouchableCustom>
-        {isOwner && (
+        {/* {isOwner && (
           <CompleteProfile progress={this.props.onboarding.percentage} />
-        )}
+        )} */}
       </View>
     );
   }

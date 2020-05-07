@@ -1,5 +1,7 @@
 PODS:
   - boost-for-react-native (1.63.0)
+  - BVLinearGradient (2.5.6):
+    - React
   - Crypto (0.1.0):
     - React
   - DoubleConversion (1.1.6)
@@ -283,12 +285,21 @@ PODS:
     - React
     - SDWebImage (~> 5.0)
     - SDWebImageWebPCoder (~> 0.2.3)
-  - RNFileShareIntent (1.1.1):
+  - RNFileShareIntent (1.1.2):
     - React
   - RNFS (2.16.6):
     - React
   - RNGestureHandler (1.6.1):
     - React
+  - RNImageCropPicker (0.28.0):
+    - React-Core
+    - React-RCTImage
+    - RNImageCropPicker/QBImagePickerController (= 0.28.0)
+    - RSKImageCropper
+  - RNImageCropPicker/QBImagePickerController (0.28.0):
+    - React-Core
+    - React-RCTImage
+    - RSKImageCropper
   - RNLocalize (1.3.4):
     - React
   - RNReanimated (1.7.1):
@@ -304,6 +315,7 @@ PODS:
     - React
   - RNVectorIcons (6.6.0):
     - React
+  - RSKImageCropper (2.2.3)
   - SDWebImage (5.4.1):
     - SDWebImage/Core (= 5.4.1)
   - SDWebImage/Core (5.4.1)
@@ -316,6 +328,7 @@ PODS:
   - Yoga (1.14.0)
 
 DEPENDENCIES:
+  - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - Crypto (from `../node_modules/react-native-minds-encryption`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -365,9 +378,10 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNExitApp (from `../node_modules/react-native-exit-app`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
-  - RNFileShareIntent (from `../node_modules/react-native-file-share-intent/ios`)
+  - RNFileShareIntent (from `../node_modules/react-native-file-share-intent`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -382,11 +396,14 @@ SPEC REPOS:
     - boost-for-react-native
     - JitsiMeetSDK
     - libwebp
+    - RSKImageCropper
     - SDWebImage
     - SDWebImageWebPCoder
     - Sentry
 
 EXTERNAL SOURCES:
+  BVLinearGradient:
+    :path: "../node_modules/react-native-linear-gradient"
   Crypto:
     :path: "../node_modules/react-native-minds-encryption"
   DoubleConversion:
@@ -480,11 +497,13 @@ EXTERNAL SOURCES:
   RNFastImage:
     :path: "../node_modules/react-native-fast-image"
   RNFileShareIntent:
-    :path: "../node_modules/react-native-file-share-intent/ios"
+    :path: "../node_modules/react-native-file-share-intent"
   RNFS:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
   RNReanimated:
@@ -504,6 +523,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  BVLinearGradient: e3aad03778a456d77928f594a649e96995f1c872
   Crypto: 523c2f143c741d3f61371c811c0983ee9c7d18ec
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   FBLazyVector: aaeaf388755e4f29cd74acbc9e3b8da6d807c37f
@@ -552,9 +572,10 @@ SPEC CHECKSUMS:
   RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
   RNExitApp: a5e276b66dda7e2fdd7aa15f63474011b122398e
   RNFastImage: c104f15f04c4f68bd65c9645cc27900bbacd9cc7
-  RNFileShareIntent: 783adf7c4386c6024dd5dfeb96cc7836948f8b47
+  RNFileShareIntent: 65b162c473575e83ce7dffc494dcda5a6b6ecbc0
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
+  RNImageCropPicker: cf129d17e042ce3e96fb9ada967c28f21f977c82
   RNLocalize: 215c419a17d7585eb7a63c748ebfd042e0cb2c3d
   RNReanimated: 4e102df74a9674fa943e05f97f3362b6e44d0b48
   RNScreens: b5c0e1b2b04512919e78bd3898e144a157ce2363
@@ -562,6 +583,7 @@ SPEC CHECKSUMS:
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   SDWebImage: 29c340dbdcef342bb13125553f4e19ce056b07a7
   SDWebImageWebPCoder: 947093edd1349d820c40afbd9f42acb6cdecd987
   Sentry: 14bdd673870e8cf64932b149fad5bbbf39a9b390

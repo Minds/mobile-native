@@ -88,7 +88,7 @@ export default class FeedStore {
    * @param {BaseModel} entity
    */
   async addViewed(entity) {
-    return await this.viewed.addViewed(entity, this.metadataService)
+    return await this.viewed.addViewed(entity, this.metadataService);
   }
 
   /**
@@ -160,7 +160,7 @@ export default class FeedStore {
     entity._list = this;
     this.entities.unshift(entity);
     this.feedsService.prepend(entity);
-    if (entity.isScheduled()) {
+    if (entity.isScheduled()) {
       this.setScheduledCount(this.scheduledCount + 1);
     }
   }
@@ -179,10 +179,10 @@ export default class FeedStore {
    * @param {BaseModel} entity
    */
   remove(entity) {
-    const index = this.entities.findIndex(e => e === entity);
+    const index = this.entities.findIndex((e) => e === entity);
     if (index < 0) return;
     this.removeIndex(index);
-    if (entity.isScheduled()) {
+    if (entity.isScheduled()) {
       this.setScheduledCount(this.scheduledCount - 1);
     }
   }
@@ -194,7 +194,7 @@ export default class FeedStore {
   @action
   removeFromOwner(guid) {
     this.entities = this.entities.filter(
-      e => !e.ownerObj || e.ownerObj.guid !== guid,
+      (e) => !e.ownerObj || e.ownerObj.guid !== guid,
     );
     this.feedsService.removeFromOwner(guid);
 
@@ -210,7 +210,7 @@ export default class FeedStore {
    * @param {BaseModel} entity
    */
   getIndex(entity) {
-    return this.entities.findIndex(e => e === entity);
+    return this.entities.findIndex((e) => e === entity);
   }
 
   /**
@@ -301,10 +301,7 @@ export default class FeedStore {
    */
   @action
   async fetch() {
-
-    this
-      .setLoading(true)
-      .setErrorLoading(false);
+    this.setLoading(true).setErrorLoading(false);
 
     const endpoint = this.feedsService.endpoint;
     const params = this.feedsService.params;
@@ -314,7 +311,11 @@ export default class FeedStore {
       const entities = await this.feedsService.getEntities();
 
       // if the endpoint or the params are changed we ignore the result
-      if (endpoint !== this.feedsService.endpoint || params !== this.feedsService.params) return;
+      if (
+        endpoint !== this.feedsService.endpoint ||
+        params !== this.feedsService.params
+      )
+        return;
 
       this.addEntities(entities);
     } catch (err) {
@@ -350,9 +351,7 @@ export default class FeedStore {
    * @param {boolean} refresh
    */
   async fetchLocalOrRemote(refresh = false) {
-    this
-      .setLoading(true)
-      .setErrorLoading(false);
+    this.setLoading(true).setErrorLoading(false);
 
     const endpoint = this.feedsService.endpoint;
     const params = this.feedsService.params;
@@ -363,7 +362,11 @@ export default class FeedStore {
       const entities = await this.feedsService.getEntities();
 
       // if the endpoint or the params are changed we ignore the result
-      if (endpoint !== this.feedsService.endpoint || params !== this.feedsService.params) return;
+      if (
+        endpoint !== this.feedsService.endpoint ||
+        params !== this.feedsService.params
+      )
+        return;
 
       if (refresh) this.clear();
       this.addEntities(entities);
@@ -382,9 +385,7 @@ export default class FeedStore {
    * @param {boolean} refresh
    */
   async fetchRemoteOrLocal(refresh = false) {
-    this
-      .setLoading(true)
-      .setErrorLoading(false);
+    this.setLoading(true).setErrorLoading(false);
 
     const endpoint = this.feedsService.endpoint;
     const params = this.feedsService.params;
@@ -395,7 +396,11 @@ export default class FeedStore {
       const entities = await this.feedsService.getEntities();
 
       // if the endpoint or the params are changed we ignore the result
-      if (endpoint !== this.feedsService.endpoint || params !== this.feedsService.params) return;
+      if (
+        endpoint !== this.feedsService.endpoint ||
+        params !== this.feedsService.params
+      )
+        return;
 
       if (refresh) this.clear();
       this.addEntities(entities);
@@ -421,20 +426,19 @@ export default class FeedStore {
     const endpoint = this.feedsService.endpoint;
     const params = this.feedsService.params;
 
-    this
-      .setLoading(true)
-      .setErrorLoading(false);
+    this.setLoading(true).setErrorLoading(false);
 
     try {
-      const entities = await this.feedsService
-        .next()
-        .getEntities();
+      const entities = await this.feedsService.next().getEntities();
 
       // if the endpoint or the params are changed we ignore the result
-      if (endpoint !== this.feedsService.endpoint || params !== this.feedsService.params) return;
+      if (
+        endpoint !== this.feedsService.endpoint ||
+        params !== this.feedsService.params
+      )
+        return;
 
       this.addEntities(entities);
-
     } catch (err) {
       // ignore aborts
       if (err.code === 'Abort') return;

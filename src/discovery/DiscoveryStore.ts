@@ -1,5 +1,5 @@
 //@ts-nocheck
-import {action, observable} from 'mobx';
+import { action, observable } from 'mobx';
 
 import NewsfeedFilterStore from '../common/stores/NewsfeedFilterStore';
 import DiscoveryFeedStore from './DiscoveryFeedStore';
@@ -31,7 +31,7 @@ class DiscoveryStore {
    */
   onSearchChangeDisposer;
 
-  @observable query = ''
+  @observable query = '';
 
   constructor() {
     this.feedStore = new DiscoveryFeedStore(this.filters);
@@ -42,9 +42,13 @@ class DiscoveryStore {
    */
   listenChanges() {
     // react to filter changes
-    this.onFilterChangeDisposer = this.filters.onFilterChange(this.onFilterChange);
+    this.onFilterChangeDisposer = this.filters.onFilterChange(
+      this.onFilterChange,
+    );
     // react to search changes
-    this.onSearchChangeDisposer = this.filters.onSearchChange(this.onSearchChange);
+    this.onSearchChangeDisposer = this.filters.onSearchChange(
+      this.onSearchChange,
+    );
   }
 
   /**
@@ -60,8 +64,8 @@ class DiscoveryStore {
       .setInjectBoost(false)
       .setPaginated(false)
       .getMetadataService()
-        .setSource('feed/discovery')
-        .setMedium('feed');
+      .setSource('feed/discovery')
+      .setMedium('feed');
   }
 
   /**
@@ -88,12 +92,20 @@ class DiscoveryStore {
   };
 
   fetch(refresh = false) {
-    const hashtags = getStores().hashtag.hashtag ? encodeURIComponent(getStores().hashtag.hashtag) : '';
+    const hashtags = getStores().hashtag.hashtag
+      ? encodeURIComponent(getStores().hashtag.hashtag)
+      : '';
     const all = getStores().hashtag.all ? '1' : '';
 
     this.listStore
-      .setEndpoint(`api/v2/feeds/global/${this.filters.filter}/${this.filters.type}`)
-      .setLimit((this.filters.type === 'images' || this.filters.type === 'videos') ? 24 : 12)
+      .setEndpoint(
+        `api/v2/feeds/global/${this.filters.filter}/${this.filters.type}`,
+      )
+      .setLimit(
+        this.filters.type === 'images' || this.filters.type === 'videos'
+          ? 24
+          : 12,
+      )
       .setInjectBoost(this.filters.type === 'activities')
       .setAsActivities(this.filters.type !== 'blogs')
       .setParams({

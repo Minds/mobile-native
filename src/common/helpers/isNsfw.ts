@@ -4,5 +4,7 @@ export default function isNsfw(entity) {
 }
 
 export function isEntityNsfw(entity) {
-  return Boolean(entity && (entity.mature || (entity.nsfw && entity.nsfw.length > 0)));
+  return Boolean(
+    entity && (entity.mature || (entity.nsfw && entity.nsfw.length > 0)),
+  );
 }

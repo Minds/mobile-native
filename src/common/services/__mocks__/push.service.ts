@@ -6,4 +6,4 @@ export default {
   setBadgeCount: jest.fn(),
   setOnInitialNotification: jest.fn(),
   handleInitialNotification: jest.fn(),
-}
+};

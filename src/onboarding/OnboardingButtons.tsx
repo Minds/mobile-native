@@ -1,8 +1,8 @@
 //@ts-nocheck
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import {ComponentsStyle} from '../styles/Components';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ComponentsStyle } from '../styles/Components';
 import Button from '../common/components/Button';
 import i18n from '../common/services/i18n.service';
 

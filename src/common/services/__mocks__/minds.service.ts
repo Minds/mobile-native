@@ -1,4 +1,4 @@
 //@ts-nocheck
 export default {
-  getSettings: jest.fn()
-}
+  getSettings: jest.fn(),
+};

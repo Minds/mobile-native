@@ -1,7 +1,8 @@
 //@ts-nocheck
 export const ERRORS = {
-  'E_INVALID_STORAGE_PASSWORD': 'You either failed entering your passwords too many times, or cancelled the operation.',
-}
+  E_INVALID_STORAGE_PASSWORD:
+    'You either failed entering your passwords too many times, or cancelled the operation.',
+};
 
 export default function readableError(message) {
   if (typeof ERRORS[message] !== 'undefined') {

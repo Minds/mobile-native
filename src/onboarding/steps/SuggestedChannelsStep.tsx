@@ -17,7 +17,6 @@ import i18n from '../../common/services/i18n.service';
 @inject('onboarding')
 @observer
 export default class SuggestedChannelsStep extends Component {
-
   /**
    * Component did mount
    */
@@ -30,12 +29,14 @@ export default class SuggestedChannelsStep extends Component {
    * Render user
    */
   renderUser = (user, index) => {
-    return <DiscoveryUser
-      row={{item: user}}
-      key={user.guid}
-      testID={`suggestedUser${index}`}
-    />
-  }
+    return (
+      <DiscoveryUser
+        row={{ item: user }}
+        key={user.guid}
+        testID={`suggestedUser${index}`}
+      />
+    );
+  };
 
   /**
    * Render
@@ -44,11 +45,19 @@ export default class SuggestedChannelsStep extends Component {
     return (
       <View>
         <View style={[CS.padding4x]} testID="suggestedChannelWizard">
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>{i18n.t('onboarding.suggestedChannels')}</Text>
-          <Text style={[CS.fontL, CS.colorDarkGreyed, CS.marginBottom3x]}>{i18n.t('onboarding.suggestedChannelsDescription')}</Text>
+          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
+            {i18n.t('onboarding.suggestedChannels')}
+          </Text>
+          <Text style={[CS.fontL, CS.colorDarkGreyed, CS.marginBottom3x]}>
+            {i18n.t('onboarding.suggestedChannelsDescription')}
+          </Text>
         </View>
-        {!this.props.onboarding.suggestedUsers.list.loaded && <ActivityIndicator/>}
-        {this.props.onboarding.suggestedUsers.list.entities.map((user, i) => this.renderUser(user, i))}
+        {!this.props.onboarding.suggestedUsers.list.loaded && (
+          <ActivityIndicator />
+        )}
+        {this.props.onboarding.suggestedUsers.list.entities.map((user, i) =>
+          this.renderUser(user, i),
+        )}
       </View>
     );
   }

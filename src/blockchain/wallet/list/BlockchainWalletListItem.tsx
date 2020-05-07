@@ -1,11 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  Text,
-  View,
-  StyleSheet,
-} from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -24,7 +20,7 @@ function aliasOrAddressExcerpt(item) {
 }
 
 function addressExcerpt(address, length = 5) {
-  if (!address || (address.toLowerCase().indexOf('0x') !== 0)) {
+  if (!address || address.toLowerCase().indexOf('0x') !== 0) {
     return address;
   }
 
@@ -36,7 +32,7 @@ function addressExcerpt(address, length = 5) {
 export default class BlockchainWalletListItem extends Component {
   state = {
     tokens: null,
-    eth: null
+    eth: null,
   };
 
   componentWillMount() {
@@ -53,7 +49,9 @@ export default class BlockchainWalletListItem extends Component {
       eth: null,
     });
 
-    const { tokens, eth } = await BlockchainWalletService.getFunds(this.props.item.address);
+    const { tokens, eth } = await BlockchainWalletService.getFunds(
+      this.props.item.address,
+    );
 
     this.setState({
       tokens,
@@ -67,9 +65,7 @@ export default class BlockchainWalletListItem extends Component {
     }
 
     if (isNaN(value)) {
-      return (<Text style={styles.value}>
-        {`${value}`}
-      </Text>);
+      return <Text style={styles.value}>{`${value}`}</Text>;
     }
 
     let amount = number(value, 0, 4);
@@ -78,11 +74,7 @@ export default class BlockchainWalletListItem extends Component {
       amount = abbrev(Math.floor(value), 0);
     }
 
-    return (
-      <Text style={styles.value}>
-        {`${amount}`}
-      </Text>
-    );
+    return <Text style={styles.value}>{`${amount}`}</Text>;
   }
 
   displayETH(value) {
@@ -96,49 +88,59 @@ export default class BlockchainWalletListItem extends Component {
       amount = abbrev(Math.floor(value), 0);
     }
 
-    return (
-      <Text style={styles.eth}>
-        {`${amount}`} ETH
-      </Text>
-    );
+    return <Text style={styles.eth}>{`${amount}`} ETH</Text>;
   }
 
   render() {
     return (
       <View style={styles.container}>
-
         <View>
           <View style={styles.headerContainer}>
             <Text style={[styles.label]}>
               {aliasOrAddressExcerpt(this.props.item).toUpperCase()}
             </Text>
 
-            { this.props.item.remote ?
-              <Text style={[styles.tag, styles.tagPrimary]}>{i18n.t('blockchain.receiver').toUpperCase()}</Text>
-              : null }
+            {this.props.item.remote ? (
+              <Text style={[styles.tag, styles.tagPrimary]}>
+                {i18n.t('blockchain.receiver').toUpperCase()}
+              </Text>
+            ) : null}
 
-            { this.props.item.offchain ?
-              <Text style={[styles.tag, styles.tagPrimary]}>{i18n.t('blockchain.offchain').toUpperCase()}</Text>
-              : null }
+            {this.props.item.offchain ? (
+              <Text style={[styles.tag, styles.tagPrimary]}>
+                {i18n.t('blockchain.offchain').toUpperCase()}
+              </Text>
+            ) : null}
           </View>
 
           <View style={styles.subContainer}>
-            { !this.props.item.privateKey && !this.props.item.offchain && !this.props.item.creditcard ?
-              <Text style={[styles.tag, { marginRight: 8, marginLeft: 0}]}>{i18n.t('blockchain.receivaOnly')}</Text>
-              : null }
+            {!this.props.item.privateKey &&
+            !this.props.item.offchain &&
+            !this.props.item.creditcard ? (
+              <Text style={[styles.tag, { marginRight: 8, marginLeft: 0 }]}>
+                {i18n.t('blockchain.receivaOnly')}
+              </Text>
+            ) : null}
 
-            { !this.props.item.creditcard && <Text style={styles.listAddress}>{addressExcerpt(this.props.item.address, 5)}</Text>}
+            {!this.props.item.creditcard && (
+              <Text style={styles.listAddress}>
+                {addressExcerpt(this.props.item.address, 5)}
+              </Text>
+            )}
 
-            { this.props.item.creditcard && <Text style={styles.listAddress}>{i18n.t('blockchain.noTokensNoProblem')}</Text> }
+            {this.props.item.creditcard && (
+              <Text style={styles.listAddress}>
+                {i18n.t('blockchain.noTokensNoProblem')}
+              </Text>
+            )}
           </View>
-
         </View>
 
         <View style={{ flexGrow: 1 }}></View>
 
         <View style={styles.valueContainer}>
           {this.displayValue(this.state.tokens, 'TOK')}
-          { !this.props.item.offchain && this.displayETH(this.state.eth)}
+          {!this.props.item.offchain && this.displayETH(this.state.eth)}
         </View>
       </View>
     );

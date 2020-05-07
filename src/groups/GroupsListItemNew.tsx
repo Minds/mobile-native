@@ -55,7 +55,7 @@ class GroupsListItemNew extends Component {
         containerStyle={styles.container}
         title={this.props.group.name}
         titleStyle={[styles.title, CS.colorPrimaryText]}
-        keyExtractor={item => item.rowKey}
+        keyExtractor={(item) => item.rowKey}
         leftAvatar={this.state.source}
         subtitle={i18n.t('groups.listMembersCount', {
           count: abbrev(this.props.group['members:count']),

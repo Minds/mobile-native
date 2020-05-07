@@ -1,36 +1,37 @@
-//@ts-nocheck
 import { Platform, Alert } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker, { Options, Image } from 'react-native-image-crop-picker';
 
 import androidPermissions from './android-permissions.service';
 
-import i18n from './i18n.service';
+export interface CustomImage extends Image {
+  uri: string;
+  type: string;
+}
+
+type mediaType = 'photo' | 'video' | 'any';
+type imagePromise = false | Image | Image[];
+export type customImagePromise = false | CustomImage | CustomImage[];
 
 /**
  * Image picker service
  */
 class ImagePickerService {
-
-  showMessage(message) {
-    setTimeout(() => { // without settimeout alert is not shown
-      Alert.alert(
-        message
-      );
+  showMessage(message: string): void {
+    setTimeout(() => {
+      // without settimeout alert is not shown
+      Alert.alert(message);
     }, 100);
   }
 
   /**
    * Check if we have permission or ask the user
    */
-  async checkGalleryPermissions() {
+  async checkGalleryPermissions(): Promise<boolean> {
     let allowed = true;
 
-    if (Platform.OS != 'ios') {
+    if (Platform.OS !== 'ios') {
       allowed = await androidPermissions.checkReadExternalStorage();
-
-      if (allowed === -1) {
-        this.showMessage(i18n.t('imagePicker.deniedExternal'));
-      } else if (!allowed) {
+      if (!allowed) {
         // request user permission
         allowed = await androidPermissions.readExternalStorage();
       }
@@ -42,15 +43,12 @@ class ImagePickerService {
   /**
    * Check if we have permission or ask the user
    */
-  async checkCameraPermissions() {
+  async checkCameraPermissions(): Promise<boolean> {
     let allowed = true;
 
-    if (Platform.OS != 'ios') {
+    if (Platform.OS !== 'ios') {
       allowed = await androidPermissions.checkCamera();
-
-      if (allowed === -1) {
-        this.showMessage(i18n.t('imagePicker.deniedCamera'));
-      } else if (!allowed) {
+      if (!allowed) {
         // request user permission
         allowed = await androidPermissions.camera();
       }
@@ -59,7 +57,7 @@ class ImagePickerService {
     return allowed;
   }
 
-  async checkPermissions() {
+  async checkPermissions(): Promise<boolean> {
     const camera = await this.checkCameraPermissions();
     const gallery = await this.checkGalleryPermissions();
 
@@ -71,27 +69,17 @@ class ImagePickerService {
    *
    * @param {string} type photo or video
    */
-  async launchCamera(type = 'photo') {
+  async launchCamera(type: mediaType = 'photo'): Promise<customImagePromise> {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
 
-    if (!allowed) return false;
+    if (!allowed) {
+      return false;
+    }
 
-    const opt = this.buildOptions('', type)
+    const opt = this.buildOptions(type);
 
-    return new Promise((resolve, reject) => {
-      ImagePicker.launchCamera(opt, response => {
-        if (response.didCancel) {
-          resolve(null);
-        } else if (response.error) {
-          reject(response.error);
-        } else if (response.customButton) {
-          resolve(null);
-        } else {
-          resolve(response);
-        }
-      });
-    });
+    return this.returnCustom(ImagePicker.openCamera(opt));
   }
 
   /**
@@ -99,76 +87,83 @@ class ImagePickerService {
    *
    * @param {string} type photo or video
    */
-  async launchImageLibrary(type = 'photo') {
+  async launchImageLibrary(
+    type: mediaType = 'photo',
+  ): Promise<customImagePromise> {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
 
-    if (!allowed) return false;
+    if (!allowed) {
+      return false;
+    }
 
-    const opt = this.buildOptions('', type)
+    const opt = this.buildOptions(type);
 
-    return new Promise((resolve, reject) => {
-      ImagePicker.launchImageLibrary(opt, response => {
-        if (response.didCancel) {
-          resolve(null);
-        } else if (response.error) {
-          reject(response.error);
-        } else if (response.customButton) {
-          resolve(null);
-        } else {
-          resolve(response);
-        }
-      });
-    });
+    return this.returnCustom(ImagePicker.openPicker(opt));
   }
 
   /**
    * Show image picker selector
    *
-   * @param {string} title
    * @param {string} type   photo or video
    */
-  async show(title, type='photo') {
+  async show(
+    title: string,
+    type: mediaType = 'photo',
+    cropperCircleOverlay: boolean = false,
+  ): Promise<customImagePromise> {
     // check or ask for permissions
-    const allowed = this.checkPermissions();
+    const allowed = await this.checkPermissions();
 
-    if (!allowed) return false;
+    if (!allowed) {
+      return false;
+    }
 
-    const opt = this.buildOptions(title, type)
+    const opt = this.buildOptions(type);
 
-    return new Promise((resolve, reject) => {
-      ImagePicker.showImagePicker(opt, response => {
-        if (response.didCancel) {
-          resolve(null);
-        } else if (response.error) {
-          reject(response.error);
-        } else if (response.customButton) {
-          resolve(null);
-        } else {
-          resolve(response);
-        }
-      });
-    });
+    opt.cropperCircleOverlay = cropperCircleOverlay;
+
+    return this.returnCustom(ImagePicker.openPicker(opt));
+  }
+
+  async returnCustom(
+    promise: Promise<imagePromise>,
+  ): Promise<customImagePromise> {
+    try {
+      const response = await promise;
+
+      if (!response) {
+        return false;
+      }
+
+      if (Array.isArray(response)) {
+        return response.map((image: Image) =>
+          Object.assign({ uri: image.path, type: image.mime }, image),
+        );
+      } else {
+        return Object.assign(
+          { uri: response.path, type: response.mime },
+          response,
+        );
+      }
+    } catch (err) {
+      if (!err.message.includes('cancelled image selection')) {
+        throw err;
+      }
+      return false;
+    }
   }
 
   /**
-   * Build the options with i18n translated texts
-   * @param {string} title
+   * Build the options
    * @param {string} type
    */
-  buildOptions(title, type) {
+  buildOptions(type: mediaType): Options {
     return {
-      title,
       mediaType: type,
-      takePhotoButtonTitle: i18n.t('imagePicker.camera'),
-      chooseFromLibraryButtonTitle: i18n.t('imagePicker.gallery'),
-      cancelButtonTitle: i18n.t('imagePicker.cancel'),
-      noData: true, // improve performance! (no base64 conversion field)
-      storageOptions: {
-        cameraRoll: true,
-        waitUntilSaved: true,
-      },
-    }
+      cropping: true,
+      showCropGuidelines: false,
+    };
   }
 }
 

@@ -1,13 +1,12 @@
 //@ts-nocheck
-import sqliteStorageProviderService from "../sqlite-storage-provider.service";
-import logService from "../log.service";
-import moment from "moment";
+import sqliteStorageProviderService from '../sqlite-storage-provider.service';
+import logService from '../log.service';
+import moment from 'moment';
 
 /**
  * Feeds Storage
  */
 export class FeedsStorage {
-
   /**
    * @var {SqliteService}
    */
@@ -55,7 +54,9 @@ export class FeedsStorage {
 
     try {
       const key = this.getKey(feed);
-      const [result] = await this.db.executeSql(
+      const [
+        result,
+      ] = await this.db.executeSql(
         'SELECT * FROM feeds WHERE key=? AND offset=?;',
         [key, 0],
       );
@@ -86,7 +87,9 @@ export class FeedsStorage {
   async removeOlderThan(days) {
     const when = moment().subtract(days, 'days');
     await this.getDb();
-    this.db.executeSql('DELETE FROM feeds WHERE updated < ?', [when.format("X")]);
+    this.db.executeSql('DELETE FROM feeds WHERE updated < ?', [
+      when.format('X'),
+    ]);
   }
 
   /**
@@ -94,15 +97,18 @@ export class FeedsStorage {
    * @param {Array} data
    */
   map(data) {
-    return data.map(m => ({urn: m.urn, timestamp: m.timestamp ? Math.floor(m.timestamp/ 1000) : null, owner_guid: m.owner_guid}))
+    return data.map((m) => ({
+      urn: m.urn,
+      timestamp: m.timestamp ? Math.floor(m.timestamp / 1000) : null,
+      owner_guid: m.owner_guid,
+    }));
   }
 
   /**
    * Generate the key from the state of the feeds service
    * @param {FeedsService} feed
    */
-  getKey(feed)
-  {
+  getKey(feed) {
     return feed.endpoint + JSON.stringify(feed.params);
   }
 
@@ -117,4 +123,4 @@ export class FeedsStorage {
   }
 }
 
-export default new FeedsStorage;
+export default new FeedsStorage();

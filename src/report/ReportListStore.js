@@ -1,12 +1,8 @@
 //@ts-nocheck
-import {
-  observable,
-  action
-} from 'mobx'
+import { observable, action } from 'mobx';
 
 export default class ReportListStore {
-
-   /**
+  /**
    * list is refreshing
    */
   @observable refreshing = false;
@@ -40,7 +36,6 @@ export default class ReportListStore {
   @action
   setList(list, replace = false) {
     if (list.appeals) {
-
       if (replace) {
         list.appeals.forEach((appeal) => {
           appeal._list = this;
@@ -75,19 +70,19 @@ export default class ReportListStore {
   }
 
   remove(appeal) {
-    const index = this.appeals.findIndex(e => e === appeal);
+    const index = this.appeals.findIndex((e) => e === appeal);
     if (index < 0) return;
     this.removeIndex(index);
   }
 
   getIndex(appeal) {
-    return this.appeals.findIndex(e => e === appeal);
+    return this.appeals.findIndex((e) => e === appeal);
   }
 
   @action
   async clearList(updateLoaded = true) {
     this.appeals = [];
-    this.offset   = '';
+    this.offset = '';
     this.errorLoading = false;
     if (updateLoaded) {
       this.loaded = false;
@@ -114,6 +109,4 @@ export default class ReportListStore {
   cantLoadMore() {
     return this.loaded && !this.offset && !this.refreshing;
   }
-
 }
-

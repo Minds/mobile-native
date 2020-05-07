@@ -1,12 +1,7 @@
 //@ts-nocheck
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
-import {
-  Text,
-  View
-} from 'react-native';
+import { Text, View } from 'react-native';
 
 import { CommonStyle } from '../../styles/Common';
 import currency from '../../common/helpers/currency';
@@ -38,31 +33,51 @@ export default class PaymentSelector extends PureComponent {
    */
   getOption(method, text, value, selected) {
     const isSelected = this.props.value === method;
-    const colorStlye = isSelected ? ThemedStyles.style.colorPrimaryText : ThemedStyles.colorSecondaryText;
+    const colorStlye = isSelected
+      ? ThemedStyles.style.colorPrimaryText
+      : ThemedStyles.colorSecondaryText;
     return (
-      <Touchable style={[CommonStyle.flexContainer, CommonStyle.paddingRight]} onPress={() => this.change(method)}>
+      <Touchable
+        style={[CommonStyle.flexContainer, CommonStyle.paddingRight]}
+        onPress={() => this.change(method)}>
         <View>
-          <Text style={[CommonStyle.fontXL, colorStlye]}>{currency(!isNaN(value) ? value : 0, method, 'prefix')}</Text>
+          <Text style={[CommonStyle.fontXL, colorStlye]}>
+            {currency(!isNaN(value) ? value : 0, method, 'prefix')}
+          </Text>
           <Text style={[CommonStyle.fontS, colorStlye]}>{text}</Text>
           {isSelected && false && selected}
         </View>
       </Touchable>
-    )
+    );
   }
 
   /**
    * Render
    */
   render() {
-    const selected = <Text style={[CommonStyle.fontS, CommonStyle.colorPrimary]}>{i18n.t('boosts.selected')}</Text>,
-      usd = this.getOption('usd', i18n.t('usd'), this.props.values.usd, selected),
-      tokens = this.getOption('tokens', i18n.t('tokens'), this.props.values.tokens, selected);
+    const selected = (
+        <Text style={[CommonStyle.fontS, CommonStyle.colorPrimary]}>
+          {i18n.t('boosts.selected')}
+        </Text>
+      ),
+      usd = this.getOption(
+        'usd',
+        i18n.t('usd'),
+        this.props.values.usd,
+        selected,
+      ),
+      tokens = this.getOption(
+        'tokens',
+        i18n.t('tokens'),
+        this.props.values.tokens,
+        selected,
+      );
 
     return (
       <View style={CommonStyle.rowJustifyStart}>
         {this.props.type !== 'p2p' && false && usd}
         {FeaturesService.has('crypto') && tokens}
       </View>
-    )
+    );
   }
 }

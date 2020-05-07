@@ -1,9 +1,10 @@
 //@ts-nocheck
 import React, { useCallback } from 'react';
-import { View, FlatList, Text } from 'react-native';
-import SettingsItem from '../SettingsItem';
+import { Text, ScrollView } from 'react-native';
+import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
+import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
@@ -33,10 +34,10 @@ export default function ({ navigation }) {
   ]);
 
   const contentAdmin = [
-    {
+    /*{
       title: i18n.t('settings.otherOptions.a1'),
       onPress: navToReportedContent,
-    },
+    },*/
     {
       title: i18n.t('settings.blockedChannels'),
       onPress: navToBlockedChannels,
@@ -75,43 +76,32 @@ export default function ({ navigation }) {
   const subTitle = [theme.colorTertiaryText, theme.fontM, theme.paddingLeft3x];
 
   return (
-    <View
-      style={[
-        theme.flexContainer,
-        theme.backgroundPrimary,
-        theme.borderTopHair,
-        theme.borderBottomHair,
-        theme.borderPrimary,
-      ]}>
-      <Text style={[subTitle, styles.subTitle]}>
-        {i18n.t('settings.otherOptions.a')}
-      </Text>
+    <ScrollView style={[theme.flexContainer, theme.backgroundPrimary]}>
+      <MenuSubtitle>{i18n.t('settings.otherOptions.a')}</MenuSubtitle>
       {contentAdmin.map((item, i) => (
-        <SettingsItem item={item} i={i} />
+        <MenuItem item={item} i={i} />
       ))}
 
-      <Text style={[subTitle, styles.subTitle]}>
+      {/*
+      <MenuSubtitle>
         {i18n.t('settings.otherOptions.b')}
-      </Text>
+      </MenuSubtitle>
       {paidContent.map((item, i) => (
-        <SettingsItem item={item} i={i} />
+        <MenuItem item={item} i={i} />
       ))}
+      */}
 
-      <Text style={[subTitle, styles.subTitle]}>
-        {i18n.t('settings.otherOptions.c')}
-      </Text>
+      <MenuSubtitle>{i18n.t('settings.otherOptions.c')}</MenuSubtitle>
       {account.map((item, i) => (
-        <SettingsItem item={item} i={i} />
+        <MenuItem item={item} i={i} />
       ))}
 
-      <Text style={[subTitle, styles.subTitle]}>
-        {i18n.t('settings.otherOptions.d')}
-      </Text>
+      <MenuSubtitle>{i18n.t('settings.otherOptions.d')}</MenuSubtitle>
       {info.map((item, i) => (
-        <SettingsItem item={item} i={i} />
+        <MenuItem item={item} i={i} />
       ))}
-    </View>
-  )
+    </ScrollView>
+  );
 }
 
 const styles = {

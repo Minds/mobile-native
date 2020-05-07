@@ -39,7 +39,7 @@ export default class RegisterScreen extends Component {
   /**
    * On register
    */
-  onRegister = guid => {
+  onRegister = (guid) => {
     logService.info('[Register] new user registered ' + guid);
   };
 }

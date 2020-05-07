@@ -6,5 +6,5 @@ export default {
   hasItem: jest.fn(),
   getKeys: jest.fn(),
   getUser: jest.fn(),
-  setUser: jest.fn()
-}
+  setUser: jest.fn(),
+};

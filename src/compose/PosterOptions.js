@@ -28,7 +28,7 @@ const height = Platform.select({ android: 80, ios: 90 });
 /**
  * Header
  */
-const Header = props => (
+const Header = (props) => (
   <Touchable
     onPress={props.onPress}
     style={[
@@ -51,7 +51,7 @@ const Header = props => (
 /**
  * Item
  */
-const Item = props => {
+const Item = (props) => {
   return (
     <Touchable
       style={[styles.row, ThemedStyles.style.borderPrimary]}
@@ -81,7 +81,8 @@ function useNavCallback(screen, props) {
  * Options
  * @param {Object} props
  */
-export default observer(function(props) {
+export default observer(function (props) {
+  const theme = ThemedStyles.style;
   // dereference observables to listen to his changes
   const nsfw = props.store.nsfw.slice();
   const tags = props.store.tags;
@@ -132,10 +133,10 @@ export default observer(function(props) {
   }, [keyboard.keyboardShown]);
 
   const renderInner = () => (
-    <View style={ThemedStyles.style.backgroundPrimary}>
+    <View style={[theme.backgroundPrimary, theme.fullHeight]}>
       <Item
         title="Tag"
-        description={tags.slice(0, 4).map(t => `#${t} `)}
+        description={tags.slice(0, 4).map((t) => `#${t} `)}
         onPress={onTagPress}
       />
       <Item
@@ -167,10 +168,10 @@ export default observer(function(props) {
         />
       )}
       {/* <Item
-        title="Visibility"
-        description="Public"
-        onPress={onMonetizePress}
-      /> */}
+          title="Visibility"
+          description="Public"
+          onPress={onMonetizePress}
+        /> */}
     </View>
   );
 
@@ -184,6 +185,7 @@ export default observer(function(props) {
       )}
       enabledInnerScrolling={true}
       enabledContentTapInteraction={true}
+      style={ThemedStyles.style.backgroundPrimary}
       onOpenEnd={onOpenEnd}
       onCloseEnd={onCloseEnd}
     />

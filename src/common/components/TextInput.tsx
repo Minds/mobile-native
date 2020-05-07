@@ -6,16 +6,18 @@ import { TextInput } from 'react-native';
  * Workaround for copy/paste issue on android
  * https://github.com/facebook/react-native/issues/20887
  */
-export default class AlternativeTextInput extends React.Component<Props, State> {
-
+export default class AlternativeTextInput extends React.Component<
+  Props,
+  State
+> {
   static defaultProps = {
     editable: true,
-  }
+  };
 
   constructor(props) {
     super(props);
     this.state = {
-      editable: !props.editable
+      editable: !props.editable,
     };
   }
 

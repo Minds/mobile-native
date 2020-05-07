@@ -12,10 +12,10 @@ import {
   Text,
 } from 'react-native';
 
-import { CommonStyle as CS } from '../styles/Common';
 import GrousBarItem from './GroupsBarItem';
 import i18n from '../common/services/i18n.service';
 import GroupModel from './GroupModel';
+import ThemedStyles from '../styles/ThemedStyles';
 
 @inject('groupsBar')
 @observer
@@ -80,20 +80,27 @@ export default class GroupsBar extends Component {
   };
 
   renderError() {
+    const theme = ThemedStyles.style;
     return (
-      <TouchableOpacity onPress={this.load} style={[CS.flexContainer]}>
-        <View style={[CS.columnAlignCenter, CS.centered, CS.padding2x]}>
-          <Text style={[CS.fontXS, CS.colorDarkGreyed, CS.marginBottom]}>
+      <TouchableOpacity onPress={this.load} style={[theme.flexContainer]}>
+        <View
+          style={[theme.columnAlignCenter, theme.centered, theme.padding2x]}>
+          <Text
+            style={[
+              theme.fontXS,
+              theme.colorSecondaryText,
+              theme.marginBottom,
+            ]}>
             {i18n.t('groups.errorLoading')}
           </Text>
           <Text
             style={[
-              CS.fontS,
-              CS.colorPrimary,
-              CS.borderPrimary,
-              CS.border,
-              CS.borderRadius7x,
-              CS.padding,
+              theme.fontS,
+              theme.colorLink,
+              theme.borderPrimary,
+              theme.border,
+              theme.borderRadius7x,
+              theme.padding,
             ]}>
             {i18n.t('tryAgain')}
           </Text>
@@ -106,6 +113,7 @@ export default class GroupsBar extends Component {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     return (
       <FlatList
         ListFooterComponent={
@@ -114,11 +122,14 @@ export default class GroupsBar extends Component {
           ) : this.props.groupsBar.loading ? (
             <ActivityIndicator
               size="large"
-              style={[CS.padding, styles.loading]}
+              style={[theme.padding, styles.loading]}
             />
           ) : undefined
         }
-        contentContainerStyle={[CS.rowJustifyStart, CS.backgroundTransparent]}
+        contentContainerStyle={[
+          theme.rowJustifyStart,
+          theme.backgroundSecondary,
+        ]}
         style={[styles.bar]}
         horizontal={true}
         renderItem={this.renderItem}

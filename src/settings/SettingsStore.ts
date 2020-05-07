@@ -9,7 +9,6 @@ import ThemedStyles from '../styles/ThemedStyles';
  * Store for the values held in Settings.
  */
 class SettingsStore {
-
   @observable appLog = true;
   @observable leftHanded = null;
 
@@ -97,6 +96,5 @@ class SettingsStore {
     storageService.setItem('UseHashtags', value);
     this.useHashtags = value;
   }
-
 }
-export default new SettingsStore;
+export default new SettingsStore();

@@ -24,6 +24,7 @@ class AndroidPermissionsService {
       const granted = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
       );
+      console.log('granted', granted);
       return granted;
     } catch (err) {
       console.warn(err);
@@ -97,7 +98,7 @@ class AndroidPermissionsService {
   /**
    * Check camera
    */
-  async checkCamera() {
+  async checkCamera(): Promise<boolean> {
     try {
       const granted = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.CAMERA,

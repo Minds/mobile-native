@@ -1,8 +1,6 @@
 //@ts-nocheck
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
@@ -12,15 +10,14 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react'
-import token from "../../common/helpers/token";
-import number from "../../common/helpers/number";
+import { observer, inject } from 'mobx-react';
+import token from '../../common/helpers/token';
+import number from '../../common/helpers/number';
 import i18n from '../../common/services/i18n.service';
 
 @inject('wallet')
 @observer
 export default class WalletBalanceTokens extends Component {
-
   componentDidMount() {
     this.props.wallet.refresh();
   }
@@ -50,43 +47,64 @@ export default class WalletBalanceTokens extends Component {
   }
 
   render() {
-
     let addresses = null;
 
     if (this.props.wallet.addresses) {
       addresses = (
         <View style={styles.addressesContainer}>
-          { this.props.wallet.addresses.map((address, i) => {
-            return (<View style={styles.addressesRow} key={i}>
-              <View style={ styles.addressColumn }>
-                <Text style={ styles.addressesLabel }>{ address.label } {i18n.t('wallet.address')}</Text>
-                <Text style={ styles.addressesAddress } ellipsizeMode='tail' numberOfLines={1} selectable>{ address.address }</Text>
+          {this.props.wallet.addresses.map((address, i) => {
+            return (
+              <View style={styles.addressesRow} key={i}>
+                <View style={styles.addressColumn}>
+                  <Text style={styles.addressesLabel}>
+                    {address.label} {i18n.t('wallet.address')}
+                  </Text>
+                  <Text
+                    style={styles.addressesAddress}
+                    ellipsizeMode="tail"
+                    numberOfLines={1}
+                    selectable>
+                    {address.address}
+                  </Text>
+                </View>
+                <View style={styles.addressColumn}>
+                  <Text style={styles.addressesBalance}>
+                    {number(token(address.balance, 18), 3)}
+                  </Text>
+                  {address.address != 'offchain' && (
+                    <Text
+                      style={[
+                        styles.addressesBalance,
+                        styles.addressesEthBalance,
+                      ]}>
+                      {address.ethBalance ? number(address.ethBalance, 3) : 0}{' '}
+                      ETH
+                    </Text>
+                  )}
+                </View>
               </View>
-              <View style={ styles.addressColumn }>
-                <Text style={ styles.addressesBalance }>{ number(token(address.balance, 18),3) }</Text>
-                { address.address != 'offchain' && <Text style={[styles.addressesBalance, styles.addressesEthBalance]}>{ address.ethBalance ? number(address.ethBalance, 3) : 0 } ETH</Text> }
-              </View>
-            </View>);
+            );
           })}
         </View>
       );
-    };
+    }
 
     return (
-      <View style={ styles.container }>
-        <View style={ styles.view }>
+      <View style={styles.container}>
+        <View style={styles.view}>
           <Image
-            resizeMode={"contain"}
+            resizeMode={'contain'}
             style={styles.logo}
             source={require('../../assets/logos/bulb.png')}
           />
-          <Text style={ styles.amount }>{ this.props.wallet.formattedBalance }</Text>
-          <Text style={ styles.currency }>{i18n.t('tokens')}</Text>
+          <Text style={styles.amount}>
+            {this.props.wallet.formattedBalance}
+          </Text>
+          <Text style={styles.currency}>{i18n.t('tokens')}</Text>
           <View style={{ flex: 1 }}></View>
-
         </View>
 
-        { addresses }
+        {addresses}
       </View>
     );
   }
@@ -154,5 +172,5 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '700',
     fontFamily: 'Roboto',
-  }
+  },
 });

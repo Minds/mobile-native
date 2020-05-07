@@ -31,6 +31,12 @@ class OnboardingScreen extends Component {
     header: null,
   };
 
+  state = {
+    loading: false,
+  };
+
+  setLoading = (loading: boolean) => this.setState({ loading });
+
   /**
    * Component did mount
    */
@@ -55,13 +61,16 @@ class OnboardingScreen extends Component {
 
   onFinish = async () => {
     try {
+      this.setLoading(true);
       await this.props.onboarding.setShown(true);
       //await this.props.onboarding.getProgress();
       this.props.hashtag.setAll(false);
       await this.loadJoinedGroups();
       await this.clearDiscovery();
+      this.setLoading(false);
       navigationService.navigate('Tabs');
     } catch (err) {
+      this.setLoading(false);
       Alert.alert(
         i18nService.t('error'),
         i18n.t('errorMessage') + '\n' + i18n.t('tryAgain'),
@@ -86,7 +95,7 @@ class OnboardingScreen extends Component {
     this.props.discovery.reset();
   };
 
-  handleWizarRef = ref => {
+  handleWizarRef = (ref) => {
     this.wizard = ref;
   };
 
@@ -95,6 +104,9 @@ class OnboardingScreen extends Component {
   onBack = () => this.wizard.previous();
 
   render() {
+    if (this.state.loading) {
+      return <CenteredLoading />;
+    }
     const CS = ThemedStyles.style;
     const steps = [];
     if (!this.props.onboarding.progress) {
@@ -102,7 +114,7 @@ class OnboardingScreen extends Component {
     }
     const completed_items = []; //this.props.onboarding.progress.completed_items;
 
-    if (!completed_items.some(r => r == 'creator_frequency')) {
+    if (!completed_items.some((r) => r == 'creator_frequency')) {
       steps.push({
         component: (
           <WelcomeStepNew onNext={this.onNext} onFinish={this.onFinish} />
@@ -111,7 +123,7 @@ class OnboardingScreen extends Component {
       });
     }
 
-    if (!completed_items.some(r => r == 'suggested_hashtags')) {
+    if (!completed_items.some((r) => r == 'suggested_hashtags')) {
       steps.push({
         component: (
           <HashtagsStepNew onNext={this.onNext} onBack={this.onBack} />
@@ -119,11 +131,11 @@ class OnboardingScreen extends Component {
       });
     }
 
-    if (!completed_items.some(r => r == 'tokens_verification')) {
+    if (!completed_items.some((r) => r == 'tokens_verification')) {
       steps.push({
         component: (
           <ChannelSetupStepNew
-            ref={r => (this.channelSetup = r)}
+            ref={(r) => (this.channelSetup = r)}
             onNext={this.onNext}
             onBack={this.onBack}
           />
@@ -148,7 +160,8 @@ class OnboardingScreen extends Component {
           <Wizard
             steps={steps}
             onFinish={this.onFinish}
-            ref={this.handleWizarRef}></Wizard>
+            ref={this.handleWizarRef}
+          />
         </KeyboardAvoidingView>
       </SafeAreaView>
     );

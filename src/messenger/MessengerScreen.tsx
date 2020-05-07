@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   Text,
   View,
@@ -67,7 +67,7 @@ class MessengerScreen extends Component {
     //this.disposeLeave();
   }
 
-  searchDebouncer = _.debounce(search => {
+  searchDebouncer = _.debounce((search) => {
     this.props.messengerList.setSearch(search);
   }, 200);
 
@@ -125,18 +125,27 @@ class MessengerScreen extends Component {
 
     return (
       <SafeAreaView style={[styles.container, theme.backgroundSecondary]}>
-        <SearchView
-          placeholder={i18n.t('discovery.search')}
-          onChangeText={this.searchChange}
-          iconRight={iconRight}
-          containerStyle={[theme.backgroundPrimary, theme.marginTop2x]}
-          iconRightOnPress={this.onLogoutPress}
-        />
+        <View
+          style={[theme.rowJustifyStart, theme.alignCenter, theme.marginTop2x]}>
+          <MIcon
+            size={45}
+            name="chevron-left"
+            style={[styles.backIcon, theme.colorIcon]}
+            onPress={this.props.navigation.goBack}
+          />
+          <SearchView
+            placeholder={i18n.t('discovery.search')}
+            onChangeText={this.searchChange}
+            iconRight={iconRight}
+            containerStyle={[theme.backgroundPrimary, theme.flexContainer]}
+            iconRightOnPress={this.onLogoutPress}
+          />
+        </View>
         {loadingCmp}
         <FlatList
           data={conversations.slice()}
           renderItem={this.renderMessage}
-          keyExtractor={item => item.guid}
+          keyExtractor={(item) => item.guid}
           onRefresh={this.refresh}
           onEndReached={this.loadMore}
           // onEndReachedThreshold={0.01}
@@ -169,7 +178,7 @@ class MessengerScreen extends Component {
    * Search change
    * We debounce to prevent a fetch to the server on every key pressed
    */
-  searchChange = search => {
+  searchChange = (search) => {
     this.searchDebouncer(search);
   };
 
@@ -191,7 +200,7 @@ class MessengerScreen extends Component {
    * render row
    * @param {object} row
    */
-  renderMessage = row => {
+  renderMessage = (row) => {
     return (
       <ConversationView
         item={row.item}
@@ -232,6 +241,12 @@ const styles = StyleSheet.create({
   },
   icons: {
     padding: 5,
+  },
+  backIcon: {
+    shadowOpacity: 0.4,
+    textShadowRadius: 4,
+    textShadowOffset: { width: 0, height: 0 },
+    elevation: 4,
   },
   row: {
     flexDirection: 'row',

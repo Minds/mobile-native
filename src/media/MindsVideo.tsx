@@ -1,8 +1,8 @@
 //@ts-nocheck
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 // workaround to fix tooltips on android
-import Tooltip from "rne-modal-tooltip";
+import Tooltip from 'rne-modal-tooltip';
 
 import {
   PanResponder,
@@ -21,9 +21,9 @@ import ProgressBar from './ProgressBar';
 
 let FORWARD_DURATION = 7;
 
-import {observer} from 'mobx-react';
+import { observer } from 'mobx-react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {CommonStyle as CS} from '../styles/Common';
+import { CommonStyle as CS } from '../styles/Common';
 import colors from '../styles/Colors';
 import ExplicitImage from '../common/components/explicit/ExplicitImage';
 import logService from '../common/services/log.service';
@@ -70,7 +70,7 @@ class MindsVideo extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.video && nextProps.video.uri !== prevState.video.uri) {
       return {
-        video: {uri: nextProps.video.uri},
+        video: { uri: nextProps.video.uri },
       };
     }
     return null;
@@ -108,7 +108,7 @@ class MindsVideo extends Component {
    * On video end
    */
   onVideoEnd = () => {
-    this.setState({key: new Date(), currentTime: 0, paused: true}, () => {
+    this.setState({ key: new Date(), currentTime: 0, paused: true }, () => {
       this.player.seek(0);
     });
   };
@@ -116,7 +116,7 @@ class MindsVideo extends Component {
   /**
    * On video load
    */
-  onVideoLoad = e => {
+  onVideoLoad = (e) => {
     let current = 0;
     if (this.state.changedModeTime > 0) {
       current = this.state.changedModeTime;
@@ -124,7 +124,11 @@ class MindsVideo extends Component {
       current = e.currentTime;
     }
 
-    this.setState({loaded: false, currentTime: current, duration: e.duration});
+    this.setState({
+      loaded: false,
+      currentTime: current,
+      duration: e.duration,
+    });
     this.player.seek(current);
 
     this.onLoadEnd();
@@ -134,27 +138,27 @@ class MindsVideo extends Component {
    * On load start
    */
   onLoadStart = () => {
-    this.setState({error: false, inProgress: true});
+    this.setState({ error: false, inProgress: true });
   };
 
   /**
    * On error
    */
-  onError = async err => {
+  onError = async (err) => {
     const entity = this.props.entity;
     try {
       const response = await attachmentService.isTranscoding(
         entity.entity_guid,
       );
       if (response.transcoding) {
-        this.setState({transcoding: true});
+        this.setState({ transcoding: true });
       } else {
         logService.exception('[MindsVideo]', new Error(err));
-        this.setState({error: true, inProgress: false});
+        this.setState({ error: true, inProgress: false });
       }
     } catch (error) {
       logService.exception('[MindsVideo]', new Error(error));
-      this.setState({error: true, inProgress: false});
+      this.setState({ error: true, inProgress: false });
     }
   };
 
@@ -162,7 +166,7 @@ class MindsVideo extends Component {
    * On load end
    */
   onLoadEnd = () => {
-    this.setState({error: false, inProgress: false});
+    this.setState({ error: false, inProgress: false });
   };
 
   /**
@@ -170,14 +174,14 @@ class MindsVideo extends Component {
    */
   toggleVolume = () => {
     const v = this.state.volume ? 0 : 1;
-    this.setState({volume: v});
+    this.setState({ volume: v });
   };
 
   /**
    * On progress
    */
-  onProgress = e => {
-    this.setState({currentTime: e.currentTime});
+  onProgress = (e) => {
+    this.setState({ currentTime: e.currentTime });
   };
 
   /**
@@ -187,7 +191,7 @@ class MindsVideo extends Component {
   onBackward(currentTime) {
     let newTime = Math.max(currentTime - FORWARD_DURATION, 0);
     this.player.seek(newTime);
-    this.setState({currentTime: newTime});
+    this.setState({ currentTime: newTime });
   }
 
   /**
@@ -201,7 +205,7 @@ class MindsVideo extends Component {
     } else {
       let newTime = currentTime + FORWARD_DURATION;
       this.player.seek(newTime);
-      this.setState({currentTime: newTime});
+      this.setState({ currentTime: newTime });
     }
   }
 
@@ -224,9 +228,9 @@ class MindsVideo extends Component {
    * @param {boolean} paused
    */
   onProgressChanged(newPercent, paused) {
-    let {duration} = this.state;
+    let { duration } = this.state;
     let newTime = (newPercent * duration) / 100;
-    this.setState({currentTime: newTime, paused: paused});
+    this.setState({ currentTime: newTime, paused: paused });
     this.player.seek(newTime);
   }
 
@@ -234,7 +238,7 @@ class MindsVideo extends Component {
    * Toggle full-screen
    */
   toggleFullscreen = () => {
-    this.setState({fullScreen: !this.state.fullScreen});
+    this.setState({ fullScreen: !this.state.fullScreen });
   };
 
   /**
@@ -250,9 +254,11 @@ class MindsVideo extends Component {
     };
 
     if (!this.state.sources && this.props.entity) {
-      const response = await attachmentService.getVideoSources(this.props.entity.entity_guid);
+      const response = await attachmentService.getVideoSources(
+        this.props.entity.entity_guid,
+      );
 
-      state.sources = response.sources.filter(v => v.type === 'video/mp4');
+      state.sources = response.sources.filter((v) => v.type === 'video/mp4');
 
       state.video = {
         uri: state.sources[0].src,
@@ -354,12 +360,12 @@ class MindsVideo extends Component {
           height={60}
           onOpen={this.openControlOverlay}
           backgroundColor="rgba(48,48,48,0.7)">
-            <Icon
-              name="ios-settings"
-              size={23}
-              color={colors.light}
-              style={CS.paddingLeft}
-            />
+          <Icon
+            name="ios-settings"
+            size={23}
+            color={colors.light}
+            style={CS.paddingLeft}
+          />
         </Tooltip>
       </View>
     );
@@ -382,7 +388,7 @@ class MindsVideo extends Component {
               CS.paddingBottom,
               i === this.state.source ? CS.bold : null,
             ]}
-            onPress={() => this.setState({source: i})}>
+            onPress={() => this.setState({ source: i })}>
             {s.size}p
           </Text>
         ))}
@@ -425,20 +431,20 @@ class MindsVideo extends Component {
   /**
    * Set the reference to the video player
    */
-  setRef = ref => {
+  setRef = (ref) => {
     this.player = ref;
   };
 
   onFullscreenPlayerDidDismiss = () => {
-    this.setState({fullScreen: false, paused: true});
+    this.setState({ fullScreen: false, paused: true });
   };
 
   /**
    * Get video component or thumb
    */
   get video() {
-    let {video, entity} = this.props;
-    let {paused, volume} = this.state;
+    let { video, entity } = this.props;
+    let { paused, volume } = this.state;
     const thumb_uri = entity
       ? entity.get('custom_data.thumbnail_src') || entity.thumbnail_src
       : null;
@@ -465,7 +471,7 @@ class MindsVideo extends Component {
         />
       );
     } else {
-      const image = {uri: thumb_uri};
+      const image = { uri: thumb_uri };
       return (
         <ExplicitImage
           onLoadEnd={this.onLoadEnd}
@@ -489,10 +495,9 @@ class MindsVideo extends Component {
     }
 
     const entity = this.props.entity;
-    let {currentTime, duration, paused} = this.state;
+    let { currentTime, duration, paused } = this.state;
 
-    const mustShow =
-      (this.state.showOverlay) || (this.state.paused && entity);
+    const mustShow = this.state.showOverlay || (this.state.paused && entity);
 
     if (mustShow) {
       const completedPercentage =
@@ -519,9 +524,16 @@ class MindsVideo extends Component {
             {this.player && this.settingsIcon}
             {this.player && (
               <View style={styles.controlBarContainer}>
-                {isIOS && <View style={[CS.padding, CS.rowJustifySpaceEvenly, CS.marginRight]}>
-                  {this.fullScreen}
-                </View>}
+                {isIOS && (
+                  <View
+                    style={[
+                      CS.padding,
+                      CS.rowJustifySpaceEvenly,
+                      CS.marginRight,
+                    ]}>
+                    {this.fullScreen}
+                  </View>
+                )}
                 {progressBar}
                 <View style={[CS.padding, CS.rowJustifySpaceEvenly]}>
                   {this.volumeIcon}
@@ -583,14 +595,23 @@ class MindsVideo extends Component {
    * Render
    */
   render() {
-    if (!(this.props.entity && this.props.entity.is_visible) && !this.state.pause && this.state.active) {
-      this.setState({pause: false, active: false, showOverlay: true});
+    if (
+      !(this.props.entity && this.props.entity.is_visible) &&
+      !this.state.pause &&
+      this.state.active
+    ) {
+      this.setState({ pause: false, active: false, showOverlay: true });
     }
-    const {error, inProgress, transcoding} = this.state;
+    const { error, inProgress, transcoding } = this.state;
 
     const overlay = this.renderOverlay();
     return (
-      <View style={[CS.flexContainer, CS.backgroundBlack, this.props.containerStyle]}>
+      <View
+        style={[
+          CS.flexContainer,
+          CS.backgroundBlack,
+          this.props.containerStyle,
+        ]}>
         <TouchableWithoutFeedback
           style={CS.flexContainer}
           onPress={this.openControlOverlay}>
@@ -655,7 +676,7 @@ let styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  fullScreen: {backgroundColor: 'black'},
+  fullScreen: { backgroundColor: 'black' },
   progressBar: {
     alignSelf: 'stretch',
     margin: 20,

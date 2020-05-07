@@ -4,7 +4,7 @@ import {
   action,
   reaction,
   runInAction,
-  extendObservable
+  extendObservable,
 } from 'mobx';
 
 import SettingsStore from '../../settings/SettingsStore';
@@ -35,10 +35,10 @@ export default class NewsfeedFilterStore {
     this.defaultNsfw = SettingsStore.consumerNsfw;
 
     extendObservable(this, {
-      filter : defaultFilter,
-      type : defaultType,
-      period : defaultPeriod,
-      nsfw : SettingsStore.consumerNsfw
+      filter: defaultFilter,
+      type: defaultType,
+      period: defaultPeriod,
+      nsfw: SettingsStore.consumerNsfw,
     });
   }
 
@@ -48,9 +48,9 @@ export default class NewsfeedFilterStore {
   @action
   clear() {
     this.filter = this.defaultFilter;
-    this.type   = this.defaultType;
+    this.type = this.defaultType;
     this.period = this.defaultPeriod;
-    this.nsfw   = this.defaultNsfw;
+    this.nsfw = this.defaultNsfw;
   }
 
   /**
@@ -111,8 +111,8 @@ export default class NewsfeedFilterStore {
   onFilterChange(fn) {
     return reaction(
       () => [this.filter, this.type, this.period, this.nsfw],
-      args => fn(...args),
-      { fireImmediately: false }
+      (args) => fn(...args),
+      { fireImmediately: false },
     );
   }
 
@@ -124,8 +124,8 @@ export default class NewsfeedFilterStore {
   onSearchChange(fn) {
     return reaction(
       () => this.searchtext,
-      q => fn(q),
-      { fireImmediately: false }
+      (q) => fn(q),
+      { fireImmediately: false },
     );
   }
 }

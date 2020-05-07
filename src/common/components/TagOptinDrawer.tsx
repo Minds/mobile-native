@@ -60,7 +60,7 @@ class TagOptinDrawer extends Component {
   /**
    * On select one tag
    */
-  onSelectOne = tag => {
+  onSelectOne = (tag) => {
     this.props.hashtag.setHashtag(tag);
     this.props.onSelectOne && this.props.onSelectOne(tag);
   };
@@ -140,7 +140,7 @@ class TagOptinDrawer extends Component {
               noScroll
               noAutofocus={true}
               hideTags={true}
-              tags={this.props.hashtag.suggested.map(m => m.value)}
+              tags={this.props.hashtag.suggested.map((m) => m.value)}
               onTagDeleted={this.props.hashtag.deselect}
               onTagAdded={this.props.hashtag.create}
               onChange={this.onChange}

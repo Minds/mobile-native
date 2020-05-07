@@ -1,15 +1,7 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  View,
-  StyleSheet,
-  Text,
-  TextInput,
-  Alert,
-} from 'react-native';
+import { View, StyleSheet, Text, TextInput, Alert } from 'react-native';
 
 import colors from '../../styles/Colors';
 import { CommonStyle } from '../../styles/Common';
@@ -19,15 +11,18 @@ import i18n from '../../common/services/i18n.service';
 import Button from '../../common/components/Button';
 
 export default class PasswordScreen extends Component {
-
   state = {
     currentPassword: '',
     newPassword: '',
-    confirmNewPassword:''
-  }
+    confirmNewPassword: '',
+  };
 
   submit() {
-    if (!this.state.currentPassword || !this.state.newPassword || !this.state.confirmNewPassword )
+    if (
+      !this.state.currentPassword ||
+      !this.state.newPassword ||
+      !this.state.confirmNewPassword
+    )
       return;
 
     if (this.state.confirmNewPassword !== this.state.newPassword) {
@@ -35,24 +30,26 @@ export default class PasswordScreen extends Component {
     } else {
       let params = {
         password: this.state.currentPassword,
-        new_password: this.state.newPassword
-      }
+        new_password: this.state.newPassword,
+      };
 
-      settingsService.submitSettings(params).then( (data) => {
-        Alert.alert(i18n.t('success'), i18n.t('settings.passwordChanged'));
-        this.setState({
-          currentPassword: '',
-          confirmNewPassword: '',
-          newPassword: ''
+      settingsService
+        .submitSettings(params)
+        .then((data) => {
+          Alert.alert(i18n.t('success'), i18n.t('settings.passwordChanged'));
+          this.setState({
+            currentPassword: '',
+            confirmNewPassword: '',
+            newPassword: '',
+          });
+        })
+        .catch((err) => {
+          Alert.alert('Error', err.message);
         });
-      }).catch( (err) => {
-        Alert.alert('Error', err.message);
-      });
     }
   }
 
   render() {
-
     return (
       <View style={CommonStyle.flexContainer}>
         <Text style={styles.title}>{i18n.t('settings.passwordTitle')}:</Text>
@@ -61,7 +58,7 @@ export default class PasswordScreen extends Component {
           placeholder={i18n.t('settings.currentPassword')}
           returnKeyType={'done'}
           placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
+          underlineColorAndroid="transparent"
           onChangeText={(value) => this.setState({ currentPassword: value })}
           autoCapitalize={'none'}
           secureTextEntry={true}
@@ -73,7 +70,7 @@ export default class PasswordScreen extends Component {
           placeholder={i18n.t('settings.newPassword')}
           returnKeyType={'done'}
           placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
+          underlineColorAndroid="transparent"
           onChangeText={(value) => this.setState({ newPassword: value })}
           autoCapitalize={'none'}
           secureTextEntry={true}
@@ -85,7 +82,7 @@ export default class PasswordScreen extends Component {
           placeholder={i18n.t('settings.confirmNewPassword')}
           returnKeyType={'done'}
           placeholderTextColor="#444"
-          underlineColorAndroid='transparent'
+          underlineColorAndroid="transparent"
           onChangeText={(value) => this.setState({ confirmNewPassword: value })}
           autoCapitalize={'none'}
           secureTextEntry={true}
@@ -95,7 +92,11 @@ export default class PasswordScreen extends Component {
         <Button
           text={i18n.t('settings.submit')}
           loading={this.state.saving}
-          containerStyle={[CommonStyle.marginTop3x, CommonStyle.padding2x, {alignSelf: 'center'}]}
+          containerStyle={[
+            CommonStyle.marginTop3x,
+            CommonStyle.padding2x,
+            { alignSelf: 'center' },
+          ]}
           onPress={() => this.submit()}
         />
       </View>
@@ -105,10 +106,10 @@ export default class PasswordScreen extends Component {
 
 const styles = StyleSheet.create({
   button: {
-    margin:20
+    margin: 20,
   },
   title: {
     padding: 8,
     fontSize: 18,
-  }
+  },
 });

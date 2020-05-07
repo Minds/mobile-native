@@ -29,6 +29,8 @@ import PasswordValidator from '../common/components/PasswordValidator';
 import validatePassword from '../common/helpers/validatePassword';
 
 import type { registerParams } from '../auth/AuthService';
+import Captcha from '../common/components/Captcha';
+import logService from '../common/services/log.service';
 
 /**
  * Register Form
@@ -36,6 +38,7 @@ import type { registerParams } from '../auth/AuthService';
 @inject('user')
 @observer
 class RegisterForm extends Component {
+  captcha;
   state = {
     error: {},
     password: '',
@@ -48,6 +51,11 @@ class RegisterForm extends Component {
     inProgress: false,
   };
 
+  constructor(props) {
+    super(props);
+    this.captcha = React.createRef();
+  }
+
   validatePassword(value) {
     let error = this.state.error;
     if (this.state.password !== value) {
@@ -56,7 +64,9 @@ class RegisterForm extends Component {
       error.confirmPasswordError = '';
     }
 
-    error.invalidPasswordError = !validatePassword(value).all ? i18n.t('auth.invalidPassword') : '';
+    error.invalidPasswordError = !validatePassword(value).all
+      ? i18n.t('auth.invalidPassword')
+      : '';
 
     this.setState({ error });
   }
@@ -71,16 +81,17 @@ class RegisterForm extends Component {
     this.setState({ termsAccepted: !!value, error });
   }
 
-  setUsername = username => this.setState({ username });
-  setEmail = email => this.setState({ email });
-  setPassword = password => this.setState({ password });
-  setConfirmPassword = confirmPassword => this.setState({ confirmPassword });
+  setUsername = (username) => this.setState({ username });
+  setEmail = (email) => this.setState({ email });
+  setPassword = (password) => this.setState({ password });
+  setConfirmPassword = (confirmPassword) => this.setState({ confirmPassword });
 
   getFormBody = () => {
     const CS = ThemedStyles.style;
     return (
       <ScrollView
         style={[CS.flexContainer, CS.marginTop2x]}
+        keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={[CS.paddingHorizontal4x, CS.paddingBottom5x]}>
         <SafeAreaView style={CS.flexContainer}>
           <TouchableOpacity
@@ -104,7 +115,7 @@ class RegisterForm extends Component {
           <Text style={[CS.colorAlert, CS.textCenter]}>
             {this.state.error.termsAcceptedError}
           </Text>
-          { this.state.passwordFocused ? (
+          {this.state.passwordFocused ? (
             <PasswordValidator password={this.state.password} />
           ) : (
             <>
@@ -166,9 +177,11 @@ class RegisterForm extends Component {
             testID="checkbox"
           />
 
+          <Captcha ref={this.captcha} onResult={this.onCaptchResult} />
+
           <View style={(CS.flexContainer, CS.paddingTop2x)}>
             <Button
-              onPress={() => this.onPressRegister()}
+              onPress={this.onPressRegister}
               borderRadius={2}
               containerStyle={[CS.button, CS.fullWidth]}
               textStyle={CS.buttonText}
@@ -213,19 +226,19 @@ class RegisterForm extends Component {
   }
 
   focusPassword = () => {
-    this.setState({passwordFocused: true});
+    this.setState({ passwordFocused: true });
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
 
   blurPassword = () => {
-    this.setState({passwordFocused: false});
+    this.setState({ passwordFocused: false });
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
   };
 
   /**
    * On press register
    */
-  async onPressRegister() {
+  onPressRegister = () => {
     this.validatePassword(this.state.confirmPassword);
 
     if (!this.state.termsAccepted) {
@@ -239,7 +252,10 @@ class RegisterForm extends Component {
     if (this.state.error.invalidPasswordError) {
       return Alert.alert(i18n.t('ops'), this.state.error.invalidPasswordError);
     }
+    this.captcha.current.show();
+  };
 
+  onCaptchResult = async (captcha: string) => {
     this.setState({ inProgress: true });
 
     try {
@@ -248,18 +264,29 @@ class RegisterForm extends Component {
         email: this.state.email,
         password: this.state.password,
         exclusive_promotions: this.state.exclusive_promotions,
+        captcha,
       } as registerParams;
       await authService.register(params);
       sessionService.setInitialScreen('OnboardingScreen');
       await apiService.clearCookies();
       await delay(100);
-      await authService.login(this.state.username, this.state.password);
+      try {
+        await authService.login(this.state.username, this.state.password);
+      } catch (err) {
+        try {
+          await authService.login(this.state.username, this.state.password);
+        } catch (error) {
+          Alert.alert(i18n.t('ops'), i18n.t('auth.failedToLoginNewAccount'));
+          logService.exception(error);
+        }
+      }
     } catch (err) {
       Alert.alert(i18n.t('ops'), err.message);
+      logService.exception(err);
     }
 
     this.setState({ inProgress: false });
-  }
+  };
 }
 
 export default RegisterForm;

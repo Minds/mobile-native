@@ -46,7 +46,13 @@ export interface ThemedStyle {
   backgroundSeparator: any;
   backgroundIcon: any;
   backgroundIconActive: any;
+  borderTransparent: any;
+  borderBackgroundPrimary: any;
+  borderBackgroundSecondary: any;
+  borderBackgroundTertiary: any;
   borderPrimary: any;
+  borderTab: any;
+  borderLink: any;
   borderIconActive: any;
   borderIcon: any;
   fontXS: any;
@@ -62,6 +68,8 @@ export interface ThemedStyle {
   textJustify: any;
   fullWidth: any;
   halfWidth: any;
+  fullHeight: any;
+  halfHeight: any;
   bold: any;
   extraBold: any;
   fontThin: any;
@@ -97,7 +105,7 @@ const step = 5;
 
 const dynamicStyles = {};
 
-for (let index = 0; index < repetitions; index++) {
+for (let index = 0; index <= repetitions; index++) {
   let value = step * index;
   const post = index === 1 ? '' : `${index}x`;
   dynamicStyles[`margin${post}`] = { margin: value };
@@ -284,8 +292,26 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
 
   // borders
+  borderTransparent: {
+    borderColor: 'transparent',
+  },
+  borderBackgroundPrimary: {
+    borderColor: theme.primary_background,
+  },
+  borderBackgroundSecondary: {
+    borderColor: theme.secondary_background,
+  },
+  borderBackgroundTertiary: {
+    borderColor: theme.tertiary_background,
+  },
+  borderLink: {
+    borderColor: theme.link,
+  },
   borderPrimary: {
     borderColor: theme.primary_border,
+  },
+  borderTab: {
+    borderColor: theme.tab_border,
   },
   borderIconActive: {
     borderColor: theme.icon_active,
@@ -337,6 +363,14 @@ export const buildStyle = (theme): ThemedStyle => ({
 
   halfWidth: {
     width: '50%',
+  },
+
+  fullHeight: {
+    height: '100%',
+  },
+
+  halfHeight: {
+    height: '50%',
   },
   bold: {
     fontWeight: '700',

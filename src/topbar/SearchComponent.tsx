@@ -3,9 +3,15 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { StyleSheet, View, SafeAreaView, Platform } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  Platform,
+  TextInput,
+} from 'react-native';
 import i18n from '../common/services/i18n.service';
-import TextInput from '../common/components/TextInput';
+// import TextInput from '../common/components/TextInput';
 import SearchResult from './SearchResultComponent';
 
 import Modal from 'react-native-modal';
@@ -24,10 +30,12 @@ class SearchComponent extends Component<Props> {
   };
 
   /**
-   * Load search history
+   * Constructor
+   * @param props
    */
-  componentDidMount() {
-    // TODO: load search history
+  constructor(props) {
+    super(props);
+    this.inputRef = React.createRef();
   }
 
   /**
@@ -56,6 +64,17 @@ class SearchComponent extends Component<Props> {
 
   handleSearchResultRef = (ref) => (this.searchResult = ref);
 
+  /**
+   * On modal show focus input
+   */
+  onModalShow = () => {
+    setTimeout(() => {
+      if (this.inputRef.current) {
+        this.inputRef.current.focus();
+      }
+    }, 300);
+  };
+
   render() {
     const CS = ThemedStyles.style;
 
@@ -78,6 +97,8 @@ class SearchComponent extends Component<Props> {
           backdropOpacity={0.9}
           useNativeDriver={true}
           animationInTiming={100}
+          onBackButtonPress={this.props.user.toggleSearching}
+          onModalShow={this.onModalShow}
           animationOutTiming={100}
           animationOut="fadeOut"
           animationIn="fadeIn"
@@ -103,6 +124,7 @@ class SearchComponent extends Component<Props> {
                     ]}
                   />
                   <TextInput
+                    ref={this.inputRef}
                     placeholder={i18n.t('discovery.search')}
                     placeholderTextColor={ThemedStyles.getColor(
                       'secondary_text',

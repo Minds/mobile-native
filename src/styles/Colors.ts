@@ -31,11 +31,12 @@ export const LIGHT_THEME = {
   icon_active: '#0085DD',
   link: '#0091FF',
   alert: '#E03C20',
-  green: 'rgb(76, 175, 80)',
   info_background: '#5A91BB',
   success_background: '#59A05E',
   danger_background: '#CA4A34',
   warning_background: '#D49538',
+  green: '#5AC36F',
+  tab_border: '#4A90E2',
 };
 
 export const DARK_THEME = {
@@ -55,9 +56,10 @@ export const DARK_THEME = {
   icon_active: '#0085DD',
   link: '#0091FF',
   alert: '#E03C20',
-  green: 'rgb(76, 175, 80)',
   info_background: '#5A91BB',
   success_background: '#59A05E',
   danger_background: '#CA4A34',
   warning_background: '#D49538',
+  green: '#5AC36F',
+  tab_border: '#4A90E2',
 };

@@ -11,8 +11,8 @@ import Counter from './Counter';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_CREATE_COMMENT } from '../../../common/Permissions';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
-import type BlogModel from 'src/blogs/BlogModel';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
+import type BlogModel from '../../../blogs/BlogModel';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);

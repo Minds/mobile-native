@@ -20,12 +20,16 @@ class BlockchainBoostService {
     const tokenApproveAndCallBoost = await token.methods.approveAndCall(
       boostAddress,
       amount,
-      BlockchainTokenService.encodeParams([ { type: 'address', value: boostWalletAddress }, { type: 'uint256', value: guid }, { type: 'uint256', value: checksum } ])
+      BlockchainTokenService.encodeParams([
+        { type: 'address', value: boostWalletAddress },
+        { type: 'uint256', value: guid },
+        { type: 'uint256', value: checksum },
+      ]),
     );
 
     const result = await Web3Service.sendSignedContractMethod(
       tokenApproveAndCallBoost,
-      i18n.t('blockchain.boostCreate',{tokensAmount, message}).trim()
+      i18n.t('blockchain.boostCreate', { tokensAmount, message }).trim(),
     );
 
     return result.transactionHash;
@@ -39,12 +43,18 @@ class BlockchainBoostService {
     const tokenApproveAndCallBoost = await token.methods.approveAndCall(
       boostAddress,
       amount,
-      BlockchainTokenService.encodeParams([ { type: 'address', value: receiver }, { type: 'uint256', value: guid }, { type: 'uint256', value: checksum } ])
+      BlockchainTokenService.encodeParams([
+        { type: 'address', value: receiver },
+        { type: 'uint256', value: guid },
+        { type: 'uint256', value: checksum },
+      ]),
     );
 
     const result = await Web3Service.sendSignedContractMethod(
       tokenApproveAndCallBoost,
-      i18n.t('blockchain.boostPeerCreate',{tokensAmount, message, receiver}).trim()
+      i18n
+        .t('blockchain.boostPeerCreate', { tokensAmount, message, receiver })
+        .trim(),
     );
 
     return result.transactionHash;

@@ -12,5 +12,5 @@ export async function vote(guid, direction, data) {
     'api/v1/votes/' + guid + '/' + direction,
     data,
   );
-  return {data: response};
+  return { data: response };
 }

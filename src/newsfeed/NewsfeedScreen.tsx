@@ -12,23 +12,25 @@ import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
 import i18n from '../common/services/i18n.service';
 import TopbarNewsfeed from '../topbar/TopbarNewsfeed';
-import type { RootStackParamList } from 'src/navigation/NavigationTypes';
-import type MessengerListStore from 'src/messenger/MessengerListStore';
-import type DiscoveryStore from 'src/discovery/DiscoveryStore';
-import type UserStore from 'src/auth/UserStore';
+import type { AppStackParamList } from '../navigation/NavigationTypes';
+import type MessengerListStore from '../messenger/MessengerListStore';
+import type DiscoveryStore from '../discovery/DiscoveryStore';
+import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
+import type NotificationsStore from '../notifications/NotificationsStore';
 
-type NewsfeedScreenRouteProp = RouteProp<RootStackParamList, 'Newsfeed'>;
-type NewsfeedcreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
+type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
+type NewsfeedScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
   'Newsfeed'
 >;
 
 type PropsType = {
-  navigation: NewsfeedcreenNavigationProp;
+  navigation: NewsfeedScreenNavigationProp;
   discovery: DiscoveryStore;
   user: UserStore;
   messengerList: MessengerListStore;
+  notifications: NotificationsStore;
   newsfeed: NewsfeedStore;
   route: NewsfeedScreenRouteProp;
 };
@@ -36,7 +38,7 @@ type PropsType = {
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user', 'discovery', 'messengerList')
+@inject('newsfeed', 'user', 'discovery', 'messengerList', 'notifications')
 @observer
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
@@ -82,6 +84,7 @@ class NewsfeedScreen extends Component<PropsType> {
 
     // load groups after the feed
     if (this.groupsBar) await this.groupsBar.initialLoad();
+
     // load discovery after the feed is loaded
     this.props.discovery.fetch();
 
@@ -90,6 +93,13 @@ class NewsfeedScreen extends Component<PropsType> {
 
     // listen socket on app start
     this.props.messengerList.listen();
+
+    // load notifications
+    try {
+      await this.props.notifications.readLocal();
+    } finally {
+      this.props.notifications.loadList(true);
+    }
   }
 
   /**
@@ -113,7 +123,7 @@ class NewsfeedScreen extends Component<PropsType> {
     const header = (
       <View>
         {topBar}
-        <GroupsBar ref={this.setGroupsBarRef} />
+        {/* <GroupsBar ref={this.setGroupsBarRef} /> */}
       </View>
     );
 

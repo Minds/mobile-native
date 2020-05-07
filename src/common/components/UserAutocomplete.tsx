@@ -1,32 +1,20 @@
 //@ts-nocheck
 import React, { PureComponent } from 'react';
 
-import {
-  TouchableHighlight,
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  ImageBackground,
-  StatusBar
-} from 'react-native';
+import { Text, View, StyleSheet, ScrollView } from 'react-native';
 import KeyboardAccessory from './KeyboardAccessory';
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
 
-import { ComponentsStyle } from '../../styles/Components';
-import { CommonStyle } from '../../styles/Common';
-import colors from '../../styles/Colors';
 import debounce from '../helpers/debounce';
 import UserTypeahead from './user-typeahead/UserTypeahead';
 import userTypeaheadService from './user-typeahead/UserTypeaheadService';
 import logService from '../services/log.service';
-
+import ThemedStyles from '../../styles/ThemedStyles';
 
 /**
  * User autocomplete component
  */
 export default class UserAutocomplete extends PureComponent {
-
   state = {
     isSearchingTag: false,
     users: [],
@@ -34,15 +22,15 @@ export default class UserAutocomplete extends PureComponent {
     text: '',
     search: false,
     selection: {
-      start:0,
-      end:0
-    }
+      start: 0,
+      end: 0,
+    },
   };
 
   /**
    * Debounced search
    */
-  query = debounce(async query => {
+  query = debounce(async (query) => {
     try {
       const users = await userTypeaheadService.search(query, 6);
       this.setState({ search: false, users });
@@ -58,11 +46,17 @@ export default class UserAutocomplete extends PureComponent {
    * @param {object} prevState
    */
   static getDerivedStateFromProps(nextProps, prevState) {
-    state = {};
+    const state = {};
 
-    if (nextProps.text != prevState.text || nextProps.selection.end != prevState.selection.end)  {
-      if (nextProps.selection.start == nextProps.selection.end) {
-        state.tag = UserAutocomplete.parseTag(nextProps.text, nextProps.selection);
+    if (
+      nextProps.text !== prevState.text ||
+      nextProps.selection.end !== prevState.selection.end
+    ) {
+      if (nextProps.selection.start === nextProps.selection.end) {
+        state.tag = UserAutocomplete.parseTag(
+          nextProps.text,
+          nextProps.selection,
+        );
         state.search = true;
       } else {
         state.tag = '';
@@ -93,27 +87,37 @@ export default class UserAutocomplete extends PureComponent {
    * Render users
    */
   renderUsers() {
-    const users = this.state.users ? this.state.users.map((user, i) => {
-      return <View style={style.tags} key={i}>
-        <Text onPress={() => this.selectTag(user)}>@{user.username}</Text>
-      </View>
-    }): null;
+    const theme = ThemedStyles.style;
+    const users = this.state.users
+      ? this.state.users.map((user, i) => {
+          return (
+            <View style={[style.tags, theme.backgroundTertiary]} key={i}>
+              <Text onPress={() => this.selectTag(user)}>@{user.username}</Text>
+            </View>
+          );
+        })
+      : null;
 
-    if (!users) return null;
+    if (!users) {
+      return null;
+    }
 
     return (
-      <ScrollView horizontal={true} keyboardShouldPersistTaps='always' style={{marginRight: 40}}>
+      <ScrollView
+        horizontal={true}
+        keyboardShouldPersistTaps="always"
+        style={theme.marginRight8x}>
         {users}
       </ScrollView>
-    )
+    );
   }
 
   /**
    * Show full screen search
    */
   showSearch = () => {
-    this.setState({isSearchingTag: true});
-  }
+    this.setState({ isSearchingTag: true });
+  };
 
   /**
    * On full search select
@@ -121,14 +125,14 @@ export default class UserAutocomplete extends PureComponent {
   searchSelect = (user) => {
     this.close();
     this.selectTag(user);
-  }
+  };
 
   /**
    * Close selector
    */
   close = () => {
-    this.setState({ isSearchingTag: false});
-  }
+    this.setState({ isSearchingTag: false });
+  };
 
   /**
    * search a tag on the cursor position
@@ -136,13 +140,14 @@ export default class UserAutocomplete extends PureComponent {
    * @param {obejct} selection
    */
   static parseTag(text, selection) {
-
     let matchText = text.substr(0, selection.end);
 
     // search end of word
     if (text.length > selection.end) {
-      endword = text.substr(selection.end).match(/^([a-zA-Z0-9])+\b/);
-      if (endword) matchText += endword[0];
+      const endword = text.substr(selection.end).match(/^([a-zA-Z0-9])+\b/);
+      if (endword) {
+        matchText += endword[0];
+      }
     }
 
     const isTag = matchText.match(/\@[a-zA-Z0-9]{2,}$/);
@@ -159,11 +164,14 @@ export default class UserAutocomplete extends PureComponent {
    * returns the full text
    */
   selectTag = (user) => {
-    let endword=[''], matchText = this.state.text.substr(0, this.state.selection.end);
+    let endword = [''],
+      matchText = this.state.text.substr(0, this.state.selection.end);
 
     // search end of word
     if (this.state.text.length > this.props.selection.end) {
-      endword = this.state.text.substr(this.state.selection.end).match(/^([a-zA-Z0-9])+\b/);
+      endword = this.state.text
+        .substr(this.state.selection.end)
+        .match(/^([a-zA-Z0-9])+\b/);
       if (endword) {
         matchText += endword[0];
       } else {
@@ -172,62 +180,71 @@ export default class UserAutocomplete extends PureComponent {
     }
 
     // the rest of the text
-    const postText = this.state.text.substr(this.state.selection.end+1+endword[0].length);
+    const postText = this.state.text.substr(
+      this.state.selection.end + 1 + endword[0].length,
+    );
 
-    this.props.onSelect(matchText.replace(/\@[a-zA-Z0-9]+$/, '@'+user.username+' '+postText));
-  }
+    this.props.onSelect(
+      matchText.replace(
+        /\@[a-zA-Z0-9]+$/,
+        '@' + user.username + ' ' + postText,
+      ),
+    );
+  };
 
   /**
    * Render
    */
   render() {
-
-    if (!this.state.tag) return null;
+    if (!this.state.tag) {
+      return null;
+    }
 
     const users = this.renderUsers();
 
     return (
       <KeyboardAccessory
-        backgroundColor='rgba(180, 180, 180, 0.8)'
+        backgroundColor={ThemedStyles.getColor('primary_background')}
         show={this.state.tag}
-        noFloat={this.props.noFloat}
-      >
+        noFloat={this.props.noFloat}>
         <UserTypeahead
           isModalVisible={this.state.isSearchingTag}
           onSelect={this.searchSelect}
           onClose={this.close}
-          value={ this.state.tag }
+          value={this.state.tag}
         />
-        { this.state.tag && <View style={style.searchBar}>
-          {users}
-          <Icon
-            containerStyle={style.searchIcon}
-            name='search'
-            color='white'
-            size={30}
-            onPress={this.showSearch} />
-        </View>}
+        {this.state.tag && (
+          <View style={style.searchBar}>
+            {users}
+            <Icon
+              containerStyle={style.searchIcon}
+              name="search"
+              iconStyle={ThemedStyles.style.colorIcon}
+              size={30}
+              onPress={this.showSearch}
+            />
+          </View>
+        )}
       </KeyboardAccessory>
-    )
+    );
   }
 }
 
 const style = StyleSheet.create({
   searchIcon: {
     position: 'absolute',
-    right:5,
-    top:5
+    right: 5,
+    top: 5,
   },
   searchBar: {
     flexDirection: 'row',
     height: 40,
     marginTop: 2,
-    marginBottom: 2
+    marginBottom: 2,
   },
   tags: {
     margin: 2,
     padding: 9,
-    backgroundColor: '#efefef',
-    borderRadius:18
-  }
+    borderRadius: 18,
+  },
 });

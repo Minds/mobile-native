@@ -10,7 +10,7 @@ export default function () {
   const CS = ThemedStyles.style;
 
   const [language, setLanguage] = useState(i18n.getCurrentLocale());
-  
+
   let selectorRef = useRef(null);
 
   const languageSelected = useCallback(
@@ -41,7 +41,7 @@ export default function () {
           {i18n.getCurrentLanguageName()}
         </Text>
       </View>
-      <Selector 
+      <Selector
         ref={selectorRef}
         onItemSelect={languageSelected}
         title={''}

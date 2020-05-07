@@ -30,7 +30,7 @@ class WalletOnboardingScreen extends Component {
     this.props.wallet.setOnboardingShown(true);
   }
 
-  setNavNext = next => {
+  setNavNext = (next) => {
     this.props.navigation.setOptions({
       title: 'Wallet',
       headerRight: () => next,

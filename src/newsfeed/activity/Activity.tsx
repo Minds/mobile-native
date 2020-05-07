@@ -31,7 +31,6 @@ import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Colors from 'src/styles/Colors';
 
 type PropsType = {
   entity: ActivityModel;
@@ -78,6 +77,9 @@ export default class Activity extends Component<PropsType, StateType> {
    * Nav to activity full screen
    */
   navToActivity = () => {
+    if (!this.props.navigation) {
+      return;
+    }
     const navOpts = { entity: this.props.entity, hydrate: false };
 
     if (this.props.entity.remind_object || this.props.hydrateOnNav) {

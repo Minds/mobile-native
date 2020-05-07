@@ -20,7 +20,6 @@ const ProgressFastImage = createImageProgress(FastImage);
  * TODO: use fastimage OnLoad when sending size it is implemented
  */
 export default class AutoHeightFastImage extends PureComponent {
-
   static propTypes = {
     ...autoHeightImagePropTypes,
     width: PropTypes.number.isRequired,
@@ -59,10 +58,14 @@ export default class AutoHeightFastImage extends PureComponent {
 
   getImageSizeFitWidth(imageURL, toWidth) {
     return new Promise((resolve, reject) => {
-      Image.getSize(imageURL, (width, height) => {
-        // success
-        resolve ({ width: toWidth, height: toWidth * height / width });
-      }, reject);
+      Image.getSize(
+        imageURL,
+        (width, height) => {
+          // success
+          resolve({ width: toWidth, height: (toWidth * height) / width });
+        },
+        reject,
+      );
     });
   }
 

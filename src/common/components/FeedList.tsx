@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text, ActivityIndicator } from 'react-native';
+import {
+  FlatList,
+  View,
+  Text,
+  ActivityIndicator,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import { observer } from 'mobx-react';
 
 import Activity from '../../newsfeed/activity/Activity';
@@ -21,6 +28,7 @@ type PropsType = {
   header: React.ReactNode;
   listComponent?: React.ComponentType;
   navigation: any;
+  style?: StyleProp<ViewStyle>;
 };
 
 /**

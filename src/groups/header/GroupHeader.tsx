@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   Text,
@@ -9,13 +7,11 @@ import {
   View,
   TouchableHighlight,
   ActivityIndicator,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
-import {
-  observer, inject
-} from 'mobx-react'
-import {debounce} from 'lodash';
+import { observer, inject } from 'mobx-react';
+import { debounce } from 'lodash';
 
 import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -41,10 +37,9 @@ import Button from '../../common/components/Button';
 @inject('groupsBar')
 @observer
 export default class GroupHeader extends Component {
-
   state = {
-    openingGathering: false
-  }
+    openingGathering: false,
+  };
 
   componentDidMount() {
     const group = this.props.store.group;
@@ -56,7 +51,9 @@ export default class GroupHeader extends Component {
    */
   getBannerFromGroup() {
     const group = this.props.store.group;
-    return MINDS_CDN_URI + 'fs/v1/banners/' + group.guid + '/fat/' + group.icontime;
+    return (
+      MINDS_CDN_URI + 'fs/v1/banners/' + group.guid + '/fat/' + group.icontime
+    );
   }
 
   /**
@@ -81,7 +78,10 @@ export default class GroupHeader extends Component {
         <Button
           onPress={store.join}
           accessibilityLabel={i18n.t('groups.subscribeMessage')}
-          containerStyle={[CommonStyle.rowJustifyCenter, CommonStyle.marginLeft]}
+          containerStyle={[
+            CommonStyle.rowJustifyCenter,
+            CommonStyle.marginLeft,
+          ]}
           textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
           icon="ios-flash"
           text={i18n.t('join')}
@@ -93,7 +93,10 @@ export default class GroupHeader extends Component {
         <Button
           onPress={store.leave}
           accessibilityLabel={i18n.t('groups.leaveMessage')}
-          containerStyle={[CommonStyle.rowJustifyCenter, CommonStyle.marginLeft]}
+          containerStyle={[
+            CommonStyle.rowJustifyCenter,
+            CommonStyle.marginLeft,
+          ]}
           textStyle={[CommonStyle.marginLeft, CommonStyle.marginRight]}
           icon="ios-flash"
           text={i18n.t('leave')}
@@ -107,24 +110,32 @@ export default class GroupHeader extends Component {
    * Get Gathering Button
    */
   getGatheringButton() {
-
     if (this.state.openingGathering) {
-      return <ActivityIndicator style={CommonStyle.paddingRight} size="large"/>
+      return (
+        <ActivityIndicator style={CommonStyle.paddingRight} size="large" />
+      );
     }
 
     if (this.props.store.group['videoChatDisabled'] === 0) {
-      return <Icon name="videocam" size={32} color={colors.primary} style={CommonStyle.paddingRight} onPress={this.joinGathering}/>
+      return (
+        <Icon
+          name="videocam"
+          size={32}
+          color={colors.primary}
+          style={CommonStyle.paddingRight}
+          onPress={this.joinGathering}
+        />
+      );
     }
     return null;
   }
 
   joinGathering = () => {
     const group = this.props.store.group;
-    this.setState({openingGathering: true});
-    setTimeout(() => this.setState({openingGathering: false}), 1500);
-    this.props.navigation.navigate('Gathering', {entity: group});
-  }
-
+    this.setState({ openingGathering: true });
+    setTimeout(() => this.setState({ openingGathering: false }), 1500);
+    this.props.navigation.navigate('Gathering', { entity: group });
+  };
 
   setMemberSearch = debounce((q) => {
     this.props.store.setMemberSearch(q);
@@ -135,34 +146,52 @@ export default class GroupHeader extends Component {
    */
   renderToolbar() {
     const group = this.props.store.group;
-    const conversation = { text: i18n.t('conversation').toUpperCase(), icon: 'ios-chatboxes', iconType: 'ion', value: 'conversation' };
+    const conversation = {
+      text: i18n.t('conversation').toUpperCase(),
+      icon: 'ios-chatboxes',
+      iconType: 'ion',
+      value: 'conversation',
+    };
     const typeOptions = [
       { text: i18n.t('feed').toUpperCase(), icon: 'list', value: 'feed' },
-      { text: i18n.t('description').toUpperCase(), icon: 'short-text', value: 'desc' },
-      { text: i18n.t('members').toUpperCase(), badge: abbrev(group['members:count'], 0), value: 'members' }
-    ]
+      {
+        text: i18n.t('description').toUpperCase(),
+        icon: 'short-text',
+        value: 'desc',
+      },
+      {
+        text: i18n.t('members').toUpperCase(),
+        badge: abbrev(group['members:count'], 0),
+        value: 'members',
+      },
+    ];
 
     if (group.conversationDisabled !== 1) {
       typeOptions.push(conversation);
     }
 
-    const searchBar = this.props.store.tab == 'members' ?
-      <SearchView
-        containerStyle={[CommonStyle.flexContainer, CommonStyle.hairLineBottom]}
-        placeholder={ i18n.t('discovery.search') }
-        onChangeText={this.setMemberSearch}
-      /> : null;
+    const searchBar =
+      this.props.store.tab == 'members' ? (
+        <SearchView
+          containerStyle={[
+            CommonStyle.flexContainer,
+            CommonStyle.hairLineBottom,
+          ]}
+          placeholder={i18n.t('discovery.search')}
+          onChangeText={this.setMemberSearch}
+        />
+      ) : null;
 
     return (
       <View>
         <Toolbar
-          options={ typeOptions }
-          initial={ this.props.store.tab }
-          onChange={ this.onTabChange }
+          options={typeOptions}
+          initial={this.props.store.tab}
+          onChange={this.onTabChange}
         />
         {searchBar}
       </View>
-    )
+    );
   }
 
   /**
@@ -194,33 +223,50 @@ export default class GroupHeader extends Component {
     }
 
     this.props.store.setTab(tab);
-  }
+  };
 
   renderAvatars = () => {
     const topMembers = this.props.store.topMembers;
     const styles = this.props.styles;
 
     if (topMembers.length) {
-      return topMembers.map(t => <Image source={t.getAvatarSource()} key={t.guid} style={styles.userAvatar}/>);
+      return topMembers.map((t) => (
+        <Image
+          source={t.getAvatarSource()}
+          key={t.guid}
+          style={styles.userAvatar}
+        />
+      ));
     } else {
       return null;
     }
-  }
+  };
 
   getActionSheet() {
-    let options = [ i18n.t('cancel') ];
-    options.push(this.props.store.group.conversationDisabled ? i18n.t('groups.enableConversations') : i18n.t('groups.disableConversations'));
+    let options = [i18n.t('cancel')];
+    options.push(
+      this.props.store.group.conversationDisabled
+        ? i18n.t('groups.enableConversations')
+        : i18n.t('groups.disableConversations'),
+    );
     return (
       <View style={stylesheet.rightToolbar}>
-        <Icon name="more-vert"  onPress={() => this.showActionSheet()} size={26} style={stylesheet.icon}/>
+        <Icon
+          name="more-vert"
+          onPress={() => this.showActionSheet()}
+          size={26}
+          style={stylesheet.icon}
+        />
         <ActionSheet
-          ref={o => this.ActionSheet = o}
+          ref={(o) => (this.ActionSheet = o)}
           options={options}
-          onPress={ (i) => { this.handleActionSheetSelection(options[i]) }}
+          onPress={(i) => {
+            this.handleActionSheetSelection(options[i]);
+          }}
           cancelButtonIndex={0}
         />
       </View>
-    )
+    );
   }
 
   async showActionSheet() {
@@ -228,10 +274,10 @@ export default class GroupHeader extends Component {
   }
 
   async handleActionSheetSelection(option) {
-    switch(option) {
+    switch (option) {
       case i18n.t('groups.disableConversations'):
       case i18n.t('groups.enableConversations'):
-        try{
+        try {
           await this.props.store.group.toggleConversationDisabled();
         } catch (err) {
           console.error(err);
@@ -247,10 +293,8 @@ export default class GroupHeader extends Component {
     Alert.alert(
       i18n.t('sorry'),
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
-      [
-        {text: i18n.t('ok'), onPress: () => {}},
-      ],
-      { cancelable: false }
+      [{ text: i18n.t('ok'), onPress: () => {} }],
+      { cancelable: false },
     );
   }
 
@@ -258,19 +302,23 @@ export default class GroupHeader extends Component {
    * Render Header
    */
   render() {
-
     const group = this.props.store.group;
     const styles = this.props.styles;
     const avatar = { uri: this.getAvatar() };
     const iurl = { uri: this.getBannerFromGroup() };
-    const actionSheet = group['is:owner'] ? this.getActionSheet() : (null);
+    const actionSheet = group['is:owner'] ? this.getActionSheet() : null;
     return (
-      <View >
-        <FastImage source={iurl} style={styles.banner} resizeMode={FastImage.resizeMode.cover} />
+      <View>
+        <FastImage
+          source={iurl}
+          style={styles.banner}
+          resizeMode={FastImage.resizeMode.cover}
+        />
         {actionSheet}
         <View style={styles.headertextcontainer}>
           <View style={styles.avatarContainer}>
-            <View style={[CommonStyle.rowJustifyStart, CommonStyle.flexContainer]}>
+            <View
+              style={[CommonStyle.rowJustifyStart, CommonStyle.flexContainer]}>
               {this.renderAvatars()}
             </View>
           </View>
@@ -287,7 +335,7 @@ export default class GroupHeader extends Component {
         <Image source={avatar} style={styles.avatar} />
         {this.renderToolbar()}
       </View>
-    )
+    );
   }
 }
 
@@ -295,9 +343,9 @@ const stylesheet = StyleSheet.create({
   rightToolbar: {
     alignSelf: 'flex-end',
     bottom: 126,
-    right: 10
+    right: 10,
   },
   icon: {
     color: '#888',
-  }
-})
+  },
+});

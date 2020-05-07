@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.minds.mobile"
+    xmlns:tools="http://schemas.android.com/tools"
 >
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -90,10 +91,12 @@
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"
+            tools:replace="android:authorities"
             >
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths"
+                tools:replace="android:resource"
                 />
         </provider>
     </application>

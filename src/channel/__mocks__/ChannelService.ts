@@ -6,5 +6,5 @@ export default {
   getImageFeed: jest.fn(),
   getVideoFeed: jest.fn(),
   getBlogFeed: jest.fn(),
-  getSubscribers: jest.fn()
-}
+  getSubscribers: jest.fn(),
+};

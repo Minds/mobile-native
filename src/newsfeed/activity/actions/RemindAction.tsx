@@ -9,8 +9,8 @@ import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { FLAG_REMIND } from '../../../common/Permissions';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from 'src/newsfeed/ActivityModel';
-import type BlogModel from 'src/blogs/BlogModel';
+import type ActivityModel from '../../../newsfeed/ActivityModel';
+import type BlogModel from '../../../blogs/BlogModel';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);

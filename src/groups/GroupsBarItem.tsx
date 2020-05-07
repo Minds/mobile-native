@@ -15,7 +15,6 @@ import FAIcon from 'react-native-vector-icons/FontAwesome';
 import { MINDS_CDN_URI } from '../config/Config';
 
 import colors from '../styles/Colors';
-import { CommonStyle as CS } from '../styles/Common';
 import FastImage from 'react-native-fast-image';
 import PulseAnimAvatar from '../common/components/PulseAnimAvatar';
 import excerpt from '../common/helpers/excerpt';
@@ -61,6 +60,7 @@ export default class GroupsBarItem extends Component {
           </Text>
         </View>
       ),
+      color: ThemedStyles.getColor('primary_text'),
       titleStyle: ThemedStyles.style.fontXL,
       backgroundColor: ThemedStyles.getColor('tertiary_background'),
       type: 'default',
@@ -68,15 +68,16 @@ export default class GroupsBarItem extends Component {
   };
 
   render() {
+    const theme = ThemedStyles.style;
     const group = this.props.group;
     if (group['marker_gathering-heartbeat']) {
       return (
         <View
           style={[
-            CS.columnAlignCenter,
+            theme.columnAlignCenter,
             styles.container,
-            CS.backgroundTransparent,
-            CS.centered,
+            theme.backgroundTransparent,
+            theme.centered,
           ]}>
           <View>
             <PulseAnimAvatar
@@ -90,7 +91,7 @@ export default class GroupsBarItem extends Component {
             />
             {group.marker_activity ? <View style={styles.acitivity} /> : null}
           </View>
-          <Text style={[CS.fontXS, CS.marginTop, CS.fontMedium]}>
+          <Text style={[theme.fontXS, theme.marginTop, theme.fontMedium]}>
             {excerpt(group.name, 11)}
           </Text>
           {group.marker_conversation ? (
@@ -107,10 +108,10 @@ export default class GroupsBarItem extends Component {
     return (
       <View
         style={[
-          CS.columnAlignCenter,
+          theme.columnAlignCenter,
           styles.container,
-          CS.backgroundTransparent,
-          CS.centered,
+          theme.backgroundTransparent,
+          theme.centered,
         ]}>
         <TouchableOpacity onPress={this.navToGroup} activeOpacity={0.5}>
           <FastImage
@@ -119,7 +120,7 @@ export default class GroupsBarItem extends Component {
           />
           {group.marker_activity ? <View style={[styles.acitivity]} /> : null}
         </TouchableOpacity>
-        <Text style={[CS.fontXS, CS.marginTop, CS.fontMedium]}>
+        <Text style={[theme.fontXS, theme.marginTop, theme.fontMedium]}>
           {excerpt(group.name, 11)}
         </Text>
         {group.marker_conversation ? (

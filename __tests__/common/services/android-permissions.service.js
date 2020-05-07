@@ -42,14 +42,14 @@ describe('Push service', () => {
     expect(PermissionsAndroid.check).toBeCalled();
   });
 
-  it('should check camera', async () => {
+  it('should check camera and resolve', async () => {
     PermissionsAndroid.check.mockResolvedValue({});
     await service.checkCamera();
     expect(PermissionsAndroid.check).toBeCalled();
   });
 
 
-  it('should check camera', async () => {
+  it('should check camera and reject', async () => {
     PermissionsAndroid.check.mockRejectedValue({});
     await service.checkCamera();
     expect(PermissionsAndroid.check).toBeCalled();

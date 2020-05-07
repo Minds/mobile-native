@@ -1,14 +1,7 @@
 //@ts-nocheck
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 
 import { CommonStyle } from '../../../styles/Common';
 import formatDate from '../../../common/helpers/date';
@@ -16,10 +9,9 @@ import formatDate from '../../../common/helpers/date';
  * List row
  */
 export default class ContributionRow extends PureComponent {
-
   state = {
-    selected: false
-  }
+    selected: false,
+  };
 
   /**
    * Render
@@ -28,22 +20,48 @@ export default class ContributionRow extends PureComponent {
     const item = this.props.item;
     const selected = this.state.selected;
 
-    const color = selected ? [CommonStyle.colorBlack, {fontFamily: 'Roboto-Black'}] : [CommonStyle.colorDark];
+    const color = selected
+      ? [CommonStyle.colorBlack, { fontFamily: 'Roboto-Black' }]
+      : [CommonStyle.colorDark];
 
     const detail = selected ? this.getDetail() : null;
 
     return (
       <View>
-      <TouchableOpacity style={styles.row} onPress={this.toggle}>
-        <View style={CommonStyle.rowJustifyStart}>
-          <Text style={[...color,  CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{formatDate(item.timestamp/1000, 'date', 'Etc/GMT-0')}</Text>
-          <Text style={[...color, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.score}</Text>
-          <Text style={[...color, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{item.share.toFixed(6).toString()}%</Text>
-        </View>
-      </TouchableOpacity>
-      {detail}
+        <TouchableOpacity style={styles.row} onPress={this.toggle}>
+          <View style={CommonStyle.rowJustifyStart}>
+            <Text
+              style={[
+                ...color,
+                CommonStyle.fontS,
+                CommonStyle.flexContainer,
+                styles.column,
+              ]}>
+              {formatDate(item.timestamp / 1000, 'date', 'Etc/GMT-0')}
+            </Text>
+            <Text
+              style={[
+                ...color,
+                CommonStyle.fontS,
+                CommonStyle.flexContainer,
+                styles.column,
+              ]}>
+              {item.score}
+            </Text>
+            <Text
+              style={[
+                ...color,
+                CommonStyle.fontS,
+                CommonStyle.flexContainer,
+                styles.column,
+              ]}>
+              {item.share.toFixed(6).toString()}%
+            </Text>
+          </View>
+        </TouchableOpacity>
+        {detail}
       </View>
-    )
+    );
   }
 
   /**
@@ -57,17 +75,42 @@ export default class ContributionRow extends PureComponent {
     Object.keys(metrics).forEach((key) => {
       let data = metrics[key];
 
-      const share = data.score/this.props.item.score * this.props.item.share;
+      const share =
+        (data.score / this.props.item.score) * this.props.item.share;
 
       detail.push(
         <View style={styles.row}>
           <View style={CommonStyle.rowJustifyStart}>
-            <Text style={[CommonStyle.colorPrimary,  CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{data.metric[0].toUpperCase() + data.metric.slice(1)}</Text>
-            <Text style={[CommonStyle.colorPrimary, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{data.score}</Text>
-            <Text style={[CommonStyle.colorPrimary, CommonStyle.fontS, CommonStyle.flexContainer, styles.column]}>{share.toFixed(6)}%</Text>
+            <Text
+              style={[
+                CommonStyle.colorPrimary,
+                CommonStyle.fontS,
+                CommonStyle.flexContainer,
+                styles.column,
+              ]}>
+              {data.metric[0].toUpperCase() + data.metric.slice(1)}
+            </Text>
+            <Text
+              style={[
+                CommonStyle.colorPrimary,
+                CommonStyle.fontS,
+                CommonStyle.flexContainer,
+                styles.column,
+              ]}>
+              {data.score}
+            </Text>
+            <Text
+              style={[
+                CommonStyle.colorPrimary,
+                CommonStyle.fontS,
+                CommonStyle.flexContainer,
+                styles.column,
+              ]}>
+              {share.toFixed(6)}%
+            </Text>
           </View>
-        </View>
-      )
+        </View>,
+      );
     });
 
     return detail;
@@ -77,8 +120,8 @@ export default class ContributionRow extends PureComponent {
    * Toggle row details
    */
   toggle = () => {
-    this.setState({selected: !this.state.selected});
-  }
+    this.setState({ selected: !this.state.selected });
+  };
 }
 
 const styles = StyleSheet.create({

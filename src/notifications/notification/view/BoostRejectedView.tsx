@@ -1,12 +1,7 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Text,
-  View,
-} from 'react-native';
+import { Text, View } from 'react-native';
 
 import BoostGiftView from './BoostGiftView';
 import i18n from '../../../common/services/i18n.service';
@@ -15,7 +10,6 @@ import i18n from '../../../common/services/i18n.service';
  * Boost Rejected Notification Component
  */
 export default class BoostRejectedView extends BoostGiftView {
-
   findReason(code) {
     return i18n.t(`boosts.rejectionReasons.${code}`);
   }
@@ -33,7 +27,9 @@ export default class BoostRejectedView extends BoostGiftView {
 
     return (
       <View style={styles.bodyContents}>
-        <Text onPress={this.navToBoostConsole}>{i18n.to('notification.boostRejected', {reason}, {description})}</Text>
+        <Text onPress={this.navToBoostConsole}>
+          {i18n.to('notification.boostRejected', { reason }, { description })}
+        </Text>
       </View>
     );
   }

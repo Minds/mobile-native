@@ -18,7 +18,6 @@ type PropsType = {
  * Forgot Password Form
  */
 export default class ForgotPassword extends PureComponent<PropsType> {
-
   /**
    * Component will mount
    */
@@ -56,13 +55,15 @@ export default class ForgotPassword extends PureComponent<PropsType> {
           ]}>
           {this.state.msg}
         </Text>
-        {!this.state.sent && <Input
-          placeholder={i18n.t('auth.username')}
-          returnKeyType={'done'}
-          onChangeText={(value) => this.setState({ username: value })}
-          autoCapitalize={'none'}
-          value={this.state.username}
-        />}
+        {!this.state.sent && (
+          <Input
+            placeholder={i18n.t('auth.username')}
+            returnKeyType={'done'}
+            onChangeText={(value) => this.setState({ username: value })}
+            autoCapitalize={'none'}
+            value={this.state.username}
+          />
+        )}
         <View style={[CS.rowJustifyEnd, CS.marginTop4x]}>
           <Button
             onPress={() => this.onPressBack()}
@@ -70,15 +71,17 @@ export default class ForgotPassword extends PureComponent<PropsType> {
             containerStyle={[CS.button, CS.marginRight2x]}
             textStyle={CS.buttonText}
           />
-          {!this.state.sent && <Button
-            onPress={() => this.onContinuePress()}
-            text={i18n.t('continue')}
-            loading={this.state.sending}
-            loadingRight={true}
-            disable={this.state.sending || this.state.sent}
-            containerStyle={CS.button}
-            textStyle={CS.buttonText}
-          />}
+          {!this.state.sent && (
+            <Button
+              onPress={() => this.onContinuePress()}
+              text={i18n.t('continue')}
+              loading={this.state.sending}
+              loadingRight={true}
+              disable={this.state.sending || this.state.sent}
+              containerStyle={CS.button}
+              textStyle={CS.buttonText}
+            />
+          )}
         </View>
       </SafeAreaView>
     );
@@ -95,14 +98,16 @@ export default class ForgotPassword extends PureComponent<PropsType> {
    * On continue press
    */
   async onContinuePress() {
-
-    if (!this.state.sent ) {
-      this.setState({sending: true});
+    if (!this.state.sent) {
+      this.setState({ sending: true });
 
       try {
         const data = await authService.forgot(this.state.username);
         console.log(data);
-        this.setState({ sent: true, msg: i18n.t('auth.requestNewPasswordSuccess') });
+        this.setState({
+          sent: true,
+          msg: i18n.t('auth.requestNewPasswordSuccess'),
+        });
       } catch (err) {
         alert('Oops. Please try again.');
         logService.exception('[ForgotPassword]', err);

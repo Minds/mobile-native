@@ -1,14 +1,17 @@
 //@ts-nocheck
-import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {default as WalletOverviewIcon, Icons} from './icon/WalletOverviewIcon';
-import {inject} from "mobx-react";
-import {observer} from "mobx-react";
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import {
+  default as WalletOverviewIcon,
+  Icons,
+} from './icon/WalletOverviewIcon';
+import { inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 @inject('wallet')
 @observer
 export default class WalletScoresView extends Component {
-/*  componentDidMount() {
+  /*  componentDidMount() {
     this.props.wallet.refresh();
   }*/
 
@@ -35,16 +38,12 @@ export default class WalletScoresView extends Component {
           icon={Icons.referrals}
           overview={this.props.wallet.overview}
         />
-        <WalletOverviewIcon
-          icon={Icons.onchain_transactions}
-        />
+        <WalletOverviewIcon icon={Icons.onchain_transactions} />
         <WalletOverviewIcon
           icon={Icons.checkins}
           overview={this.props.wallet.overview}
         />
-        <WalletOverviewIcon
-          icon={Icons.development}
-        />
+        <WalletOverviewIcon icon={Icons.development} />
       </View>
     );
   }

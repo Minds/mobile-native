@@ -1,4 +1,7 @@
 import UserModel from '../channel/UserModel';
+import { ChannelStoreType } from '../channel/v2/createChannelStore';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 export type MainSwiperParamList = {
   Capture: {};
@@ -7,20 +10,9 @@ export type MainSwiperParamList = {
 };
 
 export type RootStackParamList = {
-  Fab: {
-    disableThresholdCheck?: boolean;
-    owner: UserModel;
-    onComplete?: Function;
-    default: {
-      min: number;
-      type: string;
-    };
-  };
-  Newsfeed: {};
-  Capture: {};
   App: {};
-  Gathering: {};
   Auth: {};
+  Gathering: {};
 };
 
 export type AuthStackParamList = {
@@ -32,6 +24,18 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  Fab: {
+    disableThresholdCheck?: boolean;
+    owner: UserModel;
+    onComplete?: Function;
+    default: {
+      min: number;
+      type: string;
+    };
+  };
+  Newsfeed: {};
+  Capture: {};
+  StackCapture: {};
   Main: {};
   TagSelector: {};
   NsfwSelector: {};
@@ -43,6 +47,13 @@ export type AppStackParamList = {
   Boost: {};
   Notifications: {};
   Channel: {};
+  EditChannelScreen: {};
+  Bio: {
+    store: ChannelStoreType;
+  };
+  About: {
+    store: ChannelStoreType;
+  };
   Activity: {};
   Conversation: {};
   DiscoveryFeed: {};
@@ -71,3 +82,15 @@ export type AppStackParamList = {
   OnboardingScreen: {};
   OnboardingScreenNew: {};
 };
+
+// types for channel edit screens
+export type BioScreenRouteProp = RouteProp<AppStackParamList, 'Bio'>;
+export type BioScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'Bio'
+>;
+export type AboutScreenRouteProp = RouteProp<AppStackParamList, 'About'>;
+export type AboutScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'About'
+>;

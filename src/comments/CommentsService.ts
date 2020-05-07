@@ -15,7 +15,7 @@ const decodeUrn = (urn) => {
   };
 
   return obj;
-}
+};
 
 /**
  * Get a single comment
@@ -30,7 +30,7 @@ export async function getComment(entity_guid, guid, parent_path) {
       limit: 1,
       reversed: false,
       descending: true,
-    }
+    },
   );
 
   if (!response.comments || response.comments.length === 0) {
@@ -44,7 +44,6 @@ export async function getComment(entity_guid, guid, parent_path) {
   return response.comments[0];
 }
 
-
 /**
  * Get comments
  * @param {string} guid
@@ -52,21 +51,34 @@ export async function getComment(entity_guid, guid, parent_path) {
  * @param {string} offset
  * @param {integer} limit
  */
-export async function getComments(focusedUrn, entity_guid, parent_path, level, limit, loadNext, loadPrevious, descending ) {
-
+export async function getComments(
+  focusedUrn,
+  entity_guid,
+  parent_path,
+  level,
+  limit,
+  loadNext,
+  loadPrevious,
+  descending,
+) {
   let focusedUrnObject = focusedUrn ? decodeUrn(focusedUrn) : null;
   if (focusedUrn) {
-    if (entity_guid != focusedUrnObject.entity_guid)
-       focusedUrn = null; //wrong comment thread to focus on
-    if (loadNext || loadPrevious)
-      focusedUrn = null; //can not focus and have pagination
+    if (entity_guid != focusedUrnObject.entity_guid) focusedUrn = null; //wrong comment thread to focus on
+    if (loadNext || loadPrevious) focusedUrn = null; //can not focus and have pagination
     if (focusedUrn && parent_path === '0:0:0') {
       loadNext = focusedUrnObject.parent_guid_l1;
     }
-    if (focusedUrn && parent_path === `${focusedUrnObject.parent_guid_l1}:0:0`) {
+    if (
+      focusedUrn &&
+      parent_path === `${focusedUrnObject.parent_guid_l1}:0:0`
+    ) {
       loadNext = focusedUrnObject.parent_guid_l2;
     }
-    if (focusedUrn && parent_path === `${focusedUrnObject.parent_guid_l1}:${focusedUrnObject.parent_guid_l2}:0`) {
+    if (
+      focusedUrn &&
+      parent_path ===
+        `${focusedUrnObject.parent_guid_l1}:${focusedUrnObject.parent_guid_l2}:0`
+    ) {
       loadNext = focusedUrnObject.guid;
     }
   }
@@ -86,9 +98,22 @@ export async function getComments(focusedUrn, entity_guid, parent_path, level, l
 
   try {
     response = await api.get(uri, opts);
-    commentStorageService.write(entity_guid, parent_path, descending, loadNext || loadPrevious, focusedUrn, response);
-  } catch(err) {
-    response = await commentStorageService.read(entity_guid, parent_path, descending, loadNext || loadPrevious, focusedUrn);
+    commentStorageService.write(
+      entity_guid,
+      parent_path,
+      descending,
+      loadNext || loadPrevious,
+      focusedUrn,
+      response,
+    );
+  } catch (err) {
+    response = await commentStorageService.read(
+      entity_guid,
+      parent_path,
+      descending,
+      loadNext || loadPrevious,
+      focusedUrn,
+    );
 
     // if there is no local data we throw the exception again
     if (!response) throw err;
@@ -98,15 +123,18 @@ export async function getComments(focusedUrn, entity_guid, parent_path, level, l
     for (let comment of response.comments) {
       switch (level) {
         case 0:
-          comment.expanded = (comment.child_path === `${focusedUrnObject.parent_guid_l1}:0:0`);
+          comment.expanded =
+            comment.child_path === `${focusedUrnObject.parent_guid_l1}:0:0`;
           break;
         case 1:
-          comment.expanded = comment.child_path === `${focusedUrnObject.parent_guid_l1}:${focusedUrnObject.parent_guid_l2}:0`;
+          comment.expanded =
+            comment.child_path ===
+            `${focusedUrnObject.parent_guid_l1}:${focusedUrnObject.parent_guid_l2}:0`;
           break;
         default:
           console.log('Level out of scope', level);
       }
-      comment.focused = (comment._guid === focusedUrnObject.guid);
+      comment.focused = comment._guid === focusedUrnObject.guid;
     }
   }
 
@@ -139,7 +167,7 @@ export function deleteComment(guid) {
  */
 export function updateComment(guid, description) {
   return api.post(`api/v1/comments/update/${guid}`, {
-    description: description
+    description: description,
   });
 }
 
@@ -149,7 +177,7 @@ export function updateComment(guid, description) {
  * @param {boolean} state
  */
 export function toggleAllowComments(guid, state) {
-  return api.post(`api/v2/permissions/comments/${guid}`,{
-    allowed: state
+  return api.post(`api/v2/permissions/comments/${guid}`, {
+    allowed: state,
   });
 }

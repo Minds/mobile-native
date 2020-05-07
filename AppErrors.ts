@@ -1,5 +1,5 @@
 //@ts-nocheck
-import {Alert} from 'react-native';
+import { Alert } from 'react-native';
 
 import {
   setNativeExceptionHandler,
@@ -54,11 +54,13 @@ if (!__DEV__) {
         Alert.alert(
           'Unexpected error occurred',
           `
-          Error: ${(isFatal) ? 'Fatal:' : ''} ${e.name} ${e.message}
+          Error: ${isFatal ? 'Fatal:' : ''} ${e.name} ${e.message}
         `,
-          [{
-            text: 'Ok',
-          }]
+          [
+            {
+              text: 'Ok',
+            },
+          ],
         );
       }
 

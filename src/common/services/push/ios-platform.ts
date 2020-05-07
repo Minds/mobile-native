@@ -7,14 +7,22 @@ import logService from '../log.service';
  * Ios Platform
  */
 export default class IosPlatfom extends AbstractPlatform {
-
   /**
    * Init push service
    */
   init() {
-    NotificationsIOS.addEventListener('remoteNotificationsRegistered', this._onPushRegistered.bind(this));
-    NotificationsIOS.addEventListener('remoteNotificationsRegistrationFailed', this._onPushRegistrationFailed.bind(this));
-    NotificationsIOS.addEventListener('notificationOpened', this._onNotificationOpened.bind(this));
+    NotificationsIOS.addEventListener(
+      'remoteNotificationsRegistered',
+      this._onPushRegistered.bind(this),
+    );
+    NotificationsIOS.addEventListener(
+      'remoteNotificationsRegistrationFailed',
+      this._onPushRegistrationFailed.bind(this),
+    );
+    NotificationsIOS.addEventListener(
+      'notificationOpened',
+      this._onNotificationOpened.bind(this),
+    );
     NotificationsIOS.requestPermissions();
   }
 
@@ -22,9 +30,18 @@ export default class IosPlatfom extends AbstractPlatform {
    * Stop push service
    */
   stop() {
-    NotificationsIOS.removeEventListener('remoteNotificationsRegistered', this._onPushRegistered.bind(this));
-    NotificationsIOS.removeEventListener('remoteNotificationsRegistrationFailed', this._onPushRegistrationFailed.bind(this));
-    NotificationsIOS.removeEventListener('notificationOpened', this._onNotificationOpened.bind(this));
+    NotificationsIOS.removeEventListener(
+      'remoteNotificationsRegistered',
+      this._onPushRegistered.bind(this),
+    );
+    NotificationsIOS.removeEventListener(
+      'remoteNotificationsRegistrationFailed',
+      this._onPushRegistrationFailed.bind(this),
+    );
+    NotificationsIOS.removeEventListener(
+      'notificationOpened',
+      this._onNotificationOpened.bind(this),
+    );
   }
 
   /**
@@ -80,7 +97,6 @@ export default class IosPlatfom extends AbstractPlatform {
   registerToken() {
     super.registerToken('apple');
   }
-
 
   _onPushRegistrationFailed(error) {
     // For example:

@@ -1,11 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  StyleSheet,
-  View,
-  Platform,
-} from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 
 import colors from '../styles/Colors';
 import { observer, inject } from 'mobx-react';
@@ -17,7 +13,6 @@ import { CommonStyle } from '../styles/Common';
 @inject('messengerList')
 @observer
 export default class MessengerTabIcon extends Component {
-
   /**
    * Render
    */
@@ -26,7 +21,14 @@ export default class MessengerTabIcon extends Component {
     return (
       <View style={styles.container}>
         <Icon name="md-chatbubbles" size={24} color={tintColor} />
-        { this.props.messengerList.unread ? <FAIcon name="circle" size={10} color='rgba(70, 144, 223, 1)' style={styles.unread} /> : null}
+        {this.props.messengerList.unread ? (
+          <FAIcon
+            name="circle"
+            size={10}
+            color="rgba(70, 144, 223, 1)"
+            style={styles.unread}
+          />
+        ) : null}
       </View>
     );
   }
@@ -43,6 +45,6 @@ const styles = StyleSheet.create({
     opacity: 1,
     position: 'absolute',
     top: 0,
-    left: 15
+    left: 15,
   },
 });

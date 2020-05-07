@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,10 +8,9 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import SearchComponent from './SearchComponent';
-import navigation from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import MessengerTabIcon from '../messenger/MessengerTabIconNew';
@@ -25,6 +24,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   refreshFeed?: Function;
   navigation: any;
+  background?: string;
 }
 
 export const Topbar = observer((props: Props) => {
@@ -33,8 +33,6 @@ export const Topbar = observer((props: Props) => {
   useEffect(() => {
     wallet.refresh();
   }, []);
-
-  const listenForSearch = () => (user.searching ? styles.scale0 : {});
 
   const CS = ThemedStyles.style;
 
@@ -45,7 +43,7 @@ export const Topbar = observer((props: Props) => {
           <View
             style={[
               styles.container,
-              CS.backgroundSecondary,
+              props.background ?? CS.backgroundSecondary,
               { paddingTop: insets!.top + 10 },
             ]}>
             <View style={styles.topbar}>

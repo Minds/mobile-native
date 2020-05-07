@@ -1,6 +1,6 @@
 //@ts-nocheck
-import {observable, action} from 'mobx';
-import {cloneDeep} from 'lodash';
+import { observable, action } from 'mobx';
+import { cloneDeep } from 'lodash';
 
 import channelService from './ChannelService';
 import wireService from '../wire/WireService';
@@ -13,7 +13,6 @@ import channelsService from '../common/services/channels.service';
  * Channel Store
  */
 export default class ChannelStore {
-
   guid = null;
   feedStore = null;
 
@@ -76,18 +75,20 @@ export default class ChannelStore {
 
   @action
   loadrewards(guid) {
-    wireService.rewards(guid)
-      .then(action(rewards => {
-        if (rewards) {
-          // merge rewards
-          rewards.merged = rewards.money.concat(rewards.points);
-          this.rewards = rewards;
-        } else {
-          this.rewards = {}
-        }
-
-      }))
-      .catch(err => {
+    wireService
+      .rewards(guid)
+      .then(
+        action((rewards) => {
+          if (rewards) {
+            // merge rewards
+            rewards.merged = rewards.money.concat(rewards.points);
+            this.rewards = rewards;
+          } else {
+            this.rewards = {};
+          }
+        }),
+      )
+      .catch((err) => {
         logService.exception('[ChannelStore] loadrewards', err);
       });
   }
@@ -123,7 +124,7 @@ export default class ChannelStore {
           type: avatar.type,
           name: avatar.fileName || 'avatar.jpg',
         },
-        e => {
+        (e) => {
           this.setAvatarProgress(e.loaded / e.total);
         },
       );
@@ -148,13 +149,18 @@ export default class ChannelStore {
 
       if (banner) {
         this.isUploading = true;
-        const bannerResult = await channelService.upload(this.guid, 'banner', {
-          uri: banner.uri,
-          type: banner.type,
-          name: banner.fileName || 'banner.jpg'
-        }, e => {
-          this.setBannerProgress(e.loaded / e.total);
-        });
+        const bannerResult = await channelService.upload(
+          this.guid,
+          'banner',
+          {
+            uri: banner.uri,
+            type: banner.type,
+            name: banner.fileName || 'banner.jpg',
+          },
+          (e) => {
+            this.setBannerProgress(e.loaded / e.total);
+          },
+        );
 
         this.setBannerProgress(100);
 

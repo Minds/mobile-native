@@ -1,6 +1,6 @@
 //@ts-nocheck
 import BaseModel from '../common/BaseModel';
-import {observable} from 'mobx';
+import { observable } from 'mobx';
 
 /**
  * Conversation model

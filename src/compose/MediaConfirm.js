@@ -12,7 +12,7 @@ import MindsVideo from '../media/MindsVideo';
  * Media confirm screen
  * @param {Object} props
  */
-export default function(props) {
+export default function (props) {
   const theme = ThemedStyles.style;
 
   const insets = useSafeArea();

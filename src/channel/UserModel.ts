@@ -27,6 +27,8 @@ export default class UserModel extends BaseModel {
   btc_address?: string;
   icontime!: string;
   username!: string;
+  briefdescription!: string;
+  city!: string;
   name!: string;
   admin = false;
   plus: boolean = false;
@@ -34,7 +36,9 @@ export default class UserModel extends BaseModel {
   founder: boolean = false;
   rewards: boolean = false;
   last_accepted_tos: number = 0;
+  subscriptions_count: number = 0;
   carousels?: Array<any>;
+  dob?: string;
 
   /**
    * @var {boolean}
@@ -109,9 +113,10 @@ export default class UserModel extends BaseModel {
   }
 
   @action
-  async toggleSubscription() {
+  toggleSubscription = async () => {
     const value = !this.subscribed;
     this.subscribed = value;
+
     try {
       const metadata = this.getClientMetadata();
       await ChannelService.toggleSubscription(this.guid, value, metadata);
@@ -122,7 +127,7 @@ export default class UserModel extends BaseModel {
       });
       throw err;
     }
-  }
+  };
 
   @action
   async toggleBlock(value: boolean | null = null) {
@@ -182,9 +187,7 @@ export default class UserModel extends BaseModel {
    */
   getAvatarSource(size = 'medium') {
     return {
-      uri: `${MINDS_CDN_URI}icon/${
-        this.guid
-      }/${size}/${this.getOwnerIcontime()}`,
+      uri: `${MINDS_CDN_URI}icon/${this.guid}/${size}/${this.icontime}`,
       headers: api.buildHeaders(),
     };
   }

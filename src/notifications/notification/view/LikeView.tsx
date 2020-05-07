@@ -1,13 +1,7 @@
 //@ts-nocheck
-import React, {
-  PureComponent
-} from 'react';
+import React, { PureComponent } from 'react';
 
-import {
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
 import i18n from '../../../common/services/i18n.service';
 
@@ -15,7 +9,6 @@ import i18n from '../../../common/services/i18n.service';
  * Like Notification Component
  */
 export default class LikeView extends PureComponent {
-
   constructor(props) {
     super(props);
     this.translatedMessage = this.getMessage();
@@ -35,10 +28,12 @@ export default class LikeView extends PureComponent {
     const body = this.getBody(entity);
 
     return (
-      <TouchableOpacity style={styles.bodyContents} onPress={this.navToActivity}>
+      <TouchableOpacity
+        style={styles.bodyContents}
+        onPress={this.navToActivity}>
         {body}
       </TouchableOpacity>
-    )
+    );
   }
 
   /**
@@ -48,8 +43,11 @@ export default class LikeView extends PureComponent {
     let params = {};
     let screen = 'Activity';
     switch (this.props.entity.entityObj.type) {
-      case "comment":
-        if (this.props.entity.params.parent && this.props.entity.params.parent.type === 'group') {
+      case 'comment':
+        if (
+          this.props.entity.params.parent &&
+          this.props.entity.params.parent.type === 'group'
+        ) {
           screen = 'GroupView';
           params.group = this.props.entity.params.parent;
           params.hydrate = true;
@@ -63,7 +61,7 @@ export default class LikeView extends PureComponent {
 
         break;
       case 'object':
-        switch(this.props.entity.entityObj.subtype) {
+        switch (this.props.entity.entityObj.subtype) {
           case 'blog':
             screen = 'BlogView';
             params.blog = this.props.entity.entityObj;
@@ -83,7 +81,7 @@ export default class LikeView extends PureComponent {
         break;
     }
     this.props.navigation.push(screen, params);
-  }
+  };
 
   /**
    * Get body based in entity.entityObj.type
@@ -93,40 +91,63 @@ export default class LikeView extends PureComponent {
     const styles = this.props.styles;
 
     if (!entity.entityObj) {
-      return (
-        <Text>{i18n.t('notification.deleted')}</Text>
-      )
+      return <Text>{i18n.t('notification.deleted')}</Text>;
     }
 
     switch (entity.entityObj.type) {
-      case "comment":
+      case 'comment':
         return (
-          <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.translatedMessage} <Text style={styles.link}> {i18n.t('notification.yourComment')} </Text></Text>
-        )
-      case "activity":
+          <Text>
+            <Text style={styles.link}>{entity.fromObj.name}</Text>{' '}
+            {this.translatedMessage}{' '}
+            <Text style={styles.link}>
+              {' '}
+              {i18n.t('notification.yourComment')}{' '}
+            </Text>
+          </Text>
+        );
+      case 'activity':
         if (entity.entityObj.title) {
           return (
-            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.translatedMessage} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
-          )
+            <Text>
+              <Text style={styles.link}>{entity.fromObj.name}</Text>{' '}
+              {this.translatedMessage}{' '}
+              <Text style={styles.link}>{entity.entityObj.title}</Text>
+            </Text>
+          );
         } else {
           return (
-            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.translatedMessage} <Text style={styles.link}>{i18n.t('notification.yourActivity')}</Text></Text>
-          )
+            <Text>
+              <Text style={styles.link}>{entity.fromObj.name}</Text>{' '}
+              {this.translatedMessage}{' '}
+              <Text style={styles.link}>
+                {i18n.t('notification.yourActivity')}
+              </Text>
+            </Text>
+          );
         }
-      case "object":
+      case 'object':
         if (entity.entityObj.title) {
           return (
-            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.translatedMessage} <Text style={styles.link}>{entity.entityObj.title}</Text></Text>
-          )
+            <Text>
+              <Text style={styles.link}>{entity.fromObj.name}</Text>{' '}
+              {this.translatedMessage}{' '}
+              <Text style={styles.link}>{entity.entityObj.title}</Text>
+            </Text>
+          );
         } else {
           return (
-            <Text><Text style={styles.link}>{entity.fromObj.name}</Text> {this.translatedMessage} <Text style={styles.link}>{i18n.t('your')} {i18n.t('subtype.'+entity.entityObj.subtype)}</Text></Text>
-          )
+            <Text>
+              <Text style={styles.link}>{entity.fromObj.name}</Text>{' '}
+              {this.translatedMessage}{' '}
+              <Text style={styles.link}>
+                {i18n.t('your')} {i18n.t('subtype.' + entity.entityObj.subtype)}
+              </Text>
+            </Text>
+          );
         }
       default:
-        return (
-            <Text>... oops.</Text>
-        )
+        return <Text>... oops.</Text>;
     }
   }
 }

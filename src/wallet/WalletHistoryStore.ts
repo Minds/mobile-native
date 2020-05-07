@@ -1,8 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action
-} from 'mobx'
+import { observable, action } from 'mobx';
 
 import OffsetListStore from '../common/stores/OffsetListStore';
 import walletService from './WalletService';
@@ -12,7 +9,6 @@ import logService from '../common/services/log.service';
  * WalletHistory Store
  */
 class WalletHistoryStore {
-
   /**
    * WalletHistory list store
    */
@@ -31,16 +27,17 @@ class WalletHistoryStore {
       return;
     }
     this.loading = true;
-    return walletService.getHistory(this.list.offset, this.filter)
-      .then( feed => {
+    return walletService
+      .getHistory(this.list.offset, this.filter)
+      .then((feed) => {
         this.list.setList(feed);
       })
       .finally(() => {
         this.loading = false;
       })
-      .catch(err => {
+      .catch((err) => {
         logService.exception('[WalletHistoryStore]', err);
-      })
+      });
   }
 
   /**
@@ -48,10 +45,9 @@ class WalletHistoryStore {
    */
   refresh() {
     this.list.refresh();
-    this.loadList()
-      .finally(() => {
-        this.list.refreshDone();
-      });
+    this.loadList().finally(() => {
+      this.list.refreshDone();
+    });
   }
   /**
    * Stop polling unread count
@@ -66,7 +62,6 @@ class WalletHistoryStore {
     this.loading = false;
     this.list = new OffsetListStore();
   }
-
 }
 
 export default WalletHistoryStore;

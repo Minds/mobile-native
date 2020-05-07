@@ -41,5 +41,4 @@ export default function ({ progress }) {
   let onboarding = 'OnboardingScreen';
 
   return getProgressBar();
-
 }

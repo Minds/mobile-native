@@ -1,20 +1,15 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
   FlatList,
   ActivityIndicator,
   StyleSheet,
-  Text
+  Text,
 } from 'react-native';
 
-import {
-  observer,
-  inject
-} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import BlogCard from './BlogCard';
 import Toolbar from '../common/components/toolbar/Toolbar';
@@ -26,7 +21,7 @@ import ErrorLoading from '../common/components/ErrorLoading';
 import { withErrorBoundary } from '../common/components/ErrorBoundary';
 import i18n from '../common/services/i18n.service';
 
-const selectedTextStyle = {color: 'black'};
+const selectedTextStyle = { color: 'black' };
 
 const BlogCardWithErrorBoundary = withErrorBoundary(BlogCard);
 
@@ -36,7 +31,6 @@ const BlogCardWithErrorBoundary = withErrorBoundary(BlogCard);
 @inject('blogs')
 @observer
 export default class BlogsListScreen extends Component {
-
   static navigationOptions = {
     title: 'Blogs',
   };
@@ -44,8 +38,12 @@ export default class BlogsListScreen extends Component {
   constructor(props) {
     super(props);
     this.typeOptions = [
-      { text: i18n.t('blogs.tabSubscriptions'), value: 'network', selectedTextStyle},
-      { text: i18n.t('blogs.tabMyBlogs'), value: 'owner', selectedTextStyle},
+      {
+        text: i18n.t('blogs.tabSubscriptions'),
+        value: 'network',
+        selectedTextStyle,
+      },
+      { text: i18n.t('blogs.tabMyBlogs'), value: 'owner', selectedTextStyle },
     ];
   }
 
@@ -60,10 +58,13 @@ export default class BlogsListScreen extends Component {
     const blog = row.item;
     return (
       <View style={styles.cardContainer}>
-        <BlogCardWithErrorBoundary entity={blog} navigation={this.props.navigation} />
+        <BlogCardWithErrorBoundary
+          entity={blog}
+          navigation={this.props.navigation}
+        />
       </View>
     );
-  }
+  };
 
   /**
    * Load data
@@ -71,39 +72,40 @@ export default class BlogsListScreen extends Component {
   loadMore = () => {
     if (this.props.blogs.list.errorLoading) return;
     this.props.blogs.loadList();
-  }
+  };
 
   /**
    * Load more forced
    */
   loadMoreForce = () => {
     this.props.blogs.loadList();
-  }
+  };
 
   /**
    * On tag selection change
    */
   onTagSelectionChange = () => {
     this.props.blogs.refresh();
-  }
+  };
 
   /**
    * Render Tabs
    */
   renderToolbar() {
-
     return (
       <View>
         <Toolbar
-          options={ this.typeOptions }
-          initial={ this.props.blogs.filter }
-          onChange={ this.onTabChange }
+          options={this.typeOptions}
+          initial={this.props.blogs.filter}
+          onChange={this.onTabChange}
         />
-        { this.props.blogs.filter == 'suggested' && <View style={[CS.paddingTop, CS.paddingBottom, CS.hairLineBottom]}>
-          <TagsSubBar onChange={this.onTagSelectionChange}/>
-        </View>}
+        {this.props.blogs.filter == 'suggested' && (
+          <View style={[CS.paddingTop, CS.paddingBottom, CS.hairLineBottom]}>
+            <TagsSubBar onChange={this.onTagSelectionChange} />
+          </View>
+        )}
       </View>
-    )
+    );
   }
 
   /**
@@ -112,14 +114,14 @@ export default class BlogsListScreen extends Component {
   onTabChange = (value) => {
     this.props.blogs.setFilter(value);
     this.props.blogs.reload();
-  }
+  };
 
   /**
    * Refresh
    */
   refresh = () => {
     this.props.blogs.refresh();
-  }
+  };
 
   /**
    * Render
@@ -128,32 +130,41 @@ export default class BlogsListScreen extends Component {
     let empty = null;
     const store = this.props.blogs;
 
-    const footer = this.getFooter()
+    const footer = this.getFooter();
 
     empty = (
       <View style={ComponentsStyle.emptyComponentContainer}>
         <View style={ComponentsStyle.emptyComponent}>
-          <Text style={ComponentsStyle.emptyComponentMessage}>{i18n.t('blogs.blogListEmpty')}</Text>
+          <Text style={ComponentsStyle.emptyComponentMessage}>
+            {i18n.t('blogs.blogListEmpty')}
+          </Text>
         </View>
-      </View>);
+      </View>
+    );
 
     return (
       <FlatList
         data={store.list.entities.slice()}
-        ListEmptyComponent={!this.props.blogs.list.loaded && !this.props.blogs.list.refreshing? null : empty}
+        ListEmptyComponent={
+          !this.props.blogs.list.loaded && !this.props.blogs.list.refreshing
+            ? null
+            : empty
+        }
         removeClippedSubviews
         onRefresh={this.refresh}
         refreshing={store.list.refreshing}
         onEndReached={this.loadMore}
         // onEndReachedThreshold={0.09}
         renderItem={this.renderRow}
-        keyExtractor={item => item.guid}
+        keyExtractor={(item) => item.guid}
         style={styles.list}
         ListHeaderComponent={this.renderToolbar()}
         ListFooterComponent={footer}
-        getItemLayout={(data, index) => (
-          { length: 300, offset: 308 * index, index }
-        )}
+        getItemLayout={(data, index) => ({
+          length: 300,
+          offset: 308 * index,
+          index,
+        })}
       />
     );
   }
@@ -162,7 +173,7 @@ export default class BlogsListScreen extends Component {
    * Get list's footer
    */
   getFooter() {
-    if (this.props.blogs.loading && !this.props.blogs.list.refreshing){
+    if (this.props.blogs.loading && !this.props.blogs.list.refreshing) {
       return (
         <View style={[CS.centered, CS.padding3x]}>
           <ActivityIndicator size={'large'} />
@@ -171,11 +182,11 @@ export default class BlogsListScreen extends Component {
     }
     if (!this.props.blogs.list.errorLoading) return null;
 
-    const message = this.props.blogs.list.entities.length ?
-      i18n.t('cantLoadMore') :
-      i18n.t('cantLoad');
+    const message = this.props.blogs.list.entities.length
+      ? i18n.t('cantLoadMore')
+      : i18n.t('cantLoad');
 
-    return <ErrorLoading message={message} tryAgain={this.loadMoreForce}/>
+    return <ErrorLoading message={message} tryAgain={this.loadMoreForce} />;
   }
 }
 
@@ -184,10 +195,10 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    backgroundColor: '#FFF'
+    backgroundColor: '#FFF',
   },
   cardContainer: {
     backgroundColor: '#ececec',
     paddingBottom: 8,
-  }
+  },
 });

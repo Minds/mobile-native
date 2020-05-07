@@ -17,6 +17,7 @@ test:jest:
   before_script:
     - yarn install --frozen-lockfile
   script:
+    - 'yarn prettier --check "./src/**/*.{ts,tsx,js,json}" "./*.{tsx,ts}"'
     - yarn tsc
     - yarn test
 
@@ -75,11 +76,11 @@ build:android:
     - bundle install --path=vendor/bundle
   script:
     - bundle exec fastlane assemble_build
-    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG-dev.apk
+    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
   artifacts:
     name: "Minds APK"
     paths:
-      - Minds-$CI_COMMIT_REF_SLUG-dev.apk
+      - Minds-$CI_COMMIT_REF_SLUG.apk
     expire_in: 7 days
     when: on_success
   only:
@@ -156,6 +157,7 @@ deploy:s3andbrowserstack:
   only:
     refs:
       - /^stable-*/
+      - /^release-*/
       - /^test-*/
 
 deploy:google_play:

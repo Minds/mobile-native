@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Text, View, StyleSheet, Alert } from 'react-native';
-//@ts-ignore
+
 import Carousel from 'react-native-snap-carousel';
 
 import { CommonStyle as CS } from '../../styles/Common';
@@ -11,8 +11,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import i18n from '../../common/services/i18n.service';
 import type { StripeCard } from '../WireTypes';
 
-const { value: slideWidth, viewportHeight } = viewportPercentage(75);
-const { value: itemHorizontalMargin } = viewportPercentage(2);
+const { value: slideWidth, viewportHeight } = viewportPercentage(50);
+const { value: itemHorizontalMargin } = viewportPercentage(1);
 
 const itemWidth = slideWidth + itemHorizontalMargin * 2;
 const itemHeight = { height: Math.floor(itemWidth * 0.55) };

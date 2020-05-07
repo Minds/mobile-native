@@ -10,22 +10,22 @@ import entitiesService from '../common/services/entities.service';
  * Groups Service
  */
 class GroupsService {
-
   /**
    * Load groups
    */
   async loadList(filter, offset) {
-
-    let endpoint = (filter === 'suggested') ?
-      'api/v2/entities/suggested/groups' + (getStores().hashtag.all ? '/all' : '' ) :
-      'api/v1/groups/' + filter;
+    let endpoint =
+      filter === 'suggested'
+        ? 'api/v2/entities/suggested/groups' +
+          (getStores().hashtag.all ? '/all' : '')
+        : 'api/v1/groups/' + filter;
 
     // abort previous call
     abort('groups:list');
 
-    const data = await api.get(endpoint, { limit: 12, offset }, 'groups:list')
+    const data = await api.get(endpoint, { limit: 12, offset }, 'groups:list');
 
-    let entities = (filter === 'suggested') ? data.entities : data.groups;
+    let entities = filter === 'suggested' ? data.entities : data.groups;
 
     if (offset && entities) {
       entities.shift();
@@ -42,12 +42,12 @@ class GroupsService {
    * @param {string} guid
    */
   async loadEntity(guid) {
-    const response = await api.get('api/v1/groups/group/'+ guid);
+    const response = await api.get('api/v1/groups/group/' + guid);
     return response.group;
   }
 
   async loadFeed(guid, offset, pinnedGuids = null) {
-    return await this.loadFeedLegacy(guid, offset, pinnedGuids)
+    return await this.loadFeedLegacy(guid, offset, pinnedGuids);
   }
 
   /**
@@ -71,7 +71,7 @@ class GroupsService {
     const feed = {
       adminqueueCount: response['adminqueue:count'],
       entities: [],
-      offset: response['load-next'] || ''
+      offset: response['load-next'] || '',
     };
 
     if (response.pinned) {
@@ -86,11 +86,11 @@ class GroupsService {
   }
 
   async loadMyGroups(offset) {
-    const data = await api.get('api/v1/groups/member',{offset});
+    const data = await api.get('api/v1/groups/member', { offset });
 
     return {
       entities: data.entities || [],
-      offset: data['load-next'] || ''
+      offset: data['load-next'] || '',
     };
   }
 
@@ -103,14 +103,11 @@ class GroupsService {
   }
 
   async markAsRead(opts) {
-    if (!opts.entity_guid)
-      throw "entity guid must be set";
-    if (!opts.entity_type)
-      throw "entity type must be set";
-    if (!opts.marker)
-      throw "marker must be set";
+    if (!opts.entity_guid) throw 'entity guid must be set';
+    if (!opts.entity_type) throw 'entity type must be set';
+    if (!opts.marker) throw 'marker must be set';
 
-    return api.post('api/v2/notifications/markers/read', opts)
+    return api.post('api/v2/notifications/markers/read', opts);
   }
 
   /**
@@ -120,7 +117,7 @@ class GroupsService {
    * @param {integer} limit
    */
   loadMembers(guid, offset, limit = 21) {
-    return api.get('api/v1/groups/membership/' + guid, {limit, offset});
+    return api.get('api/v1/groups/membership/' + guid, { limit, offset });
   }
 
   /**
@@ -131,7 +128,11 @@ class GroupsService {
    * @param {string} q
    */
   searchMembers(guid, offset, limit = 21, q) {
-    return api.get('api/v1/groups/membership/' + guid + '/search', {limit, offset, q});
+    return api.get('api/v1/groups/membership/' + guid + '/search', {
+      limit,
+      offset,
+      q,
+    });
   }
 
   /**
@@ -156,7 +157,9 @@ class GroupsService {
    * @param {string} user_guid
    */
   ban(group_guid, user_guid) {
-    return api.post(`api/v1/groups/membership/${group_guid}/ban`, {user: user_guid});
+    return api.post(`api/v1/groups/membership/${group_guid}/ban`, {
+      user: user_guid,
+    });
   }
 
   /**
@@ -165,7 +168,9 @@ class GroupsService {
    * @param {string} user_guid
    */
   kick(group_guid, user_guid) {
-    return api.post(`api/v1/groups/membership/${group_guid}/kick`, {user: user_guid});
+    return api.post(`api/v1/groups/membership/${group_guid}/kick`, {
+      user: user_guid,
+    });
   }
   /**
    * Make owner of the group
@@ -191,7 +196,9 @@ class GroupsService {
    * @param {string} user_guid
    */
   makeModerator(group_guid, user_guid) {
-    return api.put(`api/v1/groups/management/${group_guid}/${user_guid}/moderator`);
+    return api.put(
+      `api/v1/groups/management/${group_guid}/${user_guid}/moderator`,
+    );
   }
 
   /**
@@ -200,11 +207,15 @@ class GroupsService {
    * @param {string} user_guid
    */
   revokeModerator(group_guid, user_guid) {
-    return api.delete(`api/v1/groups/management/${group_guid}/${user_guid}/moderator`);
+    return api.delete(
+      `api/v1/groups/management/${group_guid}/${user_guid}/moderator`,
+    );
   }
 
   toggleConversationDisabled(group_guid, state) {
-    return api.post(`api/v1/groups/group/${group_guid}`, { conversationDisabled: state });
+    return api.post(`api/v1/groups/group/${group_guid}`, {
+      conversationDisabled: state,
+    });
   }
 }
 

@@ -19,7 +19,7 @@ export default class RichEmbedStore {
    * Richembed check
    */
   @action
-  richEmbedCheck = text => {
+  richEmbedCheck = (text) => {
     const matches = Util.urlReSingle.exec(text);
 
     if (this._richEmbedFetchTimer) {
@@ -74,7 +74,6 @@ export default class RichEmbedStore {
    */
   @action
   async setRichEmbed(url) {
-
     this.hasRichEmbed = true;
     this.richEmbedUrl = url;
     this.meta = null;

@@ -1,9 +1,5 @@
 //@ts-nocheck
-import {
-  observable,
-  action,
-  computed
-} from 'mobx'
+import { observable, action, computed } from 'mobx';
 import AttachmentStore from '../common/stores/AttachmentStore';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import apiService from '../common/services/api.service';
@@ -32,17 +28,17 @@ class CaptureStore {
   async loadSuggestedTags() {
     const suggested = await hashtagService.getSuggested();
     this.suggestedTags = suggested;
-    this.suggestedTags.forEach(t => t.selected = false);
+    this.suggestedTags.forEach((t) => (t.selected = false));
   }
 
   @computed
   get selectedSuggested() {
     const selectedSuggested = [...this.suggestedTags];
     // deselect all
-    selectedSuggested.forEach(t => t.selected = false);
+    selectedSuggested.forEach((t) => (t.selected = false));
     // select
-    this.allTags.forEach(tag => {
-      const suggested = selectedSuggested.find(s => s.value == tag);
+    this.allTags.forEach((tag) => {
+      const suggested = selectedSuggested.find((s) => s.value == tag);
       if (suggested) this.setSelected(suggested, true);
     });
     return selectedSuggested;
@@ -73,8 +69,11 @@ class CaptureStore {
    */
   @action
   deleteTag = (tag) => {
-    this.text = this.text.replace(new RegExp('(^|\\s)#'+tag.value+'(?!\\w)', 'gim'),` ${tag.value}`);
-  }
+    this.text = this.text.replace(
+      new RegExp('(^|\\s)#' + tag.value + '(?!\\w)', 'gim'),
+      ` ${tag.value}`,
+    );
+  };
 
   /**
    * Add tag
@@ -83,7 +82,7 @@ class CaptureStore {
   @action
   addTag = (tag) => {
     this.text += ` #${tag.value}`;
-  }
+  };
 
   /**
    * Set posting
@@ -127,7 +126,7 @@ class CaptureStore {
       const result = await post(newPost);
       return result;
     } catch (err) {
-      throw(err);
+      throw err;
     } finally {
       this.setPosting(false);
     }
@@ -139,10 +138,10 @@ class CaptureStore {
   async remind(guid, newPost) {
     try {
       this.setPosting(true);
-      const result = await remind(guid ,newPost);
+      const result = await remind(guid, newPost);
       return result;
     } catch (err) {
-      throw(err);
+      throw err;
     } finally {
       this.setPosting(false);
     }
@@ -157,8 +156,10 @@ class CaptureStore {
     if (response && response.thirdpartynetworks) {
       const networks = response.thirdpartynetworks;
 
-      this.socialNetworks.twitter = networks.twitter && networks.twitter.connected;
-      this.socialNetworks.facebook = networks.facebook && networks.facebook.connected;
+      this.socialNetworks.twitter =
+        networks.twitter && networks.twitter.connected;
+      this.socialNetworks.facebook =
+        networks.facebook && networks.facebook.connected;
     }
     return response;
   }

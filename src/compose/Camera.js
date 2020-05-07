@@ -36,6 +36,7 @@ export default observer(function (props) {
     flashMode: RNCamera.Constants.FlashMode.off,
     recording: false,
     show: false,
+    pulse: false,
     ready: false,
     showCam() {
       store.show = true;
@@ -58,17 +59,18 @@ export default observer(function (props) {
           ? RNCamera.Constants.Type.front
           : RNCamera.Constants.Type.back;
     },
-    setRecording: (value) => {
+    setRecording: (value, pulse = false) => {
       store.recording = value;
+      store.pulse = pulse;
     },
-    async recordVideo() {
+    async recordVideo(pulse = false) {
       if (store.recording) {
         store.setRecording(false);
         return ref.current.stopRecording();
       }
       const settings = await mindsService.getSettings();
 
-      store.setRecording(true);
+      store.setRecording(true, pulse);
 
       return await ref.current.recordAsync({
         quality: 0.9,
@@ -137,7 +139,7 @@ export default observer(function (props) {
   const onLongPress = useCallback(async () => {
     if (!store.recording) {
       props.onForceVideo();
-      const result = await store.recordVideo();
+      const result = await store.recordVideo(true);
 
       if (result && props.onMedia) {
         props.onMedia({ type: 'video/mp4', ...result });
@@ -198,6 +200,7 @@ export default observer(function (props) {
           store={store}
           onLongPress={onLongPress}
           onPressOut={onPress}
+          pulse={store.pulse}
         />
       </View>
       <View style={[styles.buttonTopContainer, cleanTop]}>

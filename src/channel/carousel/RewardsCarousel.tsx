@@ -1,17 +1,9 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
-import {
-  Text,
-  View,
-  Dimensions
-} from 'react-native';
+import { Text, View, Dimensions } from 'react-native';
 
-import {
-  observer,
-} from 'mobx-react'
+import { observer } from 'mobx-react';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import Carousel from '../../common/components/Carousel';
@@ -21,27 +13,26 @@ import Carousel from '../../common/components/Carousel';
  */
 @observer
 export default class RewardsCarousel extends Component {
-
   state = {
-    width: Dimensions.get('window').width
-  }
+    width: Dimensions.get('window').width,
+  };
 
   /**
    * Handle dimensions changes
    */
   dimensionChange = () => {
     this.setState({
-      width: Dimensions.get('window').width
+      width: Dimensions.get('window').width,
     });
-  }
+  };
 
   componentWillMount() {
-    Dimensions.addEventListener("change", this.dimensionChange);
+    Dimensions.addEventListener('change', this.dimensionChange);
   }
 
   componentWillUnmount() {
     // allways remove listeners on unmount
-    Dimensions.removeEventListener("change", this.dimensionChange);
+    Dimensions.removeEventListener('change', this.dimensionChange);
   }
 
   /**
@@ -57,26 +48,28 @@ export default class RewardsCarousel extends Component {
       // align text from props
       let align = null;
       if (this.props.textAlign) {
-        align = {textAlign:this.props.textAlign};
+        align = { textAlign: this.props.textAlign };
       }
 
       rewards.map((rew) => {
         let formated = '';
         switch (rew.type) {
           case 'money':
-            formated = '$'+ rew.amount+'+';
+            formated = '$' + rew.amount + '+';
             break;
           case 'points':
             formated = rew.amount + '+ points';
             break;
           default:
-            formated = 'type not implemented'
+            formated = 'type not implemented';
             break;
         }
 
         let icon = null;
         if (!hideIcon) {
-          icon = <Icon style={cstyles.rewardicon} name={'ios-flash'} size={36} />;
+          icon = (
+            <Icon style={cstyles.rewardicon} name={'ios-flash'} size={36} />
+          );
         }
 
         rewardsArray.push(
@@ -86,20 +79,22 @@ export default class RewardsCarousel extends Component {
               <Text style={[cstyles.rewarddesc, align]}>{rew.description}</Text>
             </View>
             {icon}
-          </View>
+          </View>,
         );
       });
     }
 
-    const {
-      backgroundColor = '#fff'
-    } = this.props;
+    const { backgroundColor = '#fff' } = this.props;
 
     return (
-      <Carousel width={this.state.width} height={70} color={'#0071ff'} backgroundColor={backgroundColor}>
+      <Carousel
+        width={this.state.width}
+        height={70}
+        color={'#0071ff'}
+        backgroundColor={backgroundColor}>
         {rewardsArray}
       </Carousel>
-    )
+    );
   }
 }
 
@@ -111,13 +106,13 @@ const cstyles = {
   },
   rewardicon: {
     color: '#0071ff',
-    width: 30
+    width: 30,
   },
   rewardamount: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   rewarddesc: {
-    color: '#999'
+    color: '#999',
   },
-}
+};

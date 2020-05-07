@@ -4,7 +4,7 @@ import mindsService from './minds.service';
 
 let intialized = false;
 
-export const initStripe = async() => {
+export const initStripe = async () => {
   if (intialized) return;
   intialized = true;
 
@@ -14,7 +14,6 @@ export const initStripe = async() => {
     publishableKey: settings.stripe_key,
     //androidPayMode: 'test', // Android only
   });
-}
+};
 
 export default stripe;
-

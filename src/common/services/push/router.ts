@@ -7,7 +7,6 @@ import logService from '../log.service';
  * Push Router
  */
 export default class Router {
-
   /**
    * Navigate to the screen based on the notification data
    * @param {object} notification
@@ -19,7 +18,7 @@ export default class Router {
       //navigation.navigate('Conversation', { conversation: { guid: data.user_guid + ':' + session.guid } });
     } else if (data.uri == 'notification') {
       if (!data.json || !data.json.entity_guid) {
-        navigation.navigate('Notifications')
+        navigation.navigate('Notifications');
         return;
       }
 
@@ -49,7 +48,9 @@ export default class Router {
           } else if (entity_type[0] === 'object') {
             navigation.push('Activity', { guid: data.json.entity_guid });
           } else {
-            const err = new Error(`[DeepLinkRouter] Unknown notification, entity_type: ${entity_type}`);
+            const err = new Error(
+              `[DeepLinkRouter] Unknown notification, entity_type: ${entity_type}`,
+            );
             logService.exception('[DeepLinkRouter] Unknown notification:', err);
           }
 
@@ -61,16 +62,25 @@ export default class Router {
 
         case 'comment':
           if (data.json.entity_type == 'group') {
-            navigation.push('GroupView', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid, tab: 'conversation'});
+            navigation.push('GroupView', {
+              guid: data.json.child_guid
+                ? data.json.child_guid
+                : data.json.entity_guid,
+              tab: 'conversation',
+            });
           } else {
-            navigation.push('Activity', { guid: data.json.child_guid ? data.json.child_guid : data.json.entity_guid});
+            navigation.push('Activity', {
+              guid: data.json.child_guid
+                ? data.json.child_guid
+                : data.json.entity_guid,
+            });
           }
           break;
 
         case 'rewards_reminder':
         case 'rewards_summary':
           if (featuresService.has('crypto')) {
-            navigation.navigate('Wallet', { });
+            navigation.navigate('Wallet', {});
           } else {
             navigation.navigate('Notifications', {});
           }
@@ -78,9 +88,10 @@ export default class Router {
 
         default:
           navigation.navigate('Notifications', {});
-          logService.error('[DeepLinkRouter] Unknown notification:' + JSON.stringify(data));
+          logService.error(
+            '[DeepLinkRouter] Unknown notification:' + JSON.stringify(data),
+          );
           break;
-
       }
     }
   }
@@ -92,15 +103,18 @@ export default class Router {
   async navigateToActivityOrGroup(data) {
     const entitiesService = require('../entities.service');
     try {
-      const entity = await entitiesService.single('urn:entity:' + data.json.parent_guid);
+      const entity = await entitiesService.single(
+        'urn:entity:' + data.json.parent_guid,
+      );
 
       if (entity.type === 'group') {
-        navigation.push('GroupView', { guid: data.json.parent_guid, tab: 'conversation'});
+        navigation.push('GroupView', {
+          guid: data.json.parent_guid,
+          tab: 'conversation',
+        });
       } else {
         navigation.push('Activity', { entity: entity });
       }
-    } catch (err) {
-
-    }
+    } catch (err) {}
   }
 }

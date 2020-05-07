@@ -1,9 +1,7 @@
 //@ts-nocheck
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 
-import {View, StyleSheet} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 export default class TriangleCorner extends Component {
   render() {

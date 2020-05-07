@@ -1,7 +1,5 @@
 //@ts-nocheck
-import React, {
-  Component
-} from 'react';
+import React, { Component } from 'react';
 
 import {
   View,
@@ -12,12 +10,9 @@ import {
   Alert,
 } from 'react-native';
 
-import {
-  inject,
-  observer
-} from 'mobx-react'
+import { inject, observer } from 'mobx-react';
 
-import PhoneInput from 'react-native-phone-input'
+import PhoneInput from 'react-native-phone-input';
 
 import TransparentButton from './TransparentButton';
 import NavNextButton from './NavNextButton';
@@ -49,33 +44,40 @@ export default class PhoneValidationComponent extends Component {
     wait: 60,
     confirmed: false,
     password: '',
-  }
+  };
 
   constructor(props) {
     super(props);
 
-    this.setState({ TFAConfirmed: (this.props.TFAConfirmed && this.props.TFAConfirmed === true ) });
+    this.setState({
+      TFAConfirmed: this.props.TFAConfirmed && this.props.TFAConfirmed === true,
+    });
   }
 
   async join(retry = false) {
-    let secret = "amSC90hYrgTMQWJwxQ+mxAQ8KNWlEiDM9c3Edlq7lH19O4URgIS1n0cCwmM59a5+\/8dvdv\/wu1B71e3JnMjZgA==";
+    let secret =
+      'amSC90hYrgTMQWJwxQ+mxAQ8KNWlEiDM9c3Edlq7lH19O4URgIS1n0cCwmM59a5+/8dvdv/wu1B71e3JnMjZgA==';
     if (this.state.inProgress || (!retry && !this.canJoin())) {
       return;
     }
 
-    this.setState({ inProgress: true, error: '',confirming: false, confirmFailed: false });
+    this.setState({
+      inProgress: true,
+      error: '',
+      confirming: false,
+      confirmFailed: false,
+    });
 
     try {
-      let { secret } = this.props.TFA 
-      ? await twoFactorAuthenticationService.authenticate(this.state.phone)
-      : await this.props.wallet.join(this.state.phone, retry);
+      let { secret } = this.props.TFA
+        ? await twoFactorAuthenticationService.authenticate(this.state.phone)
+        : await this.props.wallet.join(this.state.phone, retry);
 
       this.setState({
         secret,
         confirming: true,
         inProgress: false,
       });
-
     } catch (e) {
       const error = (e && e.message) || 'Unknown server error';
       this.setState({ error, inProgress: false });
@@ -84,7 +86,6 @@ export default class PhoneValidationComponent extends Component {
   }
 
   async confirm() {
-
     if (this.state.inProgress || !this.canConfirm()) {
       return;
     }
@@ -93,12 +94,20 @@ export default class PhoneValidationComponent extends Component {
 
     try {
       if (this.props.TFA) {
-        await twoFactorAuthenticationService.check(this.state.phone, this.state.code, this.state.secret)
+        await twoFactorAuthenticationService.check(
+          this.state.phone,
+          this.state.code,
+          this.state.secret,
+        );
       } else {
-        await this.props.wallet.confirm(this.state.phone, this.state.code, this.state.secret);
+        await this.props.wallet.confirm(
+          this.state.phone,
+          this.state.code,
+          this.state.secret,
+        );
         this.props.user.setRewards(true);
       }
-      this.setState({ inProgress: false, confirmed: true});
+      this.setState({ inProgress: false, confirmed: true });
     } catch (e) {
       const error = (e && e.message) || 'Unknown server error';
       this.setState({ error });
@@ -108,14 +117,14 @@ export default class PhoneValidationComponent extends Component {
     }
   }
 
-  setPhone = phone => this.setState({ phone });
+  setPhone = (phone) => this.setState({ phone });
 
-  setCode = code => this.setState({ code });
+  setCode = (code) => this.setState({ code });
 
-  setPassword = password => this.setState({ password });
+  setPassword = (password) => this.setState({ password });
 
   canJoin() {
-    return this.refs.phoneInput && this.refs.phoneInput.isValidNumber()
+    return this.refs.phoneInput && this.refs.phoneInput.isValidNumber();
   }
 
   joinAction = () => this.join();
@@ -130,14 +139,21 @@ export default class PhoneValidationComponent extends Component {
 
   getInputNumberPartial() {
     const CS = ThemedStyles.style;
-    let joinButtonContent = <Text style={[
-      CS.colorPrimaryText,
-      CS.padding,
-      !this.canJoin() ? CS.colorSecondaryText : CS.colorPrimaryText
-    ]}>{i18n.t('validate')}</Text>
+    let joinButtonContent = (
+      <Text
+        style={[
+          CS.colorPrimaryText,
+          CS.padding,
+          !this.canJoin() ? CS.colorSecondaryText : CS.colorPrimaryText,
+        ]}>
+        {i18n.t('validate')}
+      </Text>
+    );
 
     if (this.state.inProgress) {
-      joinButtonContent = <ActivityIndicator size="small" color={Colors.primary} />;
+      joinButtonContent = (
+        <ActivityIndicator size="small" color={Colors.primary} />
+      );
     }
 
     return (
@@ -151,7 +167,7 @@ export default class PhoneValidationComponent extends Component {
               stylesheet.phoneInput,
               ComponentsStyle.loginInputNew,
               CS.marginRight2x,
-              CS.borderPrimary
+              CS.borderPrimary,
             ]}
             textStyle={ThemedStyles.style.colorPrimaryText}
             value={this.state.phone}
@@ -164,7 +180,10 @@ export default class PhoneValidationComponent extends Component {
             }}
           />
 
-          <ListItemButton onPress={this.joinAction} disabled={!this.canJoin()} style={[CS.borderPrimary, CS.borderHair]} >
+          <ListItemButton
+            onPress={this.joinAction}
+            disabled={!this.canJoin()}
+            style={[CS.borderPrimary, CS.borderHair]}>
             {joinButtonContent}
           </ListItemButton>
         </View>
@@ -176,13 +195,15 @@ export default class PhoneValidationComponent extends Component {
     let confirmButtonContent = 'CONFIRM';
     const CS = ThemedStyles.style;
     if (this.state.inProgress) {
-      confirmButtonContent = <ActivityIndicator size="small" color={Colors.primary} />;
+      confirmButtonContent = (
+        <ActivityIndicator size="small" color={Colors.primary} />
+      );
     }
 
     return (
       <View>
         <Text style={CS.colorPrimaryText}>
-          {i18n.t('onboarding.weJustSentCode', {phone: this.state.phone})}
+          {i18n.t('onboarding.weJustSentCode', { phone: this.state.phone })}
         </Text>
         <View style={[style.cols, style.form]}>
           <TextInput
@@ -193,7 +214,7 @@ export default class PhoneValidationComponent extends Component {
               ComponentsStyle.loginInputNew,
               CS.marginRight2x,
               CS.borderPrimary,
-              CS.colorPrimaryText
+              CS.colorPrimaryText,
             ]}
             value={this.state.code}
             onChangeText={this.setCode}
@@ -202,7 +223,9 @@ export default class PhoneValidationComponent extends Component {
             keyboardType="numeric"
           />
 
-          <ListItemButton disabled={!this.canConfirm()} onPress={this.confirmAction}>
+          <ListItemButton
+            disabled={!this.canConfirm()}
+            onPress={this.confirmAction}>
             <Icon
               name={'check'}
               size={26}
@@ -216,7 +239,9 @@ export default class PhoneValidationComponent extends Component {
 
   async remove2FA() {
     try {
-      const { status } = await twoFactorAuthenticationService.remove(this.state.password);
+      const { status } = await twoFactorAuthenticationService.remove(
+        this.state.password,
+      );
       if (status === 'error') {
         throw new Error('invalid password');
       } else {
@@ -229,44 +254,47 @@ export default class PhoneValidationComponent extends Component {
 
   getNumberConfirmedPartial() {
     const CS = ThemedStyles.style;
-    const component = this.props.TFA
-      ? (
-        <View>
-          <Text style={[CS.colorPrimaryText, CS.marginBottom4x]}>{i18n.t('settings.TFAEnabled')}</Text>
-          <View style={[style.cols, style.form]}>
-            <TextInput
-              style={[
-                stylesheet.col,
-                stylesheet.colFirst,
-                stylesheet.phoneInput,
-                ComponentsStyle.loginInputNew,
-                CS.marginRight2x,
-                CS.borderPrimary,
-                CS.colorPrimaryText
-              ]}
-              value={this.state.password}
-              onChangeText={this.setPassword}
-              placeholder={i18n.t('passwordPlaceholder')}
-              placeholderTextColor={ThemedStyles.getColor('secondary_text')}
-            />
-            <ListItemButton onPress={this.remove2FA}>
-              <Text style={CS.colorPrimaryText}>{i18n.t('settings.TFADisable')}</Text>
-            </ListItemButton>
-          </View>
+    const component = this.props.TFA ? (
+      <View>
+        <Text style={[CS.colorPrimaryText, CS.marginBottom4x]}>
+          {i18n.t('settings.TFAEnabled')}
+        </Text>
+        <View style={[style.cols, style.form]}>
+          <TextInput
+            style={[
+              stylesheet.col,
+              stylesheet.colFirst,
+              stylesheet.phoneInput,
+              ComponentsStyle.loginInputNew,
+              CS.marginRight2x,
+              CS.borderPrimary,
+              CS.colorPrimaryText,
+            ]}
+            value={this.state.password}
+            onChangeText={this.setPassword}
+            placeholder={i18n.t('passwordPlaceholder')}
+            placeholderTextColor={ThemedStyles.getColor('secondary_text')}
+          />
+          <ListItemButton onPress={this.remove2FA}>
+            <Text style={CS.colorPrimaryText}>
+              {i18n.t('settings.TFADisable')}
+            </Text>
+          </ListItemButton>
         </View>
-      ) : (<Text style={CS.colorPrimaryText}>{i18n.t('onboarding.numberConfirmed')}</Text>);
-    return (component);
+      </View>
+    ) : (
+      <Text style={CS.colorPrimaryText}>
+        {i18n.t('onboarding.numberConfirmed')}
+      </Text>
+    );
+    return component;
   }
 
   getFormPartial() {
-    if (this.state.TFAConfirmed)
-      return this.getNumberConfirmedPartial();
-    else if (!this.state.confirming)
-      return this.getInputNumberPartial();
-    else if (!this.state.confirmed)
-      return this.getConfirmNumberPartial();
-    else
-      return this.getNumberConfirmedPartial();
+    if (this.state.TFAConfirmed) return this.getNumberConfirmedPartial();
+    else if (!this.state.confirming) return this.getInputNumberPartial();
+    else if (!this.state.confirmed) return this.getConfirmNumberPartial();
+    else return this.getNumberConfirmedPartial();
   }
 
   getNextButton = () => {
@@ -277,17 +305,17 @@ export default class PhoneValidationComponent extends Component {
         color={Colors.darkGreyed}
       />
     );
-  }
+  };
 
   render() {
     return (
       <View>
-        <View>
-          {this.getFormPartial()}
-        </View>
-        {!!this.state.error && <View>
-          <Text style={style.error}>{this.state.error}</Text>
-        </View>}
+        <View>{this.getFormPartial()}</View>
+        {!!this.state.error && (
+          <View>
+            <Text style={style.error}>{this.state.error}</Text>
+          </View>
+        )}
       </View>
     );
   }

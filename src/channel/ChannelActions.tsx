@@ -39,7 +39,7 @@ class ChannelActions extends Component {
     this.ActionSheet.show();
   };
 
-  handleSelection = index => {
+  handleSelection = (index) => {
     this.executeAction(index);
   };
 
@@ -123,7 +123,7 @@ class ChannelActions extends Component {
     return featuresService.has('post-scheduler') && !this.state.edit;
   };
 
-  setSheetRef = o => (this.ActionSheet = o);
+  setSheetRef = (o) => (this.ActionSheet = o);
 
   /**
    * Render Header

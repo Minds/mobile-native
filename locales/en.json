@@ -70,10 +70,11 @@
     "accept":"I have read and accept the",
     "termsAndConditions":"terms of use",
     "code":"Code",
-    "join":"Join the Revolution",
+    "join":"Create a channel",
     "createChannel":"Join Minds Now",
     "haveAccount":"Don't have an account?",
-    "alreadyHaveAccount":"Already have an account? &{login}&"
+    "alreadyHaveAccount":"Already have an account? &{login}&",
+    "failedToLoginNewAccount":"The login with your new account has failed, please try to log in the login screen"
   },
   "blockchain": {
     "boostCreate": "Network Boost for {{tokensAmount}} Minds Tokens. {{message}}",
@@ -229,7 +230,7 @@
     "isClosed":"This is a closed channel",
     "errorSaving":"Error saving channel",
     "saveChanges":"Save your changes",
-    "editChannel":"Edit your channel settings",
+    "editChannel":"Edit Channel",
     "sendMessage":"Send a message to this channel",
     "message":"Message",
     "mature":"This channel contains mature content",
@@ -249,7 +250,17 @@
     "blockedNav":"You have blocked &{username}&",
     "tapUnblock":"Tap to unblock",
     "notFound":"Channel not found",
-    "viewScheduled":"Scheduled"
+    "viewScheduled":"Scheduled",
+    "edit":{
+      "channel":"Edit Channel",
+      "bio":"Bio",
+      "about":"About Info",
+      "hashtags":"Hashtags",
+      "links":"Social Links",
+      "displayName":"Display Name",
+      "location":"Location",
+      "dob":"Date of Birth"
+    }
   },
   "discovery":{
     "search":"Search...",
@@ -889,6 +900,7 @@
   "rememberTomorrow":"Remind me later",
   "enableComments": "Enable comments",
   "disableComments": "Disable comments",
+  "captcha":"Enter the characters above",
   "noInternet":"No Internet Connection",
   "offline":"Offline",
   "cantReachServer":"Can't reach the server",
@@ -904,5 +916,6 @@
   "linkCopied":"Link copied to clipboard",
   "close":"Close",
   "now":"Now",
-  "title":"Title"
+  "title":"Title",
+  "filter":"Filter"
 }
