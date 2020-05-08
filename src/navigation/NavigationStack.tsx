@@ -62,6 +62,7 @@ import {
 } from './NavigationTypes';
 import featuresService from '../common/services/features.service';
 import EditChannelStack from '../channel/v2/edit/EditChannelStack';
+import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -280,6 +281,17 @@ const AppStack = function () {
         name="OnboardingScreen"
         component={OnboardingScreen}
         options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="LearnMoreScreen"
+        component={LearnMoreScreen}
+        options={{
+          title: i18n.t('wallet.learnMore.title'),
+          headerStyle: {
+            backgroundColor: ThemedStyles.getColor('primary_background'),
+          },
+          headerHideShadow: true,
+        }}
       />
     </AppStackNav.Navigator>
   );

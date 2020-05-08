@@ -15,7 +15,10 @@ import type { WalletStoreType } from './createWalletStore';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 
 type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
-type WalletScreenNavigationProp = StackNavigationProp<AppStackParamList, 'Fab'>;
+export type WalletScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'Fab'
+>;
 
 type PropsType = {
   route: WalletScreenRouteProp;
@@ -52,7 +55,7 @@ const WalletScreen = observer((props: PropsType) => {
   let body;
   switch (store.currency) {
     case 'tokens':
-      body = <TokensTab walletStore={store} />;
+      body = <TokensTab walletStore={store} navigation={props.navigation} />;
   }
 
   return (

@@ -6,12 +6,14 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import { WalletStoreType } from '../createWalletStore';
 import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
 import MenuItem from '../../../common/components/menus/MenuItem';
+import { WalletScreenNavigationProp } from '../WalletScreen';
 
 type PropsType = {
   walletStore: WalletStoreType;
+  navigation: WalletScreenNavigationProp;
 };
 
-const TokensOverview = observer(({ walletStore }: PropsType) => {
+const TokensOverview = observer(({ walletStore, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const balanceStyle = [
     theme.fontL,
@@ -27,7 +29,7 @@ const TokensOverview = observer(({ walletStore }: PropsType) => {
     },
     {
       title: 'Learn more about wallet',
-      onPress: () => null,
+      onPress: () => navigation.push('LearnMoreScreen'),
       noIcon: true,
     },
   ];
