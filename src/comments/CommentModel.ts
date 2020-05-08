@@ -12,6 +12,7 @@ import api from '../common/services/api.service';
  */
 export default class CommentModel extends ActivityModel {
   @observable expanded = false;
+  entity_guid: string = '';
 
   /**
    * Store for child comments

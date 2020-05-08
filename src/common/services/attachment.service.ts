@@ -2,7 +2,7 @@
 import api from './api.service';
 import imagePicker from './image-picker.service';
 import Cancelable from 'promise-cancelable';
-import { Platform } from 'react-native';
+import logService from './log.service';
 
 /**
  * Attacment service
