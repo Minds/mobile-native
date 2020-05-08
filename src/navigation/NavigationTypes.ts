@@ -81,6 +81,7 @@ export type AppStackParamList = {
   NotSupported: {};
   OnboardingScreen: {};
   OnboardingScreenNew: {};
+  LearnMoreScreen: {};
 };
 
 // types for channel edit screens
