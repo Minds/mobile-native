@@ -119,7 +119,11 @@ export default observer(function (props) {
                   <TouchableOpacity
                     onPress={props.store.attachment.cancelOrDelete}
                     style={[styles.removeMedia, theme.backgroundSecondary]}>
-                    <IonIcon name="ios-close" size={28} style={styles.icon} />
+                    <IonIcon
+                      name="ios-close"
+                      size={28}
+                      style={(styles.icon, theme.colorPrimaryText)}
+                    />
                   </TouchableOpacity>
                   <ImagePreview
                     image={props.store.mediaToConfirm}
@@ -132,7 +136,11 @@ export default observer(function (props) {
                   <TouchableOpacity
                     onPress={props.store.attachment.cancelOrDelete}
                     style={[styles.removeMedia, theme.backgroundSecondary]}>
-                    <IonIcon name="ios-close" size={28} style={styles.icon} />
+                    <IonIcon
+                      name="ios-close"
+                      size={28}
+                      style={(styles.icon, theme.colorPrimaryText)}
+                    />
                   </TouchableOpacity>
                   <MindsVideo
                     video={props.store.mediaToConfirm}
