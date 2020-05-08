@@ -679,6 +679,22 @@
       "score":"Score",
       "share":"Share"
     },
+    "learnMore":{
+      "title":"Learn More",
+      "howWork":"How the new rewards system works",
+      "p1":"Minds rewards you with crypto for contributing to the network. The first step in joining our rewards program is to provide your mobile number. We convert your number into a hash ID using SHA-256 encryption and a salt key to create a unique identifier for your account. We do not store your number on our servers.",
+      "p2":"Rather than rewarding you with Points in real-time, we are now distributing our crypto rewards as a “Daily Reward Pool”. During the test network, we will be experimenting with how the Daily Reward Pool is calculated, but it will ideally be automated based on user participation once we move into the Main Ethereum network.",
+      "p3":"Every day, we measure your contributions to the network and you receive a “Contribution Score” which can be found in the Contributions section of your wallet. We then calculate how much you contributed to the network relative to the entire community, which determines the percentage of the Daily Reward Pool that you earn.",
+      "p4":"It is important to note that with the new system, you will only receive credit for unique interaction, and you can only earn credit from another unique user once per metric per day. (If a friend votes on my content 100 times in a day, I will only get credit for 1 vote). This is critical in preventing gaming and abuse of the system as we move into more valuable token rewards. We are essentially measuring how many unique users you reached in a given day.",
+      "p5":"Daily rewards will be distributed at 02:00 am GMT everyday into your OffChain address.",
+      "howContributionsTitle":"How we measure your contributions",
+      "howContributionsP":"We calculate your contribution score each day using the following weighted scoring system. Please note that the new system only gives credit for unique engagement (users who have provided a mobile number), so not all engagement you receive will be factored into your score.",
+      "onChainTitle":"OnChain vs. Offchain",
+      "onChainP1":"OffChain tokens are stored on Minds servers, and they can be used the same way that you used your Points. There are no fees, and they can be used to Boost content for more views from the network or to Wire other creators who you support.",
+      "onChainP2":"You now have the ability to withdraw these tokens into your OnChain address.",
+      "onChainP3":"OnChain tokens are stored on the Ethereum public blockchain and are accessible from outside of the Minds platform, which is key for further decentralization. OnChain transactions, however, require a small Ethereum “gas” fee, which is the incentive for the Ethereum miners to process the transaction.",
+      "onChainP4":"For OnChain configuration, you have the ability to use MetaMask (a browser plugin), your mobile device, an existing Ethereum address or you can create your own with Minds. We recommend using MetaMask for the most seamless user experience. You can change this address by clicking on the “Addresses” tab on the wallet menu"
+    },
     "join":{
       "rewardsDescription":"Rewards Tokens enable creators to earn from interactions on their content. You earn tokens based on a daily contributions pool. At the end of each day, your contributions score will be calculated and you will receive a share of the daily reward pool. In order to verify you are a unique users, we require a phone number to be provided. Your phone number will be securely hashed and sent alongside all interactions to protect against fraud and gaming.",
       "note":"Note: Minds does not store the phone numbers you provide. The numbers are hashed using SHA-256 and combined with a salt key for encryption and privacy purposes.",
