@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import { ComponentsStyle } from '../../../styles/Components';
-import { useStores } from '../../../common/hooks/use-stores';
+//import OptionsDrawer from '../../../common/components/OptionsDrawer';
+import { useDiscoveryV2Store } from '../DiscoveryV2Context';
 
 interface Props {
   style: StyleProp<ViewStyle>;
@@ -21,11 +22,16 @@ interface Props {
  * Discovery List Item
  */
 export const DiscoveryTrendsList = observer((props: Props) => {
-  const { discoveryV2 } = useStores();
+  const discoveryV2 = useDiscoveryV2Store();
+  let listRef: FlatList<[]> | null;
 
   useEffect(() => {
     discoveryV2.loadTrends(true);
   }, []);
+
+  useEffect(() => {
+    listRef && listRef.scrollToOffset({ offset: -65, animated: true });
+  }, [discoveryV2.refreshing]);
 
   const EmptyPartial = () => {
     return discoveryV2.loading || discoveryV2.refreshing ? (
@@ -51,7 +57,7 @@ export const DiscoveryTrendsList = observer((props: Props) => {
     );
   };
 
-  const refresh = () => {
+  const onRefresh = () => {
     discoveryV2.refreshTrends();
   };
 
@@ -67,13 +73,14 @@ export const DiscoveryTrendsList = observer((props: Props) => {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
+        ref={(ref) => (listRef = ref)}
         data={[...discoveryV2.trends.slice()]}
-        onRefresh={refresh}
+        onRefresh={onRefresh}
         refreshing={discoveryV2.loading}
         ListEmptyComponent={EmptyPartial}
         renderItem={ItemPartial}
         keyExtractor={keyExtractor}
-        style={styles.list}
+        //style={styles.list}
       />
     </View>
   );

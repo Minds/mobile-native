@@ -21,13 +21,15 @@ import { useStores } from '../../../common/hooks/use-stores';
 import { Icon } from 'react-native-elements';
 import isIphoneX from '../../../common/helpers/isIphoneX';
 import { DiscoverySearchList } from './DiscoverySearchList';
+import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
+import TopbarTabbar from '../../../common/components/topbar-tabbar/TopbarTabbar';
 
 interface Props {
   route: RouteProp<AppStackParamList, 'DiscoverySearch'>;
 }
 
 export const DiscoverySearchHeader = observer(() => {
-  const { discoveryV2Search } = useStores();
+  const store = useDiscoveryV2SearchStore();
 
   const navigation = useNavigation<
     StackNavigationProp<AppStackParamList, 'DiscoverySearch'>
@@ -40,34 +42,45 @@ export const DiscoverySearchHeader = observer(() => {
         ThemedStyles.style.backgroundSecondary,
         {
           paddingTop: isIphoneX ? 50 : 0,
-          flexDirection: 'row',
-          alignItems: 'center',
         },
       ]}>
-      <View style={{ paddingHorizontal: 5 }}>
-        <Icon
-          color={ThemedStyles.getColor('icon')}
-          size={32}
-          name="chevron-left"
-          type="material-community"
-          onPress={() => navigation.goBack()}
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={ThemedStyles.style.padding2x}>
+          <Icon
+            color={ThemedStyles.getColor('icon')}
+            size={32}
+            name="chevron-left"
+            type="material-community"
+            onPress={() => navigation.goBack()}
+          />
+        </View>
+
+        <SearchView
+          placeholder={i18n.t('discovery.search')}
+          onChangeText={store.setQuery}
+          value={store.query}
+          containerStyle={[
+            ThemedStyles.style.marginVertical,
+            ThemedStyles.style.marginRight4x,
+            ThemedStyles.style.backgroundPrimary,
+            { flex: 1 },
+          ]}
+          // iconRight={iconRight}
+          // iconRightOnPress={this.clearSearch}
+          {...testID('Discovery Search Input')}
         />
       </View>
-
-      <SearchView
-        placeholder={i18n.t('discovery.search')}
-        onChangeText={discoveryV2Search.setQuery}
-        value={discoveryV2Search.query}
-        containerStyle={[
-          CS.marginTop,
-          CS.marginBottom,
-          ThemedStyles.style.backgroundPrimary,
-          { flex: 1 },
-        ]}
-        // iconRight={iconRight}
-        // iconRightOnPress={this.clearSearch}
-        {...testID('Discovery Search Input')}
-      />
+      <TopbarTabbar
+        current={store.filter}
+        onChange={(filter) => {
+          store.setFilter(filter);
+        }}
+        tabs={[
+          { id: 'top', title: 'Top' },
+          { id: 'latest', title: 'Latest' },
+          { id: 'channels', title: 'Channels' },
+          { id: 'groups', title: 'Groups' },
+        ]}></TopbarTabbar>
     </View>
   );
 });
@@ -76,7 +89,7 @@ export const DiscoverySearchHeader = observer(() => {
  * Discovery screen
  */
 export const DiscoverySearchScreen = observer((props: Props) => {
-  const { discoveryV2Search } = useStores();
+  const store = useDiscoveryV2SearchStore();
 
   const navigation = useNavigation<
     StackNavigationProp<AppStackParamList, 'DiscoverySearch'>
@@ -87,7 +100,7 @@ export const DiscoverySearchScreen = observer((props: Props) => {
 
   useEffect(() => {
     // const unsubscribe = navigation.addListener('transitionEnd', (s) => {
-    discoveryV2Search.setQuery(props.route.params.query);
+    store.setQuery(props.route.params.query);
     // });
     // return unsubscribe;
   }, [props.route.params.query]);
@@ -95,7 +108,7 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   useEffect(() => {
     // clear data on leave
     const unsubscribe = navigation.addListener('blur', (s) => {
-      discoveryV2Search.reset();
+      store.reset();
     });
 
     return unsubscribe;

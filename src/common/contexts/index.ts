@@ -37,10 +37,7 @@ import logService from '../services/log.service';
  * Creates global stores that can be conused with `useStores` method
  */
 export function createStores() {
-  return {
-    discoveryV2: new discoveryV2(),
-    discoveryV2Search: new discoveryV2Search(),
-  };
+  return {};
 }
 
 /**

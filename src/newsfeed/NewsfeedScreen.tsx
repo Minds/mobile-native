@@ -122,7 +122,7 @@ class NewsfeedScreen extends Component<PropsType> {
 
     const header = (
       <View>
-        {topBar}
+        {/* {topBar} */}
         {/* <GroupsBar ref={this.setGroupsBarRef} /> */}
       </View>
     );

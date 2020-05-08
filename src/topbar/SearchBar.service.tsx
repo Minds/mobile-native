@@ -28,7 +28,7 @@ class SearchBarService {
   async getSuggestedSearch(search) {
     const res = await apiService.get('api/v2/search/suggest', {
       q: search,
-      limit: 4,
+      limit: 10,
     });
     return UserModel.createMany(res.entities);
   }

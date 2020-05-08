@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Component, Fragment, useEffect, useState } from 'react';
 
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
@@ -9,12 +9,19 @@ import i18n from '../../common/services/i18n.service';
 
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import Topbar from '../../topbar/Topbar';
-import { TopbarTabbar } from './topbar/TopbarTabbar';
+//import { TopbarTabbar } from './topbar/TopbarTabbar';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/core';
 import { TabParamList } from '../../tabs/TabsScreenNew';
-import { useStores } from '../../common/hooks/use-stores';
+
 import ThemedStyles from '../../styles/ThemedStyles';
+import { useDiscoveryV2Store } from './DiscoveryV2Context';
+import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
+import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
+import TopBarButtonTabBar from '../../common/components/topbar-tabbar/TopBarButtonTabBar';
+import NewsfeedList from '../../newsfeed/NewsfeedList';
+import { useLegacyStores } from '../../common/hooks/use-stores';
+import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
 
 interface Props {}
 
@@ -23,16 +30,55 @@ interface Props {}
  */
 
 export const DiscoveryV2Screen = observer((props: Props) => {
-  const { discoveryV2 } = useStores();
+  const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(false);
+  const store = useDiscoveryV2Store();
   const navigation = useNavigation<BottomTabNavigationProp<TabParamList>>();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', () => {
-      discoveryV2.refreshTrends();
+      if (shouldRefreshOnTabPress) {
+        onRefresh();
+      }
     });
-
     return unsubscribe;
-  }, [discoveryV2, navigation]);
+  }, [store, navigation, shouldRefreshOnTabPress]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setShouldRefreshOnTabPress(true);
+    });
+    return unsubscribe;
+  }, [store, navigation]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      setShouldRefreshOnTabPress(false);
+    });
+    return unsubscribe;
+  }, [store, navigation]);
+
+  const onRefresh = () => {
+    store.refreshTrends();
+  };
+
+  const screen = () => {
+    switch (store.activeTabId) {
+      case 'foryou':
+        return <DiscoveryTrendsList style={{}} />;
+      case 'tags':
+        return <DiscoveryTagsList style={{}} />;
+      case 'boosts':
+        useLegacyStores().newsfeed.refresh();
+        return (
+          <NewsfeedList
+            newsfeed={useLegacyStores().newsfeed}
+            navigation={useNavigation()}
+          />
+        );
+      default:
+        return <View></View>;
+    }
+  };
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
@@ -41,12 +87,21 @@ export const DiscoveryV2Screen = observer((props: Props) => {
         navigation={navigation}
         style={[CS.shadow]}
       />
-      <TopbarTabbar />
-      {discoveryV2.activeTabId === 'foryou' ? (
-        <DiscoveryTrendsList style={ThemedStyles.style.flexContainer} />
-      ) : (
-        <View />
-      )}
+
+      <View style={ThemedStyles.style.backgroundSecondary}>
+        <TopbarTabbar
+          current={store.activeTabId}
+          onChange={(tabId) => {
+            store.setTabId(tabId as TDiscoveryV2Tabs);
+          }}
+          tabs={[
+            { id: 'foryou', title: 'For you' },
+            { id: 'tags', title: 'Discover by tags' },
+            { id: 'boosts', title: 'Boosts' },
+          ]}></TopbarTabbar>
+      </View>
+
+      <View style={ThemedStyles.style.flexContainer}>{screen()}</View>
     </View>
   );
 });

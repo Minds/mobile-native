@@ -8,29 +8,30 @@ import FeedStore from '../../../common/stores/FeedStore';
 export default class DiscoveryV2SearchStore {
   @observable listStore = new FeedStore(true);
 
+  @observable filter: string = 'top';
   @observable query: string = '';
   @observable refreshing: boolean = false;
 
+  params = {
+    period: 'relevant',
+    algorithm: this.filter,
+    q: this.query,
+  };
+
   constructor() {
     this.listStore
-      .setEndpoint(`api/v2/feeds/global/latest/activities`)
+      .setEndpoint(`api/v3/discovery/search`)
       .setLimit(12)
       .setInjectBoost(false)
       .setAsActivities(false)
-      .setPaginated(false) // TODO: why is this creating duplicates
-      .setParams({
-        // hashtags,
-        period: '1y',
-        all: 1,
-        query: this.query,
-        // nsfw: this.filters.nsfw.concat([]),
-        period_fallback: 1,
-      });
+      .setPaginated(false)
+      .setParams(this.params);
   }
 
   @action
   setQuery = (query: string) => {
     this.query = query;
+    this.params.q = query;
     this.listStore.clear();
     this.refresh();
   };
@@ -38,26 +39,27 @@ export default class DiscoveryV2SearchStore {
   @action
   fetch = (refresh = false): void => {
     this.listStore
-      .setEndpoint(`api/v2/feeds/global/latest/activities`)
-      .setLimit(12)
-      .setInjectBoost(false)
-      .setAsActivities(false)
-      .setPaginated(false) // TODO: why is this creating duplicates
       .setParams({
-        // hashtags,
-        period: '1y',
-        all: 1,
-        query: this.query,
+        period: 'relevant',
+        algorithm: this.filter,
+        q: this.query,
         // nsfw: this.filters.nsfw.concat([]),
-        period_fallback: 1,
       })
       .fetch();
   };
 
   @action
+  setFilter(filter: string) {
+    this.filter = filter;
+    this.params.algorithm = filter;
+    this.listStore.clear();
+    this.refresh();
+  }
+
+  @action
   async refresh(): Promise<void> {
     this.refreshing = true;
-    await this.listStore.refresh();
+    await this.listStore.setParams(this.params).refresh();
     this.refreshing = false;
   }
 

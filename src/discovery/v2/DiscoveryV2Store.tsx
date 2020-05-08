@@ -1,14 +1,31 @@
 import { observable, action } from 'mobx';
 import apiService from '../../common/services/api.service';
+import { useLegacyStores } from '../../common/hooks/use-stores';
+
+export type TDiscoveryV2Tabs = 'foryou' | 'tags' | 'boosts';
 
 export default class DiscoveryV2Store {
-  @observable activeTabId = 'foryou';
+  @observable activeTabId: TDiscoveryV2Tabs = 'foryou';
   @observable trends = [];
+  @observable tags = [];
+  @observable trendingTags = [];
   @observable loading = false;
   @observable refreshing = false;
 
   @action
-  setTabId(id) {
+  setTabId(id: TDiscoveryV2Tabs) {
+    switch (id) {
+      case 'foryou':
+        if (id === this.activeTabId) {
+          // already on tab
+          this.refreshTrends();
+        }
+        break;
+      case 'tags':
+        break;
+      case 'boosts':
+        break;
+    }
     this.activeTabId = id;
   }
 
@@ -17,7 +34,7 @@ export default class DiscoveryV2Store {
    */
   @action
   async loadTrends(refresh: boolean = false): Promise<void> {
-    this.setLoading(true);
+    this.loading = true;
     try {
       const response: any = await apiService.get('api/v3/discovery/trends');
       this.setTrends([
@@ -28,7 +45,24 @@ export default class DiscoveryV2Store {
     } catch (err) {
       console.log(err);
     } finally {
-      this.setLoading(false);
+      this.loading = false;
+    }
+  }
+
+  /**
+   * Load discovery overview
+   */
+  @action
+  async loadTags(refresh: boolean = false): Promise<void> {
+    this.loading = true;
+    try {
+      const response: any = await apiService.get('api/v3/discovery/tags');
+      this.setTags(response.tags);
+      this.setTrendingTags(response.trending);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -38,15 +72,29 @@ export default class DiscoveryV2Store {
   }
 
   @action
-  setLoading(loading): void {
-    this.loading = loading;
+  setTags(tags): void {
+    this.tags = tags.slice();
+  }
+
+  @action
+  setTrendingTags(tags): void {
+    this.trendingTags = tags.slice();
   }
 
   @action
   async refreshTrends(): Promise<void> {
     this.refreshing = true;
-    //this.setTrends([]);
+    this.setTrends([]);
     await this.loadTrends(true);
+    this.refreshing = false;
+  }
+
+  @action
+  async refreshTags(): Promise<void> {
+    this.refreshing = true;
+    this.setTags([]);
+    this.setTrendingTags([]);
+    await this.loadTags(true);
     this.refreshing = false;
   }
 

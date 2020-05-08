@@ -8,6 +8,7 @@ describe('Feature service', () => {
     let features = {
       crypto: true,
       compose: true,
+      discovery: true,
     };
     expect(service.features).toEqual(features);
     expect(service.has('crypto')).toEqual(true);

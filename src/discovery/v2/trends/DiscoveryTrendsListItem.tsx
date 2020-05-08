@@ -50,12 +50,12 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
     return (
       <View style={[styles.heroContainer]}>
         {RichPartialThumbnail()}
-        <View style={[styles.container]}>
+        <View style={[styles.container, ThemedStyles.style.padding4x]}>
           <View style={[styles.body]}>
             <Text style={styles.title}>{data.title}</Text>
             <Text
               style={[
-                styles.secondaryInformation,
+                ThemedStyles.style.colorSecondaryText,
                 styles.secondaryInformationBottom,
               ]}>
               {data.volume} channels discussing -{' '}
@@ -70,12 +70,12 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
   const RichPartial = () => {
     const entity = data.entity;
     return (
-      <View style={[styles.container]}>
+      <View style={[styles.container, ThemedStyles.style.padding4x]}>
         <View style={[styles.body]}>
           <Text style={styles.title}>{data.title}</Text>
           <Text
             style={[
-              styles.secondaryInformation,
+              ThemedStyles.style.colorSecondaryText,
               styles.secondaryInformationBottom,
             ]}>
             {data.volume} channels discussing -{' '}
@@ -105,11 +105,11 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
 
   const TrendingHashtagPartial = () => {
     return (
-      <View style={[styles.container]}>
+      <View style={[styles.container, ThemedStyles.style.padding4x]}>
         <View style={[styles.body]}>
           <Text
             style={[
-              styles.secondaryInformation,
+              ThemedStyles.style.colorSecondaryText,
               styles.secondaryInformationTop,
             ]}>
             Trending {data.period}h - {data.volume} posts
@@ -144,7 +144,6 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#ececec',
     flexDirection: 'row',
@@ -155,9 +154,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 16,
-  },
-  secondaryInformation: {
-    color: ThemedStyles.getColor('secondary_text'),
   },
   secondaryInformationTop: {
     paddingBottom: 8,

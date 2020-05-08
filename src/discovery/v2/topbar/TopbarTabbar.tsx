@@ -10,6 +10,7 @@ import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import DiscoveryV2Store from '../DiscoveryV2Store';
 import { useStores } from '../../../common/hooks/use-stores';
+import { useDiscoveryV2Store } from '../DiscoveryV2Context';
 
 interface Props {}
 
@@ -17,14 +18,14 @@ interface Props {}
  * Newsfeed top bar
  */
 export const TopbarTabbar = observer(() => {
-  const { discoveryV2 } = useStores();
+  const store = useDiscoveryV2Store();
 
   /**
    * Selected
    * @param {string} txt
    */
   const selected = (txt) => {
-    const activeTabId = discoveryV2.activeTabId;
+    const activeTabId = store.activeTabId;
     return activeTabId == txt ? styles.tabSelected : null;
   };
 
@@ -52,7 +53,7 @@ export const TopbarTabbar = observer(() => {
               },
               selected('foryou'),
             ]}
-            onPress={() => discoveryV2.setTabId('foryou')}>
+            onPress={() => store.setTabId('foryou')}>
             <Text style={CommonStyle.fontM}>Just for you</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -65,7 +66,7 @@ export const TopbarTabbar = observer(() => {
               },
               selected('tags'),
             ]}
-            onPress={() => discoveryV2.setTabId('tags')}>
+            onPress={() => store.setTabId('tags')}>
             <Text style={CommonStyle.fontM}>Discovery by Tags</Text>
           </TouchableOpacity>
         </View>

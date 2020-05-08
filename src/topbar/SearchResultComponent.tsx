@@ -58,14 +58,14 @@ class SearchResultComponent extends Component {
         this.state.loading ? (
           <CenteredLoading />
         ) : (
-          <View style={CS.flexContainerCenter}>
+          <View style={ThemedStyles.style.flexContainerStretch}>
             {this.renderFindInDiscovery(false)}
           </View>
         )
       ) : (
         <ScrollView keyboardShouldPersistTaps="handled">
+          {this.renderFindInDiscovery(false)}
           {this.state.suggested.map(this.renderUser)}
-          {this.renderFindInDiscovery()}
         </ScrollView>
       );
 
@@ -75,7 +75,7 @@ class SearchResultComponent extends Component {
   searchDiscovery = () => {
     this.props.discovery.setQuery(this.search);
     this.props.discovery.filters.search(this.search);
-    this.props.navigation.navigate('Discovery');
+    this.props.navigation.navigate('DiscoverySearch', { query: this.search });
     this.searchBarItemTap(this.search);
   };
 
@@ -85,7 +85,7 @@ class SearchResultComponent extends Component {
     return (
       <TouchableOpacity
         onPress={this.searchDiscovery}
-        style={[CS.flexColumnCentered, CS.padding3x, ...borders]}>
+        style={[CS.flexColumnStretch, CS.padding3x, ...borders]}>
         <Text
           style={CS.colorSecondaryText}>{`SEARCH MINDS: ${this.search}`}</Text>
       </TouchableOpacity>

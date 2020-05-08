@@ -39,6 +39,7 @@ export const CODE_PUSH_TOKEN = '';
 export const MINDS_FEATURES = {
   crypto: true,
   compose: true,
+  discovery: true,
 };
 
 /**

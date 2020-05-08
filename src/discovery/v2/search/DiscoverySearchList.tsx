@@ -24,8 +24,8 @@ import ErrorBoundary from '../../../common/components/ErrorBoundary';
 import i18n from '../../../common/services/i18n.service';
 import FallbackBoundary from '../../FallbackBoundary';
 
-import { useStores } from '../../../common/hooks/use-stores';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
 
 interface Props {
   navigation: any;
@@ -33,7 +33,12 @@ interface Props {
 }
 
 export const DiscoverySearchList = observer((props: Props) => {
-  const { discoveryV2Search } = useStores();
+  const store = useDiscoveryV2SearchStore();
+  let listRef: FlatList<[]> | null;
+
+  useEffect(() => {
+    listRef && listRef.scrollToOffset({ offset: -65, animated: true });
+  }, [store.refreshing]);
 
   const keyExtractor = (item) => item.urn;
 
@@ -41,21 +46,34 @@ export const DiscoverySearchList = observer((props: Props) => {
    * Render activity item
    */
   const ItemPartial = (row) => {
+    let entity: Element;
+
+    switch (row.item.type) {
+      case 'user':
+      case 'group':
+        entity = <View></View>;
+        break;
+      default:
+        entity = (
+          <Activity
+            entity={row.item}
+            navigation={props.navigation}
+            autoHeight={false}
+          />
+        );
+    }
+
     return (
       <ErrorBoundary
         containerStyle={CS.hairLineBottom}
         message="Could not load">
-        <Activity
-          entity={row.item}
-          navigation={props.navigation}
-          autoHeight={false}
-        />
+        {entity}
       </ErrorBoundary>
     );
   };
 
   const EmptyPartial = () => {
-    return discoveryV2Search.refreshing ? (
+    return store.refreshing ? (
       <View></View>
     ) : (
       <View>
@@ -99,13 +117,14 @@ export const DiscoverySearchList = observer((props: Props) => {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        data={discoveryV2Search.listStore.entities.slice()}
-        onRefresh={discoveryV2Search.refresh}
-        refreshing={discoveryV2Search.refreshing}
+        ref={(ref) => (listRef = ref)}
+        data={[...store.listStore.entities.slice()]}
+        onRefresh={() => store.refresh()}
+        refreshing={store.refreshing}
         ListEmptyComponent={EmptyPartial}
         renderItem={ItemPartial}
         keyExtractor={keyExtractor}
-        style={[styles.list, ThemedStyles.getColor('primary_background')]}
+        style={[ThemedStyles.getColor('primary_background')]}
       />
     </View>
   );

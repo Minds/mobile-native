@@ -29,14 +29,19 @@ type PropsType<T> = {
 function TopbarTabbar<T>(props: PropsType<T>) {
   const theme = ThemedStyles.style;
   const tabStyle = [
-    theme.paddingVertical,
-    theme.marginHorizontal4x,
+    theme.paddingVertical2x,
+    theme.marginHorizontal2x,
     theme.borderBottom4x,
   ];
 
   return (
     <View
-      style={[theme.rowJustifyStart, theme.borderBottom, theme.borderPrimary]}>
+      style={[
+        theme.rowJustifyStart,
+        theme.borderBottom,
+        theme.borderPrimary,
+        theme.paddingHorizontal2x,
+      ]}>
       {props.tabs.map((tab) => (
         <TouchableOpacity
           onPress={() => props.onChange(tab.id)}

@@ -11,7 +11,7 @@ import DiscoveryScreen from '../discovery/DiscoveryScreen';
 import ThemedStyles from '../styles/ThemedStyles';
 import TabIcon from './TabIcon';
 import NotificationIcon from '../notifications/NotificationsTabIcon';
-import { MINDS_CDN_URI } from '../config/Config';
+import { MINDS_CDN_URI, MINDS_FEATURES } from '../config/Config';
 import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
 import isIphoneX from '../common/helpers/isIphoneX';
@@ -135,9 +135,7 @@ const Tabs = observer(function ({ navigation }) {
       <Tab.Screen
         name="Discovery"
         component={
-          featuresService.has('mobile-discovery')
-            ? DiscoveryV2Screen
-            : DiscoveryScreen
+          MINDS_FEATURES.discovery ? DiscoveryV2Screen : DiscoveryScreen
         }
         options={{ tabBarTestID: 'Discovery tab button' }}
       />
