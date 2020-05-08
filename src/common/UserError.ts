@@ -1,20 +1,15 @@
-//@ts-nocheck
-import { Alert } from 'react-native';
+import { showNotification } from '../../AppMessages';
 
+export type UserErrorType = 'info' | 'warning' | 'danger';
+
+/**
+ * User Error
+ * Every time a user error exception is thrown a message is show to the user
+ */
 export class UserError extends Error {
-  constructor(...args) {
-    super(...args);
-    Alert.alert(
-      '',
-      `
-        ${args[0]}
-      `,
-      [
-        {
-          text: 'Ok',
-        },
-      ],
-    );
+  constructor(message, type: UserErrorType = 'info') {
+    super(message);
+    showNotification(message, type);
   }
 }
 
