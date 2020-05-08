@@ -79,6 +79,10 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       ? entities.decodeHTML(entity.message).trim()
       : '';
 
+    if (title === message) {
+      message = '';
+    }
+
     let body = null;
     let moreLess = null;
     let explicitToggle = null;
