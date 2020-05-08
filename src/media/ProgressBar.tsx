@@ -1,22 +1,27 @@
 //@ts-nocheck
 import _ from 'lodash';
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import {
   Animated,
   PanResponder,
-  Slider,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
 import colors from '../styles/Colors';
-import { CommonStyle } from '../styles/Common';
 
 let radiusOfHolder = 5;
 let radiusOfActiveHolder = 7;
 
-export default class ProgressBar extends Component {
+type PropsType = {
+  duration: number;
+  currentTime: number;
+  percent: number;
+  onNewPercent: (number, boolean) => void;
+};
+
+export default class ProgressBar extends Component<PropsType> {
   constructor(props, context, ...args) {
     super(props, context, ...args);
     this.state = {
@@ -72,22 +77,7 @@ export default class ProgressBar extends Component {
   }
 
   getHolderStyle() {
-    let { moving, slideX, width } = this.state;
     return [styles.holder];
-    if (width > 0) {
-      var interpolatedAnimation = slideX.interpolate({
-        inputRange: [0, width],
-        outputRange: [0, width],
-        extrapolate: 'clamp',
-      });
-      return [
-        styles.holder,
-        moving && styles.activeHolder,
-        { transform: [{ translateX: interpolatedAnimation }] },
-      ];
-    } else {
-      return [styles.holder];
-    }
   }
 
   onLinePressed(e) {
