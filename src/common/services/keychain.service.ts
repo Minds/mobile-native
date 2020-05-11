@@ -108,7 +108,7 @@ class KeychainService {
         throw new Error('E_INVALID_PASSWORD_CHALLENGE_OUTCOME');
       }
     } else {
-      secret = await stores.keychain.waitForUnlock(keychain, false);
+      secret = await getStores().keychain.waitForUnlock(keychain, false);
 
       if (!secret) {
         throw new Error('E_INVALID_SECRET');

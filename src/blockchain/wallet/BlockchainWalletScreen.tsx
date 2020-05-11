@@ -41,7 +41,7 @@ export default class BlockchainWalletScreen extends Component {
 
     return {
       title: i18n.t('blockchain.walletAddresses'),
-      headerRight: (
+      headerRight: () => (
         <View style={CommonStyle.rowJustifyStart}>
           <Icon
             name="add"
