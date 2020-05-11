@@ -2,6 +2,7 @@ import UserModel from '../channel/UserModel';
 import { ChannelStoreType } from '../channel/v2/createChannelStore';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { WalletStoreType } from '../wallet/v2/createWalletStore';
 
 export type MainSwiperParamList = {
   Capture: {};
@@ -32,6 +33,8 @@ export type AppStackParamList = {
       min: number;
       type: string;
     };
+    walletStore?: WalletStoreType;
+    options?: Function;
   };
   Newsfeed: {};
   Capture: {};
@@ -81,6 +84,9 @@ export type AppStackParamList = {
   NotSupported: {};
   OnboardingScreen: {};
   OnboardingScreenNew: {};
+  ReceiverAddressScreen: {
+    walletStore: WalletStoreType;
+  };
   LearnMoreScreen: {};
 };
 

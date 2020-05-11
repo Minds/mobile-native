@@ -39,6 +39,11 @@ export default class OffsetListStore {
   viewed = new Viewed();
 
   /**
+   * Response entities
+   */
+  entities = [];
+
+  /**
    * Constructor
    * @param {string} type 'shallow'|'ref'|null
    * @param {boolean} includeMetadata
@@ -85,7 +90,7 @@ export default class OffsetListStore {
    * @param {boolean} replace
    */
   @action
-  setList(list, replace = false) {
+  setList(list, replace = false, callback = undefined) {
     if (list.entities) {
       if (replace) {
         list.entities.forEach((entity) => {
@@ -98,6 +103,10 @@ export default class OffsetListStore {
           this.entities.push(entity);
         });
       }
+    }
+
+    if (callback && callback instanceof Function) {
+      callback();
     }
 
     this.loaded = true;

@@ -5,6 +5,7 @@ import logService from '../../common/services/log.service';
 import web3Service from '../../blockchain/services/Web3Service';
 import number from '../../common/helpers/number';
 import { StripeDetails, Wallet } from './WalletTypes';
+import TokensStore from '../tokens/TokensStore';
 
 const createWalletStore = () => ({
   currency: 'tokens' as CurrencyType,
@@ -64,6 +65,10 @@ const createWalletStore = () => ({
       wire: 0,
     },
   } as Wallet,
+  /**
+   * Keep transaction history
+   */
+  ledger: new TokensStore(),
   /**
    * Set currency tab
    * @param currency
