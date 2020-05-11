@@ -13,6 +13,10 @@ import type { CurrencyType } from '../../types/Payment';
 import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from './createWalletStore';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
+import BottomOptionPopup, {
+  BottomOptionsStoreType,
+  useBottomOption,
+} from '../../common/components/BottomOptionPopup';
 
 type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -32,6 +36,7 @@ const WalletScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
 
   const store: WalletStoreType = useLocalStore(createWalletStore);
+  const bottomStore: BottomOptionsStoreType = useBottomOption();
 
   const tabs: Array<TabType<CurrencyType>> = [
     { id: 'tokens', title: 'Tokens', subtitle: store.balance.toString() },
@@ -55,11 +60,17 @@ const WalletScreen = observer((props: PropsType) => {
   let body;
   switch (store.currency) {
     case 'tokens':
-      body = <TokensTab walletStore={store} navigation={props.navigation} />;
+      body = (
+        <TokensTab
+          walletStore={store}
+          bottomStore={bottomStore}
+          navigation={props.navigation}
+        />
+      );
   }
 
   return (
-    <View>
+    <View style={theme.flexContainer}>
       <Topbar
         title="Wallet"
         navigation={props.navigation}
@@ -74,6 +85,15 @@ const WalletScreen = observer((props: PropsType) => {
         />
       </View>
       {body}
+      <BottomOptionPopup
+        height={500}
+        title={bottomStore.title}
+        show={bottomStore.visible}
+        onCancel={bottomStore.hide}
+        onDone={bottomStore.onPressDone}
+        content={bottomStore.content}
+        doneText={bottomStore.doneText}
+      />
     </View>
   );
 });

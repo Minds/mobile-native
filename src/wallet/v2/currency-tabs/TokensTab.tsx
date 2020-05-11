@@ -13,6 +13,7 @@ import { useLegacyStores } from '../../../common/hooks/use-stores';
 import TokensOverview from './TokensOverview';
 import { ScrollView } from 'react-native-gesture-handler';
 import { WalletScreenNavigationProp } from '../WalletScreen';
+import type { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'overview', title: 'Overview' },
@@ -22,6 +23,7 @@ const options: Array<ButtonTabType<TokensOptions>> = [
 
 type PropsType = {
   walletStore: WalletStoreType;
+  bottomStore: BottomOptionsStoreType;
   navigation: WalletScreenNavigationProp;
 };
 
@@ -37,56 +39,62 @@ type StoreType = ReturnType<typeof createStore>;
 /**
  * Tokens tab
  */
-const TokensTab = observer(({ walletStore, navigation }: PropsType) => {
-  const store = useLocalStore(createStore);
-  const { user } = useLegacyStores();
-  const theme = ThemedStyles.style;
-  const showSetup = !user.hasRewards() || !user.hasEthWallet();
-  let walletSetup;
+const TokensTab = observer(
+  ({ walletStore, bottomStore, navigation }: PropsType) => {
+    const store = useLocalStore(createStore);
+    const { user } = useLegacyStores();
+    const theme = ThemedStyles.style;
+    const showSetup = !user.hasRewards() || !user.hasEthWallet();
+    let walletSetup;
 
-  if (showSetup) {
-    walletSetup = [
-      {
-        title: 'Phone Verification',
-        onPress: () => null,
-        icon: { name: 'md-checkmark' },
-      },
-      {
-        title: 'Add On-Chain Address',
-        onPress: () => null,
-        noIcon: true,
-      },
-    ];
-  }
+    if (showSetup) {
+      walletSetup = [
+        {
+          title: 'Phone Verification',
+          onPress: () => null,
+          icon: { name: 'md-checkmark' },
+        },
+        {
+          title: 'Add On-Chain Address',
+          onPress: () => null,
+          noIcon: true,
+        },
+      ];
+    }
 
-  let body;
-  switch (store.option) {
-    case 'overview':
-      body = (
-        <TokensOverview walletStore={walletStore} navigation={navigation} />
-      );
-  }
+    let body;
+    switch (store.option) {
+      case 'overview':
+        body = (
+          <TokensOverview
+            walletStore={walletStore}
+            bottomStore={bottomStore}
+            navigation={navigation}
+          />
+        );
+    }
 
-  return (
-    <ScrollView>
-      {showSetup && (
-        <View style={theme.paddingTop2x}>
-          <MenuSubtitle>WALLET SETUP</MenuSubtitle>
-          {walletSetup.map((item, i) => (
-            <MenuItem item={item} i={i} />
-          ))}
+    return (
+      <ScrollView>
+        {showSetup && (
+          <View style={theme.paddingTop2x}>
+            <MenuSubtitle>WALLET SETUP</MenuSubtitle>
+            {walletSetup.map((item, i) => (
+              <MenuItem item={item} i={i} />
+            ))}
+          </View>
+        )}
+        <View style={theme.paddingTop4x}>
+          <TopBarButtonTabBar
+            tabs={options}
+            current={store.option}
+            onChange={store.setOption}
+          />
+          {body}
         </View>
-      )}
-      <View style={theme.paddingTop4x}>
-        <TopBarButtonTabBar
-          tabs={options}
-          current={store.option}
-          onChange={store.setOption}
-        />
-        {body}
-      </View>
-    </ScrollView>
-  );
-});
+      </ScrollView>
+    );
+  },
+);
 
 export default TokensTab;

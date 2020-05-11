@@ -7,7 +7,7 @@ import { observer, useLocalStore } from 'mobx-react';
 
 type PropsType = {
   onCancel: () => void;
-  onDone?: () => void;
+  onDone?: Function;
   title: string;
   show?: boolean;
   doneText: string;

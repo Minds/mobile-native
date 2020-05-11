@@ -1,5 +1,5 @@
 import type { CurrencyType } from '../../types/Payment';
-import api, { isApiError } from '../../common/services/api.service';
+import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
 import logService from '../../common/services/log.service';
 import web3Service from '../../blockchain/services/Web3Service';
@@ -8,6 +8,7 @@ import { StripeDetails, Wallet } from './WalletTypes';
 
 const createWalletStore = () => ({
   currency: 'tokens' as CurrencyType,
+
   stripeDetails: {
     hasAccount: false,
     hasBank: false,

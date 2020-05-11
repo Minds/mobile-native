@@ -102,7 +102,7 @@
     "receiverAddress":"Receive Address",
     "shouldBeReceiver":"Should this address be your receiver address for Wire & Boost?",
     "downloadPrivate":"Download the private key of this wallet",
-    "deleteWarning":"WARNING: this is irreversable and all tokens will be lost",
+    "deleteWarning":"WARNING: this is irreversible and all tokens will be lost",
     "deleteConfirmWarning":"This is an IRREVERSIBLE action. If you haven't backed up your private key, you may lose all your funds.",
     "importKeyNotExist":"The private key for this wallet does not exist.",
     "privateNotBelongToAddress":"Private Key doesn't belong to {{address}}.",
@@ -705,15 +705,21 @@
     },
     "withdraw":{
       "errorReadingStatus":"Error reading withdrawal status",
-      "errorOnlyOnceDay":"You can only withdraw once a day",
+      "errorOnlyOnceDay":"You may only withdraw once a day",
       "errorWithdrawing":"Error withdrawing tokens",
       "youCanRequest1":"You can request to withdraw up to {{amount}} tokens from your rewards to your &{onchain}& wallet.",
       "youCanRequest2":"Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals &{approval}& and may take up to 72 hours to complete",
       "youCanRequest3":"go through an approval process",
       "holdingMessage":"{{amount}} tokens are unavailable due to credit card payment. They will be released after 30 days the payment occurred.",
       "amount":"Amount",
+      "errorAmountToHigh":"You don't have enough tokens",
       "errorReadingBalances":"Error reading balances",
-      "errorAmountNegative":"Amount should be a positive number"
+      "errorAmountNegative":"Should be a positive number",
+      "notes1":"You can transfer up to {{amount}} tokens to your on-chain wallet.",
+      "notes2":"A small amount of ETH will be changed to cover the transaction fee.",
+      "notes3":"Transfers go through an approval process and may take up to three days to complete.",
+      "title":"On-chain transfer",
+      "transfer":"Transfer"
     }
   },
   "wire":{
