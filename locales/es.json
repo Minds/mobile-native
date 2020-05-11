@@ -22,7 +22,7 @@
     "auth": {
         "login": "Ingresar",
         "create": "CREAR UN CANAL",
-        "forgot": "Olvidé mi clave",
+        "forgot": "OLVIDÉ MI CLAVE",
         "email": "Email",
         "username": "Usuario",
         "password": "Clave",
@@ -33,9 +33,14 @@
         "invalidPassword": "Clave incorrecta, Prueba de nuevo",
         "confirmPasswordError": "las claves deben coincidir",
         "termsAcceptedError": "Debes de aceptar los términos y condiciones",
-        "accept": "Acepto el",
+        "accept": "He leido y acepto los",
         "termsAndConditions": "terminos y condiciones",
-        "code": "codigo"
+        "code": "codigo",
+        "join": "Únete a la revolución",
+        "createChannel": "Únete a Minds ahora",
+        "haveAccount": "No tienes una cuenta?",
+        "alreadyHaveAccount": "Ya tienes una cuenta? &{login}&",
+        "failedToLoginNewAccount": "El ingreso con tu cuenta nueva ha fallado, por favor intenta nuevamente desde la pantalla de ingreso"
     },
     "blockchain": {
         "boostCreate": "Impulsar Red {{tokensAmount}} Minds Tokens. {{message}}",
@@ -445,7 +450,12 @@
         "deleteDescription": "Alerta: Esto no es reversible y resultará en la pérdida de tu canal y todos tus datos. Tu canal no se podrá recuperar. Tu nombre de usuario será liberado nuevamente al público.",
         "logs": "Logs",
         "logOnlyErrors": "Registrar solo errores",
-        "leftHandedMode": "Modo zurdo"
+        "leftHandedMode": "Modo zurdo",
+        "passwordFormatMinCharacters": "8 o mas caracteres",
+        "passwordFormatSpecialCharacters": "Al menos 1 caracter especial",
+        "passwordFormatMixedCase": "Mayúsculas y minúsculas",
+        "passwordFormatNumber": "Al menos 1 número",
+        "passwordFormatNoSpaces": "Sin espacios"
     },
     "comingSoon": {
         "try": "Intenta la prueba de red de la aplicación",
@@ -710,7 +720,27 @@
         "offchainDescription": "Los pagos de OffChain no se publicarán en la cadena de bloques y tendrán límites de gasto. Recibirás recompensas en esta dirección.",
         "rewardsDescription1": "Cuantas más interacciones haya en su contenido, mayor será su parte del fondo diario de recompensas de token a su dirección de OffChain.",
         "ensureYouExportKey1": "La exportación puede ser realizada desde la pantalla de detalle de direcciones.",
-        "6digitDescription1": "esta sera utilizada para encriptar tu clave privada en el dispositivo."
+        "6digitDescription1": "esta sera utilizada para encriptar tu clave privada en el dispositivo.",
+        "welcomeNew": "Bienvenido a la comunidad de Minds! ",
+        "welcomePrivacy": "Tu privacidad es nuestra prioridad. Tu eres libre de proveer tan poca información como desees para mejores recomendaciones y conectar con personas en tu área.",
+        "welcomeLater": "No gracias, lo hare despues.",
+        "welcomeSetup": "Vamos a configurar.",
+        "profileSetup": "CONFIGURACION PERFIL",
+        "hashtagTitle": "Hashtags",
+        "step": "Pasos {{step}} de {{total}}",
+        "hashtagInterest": "Algunos tags que pueden ser de tu interes.",
+        "skipStep": "Saltar éste paso",
+        "infoTitle": "Información",
+        "infoMobileNumber": "Numero movil",
+        "infoLocation": "Ubicacion",
+        "infoDateBirth": "Fecha de Nacimiento",
+        "groupTitle": "Grupos",
+        "numberConfirmed": "Tu número ha sido validado.",
+        "phoneNumberTooltip": "Tu número movil puede ser utilizado para agregar seguridad a tu cuenta, identificacion y ayudar a tus amigos a encontrarte. Esta información es privada y encriptada.",
+        "dateofBirthTooltip": "Por favor ingresa tu fecha de nacimiento y ayudanos a mejorar tus recomendaciones.",
+        "locationTooltip": "Por favor ingresa tu ciudad para ayudarnos a conectarte con canales en tu área. No rastreamos tu ubicacion.",
+        "haveCompleted": "Tu perfil esta completo un &{amount}&",
+        "editProfile": "Edita tu perfil"
     },
     "userTypeAhead": {
         "placeholder": "Escribe un nombre para buscar",
@@ -784,5 +814,12 @@
     "notAllowed": "No tienes permiso",
     "undo": "Deshacer",
     "tryAgainLater": "Intenta nuevamente mas tarde.",
-    "pleaseTryAgain": "Por favor intente de nuevo"
+    "pleaseTryAgain": "Por favor intente de nuevo",
+    "emailConfirm": {
+        "confirmed": "Dirección de email confirmada!",
+        "confirm": "Por favor confirma tu dirección de email.",
+        "sendAgain": "Click aqui para enviar nuevamente.",
+        "confirmNote": "Nota: si tu cambias tu direccion de email, tendras que confirmarla nuevamente.",
+        "sent": "Email enviado"
+    }
 }
