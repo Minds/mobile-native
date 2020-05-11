@@ -22,24 +22,28 @@ export default observer(function () {
 
   const store = useLocalStore(() => ({
     currentPassword: '',
+    currentPasswordError: '',
     newPassword: '',
+    newPasswordError: '',
     confirmationPassword: '',
     passwordFocused: false,
-    error: false,
     setCurrentPassword(password) {
       store.currentPassword = password;
     },
+    setCurrentPasswordError(error) {
+      store.currentPasswordError = error;
+    },
     setNewPassword(password) {
       store.newPassword = password;
+    },
+    setNewPasswordError(error) {
+      store.newPasswordError = error;
     },
     setConfirmationPassword(password) {
       store.confirmationPassword = password;
     },
     setPasswordFocused(value) {
       store.passwordFocused = value;
-    },
-    setError(password) {
-      store.currentPassword = password;
     },
     clearInputs() {
       store.setCurrentPassword('');
@@ -61,9 +65,6 @@ export default observer(function () {
     },
   }));
 
-  let currentPasswordInput = '';
-  let newPasswordInput = '';
-
   const confirmPassword = useCallback(async () => {
     // missing data
     if (
@@ -76,21 +77,27 @@ export default observer(function () {
 
     // current password doesn't match
     try {
+      store.setCurrentPasswordError('');
       await authService.validatePassword(store.currentPassword);
     } catch (err) {
-      currentPasswordInput.showError();
+      store.setCurrentPasswordError(i18n.t('settings.invalidPassword'));
       return;
     }
 
     // password format is invalid
     if (!validatePassword(store.newPassword).all) {
-      store.setError(true);
+      store.setNewPasswordError(i18n.t('settings.invalidPassword'));
       return;
+    } else {
+      store.setNewPasswordError('');
     }
 
     // passwords not matching
     if (store.newPassword !== store.confirmationPassword) {
-      newPasswordInput.showError();
+      store.setNewPasswordError(i18n.t('settings.passwordsNotMatch'));
+      return;
+    } else {
+      store.setNewPasswordError(i18n.t(''));
     }
 
     const params = {
@@ -105,7 +112,7 @@ export default observer(function () {
     } catch (err) {
       Alert.alert('Error', err.message);
     }
-  }, [store, currentPasswordInput, newPasswordInput]);
+  }, [store]);
 
   /**
    * Set save button on header right
@@ -149,7 +156,7 @@ export default observer(function () {
             secureTextEntry={!DISABLE_PASSWORD_INPUTS}
             onFocus={props.onFocus}
             onBlur={props.onBlur ?? (() => {})}
-            onError={props.onError ?? (() => {})}
+            error={props.error}
             ref={props.ref ?? (() => {})}
           />
         </View>
@@ -173,9 +180,8 @@ export default observer(function () {
             value: store.currentPassword,
             testID: 'currentPasswordInput',
             onFocus: store.currentPasswordFocus,
-            onError: i18n.t('settings.invalidPassword'),
-            ref: (input) => (currentPasswordInput = input),
-            wrapperBorder: theme.border,
+            error: store.currentPasswordError,
+            wrapperBorder: [theme.borderTop, theme.borderBottom],
           })}
         <View style={subContainer}>
           {store.passwordFocused && (
@@ -190,8 +196,7 @@ export default observer(function () {
             testID: 'newPasswordInput',
             onFocus: store.newPasswordFocus,
             onBlur: store.newPasswordBlurred,
-            onError: i18n.t('settings.passwordsNotMatch'),
-            ref: (input) => (newPasswordInput = input),
+            error: store.newPasswordError,
             wrapperBorder: theme.borderTop,
           })}
           {getInput({
