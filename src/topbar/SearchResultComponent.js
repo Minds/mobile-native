@@ -34,7 +34,7 @@ class SearchResultComponent extends Component {
   /**
    * Only show suggested when search length > 2
    */
-  shouldShowSuggested = () => this.search.length > 2;
+  shouldShowSuggested = () => this.search.length > 0;
 
   input = async search => {
     this.search = search;
