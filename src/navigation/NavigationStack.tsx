@@ -62,6 +62,7 @@ import {
 } from './NavigationTypes';
 import featuresService from '../common/services/features.service';
 import EditChannelStack from '../channel/v2/edit/EditChannelStack';
+import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -287,6 +288,17 @@ const AppStack = function () {
         component={LearnMoreScreen}
         options={{
           title: i18n.t('wallet.learnMore.title'),
+          headerStyle: {
+            backgroundColor: ThemedStyles.getColor('primary_background'),
+          },
+          headerHideShadow: true,
+        }}
+      />
+      <AppStackNav.Screen
+        name="ReceiverAddressScreen"
+        component={ReceiverAddressScreen}
+        options={{
+          title: 'Receiver Address',
           headerStyle: {
             backgroundColor: ThemedStyles.getColor('primary_background'),
           },

@@ -12,8 +12,13 @@ import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import TokensOverview from './TokensOverview';
 import { ScrollView } from 'react-native-gesture-handler';
-import { WalletScreenNavigationProp } from '../WalletScreen';
 import type { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
+import TransactionsList from '../TransactionList/TransactionsList';
+import ReceiverSettings from '../address/ReceiverSettings';
+import {
+  WalletScreenRouteProp,
+  WalletScreenNavigationProp,
+} from '../WalletScreen';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'overview', title: 'Overview' },
@@ -25,6 +30,7 @@ type PropsType = {
   walletStore: WalletStoreType;
   bottomStore: BottomOptionsStoreType;
   navigation: WalletScreenNavigationProp;
+  route: WalletScreenRouteProp;
 };
 
 const createStore = () => ({
@@ -68,10 +74,25 @@ const TokensTab = observer(
         body = (
           <TokensOverview
             walletStore={walletStore}
-            bottomStore={bottomStore}
             navigation={navigation}
+            bottomStore={bottomStore}
           />
         );
+        break;
+      case 'transactions':
+        body = (
+          <TransactionsList
+            navigation={navigation}
+            currency="tokens"
+            wallet={walletStore}
+          />
+        );
+        break;
+      case 'settings':
+        body = (
+          <ReceiverSettings navigation={navigation} walletStore={walletStore} />
+        );
+        break;
     }
 
     return (

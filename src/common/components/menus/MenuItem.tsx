@@ -10,7 +10,7 @@ export type MenuItemPropsType = {
     icon?: any;
     noIcon?: boolean;
   };
-  i: number;
+  i?: number;
 };
 
 export default function ({ item, i }: MenuItemPropsType) {

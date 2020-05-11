@@ -18,7 +18,7 @@ import BottomOptionPopup, {
   useBottomOption,
 } from '../../common/components/BottomOptionPopup';
 
-type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
+export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
   AppStackParamList,
   'Fab'
@@ -65,6 +65,7 @@ const WalletScreen = observer((props: PropsType) => {
           walletStore={store}
           bottomStore={bottomStore}
           navigation={props.navigation}
+          route={props.route}
         />
       );
   }
