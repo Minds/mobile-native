@@ -7,7 +7,7 @@ import { observer, useLocalStore } from 'mobx-react';
 
 type PropsType = {
   onCancel: () => void;
-  onDone: () => void;
+  onDone?: () => void;
   title: string;
   show?: boolean;
   doneText: string;
@@ -50,8 +50,9 @@ const BottomOptionPopup = observer((props: PropsType) => {
         ref.current?.snapTo(1);
       },
       done() {
-        store.close();
-        p.onDone();
+        if (p.onDone) {
+          p.onDone();
+        }
       },
     }),
     props,
@@ -76,40 +77,45 @@ const BottomOptionPopup = observer((props: PropsType) => {
         ref={ref}
         snapPoints={[0, props.height]}
         onCloseEnd={store.cancel}
-        renderHeader={() => (
-          <View style={styles.headerContainer}>
-            <View
-              style={[
-                theme.backgroundSecondary,
-                theme.rowJustifySpaceBetween,
-                theme.alignEnd,
-                styles.header,
-              ]}>
-              <Text
-                onPress={store.close}
+        renderHeader={() =>
+          store.showing ? (
+            <View style={styles.headerContainer}>
+              <View
                 style={[
-                  theme.fontXL,
-                  theme.fontMedium,
-                  theme.colorSecondaryText,
+                  theme.backgroundSecondary,
+                  theme.rowJustifySpaceBetween,
+                  theme.alignEnd,
+                  styles.header,
                 ]}>
-                Cancel
-              </Text>
-              <Text style={[theme.fontXXL, theme.bold, theme.textCenter]}>
-                {props.title}
-              </Text>
-              <Text
-                style={[theme.fontXL, theme.fontMedium, theme.colorLink]}
-                onPress={store.done}>
-                {props.doneText}
-              </Text>
+                <Text
+                  onPress={store.close}
+                  style={[
+                    theme.fontXL,
+                    theme.fontMedium,
+                    theme.colorSecondaryText,
+                  ]}>
+                  Cancel
+                </Text>
+                <Text
+                  style={[theme.fontXL, theme.fontMedium, theme.textCenter]}>
+                  {props.title}
+                </Text>
+                <Text
+                  style={[theme.fontXL, theme.fontMedium, theme.colorLink]}
+                  onPress={store.done}>
+                  {props.doneText}
+                </Text>
+              </View>
             </View>
-          </View>
-        )}
-        renderContent={() => (
-          <View style={[styles.panel, theme.backgroundSecondary]}>
-            {props.content}
-          </View>
-        )}
+          ) : null
+        }
+        renderContent={() =>
+          store.showing ? (
+            <View style={[styles.panel, theme.backgroundSecondary]}>
+              {props.content}
+            </View>
+          ) : null
+        }
         initialSnap={0}
         enabledContentTapInteraction={true}
         enabledInnerScrolling={true}
@@ -144,6 +150,33 @@ const styles = StyleSheet.create({
   },
   panel: {
     height: '100%',
-    padding: 20,
   },
 });
+
+const createStore = () => ({
+  visible: false,
+  onPressDone: undefined as Function | undefined,
+  content: undefined as React.ReactNode,
+  title: '',
+  doneText: '',
+  show(title: string, done: string, content: React.ReactNode) {
+    this.content = content;
+    this.title = title;
+    this.doneText = done;
+    this.visible = true;
+  },
+  setOnPressDone(onDone) {
+    this.onPressDone = onDone;
+  },
+  hide() {
+    this.content = undefined;
+    this.onPressDone = undefined;
+    this.visible = false;
+  },
+});
+
+export type BottomOptionsStoreType = ReturnType<typeof createStore>;
+
+export const useBottomOption = () => {
+  return useLocalStore(createStore);
+};
