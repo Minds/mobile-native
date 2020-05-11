@@ -719,6 +719,7 @@
       "notes2":"A small amount of ETH will be changed to cover the transaction fee.",
       "notes3":"Transfers go through an approval process and may take up to three days to complete.",
       "title":"On-chain transfer",
+      "acceptTerms":"I agree and understand the terms",
       "transfer":"Transfer"
     }
   },

@@ -9,6 +9,7 @@ import sessionService from '../../../../common/services/session.service';
 const createWithdrawStore = (p) => {
   const store = {
     amount: p.walletStore.wallet.offchain.balance.toString(),
+    accept: false,
     canTransfer: true,
     inProgress: true,
     // computed observable
@@ -16,9 +17,15 @@ const createWithdrawStore = (p) => {
       this.inProgress = false;
       this.canTransfer = value;
     },
+    toggleAccept() {
+      this.accept = !this.accept;
+    },
     init() {
       this.getCanTransfer().then((v) => this.setCanTransfer(v));
       p.bottomStore.setOnPressDone(async () => {
+        if (!this.accept) {
+          throw new UserError(i18n.t('auth.termsAcceptedError'), 'info');
+        }
         if (this.error || !this.canTransfer || this.inProgress) {
           return;
         }

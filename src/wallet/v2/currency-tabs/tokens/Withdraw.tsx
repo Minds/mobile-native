@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useLocalStore, observer } from 'mobx-react';
+import Icon from 'react-native-vector-icons/Ionicons';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import InputContainer from '../../../../common/components/InputContainer';
 import i18n from '../../../../common/services/i18n.service';
@@ -44,11 +45,37 @@ const Withdraw = observer((props: PropsType) => {
             error={store.error}
             selectTextOnFocus={true}
           />
+          <View
+            style={[
+              theme.borderBottom,
+              theme.borderPrimary,
+              theme.rowJustifySpaceBetween,
+              theme.paddingHorizontal4x,
+              theme.paddingVertical2x,
+              theme.alignCenter,
+            ]}>
+            <Text style={[theme.colorSecondaryText, theme.fontL]}>
+              {i18n.t('wallet.withdraw.acceptTerms')}
+            </Text>
+            <Icon
+              onPress={store.toggleAccept}
+              name={
+                store.accept
+                  ? 'ios-checkmark-circle-outline'
+                  : 'ios-close-circle-outline'
+              }
+              style={
+                store.accept ? theme.colorIconActive : theme.colorTertiaryText
+              }
+              size={34}
+            />
+          </View>
           <Text
             style={[
               theme.marginTop4x,
               theme.marginHorizontal4x,
               theme.colorSecondaryText,
+              theme.fontL,
             ]}>
             {i18n.t('wallet.withdraw.notes1', { amount: store.amount }) +
               '\n\n'}
