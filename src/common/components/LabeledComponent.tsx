@@ -5,18 +5,22 @@ import ThemedStyles from '../../styles/ThemedStyles';
 type propsType = {
   label: string;
   wrapperStyle?: any;
+  labelStyle?: any;
 };
 
 const LabeledComponent: FunctionComponent<propsType> = ({
   children,
   label,
   wrapperStyle,
+  labelStyle,
 }) => {
   const theme = ThemedStyles.style;
 
+  const labelStyles = [theme.colorSecondaryText, styles.label, labelStyle];
+
   return (
     <View style={wrapperStyle}>
-      <Text style={[theme.colorSecondaryText, styles.label]}>{label}</Text>
+      <Text style={labelStyles}>{label}</Text>
       {children}
     </View>
   );

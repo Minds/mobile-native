@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 
@@ -13,12 +13,6 @@ export default function ({ navigation, route }) {
   const list = route.params.options(navigation, route);
 
   const innerWrapper = [theme.borderBottomHair, theme.borderPrimary];
-
-  navigation.setOptions({
-    headerLeft: () => (
-      <Text style={[theme.colorLink, theme.fontL, theme.bold]}>back</Text>
-    ),
-  });
 
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
