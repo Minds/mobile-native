@@ -17,11 +17,11 @@ import ThemedStyles from './src/styles/ThemedStyles';
 export const showNotification = (
   message: string,
   type: MessageType = 'info',
-  duration: number = 2000,
+  duration: number = 2800,
 ) => {
   showMessage({
     floating: true,
-    position: 'top',
+    position: 'bottom',
     message,
     icon: type,
     duration,
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     padding: 15,
     paddingRight: 15,
-    marginRight: 50,
+    marginRight: 55,
     alignSelf: 'center',
     flexWrap: 'wrap',
   },
