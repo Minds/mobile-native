@@ -215,6 +215,7 @@ dependencies {
       exclude group: 'com.facebook.react', module:'react-native-community-async-storage'
       exclude group: 'com.facebook.react', module:'react-native-community_netinfo'
       exclude group: 'com.facebook.react', module:'react-native-webview'
+      exclude group: 'com.facebook.react', module:'react-native-linear-gradient'
       exclude group: 'com.facebook.react', module:'react-native-vector-icons'
       exclude group: 'com.facebook.react', module:'react-native-svg'
     //   exclude group: 'com.facebook.react', module:'react-native-gesture-handler'
