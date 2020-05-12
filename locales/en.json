@@ -853,6 +853,7 @@
   "name":"Name",
   "approve":"Approve",
   "done":"Done",
+  "about":"About",
   "accept":"Accept",
   "confirmNoUndo":"Are you sure? There's no UNDO.",
   "confirmMessage":"Are you sure?",
