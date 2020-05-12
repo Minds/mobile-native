@@ -1,4 +1,4 @@
-import React, { useRef, Props, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, Text, StyleSheet } from 'react-native';
 import TopBarButtonTabBar, {
@@ -19,7 +19,6 @@ import {
   WalletScreenRouteProp,
   WalletScreenNavigationProp,
 } from '../WalletScreen';
-import Input from '../../../common/components/Input';
 import PhoneValidationComponent from '../../../common/components/PhoneValidationComponent';
 import i18n from '../../../common/services/i18n.service';
 
@@ -46,8 +45,6 @@ const createStore = () => ({
     this.option = option;
   },
 });
-
-type StoreType = ReturnType<typeof createStore>;
 
 type PhoneValidatorPropsType = {
   bottomStore: BottomOptionsStoreType;

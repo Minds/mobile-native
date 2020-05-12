@@ -35,8 +35,9 @@ type propsType = {
   bottomStore?: BottomOptionsStoreType;
   inputStyles?: any;
   onNext?: Function;
-  wallet: WalletStore;
-  user: UserStore;
+  textStyle?: any;
+  wallet?: WalletStore;
+  user?: UserStore;
 } & TextInputProps;
 
 @inject('user', 'wallet')
@@ -68,8 +69,11 @@ export default class PhoneValidationComponent extends Component<propsType> {
   }
 
   async join(retry = false) {
-    console.log('JOIN');
-    if (this.state.inProgress || (!retry && !this.canJoin())) {
+    if (
+      this.state.inProgress ||
+      (!retry && !this.canJoin()) ||
+      !this.props.wallet
+    ) {
       return;
     }
 
@@ -98,7 +102,12 @@ export default class PhoneValidationComponent extends Component<propsType> {
   }
 
   async confirm() {
-    if (this.state.inProgress || !this.canConfirm()) {
+    if (
+      this.state.inProgress ||
+      !this.canConfirm() ||
+      !this.props.wallet ||
+      !this.props.user
+    ) {
       return;
     }
 
