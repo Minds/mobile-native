@@ -23,7 +23,7 @@ interface Props {
  */
 export const DiscoveryTrendsList = observer((props: Props) => {
   const discoveryV2 = useDiscoveryV2Store();
-  let listRef: FlatList<[]> | null;
+  let listRef: FlatList<any> | null;
 
   useEffect(() => {
     discoveryV2.loadTrends(true);
