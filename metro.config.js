@@ -5,7 +5,8 @@
  * @format
  */
 const blacklist = require('metro-config/src/defaults/blacklist');
-const defaultSourceExts = require('metro-config/src/defaults/defaults').sourceExts;
+const defaultSourceExts = require('metro-config/src/defaults/defaults')
+  .sourceExts;
 
 module.exports = {
   resolver: {

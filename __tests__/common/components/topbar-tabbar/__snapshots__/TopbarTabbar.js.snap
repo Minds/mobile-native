@@ -1,0 +1,183 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Array [
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+    ]
+  }
+>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      Tokens
+    </Text>
+    <Text
+      style={
+        Array [
+          undefined,
+          undefined,
+          Object {
+            "paddingVertical": 2,
+          },
+          undefined,
+        ]
+      }
+    >
+      711
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      USD
+    </Text>
+    <Text
+      style={
+        Array [
+          undefined,
+          undefined,
+          Object {
+            "paddingVertical": 2,
+          },
+          undefined,
+        ]
+      }
+    >
+      $123
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      Ether
+    </Text>
+    <Text
+      style={
+        Array [
+          undefined,
+          undefined,
+          Object {
+            "paddingVertical": 2,
+          },
+          undefined,
+        ]
+      }
+    >
+      133
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          undefined,
+          undefined,
+        ]
+      }
+    >
+      Bitcoin
+    </Text>
+    <Text
+      style={
+        Array [
+          undefined,
+          undefined,
+          Object {
+            "paddingVertical": 2,
+          },
+          undefined,
+        ]
+      }
+    >
+      153
+    </Text>
+  </View>
+</View>
+`;

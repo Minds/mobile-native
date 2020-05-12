@@ -40,6 +40,7 @@ exports[`blog card component should renders correctly 1`] = `
           "headers": Object {
             "App-Version": "3.8.0",
             "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json",
             "Pragma": "no-cache",
           },
           "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
@@ -169,7 +170,7 @@ exports[`blog card component should renders correctly 1`] = `
             accessibilityIgnoresInvertColors={true}
             style={
               Object {
-                "backgroundColor": "#bdbdbd",
+                "backgroundColor": "transparent",
                 "borderRadius": 17,
                 "flex": 1,
                 "overflow": "hidden",
@@ -232,6 +233,7 @@ exports[`blog card component should renders correctly 1`] = `
                   },
                 }
               }
+              transition={true}
             />
             <View
               accessibilityElementsHidden={false}
@@ -341,6 +343,7 @@ exports[`blog card component should renders correctly 1`] = `
         "ownerObj": UserModel {
           "__list": null,
           "access_id": "2",
+          "admin": false,
           "allow_comments": true,
           "banned": "no",
           "blocked": false,
@@ -389,6 +392,7 @@ exports[`blog card component should renders correctly 1`] = `
           "impressions": 100,
           "isOwner": [Function],
           "language": "en",
+          "last_accepted_tos": 0,
           "legacy_guid": false,
           "mature": "1",
           "mature_channel": "0",
@@ -421,10 +425,12 @@ exports[`blog card component should renders correctly 1`] = `
           "subscribed": false,
           "subscriber": true,
           "subscribers_count": 50,
+          "subscriptions_count": 0,
           "subtype": false,
           "time_created": "1468113204",
           "time_updated": false,
           "type": "user",
+          "urn": "",
           "username": "someusermane",
           "verified": true,
           "website": "",
@@ -461,6 +467,8 @@ exports[`blog card component should renders correctly 1`] = `
         "time_updated": "1524862542",
         "title": "Some Title",
         "type": "object",
+        "urn": "",
+        "username": "",
         "wire_threshold": "",
       }
     }

@@ -1,52 +1,48 @@
-import {toJS} from 'mobx';
 import { whenWithTimeout } from 'mobx-utils';
 import channelService from '../../src/channel/ChannelService';
 import UserStore from '../../src/auth/UserStore';
 import meFactory from '../../__mocks__/fake/auth/MeFactory';
 import UserModel from '../../src/channel/UserModel';
 
-
 jest.mock('../../src/channel/ChannelService');
 
 // mock the static create method
-UserModel.create = jest.fn();
+// UserModel.create = jest.fn();
 
 let store;
 
 describe('user store', () => {
   beforeEach(() => {
     channelService.load.mockClear();
-    UserModel.create.mockClear();
+    // UserModel.create.mockClear();
     store = new UserStore();
   });
 
   it('should call channel service load and update me', async (done) => {
-
-    expect.assertions(4);
+    expect.assertions(3);
     // fake api response
-    const apiResponseFake = {channel: meFactory(1)};
+    const apiResponseFake = { channel: meFactory(1) };
 
     // mock methods called
     channelService.load.mockResolvedValue(apiResponseFake);
-    UserModel.create.mockReturnValue(apiResponseFake.channel);
+    // UserModel.create.mockReturnValue(apiResponseFake.channel);
 
     // me observable should be updated with the api returned data
-    whenWithTimeout(
-      () => store.me.guid == 1,
-      () => expect(toJS(store.me)).toEqual(apiResponseFake.channel),
+    await whenWithTimeout(
+      () => store.me.guid,
+      () => expect(store.me.guid).toEqual(apiResponseFake.channel.guid),
       200,
-      () => done.fail("store didn't set me observable")
+      () => done.fail("store didn't set me observable"),
     );
 
     try {
       // me must be empty before call load
-      expect(store.me.guid).toEqual(undefined);
+      expect(store.me.guid).toEqual('');
 
       const res = await store.load();
 
       // call api post one time
       expect(channelService.load).toBeCalledWith('me');
-      expect(UserModel.create).toBeCalled();
 
       done();
     } catch (e) {
@@ -55,30 +51,24 @@ describe('user store', () => {
   });
 
   it('should create a new model on setUser', async (done) => {
-
-    expect.assertions(3);
+    expect.assertions(2);
 
     // fake user
     const fakeUser = meFactory(1);
 
-    // mock methods called
-    UserModel.create.mockReturnValue(fakeUser);
-
     // me observable should be updated with the new user
     whenWithTimeout(
-      () => store.me.guid == 1,
-      () => expect(toJS(store.me)).toEqual(fakeUser),
+      () => store.me.guid,
+      () => expect(store.me.guid).toEqual(fakeUser.guid),
       200,
-      () => done.fail("store didn't set me observable")
+      () => done.fail("store didn't set me observable"),
     );
 
     try {
       // me must be empty before call load
-      expect(store.me.guid).toEqual(undefined);
+      expect(store.me.guid).toEqual('');
 
       const res = store.setUser(fakeUser);
-
-      expect(UserModel.create).toBeCalled();
 
       done();
     } catch (e) {
@@ -87,21 +77,17 @@ describe('user store', () => {
   });
 
   it('should set rewards on the observable', async (done) => {
-
     expect.assertions(1);
 
     // fake user
     const fakeUser = meFactory(1);
 
-    // mock methods called
-    UserModel.create.mockReturnValue(fakeUser);
-
     // me observable should be updated with the new user
     whenWithTimeout(
-      () => store.me.rewards == false,
-      () => expect(store.me.rewards).toEqual(false),
+      () => store.me.rewards === true,
+      () => expect(store.me.rewards).toEqual(true),
       200,
-      () => done.fail("store didn't set me observable")
+      () => done.fail("store didn't set me observable"),
     );
 
     try {
@@ -116,40 +102,33 @@ describe('user store', () => {
   });
 
   it('should set wallet on the observable', async (done) => {
-
-    // fake user
-    const fakeUser = meFactory(1);
-
-    // mock methods called
-    UserModel.create.mockReturnValue(fakeUser);
-
-    // me observable should be updated with the new user
-    whenWithTimeout(
-      () => store.me.eth_wallet == '0xFFFFFFFF',
-      () => done(),
-      200,
-      () => done.fail("store didn't set me observable")
-    );
-
     try {
+      // fake user
+      const fakeUser = meFactory(1);
+
+      // me observable should be updated with the new user
+      whenWithTimeout(
+        () => store.me.eth_wallet === '0xFFFFFFFF',
+        () => done(),
+        200,
+        () => done.fail("store didn't set me observable"),
+      );
+
       // set the user
       store.setUser(fakeUser);
       // change wallet
       store.setWallet('0xFFFFFFFF');
+      done();
     } catch (e) {
       done.fail(e);
     }
   });
 
   it('should clear the user', async (done) => {
-
     expect.assertions(1);
 
     // fake user
     const fakeUser = meFactory(1);
-
-    // mock methods called
-    UserModel.create.mockReturnValue(fakeUser);
 
     try {
       // set the user
@@ -157,10 +136,10 @@ describe('user store', () => {
 
       // me observable should be updated with the new user
       whenWithTimeout(
-        () => Object.keys(store.me).length === 0,
-        () => expect(store.me).toEqual({}),
+        () => store.me.guid !== 1,
+        () => expect(store.me.guid).toEqual(''),
         200,
-        () => done.fail("store didn't set me observable")
+        () => done.fail("store didn't set me observable"),
       );
 
       // clear
@@ -173,14 +152,10 @@ describe('user store', () => {
   });
 
   it('should clear the user on reset', async (done) => {
-
     expect.assertions(1);
 
     // fake user
     const fakeUser = meFactory(1);
-
-    // mock methods called
-    UserModel.create.mockReturnValue(fakeUser);
 
     try {
       // set the user
@@ -188,10 +163,10 @@ describe('user store', () => {
 
       // me observable should be updated with the new user
       whenWithTimeout(
-        () => Object.keys(store.me).length === 0,
-        () => expect(store.me).toEqual({}),
+        () => store.me.guid !== 1,
+        () => expect(store.me.guid).toEqual(''),
         200,
-        () => done.fail("store didn't set me observable")
+        () => done.fail("store didn't set me observable"),
       );
 
       // clear
@@ -204,12 +179,8 @@ describe('user store', () => {
   });
 
   it('should returns if the user has rewards', async (done) => {
-
     // fake user
     const fakeUser = meFactory(1);
-
-    // mock methods called
-    UserModel.create.mockReturnValue(fakeUser);
 
     try {
       // set the user
@@ -228,12 +199,8 @@ describe('user store', () => {
   });
 
   it('should returns if the user has wallet', async (done) => {
-
     // fake user
     const fakeUser = meFactory(1);
-
-    // mock methods called
-    UserModel.create.mockReturnValue(fakeUser);
 
     try {
       // set the user
@@ -252,15 +219,12 @@ describe('user store', () => {
   });
 
   it('should returns if the user is admin', async (done) => {
-
     // fake user
-    const fakeUser = meFactory(1);
+    const fakeUser = meFactory(2);
     fakeUser.admin = true;
 
-    const entity = new UserModel(fakeUser);
-
-    // mock methods called
-    UserModel.create.mockReturnValue(entity);
+    const entity = new UserModel();
+    entity.assign(fakeUser);
 
     try {
       // set the user
@@ -270,7 +234,7 @@ describe('user store', () => {
 
       done();
     } catch (e) {
-      done.fail(e);
+      done(e);
     }
   });
 });

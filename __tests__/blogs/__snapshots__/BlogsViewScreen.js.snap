@@ -44,6 +44,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         "ownerObj": UserModel {
           "__list": null,
           "access_id": "2",
+          "admin": false,
           "allow_comments": true,
           "banned": "no",
           "blocked": false,
@@ -82,6 +83,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           "impressions": 100,
           "isOwner": [Function],
           "language": "en",
+          "last_accepted_tos": 0,
           "legacy_guid": false,
           "mature": "1",
           "mature_channel": "0",
@@ -114,10 +116,12 @@ exports[`blog view screen component should renders correctly 1`] = `
           "subscribed": false,
           "subscriber": true,
           "subscribers_count": 50,
+          "subscriptions_count": 0,
           "subtype": false,
           "time_created": "1468113204",
           "time_updated": false,
           "type": "user",
+          "urn": "",
           "username": "someusermane",
           "verified": true,
           "website": "",
@@ -154,6 +158,8 @@ exports[`blog view screen component should renders correctly 1`] = `
         "time_updated": "1524862542",
         "title": "Some Title",
         "type": "object",
+        "urn": "",
+        "username": "",
         "wire_threshold": "",
       }
     }
@@ -175,6 +181,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               "headers": Object {
                 "App-Version": "3.8.0",
                 "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Content-Type": "application/json",
                 "Pragma": "no-cache",
               },
               "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
@@ -240,6 +247,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
+                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -278,6 +286,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "impressions": 100,
                   "isOwner": [Function],
                   "language": "en",
+                  "last_accepted_tos": 0,
                   "legacy_guid": false,
                   "mature": "1",
                   "mature_channel": "0",
@@ -310,10 +319,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "subscribed": false,
                   "subscriber": true,
                   "subscribers_count": 50,
+                  "subscriptions_count": 0,
                   "subtype": false,
                   "time_created": "1468113204",
                   "time_updated": false,
                   "type": "user",
+                  "urn": "",
                   "username": "someusermane",
                   "verified": true,
                   "website": "",
@@ -350,6 +361,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "time_updated": "1524862542",
                 "title": "Some Title",
                 "type": "object",
+                "urn": "",
+                "username": "",
                 "wire_threshold": "",
               }
             }
@@ -413,6 +426,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
+                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -451,6 +465,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "impressions": 100,
                   "isOwner": [Function],
                   "language": "en",
+                  "last_accepted_tos": 0,
                   "legacy_guid": false,
                   "mature": "1",
                   "mature_channel": "0",
@@ -483,10 +498,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "subscribed": false,
                   "subscriber": true,
                   "subscribers_count": 50,
+                  "subscriptions_count": 0,
                   "subtype": false,
                   "time_created": "1468113204",
                   "time_updated": false,
                   "type": "user",
+                  "urn": "",
                   "username": "someusermane",
                   "verified": true,
                   "website": "",
@@ -523,6 +540,8 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "time_updated": "1524862542",
                 "title": "Some Title",
                 "type": "object",
+                "urn": "",
+                "username": "",
                 "wire_threshold": "",
               }
             }
@@ -561,6 +580,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
+                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -599,6 +619,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "impressions": 100,
                   "isOwner": [Function],
                   "language": "en",
+                  "last_accepted_tos": 0,
                   "legacy_guid": false,
                   "mature": "1",
                   "mature_channel": "0",
@@ -631,10 +652,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "subscribed": false,
                   "subscriber": true,
                   "subscribers_count": 50,
+                  "subscriptions_count": 0,
                   "subtype": false,
                   "time_created": "1468113204",
                   "time_updated": false,
                   "type": "user",
+                  "urn": "",
                   "username": "someusermane",
                   "verified": true,
                   "website": "",
@@ -671,9 +694,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "time_updated": "1524862542",
                 "title": "Some Title",
                 "type": "object",
+                "urn": "",
+                "username": "",
                 "wire_threshold": "",
               }
             }
+            orientation="row"
             size={20}
           />
           <ThumbDownAction
@@ -709,6 +735,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
+                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -747,6 +774,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "impressions": 100,
                   "isOwner": [Function],
                   "language": "en",
+                  "last_accepted_tos": 0,
                   "legacy_guid": false,
                   "mature": "1",
                   "mature_channel": "0",
@@ -779,10 +807,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "subscribed": false,
                   "subscriber": true,
                   "subscribers_count": 50,
+                  "subscriptions_count": 0,
                   "subtype": false,
                   "time_created": "1468113204",
                   "time_updated": false,
                   "type": "user",
+                  "urn": "",
                   "username": "someusermane",
                   "verified": true,
                   "website": "",
@@ -819,9 +849,12 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "time_updated": "1524862542",
                 "title": "Some Title",
                 "type": "object",
+                "urn": "",
+                "username": "",
                 "wire_threshold": "",
               }
             }
+            orientation="row"
             size={20}
           />
         </View>
@@ -909,6 +942,7 @@ exports[`blog view screen component should renders correctly 1`] = `
     store={
       CommentsStore {
         "attachment": AttachmentStore {
+          "cancelOrDelete": [Function],
           "fileName": null,
           "guid": "",
           "transcoding": false,

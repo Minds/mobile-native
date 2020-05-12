@@ -1,5 +1,5 @@
 import { Platform, Alert } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
+import ImagePicker from 'react-native-image-crop-picker';
 import service from '../../../src/common/services/image-picker.service';
 import i18n from '../../../src/common/services/i18n.service';
 
@@ -106,11 +106,11 @@ describe('Session storage service', () => {
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.launchCamera.mockImplementation((opt, callback) => callback({}));
+    ImagePicker.openCamera.mockImplementation();
 
     await service.launchCamera('photo');
 
-    expect(ImagePicker.launchCamera).toHaveBeenCalled();
+    expect(ImagePicker.openCamera).toHaveBeenCalled();
   });
 
 
@@ -120,11 +120,11 @@ describe('Session storage service', () => {
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.launchImageLibrary.mockImplementation((opt, callback) => callback({}));
+    ImagePicker.openPicker.mockImplementation();
 
     await service.launchImageLibrary();
 
-    expect(ImagePicker.launchImageLibrary).toHaveBeenCalled();
+    expect(ImagePicker.openPicker).toHaveBeenCalled();
   });
 
 
@@ -134,10 +134,10 @@ describe('Session storage service', () => {
 
     androidPermissions.checkReadExternalStorage.mockResolvedValue(true);
     androidPermissions.readExternalStorage.mockResolvedValue(true);
-    ImagePicker.showImagePicker.mockImplementation((opt, callback) => callback({}));
+    ImagePicker.openPicker.mockImplementation();
 
     await service.show();
 
-    expect(ImagePicker.showImagePicker).toHaveBeenCalled();
+    expect(ImagePicker.openPicker).toHaveBeenCalled();
   });
 });

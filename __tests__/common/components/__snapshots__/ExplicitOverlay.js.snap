@@ -82,8 +82,12 @@ exports[`Explicit overlay component should renders the etag 1`] = `
           "right": 0,
           "top": 0,
         },
-        undefined,
-        undefined,
+        Object {
+          "paddingRight": 15,
+        },
+        Object {
+          "marginRight": 15,
+        },
       ],
       undefined,
     ]

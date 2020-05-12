@@ -32,7 +32,7 @@
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
 
-  [RNBootSplash show:@"LaunchScreen" inView:rootView];
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView];
 
   [RNNotifications startMonitorNotifications];
   return YES;

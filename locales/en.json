@@ -70,10 +70,11 @@
     "accept":"I have read and accept the",
     "termsAndConditions":"terms of use",
     "code":"Code",
-    "join":"Join the Revolution",
+    "join":"Create a channel",
     "createChannel":"Join Minds Now",
     "haveAccount":"Don't have an account?",
-    "alreadyHaveAccount":"Already have an account? &{login}&"
+    "alreadyHaveAccount":"Already have an account? &{login}&",
+    "failedToLoginNewAccount":"The login with your new account has failed, please try to log in the login screen"
   },
   "blockchain": {
     "boostCreate": "Network Boost for {{tokensAmount}} Minds Tokens. {{message}}",
@@ -101,7 +102,7 @@
     "receiverAddress":"Receive Address",
     "shouldBeReceiver":"Should this address be your receiver address for Wire & Boost?",
     "downloadPrivate":"Download the private key of this wallet",
-    "deleteWarning":"WARNING: this is irreversable and all tokens will be lost",
+    "deleteWarning":"WARNING: this is irreversible and all tokens will be lost",
     "deleteConfirmWarning":"This is an IRREVERSIBLE action. If you haven't backed up your private key, you may lose all your funds.",
     "importKeyNotExist":"The private key for this wallet does not exist.",
     "privateNotBelongToAddress":"Private Key doesn't belong to {{address}}.",
@@ -193,8 +194,18 @@
     "hold":"Hold to select only one"
   },
   "capture":{
+    "licenseDescription":"Select your desired license type. This can be changed at any time after posting.",
+    "pupularLicenses":"Popular licenses",
+    "otherLicenses":"Other Licenses",
+    "paywallLabel":"Min monthly contribution ({{currency}})",
+    "paywallDescription":"Motetize post by making it available to your users who support your channel.",
+    "paywall":"Enable paywall",
+    "noPaywall":"No paywall",
+    "customTime":"Custom time",
+    "tagsDescription":"Tagging your post will make your content more easily discoverable.",
     "couldNotLoad":"The media from {{domain}} could not be loaded.",
     "maxHashtags":"Sorry, your post cannot contain more than {{maxHashtags}} hashtags.",
+    "schedule":"Schedule Post",
     "post":"Post",
     "remind":"Remind",
     "postingIn":"(Posting in {{group}})",
@@ -208,7 +219,9 @@
     "tokens":"TOKENS",
     "gallery":"Gallery",
     "photo":"Photo",
-    "video":"Video"
+    "video":"Video",
+    "text":"Text",
+    "retake":"Retake"
   },
   "channel":{
     "modeClosed":"Closed",
@@ -217,7 +230,7 @@
     "isClosed":"This is a closed channel",
     "errorSaving":"Error saving channel",
     "saveChanges":"Save your changes",
-    "editChannel":"Edit your channel settings",
+    "editChannel":"Edit Channel",
     "sendMessage":"Send a message to this channel",
     "message":"Message",
     "mature":"This channel contains mature content",
@@ -237,7 +250,17 @@
     "blockedNav":"You have blocked &{username}&",
     "tapUnblock":"Tap to unblock",
     "notFound":"Channel not found",
-    "viewScheduled":"Scheduled"
+    "viewScheduled":"Scheduled",
+    "edit":{
+      "channel":"Edit Channel",
+      "bio":"Bio",
+      "about":"About Info",
+      "hashtags":"Hashtags",
+      "links":"Social Links",
+      "displayName":"Display Name",
+      "location":"Location",
+      "dob":"Date of Birth"
+    }
   },
   "discovery":{
     "search":"Search...",
@@ -253,6 +276,9 @@
     "recentlyVisited":"Recently visited"
   },
   "groups":{
+    "ongoingGathering":"Ongoing gathering",
+    "joinGathering":"Join Gathering",
+    "gotoGroup":"Go to group",
     "subscribeMessage":"Subscribe to this group",
     "leaveMessage":"Leave from this group",
     "banConfirm":"Are you sure? You want to ban this user?",
@@ -459,9 +485,11 @@
     "disableChannelConfirm":"Your account will be disabled. Are you sure you want to proceed?",
     "deleteChannelConfirm":"Your account and all data related to it will be deleted permanently. Are you sure you want to proceed?",
     "newPassword":"New Password",
-    "disableChannel":"Disable Channel",
-    "deleteChannel":"Delete Channel",
-    "disableDescription":"Disabling your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.",
+    "disableChannel":"Deactivate Account",
+    "disableChannelButton":"Deactivate my account",
+    "deleteChannelButton":"Delete my account",
+    "deleteChannel":"Delete Account",
+    "disableDescription":"Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.",
     "deleteDescription":"Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable. Your username will be released back to the public.",
     "confirmNewPassword":"Confirm New Password",
     "currentEmail":"Current Email",
@@ -472,7 +500,7 @@
     "logOnlyErrors":"Log only errors",
     "leftHandedMode":"Left Handed Mode",
     "recurringPayments":"Recurring Payments",
-    "deactivate":"Deactivate",
+    "deactivate":"Deactivate Account",
     "logout":"Logout",
     "errorSaving":"Error saving setting, please try again",
     "passwordChanged":"Password changed succesfully.",
@@ -484,7 +512,73 @@
     "regenerateKey":"Regenerate messenger keys",
     "deleteBlockchain":"Delete blockchain keychain",
     "darkMode":"Dark mode",
-    "lightMode":"Light mode"
+    "lightMode":"Light mode",
+    "other":"Other",
+    "account":"Account",
+    "security":"Security",
+    "billing":"Billing",
+    "invalidPassword":"Incorrect password",
+    "passwordsNotMatch":"Passwords should match",
+    "passwordFormatMinCharacters":"8 or more characters",
+    "passwordFormatSpecialCharacters":"At least 1 special character",
+    "passwordFormatMixedCase":"Mixed case",
+    "passwordFormatNumber":"At least 1 number",
+    "passwordFormatNoSpaces":"Doesn't have spaces",
+    "matureContent":"Mature Content",
+    "showMatureContent":"Always show mature content (+18)",
+    "TFA":"Two-factor authentication",
+    "TFAdescription":"Add an extra layer of security to your account by enabling 2FA",
+    "TFAEnabled":"You may disable 2FA at any point. If you’ve change mobile number, you will need to disable and re-enable 2FA",
+    "TFADisable":"Disable 2FA",
+    "sessionsOpened":"You currently have {{amount}} opened sessions",
+    "closeSessions":"CLOSE ALL SESSIONS",
+    "subscriptionListEmpty":"You don't have any recurring subscription",
+    "enterDark":"Enter Dark Mode",
+    "enterLight":"Enter Light Mode",
+    "reportedContent": {
+      "reviewPending":"REVIEW PENDING",
+      "reviewAppealed":"APPEALED",
+      "reviewApproved":"APPROVED",
+      "reviewRejected":"REJECTED",
+      "actionTaken":"Action taken",
+      "actionMessage":"&{actionTaken}&: This {{entityType}} has been &{action}& for &{reason}&",
+      "entityPost":"post",
+      "entityComment":"comment",
+      "actionNSFW":"marked NSFW",
+      "actionStrike":"given a strike",
+      "noteType":"Please type in this box if you wish to appeal this decision, explaining your reasons",
+      "appeal":"Appeal",
+      "appealNote":"Appeal Note",
+      "postNotFound":"Post not found",
+      "seeReportedContent":"Reported Content",
+      "noAppealData":" Sorry, something went wrong!"
+    },
+    "accountOptions": {
+      "1":"Email Address",
+      "2":"Display Language",
+      "3":"Password",
+      "4":"Notifications",
+      "5":"NSFW Content"
+    },
+    "securityOptions": {
+      "1":"Two-factor authentication (2FA)",
+      "2":"Your Devices"
+    },
+    "billingOptions": {
+      "1":"Payment Methods",
+      "2":"Recurring Payments"
+    },
+    "otherOptions": {
+      "a":"CONTENT ADMIN",
+      "a1":"Reported Content",
+      "b":"PAID CONTENT",
+      "b1":"Subscription Tier Management",
+      "b2":"Post Preview",
+      "c":"ACCOUNT",
+      "c2":"Delete Account",
+      "d":"INFO",
+      "d1":"App"
+    }
   },
   "comingSoon":{
     "try":"Try the canary app at",
@@ -556,7 +650,9 @@
     "numberConfirmed":"Your number has beed validated",
     "phoneNumberTooltip":"Your mobile number may be used for additional account security, unique identification and to help your friends find you. This data is private and encrypted.",
     "dateofBirthTooltip":"Please enter your birth date to confirm your age and help us improve our recommendations.",
-    "locationTooltip":"Please enter your city to help us connect you with channels in your area. We do not track your exact location."
+    "locationTooltip":"Please enter your city to help us connect you with channels in your area. We do not track your exact location.",
+    "haveCompleted":"Your profile is &{amount}& complete",
+    "editProfile": "Edit your profile"
   },
   "wallet": {
     "inviteFriend":"Invite a Friend",
@@ -583,6 +679,22 @@
       "score":"Score",
       "share":"Share"
     },
+    "learnMore":{
+      "title":"Learn More",
+      "howWork":"How the new rewards system works",
+      "p1":"Minds rewards you with crypto for contributing to the network. The first step in joining our rewards program is to provide your mobile number. We convert your number into a hash ID using SHA-256 encryption and a salt key to create a unique identifier for your account. We do not store your number on our servers.",
+      "p2":"Rather than rewarding you with Points in real-time, we are now distributing our crypto rewards as a “Daily Reward Pool”. During the test network, we will be experimenting with how the Daily Reward Pool is calculated, but it will ideally be automated based on user participation once we move into the Main Ethereum network.",
+      "p3":"Every day, we measure your contributions to the network and you receive a “Contribution Score” which can be found in the Contributions section of your wallet. We then calculate how much you contributed to the network relative to the entire community, which determines the percentage of the Daily Reward Pool that you earn.",
+      "p4":"It is important to note that with the new system, you will only receive credit for unique interaction, and you can only earn credit from another unique user once per metric per day. (If a friend votes on my content 100 times in a day, I will only get credit for 1 vote). This is critical in preventing gaming and abuse of the system as we move into more valuable token rewards. We are essentially measuring how many unique users you reached in a given day.",
+      "p5":"Daily rewards will be distributed at 02:00 am GMT everyday into your OffChain address.",
+      "howContributionsTitle":"How we measure your contributions",
+      "howContributionsP":"We calculate your contribution score each day using the following weighted scoring system. Please note that the new system only gives credit for unique engagement (users who have provided a mobile number), so not all engagement you receive will be factored into your score.",
+      "onChainTitle":"OnChain vs. Offchain",
+      "onChainP1":"OffChain tokens are stored on Minds servers, and they can be used the same way that you used your Points. There are no fees, and they can be used to Boost content for more views from the network or to Wire other creators who you support.",
+      "onChainP2":"You now have the ability to withdraw these tokens into your OnChain address.",
+      "onChainP3":"OnChain tokens are stored on the Ethereum public blockchain and are accessible from outside of the Minds platform, which is key for further decentralization. OnChain transactions, however, require a small Ethereum “gas” fee, which is the incentive for the Ethereum miners to process the transaction.",
+      "onChainP4":"For OnChain configuration, you have the ability to use MetaMask (a browser plugin), your mobile device, an existing Ethereum address or you can create your own with Minds. We recommend using MetaMask for the most seamless user experience. You can change this address by clicking on the “Addresses” tab on the wallet menu"
+    },
     "join":{
       "rewardsDescription":"Rewards Tokens enable creators to earn from interactions on their content. You earn tokens based on a daily contributions pool. At the end of each day, your contributions score will be calculated and you will receive a share of the daily reward pool. In order to verify you are a unique users, we require a phone number to be provided. Your phone number will be securely hashed and sent alongside all interactions to protect against fraud and gaming.",
       "note":"Note: Minds does not store the phone numbers you provide. The numbers are hashed using SHA-256 and combined with a salt key for encryption and privacy purposes.",
@@ -593,15 +705,22 @@
     },
     "withdraw":{
       "errorReadingStatus":"Error reading withdrawal status",
-      "errorOnlyOnceDay":"You can only withdraw once a day",
+      "errorOnlyOnceDay":"You may only withdraw once a day",
       "errorWithdrawing":"Error withdrawing tokens",
       "youCanRequest1":"You can request to withdraw up to {{amount}} tokens from your rewards to your &{onchain}& wallet.",
       "youCanRequest2":"Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals &{approval}& and may take up to 72 hours to complete",
       "youCanRequest3":"go through an approval process",
       "holdingMessage":"{{amount}} tokens are unavailable due to credit card payment. They will be released after 30 days the payment occurred.",
       "amount":"Amount",
+      "errorAmountToHigh":"You don't have enough tokens",
       "errorReadingBalances":"Error reading balances",
-      "errorAmountNegative":"Amount should be a positive number"
+      "errorAmountNegative":"Should be a positive number",
+      "notes1":"You can transfer up to {{amount}} tokens to your on-chain wallet.",
+      "notes2":"A small amount of ETH will be changed to cover the transaction fee.",
+      "notes3":"Transfers go through an approval process and may take up to three days to complete.",
+      "title":"On-chain transfer",
+      "acceptTerms":"I agree and understand the terms",
+      "transfer":"Transfer"
     }
   },
   "wire":{
@@ -664,7 +783,13 @@
     "noResults": "No results for {{query}}"
   },
   "nsfw":{
+    "safe": "Safe",
+    "notSafe": "Not Safe",
+    "categories": "NSFW Categories",
+    "description1": "If this post contains content that is NSFW (Not Safe for Work)  it is your responsibility to tag it accordingly.",
+    "description2": "See guidelines for further information.",
     "button":"NSFW",
+    "0":"Safe for work",
     "1":"Nudity",
     "2":"Pornography",
     "3":"Profanity",
@@ -691,6 +816,7 @@
     "emptySuggested":"We couldn't find what you look for",
     "clear": "Clear"
   },
+  "monetize":"Monetize",
   "downloading":"Downloading",
   "confirm18":"Confirm you are 18+",
   "postCantBeShown":"This post can't be shown on apps installed via the Play Store.",
@@ -797,6 +923,7 @@
   "rememberTomorrow":"Remind me later",
   "enableComments": "Enable comments",
   "disableComments": "Disable comments",
+  "captcha":"Enter the characters above",
   "noInternet":"No Internet Connection",
   "offline":"Offline",
   "cantReachServer":"Can't reach the server",
@@ -809,5 +936,9 @@
   "tabTitleNewsfeed":"Home",
   "tabTitleNotifications":"Notifications",
   "tabTitleDiscovery":"Discovery",
-  "linkCopied":"Link copied to clipboard"
+  "linkCopied":"Link copied to clipboard",
+  "close":"Close",
+  "now":"Now",
+  "title":"Title",
+  "filter":"Filter"
 }

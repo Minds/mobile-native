@@ -7,11 +7,11 @@ exports[`Owner component renders correctly 1`] = `
       "alignItems": "center",
       "display": "flex",
       "flexDirection": "row",
-      "padding": 8,
+      "padding": 10,
     }
   }
 >
-  <PreventDoubleTap
+  <preventDoubleTap(TouchableOpacity)
     onPress={[Function]}
   >
     <FastImage
@@ -21,6 +21,7 @@ exports[`Owner component renders correctly 1`] = `
           "headers": Object {
             "App-Version": "3.8.0",
             "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json",
             "Pragma": "no-cache",
           },
           "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
@@ -36,7 +37,7 @@ exports[`Owner component renders correctly 1`] = `
         }
       }
     />
-  </PreventDoubleTap>
+  </preventDoubleTap(TouchableOpacity)>
   <View
     style={
       Object {
@@ -54,7 +55,7 @@ exports[`Owner component renders correctly 1`] = `
         }
       }
     >
-      <PreventDoubleTap
+      <preventDoubleTap(TouchableOpacity)
         onPress={[Function]}
       >
         <Text
@@ -63,14 +64,15 @@ exports[`Owner component renders correctly 1`] = `
               Object {
                 "color": "#444",
                 "fontFamily": "Roboto",
+                "fontSize": 16,
                 "fontWeight": "bold",
               },
               undefined,
             ]
           }
         />
-      </PreventDoubleTap>
-      <PreventDoubleTap
+      </preventDoubleTap(TouchableOpacity)>
+      <preventDoubleTap(TouchableOpacity)
         onPress={[Function]}
         style={
           Object {
@@ -95,7 +97,7 @@ exports[`Owner component renders correctly 1`] = `
           &gt; 
           group
         </Text>
-      </PreventDoubleTap>
+      </preventDoubleTap(TouchableOpacity)>
     </View>
   </View>
 </View>

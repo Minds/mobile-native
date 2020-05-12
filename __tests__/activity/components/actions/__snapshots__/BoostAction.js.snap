@@ -42,7 +42,9 @@ exports[`Boost action component renders correctly 1`] = `
           "margin": 4,
           "padding": 4,
         },
-        undefined,
+        Object {
+          "backgroundColor": "transparent",
+        },
         undefined,
       ]
     }
