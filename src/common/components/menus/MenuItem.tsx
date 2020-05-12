@@ -6,8 +6,11 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 export type MenuItemPropsType = {
   item: {
     onPress: () => void;
-    title: string;
-    icon?: any;
+    title: string | JSX.Element;
+    icon?: {
+      name: string;
+      type: string;
+    };
     noIcon?: boolean;
   };
   i?: number;
@@ -26,13 +29,6 @@ export default function ({ item, i }: MenuItemPropsType) {
     theme.paddingHorizontal4x,
   ];
 
-  // ListItem Title Style
-  const titleStyle = [
-    theme.colorPrimaryText,
-    theme.paddingVertical3x,
-    { fontSize: 17 },
-  ];
-
   // ListItem Chevron Style
   const chevronStyle = item.noIcon
     ? undefined
@@ -44,7 +40,7 @@ export default function ({ item, i }: MenuItemPropsType) {
       title={item.title}
       onPress={item.onPress}
       containerStyle={containerStyle}
-      titleStyle={titleStyle}
+      titleStyle={theme.listItemTitle}
       chevron={chevronStyle}
     />
   );

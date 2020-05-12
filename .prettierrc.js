@@ -5,4 +5,5 @@ module.exports = {
   semi: true,
   bracketSpacing: true,
   trailingComma: 'all',
+  "endOfLine":"auto",
 };

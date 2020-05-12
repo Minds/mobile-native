@@ -1,10 +1,10 @@
 //@ts-nocheck
-import React, { Component } from 'react';
+import React from 'react';
 
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
 
-export default class ListItemButton extends Component {
+export default class ListItemButton extends TouchableOpacity {
   render() {
     const CS = ThemedStyles.style;
     return (

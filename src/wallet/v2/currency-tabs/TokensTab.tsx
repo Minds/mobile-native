@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { View } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
 } from '../../../common/components/topbar-tabbar/TopBarButtonTabBar';
@@ -19,6 +19,8 @@ import {
   WalletScreenRouteProp,
   WalletScreenNavigationProp,
 } from '../WalletScreen';
+import PhoneValidationComponent from '../../../common/components/PhoneValidationComponent';
+import i18n from '../../../common/services/i18n.service';
 
 const options: Array<ButtonTabType<TokensOptions>> = [
   { id: 'overview', title: 'Overview' },
@@ -35,12 +37,69 @@ type PropsType = {
 
 const createStore = () => ({
   option: 'overview' as TokensOptions,
+  showPopup: false,
+  setShowPopup(show: boolean) {
+    this.showPopup = show;
+  },
   setOption(option: TokensOptions) {
     this.option = option;
   },
 });
 
-type StoreType = ReturnType<typeof createStore>;
+type PhoneValidatorPropsType = {
+  bottomStore: BottomOptionsStoreType;
+};
+const PhoneValidator = ({ bottomStore }: PhoneValidatorPropsType) => {
+  const theme = ThemedStyles.style;
+  const ref = useRef<PhoneValidationComponent>(null);
+  const [msg, setMsg] = useState(i18n.t('wallet.phoneValidationMessage'));
+  const [label, setLabel] = useState(i18n.t('onboarding.phoneNumber'));
+
+  const verify = useCallback(() => {
+    ref.current?.confirmAction();
+    bottomStore.doneText = 'Done';
+    setLabel('');
+    bottomStore.setOnPressDone(() => bottomStore.hide());
+  }, [ref, bottomStore]);
+
+  const send = useCallback(() => {
+    ref.current?.joinAction();
+    bottomStore.doneText = 'Verify';
+    bottomStore.setOnPressDone(verify);
+    setMsg('');
+    setLabel(i18n.t('onboarding.confirmationCode'));
+  }, [ref, bottomStore, verify, setMsg, setLabel]);
+
+  bottomStore.setOnPressDone(send);
+
+  return (
+    <View>
+      <Text style={[theme.padding4x, theme.colorSecondaryText]}>{msg}</Text>
+      <View
+        style={[
+          theme.backgroundPrimary,
+          theme.borderPrimary,
+          styles.inputWraper,
+        ]}>
+        <Text style={[theme.colorSecondaryText]}>{label}</Text>
+        <PhoneValidationComponent
+          textStyle={theme.colorPrimaryText}
+          inputStyles={[theme.colorPrimaryText, theme.border0x, styles.input]}
+          bottomStore={bottomStore}
+          ref={ref}
+        />
+      </View>
+    </View>
+  );
+};
+
+const showPhoneValidator = (bottomStore: BottomOptionsStoreType) => {
+  bottomStore.show(
+    'Phone Verification',
+    'Send',
+    <PhoneValidator bottomStore={bottomStore} />,
+  );
+};
 
 /**
  * Tokens tab
@@ -56,9 +115,20 @@ const TokensTab = observer(
     if (showSetup) {
       walletSetup = [
         {
-          title: 'Phone Verification',
-          onPress: () => null,
-          icon: { name: 'md-checkmark' },
+          title: (
+            <Text
+              style={[
+                theme.listItemTitle,
+                user.hasRewards() ? theme.strikethrough : '',
+              ]}>
+              {'Phone Verification'}
+            </Text>
+          ),
+          onPress: () => showPhoneValidator(bottomStore),
+          icon: user.hasRewards()
+            ? { name: 'md-checkmark', type: 'ionicon' }
+            : undefined,
+          noIcon: !user.hasRewards(),
         },
         {
           title: 'Add On-Chain Address',
@@ -117,5 +187,19 @@ const TokensTab = observer(
     );
   },
 );
+
+const styles = StyleSheet.create({
+  input: {
+    height: 30,
+    flexBasis: 0,
+    flexGrow: 1,
+    padding: 0,
+  },
+  inputWraper: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+  },
+});
 
 export default TokensTab;
