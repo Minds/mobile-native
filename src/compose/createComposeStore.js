@@ -267,7 +267,7 @@ export default function (props) {
               return ActivityModel.create(resp.activity);
             }
           } finally {
-            this.setPosting(false);
+            this.clear(false);
           }
           return false;
         },

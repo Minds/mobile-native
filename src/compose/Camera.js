@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, Platform } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
@@ -15,6 +15,8 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { useTransition } from 'react-native-redash';
 import Animated from 'react-native-reanimated';
 import { when } from 'mobx';
+import { showMessage } from 'react-native-flash-message';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Camera
@@ -77,8 +79,44 @@ export default observer(function (props) {
         maxDuration: settings.max_video_length,
       });
     },
+    promptImageOrVideo: () => {
+      return new Promise((resolve) => {
+        showMessage({
+          position: 'bottom',
+          message: i18n.t('imagePicker.gallery'),
+          floating: true,
+          duration: 0,
+          renderCustomContent: () => (
+            <View style={[theme.rowJustifySpaceEvenly, theme.marginTop4x]}>
+              <Text
+                style={theme.fontXL}
+                onPress={async () => {
+                  resolve(await attachmentService.gallery('photo'));
+                }}>
+                {i18n.t('images')}
+              </Text>
+              <Text
+                style={theme.fontXL}
+                onPress={async () => {
+                  resolve(await attachmentService.gallery('video'));
+                }}>
+                {i18n.t('videos')}
+              </Text>
+            </View>
+          ),
+          color: ThemedStyles.getColor('primary_text'),
+          titleStyle: ThemedStyles.style.fontXL,
+          backgroundColor: ThemedStyles.getColor('tertiary_background'),
+          type: 'default',
+        });
+      });
+    },
     async selectFromGallery() {
-      const response = await attachmentService.gallery('mixed');
+      const response =
+        Platform.OS === 'android'
+          ? await store.promptImageOrVideo()
+          : await attachmentService.gallery('mixed');
+
       if (response && props.onMediaFromGallery) {
         props.onMediaFromGallery(response);
       }
