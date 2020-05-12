@@ -13,27 +13,43 @@ type PropsType = {
 const ReceiverSettings = ({ navigation, walletStore }: PropsType) => {
   const theme = ThemedStyles.style;
   const innerWrapper = [theme.borderBottomHair, theme.borderPrimary];
-  const receiverSettingsOptions = [
-    {
-      title: 'Mobile Receiver Address (Active)',
-      onPress: () =>
-        navigation.push('ReceiverAddressScreen', {
-          walletStore: walletStore,
-        }),
-    },
-    {
-      title: 'Alternate receiver address',
-      onPress: () => true,
-    },
-  ];
+
+  const receiverSettingsOptions = walletStore.wallet.receiver.address
+    ? [
+        {
+          title: 'Mobile Receiver Address (Active)',
+          onPress: () =>
+            navigation.push('ReceiverAddressScreen', {
+              walletStore: walletStore,
+            }),
+        },
+        {
+          title: 'Alternate receiver address',
+          onPress: () => navigation.push('BlockchainWallet'),
+        },
+      ]
+    : [
+        {
+          title: 'Create a new address (Recommended)',
+          onPress: () => {
+            if (!walletStore.wallet.receiver.address) {
+              walletStore.createOnchain(true);
+            }
+          },
+        },
+        {
+          title: 'Use your private key',
+          onPress: () => true,
+        },
+      ];
   return (
     <View style={theme.paddingTop4x}>
       <Text style={[theme.colorSecondaryText, styles.subTitle]}>
         RECEIVER ADDRESSES
       </Text>
       <View style={innerWrapper}>
-        <MenuItem item={receiverSettingsOptions[0]} i={0} />
-        <MenuItem item={receiverSettingsOptions[1]} i={1} />
+        <MenuItem item={receiverSettingsOptions[0]} />
+        <MenuItem item={receiverSettingsOptions[1]} />
       </View>
     </View>
   );

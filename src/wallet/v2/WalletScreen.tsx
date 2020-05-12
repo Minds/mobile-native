@@ -13,6 +13,8 @@ import type { CurrencyType } from '../../types/Payment';
 import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from './createWalletStore';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
+import CenteredLoading from '../../common/components/CenteredLoading';
+import EthTab from './currency-tabs/EthTab';
 
 export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -53,15 +55,16 @@ const WalletScreen = observer((props: PropsType) => {
   }, [store]);
 
   let body;
-  switch (store.currency) {
-    case 'tokens':
-      body = (
-        <TokensTab
-          walletStore={store}
-          navigation={props.navigation}
-          route={props.route}
-        />
-      );
+  if (store.wallet.loaded) {
+    switch (store.currency) {
+      case 'tokens':
+        body = <TokensTab walletStore={store} navigation={props.navigation} />;
+        break;
+      case 'eth':
+        body = <EthTab walletStore={store} />;
+    }
+  } else {
+    body = <CenteredLoading />;
   }
 
   return (

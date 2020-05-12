@@ -61,7 +61,7 @@ const TokensOverview = observer(({ walletStore, navigation }: PropsType) => {
       <View style={theme.paddingTop2x}>
         <MenuSubtitle>WALLET ACTIONS</MenuSubtitle>
         {walletActions.map((item, i) => (
-          <MenuItem item={item} i={i} />
+          <MenuItem item={item} key={i} />
         ))}
       </View>
     </>

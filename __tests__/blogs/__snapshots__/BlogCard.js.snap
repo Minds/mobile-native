@@ -180,19 +180,16 @@ exports[`blog card component should renders correctly 1`] = `
             <Image
               onLoad={[Function]}
               style={
-                Array [
-                  Object {
-                    "bottom": 0,
-                    "left": 0,
-                    "position": "absolute",
-                    "right": 0,
-                    "top": 0,
-                  },
-                  Object {
-                    "height": null,
-                    "width": null,
-                  },
-                ]
+                Object {
+                  "bottom": 0,
+                  "flex": 1,
+                  "height": null,
+                  "left": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                  "width": null,
+                }
               }
               testID="RNE__Image"
               theme={

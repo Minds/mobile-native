@@ -120,7 +120,8 @@
     "walletAddresses":"Wallet Addresses",
     "selectTheWallet":"Select the wallet you would like to use",
     "missingWallet":"Missing wallet address",
-    "errorSavingWallet":"There was an issue getting your saved wallet info"
+    "errorSavingWallet":"There was an issue getting your saved wallet info",
+    "errorCreatingWallet":"Error creating the onchain address"
   },
   "blogs":{
     "tabSubscriptions":"SUBSCRIPTIONS",
@@ -714,6 +715,12 @@
       "amount":"Amount",
       "errorReadingBalances":"Error reading balances",
       "errorAmountNegative":"Amount should be a positive number"
+    },
+    "eth":{
+      "title":"Ether Address",
+      "description": "Your Ether address is the same as your on-chain address.",
+      "toChange": "To view or change your address, go to",
+      "tokenSettings": "token settings"
     }
   },
   "wire":{
