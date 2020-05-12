@@ -97,6 +97,8 @@ export interface ThemedStyle {
   borderTopHair: any;
   borderBottomHair: any;
   buttonBorder: any;
+  listItemTitle: any;
+  strikethrough: any;
   [name: string]: any;
 }
 
@@ -397,6 +399,10 @@ export const buildStyle = (theme): ThemedStyle => ({
   fontSemibold: {
     fontWeight: '600',
   },
+  strikethrough: {
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid'
+  },
   // onboarding
   onboardingTitle: {
     color: '#AEB0B8',
@@ -513,5 +519,12 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   buttonBorder: {
     borderColor: theme.button_border,
+  },
+
+  // others
+  listItemTitle: {
+    color: theme.primary_text,
+    paddingVertical: 15,
+    fontSize: 17,
   },
 });

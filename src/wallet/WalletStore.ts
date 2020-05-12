@@ -93,7 +93,7 @@ class WalletStore {
    * @param {string} number
    * @param {boolean} retry
    */
-  join(number, retry) {
+  join(number: string, retry: boolean) {
     return walletService.join(number, retry);
   }
 

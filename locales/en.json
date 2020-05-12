@@ -674,6 +674,7 @@
     "contributionsDescription":"Check your rewards and daily contribution scores",
     "addressesTitle":"Addresses",
     "addressesDescription":"Configure your crypto addresses and other token related settings",
+    "phoneValidationMessage":"To start earning rewards, you will need to enter a unique phone number.",
     "contributions":{
       "date":"Date",
       "score":"Score",

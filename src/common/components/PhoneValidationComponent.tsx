@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import {
@@ -8,18 +7,17 @@ import {
   ActivityIndicator,
   StyleSheet,
   Alert,
+  TextInputProps,
 } from 'react-native';
 
 import { inject, observer } from 'mobx-react';
 
 import PhoneInput from 'react-native-phone-input';
 
-import TransparentButton from './TransparentButton';
 import NavNextButton from './NavNextButton';
 
 import Colors from '../../styles/Colors';
 import stylesheet from '../../onboarding/stylesheet';
-import { CommonStyle as CS } from '../../styles/Common';
 import i18n from '../services/i18n.service';
 import logService from '../services/log.service';
 import ListItemButton from './ListItemButton';
@@ -27,11 +25,23 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { ComponentsStyle } from '../../styles/Components';
 import ThemedStyles from '../../styles/ThemedStyles';
 import twoFactorAuthenticationService from '../services/two-factor-authentication.service';
-import ModalConfirmPassword from '../../auth/ModalConfirmPassword';
+import { BottomOptionsStoreType } from './BottomOptionPopup';
+import type WalletStore from '../../wallet/WalletStore';
+import type UserStore from '../../auth/UserStore';
+
+type propsType = {
+  TFA?: any;
+  TFAConfirmed?: boolean;
+  bottomStore?: BottomOptionsStoreType;
+  inputStyles?: any;
+  onNext?: Function;
+  wallet: WalletStore;
+  user: UserStore;
+} & TextInputProps;
 
 @inject('user', 'wallet')
 @observer
-export default class PhoneValidationComponent extends Component {
+export default class PhoneValidationComponent extends Component<propsType> {
   state = {
     inProgress: false,
     confirming: false,
@@ -44,9 +54,12 @@ export default class PhoneValidationComponent extends Component {
     wait: 60,
     confirmed: false,
     password: '',
+    TFAConfirmed: false,
   };
 
-  constructor(props) {
+  phoneInput = React.createRef<PhoneInput>();
+
+  constructor(props: propsType) {
     super(props);
 
     this.setState({
@@ -55,8 +68,7 @@ export default class PhoneValidationComponent extends Component {
   }
 
   async join(retry = false) {
-    let secret =
-      'amSC90hYrgTMQWJwxQ+mxAQ8KNWlEiDM9c3Edlq7lH19O4URgIS1n0cCwmM59a5+/8dvdv/wu1B71e3JnMjZgA==';
+    console.log('JOIN');
     if (this.state.inProgress || (!retry && !this.canJoin())) {
       return;
     }
@@ -124,7 +136,7 @@ export default class PhoneValidationComponent extends Component {
   setPassword = (password) => this.setState({ password });
 
   canJoin() {
-    return this.refs.phoneInput && this.refs.phoneInput.isValidNumber();
+    return this.phoneInput && this.phoneInput.current.isValidNumber();
   }
 
   joinAction = () => this.join();
@@ -156,82 +168,97 @@ export default class PhoneValidationComponent extends Component {
       );
     }
 
+    const joinActionButton = !this.props.bottomStore && (
+      <ListItemButton
+        onPress={this.joinAction}
+        disabled={!this.canJoin()}
+        style={[CS.borderPrimary, CS.borderHair]}>
+        {joinButtonContent}
+      </ListItemButton>
+    );
+
+    /*if (this.props.bottomStore) {
+      this.props.bottomStore.setOnPressDone(this.joinAction);
+    }*/
+
+    const defaultStyles = [
+      stylesheet.col,
+      stylesheet.colFirst,
+      stylesheet.phoneInput,
+      ComponentsStyle.loginInputNew,
+      CS.marginRight2x,
+      CS.borderPrimary,
+    ];
+
     return (
       <View>
         <View style={[CS.rowStretch]} testID="RewardsOnboarding">
           <PhoneInput
             disabled={this.state.inProgress}
-            style={[
-              stylesheet.col,
-              stylesheet.colFirst,
-              stylesheet.phoneInput,
-              ComponentsStyle.loginInputNew,
-              CS.marginRight2x,
-              CS.borderPrimary,
-            ]}
+            style={this.props.inputStyles || defaultStyles}
             textStyle={ThemedStyles.style.colorPrimaryText}
             value={this.state.phone}
             onChangePhoneNumber={this.setPhone}
-            ref="phoneInput"
+            ref={this.phoneInput}
             placeholder={i18n.t('onboarding.phoneNumber')}
             textProps={{
               onFocus: this.props.onFocus,
               onBlur: this.props.onBlur,
             }}
           />
-
-          <ListItemButton
-            onPress={this.joinAction}
-            disabled={!this.canJoin()}
-            style={[CS.borderPrimary, CS.borderHair]}>
-            {joinButtonContent}
-          </ListItemButton>
+          {joinActionButton}
         </View>
       </View>
     );
   }
 
   getConfirmNumberPartial() {
-    let confirmButtonContent = 'CONFIRM';
     const CS = ThemedStyles.style;
-    if (this.state.inProgress) {
-      confirmButtonContent = (
-        <ActivityIndicator size="small" color={Colors.primary} />
-      );
-    }
+
+    const joinActionButton = !this.props.bottomStore && (
+      <ListItemButton
+        disabled={!this.canConfirm()}
+        onPress={this.confirmAction}>
+        <Icon
+          name={'check'}
+          size={26}
+          style={!this.canConfirm() ? CS.colorSecondaryText : CS.colorDone}
+        />
+      </ListItemButton>
+    );
+
+    const text = !this.props.bottomStore && (
+      <Text style={CS.colorPrimaryText}>
+        {i18n.t('onboarding.weJustSentCode', { phone: this.state.phone })}
+      </Text>
+    );
+
+    const defaultStyles = [
+      stylesheet.col,
+      stylesheet.colFirst,
+      stylesheet.phoneInput,
+      ComponentsStyle.loginInputNew,
+      CS.marginRight2x,
+      CS.borderPrimary,
+    ];
 
     return (
       <View>
-        <Text style={CS.colorPrimaryText}>
-          {i18n.t('onboarding.weJustSentCode', { phone: this.state.phone })}
-        </Text>
+        {text}
         <View style={[style.cols, style.form]}>
           <TextInput
-            style={[
-              stylesheet.col,
-              stylesheet.colFirst,
-              stylesheet.phoneInput,
-              ComponentsStyle.loginInputNew,
-              CS.marginRight2x,
-              CS.borderPrimary,
-              CS.colorPrimaryText,
-            ]}
+            style={this.props.inputStyles || defaultStyles}
             value={this.state.code}
             onChangeText={this.setCode}
-            placeholder={i18n.t('onboarding.confirmationCode')}
+            placeholder={
+              !this.props.bottomStore
+                ? i18n.t('onboarding.confirmationCode')
+                : ''
+            }
             placeholderTextColor={ThemedStyles.getColor('secondary_text')}
             keyboardType="numeric"
           />
-
-          <ListItemButton
-            disabled={!this.canConfirm()}
-            onPress={this.confirmAction}>
-            <Icon
-              name={'check'}
-              size={26}
-              style={!this.canConfirm() ? CS.colorSecondaryText : CS.colorDone}
-            />
-          </ListItemButton>
+          {joinActionButton}
         </View>
       </View>
     );
@@ -291,10 +318,15 @@ export default class PhoneValidationComponent extends Component {
   }
 
   getFormPartial() {
-    if (this.state.TFAConfirmed) return this.getNumberConfirmedPartial();
-    else if (!this.state.confirming) return this.getInputNumberPartial();
-    else if (!this.state.confirmed) return this.getConfirmNumberPartial();
-    else return this.getNumberConfirmedPartial();
+    if (this.state.TFAConfirmed) {
+      return this.getNumberConfirmedPartial();
+    } else if (!this.state.confirming) {
+      return this.getInputNumberPartial();
+    } else if (!this.state.confirmed) {
+      return this.getConfirmNumberPartial();
+    } else {
+      return this.getNumberConfirmedPartial();
+    }
   }
 
   getNextButton = () => {

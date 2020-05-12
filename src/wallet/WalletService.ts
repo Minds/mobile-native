@@ -1,5 +1,9 @@
 //@ts-nocheck
-import api from './../common/services/api.service';
+import api, { ApiResponse } from './../common/services/api.service';
+
+interface WalletJoinResponse extends ApiResponse {
+  secret: string;
+}
 
 /**
  * Wallet Service
@@ -38,7 +42,7 @@ class WalletService {
    * @param {string} number
    * @param {boolean} retry
    */
-  join(number, retry) {
+  join(number, retry): Promise<WalletJoinResponse> {
     const params = { number };
     if (retry) params.retry = 1;
     return api.post('api/v2/blockchain/rewards/verify', params);
