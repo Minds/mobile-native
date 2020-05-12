@@ -17,7 +17,6 @@ import i18n from '../../common/services/i18n.service';
 import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
 import ChannelButtons from './ChannelButtons';
-import ChannelHeaderTabs from './ChannelHeaderTabs';
 import FeedFilter from '../../common/components/FeedFilter';
 import { useSafeArea } from 'react-native-safe-area-context';
 import ChannelBadges from '../badges/ChannelBadges';
