@@ -78,15 +78,7 @@ exports[`channel header component owner should render correctly 1`] = `
           },
           Array [
             Object {
-              "color": "#fff",
               "marginLeft": 5,
-              "shadowOpacity": 0.35,
-              "textShadowColor": "#000000",
-              "textShadowOffset": Object {
-                "height": 1,
-                "width": 1,
-              },
-              "textShadowRadius": 5,
             },
             undefined,
           ],
@@ -111,15 +103,7 @@ exports[`channel header component owner should render correctly 1`] = `
           },
           Array [
             Object {
-              "color": "#fff",
               "marginLeft": 5,
-              "shadowOpacity": 0.35,
-              "textShadowColor": "#000000",
-              "textShadowOffset": Object {
-                "height": 1,
-                "width": 1,
-              },
-              "textShadowRadius": 5,
             },
             undefined,
           ],

@@ -10,7 +10,7 @@ import IconM from 'react-native-vector-icons/MaterialIcons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
 
-import type { ChannelStoreType } from './createChannelStore';
+import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
 import { Image } from 'react-native-animatable';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
@@ -24,13 +24,16 @@ import ChannelBadges from '../badges/ChannelBadges';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { FLAG_EDIT_CHANNEL } from '../../common/Permissions';
 import * as Progress from 'react-native-progress';
+import TopbarTabbar, {
+  TabType,
+} from '../../common/components/topbar-tabbar/TopbarTabbar';
 
 type PropsType = {
   store: ChannelStoreType;
   navigation: any;
 };
 
-const bannerAspectRatio = 3.2;
+const bannerAspectRatio = 2.9;
 const { width } = Dimensions.get('window');
 const bannerHeight = width / bannerAspectRatio;
 const avatarSize = Math.round(0.7 * bannerHeight);
@@ -49,16 +52,20 @@ const ChannelHeader = observer((props: PropsType) => {
 
   const canEdit = channel.isOwner() && channel.can(FLAG_EDIT_CHANNEL);
 
+  const tabs: Array<TabType<ChannelTabType>> = [
+    { id: 'feed', title: i18n.t('feed') },
+    // { id: 'shop', title: 'Shop' },
+    { id: 'about', title: i18n.t('about') },
+  ];
+
   return (
     <View style={[styles.container, cleanTop]}>
-      <View>
-        <MIcon
-          size={28}
-          name="chevron-left"
-          style={[styles.backIcon, theme.colorIcon]}
-          onPress={props.navigation.goBack}
-        />
-      </View>
+      <MIcon
+        size={30}
+        name="chevron-left"
+        style={[styles.backIcon, theme.colorIcon]}
+        onPress={props.navigation.goBack}
+      />
       <ImageBackground
         style={styles.banner}
         source={channel.getBannerSource()}
@@ -117,7 +124,7 @@ const ChannelHeader = observer((props: PropsType) => {
         style={[
           styles.username,
           theme.colorSecondaryText,
-          theme.paddingTop2x,
+          theme.paddingTop,
           theme.paddingBottom3x,
         ]}
         numberOfLines={1}>
@@ -148,7 +155,11 @@ const ChannelHeader = observer((props: PropsType) => {
           <ChannelDescription channel={channel} />
         </View>
       </View>
-      <ChannelHeaderTabs store={props.store} />
+      <TopbarTabbar
+        tabs={tabs}
+        onChange={props.store.setTab}
+        current={props.store.tab}
+      />
       <View
         style={[
           styles.bottomBar,
@@ -167,9 +178,9 @@ const ChannelHeader = observer((props: PropsType) => {
 
 const styles = StyleSheet.create({
   backIcon: {
-    shadowOpacity: 0.4,
-    textShadowRadius: 4,
-    textShadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    shadowOffset: { height: 3, width: 0 },
     elevation: 4,
   },
   bannerSmallButton: {
@@ -220,14 +231,14 @@ const styles = StyleSheet.create({
     bottom: -avatarSize / 4,
     alignSelf: 'center',
     borderWidth: 3,
-    elevation: 20,
+    elevation: 10,
     width: avatarSize + 6,
     height: avatarSize + 6,
     borderRadius: 53,
     zIndex: 10000,
     shadowOpacity: 0.5,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 3,
+    shadowOffset: { width: 0, height: 2 },
     shadowColor: '#000',
   },
   avatar: {
