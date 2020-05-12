@@ -4,11 +4,17 @@ import { useLegacyStores } from '../../common/hooks/use-stores';
 
 export type TDiscoveryV2Tabs = 'foryou' | 'tags' | 'boosts';
 
+export type TDiscoveryTrendsTrend = {};
+
+export type TDiscoveryTagsTag = {
+  value: string;
+};
+
 export default class DiscoveryV2Store {
   @observable activeTabId: TDiscoveryV2Tabs = 'foryou';
-  @observable trends = [];
-  @observable tags = [];
-  @observable trendingTags = [];
+  @observable trends: TDiscoveryTrendsTrend[] = [];
+  @observable tags: TDiscoveryTagsTag[] = [];
+  @observable trendingTags: TDiscoveryTagsTag[] = [];
   @observable loading = false;
   @observable refreshing = false;
 
@@ -96,6 +102,21 @@ export default class DiscoveryV2Store {
     this.setTrendingTags([]);
     await this.loadTags(true);
     this.refreshing = false;
+  }
+
+  @action
+  async saveTags(
+    selected: TDiscoveryTagsTag[],
+    deselected: TDiscoveryTagsTag[],
+  ): Promise<void> {
+    this.tags = selected.slice();
+    await apiService.post('api/v3/discovery/tags', {
+      selected: selected.map((tag) => tag.value),
+      deselected: deselected.map((tag) => tag.value),
+    });
+
+    // this.refreshTrends();
+    this.refreshTags(); // Sometimes the server gets behind
   }
 
   @action

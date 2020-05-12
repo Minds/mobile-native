@@ -1,5 +1,5 @@
 import { observer, inject } from 'mobx-react';
-import React, { PureComponent, Fragment, useEffect } from 'react';
+import React, { PureComponent, Fragment, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -22,6 +22,12 @@ import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TagOptinDrawer from '../../../common/components/TagOptinDrawer';
+import BottomOptionPopup from '../../../common/components/BottomOptionPopup';
+import MenuItem from '../../../common/components/menus/MenuItem';
+import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
+import { getTags } from 'react-native-device-info';
+import { ScrollView } from 'react-native-gesture-handler';
+import { DiscoveryTagsManager } from './DiscoveryTagsManager';
 
 interface Props {
   style: StyleProp<ViewStyle>;
@@ -34,7 +40,8 @@ export const DiscoveryTagsList = observer((props: Props) => {
   const discoveryV2 = useDiscoveryV2Store();
   const navigation = useNavigation<StackNavigationProp<any>>();
   let listRef: FlatList<[]> | null;
-  let tagsDrawerRef: TagOptinDrawer | null;
+
+  const [showManageTags, setShowManageTags] = useState(false);
 
   useEffect(() => {
     discoveryV2.loadTags(true);
@@ -116,13 +123,17 @@ export const DiscoveryTagsList = observer((props: Props) => {
         <View style={[ThemedStyles.style.flexContainer]}></View>
         {info.section.title === 'Your tags' ? (
           <Text
-            onPress={() => tagsDrawerRef?.showModal()}
+            onPress={() => setShowManageTags(true)}
             style={[ThemedStyles.style.colorTertiaryText]}>
             Manage Tags
           </Text>
         ) : null}
       </View>
     );
+  };
+
+  const closeManageTags = () => {
+    setShowManageTags(false);
   };
 
   const onRefresh = () => {
@@ -157,15 +168,11 @@ export const DiscoveryTagsList = observer((props: Props) => {
           },
         ]}
         keyExtractor={keyExtractor}></SectionList>
-      {
-        <TagOptinDrawer
-          ref={(r) => (tagsDrawerRef = r)}
-          showPreferredToggle={false}
-          onChange={() => {
-            discoveryV2.refreshTags();
-          }}
-        />
-      }
+
+      <DiscoveryTagsManager
+        show={showManageTags}
+        onCancel={closeManageTags}
+        onDone={closeManageTags}></DiscoveryTagsManager>
     </View>
   );
 });
