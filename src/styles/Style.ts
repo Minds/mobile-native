@@ -401,7 +401,7 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   strikethrough: {
     textDecorationLine: 'line-through',
-    textDecorationStyle: 'solid'
+    textDecorationStyle: 'solid',
   },
   // onboarding
   onboardingTitle: {
