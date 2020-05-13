@@ -11,19 +11,21 @@ import { UserError } from '../../common/UserError';
 import i18n from '../../common/services/i18n.service';
 import { runInAction } from 'mobx';
 import BlockchainApiService from '../../blockchain/BlockchainApiService';
+import { ChartTimespanType } from './currency-tabs/TokensChart';
 
 const createWalletStore = () => ({
-  initialTab: undefined as TokensOptions | undefined,
   currency: 'tokens' as CurrencyType,
-  stripeDetails: {
+  initialTab: <TokensOptions | undefined>undefined,
+  chart: <ChartTimespanType>'7d',
+  stripeDetails: <StripeDetails>{
     hasAccount: false,
     hasBank: false,
     pendingBalanceSplit: 0,
     totalPaidOutSplit: 0,
     verified: false,
-  } as StripeDetails,
-  balance: 0 as number,
-  wallet: {
+  },
+  balance: 0,
+  wallet: <Wallet>{
     loaded: false,
     tokens: {
       label: 'Tokens',
@@ -70,7 +72,7 @@ const createWalletStore = () => ({
     limits: {
       wire: 0,
     },
-  } as Wallet,
+  },
   /**
    * Keep transaction history
    */

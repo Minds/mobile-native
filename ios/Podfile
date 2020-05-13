@@ -39,6 +39,8 @@ target 'Minds' do
 
   pod 'react-native-cameraroll', :path => '../node_modules/@react-native-community/cameraroll'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'MindsTests' do
     inherit! :search_paths
     # Pods for testing
