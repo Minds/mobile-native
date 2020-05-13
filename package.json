@@ -58,7 +58,7 @@
     "react-native-convert-ph-asset": "^1.0.3",
     "react-native-device-info": "^4.0.1",
     "react-native-device-log": "Minds/react-native-device-log#74f06b09c6656aa228a9a3a474c714d82abf509e",
-    "react-native-elements": "react-native-elements/react-native-elements#d9bfbc914fd3648103e6c391bd8ce9fa8f336b3b",
+    "react-native-elements": "^2.0.0",
     "react-native-exception-handler": "^2.10.8",
     "react-native-exit-app": "wumke/react-native-exit-app",
     "react-native-fast-image": "DylanVann/react-native-fast-image#e94e6fee66e1c60c6e8602eee20d7d5456b79a41",

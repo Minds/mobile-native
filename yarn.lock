@@ -8620,9 +8620,10 @@ react-native-elements@1.1.0:
     react-native-ratings "^6.3.0"
     react-native-status-bar-height "^2.2.0"
 
-react-native-elements@react-native-elements/react-native-elements#d9bfbc914fd3648103e6c391bd8ce9fa8f336b3b:
-  version "1.2.7"
-  resolved "https://codeload.github.com/react-native-elements/react-native-elements/tar.gz/d9bfbc914fd3648103e6c391bd8ce9fa8f336b3b"
+react-native-elements@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-elements/-/react-native-elements-2.0.0.tgz#eebe36c3250808ebd4a7e9dcf97a666fb7a20930"
+  integrity sha512-xViTU/JlabYX94fDL2iu17gvMtgEOq2lFAToYlU3RBkwb/J13cdwSr8Ti9z6v6Iui4f8S3FjkpRJnFaOsZrK7w==
   dependencies:
     "@types/react-native-vector-icons" "^6.4.4"
     color "^3.1.0"

@@ -40,6 +40,7 @@ exports[`blog card component should renders correctly 1`] = `
           "headers": Object {
             "App-Version": "3.8.0",
             "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json",
             "Pragma": "no-cache",
           },
           "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",

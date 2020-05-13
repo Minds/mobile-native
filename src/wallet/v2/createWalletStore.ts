@@ -11,11 +11,10 @@ import { UserError } from '../../common/UserError';
 import i18n from '../../common/services/i18n.service';
 import { runInAction } from 'mobx';
 import BlockchainApiService from '../../blockchain/BlockchainApiService';
-import { init } from '@sentry/react-native';
 
 const createWalletStore = () => ({
-  currency: 'tokens' as CurrencyType,
   initialTab: undefined as TokensOptions | undefined,
+  currency: 'tokens' as CurrencyType,
   stripeDetails: {
     hasAccount: false,
     hasBank: false,

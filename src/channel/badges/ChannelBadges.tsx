@@ -69,11 +69,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    color: '#fff',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowColor: '#000000',
-    shadowOpacity: 0.35,
     marginLeft: 5,
-    textShadowRadius: 5,
   },
 });

@@ -15,6 +15,10 @@ import type { WalletStoreType } from './createWalletStore';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import EthTab from './currency-tabs/EthTab';
+import BottomOptionPopup, {
+  BottomOptionsStoreType,
+  useBottomOption,
+} from '../../common/components/BottomOptionPopup';
 
 export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -34,6 +38,7 @@ const WalletScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
 
   const store: WalletStoreType = useLocalStore(createWalletStore);
+  const bottomStore: BottomOptionsStoreType = useBottomOption();
 
   const tabs: Array<TabType<CurrencyType>> = [
     { id: 'tokens', title: 'Tokens', subtitle: store.balance.toString() },
@@ -58,7 +63,13 @@ const WalletScreen = observer((props: PropsType) => {
   if (store.wallet.loaded) {
     switch (store.currency) {
       case 'tokens':
-        body = <TokensTab walletStore={store} navigation={props.navigation} />;
+        body = (
+          <TokensTab
+            walletStore={store}
+            bottomStore={bottomStore}
+            navigation={props.navigation}
+          />
+        );
         break;
       case 'eth':
         body = <EthTab walletStore={store} />;
@@ -68,7 +79,7 @@ const WalletScreen = observer((props: PropsType) => {
   }
 
   return (
-    <View>
+    <View style={theme.flexContainer}>
       <Topbar
         title="Wallet"
         navigation={props.navigation}
@@ -83,6 +94,15 @@ const WalletScreen = observer((props: PropsType) => {
         />
       </View>
       {body}
+      <BottomOptionPopup
+        height={500}
+        title={bottomStore.title}
+        show={bottomStore.visible}
+        onCancel={bottomStore.hide}
+        onDone={bottomStore.onPressDone}
+        content={bottomStore.content}
+        doneText={bottomStore.doneText}
+      />
     </View>
   );
 });

@@ -15,6 +15,8 @@ type InitialLoadParams = {
   username?: string;
 };
 
+export type ChannelTabType = 'feed' | 'shop' | 'about';
+
 type FilterType = 'all' | 'images' | 'videos' | 'blogs';
 
 type channelMediaType = 'avatar' | 'banner';
@@ -34,7 +36,7 @@ const createChannelStore = () => {
   const scheduledEndpoint = 'feeds/scheduled';
 
   const store = {
-    tab: 'feed' as 'feed' | 'shop' | 'about',
+    tab: 'feed' as ChannelTabType,
     channel: null as UserModel | null,
     loaded: false,
     filter: 'all' as FilterType,
@@ -55,7 +57,7 @@ const createChannelStore = () => {
           return 'blogs';
       }
     },
-    setTab(value: 'feed' | 'shop' | 'about') {
+    setTab(value: ChannelTabType) {
       this.tab = value;
     },
     get endpoint() {

@@ -77,14 +77,19 @@ const ChannelButtons = observer((props: PropsType) => {
     props.channel.isOwner() && props.channel.can(FLAG_EDIT_CHANNEL);
 
   return (
-    <View style={[theme.rowJustifyEnd, theme.marginTop, theme.marginRight2x]}>
+    <View
+      style={[
+        theme.rowJustifyEnd,
+        styles.marginContainer,
+        theme.marginRight2x,
+      ]}>
       {showEdit ? (
         <Button
           color={ThemedStyles.getColor('secondary_background')}
           text={i18n.t('channel.editChannel')}
           textStyle={theme.fontL}
           containerStyle={styles.button}
-          textColor="white"
+          textColor={ThemedStyles.getColor('primary_text')}
           onPress={props.onEditPress}
           inverted
         />
@@ -95,7 +100,7 @@ const ChannelButtons = observer((props: PropsType) => {
           name="ios-more"
           type="ionicon"
           color={ThemedStyles.getColor('secondary_background')}
-          reverseColor="white"
+          reverseColor={ThemedStyles.getColor('primary_text')}
           size={15}
           onPress={openMore}
         />
@@ -107,7 +112,7 @@ const ChannelButtons = observer((props: PropsType) => {
           name="coins"
           type="font-awesome-5"
           color={ThemedStyles.getColor('secondary_background')}
-          reverseColor="white"
+          reverseColor={ThemedStyles.getColor('primary_text')}
           size={15}
           onPress={openWire}
         />
@@ -119,7 +124,7 @@ const ChannelButtons = observer((props: PropsType) => {
           name="chat-bubble-outline"
           type="material"
           color={ThemedStyles.getColor('secondary_background')}
-          reverseColor="white"
+          reverseColor={ThemedStyles.getColor('primary_text')}
           size={15}
           onPress={openMessenger}
         />
@@ -143,13 +148,16 @@ const ChannelButtons = observer((props: PropsType) => {
 export default ChannelButtons;
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 0,
+  marginContainer: {
+    marginTop: Platform.select({
+      ios: 5,
+      android: 0,
+    }),
   },
   button: {
     padding: Platform.select({ ios: 8, android: 6 }),
     marginLeft: 5,
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.25,
     shadowRadius: 2,
     shadowOffset: { width: 0, height: 2 },
     shadowColor: '#000',
