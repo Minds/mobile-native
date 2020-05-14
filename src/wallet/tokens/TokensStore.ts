@@ -47,12 +47,10 @@ export default class TokensStore {
   }
 
   async loadTransactionsListAsync(filters: ListFiltersType, callback) {
-    console.log('loadTransactionsListAsync');
     if (this.list.cantLoadMore() || this.loading) {
       return false;
     }
     this.loading = true;
-    console.log('loading', this.loading);
 
     try {
       const feed = await walletService.getFilteredTransactionsLedger(
@@ -60,11 +58,8 @@ export default class TokensStore {
         this.list.offset,
       );
 
-      console.log('feed', feed);
-
       this.list.setList(feed, false, callback);
       this.loaded = true;
-      console.log('loaded', this.loaded);
     } catch (err) {
       logService.exception('[TokensStore]', err);
     } finally {
@@ -74,9 +69,7 @@ export default class TokensStore {
 
   @action
   refreshTransactionsList(filters: ListFiltersType, callback) {
-    console.log('refreshTransactionsList');
     this.list.refresh();
-    console.log('refreshed');
     this.loadTransactionsListAsync(filters, callback).finally(() => {
       this.list.refreshDone();
     });
