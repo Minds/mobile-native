@@ -88,6 +88,9 @@ export type AppStackParamList = {
     walletStore: WalletStoreType;
   };
   LearnMoreScreen: {};
+  BtcAddressScreen: {
+    walletStore: WalletStoreType;
+  };
 };
 
 // types for channel edit screens

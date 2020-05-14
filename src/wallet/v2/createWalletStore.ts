@@ -81,6 +81,7 @@ const createWalletStore = () => ({
    * Load wallet data
    */
   async loadWallet(): Promise<void> {
+    this.loadBtcAccount();
     this.getTokenAccounts();
     this.loadStripeAccount();
   },
@@ -176,6 +177,32 @@ const createWalletStore = () => ({
     this.stripeDetails = { ...account, ...this.stripeDetails };
 
     this.stripeDetails = this.stripeDetails;
+  },
+  async loadBtcAccount(): Promise<any> {
+    try {
+      const response: any = await api.get('api/v2/wallet/btc/address');
+      if (response && response.address) {
+        this.wallet.btc.address = response.address;
+      }
+    } catch (e) {
+      logService.exception(e);
+    }
+  },
+  async setBtcAccount(address): Promise<boolean> {
+    try {
+      const response = await api.post('api/v2/wallet/btc/address', {
+        address,
+      });
+
+      if (response && response.status === 'success') {
+        this.wallet.btc.address = address;
+      }
+
+      return true;
+    } catch (e) {
+      logService.exception(e);
+      return false;
+    }
   },
 });
 

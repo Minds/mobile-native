@@ -104,11 +104,12 @@ export default class OffsetListStore {
         });
       }
     }
-
+    console.log('setList');
     if (callback && callback instanceof Function) {
+      console.log('callback');
       callback();
     }
-
+    console.log('callbacked');
     this.loaded = true;
     this.offset = list.offset;
   }

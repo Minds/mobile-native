@@ -722,6 +722,38 @@
       "title":"On-chain transfer",
       "acceptTerms":"I agree and understand the terms",
       "transfer":"Transfer"
+    },
+    "transactions":{
+      "pending":"PENDING",
+      "filter":"Filter",
+      "reward":"Today’s daily reward",
+      "filterTransactions":"Filter Transactions",
+      "filterTypes":"TRANSACTION TYPES",
+      "allFilter":"All",
+      "rewardsFilter":"Minds Rewards",
+      "boostsFilter":"Boosts",
+      "transferFilter":"On-chain transfers",
+      "dateRange":"DATE RANGE",
+      "noneFilter":"None",
+      "fromFilter":"From",
+      "toFilter":"To"
+    },
+    "bitcoins":{
+      "setup":"Setup your Bitcoin address",
+      "description":"You can receive Bitcoin payments by linking your Bitcoin receiver address below.",
+      "add":"Add bitcoin address",
+      "address":"Bitcoin Receiver Address",
+      "current":"CURRENT RECEIVER ADDRESS",
+      "update":"Update Address",
+      "error":"SORRY, WE COULDN'T SET YOUR ADDRESS"
+    },
+    "usd":{
+      "bankInfo":"Bank Information",
+      "bankInfoDescription":"Add your bank account details where monthly USD rewards are deposited",
+      "add":"Add your bank details",
+      "leave":"Leave Monetization Program",
+      "leaveDescription":"For security reasons, you don't be able to rejoin the monetization program",
+      "leaveButton":"Leave Monetization Program"
     }
   },
   "wire":{

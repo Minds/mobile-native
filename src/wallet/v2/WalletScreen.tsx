@@ -17,6 +17,8 @@ import BottomOptionPopup, {
   BottomOptionsStoreType,
   useBottomOption,
 } from '../../common/components/BottomOptionPopup';
+import BitcoinsTab from './currency-tabs/BitcoinsTab';
+import UsdTab from './currency-tabs/UsdTab';
 
 export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -68,6 +70,26 @@ const WalletScreen = observer((props: PropsType) => {
           route={props.route}
         />
       );
+      break;
+    case 'btc':
+      body = (
+        <BitcoinsTab
+          walletStore={store}
+          navigation={props.navigation}
+          route={props.route}
+        />
+      );
+      break;
+    case 'usd':
+      body = (
+        <UsdTab
+          walletStore={store}
+          bottomStore={bottomStore}
+          navigation={props.navigation}
+          route={props.route}
+        />
+      );
+      break;
   }
 
   return (
