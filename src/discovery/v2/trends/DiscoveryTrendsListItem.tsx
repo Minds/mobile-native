@@ -14,6 +14,9 @@ import formatDate from '../../../common/helpers/date';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
+import excerpt from '../../../common/helpers/excerpt';
+
+const DISCOVERY_TRENDING_MAX_LENGTH = 140;
 
 interface Props {
   isHero: boolean;
@@ -52,7 +55,9 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
         {RichPartialThumbnail()}
         <View style={[styles.container, ThemedStyles.style.padding4x]}>
           <View style={[styles.body]}>
-            <Text style={styles.title}>{data.title}</Text>
+            <Text style={styles.title}>
+              {excerpt(data.title, DISCOVERY_TRENDING_MAX_LENGTH)}
+            </Text>
             <Text
               style={[
                 ThemedStyles.style.colorSecondaryText,
@@ -72,7 +77,9 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
     return (
       <View style={[styles.container, ThemedStyles.style.padding4x]}>
         <View style={[styles.body]}>
-          <Text style={styles.title}>{data.title}</Text>
+          <Text style={styles.title}>
+            {excerpt(data.title, DISCOVERY_TRENDING_MAX_LENGTH)}
+          </Text>
           <Text
             style={[
               ThemedStyles.style.colorSecondaryText,

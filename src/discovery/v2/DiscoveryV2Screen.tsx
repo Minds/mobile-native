@@ -65,8 +65,10 @@ export const DiscoveryV2Screen = observer((props: Props) => {
     switch (store.activeTabId) {
       case 'foryou':
         return <DiscoveryTrendsList style={{}} />;
-      case 'tags':
-        return <DiscoveryTagsList style={{}} />;
+      case 'your-tags':
+        return <DiscoveryTagsList style={{}} type="your" />;
+      case 'trending-tags':
+        return <DiscoveryTagsList style={{}} type="trending" />;
       case 'boosts':
         useLegacyStores().newsfeed.refresh();
         return (
@@ -95,9 +97,10 @@ export const DiscoveryV2Screen = observer((props: Props) => {
             store.setTabId(tabId as TDiscoveryV2Tabs);
           }}
           tabs={[
-            { id: 'foryou', title: 'For you' },
-            { id: 'tags', title: 'Discover by tags' },
-            { id: 'boosts', title: 'Boosts' },
+            { id: 'foryou', title: 'Just for you' },
+            { id: 'your-tags', title: 'Your tags' },
+            { id: 'trending-tags', title: 'Trending' },
+            { id: 'boosts', title: 'Boosted' },
           ]}></TopbarTabbar>
       </View>
 

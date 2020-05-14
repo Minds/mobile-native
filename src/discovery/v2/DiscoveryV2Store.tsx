@@ -2,7 +2,11 @@ import { observable, action } from 'mobx';
 import apiService from '../../common/services/api.service';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 
-export type TDiscoveryV2Tabs = 'foryou' | 'tags' | 'boosts';
+export type TDiscoveryV2Tabs =
+  | 'foryou'
+  | 'your-tags'
+  | 'trending-tags'
+  | 'boosts';
 
 export type TDiscoveryTrendsTrend = {};
 
@@ -27,7 +31,7 @@ export default class DiscoveryV2Store {
           this.refreshTrends();
         }
         break;
-      case 'tags':
+      case 'trending-tags':
         break;
       case 'boosts':
         break;
@@ -43,10 +47,11 @@ export default class DiscoveryV2Store {
     this.loading = true;
     try {
       const response: any = await apiService.get('api/v3/discovery/trends');
-      this.setTrends([
-        response.hero,
-        ...response.trends.filter((trend) => !!trend),
-      ]);
+      const trends = response.trends.filter((trend) => !!trend);
+      if (response.hero) {
+        trends.unshift(response.hero);
+      }
+      this.setTrends(trends);
       //this.setHero(response.hero);
     } catch (err) {
       console.log(err);

@@ -28,9 +28,11 @@ import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
 import { getTags } from 'react-native-device-info';
 import { ScrollView } from 'react-native-gesture-handler';
 import { DiscoveryTagsManager } from './DiscoveryTagsManager';
+import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 
 interface Props {
   style: StyleProp<ViewStyle>;
+  type: 'your' | 'trending';
 }
 
 /**
@@ -116,18 +118,17 @@ export const DiscoveryTagsList = observer((props: Props) => {
           ThemedStyles.style.backgroundPrimary,
           ThemedStyles.style.padding4x,
         ]}>
-        <Text style={[ThemedStyles.style.colorTertiaryText]}>
+        {/* <Text style={[ThemedStyles.style.colorTertiaryText]}>
           {info.section.title.toUpperCase()}
-        </Text>
+        </Text> */}
 
         <View style={[ThemedStyles.style.flexContainer]}></View>
-        {info.section.title === 'Your tags' ? (
-          <Text
-            onPress={() => setShowManageTags(true)}
-            style={[ThemedStyles.style.colorTertiaryText]}>
-            Manage Tags
-          </Text>
-        ) : null}
+
+        <Text
+          onPress={() => setShowManageTags(true)}
+          style={[ThemedStyles.style.colorTertiaryText]}>
+          Manage Tags
+        </Text>
       </View>
     );
   };
@@ -145,6 +146,20 @@ export const DiscoveryTagsList = observer((props: Props) => {
    */
   const keyExtractor = (item) => String(item.value);
 
+  let tags: TDiscoveryTagsTag[] = [];
+  let title = 'Other';
+
+  switch (props.type) {
+    case 'your':
+      tags = [...discoveryV2.tags.slice()];
+      title = 'Your tags';
+      break;
+    case 'trending':
+      tags = [...discoveryV2.trendingTags.slice()];
+      title = 'Trending tags';
+      break;
+  }
+
   /**
    * Render
    */
@@ -159,12 +174,8 @@ export const DiscoveryTagsList = observer((props: Props) => {
         refreshing={discoveryV2.loading}
         sections={[
           {
-            title: 'Your tags',
-            data: [...discoveryV2.tags.slice()],
-          },
-          {
-            title: 'Trending tags',
-            data: [...discoveryV2.trendingTags.slice()],
+            title: title,
+            data: [...tags],
           },
         ]}
         keyExtractor={keyExtractor}></SectionList>
