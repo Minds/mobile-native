@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   },
   topbar: {
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: 'center',
     flexDirection: 'row',
   },
   topbarLeft: {

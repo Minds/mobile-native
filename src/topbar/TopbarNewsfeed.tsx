@@ -38,7 +38,7 @@ class TopbarNewsfeed extends Component<PropsType> {
 
     const logo =
       ThemedStyles.theme === 0
-        ? require('./../assets/logos/logo.png')
+        ? require('./../assets/logos/bulb.png')
         : require('./../assets/logos/logo-white.png');
     const refreshFeed = this.props.refreshFeed ?? (() => false);
     return (
@@ -49,6 +49,8 @@ class TopbarNewsfeed extends Component<PropsType> {
               style={[
                 styles.container,
                 CS.backgroundSecondary,
+                ThemedStyles.style.borderBottomHair,
+                ThemedStyles.style.borderBackgroundPrimary,
                 { paddingTop: insets.top },
               ]}>
               <View style={styles.topbar}>
@@ -98,13 +100,13 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   bulb: {
-    width: 100,
+    width: 42,
     height: 35,
     alignSelf: 'flex-start',
   },
   topbar: {
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: 'center',
     flexDirection: 'row',
   },
   topbarLeft: {

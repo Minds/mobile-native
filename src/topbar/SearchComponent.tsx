@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   Platform,
   TextInput,
+  TouchableHighlight,
 } from 'react-native';
 import i18n from '../common/services/i18n.service';
 // import TextInput from '../common/components/TextInput';
@@ -84,80 +85,79 @@ class SearchComponent extends Component<Props> {
     };
 
     return (
-      <View>
-        <Icon
-          onPress={!this.isSearching() ? this.toggleSearching : null}
-          name="search"
-          size={24}
-          style={[styles.button, CS.colorIcon]}
-        />
-        <Modal
-          isVisible={this.isSearching()}
-          backdropColor={ThemedStyles.getColor('secondary_background')}
-          backdropOpacity={0.9}
-          useNativeDriver={true}
-          animationInTiming={100}
-          onBackButtonPress={this.props.user.toggleSearching}
-          onModalShow={this.onModalShow}
-          animationOutTiming={100}
-          animationOut="fadeOut"
-          animationIn="fadeIn"
-          style={styles.modal}>
-          <SafeAreaView style={[CS.flexContainer]}>
-            <View style={[CS.backgroundSecondary, styles.body, border]}>
-              <View
-                style={[
-                  styles.header,
-                  Platform.OS === 'android'
-                    ? CS.marginBottom
-                    : CS.marginBottom3x,
-                  Platform.OS === 'android' ? CS.marginTop2x : CS.marginTop4x,
-                ]}>
-                <View style={[CS.rowJustifyStart, CS.paddingLeft2x]}>
+      <TouchableHighlight
+        onPress={!this.isSearching() ? this.toggleSearching : null}
+        underlayColor="transparent">
+        <View>
+          <Icon name="search" size={26} style={[styles.button, CS.colorIcon]} />
+          <Modal
+            isVisible={this.isSearching()}
+            backdropColor={ThemedStyles.getColor('secondary_background')}
+            backdropOpacity={0.9}
+            useNativeDriver={true}
+            animationInTiming={100}
+            onBackButtonPress={this.props.user.toggleSearching}
+            onModalShow={this.onModalShow}
+            animationOutTiming={100}
+            animationOut="fadeOut"
+            animationIn="fadeIn"
+            style={styles.modal}>
+            <SafeAreaView style={[CS.flexContainer]}>
+              <View style={[CS.backgroundSecondary, styles.body, border]}>
+                <View
+                  style={[
+                    styles.header,
+                    Platform.OS === 'android'
+                      ? CS.marginBottom
+                      : CS.marginBottom3x,
+                    Platform.OS === 'android' ? CS.marginTop2x : CS.marginTop4x,
+                  ]}>
+                  <View style={[CS.rowJustifyStart, CS.paddingLeft2x]}>
+                    <Icon
+                      name="search"
+                      size={24}
+                      style={[
+                        CS.colorIcon,
+                        CS.marginRight2x,
+                        Platform.OS === 'android' ? CS.centered : null,
+                      ]}
+                    />
+                    <TextInput
+                      ref={this.inputRef}
+                      placeholder={i18n.t('discovery.search')}
+                      placeholderTextColor={ThemedStyles.getColor(
+                        'secondary_text',
+                      )}
+                      onChangeText={this.search}
+                      value={this.state.searchText}
+                      testID="searchInput"
+                      style={[styles.textInput, CS.colorPrimaryText]}
+                      selectTextOnFocus={true}
+                      onSubmitEditing={this.searchSubmit}
+                    />
+                  </View>
                   <Icon
-                    name="search"
-                    size={24}
+                    onPress={this.toggleSearching}
+                    name="close"
+                    size={18}
                     style={[
+                      styles.button,
                       CS.colorIcon,
-                      CS.marginRight2x,
                       Platform.OS === 'android' ? CS.centered : null,
                     ]}
                   />
-                  <TextInput
-                    ref={this.inputRef}
-                    placeholder={i18n.t('discovery.search')}
-                    placeholderTextColor={ThemedStyles.getColor(
-                      'secondary_text',
-                    )}
-                    onChangeText={this.search}
-                    value={this.state.searchText}
-                    testID="searchInput"
-                    style={[styles.textInput, CS.colorPrimaryText]}
-                    selectTextOnFocus={true}
-                    onSubmitEditing={this.searchSubmit}
-                  />
                 </View>
-                <Icon
-                  onPress={this.toggleSearching}
-                  name="close"
-                  size={18}
-                  style={[
-                    styles.button,
-                    CS.colorIcon,
-                    Platform.OS === 'android' ? CS.centered : null,
-                  ]}
+                <SearchResult
+                  user={this.props.user}
+                  ref={this.handleSearchResultRef}
+                  navigation={this.props.navigation}
+                  search={this.search}
                 />
               </View>
-              <SearchResult
-                user={this.props.user}
-                ref={this.handleSearchResultRef}
-                navigation={this.props.navigation}
-                search={this.search}
-              />
-            </View>
-          </SafeAreaView>
-        </Modal>
-      </View>
+            </SafeAreaView>
+          </Modal>
+        </View>
+      </TouchableHighlight>
     );
   }
 }
@@ -166,7 +166,7 @@ export default SearchComponent;
 
 const styles = StyleSheet.create({
   button: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
   },
   body: {
     minHeight: 0,
