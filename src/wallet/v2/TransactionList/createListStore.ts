@@ -1,3 +1,4 @@
+import moment from 'moment-timezone';
 import formatDate from '../../../common/helpers/date';
 import groupBy from '../../../common/helpers/groupBy';
 import type UserStore from '../../../auth/UserStore';
@@ -21,34 +22,19 @@ const createTransactionsListStore = ({ wallet, user }) => {
     refreshing: false,
     runningTotal: 0,
     previousTxAmount: 0,
-    filters: {} as ListFiltersType,
-    setFilters(filters: ListFiltersType) {
-      this.filters = filters;
-      this.refresh();
-    },
-    get listFilters() {
-      return this.filters;
+    filters: <ListFiltersType>{
+      transactionType: 'all',
+      dateRange: {
+        none: true,
+        from: moment().subtract(1, 'month').toDate(),
+        to: moment().endOf('day').toDate(),
+      },
     },
     async initialLoad() {
       this.runningTotal = wallet.balance;
 
       this.wallet.ledger.setMode('transactions');
       this.wallet.ledger.list.clearList();
-
-      const end = new Date();
-      const start = new Date();
-      end.setHours(23, 59, 59);
-      start.setMonth(start.getMonth() - 6);
-      start.setHours(0, 0, 0);
-
-      this.filters = {
-        dateRange: {
-          none: false,
-          from: start,
-          to: end,
-        },
-        transactionType: 'all',
-      };
 
       this.loadMore();
 
