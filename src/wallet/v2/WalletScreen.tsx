@@ -70,7 +70,6 @@ const WalletScreen = observer((props: PropsType) => {
             walletStore={store}
             bottomStore={bottomStore}
             navigation={props.navigation}
-            route={props.route}
           />
         );
         break;
