@@ -58,6 +58,7 @@ class CommentsAction extends Component<PropsType> {
           ThemedStyles.style.rowJustifyCenter,
           ThemedStyles.style.paddingHorizontal3x,
           ThemedStyles.style.paddingVertical2x,
+          ThemedStyles.style.alignCenter,
         ]}
         onPress={this.openComments}
         testID={this.props.testID}>

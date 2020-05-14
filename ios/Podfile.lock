@@ -311,7 +311,7 @@ PODS:
     - Sentry (~> 4.4.0)
   - RNShare (2.0.0):
     - React
-  - RNSVG (9.13.6):
+  - RNSVG (12.1.0):
     - React
   - RNVectorIcons (6.6.0):
     - React
@@ -570,9 +570,9 @@ SPEC CHECKSUMS:
   RNConvertPhAsset: 9b366b8a1abc194b76572712c6f7dd89c9e4e37f
   RNDateTimePicker: 63e79b1e0dc6da8806ed8cf76e8528f7f88bcbc3
   RNDeviceInfo: 687c1b2ab6d86ff1ca1208783320cd144138c7f2
-  RNExitApp: a5e276b66dda7e2fdd7aa15f63474011b122398e
+  RNExitApp: c4e052df2568b43bec8a37c7cd61194d4cfee2c3
   RNFastImage: c104f15f04c4f68bd65c9645cc27900bbacd9cc7
-  RNFileShareIntent: 65b162c473575e83ce7dffc494dcda5a6b6ecbc0
+  RNFileShareIntent: 39232d8273bd207aee68a7376cb7aadade8ed944
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNImageCropPicker: cf129d17e042ce3e96fb9ada967c28f21f977c82
@@ -581,7 +581,7 @@ SPEC CHECKSUMS:
   RNScreens: b5c0e1b2b04512919e78bd3898e144a157ce2363
   RNSentry: d892cbdee165cc6159d71e2a7954efdb8a361918
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
-  RNSVG: 8ba35cbeb385a52fd960fd28db9d7d18b4c2974f
+  RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   RSKImageCropper: a446db0e8444a036b34f3c43db01b2373baa4b2a
   SDWebImage: 29c340dbdcef342bb13125553f4e19ce056b07a7
@@ -589,6 +589,6 @@ SPEC CHECKSUMS:
   Sentry: 14bdd673870e8cf64932b149fad5bbbf39a9b390
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 6404d21d62cdb6cffede1500c092f2e2f665a41c
+PODFILE CHECKSUM: 36990250497793e0637f1668b5a0c299e36aefaa
 
 COCOAPODS: 1.8.4

@@ -13,6 +13,8 @@ import type { CurrencyType } from '../../types/Payment';
 import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from './createWalletStore';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
+import CenteredLoading from '../../common/components/CenteredLoading';
+import EthTab from './currency-tabs/EthTab';
 import BottomOptionPopup, {
   BottomOptionsStoreType,
   useBottomOption,
@@ -60,38 +62,44 @@ const WalletScreen = observer((props: PropsType) => {
   }, [store]);
 
   let body;
-  switch (store.currency) {
-    case 'tokens':
-      body = (
-        <TokensTab
-          walletStore={store}
-          bottomStore={bottomStore}
-          navigation={props.navigation}
-          route={props.route}
-        />
-      );
-      break;
-    case 'btc':
-      body = (
-        <BitcoinsTab
-          walletStore={store}
-          navigation={props.navigation}
-          route={props.route}
-        />
-      );
-      break;
-    case 'usd':
-      body = (
-        <UsdTab
-          walletStore={store}
-          bottomStore={bottomStore}
-          navigation={props.navigation}
-          route={props.route}
-        />
-      );
-      break;
+  if (store.wallet.loaded) {
+    switch (store.currency) {
+      case 'tokens':
+        body = (
+          <TokensTab
+            walletStore={store}
+            bottomStore={bottomStore}
+            navigation={props.navigation}
+            route={props.route}
+          />
+        );
+        break;
+      case 'btc':
+        body = (
+          <BitcoinsTab
+            walletStore={store}
+            navigation={props.navigation}
+            route={props.route}
+          />
+        );
+        break;
+      case 'usd':
+        body = (
+          <UsdTab
+            walletStore={store}
+            bottomStore={bottomStore}
+            navigation={props.navigation}
+            route={props.route}
+          />
+        );
+        break;
+      case 'eth':
+        body = <EthTab walletStore={store} />;
+        break;
+    }
+  } else {
+    body = <CenteredLoading />;
   }
-
   return (
     <View style={theme.flexContainer}>
       <Topbar

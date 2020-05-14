@@ -4,7 +4,6 @@ import { ListItem } from 'react-native-elements';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Text, View } from 'react-native';
-import { Icon } from 'react-native-vector-icons/Icon';
 
 export type MenuItemPropsType = {
   item: {
@@ -18,15 +17,10 @@ export type MenuItemPropsType = {
       | JSX.Element;
     noIcon?: boolean;
   };
-  i?: number;
   component?: 'ListItem' | 'Touchable';
 };
 
-export default function ({
-  item,
-  i,
-  component = 'ListItem',
-}: MenuItemPropsType) {
+export default function ({ item, component = 'ListItem' }: MenuItemPropsType) {
   const theme = ThemedStyles.style;
 
   // ListItem Container Style
@@ -48,7 +42,6 @@ export default function ({
   if (component === 'ListItem') {
     render = (
       <ListItem
-        key={i}
         title={item.title}
         onPress={item.onPress}
         containerStyle={containerStyle}

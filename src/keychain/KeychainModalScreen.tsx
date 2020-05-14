@@ -1,6 +1,6 @@
 //@ts-nocheck
 import React, { Component } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, SafeAreaView } from 'react-native';
 
 import Modal from 'react-native-modal';
 import { observer, inject } from 'mobx-react';
@@ -115,7 +115,7 @@ export default class KeychainModalScreen extends Component {
         backdropColor={ThemedStyles.getColor('primary_background')}
         backdropOpacity={1}>
         {this.props.keychain.isUnlocking && (
-          <View style={[theme.flexContainer, theme.padding2x]}>
+          <SafeAreaView style={[theme.flexContainer, theme.padding2x]}>
             {body}
             {this.props.keychain.unlockingAttempts > 0 && (
               <Text style={[theme.colorAlert, theme.fontL]}>
@@ -132,7 +132,7 @@ export default class KeychainModalScreen extends Component {
                 containerStyle={theme.marginLeft2x}
               />
             </View>
-          </View>
+          </SafeAreaView>
         )}
       </Modal>
     );

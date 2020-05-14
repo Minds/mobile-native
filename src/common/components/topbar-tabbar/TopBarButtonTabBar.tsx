@@ -24,9 +24,10 @@ function TopBarButtonTabBar<T>(props: PropsType<T>) {
 
   return (
     <View style={theme.rowJustifyStart}>
-      {props.tabs.map((tab) => (
+      {props.tabs.map((tab, i) => (
         <Button
           onPress={() => props.onChange(tab.id)}
+          key={i}
           text={tab.title}
           textStyle={[
             theme.fontMedium,
