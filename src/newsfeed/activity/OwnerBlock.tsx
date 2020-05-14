@@ -5,6 +5,7 @@ import FastImage from 'react-native-fast-image';
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
+import number from '../../common/helpers/number';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
@@ -102,6 +103,14 @@ export default class OwnerBlock extends PureComponent<PropsType> {
           {this.props.children}
         </View>
         {rightToolbar}
+        <Text
+          style={[
+            ThemedStyles.style.marginRight6x,
+            ThemedStyles.style.colorTertiaryText,
+            { fontSize: 14 },
+          ]}>
+          {number(this.props.entity.impressions, 0)} views
+        </Text>
       </View>
     );
   }
@@ -115,9 +124,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   avatar: {
-    height: 46,
-    width: 46,
-    borderRadius: 23,
+    height: 52,
+    width: 52,
+    borderRadius: 26,
     borderWidth: 0.5,
     borderColor: '#EEE',
   },

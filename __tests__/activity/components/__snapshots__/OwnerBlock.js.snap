@@ -30,10 +30,10 @@ exports[`Owner component renders correctly 1`] = `
       style={
         Object {
           "borderColor": "#EEE",
-          "borderRadius": 23,
+          "borderRadius": 26,
           "borderWidth": 0.5,
-          "height": 46,
-          "width": 46,
+          "height": 52,
+          "width": 52,
         }
       }
     />
@@ -100,5 +100,19 @@ exports[`Owner component renders correctly 1`] = `
       </preventDoubleTap(TouchableOpacity)>
     </View>
   </View>
+  <Text
+    style={
+      Array [
+        undefined,
+        undefined,
+        Object {
+          "fontSize": 14,
+        },
+      ]
+    }
+  >
+    0
+     views
+  </Text>
 </View>
 `;

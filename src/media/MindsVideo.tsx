@@ -329,7 +329,7 @@ class MindsVideo extends Component<PropsType, StateType> {
         <Icon
           onPress={this.play}
           style={styles.videoIcon}
-          name="md-play"
+          name="md-play-circle"
           size={size}
           color={colors.light}
         />
@@ -351,6 +351,7 @@ class MindsVideo extends Component<PropsType, StateType> {
    * Show control overlay (hide debounced 4 seconds)
    */
   openControlOverlay = () => {
+    //this.play();
     if (!this.state.showOverlay) {
       this.setState({
         showOverlay: true,

@@ -1,4 +1,3 @@
-
 stages:
   - test
   - build
@@ -54,38 +53,38 @@ i18n:uploadsync:
       - master
 
 # Web dev version using cache and without sentry maps upload
-build:android:
-  image: circleci/android:api-28-node
-  stage: build
-  cache:
-    key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
-    paths:
-      - node_modules/
-      - android/vendor/bundle
-      - .gradle/caches
-      - .gradle/wrapper
-      - .android/build-cache/
-  before_script:
-    - 'sed -i ''s/^apply from: "..\/..\/node_modules\/\@sentry\/react-native\/sentry.gradle"//'' android/app/build.gradle'
-    - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
-    - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
-    - sudo sysctl fs.inotify.max_user_watches=524288
-    - sudo sysctl -p
-    - yarn install --frozen-lockfile
-    - cd android
-    - bundle install --path=vendor/bundle
-  script:
-    - bundle exec fastlane assemble_build
-    - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
-  artifacts:
-    name: "Minds APK"
-    paths:
-      - Minds-$CI_COMMIT_REF_SLUG.apk
-    expire_in: 7 days
-    when: on_success
-  only:
-    refs:
-      - /^release-*/
+# build:android:
+#   image: circleci/android:api-28-node
+#   stage: build
+#   cache:
+#     key: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+#     paths:
+#       - node_modules/
+#       - android/vendor/bundle
+#       - .gradle/caches
+#       - .gradle/wrapper
+#       - .android/build-cache/
+#   before_script:
+#     - 'sed -i ''s/^apply from: "..\/..\/node_modules\/\@sentry\/react-native\/sentry.gradle"//'' android/app/build.gradle'
+#     - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
+#     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
+#     - sudo sysctl fs.inotify.max_user_watches=524288
+#     - sudo sysctl -p
+#     - yarn install --frozen-lockfile
+#     - cd android
+#     - bundle install --path=vendor/bundle
+#   script:
+#     - bundle exec fastlane assemble_build
+#     - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
+#   artifacts:
+#     name: "Minds APK"
+#     paths:
+#       - Minds-$CI_COMMIT_REF_SLUG.apk
+#     expire_in: 7 days
+#     when: on_success
+#   only:
+#     refs:
+#       - /^release-*/
 
 # Web version (Higher version code)
 build:androidproduction:
@@ -103,7 +102,7 @@ build:androidproduction:
     - bundle exec fastlane assemble_build
     - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG.apk
   artifacts:
-    name: "Minds APK"
+    name: 'Minds APK'
     paths:
       - Minds-$CI_COMMIT_REF_SLUG.apk
     expire_in: 7 days
@@ -112,14 +111,15 @@ build:androidproduction:
     refs:
       - /^stable-*/
       - /^test-*/
+      - /^release-*/
 
 # Play store version (Lowest version code)
 build:androidproduction-playstore:
   image: circleci/android:api-28-node
   stage: build
   before_script:
-    - 'sed -i ''s/^versionCode=/# versionCode=/'' android/gradle.properties'
-    - 'sed -i ''s/^## versionCode/versionCode/'' android/gradle.properties'
+    - "sed -i 's/^versionCode=/# versionCode=/' android/gradle.properties"
+    - "sed -i 's/^## versionCode/versionCode/' android/gradle.properties"
     - export ANDROID_SDK_HOME=$CI_PROJECT_DIR
     - export GRADLE_USER_HOME="$CI_PROJECT_DIR/.gradle"
     - sudo sysctl fs.inotify.max_user_watches=524288
@@ -131,7 +131,7 @@ build:androidproduction-playstore:
     - bundle exec fastlane assemble_build
     - mv app/build/outputs/apk/release/app-release.apk ../Minds-$CI_COMMIT_REF_SLUG-play_store.apk
   artifacts:
-    name: "Minds APK"
+    name: 'Minds APK'
     paths:
       - Minds-$CI_COMMIT_REF_SLUG-play_store.apk
     expire_in: 7 days

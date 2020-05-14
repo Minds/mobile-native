@@ -27,14 +27,13 @@ export default class BoostAction extends PureComponent<PropsType> {
    */
   render() {
     return (
-      <View style={[CommonStyle.flexContainer, CommonStyle.rowJustifyCenter]}>
+      <View>
         <TouchableHighlightCustom
           style={[
-            CommonStyle.flexContainer,
-            CommonStyle.rowJustifyCenter,
-            ComponentsStyle.bluebutton,
-            CommonStyle.backgroundTransparent,
-            ThemedStyles.style.borderIconActive,
+            ThemedStyles.style.rowJustifyCenter,
+            ThemedStyles.style.paddingHorizontal3x,
+            ThemedStyles.style.paddingVertical2x,
+            ThemedStyles.style.alignCenter,
           ]}
           underlayColor="transparent"
           onPress={this.openBoost}>
@@ -59,9 +58,8 @@ export default class BoostAction extends PureComponent<PropsType> {
 
 const styles = StyleSheet.create({
   text: {
-    paddingLeft: 2,
-    paddingRight: 2,
     fontFamily: 'Roboto',
-    fontSize: 12,
+    fontSize: 14,
+    letterSpacing: 1,
   },
 });

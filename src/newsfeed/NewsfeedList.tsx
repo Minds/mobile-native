@@ -267,6 +267,7 @@ export default class NewsfeedList extends Component<PropsType> {
           navigation={this.props.navigation}
           autoHeight={false}
           isLast={isLast}
+          showCommentsOutlet={true}
         />
       </ErrorBoundary>
     );

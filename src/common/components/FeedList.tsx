@@ -153,6 +153,7 @@ export default class FeedList<T> extends Component<PropsType> {
         viewabilityConfig={this.viewOpts}
         onViewableItemsChanged={this.onViewableItemsChanged}
         onScroll={this.onScroll}
+        keyboardShouldPersistTaps="always"
         {...passThroughProps}
       />
     );
@@ -252,6 +253,7 @@ export default class FeedList<T> extends Component<PropsType> {
           navigation={this.props.navigation}
           autoHeight={false}
           isLast={isLast}
+          showCommentsOutlet={true}
         />
       </ErrorBoundary>
     );

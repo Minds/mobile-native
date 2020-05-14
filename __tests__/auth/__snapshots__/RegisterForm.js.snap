@@ -320,10 +320,10 @@ exports[`RegisterForm component should renders correctly 1`] = `
         </View>
         <View
           accessibilityRole="checkbox"
-          accessibilityState={
-            Object {
-              "checked": false,
-            }
+          accessibilityStates={
+            Array [
+              "unchecked",
+            ]
           }
           accessible={true}
           focusable={true}
