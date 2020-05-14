@@ -6,6 +6,8 @@ import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type ActivityModel from '../ActivityModel';
 import number from '../../common/helpers/number';
+import i18nService from '../../common/services/i18n.service';
+import { Icon } from 'react-native-elements';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
@@ -85,6 +87,8 @@ export default class OwnerBlock extends PureComponent<PropsType> {
 
     const avatarSrc = channel.getAvatarSource();
 
+    const showMetrics = !this.props.entity.boosted;
+
     return (
       <View style={styles.container}>
         <DebouncedTouchableOpacity onPress={this._navToChannel}>
@@ -103,14 +107,40 @@ export default class OwnerBlock extends PureComponent<PropsType> {
           {this.props.children}
         </View>
         {rightToolbar}
-        <Text
-          style={[
-            ThemedStyles.style.marginRight6x,
-            ThemedStyles.style.colorTertiaryText,
-            { fontSize: 14 },
-          ]}>
-          {number(this.props.entity.impressions, 0)} views
-        </Text>
+        {showMetrics ? (
+          <Text
+            style={[
+              ThemedStyles.style.marginRight6x,
+              ThemedStyles.style.colorTertiaryText,
+              { fontSize: 14 },
+            ]}>
+            {number(this.props.entity.impressions, 0)} views
+          </Text>
+        ) : undefined}
+        {this.props.entity.boosted ? (
+          <View
+            style={[
+              ThemedStyles.style.rowJustifyStart,
+              ThemedStyles.style.centered,
+            ]}>
+            <Icon
+              type="ionicon"
+              name="md-trending-up"
+              size={18}
+              style={ThemedStyles.style.marginRight}
+              color={ThemedStyles.getColor('tertiary_text')}
+            />
+
+            <Text
+              style={[
+                ThemedStyles.style.marginRight6x,
+                ThemedStyles.style.colorTertiaryText,
+                { fontSize: 14 },
+              ]}>
+              {i18nService.t('boosted').toUpperCase()}
+            </Text>
+          </View>
+        ) : undefined}
       </View>
     );
   }

@@ -326,21 +326,7 @@ export default class Activity extends Component<PropsType, StateType> {
             ]}>
             {formatDate(this.props.entity.time_created, 'friendly')}
           </Text>
-          {this.props.entity.boosted && (
-            <View style={styles.boostTagContainer}>
-              <Icon
-                name="md-trending-up"
-                style={ThemedStyles.style.colorSecondaryText}
-              />
-              <Text
-                style={[
-                  styles.boostTagLabel,
-                  ThemedStyles.style.colorSecondaryText,
-                ]}>
-                {i18n.t('boosted').toUpperCase()}
-              </Text>
-            </View>
-          )}
+
           {!!this.props.entity.edited && (
             <View style={styles.boostTagContainer}>
               <Text
