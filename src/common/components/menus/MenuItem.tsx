@@ -13,10 +13,9 @@ export type MenuItemPropsType = {
     };
     noIcon?: boolean;
   };
-  i?: number;
 };
 
-export default function ({ item, i }: MenuItemPropsType) {
+export default function ({ item }: MenuItemPropsType) {
   const theme = ThemedStyles.style;
 
   // ListItem Container Style
@@ -36,7 +35,6 @@ export default function ({ item, i }: MenuItemPropsType) {
 
   return (
     <ListItem
-      key={i}
       title={item.title}
       onPress={item.onPress}
       containerStyle={containerStyle}

@@ -42,9 +42,10 @@ function TopbarTabbar<T>(props: PropsType<T>) {
         theme.borderPrimary,
         theme.paddingHorizontal2x,
       ]}>
-      {props.tabs.map((tab) => (
+      {props.tabs.map((tab, i) => (
         <TouchableOpacity
           onPress={() => props.onChange(tab.id)}
+          key={i}
           style={[
             tabStyle,
             tab.id === props.current

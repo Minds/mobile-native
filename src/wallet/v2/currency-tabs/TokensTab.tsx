@@ -32,11 +32,10 @@ type PropsType = {
   walletStore: WalletStoreType;
   bottomStore: BottomOptionsStoreType;
   navigation: WalletScreenNavigationProp;
-  route: WalletScreenRouteProp;
 };
 
-const createStore = () => ({
-  option: 'overview' as TokensOptions,
+const createStore = (walletStore: WalletStoreType) => ({
+  option: walletStore.initialTab || ('overview' as TokensOptions),
   showPopup: false,
   setShowPopup(show: boolean) {
     this.showPopup = show;
@@ -105,11 +104,15 @@ const showPhoneValidator = (bottomStore: BottomOptionsStoreType) => {
  * Tokens tab
  */
 const TokensTab = observer(
-  ({ walletStore, bottomStore, navigation }: PropsType) => {
-    const store = useLocalStore(createStore);
+  ({ walletStore, navigation, bottomStore }: PropsType) => {
+    const store = useLocalStore(createStore, walletStore);
+    // clear initial tab
+    // walletStore.setInitialTab(undefined);
+
     const { user } = useLegacyStores();
     const theme = ThemedStyles.style;
-    const showSetup = !user.hasRewards() || !user.hasEthWallet();
+    const showSetup =
+      !user.hasRewards() || !walletStore.wallet.receiver.address;
     let walletSetup;
 
     if (showSetup) {
@@ -132,8 +135,15 @@ const TokensTab = observer(
         },
         {
           title: 'Add On-Chain Address',
-          onPress: () => null,
-          noIcon: true,
+          onPress: () => {
+            if (!walletStore.wallet.receiver.address) {
+              walletStore.createOnchain(true);
+            }
+          },
+          icon: walletStore.wallet.receiver.address
+            ? { name: 'md-checkmark' }
+            : undefined,
+          noIcon: !walletStore.wallet.receiver.address,
         },
       ];
     }
@@ -171,7 +181,7 @@ const TokensTab = observer(
           <View style={theme.paddingTop2x}>
             <MenuSubtitle>WALLET SETUP</MenuSubtitle>
             {walletSetup.map((item, i) => (
-              <MenuItem item={item} i={i} />
+              <MenuItem item={item} key={i} />
             ))}
           </View>
         )}

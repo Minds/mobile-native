@@ -4,21 +4,28 @@ import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
 import logService from '../../common/services/log.service';
 import web3Service from '../../blockchain/services/Web3Service';
 import number from '../../common/helpers/number';
-import { StripeDetails, Wallet } from './WalletTypes';
+import type { StripeDetails, Wallet, TokensOptions } from './WalletTypes';
 import TokensStore from '../tokens/TokensStore';
+import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
+import { UserError } from '../../common/UserError';
+import i18n from '../../common/services/i18n.service';
+import { runInAction } from 'mobx';
+import BlockchainApiService from '../../blockchain/BlockchainApiService';
+import { ChartTimespanType } from './currency-tabs/TokensChart';
 
 const createWalletStore = () => ({
   currency: 'tokens' as CurrencyType,
-
-  stripeDetails: {
+  initialTab: <TokensOptions | undefined>undefined,
+  chart: <ChartTimespanType>'7d',
+  stripeDetails: <StripeDetails>{
     hasAccount: false,
     hasBank: false,
     pendingBalanceSplit: 0,
     totalPaidOutSplit: 0,
     verified: false,
-  } as StripeDetails,
-  balance: 0 as number,
-  wallet: {
+  },
+  balance: 0,
+  wallet: <Wallet>{
     loaded: false,
     tokens: {
       label: 'Tokens',
@@ -65,7 +72,7 @@ const createWalletStore = () => ({
     limits: {
       wire: 0,
     },
-  } as Wallet,
+  },
   /**
    * Keep transaction history
    */
@@ -74,8 +81,54 @@ const createWalletStore = () => ({
    * Set currency tab
    * @param currency
    */
-  setCurrent(currency: CurrencyType) {
+  setCurrent(currency: CurrencyType, initialTab?: TokensOptions) {
     this.currency = currency;
+    this.initialTab = initialTab;
+  },
+  /**
+   * Set initial tab for tokens
+   * @param value
+   */
+  setInitialTab(value?: TokensOptions) {
+    this.initialTab = value;
+  },
+  /**
+   * Create on-chain address
+   * @param setAsReceiver if true sets the address as receiver into the server
+   */
+  async createOnchain(setAsReceiver: boolean = false) {
+    try {
+      const address: string = await BlockchainWalletService.create();
+      if (!address) {
+        throw new Error('Empty Address');
+      }
+
+      if (setAsReceiver) {
+        await BlockchainApiService.setWallet(address);
+      }
+
+      // update wallet observables as an atomic action
+      runInAction(() => {
+        if (setAsReceiver) {
+          this.wallet.receiver.address = address;
+        }
+        if (!this.wallet.onchain.address) {
+          this.wallet.onchain.address = address;
+        }
+        if (!this.wallet.eth.address) {
+          this.wallet.eth.address = address;
+        }
+      });
+    } catch (err) {
+      console.log(err);
+      if (err.message) {
+        if (err.message === 'E_INVALID_PASSWORD_CHALLENGE_OUTCOME') {
+          return;
+        }
+      }
+      // show a warning for the user
+      throw new UserError(i18n.t('blockchain.errorCreatingWallet'));
+    }
   },
   /**
    * Load wallet data
@@ -118,7 +171,7 @@ const createWalletStore = () => ({
         response.addresses.forEach(async (address) => {
           if (address.address === 'offchain') {
             this.wallet.offchain.balance = toFriendlyCrypto(address.balance);
-          } else if (address.label === 'Receiver') {
+          } else if (address.label === 'Receiver' && address.address) {
             this.wallet.receiver.balance = toFriendlyCrypto(address.balance);
             this.wallet.receiver.address = address.address;
             this.wallet.eth.balance = number(
@@ -148,6 +201,10 @@ const createWalletStore = () => ({
     }
     return this.stripeDetails;
   },
+  /**
+   * Set stripe account
+   * @param account
+   */
   setStripeAccount(account: StripeDetails): void {
     this.stripeDetails.hasAccount = true;
     this.stripeDetails.verified = account.verified;
