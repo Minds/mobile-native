@@ -13,10 +13,14 @@ import type { CurrencyType } from '../../types/Payment';
 import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from './createWalletStore';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
+import CenteredLoading from '../../common/components/CenteredLoading';
+import EthTab from './currency-tabs/EthTab';
 import BottomOptionPopup, {
   BottomOptionsStoreType,
   useBottomOption,
 } from '../../common/components/BottomOptionPopup';
+import BitcoinsTab from './currency-tabs/BitcoinsTab';
+import UsdTab from './currency-tabs/UsdTab';
 
 export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -58,18 +62,43 @@ const WalletScreen = observer((props: PropsType) => {
   }, [store]);
 
   let body;
-  switch (store.currency) {
-    case 'tokens':
-      body = (
-        <TokensTab
-          walletStore={store}
-          bottomStore={bottomStore}
-          navigation={props.navigation}
-          route={props.route}
-        />
-      );
+  if (store.wallet.loaded) {
+    switch (store.currency) {
+      case 'tokens':
+        body = (
+          <TokensTab
+            walletStore={store}
+            bottomStore={bottomStore}
+            navigation={props.navigation}
+          />
+        );
+        break;
+      case 'btc':
+        body = (
+          <BitcoinsTab
+            walletStore={store}
+            navigation={props.navigation}
+            route={props.route}
+          />
+        );
+        break;
+      case 'usd':
+        body = (
+          <UsdTab
+            walletStore={store}
+            bottomStore={bottomStore}
+            navigation={props.navigation}
+            route={props.route}
+          />
+        );
+        break;
+      case 'eth':
+        body = <EthTab walletStore={store} />;
+        break;
+    }
+  } else {
+    body = <CenteredLoading />;
   }
-
   return (
     <View style={theme.flexContainer}>
       <Topbar

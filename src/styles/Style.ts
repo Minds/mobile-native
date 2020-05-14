@@ -97,6 +97,8 @@ export interface ThemedStyle {
   borderTopHair: any;
   borderBottomHair: any;
   buttonBorder: any;
+  listItemTitle: any;
+  strikethrough: any;
   [name: string]: any;
 }
 
@@ -296,13 +298,13 @@ export const buildStyle = (theme): ThemedStyle => ({
     borderColor: 'transparent',
   },
   borderBackgroundPrimary: {
-    borderColor: theme.primary_background,
+    borderColor: theme.borderColorPrimary,
   },
   borderBackgroundSecondary: {
-    borderColor: theme.secondary_background,
+    borderColor: theme.borderColorSecondary,
   },
   borderBackgroundTertiary: {
-    borderColor: theme.tertiary_background,
+    borderColor: theme.borderColorTertiary,
   },
   borderLink: {
     borderColor: theme.link,
@@ -396,6 +398,10 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   fontSemibold: {
     fontWeight: '600',
+  },
+  strikethrough: {
+    textDecorationLine: 'line-through',
+    textDecorationStyle: 'solid',
   },
   // onboarding
   onboardingTitle: {
@@ -513,5 +519,12 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   buttonBorder: {
     borderColor: theme.button_border,
+  },
+
+  // others
+  listItemTitle: {
+    color: theme.primary_text,
+    paddingVertical: 15,
+    fontSize: 17,
   },
 });

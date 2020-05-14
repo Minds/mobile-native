@@ -27,12 +27,12 @@ export default class WireAction extends PureComponent<PropsType> {
   render() {
     return (
       <TouchableOpacityCustom
-        style={[CommonStyle.flexContainer, CommonStyle.centered]}
+        style={[CommonStyle.centered, ThemedStyles.style.paddingHorizontal4x]}
         onPress={this.openWire}>
         <IonIcon
           style={ThemedStyles.style.colorIconActive}
           name="ios-flash"
-          size={40}
+          size={32}
         />
       </TouchableOpacityCustom>
     );

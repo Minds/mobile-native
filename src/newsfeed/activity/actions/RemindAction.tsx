@@ -50,9 +50,10 @@ export default function ({ entity, size = 20, vertical = false }: PropsTypes) {
   return (
     <TouchableOpacityCustom
       style={[
-        CS.flexContainer,
-        CS.centered,
-        vertical === true ? CS.columnAlignCenter : CS.rowJustifyCenter,
+        ThemedStyles.style.rowJustifyCenter,
+        ThemedStyles.style.paddingHorizontal3x,
+        ThemedStyles.style.paddingVertical2x,
+        ThemedStyles.style.alignCenter,
       ]}
       onPress={remind}
       testID="Remind activity button">

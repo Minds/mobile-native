@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { SectionList, View, Text, TouchableOpacity } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
@@ -10,6 +10,7 @@ import { propsType } from './types';
 import createTransactionsListStore from './Store';
 import Item from './components/Item';
 import { AvatarIcon } from './components/Icons';
+import Filter from './components/Filter';
 
 const Empty = () => (
   <View style={ThemedStyles.style.emptyComponentContainer}>
@@ -22,10 +23,11 @@ const Empty = () => (
 );
 
 const TransactionsList = observer(
-  ({ navigation, currency, wallet }: propsType) => {
+  ({ navigation, currency, wallet, bottomStore }: propsType) => {
     const { user } = useLegacyStores();
     const store = useLocalStore(createTransactionsListStore, { wallet, user });
     const theme = ThemedStyles.style;
+    const filterRef = useRef<Filter>(null);
 
     const renderItem = useCallback(
       ({ item }) => (
@@ -34,30 +36,46 @@ const TransactionsList = observer(
       [navigation, currency],
     );
 
+    const showFilter = useCallback(() => {
+      bottomStore.show(
+        i18n.t('wallet.transactions.filterTransactions'),
+        'Done',
+        <Filter store={store} ref={filterRef} bottomStore={bottomStore} />,
+      );
+    }, [store, bottomStore]);
+
     const renderHeader = useCallback(() => {
       const alignedCenterRow = [theme.rowJustifyStart, theme.alignCenter];
       return (
         <View style={theme.marginBottom3x}>
           <View style={[theme.rowJustifySpaceBetween, theme.alignCenter]}>
-            <Text style={theme.colorSecondaryText}>PENDING</Text>
+            <Text style={theme.colorSecondaryText}>
+              {i18n.t('wallet.transactions.pending')}
+            </Text>
             <TouchableOpacity onPress={() => true}>
               <View style={alignedCenterRow}>
-                <MIcon
-                  name={'filter-variant'}
-                  color={ThemedStyles.getColor('icon')}
-                  size={28}
-                />
-                <Text style={theme.colorSecondaryText}>Filter</Text>
+                <TouchableOpacity onPress={showFilter}>
+                  <MIcon
+                    name={'filter-variant'}
+                    color={ThemedStyles.getColor('icon')}
+                    size={28}
+                  />
+                  <Text style={theme.colorSecondaryText}>
+                    {i18n.t('wallet.transactions.filter')}
+                  </Text>
+                </TouchableOpacity>
               </View>
             </TouchableOpacity>
           </View>
           <View style={alignedCenterRow}>
             <AvatarIcon name="trending-up" />
-            <Text style={theme.colorPrimaryText}>Today’s daily reward</Text>
+            <Text style={theme.colorPrimaryText}>
+              {i18n.t('wallet.transactions.reward')}
+            </Text>
           </View>
         </View>
       );
-    }, [theme]);
+    }, [theme, showFilter]);
 
     const renderSectionHeader = useCallback(
       ({ section: { title } }) => (
@@ -95,8 +113,8 @@ const TransactionsList = observer(
           theme.paddingLeft4x,
           theme.paddingRight4x,
         ]}
-        onRefresh={store.refresh}
         refreshing={wallet.ledger.list.refreshing}
+        onRefresh={store.refresh}
         onEndReached={store.loadMore}
       />
     );

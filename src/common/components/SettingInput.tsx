@@ -7,6 +7,7 @@ import Input from './Input';
 type inputType = 'textInput' | 'phoneInput' | 'dateInput';
 
 type PropsType = {
+  onError?: Function;
   wrapperBorder: any;
   ref?: any;
   inputType?: inputType;

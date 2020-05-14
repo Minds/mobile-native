@@ -2,18 +2,25 @@ import React from 'react';
 
 import { ListItem } from 'react-native-elements';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Text, View } from 'react-native';
 
 export type MenuItemPropsType = {
   item: {
     onPress: () => void;
-    title: string;
-    icon?: any;
+    title: string | JSX.Element;
+    icon?:
+      | {
+          name: string;
+          type: string;
+        }
+      | JSX.Element;
     noIcon?: boolean;
   };
-  i?: number;
+  component?: 'ListItem' | 'Touchable';
 };
 
-export default function ({ item, i }: MenuItemPropsType) {
+export default function ({ item, component = 'ListItem' }: MenuItemPropsType) {
   const theme = ThemedStyles.style;
 
   // ListItem Container Style
@@ -26,26 +33,35 @@ export default function ({ item, i }: MenuItemPropsType) {
     theme.paddingHorizontal4x,
   ];
 
-  // ListItem Title Style
-  const titleStyle = [
-    theme.colorPrimaryText,
-    theme.paddingVertical3x,
-    { fontSize: 17 },
-  ];
-
   // ListItem Chevron Style
   const chevronStyle = item.noIcon
     ? undefined
     : { ...theme.colorIcon, size: 24, ...item.icon };
 
-  return (
-    <ListItem
-      key={i}
-      title={item.title}
-      onPress={item.onPress}
-      containerStyle={containerStyle}
-      titleStyle={titleStyle}
-      chevron={chevronStyle}
-    />
-  );
+  let render: JSX.Element;
+  if (component === 'ListItem') {
+    render = (
+      <ListItem
+        title={item.title}
+        onPress={item.onPress}
+        containerStyle={containerStyle}
+        titleStyle={theme.listItemTitle}
+        chevron={chevronStyle}
+      />
+    );
+  } else {
+    let icon =
+      !item.noIcon && React.isValidElement(item.icon) ? item.icon : null;
+
+    render = (
+      <TouchableOpacity onPress={item.onPress} style={containerStyle}>
+        <View style={[theme.rowJustifySpaceBetween, theme.alignCenter]}>
+          <Text style={theme.listItemTitle}>{item.title}</Text>
+          {icon}
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
+  return render;
 }

@@ -40,6 +40,8 @@ export const MINDS_FEATURES = {
   crypto: true,
   compose: true,
   discovery: true,
+  channel: true,
+  wallet: true,
 };
 
 /**

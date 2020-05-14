@@ -92,6 +92,7 @@ exports[`Media view component renders correctly 1`] = `
           },
           Object {
             "height": 1875,
+            "maxHeight": 100,
           },
         ]
       }

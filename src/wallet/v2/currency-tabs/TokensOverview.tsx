@@ -1,5 +1,4 @@
 import React from 'react';
-// import Plotly from 'react-native-plotly';
 import { View, Text } from 'react-native';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -10,6 +9,7 @@ import { WalletScreenNavigationProp } from '../WalletScreen';
 import Withdraw from './tokens/Withdraw';
 import { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
 import i18n from '../../../common/services/i18n.service';
+import TokensChart from './TokensChart';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -47,6 +47,7 @@ const TokensOverview = observer(
 
     return (
       <>
+        <TokensChart timespan={walletStore.chart} />
         <View
           style={[
             theme.paddingHorizontal3x,
@@ -74,7 +75,7 @@ const TokensOverview = observer(
         <View style={theme.paddingTop2x}>
           <MenuSubtitle>WALLET ACTIONS</MenuSubtitle>
           {walletActions.map((item, i) => (
-            <MenuItem item={item} i={i} />
+            <MenuItem item={item} key={i} />
           ))}
         </View>
       </>

@@ -155,6 +155,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
             "push": [MockFunction],
           }
         }
+        showCommentsOutlet={false}
       />
     }
     navigation={

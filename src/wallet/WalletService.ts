@@ -1,5 +1,10 @@
 //@ts-nocheck
-import api from './../common/services/api.service';
+import api, { ApiResponse } from './../common/services/api.service';
+import { ListFiltersType } from './v2/TransactionList/types';
+import moment from 'moment';
+interface WalletJoinResponse extends ApiResponse {
+  secret: string;
+}
 
 /**
  * Wallet Service
@@ -38,7 +43,7 @@ class WalletService {
    * @param {string} number
    * @param {boolean} retry
    */
-  join(number, retry) {
+  join(number, retry): Promise<WalletJoinResponse> {
     const params = { number };
     if (retry) params.retry = 1;
     return api.post('api/v2/blockchain/rewards/verify', params);
@@ -80,6 +85,31 @@ class WalletService {
           offset: data['load-next'],
         };
       });
+  }
+
+  async getFilteredTransactionsLedger(filters: ListFiltersType, offset) {
+    filters.dateRange.from.setHours(0, 0, 0);
+    filters.dateRange.to.setHours(23, 59, 59);
+
+    let opts = {
+      from: 0,
+      to: moment().unix(),
+      contract:
+        filters.transactionType === 'all' ? '' : filters.transactionType,
+      offset,
+    };
+
+    if (!filters.dateRange.none) {
+      opts.from = Math.floor(+filters.dateRange.from / 1000);
+      opts.to = Math.floor(+filters.dateRange.to / 1000);
+    }
+    console.log('GET transactions/ledger');
+    const data = await api.get('api/v2/blockchain/transactions/ledger', opts);
+    console.log('GET data', data);
+    return {
+      entities: data.transactions || [],
+      offset: data['load-next'],
+    };
   }
 
   getContributions(startDate, endDate, offset) {

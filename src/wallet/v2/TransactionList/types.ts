@@ -1,6 +1,7 @@
 import type OffsetListStore from '../../../common/stores/OffsetListStore';
 import type UserModel from '../../../channel/UserModel';
 import { WalletStoreType } from '../createWalletStore';
+import { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
 
 export type Entity = {
   _list: OffsetListStore;
@@ -58,4 +59,24 @@ export type propsType = {
   currency: currencyType;
   navigation: any;
   wallet: WalletStoreType;
+  bottomStore: BottomOptionsStoreType;
+};
+
+export type transactionTypes =
+  | 'all'
+  | 'offchain:wire'
+  | 'wire'
+  | 'offchain:reward'
+  | 'purchase'
+  | 'offchain:boost'
+  | 'boost'
+  | 'withdraw';
+
+export type ListFiltersType = {
+  transactionType: transactionTypes;
+  dateRange: {
+    none: boolean;
+    from: Date;
+    to: Date;
+  };
 };

@@ -41,6 +41,7 @@ type PropsType = {
   isLast?: boolean;
   hideTabs?: boolean;
   onLayout?: Function;
+  showCommentsOutlet?: boolean;
 };
 
 type StateType = {
@@ -186,7 +187,10 @@ export default class Activity extends Component<PropsType, StateType> {
         <Pinned entity={this.props.entity} />
         {this.showOwner()}
         {lock}
-        {message}
+        {/* Shows ontop only for rich embed or reminds */}
+        {this.props.entity.perma_url || this.props.entity.remind_object
+          ? message
+          : undefined}
         <View>
           {this.showRemind()}
 
@@ -201,11 +205,14 @@ export default class Activity extends Component<PropsType, StateType> {
           />
           {overlay}
         </View>
+        {!(this.props.entity.perma_url || this.props.entity.remind_object)
+          ? message
+          : undefined}
         {this.showActions()}
         {this.renderScheduledMessage()}
         {this.renderPendingMessage()}
         {this.renderActivitySpacer()}
-        {this.renderActivityMetrics()}
+        {/* {this.renderActivityMetrics()} */}
       </View>
     );
   }
@@ -290,90 +297,64 @@ export default class Activity extends Component<PropsType, StateType> {
    * Show Owner
    */
   showOwner() {
-    if (!this.props.entity.remind_object) {
-      const rightToolbar: React.ReactNode = (
-        <View style={styles.rightToolbar}>
-          <ActivityActionSheet
-            toggleEdit={this.toggleEdit}
-            entity={this.props.entity}
-            navigation={this.props.navigation}
-            onTranslate={this.showTranslate}
-            testID={
-              this.props.entity.text === 'e2eTest' ? 'ActivityMoreButton' : ''
-            }
-          />
-        </View>
-      );
-      return (
-        <OwnerBlock
+    const rightToolbar: React.ReactNode = (
+      <View style={styles.rightToolbar}>
+        <ActivityActionSheet
+          toggleEdit={this.toggleEdit}
           entity={this.props.entity}
           navigation={this.props.navigation}
-          rightToolbar={this.props.hideTabs ? null : rightToolbar}>
-          <TouchableOpacity
-            onPress={() => this.navToActivity()}
-            style={ThemedStyles.style.rowJustifyStart}>
-            <Text
-              style={[
-                styles.timestamp,
-                CommonStyle.paddingRight,
-                ThemedStyles.style.colorSecondaryText,
-              ]}>
-              {formatDate(this.props.entity.time_created, 'friendly')}
-            </Text>
-            {this.props.entity.boosted && (
-              <View style={styles.boostTagContainer}>
-                <Icon
-                  name="md-trending-up"
-                  style={ThemedStyles.style.colorSecondaryText}
-                />
-                <Text
-                  style={[
-                    styles.boostTagLabel,
-                    ThemedStyles.style.colorSecondaryText,
-                  ]}>
-                  {i18n.t('boosted').toUpperCase()}
-                </Text>
-              </View>
-            )}
-            {!!this.props.entity.edited && (
-              <View style={styles.boostTagContainer}>
-                <Text
-                  style={[
-                    styles.boostTagLabel,
-                    ThemedStyles.style.colorSecondaryText,
-                  ]}>
-                  · {i18n.t('edited').toUpperCase()}
-                </Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        </OwnerBlock>
-      );
-    } else {
-      return (
-        <View>
-          <RemindOwnerBlock
-            entity={this.props.entity}
-            navigation={this.props.navigation}
-          />
-          <View style={styles.rightToolbar}>
-            {!this.props.hideTabs && (
-              <ActivityActionSheet
-                toggleEdit={this.toggleEdit}
-                entity={this.props.entity}
-                navigation={this.props.navigation}
-                onTranslate={this.showTranslate}
-                testID={
-                  this.props.entity.text === 'e2eTest'
-                    ? 'ActivityMoreButton'
-                    : ''
-                }
+          onTranslate={this.showTranslate}
+          testID={
+            this.props.entity.text === 'e2eTest' ? 'ActivityMoreButton' : ''
+          }
+        />
+      </View>
+    );
+    return (
+      <OwnerBlock
+        entity={this.props.entity}
+        navigation={this.props.navigation}
+        rightToolbar={this.props.hideTabs ? null : rightToolbar}>
+        <TouchableOpacity
+          onPress={() => this.navToActivity()}
+          style={ThemedStyles.style.rowJustifyStart}>
+          <Text
+            style={[
+              styles.timestamp,
+              CommonStyle.paddingRight,
+              ThemedStyles.style.colorSecondaryText,
+            ]}>
+            {formatDate(this.props.entity.time_created, 'friendly')}
+          </Text>
+          {this.props.entity.boosted && (
+            <View style={styles.boostTagContainer}>
+              <Icon
+                name="md-trending-up"
+                style={ThemedStyles.style.colorSecondaryText}
               />
-            )}
-          </View>
-        </View>
-      );
-    }
+              <Text
+                style={[
+                  styles.boostTagLabel,
+                  ThemedStyles.style.colorSecondaryText,
+                ]}>
+                {i18n.t('boosted').toUpperCase()}
+              </Text>
+            </View>
+          )}
+          {!!this.props.entity.edited && (
+            <View style={styles.boostTagContainer}>
+              <Text
+                style={[
+                  styles.boostTagLabel,
+                  ThemedStyles.style.colorSecondaryText,
+                ]}>
+                · {i18n.t('edited').toUpperCase()}
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </OwnerBlock>
+    );
   }
 
   /**
@@ -410,7 +391,24 @@ export default class Activity extends Component<PropsType, StateType> {
       }
 
       return (
-        <View style={styles.remind}>
+        <View
+          style={[
+            styles.remind,
+            ThemedStyles.style.margin2x,
+            ThemedStyles.style.borderHair,
+            ThemedStyles.style.borderBackgroundPrimary,
+            {
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 2,
+                height: 2,
+              },
+              shadowOpacity: 0.05,
+              shadowRadius: 10,
+
+              elevation: 5,
+            },
+          ]}>
           <Activity
             ref={(r) => (this.remind = r)}
             hideTabs={true}
@@ -430,10 +428,9 @@ export default class Activity extends Component<PropsType, StateType> {
   showActions() {
     if (!this.props.hideTabs) {
       return (
-        //@ts-ignore user store is injected
         <Actions
           entity={this.props.entity}
-          navigation={this.props.navigation}
+          showCommentsOutlet={this.props.showCommentsOutlet}
         />
       );
     }
@@ -446,11 +443,12 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     padding: 10,
-    paddingTop: 0,
+    paddingTop: 10,
   },
   message: {
     fontFamily: 'Roboto',
-    fontSize: 15,
+    fontSize: 16,
+    lineHeight: 24,
   },
   emptyMessage: {
     padding: 0,
@@ -459,7 +457,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   timestamp: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#888',
   },
   remind: {
@@ -469,7 +467,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     position: 'absolute',
     right: 10,
-    top: 20,
+    top: 22,
   },
   boostTagContainer: {
     flexDirection: 'row',
@@ -478,7 +476,8 @@ const styles = StyleSheet.create({
   boostTagLabel: {
     fontWeight: '400',
     marginLeft: 2,
-    fontSize: 10,
+    fontSize: 14,
+    letterSpacing: 0.75,
   },
   activitySpacer: {
     flex: 1,

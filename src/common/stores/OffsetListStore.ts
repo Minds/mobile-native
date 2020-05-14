@@ -104,11 +104,9 @@ export default class OffsetListStore {
         });
       }
     }
-
     if (callback && callback instanceof Function) {
       callback();
     }
-
     this.loaded = true;
     this.offset = list.offset;
   }
