@@ -8,6 +8,7 @@ exports[`Comment action component renders correctly 1`] = `
       undefined,
       undefined,
       undefined,
+      undefined,
     ]
   }
 >
