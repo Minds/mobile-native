@@ -15,10 +15,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import type { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
 import TransactionsList from '../TransactionList/TransactionsList';
 import ReceiverSettings from '../address/ReceiverSettings';
-import {
-  WalletScreenRouteProp,
-  WalletScreenNavigationProp,
-} from '../WalletScreen';
+import { WalletScreenNavigationProp } from '../WalletScreen';
 import PhoneValidationComponent from '../../../common/components/PhoneValidationComponent';
 import i18n from '../../../common/services/i18n.service';
 
@@ -165,6 +162,7 @@ const TokensTab = observer(
             navigation={navigation}
             currency="tokens"
             wallet={walletStore}
+            bottomStore={bottomStore}
           />
         );
         break;

@@ -1,4 +1,5 @@
 export type TokensOptions = 'overview' | 'transactions' | 'settings';
+export type UsdOptions = 'transactions' | 'settings';
 
 export interface StripeDetails {
   bankAccount?: any;

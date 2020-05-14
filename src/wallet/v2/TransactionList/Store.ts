@@ -2,7 +2,12 @@ import formatDate from '../../../common/helpers/date';
 import groupBy from '../../../common/helpers/groupBy';
 import type UserStore from '../../../auth/UserStore';
 import UserModel from '../../../channel/UserModel';
-import { SectionListEntities, ExtendedEntity, deltaType } from './types';
+import {
+  SectionListEntities,
+  ExtendedEntity,
+  deltaType,
+  ListFiltersType,
+} from './types';
 import { WalletStoreType as WalletStore } from '../createWalletStore';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 
@@ -12,12 +17,18 @@ const createTransactionsListStore = ({ wallet, user }) => {
     user: user as UserStore,
     loading: true,
     loaded: false,
-    from: {} as Date,
-    to: {} as Date,
     list: [] as Array<SectionListEntities>,
     refreshing: false,
     runningTotal: 0,
     previousTxAmount: 0,
+    filters: {} as ListFiltersType,
+    setFilters(filters: ListFiltersType) {
+      this.filters = filters;
+      this.refresh();
+    },
+    get listFilters() {
+      return this.filters;
+    },
     async initialLoad() {
       this.runningTotal = wallet.balance;
 
@@ -30,8 +41,14 @@ const createTransactionsListStore = ({ wallet, user }) => {
       start.setMonth(start.getMonth() - 6);
       start.setHours(0, 0, 0);
 
-      this.from = start;
-      this.to = end;
+      this.filters = {
+        dateRange: {
+          none: false,
+          from: start,
+          to: end,
+        },
+        transactionType: 'all',
+      };
 
       this.loadMore();
 
@@ -44,7 +61,7 @@ const createTransactionsListStore = ({ wallet, user }) => {
       if (!this.wallet.ledger.list.cantLoadMore()) {
         const setList = this.setList;
         const ledger = this.wallet.ledger;
-        this.wallet.ledger.loadListAsync(this.from, this.to, () =>
+        this.wallet.ledger.loadTransactionsListAsync(this.filters, () =>
           setList(ledger.list.entities.slice(), false),
         );
       }
@@ -131,7 +148,12 @@ const createTransactionsListStore = ({ wallet, user }) => {
     },
     refresh() {
       this.refreshing = true;
-      this.wallet.ledger.refresh(this.from, this.to);
+      this.list = [];
+      const setList = this.setList;
+      const ledger = this.wallet.ledger;
+      this.wallet.ledger.refreshTransactionsList(this.filters, () =>
+        setList(ledger.list.entities.slice(), true),
+      );
     },
   };
 
