@@ -101,11 +101,12 @@ export const DiscoveryTagsManager = observer((props: Props) => {
               store.selectTag(tag);
             }
           },
-          icon: selected ? (
-            <Icon type="ionicon" name="ios-remove-circle-outline" />
-          ) : (
-            <Icon type="ionicon" name="ios-add-circle-outline" />
-          ),
+          icon: selected
+            ? {
+                name: 'ios-remove-circle-outline',
+                type: 'ionicon',
+              }
+            : { name: 'ios-add-circle-outline', type: 'ionicon' },
         }}></MenuItem>
     );
   };
