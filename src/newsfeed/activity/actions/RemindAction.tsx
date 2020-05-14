@@ -53,6 +53,7 @@ export default function ({ entity, size = 20, vertical = false }: PropsTypes) {
         ThemedStyles.style.rowJustifyCenter,
         ThemedStyles.style.paddingHorizontal3x,
         ThemedStyles.style.paddingVertical2x,
+        ThemedStyles.style.alignCenter,
       ]}
       onPress={remind}
       testID="Remind activity button">
