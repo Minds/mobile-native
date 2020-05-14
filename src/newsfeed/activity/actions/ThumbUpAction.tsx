@@ -11,6 +11,7 @@ import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
+import { View } from 'react-native-animatable';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -50,7 +51,6 @@ class ThumbUpAction extends Component<PropsType> {
   render() {
     const entity = this.props.entity;
 
-    //@ts-ignore
     const count = entity[`thumbs:${this.direction}:count`];
 
     const canVote = entity.can(FLAG_VOTE);
@@ -64,24 +64,25 @@ class ThumbUpAction extends Component<PropsType> {
     return (
       <TouchableOpacityCustom
         style={[
-          CS.flexContainer,
-          CS.centered,
-          this.props.orientation === 'column'
-            ? CS.columnAlignCenter
-            : CS.rowJustifyCenter,
+          ThemedStyles.style.rowJustifyCenter,
+          ThemedStyles.style.paddingHorizontal3x,
+          ThemedStyles.style.paddingVertical2x,
+          ThemedStyles.style.alignCenter,
         ]}
         onPress={this.toggleThumb}
         {...testID(`Thumb ${this.direction} activity button`)}>
         <Icon
-          style={[color, CS.marginRight]}
+          style={[color, ThemedStyles.style.marginRight]}
           name={this.iconName}
           size={this.props.size}
         />
-        <Counter
-          size={this.props.size * 0.7}
-          count={count}
-          testID={`Thumb ${this.direction} count`}
-        />
+        {count ? (
+          <Counter
+            size={this.props.size * 0.7}
+            count={count}
+            testID={`Thumb ${this.direction} count`}
+          />
+        ) : undefined}
       </TouchableOpacityCustom>
     );
   }

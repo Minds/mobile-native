@@ -298,13 +298,13 @@ export const buildStyle = (theme): ThemedStyle => ({
     borderColor: 'transparent',
   },
   borderBackgroundPrimary: {
-    borderColor: theme.primary_background,
+    borderColor: theme.borderColorPrimary,
   },
   borderBackgroundSecondary: {
-    borderColor: theme.secondary_background,
+    borderColor: theme.borderColorSecondary,
   },
   borderBackgroundTertiary: {
-    borderColor: theme.tertiary_background,
+    borderColor: theme.borderColorTertiary,
   },
   borderLink: {
     borderColor: theme.link,

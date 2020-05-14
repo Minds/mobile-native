@@ -114,6 +114,7 @@ class ActivityScreen extends Component<PropsType> {
         entity={this.entityStore.entity}
         navigation={this.props.navigation}
         autoHeight={false}
+        showCommentsOutlet={false}
       />
     ) : null;
   }

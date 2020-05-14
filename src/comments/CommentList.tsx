@@ -653,7 +653,7 @@ class CommentList extends React.Component<PropsType, StateType> {
         <ActionSheet
           ref={this.setIosActionSheetRef}
           options={[i18n.t('cancel'), i18n.t('images'), i18n.t('videos')]}
-          onPress={this.props.store.selectMediaType}
+          // onPress={this.props.store.selectMediaType}
           cancelButtonIndex={0}
         />
       );

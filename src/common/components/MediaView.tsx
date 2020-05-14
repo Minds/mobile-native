@@ -229,7 +229,7 @@ export default class MediaView extends Component<PropsType> {
           <ExplicitImage
             source={source}
             entity={this.props.entity}
-            style={[styles.image, { height }]}
+            style={[styles.image, { height, maxHeight: 100 }]}
             // loadingIndicator="placeholder"
             onError={this.imageError}
             imageStyle={styles.innerImage}
@@ -361,6 +361,7 @@ const styles = StyleSheet.create({
     minHeight: 250,
   },
   title: {
+    fontSize: 15,
     fontWeight: 'bold',
   },
   richMediaContainer: {
@@ -369,10 +370,10 @@ const styles = StyleSheet.create({
     //borderColor: '#ececec',
   },
   richMedia: {
-    padding: 8,
+    padding: 20,
   },
   domain: {
-    fontSize: 11,
+    fontSize: 13,
     color: '#888',
   },
   imageLoadError: {

@@ -44,15 +44,21 @@ class CommentsAction extends Component<PropsType> {
       this.props.entity.allow_comments &&
       this.props.entity.can(FLAG_CREATE_COMMENT);
 
-    const color = canComment
-      ? this.props.entity['comments:count'] > 0
-        ? ThemedStyles.style.colorIconActive
-        : ThemedStyles.style.colorIcon
-      : CS.colorLightGreyed;
+    // const color = canComment
+    //   ? this.props.entity['comments:count'] > 0
+    //     ? ThemedStyles.style.colorIconActive
+    //     : ThemedStyles.style.colorIcon
+    //   : CS.colorLightGreyed;
+
+    const color = ThemedStyles.style.colorIcon;
 
     return (
       <TouchableOpacityCustom
-        style={[CS.flexContainer, CS.centered, CS.rowJustifyCenter]}
+        style={[
+          ThemedStyles.style.rowJustifyCenter,
+          ThemedStyles.style.paddingHorizontal3x,
+          ThemedStyles.style.paddingVertical2x,
+        ]}
         onPress={this.openComments}
         testID={this.props.testID}>
         <Icon
