@@ -1,12 +1,14 @@
 //@ts-nocheck
 import Colors from '../styles/Colors';
 
-import { Platform } from 'react-native';
+import { Platform, ViewStyle, TextStyle, ImageStyle } from 'react-native';
 
-export default {
+type NamedStyles<T> = { [P in keyof T]: ViewStyle | TextStyle | ImageStyle };
+
+const stylesheet: NamedStyles = {
   header: {
     padding: 10,
-    paddingTop: (Platform.OS == 'ios' ? 14 : 8) + 10,
+    paddingTop: (Platform.OS === 'ios' ? 14 : 8) + 10,
     paddingBottom: 0,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -155,3 +157,5 @@ export default {
     textAlign: 'center',
   },
 };
+
+export default stylesheet;
