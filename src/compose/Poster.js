@@ -105,7 +105,11 @@ export default observer(function (props) {
       onPress={Keyboard.dismiss}
       style={theme.flexContainer}>
       <KeyboardAvoidingView style={styles.container} behavior="height">
-        <View style={styles.bodyContainer}>
+        <View
+          style={[
+            theme.flexContainer,
+            showOptions ? styles.bodyContainer : null,
+          ]}>
           <TopBar
             rightText={rightButton}
             onPressRight={onPost}
@@ -232,7 +236,6 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   bodyContainer: {
-    flex: 1,
     paddingBottom: 100,
   },
   icon: {
