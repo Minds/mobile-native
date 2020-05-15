@@ -1,13 +1,12 @@
 import React, { useCallback, useRef, useEffect } from 'react';
 import {
-  TouchableWithoutFeedback,
   TouchableOpacity,
   KeyboardAvoidingView,
   StyleSheet,
   TextInput,
-  Keyboard,
   View,
   Dimensions,
+  Platform,
 } from 'react-native';
 import { useKeyboard } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
@@ -24,6 +23,7 @@ import NavigationService from '../navigation/NavigationService';
 import RemindPreview from './RemindPreview';
 import PosterOptions from './PosterOptions';
 import TopBar from './TopBar';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const { width, height } = Dimensions.get('window');
 
@@ -101,111 +101,111 @@ export default observer(function (props) {
   );
 
   return (
-    <TouchableWithoutFeedback
-      onPress={Keyboard.dismiss}
-      style={theme.flexContainer}>
-      <KeyboardAvoidingView style={styles.container} behavior="height">
-        <View
-          style={[
-            theme.flexContainer,
-            showOptions ? styles.bodyContainer : null,
-          ]}>
-          <TopBar
-            rightText={rightButton}
-            onPressRight={onPost}
-            onPressBack={onPressBack}
-            store={props.store}
-          />
-          {props.store.attachment.hasAttachment && (
-            <>
-              {isImage ? (
-                <View style={imagePreviewStyle}>
-                  <TouchableOpacity
-                    onPress={props.store.attachment.cancelOrDelete}
-                    style={[styles.removeMedia, theme.backgroundSecondary]}>
-                    <IonIcon
-                      name="ios-close"
-                      size={28}
-                      style={(styles.icon, theme.colorPrimaryText)}
-                    />
-                  </TouchableOpacity>
-                  <ImagePreview
-                    image={props.store.mediaToConfirm}
-                    minRatio={previewRatio}
-                    style={imagePreviewStyle}
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : null}>
+      <ScrollView
+        keyboardShouldPersistTaps={'handled'}
+        contentContainerStyle={[
+          styles.scrollBody,
+          showOptions ? styles.bodyContainer : null,
+        ]}>
+        <TopBar
+          rightText={rightButton}
+          onPressRight={onPost}
+          onPressBack={onPressBack}
+          store={props.store}
+        />
+        {props.store.attachment.hasAttachment && (
+          <>
+            {isImage ? (
+              <View style={imagePreviewStyle}>
+                <TouchableOpacity
+                  onPress={props.store.attachment.cancelOrDelete}
+                  style={[styles.removeMedia, theme.backgroundSecondary]}>
+                  <IonIcon
+                    name="ios-close"
+                    size={28}
+                    style={(styles.icon, theme.colorPrimaryText)}
                   />
-                </View>
-              ) : (
-                <View style={videoPreviewStyle}>
-                  <TouchableOpacity
-                    onPress={props.store.attachment.cancelOrDelete}
-                    style={[styles.removeMedia, theme.backgroundSecondary]}>
-                    <IonIcon
-                      name="ios-close"
-                      size={28}
-                      style={(styles.icon, theme.colorPrimaryText)}
-                    />
-                  </TouchableOpacity>
-                  <MindsVideo
-                    video={props.store.mediaToConfirm}
-                    resizeMode={keyboard.keyboardShown ? 'cover' : 'contain'}
-                  />
-                </View>
-              )}
-              {props.store.attachment.uploading && (
-                <Progress.Bar
-                  progress={props.store.attachment.progress}
-                  width={width}
-                  color={ThemedStyles.getColor('green')}
-                  borderWidth={0}
-                  borderRadius={0}
-                  useNativeDriver={true}
+                </TouchableOpacity>
+                <ImagePreview
+                  image={props.store.mediaToConfirm}
+                  minRatio={previewRatio}
+                  style={imagePreviewStyle}
                 />
-              )}
-              <TitleInput store={props.store} />
-            </>
-          )}
-          <View style={theme.flexContainer}>
-            <TextInput
-              style={[
-                theme.fullWidth,
-                theme.colorPrimaryText,
-                fontSize,
-                theme.paddingHorizontal4x,
-                styles.input,
-              ]}
-              ref={inputRef}
-              placeholder={placeholder}
-              placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
-              onChangeText={props.store.setText}
-              textAlignVertical="top"
-              value={props.store.text}
-              multiline={true}
-              selectTextOnFocus={false}
-              underlineColorAndroid="transparent"
-              testID="PostInput"
-            />
-          </View>
-          {props.store.isRemind && (
-            <RemindPreview entity={props.store.entity} />
-          )}
-          {showEmbed && (
-            <MetaPreview
-              meta={props.store.embed.meta}
-              onRemove={props.store.embed.clearRichEmbed}
-            />
-          )}
-        </View>
-        {showOptions && <PosterOptions store={props.store} />}
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+              </View>
+            ) : (
+              <View style={videoPreviewStyle}>
+                <TouchableOpacity
+                  onPress={props.store.attachment.cancelOrDelete}
+                  style={[styles.removeMedia, theme.backgroundSecondary]}>
+                  <IonIcon
+                    name="ios-close"
+                    size={28}
+                    style={(styles.icon, theme.colorPrimaryText)}
+                  />
+                </TouchableOpacity>
+                <MindsVideo
+                  video={props.store.mediaToConfirm}
+                  resizeMode={keyboard.keyboardShown ? 'cover' : 'contain'}
+                />
+              </View>
+            )}
+            {props.store.attachment.uploading && (
+              <Progress.Bar
+                progress={props.store.attachment.progress}
+                width={width}
+                color={ThemedStyles.getColor('green')}
+                borderWidth={0}
+                borderRadius={0}
+                useNativeDriver={true}
+              />
+            )}
+            <TitleInput store={props.store} />
+          </>
+        )}
+        <TextInput
+          style={[
+            theme.fullWidth,
+            theme.colorPrimaryText,
+            fontSize,
+            theme.paddingHorizontal4x,
+            styles.input,
+          ]}
+          ref={inputRef}
+          placeholder={placeholder}
+          placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
+          onChangeText={props.store.setText}
+          textAlignVertical="top"
+          value={props.store.text}
+          multiline={true}
+          selectTextOnFocus={false}
+          underlineColorAndroid="transparent"
+          testID="PostInput"
+        />
+        {props.store.isRemind && <RemindPreview entity={props.store.entity} />}
+        {showEmbed && (
+          <MetaPreview
+            meta={props.store.embed.meta}
+            onRemove={props.store.embed.clearRichEmbed}
+          />
+        )}
+      </ScrollView>
+      {showOptions && <PosterOptions store={props.store} />}
+    </KeyboardAvoidingView>
   );
 });
 
 const styles = StyleSheet.create({
+  scrollBody: {
+    minHeight: '100%',
+  },
   input: {
     minHeight: 100,
+    flex: 1,
     textAlignVertical: 'top',
+    height: '100%',
   },
   remindPreview: {
     marginHorizontal: 10,
