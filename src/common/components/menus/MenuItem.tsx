@@ -2,8 +2,6 @@ import React from 'react';
 
 import { ListItem } from 'react-native-elements';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Text, View } from 'react-native';
 
 export type MenuItemPropsType = {
   item: {
@@ -17,10 +15,10 @@ export type MenuItemPropsType = {
       | JSX.Element;
     noIcon?: boolean;
   };
-  component?: 'ListItem' | 'Touchable';
+  component?: any;
 };
 
-export default function ({ item, component = 'ListItem' }: MenuItemPropsType) {
+export default function ({ item, component }: MenuItemPropsType) {
   const theme = ThemedStyles.style;
 
   // ListItem Container Style
@@ -38,30 +36,14 @@ export default function ({ item, component = 'ListItem' }: MenuItemPropsType) {
     ? undefined
     : { ...theme.colorIcon, size: 24, ...item.icon };
 
-  let render: JSX.Element;
-  if (component === 'ListItem') {
-    render = (
-      <ListItem
-        title={item.title}
-        onPress={item.onPress}
-        containerStyle={containerStyle}
-        titleStyle={theme.listItemTitle}
-        chevron={chevronStyle}
-      />
-    );
-  } else {
-    let icon =
-      !item.noIcon && React.isValidElement(item.icon) ? item.icon : null;
-
-    render = (
-      <TouchableOpacity onPress={item.onPress} style={containerStyle}>
-        <View style={[theme.rowJustifySpaceBetween, theme.alignCenter]}>
-          <Text style={theme.listItemTitle}>{item.title}</Text>
-          {icon}
-        </View>
-      </TouchableOpacity>
-    );
-  }
-
-  return render;
+  return (
+    <ListItem
+      Component={component}
+      title={item.title}
+      onPress={item.onPress}
+      containerStyle={containerStyle}
+      titleStyle={theme.listItemTitle}
+      chevron={chevronStyle}
+    />
+  );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useRef } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { SectionList, View, Text, TouchableOpacity } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
@@ -7,7 +7,7 @@ import { useLegacyStores } from '../../../common/hooks/use-stores';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { propsType } from './types';
-import createTransactionsListStore from './Store';
+import createListStore from './createListStore';
 import Item from './components/Item';
 import { AvatarIcon } from './components/Icons';
 import Filter from './components/Filter';
@@ -25,9 +25,8 @@ const Empty = () => (
 const TransactionsList = observer(
   ({ navigation, currency, wallet, bottomStore }: propsType) => {
     const { user } = useLegacyStores();
-    const store = useLocalStore(createTransactionsListStore, { wallet, user });
+    const store = useLocalStore(createListStore, { wallet, user });
     const theme = ThemedStyles.style;
-    const filterRef = useRef<Filter>(null);
 
     const renderItem = useCallback(
       ({ item }) => (
@@ -37,10 +36,16 @@ const TransactionsList = observer(
     );
 
     const showFilter = useCallback(() => {
+      const filters: Array<[string, string]> = [
+        ['all', i18n.t('wallet.transactions.allFilter')],
+        ['offchain:reward', i18n.t('wallet.transactions.rewardsFilter')],
+        ['offchain:boost', i18n.t('wallet.transactions.boostsFilter')],
+        ['offchain:wire', i18n.t('wallet.transactions.transferFilter')],
+      ];
       bottomStore.show(
         i18n.t('wallet.transactions.filterTransactions'),
         'Done',
-        <Filter store={store} ref={filterRef} bottomStore={bottomStore} />,
+        <Filter store={store} filters={filters} bottomStore={bottomStore} />,
       );
     }, [store, bottomStore]);
 
