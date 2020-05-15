@@ -7,6 +7,7 @@ import {
   TextInput,
   ActivityIndicator,
   Alert,
+  Platform,
 } from 'react-native';
 
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -203,17 +204,19 @@ class FabScreen extends Component<PropsType> {
           )}
         </Text>
 
-        <View style={[CS.paddingBottom, CS.paddingTop3x]}>
-          {this.props.wire.owner.wire_rewards.rewards && (
-            <SubscriptionTierCarousel
-              amount={amount}
-              rewards={this.props.wire.owner.wire_rewards.rewards}
-              currency={this.props.wire.currency}
-              recurring={this.props.wire.recurring}
-              onTierSelected={this.props.wire.setTier}
-            />
-          )}
-        </View>
+        {Platform.OS !== 'ios' ? (
+          <View style={[CS.paddingBottom, CS.paddingTop3x]}>
+            {this.props.wire.owner.wire_rewards.rewards && (
+              <SubscriptionTierCarousel
+                amount={amount}
+                rewards={this.props.wire.owner.wire_rewards.rewards}
+                currency={this.props.wire.currency}
+                recurring={this.props.wire.recurring}
+                onTierSelected={this.props.wire.setTier}
+              />
+            )}
+          </View>
+        ) : undefined}
 
         <View style={(CS.marginTop3x, CS.marginBottom2x)}>
           {this.props.wire.errors.map((e) => (

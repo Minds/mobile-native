@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  Platform,
 } from 'react-native';
 
 import { CheckBox } from 'react-native-elements';
@@ -197,7 +198,7 @@ class FabScreen extends Component {
             'wire.supportMessage',
             {
               payments: featuresService.has('wire-multi-currency')
-                ? 'tokens , ETH, BTC or USD'
+                ? 'tokens, ETH, BTC or USD'
                 : 'tokens',
             },
             {
@@ -206,17 +207,19 @@ class FabScreen extends Component {
           )}
         </Text>
 
-        <View style={[CS.paddingBottom, CS.paddingTop3x]}>
-          {this.props.wire.owner.wire_rewards.rewards && (
-            <SubscriptionTierCarousel
-              amount={amount}
-              rewards={this.props.wire.owner.wire_rewards.rewards}
-              currency={this.props.wire.currency}
-              recurring={this.props.wire.recurring}
-              onTierSelected={this.props.wire.setTier}
-            />
-          )}
-        </View>
+        {Platform.OS !== 'ios' ? (
+          <View style={[CS.paddingBottom, CS.paddingTop3x]}>
+            {this.props.wire.owner.wire_rewards.rewards && (
+              <SubscriptionTierCarousel
+                amount={amount}
+                rewards={this.props.wire.owner.wire_rewards.rewards}
+                currency={this.props.wire.currency}
+                recurring={this.props.wire.recurring}
+                onTierSelected={this.props.wire.setTier}
+              />
+            )}
+          </View>
+        ) : undefined}
 
         <View style={(CS.marginTop3x, CS.marginBottom2x)}>
           {this.props.wire.errors.map((e) => (
@@ -224,11 +227,13 @@ class FabScreen extends Component {
           ))}
         </View>
 
-        <PaymentMethodSelector
-          ref={this.paymethodRef}
-          value={this.props.wire.currency}
-          onSelect={this.props.wire.setCurrency}
-        />
+        <View style={[CS.marginTop3x]}>
+          <PaymentMethodSelector
+            ref={this.paymethodRef}
+            value={this.props.wire.currency}
+            onSelect={this.props.wire.setCurrency}
+          />
+        </View>
 
         <View
           style={[
