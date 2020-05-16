@@ -1,15 +1,15 @@
-//@ts-nocheck
 import React, { PureComponent } from 'react';
-
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native';
 
 import _ from 'lodash';
 import i18n from '../../../common/services/i18n.service';
+import NotificationBody from '../NotificationBody';
+import type { PropsType } from './NotificationTypes';
 
 /**
  * Comment Notification Component
  */
-export default class CommentView extends PureComponent {
+export default class CommentView extends PureComponent<PropsType> {
   render() {
     const entity = this.props.entity;
     const styles = this.props.styles;
@@ -20,7 +20,7 @@ export default class CommentView extends PureComponent {
     const is_reply = entity.params && entity.params.is_reply;
 
     return (
-      <TouchableOpacity onPress={this.navTo}>
+      <NotificationBody styles={styles} onPress={this.navTo} entity={entity}>
         <Text>
           <Text style={styles.link}>{entity.fromObj.name}</Text>
           <Text>
@@ -31,7 +31,7 @@ export default class CommentView extends PureComponent {
           </Text>
           {body}
         </Text>
-      </TouchableOpacity>
+      </NotificationBody>
     );
   }
 

@@ -2,27 +2,54 @@
 
 exports[`renders correctly 1`] = `
 <View
+  accessible={true}
+  focusable={true}
+  isTVSelectable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
+      "opacity": 1,
     }
   }
 >
-  <Text
-    onPress={[Function]}
-  >
-    You have a pending referral! 
-    <Text
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
-    >
-      someUser
+    }
+  >
+    <Text>
+      You have a pending referral! 
+      <Text
+        style={
+          Object {
+            "fontWeight": "600",
+          }
+        }
+      >
+        someUser
+      </Text>
+       used your referral link when they signed up for Minds. You'll get tokens once they join the rewards program and set up their wallet
     </Text>
-     used your referral link when they signed up for Minds. You'll get tokens once they join the rewards program and set up their wallet
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

@@ -2,25 +2,54 @@
 
 exports[`renders correctly 1`] = `
 <View
+  accessible={true}
+  focusable={true}
+  isTVSelectable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
+      "opacity": 1,
     }
   }
 >
-  <Text>
-    <Text
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
-    >
-      someUser
+    }
+  >
+    <Text>
+      <Text
+        style={
+          Object {
+            "fontWeight": "600",
+          }
+        }
+      >
+        someUser
+      </Text>
+       
+      tried to call you.
     </Text>
-     
-    tried to call you.
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

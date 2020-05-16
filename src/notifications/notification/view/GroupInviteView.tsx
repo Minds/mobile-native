@@ -1,14 +1,14 @@
-//@ts-nocheck
 import React, { PureComponent } from 'react';
-
 import { Text, View } from 'react-native';
 
 import i18n from '../../../common/services/i18n.service';
+import NotificationBody from '../NotificationBody';
+import { PropsType } from './NotificationTypes';
 
 /**
  * Group Invite Notification Component
  */
-export default class GroupInviteView extends PureComponent {
+export default class GroupInviteView extends PureComponent<PropsType> {
   /**
    * Navigate to group
    */
@@ -23,14 +23,19 @@ export default class GroupInviteView extends PureComponent {
     const styles = this.props.styles;
 
     return (
-      <View style={styles.bodyContents}>
-        <Text onPress={this.navToGroup}>
-          {i18n.t('notification.groupInvite', {
-            user: entity.params.user,
-            name: entity.params.group.name,
-          })}
-        </Text>
-      </View>
+      <NotificationBody
+        styles={styles}
+        onPress={this.navToGroup}
+        entity={entity}>
+        <View style={styles.bodyContents}>
+          <Text>
+            {i18n.t('notification.groupInvite', {
+              user: entity.params.user,
+              name: entity.params.group.name,
+            })}
+          </Text>
+        </View>
+      </NotificationBody>
     );
   }
 }

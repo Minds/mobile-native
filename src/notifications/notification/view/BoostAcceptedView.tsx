@@ -1,10 +1,9 @@
-//@ts-nocheck
-import React, { Component } from 'react';
-
+import React from 'react';
 import { Text, View } from 'react-native';
 
 import BoostGiftView from './BoostGiftView';
 import i18n from '../../../common/services/i18n.service';
+import NotificationBody from '../NotificationBody';
 
 /**
  * Boost Accepted Notification Component
@@ -27,9 +26,14 @@ export default class BoostAcceptedView extends BoostGiftView {
     );
 
     return (
-      <View style={styles.bodyContents}>
-        <Text onPress={this.navToBoostConsole}>{text}</Text>
-      </View>
+      <NotificationBody
+        styles={styles}
+        onPress={this.navToBoostConsole}
+        entity={this.props.entity}>
+        <View style={styles.bodyContents}>
+          <Text>{text}</Text>
+        </View>
+      </NotificationBody>
     );
   }
 }

@@ -1,14 +1,14 @@
-//@ts-nocheck
 import React, { PureComponent } from 'react';
-
 import { Text, View } from 'react-native';
 
 import i18n from '../../../common/services/i18n.service';
+import type { PropsType } from './NotificationTypes';
+import NotificationBody from '../NotificationBody';
 
 /**
  * Friends Notification Component
  */
-export default class FriendsView extends PureComponent {
+export default class FriendsView extends PureComponent<PropsType> {
   /**
    * Navigate To channel
    */
@@ -26,12 +26,15 @@ export default class FriendsView extends PureComponent {
       ? i18n.t('notification.friends1', { name: entity.fromObj.name })
       : i18n.t('notification.friends2', { name: entity.fromObj.name });
 
-    const body = (
-      <Text style={styles.link} onPress={this.navToChannel}>
-        {message}
-      </Text>
+    return (
+      <NotificationBody
+        styles={styles}
+        onPress={this.navToChannel}
+        entity={entity}>
+        <View style={styles.bodyContents}>
+          <Text style={styles.link}>{message}</Text>
+        </View>
+      </NotificationBody>
     );
-
-    return <View style={styles.bodyContents}>{body}</View>;
   }
 }

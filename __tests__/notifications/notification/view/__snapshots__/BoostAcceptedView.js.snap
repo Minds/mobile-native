@@ -2,31 +2,58 @@
 
 exports[`renders correctly 1`] = `
 <View
+  accessible={true}
+  focusable={true}
+  isTVSelectable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
+      "opacity": 1,
     }
   }
 >
-  <Text
-    onPress={[Function]}
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      }
+    }
   >
-    100 tokens 
     <Text>
-      for
-       
-      <Text
-        style={
-          Object {
-            "fontWeight": "600",
+      100 tokens 
+      <Text>
+        for
+         
+        <Text
+          style={
+            Object {
+              "fontWeight": "600",
+            }
           }
-        }
-      >
-        some title
+        >
+          some title
+        </Text>
       </Text>
+       were accepted.
     </Text>
-     were accepted.
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

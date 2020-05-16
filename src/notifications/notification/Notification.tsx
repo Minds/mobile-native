@@ -1,10 +1,8 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { Text, TouchableWithoutFeedback, Image, View } from 'react-native';
 
 import { MINDS_CDN_URI } from '../../config/Config';
-import formatDate from '../../common/helpers/date';
 
 import BoostAcceptedView from './view/BoostAcceptedView';
 import BoostCompletedView from './view/BoostCompletedView';
@@ -48,13 +46,52 @@ import ReferralPendingView from './view/ReferralPendingView';
 import ReferralPingView from './view/ReferralPingView';
 
 import styles from './style';
-import { CommonStyle as CS } from '../../styles/Common';
 import ThemedStyles from '../../styles/ThemedStyles';
+
+export type NotificationType = {
+  fromObj: {
+    guid: string;
+    name: string;
+    subscribed: boolean;
+  };
+  from: any;
+  entityObj: any;
+  entity: any;
+  to: any;
+  params: {
+    state: any;
+    reward_factor: string;
+    action: string;
+    parent: any;
+    user: any;
+    focusedCommentUrn: string;
+    message: string;
+    is_reply: boolean;
+    channel: string;
+    bid: number;
+    reason: number;
+    type: string;
+    amount: string;
+    from_username: string;
+    to_username: string;
+    subscribed: boolean;
+    from_guid: string;
+    group: any;
+    points: number;
+    impressions: number;
+  };
+  time_created: string;
+};
+
+type PropsType = {
+  entity: NotificationType;
+  navigation: any;
+};
 
 /**
  * Main Notification row Component
  */
-export default class Notification extends Component {
+export default class Notification extends Component<PropsType> {
   /**
    * Navigate To channel
    */
@@ -68,7 +105,7 @@ export default class Notification extends Component {
   };
 
   // Notifications are stateless, therefore they don't need to be rendered more than once
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate() {
     return false;
   }
 
@@ -107,12 +144,7 @@ export default class Notification extends Component {
         <TouchableWithoutFeedback onPress={this.navToChannel}>
           <Image source={avatarSrc} style={styles.avatar} />
         </TouchableWithoutFeedback>
-        <View style={styles.body}>
-          {body}
-          <Text style={styles.timestamp}>
-            {formatDate(this.props.entity.time_created)}
-          </Text>
-        </View>
+        {body}
       </View>
     );
   }
@@ -452,8 +484,7 @@ export default class Notification extends Component {
           <RewardsStateIncreaseView
             navigation={this.props.navigation}
             styles={styles}
-            state={entity.params.state}
-            multiplier={entity.params.reward_factor}
+            entity={entity}
           />
         );
 
@@ -462,8 +493,7 @@ export default class Notification extends Component {
           <RewardsStateDecreaseView
             navigation={this.props.navigation}
             styles={styles}
-            state={entity.params.state}
-            multiplier={entity.params.reward_factor}
+            entity={entity}
           />
         );
 
@@ -472,8 +502,7 @@ export default class Notification extends Component {
           <RewardsStateDecreaseTodayView
             navigation={this.props.navigation}
             styles={styles}
-            state={entity.params.state}
-            multiplier={entity.params.reward_factor}
+            entity={entity}
           />
         );
 
@@ -482,7 +511,7 @@ export default class Notification extends Component {
           <RewardsSummaryView
             navigation={this.props.navigation}
             styles={styles}
-            amount={entity.params.amount}
+            entity={entity}
           />
         );
 
