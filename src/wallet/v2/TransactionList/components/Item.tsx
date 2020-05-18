@@ -1,5 +1,9 @@
 import React from 'react';
-import { ItemPropsType, ExtendedEntity, currencyType } from '../types';
+import {
+  ItemPropsType,
+  ExtendedEntity,
+  currencyType,
+} from '../TransactionsListTypes';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { View, Text } from 'react-native';
 import formatDate from '../../../../common/helpers/date';
@@ -31,9 +35,11 @@ const Item = ({ entity, navigation, currency }: ItemPropsType) => {
           <Text style={theme.colorPrimaryText}>{entity.amount}</Text>
         </View>
         <View style={theme.rowJustifyEnd}>
-          <Text style={secondaryText}>{`${entity.runningTotal.int}${
-            entity.runningTotal.frac ? '.' + entity.runningTotal.frac : ''
-          }`}</Text>
+          {!!entity.runningTotal && (
+            <Text style={secondaryText}>{`${entity.runningTotal.int}${
+              entity.runningTotal.frac ? '.' + entity.runningTotal.frac : ''
+            }`}</Text>
+          )}
         </View>
       </View>
     </View>
@@ -62,15 +68,11 @@ const getTypeStringAndIcon = (
   navigation: any,
 ) => {
   const theme = ThemedStyles.style;
-  const superType =
-    entity.contract.indexOf('offchain:') === -1
-      ? entity.contract
-      : entity.contract.substr(9);
 
   const textColor = theme.colorPrimaryText;
 
   let typeString: JSX.Element, avatar: JSX.Element;
-  switch (superType) {
+  switch (entity.superType) {
     case 'reward':
       avatar = <AvatarIcon name="star-outline" />;
       typeString = <Text style={textColor}>{'Minds Reward'}</Text>;
@@ -79,7 +81,7 @@ const getTypeStringAndIcon = (
       avatar = <AvatarIcon name="trending-up" />;
       typeString = (
         <Text style={textColor}>{`${getTypeLabel(
-          superType,
+          entity.superType,
           currency,
         )}ed Content`}</Text>
       );
@@ -91,7 +93,9 @@ const getTypeStringAndIcon = (
     case 'withdraw':
       avatar = <AvatarIcon name="arrow-right" />;
       typeString = (
-        <Text style={textColor}>{getTypeLabel(superType, currency)}</Text>
+        <Text style={textColor}>
+          {getTypeLabel(entity.superType, currency)}
+        </Text>
       );
       break;
     case 'payout':
@@ -118,9 +122,10 @@ const getTypeStringAndIcon = (
       );
       typeString = (
         <Text>
-          <Text style={textColor}>{`${getTypeLabel(superType, currency)} ${
-            otherUser.isSender ? 'from ' : 'to '
-          }`}</Text>
+          <Text style={textColor}>{`${getTypeLabel(
+            entity.superType,
+            currency,
+          )} ${otherUser.isSender ? 'from ' : 'to '}`}</Text>
           <Text
             style={theme.colorLink}
             onPress={() =>

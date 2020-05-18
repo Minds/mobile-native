@@ -14,6 +14,8 @@ import {
   WalletScreenNavigationProp,
 } from '../WalletScreen';
 import UsdSettings from '../address/UsdSettings';
+import i18n from '../../../common/services/i18n.service';
+import TransactionsListCash from '../TransactionList/TransactionsListCash';
 
 const options: Array<ButtonTabType<UsdOptions>> = [
   { id: 'transactions', title: 'Transactions' },
@@ -37,28 +39,43 @@ const createStore = () => ({
 /**
  * Usd tab
  */
-const UsdTab = observer(({ walletStore, navigation, route }: PropsType) => {
-  const store = useLocalStore(createStore);
-  const theme = ThemedStyles.style;
+const UsdTab = observer(
+  ({ walletStore, navigation, route, bottomStore }: PropsType) => {
+    const store = useLocalStore(createStore);
+    const theme = ThemedStyles.style;
 
-  let body;
-  switch (store.option) {
-    case 'transactions':
-      body = null;
-      break;
-    case 'settings':
-      body = (
-        <UsdSettings
-          navigation={navigation}
-          walletStore={walletStore}
-          route={route}
-        />
-      );
-      break;
-  }
+    let body;
+    switch (store.option) {
+      case 'transactions':
+        //TODO: filter are not implemented in the backend change the first string to the corresponding values after
+        const filters: Array<[string, string]> = [
+          ['all', i18n.t('wallet.transactions.allFilter')],
+          ['wire', i18n.t('wallet.transactions.wiresFilter')],
+          ['pro', i18n.t('wallet.transactions.proEarningsFilter')],
+          ['payout', i18n.t('wallet.transactions.payoutsFilter')],
+        ];
+        body = (
+          <TransactionsListCash
+            filters={filters}
+            navigation={navigation}
+            currency="usd"
+            wallet={walletStore}
+            bottomStore={bottomStore}
+          />
+        );
+        break;
+      case 'settings':
+        body = (
+          <UsdSettings
+            navigation={navigation}
+            walletStore={walletStore}
+            route={route}
+          />
+        );
+        break;
+    }
 
-  return (
-    <ScrollView>
+    const mainBody = (
       <View style={theme.paddingTop4x}>
         <TopBarButtonTabBar
           tabs={options}
@@ -67,8 +84,14 @@ const UsdTab = observer(({ walletStore, navigation, route }: PropsType) => {
         />
         {body}
       </View>
-    </ScrollView>
-  );
-});
+    );
+
+    if (store.option !== 'transactions') {
+      return <ScrollView>{mainBody}</ScrollView>;
+    } else {
+      return <View style={theme.flexContainer}>{mainBody}</View>;
+    }
+  },
+);
 
 export default UsdTab;

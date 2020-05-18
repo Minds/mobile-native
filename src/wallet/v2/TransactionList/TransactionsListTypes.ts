@@ -3,6 +3,11 @@ import type UserModel from '../../../channel/UserModel';
 import { WalletStoreType } from '../createWalletStore';
 import { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
 
+export type FilterStore = {
+  filters: ListFiltersType;
+  refresh: () => void;
+};
+
 export type Entity = {
   _list: OffsetListStore;
   amount: number;
@@ -21,7 +26,10 @@ export type Entity = {
 export type deltaType = 'neutral' | 'positive' | 'negative';
 
 export interface ExtendedEntity extends Entity {
+  formatted: boolean;
+  superType: string;
   date: Date | string;
+  customer_user: any;
   otherUser: {
     avatar: {
       uri: any;
@@ -55,7 +63,8 @@ export type DeltaIconPropsType = {
   delta: deltaType;
 };
 
-export type propsType = {
+export type PropsType = {
+  filters: Array<[string, string]>;
   currency: currencyType;
   navigation: any;
   wallet: WalletStoreType;

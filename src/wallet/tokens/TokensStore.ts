@@ -4,7 +4,7 @@ import { action } from 'mobx';
 import walletService from '../WalletService';
 import OffsetListStore from '../../common/stores/OffsetListStore';
 import logService from '../../common/services/log.service';
-import { ListFiltersType } from '../v2/TransactionList/types';
+import { ListFiltersType } from '../v2/TransactionList/TransactionsListTypes';
 
 export default class TokensStore {
   list = new OffsetListStore('shallow');
@@ -46,7 +46,10 @@ export default class TokensStore {
       });
   }
 
-  async loadTransactionsListAsync(filters: ListFiltersType, callback) {
+  async loadTransactionsListAsync(
+    filters: ListFiltersType,
+    callback?: Function,
+  ) {
     if (this.list.cantLoadMore() || this.loading) {
       return false;
     }
@@ -68,7 +71,7 @@ export default class TokensStore {
   }
 
   @action
-  refreshTransactionsList(filters: ListFiltersType, callback) {
+  refreshTransactionsList(filters: ListFiltersType, callback?: Function) {
     this.list.refresh();
     this.loadTransactionsListAsync(filters, callback).finally(() => {
       this.list.refreshDone();

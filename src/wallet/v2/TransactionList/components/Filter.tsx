@@ -9,11 +9,11 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 import { Platform } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import { TransactionsListStoreType } from '../createListStore';
 import { ScrollView } from 'react-native-gesture-handler';
+import { FilterStore } from '../TransactionsListTypes';
 
 type PropsType = {
-  store: TransactionsListStoreType;
+  store: FilterStore;
   bottomStore: BottomOptionsStoreType;
   filters: Array<[string, string]>;
 };
