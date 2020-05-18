@@ -103,9 +103,7 @@ class WalletService {
       opts.from = Math.floor(+filters.dateRange.from / 1000);
       opts.to = Math.floor(+filters.dateRange.to / 1000);
     }
-    console.log('GET transactions/ledger');
     const data = await api.get('api/v2/blockchain/transactions/ledger', opts);
-    console.log('GET data', data);
     return {
       entities: data.transactions || [],
       offset: data['load-next'],

@@ -14,34 +14,52 @@ exports[`renders correctly for activity 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
       "opacity": 1,
     }
   }
 >
-  <Text>
-    <Text
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
-    >
-      someUser
-    </Text>
-     
-    voted up
-     
-    <Text
-      style={
-        Object {
-          "fontWeight": "600",
+    }
+  >
+    <Text>
+      <Text
+        style={
+          Object {
+            "fontWeight": "600",
+          }
         }
-      }
-    >
-      some title
+      >
+        someUser
+      </Text>
+       
+      voted up
+       
+      <Text
+        style={
+          Object {
+            "fontWeight": "600",
+          }
+        }
+      >
+        some title
+      </Text>
     </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;
@@ -60,36 +78,54 @@ exports[`renders correctly for comment 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
       "opacity": 1,
     }
   }
 >
-  <Text>
-    <Text
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
-    >
-      someUser
-    </Text>
-     
-    voted up
-     
-    <Text
-      style={
-        Object {
-          "fontWeight": "600",
+    }
+  >
+    <Text>
+      <Text
+        style={
+          Object {
+            "fontWeight": "600",
+          }
         }
-      }
-    >
+      >
+        someUser
+      </Text>
        
-      your comment
+      voted up
        
+      <Text
+        style={
+          Object {
+            "fontWeight": "600",
+          }
+        }
+      >
+         
+        your comment
+         
+      </Text>
     </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;
@@ -108,34 +144,52 @@ exports[`renders correctly for object 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
       "opacity": 1,
     }
   }
 >
-  <Text>
-    <Text
-      style={
-        Object {
-          "fontWeight": "600",
-        }
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
       }
-    >
-      someUser
-    </Text>
-     
-    voted up
-     
-    <Text
-      style={
-        Object {
-          "fontWeight": "600",
+    }
+  >
+    <Text>
+      <Text
+        style={
+          Object {
+            "fontWeight": "600",
+          }
         }
-      }
-    >
-      some title
+      >
+        someUser
+      </Text>
+       
+      voted up
+       
+      <Text
+        style={
+          Object {
+            "fontWeight": "600",
+          }
+        }
+      >
+        some title
+      </Text>
     </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

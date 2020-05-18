@@ -14,16 +14,34 @@ exports[`renders correctly activity 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
       "opacity": 1,
     }
   }
 >
-  <Text>
-    someUser
-     
-    tagged you in a post
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      }
+    }
+  >
+    <Text>
+      someUser
+       
+      tagged you in a post
+    </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;
@@ -42,16 +60,34 @@ exports[`renders correctly comment 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
-      "flexDirection": "row",
-      "flexWrap": "wrap",
+      "flex": 1,
+      "marginLeft": 8,
       "opacity": 1,
     }
   }
 >
-  <Text>
-    someUser
-     
-    tagged you in a comment
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      }
+    }
+  >
+    <Text>
+      someUser
+       
+      tagged you in a comment
+    </Text>
+  </View>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;

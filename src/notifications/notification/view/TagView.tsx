@@ -1,17 +1,16 @@
-//@ts-nocheck
 import React, { PureComponent } from 'react';
-
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View } from 'react-native';
 
 import entityService from '../../../common/services/entity.service';
 import logService from '../../../common/services/log.service';
-
 import i18n from '../../../common/services/i18n.service';
+import type { PropsType } from './NotificationTypes';
+import NotificationBody from '../NotificationBody';
 
 /**
  * Tag Notification Component
  */
-export default class TagView extends PureComponent {
+export default class TagView extends PureComponent<PropsType> {
   /**
    * Navigate to activity
    */
@@ -66,18 +65,21 @@ export default class TagView extends PureComponent {
       this.props.entity.params.parent.type === 'group';
 
     return (
-      <TouchableOpacity
-        style={styles.bodyContents}
-        onPress={this.navToActivity}>
-        <Text>
-          {entity.fromObj.name}{' '}
-          {isComment
-            ? isConversation
-              ? i18n.t('notification.tagConversation')
-              : i18n.t('notification.tagComment')
-            : i18n.t('notification.tagPost')}
-        </Text>
-      </TouchableOpacity>
+      <NotificationBody
+        styles={styles}
+        onPress={this.navToActivity}
+        entity={entity}>
+        <View style={styles.bodyContents}>
+          <Text>
+            {entity.fromObj.name}{' '}
+            {isComment
+              ? isConversation
+                ? i18n.t('notification.tagConversation')
+                : i18n.t('notification.tagComment')
+              : i18n.t('notification.tagPost')}
+          </Text>
+        </View>
+      </NotificationBody>
     );
   }
 }

@@ -1,10 +1,9 @@
-//@ts-nocheck
-import React, { Component } from 'react';
-
+import React from 'react';
 import { Text, View } from 'react-native';
 
 import BoostPeerAcceptedView from './BoostPeerAcceptedView';
 import i18n from '../../../common/services/i18n.service';
+import NotificationBody from '../NotificationBody';
 
 /**
  * Boost Peer Rejected Notification Component
@@ -19,18 +18,23 @@ export default class BoostPeerRejectedView extends BoostPeerAcceptedView {
     const amount = this.getAmount();
 
     return (
-      <View style={styles.bodyContents}>
-        <Text onPress={() => this.navToBoostConsole({ filter: 'peer' })}>
-          <Text style={styles.bold} onPress={this.navToChannel}>
-            @{entity.from.username}
-          </Text>{' '}
-          {i18n.t('notification.boostPeerRejected')}{' '}
-          <Text style={styles.bold}>
-            {amount} {type}
-          </Text>{' '}
-          {description} {i18n.t('notification.notCharged')}
-        </Text>
-      </View>
+      <NotificationBody
+        styles={styles}
+        onPress={this.navToBoostConsole}
+        entity={entity}>
+        <View style={styles.bodyContents}>
+          <Text onPress={() => this.navToBoostConsole({ filter: 'peer' })}>
+            <Text style={styles.bold} onPress={this.navToChannel}>
+              @{entity.from.username}
+            </Text>{' '}
+            {i18n.t('notification.boostPeerRejected')}{' '}
+            <Text style={styles.bold}>
+              {amount} {type}
+            </Text>{' '}
+            {description} {i18n.t('notification.notCharged')}
+          </Text>
+        </View>
+      </NotificationBody>
     );
   }
 }

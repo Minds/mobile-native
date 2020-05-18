@@ -14,6 +14,8 @@ exports[`renders correctly 1`] = `
   onStartShouldSetResponder={[Function]}
   style={
     Object {
+      "flex": 1,
+      "marginLeft": 8,
       "opacity": 1,
     }
   }
@@ -42,6 +44,15 @@ exports[`renders correctly 1`] = `
     >
       some owner's activity
     </Text>
+  </Text>
+  <Text
+    style={
+      Object {
+        "fontSize": 11,
+      }
+    }
+  >
+    Invalid date
   </Text>
 </View>
 `;
