@@ -4,6 +4,7 @@ import i18n from 'i18n-js';
 import { memoize } from 'lodash';
 import { I18nManager } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
+import ThemedStyles from 'src/styles/ThemedStyles';
 
 const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
@@ -17,6 +18,7 @@ const translationGetters = {
   ja: () => require('../../../locales/ja.json'),
   pt: () => require('../../../locales/pt.json'),
   ru: () => require('../../../locales/ru.json'),
+  th: () => require('../../../locales/th.json'),
   vi: () => require('../../../locales/vi.json'),
   zh: () => require('../../../locales/zh.json'),
 };
@@ -157,6 +159,7 @@ class I18nService {
       { name: 'Japanese', value: 'ja' },
       { name: 'Portuguese', value: 'pt' },
       { name: 'Russian', value: 'ru' },
+      { name: 'Thai', value: 'th' },
       { name: 'Vietnamese', value: 'vi' },
       { name: 'Chinese', value: 'zh' },
       { name: 'Slovak', value: 'sk' },
