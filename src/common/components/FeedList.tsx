@@ -30,7 +30,7 @@ type PropsType = {
   listComponent?: React.ComponentType;
   navigation: any;
   style?: StyleProp<ViewStyle>;
-  tab: ChannelTabType;
+  tab?: ChannelTabType;
 };
 
 /**
