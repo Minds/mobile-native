@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ImageBackground,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 import IconM from 'react-native-vector-icons/MaterialIcons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -26,6 +27,7 @@ import * as Progress from 'react-native-progress';
 import TopbarTabbar, {
   TabType,
 } from '../../common/components/topbar-tabbar/TopbarTabbar';
+import AboutTab from './tabs/AboutTab';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -56,6 +58,34 @@ const ChannelHeader = observer((props: PropsType) => {
     // { id: 'shop', title: 'Shop' },
     { id: 'about', title: i18n.t('about') },
   ];
+
+  const screen = () => {
+    switch (props.store.tab) {
+      case 'feed':
+        return (
+          <View
+            style={[
+              styles.bottomBar,
+              theme.borderPrimary,
+              theme.paddingHorizontal4x,
+              theme.rowJustifySpaceBetween,
+            ]}>
+            <Text style={[theme.fontL, theme.colorSecondaryText]}>
+              Scheduled: <Text style={theme.colorPrimaryText}>0</Text>
+            </Text>
+            <FeedFilter store={props.store} />
+          </View>
+        );
+      case 'about':
+        return (
+          <ScrollView>
+            <AboutTab store={props.store} navigation={props.navigation} />
+          </ScrollView>
+        );
+      default:
+        return <View></View>;
+    }
+  };
 
   return (
     <View style={[styles.container, cleanTop]}>
@@ -159,18 +189,7 @@ const ChannelHeader = observer((props: PropsType) => {
         onChange={props.store.setTab}
         current={props.store.tab}
       />
-      <View
-        style={[
-          styles.bottomBar,
-          theme.borderPrimary,
-          theme.paddingHorizontal4x,
-          theme.rowJustifySpaceBetween,
-        ]}>
-        <Text style={[theme.fontL, theme.colorSecondaryText]}>
-          Scheduled: <Text style={theme.colorPrimaryText}>0</Text>
-        </Text>
-        <FeedFilter store={props.store} />
-      </View>
+      {screen()}
     </View>
   );
 });

@@ -40,6 +40,9 @@ export default class UserModel extends BaseModel {
   carousels?: Array<any>;
   dob?: string;
 
+  tags: Array<string> = [];
+  groupsCount: number = 0;
+
   /**
    * @var {boolean}
    */

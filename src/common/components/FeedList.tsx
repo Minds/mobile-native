@@ -19,6 +19,7 @@ import i18n from '../services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../stores/FeedStore';
 import type ActivityModel from '../../newsfeed/ActivityModel';
+import { ChannelTabType } from '../../channel/v2/createChannelStore';
 
 type PropsType = {
   feedStore: FeedStore;
@@ -29,6 +30,7 @@ type PropsType = {
   listComponent?: React.ComponentType;
   navigation: any;
   style?: StyleProp<ViewStyle>;
+  tab: ChannelTabType;
 };
 
 /**
@@ -127,6 +129,8 @@ export default class FeedList<T> extends Component<PropsType> {
 
     const footer = this.getFooter();
 
+    const renderList = this.props.tab === 'feed';
+
     return (
       <ListComponent
         ref={this.setListRef}
@@ -134,7 +138,7 @@ export default class FeedList<T> extends Component<PropsType> {
         onLayout={this.onLayout}
         ListHeaderComponent={header}
         ListFooterComponent={footer}
-        data={feedStore.entities.slice()}
+        data={renderList ? feedStore.entities.slice() : []}
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
@@ -149,7 +153,7 @@ export default class FeedList<T> extends Component<PropsType> {
         initialNumToRender={6}
         windowSize={11}
         // removeClippedSubviews={true}
-        ListEmptyComponent={empty}
+        ListEmptyComponent={renderList ? empty : null}
         viewabilityConfig={this.viewOpts}
         onViewableItemsChanged={this.onViewableItemsChanged}
         onScroll={this.onScroll}
