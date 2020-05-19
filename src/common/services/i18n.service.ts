@@ -4,23 +4,66 @@ import i18n from 'i18n-js';
 import { memoize } from 'lodash';
 import { I18nManager } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import ThemedStyles from 'src/styles/ThemedStyles';
+import moment from 'moment-timezone';
+import { observable, action } from 'mobx';
 
 const translationGetters = {
   // lazy requires (metro bundler does not support symlinks)
-  en: () => require('../../../locales/en.json'),
-  es: () => require('../../../locales/es.json'),
-  ar: () => require('../../../locales/ar.json'),
-  de: () => require('../../../locales/de.json'),
-  fr: () => require('../../../locales/fr.json'),
-  hi: () => require('../../../locales/hi.json'),
-  it: () => require('../../../locales/it.json'),
-  ja: () => require('../../../locales/ja.json'),
-  pt: () => require('../../../locales/pt.json'),
-  ru: () => require('../../../locales/ru.json'),
-  th: () => require('../../../locales/th.json'),
-  vi: () => require('../../../locales/vi.json'),
-  zh: () => require('../../../locales/zh.json'),
+  en: () => {
+    return require('../../../locales/en.json');
+  },
+  es: () => {
+    require('moment/locale/es');
+    return require('../../../locales/es.json');
+  },
+  ar: () => {
+    require('moment/locale/ar');
+    return require('../../../locales/ar.json');
+  },
+  de: () => {
+    require('moment/locale/de');
+    return require('../../../locales/de.json');
+  },
+  fr: () => {
+    require('moment/locale/fr');
+    return require('../../../locales/fr.json');
+  },
+  hi: () => {
+    require('moment/locale/hi');
+    return require('../../../locales/hi.json');
+  },
+  it: () => {
+    require('moment/locale/it');
+    return require('../../../locales/it.json');
+  },
+  ja: () => {
+    require('moment/locale/ja');
+    return require('../../../locales/ja.json');
+  },
+  pt: () => {
+    require('moment/locale/pt');
+    return require('../../../locales/pt.json');
+  },
+  ru: () => {
+    require('moment/locale/ru');
+    return require('../../../locales/ru.json');
+  },
+  th: () => {
+    require('moment/locale/th');
+    return require('../../../locales/th.json');
+  },
+  vi: () => {
+    require('moment/locale/vi');
+    return require('../../../locales/vi.json');
+  },
+  zh: () => {
+    require('moment/locale/zh-cn');
+    return require('../../../locales/zh.json');
+  },
+  sk: () => {
+    require('moment/locale/sk');
+    return require('../../../locales/sk.json');
+  },
 };
 
 const translate = memoize(
@@ -31,6 +74,7 @@ const translate = memoize(
 const namespace = '@Minds:Locale';
 
 class I18nService {
+  @observable locale = 'en';
   constructor() {
     if (process.env.JEST_WORKER_ID === undefined) {
       this.init();
@@ -114,6 +158,7 @@ class I18nService {
    * Set locale
    * @param {string} locale
    */
+  @action
   setLocale(locale: string, store = true) {
     if (store) {
       AsyncStorage.setItem(namespace, locale);
@@ -133,6 +178,10 @@ class I18nService {
       };
     }
     i18n.locale = locale;
+    moment.locale(locale);
+
+    // update observable to fire app reload
+    this.locale = locale;
   }
 
   getCurrentLanguageName() {
