@@ -17,6 +17,7 @@ export const USER_MODE_CLOSED = 2;
  * User model
  */
 export default class UserModel extends BaseModel {
+  programs;
   merchant;
   /**
    * Eth wallet

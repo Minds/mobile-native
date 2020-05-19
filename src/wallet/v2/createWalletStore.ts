@@ -12,6 +12,7 @@ import i18n from '../../common/services/i18n.service';
 import { runInAction } from 'mobx';
 import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
+import sessionService from '../../common/services/session.service';
 
 const createWalletStore = () => ({
   currency: 'tokens' as CurrencyType,
@@ -23,6 +24,20 @@ const createWalletStore = () => ({
     pendingBalanceSplit: 0,
     totalPaidOutSplit: 0,
     verified: false,
+    accountNumber: '',
+    bankAccount: null,
+    city: '',
+    country: 'US',
+    firstName: '',
+    lastName: '',
+    postCode: '',
+    routingNumber: null,
+    ssn: null,
+    state: '',
+    street: '',
+    dob: '',
+    phoneNumber: '',
+    personalIdNumber: '',
   },
   balance: 0,
   wallet: <Wallet>{
@@ -231,7 +246,7 @@ const createWalletStore = () => ({
       this.stripeDetails.hasBank = true;
     }
 
-    this.stripeDetails = { ...account, ...this.stripeDetails };
+    this.stripeDetails = { ...this.stripeDetails, ...account };
 
     this.stripeDetails = this.stripeDetails;
   },
@@ -256,6 +271,41 @@ const createWalletStore = () => ({
       }
 
       return true;
+    } catch (e) {
+      logService.exception(e);
+      return false;
+    }
+  },
+  async createStripeAccount(form): Promise<void | boolean> {
+    const response = await (<any>api.put('api/v2/wallet/usd/account', form));
+    if (!sessionService.getUser().programs) {
+      sessionService.getUser().programs = [];
+    }
+    sessionService.getUser().programs.push('affiliate');
+
+    sessionService.getUser().merchant = {
+      id: response.account.id,
+      service: 'stripe',
+    };
+
+    this.setStripeAccount(response.account);
+  },
+  async addStripeBank(form) {
+    const response = <any>(
+      await api.post('api/v2/payments/stripe/connect/bank', form)
+    );
+
+    // Refresh the account
+    await this.loadStripeAccount();
+
+    return response;
+  },
+  async leaveMonetization() {
+    try {
+      const response = await (<any>(
+        api.delete('api/v2/payments/stripe/connect')
+      ));
+      return response;
     } catch (e) {
       logService.exception(e);
       return false;

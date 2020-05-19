@@ -754,13 +754,41 @@
       "add":"Add your bank details",
       "leave":"Leave Monetization Program",
       "leaveDescription":"For security reasons, you don't be able to rejoin the monetization program",
-      "leaveButton":"Leave Monetization Program"
+      "leaveButton":"Leave Monetization Program",
+      "confirmLeave": "Are you sure? You won't be able to rejoin.",
+      "sure":"Yes, I'm sure"
     },
     "eth":{
       "title":"Ether Address",
       "description": "Your Ether address is the same as your on-chain address.",
       "toChange": "To view or change your address, go to",
       "tokenSettings": "token settings"
+    },
+    "bank":{
+      "title":"Bank Information",
+      "country": "Country",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "dob": "Date of birth",
+      "address": "Address",
+      "town": "Town/City",
+      "zip": "Zip Code",
+      "postal": "Postal Code",
+      "iban": "Bank Account Number / IBAN",
+      "sortCode": "Routing Number / Sort Code",
+      "agree": "I have read and agree to the",
+      "ssa": "Stripe Services Agreement",
+      "phoneNumber": "Phone Number",
+      "phoneNumberInvalid": "Invalid Phone Number",
+      "hkid": "Hong Kong Identity Card (HKID)",
+      "nric": "National Registration Identity Card (NRIC)",
+      "ssn": "SSN (last 4 digits)",
+      "state": "State",
+      "province": "State / Province",
+      "check": "Validation fail for {{input}}",
+      "fail": "Something went wrong",
+      "finish": "Finish adding your bank details to start receiving cash payouts",
+      "complete": "Complete bank details"
     }
   },
   "wire":{

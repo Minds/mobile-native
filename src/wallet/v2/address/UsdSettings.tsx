@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   WalletScreenNavigationProp,
   WalletScreenRouteProp,
 } from '../WalletScreen';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Alert } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import MenuItem from '../../../common/components/menus/MenuItem';
@@ -16,11 +16,30 @@ type PropsType = {
   route: WalletScreenRouteProp;
 };
 
-const UsdSettings = ({ walletStore }: PropsType) => {
+const UsdSettings = ({ walletStore, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const hasBankInfo =
     walletStore.wallet.cash.address !== null &&
     walletStore.wallet.cash.address !== '';
+
+  const hasBankAccount = walletStore.stripeDetails.hasBank;
+
+  const navToBankScreen = () =>
+    navigation.push('BankInfoScreen', { walletStore });
+
+  const confirm = useCallback(() => {
+    Alert.alert(
+      i18n.t('wallet.usd.leaveButton'),
+      i18n.t('wallet.usd.confirmLeave'),
+      [
+        { text: i18n.t('no'), style: 'cancel' },
+        {
+          text: i18n.t('wallet.usd.sure'),
+          onPress: () => walletStore.leaveMonetization(),
+        },
+      ],
+    );
+  }, [walletStore]);
 
   return (
     <View style={theme.paddingTop4x}>
@@ -33,7 +52,7 @@ const UsdSettings = ({ walletStore }: PropsType) => {
             <Text style={[theme.paddingBottom3x, theme.colorSecondaryText]}>
               {i18n.t('wallet.usd.bankInfoDescription')}
             </Text>
-            <Button onPress={() => true} text={i18n.t('wallet.usd.add')} />
+            <Button onPress={navToBankScreen} text={i18n.t('wallet.usd.add')} />
           </View>
         )}
       </View>
@@ -41,8 +60,10 @@ const UsdSettings = ({ walletStore }: PropsType) => {
         <View style={theme.marginBottom7x}>
           <MenuItem
             item={{
-              title: walletStore.wallet.cash.address || '',
-              onPress: () => true,
+              title: hasBankAccount
+                ? walletStore.wallet.cash.label
+                : i18n.t('wallet.bank.complete'),
+              onPress: navToBankScreen,
             }}
           />
         </View>
@@ -58,7 +79,7 @@ const UsdSettings = ({ walletStore }: PropsType) => {
       <MenuItem
         item={{
           title: i18n.t('wallet.usd.leaveButton'),
-          onPress: () => true,
+          onPress: confirm,
         }}
       />
     </View>

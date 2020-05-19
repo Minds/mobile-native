@@ -14,7 +14,7 @@ const MenuSubtitle = ({ children }: PropsType) => {
     theme.fontM,
     theme.marginTop5x,
     theme.marginBottom2x,
-    theme.paddingLeft4x,
+    theme.paddingHorizontal4x,
   ];
 
   return <Text style={subTitleStyle}>{children}</Text>;
