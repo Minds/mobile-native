@@ -1,5 +1,5 @@
 import React from 'react';
-import { DeltaIconPropsType } from '../types';
+import { DeltaIconPropsType } from '../TransactionsListTypes';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ThemedStyles from '../../../../styles/ThemedStyles';
 

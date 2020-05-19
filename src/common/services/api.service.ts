@@ -4,7 +4,7 @@ import { NativeModules } from 'react-native';
 import session from './session.service';
 import { MINDS_API_URI, NETWORK_TIMEOUT } from '../../config/Config';
 
-import abortableFetch from '../helpers/abortableFetch';
+import abortableFetch, { abort } from '../helpers/abortableFetch';
 import { Version } from '../../config/Version';
 import logService from './log.service';
 
@@ -84,6 +84,14 @@ class ApiService {
     }
 
     return data;
+  }
+
+  /**
+   * Abort the calls attached to the tag
+   * @param tag
+   */
+  abort(tag: any) {
+    abort(tag);
   }
 
   /**

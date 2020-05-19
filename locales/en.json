@@ -737,7 +737,10 @@
       "dateRange":"DATE RANGE",
       "noneFilter":"None",
       "fromFilter":"From",
-      "toFilter":"To"
+      "toFilter":"To",
+      "wiresFilter":"Wire",
+      "proEarningsFilter":"Pro Earnings",
+      "payoutsFilter":"Payouts"
     },
     "bitcoins":{
       "setup":"Setup your Bitcoin address",

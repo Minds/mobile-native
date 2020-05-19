@@ -1,6 +1,6 @@
 //@ts-nocheck
 import api, { ApiResponse } from './../common/services/api.service';
-import { ListFiltersType } from './v2/TransactionList/types';
+import { ListFiltersType } from './v2/TransactionList/TransactionsListTypes';
 import moment from 'moment';
 interface WalletJoinResponse extends ApiResponse {
   secret: string;

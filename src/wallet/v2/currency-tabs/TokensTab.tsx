@@ -13,7 +13,7 @@ import { useLegacyStores } from '../../../common/hooks/use-stores';
 import TokensOverview from './TokensOverview';
 import { ScrollView } from 'react-native-gesture-handler';
 import type { BottomOptionsStoreType } from '../../../common/components/BottomOptionPopup';
-import TransactionsList from '../TransactionList/TransactionsList';
+import TransactionsListTokens from '../TransactionList/TransactionsListTokens';
 import ReceiverSettings from '../address/ReceiverSettings';
 import { WalletScreenNavigationProp } from '../WalletScreen';
 import PhoneValidationComponent from '../../../common/components/PhoneValidationComponent';
@@ -157,8 +157,15 @@ const TokensTab = observer(
         );
         break;
       case 'transactions':
+        const filters: Array<[string, string]> = [
+          ['all', i18n.t('wallet.transactions.allFilter')],
+          ['offchain:reward', i18n.t('wallet.transactions.rewardsFilter')],
+          ['offchain:boost', i18n.t('wallet.transactions.boostsFilter')],
+          ['offchain:wire', i18n.t('wallet.transactions.transferFilter')],
+        ];
         body = (
-          <TransactionsList
+          <TransactionsListTokens
+            filters={filters}
             navigation={navigation}
             currency="tokens"
             wallet={walletStore}
@@ -173,8 +180,8 @@ const TokensTab = observer(
         break;
     }
 
-    return (
-      <ScrollView>
+    const mainBody = (
+      <>
         {showSetup && (
           <View style={theme.paddingTop2x}>
             <MenuSubtitle>WALLET SETUP</MenuSubtitle>
@@ -191,8 +198,13 @@ const TokensTab = observer(
           />
           {body}
         </View>
-      </ScrollView>
+      </>
     );
+    if (store.option !== 'transactions') {
+      return <ScrollView>{mainBody}</ScrollView>;
+    } else {
+      return <View style={theme.flexContainer}>{mainBody}</View>;
+    }
   },
 );
 
