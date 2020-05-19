@@ -65,6 +65,7 @@ import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
+import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -311,6 +312,17 @@ const AppStack = function () {
         component={BtcReceiverAddressScreen}
         options={{
           title: i18n.t('wallet.bitcoins.update'),
+          headerStyle: {
+            backgroundColor: ThemedStyles.getColor('primary_background'),
+          },
+          headerHideShadow: true,
+        }}
+      />
+      <AppStackNav.Screen
+        name="BankInfoScreen"
+        component={BankInfoScreen}
+        options={{
+          title: i18n.t('wallet.bank.title'),
           headerStyle: {
             backgroundColor: ThemedStyles.getColor('primary_background'),
           },

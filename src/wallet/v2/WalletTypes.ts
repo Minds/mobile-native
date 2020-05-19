@@ -10,6 +10,19 @@ export interface StripeDetails {
   hasAccount: boolean;
   hasBank: boolean;
   verified: boolean;
+  city: string;
+  country: string;
+  firstName: string;
+  lastName: string;
+  postCode: string;
+  routingNumber: any;
+  accountNumber: string;
+  ssn?: any;
+  state: string;
+  street: string;
+  dob: string;
+  phoneNumber: string;
+  personalIdNumber?: string;
 }
 
 export interface WalletCurrency {
