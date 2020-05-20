@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 
 import { StyleSheet, View, Platform } from 'react-native';
 
@@ -43,9 +43,6 @@ export const Actions = observer((props: PropsType) => {
           <View style={styles.container}>
             <ThumbUpAction entity={entity} />
             <ThumbDownAction entity={entity} />
-            {!isOwner && hasCrypto && hasWire && (
-              <WireAction owner={entity.ownerObj} navigation={navigation} />
-            )}
             <CommentsAction
               entity={entity}
               navigation={navigation}
@@ -57,7 +54,7 @@ export const Actions = observer((props: PropsType) => {
 
             <View style={ThemedStyles.style.flexContainer} />
 
-            {!isOwner && hasCrypto && (
+            {!isOwner && hasCrypto && hasWire && (
               <WireAction owner={entity.ownerObj} navigation={navigation} />
             )}
 
