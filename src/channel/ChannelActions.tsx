@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Platform } from 'react-native';
 
 import { observer } from 'mobx-react';
 
@@ -135,6 +135,7 @@ class ChannelActions extends Component {
       !channel.blocked &&
       !isOwner &&
       featuresService.has('crypto') &&
+      Platform.OS !== 'ios' &&
       channel.can(FLAG_WIRE);
     const showScheduled =
       featuresService.has('post-scheduler') && !this.state.edit && isOwner;

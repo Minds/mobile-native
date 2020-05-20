@@ -90,16 +90,6 @@ exports[`Activity component renders correctly 1`] = `
         }
       }
     />
-    <WireAction
-      owner={
-        Object {
-          "guid": "824853017709780997",
-          "subtype": false,
-          "time_created": "1522036284",
-          "type": "user",
-        }
-      }
-    />
     <CommentsAction
       entity={
         Object {
