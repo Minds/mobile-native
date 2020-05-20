@@ -252,6 +252,7 @@
     "tapUnblock":"Tap to unblock",
     "notFound":"Channel not found",
     "viewScheduled":"Scheduled",
+    "badges":"Badges",
     "edit":{
       "channel":"Edit Channel",
       "bio":"Bio",

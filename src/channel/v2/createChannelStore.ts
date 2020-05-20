@@ -245,6 +245,13 @@ const createChannelStore = () => {
         this.loadFromEntity(channel);
       }
     },
+    async getGroupCount() {
+      if (this.channel) {
+        return await channelsService.getGroupCount(this.channel);
+      } else {
+        return 0;
+      }
+    },
   };
   return store;
 };

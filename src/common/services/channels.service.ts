@@ -93,6 +93,17 @@ class ChannelsService {
     const urn = `urn:channels:${channel.guid}`;
     entitiesStorage.remove(urn);
   }
+
+  async getGroupCount(channel: UserModel): Promise<number> {
+    try {
+      const response: any = await apiService.get(
+        `api/v3/channel/${channel.guid}/groups/count`,
+      );
+      return response.count;
+    } catch (err) {
+      return 0;
+    }
+  }
 }
 
 export default new ChannelsService();

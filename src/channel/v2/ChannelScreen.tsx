@@ -63,6 +63,7 @@ const ChannelScreen = observer((props: PropsType) => {
       navigation={props.navigation}
       emptyMessage={emptyMessage}
       style={[theme.backgroundSecondary, theme.flexContainer]}
+      tab={store.tab}
     />
   );
 });
