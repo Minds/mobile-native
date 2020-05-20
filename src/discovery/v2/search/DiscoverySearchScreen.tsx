@@ -1,10 +1,6 @@
-import React, { Component, Fragment, ComponentType, useEffect } from 'react';
-
-import { StyleSheet, View } from 'react-native';
-
+import React, { useEffect, useCallback } from 'react';
+import { View } from 'react-native';
 import { observer } from 'mobx-react';
-
-import _ from 'lodash';
 
 import SearchView from '../../../common/components/SearchView';
 import { CommonStyle as CS } from '../../../styles/Common';
@@ -17,7 +13,6 @@ import { useNavigation } from '@react-navigation/core';
 import { RouteProp } from '@react-navigation/native';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useStores } from '../../../common/hooks/use-stores';
 import { Icon } from 'react-native-elements';
 import isIphoneX from '../../../common/helpers/isIphoneX';
 import { DiscoverySearchList } from './DiscoverySearchList';
@@ -28,30 +23,33 @@ interface Props {
   route: RouteProp<AppStackParamList, 'DiscoverySearch'>;
 }
 
+const paddingTop = {
+  paddingTop: isIphoneX ? 50 : 0,
+};
+
 export const DiscoverySearchHeader = observer(() => {
+  const theme = ThemedStyles.style;
   const store = useDiscoveryV2SearchStore();
 
   const navigation = useNavigation<
     StackNavigationProp<AppStackParamList, 'DiscoverySearch'>
   >();
 
+  const onPressBack = useCallback(() => {
+    store.reset();
+    navigation.goBack();
+  }, [navigation, store]);
+
   return (
-    <View
-      style={[
-        CS.shadow,
-        ThemedStyles.style.backgroundSecondary,
-        {
-          paddingTop: isIphoneX ? 50 : 0,
-        },
-      ]}>
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View style={ThemedStyles.style.padding2x}>
+    <View style={[CS.shadow, theme.backgroundSecondary, paddingTop]}>
+      <View style={[theme.rowJustifyStart, theme.alignCenter]}>
+        <View style={theme.padding2x}>
           <Icon
             color={ThemedStyles.getColor('icon')}
             size={32}
             name="chevron-left"
             type="material-community"
-            onPress={() => navigation.goBack()}
+            onPress={onPressBack}
           />
         </View>
 
@@ -60,10 +58,10 @@ export const DiscoverySearchHeader = observer(() => {
           onChangeText={store.setQuery}
           value={store.query}
           containerStyle={[
-            ThemedStyles.style.marginVertical,
-            ThemedStyles.style.marginRight4x,
-            ThemedStyles.style.backgroundPrimary,
-            { flex: 1 },
+            theme.marginVertical,
+            theme.marginRight4x,
+            theme.backgroundPrimary,
+            theme.flexContainer,
           ]}
           // iconRight={iconRight}
           // iconRightOnPress={this.clearSearch}
@@ -72,15 +70,14 @@ export const DiscoverySearchHeader = observer(() => {
       </View>
       <TopbarTabbar
         current={store.filter}
-        onChange={(filter) => {
-          store.setFilter(filter);
-        }}
+        onChange={store.setFilter}
         tabs={[
           { id: 'top', title: 'Top' },
           { id: 'latest', title: 'Latest' },
           { id: 'channels', title: 'Channels' },
           { id: 'groups', title: 'Groups' },
-        ]}></TopbarTabbar>
+        ]}
+      />
     </View>
   );
 });
@@ -89,6 +86,7 @@ export const DiscoverySearchHeader = observer(() => {
  * Discovery screen
  */
 export const DiscoverySearchScreen = observer((props: Props) => {
+  const theme = ThemedStyles.style;
   const store = useDiscoveryV2SearchStore();
 
   const navigation = useNavigation<
@@ -99,33 +97,16 @@ export const DiscoverySearchScreen = observer((props: Props) => {
   });
 
   useEffect(() => {
-    // const unsubscribe = navigation.addListener('transitionEnd', (s) => {
     store.setQuery(props.route.params.query);
-    // });
-    // return unsubscribe;
-  }, [props.route.params.query]);
-
-  useEffect(() => {
-    // clear data on leave
-    const unsubscribe = navigation.addListener('blur', (s) => {
-      store.reset();
-    });
-
-    return unsubscribe;
-  }, []);
+  }, [props.route.params.query, store]);
 
   return (
-    <View style={{ flex: 1 }}>
-      <DiscoverySearchHeader></DiscoverySearchHeader>
+    <View style={theme.flexContainer}>
+      <DiscoverySearchHeader />
       <DiscoverySearchList
         navigation={navigation}
-        style={styles.list}></DiscoverySearchList>
+        style={theme.flexContainer}
+      />
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-  },
 });

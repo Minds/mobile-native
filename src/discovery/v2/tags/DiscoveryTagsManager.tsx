@@ -1,8 +1,7 @@
-import { observer, inject, useLocalStore } from 'mobx-react';
-import React, { PureComponent, Fragment, useEffect, useState } from 'react';
+import { observer, useLocalStore } from 'mobx-react';
+import React, { useEffect } from 'react';
 import {
   View,
-  StyleSheet,
   StyleProp,
   ViewStyle,
   SectionList,
@@ -10,7 +9,6 @@ import {
 } from 'react-native';
 import { useDiscoveryV2Store } from '../DiscoveryV2Context';
 import ThemedStyles from '../../../styles/ThemedStyles';
-import { Icon } from 'react-native-elements';
 
 import BottomOptionPopup from '../../../common/components/BottomOptionPopup';
 import MenuItem from '../../../common/components/menus/MenuItem';
@@ -82,7 +80,7 @@ export const DiscoveryTagsManager = observer((props: Props) => {
 
   useEffect(() => {
     store.setTags(discoveryV2.tags.slice(), discoveryV2.trendingTags.slice());
-  }, [props.show]);
+  }, [discoveryV2.tags, discoveryV2.trendingTags, props.show, store]);
 
   const ItemPartial = ({ item, index }) => {
     const tag = item;
@@ -107,7 +105,8 @@ export const DiscoveryTagsManager = observer((props: Props) => {
                 type: 'ionicon',
               }
             : { name: 'ios-add-circle-outline', type: 'ionicon' },
-        }}></MenuItem>
+        }}
+      />
     );
   };
 
@@ -158,13 +157,12 @@ export const DiscoveryTagsManager = observer((props: Props) => {
               data: [...store.other.slice()],
             },
           ]}
-          keyExtractor={keyExtractor}></SectionList>
+          keyExtractor={keyExtractor}
+        />
       }
       doneText="Done"
     />
   );
 });
-
-const styles = StyleSheet.create({});
 
 export default DiscoveryTagsManager;

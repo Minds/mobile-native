@@ -1,41 +1,32 @@
-import { observer, inject } from 'mobx-react';
-import React, { PureComponent, Fragment, useEffect } from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  ActivityIndicator,
-  StyleProp,
-  ViewStyle,
-} from 'react-native';
+import { observer } from 'mobx-react';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, FlatList } from 'react-native';
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import { ComponentsStyle } from '../../../styles/Components';
-//import OptionsDrawer from '../../../common/components/OptionsDrawer';
 import { useDiscoveryV2Store } from '../DiscoveryV2Context';
-
-interface Props {
-  style: StyleProp<ViewStyle>;
-}
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 /**
  * Discovery List Item
  */
-export const DiscoveryTrendsList = observer((props: Props) => {
+export const DiscoveryTrendsList = observer(() => {
+  const theme = ThemedStyles.style;
   const discoveryV2 = useDiscoveryV2Store();
-  let listRef: FlatList<any> | null;
+  let listRef = useRef<FlatList<any>>(null);
 
   useEffect(() => {
     discoveryV2.loadTrends(true);
-  }, []);
+  }, [discoveryV2]);
 
   useEffect(() => {
-    listRef && listRef.scrollToOffset({ offset: -65, animated: true });
-  }, [discoveryV2.refreshing]);
+    if (listRef.current) {
+      listRef.current.scrollToOffset({ offset: -65, animated: true });
+    }
+  }, [discoveryV2.refreshing, listRef]);
 
   const EmptyPartial = () => {
     return discoveryV2.loading || discoveryV2.refreshing ? (
-      <View></View>
+      <View />
     ) : (
       <View>
         <View style={ComponentsStyle.emptyComponentContainer}>
@@ -50,11 +41,7 @@ export const DiscoveryTrendsList = observer((props: Props) => {
   };
 
   const ItemPartial = ({ item, index }) => {
-    return (
-      <DiscoveryTrendsListItem
-        isHero={index === 0}
-        data={item}></DiscoveryTrendsListItem>
-    );
+    return <DiscoveryTrendsListItem isHero={index === 0} data={item} />;
   };
 
   const onRefresh = () => {
@@ -69,25 +56,17 @@ export const DiscoveryTrendsList = observer((props: Props) => {
   /**
    * Render
    */
-
   return (
-    <View style={{ flex: 1 }}>
+    <View style={theme.flexContainer}>
       <FlatList
-        ref={(ref) => (listRef = ref)}
-        data={[...discoveryV2.trends.slice()]}
+        ref={listRef}
+        data={discoveryV2.trends.slice()}
         onRefresh={onRefresh}
         refreshing={discoveryV2.loading}
         ListEmptyComponent={EmptyPartial}
         renderItem={ItemPartial}
         keyExtractor={keyExtractor}
-        //style={styles.list}
       />
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-  },
 });

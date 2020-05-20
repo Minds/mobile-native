@@ -20,7 +20,7 @@ export default class DiscoveryV2SearchStore {
 
   constructor() {
     this.listStore
-      .setEndpoint(`api/v3/discovery/search`)
+      .setEndpoint('api/v3/discovery/search')
       .setLimit(12)
       .setInjectBoost(false)
       .setAsActivities(false)
@@ -49,12 +49,12 @@ export default class DiscoveryV2SearchStore {
   };
 
   @action
-  setFilter(filter: string) {
+  setFilter = (filter: string) => {
     this.filter = filter;
     this.params.algorithm = filter;
     this.listStore.clear();
     this.refresh();
-  }
+  };
 
   @action
   async refresh(): Promise<void> {

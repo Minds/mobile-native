@@ -1,28 +1,13 @@
-import React, { Component, Fragment, ComponentType, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-import {
-  StyleSheet,
-  Platform,
-  Text,
-  Dimensions,
-  RefreshControl,
-  View,
-  FlatList,
-} from 'react-native';
+import { Text, View, FlatList } from 'react-native';
 
 import { observer } from 'mobx-react';
-
-import _ from 'lodash';
 
 import Activity from '../../../newsfeed/activity/Activity';
 import { CommonStyle as CS } from '../../../styles/Common';
 import { ComponentsStyle } from '../../../styles/Components';
-
-import ErrorLoading from '../../../common/components/ErrorLoading';
-
 import ErrorBoundary from '../../../common/components/ErrorBoundary';
-import i18n from '../../../common/services/i18n.service';
-import FallbackBoundary from '../../FallbackBoundary';
 
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
@@ -33,12 +18,16 @@ interface Props {
 }
 
 export const DiscoverySearchList = observer((props: Props) => {
+  const theme = ThemedStyles.style;
+
   const store = useDiscoveryV2SearchStore();
-  let listRef: FlatList<[]> | null;
+  let listRef = useRef<FlatList<[]>>(null);
 
   useEffect(() => {
-    listRef && listRef.scrollToOffset({ offset: -65, animated: true });
-  }, [store.refreshing]);
+    if (listRef.current) {
+      listRef.current.scrollToOffset({ offset: -65, animated: true });
+    }
+  }, [listRef, store.refreshing]);
 
   const keyExtractor = (item) => item.urn;
 
@@ -51,7 +40,7 @@ export const DiscoverySearchList = observer((props: Props) => {
     switch (row.item.type) {
       case 'user':
       case 'group':
-        entity = <View></View>;
+        entity = <View />;
         break;
       default:
         entity = (
@@ -74,7 +63,7 @@ export const DiscoverySearchList = observer((props: Props) => {
 
   const EmptyPartial = () => {
     return store.refreshing ? (
-      <View></View>
+      <View />
     ) : (
       <View>
         <View style={ComponentsStyle.emptyComponentContainer}>
@@ -115,23 +104,17 @@ export const DiscoverySearchList = observer((props: Props) => {
   // };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={theme.flexContainer}>
       <FlatList
-        ref={(ref) => (listRef = ref)}
-        data={[...store.listStore.entities.slice()]}
+        ref={listRef}
+        data={store.listStore.entities.slice()}
         onRefresh={() => store.refresh()}
         refreshing={store.refreshing}
         ListEmptyComponent={EmptyPartial}
         renderItem={ItemPartial}
         keyExtractor={keyExtractor}
-        style={[ThemedStyles.getColor('primary_background')]}
+        style={theme.backgroundPrimary}
       />
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  list: {
-    flex: 1,
-  },
 });
