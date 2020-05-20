@@ -129,7 +129,7 @@ export default class FeedList<T> extends Component<PropsType> {
 
     const footer = this.getFooter();
 
-    const renderList = this.props.tab === 'feed';
+    const renderList = !this.props.tab || this.props.tab === 'feed';
 
     return (
       <ListComponent
