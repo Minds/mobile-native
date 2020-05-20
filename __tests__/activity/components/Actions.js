@@ -72,7 +72,7 @@ xdescribe('Activity component', () => {
   it('should have the expectedComponents', async () => {
     screen.update();
 
-    //expect(screen.find('WireAction')).toHaveLength(1);
+    // expect(screen.find('WireAction')).toHaveLength(1);
     expect(screen.find('ThumbUpAction')).toHaveLength(1);
     expect(screen.find('ThumbDownAction')).toHaveLength(1);
     expect(screen.find('CommentsAction')).toHaveLength(1);

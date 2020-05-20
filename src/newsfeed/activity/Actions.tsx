@@ -1,8 +1,8 @@
-import React, { PureComponent, useEffect } from 'react';
+import React  from 'react';
 
-import { StyleSheet, View, ActionSheetIOS } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import ThumbUpAction from './actions/ThumbUpAction';
 import ThumbDownAction from './actions/ThumbDownAction';
@@ -11,17 +11,13 @@ import CommentsAction from './actions/CommentsAction';
 import RemindAction from './actions/RemindAction';
 import BoostAction from './actions/BoostAction';
 
-import { CommonStyle } from '../../styles/Common';
 import featuresService from '../../common/services/features.service';
 import BaseModel from '../../common/BaseModel';
 import type ActivityModel from '../ActivityModel';
-import type UserStore from '../../auth/UserStore';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 import { useNavigation } from '@react-navigation/native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { Text } from 'react-native-animatable';
 import CommentsEntityOutlet from '../../comments/CommentsEntityOutlet';
-import { UserError } from '../../common/UserError';
 
 type PropsType = {
   entity: ActivityModel;
@@ -32,10 +28,9 @@ export const Actions = observer((props: PropsType) => {
   const { user } = useLegacyStores();
   const navigation = useNavigation();
 
-  useEffect(() => {}, [props.showCommentsOutlet]);
-
   const entity = props.entity;
   const isOwner = user.me.guid === entity.owner_guid;
+  const hasWire = Platform.OS !== 'ios';
   const hasCrypto = featuresService.has('crypto');
   const isScheduled = BaseModel.isScheduled(
     parseInt(entity.time_created, 10) * 1000,
@@ -48,6 +43,9 @@ export const Actions = observer((props: PropsType) => {
           <View style={styles.container}>
             <ThumbUpAction entity={entity} />
             <ThumbDownAction entity={entity} />
+            {!isOwner && hasCrypto && hasWire && (
+              <WireAction owner={entity.ownerObj} navigation={navigation} />
+            )}
             <CommentsAction
               entity={entity}
               navigation={navigation}
@@ -57,7 +55,7 @@ export const Actions = observer((props: PropsType) => {
             />
             <RemindAction entity={entity} />
 
-            <View style={{ flex: 1 }}></View>
+            <View style={ThemedStyles.style.flexContainer} />
 
             {!isOwner && hasCrypto && (
               <WireAction owner={entity.ownerObj} navigation={navigation} />
@@ -70,7 +68,7 @@ export const Actions = observer((props: PropsType) => {
         )}
       </View>
       {props.showCommentsOutlet ? (
-        <CommentsEntityOutlet entity={entity}></CommentsEntityOutlet>
+        <CommentsEntityOutlet entity={entity} />
       ) : undefined}
     </View>
   );

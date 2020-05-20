@@ -59,6 +59,7 @@ import translationService from './src/common/services/translation.service';
 import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
 import AppMessages from './AppMessages';
+import i18n from './src/common/services/i18n.service';
 
 const stores = getStores();
 let deepLinkUrl = '';
@@ -372,7 +373,7 @@ class App extends Component<Props, State> {
                   )}
                 />
                 <NavigationStack
-                  key={ThemedStyles.theme}
+                  key={ThemedStyles.theme + i18n.locale}
                   isLoggedIn={isLoggedIn}
                 />
                 <AppMessages />

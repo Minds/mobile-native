@@ -304,7 +304,7 @@ exports[`Activity component renders correctly 1`] = `
           ]
         }
       >
-        2y ago
+        2 years ago
       </Text>
     </TouchableOpacity>
   </OwnerBlock>
