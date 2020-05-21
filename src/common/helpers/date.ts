@@ -9,30 +9,9 @@ function pad(n, width, z) {
 
 function frendlyTime(date) {
   const now = moment();
+  const diff = moment.duration(date.diff(now));
 
-  const diff = moment.duration(now.diff(date));
-
-  if (diff.years() > 0) {
-    return `${diff.years()}y ago`;
-  }
-
-  if (diff.weeks() > 0) {
-    return `${diff.weeks()}w ago`;
-  }
-
-  if (diff.days() > 0) {
-    return `${diff.days()}d ago`;
-  }
-
-  if (diff.hours() > 0) {
-    return `${diff.hours()}h ago`;
-  }
-
-  if (diff.minutes() > 0) {
-    return `${diff.minutes()}m ago`;
-  }
-
-  return `${diff.seconds()}s ago`;
+  return diff.humanize(true);
 }
 
 export default function formatDate(

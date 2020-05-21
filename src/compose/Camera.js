@@ -33,102 +33,70 @@ export default observer(function (props) {
   const cleanBottom = { paddingBottom: insets.bottom + 50 };
 
   // local store
-  const store = useLocalStore(() => ({
-    cameraType: RNCamera.Constants.Type.back,
-    flashMode: RNCamera.Constants.FlashMode.off,
-    recording: false,
-    show: false,
-    pulse: false,
-    ready: false,
-    showCam() {
-      store.show = true;
-    },
-    isReady() {
-      store.ready = true;
-    },
-    toggleFlash: () => {
-      if (store.flashMode === RNCamera.Constants.FlashMode.on) {
-        store.flashMode = RNCamera.Constants.FlashMode.off;
-      } else if (store.flashMode === RNCamera.Constants.FlashMode.off) {
-        store.flashMode = RNCamera.Constants.FlashMode.auto;
-      } else {
-        store.flashMode = RNCamera.Constants.FlashMode.on;
-      }
-    },
-    toggleCamera: () => {
-      store.cameraType =
-        store.cameraType === RNCamera.Constants.Type.back
-          ? RNCamera.Constants.Type.front
-          : RNCamera.Constants.Type.back;
-    },
-    setRecording: (value, pulse = false) => {
-      store.recording = value;
-      store.pulse = pulse;
-    },
-    async recordVideo(pulse = false) {
-      if (store.recording) {
-        store.setRecording(false);
-        return ref.current.stopRecording();
-      }
-      const settings = await mindsService.getSettings();
+  const store = useLocalStore(
+    (p) => ({
+      cameraType: RNCamera.Constants.Type.back,
+      flashMode: RNCamera.Constants.FlashMode.off,
+      recording: false,
+      show: false,
+      pulse: false,
+      ready: false,
+      showCam() {
+        store.show = true;
+      },
+      isReady() {
+        store.ready = true;
+      },
+      toggleFlash: () => {
+        if (store.flashMode === RNCamera.Constants.FlashMode.on) {
+          store.flashMode = RNCamera.Constants.FlashMode.off;
+        } else if (store.flashMode === RNCamera.Constants.FlashMode.off) {
+          store.flashMode = RNCamera.Constants.FlashMode.auto;
+        } else {
+          store.flashMode = RNCamera.Constants.FlashMode.on;
+        }
+      },
+      toggleCamera: () => {
+        store.cameraType =
+          store.cameraType === RNCamera.Constants.Type.back
+            ? RNCamera.Constants.Type.front
+            : RNCamera.Constants.Type.back;
+      },
+      setRecording: (value, pulse = false) => {
+        store.recording = value;
+        store.pulse = pulse;
+      },
+      async recordVideo(pulse = false) {
+        if (store.recording) {
+          store.setRecording(false);
+          return ref.current.stopRecording();
+        }
+        const settings = await mindsService.getSettings();
 
-      store.setRecording(true, pulse);
+        store.setRecording(true, pulse);
 
-      return await ref.current.recordAsync({
-        quality: 0.9,
-        maxDuration: settings.max_video_length,
-      });
-    },
-    promptImageOrVideo: () => {
-      return new Promise((resolve) => {
-        showMessage({
-          position: 'bottom',
-          message: i18n.t('imagePicker.gallery'),
-          floating: true,
-          duration: 0,
-          renderCustomContent: () => (
-            <View style={[theme.rowJustifySpaceEvenly, theme.marginTop4x]}>
-              <Text
-                style={theme.fontXL}
-                onPress={async () => {
-                  resolve(await attachmentService.gallery('photo'));
-                }}>
-                {i18n.t('images')}
-              </Text>
-              <Text
-                style={theme.fontXL}
-                onPress={async () => {
-                  resolve(await attachmentService.gallery('video'));
-                }}>
-                {i18n.t('videos')}
-              </Text>
-            </View>
-          ),
-          color: ThemedStyles.getColor('primary_text'),
-          titleStyle: ThemedStyles.style.fontXL,
-          backgroundColor: ThemedStyles.getColor('tertiary_background'),
-          type: 'default',
+        return await ref.current.recordAsync({
+          quality: 0.9,
+          maxDuration: settings.max_video_length,
         });
-      });
-    },
-    async selectFromGallery() {
-      const response =
-        Platform.OS === 'android'
-          ? await store.promptImageOrVideo()
-          : await attachmentService.gallery('mixed');
+      },
+      async selectFromGallery() {
+        const response = await attachmentService.gallery(p.mode);
 
-      if (response && props.onMediaFromGallery) {
-        props.onMediaFromGallery(response);
-      }
-    },
-    takePicture() {
-      return ref.current.takePictureAsync({
-        base64: false,
-        quality: 0.9,
-        pauseAfterCapture: true,
-      });
-    },
-  }));
+        if (response && props.onMediaFromGallery) {
+          props.onMediaFromGallery(response);
+        }
+      },
+      takePicture() {
+        return ref.current.takePictureAsync({
+          base64: false,
+          quality: 0.9,
+          pauseAfterCapture: true,
+        });
+      },
+    }),
+    props,
+  );
 
   useEffect(() => {
     const t = setTimeout(() => {
