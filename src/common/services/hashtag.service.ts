@@ -43,7 +43,7 @@ class HashtagService {
    */
   slice(input) {
     try {
-      const regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
+      const regex = /(?:^|\s)(?:#)([\u0E00-\u0E7Fa-zA-Z\d]+)/gm;
       let matches = [];
       let match;
       while ((match = regex.exec(input))) {

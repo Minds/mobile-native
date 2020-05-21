@@ -51,7 +51,7 @@ class CaptureStore {
 
   @computed
   get allTags() {
-    const hash = /(^|\s)\#(\w*[a-zA-Z_]+\w*)/gim;
+    const hash = /(^|\s)\#(\w*[\u0E00-\u0E7Fa-zA-Z_]+\w*)/gim;
     const result = this.text.split(hash);
     const hashtags = [];
 
