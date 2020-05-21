@@ -20,7 +20,6 @@ import { DiscoveryTagsManager } from './DiscoveryTagsManager';
 import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 
 interface Props {
-  style: StyleProp<ViewStyle>;
   type: 'your' | 'trending';
 }
 
@@ -34,7 +33,7 @@ export const DiscoveryTagsList = observer((props: Props) => {
   const [showManageTags, setShowManageTags] = useState(false);
 
   useEffect(() => {
-    discoveryV2.loadTags(true);
+    discoveryV2.loadTags();
   }, [discoveryV2]);
 
   const onPress = (data): void => {

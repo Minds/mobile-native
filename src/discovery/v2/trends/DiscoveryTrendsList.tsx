@@ -15,7 +15,7 @@ export const DiscoveryTrendsList = observer(() => {
   let listRef = useRef<FlatList<any>>(null);
 
   useEffect(() => {
-    discoveryV2.loadTrends(true);
+    discoveryV2.loadTrends();
   }, [discoveryV2]);
 
   useEffect(() => {

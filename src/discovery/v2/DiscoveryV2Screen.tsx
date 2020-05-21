@@ -60,11 +60,11 @@ export const DiscoveryV2Screen = observer((props: Props) => {
   const screen = () => {
     switch (store.activeTabId) {
       case 'foryou':
-        return <DiscoveryTrendsList style={{}} />;
+        return <DiscoveryTrendsList />;
       case 'your-tags':
-        return <DiscoveryTagsList style={{}} type="your" />;
+        return <DiscoveryTagsList type="your" />;
       case 'trending-tags':
-        return <DiscoveryTagsList style={{}} type="trending" />;
+        return <DiscoveryTagsList type="trending" />;
       case 'boosts':
         newsfeed.refresh();
         return <NewsfeedList newsfeed={newsfeed} navigation={navigation} />;
