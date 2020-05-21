@@ -9,8 +9,6 @@ import FastImage from 'react-native-fast-image';
  */
 export default class ImageViewer extends Component {
   render() {
-    console.log('ImageViewer');
-
     return (
       <View style={styles.wrapper}>
         <ImageZoom
