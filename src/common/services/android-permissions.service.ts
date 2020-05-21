@@ -1,5 +1,4 @@
-//@ts-nocheck
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, Rationale, Permission } from 'react-native';
 import i18nService from './i18n.service';
 
 /**
@@ -13,6 +12,7 @@ class AndroidPermissionsService {
     return this._request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE, {
       title: 'Minds',
       message: i18nService.t('permissions.externalStorage'),
+      buttonPositive: i18nService.t('permissions.grant'),
     });
   }
 
@@ -39,6 +39,7 @@ class AndroidPermissionsService {
     return this._request(PermissionsAndroid.PERMISSIONS.READ_SMS, {
       title: 'Minds',
       message: i18nService.t('permissions.sms'),
+      buttonPositive: i18nService.t('permissions.grant'),
     });
   }
 
@@ -66,6 +67,7 @@ class AndroidPermissionsService {
       {
         title: 'Minds',
         message: i18nService.t('permissions.writeExternalStorage'),
+        buttonPositive: i18nService.t('permissions.grant'),
       },
     );
   }
@@ -73,7 +75,7 @@ class AndroidPermissionsService {
   /**
    * Check external storage write permission
    */
-  async checkWriteExternalStorage() {
+  async checkWriteExternalStorage(): Promise<boolean> {
     try {
       const granted = await PermissionsAndroid.check(
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -81,7 +83,7 @@ class AndroidPermissionsService {
       return granted;
     } catch (err) {
       console.warn(err);
-      return err;
+      return false;
     }
   }
 
@@ -92,6 +94,7 @@ class AndroidPermissionsService {
     return this._request(PermissionsAndroid.PERMISSIONS.CAMERA, {
       title: 'Minds',
       message: i18nService.t('permissions.camera'),
+      buttonPositive: i18nService.t('permissions.grant'),
     });
   }
 
@@ -115,11 +118,16 @@ class AndroidPermissionsService {
    * @param {string} permission
    * @param {object} opt
    */
-  async _request(permission, opt = {}) {
+  async _request(
+    permission: Permission,
+    opt: Rationale | undefined = undefined,
+  ) {
     try {
       const granted = await PermissionsAndroid.request(permission, opt);
 
-      if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) return -1;
+      if (granted === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+        return -1;
+      }
 
       return granted === PermissionsAndroid.RESULTS.GRANTED;
     } catch (err) {

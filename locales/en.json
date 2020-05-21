@@ -25,6 +25,7 @@
     "writeExternalStorage":"Minds needs access to your external storage so you can download awesome pictures.",
     "sms":"Minds needs access to read sms to auto-detect the validation code.",
     "camera":"Minds needs access to your external camera so you can upload awesome pictures.",
+    "grant":"Grant",
     "notAllowed":{
       "appoint_admin":"You are not allowed to appoint an admin",
       "appoint_moderator":"You are not allowed to appoint a moderator",

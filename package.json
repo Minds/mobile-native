@@ -69,6 +69,7 @@
     "react-native-fs": "^2.16.1",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-image-crop-picker": "^0.28.0",
+    "react-native-image-pan-zoom": "^2.1.12",
     "react-native-image-picker": "^2.3.1",
     "react-native-image-progress": "^1.1.1",
     "react-native-jitsi-meet": "Minds/react-native-jitsi-meet#a8362eecfbbbd93f64775cdcea24e3e9485461de",
