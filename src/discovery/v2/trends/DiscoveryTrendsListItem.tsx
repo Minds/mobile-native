@@ -1,5 +1,5 @@
-import { observer, inject } from 'mobx-react';
-import React, { Component, Fragment, PureComponent } from 'react';
+import { observer } from 'mobx-react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,6 @@ import {
   TouchableHighlight,
   Dimensions,
 } from 'react-native';
-import Colors from '../../../styles/Colors';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import FastImage from 'react-native-fast-image';
 import formatDate from '../../../common/helpers/date';
@@ -25,7 +24,6 @@ interface Props {
 /**
  * Discovery List Item
  */
-
 export const DiscoveryTrendsListItem = observer((props: Props) => {
   const { data, isHero } = props;
   const navigation = useNavigation<StackNavigationProp<any>>();
@@ -53,7 +51,12 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
     return (
       <View style={[styles.heroContainer]}>
         {RichPartialThumbnail()}
-        <View style={[styles.container, ThemedStyles.style.padding4x]}>
+        <View
+          style={[
+            styles.container,
+            ThemedStyles.style.padding4x,
+            ThemedStyles.style.borderPrimary,
+          ]}>
           <View style={[styles.body]}>
             <Text style={styles.title}>
               {excerpt(data.title, DISCOVERY_TRENDING_MAX_LENGTH)}
@@ -75,7 +78,12 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
   const RichPartial = () => {
     const entity = data.entity;
     return (
-      <View style={[styles.container, ThemedStyles.style.padding4x]}>
+      <View
+        style={[
+          styles.container,
+          ThemedStyles.style.padding4x,
+          ThemedStyles.style.borderPrimary,
+        ]}>
         <View style={[styles.body]}>
           <Text style={styles.title}>
             {excerpt(data.title, DISCOVERY_TRENDING_MAX_LENGTH)}
@@ -112,7 +120,12 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
 
   const TrendingHashtagPartial = () => {
     return (
-      <View style={[styles.container, ThemedStyles.style.padding4x]}>
+      <View
+        style={[
+          styles.container,
+          ThemedStyles.style.padding4x,
+          ThemedStyles.style.borderPrimary,
+        ]}>
         <View style={[styles.body]}>
           <Text
             style={[
@@ -128,9 +141,7 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
           color={ThemedStyles.getColor('tertiary_text')}
           name="chevron-right"
           size={32}
-          style={{
-            alignSelf: 'center',
-          }}
+          style={styles.centered}
         />
       </View>
     );
@@ -151,13 +162,15 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#ececec',
+    borderBottomWidth: StyleSheet.hairlineWidth * 2,
     flexDirection: 'row',
     display: 'flex',
     alignItems: 'center',
   },
   body: { flex: 1, paddingRight: 10 },
+  centered: {
+    alignSelf: 'center',
+  },
   title: {
     fontWeight: 'bold',
     fontSize: 16,

@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx';
 import apiService from '../../common/services/api.service';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 
 export type TDiscoveryV2Tabs =
   | 'foryou'
@@ -43,7 +42,7 @@ export default class DiscoveryV2Store {
    * Load discovery overview
    */
   @action
-  async loadTrends(refresh: boolean = false): Promise<void> {
+  async loadTrends(): Promise<void> {
     this.loading = true;
     try {
       const response: any = await apiService.get('api/v3/discovery/trends');
@@ -64,7 +63,7 @@ export default class DiscoveryV2Store {
    * Load discovery overview
    */
   @action
-  async loadTags(refresh: boolean = false): Promise<void> {
+  async loadTags(): Promise<void> {
     this.loading = true;
     try {
       const response: any = await apiService.get('api/v3/discovery/tags');
@@ -96,7 +95,7 @@ export default class DiscoveryV2Store {
   async refreshTrends(): Promise<void> {
     this.refreshing = true;
     this.setTrends([]);
-    await this.loadTrends(true);
+    await this.loadTrends();
     this.refreshing = false;
   }
 
@@ -105,7 +104,7 @@ export default class DiscoveryV2Store {
     this.refreshing = true;
     this.setTags([]);
     this.setTrendingTags([]);
-    await this.loadTags(true);
+    await this.loadTags();
     this.refreshing = false;
   }
 
