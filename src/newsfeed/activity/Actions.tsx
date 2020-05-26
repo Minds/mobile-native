@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 
 import { inject } from 'mobx-react';
 
@@ -32,6 +32,7 @@ export default class Actions extends PureComponent<PropsType> {
     const entity = this.props.entity;
     const isOwner = this.props.user.me.guid === entity.owner_guid;
     const hasCrypto = featuresService.has('crypto');
+    const hasWire = Platform.OS !== 'ios';
     const isScheduled = BaseModel.isScheduled(
       parseInt(entity.time_created, 10) * 1000,
     );
@@ -41,7 +42,7 @@ export default class Actions extends PureComponent<PropsType> {
           <View style={styles.container}>
             <ThumbUpAction entity={entity} />
             <ThumbDownAction entity={entity} />
-            {!isOwner && hasCrypto && (
+            {!isOwner && hasCrypto && hasWire && (
               <WireAction
                 owner={entity.ownerObj}
                 navigation={this.props.navigation}

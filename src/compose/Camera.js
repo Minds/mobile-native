@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, Platform } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
@@ -15,6 +15,8 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { useTransition } from 'react-native-redash';
 import Animated from 'react-native-reanimated';
 import { when } from 'mobx';
+import { showMessage } from 'react-native-flash-message';
+import i18n from '../common/services/i18n.service';
 
 /**
  * Camera
@@ -31,66 +33,70 @@ export default observer(function (props) {
   const cleanBottom = { paddingBottom: insets.bottom + 50 };
 
   // local store
-  const store = useLocalStore(() => ({
-    cameraType: RNCamera.Constants.Type.back,
-    flashMode: RNCamera.Constants.FlashMode.off,
-    recording: false,
-    show: false,
-    pulse: false,
-    ready: false,
-    showCam() {
-      store.show = true;
-    },
-    isReady() {
-      store.ready = true;
-    },
-    toggleFlash: () => {
-      if (store.flashMode === RNCamera.Constants.FlashMode.on) {
-        store.flashMode = RNCamera.Constants.FlashMode.off;
-      } else if (store.flashMode === RNCamera.Constants.FlashMode.off) {
-        store.flashMode = RNCamera.Constants.FlashMode.auto;
-      } else {
-        store.flashMode = RNCamera.Constants.FlashMode.on;
-      }
-    },
-    toggleCamera: () => {
-      store.cameraType =
-        store.cameraType === RNCamera.Constants.Type.back
-          ? RNCamera.Constants.Type.front
-          : RNCamera.Constants.Type.back;
-    },
-    setRecording: (value, pulse = false) => {
-      store.recording = value;
-      store.pulse = pulse;
-    },
-    async recordVideo(pulse = false) {
-      if (store.recording) {
-        store.setRecording(false);
-        return ref.current.stopRecording();
-      }
-      const settings = await mindsService.getSettings();
+  const store = useLocalStore(
+    (p) => ({
+      cameraType: RNCamera.Constants.Type.back,
+      flashMode: RNCamera.Constants.FlashMode.off,
+      recording: false,
+      show: false,
+      pulse: false,
+      ready: false,
+      showCam() {
+        store.show = true;
+      },
+      isReady() {
+        store.ready = true;
+      },
+      toggleFlash: () => {
+        if (store.flashMode === RNCamera.Constants.FlashMode.on) {
+          store.flashMode = RNCamera.Constants.FlashMode.off;
+        } else if (store.flashMode === RNCamera.Constants.FlashMode.off) {
+          store.flashMode = RNCamera.Constants.FlashMode.auto;
+        } else {
+          store.flashMode = RNCamera.Constants.FlashMode.on;
+        }
+      },
+      toggleCamera: () => {
+        store.cameraType =
+          store.cameraType === RNCamera.Constants.Type.back
+            ? RNCamera.Constants.Type.front
+            : RNCamera.Constants.Type.back;
+      },
+      setRecording: (value, pulse = false) => {
+        store.recording = value;
+        store.pulse = pulse;
+      },
+      async recordVideo(pulse = false) {
+        if (store.recording) {
+          store.setRecording(false);
+          return ref.current.stopRecording();
+        }
+        const settings = await mindsService.getSettings();
 
-      store.setRecording(true, pulse);
+        store.setRecording(true, pulse);
 
-      return await ref.current.recordAsync({
-        quality: 0.9,
-        maxDuration: settings.max_video_length,
-      });
-    },
-    async selectFromGallery() {
-      const response = await attachmentService.gallery('mixed');
-      if (response && props.onMediaFromGallery) {
-        props.onMediaFromGallery(response);
-      }
-    },
-    takePicture() {
-      return ref.current.takePictureAsync({
-        base64: false,
-        quality: 0.9,
-        pauseAfterCapture: true,
-      });
-    },
-  }));
+        return await ref.current.recordAsync({
+          quality: 0.9,
+          maxDuration: settings.max_video_length,
+        });
+      },
+      async selectFromGallery() {
+        const response = await attachmentService.gallery(p.mode);
+
+        if (response && props.onMediaFromGallery) {
+          props.onMediaFromGallery(response);
+        }
+      },
+      takePicture() {
+        return ref.current.takePictureAsync({
+          base64: false,
+          quality: 0.9,
+          pauseAfterCapture: true,
+        });
+      },
+    }),
+    props,
+  );
 
   useEffect(() => {
     const t = setTimeout(() => {
