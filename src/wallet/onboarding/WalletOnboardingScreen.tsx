@@ -2,7 +2,14 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -15,6 +22,7 @@ import WalletOnboardingFinishedScreen from './screens/WalletOnboardingFinishedSc
 
 import stylesheet from '../../onboarding/stylesheet';
 import { CommonStyle as CS } from '../../styles/Common';
+import isIphoneX from '../../common/helpers/isIphoneX';
 
 @inject('user', 'wallet')
 @observer
@@ -73,35 +81,40 @@ class WalletOnboardingScreen extends Component {
 
   render() {
     return (
-      <ScrollView style={style.view} keyboardShouldPersistTaps="always">
-        {this.state.step === 0 && (
-          <WalletOnboardingWelcomeScreen
-            onNext={this.nextStepAction}
-            onSetNavNext={this.setNavNext}
-          />
-        )}
+      <KeyboardAvoidingView
+        style={style.view}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={isIphoneX ? 100 : 64}>
+        <ScrollView keyboardShouldPersistTaps="always">
+          {this.state.step === 0 && (
+            <WalletOnboardingWelcomeScreen
+              onNext={this.nextStepAction}
+              onSetNavNext={this.setNavNext}
+            />
+          )}
 
-        {this.state.step === 1 && (
-          <WalletOnboardingJoinRewardsScreen
-            onNext={this.nextStepAction}
-            onSetNavNext={this.setNavNext}
-          />
-        )}
+          {this.state.step === 1 && (
+            <WalletOnboardingJoinRewardsScreen
+              onNext={this.nextStepAction}
+              onSetNavNext={this.setNavNext}
+            />
+          )}
 
-        {this.state.step === 2 && (
-          <WalletOnboardingOnChainSetupScreen
-            onNext={this.nextStepAction}
-            onSetNavNext={this.setNavNext}
-          />
-        )}
+          {this.state.step === 2 && (
+            <WalletOnboardingOnChainSetupScreen
+              onNext={this.nextStepAction}
+              onSetNavNext={this.setNavNext}
+            />
+          )}
 
-        {this.state.step === 3 && (
-          <WalletOnboardingFinishedScreen
-            onNext={this.nextStepAction}
-            onSetNavNext={this.setNavNext}
-          />
-        )}
-      </ScrollView>
+          {this.state.step === 3 && (
+            <WalletOnboardingFinishedScreen
+              onNext={this.nextStepAction}
+              onSetNavNext={this.setNavNext}
+            />
+          )}
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
