@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { observable, action } from 'mobx';
 
 import NewsfeedService from './NewsfeedService';
@@ -9,11 +8,13 @@ import logService from '../common/services/log.service';
 import FeedStore from '../common/stores/FeedStore';
 import { isNetworkFail } from '../common/helpers/abortableFetch';
 import UserModel from '../channel/UserModel';
+import type FeedList from '../common/components/FeedList';
+import { FeedType } from '../types/Common';
 
 /**
  * News feed store
  */
-class NewsfeedStore {
+class NewsfeedStore<T> {
   list!: OffsetFeedListStore;
   feedStore: FeedStore = new FeedStore(true);
   loaded: boolean = false;
@@ -21,7 +22,7 @@ class NewsfeedStore {
   /**
    * List reference
    */
-  listRef;
+  listRef?: FeedList<T>;
 
   service = new NewsfeedService();
 
@@ -60,14 +61,22 @@ class NewsfeedStore {
    * Scroll to top
    */
   scrollToTop() {
-    if (this.filter !== 'subscribed') return;
-    this.listRef.scrollToTop(false);
+    if (this.filter !== 'subscribed') {
+      return;
+    }
+    if (this.listRef) {
+      this.listRef.scrollToTop(false);
+    }
   }
 
   /**
    * Set FeedList reference
    */
-  setListRef = (r) => (this.listRef = r);
+  setListRef = (r: FeedList<T> | null) => {
+    if (r) {
+      this.listRef = r;
+    }
+  };
 
   buildStores() {
     this.list = new OffsetFeedListStore('shallow', true);
@@ -93,7 +102,7 @@ class NewsfeedStore {
    */
   @action
   async loadFeed(refresh = false) {
-    let feed;
+    let feed: FeedType;
 
     if (this.list.cantLoadMore() || this.loading) {
       return Promise.resolve();
@@ -112,7 +121,9 @@ class NewsfeedStore {
       this.loaded = true;
     } catch (err) {
       // ignore aborts
-      if (err.code === 'Abort') return;
+      if (err.code === 'Abort') {
+        return;
+      }
 
       this.list.setErrorLoading(true);
 
@@ -128,9 +139,8 @@ class NewsfeedStore {
    * Generate a unique Id for use with list views
    * @param {object} feed
    */
-  assignRowKeys(feed) {
-    feed.entities.forEach((entity, index) => {
-      //@ts-ignore
+  assignRowKeys(feed: FeedType) {
+    feed.entities.forEach((entity: ActivityModel, index) => {
       entity.rowKey = `${entity.guid}:${index}:${this.list.entities.length}`;
     });
   }
@@ -140,7 +150,7 @@ class NewsfeedStore {
    * @param {string} filter
    */
   @action
-  setFilter(filter) {
+  setFilter(filter: string) {
     this.filter = filter;
     this.list.clearList();
     this.loadFeed(true);
@@ -149,7 +159,7 @@ class NewsfeedStore {
   /**
    * Load boosts
    */
-  loadBoosts(rating) {
+  loadBoosts(rating: number) {
     // get first 15 boosts
     this.loadingBoost = true;
     this.service.getBoosts('', 15, rating).then((boosts) => {
@@ -158,12 +168,12 @@ class NewsfeedStore {
     });
   }
 
-  prepend(entity) {
+  prepend(entity: ActivityModel) {
     const model = ActivityModel.checkOrCreate(entity);
 
     this.feedStore.prepend(model);
 
-    model.listRef = this.listRef.listRef;
+    model.listRef = this.listRef?.listRef;
   }
 
   @action

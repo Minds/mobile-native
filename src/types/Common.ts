@@ -1,5 +1,6 @@
 import type UserModel from '../channel/UserModel';
 import type GroupModel from '../groups/GroupModel';
+import type ActivityModel from '../newsfeed/ActivityModel';
 
 export type ThumbSize = 'small' | 'medium' | 'large' | 'xlarge';
 
@@ -29,4 +30,9 @@ export type ActivityEntity = {
   url?: string;
   urn?: string;
   boosted_guid?: string;
+};
+
+export type FeedType = {
+  entities: Array<ActivityModel>;
+  offset: string;
 };

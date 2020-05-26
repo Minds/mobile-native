@@ -11,7 +11,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import type NewsfeedStore from '../NewsfeedStore';
 
 type PropsType = {
-  newsfeed: NewsfeedStore;
+  newsfeed: NewsfeedStore<any>;
 };
 
 /**

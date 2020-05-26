@@ -44,6 +44,7 @@ export default class ActivityModel extends BaseModel {
   'thumbs:down:user_guids': Array<number>;
   'thumbs:up:user_guids': Array<number>;
 
+  rowKey?: string;
   containerObj?: GroupModel;
   remind_object?: ActivityModel;
   ownerObj!: UserModel;
