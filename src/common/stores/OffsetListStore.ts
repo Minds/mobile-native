@@ -3,6 +3,10 @@ import { observable, action, extendObservable } from 'mobx';
 import MetadataService from '../services/metadata.service';
 import Viewed from './Viewed';
 
+type EntityType = {
+  _list: OffsetListStore;
+} & Record<string, any>;
+
 /**
  * Common infinite scroll list
  */
@@ -41,7 +45,7 @@ export default class OffsetListStore {
   /**
    * Response entities
    */
-  entities = [];
+  entities: Array<EntityType> = [];
 
   /**
    * Constructor
@@ -93,12 +97,12 @@ export default class OffsetListStore {
   setList(list, replace = false, callback = undefined) {
     if (list.entities) {
       if (replace) {
-        list.entities.forEach((entity) => {
+        list.entities.forEach((entity: EntityType) => {
           entity._list = this;
         });
         this.entities = list.entities;
       } else {
-        list.entities.forEach((entity) => {
+        list.entities.forEach((entity: EntityType) => {
           entity._list = this;
           this.entities.push(entity);
         });

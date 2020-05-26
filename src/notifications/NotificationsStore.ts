@@ -1,22 +1,18 @@
-//@ts-nocheck
-import { observable, action, computed, toJS } from 'mobx';
+import { observable, action, toJS } from 'mobx';
 
-import { showMessage, hideMessage } from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 
-import NotificationsService, {
-  getFeed,
-  getCount,
-  getSingle,
-} from './NotificationsService';
+import NotificationsService, { getCount } from './NotificationsService';
 
 import OffsetListStore from '../common/stores/OffsetListStore';
 import session from '../common/services/session.service';
 import badge from '../common/services/badge.service';
 import logService from '../common/services/log.service';
 import socketService from '../common/services/socket.service';
-import { Alert } from 'react-native';
 import storageService from '../common/services/storage.service';
 import i18n from '../common/services/i18n.service';
+
+export type FilterType = 'all' | 'tags' | 'comments' | 'boosts' | 'votes';
 
 /**
  * Notifications Store
@@ -34,28 +30,28 @@ class NotificationsStore {
   /**
    * unread notifications counter
    */
-  @observable unread = 0;
+  @observable unread: number = 0;
 
   /**
    * Notifications list filter
    */
-  @observable filter = 'all';
+  @observable filter: FilterType = 'all';
 
   /**
    * PollInterval
    */
-  pollInterval = null;
+  pollInterval: NodeJS.Timeout | null = null;
 
   /**
    * List loading
    */
-  @observable loading = false;
+  @observable loading: boolean = false;
 
   /**
    * Class constructor
    */
   constructor() {
-    const dispose = session.onSession((token) => {
+    session.onSession((token: string) => {
       if (token) {
         // load count on session start
         this.loadCount();
@@ -68,17 +64,9 @@ class NotificationsStore {
         this.stopPollCount();
       }
     });
-
-    // fix to clear the interval when are developing with hot reload (timers was not cleared automatically)
-    if (module.hot) {
-      module.hot.accept(() => {
-        this.stopPollCount();
-        dispose();
-      });
-    }
   }
 
-  onSocket = async (guid) => {
+  onSocket = async () => {
     this.increment();
 
     // TODO: enable live notifications
@@ -151,7 +139,7 @@ class NotificationsStore {
       const feed = await this.service.getFeed(offset, filter);
 
       // prevent race conditions when filter change
-      if (feed && filter == this.filter) {
+      if (feed && filter === this.filter) {
         this.list.setList(feed, refresh);
         this.persist();
       }
@@ -215,14 +203,14 @@ class NotificationsStore {
   }
 
   @action
-  setFilter(filter) {
+  setFilter(filter: FilterType) {
     this.filter = filter;
     this.list.clearList();
     this.refresh();
   }
 
   @action
-  setUnread(count) {
+  setUnread(count: number) {
     this.unread = count;
     badge.setUnreadNotifications(count);
   }
