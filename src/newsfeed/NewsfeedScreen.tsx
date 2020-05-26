@@ -31,7 +31,7 @@ type PropsType = {
   user: UserStore;
   messengerList: MessengerListStore;
   notifications: NotificationsStore;
-  newsfeed: NewsfeedStore;
+  newsfeed: NewsfeedStore<any>;
   route: NewsfeedScreenRouteProp;
 };
 

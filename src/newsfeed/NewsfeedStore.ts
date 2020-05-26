@@ -72,7 +72,11 @@ class NewsfeedStore<T> {
   /**
    * Set FeedList reference
    */
-  setListRef = (r: FeedList<T> | undefined) => (this.listRef = r);
+  setListRef = (r: FeedList<T> | null) => {
+    if (r) {
+      this.listRef = r;
+    }
+  };
 
   buildStores() {
     this.list = new OffsetFeedListStore('shallow', true);
