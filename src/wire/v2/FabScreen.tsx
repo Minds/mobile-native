@@ -161,7 +161,9 @@ const FabScreen = observer(({ route, navigation }) => {
 
   return (
     <Fragment>
-      <ScrollView keyboardShouldPersistTaps={true}>
+      <ScrollView
+        keyboardShouldPersistTaps={true}
+        contentContainerStyle={cleanTop}>
         <View style={theme.rowJustifySpaceBetween}>
           <View style={theme.rowJustifyStart}>
             <MIcon
@@ -170,15 +172,17 @@ const FabScreen = observer(({ route, navigation }) => {
               style={[styles.backIcon, theme.colorIcon]}
               onPress={navigation.goBack}
             />
-            <Text style={[theme.centered, theme.fontXXL, theme.bold]}>Pay</Text>
+            <Text style={[theme.centered, theme.fontXXL, theme.bold]}>
+              {i18n.t('channel.fabPay')}
+            </Text>
           </View>
           <Text
             style={[theme.centered, theme.bold, theme.paddingRight4x]}
             onPress={store.confirmSend}>
-            Send Payment
+            {i18n.t('channel.fabSend')}
           </Text>
         </View>
-        <View style={[styles.container, cleanTop]}>
+        <View style={styles.container}>
           <HeaderComponent user={owner} />
           <UserNamesComponent user={owner} pay={true} />
           <HeaderTabsComponent tabList={tabList} store={store} />

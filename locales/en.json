@@ -262,7 +262,9 @@
       "location": "Location",
       "dob": "Date of Birth"
     },
-    "badges": "Badges"
+    "badges": "Badges",
+    "fabSend": "Send Payment",
+    "fabPay": "Pay"
   },
   "discovery": {
     "search": "Search...",
