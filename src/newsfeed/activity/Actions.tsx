@@ -22,9 +22,11 @@ import CommentsEntityOutlet from '../../comments/CommentsEntityOutlet';
 type PropsType = {
   entity: ActivityModel;
   showCommentsOutlet?: boolean;
+  onPressComment?: () => void;
 };
 
 export const Actions = observer((props: PropsType) => {
+  const theme = ThemedStyles.style;
   const { user } = useLegacyStores();
   const navigation = useNavigation();
 
@@ -38,32 +40,31 @@ export const Actions = observer((props: PropsType) => {
 
   return (
     <View>
-      <View style={ThemedStyles.style.flexContainer}>
-        {entity && (
-          <View style={styles.container}>
-            <ThumbUpAction entity={entity} />
-            <ThumbDownAction entity={entity} />
-            <CommentsAction
-              entity={entity}
-              navigation={navigation}
-              testID={
-                props.entity.text === 'e2eTest' ? 'ActivityCommentButton' : ''
-              }
-            />
-            <RemindAction entity={entity} />
+      {entity && (
+        <View style={styles.container}>
+          <ThumbUpAction entity={entity} />
+          <ThumbDownAction entity={entity} />
+          <CommentsAction
+            entity={entity}
+            navigation={navigation}
+            onPressComment={props.onPressComment}
+            testID={
+              props.entity.text === 'e2eTest' ? 'ActivityCommentButton' : ''
+            }
+          />
+          <RemindAction entity={entity} />
 
-            <View style={ThemedStyles.style.flexContainer} />
+          <View style={ThemedStyles.style.flexContainer} />
 
-            {!isOwner && hasCrypto && hasWire && (
-              <WireAction owner={entity.ownerObj} navigation={navigation} />
-            )}
+          {!isOwner && hasCrypto && hasWire && (
+            <WireAction owner={entity.ownerObj} navigation={navigation} />
+          )}
 
-            {isOwner && hasCrypto && !isScheduled && (
-              <BoostAction entity={entity} navigation={navigation} />
-            )}
-          </View>
-        )}
-      </View>
+          {isOwner && hasCrypto && !isScheduled && (
+            <BoostAction entity={entity} navigation={navigation} />
+          )}
+        </View>
+      )}
       {props.showCommentsOutlet ? (
         <CommentsEntityOutlet entity={entity} />
       ) : undefined}
@@ -80,8 +81,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: 0,
-    paddingTop: featuresService.has('crypto') ? 4 : 8,
-    paddingBottom: featuresService.has('crypto') ? 4 : 8,
+    // paddingTop: featuresService.has('crypto') ? 4 : 8,
+    // paddingBottom: featuresService.has('crypto') ? 4 : 8,
   },
   avatar: {
     height: 46,

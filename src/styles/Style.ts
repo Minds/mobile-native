@@ -5,6 +5,7 @@ export interface ThemedStyle {
   flexContainer: any;
   flexContainerCenter: any;
   flexColumn: any;
+  justifyCenter: any;
   columnAlignCenter: any;
   flexColumnStretch: any;
   flexColumnCentered: any;
@@ -147,6 +148,9 @@ export const buildStyle = (theme): ThemedStyle => ({
   flexColumn: {
     flex: 1,
     flexDirection: 'column',
+  },
+  justifyCenter: {
+    justifyContent: 'center',
   },
   columnAlignCenter: {
     alignItems: 'center',

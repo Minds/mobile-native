@@ -3,8 +3,6 @@ import { View, Text, StatusBar, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSafeArea } from 'react-native-safe-area-context';
 
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import ThemedStyles from '../styles/ThemedStyles';
 import Camera from './Camera';
 import Poster from './Poster';
@@ -17,6 +15,7 @@ import {
   useFocusEffect,
 } from '@react-navigation/native';
 import { useLegacyStores } from '../common/hooks/use-stores';
+import FloatingBackButton from '../common/components/FloatingBackButton';
 
 /**
  * Compose Screen
@@ -61,7 +60,6 @@ export default observer(function (props) {
   );
 
   const tabStyle = { paddingBottom: insets.bottom || 25 };
-  const inconStyle = { top: insets.top || 5 };
 
   const theme = ThemedStyles.style;
   const showCamera = store.mode === 'photo' || store.mode === 'video';
@@ -119,11 +117,9 @@ export default observer(function (props) {
               </Text>
             </View>
           </View>
-          <MIcon
-            size={45}
-            name="chevron-left"
-            style={[styles.backIcon, inconStyle]}
+          <FloatingBackButton
             onPress={props.navigation.goBack}
+            style={theme.colorWhite}
           />
         </>
       ) : store.mode === 'confirm' ? (
@@ -144,22 +140,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
   },
   tabText: {
-    shadowOpacity: 0.6,
-    textShadowRadius: 5,
-    textShadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 0, height: 0 },
     elevation: 5,
   },
   tabs: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  backIcon: {
-    position: 'absolute',
-    color: 'white',
-    left: 0,
-    shadowOpacity: 0.4,
-    textShadowRadius: 4,
-    textShadowOffset: { width: 0, height: 0 },
-    elevation: 4,
   },
 });

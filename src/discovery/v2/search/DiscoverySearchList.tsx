@@ -8,6 +8,7 @@ import Activity from '../../../newsfeed/activity/Activity';
 import { CommonStyle as CS } from '../../../styles/Common';
 import { ComponentsStyle } from '../../../styles/Components';
 import ErrorBoundary from '../../../common/components/ErrorBoundary';
+import FeedList from '../../../common/components/FeedList';
 
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
@@ -105,7 +106,12 @@ export const DiscoverySearchList = observer((props: Props) => {
 
   return (
     <View style={theme.flexContainer}>
-      <FlatList
+      <FeedList
+        feedStore={store.listStore}
+        navigation={props.navigation}
+        emptyMessage={EmptyPartial}
+      />
+      {/* <FlatList
         ref={listRef}
         data={store.listStore.entities.slice()}
         onRefresh={() => store.refresh()}
@@ -113,8 +119,11 @@ export const DiscoverySearchList = observer((props: Props) => {
         ListEmptyComponent={EmptyPartial}
         renderItem={ItemPartial}
         keyExtractor={keyExtractor}
+        onEndReached={store.listStore.loadMore}
         style={theme.backgroundPrimary}
-      />
+        initialNumToRender={6}
+        windowSize={11}
+      /> */}
     </View>
   );
 });

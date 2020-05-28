@@ -82,6 +82,7 @@ export default class OwnerBlock extends PureComponent<PropsType> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     const channel = this.props.entity.ownerObj;
     const rightToolbar = this.props.rightToolbar || null;
 
@@ -106,41 +107,34 @@ export default class OwnerBlock extends PureComponent<PropsType> {
           </View>
           {this.props.children}
         </View>
-        {rightToolbar}
         {showMetrics ? (
           <Text
-            style={[
-              ThemedStyles.style.marginRight6x,
-              ThemedStyles.style.colorTertiaryText,
-              { fontSize: 14 },
-            ]}>
-            {number(this.props.entity.impressions, 0)} views
+            style={[theme.marginRight2x, theme.colorTertiaryText, theme.fontM]}>
+            {number(this.props.entity.impressions, 0)}{' '}
+            {i18nService.t('views').toLowerCase()}
           </Text>
         ) : undefined}
         {this.props.entity.boosted ? (
-          <View
-            style={[
-              ThemedStyles.style.rowJustifyStart,
-              ThemedStyles.style.centered,
-            ]}>
+          <View style={[theme.rowJustifyStart, theme.centered]}>
             <Icon
               type="ionicon"
               name="md-trending-up"
               size={18}
-              style={ThemedStyles.style.marginRight}
+              style={theme.marginRight}
               color={ThemedStyles.getColor('tertiary_text')}
             />
 
             <Text
               style={[
-                ThemedStyles.style.marginRight6x,
-                ThemedStyles.style.colorTertiaryText,
-                { fontSize: 14 },
+                theme.marginRight2x,
+                theme.colorTertiaryText,
+                theme.fontM,
               ]}>
               {i18nService.t('boosted').toUpperCase()}
             </Text>
           </View>
         ) : undefined}
+        {rightToolbar}
       </View>
     );
   }

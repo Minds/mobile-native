@@ -20,7 +20,7 @@ export default observer(function (props) {
       <MIcon
         size={45}
         name="chevron-left"
-        style={[styles.backIcon, theme.colorWhite]}
+        style={theme.colorPrimaryText}
         onPress={props.onPressBack}
       />
       {props.leftText && <Text style={styles.leftText}>{props.leftText}</Text>}
@@ -48,12 +48,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  backIcon: {
-    shadowOpacity: 2,
-    textShadowRadius: 4,
-    textShadowOffset: { width: 0, height: 0 },
-    elevation: 4,
   },
   leftText: {
     textAlign: 'left',

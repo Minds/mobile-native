@@ -87,6 +87,16 @@ const BottomOptionPopup = observer((props: PropsType) => {
                   theme.alignEnd,
                   styles.header,
                 ]}>
+                <View
+                  style={[
+                    StyleSheet.absoluteFill,
+                    theme.rowJustifyCenter,
+                    theme.alignCenter,
+                  ]}>
+                  <Text style={[theme.fontXL, theme.fontMedium]}>
+                    {props.title}
+                  </Text>
+                </View>
                 <Text
                   onPress={store.close}
                   style={[
@@ -95,10 +105,6 @@ const BottomOptionPopup = observer((props: PropsType) => {
                     theme.colorSecondaryText,
                   ]}>
                   Cancel
-                </Text>
-                <Text
-                  style={[theme.fontXL, theme.fontMedium, theme.textCenter]}>
-                  {props.title}
                 </Text>
                 <Text
                   style={[theme.fontXL, theme.fontMedium, theme.colorLink]}

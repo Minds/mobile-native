@@ -105,14 +105,13 @@ exports[`Owner component renders correctly 1`] = `
       Array [
         undefined,
         undefined,
-        Object {
-          "fontSize": 14,
-        },
+        undefined,
       ]
     }
   >
     0
-     views
+     
+    views
   </Text>
 </View>
 `;

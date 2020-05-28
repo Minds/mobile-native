@@ -32,9 +32,9 @@ export const Topbar = observer((props: Props) => {
 
   useEffect(() => {
     wallet.refresh();
-  }, []);
+  }, [wallet]);
 
-  const CS = ThemedStyles.style;
+  const theme = ThemedStyles.style;
 
   return (
     <SafeAreaConsumer>
@@ -43,15 +43,15 @@ export const Topbar = observer((props: Props) => {
           <View
             style={[
               styles.container,
-              props.background ?? CS.backgroundSecondary,
+              props.background ?? theme.backgroundSecondary,
               { paddingTop: insets!.top + 10 },
             ]}>
             <View style={styles.topbar}>
-              <View style={[styles.topbarLeft, CS.marginLeft4x]}>
+              <View style={[styles.topbarLeft, theme.marginLeft4x]}>
                 <Text
                   style={[
-                    CS.titleText,
-                    CS.colorPrimaryText,
+                    theme.titleText,
+                    theme.colorPrimaryText,
                     styles.lineHeight0,
                   ]}
                   onPress={() =>

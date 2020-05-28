@@ -3,6 +3,7 @@ import { ChannelStoreType } from '../channel/v2/createChannelStore';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { WalletStoreType } from '../wallet/v2/createWalletStore';
+import type FeedStore from '../common/stores/FeedStore';
 
 export type MainSwiperParamList = {
   Capture: {};
@@ -35,6 +36,10 @@ export type AppStackParamList = {
     };
     walletStore?: WalletStoreType;
     options?: Function;
+  };
+  ActivityFullScreen: {
+    feed: FeedStore;
+    current: number;
   };
   Newsfeed: {};
   Capture: {};

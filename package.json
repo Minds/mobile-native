@@ -19,6 +19,7 @@
     "release-json": "node tasks/generate_release_json.js"
   },
   "dependencies": {
+    "@crowdlinker/react-native-pager": "^0.2.3",
     "@hawkingnetwork/node-libs-react-native": "^1.0.10",
     "@react-native-community/art": "^1.1.2",
     "@react-native-community/async-storage": "^1.8.0",

@@ -16,10 +16,8 @@ import gatheringService from '../common/services/gathering.service';
 import { observer } from 'mobx-react';
 import isIphoneX from '../common/helpers/isIphoneX';
 import MenuStack from '../settings/SettingsNavigation';
-import featuresService from '../common/services/features.service';
 import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
 import { useLegacyStores } from '../common/hooks/use-stores';
-import { TLegacyStores } from 'src/common/contexts';
 
 export type TabParamList = {
   Newsfeed: {};
@@ -52,7 +50,7 @@ const Tabs = observer(function ({ navigation }) {
     return null;
   }
 
-  const height = isIOS ? (Platform.isPad ? 100 : isIphoneX ? 85 : 70) : 65;
+  const height = isIOS ? (Platform.isPad ? 100 : isIphoneX ? 75 : 70) : 65;
 
   return (
     <Tab.Navigator
@@ -77,7 +75,7 @@ const Tabs = observer(function ({ navigation }) {
         },
       }}
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size, tabStyle }) => {
+        tabBarIcon: ({ focused, color }) => {
           let iconName,
             iconsize = 28;
 
@@ -85,7 +83,7 @@ const Tabs = observer(function ({ navigation }) {
             case 'Menu':
               return (
                 <View>
-                  {focused && <View style={[styles.acitivity]} />}
+                  {focused && <View style={[styles.activity]} />}
                   <Avatar
                     rounded
                     source={{
@@ -168,7 +166,7 @@ const Tabs = observer(function ({ navigation }) {
 });
 
 const styles = {
-  acitivity: {
+  activity: {
     zIndex: 9990,
     top: -5,
     left: -5,

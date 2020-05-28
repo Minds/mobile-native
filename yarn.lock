@@ -688,6 +688,11 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@crowdlinker/react-native-pager@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@crowdlinker/react-native-pager/-/react-native-pager-0.2.3.tgz#d1c61ad609f9f4209be9d20fef57bb278d205b16"
+  integrity sha512-9/P0DsaWcW9muXal2VewRWugHBZG6ZRbIfO9hxy5hq2DMA74qMv8VL4IXXGyfcR+4DlV3WuaPjEqs+8RkNlRkA==
+
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"

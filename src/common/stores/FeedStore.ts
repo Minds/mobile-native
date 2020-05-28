@@ -418,7 +418,7 @@ export default class FeedStore {
   /**
    * Load next page
    */
-  async loadMore() {
+  loadMore = async () => {
     if (this.loading || !this.loaded || !this.feedsService.hasMore) {
       return;
     }
@@ -447,7 +447,7 @@ export default class FeedStore {
     } finally {
       this.setLoading(false);
     }
-  }
+  };
 
   /**
    * Refresh

@@ -6,7 +6,7 @@ import FeedStore from '../../../common/stores/FeedStore';
  * Discovery Search Store
  */
 export default class DiscoveryV2SearchStore {
-  @observable listStore = new FeedStore(true);
+  listStore = new FeedStore(true);
 
   @observable filter: string = 'top';
   @observable query: string = '';
@@ -24,7 +24,7 @@ export default class DiscoveryV2SearchStore {
       .setLimit(12)
       .setInjectBoost(false)
       .setAsActivities(false)
-      .setPaginated(false)
+      .setPaginated(true)
       .setParams(this.params);
   }
 

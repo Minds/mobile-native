@@ -1,17 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Media view component renders correctly 1`] = `
-<View>
+<View
+  style={
+    Array [
+      undefined,
+    ]
+  }
+>
   <TouchableOpacity
     activeOpacity={1}
     onLongPress={[Function]}
     onPress={[Function]}
     style={
       Array [
-        Object {
-          "alignItems": "stretch",
-          "flex": 1,
-        },
+        Object {},
         Object {
           "height": 1875,
         },
@@ -74,27 +77,11 @@ exports[`Media view component renders correctly 1`] = `
           },
         }
       }
-      imageStyle={
-        Object {
-          "backgroundColor": "black",
-        }
-      }
       onError={[Function]}
       source={
         Object {
           "uri": "www.something.com",
         }
-      }
-      style={
-        Array [
-          Object {
-            "flex": 1,
-          },
-          Object {
-            "height": 1875,
-            "maxHeight": 100,
-          },
-        ]
       }
     />
   </TouchableOpacity>
