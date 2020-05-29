@@ -36,10 +36,7 @@ class TopbarNewsfeed extends Component<PropsType> {
   render() {
     const CS = ThemedStyles.style;
 
-    const logo =
-      ThemedStyles.theme === 0
-        ? require('./../assets/logos/bulb.png')
-        : require('./../assets/logos/logo-white.png');
+    const logo = require('./../assets/logos/bulb.png');
     const refreshFeed = this.props.refreshFeed ?? (() => false);
     return (
       <SafeAreaConsumer>
