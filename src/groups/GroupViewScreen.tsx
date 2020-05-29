@@ -4,12 +4,10 @@ import React, { Component } from 'react';
 import {
   View,
   StyleSheet,
-  Text,
   FlatList,
   ScrollView,
   Alert,
   SafeAreaView,
-  Platform,
 } from 'react-native';
 
 import { Header } from '@react-navigation/stack';
@@ -32,7 +30,6 @@ import CommentList from '../comments/CommentList';
 import CenteredLoading from '../common/components/CenteredLoading';
 import commentsStoreProvider from '../comments/CommentsStoreProvider';
 import i18n from '../common/services/i18n.service';
-import featuresService from '../common/services/features.service';
 import FeedList from '../common/components/FeedList';
 import {
   FLAG_CREATE_POST,

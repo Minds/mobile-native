@@ -1,17 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 
 import { Text, View, FlatList } from 'react-native';
 
 import { observer } from 'mobx-react';
 
 import Activity from '../../../newsfeed/activity/Activity';
-import { CommonStyle as CS } from '../../../styles/Common';
 import { ComponentsStyle } from '../../../styles/Components';
 import ErrorBoundary from '../../../common/components/ErrorBoundary';
 import FeedList from '../../../common/components/FeedList';
 
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
+import GroupsListItemNew from '../../../groups/GroupsListItemNew';
+import DiscoveryUser from '../../DiscoveryUserNew';
 
 interface Props {
   navigation: any;
@@ -30,37 +31,49 @@ export const DiscoverySearchList = observer((props: Props) => {
     }
   }, [listRef, store.refreshing]);
 
-  const keyExtractor = (item) => item.urn;
-
   /**
    * Render activity item
    */
-  const ItemPartial = (row) => {
-    let entity: Element;
+  const ItemPartial = useCallback(
+    (row) => {
+      let entity: Element;
 
-    switch (row.item.type) {
-      case 'user':
-      case 'group':
-        entity = <View />;
-        break;
-      default:
-        entity = (
-          <Activity
-            entity={row.item}
-            navigation={props.navigation}
-            autoHeight={false}
-          />
-        );
-    }
+      switch (row.item.type) {
+        case 'user':
+          entity = <DiscoveryUser row={row} navigation={props.navigation} />;
+          break;
+        case 'group':
+          entity = (
+            <GroupsListItemNew
+              group={row.item}
+              onPress={() =>
+                props.navigation.push('GroupView', {
+                  group: row.item.toPlainObject(),
+                })
+              }
+            />
+          );
+          break;
+        default:
+          entity = (
+            <Activity
+              entity={row.item}
+              navigation={props.navigation}
+              autoHeight={false}
+            />
+          );
+      }
 
-    return (
-      <ErrorBoundary
-        containerStyle={CS.hairLineBottom}
-        message="Could not load">
-        {entity}
-      </ErrorBoundary>
-    );
-  };
+      return (
+        <ErrorBoundary
+          containerStyle={[theme.borderBottomHair, theme.borderPrimary]}
+          message="Could not load">
+          {entity}
+        </ErrorBoundary>
+      );
+    },
+    [props.navigation, theme.borderBottomHair, theme.borderPrimary],
+  );
 
   const EmptyPartial = () => {
     return store.refreshing ? (
@@ -78,52 +91,14 @@ export const DiscoverySearchList = observer((props: Props) => {
     );
   };
 
-  // const FooterPartial = () => {
-  //   const store = discoveryV2Search;
-
-  //   if (store.listStore.loading && !store.listStore.refreshing) {
-  //     return (
-  //       <View
-  //         style={{
-  //           flex: 1,
-  //           alignItems: 'center',
-  //           justifyContent: 'center',
-  //           padding: 16,
-  //         }}>
-  //         <ActivityIndicator size={'large'} />
-  //       </View>
-  //     );
-  //   }
-
-  //   if (!store.listStore.errorLoading) return null;
-
-  //   const message = store.listStore.entities.length
-  //     ? i18n.t('cantLoadMore')
-  //     : i18n.t('cantLoad');
-
-  //   return <ErrorLoading message={message} tryAgain={() => {}} />;
-  // };
-
   return (
     <View style={theme.flexContainer}>
       <FeedList
         feedStore={store.listStore}
         navigation={props.navigation}
         emptyMessage={EmptyPartial}
+        renderActivity={ItemPartial}
       />
-      {/* <FlatList
-        ref={listRef}
-        data={store.listStore.entities.slice()}
-        onRefresh={() => store.refresh()}
-        refreshing={store.refreshing}
-        ListEmptyComponent={EmptyPartial}
-        renderItem={ItemPartial}
-        keyExtractor={keyExtractor}
-        onEndReached={store.listStore.loadMore}
-        style={theme.backgroundPrimary}
-        initialNumToRender={6}
-        windowSize={11}
-      /> */}
     </View>
   );
 });
