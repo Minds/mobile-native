@@ -103,13 +103,6 @@ sessionService.onLogin(async () => {
   // hide splash
   RNBootSplash.hide({ duration: 250 });
 
-  NavigationService.navigate('App', { screen: sessionService.initialScreen });
-
-  // check onboarding progress and navigate if necessary
-  getStores().onboarding.getProgress(
-    sessionService.initialScreen !== 'OnboardingScreenNew',
-  );
-
   // check update
   if (Platform.OS !== 'ios' && !GOOGLE_PLAY_STORE) {
     setTimeout(async () => {
@@ -118,29 +111,38 @@ sessionService.onLogin(async () => {
     }, 5000);
   }
 
-  try {
-    // handle deep link (if the app is opened by one)
-    if (deepLinkUrl) {
-      deeplinkService.navigate('App', { screen: deepLinkUrl });
-      deepLinkUrl = '';
+  // delay initial navigation until the app navigator is ready
+  setTimeout(() => {
+    try {
+      NavigationService.navigate(sessionService.initialScreen);
+
+      // check onboarding progress and navigate if necessary
+      getStores().onboarding.getProgress(
+        sessionService.initialScreen !== 'OnboardingScreen',
+      );
+      // // handle deep link (if the app is opened by one)
+      if (deepLinkUrl) {
+        deeplinkService.navigate('App', { screen: deepLinkUrl });
+        deepLinkUrl = '';
+      }
+
+      // handle initial notifications (if the app is opened by tap on one)
+      pushService.handleInitialNotification();
+
+      // handle shared
+      receiveShare.handle();
+    } catch (err) {
+      logService.exception(err);
     }
+  }, 500);
 
-    // handle initial notifications (if the app is opened by tap on one)
-    pushService.handleInitialNotification();
-
-    // handle shared
-    receiveShare.handle();
-
-    // fire offline cache garbage collector 30 seconds after start
-    setTimeout(() => {
-      if (!connectivityService.isConnected) return;
-      entitiesStorage.removeOlderThan(30);
-      feedsStorage.removeOlderThan(30);
-      commentStorageService.removeOlderThan(30);
-    }, 30000);
-  } catch (err) {
-    logService.exception(err);
-  }
+  // fire offline cache garbage collector 30 seconds after start
+  setTimeout(() => {
+    if (!connectivityService.isConnected) return;
+    entitiesStorage.removeOlderThan(30);
+    feedsStorage.removeOlderThan(30);
+    commentStorageService.removeOlderThan(30);
+  }, 30000);
 });
 
 //on app logout

@@ -48,7 +48,10 @@ export default function (props) {
     extra: null,
     onScreenFocused() {
       const params = props.route.params;
-      if (!params || (!params.entity && !params.mode && !params.media)) {
+      if (
+        !params ||
+        (!params.entity && !params.mode && !params.media && !params.text)
+      ) {
         return;
       }
 
@@ -64,12 +67,18 @@ export default function (props) {
         this.attachment.attachMedia(mediaToConfirm);
       }
 
+      if (params.text) {
+        this.setText(params.text);
+        this.mode = 'text';
+      }
+
       // clear params to avoid repetition
       props.navigation.setParams({
         entity: undefined,
         media: undefined,
         mode: undefined,
         isRemind: undefined,
+        text: undefined,
       });
     },
     setTokenThreshold(value) {
