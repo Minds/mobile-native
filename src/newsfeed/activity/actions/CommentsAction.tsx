@@ -22,6 +22,7 @@ type PropsType = {
   testID?: string;
   size: number;
   navigation: any;
+  onPressComment?: () => void;
 };
 
 /**
@@ -79,12 +80,16 @@ class CommentsAction extends Component<PropsType> {
    * Open comments screen
    */
   openComments = () => {
+    if (this.props.onPressComment) {
+      this.props.onPressComment();
+      return;
+    }
     const cantOpen =
       !this.props.entity.allow_comments &&
-      this.props.entity['comments:count'] == 0;
+      this.props.entity['comments:count'] === 0;
     // TODO: fix
     const routes = this.props.navigation.dangerouslyGetState().routes;
-    if ((routes && routes[routes.length - 1].name == 'Activity') || cantOpen) {
+    if ((routes && routes[routes.length - 1].name === 'Activity') || cantOpen) {
       return;
     }
     this.props.navigation.push('Activity', {

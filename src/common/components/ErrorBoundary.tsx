@@ -8,7 +8,7 @@ import { showNotification } from '../../../AppMessages';
 
 type PropsType = {
   message: string;
-  containerStyle?: ViewStyle;
+  containerStyle?: ViewStyle | Array<ViewStyle>;
   children: React.ReactNode;
   textSmall?: boolean;
 };

@@ -10,11 +10,8 @@ import {
   LayoutChangeEvent,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-
 import ExplicitText from '../../common/components/explicit/ExplicitText';
 import OwnerBlock from './OwnerBlock';
-import RemindOwnerBlock from './RemindOwnerBlock';
 import Actions from './Actions';
 import formatDate from '../../common/helpers/date';
 import ActivityActionSheet from './ActivityActionSheet';
@@ -31,6 +28,7 @@ import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
+import type FeedStore from '../../common/stores/FeedStore';
 
 type PropsType = {
   entity: ActivityModel;
@@ -81,10 +79,25 @@ export default class Activity extends Component<PropsType, StateType> {
     if (!this.props.navigation) {
       return;
     }
-    const navOpts = { entity: this.props.entity, hydrate: false };
+    const navOpts = {
+      entity: this.props.entity,
+      hydrate: false,
+      feed: undefined as FeedStore | undefined,
+      current: 0,
+    };
 
     if (this.props.entity.remind_object || this.props.hydrateOnNav) {
       navOpts.hydrate = true;
+    }
+
+    if (this.props.entity.__list) {
+      const index = this.props.entity.__list.entities.findIndex(
+        (e) => e === this.props.entity,
+      );
+      navOpts.feed = this.props.entity.__list;
+      navOpts.current = index;
+      this.props.navigation.push('ActivityFullScreen', navOpts);
+      return;
     }
 
     this.props.navigation.push('Activity', navOpts);
@@ -298,7 +311,7 @@ export default class Activity extends Component<PropsType, StateType> {
    */
   showOwner() {
     const rightToolbar: React.ReactNode = (
-      <View style={styles.rightToolbar}>
+      <View>
         <ActivityActionSheet
           toggleEdit={this.toggleEdit}
           entity={this.props.entity}
@@ -383,17 +396,6 @@ export default class Activity extends Component<PropsType, StateType> {
             ThemedStyles.style.margin2x,
             ThemedStyles.style.borderHair,
             ThemedStyles.style.borderBackgroundPrimary,
-            {
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 2,
-                height: 2,
-              },
-              shadowOpacity: 0.05,
-              shadowRadius: 10,
-
-              elevation: 5,
-            },
           ]}>
           <Activity
             ref={(r) => (this.remind = r)}
@@ -447,13 +449,15 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   remind: {
-    //  flex:1,
-  },
-  rightToolbar: {
-    alignSelf: 'flex-end',
-    position: 'absolute',
-    right: 10,
-    top: 22,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+
+    elevation: 5,
   },
   boostTagContainer: {
     flexDirection: 'row',

@@ -1,7 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { Text, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, Platform } from 'react-native';
 
 import { observer } from 'mobx-react';
 
@@ -10,9 +10,12 @@ import Counter from '../newsfeed/activity/actions/Counter';
 import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
+import { TouchableOpacity as TouchableGesture } from 'react-native-gesture-handler';
 
 // prevent double tap in touchable
-const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
+const TouchableOpacityCustom = withPreventDoubleTap(
+  Platform.OS === 'ios' ? TouchableOpacity : TouchableGesture,
+);
 
 /**
  * Reply Action Component

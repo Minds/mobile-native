@@ -44,7 +44,12 @@ export default function ({ entity, size = 20, vertical = false }: PropsTypes) {
     }
 
     const { key } = route;
-    navigation.navigate('Capture', { isRemind: true, entity, parentKey: key });
+    const screen =
+      route.name === 'Newsfeed' || route.name === 'Discovery'
+        ? 'Capture'
+        : 'StackCapture';
+
+    navigation.navigate(screen, { isRemind: true, entity, parentKey: key });
   }, [route, entity, navigation]);
 
   return (

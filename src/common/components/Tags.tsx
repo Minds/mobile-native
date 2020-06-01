@@ -183,7 +183,7 @@ export default class Tags extends PureComponent<PropsType> {
    * Navigate to discovery
    */
   navToDiscovery = (q) => {
-    this.props.navigation.navigate('Discovery', { query: q });
+    this.props.navigation.navigate('DiscoverySearch', { query: q });
   };
 
   /**
@@ -227,7 +227,7 @@ export default class Tags extends PureComponent<PropsType> {
    */
   replaceRegular(str, regular, replace) {
     const result = str.split(regular);
-    if (result.length == 1) return str;
+    if (result.length === 1) return str;
 
     for (let i = 2; i < result.length; i = i + 3) {
       const content = result[i];

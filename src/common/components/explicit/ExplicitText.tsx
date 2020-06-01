@@ -22,6 +22,7 @@ type PropsType = {
   entity: ActivityModel;
   navigation: any;
   style?: TextStyle | Array<TextStyle>;
+  noTruncate?: boolean;
 };
 
 type StateType = {
@@ -88,11 +89,13 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     let explicitToggle = null;
 
     if (message !== '') {
-      const truncated = this.truncate(message);
-      // truncate if necessary
-      if (message.length > truncated.length) {
-        if (!this.state.more) message = truncated;
-        moreLess = this.getMoreLess();
+      if (!this.props.noTruncate) {
+        const truncated = this.truncate(message);
+        // truncate if necessary
+        if (message.length > truncated.length) {
+          if (!this.state.more) message = truncated;
+          moreLess = this.getMoreLess();
+        }
       }
 
       body =

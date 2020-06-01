@@ -68,6 +68,7 @@ class Comment extends Component {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     const comment = this.props.comment;
     const avatarSrc = comment.ownerObj.getAvatarSource();
     const canReply = comment.can_reply && comment.parent_guid_l2 == 0;
@@ -75,7 +76,7 @@ class Comment extends Component {
     const actions = (
       <View style={[CommonStyle.flexContainer]}>
         <View style={styles.actionsContainer}>
-          <Text style={styles.timestamp}>
+          <Text style={[theme.fontM, theme.colorSecondaryText]}>
             {formatDate(comment.time_created, 'friendly')}
           </Text>
           <View
@@ -104,11 +105,7 @@ class Comment extends Component {
 
         <View style={styles.contentContainer}>
           <View style={styles.content}>
-            <View
-              style={[
-                styles.textContainer,
-                ThemedStyles.style.backgroundTertiary,
-              ]}>
+            <View style={[styles.textContainer, theme.backgroundTertiary]}>
               {this.state.editing ? (
                 <CommentEditor
                   setEditing={this.setEditing}
@@ -134,6 +131,32 @@ class Comment extends Component {
               )}
             </View>
           </View>
+
+          {comment.mature ? (
+            <ExplicitOverlay
+              entity={comment}
+              iconSize={35}
+              fontStyle={theme.fontS}
+              iconPosition="left"
+              closeContainerStyle={styles.matureCloseContainer}
+              containerStyle={[
+                styles.matureContainer,
+                CommonStyle.marginLeft,
+                CommonStyle.marginRight,
+                CommonStyle.borderRadius5x,
+              ]}
+            />
+          ) : null}
+          {comment.hasMedia() && (
+            <View style={styles.media}>
+              <MediaView
+                entity={comment}
+                style={styles.media}
+                navigation={this.props.navigation}
+                width={Dimensions.get('window').width - 60}
+              />
+            </View>
+          )}
           {actions}
           {comment.expanded && (
             <CommentList
@@ -146,29 +169,6 @@ class Comment extends Component {
               route={this.props.route}
             />
           )}
-
-          {comment.mature ? (
-            <ExplicitOverlay
-              entity={comment}
-              iconSize={35}
-              fontStyle={{ fontSize: 12 }}
-              iconPosition="left"
-              closeContainerStyle={styles.matureCloseContainer}
-              containerStyle={[
-                styles.matureContainer,
-                CommonStyle.marginLeft,
-                CommonStyle.marginRight,
-                CommonStyle.borderRadius5x,
-              ]}
-            />
-          ) : null}
-
-          <MediaView
-            entity={comment}
-            style={styles.media}
-            navigation={this.props.navigation}
-            width={Dimensions.get('window').width - 60}
-          />
         </View>
         <CommentActionSheet
           entity={this.props.entity}
@@ -297,10 +297,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
   },
   media: {
-    flex: 1,
-    margin: 8,
-    borderRadius: 3,
-    //marginLeft: 16,
+    margin: 5,
+    paddingTop: 10,
   },
   contentContainer: {
     flex: 1,
@@ -312,8 +310,9 @@ const styles = StyleSheet.create({
     textShadowRadius: 20,
   },
   textContainer: {
-    borderRadius: 20,
+    borderRadius: 3,
     marginHorizontal: 5,
+    flex: 1,
     padding: 5,
   },
   content: {
@@ -341,15 +340,12 @@ const styles = StyleSheet.create({
   },
   message: {
     paddingHorizontal: 6,
+    paddingVertical: 6,
     fontSize: 14,
   },
   username: {
     // fontWeight: '800',
     fontFamily: 'Roboto-Black',
     paddingRight: 8,
-  },
-  timestamp: {
-    fontSize: 10,
-    color: '#888',
   },
 });

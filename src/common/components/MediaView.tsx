@@ -33,7 +33,8 @@ import type ActivityModel from 'src/newsfeed/ActivityModel';
 type PropsType = {
   entity: ActivityModel;
   navigation: any;
-  style: ViewStyle | Array<ViewStyle>;
+  style?: ViewStyle | Array<ViewStyle>;
+  containerStyle?: ViewStyle | Array<ViewStyle>;
   autoHeight?: boolean;
 };
 /**
@@ -92,15 +93,6 @@ export default class MediaView extends Component<PropsType> {
   }
 
   getVideo() {
-    let guid;
-    if (this.props.entity.custom_data) {
-      guid = this.props.entity.custom_data.guid;
-    } else if (this.props.entity.cinemr_guid) {
-      guid = this.props.entity.cinemr_guid;
-    } else {
-      guid = this.props.entity.guid;
-    }
-
     return (
       <View style={styles.videoContainer}>
         <MindsVideo
@@ -216,7 +208,7 @@ export default class MediaView extends Component<PropsType> {
       return <View style={[styles.imageLoadError, { height }]}>{text}</View>;
     }
 
-    if (custom_data && custom_data[0].height && custom_data[0].height != '0') {
+    if (custom_data && custom_data[0].height && custom_data[0].height !== '0') {
       let ratio = custom_data[0].height / custom_data[0].width;
       let height = this.props.width * ratio;
       return (
@@ -229,10 +221,8 @@ export default class MediaView extends Component<PropsType> {
           <ExplicitImage
             source={source}
             entity={this.props.entity}
-            style={[styles.image, { height, maxHeight: 100 }]}
             // loadingIndicator="placeholder"
             onError={this.imageError}
-            imageStyle={styles.innerImage}
           />
         </TouchableOpacity>
       );
@@ -276,7 +266,7 @@ export default class MediaView extends Component<PropsType> {
     if (!media) return null;
 
     return (
-      <View style={this.props.style}>
+      <View style={[this.props.containerStyle]}>
         {media}
         {!!this.props.entity.license && false && this.getLicense()}
       </View>
@@ -344,8 +334,8 @@ export default class MediaView extends Component<PropsType> {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    flex: 1,
-    alignItems: 'stretch',
+    // flex: 1,
+    // alignItems: 'stretch',
     //minHeight: 200,
   },
   image: {

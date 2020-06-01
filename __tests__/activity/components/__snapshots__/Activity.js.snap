@@ -183,16 +183,7 @@ exports[`Activity component renders correctly 1`] = `
       }
     }
     rightToolbar={
-      <View
-        style={
-          Object {
-            "alignSelf": "flex-end",
-            "position": "absolute",
-            "right": 10,
-            "top": 22,
-          }
-        }
-      >
+      <View>
         <ActivityActionSheet
           entity={
             ActivityModel {

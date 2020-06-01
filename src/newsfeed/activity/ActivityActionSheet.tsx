@@ -357,7 +357,7 @@ export default class ActivityActionSheet extends Component<
     };
 
     return (
-      <View style={[CS.flexContainer, CS.centered]}>
+      <View>
         <Icon
           name="more-vert"
           onPress={() => this.showActionSheet()}

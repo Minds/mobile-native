@@ -106,6 +106,23 @@ export default class ActivityModel extends BaseModel {
     return this.__list;
   }
 
+  /**
+   * Has media
+   */
+  hasMedia(): boolean {
+    const type = this.custom_type || this.subtype;
+    switch (type) {
+      case 'image':
+      case 'video':
+      case 'batch':
+        return true;
+    }
+    if (this.perma_url) {
+      return true;
+    }
+    return false;
+  }
+
   toPlainObject() {
     const plainEntity = super.toPlainObject();
     if (plainEntity.remind_object && plainEntity.remind_object.__list) {

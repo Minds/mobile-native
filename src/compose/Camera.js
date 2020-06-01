@@ -245,18 +245,16 @@ const styles = StyleSheet.create({
   },
   cameraReverseIcon: {
     color: 'white',
-    shadowOpacity: 0.3,
-    textShadowRadius: 2,
-    textShadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 0, height: 0 },
     shadowRadius: 2.22,
     elevation: 4,
   },
   flashIcon: {
     color: 'white',
     marginTop: 10,
-    shadowOpacity: 0.3,
-    textShadowRadius: 2,
-    textShadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 0, height: 0 },
     elevation: 1,
   },
   galleryIconContainer: {
@@ -270,8 +268,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginLeft: 12,
     shadowOpacity: 0.4,
-    textShadowRadius: 4,
-    textShadowOffset: { width: 0, height: 0 },
+    shadowOffset: { width: 0, height: 0 },
     elevation: 4,
   },
   buttonContainer: {

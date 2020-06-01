@@ -26,7 +26,7 @@ type PropsType = {
   renderTileActivity?: Function;
   renderActivity?: Function;
   emptyMessage?: React.ReactNode;
-  header: React.ReactNode;
+  header?: React.ReactNode;
   listComponent?: React.ComponentType;
   navigation: any;
   style?: StyleProp<ViewStyle>;

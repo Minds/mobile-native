@@ -66,6 +66,7 @@ import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
+import ViewerScreen from '../discovery/v2/viewer/ViewerScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -120,6 +121,11 @@ const AppStack = function () {
         name="Main"
         component={MainSwiperScreen}
         options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="ActivityFullScreen"
+        component={ViewerScreen}
+        options={{ stackAnimation: 'none', ...hideHeader }}
       />
       <AppStackNav.Screen
         name="StackCapture"
