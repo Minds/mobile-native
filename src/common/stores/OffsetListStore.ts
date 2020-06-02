@@ -153,7 +153,7 @@ export default class OffsetListStore {
   }
 
   @action
-  async refresh(keepEntities = false) {
+  refresh(keepEntities = false) {
     this.refreshing = true;
     this.errorLoading = false;
     if (!keepEntities) this.entities = [];

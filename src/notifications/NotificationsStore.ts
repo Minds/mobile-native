@@ -125,7 +125,10 @@ class NotificationsStore {
    */
   async loadList(refresh = false) {
     // no more data? return
-    if (!refresh && (this.list.cantLoadMore() || this.loading)) {
+    if (
+      (!refresh || this.list.refreshing) &&
+      (this.list.cantLoadMore() || this.loading)
+    ) {
       return;
     }
 
@@ -154,7 +157,7 @@ class NotificationsStore {
    * Refresh list
    */
   async refresh() {
-    await this.list.refresh(true);
+    this.list.refresh(true);
     try {
       await this.loadList(true);
     } catch (err) {
