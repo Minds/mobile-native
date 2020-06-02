@@ -2,6 +2,7 @@
 import navigation from '../../../navigation/NavigationService';
 import featuresService from '../features.service';
 import logService from '../log.service';
+import entitiesService from '../entities.service';
 
 /**
  * Push Router
@@ -42,11 +43,20 @@ export default class Router {
             this.navigateToActivityOrGroup(data);
             //navigation.push('Activity', { guid: data.json.parent_guid });
           } else if (entity_type[0] === 'activity') {
-            navigation.push('Activity', { guid: data.json.entity_guid });
+            navigation.navigate('App', {
+              screen: 'Activity',
+              params: { guid: data.json.entity_guid },
+            });
           } else if (entity_type[1] === 'blog') {
-            navigation.push('BlogView', { guid: data.json.entity_guid });
+            navigation.navigate('App', {
+              screen: 'BlogView',
+              params: { guid: data.json.entity_guid },
+            });
           } else if (entity_type[0] === 'object') {
-            navigation.push('Activity', { guid: data.json.entity_guid });
+            navigation.navigate('App', {
+              screen: 'Activity',
+              params: { guid: data.json.entity_guid },
+            });
           } else {
             const err = new Error(
               `[DeepLinkRouter] Unknown notification, entity_type: ${entity_type}`,
@@ -57,22 +67,31 @@ export default class Router {
           break;
 
         case 'remind':
-          navigation.push('Activity', { guid: data.json.entity_guid });
+          navigation.push('App', {
+            screen: 'Activity',
+            params: { guid: data.json.entity_guid },
+          });
           break;
 
         case 'comment':
-          if (data.json.entity_type == 'group') {
-            navigation.push('GroupView', {
-              guid: data.json.child_guid
-                ? data.json.child_guid
-                : data.json.entity_guid,
-              tab: 'conversation',
+          if (data.json.entity_type === 'group') {
+            navigation.navigate('App', {
+              screen: 'GroupView',
+              params: {
+                guid: data.json.child_guid
+                  ? data.json.child_guid
+                  : data.json.entity_guid,
+                tab: 'conversation',
+              },
             });
           } else {
-            navigation.push('Activity', {
-              guid: data.json.child_guid
-                ? data.json.child_guid
-                : data.json.entity_guid,
+            navigation.navigate('App', {
+              screen: 'Activity',
+              params: {
+                guid: data.json.child_guid
+                  ? data.json.child_guid
+                  : data.json.entity_guid,
+              },
             });
           }
           break;
@@ -80,14 +99,20 @@ export default class Router {
         case 'rewards_reminder':
         case 'rewards_summary':
           if (featuresService.has('crypto')) {
-            navigation.navigate('Wallet', {});
+            navigation.navigate('App', {
+              screen: 'Wallet',
+            });
           } else {
-            navigation.navigate('Notifications', {});
+            navigation.navigate('App', {
+              screen: 'Notifications',
+            });
           }
           break;
 
         default:
-          navigation.navigate('Notifications', {});
+          navigation.navigate('App', {
+            screen: 'Notifications',
+          });
           logService.error(
             '[DeepLinkRouter] Unknown notification:' + JSON.stringify(data),
           );
@@ -101,20 +126,27 @@ export default class Router {
    * @param {Object} data
    */
   async navigateToActivityOrGroup(data) {
-    const entitiesService = require('../entities.service');
     try {
       const entity = await entitiesService.single(
         'urn:entity:' + data.json.parent_guid,
       );
 
       if (entity.type === 'group') {
-        navigation.push('GroupView', {
-          guid: data.json.parent_guid,
-          tab: 'conversation',
+        navigation.push('App', {
+          screen: 'GroupView',
+          params: {
+            guid: data.json.parent_guid,
+            tab: 'conversation',
+          },
         });
       } else {
-        navigation.push('Activity', { entity: entity });
+        navigation.navigate('App', {
+          screen: 'Activity',
+          params: { entity: entity },
+        });
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
