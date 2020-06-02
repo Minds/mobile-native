@@ -284,12 +284,11 @@ class MindsVideo extends Component<PropsType, StateType> {
   play = async () => {
     videoPlayerService.setCurrent(this);
 
-    const state = {
+    const state: any = {
       active: true,
       showOverlay: false,
       paused: false,
       sources: [] as Array<Source>,
-      video: undefined as any,
     };
 
     if (!this.state.sources && this.props.entity) {
