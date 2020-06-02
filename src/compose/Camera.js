@@ -81,7 +81,7 @@ export default observer(function (props) {
         });
       },
       async selectFromGallery() {
-        const response = await attachmentService.gallery(p.mode);
+        const response = await attachmentService.gallery(p.mode, false);
 
         if (response && props.onMediaFromGallery) {
           props.onMediaFromGallery(response);

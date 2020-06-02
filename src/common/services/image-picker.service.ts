@@ -89,6 +89,7 @@ class ImagePickerService {
    */
   async launchImageLibrary(
     type: mediaType = 'photo',
+    crop = true,
   ): Promise<customImagePromise> {
     // check or ask for permissions
     const allowed = await this.checkPermissions();
@@ -97,7 +98,7 @@ class ImagePickerService {
       return false;
     }
 
-    const opt = this.buildOptions(type);
+    const opt = this.buildOptions(type, crop);
 
     return this.returnCustom(ImagePicker.openPicker(opt));
   }
@@ -119,7 +120,7 @@ class ImagePickerService {
       return false;
     }
 
-    const opt = this.buildOptions(type);
+    const opt = this.buildOptions(type, true);
 
     opt.cropperCircleOverlay = cropperCircleOverlay;
 
@@ -158,10 +159,10 @@ class ImagePickerService {
    * Build the options
    * @param {string} type
    */
-  buildOptions(type: mediaType): Options {
+  buildOptions(type: mediaType, crop: boolean): Options {
     return {
       mediaType: type,
-      cropping: true,
+      cropping: crop && type !== 'video',
       showCropGuidelines: false,
     };
   }
