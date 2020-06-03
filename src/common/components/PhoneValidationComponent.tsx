@@ -145,7 +145,11 @@ export default class PhoneValidationComponent extends Component<propsType> {
   setPassword = (password) => this.setState({ password });
 
   canJoin() {
-    return this.phoneInput && this.phoneInput.current.isValidNumber();
+    return (
+      this.phoneInput &&
+      this.phoneInput.current &&
+      this.phoneInput.current.isValidNumber()
+    );
   }
 
   joinAction = () => this.join();
