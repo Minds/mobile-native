@@ -159,7 +159,7 @@ class ImagePickerService {
    * Build the options
    * @param {string} type
    */
-  buildOptions(type: mediaType, crop: boolean): Options {
+  buildOptions(type: mediaType, crop: boolean = true): Options {
     return {
       mediaType: type,
       cropping: crop && type !== 'video',
