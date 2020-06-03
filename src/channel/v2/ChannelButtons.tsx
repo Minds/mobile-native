@@ -84,15 +84,17 @@ const ChannelButtons = observer((props: PropsType) => {
         theme.marginRight2x,
       ]}>
       {showEdit ? (
-        <Button
-          color={ThemedStyles.getColor('secondary_background')}
-          text={i18n.t('channel.editChannel')}
-          textStyle={theme.fontL}
-          containerStyle={styles.button}
-          textColor={ThemedStyles.getColor('primary_text')}
-          onPress={props.onEditPress}
-          inverted
-        />
+        <View style={isIos ? undefined : theme.paddingTop2x}>
+          <Button
+            color={ThemedStyles.getColor('secondary_background')}
+            text={i18n.t('channel.editChannel')}
+            textStyle={isIos ? theme.fontL : theme.fontM}
+            containerStyle={styles.button}
+            textColor={ThemedStyles.getColor('primary_text')}
+            onPress={props.onEditPress}
+            inverted
+          />
+        </View>
       ) : (
         <Icon
           raised

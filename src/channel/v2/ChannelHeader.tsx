@@ -108,7 +108,7 @@ const ChannelHeader = observer((props: PropsType) => {
           {canEdit && (
             <SmallCircleButton
               name="camera"
-              style={[styles.avatarSmallButton]}
+              style={styles.avatarSmallButton}
               onPress={() => props.store.upload('avatar')}
             />
           )}
@@ -134,7 +134,7 @@ const ChannelHeader = observer((props: PropsType) => {
       {canEdit && (
         <SmallCircleButton
           name="camera"
-          style={[styles.bannerSmallButton]}
+          style={styles.bannerSmallButton}
           onPress={() => props.store.upload('banner')}
         />
       )}
