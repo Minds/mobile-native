@@ -70,9 +70,26 @@ const ChannelHeader = observer((props: PropsType) => {
               theme.paddingHorizontal4x,
               theme.rowJustifySpaceBetween,
             ]}>
-            <Text style={[theme.fontL, theme.colorSecondaryText]}>
-              Scheduled: <Text style={theme.colorPrimaryText}>0</Text>
-            </Text>
+            {props.store.feedStore.scheduledCount > 0 ? (
+              <View
+                style={[
+                  theme.borderBottom,
+                  props.store.showScheduled
+                    ? theme.borderTab
+                    : theme.borderTransparent,
+                ]}>
+                <Text
+                  style={[theme.fontL, theme.colorSecondaryText]}
+                  onPress={props.store.toggleScheduled}>
+                  {i18n.t('channel.viewScheduled')}:{' '}
+                  <Text style={theme.colorPrimaryText}>
+                    {props.store.feedStore.scheduledCount}
+                  </Text>
+                </Text>
+              </View>
+            ) : (
+              <View />
+            )}
             <FeedFilter store={props.store} />
           </View>
         );
@@ -83,7 +100,7 @@ const ChannelHeader = observer((props: PropsType) => {
           </ScrollView>
         );
       default:
-        return <View></View>;
+        return <View />;
     }
   };
 

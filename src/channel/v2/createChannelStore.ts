@@ -65,6 +65,7 @@ const createChannelStore = () => {
     },
     toggleScheduled() {
       this.showScheduled = !this.showScheduled;
+      this.loadFeed(true);
     },
     /**
      * Initial load
@@ -126,7 +127,10 @@ const createChannelStore = () => {
      */
     setChannel(channel: UserModel) {
       this.channel = channel;
-      this.loaded = true;
+      if (!this.loaded) {
+        this.loaded = true;
+        this.feedStore.getScheduledCount(this.channel.guid);
+      }
     },
     /**
      * Load channel from existing entity
