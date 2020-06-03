@@ -26,7 +26,6 @@ exports[`LoginForm component should renders correctly 1`] = `
         Object {
           "flexDirection": "row",
           "justifyContent": "space-between",
-          "width": "100%",
         }
       }
     >
@@ -35,7 +34,6 @@ exports[`LoginForm component should renders correctly 1`] = `
           Object {
             "flexDirection": "row",
             "justifyContent": "space-between",
-            "width": "100%",
           }
         }
       >
@@ -84,7 +82,6 @@ exports[`LoginForm component should renders correctly 1`] = `
           Object {
             "flexDirection": "row",
             "justifyContent": "space-between",
-            "width": "100%",
           }
         }
       >
@@ -93,7 +90,6 @@ exports[`LoginForm component should renders correctly 1`] = `
             Object {
               "flexDirection": "row",
               "justifyContent": "space-between",
-              "width": "100%",
             }
           }
         >
