@@ -9,6 +9,7 @@ import api from '../../../common/services/api.service';
 import groupBy from '../../../common/helpers/groupBy';
 import UserModel from '../../../channel/UserModel';
 import moment from 'moment';
+import logService from '../../../common/services/log.service';
 
 type ParamsType = {
   wallet: WalletStoreType;
@@ -57,13 +58,17 @@ const createCashTransactionsStore = ({ wallet, user }: ParamsType) => {
     async load() {
       this.setLoading(true);
       // api.abort(this);
-      const result = await api.get<any>(
-        'api/v2/payments/stripe/transactions',
-        {},
-        this,
-      );
-
-      this.setEntities(result.transactions);
+      try {
+        const result = await api.get<any>(
+          'api/v2/payments/stripe/transactions',
+          {},
+          this,
+        );
+        this.setEntities(result.transactions);
+      } catch (err) {
+        logService.exception(err);
+        this.loading = false;
+      }
     },
     getDelta(tx) {
       let delta = 'neutral';
