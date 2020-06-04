@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
 import {
   TouchableOpacity,
   KeyboardAvoidingView,
@@ -9,7 +9,7 @@ import {
   Platform,
 } from 'react-native';
 import { useKeyboard } from '@react-native-community/hooks';
-import { observer } from 'mobx-react';
+import { observer, useLocalStore } from 'mobx-react';
 import * as Progress from 'react-native-progress';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
@@ -60,6 +60,13 @@ export default observer(function (props) {
     }
   }, [props.store]);
 
+  const localStore = useLocalStore(() => ({
+    height: 42, // input height
+    onSizeChange(e) {
+      localStore.height = e.nativeEvent.contentSize.height;
+    },
+  }));
+
   const videoPreviewStyle = {
     height: keyboard.keyboardShown ? width / 2.5 : width,
     width: width,
@@ -96,20 +103,15 @@ export default observer(function (props) {
     }
   }, [inputRef]);
 
-  const showOptions = !(
-    keyboard.keyboardShown && props.store.attachment.hasAttachment
-  );
+  const showOptions = true;
 
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : null}>
+      behavior={Platform.OS === 'ios' ? 'height' : null}>
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
-        contentContainerStyle={[
-          styles.scrollBody,
-          showOptions ? styles.bodyContainer : null,
-        ]}>
+        contentContainerStyle={[styles.scrollBody, styles.bodyContainer]}>
         <TopBar
           rightText={rightButton}
           onPressRight={onPost}
@@ -172,8 +174,11 @@ export default observer(function (props) {
             fontSize,
             theme.paddingHorizontal4x,
             styles.input,
+            { height: localStore.height },
           ]}
+          onContentSizeChange={localStore.onSizeChange}
           ref={inputRef}
+          scrollEnabled={false}
           placeholder={placeholder}
           placeholderTextColor={ThemedStyles.getColor('tertiary_text')}
           onChangeText={props.store.setText}
@@ -192,7 +197,7 @@ export default observer(function (props) {
           />
         )}
       </ScrollView>
-      {showOptions && <PosterOptions store={props.store} />}
+      <PosterOptions store={props.store} />
     </KeyboardAvoidingView>
   );
 });
