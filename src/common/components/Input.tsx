@@ -182,7 +182,6 @@ export default class Input extends Component<propsType> {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    width: '100%',
     justifyContent: 'space-between',
   },
   label: {
