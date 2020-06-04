@@ -491,7 +491,7 @@ export default class FeedStore {
    */
   async getScheduledCount(guid) {
     const count = await channelService.getScheduledCount(guid);
-    this.setScheduledCount(count);
+    this.setScheduledCount(parseInt(count, 10));
   }
 
   @action

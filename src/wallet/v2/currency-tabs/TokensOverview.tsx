@@ -59,13 +59,13 @@ const TokensOverview = observer(
             <Text style={theme.fontXL}>{walletStore.balance}</Text>
           </View>
           <View>
-            <Text style={balanceStyle}>Off chain</Text>
+            <Text style={balanceStyle}>Off Chain</Text>
             <Text style={theme.fontXL}>
               {walletStore.wallet.offchain.balance}
             </Text>
           </View>
           <View>
-            <Text style={balanceStyle}>On chain</Text>
+            <Text style={balanceStyle}>On Chain</Text>
             <Text style={theme.fontXL}>
               {walletStore.wallet.onchain.balance}
             </Text>

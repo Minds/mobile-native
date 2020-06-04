@@ -101,14 +101,18 @@ const TokensChart = observer(({ timespan }: PropsType) => {
         scrollableDotRadius: 4,
         scrollableInfoViewStyle: {
           justifyContent: 'center',
-          alignContent: 'center',
+          height: 80,
+          padding: 0,
+          // alignContent: 'center',
           backgroundColor: ThemedStyles.getColor('tertiary_background'),
           borderRadius: 2,
         },
         scrollableInfoTextStyle: {
           color: ThemedStyles.getColor('primary_text'),
-          marginHorizontal: 4,
-          flex: 1,
+          // marginHorizontal: 4,
+          // flex: 1,
+          padding: 0,
+          fontSize: 14,
           textAlign: 'center',
         },
         scrollableInfoSize: {
