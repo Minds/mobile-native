@@ -70,10 +70,7 @@ class DiscoveryTile extends Component {
       url.priority = FastImage.priority.low;
     }
 
-    const show_overlay =
-      entity.shouldBeBlured() &&
-      !entity.is_parent_mature &&
-      !(entity.shouldBeBlured() && entity.is_parent_mature);
+    const show_overlay = entity.shouldBeBlured();
 
     const overlay = show_overlay ? (
       <ExplicitOverlay entity={entity} iconSize={45} hideText={true} />

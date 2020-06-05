@@ -72,10 +72,6 @@ export default class ActivityModel extends BaseModel {
     min: number;
   } | null;
   _preview?: boolean;
-  /**
-   * Set programatically to indicate that the parent is marked as mature
-   */
-  is_parent_mature?: boolean;
 
   /**
    * Mature visibility flag
@@ -238,7 +234,7 @@ export default class ActivityModel extends BaseModel {
     }
     this.mature_visibility = !this.mature_visibility;
 
-    if (this.remind_object && this.remind_object.mature) {
+    if (this.remind_object && this.remind_object) {
       this.remind_object.mature_visibility = this.mature_visibility;
     }
   }
