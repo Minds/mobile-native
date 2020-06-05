@@ -90,7 +90,7 @@ export default class Activity extends Component<PropsType, StateType> {
       navOpts.hydrate = true;
     }
 
-    if (this.props.entity.__list) {
+    if (this.props.entity.__list && !this.props.isReminded) {
       const index = this.props.entity.__list.entities.findIndex(
         (e) => e === this.props.entity,
       );
