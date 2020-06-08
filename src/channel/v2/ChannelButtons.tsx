@@ -61,6 +61,7 @@ const ChannelButtons = observer((props: PropsType) => {
   }, [menuRef]);
 
   const showWire =
+    !isIos &&
     !props.channel.blocked &&
     !props.channel.isOwner() &&
     props.channel.can(FLAG_WIRE);
