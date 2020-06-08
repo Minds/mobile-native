@@ -2,7 +2,7 @@
 stages:
   - test
   - build
-  - i18n
+  - l10n
   - deploy
 
 # Spec test
@@ -21,37 +21,47 @@ test:jest:
     - yarn tsc
     - yarn test
 
-# Upload new terms to poeditor
-i18n:upload:
-  image: node:10.16.3
-  stage: i18n
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-  before_script:
-    - yarn install --frozen-lockfile
+l10n-sync:
+  stage: l10n
   script:
-    - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1
-  only:
-    refs:
-      - /^release-*/
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/l10n.git
+    - cp locales/en.json l10n/mobile-native/en.json
+    - cd l10n
+    - git commit -am 'update default language for mobile-native' && git push --set-upstream origin master
+    - cd .. # back to mobile
+    - cp -r l10n/mobile-native/locale/ locales/
+
+# Upload new terms to poeditor
+# i18n:upload:
+#   image: node:10.16.3
+#   stage: i18n
+#   cache:
+#     key: ${CI_COMMIT_REF_SLUG}
+#     paths:
+#       - node_modules/
+#   before_script:
+#     - yarn install --frozen-lockfile
+#   script:
+#     - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1
+#   only:
+#     refs:
+#       - /^release-*/
 
 # Upload new terms and remove the deleted
-i18n:uploadsync:
-  image: node:10.16.3
-  stage: i18n
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - node_modules/
-  before_script:
-    - yarn install --frozen-lockfile
-  script:
-    - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1 --sync_terms=1
-  only:
-    refs:
-      - master
+# i18n:uploadsync:
+#   image: node:10.16.3
+#   stage: i18n
+#   cache:
+#     key: ${CI_COMMIT_REF_SLUG}
+#    paths:
+#      - node_modules/
+#  before_script:
+#    - yarn install --frozen-lockfile
+#   script:
+#     - yarn locale upload --poeditor-key=${CI_POEDITOR_KEY} --overwrite=1 --sync_terms=1
+#   only:
+#     refs:
+#       - master
 
 # Web dev version using cache and without sentry maps upload
 build:android:
