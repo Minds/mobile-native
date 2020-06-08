@@ -190,12 +190,13 @@ export default class Activity extends Component<PropsType, StateType> {
       : [ThemedStyles.style.borderBottomHair, ThemedStyles.style.borderPrimary];
 
     return (
-      <View
+      <TouchableOpacity
         style={[
           styles.container,
           ...borderBottom,
           ThemedStyles.style.backgroundSecondary,
         ]}
+        onPress={this.navToActivity}
         onLayout={this.onLayout}
         testID="ActivityView">
         <Pinned entity={this.props.entity} />
@@ -227,7 +228,7 @@ export default class Activity extends Component<PropsType, StateType> {
         {this.renderPendingMessage()}
         {this.renderActivitySpacer()}
         {/* {this.renderActivityMetrics()} */}
-      </View>
+      </TouchableOpacity>
     );
   }
 

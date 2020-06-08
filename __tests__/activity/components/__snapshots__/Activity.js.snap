@@ -1,8 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Activity component renders correctly 1`] = `
-<View
+<TouchableOpacity
+  activeOpacity={0.2}
   onLayout={[Function]}
+  onPress={[Function]}
   style={
     Array [
       Object {
@@ -668,5 +670,5 @@ exports[`Activity component renders correctly 1`] = `
       }
     }
   />
-</View>
+</TouchableOpacity>
 `;
