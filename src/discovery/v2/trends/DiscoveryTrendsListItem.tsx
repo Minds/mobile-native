@@ -147,7 +147,7 @@ export const DiscoveryTrendsListItem = observer((props: Props) => {
     );
   };
 
-  if (isHero) {
+  if (isHero && data.entity) {
     partial = HeroPartial();
   } else {
     partial = data.title ? RichPartial() : TrendingHashtagPartial();
