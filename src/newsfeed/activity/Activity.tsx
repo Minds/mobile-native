@@ -38,6 +38,7 @@ type PropsType = {
   autoHeight?: boolean;
   isLast?: boolean;
   hideTabs?: boolean;
+  parentMature?: boolean;
   onLayout?: Function;
   showCommentsOutlet?: boolean;
 };
@@ -178,8 +179,8 @@ export default class Activity extends Component<PropsType, StateType> {
 
     const show_overlay =
       entity.shouldBeBlured() &&
-      !entity.is_parent_mature &&
-      !(entity.shouldBeBlured() && entity.is_parent_mature);
+      !this.props.parentMature &&
+      !(entity.shouldBeBlured() && this.props.parentMature);
     const overlay = show_overlay ? (
       <ExplicitOverlay entity={this.props.entity} />
     ) : null;
@@ -204,7 +205,7 @@ export default class Activity extends Component<PropsType, StateType> {
         {this.props.entity.perma_url || this.props.entity.remind_object
           ? message
           : undefined}
-        <View>
+        <View style={show_overlay ? styles.nsfwContainer : null}>
           {this.showRemind()}
 
           <MediaView
@@ -216,11 +217,11 @@ export default class Activity extends Component<PropsType, StateType> {
             style={styles.media}
             autoHeight={this.props.autoHeight}
           />
+          {!(this.props.entity.perma_url || this.props.entity.remind_object)
+            ? message
+            : undefined}
           {overlay}
         </View>
-        {!(this.props.entity.perma_url || this.props.entity.remind_object)
-          ? message
-          : undefined}
         {this.showActions()}
         {this.renderScheduledMessage()}
         {this.renderPendingMessage()}
@@ -385,10 +386,6 @@ export default class Activity extends Component<PropsType, StateType> {
         );
       }
 
-      if (this.props.entity.shouldBeBlured()) {
-        remind_object.is_parent_mature = true;
-      }
-
       return (
         <View
           style={[
@@ -403,6 +400,7 @@ export default class Activity extends Component<PropsType, StateType> {
             entity={remind_object}
             navigation={this.props.navigation}
             isReminded={true}
+            parentMature={this.props.entity.shouldBeBlured()}
             hydrateOnNav={true}
           />
         </View>
@@ -428,6 +426,9 @@ export default class Activity extends Component<PropsType, StateType> {
 const styles = StyleSheet.create({
   container: {
     overflow: 'visible',
+  },
+  nsfwContainer: {
+    minHeight: 250,
   },
   messageContainer: {
     padding: 10,
