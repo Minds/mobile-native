@@ -20,6 +20,7 @@ import type ActivityModel from 'src/newsfeed/ActivityModel';
 
 type PropsType = {
   entity: ActivityModel;
+  selectable?: boolean;
   navigation: any;
   style?: TextStyle | Array<TextStyle>;
   noTruncate?: boolean;
@@ -102,7 +103,10 @@ export default class ExplicitText extends Component<PropsType, StateType> {
         entity.shouldBeBlured() && !entity.mature_visibility ? (
           <Text style={styles.mature}>{message}</Text>
         ) : (
-          <Tags navigation={this.props.navigation} style={this.props.style}>
+          <Tags
+            navigation={this.props.navigation}
+            style={this.props.style}
+            selectable={this.props.selectable}>
             {message}
           </Tags>
         );

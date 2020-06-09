@@ -191,6 +191,8 @@ export default class Activity extends Component<PropsType, StateType> {
 
     return (
       <TouchableOpacity
+        delayPressIn={60}
+        activeOpacity={0.8}
         style={[
           styles.container,
           ...borderBottom,
@@ -330,9 +332,7 @@ export default class Activity extends Component<PropsType, StateType> {
         entity={this.props.entity}
         navigation={this.props.navigation}
         rightToolbar={this.props.hideTabs ? null : rightToolbar}>
-        <TouchableOpacity
-          onPress={() => this.navToActivity()}
-          style={ThemedStyles.style.rowJustifyStart}>
+        <View style={ThemedStyles.style.rowJustifyStart}>
           <Text
             style={[
               styles.timestamp,
@@ -353,7 +353,7 @@ export default class Activity extends Component<PropsType, StateType> {
               </Text>
             </View>
           )}
-        </TouchableOpacity>
+        </View>
       </OwnerBlock>
     );
   }

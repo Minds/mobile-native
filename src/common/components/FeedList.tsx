@@ -148,7 +148,7 @@ export default class FeedList<T> extends Component<PropsType> {
         numColumns={feedStore.isTiled ? 3 : 1}
         style={[
           ThemedStyles.style.flexContainer,
-          ThemedStyles.style.backgroundPrimary,
+          ThemedStyles.style.backgroundSecondary,
         ]}
         initialNumToRender={6}
         windowSize={11}

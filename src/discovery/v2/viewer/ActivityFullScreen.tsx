@@ -1,5 +1,5 @@
 import React, { useRef, useCallback } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -135,9 +135,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                 />
               </View>
             }>
-            <TouchableOpacity
-              // onPress={}
-              style={theme.rowJustifyStart}>
+            <View style={theme.rowJustifyStart}>
               <Text
                 style={[
                   theme.fontM,
@@ -154,7 +152,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                   </Text>
                 </View>
               )}
-            </TouchableOpacity>
+            </View>
           </OwnerBlock>
           <View
             style={[
@@ -169,6 +167,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                   entity={entity}
                   navigation={navigation}
                   style={fontStyle}
+                  selectable={false}
                   noTruncate={true}
                 />
                 <Translate
