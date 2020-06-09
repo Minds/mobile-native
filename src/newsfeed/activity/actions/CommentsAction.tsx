@@ -92,10 +92,17 @@ class CommentsAction extends Component<PropsType> {
     if ((routes && routes[routes.length - 1].name === 'Activity') || cantOpen) {
       return;
     }
-    this.props.navigation.push('Activity', {
-      entity: this.props.entity,
-      scrollToBottom: true,
-    });
+    if (this.props.entity.subtype && this.props.entity.subtype === 'blog') {
+      this.props.navigation.push('BlogView', {
+        blog: this.props.entity,
+        scrollToBottom: true,
+      });
+    } else {
+      this.props.navigation.push('Activity', {
+        entity: this.props.entity,
+        scrollToBottom: true,
+      });
+    }
   };
 }
 

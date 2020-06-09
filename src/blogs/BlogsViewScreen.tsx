@@ -78,6 +78,8 @@ export default class BlogsViewScreen extends Component {
   constructor(props) {
     super(props);
 
+    this.listRef = React.createRef(null);
+
     this.comments = commentsStoreProvider.get();
   }
 
@@ -143,6 +145,16 @@ export default class BlogsViewScreen extends Component {
   }
 
   /**
+   * On HTML height updated
+   */
+  onHeightUpdated = () => {
+    const params = this.props.route.params;
+    if (params && params.scrollToBottom && this.listRef.current) {
+      this.listRef.current.scrollToBottom();
+    }
+  };
+
+  /**
    * Render blog
    */
   getHeader() {
@@ -189,7 +201,10 @@ export default class BlogsViewScreen extends Component {
         {actions}
         <View style={styles.description}>
           {blog.description ? (
-            <BlogViewHTML html={blog.description} />
+            <BlogViewHTML
+              html={blog.description}
+              onHeightUpdated={this.onHeightUpdated}
+            />
           ) : (
             <CenteredLoading />
           )}
@@ -299,6 +314,7 @@ export default class BlogsViewScreen extends Component {
         {!this.state.error ? (
           <CommentList
             header={this.getHeader()}
+            ref={this.listRef}
             entity={this.props.blogsView.blog}
             store={this.comments}
             navigation={this.props.navigation}
