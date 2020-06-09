@@ -334,7 +334,7 @@ class MindsVideo extends Component<PropsType, StateType> {
     if (this.state.paused) {
       return (
         <Icon
-          onPress={this.play}
+          onPress={this.play as () => void}
           style={styles.videoIcon}
           name="md-play-circle"
           size={size}
