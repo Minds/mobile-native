@@ -41,7 +41,7 @@ export default class FeedList<T> extends Component<PropsType> {
   listRef?: FlatList<T>;
   cantShowActivity: string = '';
   viewOpts = {
-    viewAreaCoveragePercentThreshold: 50,
+    itemVisiblePercentThreshold: 50,
     minimumViewTime: 300,
   };
   state = {
