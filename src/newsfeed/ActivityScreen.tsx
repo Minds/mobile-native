@@ -113,7 +113,7 @@ class ActivityScreen extends Component<PropsType> {
         ref={this.setRef}
         entity={this.entityStore.entity}
         navigation={this.props.navigation}
-        autoHeight={false}
+        autoHeight={true}
         showCommentsOutlet={false}
       />
     ) : null;

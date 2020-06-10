@@ -116,7 +116,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
               : { paddingTop: insets.top + 40, minHeight: window.height - 200 },
           ]}>
           {hasMedia && (
-            <MediaView ref={mediaRef} entity={entity} navigation={navigation} />
+            <MediaView
+              ref={mediaRef}
+              entity={entity}
+              navigation={navigation}
+              autoHeight={true}
+            />
           )}
           <FloatingBackButton
             onPress={navigation.goBack}
