@@ -161,7 +161,12 @@ class I18nService {
   @action
   setLocale(locale: string, store = true) {
     if (store) {
+      // test fails if we use import
+      const api = require('./api.service').default;
       AsyncStorage.setItem(namespace, locale);
+      api.post('api/v1/settings', {
+        language: locale,
+      });
     }
     // clear translation cache
     translate.cache.clear();
