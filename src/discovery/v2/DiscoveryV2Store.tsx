@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx';
 import apiService from '../../common/services/api.service';
+import FeedStore from '../../common/stores/FeedStore';
 
 export type TDiscoveryV2Tabs =
   | 'foryou'
@@ -20,6 +21,20 @@ export default class DiscoveryV2Store {
   @observable trendingTags: TDiscoveryTagsTag[] = [];
   @observable loading = false;
   @observable refreshing = false;
+  boostFeed: FeedStore;
+
+  constructor() {
+    this.boostFeed = new FeedStore(true);
+    this.boostFeed
+      .getMetadataService()!
+      .setSource('feed/boosts')
+      .setMedium('featured-content');
+
+    this.boostFeed
+      .setEndpoint('api/v2/boost/feed')
+      .setInjectBoost(false)
+      .setLimit(15);
+  }
 
   @action
   setTabId(id: TDiscoveryV2Tabs) {
