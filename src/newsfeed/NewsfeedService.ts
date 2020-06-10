@@ -77,7 +77,7 @@ export default class NewsfeedService {
 }
 
 export function update(post) {
-  return api.post('api/v1/newsfeed/' + post.guid, post).then((data: any) => {
+  return api.post('api/v2/newsfeed/' + post.guid, post).then((data: any) => {
     return {
       entity: data.activity,
     };

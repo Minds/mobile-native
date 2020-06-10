@@ -8,6 +8,19 @@ import { Text, TextStyle } from 'react-native';
 import colors from '../../styles/Colors';
 import openUrlService from '../services/open-url.service';
 
+const hashRegex = new RegExp(
+  [
+    '([^&]|\\B|^)', // Start of string, and word bounday. Not if preceeded by & symbol
+    '#', //
+    '(',
+    '[\\wÀ-ÿ]+', // All Latin words + accented characters
+    '|[\\u0E00-\\u0E7F]+', // Unicode range for Thai
+    '|[\\u2460-\\u9FBB]+', // Unicode range for Japanese but may be overly zealous
+    ')',
+  ].join(''),
+  'gim',
+);
+
 type PropsType = {
   color?: string;
   navigation: any;
@@ -143,9 +156,7 @@ export default class Tags extends PureComponent<PropsType> {
    * #tags
    */
   parseHash = (str) => {
-    const hash = /(^|\s|\B)#(\w*[a-zA-Z_]+\w*)/gim;
-
-    return this.replaceRegular(str, hash, (i, content) => {
+    return this.replaceRegular(str, hashRegex, (i, content) => {
       return (
         <Text
           key={i}
