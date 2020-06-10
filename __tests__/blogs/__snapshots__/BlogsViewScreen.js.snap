@@ -879,6 +879,7 @@ exports[`blog view screen component should renders correctly 1`] = `
         >
           <BlogViewHTML
             html="Some Blog"
+            onHeightUpdated={[Function]}
           />
         </View>
         <View
