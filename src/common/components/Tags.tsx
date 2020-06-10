@@ -10,6 +10,7 @@ import openUrlService from '../services/open-url.service';
 
 type PropsType = {
   color?: string;
+  selectable?: boolean;
   navigation: any;
   style?: TextStyle | Array<TextStyle>;
 };
@@ -40,6 +41,8 @@ export default class Tags extends PureComponent<PropsType> {
   render() {
     this.index = 0;
     const tags = this.parseTags(this.props.children);
+    const selectable =
+      this.props.selectable !== undefined ? this.props.selectable : true;
 
     if (Array.isArray(tags)) {
       // workaround to prevent styling problems when there is many tags
@@ -47,14 +50,14 @@ export default class Tags extends PureComponent<PropsType> {
 
       return chunks.map((data, i) => {
         return (
-          <Text selectable={true} style={this.props.style} key={i}>
+          <Text selectable={selectable} style={this.props.style} key={i}>
             {data}
           </Text>
         );
       });
     } else {
       return (
-        <Text selectable={true} style={this.props.style}>
+        <Text selectable={selectable} style={this.props.style}>
           {tags}
         </Text>
       );
