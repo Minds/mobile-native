@@ -1,14 +1,7 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import {
-  Text,
-  Image,
-  View,
-  TouchableHighlight,
-  ActivityIndicator,
-  StyleSheet,
-} from 'react-native';
+import { Text, Image, View, ActivityIndicator, StyleSheet } from 'react-native';
 
 import { observer, inject } from 'mobx-react';
 import { debounce } from 'lodash';
@@ -17,19 +10,17 @@ import FastImage from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ActionSheet from 'react-native-actionsheet';
 
-import { MINDS_CDN_URI } from '../../config/Config';
+import { MINDS_CDN_URI, MINDS_LINK_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 import Toolbar from '../../common/components/toolbar/Toolbar';
 import { CommonStyle } from '../../styles/Common';
-import { ComponentsStyle } from '../../styles/Components';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import SearchView from '../../common/components/SearchView';
-import gathering from '../../common/services/gathering.service';
-import colors from '../../styles/Colors';
 import i18n from '../../common/services/i18n.service';
-import featuresService from '../../common/services/features.service';
 import { FLAG_JOIN, FLAG_JOIN_GATHERING } from '../../common/Permissions';
 import Button from '../../common/components/Button';
+import ThemedStyles from '../../styles/ThemedStyles';
+import ShareService from '../../share/ShareService';
 
 /**
  * Group Header
@@ -55,6 +46,16 @@ export default class GroupHeader extends Component {
       MINDS_CDN_URI + 'fs/v1/banners/' + group.guid + '/fat/' + group.icontime
     );
   }
+
+  /**
+   * Share group
+   */
+  share = () => {
+    ShareService.share(
+      this.props.store.group.name,
+      MINDS_LINK_URI + `groups/profile/${this.props.store.group.guid}/feed`,
+    );
+  };
 
   /**
    * Get Group Avatar
@@ -110,6 +111,7 @@ export default class GroupHeader extends Component {
    * Get Gathering Button
    */
   getGatheringButton() {
+    const theme = ThemedStyles.style;
     if (this.state.openingGathering) {
       return (
         <ActivityIndicator style={CommonStyle.paddingRight} size="large" />
@@ -121,8 +123,7 @@ export default class GroupHeader extends Component {
         <Icon
           name="videocam"
           size={32}
-          color={colors.primary}
-          style={CommonStyle.paddingRight}
+          style={[theme.paddingRight, theme.marginRight, theme.colorIconActive]}
           onPress={this.joinGathering}
         />
       );
@@ -207,6 +208,7 @@ export default class GroupHeader extends Component {
           this.props.store.refresh(group.guid);
           this.props.groupsBar.markAsRead(group, 'activity');
         }
+        break;
       case 'desc':
         this.props.store.list && this.props.store.list.clearList(false);
         break;
@@ -302,6 +304,7 @@ export default class GroupHeader extends Component {
    * Render Header
    */
   render() {
+    const theme = ThemedStyles.style;
     const group = this.props.store.group;
     const styles = this.props.styles;
     const avatar = { uri: this.getAvatar() };
@@ -327,6 +330,16 @@ export default class GroupHeader extends Component {
               <Text style={styles.name}>{group.name.toUpperCase()}</Text>
             </View>
             <View style={styles.buttonscol}>
+              <Icon
+                name="share"
+                size={28}
+                style={[
+                  theme.paddingRight,
+                  theme.marginRight,
+                  theme.colorIconActive,
+                ]}
+                onPress={this.share}
+              />
               {group.can(FLAG_JOIN_GATHERING) && this.getGatheringButton()}
               {group.can(FLAG_JOIN) && this.getActionButton()}
             </View>
