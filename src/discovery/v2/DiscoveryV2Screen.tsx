@@ -16,9 +16,8 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './DiscoveryV2Context';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
-import NewsfeedList from '../../newsfeed/NewsfeedList';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
+import FeedList from '../../common/components/FeedList';
 
 interface Props {
   navigation: BottomTabNavigationProp<TabParamList>;
@@ -31,8 +30,6 @@ export const DiscoveryV2Screen = observer((props: Props) => {
   const [shouldRefreshOnTabPress, setShouldRefreshOnTabPress] = useState(false);
   const store = useDiscoveryV2Store();
   const navigation = props.navigation;
-
-  const { newsfeed } = useLegacyStores();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('tabPress', () => {
@@ -66,8 +63,8 @@ export const DiscoveryV2Screen = observer((props: Props) => {
       case 'trending-tags':
         return <DiscoveryTagsList type="trending" />;
       case 'boosts':
-        newsfeed.refresh();
-        return <NewsfeedList newsfeed={newsfeed} navigation={navigation} />;
+        store.boostFeed.fetchRemoteOrLocal();
+        return <FeedList feedStore={store.boostFeed} navigation={navigation} />;
       default:
         return <View />;
     }
