@@ -16,7 +16,6 @@ import {
 } from 'react-native';
 
 import ExplicitImage from './explicit/ExplicitImage';
-import AutoHeightFastImage from './AutoHeightFastImage';
 import domain from '../helpers/domain';
 import MindsVideo from '../../media/MindsVideo';
 import mediaProxyUrl from '../helpers/media-proxy-url';
@@ -51,6 +50,8 @@ export default class MediaView extends Component<PropsType> {
 
   state = {
     imageLoadFailed: false,
+    height: 0,
+    width: 0,
   };
 
   /**
@@ -144,7 +145,7 @@ export default class MediaView extends Component<PropsType> {
   }
 
   imageError = (err) => {
-    logService.error('[MediaView] Image error: ' + this.source.uri);
+    logService.log('[MediaView] Image error: ' + this.source.uri, err);
     this.setState({ imageLoadFailed: true });
   };
 
@@ -168,6 +169,18 @@ export default class MediaView extends Component<PropsType> {
   };
 
   /**
+   * On image load handler
+   */
+  onLoadImage = (e) => {
+    if (this.props.autoHeight) {
+      this.setState({
+        height: e.nativeEvent.height,
+        width: e.nativeEvent.width,
+      });
+    }
+  };
+
+  /**
    * Get image with autoheight or Touchable fixed height
    * @param {object} source
    */
@@ -182,8 +195,9 @@ export default class MediaView extends Component<PropsType> {
       if (
         !autoHeight &&
         custom_data &&
+        custom_data[0] &&
         custom_data[0].height &&
-        custom_data[0].height != '0'
+        custom_data[0].height !== '0'
       ) {
         let ratio = custom_data[0].height / custom_data[0].width;
         height = this.props.width * ratio;
@@ -208,47 +222,32 @@ export default class MediaView extends Component<PropsType> {
       return <View style={[styles.imageLoadError, { height }]}>{text}</View>;
     }
 
-    if (custom_data && custom_data[0].height && custom_data[0].height !== '0') {
-      let ratio = custom_data[0].height / custom_data[0].width;
-      let height = this.props.width * ratio;
-      return (
-        <TouchableOpacity
-          onPress={this.navToImage}
-          onLongPress={this.imageLongPress}
-          style={[styles.imageContainer, { height }]}
-          activeOpacity={1}
-          {...testID('Posted Image')}>
-          <ExplicitImage
-            source={source}
-            entity={this.props.entity}
-            // loadingIndicator="placeholder"
-            onError={this.imageError}
-          />
-        </TouchableOpacity>
-      );
+    let aspectRatio = 1.5;
+
+    if (
+      custom_data &&
+      custom_data[0] &&
+      custom_data[0].height &&
+      custom_data[0].height !== '0'
+    ) {
+      aspectRatio = custom_data[0].width / custom_data[0].height;
+    } else if (this.state.height > 0) {
+      aspectRatio = this.state.width / this.state.height;
     }
 
-    return autoHeight ? (
+    return (
       <TouchableOpacity
         onPress={this.navToImage}
         onLongPress={this.imageLongPress}
-        style={styles.imageContainer}
-        activeOpacity={0.8}>
-        <AutoHeightFastImage source={source} width={this.props.width} />
-      </TouchableOpacity>
-    ) : (
-      <TouchableOpacity
-        onPress={this.navToImage}
-        onLongPress={this.imageLongPress}
-        style={[styles.imageContainer, { minHeight: 200 }]}
-        activeOpacity={0.8}>
+        style={[styles.imageContainer, { aspectRatio }]}
+        activeOpacity={1}
+        {...testID('Posted Image')}>
         <ExplicitImage
           source={source}
           entity={this.props.entity}
-          style={styles.image}
+          onLoad={this.onLoadImage}
           // loadingIndicator="placeholder"
           onError={this.imageError}
-          imageStyle={styles.innerImage}
         />
       </TouchableOpacity>
     );
@@ -334,9 +333,7 @@ export default class MediaView extends Component<PropsType> {
 
 const styles = StyleSheet.create({
   imageContainer: {
-    // flex: 1,
-    // alignItems: 'stretch',
-    //minHeight: 200,
+    width: '100%',
   },
   image: {
     //height: 200,
