@@ -18,6 +18,7 @@ import type DiscoveryStore from '../discovery/DiscoveryStore';
 import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
 import type NotificationsStore from '../notifications/NotificationsStore';
+import CheckLanguage from '../common/components/CheckLanguage';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -117,13 +118,9 @@ class NewsfeedScreen extends Component<PropsType> {
   render() {
     const newsfeed = this.props.newsfeed;
 
-    //@ts-ignore
-    const topBar = <Topbar />;
-
     const header = (
       <View>
-        {/* {topBar} */}
-        {/* <GroupsBar ref={this.setGroupsBarRef} /> */}
+        <CheckLanguage />
       </View>
     );
 

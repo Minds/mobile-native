@@ -11,6 +11,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 class SettingsStore {
   @observable appLog = true;
   @observable leftHanded = null;
+  @observable ignoreBestLanguage = '';
 
   consumerNsfw = [];
   creatorNsfw = [];
@@ -29,6 +30,7 @@ class SettingsStore {
       'ConsumerNsfw',
       'UseHashtags',
       'Theme',
+      'IgnoreBestLanguage',
     ]);
 
     // store theme changes
@@ -46,6 +48,7 @@ class SettingsStore {
     this.creatorNsfw = data[2][1] || [];
     this.consumerNsfw = data[3][1] || [];
     this.useHashtags = data[4][1] === null ? true : data[4][1];
+    this.ignoreBestLanguage = data[6][1] || '';
 
     // set the initial value for hashtag
     getStores().hashtag.setAll(!this.useHashtags);
@@ -54,6 +57,16 @@ class SettingsStore {
     ThemedStyles.setTheme(data[5][1] || 0);
 
     return this;
+  }
+
+  /**
+   * Set ignore best language
+   * @param value string
+   */
+  @action
+  setIgnoreBestLanguage(value: string) {
+    this.ignoreBestLanguage = value;
+    storageService.setItem('IgnoreBestLanguage', value);
   }
 
   /**
