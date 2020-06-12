@@ -28,11 +28,7 @@ interface Props {
 }
 
 export const Topbar = observer((props: Props) => {
-  const { wallet, user } = useLegacyStores();
-
-  useEffect(() => {
-    wallet.refresh();
-  }, [wallet]);
+  const { user } = useLegacyStores();
 
   const theme = ThemedStyles.style;
 

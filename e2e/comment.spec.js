@@ -1,4 +1,3 @@
-import sleep from '../src/common/helpers/sleep';
 
 import { waitForElement, waitForAndType, tapElement, waitForAndTap } from './helpers/waitFor';
 import { capturePoster, deletePost } from './actions/capturePoster';
@@ -41,10 +40,10 @@ describe('Comment Flow', () => {
 
     // check reply
     await waitForElement(by.label(`@${process.env.loginUser} ${replyText}`));
-    
+
     // finish
     await deletePost();
-    
+
   });
 
 });

@@ -8,38 +8,29 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
-import TabsScreenNew from '../tabs/TabsScreenNew';
+import TabsScreen from '../tabs/TabsScreen';
 import NotificationsScreen from '../notifications/NotificationsScreen';
 import ActivityScreen from '../newsfeed/ActivityScreen';
-import ChannelScreen from '../channel/ChannelScreen';
 import ChannelSubscribers from '../channel/subscribers/ChannelSubscribers';
 import RegisterScreen from '../auth/RegisterScreen';
 import ConversationScreen from '../messenger/ConversationScreen';
 import GroupsListScreen from '../groups/GroupsListScreen';
 import GroupViewScreen from '../groups/GroupViewScreen';
-import WalletScreen from '../wallet/WalletScreen';
-import WalletHistoryScreen from '../wallet/WalletHistoryScreen';
 import BoostConsoleScreen from '../boost/BoostConsoleScreen';
 import BlogsListScreen from '../blogs/BlogsListScreen';
 import BlogsViewScreen from '../blogs/BlogsViewScreen';
-import FabScreen from '../wire/FabScreen';
 import FabScreenV2 from '../wire/v2/FabScreen';
 import ViewImageScreen from '../media/ViewImageScreen';
 import BoostScreen from '../boost/creator/BoostScreen';
-import ContributionsScreen from '../wallet/tokens/ContributionsScreen';
-import TransactionsScreen from '../wallet/tokens/TransactionsScreen';
 import BlockchainWalletScreen from '../blockchain/wallet/BlockchainWalletScreen';
 import BlockchainWalletModalScreen from '../blockchain/wallet/modal/BlockchainWalletModalScreen';
 import BlockchainWalletImportScreen from '../blockchain/wallet/import/BlockchainWalletImportScreen';
 import BlockchainWalletDetailsScreen from '../blockchain/wallet/details/BlockchainWalletDetailsScreen';
 import ReportScreen from '../report/ReportScreen';
 import MoreScreen from '../tabs/MoreScreen';
-import WithdrawScreen from '../wallet/tokens/WithdrawScreen';
-import WalletOnboardingScreen from '../wallet/onboarding/WalletOnboardingScreen';
 import NotSupportedScreen from '../static-views/NotSupportedScreen';
 import OnboardingScreen from '../onboarding/OnboardingScreen';
 import UpdatingScreen from '../update/UpdateScreen';
-import DiscoveryFeedScreen from '../discovery/DiscoveryFeedScreen';
 import { DiscoverySearchScreen } from '../discovery/v2/search/DiscoverySearchScreen';
 import Gathering from '../gathering/Gathering';
 import EmailConfirmationScreen from '../onboarding/EmailConfirmationScreen';
@@ -70,7 +61,6 @@ import ViewerScreen from '../discovery/v2/viewer/ViewerScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
-const discoveryOptions = ({ route }) => ({ title: route.params.title || '' });
 const captureOptions = {
   title: '',
   stackAnimation: 'fade',
@@ -101,7 +91,7 @@ const MainSwiperScreen = () => {
       />
       <MainSwiper.Screen
         name="Tabs"
-        component={TabsScreenNew}
+        component={TabsScreen}
         options={hideHeader}
       />
       <MainSwiper.Screen
@@ -173,9 +163,7 @@ const AppStack = function () {
       />
       <AppStackNav.Screen
         name="Channel"
-        component={
-          featuresService.has('channel') ? ChannelScreenV2 : ChannelScreen
-        }
+        component={ChannelScreenV2}
         options={hideHeader}
       />
       {EditChannelScreens}
@@ -185,11 +173,6 @@ const AppStack = function () {
         options={activityOptions}
       />
       <AppStackNav.Screen name="Conversation" component={ConversationScreen} />
-      <AppStackNav.Screen
-        name="DiscoveryFeed"
-        component={DiscoveryFeedScreen}
-        options={discoveryOptions}
-      />
       <AppStackNav.Screen
         name="DiscoverySearch"
         component={DiscoverySearchScreen}
@@ -205,9 +188,6 @@ const AppStack = function () {
         component={GroupViewScreen}
         options={hideHeader}
       />
-      {!featuresService.has('wallet') && (
-        <AppStackNav.Screen name="Wallet" component={WalletScreen} />
-      )}
       <AppStackNav.Screen
         name="BlogList"
         component={BlogsListScreen}
@@ -225,12 +205,8 @@ const AppStack = function () {
       />
       <AppStackNav.Screen
         name="WireFab"
-        component={featuresService.has('pay') ? FabScreenV2 : FabScreen}
+        component={FabScreenV2}
         options={hideHeader}
-      />
-      <AppStackNav.Screen
-        name="WalletHistory"
-        component={WalletHistoryScreen}
       />
       <AppStackNav.Screen
         name="ViewImage"
@@ -245,16 +221,6 @@ const AppStack = function () {
         name="BlockchainWallet"
         component={BlockchainWalletScreen}
         options={BlockchainWalletScreen.navigationOptions}
-      />
-      <AppStackNav.Screen
-        name="Contributions"
-        component={ContributionsScreen}
-        options={{ title: i18n.t('wallet.contributionsTitle') }}
-      />
-      <AppStackNav.Screen
-        name="Transactions"
-        component={TransactionsScreen}
-        options={{ title: i18n.t('wallet.transactionsTitle') }}
       />
       <AppStackNav.Screen
         name="BlockchainWalletModal"
@@ -278,12 +244,6 @@ const AppStack = function () {
         name="More"
         component={MoreScreen}
         options={{ title: i18n.t('report') }}
-      />
-      <AppStackNav.Screen name="Withdraw" component={WithdrawScreen} />
-      <AppStackNav.Screen
-        name="WalletOnboarding"
-        component={WalletOnboardingScreen}
-        options={{ title: 'Wallet' }}
       />
       <AppStackNav.Screen name="NotSupported" component={NotSupportedScreen} />
       <AppStackNav.Screen

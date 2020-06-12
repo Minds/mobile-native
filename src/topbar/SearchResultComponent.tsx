@@ -12,11 +12,8 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import DiscoveryUserNew from '../discovery/DiscoveryUserNew';
 import i18n from '../common/services/i18n.service';
 import FAIcon from 'react-native-vector-icons/FontAwesome5';
-import debounce from '../common/helpers/debounce';
 import ThemedStyles from '../styles/ThemedStyles';
-import { inject } from 'mobx-react';
 
-@inject('discovery')
 class SearchResultComponent extends Component {
   search = '';
 
@@ -52,7 +49,6 @@ class SearchResultComponent extends Component {
    * List based on what user has typed
    */
   renderSuggestedSearch = () => {
-    const CS = ThemedStyles.style;
     const suggestedSearch =
       this.state.suggested.length === 0 ? (
         this.state.loading ? (
@@ -73,8 +69,6 @@ class SearchResultComponent extends Component {
   };
 
   searchDiscovery = () => {
-    this.props.discovery.setQuery(this.search);
-    this.props.discovery.filters.search(this.search);
     this.props.navigation.navigate('DiscoverySearch', { query: this.search });
     this.searchBarItemTap(this.search);
   };

@@ -4,33 +4,42 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
-  Image,
   TouchableOpacity,
+  Image,
+  Alert,
 } from 'react-native';
-
 import { observer, inject } from 'mobx-react';
-import Icon from 'react-native-vector-icons/Ionicons';
-import * as Progress from 'react-native-progress';
 
-import { CommonStyle as CS } from '../../styles/Common';
+import i18n from '../../common/services/i18n.service';
+import { ScrollView } from 'react-native-gesture-handler';
+import Input from '../../common/components/Input';
+
+import OnboardingButtons from '../OnboardingButtons';
+import OnboardingBackButton from '../OnboardingBackButton';
+
 import sessionService from '../../common/services/session.service';
 import imagePicker from '../../common/services/image-picker.service';
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
-import i18n from '../../common/services/i18n.service';
 import { UserError } from '../../common/UserError';
+
+import Icon from 'react-native-vector-icons/Ionicons';
+import * as Progress from 'react-native-progress';
+import ThemedStyles from '../../styles/ThemedStyles';
+import remoteAction from '../../common/RemoteAction';
+import LocationAutoSuggest from '../../common/components/LocationAutoSuggest';
 
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
 @inject('channel', 'user')
 @observer
-export default class ChannelSetupStep extends Component {
+class ChannelSetupStepNew extends Component {
   state = {
+    phoneNumber: '+1',
+    city: '',
+    dob: '',
     preview_avatar: null,
     preview_banner: null,
-    briefdescription: '',
-    name: '',
     saving: false,
     dirty: false,
   };
@@ -40,20 +49,16 @@ export default class ChannelSetupStep extends Component {
     banner: null,
   };
 
-  /**
-   * Component will mount
-   */
-  componentWillMount() {
+  store;
+
+  constructor(props) {
+    super(props);
     this.store = this.props.channel.store(sessionService.guid);
-    this.setState({
-      briefdescription: this.props.user.me.briefdescription,
-      name: this.props.user.me.name,
-    });
   }
 
   changeAvatarAction = async () => {
     try {
-      const response = await imagePicker.show('Select avatar', 'photo', true);
+      const response = await imagePicker.show('Select avatar', 'photo');
       if (response) {
         this.selectMedia(response);
       }
@@ -67,43 +72,17 @@ export default class ChannelSetupStep extends Component {
       preview_avatar: file.uri,
     });
 
-    this.store.uploadAvatar(file);
     this.uploads['avatar'] = file;
+
+    this.store.uploadAvatar(file).catch((e) => {
+      this.setState({
+        preview_avatar: null,
+      });
+      this.uploads['avatar'] = null;
+      console.log(e);
+    });
   }
 
-  save = async () => {
-    if (this.store.isUploading)
-      throw new UserError('Avatar is uploading, please wait');
-    if (!this.state.dirty) return;
-    payload = {
-      briefdescription: this.state.briefdescription,
-      name: this.state.name,
-      // avatar: this.uploads.avatar,
-    };
-
-    this.setState({ saving: true });
-
-    const response = await this.store.save(payload);
-
-    if (response === true) {
-      await this.props.user.load(true);
-      this.setState({ saving: false, edit: false });
-      this.uploads = {
-        avatar: null,
-        banner: null,
-      };
-    } else if (response === false) {
-      alert('Error saving channel');
-      this.setState({ saving: false });
-    } else {
-      alert(response);
-      this.setState({ saving: false });
-    }
-  };
-
-  /**
-   * Get Channel Avatar
-   */
   getAvatar() {
     if (this.state.preview_avatar) {
       return { uri: this.state.preview_avatar };
@@ -112,113 +91,194 @@ export default class ChannelSetupStep extends Component {
     return this.props.user.me.getAvatarSource();
   }
 
-  setBriefdescription = (briefdescription) =>
-    this.setState({ briefdescription, dirty: true });
-  setName = (name) => this.setState({ name, dirty: true });
+  setPhoneNumber = (phoneNumber) => this.setState({ phoneNumber });
+  setCity = (city) => this.setState({ city });
+  setBirthDate = (dob) => this.setState({ dob });
 
-  /**
-   * Render
-   */
-  render() {
+  save = async () => {
+    if (this.store.isUploading) {
+      throw new UserError('Avatar is uploading, please wait');
+    }
+
+    const { phoneNumber, city, dob } = this.state;
+
+    const payload = {
+      phoneNumber,
+      city,
+      dob,
+    };
+
+    this.setState({ saving: true });
+
+    await remoteAction(
+      async () => {
+        const response = await this.store.save(payload);
+        if (response === true) {
+          await this.props.user.load(true);
+          this.setState({ saving: false });
+          this.uploads = {
+            avatar: null,
+            banner: null,
+          };
+        } else if (response === false) {
+          Alert.alert('Error saving channel');
+          this.setState({ saving: false });
+        }
+      },
+      '',
+      0,
+      false,
+    );
+  };
+
+  getBody = () => {
+    const theme = ThemedStyles.style;
     const hasAvatar = this.props.user.hasAvatar() || this.state.preview_avatar;
     const avatar = this.getAvatar();
-
     return (
-      <View style={CS.marginBottom3x}>
-        <View
-          style={[
-            CS.padding4x,
-            CS.flexContainer,
-            CS.rowJustifyStart,
-            CS.alignCenter,
-          ]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
-            {i18n.t('onboarding.chooseAvatar')}
+      <View style={[theme.flexContainer, theme.columnAlignCenter]}>
+        <OnboardingBackButton onBack={this.props.onBack} />
+        <View style={[styles.textsContainer]}>
+          <Text style={[theme.onboardingTitle, theme.marginBottom2x]}>
+            {i18n.t('onboarding.profileSetup')}
           </Text>
-          <View style={[CS.rowJustifyEnd, CS.flexContainer]}>
-            <TouchableCustom
-              onPress={this.changeAvatarAction}
+          <Text style={[theme.titleText, theme.colorPrimaryText]}>
+            {i18n.t('onboarding.infoTitle')}
+          </Text>
+          <Text style={[theme.subTitleText, theme.colorSecondaryText]}>
+            {i18n.t('onboarding.step', { step: 2, total: 4 })}
+          </Text>
+        </View>
+        <View style={theme.fullWidth}>
+          <View
+            style={[
+              theme.padding4x,
+              theme.flexContainer,
+              theme.rowJustifyStart,
+              theme.alignCenter,
+              theme.marginVertical1x,
+            ]}>
+            <Text
               style={[
-                styles.avatar,
-                CS.marginLeft3x,
-                CS.border,
-                CS.borderGreyed,
-              ]}
-              disabled={this.saving}
-              testID="selectAvatar">
-              {hasAvatar && (
-                <Image source={avatar} style={styles.wrappedAvatar} />
-              )}
-
-              <View
+                theme.fontXXL,
+                theme.colorSecondaryText,
+                theme.fontMedium,
+              ]}>
+              {i18n.t('onboarding.chooseAvatar')}
+            </Text>
+            <View style={[theme.rowJustifyEnd, theme.flexContainer]}>
+              <TouchableCustom
+                onPress={this.changeAvatarAction}
                 style={[
-                  styles.tapOverlayView,
-                  hasAvatar ? null : CS.backgroundTransparent,
+                  styles.avatar,
+                  theme.marginLeft3x,
+                  theme.border,
+                  theme.buttonBorder,
                 ]}
-              />
-              <View style={[styles.overlay, CS.centered]}>
-                <Icon
-                  name="md-cloud-upload"
-                  size={40}
-                  color={hasAvatar ? '#FFF' : '#444'}
+                disabled={this.saving}
+                testID="selectAvatar">
+                {hasAvatar && (
+                  <Image source={avatar} style={styles.wrappedAvatar} />
+                )}
+
+                <View
+                  style={[
+                    styles.tapOverlayView,
+                    hasAvatar ? null : theme.backgroundTransparent,
+                  ]}
                 />
-              </View>
-              {this.store.isUploading && this.store.avatarProgress ? (
-                <View style={[styles.tapOverlayView, styles.progress]}>
-                  <Progress.Pie
-                    progress={this.store.avatarProgress}
-                    size={36}
+                <View style={[styles.overlay, theme.centered]}>
+                  <Icon
+                    name="md-cloud-upload"
+                    size={40}
+                    style={hasAvatar ? theme.colorWhite : theme.colorButton}
                   />
                 </View>
-              ) : null}
-            </TouchableCustom>
+                {this.store.isUploading && this.store.avatarProgress ? (
+                  <View style={[styles.tapOverlayView, styles.progress]}>
+                    <Progress.Pie
+                      progress={this.store.avatarProgress}
+                      size={36}
+                    />
+                  </View>
+                ) : null}
+              </TouchableCustom>
+            </View>
           </View>
-        </View>
-        <View style={[CS.padding4x, CS.flexContainer]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
-            {i18n.t('onboarding.chooseName')}
-          </Text>
-          <TextInput
-            style={[
-              CS.borderHair,
-              CS.borderDarkGreyed,
-              CS.borderRadius10x,
-              CS.fontXL,
-              CS.padding2x,
-              CS.fontHairline,
-              CS.marginTop4x,
-            ]}
-            placeholder="eg. John Smith"
-            value={this.state.name}
-            onChangeText={this.setName}
+          <Input
+            placeholder={i18n.t('onboarding.infoMobileNumber')}
+            onChangeText={this.setPhoneNumber}
+            onEndEditing={(e) => console.log(e.nativeEvent.text)}
+            value={this.state.phoneNumber}
+            editable={true}
+            optional={true}
+            info={i18n.t('onboarding.phoneNumberTooltip')}
+            inputType={'phoneInput'}
           />
-        </View>
-        <View style={[CS.padding4x, CS.flexContainer]}>
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
-            {i18n.t('onboarding.describeChannel')}
-          </Text>
-          <TextInput
-            style={[
-              CS.borderHair,
-              CS.borderDarkGreyed,
-              CS.borderRadius10x,
-              CS.fontXL,
-              CS.padding2x,
-              CS.fontHairline,
-              CS.marginTop4x,
-            ]}
-            placeholder="eg. Independent Journalist"
-            value={this.state.briefdescription}
-            onChangeText={this.setBriefdescription}
+          <LocationAutoSuggest
+            placeholder={i18n.t('onboarding.infoLocation')}
+            onChangeText={this.setCity}
+            value={this.state.city}
+            editable={true}
+            optional={true}
+            info={i18n.t('onboarding.locationTooltip')}
+            inputStyle={'inputAlone'}
+          />
+          <Input
+            placeholder={i18n.t('onboarding.infoDateBirth')}
+            onChangeText={this.setBirthDate}
+            value={this.state.dob}
+            editable={true}
+            optional={true}
+            info={i18n.t('onboarding.dateofBirthTooltip')}
+            inputType={'dateInput'}
           />
         </View>
       </View>
     );
+  };
+
+  next = async () => {
+    await this.save();
+    this.props.onNext();
+  };
+
+  getFooter = () => {
+    return <OnboardingButtons onNext={this.next} saving={this.state.saving} />;
+  };
+
+  render() {
+    const theme = ThemedStyles.style;
+    const containersStyle = [
+      theme.rowJustifyCenter,
+      theme.backgroundPrimary,
+      theme.paddingHorizontal4x,
+      theme.paddingVertical4x,
+    ];
+    return (
+      <ScrollView
+        style={styles.inputContainer}
+        keyboardShouldPersistTaps={true}>
+        <View style={containersStyle}>{this.getBody()}</View>
+        <View style={containersStyle}>{this.getFooter()}</View>
+      </ScrollView>
+    );
   }
 }
 
-// style
+export default ChannelSetupStepNew;
+
 const styles = StyleSheet.create({
+  containerButton: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  inputContainer: {
+    width: '100%',
+  },
+  textsContainer: {
+    alignItems: 'center',
+  },
   avatar: {
     height: 90,
     width: 90,
