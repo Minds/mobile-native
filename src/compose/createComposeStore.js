@@ -9,6 +9,7 @@ import remoteAction from '../common/RemoteAction';
 import ActivityModel from '../newsfeed/ActivityModel';
 import { getSingle } from '../newsfeed/NewsfeedService';
 import ThemedStyles from '../styles/ThemedStyles';
+import settingsStore from '../settings/SettingsStore';
 
 /**
  * Display an error message to the user.
@@ -40,7 +41,7 @@ export default function (props) {
     },
     embed: new RichEmbedStore(),
     posting: false,
-    mode: 'photo',
+    mode: settingsStore.composerMode,
     text: '',
     title: '',
     mediaToConfirm: null,
@@ -58,7 +59,11 @@ export default function (props) {
       this.isRemind = params.isRemind;
       this.entity = params.entity || null;
       const propsMode = params.mode || null;
-      this.mode = propsMode ? propsMode : this.isRemind ? 'text' : 'photo';
+      this.mode = propsMode
+        ? propsMode
+        : this.isRemind
+        ? 'text'
+        : settingsStore.composerMode;
       const mediaToConfirm = params.media || null;
 
       if (mediaToConfirm) {
@@ -173,18 +178,21 @@ export default function (props) {
      */
     setModePhoto() {
       this.clear();
+      settingsStore.setComposerMode(this.mode);
     },
     /**
      * Set mode video
      */
     setModeVideo() {
       this.mode = 'video';
+      settingsStore.setComposerMode(this.mode);
     },
     /**
      * Set mode text
      */
     setModeText() {
       this.mode = 'text';
+      settingsStore.setComposerMode(this.mode);
     },
     /**
      * Clear the store to the initial values
