@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
   wraper: {
     position: 'absolute',
     right: 0,
+    top: 0,
     zIndex: 9,
     paddingVertical: 2,
     paddingHorizontal: 5,

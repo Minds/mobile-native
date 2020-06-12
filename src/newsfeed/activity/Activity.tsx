@@ -200,12 +200,13 @@ export default class Activity extends Component<PropsType, StateType> {
         testID="ActivityView">
         <Pinned entity={this.props.entity} />
         {this.showOwner()}
-        {lock}
-        {/* Shows ontop only for rich embed or reminds */}
-        {this.props.entity.perma_url || this.props.entity.remind_object
-          ? message
-          : undefined}
+
         <View style={show_overlay ? styles.nsfwContainer : null}>
+          {lock}
+          {/* Shows ontop only for rich embed or reminds */}
+          {this.props.entity.perma_url || this.props.entity.remind_object
+            ? message
+            : undefined}
           {this.showRemind()}
 
           <MediaView

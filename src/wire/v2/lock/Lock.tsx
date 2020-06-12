@@ -12,7 +12,30 @@ type PropsType = {
 };
 
 const Lock = observer(({ entity, navigation }: PropsType) => {
-  return <LockTag type="plus" />;
+  const theme = ThemedStyles.style;
+  return (
+    <View
+      style={[
+        styles.mask,
+        theme.backgroundSeparator,
+        theme.alignJustifyCenter,
+        theme.padding2x,
+      ]}>
+      <LockTag type="plus" />
+    </View>
+  );
+});
+
+const styles = StyleSheet.create({
+  mask: {
+    position: 'absolute',
+    bottom: 0,
+    height: '100%',
+    width: '100%',
+    zIndex: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default Lock;

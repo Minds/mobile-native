@@ -11,9 +11,11 @@ import openUrlService from '../../common/services/open-url.service';
 import { MINDS_PRO } from '../../config/Config';
 import WireService from '../../wire/WireService';
 import type { SupportTiersType } from '../../wire/WireTypes';
+import TierManagementScreen from '../../settings/screens/TierManagementScreen';
 
 type PropsType = {
   route: any;
+  navigation: any;
 };
 
 const createMembershipMonetizeStore = () => {
@@ -37,28 +39,54 @@ const createMembershipMonetizeStore = () => {
 
 export type TierStoreType = ReturnType<typeof createMembershipMonetizeStore>;
 
-const MembershipMonetizeScreeen = observer(({ route }: PropsType) => {
-  const { user } = useLegacyStores();
-  const store = route.params.store;
-  const theme = ThemedStyles.style;
+const MembershipMonetizeScreeen = observer(
+  ({ route, navigation }: PropsType) => {
+    const { user } = useLegacyStores();
+    const store = route.params.store;
+    const theme = ThemedStyles.style;
 
-  const descriptionTextStyle = [
-    theme.colorSecondaryText,
-    theme.fontL,
-    theme.paddingVertical2x,
-  ];
+    const descriptionTextStyle = [
+      theme.colorSecondaryText,
+      theme.fontL,
+      theme.paddingVertical2x,
+    ];
 
-  const localStore = useLocalStore(createMembershipMonetizeStore);
+    const localStore = useLocalStore(createMembershipMonetizeStore);
 
-  useEffect(() => {
-    if (!localStore.loaded) {
-      localStore.init(user.me.guid);
+    useEffect(() => {
+      if (!localStore.loaded) {
+        localStore.init(user.me.guid);
+      }
+    }, [localStore, user]);
+
+    if (localStore.supportTiers.length === 0) {
+      return (
+        <Wrapper store={store} hideDone={true}>
+          <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
+            <Text style={[styles.title, theme.colorPrimaryText]}>
+              {i18n.t('monetize.subScreensTitle')}
+            </Text>
+            <Text style={descriptionTextStyle}>
+              {i18n.t('monetize.membershipMonetize.description')}
+            </Text>
+            <Text style={[styles.title, theme.colorPrimaryText]}>
+              {i18n.t('monetize.membershipMonetize.noTiers')}
+            </Text>
+            <Text style={descriptionTextStyle}>
+              {i18n.t('monetize.membershipMonetize.tiersDescription')}
+            </Text>
+            <Button
+              text={i18n.t('monetize.membershipMonetize.setup')}
+              textStyle={[styles.title]}
+              onPress={() => openUrlService.open(MINDS_PRO)}
+            />
+          </View>
+        </Wrapper>
+      );
     }
-  }, [localStore, user]);
 
-  if (localStore.supportTiers.length === 0) {
     return (
-      <Wrapper store={store} hideDone={true}>
+      <Wrapper store={store} doneText={i18n.t('save')}>
         <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
           <Text style={[styles.title, theme.colorPrimaryText]}>
             {i18n.t('monetize.subScreensTitle')}
@@ -66,40 +94,21 @@ const MembershipMonetizeScreeen = observer(({ route }: PropsType) => {
           <Text style={descriptionTextStyle}>
             {i18n.t('monetize.membershipMonetize.description')}
           </Text>
-          <Text style={[styles.title, theme.colorPrimaryText]}>
-            {i18n.t('monetize.membershipMonetize.noTiers')}
-          </Text>
-          <Text style={descriptionTextStyle}>
-            {i18n.t('monetize.membershipMonetize.tiersDescription')}
-          </Text>
-          <Button
-            text={i18n.t('monetize.membershipMonetize.setup')}
-            textStyle={[styles.title]}
-            onPress={() => openUrlService.open(MINDS_PRO)}
+          <MenuSubtitle
+            labelText={i18n.t('monetize.membershipMonetize.label')}
+            linkText={''}
+            onLinkPress={() => true}
+          />
+          <TierManagementScreen
+            route={route}
+            navigation={navigation}
+            tierStore={localStore}
           />
         </View>
       </Wrapper>
     );
-  }
-
-  return (
-    <Wrapper store={store} doneText={i18n.t('save')}>
-      <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
-        <Text style={[styles.title, theme.colorPrimaryText]}>
-          {i18n.t('monetize.subScreensTitle')}
-        </Text>
-        <Text style={descriptionTextStyle}>
-          {i18n.t('monetize.membershipMonetize.description')}
-        </Text>
-        <MenuSubtitle
-          labelText={i18n.t('monetize.membershipMonetize.label')}
-          linkText={i18n.t('monetize.membershipMonetize.manage')}
-          onLinkPress={() => true}
-        />
-      </View>
-    </Wrapper>
-  );
-});
+  },
+);
 
 const styles = StyleSheet.create({
   title: {

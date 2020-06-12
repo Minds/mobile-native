@@ -8,6 +8,7 @@ import { useLegacyStores } from '../../common/hooks/use-stores';
 import { SupportTiersType } from '../../wire/WireTypes';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { TierStoreType } from '../../compose/monetize/MembershipMonetizeScreeen';
+import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type PaymentType = 'usd' | 'tokens';
 
@@ -52,6 +53,9 @@ const renderTiers = (
   navigation: any,
 ) => {
   const theme = ThemedStyles.style;
+  const checkIcon = (
+    <MIcon name="check" size={23} style={theme.colorPrimaryText} />
+  );
   if (tiers.length > 0) {
     return tiers.map((tier) => (
       <MenuItem
@@ -60,7 +64,11 @@ const renderTiers = (
             ? () => tierStore.setSelectedTier(tier)
             : () => navToTierScreen(navigation, type, tier),
           title: tier.description,
-          noIcon: useForSelection,
+          icon:
+            useForSelection && tier === tierStore.selectedTier
+              ? checkIcon
+              : undefined,
+          noIcon: useForSelection && tier !== tierStore.selectedTier,
         }}
       />
     ));

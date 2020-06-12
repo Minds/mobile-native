@@ -169,6 +169,7 @@ const AppStack = function () {
         name="MembershipMonetize"
         component={MembershipMonetizeScreeen}
         options={hideHeader}
+        initialParams={{ useForSelection: true }}
       />
       <AppStackNav.Screen
         name="CustomMonetize"

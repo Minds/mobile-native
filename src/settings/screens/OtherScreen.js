@@ -6,6 +6,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import NavigationService from '../../navigation/NavigationService';
+import featuresService from '../../common/services/features.service';
 
 function useNavCallback(screen) {
   return useCallback(() => {
@@ -63,10 +64,12 @@ export default function ({ navigation }) {
         <MenuItem item={item} i={i} />
       ))}
 
-      <MenuSubtitle>{i18n.t('settings.otherOptions.b')}</MenuSubtitle>
-      {paidContent.map((item, i) => (
-        <MenuItem item={item} i={i} />
-      ))}
+      {featuresService.has('plus-2020') && (
+        <MenuSubtitle>{i18n.t('settings.otherOptions.b')}</MenuSubtitle>
+      )}
+
+      {featuresService.has('plus-2020') &&
+        paidContent.map((item, i) => <MenuItem item={item} i={i} />)}
 
       <MenuSubtitle>{i18n.t('settings.otherOptions.c')}</MenuSubtitle>
       {account.map((item, i) => (
