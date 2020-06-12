@@ -5,75 +5,56 @@ import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
+import NavigationService from '../../navigation/NavigationService';
+
+function useNavCallback(screen) {
+  return useCallback(() => {
+    NavigationService.navigate(screen);
+  }, [screen]);
+}
 
 export default function ({ navigation }) {
   const theme = ThemedStyles.style;
 
-  const navToBlockedChannels = useCallback(
-    () => navigation.push('BlockedChannels'),
-    [navigation],
-  );
-
-  const navToReportedContent = useCallback(
-    () => navigation.push('ReportedContent'),
-    [navigation],
-  );
-
-  const navToDeleteChannel = useCallback(
-    () => navigation.push('DeleteChannel'),
-    [navigation],
-  );
-
-  const navToDeactivateChannel = useCallback(
-    () => navigation.push('DeactivateChannel'),
-    [navigation],
-  );
-
-  const navToAppInfo = useCallback(() => navigation.push('AppInfo'), [
-    navigation,
-  ]);
-
   const contentAdmin = [
     /*{
       title: i18n.t('settings.otherOptions.a1'),
-      onPress: navToReportedContent,
+      onPress: useNavCallback('ReportedContent'),
     },*/
     {
       title: i18n.t('settings.blockedChannels'),
-      onPress: navToBlockedChannels,
+      onPress: useNavCallback('BlockedChannels'),
     },
   ];
 
   const paidContent = [
     {
       title: i18n.t('settings.otherOptions.b1'),
-      onPress: '',
+      onPress: useNavCallback('TierManagementScreen'),
     },
-    {
+    /*{
       title: i18n.t('settings.otherOptions.b2'),
       onPress: '',
-    },
+    },*/
   ];
 
   const account = [
     {
       title: i18n.t('settings.deactivate'),
-      onPress: navToDeactivateChannel,
+      onPress: useNavCallback('DeactivateChannel'),
     },
     {
       title: i18n.t('settings.otherOptions.c2'),
-      onPress: navToDeleteChannel,
+      onPress: useNavCallback('DeleteChannel'),
     },
   ];
 
   const info = [
     {
       title: i18n.t('settings.otherOptions.d1'),
-      onPress: navToAppInfo,
+      onPress: useNavCallback('AppInfo'),
     },
   ];
-
-  const subTitle = [theme.colorTertiaryText, theme.fontM, theme.paddingLeft3x];
 
   return (
     <ScrollView style={[theme.flexContainer, theme.backgroundPrimary]}>
@@ -82,14 +63,10 @@ export default function ({ navigation }) {
         <MenuItem item={item} i={i} />
       ))}
 
-      {/*
-      <MenuSubtitle>
-        {i18n.t('settings.otherOptions.b')}
-      </MenuSubtitle>
+      <MenuSubtitle>{i18n.t('settings.otherOptions.b')}</MenuSubtitle>
       {paidContent.map((item, i) => (
         <MenuItem item={item} i={i} />
       ))}
-      */}
 
       <MenuSubtitle>{i18n.t('settings.otherOptions.c')}</MenuSubtitle>
       {account.map((item, i) => (
@@ -103,10 +80,3 @@ export default function ({ navigation }) {
     </ScrollView>
   );
 }
-
-const styles = {
-  subTitle: {
-    lineHeight: 35,
-    paddingTop: 10,
-  },
-};

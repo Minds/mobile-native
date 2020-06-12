@@ -1,4 +1,5 @@
 import type UserModel from '../channel/UserModel';
+import { ApiResponse } from '../common/services/api.service';
 export type Currency = 'tokens' | 'usd' | 'eth' | 'btc';
 
 export type Reward = {
@@ -15,6 +16,15 @@ export type WireRequest = {
   recurring: boolean;
   paymentMethodId?: string;
 };
+
+export type SupportTiersType = {
+  amount: string;
+  description: string;
+};
+
+export interface SupportTiersResponse extends ApiResponse {
+  support_tiers: SupportTiersType[];
+}
 
 type PaymentMethod =
   | 'usd'

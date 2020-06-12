@@ -1,10 +1,12 @@
+import { waitForAndType, waitForAndTap, waitForElement } from '../helpers/waitFor';
+
 /**
  * Login action
  * @param {string} username
  * @param {string} password
  */
-export default async function(username, password) {
-  await element(by.id('usernameInput')).typeText(username);
-  await element(by.id('userPasswordInput')).typeText(password);
-  await element(by.id('loginButton')).tap();
+export default async function (username, password) {
+  await waitForAndType(by.id('usernameInput'), username);
+  await waitForAndType(by.id('userPasswordInput'), password);
+  await waitForAndTap(by.id('loginButton'));
 }

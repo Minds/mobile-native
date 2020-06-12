@@ -33,7 +33,10 @@ export default observer(function (props) {
         />
       ) : (
         props.rightText && (
-          <Text style={styles.postButton} onPress={props.onPressRight}>
+          <Text
+            style={styles.postButton}
+            onPress={props.onPressRight}
+            testID="topBarDone">
             {props.rightText}
           </Text>
         )

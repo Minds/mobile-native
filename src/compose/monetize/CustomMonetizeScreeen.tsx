@@ -1,18 +1,19 @@
 import React, { useCallback, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import TopBar from '../TopBar';
+import i18n from '../../common/services/i18n.service';
+import NavigationService from '../../navigation/NavigationService';
+import ThemedStyles from '../../styles/ThemedStyles';
 
-import ThemedStyles from '../styles/ThemedStyles';
-import TopBar from './TopBar';
-import i18n from '../common/services/i18n.service';
-import NavigationService from '../navigation/NavigationService';
-import { TextInput } from 'react-native-gesture-handler';
-
-/**
- * NSFW selector
- */
-export default observer(function (props) {
+const CustomMonetizeScreen = observer((props) => {
   const theme = ThemedStyles.style;
   const store = props.route.params.store;
 
@@ -30,7 +31,7 @@ export default observer(function (props) {
     store.setTokenThreshold(0);
   }, [store]);
 
-  const inputRef = useRef();
+  const inputRef = useRef<TextInput>(null);
 
   const isActive = Boolean(
     store.wire_threshold && store.wire_threshold.min > 0,
@@ -100,29 +101,6 @@ export default observer(function (props) {
             underlineColorAndroid="transparent"
             testID="TokenInput"
           />
-          {/* <Text
-            style={[
-              theme.fontM,
-              theme.colorSecondaryText,
-              theme.marginTop5x,
-              theme.paddingHorizontal3x,
-              theme.marginBottom2x,
-            ]}>
-            {i18n.t('capture.paywallLabel', { currency: 'USD' })}
-          </Text>
-          <TextInput
-            style={[theme.colorPrimaryText, theme.borderPrimary, styles.input]}
-            keyboardType="numeric"
-            onChangeText={localStore.setText}
-            textAlignVertical="top"
-            value={localStore.text}
-            autoCapitalize="none"
-            multiline={false}
-            autoCorrect={false}
-            selectTextOnFocus={true}
-            underlineColorAndroid="transparent"
-            testID="TokenInput"
-          /> */}
         </>
       )}
     </View>
@@ -150,3 +128,5 @@ const styles = StyleSheet.create({
     borderTopWidth: StyleSheet.hairlineWidth,
   },
 });
+
+export default CustomMonetizeScreen;

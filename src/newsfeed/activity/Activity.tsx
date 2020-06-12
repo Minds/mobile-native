@@ -20,7 +20,7 @@ import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
 import Translate from '../../common/components/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
-import Lock from '../../wire/lock/Lock';
+import Lock from '../../wire/v2/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
@@ -150,10 +150,7 @@ export default class Activity extends Component<PropsType, StateType> {
     }
 
     const hasText = !!entity.text;
-    const lock =
-      entity.paywall && entity.paywall === '1' ? (
-        <Lock entity={entity} navigation={this.props.navigation} />
-      ) : null;
+    const lock = <Lock entity={entity} navigation={this.props.navigation} />;
 
     const message = this.state.editing ? (
       //Passing the store in newsfeed (could be channel also)

@@ -16,14 +16,21 @@ export type MenuItemPropsType = {
     noIcon?: boolean;
   };
   component?: any;
+  backgroundPrimary?: boolean;
+  testID?: string;
 };
 
-export default function ({ item, component }: MenuItemPropsType) {
+export default function ({
+  item,
+  component,
+  backgroundPrimary,
+  testID,
+}: MenuItemPropsType) {
   const theme = ThemedStyles.style;
 
   // ListItem Container Style
   const containerStyle = [
-    theme.backgroundSecondary,
+    backgroundPrimary ? theme.backgroundPrimary : theme.backgroundSecondary,
     theme.borderTopHair,
     theme.borderBottomHair,
     theme.borderPrimary,
@@ -44,6 +51,7 @@ export default function ({ item, component }: MenuItemPropsType) {
       containerStyle={containerStyle}
       titleStyle={theme.listItemTitle}
       chevron={chevronStyle}
+      testID={testID}
     />
   );
 }

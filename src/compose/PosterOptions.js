@@ -30,6 +30,7 @@ const height = Platform.select({ android: 80, ios: 90 });
  */
 const Header = (props) => (
   <Touchable
+    testID="postOptionsButton"
     onPress={props.onPress}
     style={[
       styles.header,
@@ -55,7 +56,8 @@ const Item = (props) => {
   return (
     <Touchable
       style={[styles.row, ThemedStyles.style.borderPrimary]}
-      onPress={props.onPress}>
+      onPress={props.onPress}
+      testID={props.testID}>
       <Text style={[styles.optionTitle, ThemedStyles.style.colorSecondaryText]}>
         {props.title}
       </Text>
@@ -71,10 +73,10 @@ const Item = (props) => {
   );
 };
 
-function useNavCallback(screen, props) {
+export function useNavCallback(screen, store) {
   return useCallback(() => {
-    NavigationService.navigate(screen, { store: props.store });
-  }, [props.store, screen]);
+    NavigationService.navigate(screen, { store });
+  }, [store, screen]);
 }
 
 /**
@@ -83,22 +85,23 @@ function useNavCallback(screen, props) {
  */
 export default observer(function (props) {
   const theme = ThemedStyles.style;
+  const store = props.store;
   // dereference observables to listen to his changes
-  const nsfw = props.store.nsfw.slice();
-  const tags = props.store.tags;
-  const time_created = props.store.time_created;
-  const tokens = props.store.wire_threshold.min;
-  const license = props.store.attachment.license;
-  const hasAttachment = props.store.attachment.hasAttachment;
+  const nsfw = store.nsfw.slice();
+  const tags = store.tags;
+  const time_created = store.time_created;
+  const tokens = store.wire_threshold.min;
+  const license = store.attachment.license;
+  const hasAttachment = store.attachment.hasAttachment;
 
   const keyboard = useKeyboard();
   const ref = useRef();
 
-  const onTagPress = useNavCallback('TagSelector', props);
-  const onNsfwPress = useNavCallback('NsfwSelector', props);
-  const onSchedulePress = useNavCallback('ScheduleSelector', props);
-  const onMonetizePress = useNavCallback('MonetizeSelector', props);
-  const onLicensePress = useNavCallback('LicenseSelector', props);
+  const onTagPress = useNavCallback('TagSelector', store);
+  const onNsfwPress = useNavCallback('NsfwSelector', store);
+  const onSchedulePress = useNavCallback('ScheduleSelector', store);
+  const onMonetizePress = useNavCallback('MonetizeSelector', store);
+  const onLicensePress = useNavCallback('LicenseSelector', store);
 
   const localStore = useLocalStore(() => ({
     opened: false,
@@ -154,11 +157,12 @@ export default observer(function (props) {
         onPress={onSchedulePress}
       />
       <Item
-        title={i18n.t('monetize')}
+        title={i18n.t('monetize.title')}
         description={
           tokens ? `${tokens} ${i18n.t('tokens').toLowerCase()} +` : ''
         }
         onPress={onMonetizePress}
+        testID="monetizeButton"
       />
       {hasAttachment && (
         <Item

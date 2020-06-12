@@ -28,4 +28,18 @@ export const waitForAndTap = async (e) => {
 export const waitForAndType = async (e, text, replaceText = false) => {
   await waitForElement(e);
   await typeText(e, text, replaceText);
+  await device.pressBack();
+  try {
+    await waitForElement(by.text(text));
+  } catch (ex) {
+    await waitForElement(e);
+    await typeText(e, text, replaceText);
+    await device.pressBack();
+  };
 }
+
+/*
+  - problems with the emulator, it was frezzing silently with out any errors, i found out later that for some reason i lost the state that i had saved and Hyper-V enabled for local stack
+  - not working until i noticed that we never merged in the detox fixes branch a couple of month ago
+  - 
+*/

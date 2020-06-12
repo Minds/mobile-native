@@ -49,6 +49,9 @@ export type AppStackParamList = {
   NsfwSelector: {};
   ScheduleSelector: {};
   MonetizeSelector: {};
+  PlusMonetize: {};
+  MembershipMonetize: {};
+  CustomMonetize: {};
   LicenseSelector: {};
   EmailConfirmation: {};
   Update: {};
@@ -99,6 +102,8 @@ export type AppStackParamList = {
   BankInfoScreen: {
     walletStore: WalletStoreType;
   };
+  TierScreen: {};
+  PlusScreen: {};
 };
 
 // types for channel edit screens

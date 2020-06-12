@@ -51,6 +51,7 @@ import TagSelector from '../compose/TagSelector';
 import NsfwSelector from '../compose/NsfwSelector';
 import ScheduleSelector from '../compose/ScheduleSelector';
 import MonetizeSelector from '../compose/MonetizeSelector';
+import MonetizeScreen from '../compose/monetize/MonetizeScreeen';
 import LicenseSelector from '../compose/LicenseSelector';
 import ChannelScreenV2 from '../channel/v2/ChannelScreen';
 
@@ -67,6 +68,11 @@ import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
 import BtcReceiverAddressScreen from '../wallet/v2/address/BtcAddressScreen';
 import BankInfoScreen from '../wallet/v2/address/BankInfoScreen';
 import ViewerScreen from '../discovery/v2/viewer/ViewerScreen';
+import PlusMonetizeScreen from '../compose/monetize/PlusMonetizeScreeen';
+import MembershipMonetizeScreeen from '../compose/monetize/MembershipMonetizeScreeen';
+import CustomMonetizeScreen from '../compose/monetize/CustomMonetizeScreeen';
+import TierScreen from '../settings/screens/TierScreen';
+import PlusScreen from '../common/components/PlusScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -149,7 +155,24 @@ const AppStack = function () {
       />
       <AppStackNav.Screen
         name="MonetizeSelector"
-        component={MonetizeSelector}
+        component={
+          featuresService.has('plus-2020') ? MonetizeScreen : MonetizeSelector
+        }
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="PlusMonetize"
+        component={PlusMonetizeScreen}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="MembershipMonetize"
+        component={MembershipMonetizeScreeen}
+        options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="CustomMonetize"
+        component={CustomMonetizeScreen}
         options={hideHeader}
       />
       <AppStackNav.Screen
@@ -290,6 +313,16 @@ const AppStack = function () {
         name="OnboardingScreen"
         component={OnboardingScreen}
         options={hideHeader}
+      />
+      <AppStackNav.Screen
+        name="TierScreen"
+        component={TierScreen}
+        options={{ title: 'Tier Management' }}
+      />
+      <AppStackNav.Screen
+        name="PlusScreen"
+        component={PlusScreen}
+        options={{ title: 'Upgrade to Plus' }}
       />
       <AppStackNav.Screen
         name="LearnMoreScreen"
