@@ -14,9 +14,11 @@ exports[`Media view component renders correctly 1`] = `
     onPress={[Function]}
     style={
       Array [
-        Object {},
         Object {
-          "height": 1875,
+          "width": "100%",
+        },
+        Object {
+          "aspectRatio": 0.4,
         },
       ]
     }
@@ -78,6 +80,7 @@ exports[`Media view component renders correctly 1`] = `
         }
       }
       onError={[Function]}
+      onLoad={[Function]}
       source={
         Object {
           "uri": "www.something.com",

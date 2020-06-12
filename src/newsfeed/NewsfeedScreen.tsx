@@ -5,8 +5,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { View } from 'react-native';
 
-import NewsfeedList from './NewsfeedList';
-import Topbar from './topbar/Topbar';
 import { CommonStyle } from '../styles/Common';
 import GroupsBar from '../groups/GroupsBar';
 import FeedList from '../common/components/FeedList';
@@ -54,12 +52,8 @@ class NewsfeedScreen extends Component<PropsType> {
 
   refreshNewsfeed = (e) => {
     if (this.props.navigation.isFocused()) {
-      if (this.props.newsfeed.filter === 'subscribed') {
-        this.props.newsfeed.scrollToTop();
-        this.props.newsfeed.feedStore.refresh();
-      } else {
-        this.props.newsfeed.refresh();
-      }
+      this.props.newsfeed.scrollToTop();
+      this.props.newsfeed.feedStore.refresh();
       e && e.preventDefault();
     }
   };
@@ -79,15 +73,15 @@ class NewsfeedScreen extends Component<PropsType> {
   }
 
   async loadFeed() {
-    this.props.discovery.init();
+    // this.props.discovery.init();
 
     await this.props.newsfeed.feedStore.fetchRemoteOrLocal();
 
     // load groups after the feed
     if (this.groupsBar) await this.groupsBar.initialLoad();
 
-    // load discovery after the feed is loaded
-    this.props.discovery.fetch();
+    // // load discovery after the feed is loaded
+    // this.props.discovery.fetch();
 
     // load messenger
     this.props.messengerList.loadList();
@@ -124,26 +118,6 @@ class NewsfeedScreen extends Component<PropsType> {
       </View>
     );
 
-    let feed;
-    if (newsfeed.filter === 'subscribed') {
-      feed = (
-        <FeedList
-          ref={newsfeed.setListRef}
-          feedStore={newsfeed.feedStore}
-          header={header}
-          navigation={this.props.navigation}
-        />
-      );
-    } else {
-      feed = (
-        <NewsfeedList
-          newsfeed={newsfeed}
-          header={header}
-          navigation={this.props.navigation}
-        />
-      );
-    }
-
     return (
       <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
         <TopbarNewsfeed
@@ -151,7 +125,12 @@ class NewsfeedScreen extends Component<PropsType> {
           navigation={this.props.navigation}
           refreshFeed={this.refreshNewsfeed}
         />
-        {feed}
+        <FeedList
+          ref={newsfeed.setListRef}
+          header={header}
+          feedStore={newsfeed.feedStore}
+          navigation={this.props.navigation}
+        />
         {/* <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/> */}
       </View>
     );

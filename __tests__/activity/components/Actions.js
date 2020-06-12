@@ -12,7 +12,6 @@ import { commentsServiceFaker } from '../../../__mocks__/fake/CommentsFaker';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
 import renderer from 'react-test-renderer';
-import AutoHeightFastImage from '../../../src/common/components/AutoHeightFastImage';
 
 import formatDate from '../../../src/common/helpers/date';
 import domain from '../../../src/common/helpers/domain';

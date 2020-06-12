@@ -34,11 +34,6 @@ export default class ExplicitImage extends Component<
     this.props.onError && this.props.onError(event.nativeEvent.error);
   };
 
-  onLoadEnd = () => {
-    // bubble event up
-    this.props.onLoadEnd && this.props.onLoadEnd();
-  };
-
   render() {
     const loadingIndicator = this.props.loadingIndicator;
 
@@ -71,7 +66,8 @@ export default class ExplicitImage extends Component<
         return (
           <ConnectivityAwareSmartImage
             source={this.props.source}
-            onLoadEnd={this.onLoadEnd}
+            onLoadEnd={this.props.onLoadEnd}
+            onLoad={this.props.onLoad}
             style={[CommonStyle.positionAbsolute, this.props.imageStyle]}
           />
         );
@@ -81,7 +77,8 @@ export default class ExplicitImage extends Component<
             indicator={ProgressCircle}
             threshold={150}
             source={this.props.source}
-            onLoadEnd={this.onLoadEnd}
+            onLoadEnd={this.props.onLoadEnd}
+            onLoad={this.props.onLoad}
             onError={this.imageError}
             style={[CommonStyle.positionAbsolute, this.props.imageStyle]}
           />
