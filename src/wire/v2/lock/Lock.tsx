@@ -62,8 +62,8 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
 
   return (
     <ImageBackground
-      style={styles.backgroundImage}
-      source={entity.getThumbSource()}
+      style={[styles.backgroundImage, styles.mask]}
+      source={entity.getThumbSource('small')}
       resizeMode="cover">
       <Text style={[theme.colorWhite, theme.fontL]}>{message}</Text>
     </ImageBackground>
@@ -81,8 +81,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backgroundImage: {
-    height: '100%',
-    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },

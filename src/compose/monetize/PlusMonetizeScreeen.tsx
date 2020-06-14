@@ -1,14 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Linking } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Switch from 'react-native-switch-pro';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import NavigationService from '../../navigation/NavigationService';
-import TopBar from '../TopBar';
-import MenuItem from '../../common/components/menus/MenuItem';
-import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 import Button from '../../common/components/Button';
 import Wrapper from './common/Wrapper';
