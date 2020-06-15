@@ -19,17 +19,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
           }
         }
       >
-        You can request to withdraw up to 0 tokens from your rewards to your 
-        <Text
-          style={
-            Object {
-              "fontWeight": "700",
-            }
-          }
-        >
-          OnChain
-        </Text>
-         wallet.
+        [missing "en.wallet.withdraw.youCanRequest1" translation]
         
 
         <Text
@@ -39,17 +29,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
             }
           }
         >
-          Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals 
-          <Text
-            style={
-              Object {
-                "fontWeight": "700",
-              }
-            }
-          >
-            go through an approval process
-          </Text>
-           and may take up to 72 hours to complete
+          [missing "en.wallet.withdraw.youCanRequest2" translation]
         </Text>
         
       </Text>
@@ -157,17 +137,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
             }
           }
         >
-          You can request to withdraw up to 0 tokens from your rewards to your 
-          <Text
-            style={
-              Object {
-                "fontWeight": "700",
-              }
-            }
-          >
-            OnChain
-          </Text>
-           wallet.
+          [missing "en.wallet.withdraw.youCanRequest1" translation]
           
 
           <Text
@@ -177,17 +147,7 @@ exports[`WithdrawScreen renders correctly 1`] = `
               }
             }
           >
-            Note: a small amount of ETH will be charged to cover the transaction fee. Withdrawals 
-            <Text
-              style={
-                Object {
-                  "fontWeight": "700",
-                }
-              }
-            >
-              go through an approval process
-            </Text>
-             and may take up to 72 hours to complete
+            [missing "en.wallet.withdraw.youCanRequest2" translation]
           </Text>
           
         </Text>

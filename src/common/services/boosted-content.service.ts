@@ -76,7 +76,7 @@ class BoostedContentService {
   async update() {
     await this.feedsService!.fetch();
     this.boosts = this.cleanBoosts(await this.feedsService!.getEntities());
-    console.log(this.boosts)
+    console.log(this.boosts);
   }
 
   /**

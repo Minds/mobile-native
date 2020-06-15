@@ -221,7 +221,7 @@ class ChannelActions extends Component {
         {!isOwner && (
           <ButtonCustom
             onPress={this.showActionSheet}
-            accessibilityLabel={i18n.t('more')}
+            accessibilityLabel="More"
             containerStyle={[CS.rowJustifyCenter, CS.marginLeft]}
             textStyle={[CS.marginLeft, CS.marginRight]}
             icon="ios-flash"
