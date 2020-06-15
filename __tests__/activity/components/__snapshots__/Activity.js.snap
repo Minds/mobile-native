@@ -2,7 +2,8 @@
 
 exports[`Activity component renders correctly 1`] = `
 <TouchableOpacity
-  activeOpacity={0.2}
+  activeOpacity={0.8}
+  delayPressIn={60}
   onLayout={[Function]}
   onPress={[Function]}
   style={
@@ -279,10 +280,7 @@ exports[`Activity component renders correctly 1`] = `
       </View>
     }
   >
-    <TouchableOpacity
-      activeOpacity={0.2}
-      onPress={[Function]}
-    >
+    <View>
       <Text
         style={
           Array [
@@ -299,7 +297,7 @@ exports[`Activity component renders correctly 1`] = `
       >
         2 years ago
       </Text>
-    </TouchableOpacity>
+    </View>
   </OwnerBlock>
   <View
     style={null}

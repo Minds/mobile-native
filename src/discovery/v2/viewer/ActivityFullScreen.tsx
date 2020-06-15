@@ -1,5 +1,5 @@
-import React, { useRef, useCallback, useEffect } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import React, { useRef, useCallback } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -90,7 +90,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     }
   }, []);
 
-  useOnFocus((v) => {
+  useOnFocus(() => {
     const user = sessionService.getUser();
 
     // if we have some video playing we pause it and reset the current video
@@ -130,7 +130,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
               : { paddingTop: insets.top + 40, minHeight: window.height - 200 },
           ]}>
           {hasMedia && (
-            <MediaView ref={mediaRef} entity={entity} navigation={navigation} />
+            <MediaView
+              ref={mediaRef}
+              entity={entity}
+              navigation={navigation}
+              autoHeight={true}
+            />
           )}
           <FloatingBackButton
             onPress={navigation.goBack}
@@ -149,9 +154,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                 />
               </View>
             }>
-            <TouchableOpacity
-              // onPress={}
-              style={theme.rowJustifyStart}>
+            <View style={theme.rowJustifyStart}>
               <Text
                 style={[
                   theme.fontM,
@@ -168,7 +171,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                   </Text>
                 </View>
               )}
-            </TouchableOpacity>
+            </View>
           </OwnerBlock>
           <View
             style={[
@@ -183,6 +186,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
                   entity={entity}
                   navigation={navigation}
                   style={fontStyle}
+                  selectable={false}
                   noTruncate={true}
                 />
                 <Translate

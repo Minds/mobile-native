@@ -10,6 +10,7 @@ import { LICENSES } from '../common/services/list-options.service';
  * User model
  */
 export default class BlogModel extends BaseModel {
+  subtype?: string;
   thumbnail_src?: string;
   license: string = '';
   reminds: number = 0;

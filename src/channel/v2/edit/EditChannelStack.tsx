@@ -34,17 +34,20 @@ const EditChannelStack = function (AppStackNav: any) {
 
   return [
     <AppStackNav.Screen
+      key="edit1"
       name="EditChannelScreen"
       component={OptionsDrawer}
       options={{ title: i18n.t('channel.editChannel'), ...navigatorOptions }}
       initialParams={{ options: EditChannelOptions }}
     />,
     <AppStackNav.Screen
+      key="edit2"
       name="Bio"
       component={BioScreen}
       options={{ title: i18n.t('channel.edit.about'), ...navigatorOptions }}
     />,
     <AppStackNav.Screen
+      key="edit3"
       name="About"
       component={AboutScreen}
       options={{ title: i18n.t('channel.edit.about'), ...navigatorOptions }}

@@ -15,6 +15,7 @@ class SettingsStore {
   consumerNsfw = [];
   creatorNsfw = [];
   useHashtag = true;
+  composerMode = 'photo';
 
   /**
    * Initializes local variables with their correct values as stored locally.
@@ -29,6 +30,7 @@ class SettingsStore {
       'ConsumerNsfw',
       'UseHashtags',
       'Theme',
+      'ComposerMode',
     ]);
 
     // store theme changes
@@ -46,6 +48,7 @@ class SettingsStore {
     this.creatorNsfw = data[2][1] || [];
     this.consumerNsfw = data[3][1] || [];
     this.useHashtags = data[4][1] === null ? true : data[4][1];
+    this.composerMode = data[6][1] || 'photo';
 
     // set the initial value for hashtag
     getStores().hashtag.setAll(!this.useHashtags);
@@ -62,6 +65,13 @@ class SettingsStore {
    */
   setTheme(value) {
     storageService.setItem('Theme', value);
+  }
+  /**
+   * Set composer mode
+   * @param {string} value
+   */
+  setComposerMode(value: string) {
+    storageService.setItem('ComposerMode', value);
   }
 
   /**

@@ -84,7 +84,7 @@ exports[`Activity screen component renders correctly with an entity as param 2`]
     }
     header={
       <Activity
-        autoHeight={false}
+        autoHeight={true}
         entity={
           ActivityModel {
             "__list": null,
