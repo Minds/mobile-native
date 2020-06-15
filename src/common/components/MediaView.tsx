@@ -141,7 +141,14 @@ export default class MediaView extends Component<PropsType> {
    * Pause video if exist
    */
   pauseVideo() {
-    this.videoPlayer && this.videoPlayer && this.videoPlayer.pause();
+    if (this.videoPlayer) this.videoPlayer.pause();
+  }
+
+  /**
+   * Play video if exist
+   */
+  playVideo(sound: boolean) {
+    if (this.videoPlayer) this.videoPlayer.play(sound);
   }
 
   imageError = (err) => {

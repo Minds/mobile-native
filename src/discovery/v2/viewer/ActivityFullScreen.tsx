@@ -28,6 +28,9 @@ import CommentList from '../../../comments/CommentList';
 import CommentsStore from '../../../comments/CommentsStore';
 import { ScrollView } from 'react-native-gesture-handler';
 import isIphoneX from '../../../common/helpers/isIphoneX';
+import sessionService from '../../../common/services/session.service';
+import { useOnFocus } from '@crowdlinker/react-native-pager';
+import videoPlayerService from '../../../common/services/video-player.service';
 
 const FONT_THRESHOLD = 300;
 
@@ -86,6 +89,17 @@ const ActivityFullScreen = observer((props: PropsType) => {
       }
     }
   }, []);
+
+  useOnFocus(() => {
+    const user = sessionService.getUser();
+
+    // if we have some video playing we pause it and reset the current video
+    videoPlayerService.setCurrent(null);
+
+    if (user.plus && !user.disable_autoplay_videos && mediaRef.current) {
+      mediaRef.current.playVideo(true);
+    }
+  });
 
   const onPressComment = useCallback(() => {
     bottomStore.show(
