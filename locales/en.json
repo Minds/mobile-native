@@ -249,6 +249,11 @@
   "discovery": {
     "search": "Search...",
     "nothingToShow": "Nothing to show",
+    "all": "All",
+    "channels": "Channels",
+    "videos": "Videos",
+    "images": "Images",
+    "blogs": "Blogs",
     "groups": "Groups"
   },
   "groups": {
