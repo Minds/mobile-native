@@ -1,3 +1,5 @@
+import { runInAction } from 'mobx';
+
 import type { CurrencyType } from '../../types/Payment';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
@@ -8,7 +10,6 @@ import type { StripeDetails, Wallet, TokensOptions } from './WalletTypes';
 import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
 import { UserError } from '../../common/UserError';
 import i18n from '../../common/services/i18n.service';
-import { runInAction } from 'mobx';
 import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
 import sessionService from '../../common/services/session.service';

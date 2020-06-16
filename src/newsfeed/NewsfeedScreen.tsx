@@ -12,7 +12,6 @@ import i18n from '../common/services/i18n.service';
 import TopbarNewsfeed from '../topbar/TopbarNewsfeed';
 import type { AppStackParamList } from '../navigation/NavigationTypes';
 import type MessengerListStore from '../messenger/MessengerListStore';
-import type DiscoveryStore from '../discovery/DiscoveryStore';
 import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
 import type NotificationsStore from '../notifications/NotificationsStore';
@@ -25,7 +24,6 @@ type NewsfeedScreenNavigationProp = StackNavigationProp<
 
 type PropsType = {
   navigation: NewsfeedScreenNavigationProp;
-  discovery: DiscoveryStore;
   user: UserStore;
   messengerList: MessengerListStore;
   notifications: NotificationsStore;
@@ -36,7 +34,7 @@ type PropsType = {
 /**
  * News Feed Screen
  */
-@inject('newsfeed', 'user', 'discovery', 'messengerList', 'notifications')
+@inject('newsfeed', 'user', 'messengerList', 'notifications')
 @observer
 class NewsfeedScreen extends Component<PropsType> {
   disposeTabPress?: Function;
@@ -78,9 +76,6 @@ class NewsfeedScreen extends Component<PropsType> {
 
     // load groups after the feed
     if (this.groupsBar) await this.groupsBar.initialLoad();
-
-    // // load discovery after the feed is loaded
-    // this.props.discovery.fetch();
 
     // load messenger
     this.props.messengerList.loadList();

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
 
 import {
@@ -29,6 +29,8 @@ import ActivityModel from '../ActivityModel';
 import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../../common/stores/FeedStore';
+import sessionService from '../../common/services/session.service';
+import NavigationService from '../../navigation/NavigationService';
 
 type PropsType = {
   entity: ActivityModel;
@@ -53,6 +55,14 @@ type StateType = {
 @observer
 export default class Activity extends Component<PropsType, StateType> {
   /**
+   * Disposer for autoplay reaction
+   */
+  autoPlayDispose: any;
+  /**
+   * Disposer for autoplay timeout
+   */
+  autoplayVideoTimeout: any;
+  /**
    * Translate reference
    */
   translate: Translate | null = null;
@@ -73,6 +83,7 @@ export default class Activity extends Component<PropsType, StateType> {
   state = {
     editing: false,
   } as StateType;
+
   /**
    * Nav to activity full screen
    */
@@ -136,6 +147,49 @@ export default class Activity extends Component<PropsType, StateType> {
       }, 1000);
     }
   };
+
+  /**
+   * On did mount
+   */
+  componentDidMount() {
+    this.autoPlayDispose = reaction(
+      () => this.props.entity.is_visible,
+      (visible) => {
+        const type = this.props.entity.custom_type || this.props.entity.subtype;
+        if (type === 'video') {
+          if (visible) {
+            const user = sessionService.getUser();
+            if (user.plus && !user.disable_autoplay_videos) {
+              const state = NavigationService.getCurrentState();
+              // sound only for ActivityScreen (Full screen)
+              const sound = state.name === 'Activity';
+              this.autoplayVideoTimeout = setTimeout(() => {
+                if (this.props.entity.is_visible) {
+                  this.playVideo(sound);
+                }
+              }, 300);
+            }
+          } else {
+            // no longer visible we pause it
+            this.pauseVideo();
+          }
+        }
+      },
+      { fireImmediately: true },
+    );
+  }
+
+  /**
+   * On unmount
+   */
+  componentWillUnmount() {
+    if (this.autoPlayDispose) {
+      this.autoPlayDispose();
+    }
+    if (this.autoplayVideoTimeout) {
+      clearTimeout(this.autoplayVideoTimeout);
+    }
+  }
 
   /**
    * Render
@@ -292,6 +346,13 @@ export default class Activity extends Component<PropsType, StateType> {
    */
   pauseVideo() {
     this.mediaView?.pauseVideo();
+  }
+
+  /**
+   * Play video if exist
+   */
+  playVideo(sound = true) {
+    this.mediaView?.playVideo(sound);
   }
 
   toggleEdit = (value) => {

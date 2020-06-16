@@ -10,7 +10,7 @@ import i18n from '../../common/services/i18n.service';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import Topbar from '../../topbar/Topbar';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { TabParamList } from '../../tabs/TabsScreenNew';
+import { TabParamList } from '../../tabs/TabsScreen';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './DiscoveryV2Context';
