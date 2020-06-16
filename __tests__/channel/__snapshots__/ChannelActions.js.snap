@@ -15,7 +15,7 @@ exports[`channel actions component should renders correctly 1`] = `
   }
 >
   <View
-    accessibilityLabel="[missing \\"en.more\\" translation]"
+    accessibilityLabel="More"
     accessible={true}
     focusable={true}
     isTVSelectable={true}
