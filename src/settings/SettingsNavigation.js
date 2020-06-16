@@ -3,14 +3,14 @@ import React from 'react';
 
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import ThemedStyles from '../styles/ThemedStyles';
-import MoreScreenNew from '../tabs/MoreScreenNew';
+import MoreScreen from '../tabs/MoreScreen';
 import SettingsScreen from './SettingsScreen';
 import OtherScreen from './screens/OtherScreen';
 import EmailScreen from './screens/EmailScreen';
-import PasswordScreenNew from './screens/PasswordScreenNew';
+import PasswordScreen from './screens/PasswordScreen';
 import NotificationsSettingsScreen from '../notifications/NotificationsSettingsScreen';
 import BlockedChannelsScreen from './screens/BlockedChannelsScreen';
-import DeleteChannelScreenNew from './screens/DeleteChannelScreenNew';
+import DeleteChannelScreen from './screens/DeleteChannelScreen';
 import DeactivateChannelScreen from './screens/DeactivateChannelScreen';
 import LanguageScreen from './screens/LanguageScreen';
 import TFAScreen from './screens/TFAScreen';
@@ -104,7 +104,7 @@ const MenuStack = function ({ navigation, route }) {
       }}>
       <MenuStackNav.Screen
         name="Main"
-        component={MoreScreenNew}
+        component={MoreScreen}
         options={hideHeader}
       />
       <MenuStackNav.Screen
@@ -142,7 +142,7 @@ const MenuStack = function ({ navigation, route }) {
       />
       <MenuStackNav.Screen
         name="SettingsPassword"
-        component={PasswordScreenNew}
+        component={PasswordScreen}
         options={{ title: i18n.t('settings.accountOptions.3') }}
       />
       <MenuStackNav.Screen
@@ -157,7 +157,7 @@ const MenuStack = function ({ navigation, route }) {
       />
       <MenuStackNav.Screen
         name="DeleteChannel"
-        component={DeleteChannelScreenNew}
+        component={DeleteChannelScreen}
       />
       <MenuStackNav.Screen
         name="DeactivateChannel"

@@ -24,13 +24,8 @@ type PropsType = {
 };
 
 @inject('user')
-@inject('wallet')
 @observer
 class TopbarNewsfeed extends Component<PropsType> {
-  componentDidMount() {
-    this.props.wallet.refresh();
-  }
-
   listenForSearch = () => (this.props.user.searching ? styles.scale0 : {});
 
   render() {
