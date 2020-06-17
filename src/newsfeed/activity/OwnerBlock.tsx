@@ -89,7 +89,8 @@ export default class OwnerBlock extends PureComponent<PropsType> {
 
     const avatarSrc = channel.getAvatarSource();
 
-    const showMetrics = !this.props.entity.boosted;
+    const showMetrics =
+      !this.props.entity.boosted && this.props.entity.impressions > 0;
 
     return (
       <View style={[styles.container, theme.borderPrimary]}>
