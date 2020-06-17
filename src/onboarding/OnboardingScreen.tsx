@@ -15,7 +15,7 @@ import Wizard from '../common/components/Wizard';
 
 import WelcomeStepNew from './steps/WelcomeStepNew';
 import navigationService from '../navigation/NavigationService';
-import i18nService from '../common/services/i18n.service';
+import i18n from '../common/services/i18n.service';
 import CenteredLoading from '../common/components/CenteredLoading';
 import HashtagsStepNew from './steps/HashtagsStepNew';
 import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
@@ -66,13 +66,13 @@ class OnboardingScreen extends Component {
       //await this.props.onboarding.getProgress();
       this.props.hashtag.setAll(false);
       await this.loadJoinedGroups();
-      await this.clearDiscovery();
       this.setLoading(false);
       navigationService.navigate('Tabs');
     } catch (err) {
+      console.log(err);
       this.setLoading(false);
       Alert.alert(
-        i18nService.t('error'),
+        i18n.t('error'),
         i18n.t('errorMessage') + '\n' + i18n.t('tryAgain'),
       );
     }
@@ -85,14 +85,6 @@ class OnboardingScreen extends Component {
     this.props.groupsBar.reset();
     await this.props.groupsBar.loadGroups();
     await this.props.groupsBar.loadMarkers();
-  };
-
-  /**
-   * Clear discovery used for suggested groups and channels
-   */
-  clearDiscovery = async () => {
-    this.props.discovery.clearList();
-    this.props.discovery.reset();
   };
 
   handleWizarRef = (ref) => {
@@ -156,7 +148,7 @@ class OnboardingScreen extends Component {
       <SafeAreaView style={[CS.flexContainer, CS.backgroundPrimary]}>
         <KeyboardAvoidingView
           style={[CS.flexContainer]}
-          behavior={Platform.OS == 'ios' ? 'padding' : null}>
+          behavior={Platform.OS === 'ios' ? 'padding' : null}>
           <Wizard
             steps={steps}
             onFinish={this.onFinish}
