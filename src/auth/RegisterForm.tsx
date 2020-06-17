@@ -31,6 +31,7 @@ import validatePassword from '../common/helpers/validatePassword';
 import type { registerParams } from '../auth/AuthService';
 import Captcha from '../common/components/Captcha';
 import logService from '../common/services/log.service';
+import i18nService from '../common/services/i18n.service';
 
 /**
  * Register Form
@@ -272,6 +273,7 @@ class RegisterForm extends Component {
       await delay(100);
       try {
         await authService.login(this.state.username, this.state.password);
+        i18nService.setLocaleBackend();
       } catch (err) {
         try {
           await authService.login(this.state.username, this.state.password);

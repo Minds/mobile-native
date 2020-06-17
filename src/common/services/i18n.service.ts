@@ -75,6 +75,8 @@ const namespace = '@Minds:Locale';
 
 class I18nService {
   @observable locale = 'en';
+  bestLocale = 'en';
+
   constructor() {
     if (process.env.JEST_WORKER_ID === undefined) {
       this.init();
@@ -83,19 +85,32 @@ class I18nService {
     i18n.defaultLocale = 'en';
   }
 
+  /**
+   * Initialize service
+   */
   async init() {
+    // read locale from storage
     let language = await AsyncStorage.getItem(namespace);
+    // get best available language when app start
+    this.bestLocale = this.getBestLanguage();
 
     if (!language) {
-      // fallback if no available language fits
-      const fallback = { languageTag: 'en' };
-      let { languageTag } =
-        RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
-        fallback;
-      language = languageTag;
+      language = this.bestLocale;
     }
 
     this.setLocale(language, false);
+  }
+
+  /**
+   * Get best available language
+   */
+  getBestLanguage() {
+    // fallback if no available language fits
+    const fallback = { languageTag: 'en' };
+    let { languageTag } =
+      RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
+      fallback;
+    return languageTag;
   }
 
   /**
@@ -182,6 +197,21 @@ class I18nService {
 
     // update observable to fire app reload
     this.locale = locale;
+
+    if (store) {
+      this.setLocaleBackend();
+    }
+  }
+
+  /**
+   * Send locale to the backend
+   */
+  setLocaleBackend() {
+    // test fails if we use import
+    const api = require('./api.service').default;
+    api.post('api/v1/settings', {
+      language: this.locale,
+    });
   }
 
   getCurrentLanguageName() {
