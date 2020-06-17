@@ -2,9 +2,6 @@ import React, { PureComponent } from 'react';
 
 import { Text, View, StyleSheet, TouchableHighlight } from 'react-native';
 
-import { CommonStyle } from '../../../styles/Common';
-import { ComponentsStyle } from '../../../styles/Components';
-
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import i18n from '../../../common/services/i18n.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -26,19 +23,20 @@ export default class BoostAction extends PureComponent<PropsType> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     return (
       <View>
         <TouchableHighlightCustom
           style={[
-            ThemedStyles.style.rowJustifyCenter,
-            ThemedStyles.style.paddingHorizontal3x,
-            ThemedStyles.style.paddingVertical2x,
-            ThemedStyles.style.alignCenter,
+            theme.rowJustifyCenter,
+            theme.paddingHorizontal3x,
+            theme.paddingVertical4x,
+            theme.alignCenter,
           ]}
           underlayColor="transparent"
           onPress={this.openBoost}>
           <Text
-            style={[styles.text, ThemedStyles.style.colorIconActive]}
+            style={[styles.text, theme.colorIconActive]}
             numberOfLines={1}
             adjustsFontSizeToFit={true}>
             {i18n.t('boost').toUpperCase()}
@@ -59,7 +57,9 @@ export default class BoostAction extends PureComponent<PropsType> {
 const styles = StyleSheet.create({
   text: {
     fontFamily: 'Roboto',
-    fontSize: 14,
+    fontSize: 15,
+    textAlignVertical: 'center',
+    lineHeight: 21,
     letterSpacing: 1,
   },
 });

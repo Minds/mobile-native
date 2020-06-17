@@ -158,7 +158,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
    * Get text char limit based on screen height
    */
   getTextLimit() {
-    return this.state.height * 1.5;
+    return this.state.height * 0.5;
   }
 
   /**

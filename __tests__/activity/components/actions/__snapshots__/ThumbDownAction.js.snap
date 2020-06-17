@@ -16,7 +16,7 @@ exports[`Thumb action component renders correctly 1`] = `
   <Icon
     allowFontScaling={false}
     name="thumb-down"
-    size={20}
+    size={21}
     style={
       Array [
         undefined,

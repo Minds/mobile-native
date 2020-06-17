@@ -8,6 +8,7 @@ import type ActivityModel from '../ActivityModel';
 import number from '../../common/helpers/number';
 import i18nService from '../../common/services/i18n.service';
 import { Icon } from 'react-native-elements';
+import IconMa from 'react-native-vector-icons/MaterialIcons';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
@@ -91,14 +92,24 @@ export default class OwnerBlock extends PureComponent<PropsType> {
     const showMetrics = !this.props.entity.boosted;
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, theme.borderPrimary]}>
         <DebouncedTouchableOpacity onPress={this._navToChannel}>
           <FastImage source={avatarSrc} style={styles.avatar} />
         </DebouncedTouchableOpacity>
         <View style={styles.body}>
           <View style={styles.nameContainer}>
-            <DebouncedTouchableOpacity onPress={this._navToChannel}>
+            <DebouncedTouchableOpacity
+              onPress={this._navToChannel}
+              style={[theme.rowJustifyStart, theme.alignCenter]}>
+              {!!this.props.entity.remind_object && (
+                <IconMa
+                  name="repeat"
+                  size={16}
+                  style={[theme.colorIconActive, theme.marginRight]}
+                />
+              )}
               <Text
+                numberOfLines={1}
                 style={[styles.username, ThemedStyles.style.colorPrimaryText]}>
                 {channel.username}
               </Text>
@@ -109,7 +120,12 @@ export default class OwnerBlock extends PureComponent<PropsType> {
         </View>
         {showMetrics ? (
           <Text
-            style={[theme.marginRight2x, theme.colorTertiaryText, theme.fontM]}>
+            numberOfLines={1}
+            style={[
+              theme.marginRight2x,
+              theme.colorSecondaryText,
+              theme.fontM,
+            ]}>
             {number(this.props.entity.impressions, 0)}{' '}
             {i18nService.t('views').toLowerCase()}
           </Text>
@@ -143,14 +159,16 @@ export default class OwnerBlock extends PureComponent<PropsType> {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    padding: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 13,
     alignItems: 'center',
     flexDirection: 'row',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
-    height: 52,
-    width: 52,
-    borderRadius: 26,
+    height: 40,
+    width: 40,
+    borderRadius: 20,
     borderWidth: 0.5,
     borderColor: '#EEE',
   },

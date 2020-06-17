@@ -708,7 +708,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               }
             }
             orientation="row"
-            size={20}
+            size={21}
           />
           <ThumbDownAction
             entity={
@@ -865,7 +865,7 @@ exports[`blog view screen component should renders correctly 1`] = `
               }
             }
             orientation="row"
-            size={20}
+            size={21}
           />
         </View>
         <View

@@ -32,6 +32,8 @@ import type FeedStore from '../../common/stores/FeedStore';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 
+const FONT_THRESHOLD = 300;
+
 type PropsType = {
   entity: ActivityModel;
   navigation: any;
@@ -195,6 +197,7 @@ export default class Activity extends Component<PropsType, StateType> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     const entity = ActivityModel.checkOrCreate(this.props.entity);
 
     if (blockListService.blocked.has(entity.ownerObj.guid)) {
@@ -204,6 +207,16 @@ export default class Activity extends Component<PropsType, StateType> {
     }
 
     const hasText = !!entity.text;
+    const hasMedia = entity.hasMedia();
+    const hasRemind = !!entity.remind_object;
+
+    const isShortText =
+      !hasMedia && !hasRemind && entity.text.length < FONT_THRESHOLD;
+
+    const fontStyle = isShortText
+      ? [theme.fontXL, theme.fontMedium]
+      : theme.fontL;
+
     const lock =
       entity.paywall && entity.paywall === '1' ? (
         <Lock entity={entity} navigation={this.props.navigation} />
@@ -218,7 +231,7 @@ export default class Activity extends Component<PropsType, StateType> {
           <ExplicitText
             entity={entity}
             navigation={this.props.navigation}
-            style={styles.message}
+            style={[styles.message, fontStyle]}
           />
         ) : null}
         {hasText ? (
@@ -241,17 +254,13 @@ export default class Activity extends Component<PropsType, StateType> {
 
     const borderBottom = this.props.isReminded
       ? []
-      : [ThemedStyles.style.borderBottomHair, ThemedStyles.style.borderPrimary];
+      : [theme.borderBottom8x, theme.borderBackgroundPrimary];
 
     return (
       <TouchableOpacity
         delayPressIn={60}
         activeOpacity={0.8}
-        style={[
-          styles.container,
-          ...borderBottom,
-          ThemedStyles.style.backgroundSecondary,
-        ]}
+        style={[styles.container, ...borderBottom, theme.backgroundSecondary]}
         onPress={this.navToActivity}
         onLayout={this.onLayout}
         testID="ActivityView">
@@ -398,7 +407,7 @@ export default class Activity extends Component<PropsType, StateType> {
             style={[
               styles.timestamp,
               CommonStyle.paddingRight,
-              ThemedStyles.style.colorSecondaryText,
+              ThemedStyles.style.colorTertiaryText,
             ]}>
             {formatDate(this.props.entity.time_created, 'friendly')}
           </Text>
@@ -424,6 +433,7 @@ export default class Activity extends Component<PropsType, StateType> {
    */
   showRemind() {
     const remind_object = this.props.entity.remind_object;
+    const theme = ThemedStyles.style;
 
     if (remind_object) {
       if (blockListService.has(remind_object.owner_guid)) {
@@ -431,11 +441,11 @@ export default class Activity extends Component<PropsType, StateType> {
           <View
             style={[
               styles.blockedNoticeView,
-              CommonStyle.margin2x,
-              CommonStyle.borderRadius2x,
-              CommonStyle.padding2x,
+              theme.margin2x,
+              theme.borderRadius2x,
+              theme.padding2x,
             ]}>
-            <Text style={[CommonStyle.textCenter, styles.blockedNoticeDesc]}>
+            <Text style={[theme.textCenter, styles.blockedNoticeDesc]}>
               {i18n.t('activity.remindBlocked')}
               <Text
                 onPress={() => this.navToRemindChannel()}
@@ -452,9 +462,9 @@ export default class Activity extends Component<PropsType, StateType> {
         <View
           style={[
             styles.remind,
-            ThemedStyles.style.margin2x,
-            ThemedStyles.style.borderHair,
-            ThemedStyles.style.borderBackgroundPrimary,
+            theme.margin2x,
+            theme.borderHair,
+            theme.borderPrimary,
           ]}>
           <Activity
             ref={(r) => (this.remind = r)}
@@ -493,8 +503,8 @@ const styles = StyleSheet.create({
     minHeight: 250,
   },
   messageContainer: {
-    padding: 10,
-    paddingTop: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
   },
   message: {
     fontFamily: 'Roboto',
@@ -514,12 +524,11 @@ const styles = StyleSheet.create({
   remind: {
     shadowColor: '#000',
     shadowOffset: {
-      width: 2,
-      height: 2,
+      width: 1,
+      height: 1,
     },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
-
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
     elevation: 5,
   },
   boostTagContainer: {

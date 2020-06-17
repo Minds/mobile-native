@@ -11,7 +11,6 @@ import { FLAG_VOTE } from '../../../common/Permissions';
 import remoteAction from '../../../common/RemoteAction';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import { View } from 'react-native-animatable';
 
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(TouchableOpacity);
@@ -31,7 +30,7 @@ class ThumbUpAction extends Component<PropsType> {
    * Default Props
    */
   static defaultProps = {
-    size: 20,
+    size: 21,
     orientation: 'row',
   };
 
@@ -49,6 +48,7 @@ class ThumbUpAction extends Component<PropsType> {
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     const entity = this.props.entity;
 
     const count = entity[`thumbs:${this.direction}:count`];
@@ -57,28 +57,28 @@ class ThumbUpAction extends Component<PropsType> {
 
     const color = canVote
       ? this.voted
-        ? ThemedStyles.style.colorIconActive
-        : ThemedStyles.style.colorIcon
+        ? theme.colorIconActive
+        : theme.colorIcon
       : CS.colorLightGreyed;
 
     return (
       <TouchableOpacityCustom
         style={[
-          ThemedStyles.style.rowJustifyCenter,
-          ThemedStyles.style.paddingHorizontal3x,
-          ThemedStyles.style.paddingVertical2x,
-          ThemedStyles.style.alignCenter,
+          theme.rowJustifyCenter,
+          theme.paddingHorizontal3x,
+          theme.paddingVertical4x,
+          theme.alignCenter,
         ]}
         onPress={this.toggleThumb}
         {...testID(`Thumb ${this.direction} activity button`)}>
         <Icon
-          style={[color, ThemedStyles.style.marginRight]}
+          style={[color, theme.marginRight]}
           name={this.iconName}
           size={this.props.size}
         />
         {count ? (
           <Counter
-            size={this.props.size * 0.7}
+            // size={this.props.size * 0.7}
             count={count}
             testID={`Thumb ${this.direction} count`}
           />
