@@ -28,16 +28,18 @@ class ReportService {
 
   getAction(report) {
     let friendlyString =
-      report.entity && report.entity.type == 'user' ? 'banned' : 'removed';
+      report.entity && report.entity.type === 'user'
+        ? 'settings.reportedContent.action.banned'
+        : 'settings.reportedContent.action.removed';
 
     switch (report.reason_code) {
       case 2:
-        friendlyString = 'actionNSFW';
+        friendlyString = 'settings.reportedContent.action.actionNSFW';
         break;
       case 4:
       case 8:
-        if (report.entity && report.entity.type == 'user')
-          friendlyString = 'actionStrike';
+        if (report.entity && report.entity.type === 'user')
+          friendlyString = 'settings.reportedContent.action.actionStrike';
         break;
     }
 
