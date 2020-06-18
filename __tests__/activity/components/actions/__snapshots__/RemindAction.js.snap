@@ -16,7 +16,7 @@ exports[`Thumb action component renders correctly 1`] = `
   <Icon
     allowFontScaling={false}
     name="repeat"
-    size={20}
+    size={21}
     style={
       Array [
         undefined,
@@ -28,7 +28,7 @@ exports[`Thumb action component renders correctly 1`] = `
   />
   <Counter
     count={0}
-    size={14}
+    size={15}
   />
 </preventDoubleTap(TouchableOpacity)>
 `;

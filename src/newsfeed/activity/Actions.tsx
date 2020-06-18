@@ -41,7 +41,7 @@ export const Actions = observer((props: PropsType) => {
   return (
     <View>
       {entity && (
-        <View style={styles.container}>
+        <View style={[styles.container, theme.borderPrimary]}>
           <ThumbUpAction entity={entity} />
           <ThumbDownAction entity={entity} />
           <CommentsAction
@@ -53,8 +53,6 @@ export const Actions = observer((props: PropsType) => {
             }
           />
           <RemindAction entity={entity} />
-
-          <View style={ThemedStyles.style.flexContainer} />
 
           {!isOwner && hasCrypto && hasWire && (
             <WireAction owner={entity.ownerObj} navigation={navigation} />
@@ -78,11 +76,11 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    padding: 0,
-    // paddingTop: featuresService.has('crypto') ? 4 : 8,
-    // paddingBottom: featuresService.has('crypto') ? 4 : 8,
+    // alignItems: 'center',
+    justifyContent: 'space-evenly',
+    paddingHorizontal: 10,
+    // backgroundColor: 'blue',
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
     height: 46,

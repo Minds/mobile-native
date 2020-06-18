@@ -257,7 +257,7 @@ export default class FeedList<T> extends Component<PropsType> {
           navigation={this.props.navigation}
           autoHeight={false}
           isLast={isLast}
-          showCommentsOutlet={true}
+          showCommentsOutlet={false}
         />
       </ErrorBoundary>
     );

@@ -3,12 +3,17 @@
 exports[`Owner component renders correctly 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "display": "flex",
-      "flexDirection": "row",
-      "padding": 10,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "borderBottomWidth": 0.5,
+        "display": "flex",
+        "flexDirection": "row",
+        "paddingHorizontal": 20,
+        "paddingVertical": 13,
+      },
+      undefined,
+    ]
   }
 >
   <preventDoubleTap(TouchableOpacity)
@@ -30,10 +35,10 @@ exports[`Owner component renders correctly 1`] = `
       style={
         Object {
           "borderColor": "#EEE",
-          "borderRadius": 26,
+          "borderRadius": 20,
           "borderWidth": 0.5,
-          "height": 52,
-          "width": 52,
+          "height": 40,
+          "width": 40,
         }
       }
     />
@@ -57,8 +62,15 @@ exports[`Owner component renders correctly 1`] = `
     >
       <preventDoubleTap(TouchableOpacity)
         onPress={[Function]}
+        style={
+          Array [
+            undefined,
+            undefined,
+          ]
+        }
       >
         <Text
+          numberOfLines={1}
           style={
             Array [
               Object {

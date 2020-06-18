@@ -24,7 +24,7 @@ type PropsTypes = {
 /**
  * Remind Action Component
  */
-export default function ({ entity, size = 20, vertical = false }: PropsTypes) {
+export default function ({ entity, size = 21, vertical = false }: PropsTypes) {
   const color = entity.can(FLAG_REMIND)
     ? entity.reminds > 0
       ? ThemedStyles.style.colorIconActive
@@ -57,13 +57,13 @@ export default function ({ entity, size = 20, vertical = false }: PropsTypes) {
       style={[
         ThemedStyles.style.rowJustifyCenter,
         ThemedStyles.style.paddingHorizontal3x,
-        ThemedStyles.style.paddingVertical2x,
+        ThemedStyles.style.paddingVertical4x,
         ThemedStyles.style.alignCenter,
       ]}
       onPress={remind}
       testID="Remind activity button">
       <Icon style={[color, CS.marginRight]} name="repeat" size={size} />
-      <Counter count={entity.reminds} size={size * 0.7} />
+      <Counter count={entity.reminds} />
     </TouchableOpacityCustom>
   );
 }

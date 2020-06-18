@@ -7,7 +7,6 @@ import { ActionSheetCustom as ActionSheet } from 'react-native-actionsheet';
 
 import { MINDS_URI } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
-import { CommonStyle as CS } from '../../styles/Common';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
 import featuresService from '../../common/services/features.service';
@@ -51,8 +50,9 @@ export default class ActivityActionSheet extends Component<
    */
   constructor(props) {
     super(props);
+    const theme = ThemedStyles.style;
     this.deleteOption = (
-      <Text testID="deleteOption" style={[CS.colorDanger, CS.fontXL]}>
+      <Text testID="deleteOption" style={[theme.colorDanger, theme.fontXL]}>
         {i18n.t('delete')}
       </Text>
     );
@@ -326,7 +326,7 @@ export default class ActivityActionSheet extends Component<
    * Render Header
    */
   render() {
-    const CS = ThemedStyles.style;
+    const theme = ThemedStyles.style;
 
     const styles = {
       body: {
@@ -361,8 +361,8 @@ export default class ActivityActionSheet extends Component<
         <Icon
           name="more-vert"
           onPress={() => this.showActionSheet()}
-          size={26}
-          style={CS.colorSecondaryText}
+          size={28}
+          style={theme.colorTertiaryText}
           testID={this.props.testID}
         />
         <ActionSheet

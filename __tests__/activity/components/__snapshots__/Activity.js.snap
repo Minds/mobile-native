@@ -398,8 +398,8 @@ exports[`Activity component renders correctly 1`] = `
     <View
       style={
         Object {
-          "padding": 10,
-          "paddingTop": 10,
+          "paddingHorizontal": 20,
+          "paddingVertical": 15,
         }
       }
     >
@@ -490,11 +490,17 @@ exports[`Activity component renders correctly 1`] = `
           }
         }
         style={
-          Object {
-            "fontFamily": "Roboto",
-            "fontSize": 16,
-            "lineHeight": 24,
-          }
+          Array [
+            Object {
+              "fontFamily": "Roboto",
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            Array [
+              undefined,
+              undefined,
+            ],
+          ]
         }
       />
       <Translate
