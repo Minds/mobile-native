@@ -28,7 +28,7 @@ const TokensOverview = observer(
 
     const walletActions = [
       {
-        title: 'Transfer to On-chain',
+        title: i18n.t('wallet.transferToOnchain'),
         onPress: () => {
           bottomStore.show(
             i18n.t('wallet.withdraw.title'),
@@ -39,7 +39,7 @@ const TokensOverview = observer(
         noIcon: true,
       },
       {
-        title: 'Learn more about wallet',
+        title: i18n.t('wallet.leanMore'),
         onPress: () => navigation.push('LearnMoreScreen'),
         noIcon: true,
       },
@@ -55,17 +55,17 @@ const TokensOverview = observer(
             theme.rowJustifySpaceBetween,
           ]}>
           <View>
-            <Text style={balanceStyle}>Wallet balance</Text>
+            <Text style={balanceStyle}>{i18n.t('wallet.walletBalance')}</Text>
             <Text style={theme.fontXL}>{walletStore.balance}</Text>
           </View>
           <View>
-            <Text style={balanceStyle}>Off Chain</Text>
+            <Text style={balanceStyle}>{i18n.t('blockchain.offchain')}</Text>
             <Text style={theme.fontXL}>
               {walletStore.wallet.offchain.balance}
             </Text>
           </View>
           <View>
-            <Text style={balanceStyle}>On Chain</Text>
+            <Text style={balanceStyle}>{i18n.t('blockchain.onchain')}</Text>
             <Text style={theme.fontXL}>
               {walletStore.wallet.onchain.balance}
             </Text>
@@ -73,7 +73,7 @@ const TokensOverview = observer(
         </View>
 
         <View style={theme.paddingTop2x}>
-          <MenuSubtitle>WALLET ACTIONS</MenuSubtitle>
+          <MenuSubtitle>{i18n.t('wallet.walletActions')}</MenuSubtitle>
           {walletActions.map((item, i) => (
             <MenuItem item={item} key={i} />
           ))}

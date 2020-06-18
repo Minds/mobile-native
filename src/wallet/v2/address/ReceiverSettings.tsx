@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { WalletStoreType } from '../createWalletStore';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import MenuItem from '../../../common/components/menus/MenuItem';
+import i18n from '../../../common/services/i18n.service';
 
 type PropsType = {
   navigation: WalletScreenNavigationProp;
@@ -17,20 +18,20 @@ const ReceiverSettings = ({ navigation, walletStore }: PropsType) => {
   const receiverSettingsOptions = walletStore.wallet.receiver.address
     ? [
         {
-          title: 'Mobile Receiver Address (Active)',
+          title: i18n.t('wallet.activeAddress'),
           onPress: () =>
             navigation.push('ReceiverAddressScreen', {
               walletStore: walletStore,
             }),
         },
         {
-          title: 'Alternate receiver address',
+          title: i18n.t('wallet.alternateReceiver'),
           onPress: () => navigation.push('BlockchainWallet'),
         },
       ]
     : [
         {
-          title: 'Create a new address (Recommended)',
+          title: i18n.t('wallet.createAddress'),
           onPress: () => {
             if (!walletStore.wallet.receiver.address) {
               walletStore.createOnchain(true);
@@ -38,14 +39,14 @@ const ReceiverSettings = ({ navigation, walletStore }: PropsType) => {
           },
         },
         {
-          title: 'Use your private key',
+          title: i18n.t('wallet.usePrivateKey'),
           onPress: () => true,
         },
       ];
   return (
     <View style={theme.paddingTop4x}>
       <Text style={[theme.colorSecondaryText, styles.subTitle]}>
-        RECEIVER ADDRESSES
+        {i18n.t('wallet.receiverAddresses').toUpperCase()}
       </Text>
       <View style={innerWrapper}>
         <MenuItem item={receiverSettingsOptions[0]} />

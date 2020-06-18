@@ -53,14 +53,14 @@ const PhoneValidator = ({ bottomStore }: PhoneValidatorPropsType) => {
 
   const verify = useCallback(() => {
     ref.current?.confirmAction();
-    bottomStore.doneText = 'Done';
+    bottomStore.doneText = i18n.t('done');
     setLabel('');
     bottomStore.setOnPressDone(() => bottomStore.hide());
   }, [ref, bottomStore]);
 
   const send = useCallback(() => {
     ref.current?.joinAction();
-    bottomStore.doneText = 'Verify';
+    bottomStore.doneText = i18n.t('verify');
     bottomStore.setOnPressDone(verify);
     setMsg('');
     setLabel(i18n.t('onboarding.confirmationCode'));
@@ -91,8 +91,8 @@ const PhoneValidator = ({ bottomStore }: PhoneValidatorPropsType) => {
 
 const showPhoneValidator = (bottomStore: BottomOptionsStoreType) => {
   bottomStore.show(
-    'Phone Verification',
-    'Send',
+    i18n.t('wallet.phoneVerification'),
+    i18n.t('send'),
     <PhoneValidator bottomStore={bottomStore} />,
   );
 };
@@ -121,7 +121,7 @@ const TokensTab = observer(
                 theme.listItemTitle,
                 user.hasRewards() ? theme.strikethrough : '',
               ]}>
-              {'Phone Verification'}
+              {i18n.t('wallet.phoneVerification')}
             </Text>
           ),
           onPress: () => showPhoneValidator(bottomStore),
@@ -131,7 +131,7 @@ const TokensTab = observer(
           noIcon: !user.hasRewards(),
         },
         {
-          title: 'Add On-Chain Address',
+          title: i18n.t('wallet.addOnchainAddress'),
           onPress: () => {
             if (!walletStore.wallet.receiver.address) {
               walletStore.createOnchain(true);
@@ -184,7 +184,7 @@ const TokensTab = observer(
       <>
         {showSetup && (
           <View style={theme.paddingTop2x}>
-            <MenuSubtitle>WALLET SETUP</MenuSubtitle>
+            <MenuSubtitle>{i18n.t('wallet.setup')}</MenuSubtitle>
             {walletSetup.map((item, i) => (
               <MenuItem item={item} key={i} />
             ))}
