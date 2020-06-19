@@ -113,7 +113,8 @@
     "tapToCreate": "Tap here to create a new one.",
     "noTokensNoProblem": "No tokens? No problem!",
     "receivaOnly": "RECEIVE ONLY",
-    "offchain": "Offchain",
+    "offchain": "Off-chain",
+    "onchain":"On-chain",
     "receiver": "Receiver",
     "selectWallet": "Select a wallet",
     "walletAddresses": "Wallet Addresses",
@@ -247,8 +248,15 @@
     "fabPay": "Pay"
   },
   "discovery": {
+    "manage":"Manage Tags",
+    "justForYou":"Just for you",
+    "yourTags":"Your tags",
+    "otherTags":"Other tags",
+    "trendingTags":"Trending tags",
+    "trending":"Trending",
     "search": "Search...",
     "nothingToShow": "Nothing to show",
+    "nothingToSee":"Nothing to see here...",
     "all": "All",
     "channels": "Channels",
     "videos": "Videos",
@@ -606,7 +614,19 @@
     "locationTooltip": "Please enter your city to help us connect you with channels in your area. We do not track your exact location."
   },
   "wallet": {
+    "cash":"Cash",
+    "activeAddress":"Mobile Receiver Address (Active)",
+    "alternateReceiver":"Alternate receiver address",
+    "createAddress":"Create a new address (Recommended)",
+    "transferToOnchain":"Transfer to On-chain",
+    "usePrivateKey":"Use your private key",
+    "receiverAddresses":"Receiver Addresses",
+    "setup":"WALLET SETUP",
+    "addOnchainAddress":"Add On-Chain Address",
+    "leanMore":"Learn more about wallet",
     "address": "Address",
+    "walletActions":"WALLET ACTIONS",
+    "walletBalance":"Wallet balance",
     "transactionsEmpty": "Your transaction list is empty",
     "withdraw": {
       "errorOnlyOnceDay": "You may only withdraw once a day",
@@ -632,12 +652,15 @@
       "sure": "Yes, I'm sure"
     },
     "transactions": {
+      "transaction":"Transaction",
+      "transactions":"Transactions",
       "pending": "PENDING",
       "filter": "Filter",
       "reward": "Today’s daily reward",
       "filterTransactions": "Filter Transactions",
       "filterTypes": "TRANSACTION TYPES",
       "allFilter": "All",
+      "mindsReward":"Minds Reward",
       "rewardsFilter": "Minds Rewards",
       "boostsFilter": "Boosts",
       "transferFilter": "On-chain transfers",
@@ -646,10 +669,15 @@
       "fromFilter": "From",
       "toFilter": "To",
       "wiresFilter": "Wire",
+      "onchainWire":"On-Chain Wire",
+      "offchainWire":"Off-Chain Wire",
+      "offchainBoost":"Off-Chain Boost",
+      "onchainBoost":"On-Chain Boost",
       "proEarningsFilter": "Pro Earnings",
       "payoutsFilter": "Payouts"
     },
     "phoneValidationMessage": "To start earning rewards, you will need to enter a unique phone number.",
+    "phoneVerification":"Phone Verification",
     "learnMore": {
       "title": "Learn More",
       "howWork": "How the new rewards system works",
@@ -771,6 +799,7 @@
     "emptySuggested": "We couldn't find what you look for",
     "clear": "Clear"
   },
+  "add":"Add",
   "monetize": "Monetize",
   "downloading": "Downloading",
   "confirm18": "Confirm you are 18+",
@@ -846,6 +875,8 @@
   "their": "their",
   "for": "for",
   "usd": "USD",
+  "ether":"Ether",
+  "bitcoin":"Bitcoin",
   "locked": "Locked",
   "thanks": "Thanks",
   "completed": "Completed",
@@ -885,5 +916,8 @@
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
-  "about": "About"
+  "about": "About",
+  "purchase":"Purchase",
+  "verify":"Verify",
+  "other":"Other"
 }

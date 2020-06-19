@@ -4,8 +4,6 @@ import {
   View,
   Text,
   StyleSheet,
-  StyleProp,
-  ViewStyle,
   SectionList,
   SectionListData,
   TouchableHighlight,
@@ -18,10 +16,16 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { DiscoveryTagsManager } from './DiscoveryTagsManager';
 import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
+import i18n from '../../../common/services/i18n.service';
 
 interface Props {
   type: 'your' | 'trending';
 }
+
+/**
+ * Key extractor
+ */
+const keyExtractor = (item) => String(item.value);
 
 /**
  * Discovery List Item
@@ -50,7 +54,7 @@ export const DiscoveryTagsList = observer((props: Props) => {
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
             <Text style={ComponentsStyle.emptyComponentMessage}>
-              Nothing to see here...
+              {i18n.t('discovery.nothingToSee')}
             </Text>
           </View>
         </View>
@@ -121,22 +125,17 @@ export const DiscoveryTagsList = observer((props: Props) => {
     discoveryV2.refreshTags();
   };
 
-  /**
-   * Key extractor
-   */
-  const keyExtractor = (item) => String(item.value);
-
   let tags: TDiscoveryTagsTag[] = [];
-  let title = 'Other';
+  let title = i18n.t('other');
 
   switch (props.type) {
     case 'your':
       tags = [...discoveryV2.tags.slice()];
-      title = 'Your tags';
+      title = i18n.t('discovery.yourTags');
       break;
     case 'trending':
       tags = [...discoveryV2.trendingTags.slice()];
-      title = 'Trending tags';
+      title = i18n.t('discovery.trendingTags');
       break;
   }
 
@@ -184,15 +183,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 16,
-  },
-  secondaryInformation: {
-    color: ThemedStyles.getColor('secondary_text'),
-  },
-  secondaryInformationTop: {
-    paddingBottom: 8,
-  },
-  secondaryInformationBottom: {
-    paddingTop: 8,
   },
   thumbnail: {
     width: 100,

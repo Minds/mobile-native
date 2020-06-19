@@ -18,7 +18,6 @@ import { CommonStyle } from '../styles/Common';
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../common/Permissions';
 import SubscriptionButton from '../channel/subscription/SubscriptionButton';
 import ThemedStyles from '../styles/ThemedStyles';
-import { CommonStyle as CS } from '../styles/Common';
 
 type PropsType = {
   row: any;

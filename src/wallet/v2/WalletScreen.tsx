@@ -21,6 +21,7 @@ import BottomOptionPopup, {
 } from '../../common/components/BottomOptionPopup';
 import BitcoinsTab from './currency-tabs/BitcoinsTab';
 import UsdTab from './currency-tabs/UsdTab';
+import i18n from '../../common/services/i18n.service';
 
 export type WalletScreenRouteProp = RouteProp<AppStackParamList, 'Fab'>;
 export type WalletScreenNavigationProp = StackNavigationProp<
@@ -43,16 +44,24 @@ const WalletScreen = observer((props: PropsType) => {
   const bottomStore: BottomOptionsStoreType = useBottomOption();
 
   const tabs: Array<TabType<CurrencyType>> = [
-    { id: 'tokens', title: 'Tokens', subtitle: store.balance.toString() },
-    { id: 'usd', title: 'USD', subtitle: store.wallet.cash.balance.toString() },
+    {
+      id: 'tokens',
+      title: i18n.t('tokens'),
+      subtitle: store.balance.toString(),
+    },
+    {
+      id: 'usd',
+      title: i18n.t('usd'),
+      subtitle: store.wallet.cash.balance.toString(),
+    },
     {
       id: 'eth',
-      title: 'Ether',
+      title: i18n.t('ether'),
       subtitle: store.wallet.eth.balance.toString(),
     },
     {
       id: 'btc',
-      title: 'Bitcoin',
+      title: i18n.t('bitcoin'),
       subtitle: store.wallet.btc.balance.toString(),
     },
   ];
@@ -102,7 +111,7 @@ const WalletScreen = observer((props: PropsType) => {
   return (
     <View style={theme.flexContainer}>
       <Topbar
-        title="Wallet"
+        title={i18n.t('moreScreen.wallet')}
         navigation={props.navigation}
         background={theme.backgroundPrimary}
       />
