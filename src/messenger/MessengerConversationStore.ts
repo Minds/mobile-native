@@ -6,6 +6,7 @@ import crypto from './../common/services/crypto.service';
 import socket from '../common/services/socket.service';
 import session from '../common/services/session.service';
 import logService from '../common/services/log.service';
+import MessageModel from './conversation/MessageModel';
 
 /**
  * Messenger Conversation Store
@@ -103,12 +104,12 @@ class MessengerConversationStore {
 
   @action
   setMessages(msgs) {
-    msgs.forEach((m) => this.messages.push(m));
+    msgs.forEach((m) => this.messages.push(MessageModel.create(m)));
   }
 
   @action
   addMessage(msg) {
-    this.messages.unshift(msg);
+    this.messages.unshift(MessageModel.checkOrCreate(msg));
   }
 
   /**
@@ -118,19 +119,27 @@ class MessengerConversationStore {
    * @param {string} text
    */
   @action
-  send(myGuid, text) {
-    this.messages.unshift({
+  async send(myGuid, text) {
+    const message = MessageModel.create({
       guid: myGuid + this.messages.length,
       rowKey: Date.now().toString(),
       message: text,
-      decrypted: true,
+      decryptedMessage: text,
+      sending: true,
       owner: { guid: myGuid },
       time_created: Date.now() / 1000,
     });
 
-    return this._encryptMessage(text).then((encrypted) => {
-      return messengerService.send(this.guid, encrypted);
-    });
+    this.messages.unshift(message);
+
+    try {
+      const encrypted = await this._encryptMessage(text);
+      const response = await messengerService.send(this.guid, encrypted);
+      message.setSending(false);
+      message.assign(response.message);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   @action
@@ -214,9 +223,7 @@ class MessengerConversationStore {
 
       for (let index in message.messages) {
         try {
-          message.message = await crypto.decrypt(message.messages[index]);
           message.rowKey = Date.now().toString();
-          message.decrypted = true;
           // break on correct decryption
 
           if (message.message) break;

@@ -292,6 +292,7 @@
   },
   "messenger": {
     "decrypting": "decrypting...",
+    "couldntDecrypt":"couldn't decrypt",
     "typeYourMessage": "Type your message...",
     "invited": "Invited",
     "invite": "Invite",
