@@ -69,6 +69,7 @@ class OnboardingScreen extends Component {
       this.setLoading(false);
       navigationService.navigate('Tabs');
     } catch (err) {
+      console.log(err);
       this.setLoading(false);
       Alert.alert(
         i18n.t('error'),
@@ -145,7 +146,7 @@ class OnboardingScreen extends Component {
       <SafeAreaView style={[CS.flexContainer, CS.backgroundPrimary]}>
         <KeyboardAvoidingView
           style={[CS.flexContainer]}
-          behavior={Platform.OS == 'ios' ? 'padding' : null}>
+          behavior={Platform.OS === 'ios' ? 'padding' : null}>
           <Wizard
             steps={steps}
             onFinish={this.onFinish}
