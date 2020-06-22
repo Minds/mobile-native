@@ -12,6 +12,7 @@ import ActivityFullScreen from './ActivityFullScreen';
 import type FeedStore from '../../../common/stores/FeedStore';
 import { StatusBar } from 'react-native';
 import { useDimensions } from '@react-native-community/hooks';
+import ThemedStyles from '../../../styles/ThemedStyles';
 
 type ActivityFullScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -41,28 +42,43 @@ const ViewerScreen = observer((props: PropsType) => {
   }));
 
   const { width, height } = useDimensions().window;
+  const translationX = width * 0.13;
 
   const pagerStyle: any = {
     height: height - (StatusBar.currentHeight || 0),
     width,
+    backgroundColor: ThemedStyles.getColor('tertiary_background'),
     alignSelf: 'center',
   };
 
   const stackConfig: iPageInterpolation = {
     transform: [
       {
+        // { perspective: 400 },
+        perspective: {
+          inputRange: [-1, 0, 1],
+          outputRange: [1000, 1000, 1000],
+        },
+        rotateY: {
+          inputRange: [-1, 0, 1],
+          outputRange: [0.5, 0, -0.5],
+        },
         scale: {
           inputRange: [-1, 0, 1],
-          outputRange: [0.85, 1, 0.85],
+          outputRange: [0.8, 1, 0.8],
+        },
+        translateX: {
+          inputRange: [-1, -0.07, 0, 0.07, 1],
+          outputRange: [
+            translationX,
+            translationX * 0.5,
+            0,
+            -translationX * 0.5,
+            -translationX,
+          ],
         },
       },
     ],
-    opacity: {
-      inputRange: [-1, 0, 1],
-      outputRange: [0, 1, 0],
-    },
-
-    zIndex: (offset) => offset,
   };
 
   return (
