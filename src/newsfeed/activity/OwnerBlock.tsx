@@ -1,5 +1,11 @@
 import React, { PureComponent } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
@@ -14,6 +20,8 @@ const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 type PropsType = {
   entity: ActivityModel;
   rightToolbar?: React.ReactNode;
+  leftToolbar?: React.ReactNode;
+  containerStyle?: ViewStyle | Array<ViewStyle>;
   navigation: any;
   route?: any;
   children?: React.ReactNode;
@@ -73,7 +81,7 @@ export default class OwnerBlock extends PureComponent<PropsType> {
           style={[styles.groupName, ThemedStyles.style.colorPrimaryText]}
           lineBreakMode="tail"
           numberOfLines={1}>
-          > {this.props.entity.containerObj.name}
+          {'>'} {this.props.entity.containerObj.name}
         </Text>
       </DebouncedTouchableOpacity>
     );
@@ -93,7 +101,13 @@ export default class OwnerBlock extends PureComponent<PropsType> {
       !this.props.entity.boosted && this.props.entity.impressions > 0;
 
     return (
-      <View style={[styles.container, theme.borderPrimary]}>
+      <View
+        style={[
+          styles.container,
+          theme.borderPrimary,
+          this.props.containerStyle,
+        ]}>
+        {this.props.leftToolbar}
         <DebouncedTouchableOpacity onPress={this._navToChannel}>
           <FastImage source={avatarSrc} style={styles.avatar} />
         </DebouncedTouchableOpacity>

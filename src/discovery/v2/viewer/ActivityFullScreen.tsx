@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -62,6 +62,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
   const showText = !!entity.text && !store.isEditing;
+  const cleanBottom = useMemo(() => ({ paddingBottom: insets.bottom - 10 }), [
+    insets.bottom,
+  ]);
+  const cleanTop = useMemo(() => ({ paddingTop: insets.top }), [insets.top]);
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < FONT_THRESHOLD;
@@ -70,7 +74,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     ? [theme.fontXL, theme.fontMedium]
     : theme.fontL;
 
-  const backgroundColor = ThemedStyles.getColor('primary_background');
+  const backgroundColor = ThemedStyles.getColor('secondary_background');
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
 
@@ -88,7 +92,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
         remindRef.current.showTranslate();
       }
     }
-  }, []);
+  }, [translateRef]);
 
   useOnFocus(() => {
     const user = sessionService.getUser();
@@ -118,32 +122,25 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }, [bottomStore, entity, navigation, route, store.comments]);
 
   return (
-    <View style={[window, theme.flexContainer]}>
+    <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
       <View style={theme.flexContainer}>
         <ScrollView
           style={theme.flexContainer}
           contentContainerStyle={[
             theme.fullWidth,
             !isShortText ? styles.paddingBottom : null,
-            hasMedia
-              ? null
-              : { paddingTop: insets.top + 40, minHeight: window.height - 200 },
+            { minHeight: window.height - 200 },
           ]}>
-          {hasMedia && (
-            <MediaView
-              ref={mediaRef}
-              entity={entity}
-              navigation={navigation}
-              autoHeight={true}
-            />
-          )}
-          <FloatingBackButton
-            onPress={navigation.goBack}
-            style={hasMedia ? theme.colorWhite : theme.colorPrimaryText}
-          />
           <OwnerBlock
             entity={entity}
             navigation={navigation}
+            containerStyle={[theme.backgroundPrimary, styles.header, cleanTop]}
+            leftToolbar={
+              <FloatingBackButton
+                onPress={navigation.goBack}
+                style={[theme.colorPrimaryText, styles.backButton]}
+              />
+            }
             rightToolbar={
               <View style={theme.rowJustifyCenter}>
                 <ActivityActionSheet
@@ -173,6 +170,14 @@ const ActivityFullScreen = observer((props: PropsType) => {
               )}
             </View>
           </OwnerBlock>
+          {hasMedia && (
+            <MediaView
+              ref={mediaRef}
+              entity={entity}
+              navigation={navigation}
+              autoHeight={true}
+            />
+          )}
           <View
             style={[
               theme.paddingHorizontal4x,
@@ -226,8 +231,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           />
         )}
       </View>
-      <View
-        style={[theme.rowJustifyStart, { paddingBottom: insets.bottom - 10 }]}>
+      <View style={cleanBottom}>
         <Actions
           entity={entity}
           showCommentsOutlet={false}
@@ -249,6 +253,25 @@ const ActivityFullScreen = observer((props: PropsType) => {
 
 export default ActivityFullScreen;
 const styles = StyleSheet.create({
+  backButton: {
+    position: undefined,
+    top: undefined,
+    width: 50,
+    paddingTop: 5,
+    marginLeft: -17,
+    marginRight: -5,
+  },
+  header: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+    borderBottomWidth: 0,
+  },
   linear: {
     position: 'absolute',
     bottom: 0,
