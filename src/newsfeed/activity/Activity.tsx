@@ -110,7 +110,10 @@ export default class Activity extends Component<PropsType, StateType> {
       );
       navOpts.feed = this.props.entity.__list;
       navOpts.current = index;
-      this.props.navigation.push('ActivityFullScreen', navOpts);
+      this.props.navigation.push('ActivityFullScreenNav', {
+        screen: 'ActivityFullScreen',
+        params: navOpts,
+      });
       return;
     }
 

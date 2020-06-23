@@ -47,7 +47,9 @@ const ViewerScreen = observer((props: PropsType) => {
   const pagerStyle: any = {
     height: height - (StatusBar.currentHeight || 0),
     width,
-    backgroundColor: ThemedStyles.getColor('tertiary_background'),
+    backgroundColor: ThemedStyles.theme
+      ? 'black'
+      : ThemedStyles.getColor('tertiary_background'),
     alignSelf: 'center',
   };
 
