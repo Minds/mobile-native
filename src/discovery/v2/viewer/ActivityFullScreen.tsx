@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useMemo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -32,29 +32,43 @@ import sessionService from '../../../common/services/session.service';
 import { useOnFocus } from '@crowdlinker/react-native-pager';
 import videoPlayerService from '../../../common/services/video-player.service';
 
-const FONT_THRESHOLD = 300;
+const TEXT_SHORT_THRESHOLD = 110;
+const TEXT_MEDIUM_THRESHOLD = 300;
 
 type PropsType = {
   entity: ActivityModel;
 };
 
 const ActivityFullScreen = observer((props: PropsType) => {
+  // Local store
   const store = useLocalStore(() => ({
     isEditing: false,
     comments: new CommentsStore(),
+    scrollViewHeight: 0,
+    contentHeight: 0,
     toggleEdit() {
       store.isEditing = !store.isEditing;
     },
+    onContentSizeChange(width, height) {
+      store.contentHeight = height;
+    },
+    onScrollViewSizeChange(e) {
+      store.scrollViewHeight = e.nativeEvent.layout.height;
+    },
+    get contentFit() {
+      if (!store.scrollViewHeight || !store.contentHeight) {
+        return false;
+      }
+      return store.scrollViewHeight > store.contentHeight;
+    },
   }));
+
   const route = useRoute();
-
   const bottomStore: BottomOptionsStoreType = useBottomOption();
-
   const insets = useSafeArea();
   const window = useDimensions().window;
   const theme = ThemedStyles.style;
   const entity: ActivityModel = props.entity;
-  // entity.boosted = true;
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
   const translateRef = useRef<Translate>(null);
@@ -65,14 +79,22 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const cleanBottom = useMemo(() => ({ paddingBottom: insets.bottom - 10 }), [
     insets.bottom,
   ]);
-  const cleanTop = useMemo(() => ({ paddingTop: insets.top }), [insets.top]);
+  const cleanTop = useMemo(() => ({ paddingTop: insets.top || 10 }), [
+    insets.top,
+  ]);
 
   const isShortText =
-    !hasMedia && !hasRemind && entity.text.length < FONT_THRESHOLD;
+    !hasMedia && !hasRemind && entity.text.length < TEXT_SHORT_THRESHOLD;
 
-  const fontStyle = isShortText
-    ? [theme.fontXL, theme.fontMedium]
-    : theme.fontL;
+  const isMediumText = isShortText
+    ? false
+    : !hasMedia && !hasRemind && entity.text.length < TEXT_MEDIUM_THRESHOLD;
+
+  const fontStyle = isMediumText
+    ? [theme.fontXXL, theme.fontMedium]
+    : isShortText
+    ? [theme.fontXXXL, theme.fontMedium]
+    : theme.fontLM;
 
   const backgroundColor = ThemedStyles.getColor('secondary_background');
   const startColor = backgroundColor + '00';
@@ -124,52 +146,54 @@ const ActivityFullScreen = observer((props: PropsType) => {
   return (
     <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
       <View style={theme.flexContainer}>
+        <OwnerBlock
+          entity={entity}
+          navigation={navigation}
+          containerStyle={[theme.backgroundPrimary, styles.header, cleanTop]}
+          leftToolbar={
+            <FloatingBackButton
+              onPress={navigation.goBack}
+              style={[theme.colorPrimaryText, styles.backButton]}
+            />
+          }
+          rightToolbar={
+            <View style={theme.rowJustifyCenter}>
+              <ActivityActionSheet
+                toggleEdit={store.toggleEdit}
+                entity={entity}
+                navigation={navigation}
+                onTranslate={onTranslate}
+              />
+            </View>
+          }>
+          <View style={theme.rowJustifyStart}>
+            <Text
+              style={[
+                theme.fontM,
+                theme.colorSecondaryText,
+                theme.paddingRight,
+              ]}>
+              {formatDate(entity.time_created, 'friendly')}
+            </Text>
+
+            {!!entity.edited && (
+              <View style={[theme.rowJustifyCenter, theme.alignCenter]}>
+                <Text style={[theme.fontM, theme.colorSecondaryText]}>
+                  · {i18n.t('edited').toUpperCase()}
+                </Text>
+              </View>
+            )}
+          </View>
+        </OwnerBlock>
         <ScrollView
           style={theme.flexContainer}
+          onLayout={store.onScrollViewSizeChange}
+          onContentSizeChange={store.onContentSizeChange}
           contentContainerStyle={[
+            store.contentFit ? theme.justifyCenter : null,
             theme.fullWidth,
-            !isShortText ? styles.paddingBottom : null,
-            { minHeight: window.height - 200 },
+            styles.content,
           ]}>
-          <OwnerBlock
-            entity={entity}
-            navigation={navigation}
-            containerStyle={[theme.backgroundPrimary, styles.header, cleanTop]}
-            leftToolbar={
-              <FloatingBackButton
-                onPress={navigation.goBack}
-                style={[theme.colorPrimaryText, styles.backButton]}
-              />
-            }
-            rightToolbar={
-              <View style={theme.rowJustifyCenter}>
-                <ActivityActionSheet
-                  toggleEdit={store.toggleEdit}
-                  entity={entity}
-                  navigation={navigation}
-                  onTranslate={onTranslate}
-                />
-              </View>
-            }>
-            <View style={theme.rowJustifyStart}>
-              <Text
-                style={[
-                  theme.fontM,
-                  theme.colorSecondaryText,
-                  theme.paddingRight,
-                ]}>
-                {formatDate(entity.time_created, 'friendly')}
-              </Text>
-
-              {!!entity.edited && (
-                <View style={[theme.rowJustifyCenter, theme.alignCenter]}>
-                  <Text style={[theme.fontM, theme.colorSecondaryText]}>
-                    · {i18n.t('edited').toUpperCase()}
-                  </Text>
-                </View>
-              )}
-            </View>
-          </OwnerBlock>
           {hasMedia && (
             <MediaView
               ref={mediaRef}
@@ -178,13 +202,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
               autoHeight={true}
             />
           )}
-          <View
-            style={[
-              theme.paddingHorizontal4x,
-              isShortText
-                ? [theme.fullHeight, theme.rowJustifyCenter, theme.alignCenter]
-                : null,
-            ]}>
+          <View style={[theme.paddingHorizontal4x, theme.paddingVertical4x]}>
             {showText && (
               <>
                 <ExplicitText
@@ -224,7 +242,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
             </View>
           )}
         </ScrollView>
-        {!isShortText && (
+        {!store.contentFit && (
           <LinearGradient
             colors={[startColor, endColor]}
             style={styles.linear}
@@ -257,9 +275,16 @@ const styles = StyleSheet.create({
     position: undefined,
     top: undefined,
     width: 50,
-    paddingTop: 5,
+    paddingTop: Platform.select({
+      ios: 5,
+      android: 0,
+    }),
     marginLeft: -17,
     marginRight: -5,
+  },
+  content: {
+    flexGrow: 1,
+    justifyContent: 'center',
   },
   header: {
     shadowColor: '#000',
@@ -275,11 +300,8 @@ const styles = StyleSheet.create({
   linear: {
     position: 'absolute',
     bottom: 0,
-    height: '10%',
+    height: 40,
     width: '100%',
-  },
-  paddingBottom: {
-    paddingBottom: 80,
   },
   remind: {
     shadowColor: '#000',

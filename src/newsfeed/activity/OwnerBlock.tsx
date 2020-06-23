@@ -184,8 +184,6 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     borderRadius: 20,
-    borderWidth: 0.5,
-    borderColor: '#EEE',
   },
   body: {
     marginLeft: 8,
