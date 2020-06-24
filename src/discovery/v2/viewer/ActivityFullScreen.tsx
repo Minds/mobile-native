@@ -58,7 +58,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
-  const showText = !!entity.text && !store.isEditing;
+  const showText = (!!entity.text || entity.title) && !store.isEditing;
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < FONT_THRESHOLD;

@@ -149,7 +149,7 @@ export default class Activity extends Component<PropsType, StateType> {
       );
     }
 
-    const hasText = !!entity.text;
+    const hasText = !!entity.text || !!entity.title;
     const lock =
       entity.paywall && entity.paywall === '1' ? (
         <Lock entity={entity} navigation={this.props.navigation} />
