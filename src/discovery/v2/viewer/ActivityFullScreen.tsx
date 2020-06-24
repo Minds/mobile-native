@@ -31,6 +31,7 @@ import isIphoneX from '../../../common/helpers/isIphoneX';
 import sessionService from '../../../common/services/session.service';
 import { useOnFocus } from '@crowdlinker/react-native-pager';
 import videoPlayerService from '../../../common/services/video-player.service';
+import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
 
 const TEXT_SHORT_THRESHOLD = 110;
 const TEXT_MEDIUM_THRESHOLD = 300;
@@ -59,7 +60,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
       if (!store.scrollViewHeight || !store.contentHeight) {
         return false;
       }
-      return store.scrollViewHeight > store.contentHeight;
+      return store.scrollViewHeight + 50 > store.contentHeight;
     },
   }));
 
@@ -99,6 +100,10 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const backgroundColor = ThemedStyles.getColor('secondary_background');
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
+
+  const overlay = entity.shouldBeBlured() ? (
+    <ExplicitOverlay entity={entity} />
+  ) : null;
 
   /**
    * On press translate in actions menu
@@ -202,6 +207,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
               autoHeight={true}
             />
           )}
+          {overlay}
           <View style={[theme.paddingHorizontal4x, theme.paddingVertical4x]}>
             {showText && (
               <>
