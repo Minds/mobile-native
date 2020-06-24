@@ -114,7 +114,6 @@ export default class ActivityEditor extends Component<PropsType, StateType> {
     let time_created: string | number = this.state.time_created;
     if (time_created) {
       time_created = new Date(this.state.time_created).getTime();
-      time_created = Math.floor(time_created / 1000);
     }
     return time_created;
   };
