@@ -28,6 +28,7 @@ import CommentList from '../../../comments/CommentList';
 import CommentsStore from '../../../comments/CommentsStore';
 import { ScrollView } from 'react-native-gesture-handler';
 import isIphoneX from '../../../common/helpers/isIphoneX';
+import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
 
 const FONT_THRESHOLD = 300;
 
@@ -59,6 +60,12 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
   const showText = !!entity.text && !store.isEditing;
+  const overlay = entity.shouldBeBlured() ? (
+    <ExplicitOverlay
+      entity={entity}
+      closeContainerStyle={{ paddingTop: insets.top }}
+    />
+  ) : null;
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < FONT_THRESHOLD;
@@ -220,6 +227,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
           onPressComment={onPressComment}
         />
       </View>
+      {overlay}
       <BottomOptionPopup
         height={window.height * 0.85}
         title={bottomStore.title}
