@@ -8,3 +8,5 @@ export default function (props) {
   const store = useLocalStore(createComposerStore, props);
   return store;
 }
+
+export type ComposeStoreType = ReturnType<typeof createComposerStore>;

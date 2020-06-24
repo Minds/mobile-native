@@ -10,6 +10,7 @@ type PropsType = {
   children: React.ReactNode;
   hideDone?: boolean;
   doneText?: string;
+  onPressRight: Function;
 };
 
 const Wrapper = ({ store, children, hideDone, doneText }: PropsType) => {

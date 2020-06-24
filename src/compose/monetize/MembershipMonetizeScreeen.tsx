@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -12,10 +12,22 @@ import { MINDS_PRO } from '../../config/Config';
 import WireService from '../../wire/WireService';
 import type { SupportTiersType } from '../../wire/WireTypes';
 import TierManagementScreen from '../../settings/screens/TierManagementScreen';
+import { AppStackParamList } from '../../navigation/NavigationTypes';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+
+type MembershipMonetizeScreenRouteProp = RouteProp<
+  AppStackParamList,
+  'MembershipMonetize'
+>;
+type MembershipMonetizeScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'MembershipMonetize'
+>;
 
 type PropsType = {
-  route: any;
-  navigation: any;
+  route: MembershipMonetizeScreenRouteProp;
+  navigation: MembershipMonetizeScreenNavigationProp;
 };
 
 const createMembershipMonetizeStore = () => {
@@ -53,6 +65,10 @@ const MembershipMonetizeScreeen = observer(
 
     const localStore = useLocalStore(createMembershipMonetizeStore);
 
+    const save = useCallback(() => {
+      store.saveMembsershipMonetize(localStore.selectedTier.urn);
+    }, [store, localStore]);
+
     useEffect(() => {
       if (!localStore.loaded) {
         localStore.init(user.me.guid);
@@ -61,7 +77,7 @@ const MembershipMonetizeScreeen = observer(
 
     if (localStore.supportTiers.length === 0) {
       return (
-        <Wrapper store={store} hideDone={true}>
+        <Wrapper store={store} hideDone={true} onPressRight={save}>
           <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
             <Text style={[styles.title, theme.colorPrimaryText]}>
               {i18n.t('monetize.subScreensTitle')}

@@ -13,12 +13,43 @@ import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import ThemedStyles from '../../styles/ThemedStyles';
 
-const CustomMonetizeScreen = observer((props) => {
+import { AppStackParamList } from '../../navigation/NavigationTypes';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+import { string } from 'react-native-redash';
+import Switch from 'react-native-switch-pro';
+
+type CustomMonetizeScreenRouteProp = RouteProp<
+  AppStackParamList,
+  'CustomMonetize'
+>;
+type CustomMonetizeScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'CustomMonetize'
+>;
+
+type PropsType = {
+  route: CustomMonetizeScreenRouteProp;
+};
+
+const CustomMonetizeScreen = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
   const store = props.route.params.store;
 
   const localStore = useLocalStore(() => ({
     show: false,
+    usd: '',
+    has_usd: true,
+    has_tokens: true,
+    setUsd(usd: string) {
+      this.usd = usd;
+    },
+    setHasUsd(has_usd: boolean) {
+      this.has_usd = has_usd;
+    },
+    setHasTokens(has_tokens: boolean) {
+      this.has_tokens = has_tokens;
+    },
     showInput() {
       this.show = true;
     },
@@ -37,12 +68,20 @@ const CustomMonetizeScreen = observer((props) => {
     store.wire_threshold && store.wire_threshold.min > 0,
   );
 
+  const save = useCallback(() => {
+    store.saveCustomMonetize(
+      localStore.usd,
+      localStore.has_usd,
+      localStore.has_tokens,
+    );
+  }, [store, localStore]);
+
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
       <TopBar
         leftText={i18n.t('monetize.title')}
         rightText={i18n.t('done')}
-        onPressRight={NavigationService.goBack}
+        onPressRight={save}
         onPressBack={NavigationService.goBack}
         store={store}
       />
@@ -87,13 +126,23 @@ const CustomMonetizeScreen = observer((props) => {
             ]}>
             {i18n.t('capture.paywallLabel', { currency: 'Tokens' })}
           </Text>
+          <View style={theme.rowJustifySpaceBetween}>
+            <Switch
+              value={localStore.has_tokens}
+              onSyncPress={localStore.setHasTokens}
+            />
+            <Switch
+              value={localStore.has_usd}
+              onSyncPress={localStore.setHasUsd}
+            />
+          </View>
           <TextInput
             ref={inputRef}
             style={[theme.colorPrimaryText, theme.borderPrimary, styles.input]}
             keyboardType="numeric"
-            onChangeText={store.setTokenThreshold}
+            onChangeText={localStore.setUsd}
             textAlignVertical="top"
-            value={localStore.tokens.toString()}
+            value={localStore.usd}
             autoCapitalize="none"
             multiline={false}
             autoCorrect={false}

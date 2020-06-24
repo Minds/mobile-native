@@ -20,6 +20,7 @@ export type WireRequest = {
 export type SupportTiersType = {
   amount: string;
   description: string;
+  urn: string;
 };
 
 export interface SupportTiersResponse extends ApiResponse {

@@ -12,9 +12,18 @@ import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 import { useNavCallback } from '../PosterOptions';
 import Wrapper from './common/Wrapper';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList } from '../../navigation/NavigationTypes';
+
+type MonetizeScreenRouteProp = RouteProp<AppStackParamList, 'MonetizeSelector'>;
+type MonetizeScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'MonetizeSelector'
+>;
 
 type PropsType = {
-  route: any;
+  route: MonetizeScreenRouteProp;
 };
 
 type ItemTextPropsType = {

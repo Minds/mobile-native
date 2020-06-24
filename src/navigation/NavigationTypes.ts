@@ -4,6 +4,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type FeedStore from '../common/stores/FeedStore';
+import { ComposeStoreType } from '../compose/useComposeStore';
 
 export type MainSwiperParamList = {
   Capture: {};
@@ -48,10 +49,18 @@ export type AppStackParamList = {
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
-  MonetizeSelector: {};
-  PlusMonetize: {};
-  MembershipMonetize: {};
-  CustomMonetize: {};
+  MonetizeSelector: {
+    store: ComposeStoreType;
+  };
+  PlusMonetize: {
+    store: ComposeStoreType;
+  };
+  MembershipMonetize: {
+    store: ComposeStoreType;
+  };
+  CustomMonetize: {
+    store: ComposeStoreType;
+  };
   LicenseSelector: {};
   EmailConfirmation: {};
   Update: {};

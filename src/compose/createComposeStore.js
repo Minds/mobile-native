@@ -9,6 +9,8 @@ import remoteAction from '../common/RemoteAction';
 import ActivityModel from '../newsfeed/ActivityModel';
 import { getSingle } from '../newsfeed/NewsfeedService';
 import ThemedStyles from '../styles/ThemedStyles';
+import featuresService from '../common/services/features.service';
+import mindsService from '../common/services/minds.service';
 
 /**
  * Display an error message to the user.
@@ -317,10 +319,11 @@ export default function (props) {
 
       let newPost = {
         message: this.text,
-        wire_threshold:
-          this.wire_threshold && this.wire_threshold.min
-            ? this.wire_threshold.min
-            : null,
+        wire_threshold: featuresService.has('plus-2020')
+          ? this.wire_threshold || null
+          : this.wire_threshold && this.wire_threshold.min
+          ? this.wire_threshold.min
+          : null,
         time_created:
           Math.floor(this.time_created / 1000) || Math.floor(Date.now() / 1000),
       };
@@ -373,6 +376,40 @@ export default function (props) {
         0,
         false,
       );
+    },
+    async saveMembsershipMonetize(urn: string, expires: number = null) {
+      this.wire_threshold = {
+        support_tier: { urn, expires },
+      };
+    },
+    async saveCustomMonetize(
+      usd,
+      has_usd,
+      has_tokens,
+      description = '',
+      public = false,
+    ) {
+      const response = await api.post('api/v3/wire/supporttiers', {
+        usd,
+        description,
+        has_usd,
+        has_tokens,
+        public,
+      });
+      this.wire_threshold = {
+        support_tier: {
+          urn: response.support_tier.urn,
+          expires: null,
+        },
+      };
+    },
+    async savePlusMonetize(expires: number) {
+      this.wire_threshold = {
+        support_tier: {
+          urn: (await mindsService.getSettings()).plus.support_tier_urn,
+          expires,
+        },
+      };
     },
   };
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, Text, StyleSheet, Linking } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import Switch from 'react-native-switch-pro';
@@ -11,9 +11,18 @@ import openUrlService from '../../common/services/open-url.service';
 import { MINDS_PRO } from '../../config/Config';
 import { CheckBox } from 'react-native-elements';
 import LabeledComponent from '../../common/components/LabeledComponent';
+import { AppStackParamList } from '../../navigation/NavigationTypes';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp } from '@react-navigation/native';
+
+type PlusMonetizeScreenRouteProp = RouteProp<AppStackParamList, 'PlusMonetize'>;
+type PlusMonetizeScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'PlusMonetize'
+>;
 
 type PropsType = {
-  route: any;
+  route: PlusMonetizeScreenRouteProp;
 };
 
 const createPlusMonetizeStore = () => {
@@ -39,9 +48,15 @@ const PlusMonetizeScreen = observer(({ route }: PropsType) => {
 
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
 
+  const save = useCallback(() => {
+    const exclusivity =
+      localStore.exclusivity === '48hrs' ? 48 * 60 * 60 : null;
+    store.savePlusMonetize(exclusivity);
+  }, [store, localStore]);
+
   if (!user.me.pro) {
     return (
-      <Wrapper store={store} hideDone={true}>
+      <Wrapper store={store} hideDone={true} onPressRight={save}>
         <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
           <Text style={[styles.title, theme.colorPrimaryText]}>
             {i18n.t('monetize.plusMonetize.title')}
