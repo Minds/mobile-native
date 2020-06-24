@@ -8,85 +8,89 @@ exports[`Media view component renders correctly 1`] = `
     ]
   }
 >
-  <TouchableOpacity
-    activeOpacity={1}
-    onLongPress={[Function]}
-    onPress={[Function]}
-    style={
-      Array [
-        Object {
-          "width": "100%",
-        },
-        Object {
-          "aspectRatio": 0.4,
-        },
-      ]
-    }
-    testID="Posted Image"
+  <SharedElement
+    id="undefined.image"
   >
-    <ExplicitImage
-      entity={
-        Object {
-          "attachment_guid": false,
-          "blurb": false,
-          "containerObj": undefined,
-          "container_guid": "activityguid0",
-          "custom_data": Array [
-            Object {
-              "height": 50,
-              "width": 20,
-            },
-          ],
-          "custom_type": false,
-          "description": "Congratulations! ",
-          "edited": "",
-          "getThumbSource": [MockFunction] {
-            "calls": Array [
-              Array [
-                "xlarge",
-              ],
-            ],
-            "results": Array [
+    <TouchableOpacity
+      activeOpacity={1}
+      onLongPress={[Function]}
+      onPress={[Function]}
+      style={
+        Array [
+          Object {
+            "width": "100%",
+          },
+          Object {
+            "aspectRatio": 0.4,
+          },
+        ]
+      }
+      testID="Posted Image"
+    >
+      <ExplicitImage
+        entity={
+          Object {
+            "attachment_guid": false,
+            "blurb": false,
+            "containerObj": undefined,
+            "container_guid": "activityguid0",
+            "custom_data": Array [
               Object {
-                "type": "return",
-                "value": Object {
-                  "uri": "www.something.com",
-                },
+                "height": 50,
+                "width": 20,
               },
             ],
-          },
-          "guid": "activityguid0",
-          "mature": false,
-          "message": "Message",
-          "ownerObj": Object {
-            "guid": "824853017709780997",
-            "subtype": false,
+            "custom_type": false,
+            "description": "Congratulations! ",
+            "edited": "",
+            "getThumbSource": [MockFunction] {
+              "calls": Array [
+                Array [
+                  "xlarge",
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "type": "return",
+                  "value": Object {
+                    "uri": "www.something.com",
+                  },
+                },
+              ],
+            },
+            "guid": "activityguid0",
+            "mature": false,
+            "message": "Message",
+            "ownerObj": Object {
+              "guid": "824853017709780997",
+              "subtype": false,
+              "time_created": "1522036284",
+              "type": "user",
+            },
+            "owner_guid": "824853017709780997",
+            "parent_guid": "838106762591510528",
+            "perma_url": false,
+            "rowKey": "something0",
+            "shouldBeBlured": [MockFunction],
+            "subtype": "image",
+            "thumbnail_src": false,
             "time_created": "1522036284",
-            "type": "user",
-          },
-          "owner_guid": "824853017709780997",
-          "parent_guid": "838106762591510528",
-          "perma_url": false,
-          "rowKey": "something0",
-          "shouldBeBlured": [MockFunction],
-          "subtype": "image",
-          "thumbnail_src": false,
-          "time_created": "1522036284",
-          "title": "TITLE",
-          "type": "activity",
-          "wire_totals": Object {
-            "tokens": 1000000000000000000,
-          },
+            "title": "TITLE",
+            "type": "activity",
+            "wire_totals": Object {
+              "tokens": 1000000000000000000,
+            },
+          }
         }
-      }
-      onError={[Function]}
-      onLoad={[Function]}
-      source={
-        Object {
-          "uri": "www.something.com",
+        onError={[Function]}
+        onLoad={[Function]}
+        source={
+          Object {
+            "uri": "www.something.com",
+          }
         }
-      }
-    />
-  </TouchableOpacity>
+      />
+    </TouchableOpacity>
+  </SharedElement>
 </View>
 `;
