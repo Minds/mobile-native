@@ -4,6 +4,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type FeedStore from '../common/stores/FeedStore';
+import ActivityModel from '../newsfeed/ActivityModel';
 
 export type MainSwiperParamList = {
   Capture: {};
@@ -25,6 +26,16 @@ export type AuthStackParamList = {
   Register: {};
 };
 
+export type ActivityFullScreenParamList = {
+  ActivityFullScreen: {
+    feed: FeedStore;
+    current: number;
+  };
+  ViewImage: {
+    entity: ActivityModel;
+  };
+};
+
 export type AppStackParamList = {
   Fab: {
     disableThresholdCheck?: boolean;
@@ -37,10 +48,7 @@ export type AppStackParamList = {
     walletStore?: WalletStoreType;
     options?: Function;
   };
-  ActivityFullScreen: {
-    feed: FeedStore;
-    current: number;
-  };
+  ActivityFullScreenNav: {};
   Newsfeed: {};
   Capture: {};
   StackCapture: {};

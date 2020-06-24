@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppStackParamList } from '../../../navigation/NavigationTypes';
+import { ActivityFullScreenParamList } from '../../../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
 import {
@@ -15,7 +15,7 @@ import { useDimensions } from '@react-native-community/hooks';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 type ActivityFullScreenRouteProp = RouteProp<
-  AppStackParamList,
+  ActivityFullScreenParamList,
   'ActivityFullScreen'
 >;
 

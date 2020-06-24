@@ -51,6 +51,7 @@ import {
   AuthStackParamList,
   AppStackParamList,
   MainSwiperParamList,
+  ActivityFullScreenParamList,
 } from './NavigationTypes';
 import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
@@ -76,7 +77,9 @@ const AuthStackNav = createNativeStackNavigator<AuthStackParamList>();
 const RootStackNav = createNativeStackNavigator<RootStackParamList>();
 const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
 
-const FullScreenPostStackNav = createSharedElementStackNavigator();
+const FullScreenPostStackNav = createSharedElementStackNavigator<
+  ActivityFullScreenParamList
+>();
 
 const FullScreenPostStack = () => (
   <FullScreenPostStackNav.Navigator>
@@ -88,7 +91,7 @@ const FullScreenPostStack = () => (
     <FullScreenPostStackNav.Screen
       name="ViewImage"
       component={ViewImageScreen}
-      options={({ route }) => ({
+      options={({ route }: { route: any }) => ({
         title: route.params.entity.ownerObj.name,
         headerStyle: {
           backgroundColor: '#000',
