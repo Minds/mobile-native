@@ -63,7 +63,7 @@ export default observer(function (props) {
   const localStore = useLocalStore(() => ({
     height: 42, // input height
     onSizeChange(e) {
-      localStore.height = e.nativeEvent.contentSize.height;
+      localStore.height = e.nativeEvent.contentSize.height * 1.1;
     },
   }));
 
@@ -111,7 +111,7 @@ export default observer(function (props) {
       behavior={Platform.OS === 'ios' ? 'height' : null}>
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
-        contentContainerStyle={[styles.scrollBody, styles.bodyContainer]}>
+        contentContainerStyle={styles.bodyContainer}>
         <TopBar
           rightText={rightButton}
           onPressRight={onPost}
@@ -203,14 +203,9 @@ export default observer(function (props) {
 });
 
 const styles = StyleSheet.create({
-  scrollBody: {
-    minHeight: '100%',
-  },
   input: {
     minHeight: 100,
-    flex: 1,
     textAlignVertical: 'top',
-    height: '100%',
   },
   remindPreview: {
     marginHorizontal: 10,
@@ -241,6 +236,7 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
   bodyContainer: {
+    minHeight: '100%',
     paddingBottom: 100,
   },
   icon: {
