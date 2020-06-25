@@ -48,6 +48,8 @@ class ApiService {
   }
 
   async parseResponse<T extends ApiResponse>(response, url): Promise<T> {
+    console.log('url', url);
+    console.log(response.status);
     // check status
     if (response.status) {
       if (response.status === 401) {

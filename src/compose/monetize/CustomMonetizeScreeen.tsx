@@ -18,6 +18,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import { string } from 'react-native-redash';
 import Switch from 'react-native-switch-pro';
+import Wrapper from './common/Wrapper';
+import CenteredLoading from '../../common/components/CenteredLoading';
 
 type CustomMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -38,9 +40,13 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
 
   const localStore = useLocalStore(() => ({
     show: false,
-    usd: '',
+    usd: '0',
     has_usd: true,
     has_tokens: true,
+    loading: false,
+    setLoading(loading: boolean) {
+      this.loading = loading;
+    },
     setUsd(usd: string) {
       this.usd = usd;
     },
@@ -51,108 +57,119 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
       this.has_tokens = has_tokens;
     },
     showInput() {
-      this.show = true;
-    },
-    get tokens() {
-      return store.wire_threshold ? store.wire_threshold.min : 0;
+      this.show = !this.show;
     },
   }));
 
-  const onNopaywall = useCallback(() => {
-    store.setTokenThreshold(0);
-  }, [store]);
-
   const inputRef = useRef<TextInput>(null);
 
-  const isActive = Boolean(
-    store.wire_threshold && store.wire_threshold.min > 0,
-  );
-
-  const save = useCallback(() => {
-    store.saveCustomMonetize(
-      localStore.usd,
-      localStore.has_usd,
-      localStore.has_tokens,
-    );
+  const save = useCallback(async () => {
+    try {
+      localStore.setLoading(true);
+      await store.saveCustomMonetize(
+        localStore.usd,
+        localStore.has_usd,
+        localStore.has_tokens,
+      );
+    } catch (ex) {
+      console.log(ex);
+    } finally {
+      localStore.setLoading(false);
+    }
   }, [store, localStore]);
 
+  const labelStyle = [
+    theme.fontM,
+    theme.colorSecondaryText,
+    theme.marginTop5x,
+    theme.paddingHorizontal3x,
+    theme.marginBottom2x,
+  ];
+
+  if (localStore.loading) {
+    return <CenteredLoading />;
+  }
+
   return (
-    <View style={[theme.flexContainer, theme.backgroundPrimary]}>
-      <TopBar
-        leftText={i18n.t('monetize.title')}
-        rightText={i18n.t('done')}
-        onPressRight={save}
-        onPressBack={NavigationService.goBack}
-        store={store}
-      />
-      <Text
-        style={[
-          theme.paddingVertical6x,
-          theme.colorSecondaryText,
-          theme.fontL,
-          theme.paddingHorizontal3x,
-        ]}>
-        {i18n.t('capture.paywallDescription')}
-      </Text>
-      <TouchableOpacity
-        style={[styles.optsRow, theme.borderPrimary]}
-        onPress={onNopaywall}>
-        <Text style={[theme.flexContainer, theme.fontL]}>
-          {i18n.t('capture.noPaywall')}
+    <Wrapper store={store} hideDone={!localStore.show} onPressRight={save}>
+      <View style={[theme.flexContainer, theme.backgroundPrimary]}>
+        <Text
+          style={[
+            theme.paddingVertical6x,
+            theme.colorSecondaryText,
+            theme.fontL,
+            theme.paddingHorizontal3x,
+          ]}>
+          {i18n.t('capture.paywallDescription')}
         </Text>
-        {!isActive && (
-          <MIcon name="check" size={23} style={theme.colorPrimaryText} />
-        )}
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.optsRow, theme.borderPrimary]}
-        onPress={localStore.showInput}>
-        <Text style={[theme.flexContainer, theme.fontL]}>
-          {i18n.t('capture.paywall')}
-        </Text>
-        {isActive && (
-          <MIcon name="check" size={23} style={theme.colorPrimaryText} />
-        )}
-      </TouchableOpacity>
-      {(localStore.show || isActive) && (
-        <>
-          <Text
-            style={[
-              theme.fontM,
-              theme.colorSecondaryText,
-              theme.marginTop5x,
-              theme.paddingHorizontal3x,
-              theme.marginBottom2x,
-            ]}>
-            {i18n.t('capture.paywallLabel', { currency: 'Tokens' })}
+        <TouchableOpacity
+          style={[styles.optsRow, theme.borderPrimary]}
+          onPress={localStore.showInput}>
+          <Text style={[theme.flexContainer, theme.fontL]}>
+            {i18n.t('capture.noPaywall')}
           </Text>
-          <View style={theme.rowJustifySpaceBetween}>
-            <Switch
-              value={localStore.has_tokens}
-              onSyncPress={localStore.setHasTokens}
+          {!localStore.show && (
+            <MIcon name="check" size={23} style={theme.colorPrimaryText} />
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.optsRow, theme.borderPrimary]}
+          onPress={localStore.showInput}>
+          <Text style={[theme.flexContainer, theme.fontL]}>
+            {i18n.t('capture.paywall')}
+          </Text>
+          {localStore.show && (
+            <MIcon name="check" size={23} style={theme.colorPrimaryText} />
+          )}
+        </TouchableOpacity>
+        {localStore.show && (
+          <>
+            <Text style={labelStyle}>
+              {i18n.t('monetize.customMonetize.usd')}
+            </Text>
+            <TextInput
+              ref={inputRef}
+              style={[
+                theme.colorPrimaryText,
+                theme.borderPrimary,
+                styles.input,
+              ]}
+              keyboardType="numeric"
+              onChangeText={localStore.setUsd}
+              textAlignVertical="top"
+              value={localStore.usd}
+              autoCapitalize="none"
+              multiline={false}
+              autoCorrect={false}
+              selectTextOnFocus={true}
+              underlineColorAndroid="transparent"
+              testID="TokenInput"
             />
-            <Switch
-              value={localStore.has_usd}
-              onSyncPress={localStore.setHasUsd}
-            />
-          </View>
-          <TextInput
-            ref={inputRef}
-            style={[theme.colorPrimaryText, theme.borderPrimary, styles.input]}
-            keyboardType="numeric"
-            onChangeText={localStore.setUsd}
-            textAlignVertical="top"
-            value={localStore.usd}
-            autoCapitalize="none"
-            multiline={false}
-            autoCorrect={false}
-            selectTextOnFocus={true}
-            underlineColorAndroid="transparent"
-            testID="TokenInput"
-          />
-        </>
-      )}
-    </View>
+
+            <View style={theme.rowJustifySpaceBetween}>
+              <View style={theme.flexColumnCentered}>
+                <Text style={labelStyle}>
+                  {i18n.t('monetize.customMonetize.hasUsd')}
+                </Text>
+                <Switch
+                  value={localStore.has_tokens}
+                  onSyncPress={localStore.setHasTokens}
+                />
+              </View>
+              <View style={theme.flexColumnCentered}>
+                <Text style={labelStyle}>
+                  {i18n.t('monetize.customMonetize.hasTokens')}
+                </Text>
+                <Switch
+                  value={localStore.has_usd}
+                  onSyncPress={localStore.setHasUsd}
+                />
+              </View>
+            </View>
+          </>
+        )}
+      </View>
+    </Wrapper>
   );
 });
 

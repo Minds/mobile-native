@@ -946,6 +946,11 @@
       "setup": "Setup membersip tiers",
       "label": "MEMBERSHIP TIERS",
       "manage": "Manage"
+    },
+    "customMonetize": {
+      "usd": "Contributiuon in USD (will be converted to tokens if necesary)",
+      "hasUsd": "Accept USD",
+      "hasTokens": "Accept Tokens"
     }
   },
   "downloading": "Downloading",

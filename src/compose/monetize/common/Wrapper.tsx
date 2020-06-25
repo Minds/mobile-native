@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import TopBar from '../../TopBar';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { View } from 'react-native';
@@ -13,17 +13,28 @@ type PropsType = {
   onPressRight: Function;
 };
 
-const Wrapper = ({ store, children, hideDone, doneText }: PropsType) => {
+const Wrapper = ({
+  store,
+  children,
+  hideDone,
+  doneText,
+  onPressRight,
+}: PropsType) => {
   const theme = ThemedStyles.style;
   const rightText =
     hideDone === true ? null : doneText ? doneText : i18n.t('done');
+
+  const onPressRightCallBack = useCallback(() => {
+    onPressRight();
+    NavigationService.goBack();
+  }, [onPressRight]);
 
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
       <TopBar
         leftText={i18n.t('monetize.title')}
         rightText={rightText}
-        onPressRight={NavigationService.goBack}
+        onPressRight={onPressRightCallBack}
         onPressBack={NavigationService.goBack}
         store={store}
       />
