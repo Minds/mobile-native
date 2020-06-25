@@ -525,10 +525,10 @@ export default class CommentsStore {
       let response;
       switch (i) {
         case 1:
-          response = await attachmentService.gallery('photo');
+          response = await attachmentService.gallery('photo', false);
           break;
         case 2:
-          response = await attachmentService.gallery('video');
+          response = await attachmentService.gallery('video', false);
           break;
       }
 
@@ -545,7 +545,7 @@ export default class CommentsStore {
   async gallery(actionSheet) {
     if (Platform.OS == 'ios') {
       try {
-        const response = await attachmentService.gallery('mixed');
+        const response = await attachmentService.gallery('mixed', false);
 
         // nothing selected
         if (!response) return;
