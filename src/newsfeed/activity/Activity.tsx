@@ -209,7 +209,7 @@ export default class Activity extends Component<PropsType, StateType> {
       );
     }
 
-    const hasText = !!entity.text;
+    const hasText = !!entity.text || !!entity.title;
     const hasMedia = entity.hasMedia();
     const hasRemind = !!entity.remind_object;
 
