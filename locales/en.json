@@ -845,7 +845,7 @@
     "preApproveMessage": "We need you to pre-approve Minds Wire wallet for the recurring wire transactions.",
     "nameReward": "{{name}}'s rewards",
     "lock": {
-      "plus": "PLUS",
+      "plus": "Minds+",
       "members": "Members Only"
     }
   },
@@ -926,7 +926,7 @@
     "title": "Monetize",
     "none": "None",
     "options": "MONETIZATION OPTIONS",
-    "plus": "Plus",
+    "plus": "Minds+",
     "memberships": "Your Memberships",
     "custom": "Custom",
     "subScreensTitle": "Last month Pro creators earned over $2,500!",
