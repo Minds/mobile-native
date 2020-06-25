@@ -383,13 +383,7 @@ export default function (props) {
         support_tier: { urn, expires },
       };
     },
-    async saveCustomMonetize(
-      usd,
-      has_usd,
-      has_tokens,
-      description = '',
-      public = false,
-    ) {
+    async saveCustomMonetize(usd, has_usd, has_tokens) {
       const supportTier = await supportTiersService.createPrivate(
         usd,
         has_usd,
