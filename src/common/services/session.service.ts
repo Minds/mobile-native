@@ -83,7 +83,9 @@ class SessionService {
         refresh_token_expires * 1000 > Date.now()
       ) {
         logService.info('[SessionService] refreshing token');
-        return await AuthService.refreshToken();
+        const token = await AuthService.refreshToken();
+        await this.loadUser(user);
+        return token;
       }
 
       // ensure user loaded before activate the session
