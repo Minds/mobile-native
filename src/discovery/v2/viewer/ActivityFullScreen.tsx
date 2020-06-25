@@ -59,13 +59,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
-  const showText = !!entity.text && !store.isEditing;
   const overlay = entity.shouldBeBlured() ? (
     <ExplicitOverlay
       entity={entity}
       closeContainerStyle={{ paddingTop: insets.top }}
     />
   ) : null;
+  const showText = (!!entity.text || !!entity.title) && !store.isEditing;
 
   const isShortText =
     !hasMedia && !hasRemind && entity.text.length < FONT_THRESHOLD;
