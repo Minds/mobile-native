@@ -43,7 +43,6 @@ export default class ActivityModel extends BaseModel {
   'comments:count': number;
   'thumbs:down:user_guids': Array<number>;
   'thumbs:up:user_guids': Array<number>;
-
   rowKey?: string;
   containerObj?: GroupModel;
   remind_object?: ActivityModel;
@@ -72,6 +71,9 @@ export default class ActivityModel extends BaseModel {
     min: number;
   } | null;
   _preview?: boolean;
+  attachments?: {
+    attachment_guid: string;
+  };
 
   /**
    * Mature visibility flag
