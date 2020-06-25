@@ -13,6 +13,7 @@ exports[`Owner component renders correctly 1`] = `
         "paddingVertical": 13,
       },
       undefined,
+      undefined,
     ]
   }
 >
@@ -34,9 +35,7 @@ exports[`Owner component renders correctly 1`] = `
       }
       style={
         Object {
-          "borderColor": "#EEE",
           "borderRadius": 20,
-          "borderWidth": 0.5,
           "height": 40,
           "width": 40,
         }
@@ -106,7 +105,8 @@ exports[`Owner component renders correctly 1`] = `
             ]
           }
         >
-          &gt; 
+          &gt;
+           
           group
         </Text>
       </preventDoubleTap(TouchableOpacity)>

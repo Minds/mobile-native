@@ -5,6 +5,7 @@ import {
   NativeStackNavigationOptions,
 } from 'react-native-screens/native-stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 
 import LoginScreen from '../auth/LoginScreen';
 import ForgotScreen from '../auth/ForgotScreen';
@@ -50,8 +51,8 @@ import {
   AuthStackParamList,
   AppStackParamList,
   MainSwiperParamList,
+  ActivityFullScreenParamList,
 } from './NavigationTypes';
-import featuresService from '../common/services/features.service';
 import EditChannelStack from '../channel/v2/edit/EditChannelStack';
 import ReceiverAddressScreen from '../wallet/v2/address/ReceiverAddressScreen';
 import LearnMoreScreen from '../wallet/v2/LearnMoreScreen';
@@ -75,6 +76,30 @@ const AppStackNav = createNativeStackNavigator<AppStackParamList>();
 const AuthStackNav = createNativeStackNavigator<AuthStackParamList>();
 const RootStackNav = createNativeStackNavigator<RootStackParamList>();
 const MainSwiper = createMaterialTopTabNavigator<MainSwiperParamList>();
+
+const FullScreenPostStackNav = createSharedElementStackNavigator<
+  ActivityFullScreenParamList
+>();
+
+const FullScreenPostStack = () => (
+  <FullScreenPostStackNav.Navigator>
+    <FullScreenPostStackNav.Screen
+      name="ActivityFullScreen"
+      component={ViewerScreen}
+      options={{ stackAnimation: 'none', ...hideHeader, title: '' }}
+    />
+    <FullScreenPostStackNav.Screen
+      name="ViewImage"
+      component={ViewImageScreen}
+      options={({ route }: { route: any }) => ({
+        title: route.params.entity.ownerObj.name,
+        headerStyle: {
+          backgroundColor: '#000',
+        },
+      })}
+    />
+  </FullScreenPostStackNav.Navigator>
+);
 
 // Main navigation swiper
 const MainSwiperScreen = () => {
@@ -113,8 +138,8 @@ const AppStack = function () {
         options={hideHeader}
       />
       <AppStackNav.Screen
-        name="ActivityFullScreen"
-        component={ViewerScreen}
+        name="ActivityFullScreenNav"
+        component={FullScreenPostStack}
         options={{ stackAnimation: 'none', ...hideHeader }}
       />
       <AppStackNav.Screen

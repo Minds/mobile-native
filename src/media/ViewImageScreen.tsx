@@ -57,6 +57,7 @@ export default class ViewImageScreen extends Component {
         ]}>
         <ImageViewer
           source={source}
+          urn={this.props.route.params.entity.urn}
           width={this.state.width}
           height={this.state.height}
         />
@@ -65,14 +66,8 @@ export default class ViewImageScreen extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: '#000',
-    paddingTop: Platform.OS == 'ios' ? 14 : 8,
-  },
-  iconclose: {
-    alignSelf: 'flex-end',
-    padding: Platform.OS == 'ios' ? 10 : 8,
-    color: '#FFF',
-  },
-});
+const sharedElements: SharedElementsComponentConfig = (route) => {
+  const item = route.params.entity;
+  return [{ id: `${item.urn}.image` }];
+};
+ViewImageScreen.sharedElements = sharedElements;

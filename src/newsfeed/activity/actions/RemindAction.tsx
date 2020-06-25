@@ -26,9 +26,7 @@ type PropsTypes = {
  */
 export default function ({ entity, size = 21, vertical = false }: PropsTypes) {
   const color = entity.can(FLAG_REMIND)
-    ? entity.reminds > 0
-      ? ThemedStyles.style.colorIconActive
-      : ThemedStyles.style.colorIcon
+    ? ThemedStyles.style.colorIcon
     : CS.colorLightGreyed;
 
   const route = useRoute();
