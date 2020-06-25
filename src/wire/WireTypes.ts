@@ -21,6 +21,15 @@ export type SupportTiersType = {
   amount: string;
   description: string;
   urn: string;
+  expires: number;
+  entity_guid: string;
+  guid: string;
+  public: boolean;
+  name: string;
+  usd: string;
+  has_usd: boolean;
+  has_tokens: boolean;
+  tokens: string;
 };
 
 export interface SupportTiersResponse extends ApiResponse {
