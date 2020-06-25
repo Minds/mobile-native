@@ -70,17 +70,6 @@ class WireService {
     });
   }
 
-  async getSupportTiers(guid: string): Promise<SupportTiersType[]> {
-    const response: SupportTiersResponse = await api.get(
-      `api/v3/wire/supporttiers/all/${guid}`,
-    );
-    if (response.status === 'success') {
-      return response.support_tiers;
-    } else {
-      return [];
-    }
-  }
-
   /**
    * Send wire
    * @param {object} opts

@@ -11,6 +11,7 @@ import { getSingle } from '../newsfeed/NewsfeedService';
 import ThemedStyles from '../styles/ThemedStyles';
 import featuresService from '../common/services/features.service';
 import mindsService from '../common/services/minds.service';
+import supportTiersService from '../common/services/support-tiers.service';
 
 /**
  * Display an error message to the user.
@@ -389,17 +390,15 @@ export default function (props) {
       description = '',
       public = false,
     ) {
-      const response = await api.post('api/v3/wire/supporttiers', {
+      const supportTier = await supportTiersService.createPrivate(
         usd,
-        description,
         has_usd,
         has_tokens,
-        public,
-      });
+      );
       this.wire_threshold = {
         support_tier: {
-          urn: response.support_tier.urn,
-          expires: null,
+          urn: supportTier.urn,
+          expires: supportTier.expires,
         },
       };
     },
