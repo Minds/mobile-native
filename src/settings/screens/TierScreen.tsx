@@ -8,6 +8,7 @@ import i18n from '../../common/services/i18n.service';
 import { useLegacyStores } from '../../common/hooks/use-stores';
 import SaveButton from '../../common/components/SaveButton';
 import apiService from '../../common/services/api.service';
+import supportTiersService from '../../common/services/support-tiers.service';
 
 type PropsType = {
   route: any;
@@ -31,12 +32,13 @@ const createTierStore = () => {
       this.saving = saving;
     },
     async saveTier(type: PaymentType) {
-      await apiService.post('api/v3/wire/supporttiers', {
-        usd: this.payment,
-        description: this.description,
-        has_usd: type === 'usd',
-        has_tokens: type === 'tokens',
-      });
+      await supportTiersService.createPublic(
+        '',
+        this.payment,
+        this.description,
+        type === 'usd',
+        type === 'tokens',
+      );
     },
   };
   return store;

@@ -15,6 +15,7 @@ import TierManagementScreen from '../../settings/screens/TierManagementScreen';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import supportTiersService from '../../common/services/support-tiers.service';
 
 type MembershipMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -43,7 +44,8 @@ const createMembershipMonetizeStore = () => {
       this.loaded = true;
     },
     async getSupportTiers(guid: string) {
-      this.supportTiers = await WireService.getSupportTiers(guid);
+      this.supportTiers =
+        (await supportTiersService.getAllFromGuid(guid)) || [];
     },
   };
   return store;
