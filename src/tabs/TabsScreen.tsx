@@ -17,6 +17,7 @@ import isIphoneX from '../common/helpers/isIphoneX';
 import MenuStack from '../settings/SettingsNavigation';
 import { DiscoveryV2Screen } from '../discovery/v2/DiscoveryV2Screen';
 import { useLegacyStores } from '../common/hooks/use-stores';
+import ComposeIcon from '../compose/ComposeIcon';
 
 export type TabParamList = {
   Newsfeed: {};
@@ -33,6 +34,7 @@ const Tab = createBottomTabNavigator<TabParamList>();
  * @param {Object} props
  */
 const Tabs = observer(function ({ navigation }) {
+  const theme = ThemedStyles.style;
   const { user } = useLegacyStores();
   const isIOS = Platform.OS === 'ios';
 
@@ -65,8 +67,8 @@ const Tabs = observer(function ({ navigation }) {
           backgroundColor: ThemedStyles.getColor('secondary_background'),
           height,
           paddingTop: isIOS && isIphoneX ? 30 : 2,
-          paddingLeft: isIphoneX ? 20 : 0,
-          paddingRight: isIphoneX ? 20 : 0,
+          paddingLeft: isIphoneX ? 20 : 15,
+          paddingRight: isIphoneX ? 20 : 15,
         },
         tabStyle: {
           height,
@@ -111,9 +113,7 @@ const Tabs = observer(function ({ navigation }) {
             case 'Notifications':
               return <NotificationIcon tintColor={color} size={iconsize} />;
             case 'CaptureTab':
-              iconName = 'plus';
-              iconsize = 64;
-              break;
+              return <ComposeIcon style={styles.compose} />;
           }
 
           if (Platform.isPad) {
@@ -163,6 +163,10 @@ const Tabs = observer(function ({ navigation }) {
 });
 
 const styles = {
+  compose: {
+    width: 48,
+    height: 46,
+  },
   activity: {
     zIndex: 9990,
     top: -5,
