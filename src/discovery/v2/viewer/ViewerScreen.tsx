@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ActivityFullScreenParamList } from '../../../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/native';
 import { useLocalStore, observer } from 'mobx-react';
@@ -38,8 +38,22 @@ const ViewerScreen = observer((props: PropsType) => {
       }
 
       store.index = v;
+
+      // report viewed with metadata
+      feedStore.addViewed(feedStore.entities[store.index]);
     },
   }));
+
+  useEffect(() => {
+    feedStore.viewed.clearViewed();
+    feedStore.metadataService?.pushSource('single');
+    // report initial as viewed with metadata
+    feedStore.addViewed(feedStore.entities[store.index]);
+    return () => {
+      feedStore.viewed.clearViewed();
+      feedStore.metadataService?.popSource();
+    };
+  }, [feedStore, store]);
 
   const { width, height } = useDimensions().window;
   const translationX = width * 0.13;
