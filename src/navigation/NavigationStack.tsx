@@ -73,6 +73,7 @@ import MembershipMonetizeScreeen from '../compose/monetize/MembershipMonetizeScr
 import CustomMonetizeScreen from '../compose/monetize/CustomMonetizeScreeen';
 import TierScreen from '../settings/screens/TierScreen';
 import PlusScreen from '../common/components/PlusScreen';
+import PlusDiscoveryScreen from '../discovery/v2/PlusDiscoveryScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -368,6 +369,11 @@ const AppStack = function () {
           },
           headerHideShadow: true,
         }}
+      />
+      <AppStackNav.Screen
+        name="PlusDiscoveryScreen"
+        component={PlusDiscoveryScreen}
+        options={hideHeader}
       />
     </AppStackNav.Navigator>
   );

@@ -113,6 +113,7 @@ export type AppStackParamList = {
   };
   TierScreen: {};
   PlusScreen: {};
+  PlusDiscoveryScreen: {};
 };
 
 // types for channel edit screens
