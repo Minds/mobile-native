@@ -35,7 +35,7 @@ class ShareService {
       } catch (err) {
         console.log(err);
       }
-    }, 600);
+    }, 10);
   }
 }
 

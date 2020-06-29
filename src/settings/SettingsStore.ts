@@ -11,10 +11,12 @@ import ThemedStyles from '../styles/ThemedStyles';
 class SettingsStore {
   @observable appLog = true;
   @observable leftHanded = null;
+  @observable ignoreBestLanguage = '';
 
   consumerNsfw = [];
   creatorNsfw = [];
   useHashtag = true;
+  composerMode = 'photo';
 
   /**
    * Initializes local variables with their correct values as stored locally.
@@ -29,6 +31,8 @@ class SettingsStore {
       'ConsumerNsfw',
       'UseHashtags',
       'Theme',
+      'IgnoreBestLanguage',
+      'ComposerMode',
     ]);
 
     // store theme changes
@@ -46,6 +50,8 @@ class SettingsStore {
     this.creatorNsfw = data[2][1] || [];
     this.consumerNsfw = data[3][1] || [];
     this.useHashtags = data[4][1] === null ? true : data[4][1];
+    this.ignoreBestLanguage = data[6][1] || '';
+    this.composerMode = data[7][1] || 'photo';
 
     // set the initial value for hashtag
     getStores().hashtag.setAll(!this.useHashtags);
@@ -57,11 +63,28 @@ class SettingsStore {
   }
 
   /**
+   * Set ignore best language
+   * @param value string
+   */
+  @action
+  setIgnoreBestLanguage(value: string) {
+    this.ignoreBestLanguage = value;
+    storageService.setItem('IgnoreBestLanguage', value);
+  }
+
+  /**
    * Set the theme in the stored values
    * @param {numeric} value
    */
   setTheme(value) {
     storageService.setItem('Theme', value);
+  }
+  /**
+   * Set composer mode
+   * @param {string} value
+   */
+  setComposerMode(value: string) {
+    storageService.setItem('ComposerMode', value);
   }
 
   /**

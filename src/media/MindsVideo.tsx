@@ -293,7 +293,10 @@ class MindsVideo extends Component<PropsType, StateType> {
 
     if (!this.state.sources && this.props.entity) {
       const response: any = await attachmentService.getVideoSources(
-        this.props.entity.entity_guid || this.props.entity.guid,
+        this.props.entity.attachments &&
+          this.props.entity.attachments.attachment_guid
+          ? this.props.entity.attachments.attachment_guid
+          : this.props.entity.entity_guid || this.props.entity.guid,
       );
 
       state.sources = response.sources.filter((v) => v.type === 'video/mp4');
@@ -304,6 +307,8 @@ class MindsVideo extends Component<PropsType, StateType> {
           headers: apiService.buildHeaders(),
         };
       }
+    } else {
+      console.log('NO SOURCES!');
     }
 
     this.setState(state);

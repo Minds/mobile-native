@@ -100,18 +100,5 @@ exports[`Owner component renders correctly 1`] = `
       </preventDoubleTap(TouchableOpacity)>
     </View>
   </View>
-  <Text
-    style={
-      Array [
-        undefined,
-        undefined,
-        undefined,
-      ]
-    }
-  >
-    0
-     
-    views
-  </Text>
 </View>
 `;

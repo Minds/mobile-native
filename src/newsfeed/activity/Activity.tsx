@@ -149,8 +149,11 @@ export default class Activity extends Component<PropsType, StateType> {
       );
     }
 
-    const hasText = !!entity.text;
-    const lock = <Lock entity={entity} navigation={this.props.navigation} />;
+    const hasText = !!entity.text || !!entity.title;
+    const lock =
+      entity.paywall && entity.paywall === '1' ? (
+        <Lock entity={entity} navigation={this.props.navigation} />
+      ) : null;
 
     const message = this.state.editing ? (
       //Passing the store in newsfeed (could be channel also)
