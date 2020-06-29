@@ -32,7 +32,7 @@ export default class UserModel extends BaseModel {
   briefdescription!: string;
   city!: string;
   name!: string;
-  admin = false;
+  is_admin = false;
   plus: boolean = false;
   verified: boolean = false;
   founder: boolean = false;
@@ -161,7 +161,7 @@ export default class UserModel extends BaseModel {
    * Is admin
    */
   isAdmin() {
-    return this.admin;
+    return this.is_admin;
   }
 
   /**
