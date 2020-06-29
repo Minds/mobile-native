@@ -59,7 +59,7 @@ const PlusMonetizeScreen = observer(({ route }: PropsType) => {
       <Wrapper store={store} hideDone={true} onPressRight={save}>
         <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
           <Text style={[styles.title, theme.colorPrimaryText]}>
-            {i18n.t('monetize.plusMonetize.title')}
+            {i18n.t('monetize.subScreensTitle')}
           </Text>
           <Text
             style={[

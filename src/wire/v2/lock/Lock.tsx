@@ -30,10 +30,10 @@ const getTextForBlocked = (type: BlockType) => {
       message = 'Become a member to view this post';
       break;
     case 'plus':
-      message = 'Join Plus to view this post';
+      message = 'Join Minds+ to view this post';
       break;
     case 'paywall':
-      message = 'Pay too see this post';
+      message = 'Pay 1 Token see this post';
       break;
   }
   return message;
@@ -41,10 +41,10 @@ const getTextForBlocked = (type: BlockType) => {
 
 const Lock = observer(({ entity, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
-  const hasMedia = entity.hasMedia();
+  const hasMedia = entity.hasThumbnails();
   // we don´t know yet what the data structure be like
-  const blockedType = getBlockType(entity.wire_threshold);
-  const message = getTextForBlocked(blockedType);
+  //const blockedType = getBlockType(entity.wire_threshold);
+  const message = getTextForBlocked('members');
   if (!hasMedia) {
     return (
       <View
@@ -55,7 +55,7 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
           theme.padding2x,
         ]}>
         <Text style={[theme.colorWhite, theme.fontL]}>{message}</Text>
-        <LockTag type={blockedType} />
+        <LockTag type={'members'} />
       </View>
     );
   }
@@ -63,9 +63,10 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
   return (
     <ImageBackground
       style={[styles.backgroundImage, styles.mask]}
-      source={entity.getThumbSource('small')}
+      source={entity.getThumbSource('large')}
       resizeMode="cover">
       <Text style={[theme.colorWhite, theme.fontL]}>{message}</Text>
+      <LockTag type={'members'} />
     </ImageBackground>
   );
 });
