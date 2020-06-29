@@ -5,6 +5,9 @@ import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LockTag from './LockTag';
+import Colors from '../../../styles/Colors';
+import Touchable from '../../../common/components/Touchable';
+import WireService from '../../WireService';
 
 type PropsType = {
   entity: ActivityModel;
@@ -41,11 +44,11 @@ const getTextForBlocked = (type: BlockType) => {
 
 const Lock = observer(({ entity, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
-  const hasMedia = entity.hasThumbnails();
   // we don´t know yet what the data structure be like
   //const blockedType = getBlockType(entity.wire_threshold);
   const message = getTextForBlocked('members');
-  if (!hasMedia) {
+
+  if (!entity.hasThumbnails() && !entity.hasMedia()) {
     return (
       <View
         style={[
@@ -60,6 +63,15 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
     );
   }
 
+  const playButton = entity.hasMedia() ? (
+    <Icon
+      style={styles.videoIcon}
+      name="play-circle-outline"
+      size={86}
+      color={Colors.light}
+    />
+  ) : null;
+
   return (
     <ImageBackground
       style={[styles.backgroundImage, styles.mask]}
@@ -67,6 +79,7 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
       resizeMode="cover">
       <Text style={[theme.colorWhite, theme.fontL]}>{message}</Text>
       <LockTag type={'members'} />
+      {playButton}
     </ImageBackground>
   );
 });
@@ -84,6 +97,14 @@ const styles = StyleSheet.create({
   backgroundImage: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  videoIcon: {
+    position: 'relative',
+    alignSelf: 'center',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
   },
 });
 
