@@ -386,7 +386,7 @@ export default function (props) {
         false,
       );
     },
-    async saveMembsershipMonetize(urn: string, expires: number = null) {
+    async saveMembsershipMonetize(urn, expires = null) {
       this.wire_threshold = {
         support_tier: { urn, expires },
       };
@@ -404,7 +404,7 @@ export default function (props) {
         },
       };
     },
-    async savePlusMonetize(expires: number) {
+    async savePlusMonetize(expires) {
       this.wire_threshold = {
         support_tier: {
           urn: (await mindsService.getSettings()).plus.support_tier_urn,

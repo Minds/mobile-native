@@ -10,7 +10,7 @@ type PropsType = {
   children: React.ReactNode;
   hideDone?: boolean;
   doneText?: string;
-  onPressRight: Function;
+  onPressRight?: Function;
 };
 
 const Wrapper = ({
@@ -25,7 +25,7 @@ const Wrapper = ({
     hideDone === true ? null : doneText ? doneText : i18n.t('done');
 
   const onPressRightCallBack = useCallback(() => {
-    onPressRight();
+    onPressRight && onPressRight();
     NavigationService.goBack();
   }, [onPressRight]);
 
