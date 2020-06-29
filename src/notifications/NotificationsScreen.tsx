@@ -156,8 +156,9 @@ class NotificationsScreen extends Component {
   /**
    * Clear and reload
    */
-  refresh = () => {
-    this.props.notifications.refresh();
+  refresh = async () => {
+    await this.props.notifications.refresh();
+    this.props.notifications.setUnread(0);
   };
 
   /**
