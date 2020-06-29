@@ -85,6 +85,7 @@ class SettingsStore {
    */
   setComposerMode(value: string) {
     storageService.setItem('ComposerMode', value);
+    this.composerMode = value;
   }
 
   /**
