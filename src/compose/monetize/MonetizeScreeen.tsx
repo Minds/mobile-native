@@ -80,7 +80,7 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
           icon: !isActive ? checkIcon : undefined,
           noIcon: isActive,
         }}
-        backgroundPrimary={true}
+        containerItemStyle={theme.backgroundPrimary}
         testID="monetizeNone"
       />
       <View style={theme.marginTop4x}>
@@ -92,7 +92,7 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
               <ItemText title={i18n.t('monetize.plus')} isActive={isActive} />
             ),
           }}
-          backgroundPrimary={true}
+          containerItemStyle={theme.backgroundPrimary}
           testID="monetizePlus"
         />
         <MenuItem
@@ -105,7 +105,7 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
               />
             ),
           }}
-          backgroundPrimary={true}
+          containerItemStyle={theme.backgroundPrimary}
           testID="monetizeMemberships"
         />
         <MenuItem
@@ -115,7 +115,7 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
               <ItemText title={i18n.t('monetize.custom')} isActive={isActive} />
             ),
           }}
-          backgroundPrimary={true}
+          containerItemStyle={theme.backgroundPrimary}
           testID="monetizeCustom"
         />
       </View>

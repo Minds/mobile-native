@@ -17,6 +17,7 @@ import MindsService from '../../common/services/minds.service';
 import CenteredLoading from './CenteredLoading';
 import MenuItem from './menus/MenuItem';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Colors from '../../styles/Colors';
 
 const bannerAspectRatio = 1.7;
 
@@ -138,10 +139,10 @@ const PlusScreen = observer(() => {
         <Switch
           value={localStore.method === 'tokens'}
           onSyncPress={localStore.setMethod}
-          circleColorActive="#f6f7f5"
-          circleColorInactive="#f6f7f5"
-          backgroundActive="#3484f5"
-          backgroundInactive="#3484f5"
+          circleColorActive={Colors.switchCircle}
+          circleColorInactive={Colors.switchCircle}
+          backgroundActive={Colors.switchBackgroun}
+          backgroundInactive={Colors.switchBackgroun}
           style={theme.marginHorizontal2x}
         />
         <Text style={switchTextStyle}>{i18n.t('tokens')}</Text>

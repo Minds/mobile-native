@@ -14,6 +14,7 @@ import LabeledComponent from '../../common/components/LabeledComponent';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
+import Colors from '../../styles/Colors';
 
 type PlusMonetizeScreenRouteProp = RouteProp<AppStackParamList, 'PlusMonetize'>;
 type PlusMonetizeScreenNavigationProp = StackNavigationProp<
@@ -71,7 +72,7 @@ const PlusMonetizeScreen = observer(({ route }: PropsType) => {
           </Text>
           <Button
             text={i18n.t('monetize.plusMonetize.upgrade')}
-            textStyle={[styles.title]}
+            textStyle={styles.title}
             onPress={() => openUrlService.open(MINDS_PRO)}
           />
         </View>
@@ -120,10 +121,10 @@ const PlusMonetizeScreen = observer(({ route }: PropsType) => {
             <Switch
               value={localStore.exclusivity === 'always'}
               onSyncPress={localStore.setExclusivity}
-              circleColorActive="#f6f7f5"
-              circleColorInactive="#f6f7f5"
-              backgroundActive="#3484f5"
-              backgroundInactive="#3484f5"
+              circleColorActive={Colors.switchCircle}
+              circleColorInactive={Colors.switchCircle}
+              backgroundActive={Colors.switchBackgroun}
+              backgroundInactive={Colors.switchBackgroun}
               style={theme.marginHorizontal2x}
             />
             <Text style={switchTextStyle}>

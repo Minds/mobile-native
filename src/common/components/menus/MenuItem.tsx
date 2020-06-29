@@ -16,26 +16,27 @@ export type MenuItemPropsType = {
     noIcon?: boolean;
   };
   component?: any;
-  backgroundPrimary?: boolean;
+  containerItemStyle?: any;
   testID?: string;
 };
 
 export default function ({
   item,
   component,
-  backgroundPrimary,
+  containerItemStyle,
   testID,
 }: MenuItemPropsType) {
   const theme = ThemedStyles.style;
 
   // ListItem Container Style
   const containerStyle = [
-    backgroundPrimary ? theme.backgroundPrimary : theme.backgroundSecondary,
+    theme.backgroundSecondary,
     theme.borderTopHair,
     theme.borderBottomHair,
     theme.borderPrimary,
     theme.padding0x,
     theme.paddingHorizontal4x,
+    ...containerItemStyle,
   ];
 
   // ListItem Chevron Style

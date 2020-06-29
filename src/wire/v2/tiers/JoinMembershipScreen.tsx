@@ -8,6 +8,7 @@ import UserNamesComponent from '../../../common/components/UserNamesComponent';
 import LabeledComponent from '../../../common/components/LabeledComponent';
 import StripeCardSelector from '../../methods/StripeCardSelector';
 import Switch from 'react-native-switch-pro';
+import Colors from '../../../styles/Colors';
 
 const tabList = [
   {
@@ -64,10 +65,10 @@ const JoinMembershipScreen = observer(({ route, navigation }) => {
           <Switch
             //value={localStore.exclusivity === 'always'}
             //onSyncPress={localStore.setExclusivity}
-            circleColorActive="#f6f7f5"
-            circleColorInactive="#f6f7f5"
-            backgroundActive="#3484f5"
-            backgroundInactive="#3484f5"
+            circleColorActive={Colors.switchCircle}
+            circleColorInactive={Colors.switchCircle}
+            backgroundActive={Colors.switchBackgroun}
+            backgroundInactive={Colors.switchBackgroun}
             style={theme.marginHorizontal2x}
           />
           <Text style={switchTextStyle}>{'Tokens'}</Text>
