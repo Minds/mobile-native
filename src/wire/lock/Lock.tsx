@@ -207,7 +207,7 @@ export default class Lock extends PureComponent<PropsType> {
    */
   getFormatedAmount(): string {
     const entity = this.props.entity;
-    if (entity.wire_threshold) {
+    if (entity.wire_threshold && entity.wire_threshold.min) {
       return currency(
         entity.wire_threshold.min,
         entity.wire_threshold.type,
