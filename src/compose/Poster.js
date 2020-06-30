@@ -195,6 +195,9 @@ export default observer(function (props) {
           testID="PostInput"
         />
         {props.store.isRemind && <RemindPreview entity={props.store.entity} />}
+        {props.store.isEdit && props.store.entity.remind_object && (
+          <RemindPreview entity={props.store.entity.remind_object} />
+        )}
         {showEmbed && (
           <MetaPreview
             meta={props.store.embed.meta}
