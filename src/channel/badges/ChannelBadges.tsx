@@ -5,6 +5,7 @@ import { View, StyleSheet, ViewStyle, TextStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import type UserModel from '../UserModel';
+import ThemedStyles from '../../styles/ThemedStyles';
 
 type PropsType = {
   channel: UserModel;
@@ -42,7 +43,11 @@ export default class ChannelBadges extends PureComponent<PropsType> {
         <Icon
           name="verified-user"
           size={size}
-          style={[styles.icon, this.props.iconStyle]}
+          style={[
+            styles.icon,
+            this.props.iconStyle,
+            channel.isAdmin() ? ThemedStyles.style.colorGreen : null,
+          ]}
           key={2}
         />,
       );
