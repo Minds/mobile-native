@@ -1,7 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { StyleSheet, View, Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableHighlight,
+  ViewStyle,
+} from 'react-native';
 
 import { observer, useLocalStore } from 'mobx-react';
 
@@ -13,6 +19,8 @@ type PropsType = {
   doneText: string;
   height: number;
   content: React.ReactNode;
+  backgroundColor?: ViewStyle;
+  contentContainerStyle?: ViewStyle;
 };
 
 /**
@@ -68,10 +76,16 @@ const BottomOptionPopup = observer((props: PropsType) => {
     }
   }, [store, props.show]);
 
+  const backgroundColor = props.backgroundColor || theme.backgroundSecondary;
+
   return (
     <>
       {store.showing && (
-        <View style={[styles.overlay, theme.backgroundSecondary]} />
+        <TouchableHighlight
+          style={[styles.overlay, theme.backgroundSecondary]}
+          onPress={store.close}>
+          <View />
+        </TouchableHighlight>
       )}
       <BottomSheet
         ref={ref}
@@ -82,7 +96,7 @@ const BottomOptionPopup = observer((props: PropsType) => {
             <View style={styles.headerContainer}>
               <View
                 style={[
-                  theme.backgroundSecondary,
+                  backgroundColor,
                   theme.rowJustifySpaceBetween,
                   theme.alignEnd,
                   styles.header,
@@ -117,7 +131,12 @@ const BottomOptionPopup = observer((props: PropsType) => {
         }
         renderContent={() =>
           store.showing ? (
-            <View style={[styles.panel, theme.backgroundSecondary]}>
+            <View
+              style={[
+                styles.panel,
+                backgroundColor,
+                props.contentContainerStyle,
+              ]}>
               {props.content}
             </View>
           ) : null

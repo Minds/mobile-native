@@ -100,7 +100,7 @@ const ViewerScreen = observer((props: PropsType) => {
   return (
     <PagerProvider activeIndex={store.index} onChange={store.setIndex}>
       <Pager
-        adjacentChildOffset={2}
+        adjacentChildOffset={1}
         maxIndex={feedStore.entities.length - 1}
         style={pagerStyle}
         pageInterpolation={stackConfig}

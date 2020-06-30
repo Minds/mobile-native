@@ -1,5 +1,11 @@
 import React, { useRef, useCallback, useMemo } from 'react';
-import { View, Text, StyleSheet, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -17,7 +23,7 @@ import Translate from '../../../common/components/Translate';
 import { useSafeArea } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
-import { useDimensions } from '@react-native-community/hooks';
+import { useDimensions, useKeyboard } from '@react-native-community/hooks';
 import { observer, useLocalStore } from 'mobx-react';
 import ActivityEditor from '../../../newsfeed/activity/ActivityEditor';
 import BottomOptionPopup, {
@@ -39,6 +45,8 @@ const TEXT_MEDIUM_THRESHOLD = 300;
 type PropsType = {
   entity: ActivityModel;
 };
+
+const isIos = Platform.OS === 'ios';
 
 const ActivityFullScreen = observer((props: PropsType) => {
   // Local store
@@ -63,7 +71,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
       return store.scrollViewHeight + 50 > store.contentHeight;
     },
   }));
-
+  const keyboard = useKeyboard();
   const route = useRoute();
   const bottomStore: BottomOptionsStoreType = useBottomOption();
   const insets = useSafeArea();
@@ -146,7 +154,9 @@ const ActivityFullScreen = observer((props: PropsType) => {
         route={route}
       />,
     );
-  }, [bottomStore, entity, navigation, route, store.comments]);
+  }, [bottomStore, entity, navigation, route]);
+
+  let buttonPopUpHeight = window.height * 0.85;
 
   return (
     <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
@@ -264,7 +274,17 @@ const ActivityFullScreen = observer((props: PropsType) => {
       </View>
       {overlay}
       <BottomOptionPopup
-        height={window.height * 0.85}
+        backgroundColor={
+          ThemedStyles.theme === 1
+            ? theme.backgroundPrimary
+            : theme.backgroundSecondary
+        }
+        contentContainerStyle={
+          keyboard.keyboardShown && !isIos
+            ? { paddingBottom: keyboard.keyboardHeight }
+            : undefined
+        }
+        height={buttonPopUpHeight}
         title={bottomStore.title}
         show={bottomStore.visible}
         onCancel={bottomStore.hide}

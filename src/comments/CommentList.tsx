@@ -369,11 +369,7 @@ class CommentList extends React.Component<PropsType, StateType> {
     return (
       <View>
         <View
-          style={[
-            theme.rowJustifyCenter,
-            theme.margin,
-            theme.backgroundSecondary,
-          ]}
+          style={[theme.rowJustifyCenter, theme.margin]}
           testID={this.props.parent ? 'CommentParentView' : ''}>
           <Image
             source={avatarImg}
@@ -683,7 +679,7 @@ class CommentList extends React.Component<PropsType, StateType> {
     const footer = this.getFooter();
 
     const emptyThread = (
-      <View style={[CS.textCenter]}>
+      <View style={CS.textCenter}>
         {this.isWholeThreadBlocked() && (
           <Text
             style={[
@@ -699,16 +695,10 @@ class CommentList extends React.Component<PropsType, StateType> {
     );
 
     return (
-      <View
-        style={[
-          CS.flexContainer,
-          ThemedStyles.style.backgroundSecondary,
-          paddingBottom,
-        ]}
-        onLayout={this.onLayout}>
+      <View style={[CS.flexContainer, paddingBottom]} onLayout={this.onLayout}>
         <KeyboardAvoidingView
-          style={[CS.flexContainer]}
-          behavior={Platform.OS == 'ios' ? 'padding' : null}
+          style={CS.flexContainer}
+          behavior={Platform.OS === 'ios' ? 'padding' : null}
           keyboardVerticalOffset={
             this.props.keyboardVerticalOffset
               ? -this.props.keyboardVerticalOffset
@@ -739,7 +729,7 @@ class CommentList extends React.Component<PropsType, StateType> {
                   <CenteredLoading />
                 )
               }
-              style={[CS.flexContainer, ThemedStyles.style.backgroundSecondary]}
+              style={theme.flexContainer}
             />
             {this.renderPoster()}
             <UserAutocomplete
