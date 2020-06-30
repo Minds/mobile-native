@@ -9,6 +9,8 @@ import type {
   Payload,
   PayloadOnchain,
   TransactionPayload,
+  SupportTiersResponse,
+  SupportTiersType,
 } from './WireTypes';
 
 /**

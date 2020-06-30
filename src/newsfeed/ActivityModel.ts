@@ -22,7 +22,7 @@ import entitiesService from '../common/services/entities.service';
 import type { ThumbSize } from '../types/Common';
 import type GroupModel from '../groups/GroupModel';
 
-type Thumbs = Record<ThumbSize, string>;
+type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
 /**
  * Activity model
@@ -119,6 +119,14 @@ export default class ActivityModel extends BaseModel {
       return true;
     }
     return false;
+  }
+
+  hasThumbnails(): boolean {
+    return Array.isArray(this.thumbnails) && this.thumbnails.length === 0
+      ? false
+      : this.thumbnails
+      ? true
+      : false;
   }
 
   toPlainObject() {

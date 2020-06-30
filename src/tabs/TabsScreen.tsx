@@ -138,7 +138,7 @@ const Tabs = observer(function ({ navigation }) {
         name="CaptureTab"
         component={View}
         options={{
-          tabBarTestID: 'Capture tab button',
+          tabBarTestID: 'CaptureTabButton',
           tabBarButton: (props) => (
             <TouchableOpacity
               {...props}

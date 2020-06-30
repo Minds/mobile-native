@@ -105,6 +105,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           "permissions": Object {},
           "pinned_posts": Array [],
           "plus": true,
+          "pro": false,
           "programs": Array [
             "affiliate",
           ],
@@ -310,6 +311,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],
@@ -491,6 +493,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],
@@ -647,6 +650,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],
@@ -804,6 +808,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],

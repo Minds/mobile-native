@@ -64,7 +64,10 @@ export default class MediaView extends Component<PropsType> {
       this.props.entity.title && this.props.entity.title.length > 200
         ? this.props.entity.title.substring(0, 200) + '...'
         : this.props.entity.title;
-    const type = this.props.entity.custom_type || this.props.entity.subtype;
+    let type = this.props.entity.custom_type || this.props.entity.subtype;
+    if (!type && this.props.entity.hasThumbnails()) {
+      type = 'image';
+    }
     switch (type) {
       case 'image':
       case 'batch':

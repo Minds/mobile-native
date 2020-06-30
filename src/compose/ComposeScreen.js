@@ -112,7 +112,8 @@ export default observer(function (props) {
                   styles.tabText,
                   store.mode === 'text' ? theme.colorIconActive : null,
                 ]}
-                onPress={store.setModeText}>
+                onPress={store.setModeText}
+                testID="CaptureTextButton">
                 {i18nService.t('capture.text').toUpperCase()}
               </Text>
             </View>

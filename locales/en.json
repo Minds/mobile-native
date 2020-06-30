@@ -529,6 +529,12 @@
     "subscriptionListEmpty": "You don't have any recurring subscription",
     "enterDark": "Enter Dark Mode",
     "enterLight": "Enter Light Mode",
+    "tokenTiers": "TOKEN TIERS",
+    "usdTiers": "USD TIERS",
+    "addTier": "Add Tier",
+    "noUsdTier": "No USD Tier",
+    "noTokenTier": "No Tokens Tier",
+    "payment": "Payment",
     "reportedContent": {
       "action": {
         "actionNSFW": "marked NSFW",
@@ -748,7 +754,12 @@
     "confirmMessage": "You will send {{amount}} to @{{name}}",
     "errorSendingWire": "There was a problem sending wire",
     "selectWalletMessage": "Select the wallet you would like to use for this Wire.",
-    "preApproveMessage": "We need you to pre-approve Minds Wire wallet for the recurring wire transactions."
+    "preApproveMessage": "We need you to pre-approve Minds Wire wallet for the recurring wire transactions.",
+    "nameReward": "{{name}}'s rewards",
+    "lock": {
+      "plus": "Minds+",
+      "members": "Members Only"
+    }
   },
   "validation": {
     "email": "Invalid email",
@@ -800,8 +811,38 @@
     "emptySuggested": "We couldn't find what you look for",
     "clear": "Clear"
   },
+  "monetize": {
+    "title": "Monetize",
+    "none": "None",
+    "options": "MONETIZATION OPTIONS",
+    "plus": "Minds+",
+    "memberships": "Your Memberships",
+    "custom": "Custom",
+    "subScreensTitle": "Last month Pro creators earned over $2,500!",
+    "plusMonetize": {
+      "notPro": "You’ll need to upgrade to Minds Pro in order to submit your post to the Minds Plus content pool. You will earn revenue based on the performance of the content.",
+      "upgrade": "Upgrade to Minds Pro",
+      "submit": "Submit this post to the Minds Plus pool and earn potential revenue.",
+      "agree": "I agree to the T&C’s",
+      "exclusivity": "Exclusivity Period",
+      "hrs": "48 hrs",
+      "always": "Always"
+    },
+    "membershipMonetize": {
+      "description": "Makes this post available exclusivley to one of your membership tiers.",
+      "noTiers": "You don’t have any Membership Tiers",
+      "tiersDescription": "Setting up your tiers is quick and easy. Start earning extra revenue for your content today.",
+      "setup": "Setup membersip tiers",
+      "label": "MEMBERSHIP TIERS",
+      "manage": "Manage"
+    },
+    "customMonetize": {
+      "usd": "Contributiuon in USD (will be converted to tokens if necesary)",
+      "hasUsd": "Accept USD",
+      "hasTokens": "Accept Tokens"
+    }
+  },
   "add":"Add",
-  "monetize": "Monetize",
   "downloading": "Downloading",
   "confirm18": "Confirm you are 18+",
   "postCantBeShown": "This post can't be shown on apps installed via the Play Store.",

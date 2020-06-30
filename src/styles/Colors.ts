@@ -12,6 +12,8 @@ export default colors = {
   darkGreyed: '#777777',
   explicit: '#f44336',
   action: 'rgb(96, 125, 139)',
+  switchCircle: '#f6f7f5',
+  switchBackgroun: '#3484f5',
 };
 
 export const LIGHT_THEME = {

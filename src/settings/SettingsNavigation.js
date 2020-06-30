@@ -26,6 +26,7 @@ import OptionsDrawer from '../common/components/OptionsDrawer';
 import { Platform } from 'react-native';
 import WalletScreen from '../wallet/v2/WalletScreen';
 import featuresService from '../common/services/features.service';
+import TierManagementScreen from './screens/TierManagementScreen';
 
 const MenuStackNav = createNativeStackNavigator();
 
@@ -154,6 +155,12 @@ const MenuStack = function ({ navigation, route }) {
         name="BlockedChannels"
         component={BlockedChannelsScreen}
         options={{ title: i18n.t('settings.blockedChannels') }}
+      />
+      <MenuStackNav.Screen
+        name="TierManagementScreen"
+        component={TierManagementScreen}
+        options={{ title: i18n.t('settings.otherOptions.b1') }}
+        initialParams={{ useForSelection: false }}
       />
       <MenuStackNav.Screen
         name="DeleteChannel"
