@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
 
 import {
@@ -31,6 +31,10 @@ import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../../common/stores/FeedStore';
 import featuresService from '../../common/services/features.service';
+import sessionService from '../../common/services/session.service';
+import NavigationService from '../../navigation/NavigationService';
+
+const FONT_THRESHOLD = 300;
 
 type PropsType = {
   entity: ActivityModel;
@@ -55,6 +59,14 @@ type StateType = {
 @observer
 export default class Activity extends Component<PropsType, StateType> {
   /**
+   * Disposer for autoplay reaction
+   */
+  autoPlayDispose: any;
+  /**
+   * Disposer for autoplay timeout
+   */
+  autoplayVideoTimeout: any;
+  /**
    * Translate reference
    */
   translate: Translate | null = null;
@@ -75,6 +87,7 @@ export default class Activity extends Component<PropsType, StateType> {
   state = {
     editing: false,
   } as StateType;
+
   /**
    * Nav to activity full screen
    */
@@ -99,7 +112,10 @@ export default class Activity extends Component<PropsType, StateType> {
       );
       navOpts.feed = this.props.entity.__list;
       navOpts.current = index;
-      this.props.navigation.push('ActivityFullScreen', navOpts);
+      this.props.navigation.push('ActivityFullScreenNav', {
+        screen: 'ActivityFullScreen',
+        params: navOpts,
+      });
       return;
     }
 
@@ -140,9 +156,53 @@ export default class Activity extends Component<PropsType, StateType> {
   };
 
   /**
+   * On did mount
+   */
+  componentDidMount() {
+    this.autoPlayDispose = reaction(
+      () => this.props.entity.is_visible,
+      (visible) => {
+        const type = this.props.entity.custom_type || this.props.entity.subtype;
+        if (type === 'video') {
+          if (visible) {
+            const user = sessionService.getUser();
+            if (user.plus && !user.disable_autoplay_videos) {
+              const state = NavigationService.getCurrentState();
+              // sound only for ActivityScreen (Full screen)
+              const sound = state.name === 'Activity';
+              this.autoplayVideoTimeout = setTimeout(() => {
+                if (this.props.entity.is_visible) {
+                  this.playVideo(sound);
+                }
+              }, 300);
+            }
+          } else {
+            // no longer visible we pause it
+            this.pauseVideo();
+          }
+        }
+      },
+      { fireImmediately: true },
+    );
+  }
+
+  /**
+   * On unmount
+   */
+  componentWillUnmount() {
+    if (this.autoPlayDispose) {
+      this.autoPlayDispose();
+    }
+    if (this.autoplayVideoTimeout) {
+      clearTimeout(this.autoplayVideoTimeout);
+    }
+  }
+
+  /**
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     const entity = ActivityModel.checkOrCreate(this.props.entity);
 
     if (blockListService.blocked.has(entity.ownerObj.guid)) {
@@ -152,6 +212,17 @@ export default class Activity extends Component<PropsType, StateType> {
     }
 
     const hasText = !!entity.text || !!entity.title;
+    
+    const hasMedia = entity.hasMedia();
+    const hasRemind = !!entity.remind_object;
+
+    const isShortText =
+      !hasMedia && !hasRemind && entity.text.length < FONT_THRESHOLD;
+
+    const fontStyle = isShortText
+      ? [theme.fontXL, theme.fontMedium]
+      : theme.fontL;
+
     let lock;
 
     if (featuresService.has('plus-2020')) {
@@ -175,7 +246,7 @@ export default class Activity extends Component<PropsType, StateType> {
           <ExplicitText
             entity={entity}
             navigation={this.props.navigation}
-            style={styles.message}
+            style={[styles.message, fontStyle]}
           />
         ) : null}
         {hasText ? (
@@ -198,17 +269,13 @@ export default class Activity extends Component<PropsType, StateType> {
 
     const borderBottom = this.props.isReminded
       ? []
-      : [ThemedStyles.style.borderBottomHair, ThemedStyles.style.borderPrimary];
+      : [theme.borderBottom8x, theme.borderBackgroundPrimary];
 
     return (
       <TouchableOpacity
         delayPressIn={60}
         activeOpacity={0.8}
-        style={[
-          styles.container,
-          ...borderBottom,
-          ThemedStyles.style.backgroundSecondary,
-        ]}
+        style={[styles.container, ...borderBottom, theme.backgroundSecondary]}
         onPress={this.navToActivity}
         onLayout={this.onLayout}
         testID="ActivityView">
@@ -306,6 +373,13 @@ export default class Activity extends Component<PropsType, StateType> {
     this.mediaView?.pauseVideo();
   }
 
+  /**
+   * Play video if exist
+   */
+  playVideo(sound = true) {
+    this.mediaView?.playVideo(sound);
+  }
+
   toggleEdit = (value) => {
     this.setState({ editing: value });
   };
@@ -349,7 +423,7 @@ export default class Activity extends Component<PropsType, StateType> {
             style={[
               styles.timestamp,
               CommonStyle.paddingRight,
-              ThemedStyles.style.colorSecondaryText,
+              ThemedStyles.style.colorTertiaryText,
             ]}>
             {formatDate(this.props.entity.time_created, 'friendly')}
           </Text>
@@ -375,6 +449,7 @@ export default class Activity extends Component<PropsType, StateType> {
    */
   showRemind() {
     const remind_object = this.props.entity.remind_object;
+    const theme = ThemedStyles.style;
 
     if (remind_object) {
       if (blockListService.has(remind_object.owner_guid)) {
@@ -382,11 +457,11 @@ export default class Activity extends Component<PropsType, StateType> {
           <View
             style={[
               styles.blockedNoticeView,
-              CommonStyle.margin2x,
-              CommonStyle.borderRadius2x,
-              CommonStyle.padding2x,
+              theme.margin2x,
+              theme.borderRadius2x,
+              theme.padding2x,
             ]}>
-            <Text style={[CommonStyle.textCenter, styles.blockedNoticeDesc]}>
+            <Text style={[theme.textCenter, styles.blockedNoticeDesc]}>
               {i18n.t('activity.remindBlocked')}
               <Text
                 onPress={() => this.navToRemindChannel()}
@@ -403,9 +478,9 @@ export default class Activity extends Component<PropsType, StateType> {
         <View
           style={[
             styles.remind,
-            ThemedStyles.style.margin2x,
-            ThemedStyles.style.borderHair,
-            ThemedStyles.style.borderBackgroundPrimary,
+            theme.margin2x,
+            theme.borderHair,
+            theme.borderPrimary,
           ]}>
           <Activity
             ref={(r) => (this.remind = r)}
@@ -444,8 +519,8 @@ const styles = StyleSheet.create({
     minHeight: 250,
   },
   messageContainer: {
-    padding: 10,
-    paddingTop: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 15,
   },
   message: {
     fontFamily: 'Roboto',
@@ -465,12 +540,11 @@ const styles = StyleSheet.create({
   remind: {
     shadowColor: '#000',
     shadowOffset: {
-      width: 2,
-      height: 2,
+      width: 1,
+      height: 1,
     },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
-
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
     elevation: 5,
   },
   boostTagContainer: {

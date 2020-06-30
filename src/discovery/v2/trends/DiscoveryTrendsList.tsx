@@ -5,6 +5,7 @@ import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 import { ComponentsStyle } from '../../../styles/Components';
 import { useDiscoveryV2Store } from '../DiscoveryV2Context';
 import ThemedStyles from '../../../styles/ThemedStyles';
+import i18n from '../../../common/services/i18n.service';
 
 /**
  * Discovery List Item
@@ -32,7 +33,7 @@ export const DiscoveryTrendsList = observer(() => {
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
             <Text style={ComponentsStyle.emptyComponentMessage}>
-              Nothing to see here...
+              {i18n.t('discovery.nothingToSee')}
             </Text>
           </View>
         </View>

@@ -1,5 +1,5 @@
 import deleteUser from './helpers/deleteUser';
-import sleep from '../src/common/helpers/sleep';
+import delay from '../src/common/helpers/delay';
 
 describe.skip('Register Flow With Feature flags', () => {
   const username = 'e2euser' + ((Math.random() * 0xffffff) << 0).toString(16);
@@ -90,7 +90,7 @@ describe.skip('Register Flow With Feature flags', () => {
       // tap the select avatar button
       //await element(by.id('selectAvatar')).tap();
 
-      //await sleep(3000);
+      //await delay(3000);
 
       // move to next step
       await element(by.id('wizardNext')).tap();

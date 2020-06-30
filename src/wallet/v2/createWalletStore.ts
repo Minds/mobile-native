@@ -1,3 +1,5 @@
+import { runInAction } from 'mobx';
+
 import type { CurrencyType } from '../../types/Payment';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
@@ -8,7 +10,6 @@ import type { StripeDetails, Wallet, TokensOptions } from './WalletTypes';
 import BlockchainWalletService from '../../blockchain/wallet/BlockchainWalletService';
 import { UserError } from '../../common/UserError';
 import i18n from '../../common/services/i18n.service';
-import { runInAction } from 'mobx';
 import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
 import sessionService from '../../common/services/session.service';
@@ -42,43 +43,43 @@ const createWalletStore = () => ({
   wallet: <Wallet>{
     loaded: false,
     tokens: {
-      label: 'Tokens',
+      label: i18n.t('tokens'),
       unit: 'tokens',
       balance: 0,
       address: null,
     },
     offchain: {
-      label: 'Off-chain',
+      label: i18n.t('blockchain.offchain'),
       unit: 'tokens',
       balance: 0,
       address: 'offchain',
     },
     onchain: {
-      label: 'On-chain',
+      label: i18n.t('blockchain.onchain'),
       unit: 'tokens',
       balance: 0, //eth balance
       address: null,
     },
     receiver: {
-      label: 'Receiver',
+      label: i18n.t('blockchain.receiver'),
       unit: 'tokens',
       balance: 0,
       address: null,
     },
     cash: {
-      label: 'Cash',
+      label: i18n.t('wallet.cash'),
       unit: 'cash',
       balance: 0,
       address: null,
     },
     eth: {
-      label: 'Ether',
+      label: i18n.t('ether'),
       unit: 'eth',
       balance: 0,
       address: null,
     },
     btc: {
-      label: 'Bitcoin',
+      label: i18n.t('bitcoin'),
       unit: 'btc',
       balance: 0,
       address: null,

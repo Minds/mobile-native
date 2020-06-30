@@ -7,7 +7,6 @@ import { CommonStyle as CS } from '../../../styles/Common';
 
 import testID from '../../../common/helpers/testID';
 import i18n from '../../../common/services/i18n.service';
-
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/core';
 import { RouteProp } from '@react-navigation/native';
@@ -74,8 +73,8 @@ export const DiscoverySearchHeader = observer(() => {
         tabs={[
           { id: 'top', title: 'Top' },
           { id: 'latest', title: 'Latest' },
-          { id: 'channels', title: 'Channels' },
-          { id: 'groups', title: 'Groups' },
+          { id: 'channels', title: i18n.t('discovery.channels') },
+          { id: 'groups', title: i18n.t('discovery.groups') },
         ]}
       />
     </View>

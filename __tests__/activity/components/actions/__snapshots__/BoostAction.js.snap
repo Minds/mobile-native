@@ -29,8 +29,10 @@ exports[`Boost action component renders correctly 1`] = `
         Array [
           Object {
             "fontFamily": "Roboto",
-            "fontSize": 14,
+            "fontSize": 15,
             "letterSpacing": 1,
+            "lineHeight": 21,
+            "textAlignVertical": "center",
           },
           undefined,
         ]

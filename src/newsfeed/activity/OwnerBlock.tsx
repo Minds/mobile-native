@@ -1,5 +1,11 @@
 import React, { PureComponent } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
@@ -8,11 +14,14 @@ import type ActivityModel from '../ActivityModel';
 import number from '../../common/helpers/number';
 import i18nService from '../../common/services/i18n.service';
 import { Icon } from 'react-native-elements';
+import IconMa from 'react-native-vector-icons/MaterialIcons';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
 type PropsType = {
   entity: ActivityModel;
   rightToolbar?: React.ReactNode;
+  leftToolbar?: React.ReactNode;
+  containerStyle?: ViewStyle | Array<ViewStyle>;
   navigation: any;
   route?: any;
   children?: React.ReactNode;
@@ -72,7 +81,7 @@ export default class OwnerBlock extends PureComponent<PropsType> {
           style={[styles.groupName, ThemedStyles.style.colorPrimaryText]}
           lineBreakMode="tail"
           numberOfLines={1}>
-          > {this.props.entity.containerObj.name}
+          {'>'} {this.props.entity.containerObj.name}
         </Text>
       </DebouncedTouchableOpacity>
     );
@@ -92,14 +101,30 @@ export default class OwnerBlock extends PureComponent<PropsType> {
       !this.props.entity.boosted && this.props.entity.impressions > 0;
 
     return (
-      <View style={styles.container}>
+      <View
+        style={[
+          styles.container,
+          theme.borderPrimary,
+          this.props.containerStyle,
+        ]}>
+        {this.props.leftToolbar}
         <DebouncedTouchableOpacity onPress={this._navToChannel}>
           <FastImage source={avatarSrc} style={styles.avatar} />
         </DebouncedTouchableOpacity>
         <View style={styles.body}>
           <View style={styles.nameContainer}>
-            <DebouncedTouchableOpacity onPress={this._navToChannel}>
+            <DebouncedTouchableOpacity
+              onPress={this._navToChannel}
+              style={[theme.rowJustifyStart, theme.alignCenter]}>
+              {!!this.props.entity.remind_object && (
+                <IconMa
+                  name="repeat"
+                  size={16}
+                  style={[theme.colorIconActive, theme.marginRight]}
+                />
+              )}
               <Text
+                numberOfLines={1}
                 style={[styles.username, ThemedStyles.style.colorPrimaryText]}>
                 {channel.username}
               </Text>
@@ -110,7 +135,12 @@ export default class OwnerBlock extends PureComponent<PropsType> {
         </View>
         {showMetrics ? (
           <Text
-            style={[theme.marginRight2x, theme.colorTertiaryText, theme.fontM]}>
+            numberOfLines={1}
+            style={[
+              theme.marginRight2x,
+              theme.colorSecondaryText,
+              theme.fontM,
+            ]}>
             {number(this.props.entity.impressions, 0)}{' '}
             {i18nService.t('views').toLowerCase()}
           </Text>
@@ -144,16 +174,16 @@ export default class OwnerBlock extends PureComponent<PropsType> {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    padding: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 13,
     alignItems: 'center',
     flexDirection: 'row',
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   avatar: {
-    height: 52,
-    width: 52,
-    borderRadius: 26,
-    borderWidth: 0.5,
-    borderColor: '#EEE',
+    height: 40,
+    width: 40,
+    borderRadius: 20,
   },
   body: {
     marginLeft: 8,

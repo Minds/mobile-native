@@ -215,6 +215,13 @@ class MindsVideo extends Component<PropsType, StateType> {
   };
 
   /**
+   * Mute video
+   */
+  mute() {
+    this.setState({ volume: 0 });
+  }
+
+  /**
    * On progress
    */
   onProgress = (e) => {
@@ -281,11 +288,12 @@ class MindsVideo extends Component<PropsType, StateType> {
   /**
    * Play the current video and activate the player
    */
-  play = async () => {
+  play = async (sound: boolean = true) => {
     videoPlayerService.setCurrent(this);
 
     const state: any = {
       active: true,
+      volume: sound ? 1 : 0,
       showOverlay: false,
       paused: false,
       sources: [] as Array<Source>,
@@ -331,7 +339,7 @@ class MindsVideo extends Component<PropsType, StateType> {
     if (this.state.paused) {
       return (
         <Icon
-          onPress={this.play}
+          onPress={this.play as () => void}
           style={styles.videoIcon}
           name="md-play-circle"
           size={size}
@@ -642,13 +650,6 @@ class MindsVideo extends Component<PropsType, StateType> {
    * Render
    */
   render() {
-    if (
-      !(this.props.entity && this.props.entity.is_visible) &&
-      !this.state.paused &&
-      this.state.active
-    ) {
-      this.setState({ paused: false, active: false, showOverlay: true });
-    }
     const { error, inProgress, transcoding } = this.state;
 
     const overlay = this.renderOverlay();

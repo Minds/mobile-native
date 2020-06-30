@@ -18,8 +18,8 @@ import i18n from '../../../common/services/i18n.service';
 import TransactionsListCash from '../TransactionList/TransactionsListCash';
 
 const options: Array<ButtonTabType<UsdOptions>> = [
-  { id: 'transactions', title: 'Transactions' },
-  { id: 'settings', title: 'Settings' },
+  { id: 'transactions', title: i18n.t('wallet.transactions.transactions') },
+  { id: 'settings', title: i18n.t('moreScreen.settings') },
 ];
 
 type PropsType = {

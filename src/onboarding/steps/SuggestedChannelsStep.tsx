@@ -4,33 +4,41 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
-  TouchableHighlight,
   ActivityIndicator,
-  I18nManager,
+  StyleSheet,
+  ScrollView,
 } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
 import { CommonStyle as CS } from '../../styles/Common';
-import DiscoveryUser from '../../discovery/DiscoveryUser';
+import DiscoveryUserNew from '../../discovery/DiscoveryUserNew';
 import i18n from '../../common/services/i18n.service';
 
-@inject('onboarding')
+import OnboardingButtons from '../OnboardingButtons';
+import OnboardingBackButton from '../OnboardingBackButton';
+
+@inject('discovery')
 @observer
-export default class SuggestedChannelsStep extends Component {
+export default class SuggestedChannelsStepNew extends Component {
+  constructor(props) {
+    super(props);
+
+    this.props.discovery.init();
+    this.props.discovery.filters.setType('channels');
+    this.props.discovery.filters.setPeriod('1y');
+  }
+
   /**
    * Component did mount
    */
-  componentDidMount() {
-    this.props.onboarding.suggestedUsers.list.clearList();
-    this.props.onboarding.getSuggestedUsers();
-  }
+  componentDidMount() {}
 
   /**
    * Render user
    */
   renderUser = (user, index) => {
     return (
-      <DiscoveryUser
+      <DiscoveryUserNew
         row={{ item: user }}
         key={user.guid}
         testID={`suggestedUser${index}`}
@@ -38,27 +46,68 @@ export default class SuggestedChannelsStep extends Component {
     );
   };
 
+  getBody = () => {
+    const discovery = this.props.discovery;
+
+    return (
+      <View style={[CS.flexContainer, CS.columnAlignCenter]}>
+        <OnboardingBackButton onBack={this.props.onBack} />
+        <View style={styles.textsContainer}>
+          <Text style={[CS.onboardingTitle, CS.marginBottom2x]}>
+            {i18n.t('onboarding.profileSetup')}
+          </Text>
+          <Text style={[CS.titleText, CS.colorPrimaryText]}>
+            {i18n.t('onboarding.suggestedChannels')}
+          </Text>
+          <Text style={[CS.subTitleText, CS.colorSecondaryText]}>
+            {i18n.t('onboarding.step', { step: 4, total: 4 })}
+          </Text>
+          <Text
+            style={[
+              CS.subTitleText,
+              CS.colorPrimaryText,
+              CS.marginBottom4x,
+              CS.marginTop4x,
+            ]}>
+            {i18n.t('onboarding.suggestedChannelsDescription')}
+          </Text>
+        </View>
+        <ScrollView style={styles.channelContainer}>
+          {!discovery.listStore.loaded && <ActivityIndicator />}
+          {discovery.listStore.entities
+            .slice()
+            .map((user, i) => this.renderUser(user, i))}
+        </ScrollView>
+      </View>
+    );
+  };
+
+  getFooter = () => {
+    return <OnboardingButtons onNext={this.props.onNext} />;
+  };
+
   /**
    * Render
    */
   render() {
     return (
-      <View>
-        <View style={[CS.padding4x]} testID="suggestedChannelWizard">
-          <Text style={[CS.fontXXL, CS.colorDark, CS.fontMedium]}>
-            {i18n.t('onboarding.suggestedChannels')}
-          </Text>
-          <Text style={[CS.fontL, CS.colorDarkGreyed, CS.marginBottom3x]}>
-            {i18n.t('onboarding.suggestedChannelsDescription')}
-          </Text>
+      <View style={[CS.flexContainerCenter]}>
+        <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>
+          {this.getBody()}
         </View>
-        {!this.props.onboarding.suggestedUsers.list.loaded && (
-          <ActivityIndicator />
-        )}
-        {this.props.onboarding.suggestedUsers.list.entities.map((user, i) =>
-          this.renderUser(user, i),
-        )}
+        <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
+          {this.getFooter()}
+        </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  channelContainer: {
+    width: '100%',
+  },
+  textsContainer: {
+    alignItems: 'center',
+  },
+});

@@ -46,7 +46,7 @@ const UserNamesComponent: FunctionComponent<propsType> = observer(
           <ChannelBadges
             channel={channel}
             size={22}
-            iconStyle={theme.colorGreen}
+            iconStyle={theme.colorLink}
           />
         </View>
         <Text

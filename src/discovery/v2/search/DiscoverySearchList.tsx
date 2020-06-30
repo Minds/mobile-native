@@ -13,6 +13,7 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
 import GroupsListItemNew from '../../../groups/GroupsListItemNew';
 import DiscoveryUser from '../../DiscoveryUserNew';
+import i18n from '../../../common/services/i18n.service';
 
 interface Props {
   navigation: any;
@@ -83,7 +84,7 @@ export const DiscoverySearchList = observer((props: Props) => {
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
             <Text style={ComponentsStyle.emptyComponentMessage}>
-              Nothing to see here...
+              {i18n.t('discovery.nothingToSee')}
             </Text>
           </View>
         </View>

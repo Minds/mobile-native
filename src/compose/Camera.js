@@ -35,7 +35,7 @@ export default observer(function (props) {
   // local store
   const store = useLocalStore(
     (p) => ({
-      cameraType: RNCamera.Constants.Type.back,
+      cameraType: RNCamera.Constants.Type.front,
       flashMode: RNCamera.Constants.FlashMode.off,
       recording: false,
       show: false,

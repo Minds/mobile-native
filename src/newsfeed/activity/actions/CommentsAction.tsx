@@ -31,19 +31,16 @@ type PropsType = {
 @observer
 class CommentsAction extends Component<PropsType> {
   static defaultProps = {
-    size: 20,
+    size: 21,
   };
   /**
    * Render
    */
   render() {
+    const theme = ThemedStyles.style;
     const icon = this.props.entity.allow_comments
       ? 'chat-bubble'
       : 'speaker-notes-off';
-
-    const canComment =
-      this.props.entity.allow_comments &&
-      this.props.entity.can(FLAG_CREATE_COMMENT);
 
     // const color = canComment
     //   ? this.props.entity['comments:count'] > 0
@@ -51,27 +48,22 @@ class CommentsAction extends Component<PropsType> {
     //     : ThemedStyles.style.colorIcon
     //   : CS.colorLightGreyed;
 
-    const color = ThemedStyles.style.colorIcon;
-
     return (
       <TouchableOpacityCustom
         style={[
-          ThemedStyles.style.rowJustifyCenter,
-          ThemedStyles.style.paddingHorizontal3x,
-          ThemedStyles.style.paddingVertical2x,
-          ThemedStyles.style.alignCenter,
+          theme.rowJustifyCenter,
+          theme.paddingHorizontal3x,
+          theme.paddingVertical4x,
+          theme.alignCenter,
         ]}
         onPress={this.openComments}
         testID={this.props.testID}>
         <Icon
-          style={[color, CS.marginRight]}
+          style={[theme.colorIcon, CS.marginRight]}
           name={icon}
           size={this.props.size}
         />
-        <Counter
-          size={this.props.size * 0.7}
-          count={this.props.entity['comments:count']}
-        />
+        <Counter count={this.props.entity['comments:count']} />
       </TouchableOpacityCustom>
     );
   }

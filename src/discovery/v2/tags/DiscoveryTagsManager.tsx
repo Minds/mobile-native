@@ -17,6 +17,7 @@ import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
 import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import InputContainer from '../../../common/components/InputContainer';
+import i18n from '../../../common/services/i18n.service';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -155,7 +156,7 @@ export const DiscoveryTagsManager = observer((props: Props) => {
   return (
     <BottomOptionPopup
       height={500}
-      title="Manage Tags"
+      title={i18n.t('discovery.manage')}
       show={props.show}
       onCancel={onCancel}
       onDone={onDone}
@@ -164,7 +165,7 @@ export const DiscoveryTagsManager = observer((props: Props) => {
           <SectionList
             ListHeaderComponent={
               <InputContainer
-                placeholder="Add"
+                placeholder={i18n.t('add')}
                 onChangeText={store.setValue}
                 onSubmitEditing={onCreate}
                 value={store.inputValue}
@@ -181,11 +182,11 @@ export const DiscoveryTagsManager = observer((props: Props) => {
             renderSectionHeader={SectionHeaderPatrial}
             sections={[
               {
-                title: 'Your tags',
+                title: i18n.t('discovery.yourTags'),
                 data: store.selected.slice(),
               },
               {
-                title: 'Other tags',
+                title: i18n.t('discovery.otherTags'),
                 data: store.other.slice(),
               },
             ]}
@@ -193,7 +194,7 @@ export const DiscoveryTagsManager = observer((props: Props) => {
           />
         </ScrollView>
       }
-      doneText="Done"
+      doneText={i18n.t('done')}
     />
   );
 });

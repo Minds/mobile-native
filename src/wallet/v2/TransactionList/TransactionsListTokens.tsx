@@ -32,7 +32,7 @@ const TransactionsListTokens = observer(
     const showFilter = useCallback(() => {
       bottomStore.show(
         i18n.t('wallet.transactions.filterTransactions'),
-        'Done',
+        i18n.t('done'),
         <Filter store={store} filters={filters} bottomStore={bottomStore} />,
       );
     }, [store, bottomStore, filters]);

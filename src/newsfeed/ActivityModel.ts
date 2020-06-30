@@ -83,7 +83,7 @@ export default class ActivityModel extends BaseModel {
   /**
    * Is visible in flat list
    */
-  @observable is_visible: boolean = true;
+  @observable is_visible: boolean = false;
 
   /**
    *  List reference setter
@@ -252,6 +252,9 @@ export default class ActivityModel extends BaseModel {
   @action
   setVisible(value: boolean) {
     this.is_visible = value;
+    if (this.remind_object) {
+      this.remind_object.is_visible = value;
+    }
   }
 
   /**

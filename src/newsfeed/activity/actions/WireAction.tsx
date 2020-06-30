@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 
 import { TouchableOpacity } from 'react-native';
 
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { CommonStyle } from '../../../styles/Common';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
@@ -29,10 +29,10 @@ export default class WireAction extends PureComponent<PropsType> {
       <TouchableOpacityCustom
         style={[CommonStyle.centered, ThemedStyles.style.paddingHorizontal4x]}
         onPress={this.openWire}>
-        <IonIcon
+        <Icon
           style={ThemedStyles.style.colorIconActive}
-          name="ios-flash"
-          size={32}
+          name="coins"
+          size={20}
         />
       </TouchableOpacityCustom>
     );

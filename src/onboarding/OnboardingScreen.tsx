@@ -13,15 +13,15 @@ import { inject, observer } from 'mobx-react';
 
 import Wizard from '../common/components/Wizard';
 
-import WelcomeStepNew from './steps/WelcomeStepNew';
+import WelcomeStep from './steps/WelcomeStep';
 import navigationService from '../navigation/NavigationService';
 import i18n from '../common/services/i18n.service';
 import CenteredLoading from '../common/components/CenteredLoading';
-import HashtagsStepNew from './steps/HashtagsStepNew';
-import ChannelSetupStepNew from './steps/ChannelSetupStepNew';
+import HashtagsStep from './steps/HashtagsStep';
+import ChannelSetupStep from './steps/ChannelSetupStep';
 import ThemedStyles from '../styles/ThemedStyles';
 
-@inject('onboarding', 'hashtag', 'groupsBar', 'discovery')
+@inject('onboarding', 'hashtag', 'groupsBar')
 @observer
 class OnboardingScreen extends Component {
   /**
@@ -109,7 +109,7 @@ class OnboardingScreen extends Component {
     if (!completed_items.some((r) => r == 'creator_frequency')) {
       steps.push({
         component: (
-          <WelcomeStepNew onNext={this.onNext} onFinish={this.onFinish} />
+          <WelcomeStep onNext={this.onNext} onFinish={this.onFinish} />
         ),
         ready: () => false,
       });
@@ -117,16 +117,14 @@ class OnboardingScreen extends Component {
 
     if (!completed_items.some((r) => r == 'suggested_hashtags')) {
       steps.push({
-        component: (
-          <HashtagsStepNew onNext={this.onNext} onBack={this.onBack} />
-        ),
+        component: <HashtagsStep onNext={this.onNext} onBack={this.onBack} />,
       });
     }
 
     if (!completed_items.some((r) => r == 'tokens_verification')) {
       steps.push({
         component: (
-          <ChannelSetupStepNew
+          <ChannelSetupStep
             ref={(r) => (this.channelSetup = r)}
             onNext={this.onNext}
             onBack={this.onBack}
@@ -137,11 +135,11 @@ class OnboardingScreen extends Component {
 
     // TODO: enable group and channel selectors
     // if (!completed_items.some(r => r == 'suggested_groups')) {
-    //   steps.push({component: <SuggestedGroupsStepNew onNext={this.onNext} onBack={this.onBack}/>});
+    //   steps.push({component: <SuggestedGroupsStep onNext={this.onNext} onBack={this.onBack}/>});
     // }
 
     // if (!completed_items.some(r => r == 'suggested_channels')) {
-    //   steps.push({component: <SuggestedChannelsStepNew onNext={this.onNext} onBack={this.onBack}/>});
+    //   steps.push({component: <SuggestedChannelsStep onNext={this.onNext} onBack={this.onBack}/>});
     // }
 
     return (

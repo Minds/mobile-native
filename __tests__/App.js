@@ -18,11 +18,14 @@ jest.mock('../src/common/services/sqlite-storage-provider.service')
 jest.mock('../src/common/services/log.service', () => {});
 jest.mock('../src/common/services/push.service');
 
-// use the web3 mock to prevent sintax error from node_tar
+// use the web3 mock to prevent syntax error from node_tar
 jest.mock('web3');
 
-//mock notifications
+//mock packages
 jest.mock('react-native-notifications');
+jest.mock('react-navigation-shared-element', () => ({
+  createSharedElementStackNavigator: jest.fn(),
+}));
 jest.mock('react-native-convert-ph-asset');
 jest.mock('@react-navigation/native');
 jest.mock('@react-navigation/bottom-tabs');

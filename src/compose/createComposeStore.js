@@ -245,7 +245,7 @@ export default function (props) {
      */
     rejectImage() {
       this.mediaToConfirm = null;
-      this.mode = 'photo';
+      this.mode = settingsStore.composerMode;
     },
     /**
      * On media selected from gallery

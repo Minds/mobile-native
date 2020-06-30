@@ -10,7 +10,7 @@ import i18n from '../../common/services/i18n.service';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import Topbar from '../../topbar/Topbar';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { TabParamList } from '../../tabs/TabsScreenNew';
+import { TabParamList } from '../../tabs/TabsScreen';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './DiscoveryV2Context';
@@ -84,10 +84,10 @@ export const DiscoveryV2Screen = observer((props: Props) => {
             store.setTabId(tabId as TDiscoveryV2Tabs);
           }}
           tabs={[
-            { id: 'foryou', title: 'Just for you' },
-            { id: 'your-tags', title: 'Your tags' },
-            { id: 'trending-tags', title: 'Trending' },
-            { id: 'boosts', title: 'Boosted' },
+            { id: 'foryou', title: i18n.t('discovery.justForYou') },
+            { id: 'your-tags', title: i18n.t('discovery.yourTags') },
+            { id: 'trending-tags', title: i18n.t('discovery.trending') },
+            { id: 'boosts', title: i18n.t('boosted') },
           ]}
         />
       </View>

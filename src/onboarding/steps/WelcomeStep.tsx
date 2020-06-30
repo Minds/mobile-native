@@ -1,100 +1,90 @@
 //@ts-nocheck
 import React, { Component } from 'react';
 
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { observer, inject } from 'mobx-react';
 
-import { CommonStyle as CS } from '../../styles/Common';
-import colors from '../../styles/Colors';
-import { ListItem } from 'react-native-elements';
-import logService from '../../common/services/log.service';
 import i18nService from '../../common/services/i18n.service';
+import { ComponentsStyle } from '../../styles/Components';
+import Button from '../../common/components/Button';
+import ThemedStyles from '../../styles/ThemedStyles';
 
-@inject('hashtag', 'onboarding')
+@inject('user')
 @observer
 export default class WelcomeStep extends Component {
-  /**
-   * Component did mount
-   */
-  componentWillMount() {
-    this.props.hashtag.setAll(true);
-    this.props.hashtag.loadSuggested().catch((e) => {
-      logService.exception(e);
-    });
-  }
+  getBody = () => {
+    const CS = ThemedStyles.style;
+    return (
+      <View style={[CS.flexContainer, CS.columnAlignCenter]}>
+        <Image
+          source={require('./../../assets/welcome.png')}
+          style={[styles.welcome, CS.marginTop4x, CS.marginBottom3x]}
+        />
+        <Text style={[CS.titleText, CS.colorPrimaryText, CS.marginBottom4x]}>
+          @{this.props.user.me.name}
+        </Text>
 
-  setFrequency = async (value) => {
-    await this.props.onboarding.setFrequency(value);
-    this.props.onNext();
+        <Text
+          style={[CS.subTitleText, CS.colorSecondaryText, CS.marginBottom4x]}>
+          {i18nService.t('onboarding.welcomeNew')}
+        </Text>
+
+        <Text
+          style={[
+            CS.subTitleText,
+            CS.colorSecondaryText,
+            CS.marginBottom4x,
+            CS.textJustify,
+          ]}>
+          {i18nService.t('onboarding.welcomePrivacy')}
+        </Text>
+      </View>
+    );
+  };
+
+  getFooter = () => {
+    const CS = ThemedStyles.style;
+    return (
+      <View style={CS.flexContainer}>
+        <Button
+          onPress={this.props.onNext}
+          borderRadius={2}
+          containerStyle={ComponentsStyle.loginButtonNew}
+          testID="wizardNext">
+          <Text style={ComponentsStyle.loginButtonTextNew}>
+            {i18nService.t('onboarding.welcomeSetup')}
+          </Text>
+        </Button>
+        <Text
+          style={[CS.linkNew, CS.marginTop2x, CS.centered]}
+          onPress={this.props.onFinish}>
+          {i18nService.t('onboarding.welcomeLater')}
+        </Text>
+      </View>
+    );
   };
 
   /**
    * Render
    */
   render() {
+    const CS = ThemedStyles.style;
     return (
-      <View style={[CS.padding4x]}>
-        <Text
-          style={[CS.fontXXXL, CS.colorDark, CS.fontMedium, CS.marginBottom3x]}>
-          {i18nService.t('onboarding.welcome')}
-        </Text>
-        <Text
-          style={[
-            CS.fontL,
-            CS.colorDark,
-            CS.fontMedium,
-            CS.marginBottom3x,
-            CS.fontLight,
-          ]}>
-          {i18nService.t('onboarding.welcome1')}
-        </Text>
-        <Text
-          style={[
-            CS.fontL,
-            CS.colorDark,
-            CS.fontMedium,
-            CS.marginBottom3x,
-            CS.fontLight,
-          ]}>
-          {i18nService.t('onboarding.welcome2')}
-        </Text>
-
-        <View>
-          <ListItem
-            title="Rarely"
-            titleStyle={[CS.fontXL, { marginLeft: 0, paddingLeft: 0 }]}
-            containerStyle={[
-              CS.borderBottomHair,
-              { paddingLeft: 0, marginLeft: 0 },
-            ]}
-            chevronColor={colors.primary}
-            onPress={() => this.setFrequency('rarely')}
-            noBorder
-          />
-          <ListItem
-            title="Sometimes"
-            titleStyle={{ marginLeft: 0, paddingLeft: 0 }}
-            containerStyle={[
-              CS.borderBottomHair,
-              { paddingLeft: 0, marginLeft: 0 },
-            ]}
-            chevronColor={colors.primary}
-            onPress={() => this.setFrequency('sometimes')}
-            noBorder
-          />
-          <ListItem
-            title="Frequently"
-            titleStyle={{ marginLeft: 0, paddingLeft: 0 }}
-            containerStyle={[
-              CS.noBorderBottom,
-              { paddingLeft: 0, marginLeft: 0 },
-            ]}
-            chevronColor={colors.primary}
-            onPress={() => this.setFrequency('frequently')}
-            noBorder
-          />
+      <View style={[CS.flexContainerCenter]} testID="artTestID">
+        <View style={[CS.mindsLayoutBody, CS.backgroundPrimary]}>
+          {this.getBody()}
+        </View>
+        <View style={[CS.mindsLayoutFooter, CS.backgroundPrimary]}>
+          {this.getFooter()}
         </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  welcome: {
+    height: 36,
+    width: 36,
+  },
+});

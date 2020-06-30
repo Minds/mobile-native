@@ -60,6 +60,7 @@ export interface ThemedStyle {
   fontS: any;
   fontM: any;
   fontL: any;
+  fontLM: any;
   fontXL: any;
   fontXXL: any;
   fontXXXL: any;
@@ -302,13 +303,13 @@ export const buildStyle = (theme): ThemedStyle => ({
     borderColor: 'transparent',
   },
   borderBackgroundPrimary: {
-    borderColor: theme.borderColorPrimary,
+    borderColor: theme.primary_background,
   },
   borderBackgroundSecondary: {
-    borderColor: theme.borderColorSecondary,
+    borderColor: theme.secondary_background,
   },
   borderBackgroundTertiary: {
-    borderColor: theme.borderColorTertiary,
+    borderColor: theme.tertiary_background,
   },
   borderLink: {
     borderColor: theme.link,
@@ -338,6 +339,9 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   fontL: {
     fontSize: 16,
+  },
+  fontLM: {
+    fontSize: 17,
   },
   fontXL: {
     fontSize: 18,

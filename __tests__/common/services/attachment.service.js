@@ -2,7 +2,7 @@ import api from '../../../src/common/services/api.service';
 import imagePicker from '../../../src/common/services/image-picker.service';
 import service from '../../../src/common/services/attachment.service';
 jest.mock('../../../src/common/services/api.service');
-jest.mock('../../../src/capture/CaptureService');
+// jest.mock('../../../src/capture/CaptureService');
 jest.mock('../../../src/common/services/image-picker.service');
 
 /**

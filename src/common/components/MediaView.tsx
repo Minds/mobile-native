@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import { observer } from 'mobx-react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { SharedElement } from 'react-navigation-shared-element';
 
 import {
   Text,
@@ -144,7 +145,14 @@ export default class MediaView extends Component<PropsType> {
    * Pause video if exist
    */
   pauseVideo() {
-    this.videoPlayer && this.videoPlayer && this.videoPlayer.pause();
+    if (this.videoPlayer) this.videoPlayer.pause();
+  }
+
+  /**
+   * Play video if exist
+   */
+  playVideo(sound: boolean) {
+    if (this.videoPlayer) this.videoPlayer.play(sound);
   }
 
   imageError = (err) => {
@@ -239,20 +247,22 @@ export default class MediaView extends Component<PropsType> {
     }
 
     return (
-      <TouchableOpacity
-        onPress={this.navToImage}
-        onLongPress={this.imageLongPress}
-        style={[styles.imageContainer, { aspectRatio }]}
-        activeOpacity={1}
-        {...testID('Posted Image')}>
-        <ExplicitImage
-          source={source}
-          entity={this.props.entity}
-          onLoad={this.onLoadImage}
-          // loadingIndicator="placeholder"
-          onError={this.imageError}
-        />
-      </TouchableOpacity>
+      <SharedElement id={`${this.props.entity.urn}.image`}>
+        <TouchableOpacity
+          onPress={this.navToImage}
+          onLongPress={this.imageLongPress}
+          style={[styles.imageContainer, { aspectRatio }]}
+          activeOpacity={1}
+          {...testID('Posted Image')}>
+          <ExplicitImage
+            source={source}
+            entity={this.props.entity}
+            onLoad={this.onLoadImage}
+            // loadingIndicator="placeholder"
+            onError={this.imageError}
+          />
+        </TouchableOpacity>
+      </SharedElement>
     );
   }
 

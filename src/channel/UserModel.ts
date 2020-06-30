@@ -24,6 +24,8 @@ export default class UserModel extends BaseModel {
    * Eth wallet
    */
   eth_wallet: string = '';
+  disable_autoplay_videos?: boolean;
+  wire_rewards;
   sums;
   btc_address?: string;
   icontime!: string;
@@ -31,7 +33,7 @@ export default class UserModel extends BaseModel {
   briefdescription!: string;
   city!: string;
   name!: string;
-  admin = false;
+  is_admin = false;
   plus: boolean = false;
   verified: boolean = false;
   founder: boolean = false;
@@ -186,7 +188,7 @@ export default class UserModel extends BaseModel {
    * Is admin
    */
   isAdmin() {
-    return this.admin;
+    return this.is_admin;
   }
 
   /**
