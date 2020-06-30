@@ -29,11 +29,13 @@ export default observer(function (props) {
 
   return (
     <View style={[styles.container, theme.paddingHorizontal4x]}>
-      <TouchableOpacity
-        onPress={props.onRemove}
-        style={[styles.removeRichEmbed, theme.backgroundSecondary]}>
-        <IonIcon name="ios-close" size={28} style={styles.icon} />
-      </TouchableOpacity>
+      {!props.isEdit && (
+        <TouchableOpacity
+          onPress={props.onRemove}
+          style={[styles.removeRichEmbed, theme.backgroundSecondary]}>
+          <IonIcon name="ios-close" size={28} style={styles.icon} />
+        </TouchableOpacity>
+      )}
       <View
         style={[
           styles.row,

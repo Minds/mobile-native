@@ -26,27 +26,41 @@ const showError = (message) => {
   });
 };
 
+const DEFAULT_MONETIZE = {
+  type: 'tokens',
+  min: 0,
+};
+
 /**
  * Composer store
  */
 export default function (props) {
   return {
     isRemind: false,
+    isEdit: false,
+    mode: settingsStore.composerMode,
+    videoPoster: null,
     entity: null,
     attachment: new AttachmentStore(),
     nsfw: [],
-    wire_threshold: {
-      type: 'tokens',
-      min: 0,
-    },
+    tags: [],
+    wire_threshold: DEFAULT_MONETIZE,
     embed: new RichEmbedStore(),
-    posting: false,
-    mode: settingsStore.composerMode,
     text: '',
     title: '',
-    mediaToConfirm: null,
     time_created: null,
+    mediaToConfirm: null,
     extra: null,
+    posting: false,
+    get canEditMetadata(): boolean {
+      if (!this.entity) {
+        return true;
+      } else if (this.entity.remind_object) {
+        return false;
+      }
+
+      return !this.entity.perma_url || !this.entity.entity_guid;
+    },
     onScreenFocused() {
       const params = props.route.params;
       if (
@@ -57,24 +71,28 @@ export default function (props) {
       }
 
       this.isRemind = params.isRemind;
+      this.isEdit = params.isEdit;
       this.entity = params.entity || null;
-      const propsMode = params.mode || null;
-      this.mode = propsMode
-        ? propsMode
-        : this.isRemind
+
+      this.mode = params.mode
+        ? params.mode
+        : this.isRemind || this.isEdit
         ? 'text'
         : settingsStore.composerMode;
-      const mediaToConfirm = params.media || null;
 
-      if (mediaToConfirm) {
+      if (params.media) {
         this.mode = 'text';
-        this.mediaToConfirm = mediaToConfirm;
-        this.attachment.attachMedia(mediaToConfirm);
+        this.mediaToConfirm = params.media;
+        this.attachment.attachMedia(params.media);
       }
 
       if (params.text) {
         this.setText(params.text);
         this.mode = 'text';
+      }
+
+      if (this.isEdit) {
+        this.hydrateFromEntity();
       }
 
       // clear params to avoid repetition
@@ -85,6 +103,36 @@ export default function (props) {
         isRemind: undefined,
         text: undefined,
       });
+    },
+    hydrateFromEntity() {
+      this.text = this.entity.message || '';
+      this.time_created = this.entity.time_created * 1000;
+      this.title = this.entity.title || '';
+      this.nsfw = this.entity.nsfw || [];
+      this.tags = this.entity.tags || [];
+      this.wire_threshold = this.entity.wire_threshold || DEFAULT_MONETIZE;
+
+      if (this.entity.custom_type === 'batch') {
+        this.attachment.setMedia('image', this.entity.entity_guid);
+        this.mediaToConfirm = {
+          type: 'image',
+          uri: this.entity.custom_data[0].src,
+          width: this.entity.custom_data[0].width,
+          height: this.entity.custom_data[0].height,
+        };
+      } else if (this.entity.custom_type === 'video') {
+        this.attachment.setMedia('video', this.entity.entity_guid);
+        this.videoPoster = { url: this.entity.custom_data.thumbnail_src };
+      } else if (this.entity.entity_guid || this.entity.perma_url) {
+        // Rich embeds (blogs included)
+        this.embed.setMeta({
+          entityGuid: this.entity.entity_guid || null,
+          url: this.entity.perma_url,
+          title: this.entity.title || '',
+          description: this.entity.blurb || '',
+          thumbnail: this.entity.thumbnail_src || '',
+        });
+      }
     },
     setTokenThreshold(value) {
       value = parseFloat(value);
@@ -110,21 +158,6 @@ export default function (props) {
       }
     },
     /**
-     * @returns {Array} tags
-     */
-    get tags() {
-      const hash = /(^|\s)\#(\w*[a-zA-Z_]+\w*)/gim;
-      const result = this.text.split(hash);
-      const hashtags = [];
-
-      for (let i = 2; i < result.length; i = i + 3) {
-        hashtags.push(result[i].trim());
-      }
-
-      // remove repeated and return
-      return [...new Set(hashtags)];
-    },
-    /**
      * Add tag
      * @param {string} tag
      */
@@ -136,17 +169,17 @@ export default function (props) {
         return;
       }
 
-      this.text += ` #${tag}`;
+      this.tags.push(tag);
     },
     /**
      * Remove a tag
      * @param {string} tag
      */
     removeTag(tag) {
-      this.text = this.text.replace(
-        new RegExp('(^|\\s)#' + tag + '(?!\\w)', 'gim'),
-        '',
-      );
+      const index = this.tags.findIndex((v) => v === tag);
+      if (index !== -1) {
+        this.tags.splice(index, 1);
+      }
     },
     /**
      * Set posting
@@ -222,9 +255,10 @@ export default function (props) {
       this.entity = null;
       this.mode = 'photo';
       this.isRemind = false;
+      this.isEdit = false;
       this.nsfw = [];
       this.time_created = null;
-      this.wire_threshold = 0;
+      this.wire_threshold = DEFAULT_MONETIZE;
     },
     /**
      * On media
@@ -297,6 +331,10 @@ export default function (props) {
      * Submit post
      */
     async submit() {
+      if (this.posting) {
+        return;
+      }
+
       // is uploading?
       if (this.attachment.hasAttachment && this.attachment.uploading) {
         showError(i18n.t('capture.pleaseTryAgain'));
@@ -323,12 +361,12 @@ export default function (props) {
         return false;
       }
 
+      const paywall = this.wire_threshold && this.wire_threshold.min;
+
       let newPost = {
         message: this.text,
-        wire_threshold:
-          this.wire_threshold && this.wire_threshold.min
-            ? this.wire_threshold.min
-            : null,
+        wire_threshold: paywall ? this.wire_threshold : null,
+        paywall,
         time_created:
           Math.floor(this.time_created / 1000) || Math.floor(Date.now() / 1000),
       };
@@ -340,8 +378,8 @@ export default function (props) {
       newPost.nsfw = this.nsfw || [];
 
       if (this.attachment.guid) {
-        newPost.attachment_guid = this.attachment.guid;
-        newPost.attachment_license = this.attachment.license;
+        newPost.entity_guid = this.attachment.guid;
+        newPost.license = this.attachment.license;
       }
 
       if (this.embed.meta) {
@@ -354,33 +392,32 @@ export default function (props) {
         props.navigation.setParams({ group: undefined });
       }
 
+      // keep the container if it is an edited activity
+      if (this.isEdit && typeof this.entity.container_guid !== 'undefined') {
+        newPost.container_guid = this.entity.containerGuid;
+      }
+
       if (this.tags.length) {
         newPost.tags = this.tags;
       }
 
-      return await remoteAction(
-        async () => {
-          if (this.posting) {
-            return;
-          }
-          this.setPosting(true);
-          let response;
-          try {
-            response = await api.post('api/v2/newsfeed', newPost);
-          } finally {
-            this.setPosting(false);
-          }
+      this.setPosting(true);
 
-          if (response && response.activity) {
-            this.clear(false);
-            return ActivityModel.create(response.activity);
+      const guidParam = this.isEdit ? `/${this.entity.guid}` : '';
+
+      try {
+        const response = await api.post(`api/v2/newsfeed${guidParam}`, newPost);
+        if (response && response.activity) {
+          if (this.isEdit) {
+            this.entity.update(response.activity);
+            this.entity.setEdited('1');
+            return this.entity;
           }
-          return false;
-        },
-        '',
-        0,
-        false,
-      );
+          return ActivityModel.create(response.activity);
+        }
+      } finally {
+        this.setPosting(false);
+      }
     },
   };
 }

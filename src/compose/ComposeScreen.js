@@ -34,15 +34,17 @@ export default observer(function (props) {
    * On post
    */
   const onPost = useCallback(
-    (entity) => {
+    (entity, isEdit) => {
       const { goBack, dispatch } = props.navigation;
       const { params } = props.route;
 
-      stores.newsfeed.prepend(entity);
+      if (!isEdit) {
+        stores.newsfeed.prepend(entity);
+      }
 
       if (params && params.parentKey) {
         const routeParams = {
-          prepend: entity,
+          prepend: isEdit ? undefined : entity,
         };
 
         if (params.group) {
@@ -55,8 +57,9 @@ export default observer(function (props) {
         });
       }
       goBack(null);
+      store.clear(false);
     },
-    [props, stores],
+    [props, stores, store],
   );
 
   const tabStyle = { paddingBottom: insets.bottom || 25 };
