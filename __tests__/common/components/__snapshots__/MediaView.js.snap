@@ -40,14 +40,6 @@ exports[`Media view component renders correctly 1`] = `
                 "width": 20,
               },
             ],
-          },
-          "guid": "activityguid0",
-          "hasThumbnails": [MockFunction],
-          "mature": false,
-          "message": "Message",
-          "ownerObj": Object {
-            "guid": "824853017709780997",
-            "subtype": false,
             "custom_type": false,
             "description": "Congratulations! ",
             "edited": "",
@@ -67,6 +59,7 @@ exports[`Media view component renders correctly 1`] = `
               ],
             },
             "guid": "activityguid0",
+            "hasThumbnails": [MockFunction],
             "mature": false,
             "message": "Message",
             "ownerObj": Object {
