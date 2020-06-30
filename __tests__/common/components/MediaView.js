@@ -15,6 +15,8 @@ describe('Media view component', () => {
     entity.subtype = 'image';
     entity.getThumbSource = jest.fn();
     entity.getThumbSource.mockReturnValue({ uri: 'www.something.com' });
+    entity.hasThumbnails = jest.fn();
+    entity.hasThumbnails.mockReturnValue(false);
     screen = shallow(<MediaView entity={entity} />);
   });
 
@@ -29,10 +31,12 @@ describe('Media view component', () => {
     expect(screen.find('TouchableOpacity')).toHaveLength(1);
   });
 
-  it('sholdnt show overlay if press', async () => {
+  it('should show overlay if press', async () => {
     let mockResponse = activitiesServiceFaker().load(1);
     entity = mockResponse.activities[0];
     entity.mature = false;
+    entity.hasThumbnails = jest.fn();
+    entity.hasThumbnails.mockReturnValue(false);
     screen = shallow(<MediaView entity={entity} />);
     screen.update();
     expect(screen.find('ExplicitOverlay')).toHaveLength(0);
@@ -45,6 +49,8 @@ describe('Media view component', () => {
     entity.subtype = 'videos';
     entity.getThumbSource = jest.fn();
     entity.getThumbSource.mockReturnValue({ uri: 'www.something.com' });
+    entity.hasThumbnails = jest.fn();
+    entity.hasThumbnails.mockReturnValue(false);
     screen = shallow(<MediaView entity={entity} />);
     screen.update();
     expect(screen.find('ExplicitOverlay')).toHaveLength(0);

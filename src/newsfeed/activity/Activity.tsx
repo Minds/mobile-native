@@ -20,7 +20,8 @@ import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
 import Translate from '../../common/components/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
-import Lock from '../../wire/v2/lock/Lock';
+import LockV2 from '../../wire/v2/lock/Lock';
+import Lock from '../../wire/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
 import blockListService from '../../common/services/block-list.service';
@@ -29,6 +30,7 @@ import ActivityModel from '../ActivityModel';
 import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../../common/stores/FeedStore';
+import featuresService from '../../common/services/features.service';
 
 type PropsType = {
   entity: ActivityModel;
@@ -150,10 +152,19 @@ export default class Activity extends Component<PropsType, StateType> {
     }
 
     const hasText = !!entity.text || !!entity.title;
-    const lock =
-      entity.paywall && entity.paywall === '1' ? (
-        <Lock entity={entity} navigation={this.props.navigation} />
-      ) : null;
+    let lock;
+
+    if (featuresService.has('plus-2020')) {
+      lock =
+        entity.paywall && entity.paywall === '1' ? (
+          <LockV2 entity={entity} navigation={this.props.navigation} />
+        ) : null;
+    } else {
+      lock =
+        entity.paywall && entity.paywall === '1' ? (
+          <Lock entity={entity} navigation={this.props.navigation} />
+        ) : null;
+    }
 
     const message = this.state.editing ? (
       //Passing the store in newsfeed (could be channel also)
