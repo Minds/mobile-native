@@ -32,7 +32,7 @@ export default observer(function (props) {
       <TouchableOpacity
         onPress={props.onRemove}
         style={[styles.removeRichEmbed, theme.backgroundSecondary]}>
-        <IonIcon name="ios-close" size={28} style={styles.icon} />
+        <IonIcon name="ios-close" size={28} style={theme.colorIcon} />
       </TouchableOpacity>
       <View
         style={[
@@ -65,9 +65,6 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: imgSize,
     height: imgSize,
-  },
-  icon: {
-    color: '#FFFFFF',
   },
   container: {
     width: '100%',
