@@ -21,11 +21,15 @@ const tabList = [
   },
 ];
 
-type tabType = 'tokens' | 'usd' | 'eth';
+type payMethod = 'tokens' | 'usd';
 
 const createJoinMembershipStore = () => {
   const store = {
     card: '' as any,
+    payMethod: 'usd' as payMethod,
+    setPayMethod(method: payMethod) {
+      this.payMethod = method;
+    },
     setCard(card: any) {
       this.card = card;
     },
@@ -63,8 +67,8 @@ const JoinMembershipScreen = observer(({ route, navigation }) => {
         <View style={theme.rowJustifyStart}>
           <Text style={switchTextStyle}>{'USD'}</Text>
           <Switch
-            //value={localStore.exclusivity === 'always'}
-            //onSyncPress={localStore.setExclusivity}
+            value={store.payMethod === 'usd'}
+            onSyncPress={store.setPayMethod}
             circleColorActive={Colors.switchCircle}
             circleColorInactive={Colors.switchCircle}
             backgroundActive={Colors.switchBackgroun}
