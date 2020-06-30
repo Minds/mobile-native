@@ -55,15 +55,6 @@ export default function (props) {
     mediaToConfirm: null,
     extra: null,
     posting: false,
-    get canEditMetadata(): boolean {
-      if (!this.entity) {
-        return true;
-      } else if (this.entity.remind_object) {
-        return false;
-      }
-
-      return !this.entity.perma_url || !this.entity.entity_guid;
-    },
     onScreenFocused() {
       const params = props.route.params;
       if (
