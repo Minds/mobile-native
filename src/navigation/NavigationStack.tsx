@@ -66,6 +66,7 @@ import CustomMonetizeScreen from '../compose/monetize/CustomMonetizeScreeen';
 import TierScreen from '../settings/screens/TierScreen';
 import PlusScreen from '../common/components/PlusScreen';
 import PlusDiscoveryScreen from '../discovery/v2/PlusDiscoveryScreen';
+import featuresService from '../common/services/features.service';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };

@@ -25,7 +25,6 @@ export default class UserModel extends BaseModel {
    */
   eth_wallet: string = '';
   disable_autoplay_videos?: boolean;
-  wire_rewards;
   sums;
   btc_address?: string;
   icontime!: string;
