@@ -4,6 +4,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type FeedStore from '../common/stores/FeedStore';
+import { ComposeStoreType } from '../compose/useComposeStore';
 import ActivityModel from '../newsfeed/ActivityModel';
 
 export type MainSwiperParamList = {
@@ -56,7 +57,18 @@ export type AppStackParamList = {
   TagSelector: {};
   NsfwSelector: {};
   ScheduleSelector: {};
-  MonetizeSelector: {};
+  MonetizeSelector: {
+    store: ComposeStoreType;
+  };
+  PlusMonetize: {
+    store: ComposeStoreType;
+  };
+  MembershipMonetize: {
+    store: ComposeStoreType;
+  };
+  CustomMonetize: {
+    store: ComposeStoreType;
+  };
   LicenseSelector: {};
   EmailConfirmation: {};
   Update: {};
@@ -107,6 +119,9 @@ export type AppStackParamList = {
   BankInfoScreen: {
     walletStore: WalletStoreType;
   };
+  TierScreen: {};
+  PlusScreen: {};
+  PlusDiscoveryScreen: {};
 };
 
 // types for channel edit screens

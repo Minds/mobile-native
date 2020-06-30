@@ -68,9 +68,6 @@ const styles = StyleSheet.create({
     width: imgSize,
     height: imgSize,
   },
-  icon: {
-    color: '#FFFFFF',
-  },
   container: {
     width: '100%',
     backgroundColor: 'transparent',

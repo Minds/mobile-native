@@ -221,7 +221,7 @@ describe('user store', () => {
   it('should returns if the user is admin', async (done) => {
     // fake user
     const fakeUser = meFactory(2);
-    fakeUser.admin = true;
+    fakeUser.is_admin = true;
 
     const entity = new UserModel();
     entity.assign(fakeUser);

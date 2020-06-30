@@ -9,6 +9,9 @@ import remoteAction from '../common/RemoteAction';
 import ActivityModel from '../newsfeed/ActivityModel';
 import { getSingle } from '../newsfeed/NewsfeedService';
 import ThemedStyles from '../styles/ThemedStyles';
+import featuresService from '../common/services/features.service';
+import mindsService from '../common/services/minds.service';
+import supportTiersService from '../common/services/support-tiers.service';
 import settingsStore from '../settings/SettingsStore';
 
 /**
@@ -276,7 +279,7 @@ export default function (props) {
      */
     rejectImage() {
       this.mediaToConfirm = null;
-      this.mode = 'photo';
+      this.mode = settingsStore.composerMode;
     },
     /**
      * On media selected from gallery
@@ -365,7 +368,11 @@ export default function (props) {
 
       let newPost = {
         message: this.text,
-        wire_threshold: paywall ? this.wire_threshold : null,
+        wire_threshold: featuresService.has('plus-2020')
+          ? this.wire_threshold || null
+          : paywall
+          ? this.wire_threshold.min
+          : null,
         paywall,
         time_created:
           Math.floor(this.time_created / 1000) || Math.floor(Date.now() / 1000),
@@ -418,6 +425,32 @@ export default function (props) {
       } finally {
         this.setPosting(false);
       }
+    },
+    async saveMembsershipMonetize(urn, expires = null) {
+      this.wire_threshold = {
+        support_tier: { urn, expires },
+      };
+    },
+    async saveCustomMonetize(usd, has_usd, has_tokens) {
+      const supportTier = await supportTiersService.createPrivate(
+        usd,
+        has_usd,
+        has_tokens,
+      );
+      this.wire_threshold = {
+        support_tier: {
+          urn: supportTier.urn,
+          expires: supportTier.expires,
+        },
+      };
+    },
+    async savePlusMonetize(expires) {
+      this.wire_threshold = {
+        support_tier: {
+          urn: (await mindsService.getSettings()).plus.support_tier_urn,
+          expires,
+        },
+      };
     },
   };
 }

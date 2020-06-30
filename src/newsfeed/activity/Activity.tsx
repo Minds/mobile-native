@@ -19,6 +19,7 @@ import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
 import Translate from '../../common/components/Translate';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
+import LockV2 from '../../wire/v2/lock/Lock';
 import Lock from '../../wire/lock/Lock';
 import { CommonStyle } from '../../styles/Common';
 import Pinned from '../../common/components/Pinned';
@@ -28,6 +29,7 @@ import ActivityModel from '../ActivityModel';
 import BlockedChannel from '../../common/components/BlockedChannel';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type FeedStore from '../../common/stores/FeedStore';
+import featuresService from '../../common/services/features.service';
 import sessionService from '../../common/services/session.service';
 import NavigationService from '../../navigation/NavigationService';
 
@@ -198,6 +200,7 @@ export default class Activity extends Component<PropsType> {
     }
 
     const hasText = !!entity.text || !!entity.title;
+
     const hasMedia = entity.hasMedia();
     const hasRemind = !!entity.remind_object;
 
@@ -208,10 +211,19 @@ export default class Activity extends Component<PropsType> {
       ? [theme.fontXL, theme.fontMedium]
       : theme.fontL;
 
-    const lock =
-      entity.paywall && entity.paywall === '1' ? (
-        <Lock entity={entity} navigation={this.props.navigation} />
-      ) : null;
+    let lock;
+
+    if (featuresService.has('plus-2020')) {
+      lock =
+        entity.paywall && entity.paywall === '1' ? (
+          <LockV2 entity={entity} navigation={this.props.navigation} />
+        ) : null;
+    } else {
+      lock =
+        entity.paywall && entity.paywall === '1' ? (
+          <Lock entity={entity} navigation={this.props.navigation} />
+        ) : null;
+    }
 
     const message = (
       <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
@@ -254,12 +266,13 @@ export default class Activity extends Component<PropsType> {
         testID="ActivityView">
         <Pinned entity={this.props.entity} />
         {this.showOwner()}
-        {lock}
-        {/* Shows ontop only for rich embed or reminds */}
-        {this.props.entity.perma_url || this.props.entity.remind_object
-          ? message
-          : undefined}
+
         <View style={show_overlay ? styles.nsfwContainer : null}>
+          {lock}
+          {/* Shows ontop only for rich embed or reminds */}
+          {this.props.entity.perma_url || this.props.entity.remind_object
+            ? message
+            : undefined}
           {this.showRemind()}
 
           <MediaView

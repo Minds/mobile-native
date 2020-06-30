@@ -44,7 +44,6 @@ exports[`blog view screen component should renders correctly 1`] = `
         "ownerObj": UserModel {
           "__list": null,
           "access_id": "2",
-          "admin": false,
           "allow_comments": true,
           "banned": "no",
           "blocked": false,
@@ -83,6 +82,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           "icontime": "1523515420",
           "impressions": 100,
           "isOwner": [Function],
+          "is_admin": false,
           "language": "en",
           "last_accepted_tos": 0,
           "legacy_guid": false,
@@ -105,6 +105,7 @@ exports[`blog view screen component should renders correctly 1`] = `
           "permissions": Object {},
           "pinned_posts": Array [],
           "plus": true,
+          "pro": false,
           "programs": Array [
             "affiliate",
           ],
@@ -249,7 +250,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
-                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -288,6 +288,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "icontime": "1523515420",
                   "impressions": 100,
                   "isOwner": [Function],
+                  "is_admin": false,
                   "language": "en",
                   "last_accepted_tos": 0,
                   "legacy_guid": false,
@@ -310,6 +311,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],
@@ -430,7 +432,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
-                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -469,6 +470,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "icontime": "1523515420",
                   "impressions": 100,
                   "isOwner": [Function],
+                  "is_admin": false,
                   "language": "en",
                   "last_accepted_tos": 0,
                   "legacy_guid": false,
@@ -491,6 +493,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],
@@ -586,7 +589,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
-                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -625,6 +627,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "icontime": "1523515420",
                   "impressions": 100,
                   "isOwner": [Function],
+                  "is_admin": false,
                   "language": "en",
                   "last_accepted_tos": 0,
                   "legacy_guid": false,
@@ -647,6 +650,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],
@@ -743,7 +747,6 @@ exports[`blog view screen component should renders correctly 1`] = `
                 "ownerObj": UserModel {
                   "__list": null,
                   "access_id": "2",
-                  "admin": false,
                   "allow_comments": true,
                   "banned": "no",
                   "blocked": false,
@@ -782,6 +785,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "icontime": "1523515420",
                   "impressions": 100,
                   "isOwner": [Function],
+                  "is_admin": false,
                   "language": "en",
                   "last_accepted_tos": 0,
                   "legacy_guid": false,
@@ -804,6 +808,7 @@ exports[`blog view screen component should renders correctly 1`] = `
                   "permissions": Object {},
                   "pinned_posts": Array [],
                   "plus": true,
+                  "pro": false,
                   "programs": Array [
                     "affiliate",
                   ],

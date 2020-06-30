@@ -16,9 +16,16 @@ export type MenuItemPropsType = {
     noIcon?: boolean;
   };
   component?: any;
+  containerItemStyle?: any;
+  testID?: string;
 };
 
-export default function ({ item, component }: MenuItemPropsType) {
+export default function ({
+  item,
+  component,
+  containerItemStyle,
+  testID,
+}: MenuItemPropsType) {
   const theme = ThemedStyles.style;
 
   // ListItem Container Style
@@ -29,6 +36,7 @@ export default function ({ item, component }: MenuItemPropsType) {
     theme.borderPrimary,
     theme.padding0x,
     theme.paddingHorizontal4x,
+    ...containerItemStyle,
   ];
 
   // ListItem Chevron Style
@@ -44,6 +52,7 @@ export default function ({ item, component }: MenuItemPropsType) {
       containerStyle={containerStyle}
       titleStyle={theme.listItemTitle}
       chevron={chevronStyle}
+      testID={testID}
     />
   );
 }

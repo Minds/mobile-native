@@ -88,6 +88,19 @@ class MoreScreenNew extends Component {
       },
       */
       {
+        name: i18n.t('wire.lock.plus'),
+        icon: (
+          <Icon
+            name="add-to-queue"
+            size={ICON_SIZE - 4}
+            style={[theme.colorIcon, styles.icon]}
+          />
+        ),
+        onPress: () => {
+          this.props.navigation.navigate('PlusDiscoveryScreen');
+        },
+      },
+      {
         name: i18n.t('discovery.groups'),
         icon: (
           <IconFa

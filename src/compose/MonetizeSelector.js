@@ -39,7 +39,7 @@ export default observer(function (props) {
   return (
     <View style={[theme.flexContainer, theme.backgroundPrimary]}>
       <TopBar
-        leftText={i18n.t('monetize')}
+        leftText={i18n.t('monetize.title')}
         rightText={i18n.t('done')}
         onPressRight={NavigationService.goBack}
         onPressBack={NavigationService.goBack}

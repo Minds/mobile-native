@@ -7,6 +7,7 @@ import ChannelService from './ChannelService';
 import sessionService from '../common/services/session.service';
 import apiService from '../common/services/api.service';
 import logService from '../common/services/log.service';
+import { SupportTiersType } from '../wire/WireTypes';
 
 //@ts-nocheck
 export const USER_MODE_OPEN = 0;
@@ -24,7 +25,6 @@ export default class UserModel extends BaseModel {
    */
   eth_wallet: string = '';
   disable_autoplay_videos?: boolean;
-  wire_rewards;
   sums;
   btc_address?: string;
   icontime!: string;
@@ -32,7 +32,7 @@ export default class UserModel extends BaseModel {
   briefdescription!: string;
   city!: string;
   name!: string;
-  admin = false;
+  is_admin = false;
   plus: boolean = false;
   verified: boolean = false;
   founder: boolean = false;
@@ -41,6 +41,7 @@ export default class UserModel extends BaseModel {
   subscriptions_count: number = 0;
   carousels?: Array<any>;
   dob?: string;
+  pro: boolean = false;
 
   tags: Array<string> = [];
   groupsCount: number = 0;
@@ -84,6 +85,8 @@ export default class UserModel extends BaseModel {
    * @var {boolean}
    */
   @observable email_confirmed = false;
+
+  @observable wire_rewards;
 
   /**
    * Confirm email
@@ -157,11 +160,34 @@ export default class UserModel extends BaseModel {
     this.email_confirmed = value;
   }
 
+  @action
+  setTier(tier: SupportTiersType, type: 'usd' | 'tokens') {
+    const wire_rewards = this.wire_rewards;
+    if (!wire_rewards.rewards) {
+      wire_rewards.rewards = {
+        money: [] as SupportTiersType[],
+        tokens: [] as SupportTiersType[],
+      };
+    }
+    if (type === 'tokens') {
+      if (!wire_rewards.rewards.tokens) {
+        wire_rewards.rewards.tokens = [] as SupportTiersType[];
+      }
+      wire_rewards.rewards.tokens.push(tier);
+    } else {
+      if (!wire_rewards.rewards.money) {
+        wire_rewards.rewards.money = [] as SupportTiersType[];
+      }
+      wire_rewards.rewards.money.push(tier);
+    }
+    this.wire_rewards = wire_rewards;
+  }
+
   /**
    * Is admin
    */
   isAdmin() {
-    return this.admin;
+    return this.is_admin;
   }
 
   /**
