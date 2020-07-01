@@ -43,6 +43,15 @@ const styles = StyleSheet.create({
     marginRight: 5,
     marginTop: 5,
     flexDirection: 'row',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1.5,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 1.41,
+
+    elevation: 2,
   },
   bgGray: {
     backgroundColor: '#7D7D82',

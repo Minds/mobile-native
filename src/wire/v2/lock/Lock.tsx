@@ -75,7 +75,9 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
       style={[styles.backgroundImage, styles.mask]}
       source={entity.getThumbSource('large')}
       resizeMode="cover">
-      <Text style={[theme.colorWhite, theme.fontL]}>{message}</Text>
+      {!playButton && (
+        <Text style={[theme.colorWhite, theme.fontL, theme.fontSemibold]}>{message}</Text>
+      )}
       <LockTag type={'members'} />
       {playButton}
     </ImageBackground>
