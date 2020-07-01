@@ -147,21 +147,23 @@ export default class AttachmentStore {
   /**
    * Cancel the upload or delete the attachment if it is finished
    */
-  cancelOrDelete = () => {
+  cancelOrDelete = (deleteRemote = true) => {
     if (this.uploading) {
       this.cancelCurrentUpload();
     } else {
-      this.delete();
+      this.delete(deleteRemote);
     }
   };
 
   /**
    * Delete the uploaded attachment
    */
-  async delete() {
+  async delete(deleteRemote) {
     if (!this.uploading && this.hasAttachment && this.guid) {
       try {
-        attachmentService.deleteMedia(this.guid);
+        if (deleteRemote) {
+          attachmentService.deleteMedia(this.guid);
+        }
         this.clear();
         return true;
       } catch (err) {
@@ -191,6 +193,13 @@ export default class AttachmentStore {
   @action
   setLicense(value) {
     this.license = value;
+  }
+
+  @action
+  setMedia(type, guid) {
+    this.type = type;
+    this.guid = guid;
+    this.hasAttachment = Boolean(guid);
   }
 
   @action

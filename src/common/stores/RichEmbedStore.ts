@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { observable, action, extendObservable, isObservable } from 'mobx';
+import { observable, action, runInAction } from 'mobx';
 import RichEmbedService from '../services/rich-embed.service';
 import Util from '../helpers/util';
 import logService from '../services/log.service';
@@ -69,6 +69,16 @@ export default class RichEmbedStore {
   };
 
   /**
+   * Set metadata
+   * @param meta
+   */
+  @action
+  setMeta(meta) {
+    this.meta = meta;
+    this.hasRichEmbed = Boolean(meta);
+  }
+
+  /**
    * Set rich embed
    * @param {string} url
    */
@@ -81,8 +91,10 @@ export default class RichEmbedStore {
 
     try {
       const meta = await RichEmbedService.getMeta(url);
-      this.meta = meta;
-      this.metaInProgress = false;
+      runInAction(() => {
+        this.meta = meta;
+        this.metaInProgress = false;
+      });
     } catch (e) {
       this.metaInProgress = false;
       logService.exception('[RichEmbedStore]', e);

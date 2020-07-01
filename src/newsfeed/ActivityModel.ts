@@ -11,7 +11,6 @@ import {
   deleteItem,
   unfollow,
   follow,
-  update,
 } from '../newsfeed/NewsfeedService';
 import api from '../common/services/api.service';
 
@@ -340,28 +339,8 @@ export default class ActivityModel extends BaseModel {
   }
 
   @action
-  async updateActivity(data: any = {}) {
-    const entity: any = this.toPlainObject();
-
-    if (data) {
-      for (const field in data) {
-        entity[field] = data[field];
-      }
-    }
-
-    // call update endpoint
-    await update(entity);
-
-    // update instance properties
-    this.update(data);
-
-    this.setEdited(entity.message);
-  }
-
-  @action
-  setEdited(message: string) {
-    this.message = message;
-    this.edited = '1';
+  setEdited(value) {
+    this.edited = value;
   }
 }
 

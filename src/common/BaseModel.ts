@@ -311,7 +311,7 @@ export default class BaseModel extends AbstractModel {
   }
 
   isScheduled() {
-    return parseInt(this.time_created, 10) * 1000 > Date.now();
+    return parseInt(this.time_created, 10) * 1000 > Date.now() + 15000;
   }
 
   /**

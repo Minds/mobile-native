@@ -25,7 +25,6 @@ import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
 import { useDimensions, useKeyboard } from '@react-native-community/hooks';
 import { observer, useLocalStore } from 'mobx-react';
-import ActivityEditor from '../../../newsfeed/activity/ActivityEditor';
 import BottomOptionPopup, {
   useBottomOption,
   BottomOptionsStoreType,
@@ -51,13 +50,9 @@ const isIos = Platform.OS === 'ios';
 const ActivityFullScreen = observer((props: PropsType) => {
   // Local store
   const store = useLocalStore(() => ({
-    isEditing: false,
     comments: new CommentsStore(),
     scrollViewHeight: 0,
     contentHeight: 0,
-    toggleEdit() {
-      store.isEditing = !store.isEditing;
-    },
     onContentSizeChange(width, height) {
       store.contentHeight = height;
     },
@@ -84,7 +79,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
-  const showText = (!!entity.text || !!entity.title) && !store.isEditing;
+  const showText = !!entity.text || !!entity.title;
   const cleanBottom = useMemo(() => ({ paddingBottom: insets.bottom - 10 }), [
     insets.bottom,
   ]);
@@ -174,7 +169,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
           rightToolbar={
             <View style={theme.rowJustifyCenter}>
               <ActivityActionSheet
-                toggleEdit={store.toggleEdit}
                 entity={entity}
                 navigation={navigation}
                 onTranslate={onTranslate}
@@ -234,9 +228,6 @@ const ActivityFullScreen = observer((props: PropsType) => {
                   style={fontStyle}
                 />
               </>
-            )}
-            {store.isEditing && (
-              <ActivityEditor entity={entity} toggleEdit={store.toggleEdit} />
             )}
           </View>
           {hasRemind && (

@@ -88,7 +88,7 @@ export default observer(function (props) {
   const store = props.store;
   // dereference observables to listen to his changes
   const nsfw = store.nsfw.slice();
-  const tags = store.tags;
+  const tags = store.tags.slice();
   const time_created = store.time_created;
   const tokens = store.wire_threshold.min;
   const license = store.attachment.license;
@@ -135,6 +135,8 @@ export default observer(function (props) {
     }
   }, [keyboard.keyboardShown]);
 
+  const showSchedule = props.store.isEdit ? time_created > Date.now() : true;
+
   const renderInner = () => (
     <View style={[theme.backgroundPrimary, theme.fullHeight]}>
       <Item
@@ -149,13 +151,15 @@ export default observer(function (props) {
         }
         onPress={onNsfwPress}
       />
-      <Item
-        title={i18n.t('capture.schedule')}
-        description={
-          time_created ? moment(time_created).calendar() : i18n.t('now')
-        }
-        onPress={onSchedulePress}
-      />
+      {showSchedule && (
+        <Item
+          title={i18n.t('capture.schedule')}
+          description={
+            time_created ? moment(time_created).calendar() : i18n.t('now')
+          }
+          onPress={onSchedulePress}
+        />
+      )}
       <Item
         title={i18n.t('monetize.title')}
         description={

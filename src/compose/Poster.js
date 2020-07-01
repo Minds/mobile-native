@@ -41,18 +41,19 @@ export default observer(function (props) {
 
   // On post press
   const onPost = useCallback(async () => {
+    const isEdit = props.store.isEdit;
     const entity = await (props.store.isRemind
       ? props.store.remind()
       : props.store.submit());
 
     if (entity) {
-      props.onPost(entity);
+      props.onPost(entity, isEdit);
     }
   }, [props]);
 
   // On press back
   const onPressBack = useCallback(() => {
-    if (props.store.isRemind) {
+    if (props.store.isRemind || props.store.isEdit) {
       props.store.clear();
       NavigationService.goBack();
     } else {
@@ -95,6 +96,8 @@ export default observer(function (props) {
     ? undefined
     : props.store.isRemind
     ? i18n.t('capture.remind')
+    : props.store.isEdit
+    ? i18n.t('save')
     : i18n.t('capture.post');
 
   useEffect(() => {
@@ -102,8 +105,6 @@ export default observer(function (props) {
       inputRef.current.focus();
     }
   }, [inputRef]);
-
-  const showOptions = true;
 
   return (
     <KeyboardAvoidingView
@@ -122,15 +123,19 @@ export default observer(function (props) {
           <>
             {isImage ? (
               <View style={imagePreviewStyle}>
-                <TouchableOpacity
-                  onPress={props.store.attachment.cancelOrDelete}
-                  style={[styles.removeMedia, theme.backgroundSecondary]}>
-                  <IonIcon
-                    name="ios-close"
-                    size={28}
-                    style={(styles.icon, theme.colorPrimaryText)}
-                  />
-                </TouchableOpacity>
+                {!props.store.isEdit && (
+                  <TouchableOpacity
+                    onPress={() =>
+                      props.store.attachment.cancelOrDelete(!props.store.isEdit)
+                    }
+                    style={[styles.removeMedia, theme.backgroundSecondary]}>
+                    <IonIcon
+                      name="ios-close"
+                      size={28}
+                      style={(styles.icon, theme.colorPrimaryText)}
+                    />
+                  </TouchableOpacity>
+                )}
                 <ImagePreview
                   image={props.store.mediaToConfirm}
                   minRatio={previewRatio}
@@ -190,10 +195,14 @@ export default observer(function (props) {
           testID="PostInput"
         />
         {props.store.isRemind && <RemindPreview entity={props.store.entity} />}
+        {props.store.isEdit && props.store.entity.remind_object && (
+          <RemindPreview entity={props.store.entity.remind_object} />
+        )}
         {showEmbed && (
           <MetaPreview
             meta={props.store.embed.meta}
             onRemove={props.store.embed.clearRichEmbed}
+            isEdit={props.store.isEdit}
           />
         )}
       </ScrollView>

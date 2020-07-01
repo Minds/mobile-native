@@ -23,10 +23,7 @@ jest.mock(
 );
 jest.mock('../../../src/newsfeed/activity/OwnerBlock', () => 'OwnerBlock');
 jest.mock('../../../src/newsfeed/activity/Actions', () => 'Actions');
-jest.mock(
-  '../../../src/newsfeed/activity/ActivityEditor',
-  () => 'ActivityEditor',
-);
+
 jest.mock(
   '../../../src/newsfeed/activity/RemindOwnerBlock',
   () => 'RemindOwnerBlock',

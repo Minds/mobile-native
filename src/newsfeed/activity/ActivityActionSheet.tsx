@@ -20,7 +20,6 @@ import type ActivityModel from '../ActivityModel';
 type PropsType = {
   entity: ActivityModel;
   onTranslate: Function;
-  toggleEdit: Function;
   testID?: string;
   navigation: any;
 };
@@ -258,7 +257,10 @@ export default class ActivityActionSheet extends Component<
         if (this.props.onTranslate) this.props.onTranslate();
         break;
       case i18n.t('edit'):
-        this.props.toggleEdit(true);
+        this.props.navigation.navigate('StackCapture', {
+          isEdit: true,
+          entity: this.props.entity,
+        });
         break;
       case i18n.t('setExplicit'):
       case i18n.t('removeExplicit'):

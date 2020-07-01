@@ -11,8 +11,8 @@ import { observer } from 'mobx-react';
  * @param {Object} props
  */
 export default observer(function (props) {
-  const [open, setOpen] = useState(false);
-  const onpress = useCallback(() => {
+  const [open, setOpen] = useState(Boolean(props.store.title));
+  const onPress = useCallback(() => {
     setOpen((old) => {
       if (old === true) {
         props.store.setTitle('');
@@ -36,11 +36,11 @@ export default observer(function (props) {
           name={open ? 'minus' : 'plus'}
           size={20}
           style={theme.colorTertiaryText}
-          onPress={onpress}
+          onPress={onPress}
         />
         <Text
           style={[theme.fontXL, theme.colorIcon, theme.paddingHorizontal2x]}
-          onPress={onpress}>
+          onPress={onPress}>
           Title
         </Text>
       </View>

@@ -15,7 +15,6 @@ import OwnerBlock from './OwnerBlock';
 import Actions from './Actions';
 import formatDate from '../../common/helpers/date';
 import ActivityActionSheet from './ActivityActionSheet';
-import ActivityEditor from './ActivityEditor';
 import ActivityMetrics from './metrics/ActivityMetrics';
 import MediaView from '../../common/components/MediaView';
 import Translate from '../../common/components/Translate';
@@ -49,15 +48,11 @@ type PropsType = {
   showCommentsOutlet?: boolean;
 };
 
-type StateType = {
-  editing: boolean;
-};
-
 /**
  * Activity
  */
 @observer
-export default class Activity extends Component<PropsType, StateType> {
+export default class Activity extends Component<PropsType> {
   /**
    * Disposer for autoplay reaction
    */
@@ -80,13 +75,6 @@ export default class Activity extends Component<PropsType, StateType> {
    * Remind reference
    */
   mediaView: MediaView | null = null;
-
-  /**
-   * initial state
-   */
-  state = {
-    editing: false,
-  } as StateType;
 
   /**
    * Nav to activity full screen
@@ -237,10 +225,7 @@ export default class Activity extends Component<PropsType, StateType> {
         ) : null;
     }
 
-    const message = this.state.editing ? (
-      //Passing the store in newsfeed (could be channel also)
-      <ActivityEditor entity={entity} toggleEdit={this.toggleEdit} />
-    ) : (
+    const message = (
       <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
         {hasText ? (
           <ExplicitText
@@ -380,10 +365,6 @@ export default class Activity extends Component<PropsType, StateType> {
     this.mediaView?.playVideo(sound);
   }
 
-  toggleEdit = (value) => {
-    this.setState({ editing: value });
-  };
-
   /**
    * Show translation
    */
@@ -403,7 +384,6 @@ export default class Activity extends Component<PropsType, StateType> {
     const rightToolbar: React.ReactNode = (
       <View>
         <ActivityActionSheet
-          toggleEdit={this.toggleEdit}
           entity={this.props.entity}
           navigation={this.props.navigation}
           onTranslate={this.showTranslate}
