@@ -23,7 +23,7 @@ export type MenuItemPropsType = {
 export default function ({
   item,
   component,
-  containerItemStyle = [],
+  containerItemStyle,
   testID,
 }: MenuItemPropsType) {
   const theme = ThemedStyles.style;
