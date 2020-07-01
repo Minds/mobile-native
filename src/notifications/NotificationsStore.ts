@@ -92,6 +92,11 @@ class NotificationsStore {
   }
 
   @action
+  setLoading(value: boolean) {
+    this.loading = value;
+  }
+
+  @action
   async readLocal() {
     const notifications = await storageService.getItem(
       `notificationsList:${this.filter}`,
@@ -132,7 +137,7 @@ class NotificationsStore {
       return;
     }
 
-    this.loading = true;
+    this.setLoading(true);
 
     const filter = this.filter;
 
@@ -149,15 +154,19 @@ class NotificationsStore {
     } catch (err) {
       logService.exception('[NotificationStore]', err);
     } finally {
-      this.loading = false;
+      this.setLoading(false);
     }
   }
 
   /**
    * Refresh list
    */
-  async refresh() {
-    this.list.refresh(true);
+  async loadRemoteOrLocal(refresh = true) {
+    if (refresh) {
+      this.list.refresh(true);
+    } else {
+      this.list.clearList();
+    }
     try {
       await this.loadList(true);
     } catch (err) {
@@ -209,7 +218,7 @@ class NotificationsStore {
   setFilter(filter: FilterType) {
     this.filter = filter;
     this.list.clearList();
-    this.refresh();
+    this.loadRemoteOrLocal(false);
   }
 
   @action

@@ -138,7 +138,7 @@ class NotificationsScreen extends Component {
           initialNumToRender={12}
           stickyHeaderIndices={this.headerIndex}
           windowSize={8}
-          refreshing={list.refreshing || this.props.notifications.loading}
+          refreshing={list.refreshing}
           style={[ThemedStyles.style.backgroundPrimary, CS.flexContainer]}
         />
       </View>
@@ -157,7 +157,7 @@ class NotificationsScreen extends Component {
    * Clear and reload
    */
   refresh = async () => {
-    await this.props.notifications.refresh();
+    await this.props.notifications.loadRemoteOrLocal();
     this.props.notifications.setUnread(0);
   };
 
