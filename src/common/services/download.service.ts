@@ -31,7 +31,7 @@ class DownloadService {
         const type = this.isGif(entity) ? 'gif' : 'jpg';
         const filePath = `${RNFS.CachesDirectoryPath}/${entity.guid}.${type}`;
         const download = RNFS.downloadFile({
-          fromUrl: url + '?acces_token=' + session.token.toString(),
+          fromUrl: url,
           toFile: filePath,
           progressDivider: 1,
         });
