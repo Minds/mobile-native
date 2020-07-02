@@ -210,12 +210,14 @@ export default observer(function (props) {
         />
       </View>
       <View style={[styles.buttonTopContainer, cleanTop]}>
-        <Icon
-          name="ios-reverse-camera"
-          size={40}
-          style={styles.cameraReverseIcon}
-          onPress={store.toggleCamera}
-        />
+        {!store.recording && (
+          <Icon
+            name="ios-reverse-camera"
+            size={40}
+            style={styles.cameraReverseIcon}
+            onPress={store.toggleCamera}
+          />
+        )}
         <MIcon
           name={flashIconName}
           size={35}
