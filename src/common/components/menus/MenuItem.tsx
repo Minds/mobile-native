@@ -16,7 +16,7 @@ export type MenuItemPropsType = {
     noIcon?: boolean;
   };
   component?: any;
-  containerItemStyle?: any;
+  containerItemStyle?: {} | [];
   testID?: string;
 };
 
@@ -36,7 +36,7 @@ export default function ({
     theme.borderPrimary,
     theme.padding0x,
     theme.paddingHorizontal4x,
-    ...containerItemStyle,
+    containerItemStyle,
   ];
 
   // ListItem Chevron Style
