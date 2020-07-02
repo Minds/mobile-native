@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { observer } from 'mobx-react';
 import MenuSubtitleWithButton from '../../common/components/menus/MenuSubtitleWithButton';
 import i18n from '../../common/services/i18n.service';
@@ -9,6 +9,7 @@ import { SupportTiersType } from '../../wire/WireTypes';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { TierStoreType } from '../../compose/monetize/MembershipMonetizeScreeen';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import supportTiersService from '../../common/services/support-tiers.service';
 
 export type PaymentType = 'usd' | 'tokens';
 
@@ -39,10 +40,9 @@ const Header = ({ onLinkPress, labelText }: HeaderPropsType) => {
 
 const navToTierScreen = (
   navigation: any,
-  type: PaymentType,
   tier: SupportTiersType | boolean = false,
 ) => {
-  navigation.push('TierScreen', { type, tier });
+  navigation.push('TierScreen', { tier });
 };
 
 const renderTiers = (
@@ -62,7 +62,7 @@ const renderTiers = (
         item={{
           onPress: useForSelection
             ? () => tierStore.setSelectedTier(tier)
-            : () => navToTierScreen(navigation, type, tier),
+            : () => navToTierScreen(navigation, tier),
           title: tier.description,
           icon:
             useForSelection && tier === tierStore.selectedTier
@@ -83,6 +83,17 @@ const renderTiers = (
   }
 };
 
+const createTierManagementStore = () => {
+  const store = {
+    loaded: false,
+    support_tiers: [] as SupportTiersType[],
+    setSupportTIers(support_tiers: SupportTiersType[]) {
+      this.support_tiers = support_tiers;
+    },
+  };
+  return store;
+};
+
 const TierManagementScreen = observer(
   ({ route, navigation, tierStore }: PropsType) => {
     const { user } = useLegacyStores();
@@ -98,16 +109,26 @@ const TierManagementScreen = observer(
       [useForSelection, tierStore, navigation],
     );
 
+    useEffect(() => {
+      const getTiers = async () => {
+        const support_tiers = await supportTiersService.getAllFromUser();
+        //if (support_tiers) {
+        console.log('support_tiers', support_tiers);
+        //}
+      };
+      getTiers();
+    }, []);
+
     return (
       <ScrollView>
         <Header
           labelText={i18n.t('settings.tokenTiers')}
-          onLinkPress={() => navToTierScreen(navigation, 'tokens')}
+          onLinkPress={() => navToTierScreen(navigation)}
         />
         {renderTiersCallBack(tokens, 'tokens')}
         <Header
           labelText={i18n.t('settings.usdTiers')}
-          onLinkPress={() => navToTierScreen(navigation, 'usd')}
+          onLinkPress={() => navToTierScreen(navigation)}
         />
         {renderTiersCallBack(money, 'usd')}
       </ScrollView>

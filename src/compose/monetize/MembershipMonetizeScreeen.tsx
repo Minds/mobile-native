@@ -44,8 +44,8 @@ const createMembershipMonetizeStore = () => {
       this.loaded = true;
     },
     async getSupportTiers(guid: string) {
-      this.supportTiers =
-        (await supportTiersService.getAllFromGuid(guid)) || [];
+      this.supportTiers = (await supportTiersService.getAllFromUser()) || [];
+      console.log('this.supportTiers', this.supportTiers);
     },
   };
   return store;

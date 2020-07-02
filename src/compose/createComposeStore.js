@@ -423,17 +423,12 @@ export default function (props) {
       };
     },
     async saveCustomMonetize(usd, has_usd, has_tokens) {
-      const supportTier = await supportTiersService.createPrivate(
+      const support_tier = await supportTiersService.createPrivate(
         usd,
         has_usd,
         has_tokens,
       );
-      this.wire_threshold = {
-        support_tier: {
-          urn: supportTier.urn,
-          expires: supportTier.expires,
-        },
-      };
+      this.wire_threshold = { support_tier };
     },
     async savePlusMonetize(expires) {
       this.wire_threshold = {

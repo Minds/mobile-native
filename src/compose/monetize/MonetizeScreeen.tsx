@@ -54,8 +54,13 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
   const theme = ThemedStyles.style;
   const store = route.params.store;
 
+  const isCustomSelected =
+    store.wire_threshold &&
+    store.wire_threshold.support_tier &&
+    !store.wire_threshold.support_tier.public;
+
   const isActive = Boolean(
-    store.wire_threshold && store.wire_threshold.min > 0,
+    store.wire_threshold && store.wire_threshold.support_tier,
   );
 
   const checkIcon = (
@@ -89,7 +94,7 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
           item={{
             onPress: useNavCallback('PlusMonetize', store),
             title: (
-              <ItemText title={i18n.t('monetize.plus')} isActive={isActive} />
+              <ItemText title={i18n.t('monetize.plus')} isActive={false} />
             ),
           }}
           containerItemStyle={theme.backgroundPrimary}
@@ -101,7 +106,7 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
             title: (
               <ItemText
                 title={i18n.t('monetize.memberships')}
-                isActive={isActive}
+                isActive={false}
               />
             ),
           }}
@@ -112,7 +117,10 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
           item={{
             onPress: useNavCallback('CustomMonetize', store),
             title: (
-              <ItemText title={i18n.t('monetize.custom')} isActive={isActive} />
+              <ItemText
+                title={i18n.t('monetize.custom')}
+                isActive={isCustomSelected}
+              />
             ),
           }}
           containerItemStyle={theme.backgroundPrimary}

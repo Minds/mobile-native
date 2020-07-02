@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
@@ -46,7 +46,11 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   // we don´t know yet what the data structure be like
   //const blockedType = getBlockType(entity.wire_threshold);
-  const message = getTextForBlocked('members');
+  const message = getTextForBlocked('plus');
+
+  const unlock = useCallback(() => {
+    navigation.push('PlusScreen');
+  }, [navigation]);
 
   if (!entity.hasThumbnails() && !entity.hasMedia()) {
     return (
@@ -58,7 +62,7 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
           theme.padding2x,
         ]}>
         <Text style={[theme.colorWhite, theme.fontL]}>{message}</Text>
-        <LockTag type={'members'} />
+        <LockTag type={'plus'} />
       </View>
     );
   }
@@ -77,8 +81,10 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
       style={[styles.backgroundImage, styles.mask]}
       source={entity.getThumbSource('large')}
       resizeMode="cover">
-      <Text style={[theme.colorWhite, theme.fontL]}>{message}</Text>
-      <LockTag type={'members'} />
+      <Text style={[theme.colorWhite, theme.fontL]} onPress={unlock}>
+        {message}
+      </Text>
+      <LockTag type={'plus'} />
       {playButton}
     </ImageBackground>
   );

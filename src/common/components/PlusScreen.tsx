@@ -18,6 +18,7 @@ import CenteredLoading from './CenteredLoading';
 import MenuItem from './menus/MenuItem';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../styles/Colors';
+import SaveButton from './SaveButton';
 
 const bannerAspectRatio = 1.7;
 
@@ -58,7 +59,7 @@ type PropsOptionType = {
   localStore: PlusStoreType;
 };
 
-const Options = ({ options, localStore }: PropsOptionType) => {
+const Options = observer(({ options, localStore }: PropsOptionType) => {
   const theme = ThemedStyles.style;
   const checkIcon = (
     <MIcon name="check" size={23} style={theme.colorPrimaryText} />
@@ -68,10 +69,7 @@ const Options = ({ options, localStore }: PropsOptionType) => {
       <MenuItem
         item={{
           onPress: () => localStore.setSelectedOption(options[0]),
-          title: (
-            <Text
-              style={theme.colorPrimaryText}>{`Annually ${options[0]}`}</Text>
-          ),
+          title: `Annually   ${options[0]} / month`,
           icon:
             localStore.selectedOption === options[0] ? checkIcon : undefined,
           noIcon: localStore.selectedOption !== options[0],
@@ -80,10 +78,7 @@ const Options = ({ options, localStore }: PropsOptionType) => {
       <MenuItem
         item={{
           onPress: () => localStore.setSelectedOption(options[1]),
-          title: (
-            <Text
-              style={theme.colorPrimaryText}>{`Monthly ${options[1]}`}</Text>
-          ),
+          title: `Monthly   ${options[1]} / month`,
           icon:
             localStore.selectedOption === options[1] ? checkIcon : undefined,
           noIcon: localStore.selectedOption !== options[1],
@@ -91,15 +86,23 @@ const Options = ({ options, localStore }: PropsOptionType) => {
       />
     </View>
   );
+});
+
+type PropsType = {
+  navigation: any;
 };
 
-const PlusScreen = observer(() => {
+const PlusScreen = observer(({ navigation }: PropsType) => {
   const localStore = useLocalStore(createPlusStore);
   const theme = ThemedStyles.style;
   const insets = useSafeArea();
   const cleanTop = insets.top ? { marginTop: insets.top } : null;
 
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
+
+  navigation.setOptions({
+    headerRight: () => <SaveButton onPress={() => {}} text={'Upgrade'} />,
+  });
 
   useEffect(() => {
     if (!localStore.loaded) {
@@ -112,7 +115,7 @@ const PlusScreen = observer(() => {
   }
 
   return (
-    <View style={[styles.container, cleanTop]}>
+    <ScrollView style={[styles.container, cleanTop]}>
       <ImageBackground
         style={styles.banner}
         source={require('../../assets/plus-image.png')}
@@ -165,7 +168,9 @@ const PlusScreen = observer(() => {
           ]}
         />
       )}
-      <LabeledComponent label="Select Card" wrapperStyle={theme.marginBottom4x}>
+      <LabeledComponent
+        label="SELECT CARD"
+        wrapperStyle={[theme.marginVertical4x, theme.paddingHorizontal4x]}>
         <ScrollView
           contentContainerStyle={[
             theme.paddingLeft2x,
@@ -177,7 +182,7 @@ const PlusScreen = observer(() => {
           <StripeCardSelector onCardSelected={localStore.setCard} />
         </ScrollView>
       </LabeledComponent>
-    </View>
+    </ScrollView>
   );
 });
 
