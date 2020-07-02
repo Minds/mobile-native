@@ -15,6 +15,7 @@ import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import Colors from '../../styles/Colors';
+import MindsSwitch from '../../common/components/MindsSwitch';
 
 type PlusMonetizeScreenRouteProp = RouteProp<AppStackParamList, 'PlusMonetize'>;
 type PlusMonetizeScreenNavigationProp = StackNavigationProp<
@@ -33,8 +34,8 @@ const createPlusMonetizeStore = () => {
     setAgreedTerms() {
       this.agreedTerms = !this.agreedTerms;
     },
-    setExclusivity() {
-      this.exclusivity = this.exclusivity === '48hrs' ? 'always' : '48hrs';
+    setExclusivity(exclusivity) {
+      this.exclusivity = exclusivity;
     },
   };
   return store;
@@ -114,23 +115,13 @@ const PlusMonetizeScreen = observer(({ route }: PropsType) => {
         <LabeledComponent
           label={i18n.t('monetize.plusMonetize.exclusivity')}
           labelStyle={theme.fontL}>
-          <View style={theme.rowJustifyStart}>
-            <Text style={switchTextStyle}>
-              {i18n.t('monetize.plusMonetize.hrs')}
-            </Text>
-            <Switch
-              value={localStore.exclusivity === 'always'}
-              onSyncPress={localStore.setExclusivity}
-              circleColorActive={Colors.switchCircle}
-              circleColorInactive={Colors.switchCircle}
-              backgroundActive={Colors.switchBackgroun}
-              backgroundInactive={Colors.switchBackgroun}
-              style={theme.marginHorizontal2x}
-            />
-            <Text style={switchTextStyle}>
-              {i18n.t('monetize.plusMonetize.always')}
-            </Text>
-          </View>
+          <MindsSwitch
+            leftText={i18n.t('monetize.plusMonetize.hrs')}
+            rightText={i18n.t('monetize.plusMonetize.always')}
+            leftValue={'48hrs'}
+            rightValue={'always'}
+            onSelectedValueChange={localStore.setExclusivity}
+          />
         </LabeledComponent>
       </View>
     </Wrapper>

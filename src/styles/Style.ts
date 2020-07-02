@@ -101,6 +101,8 @@ export interface ThemedStyle {
   buttonBorder: any;
   listItemTitle: any;
   strikethrough: any;
+  mindsSwitchBackgroundPrimary: any;
+  mindsSwitchBackgroundSecondary: any;
   [name: string]: any;
 }
 
@@ -296,6 +298,12 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   backgroundIconActive: {
     backgroundColor: theme.icon_active,
+  },
+  mindsSwitchBackgroundPrimary: {
+    backgroundColor: theme.secondary_background,
+  },
+  mindsSwitchBackgroundSecondary: {
+    backgroundColor: theme.primary_border,
   },
 
   // borders

@@ -37,9 +37,8 @@ const ItemText = ({ title, isActive }: ItemTextPropsType) => {
     <View
       style={[
         theme.rowJustifySpaceBetween,
-        theme.paddingTop3x,
-        theme.paddingBottom2x,
-        theme.borderBottomHair,
+        theme.paddingTop4x,
+        theme.paddingBottom3x,
         theme.borderPrimary,
       ]}>
       <Text>{title}</Text>
