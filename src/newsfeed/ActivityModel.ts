@@ -48,7 +48,7 @@ export default class ActivityModel extends BaseModel {
   ownerObj!: UserModel;
   listRef?: FlatList<any>;
   thumbnails?: Thumbs;
-  paywall: '1' | '' = '';
+  paywall: true | '1' | '' = '';
   paywall_unlocked: boolean = false;
   guid: string = '';
   subtype: string = '';

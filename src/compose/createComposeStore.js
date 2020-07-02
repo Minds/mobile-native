@@ -335,7 +335,7 @@ export default function (props) {
         return false;
       }
 
-      // Somthing to post?
+      // Something to post?
       if (
         !this.attachment.hasAttachment &&
         !this.text &&
