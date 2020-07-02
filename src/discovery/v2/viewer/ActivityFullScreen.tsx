@@ -1,11 +1,5 @@
 import React, { useRef, useCallback, useMemo } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
@@ -37,6 +31,10 @@ import sessionService from '../../../common/services/session.service';
 import { useOnFocus } from '@crowdlinker/react-native-pager';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
+import featuresService from '../../../common/services/features.service';
+
+import LockV2 from '../../../wire/v2/lock/Lock';
+import Lock from '../../../wire/lock/Lock';
 
 const TEXT_SHORT_THRESHOLD = 110;
 const TEXT_MEDIUM_THRESHOLD = 300;
@@ -152,6 +150,19 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }, [bottomStore, entity, navigation, route]);
 
   let buttonPopUpHeight = window.height * 0.85;
+  let lock;
+
+  if (featuresService.has('plus-2020')) {
+    lock =
+      entity.paywall && entity.paywall === '1' ? (
+        <LockV2 entity={entity} navigation={navigation} />
+      ) : null;
+  } else {
+    lock =
+      entity.paywall && entity.paywall === '1' ? (
+        <Lock entity={entity} navigation={navigation} />
+      ) : null;
+  }
 
   return (
     <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
@@ -203,6 +214,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
             theme.fullWidth,
             styles.content,
           ]}>
+          {lock}
           {hasMedia && (
             <MediaView
               ref={mediaRef}
