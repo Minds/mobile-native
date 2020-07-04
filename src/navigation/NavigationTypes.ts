@@ -65,6 +65,7 @@ export type AppStackParamList = {
   };
   MembershipMonetize: {
     store: ComposeStoreType;
+    useForSelection: boolean;
   };
   CustomMonetize: {
     store: ComposeStoreType;

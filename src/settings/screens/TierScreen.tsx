@@ -40,7 +40,6 @@ const createTierStore = () => {
       this.support_tier = support_tier;
     },
     async saveTier() {
-      console.log('saveTier', supportTiersService);
       try {
         await supportTiersService.createPublic(
           this.support_tier.description,
@@ -77,11 +76,11 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
   }
 
   const save = useCallback(async () => {
-    console.log('save', localStore);
     localStore.setSaving(true);
     await localStore.saveTier();
     localStore.setSaving(false);
-  }, [localStore]);
+    navigation.goBack();
+  }, [localStore, navigation]);
 
   navigation.setOptions({
     headerRight: () => <SaveButton onPress={save} />,

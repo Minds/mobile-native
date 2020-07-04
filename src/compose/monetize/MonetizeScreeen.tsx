@@ -101,7 +101,11 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
         />
         <MenuItem
           item={{
-            onPress: useNavCallback('MembershipMonetize', store),
+            onPress: () =>
+              NavigationService.navigate('MembershipMonetize', {
+                store,
+                useForSelection: true,
+              }),
             title: (
               <ItemText
                 title={i18n.t('monetize.memberships')}

@@ -32,6 +32,7 @@ export interface ThemedStyle {
   colorIconActive: any;
   colorSeparator: any;
   colorAlert: any;
+  colorTransparent: any;
   backgroundInfo: any;
   backgroundSuccess: any;
   backgroundDanger: any;
@@ -249,6 +250,9 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   colorAlert: {
     color: theme.alert,
+  },
+  colorTransparent: {
+    color: 'transparent',
   },
   // backgrounds
   backgroundInfo: {

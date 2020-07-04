@@ -532,8 +532,7 @@
     "tokenTiers": "TOKEN TIERS",
     "usdTiers": "USD TIERS",
     "addTier": "Add Tier",
-    "noUsdTier": "No USD Tier",
-    "noTokenTier": "No Tokens Tier",
+    "noTiers": "You don't have any tier",
     "payment": "Payment",
     "reportedContent": {
       "action": {

@@ -105,24 +105,19 @@ const MembershipMonetizeScreeen = observer(
 
     return (
       <Wrapper store={store} doneText={i18n.t('save')} onPressRight={save}>
-        <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
+        <View style={[theme.paddingTop6x, theme.paddingHorizontal3x]}>
           <Text style={[styles.title, theme.colorPrimaryText]}>
             {i18n.t('monetize.subScreensTitle')}
           </Text>
           <Text style={descriptionTextStyle}>
             {i18n.t('monetize.membershipMonetize.description')}
           </Text>
-          <MenuSubtitle
-            labelText={i18n.t('monetize.membershipMonetize.label')}
-            linkText={''}
-            onLinkPress={() => true}
-          />
-          <TierManagementScreen
-            route={route}
-            navigation={navigation}
-            tierStore={localStore}
-          />
         </View>
+        <TierManagementScreen
+          route={route}
+          navigation={navigation}
+          tierStore={localStore}
+        />
       </Wrapper>
     );
   },
