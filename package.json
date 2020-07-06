@@ -8,6 +8,8 @@
     "start": "react-native start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "check-prettier": "yarn prettier --check \"./src/**/*.{ts,tsx,js,json}\" \"./*.{tsx,ts}\"",
+    "push-locale": "cp locales/en.json ../l10n/mobile-native/Base.json",
+    "pull-locale": "cd ../l10n; git pull origin master; cd -; cp ../l10n/mobile-native/locale/*.json locales/",
     "static-analysis": "tsc",
     "validate-locales": "node tasks/validate-locales.js",
     "unused-locales": "ts-node tasks/unused-locales.js",
