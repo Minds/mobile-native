@@ -6,8 +6,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LockTag from './LockTag';
 import Colors from '../../../styles/Colors';
-import Touchable from '../../../common/components/Touchable';
-import WireService from '../../WireService';
 
 type PropsType = {
   entity: ActivityModel;
@@ -63,7 +61,7 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
     );
   }
 
-  const playButton = entity.hasMedia() ? (
+  const playButton = entity.hasVideo() ? (
     <Icon
       style={styles.videoIcon}
       name="play-circle-outline"
@@ -77,7 +75,11 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
       style={[styles.backgroundImage, styles.mask]}
       source={entity.getThumbSource('large')}
       resizeMode="cover">
-      <Text style={[theme.colorWhite, theme.fontL]}>{message}</Text>
+      {!playButton && (
+        <Text style={[theme.colorWhite, theme.fontL, theme.fontSemibold]}>
+          {message}
+        </Text>
+      )}
       <LockTag type={'members'} />
       {playButton}
     </ImageBackground>
