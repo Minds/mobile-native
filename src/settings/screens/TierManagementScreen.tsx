@@ -22,7 +22,7 @@ type HeaderPropsType = {
 type PropsType = {
   route: any;
   navigation: any;
-  tierStore: TierStoreType;
+  tierStore?: TierStoreType;
 };
 
 const Header = ({ onLinkPress, labelText }: HeaderPropsType) => {
@@ -39,17 +39,10 @@ const Header = ({ onLinkPress, labelText }: HeaderPropsType) => {
   );
 };
 
-const navToTierScreen = (
-  navigation: any,
-  tier: SupportTiersType | boolean = false,
-) => {
-  navigation.push('TierScreen', { tier });
-};
-
 const renderTiers = (
   tiers: SupportTiersType[],
   useForSelection: boolean,
-  tierStore: TierStoreType,
+  tierStore: TierStoreType | undefined,
   navigation: any,
 ) => {
   const theme = ThemedStyles.style;
@@ -63,9 +56,10 @@ const renderTiers = (
     return tiers.map((tier) => (
       <MenuItem
         item={{
-          onPress: useForSelection
-            ? () => tierStore.setSelectedTier(tier)
-            : () => navToTierScreen(navigation, tier),
+          onPress:
+            useForSelection && tierStore
+              ? () => tierStore.setSelectedTier(tier)
+              : () => navToTierScreen(navigation, tier),
           title: (
             <View
               style={[
@@ -80,7 +74,7 @@ const renderTiers = (
           ),
           icon: !useForSelection
             ? undefined
-            : tier === tierStore.selectedTier
+            : tierStore && tier === tierStore.selectedTier
             ? checkIcon
             : transparentCheckIcon,
         }}
@@ -104,8 +98,21 @@ const createTierManagementStore = () => {
       this.support_tiers = support_tiers;
       this.loaded = true;
     },
+    addTier(support_tier: SupportTiersType) {
+      this.support_tiers.push(support_tier);
+    },
   };
   return store;
+};
+
+const navToTierScreen = (
+  navigation: any,
+  tier: SupportTiersType | boolean = false,
+  localStore:
+    | ReturnType<typeof createTierManagementStore>
+    | undefined = undefined,
+) => {
+  navigation.push('TierScreen', { tier, tierManagementStore: localStore });
 };
 
 const TierManagementScreen = observer(
@@ -130,9 +137,12 @@ const TierManagementScreen = observer(
           localStore.setSupportTIers(support_tiers);
         }
       };
-
-      getTiers();
-    }, [localStore]);
+      if (!tierStore) {
+        getTiers();
+      } else {
+        localStore.setSupportTIers(tierStore.supportTiers);
+      }
+    }, [localStore, tierStore]);
 
     if (!localStore.loaded) {
       return <CenteredLoading />;
@@ -142,7 +152,7 @@ const TierManagementScreen = observer(
       <ScrollView>
         <Header
           labelText={i18n.t('monetize.membershipMonetize.label')}
-          onLinkPress={() => navToTierScreen(navigation)}
+          onLinkPress={() => navToTierScreen(navigation, false, localStore)}
         />
         {renderTiersCallBack()}
       </ScrollView>

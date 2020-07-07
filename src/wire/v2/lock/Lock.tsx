@@ -8,35 +8,46 @@ import LockTag from './LockTag';
 import Colors from '../../../styles/Colors';
 import Touchable from '../../../common/components/Touchable';
 import WireService from '../../WireService';
+import { SupportTiersType } from '../../WireTypes';
+import mindsService from '../../../common/services/minds.service';
+import Button from '../../../common/components/Button';
+import i18n from '../../../common/services/i18n.service';
 
 type PropsType = {
   entity: ActivityModel;
   navigation: any;
 };
 
-type BlockType = 'members' | 'paywall' | 'plus';
+type LockType = 'members' | 'paywall' | 'plus';
 
-const getBlockType = (urn: string): BlockType => {
-  if (!urn) {
-    return 'paywall';
+const getLockType = (support_tier: SupportTiersType): LockType => {
+  let type: LockType = support_tier.public ? 'members' : 'paywall';
+
+  if (mindsService.settings.plus.support_tier_urn === support_tier.urn) {
+    type = 'plus';
   }
-  const type = urn.split(':')[1];
 
-  // TODO how we indentify paywall if all are support-tier
-  return type === 'support-tier' ? 'members' : 'plus';
+  return type;
 };
 
-const getTextForBlocked = (type: BlockType) => {
+const getTextForBlocked = (type: LockType, support_tier: SupportTiersType) => {
   let message = '';
   switch (type) {
     case 'members':
-      message = 'Become a member to view this post';
+      message = `Become ${support_tier.name} to view this post`;
       break;
     case 'plus':
       message = 'Join Minds+ to view this post';
       break;
     case 'paywall':
-      message = 'Pay 1 Token see this post';
+      const payUsd = support_tier.has_usd ? `${support_tier.usd} USD` : '';
+      const payTokens = support_tier.has_tokens
+        ? `${support_tier.tokens} Tokens`
+        : '';
+      let pay = payUsd;
+      pay +=
+        pay !== '' ? (payTokens !== '' ? ` / ${payTokens}` : '') : payTokens;
+      message = `Pay ${pay} to see this post`;
       break;
   }
   return message;
@@ -44,13 +55,47 @@ const getTextForBlocked = (type: BlockType) => {
 
 const Lock = observer(({ entity, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
+  const wire_threshold = entity.wire_threshold;
+  const support_tier: SupportTiersType | null =
+    wire_threshold && 'support_tier' in wire_threshold
+      ? wire_threshold.support_tier
+      : null;
   // we don´t know yet what the data structure be like
-  //const blockedType = getBlockType(entity.wire_threshold);
-  const message = getTextForBlocked('plus');
+  let lockType: LockType = 'paywall';
+  let message = 'Pay to see this post';
+
+  if (support_tier) {
+    lockType = getLockType(support_tier);
+    message = getTextForBlocked(lockType, support_tier);
+  }
 
   const unlock = useCallback(() => {
-    navigation.push('PlusScreen');
-  }, [navigation]);
+    switch (lockType) {
+      case 'plus':
+        navigation.push('PlusScreen');
+        break;
+      case 'members':
+      case 'paywall':
+        navigation.push('JoinMembershipScreen', {
+          owner: entity.ownerObj,
+          tier: support_tier,
+        });
+    }
+  }, [navigation, lockType, entity, support_tier]);
+
+  const unlockBlock = (
+    <>
+      <Text
+        style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
+        {message}
+      </Text>
+      <Button
+        onPress={unlock}
+        text={i18n.t('unlockPost')}
+        containerStyle={theme.paddingVertical2x}
+      />
+    </>
+  );
 
   if (!entity.hasThumbnails() && !entity.hasMedia()) {
     return (
@@ -61,30 +106,30 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
           theme.centered,
           theme.padding2x,
         ]}>
-        <Text style={[theme.colorWhite, theme.fontL]}>{message}</Text>
-        <LockTag type={'plus'} />
+        {unlockBlock}
+        <LockTag type={lockType} />
       </View>
     );
   }
 
-  const playButton = entity.hasMedia() ? (
-    <Icon
-      style={styles.videoIcon}
-      name="play-circle-outline"
-      size={86}
-      color={Colors.light}
-    />
-  ) : null;
+  const playButton =
+    entity.hasMedia() &&
+    (entity.custom_type === 'video' || entity.subtype === 'video') ? (
+      <Icon
+        style={styles.videoIcon}
+        name="play-circle-outline"
+        size={86}
+        color={Colors.light}
+      />
+    ) : null;
 
   return (
     <ImageBackground
       style={[styles.backgroundImage, styles.mask]}
       source={entity.getThumbSource('large')}
       resizeMode="cover">
-      <Text style={[theme.colorWhite, theme.fontL]} onPress={unlock}>
-        {message}
-      </Text>
-      <LockTag type={'plus'} />
+      {unlockBlock}
+      <LockTag type={lockType} />
       {playButton}
     </ImageBackground>
   );
@@ -111,6 +156,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
+  },
+  lockMessage: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 16,
+    letterSpacing: 0,
   },
 });
 

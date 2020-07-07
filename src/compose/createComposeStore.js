@@ -417,10 +417,8 @@ export default function (props) {
         this.setPosting(false);
       }
     },
-    async saveMembsershipMonetize(urn, expires = null) {
-      this.wire_threshold = {
-        support_tier: { urn, expires },
-      };
+    async saveMembsershipMonetize(support_tier) {
+      this.wire_threshold = { support_tier };
     },
     async saveCustomMonetize(usd, has_usd, has_tokens) {
       const support_tier = await supportTiersService.createPrivate(
@@ -437,6 +435,9 @@ export default function (props) {
           expires,
         },
       };
+    },
+    clearWireThreshold() {
+      this.wire_threshold = DEFAULT_MONETIZE;
     },
   };
 }

@@ -898,6 +898,7 @@
   "attention": "Attention",
   "retry": "Retry",
   "unlock": "Unlock",
+  "unlockPost": "Unlock Post",
   "setup": "Setup",
   "send": "Send",
   "passwordPlaceholder": "password...",

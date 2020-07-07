@@ -6,6 +6,7 @@ import { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type FeedStore from '../common/stores/FeedStore';
 import { ComposeStoreType } from '../compose/useComposeStore';
 import ActivityModel from '../newsfeed/ActivityModel';
+import { SupportTiersType } from '../wire/WireTypes';
 
 export type MainSwiperParamList = {
   Capture: {};
@@ -123,6 +124,10 @@ export type AppStackParamList = {
   TierScreen: {};
   PlusScreen: {};
   PlusDiscoveryScreen: {};
+  JoinMembershipScreen: {
+    tier: SupportTiersType;
+    owner: UserModel;
+  };
 };
 
 // types for channel edit screens

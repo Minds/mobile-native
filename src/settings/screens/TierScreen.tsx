@@ -40,8 +40,9 @@ const createTierStore = () => {
       this.support_tier = support_tier;
     },
     async saveTier() {
+      let response;
       try {
-        await supportTiersService.createPublic(
+        response = await supportTiersService.createPublic(
           this.support_tier.description,
           this.support_tier.usd,
           this.support_tier.description,
@@ -49,7 +50,10 @@ const createTierStore = () => {
           this.support_tier.has_tokens,
         );
       } catch (err) {
+        response = false;
         throw new UserError(err.message);
+      } finally {
+        return response;
       }
     },
   };
@@ -59,6 +63,9 @@ const createTierStore = () => {
 const TierScreen = observer(({ route, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
   const tier: SupportTiersType | boolean = route.params.tier;
+  const tierManagementStore = route.params.tierManagementStore;
+
+  let isNew = true;
 
   const labelStyle = [
     theme.fontM,
@@ -73,14 +80,18 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
   //check no boolean
   if (tier && tier !== true) {
     localStore.setTier(tier);
+    isNew = false;
   }
 
   const save = useCallback(async () => {
     localStore.setSaving(true);
-    await localStore.saveTier();
+    const tier = await localStore.saveTier();
     localStore.setSaving(false);
+    if (isNew && tier && tierManagementStore) {
+      tierManagementStore.addTier(tier);
+    }
     navigation.goBack();
-  }, [localStore, navigation]);
+  }, [localStore, navigation, tierManagementStore, isNew]);
 
   navigation.setOptions({
     headerRight: () => <SaveButton onPress={save} />,

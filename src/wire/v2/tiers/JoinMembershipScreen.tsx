@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
@@ -9,6 +9,11 @@ import LabeledComponent from '../../../common/components/LabeledComponent';
 import StripeCardSelector from '../../methods/StripeCardSelector';
 import Switch from 'react-native-switch-pro';
 import Colors from '../../../styles/Colors';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList } from '../../../navigation/NavigationTypes';
+import Button from '../../../common/components/Button';
+import WireService from '../../WireService';
 
 const tabList = [
   {
@@ -22,13 +27,26 @@ const tabList = [
 ];
 
 type payMethod = 'tokens' | 'usd';
+type JoinMembershipScreenRouteProp = RouteProp<
+  AppStackParamList,
+  'JoinMembershipScreen'
+>;
+type JoinMembershipScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'JoinMembershipScreen'
+>;
+
+type PropsType = {
+  route: JoinMembershipScreenRouteProp;
+  navigation: JoinMembershipScreenNavigationProp;
+};
 
 const createJoinMembershipStore = () => {
   const store = {
     card: '' as any,
     payMethod: 'usd' as payMethod,
-    setPayMethod(method: payMethod) {
-      this.payMethod = method;
+    setPayMethod() {
+      this.payMethod = this.payMethod === 'usd' ? 'tokens' : 'usd';
     },
     setCard(card: any) {
       this.card = card;
@@ -38,7 +56,7 @@ const createJoinMembershipStore = () => {
   return store;
 };
 
-const JoinMembershipScreen = observer(({ route, navigation }) => {
+const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
   /**
    * TODO
    * Get amounts
@@ -46,6 +64,7 @@ const JoinMembershipScreen = observer(({ route, navigation }) => {
    * show input if tokens is selected payment
    */
   const store = useLocalStore(createJoinMembershipStore);
+  const support_tier = route.params.tier;
 
   const owner = route.params.owner;
 
@@ -55,6 +74,50 @@ const JoinMembershipScreen = observer(({ route, navigation }) => {
   const cleanTop = insets.top ? { marginTop: insets.top } : null;
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
 
+  /*const pay = useCallback(
+    async () => {
+      WireService.unlock();
+    },
+    [input],
+  )*/
+
+  let costText;
+  const costTextStyle = [
+    styles.costText,
+    theme.fontL,
+    theme.colorSecondaryText,
+  ];
+  if (store.payMethod === 'usd') {
+    if (support_tier.has_usd) {
+      costText = (
+        <Text style={costTextStyle}>
+          <Text style={theme.colorPrimaryText}>{`$${support_tier.usd} `}</Text>
+          per month
+        </Text>
+      );
+    } else {
+      costText = <Text style={costTextStyle}>Doesn't accept USD</Text>;
+    }
+  }
+
+  if (store.payMethod === 'tokens') {
+    if (support_tier.has_usd) {
+      costText = (
+        <Text style={costTextStyle}>
+          <Text
+            style={
+              theme.colorPrimaryText
+            }>{`${support_tier.tokens} Tokens `}</Text>
+          per month
+        </Text>
+      );
+    } else {
+      costText = <Text style={costTextStyle}>Doesn't accept Tokens</Text>;
+    }
+  }
+
+  const payText = support_tier.public ? 'Become a Member' : 'Pay Custom Tier';
+
   return (
     <Fragment>
       <ScrollView
@@ -62,35 +125,57 @@ const JoinMembershipScreen = observer(({ route, navigation }) => {
         contentContainerStyle={cleanTop}>
         <View style={styles.container}>
           <HeaderComponent user={owner} />
-          <UserNamesComponent user={owner} pay={true} />
+          <UserNamesComponent user={owner} />
         </View>
-        <View style={theme.rowJustifyStart}>
+        <View style={[theme.rowJustifyStart, theme.paddingLeft4x]}>
           <Text style={switchTextStyle}>{'USD'}</Text>
           <Switch
-            value={store.payMethod === 'usd'}
+            value={store.payMethod === 'tokens'}
             onSyncPress={store.setPayMethod}
-            circleColorActive={Colors.switchCircle}
-            circleColorInactive={Colors.switchCircle}
-            backgroundActive={Colors.switchBackgroun}
-            backgroundInactive={Colors.switchBackgroun}
+            circleColorActive={Colors.switchBackgroun}
+            circleColorInactive={Colors.switchBackgroun}
+            backgroundActive={Colors.switchCircle}
+            backgroundInactive={Colors.switchCircle}
             style={theme.marginHorizontal2x}
           />
           <Text style={switchTextStyle}>{'Tokens'}</Text>
         </View>
-        <LabeledComponent
-          label="Select Card"
-          wrapperStyle={theme.marginBottom4x}>
-          <ScrollView
-            contentContainerStyle={[
-              theme.paddingLeft2x,
-              theme.paddingRight2x,
-              theme.columnAlignCenter,
-              theme.alignCenter,
-              theme.paddingTop2x,
-            ]}>
-            <StripeCardSelector onCardSelected={store.setCard} />
-          </ScrollView>
-        </LabeledComponent>
+        <View style={theme.padding4x}>
+          <Text
+            style={[
+              styles.tierName,
+              theme.fontXL,
+              theme.colorPrimaryText,
+              theme.marginBottom2x,
+            ]}>{`${
+            support_tier.name.charAt(0).toUpperCase() +
+            support_tier.name.slice(1)
+          } Tier`}</Text>
+          {costText}
+        </View>
+        {store.payMethod === 'usd' && support_tier.has_usd && (
+          <LabeledComponent
+            label="Select Card"
+            wrapperStyle={[theme.marginBottom4x, theme.paddingLeft4x]}>
+            <ScrollView
+              contentContainerStyle={[
+                theme.paddingLeft2x,
+                theme.paddingRight2x,
+                theme.columnAlignCenter,
+                theme.alignCenter,
+                theme.paddingTop2x,
+              ]}>
+              <StripeCardSelector onCardSelected={store.setCard} />
+            </ScrollView>
+          </LabeledComponent>
+        )}
+        <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
+          <Button
+            onPress={() => true}
+            text={payText}
+            containerStyle={[theme.paddingVertical2x, styles.buttonRight]}
+          />
+        </View>
       </ScrollView>
     </Fragment>
   );
@@ -107,8 +192,19 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   switchText: {
-    fontFamily: 'Roboto-Medium',
+    fontFamily: 'Roboto-Regular',
     fontSize: 15,
+  },
+  tierName: {
+    fontFamily: 'Roboto-Bold',
+    letterSpacing: 0,
+  },
+  costText: {
+    fontFamily: 'Roboto-Medium',
+    letterSpacing: 0,
+  },
+  buttonRight: {
+    alignSelf: 'flex-end',
   },
 });
 

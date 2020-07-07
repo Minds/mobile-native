@@ -48,8 +48,6 @@ const PlusMonetizeScreen = observer(({ route }: PropsType) => {
 
   const localStore = useLocalStore(createPlusMonetizeStore);
 
-  const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
-
   const save = useCallback(() => {
     const exclusivity =
       localStore.exclusivity === '48hrs' ? 48 * 60 * 60 : null;
@@ -82,7 +80,11 @@ const PlusMonetizeScreen = observer(({ route }: PropsType) => {
   }
 
   return (
-    <Wrapper store={store} doneText={i18n.t('save')} onPressRight={save}>
+    <Wrapper
+      store={store}
+      doneText={i18n.t('save')}
+      onPressRight={save}
+      hideDone={!localStore.agreedTerms}>
       <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
         <Text style={[styles.title, theme.colorPrimaryText]}>
           {i18n.t('monetize.subScreensTitle')}
