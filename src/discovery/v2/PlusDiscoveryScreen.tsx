@@ -52,7 +52,7 @@ const PlusDiscoveryScreen = observer(({ navigation }: PropsType) => {
   return (
     <View style={ThemedStyles.style.flexContainer}>
       <Topbar
-        title={i18n.t('tabTitleDiscovery')}
+        title={i18n.t('plusTabTitleDiscovery')}
         navigation={navigation}
         style={[CS.shadow]}
       />
