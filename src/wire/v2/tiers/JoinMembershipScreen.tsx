@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, Alert } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { useSafeArea } from 'react-native-safe-area-context';
 import HeaderComponent from '../../../common/components/HeaderComponent';
@@ -14,6 +14,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import Button from '../../../common/components/Button';
 import WireService from '../../WireService';
+import i18n from '../../../common/services/i18n.service';
+import { useLegacyStores } from '../../../common/hooks/use-stores';
+import { UserError } from '../../../common/UserError';
 
 const tabList = [
   {
@@ -45,6 +48,10 @@ const createJoinMembershipStore = () => {
   const store = {
     card: '' as any,
     payMethod: 'usd' as payMethod,
+    loading: false,
+    setLoading(loading) {
+      this.loading = loading;
+    },
     setPayMethod() {
       this.payMethod = this.payMethod === 'usd' ? 'tokens' : 'usd';
     },
@@ -63,10 +70,11 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
    * (new) Disable switch if tokens not valid payment
    * show input if tokens is selected payment
    */
+  const { wire } = useLegacyStores();
   const store = useLocalStore(createJoinMembershipStore);
-  const support_tier = route.params.tier;
+  const { support_tier, entity, onComplete } = route.params;
 
-  const owner = route.params.owner;
+  const owner = entity.ownerObj;
 
   const theme = ThemedStyles.style;
 
@@ -74,12 +82,77 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
   const cleanTop = insets.top ? { marginTop: insets.top } : null;
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
 
-  /*const pay = useCallback(
-    async () => {
-      WireService.unlock();
-    },
-    [input],
-  )*/
+  const complete = useCallback(() => {
+    store.setLoading(false);
+    onComplete();
+    navigation.goBack();
+  }, [navigation, onComplete, store]);
+
+  const payWithUsd = useCallback(async () => {
+    try {
+      if (support_tier.usd === '0') {
+        complete();
+      }
+      wire.setAmount(parseFloat(support_tier.usd));
+      wire.setCurrency('usd');
+      wire.setOwner(owner);
+      wire.setRecurring(support_tier.public);
+      wire.setPaymentMethodId(store.card.id);
+      const done = await wire.send();
+
+      if (!done) {
+        throw new UserError(i18n.t('boosts.errorPayment'));
+      }
+
+      complete();
+    } catch (err) {
+      console.log('payWithUsd err', err);
+    } finally {
+      store.setLoading(false);
+    }
+  }, [support_tier, store, complete, wire, owner]);
+
+  const payWithTokens = useCallback(async () => {
+    try {
+      if (support_tier.tokens === '0') {
+        complete();
+      }
+      wire.setAmount(parseFloat(support_tier.tokens));
+      wire.setCurrency('tokens');
+      wire.setOwner(owner);
+      wire.setRecurring(support_tier.public);
+      const done = await wire.send();
+      if (!done) {
+        throw new UserError(i18n.t('boosts.errorPayment'));
+      }
+
+      complete();
+    } catch (err) {
+      console.log('payWithTokens err', err);
+    } finally {
+      store.setLoading(false);
+    }
+  }, [support_tier, complete, wire, owner, store]);
+
+  const confirmSend = useCallback(async () => {
+    store.setLoading(true);
+    if (store.payMethod === 'usd') {
+      if (!support_tier.has_usd) {
+        store.setLoading(false);
+        Alert.alert(i18n.t('sorry'), "It doesn't accept USD");
+      } else {
+        payWithUsd();
+      }
+    }
+    if (store.payMethod === 'tokens') {
+      if (!support_tier.has_tokens) {
+        store.setLoading(false);
+        Alert.alert(i18n.t('sorry'), "It doesn't accept Tokens");
+      } else {
+        payWithTokens();
+      }
+    }
+  }, [support_tier, store, payWithTokens, payWithUsd]);
 
   let costText;
   const costTextStyle = [
@@ -171,9 +244,10 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
         )}
         <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
           <Button
-            onPress={() => true}
+            onPress={confirmSend}
             text={payText}
             containerStyle={[theme.paddingVertical2x, styles.buttonRight]}
+            loading={store.loading}
           />
         </View>
       </ScrollView>

@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type FeedStore from '../common/stores/FeedStore';
 import { ComposeStoreType } from '../compose/useComposeStore';
-import ActivityModel from '../newsfeed/ActivityModel';
+import type ActivityModel from '../newsfeed/ActivityModel';
 import { SupportTiersType } from '../wire/WireTypes';
 
 export type MainSwiperParamList = {
@@ -125,8 +125,9 @@ export type AppStackParamList = {
   PlusScreen: {};
   PlusDiscoveryScreen: {};
   JoinMembershipScreen: {
-    tier: SupportTiersType;
-    owner: UserModel;
+    support_tier: SupportTiersType;
+    entity: ActivityModel;
+    onComplete: Function;
   };
 };
 

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LockTag from './LockTag';
@@ -70,17 +70,57 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
   }
 
   const unlock = useCallback(() => {
-    switch (lockType) {
-      case 'plus':
-        navigation.push('PlusScreen');
-        break;
-      case 'members':
-      case 'paywall':
-        navigation.push('JoinMembershipScreen', {
-          owner: entity.ownerObj,
-          tier: support_tier,
-        });
-    }
+    //this.setState({ unlocking: true });
+
+    entity.unlock(true).then((result) => {
+      //this.setState({ unlocking: false });
+      if (result) return;
+
+      switch (lockType) {
+        case 'plus':
+          navigation.push('PlusScreen', {
+            support_tier,
+            entity,
+            onComplete: (resultComplete: any) => {
+              if (
+                resultComplete &&
+                resultComplete.payload.method === 'onchain'
+              ) {
+                setTimeout(() => {
+                  Alert.alert(
+                    i18n.t('wire.weHaveReceivedYourTransaction'),
+                    i18n.t('wire.pleaseTryUnlockingMessage'),
+                  );
+                }, 400);
+              } else {
+                entity.unlock();
+              }
+            },
+          });
+          break;
+        case 'members':
+        case 'paywall':
+          navigation.push('JoinMembershipScreen', {
+            support_tier,
+            entity,
+            onComplete: (resultComplete: any) => {
+              if (
+                resultComplete &&
+                resultComplete.payload.method === 'onchain'
+              ) {
+                setTimeout(() => {
+                  Alert.alert(
+                    i18n.t('wire.weHaveReceivedYourTransaction'),
+                    i18n.t('wire.pleaseTryUnlockingMessage'),
+                  );
+                }, 400);
+              } else {
+                entity.unlock();
+              }
+            },
+          });
+      }
+    });
   }, [navigation, lockType, entity, support_tier]);
 
   const unlockBlock = (
