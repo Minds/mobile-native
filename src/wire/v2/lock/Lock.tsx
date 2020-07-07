@@ -6,8 +6,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LockTag from './LockTag';
 import Colors from '../../../styles/Colors';
-import Touchable from '../../../common/components/Touchable';
-import WireService from '../../WireService';
 import { SupportTiersType } from '../../WireTypes';
 import mindsService from '../../../common/services/minds.service';
 import Button from '../../../common/components/Button';
@@ -152,23 +150,31 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
     );
   }
 
-  const playButton =
-    entity.hasMedia() &&
-    (entity.custom_type === 'video' || entity.subtype === 'video') ? (
-      <Icon
-        style={styles.videoIcon}
-        name="play-circle-outline"
-        size={86}
-        color={Colors.light}
-      />
-    ) : null;
+  const playButton = entity.hasVideo() ? (
+    <Icon
+      style={styles.videoIcon}
+      name="play-circle-outline"
+      size={86}
+      color={Colors.light}
+    />
+  ) : null;
 
   return (
     <ImageBackground
       style={[styles.backgroundImage, styles.mask]}
       source={entity.getThumbSource('large')}
       resizeMode="cover">
-      {unlockBlock}
+      {!playButton && (
+        <Text
+          style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
+          {message}
+        </Text>
+      )}
+      <Button
+        onPress={unlock}
+        text={i18n.t('unlockPost')}
+        containerStyle={theme.paddingVertical2x}
+      />
       <LockTag type={lockType} />
       {playButton}
     </ImageBackground>

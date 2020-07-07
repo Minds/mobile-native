@@ -124,6 +124,21 @@ export default class ActivityModel extends BaseModel {
     return false;
   }
 
+  /**
+   * Has an attached video
+   */
+  hasVideo(): boolean {
+    return (this.custom_type || this.subtype) === 'video';
+  }
+
+  /**
+   * Has an attached image
+   */
+  hasImage(): boolean {
+    const type = this.custom_type || this.subtype;
+    return type === 'image' || type === 'batch';
+  }
+
   hasThumbnails(): boolean {
     return Array.isArray(this.thumbnails) && this.thumbnails.length === 0
       ? false
