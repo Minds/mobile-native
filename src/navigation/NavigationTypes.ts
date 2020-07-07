@@ -123,12 +123,12 @@ export type AppStackParamList = {
   };
   TierScreen: {};
   PlusScreen: {
-    support_tier: SupportTiersType;
-    entity: ActivityModel;
     onComplete: Function;
   };
   PlusDiscoveryScreen: {};
   JoinMembershipScreen: {
+    support_tier: SupportTiersType;
+    entity: ActivityModel;
     onComplete: Function;
   };
 };

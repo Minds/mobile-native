@@ -302,7 +302,12 @@ exports[`Activity component renders correctly 1`] = `
     </View>
   </OwnerBlock>
   <View
-    style={null}
+    style={
+      Object {
+        "justifyContent": "center",
+        "minHeight": 150,
+      }
+    }
   >
     <MediaView
       entity={
