@@ -57,10 +57,16 @@ export default class DiscoveryV2Store {
    * Load discovery overview
    */
   @action
-  async loadTrends(): Promise<void> {
+  async loadTrends(plus: boolean | undefined = undefined): Promise<void> {
     this.loading = true;
+
     try {
-      const response: any = await apiService.get('api/v3/discovery/trends');
+      let response: any;
+      if (plus) {
+        response = await apiService.get('api/v3/discovery/trends', { plus });
+      } else {
+        response = await apiService.get('api/v3/discovery/trends');
+      }
       const trends = response.trends.filter((trend) => !!trend);
       if (response.hero) {
         trends.unshift(response.hero);
@@ -78,10 +84,15 @@ export default class DiscoveryV2Store {
    * Load discovery overview
    */
   @action
-  async loadTags(): Promise<void> {
+  async loadTags(plus: boolean | undefined = undefined): Promise<void> {
     this.loading = true;
     try {
-      const response: any = await apiService.get('api/v3/discovery/tags');
+      let response: any;
+      if (plus) {
+        response = await apiService.get('api/v3/discovery/tags', { plus });
+      } else {
+        response = await apiService.get('api/v3/discovery/tags');
+      }
       this.setTags(response.tags);
       this.setTrendingTags(response.trending);
     } catch (err) {

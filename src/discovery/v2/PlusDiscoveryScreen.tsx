@@ -41,9 +41,9 @@ const PlusDiscoveryScreen = observer(({ navigation }: PropsType) => {
   const screen = () => {
     switch (store.activeTabId) {
       case 'foryou':
-        return <DiscoveryTrendsList />;
+        return <DiscoveryTrendsList plus={true} />;
       case 'trending-tags':
-        return <DiscoveryTagsList type="trending" />;
+        return <DiscoveryTagsList type="trending" plus={true} />;
       default:
         return <View />;
     }

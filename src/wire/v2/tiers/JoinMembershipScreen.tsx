@@ -13,21 +13,9 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
 import Button from '../../../common/components/Button';
-import WireService from '../../WireService';
 import i18n from '../../../common/services/i18n.service';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
 import { UserError } from '../../../common/UserError';
-
-const tabList = [
-  {
-    name: 'tokens',
-    label: 'Tokens',
-  },
-  {
-    name: 'usd',
-    label: 'USD',
-  },
-];
 
 type payMethod = 'tokens' | 'usd';
 type JoinMembershipScreenRouteProp = RouteProp<

@@ -122,11 +122,13 @@ export type AppStackParamList = {
     walletStore: WalletStoreType;
   };
   TierScreen: {};
-  PlusScreen: {};
-  PlusDiscoveryScreen: {};
-  JoinMembershipScreen: {
+  PlusScreen: {
     support_tier: SupportTiersType;
     entity: ActivityModel;
+    onComplete: Function;
+  };
+  PlusDiscoveryScreen: {};
+  JoinMembershipScreen: {
     onComplete: Function;
   };
 };
