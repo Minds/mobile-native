@@ -364,7 +364,7 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="PlusDiscoveryScreen"
         component={PlusDiscoveryScreen}
-        options={hideHeader}
+        options={{ title: i18n.t('plusTabTitleDiscovery') }}
       />
     </AppStackNav.Navigator>
   );
