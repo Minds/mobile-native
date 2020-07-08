@@ -147,7 +147,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
         route={route}
       />,
     );
-  }, [bottomStore, entity, navigation, route]);
+  }, [bottomStore, entity, navigation, route, store]);
 
   let buttonPopUpHeight = window.height * 0.85;
 

@@ -67,6 +67,10 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
     message = getTextForBlocked(lockType, support_tier);
   }
 
+  if (entity.isOwner()) {
+    return <LockTag type={lockType} />;
+  }
+
   const unlock = useCallback(() => {
     //this.setState({ unlocking: true });
 
