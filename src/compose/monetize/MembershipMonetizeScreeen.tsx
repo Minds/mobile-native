@@ -3,13 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import MenuSubtitle from '../../common/components/menus/MenuSubtitleWithButton';
-import { useLegacyStores } from '../../common/hooks/use-stores';
-import Button from '../../common/components/Button';
 import Wrapper from './common/Wrapper';
-import openUrlService from '../../common/services/open-url.service';
-import { MINDS_PRO } from '../../config/Config';
-import WireService from '../../wire/WireService';
 import type { SupportTiersType } from '../../wire/WireTypes';
 import TierManagementScreen from '../../settings/screens/TierManagementScreen';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
@@ -84,33 +78,6 @@ const MembershipMonetizeScreeen = observer(
       }
     }, [localStore, store]);
 
-    if (localStore.supportTiers.length === 0) {
-      return (
-        <Wrapper store={store} hideDone={true} onPressRight={save}>
-          <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
-            <Text style={[styles.title, theme.colorPrimaryText]}>
-              {i18n.t('monetize.subScreensTitle')}
-            </Text>
-            <Text style={descriptionTextStyle}>
-              {i18n.t('monetize.membershipMonetize.description')}
-            </Text>
-            <Text style={[styles.title, theme.colorPrimaryText]}>
-              {i18n.t('monetize.membershipMonetize.noTiers')}
-            </Text>
-            <Text style={descriptionTextStyle}>
-              {i18n.t('monetize.membershipMonetize.tiersDescription')}
-            </Text>
-            <Button
-              text={i18n.t('monetize.membershipMonetize.setup')}
-              textStyle={[styles.title]}
-              onPress={() => openUrlService.open(MINDS_PRO)}
-              containerStyle={[styles.buttonLeft, theme.paddingVertical2x]}
-            />
-          </View>
-        </Wrapper>
-      );
-    }
-
     return (
       <Wrapper store={store} doneText={i18n.t('save')} onPressRight={save}>
         <View style={[theme.paddingTop6x, theme.paddingHorizontal3x]}>
@@ -120,6 +87,16 @@ const MembershipMonetizeScreeen = observer(
           <Text style={descriptionTextStyle}>
             {i18n.t('monetize.membershipMonetize.description')}
           </Text>
+          {localStore.supportTiers.length === 0 && (
+            <>
+              <Text style={[styles.title, theme.colorPrimaryText]}>
+                {i18n.t('monetize.membershipMonetize.noTiers')}
+              </Text>
+              <Text style={descriptionTextStyle}>
+                {i18n.t('monetize.membershipMonetize.tiersDescription')}
+              </Text>
+            </>
+          )}
         </View>
         <TierManagementScreen
           route={route}
