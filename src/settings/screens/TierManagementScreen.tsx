@@ -4,7 +4,6 @@ import MenuSubtitleWithButton from '../../common/components/menus/MenuSubtitleWi
 import i18n from '../../common/services/i18n.service';
 import { StyleSheet, Text, ScrollView, View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 import { SupportTiersType } from '../../wire/WireTypes';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { TierStoreType } from '../../compose/monetize/MembershipMonetizeScreeen';
@@ -83,7 +82,7 @@ const renderTiers = (
     ));
   } else {
     return (
-      <Text style={[theme.fontL, theme.colorSecondaryText]}>
+      <Text style={[theme.fontL, theme.colorSecondaryText, theme.centered]}>
         {i18n.t('settings.noTiers')}
       </Text>
     );
