@@ -67,6 +67,7 @@ import TierScreen from '../settings/screens/TierScreen';
 import PlusScreen from '../common/components/PlusScreen';
 import PlusDiscoveryScreen from '../discovery/v2/PlusDiscoveryScreen';
 import featuresService from '../common/services/features.service';
+import JoinMembershipScreen from '../wire/v2/tiers/JoinMembershipScreen';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 const messengerOptions = { title: 'Messenger' };
@@ -310,6 +311,11 @@ const AppStack = function () {
         name="PlusScreen"
         component={PlusScreen}
         options={{ title: 'Upgrade to Plus' }}
+      />
+      <AppStackNav.Screen
+        name="JoinMembershipScreen"
+        component={JoinMembershipScreen}
+        options={{ title: '' }}
       />
       <AppStackNav.Screen
         name="LearnMoreScreen"

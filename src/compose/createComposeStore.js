@@ -335,7 +335,7 @@ export default function (props) {
         return false;
       }
 
-      // Somthing to post?
+      // Something to post?
       if (
         !this.attachment.hasAttachment &&
         !this.text &&
@@ -417,23 +417,16 @@ export default function (props) {
         this.setPosting(false);
       }
     },
-    async saveMembsershipMonetize(urn, expires = null) {
-      this.wire_threshold = {
-        support_tier: { urn, expires },
-      };
+    async saveMembsershipMonetize(support_tier) {
+      this.wire_threshold = { support_tier };
     },
     async saveCustomMonetize(usd, has_usd, has_tokens) {
-      const supportTier = await supportTiersService.createPrivate(
+      const support_tier = await supportTiersService.createPrivate(
         usd,
         has_usd,
         has_tokens,
       );
-      this.wire_threshold = {
-        support_tier: {
-          urn: supportTier.urn,
-          expires: supportTier.expires,
-        },
-      };
+      this.wire_threshold = { support_tier };
     },
     async savePlusMonetize(expires) {
       this.wire_threshold = {
@@ -442,6 +435,9 @@ export default function (props) {
           expires,
         },
       };
+    },
+    clearWireThreshold() {
+      this.wire_threshold = DEFAULT_MONETIZE;
     },
   };
 }

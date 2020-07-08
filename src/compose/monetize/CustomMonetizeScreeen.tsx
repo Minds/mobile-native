@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -20,6 +20,7 @@ import { string } from 'react-native-redash';
 import Switch from 'react-native-switch-pro';
 import Wrapper from './common/Wrapper';
 import CenteredLoading from '../../common/components/CenteredLoading';
+import { SupportTiersType } from '../../wire/WireTypes';
 
 type CustomMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -44,6 +45,12 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
     has_usd: true,
     has_tokens: true,
     loading: false,
+    init(support_tier: SupportTiersType) {
+      this.usd = support_tier.usd;
+      this.has_tokens = support_tier.has_tokens;
+      this.has_usd = support_tier.has_usd;
+      this.show = true;
+    },
     setLoading(loading: boolean) {
       this.loading = loading;
     },
@@ -75,6 +82,15 @@ const CustomMonetizeScreen = observer((props: PropsType) => {
       console.log(ex);
     } finally {
       localStore.setLoading(false);
+    }
+  }, [store, localStore]);
+
+  useEffect(() => {
+    if (store.wire_threshold && store.wire_threshold.support_tier) {
+      const support_tier: SupportTiersType = store.wire_threshold.support_tier;
+      if (!support_tier.public) {
+        localStore.init(support_tier);
+      }
     }
   }, [store, localStore]);
 

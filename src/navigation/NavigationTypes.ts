@@ -5,7 +5,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { WalletStoreType } from '../wallet/v2/createWalletStore';
 import type FeedStore from '../common/stores/FeedStore';
 import { ComposeStoreType } from '../compose/useComposeStore';
-import ActivityModel from '../newsfeed/ActivityModel';
+import type ActivityModel from '../newsfeed/ActivityModel';
+import { SupportTiersType } from '../wire/WireTypes';
 
 export type MainSwiperParamList = {
   Capture: {};
@@ -65,6 +66,7 @@ export type AppStackParamList = {
   };
   MembershipMonetize: {
     store: ComposeStoreType;
+    useForSelection: boolean;
   };
   CustomMonetize: {
     store: ComposeStoreType;
@@ -120,8 +122,15 @@ export type AppStackParamList = {
     walletStore: WalletStoreType;
   };
   TierScreen: {};
-  PlusScreen: {};
+  PlusScreen: {
+    onComplete: Function;
+  };
   PlusDiscoveryScreen: {};
+  JoinMembershipScreen: {
+    support_tier: SupportTiersType;
+    entity: ActivityModel;
+    onComplete: Function;
+  };
 };
 
 // types for channel edit screens
