@@ -153,10 +153,9 @@ const ActivityFullScreen = observer((props: PropsType) => {
 
   const LockCmp = featuresService.has('plus-2020') ? LockV2 : Lock;
 
-  const lock =
-    entity.paywall && entity.paywall ? (
-      <LockCmp entity={entity} navigation={navigation} />
-    ) : null;
+  const lock = entity.paywall ? (
+    <LockCmp entity={entity} navigation={navigation} />
+  ) : null;
 
   return (
     <View style={[window, theme.flexContainer, theme.backgroundSecondary]}>
