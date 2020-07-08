@@ -154,7 +154,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const LockCmp = featuresService.has('plus-2020') ? LockV2 : Lock;
 
   const lock =
-    entity.paywall && entity.paywall ? (
+    entity.paywall && entity.paywall && !entity.isOwner() ? (
       <LockCmp entity={entity} navigation={navigation} />
     ) : null;
 
