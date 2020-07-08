@@ -214,7 +214,7 @@ export default class Activity extends Component<PropsType> {
     const LockCmp = featuresService.has('plus-2020') ? LockV2 : Lock;
 
     const lock =
-      entity.paywall && entity.paywall && !entity.isOwner() ? (
+      entity.paywall && entity.paywall ? (
         <LockCmp entity={entity} navigation={this.props.navigation} />
       ) : null;
 
