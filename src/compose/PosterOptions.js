@@ -112,7 +112,9 @@ export default observer(function (props) {
   }));
 
   const monetizeDesc = featuresService.has('plus-2020')
-    ? store.wire_threshold.support_tier?.name || ''
+    ? store.wire_threshold.support_tier?.urn
+      ? store.wire_threshold.support_tier?.name || 'Plus'
+      : ''
     : tokens
     ? `${tokens} ${i18n.t('tokens').toLowerCase()} +`
     : '';
