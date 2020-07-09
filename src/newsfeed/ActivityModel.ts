@@ -20,6 +20,7 @@ import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
 import type { ThumbSize } from '../types/Common';
 import type GroupModel from '../groups/GroupModel';
+import { SupportTiersType } from '../wire/WireTypes';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -48,7 +49,7 @@ export default class ActivityModel extends BaseModel {
   ownerObj!: UserModel;
   listRef?: FlatList<any>;
   thumbnails?: Thumbs;
-  paywall: '1' | '' = '';
+  paywall: true | '1' | '' = '';
   paywall_unlocked: boolean = false;
   guid: string = '';
   subtype: string = '';
@@ -65,10 +66,13 @@ export default class ActivityModel extends BaseModel {
   thumbnail_src?: string;
   dontPin?: boolean;
   boosted?: boolean;
-  wire_threshold?: {
-    type: 'token' | 'money';
-    min: number;
-  } | null;
+  wire_threshold?:
+    | {
+        type: 'token' | 'money';
+        min: number;
+      }
+    | { support_tier: SupportTiersType }
+    | null;
   _preview?: boolean;
   attachments?: {
     attachment_guid: string;

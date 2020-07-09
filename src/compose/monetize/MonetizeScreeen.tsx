@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
-import { observer } from 'mobx-react';
+import { observer, useLocalStore } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -15,6 +15,7 @@ import Wrapper from './common/Wrapper';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { AppStackParamList } from '../../navigation/NavigationTypes';
+import mindsService from '../../common/services/minds.service';
 
 type MonetizeScreenRouteProp = RouteProp<AppStackParamList, 'MonetizeSelector'>;
 type MonetizeScreenNavigationProp = StackNavigationProp<
@@ -37,9 +38,8 @@ const ItemText = ({ title, isActive }: ItemTextPropsType) => {
     <View
       style={[
         theme.rowJustifySpaceBetween,
-        theme.paddingTop3x,
-        theme.paddingBottom2x,
-        theme.borderBottomHair,
+        theme.paddingTop4x,
+        theme.paddingBottom3x,
         theme.borderPrimary,
       ]}>
       <Text>{title}</Text>
@@ -54,8 +54,26 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
   const theme = ThemedStyles.style;
   const store = route.params.store;
 
+  const support_tier_urn = mindsService.settings.plus.support_tier_urn;
+
+  const isCustomSelected =
+    store.wire_threshold &&
+    store.wire_threshold.support_tier &&
+    !store.wire_threshold.support_tier.public &&
+    store.wire_threshold.support_tier.urn !== support_tier_urn;
+
+  const isMemembsershipSelected =
+    store.wire_threshold &&
+    store.wire_threshold.support_tier &&
+    store.wire_threshold.support_tier.public;
+
+  const isPlusSelected =
+    store.wire_threshold &&
+    store.wire_threshold.support_tier &&
+    store.wire_threshold.support_tier.urn === support_tier_urn;
+
   const isActive = Boolean(
-    store.wire_threshold && store.wire_threshold.min > 0,
+    store.wire_threshold && store.wire_threshold.support_tier,
   );
 
   const checkIcon = (
@@ -75,7 +93,7 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
       </Text>
       <MenuItem
         item={{
-          onPress: () => true,
+          onPress: () => store.clearWireThreshold(),
           title: i18n.t('monetize.none'),
           icon: !isActive ? checkIcon : undefined,
           noIcon: isActive,
@@ -89,7 +107,10 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
           item={{
             onPress: useNavCallback('PlusMonetize', store),
             title: (
-              <ItemText title={i18n.t('monetize.plus')} isActive={isActive} />
+              <ItemText
+                title={i18n.t('monetize.plus')}
+                isActive={isPlusSelected}
+              />
             ),
           }}
           containerItemStyle={theme.backgroundPrimary}
@@ -97,11 +118,15 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
         />
         <MenuItem
           item={{
-            onPress: useNavCallback('MembershipMonetize', store),
+            onPress: () =>
+              NavigationService.navigate('MembershipMonetize', {
+                store,
+                useForSelection: true,
+              }),
             title: (
               <ItemText
                 title={i18n.t('monetize.memberships')}
-                isActive={isActive}
+                isActive={isMemembsershipSelected}
               />
             ),
           }}
@@ -112,7 +137,10 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
           item={{
             onPress: useNavCallback('CustomMonetize', store),
             title: (
-              <ItemText title={i18n.t('monetize.custom')} isActive={isActive} />
+              <ItemText
+                title={i18n.t('monetize.custom')}
+                isActive={isCustomSelected}
+              />
             ),
           }}
           containerItemStyle={theme.backgroundPrimary}

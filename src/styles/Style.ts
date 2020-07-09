@@ -32,6 +32,7 @@ export interface ThemedStyle {
   colorIconActive: any;
   colorSeparator: any;
   colorAlert: any;
+  colorTransparent: any;
   backgroundInfo: any;
   backgroundSuccess: any;
   backgroundDanger: any;
@@ -101,6 +102,8 @@ export interface ThemedStyle {
   buttonBorder: any;
   listItemTitle: any;
   strikethrough: any;
+  mindsSwitchBackgroundPrimary: any;
+  mindsSwitchBackgroundSecondary: any;
   [name: string]: any;
 }
 
@@ -248,6 +251,9 @@ export const buildStyle = (theme): ThemedStyle => ({
   colorAlert: {
     color: theme.alert,
   },
+  colorTransparent: {
+    color: 'transparent',
+  },
   // backgrounds
   backgroundInfo: {
     backgroundColor: theme.info_background,
@@ -296,6 +302,12 @@ export const buildStyle = (theme): ThemedStyle => ({
   },
   backgroundIconActive: {
     backgroundColor: theme.icon_active,
+  },
+  mindsSwitchBackgroundPrimary: {
+    backgroundColor: theme.secondary_background,
+  },
+  mindsSwitchBackgroundSecondary: {
+    backgroundColor: theme.primary_border,
   },
 
   // borders

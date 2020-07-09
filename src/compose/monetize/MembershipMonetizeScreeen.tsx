@@ -39,13 +39,21 @@ const createMembershipMonetizeStore = () => {
     setSelectedTier(tier: SupportTiersType) {
       this.selectedTier = tier;
     },
-    init(guid: string) {
-      this.getSupportTiers(guid);
+    init(wire_threshold) {
+      this.getSupportTiers(wire_threshold);
       this.loaded = true;
     },
-    async getSupportTiers(guid: string) {
-      this.supportTiers =
-        (await supportTiersService.getAllFromGuid(guid)) || [];
+    async getSupportTiers(wire_threshold) {
+      this.supportTiers = (await supportTiersService.getAllFromUser()) || [];
+      if (wire_threshold && wire_threshold.support_tier) {
+        const urn = wire_threshold.support_tier.urn;
+        const found = this.supportTiers.find(
+          (support_tier) => support_tier.urn === urn,
+        );
+        if (found) {
+          this.selectedTier = found;
+        }
+      }
     },
   };
   return store;
@@ -55,7 +63,6 @@ export type TierStoreType = ReturnType<typeof createMembershipMonetizeStore>;
 
 const MembershipMonetizeScreeen = observer(
   ({ route, navigation }: PropsType) => {
-    const { user } = useLegacyStores();
     const store = route.params.store;
     const theme = ThemedStyles.style;
 
@@ -68,14 +75,14 @@ const MembershipMonetizeScreeen = observer(
     const localStore = useLocalStore(createMembershipMonetizeStore);
 
     const save = useCallback(() => {
-      store.saveMembsershipMonetize(localStore.selectedTier.urn);
+      store.saveMembsershipMonetize(localStore.selectedTier);
     }, [store, localStore]);
 
     useEffect(() => {
       if (!localStore.loaded) {
-        localStore.init(user.me.guid);
+        localStore.init(store.wire_threshold);
       }
-    }, [localStore, user]);
+    }, [localStore, store]);
 
     if (localStore.supportTiers.length === 0) {
       return (
@@ -97,6 +104,7 @@ const MembershipMonetizeScreeen = observer(
               text={i18n.t('monetize.membershipMonetize.setup')}
               textStyle={[styles.title]}
               onPress={() => openUrlService.open(MINDS_PRO)}
+              containerStyle={[styles.buttonLeft, theme.paddingVertical2x]}
             />
           </View>
         </Wrapper>
@@ -105,24 +113,19 @@ const MembershipMonetizeScreeen = observer(
 
     return (
       <Wrapper store={store} doneText={i18n.t('save')} onPressRight={save}>
-        <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
+        <View style={[theme.paddingTop6x, theme.paddingHorizontal3x]}>
           <Text style={[styles.title, theme.colorPrimaryText]}>
             {i18n.t('monetize.subScreensTitle')}
           </Text>
           <Text style={descriptionTextStyle}>
             {i18n.t('monetize.membershipMonetize.description')}
           </Text>
-          <MenuSubtitle
-            labelText={i18n.t('monetize.membershipMonetize.label')}
-            linkText={''}
-            onLinkPress={() => true}
-          />
-          <TierManagementScreen
-            route={route}
-            navigation={navigation}
-            tierStore={localStore}
-          />
         </View>
+        <TierManagementScreen
+          route={route}
+          navigation={navigation}
+          tierStore={localStore}
+        />
       </Wrapper>
     );
   },
@@ -132,6 +135,10 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Roboto-Medium',
     fontSize: 17,
+  },
+  buttonLeft: {
+    marginTop: 15,
+    alignSelf: 'flex-start',
   },
 });
 

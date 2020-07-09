@@ -211,19 +211,12 @@ export default class Activity extends Component<PropsType> {
       ? [theme.fontXL, theme.fontMedium]
       : theme.fontL;
 
-    let lock;
+    const LockCmp = featuresService.has('plus-2020') ? LockV2 : Lock;
 
-    if (featuresService.has('plus-2020')) {
-      lock =
-        entity.paywall && entity.paywall === '1' ? (
-          <LockV2 entity={entity} navigation={this.props.navigation} />
-        ) : null;
-    } else {
-      lock =
-        entity.paywall && entity.paywall === '1' ? (
-          <Lock entity={entity} navigation={this.props.navigation} />
-        ) : null;
-    }
+    const lock =
+      entity.paywall && entity.paywall ? (
+        <LockCmp entity={entity} navigation={this.props.navigation} />
+      ) : null;
 
     const message = (
       <View style={hasText ? styles.messageContainer : styles.emptyMessage}>
@@ -267,7 +260,7 @@ export default class Activity extends Component<PropsType> {
         <Pinned entity={this.props.entity} />
         {this.showOwner()}
 
-        <View style={show_overlay ? styles.nsfwContainer : null}>
+        <View style={styles.bodyContainer}>
           {lock}
           {/* Shows ontop only for rich embed or reminds */}
           {this.props.entity.perma_url || this.props.entity.remind_object
@@ -495,8 +488,9 @@ const styles = StyleSheet.create({
   container: {
     overflow: 'visible',
   },
-  nsfwContainer: {
-    minHeight: 250,
+  bodyContainer: {
+    minHeight: 150,
+    justifyContent: 'center',
   },
   messageContainer: {
     paddingHorizontal: 20,

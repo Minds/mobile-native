@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import {
   StyleSheet,
@@ -18,19 +18,34 @@ import CenteredLoading from './CenteredLoading';
 import MenuItem from './menus/MenuItem';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Colors from '../../styles/Colors';
+import { useLegacyStores } from '../hooks/use-stores';
+import { UserError } from '../UserError';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { AppStackParamList } from '../../navigation/NavigationTypes';
+import Button from './Button';
+import mindsService from '../services/minds.service';
 
 const bannerAspectRatio = 1.7;
 
 const createPlusStore = () => {
   const store = {
     loaded: false,
+    loading: false,
     method: 'usd' as 'usd' | 'tokens',
     card: '' as any,
     settings: false as boolean | any,
-    selectedOption: false as boolean | object,
+    selectedOption: false as boolean | any,
+    monthly: false,
     init() {
       this.getSettings();
       this.loaded = true;
+    },
+    setMonthly(monthly: boolean) {
+      this.monthly = monthly;
+    },
+    setLoading(loading) {
+      this.loading = loading;
     },
     async getSettings() {
       this.settings = (await MindsService.getSettings()).upgrades.plus;
@@ -44,7 +59,7 @@ const createPlusStore = () => {
     setSettings(settings) {
       this.settings = settings;
     },
-    setSelectedOption(option: object) {
+    setSelectedOption(option: any) {
       this.selectedOption = option;
     },
   };
@@ -53,12 +68,25 @@ const createPlusStore = () => {
 
 type PlusStoreType = ReturnType<typeof createPlusStore>;
 
+type payMethod = 'tokens' | 'usd';
+
+type PlusScreenRouteProp = RouteProp<AppStackParamList, 'PlusScreen'>;
+type PlusScreenNavigationProp = StackNavigationProp<
+  AppStackParamList,
+  'PlusScreen'
+>;
+
+type PropsType = {
+  route: PlusScreenRouteProp;
+  navigation: PlusScreenNavigationProp;
+};
+
 type PropsOptionType = {
   options: any[];
   localStore: PlusStoreType;
 };
 
-const Options = ({ options, localStore }: PropsOptionType) => {
+const Options = observer(({ options, localStore }: PropsOptionType) => {
   const theme = ThemedStyles.style;
   const checkIcon = (
     <MIcon name="check" size={23} style={theme.colorPrimaryText} />
@@ -67,11 +95,11 @@ const Options = ({ options, localStore }: PropsOptionType) => {
     <View>
       <MenuItem
         item={{
-          onPress: () => localStore.setSelectedOption(options[0]),
-          title: (
-            <Text
-              style={theme.colorPrimaryText}>{`Annually ${options[0]}`}</Text>
-          ),
+          onPress: () => {
+            localStore.setSelectedOption(options[0]);
+            localStore.setMonthly(false);
+          },
+          title: `Annually   ${options[0]}`,
           icon:
             localStore.selectedOption === options[0] ? checkIcon : undefined,
           noIcon: localStore.selectedOption !== options[0],
@@ -79,11 +107,11 @@ const Options = ({ options, localStore }: PropsOptionType) => {
       />
       <MenuItem
         item={{
-          onPress: () => localStore.setSelectedOption(options[1]),
-          title: (
-            <Text
-              style={theme.colorPrimaryText}>{`Monthly ${options[1]}`}</Text>
-          ),
+          onPress: () => {
+            localStore.setSelectedOption(options[1]);
+            localStore.setMonthly(true);
+          },
+          title: `Monthly   ${options[1]} / month`,
           icon:
             localStore.selectedOption === options[1] ? checkIcon : undefined,
           noIcon: localStore.selectedOption !== options[1],
@@ -91,15 +119,80 @@ const Options = ({ options, localStore }: PropsOptionType) => {
       />
     </View>
   );
-};
+});
 
-const PlusScreen = observer(() => {
+const PlusScreen = observer(({ navigation, route }: PropsType) => {
   const localStore = useLocalStore(createPlusStore);
   const theme = ThemedStyles.style;
   const insets = useSafeArea();
   const cleanTop = insets.top ? { marginTop: insets.top } : null;
+  const { wire } = useLegacyStores();
+  const { onComplete } = route.params;
+  const owner = mindsService.settings.plus.handler;
 
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
+
+  const complete = useCallback(() => {
+    localStore.setLoading(false);
+    onComplete();
+    navigation.goBack();
+  }, [navigation, onComplete, localStore]);
+
+  const payWithUsd = useCallback(async () => {
+    try {
+      if (localStore.selectedOption === '0') {
+        complete();
+      }
+      wire.setAmount(parseFloat(localStore.selectedOption));
+      wire.setCurrency('usd');
+      wire.setOwner(owner);
+      wire.setRecurring(localStore.monthly);
+      wire.setPaymentMethodId(localStore.card.id);
+      const done = await wire.send();
+
+      if (!done) {
+        throw new UserError(i18n.t('boosts.errorPayment'));
+      }
+
+      complete();
+    } catch (err) {
+      console.log('payWithUsd err', err);
+    } finally {
+      localStore.setLoading(false);
+    }
+  }, [localStore, complete, wire, owner]);
+
+  const payWithTokens = useCallback(async () => {
+    try {
+      if (localStore.selectedOption === '0') {
+        complete();
+      }
+      wire.setAmount(parseFloat(localStore.selectedOption));
+      wire.setCurrency('tokens');
+      wire.setOwner(owner);
+      wire.setRecurring(localStore.monthly);
+      const done = await wire.send();
+      if (!done) {
+        throw new UserError(i18n.t('boosts.errorPayment'));
+      }
+
+      complete();
+    } catch (err) {
+      console.log('payWithTokens err', err);
+    } finally {
+      localStore.setLoading(false);
+    }
+  }, [complete, wire, owner, localStore]);
+
+  const confirmSend = useCallback(async () => {
+    localStore.setLoading(true);
+    if (localStore.method === 'usd') {
+      payWithUsd();
+    }
+    if (localStore.method === 'tokens') {
+      payWithTokens();
+    }
+  }, [localStore, payWithTokens, payWithUsd]);
 
   useEffect(() => {
     if (!localStore.loaded) {
@@ -112,7 +205,7 @@ const PlusScreen = observer(() => {
   }
 
   return (
-    <View style={[styles.container, cleanTop]}>
+    <ScrollView style={[styles.container, cleanTop]}>
       <ImageBackground
         style={styles.banner}
         source={require('../../assets/plus-image.png')}
@@ -165,19 +258,31 @@ const PlusScreen = observer(() => {
           ]}
         />
       )}
-      <LabeledComponent label="Select Card" wrapperStyle={theme.marginBottom4x}>
-        <ScrollView
-          contentContainerStyle={[
-            theme.paddingLeft2x,
-            theme.paddingRight2x,
-            theme.columnAlignCenter,
-            theme.alignCenter,
-            theme.paddingTop2x,
-          ]}>
-          <StripeCardSelector onCardSelected={localStore.setCard} />
-        </ScrollView>
-      </LabeledComponent>
-    </View>
+      {localStore.method === 'usd' && (
+        <LabeledComponent
+          label="SELECT CARD"
+          wrapperStyle={[theme.marginVertical4x, theme.paddingHorizontal4x]}>
+          <ScrollView
+            contentContainerStyle={[
+              theme.paddingLeft2x,
+              theme.paddingRight2x,
+              theme.columnAlignCenter,
+              theme.alignCenter,
+              theme.paddingTop2x,
+            ]}>
+            <StripeCardSelector onCardSelected={localStore.setCard} />
+          </ScrollView>
+        </LabeledComponent>
+      )}
+      <View style={[theme.padding2x, theme.borderTop, theme.borderPrimary]}>
+        <Button
+          onPress={confirmSend}
+          text={'Upgrade to Plus'}
+          containerStyle={[theme.paddingVertical2x, styles.buttonRight]}
+          loading={localStore.loading}
+        />
+      </View>
+    </ScrollView>
   );
 });
 
@@ -215,5 +320,8 @@ const styles = StyleSheet.create({
   switchText: {
     fontFamily: 'Roboto-Medium',
     fontSize: 15,
+  },
+  buttonRight: {
+    alignSelf: 'flex-end',
   },
 });

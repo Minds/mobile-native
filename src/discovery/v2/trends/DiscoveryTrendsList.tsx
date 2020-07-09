@@ -7,17 +7,21 @@ import { useDiscoveryV2Store } from '../DiscoveryV2Context';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import i18n from '../../../common/services/i18n.service';
 
+type PropsType = {
+  plus?: boolean;
+};
+
 /**
  * Discovery List Item
  */
-export const DiscoveryTrendsList = observer(() => {
+export const DiscoveryTrendsList = observer(({ plus }: PropsType) => {
   const theme = ThemedStyles.style;
   const discoveryV2 = useDiscoveryV2Store();
   let listRef = useRef<FlatList<any>>(null);
 
   useEffect(() => {
-    discoveryV2.loadTrends();
-  }, [discoveryV2]);
+    discoveryV2.loadTrends(plus);
+  }, [discoveryV2, plus]);
 
   useEffect(() => {
     if (listRef.current) {

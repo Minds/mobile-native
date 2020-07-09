@@ -89,6 +89,7 @@ class WireService {
         recurring: !!opts.recurring,
       })
       .then((result: any): any => {
+        console.log('result', result);
         result.payload = payload;
         return result;
       });

@@ -20,6 +20,7 @@ import i18n from '../../../common/services/i18n.service';
 
 interface Props {
   type: 'your' | 'trending';
+  plus?: boolean;
 }
 
 /**
@@ -37,8 +38,8 @@ export const DiscoveryTagsList = observer((props: Props) => {
   const [showManageTags, setShowManageTags] = useState(false);
 
   useEffect(() => {
-    discoveryV2.loadTags();
-  }, [discoveryV2]);
+    discoveryV2.loadTags(props.plus);
+  }, [discoveryV2, props]);
 
   const onPress = (data): void => {
     navigation.push('DiscoverySearch', {

@@ -1,40 +1,51 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LockTag from './LockTag';
 import Colors from '../../../styles/Colors';
+import { SupportTiersType } from '../../WireTypes';
+import mindsService from '../../../common/services/minds.service';
+import Button from '../../../common/components/Button';
+import i18n from '../../../common/services/i18n.service';
 
 type PropsType = {
   entity: ActivityModel;
   navigation: any;
 };
 
-type BlockType = 'members' | 'paywall' | 'plus';
+type LockType = 'members' | 'paywall' | 'plus';
 
-const getBlockType = (urn: string): BlockType => {
-  if (!urn) {
-    return 'paywall';
+const getLockType = (support_tier: SupportTiersType): LockType => {
+  let type: LockType = support_tier.public ? 'members' : 'paywall';
+
+  if (mindsService.settings.plus.support_tier_urn === support_tier.urn) {
+    type = 'plus';
   }
-  const type = urn.split(':')[1];
 
-  // TODO how we indentify paywall if all are support-tier
-  return type === 'support-tier' ? 'members' : 'plus';
+  return type;
 };
 
-const getTextForBlocked = (type: BlockType) => {
+const getTextForBlocked = (type: LockType, support_tier: SupportTiersType) => {
   let message = '';
   switch (type) {
     case 'members':
-      message = 'Become a member to view this post';
+      message = `Become ${support_tier.name} to view this post`;
       break;
     case 'plus':
       message = 'Join Minds+ to view this post';
       break;
     case 'paywall':
-      message = 'Pay 1 Token see this post';
+      const payUsd = support_tier.has_usd ? `${support_tier.usd} USD` : '';
+      const payTokens = support_tier.has_tokens
+        ? `${support_tier.tokens} Tokens`
+        : '';
+      let pay = payUsd;
+      pay +=
+        pay !== '' ? (payTokens !== '' ? ` / ${payTokens}` : '') : payTokens;
+      message = `Pay ${pay} to see this post`;
       break;
   }
   return message;
@@ -42,9 +53,91 @@ const getTextForBlocked = (type: BlockType) => {
 
 const Lock = observer(({ entity, navigation }: PropsType) => {
   const theme = ThemedStyles.style;
+  const wire_threshold = entity.wire_threshold;
+  const support_tier: SupportTiersType | null =
+    wire_threshold && 'support_tier' in wire_threshold
+      ? wire_threshold.support_tier
+      : null;
   // we don´t know yet what the data structure be like
-  //const blockedType = getBlockType(entity.wire_threshold);
-  const message = getTextForBlocked('members');
+  let lockType: LockType = 'paywall';
+  let message = 'Pay to see this post';
+
+  if (support_tier) {
+    lockType = getLockType(support_tier);
+    message = getTextForBlocked(lockType, support_tier);
+  }
+
+  if (entity.isOwner()) {
+    return <LockTag type={lockType} />;
+  }
+
+  const unlock = useCallback(() => {
+    //this.setState({ unlocking: true });
+
+    entity.unlock(true).then((result) => {
+      //this.setState({ unlocking: false });
+      if (result) return;
+
+      switch (lockType) {
+        case 'plus':
+          navigation.push('PlusScreen', {
+            support_tier,
+            entity,
+            onComplete: (resultComplete: any) => {
+              if (
+                resultComplete &&
+                resultComplete.payload.method === 'onchain'
+              ) {
+                setTimeout(() => {
+                  Alert.alert(
+                    i18n.t('wire.weHaveReceivedYourTransaction'),
+                    i18n.t('wire.pleaseTryUnlockingMessage'),
+                  );
+                }, 400);
+              } else {
+                entity.unlock();
+              }
+            },
+          });
+          break;
+        case 'members':
+        case 'paywall':
+          navigation.push('JoinMembershipScreen', {
+            support_tier,
+            entity,
+            onComplete: (resultComplete: any) => {
+              if (
+                resultComplete &&
+                resultComplete.payload.method === 'onchain'
+              ) {
+                setTimeout(() => {
+                  Alert.alert(
+                    i18n.t('wire.weHaveReceivedYourTransaction'),
+                    i18n.t('wire.pleaseTryUnlockingMessage'),
+                  );
+                }, 400);
+              } else {
+                entity.unlock();
+              }
+            },
+          });
+      }
+    });
+  }, [navigation, lockType, entity, support_tier]);
+
+  const unlockBlock = (
+    <>
+      <Text
+        style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
+        {message}
+      </Text>
+      <Button
+        onPress={unlock}
+        text={i18n.t('unlockPost')}
+        containerStyle={theme.paddingVertical2x}
+      />
+    </>
+  );
 
   if (!entity.hasThumbnails() && !entity.hasMedia()) {
     return (
@@ -55,8 +148,8 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
           theme.centered,
           theme.padding2x,
         ]}>
-        <Text style={[theme.colorWhite, theme.fontL]}>{message}</Text>
-        <LockTag type={'members'} />
+        {unlockBlock}
+        <LockTag type={lockType} />
       </View>
     );
   }
@@ -76,11 +169,17 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
       source={entity.getThumbSource('large')}
       resizeMode="cover">
       {!playButton && (
-        <Text style={[theme.colorWhite, theme.fontL, theme.fontSemibold]}>
+        <Text
+          style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
           {message}
         </Text>
       )}
-      <LockTag type={'members'} />
+      <Button
+        onPress={unlock}
+        text={i18n.t('unlockPost')}
+        containerStyle={theme.paddingVertical2x}
+      />
+      <LockTag type={lockType} />
       {playButton}
     </ImageBackground>
   );
@@ -107,6 +206,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
+  },
+  lockMessage: {
+    fontFamily: 'Roboto-Medium',
+    fontSize: 16,
+    letterSpacing: 0,
   },
 });
 

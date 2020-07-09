@@ -41,9 +41,9 @@ const PlusDiscoveryScreen = observer(({ navigation }: PropsType) => {
   const screen = () => {
     switch (store.activeTabId) {
       case 'foryou':
-        return <DiscoveryTrendsList />;
+        return <DiscoveryTrendsList plus={true} />;
       case 'trending-tags':
-        return <DiscoveryTagsList type="trending" />;
+        return <DiscoveryTagsList type="trending" plus={true} />;
       default:
         return <View />;
     }
@@ -51,11 +51,6 @@ const PlusDiscoveryScreen = observer(({ navigation }: PropsType) => {
 
   return (
     <View style={ThemedStyles.style.flexContainer}>
-      <Topbar
-        title={i18n.t('tabTitleDiscovery')}
-        navigation={navigation}
-        style={[CS.shadow]}
-      />
       <View style={ThemedStyles.style.backgroundSecondary}>
         <TopbarTabbar
           current={store.activeTabId}

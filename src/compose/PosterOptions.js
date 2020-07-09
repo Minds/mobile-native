@@ -23,6 +23,7 @@ import ThemedStyles from '../styles/ThemedStyles';
 import NavigationService from '../navigation/NavigationService';
 import i18n from '../common/services/i18n.service';
 import { getLicenseText } from '../common/services/list-options.service';
+import featuresService from '../common/services/features.service';
 
 const Touchable = Platform.select({
   ios: RNTouchableOpacity,
@@ -162,6 +163,12 @@ export default observer(
 
     const showSchedule = props.store.isEdit ? time_created > Date.now() : true;
 
+    const monetizeDesc = featuresService.has('plus-2020')
+      ? store.wire_threshold.support_tier?.name || ''
+      : tokens
+      ? `${tokens} ${i18n.t('tokens').toLowerCase()} +`
+      : '';
+
     const renderInner = () => (
       <View style={[theme.backgroundSecondary, theme.fullHeight]}>
         <Item
@@ -187,9 +194,7 @@ export default observer(
         )}
         <Item
           title={i18n.t('monetize.title')}
-          description={
-            tokens ? `${tokens} ${i18n.t('tokens').toLowerCase()} +` : ''
-          }
+          description={monetizeDesc}
           onPress={onMonetizePress}
           testID="monetizeButton"
         />

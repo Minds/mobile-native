@@ -5,13 +5,14 @@ import { Text } from 'react-native';
 
 type propsType = {
   onPress: () => void;
+  text?: string;
 };
 
-const SaveButton = ({ onPress }: propsType) => {
+const SaveButton = ({ onPress, text }: propsType) => {
   const theme = ThemedStyles.style;
   return (
     <Text onPress={onPress} style={[theme.colorLink, theme.fontL, theme.bold]}>
-      {i18n.t('save')}
+      {text || i18n.t('save')}
     </Text>
   );
 };
