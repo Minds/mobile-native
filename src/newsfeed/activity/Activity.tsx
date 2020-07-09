@@ -213,10 +213,9 @@ export default class Activity extends Component<PropsType> {
 
     const LockCmp = featuresService.has('plus-2020') ? LockV2 : Lock;
 
-    const lock =
-      entity.paywall && entity.paywall ? (
-        <LockCmp entity={entity} navigation={this.props.navigation} />
-      ) : null;
+    const lock = entity.paywall ? (
+      <LockCmp entity={entity} navigation={this.props.navigation} />
+    ) : null;
 
     const message = (
       <View style={hasText ? styles.messageContainer : styles.emptyMessage}>

@@ -1,16 +1,15 @@
 import React, { useCallback } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { SupportTiersType } from '../../wire/WireTypes';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import SettingInput from '../../common/components/SettingInput';
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 import SaveButton from '../../common/components/SaveButton';
-import apiService from '../../common/services/api.service';
 import supportTiersService from '../../common/services/support-tiers.service';
 import Switch from 'react-native-switch-pro';
 import { UserError } from '../../common/UserError';
+import Colors from '../../styles/Colors';
 
 type PropsType = {
   route: any;
@@ -117,20 +116,15 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
       <View style={theme.rowJustifySpaceBetween}>
         <View style={theme.flexColumnCentered}>
           <Text style={labelStyle}>
-            {i18n.t('monetize.customMonetize.hasUsd')}
-          </Text>
-          <Switch
-            value={localStore.support_tier.has_tokens}
-            onSyncPress={localStore.setHasTokens}
-          />
-        </View>
-        <View style={theme.flexColumnCentered}>
-          <Text style={labelStyle}>
             {i18n.t('monetize.customMonetize.hasTokens')}
           </Text>
           <Switch
             value={localStore.support_tier.has_usd}
             onSyncPress={localStore.setHasUsd}
+            circleColorActive={Colors.switchCircle}
+            circleColorInactive={Colors.switchCircle}
+            backgroundActive={Colors.switchBackground}
+            backgroundInactive={Colors.switchBackground}
           />
         </View>
       </View>

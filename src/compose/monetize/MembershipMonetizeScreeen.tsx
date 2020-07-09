@@ -10,6 +10,7 @@ import { AppStackParamList } from '../../navigation/NavigationTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
 import supportTiersService from '../../common/services/support-tiers.service';
+import CenteredLoading from '../../common/components/CenteredLoading';
 
 type MembershipMonetizeScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -35,10 +36,12 @@ const createMembershipMonetizeStore = () => {
     },
     init(wire_threshold) {
       this.getSupportTiers(wire_threshold);
-      this.loaded = true;
     },
     async getSupportTiers(wire_threshold) {
       this.supportTiers = (await supportTiersService.getAllFromUser()) || [];
+      this.checkForSelected(wire_threshold);
+    },
+    checkForSelected(wire_threshold) {
       if (wire_threshold && wire_threshold.support_tier) {
         const urn = wire_threshold.support_tier.urn;
         const found = this.supportTiers.find(
@@ -48,6 +51,7 @@ const createMembershipMonetizeStore = () => {
           this.selectedTier = found;
         }
       }
+      this.loaded = true;
     },
   };
   return store;
@@ -78,18 +82,26 @@ const MembershipMonetizeScreeen = observer(
       }
     }, [localStore, store]);
 
+    const title = [styles.title, theme.colorPrimaryText, theme.paddingTop3x];
+
+    if (!localStore.loaded) {
+      return <CenteredLoading />;
+    }
+
     return (
-      <Wrapper store={store} doneText={i18n.t('save')} onPressRight={save}>
-        <View style={[theme.paddingTop6x, theme.paddingHorizontal3x]}>
-          <Text style={[styles.title, theme.colorPrimaryText]}>
-            {i18n.t('monetize.subScreensTitle')}
-          </Text>
+      <Wrapper
+        store={store}
+        doneText={i18n.t('save')}
+        onPressRight={save}
+        hideDone={!localStore.selectedTier.urn}>
+        <View style={[theme.paddingTop3x, theme.paddingHorizontal3x]}>
+          <Text style={title}>{i18n.t('monetize.subScreensTitle')}</Text>
           <Text style={descriptionTextStyle}>
             {i18n.t('monetize.membershipMonetize.description')}
           </Text>
           {localStore.supportTiers.length === 0 && (
             <>
-              <Text style={[styles.title, theme.colorPrimaryText]}>
+              <Text style={title}>
                 {i18n.t('monetize.membershipMonetize.noTiers')}
               </Text>
               <Text style={descriptionTextStyle}>

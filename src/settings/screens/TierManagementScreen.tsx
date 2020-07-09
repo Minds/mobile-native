@@ -31,8 +31,12 @@ const Header = ({ onLinkPress, labelText }: HeaderPropsType) => {
       labelText={labelText}
       labelStyle={[styles.label, theme.colorSecondaryText]}
       linkText={i18n.t('settings.addTier')}
-      linkStyle={[styles.link, theme.colorLink]}
-      containerStyle={[theme.paddingHorizontal4x, theme.marginBottom4x]}
+      linkStyle={[styles.link, theme.colorLink, theme.paddingRight2x]}
+      containerStyle={[
+        theme.paddingHorizontal4x,
+        theme.marginBottom4x,
+        theme.alignCenter,
+      ]}
       onLinkPress={onLinkPress}
     />
   );
@@ -82,9 +86,11 @@ const renderTiers = (
     ));
   } else {
     return (
-      <Text style={[theme.fontL, theme.colorSecondaryText, theme.centered]}>
-        {i18n.t('settings.noTiers')}
-      </Text>
+      <View style={[theme.flexContainer, theme.centered]}>
+        <Text style={[theme.fontXL, theme.colorTertiaryText]}>
+          {i18n.t('settings.noTiers')}
+        </Text>
+      </View>
     );
   }
 };
@@ -148,7 +154,12 @@ const TierManagementScreen = observer(
     }
 
     return (
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={
+          localStore.support_tiers.length === 0
+            ? ThemedStyles.style.flexContainer
+            : null
+        }>
         <Header
           labelText={i18n.t('monetize.membershipMonetize.label')}
           onLinkPress={() => navToTierScreen(navigation, false, localStore)}

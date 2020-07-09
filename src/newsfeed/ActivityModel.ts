@@ -35,6 +35,7 @@ export default class ActivityModel extends BaseModel {
   @observable title: string = '';
   @observable mature: boolean = false;
   @observable edited: '0' | '1' = '0';
+  @observable paywall: true | '1' | '' = '';
 
   // decorated observables
   'is:following': boolean;
@@ -49,7 +50,6 @@ export default class ActivityModel extends BaseModel {
   ownerObj!: UserModel;
   listRef?: FlatList<any>;
   thumbnails?: Thumbs;
-  paywall: true | '1' | '' = '';
   paywall_unlocked: boolean = false;
   guid: string = '';
   subtype: string = '';
