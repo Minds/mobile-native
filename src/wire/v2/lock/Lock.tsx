@@ -1,20 +1,19 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import { View, Text, StyleSheet, Alert } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LockTag from './LockTag';
 import { SupportTiersType } from '../../WireTypes';
 import mindsService from '../../../common/services/minds.service';
 import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
+import type { LockType } from '../../../types/Common';
 
 type PropsType = {
   entity: ActivityModel;
   navigation: any;
 };
-
-type LockType = 'members' | 'paywall' | 'plus';
 
 const getLockType = (support_tier: SupportTiersType): LockType => {
   let type: LockType = support_tier.public ? 'members' : 'paywall';
@@ -70,58 +69,8 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
   }
 
   const unlock = useCallback(() => {
-    //this.setState({ unlocking: true });
-
-    entity.unlock(true).then((result) => {
-      //this.setState({ unlocking: false });
-      if (result) return;
-
-      switch (lockType) {
-        case 'plus':
-          navigation.push('PlusScreen', {
-            support_tier,
-            entity,
-            onComplete: (resultComplete: any) => {
-              if (
-                resultComplete &&
-                resultComplete.payload.method === 'onchain'
-              ) {
-                setTimeout(() => {
-                  Alert.alert(
-                    i18n.t('wire.weHaveReceivedYourTransaction'),
-                    i18n.t('wire.pleaseTryUnlockingMessage'),
-                  );
-                }, 400);
-              } else {
-                entity.unlock();
-              }
-            },
-          });
-          break;
-        case 'members':
-        case 'paywall':
-          navigation.push('JoinMembershipScreen', {
-            support_tier,
-            entity,
-            onComplete: (resultComplete: any) => {
-              if (
-                resultComplete &&
-                resultComplete.payload.method === 'onchain'
-              ) {
-                setTimeout(() => {
-                  Alert.alert(
-                    i18n.t('wire.weHaveReceivedYourTransaction'),
-                    i18n.t('wire.pleaseTryUnlockingMessage'),
-                  );
-                }, 400);
-              } else {
-                entity.unlock();
-              }
-            },
-          });
-      }
-    });
-  }, [navigation, lockType, entity, support_tier]);
+    entity.unlockOrPay();
+  }, [entity]);
 
   const button = entity.hasVideo() ? null : (
     <Button

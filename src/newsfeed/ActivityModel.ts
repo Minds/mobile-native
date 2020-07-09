@@ -18,9 +18,11 @@ import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import entitiesService from '../common/services/entities.service';
-import type { ThumbSize } from '../types/Common';
+import type { ThumbSize, LockType } from '../types/Common';
 import type GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
+import mindsService from '../common/services/minds.service';
+import NavigationService from '../navigation/NavigationService';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -314,6 +316,83 @@ export default class ActivityModel extends BaseModel {
         Alert.alert(err.message);
       }
       return false;
+    }
+  }
+
+  /**
+   * Get the lock type for the activity
+   */
+  getLockType = (): LockType | undefined => {
+    const support_tier: SupportTiersType | null =
+      this.wire_threshold && 'support_tier' in this.wire_threshold
+        ? this.wire_threshold.support_tier
+        : null;
+    if (!support_tier) {
+      return;
+    }
+    let type: LockType = support_tier.public ? 'members' : 'paywall';
+
+    if (mindsService.settings.plus.support_tier_urn === support_tier.urn) {
+      type = 'plus';
+    }
+
+    return type;
+  };
+
+  /**
+   * Unlock the entity or prompt pay options
+   */
+  async unlockOrPay() {
+    const result = await this.unlock(true);
+
+    if (result) {
+      return;
+    }
+
+    const lockType = this.getLockType();
+
+    const support_tier: SupportTiersType | null =
+      this.wire_threshold && 'support_tier' in this.wire_threshold
+        ? this.wire_threshold.support_tier
+        : null;
+
+    switch (lockType) {
+      case 'plus':
+        NavigationService.push('PlusScreen', {
+          support_tier,
+          entity: this,
+          onComplete: (resultComplete: any) => {
+            if (resultComplete && resultComplete.payload.method === 'onchain') {
+              setTimeout(() => {
+                Alert.alert(
+                  i18n.t('wire.weHaveReceivedYourTransaction'),
+                  i18n.t('wire.pleaseTryUnlockingMessage'),
+                );
+              }, 400);
+            } else {
+              this.unlock();
+            }
+          },
+        });
+        break;
+      case 'members':
+      case 'paywall':
+        NavigationService.push('JoinMembershipScreen', {
+          support_tier,
+          entity: this,
+          onComplete: (resultComplete: any) => {
+            if (resultComplete && resultComplete.payload.method === 'onchain') {
+              setTimeout(() => {
+                Alert.alert(
+                  i18n.t('wire.weHaveReceivedYourTransaction'),
+                  i18n.t('wire.pleaseTryUnlockingMessage'),
+                );
+              }, 400);
+            } else {
+              this.unlock();
+            }
+          },
+        });
     }
   }
 
