@@ -219,6 +219,7 @@
     "photo": "Photo",
     "video": "Video",
     "text": "Text",
+    "postOptions":"Post Options",
     "retake": "Retake"
   },
   "channel": {

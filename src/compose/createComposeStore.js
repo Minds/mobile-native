@@ -13,6 +13,7 @@ import featuresService from '../common/services/features.service';
 import mindsService from '../common/services/minds.service';
 import supportTiersService from '../common/services/support-tiers.service';
 import settingsStore from '../settings/SettingsStore';
+import attachmentService from '../common/services/attachment.service';
 
 /**
  * Display an error message to the user.
@@ -203,8 +204,9 @@ export default function (props) {
     /**
      * Set mode photo
      */
-    setModePhoto() {
-      this.clear();
+    setModePhoto(clear = true) {
+      if (clear) this.clear();
+      this.mode = 'photo';
       settingsStore.setComposerMode(this.mode);
     },
     /**
@@ -271,6 +273,19 @@ export default function (props) {
     rejectImage() {
       this.mediaToConfirm = null;
       this.mode = settingsStore.composerMode;
+    },
+    /**
+     * Select media from gallery
+     */
+    async selectFromGallery(mode) {
+      const response = await attachmentService.gallery(
+        mode || this.mode,
+        false,
+      );
+
+      if (response) {
+        this.onMediaFromGallery(response);
+      }
     },
     /**
      * On media selected from gallery

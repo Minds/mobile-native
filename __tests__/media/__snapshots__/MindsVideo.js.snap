@@ -85,7 +85,7 @@ exports[`Messenger setup component should renders correctly with entity 1`] = `
           ]
         }
       >
-        
+        
       </Text>
     </View>
   </View>
@@ -177,7 +177,7 @@ exports[`Messenger setup component should renders correctly with source 1`] = `
           ]
         }
       >
-        
+        
       </Text>
     </View>
   </View>
