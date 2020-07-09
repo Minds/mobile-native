@@ -234,8 +234,8 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
           onSyncPress={localStore.setMethod}
           circleColorActive={Colors.switchCircle}
           circleColorInactive={Colors.switchCircle}
-          backgroundActive={Colors.switchBackgroun}
-          backgroundInactive={Colors.switchBackgroun}
+          backgroundActive={Colors.switchBackground}
+          backgroundInactive={Colors.switchBackground}
           style={theme.marginHorizontal2x}
         />
         <Text style={switchTextStyle}>{i18n.t('tokens')}</Text>

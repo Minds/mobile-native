@@ -193,10 +193,10 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           <Switch
             value={store.payMethod === 'tokens'}
             onSyncPress={store.setPayMethod}
-            circleColorActive={Colors.switchBackgroun}
-            circleColorInactive={Colors.switchBackgroun}
-            backgroundActive={Colors.switchCircle}
-            backgroundInactive={Colors.switchCircle}
+            circleColorActive={Colors.switchCircle}
+            circleColorInactive={Colors.switchCircle}
+            backgroundActive={Colors.switchBackground}
+            backgroundInactive={Colors.switchBackground}
             style={theme.marginHorizontal2x}
           />
           <Text style={switchTextStyle}>{'Tokens'}</Text>

@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
-import { observer, useLocalStore } from 'mobx-react';
+import { observer } from 'mobx-react';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import NavigationService from '../../navigation/NavigationService';
-import TopBar from '../TopBar';
 import MenuItem from '../../common/components/menus/MenuItem';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 import { useNavCallback } from '../PosterOptions';
 import Wrapper from './common/Wrapper';
 import { RouteProp } from '@react-navigation/native';
@@ -27,25 +25,18 @@ type PropsType = {
   route: MonetizeScreenRouteProp;
 };
 
-type ItemTextPropsType = {
-  title: string;
+type IconItemPropsType = {
   isActive: boolean;
 };
 
-const ItemText = ({ title, isActive }: ItemTextPropsType) => {
+const IconItem = ({ isActive }: IconItemPropsType) => {
   const theme = ThemedStyles.style;
   return (
-    <View
-      style={[
-        theme.rowJustifySpaceBetween,
-        theme.paddingTop4x,
-        theme.paddingBottom3x,
-        theme.borderPrimary,
-      ]}>
-      <Text>{title}</Text>
+    <View style={theme.rowJustifyStart}>
       {isActive && (
         <MIcon name="check" size={24} style={theme.colorSecondaryText} />
       )}
+      <MIcon name="chevron-right" size={24} style={theme.colorSecondaryText} />
     </View>
   );
 };
@@ -106,12 +97,8 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
         <MenuItem
           item={{
             onPress: useNavCallback('PlusMonetize', store),
-            title: (
-              <ItemText
-                title={i18n.t('monetize.plus')}
-                isActive={isPlusSelected}
-              />
-            ),
+            title: i18n.t('monetize.plus'),
+            icon: <IconItem isActive={isPlusSelected} />,
           }}
           containerItemStyle={theme.backgroundPrimary}
           testID="monetizePlus"
@@ -123,12 +110,8 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
                 store,
                 useForSelection: true,
               }),
-            title: (
-              <ItemText
-                title={i18n.t('monetize.memberships')}
-                isActive={isMemembsershipSelected}
-              />
-            ),
+            title: i18n.t('monetize.memberships'),
+            icon: <IconItem isActive={isMemembsershipSelected} />,
           }}
           containerItemStyle={theme.backgroundPrimary}
           testID="monetizeMemberships"
@@ -136,12 +119,8 @@ const MonetizeScreen = observer(({ route }: PropsType) => {
         <MenuItem
           item={{
             onPress: useNavCallback('CustomMonetize', store),
-            title: (
-              <ItemText
-                title={i18n.t('monetize.custom')}
-                isActive={isCustomSelected}
-              />
-            ),
+            title: i18n.t('monetize.custom'),
+            icon: <IconItem isActive={isCustomSelected} />,
           }}
           containerItemStyle={theme.backgroundPrimary}
           testID="monetizeCustom"
