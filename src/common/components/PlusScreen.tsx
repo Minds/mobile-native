@@ -56,9 +56,13 @@ const createPlusStore = () => {
         : (await MindsService.getSettings()).upgrades.plus;
 
       // used to pay plus by wire
-      this.owner = await WireService.getEntityByHandler(
-        mindsService.settings.plus.handler,
-      );
+      this.owner = pro
+        ? await WireService.getEntityByHandler(
+            mindsService.settings.pro.handler,
+          )
+        : await WireService.getEntityByHandler(
+            mindsService.settings.plus.handler,
+          );
 
       this.loaded = true;
     },
