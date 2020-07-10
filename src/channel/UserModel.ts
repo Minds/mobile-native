@@ -41,7 +41,6 @@ export default class UserModel extends BaseModel {
   subscriptions_count: number = 0;
   carousels?: Array<any>;
   dob?: string;
-  pro: boolean = false;
 
   tags: Array<string> = [];
   groupsCount: number = 0;
@@ -87,6 +86,8 @@ export default class UserModel extends BaseModel {
   @observable email_confirmed = false;
 
   @observable wire_rewards;
+
+  @observable pro: boolean = false;
 
   /**
    * Confirm email
@@ -181,6 +182,11 @@ export default class UserModel extends BaseModel {
       wire_rewards.rewards.money.push(tier);
     }
     this.wire_rewards = wire_rewards;
+  }
+
+  @action
+  togglePro() {
+    this.pro = !this.pro;
   }
 
   /**
