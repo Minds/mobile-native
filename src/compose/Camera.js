@@ -204,6 +204,7 @@ export default observer(function (props) {
                 name="format-text-variant"
                 size={12}
                 style={[styles.icon, styles.autoIcon]}
+                onPress={store.toggleFlash}
               />
             )}
           </View>
