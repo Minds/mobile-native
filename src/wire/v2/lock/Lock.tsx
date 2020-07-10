@@ -1,22 +1,19 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import { View, Text, StyleSheet, ImageBackground, Alert } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { View, Text, StyleSheet } from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import LockTag from './LockTag';
-import Colors from '../../../styles/Colors';
 import { SupportTiersType } from '../../WireTypes';
 import mindsService from '../../../common/services/minds.service';
 import Button from '../../../common/components/Button';
 import i18n from '../../../common/services/i18n.service';
+import type { LockType } from '../../../types/Common';
 
 type PropsType = {
   entity: ActivityModel;
   navigation: any;
 };
-
-type LockType = 'members' | 'paywall' | 'plus';
 
 const getLockType = (support_tier: SupportTiersType): LockType => {
   let type: LockType = support_tier.public ? 'members' : 'paywall';
@@ -67,76 +64,20 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
     message = getTextForBlocked(lockType, support_tier);
   }
 
-  if (entity.isOwner()) {
+  if (entity.isOwner() || entity.hasVideo()) {
     return <LockTag type={lockType} />;
   }
 
   const unlock = useCallback(() => {
-    //this.setState({ unlocking: true });
+    entity.unlockOrPay();
+  }, [entity]);
 
-    entity.unlock(true).then((result) => {
-      //this.setState({ unlocking: false });
-      if (result) return;
-
-      switch (lockType) {
-        case 'plus':
-          navigation.push('PlusScreen', {
-            support_tier,
-            entity,
-            onComplete: (resultComplete: any) => {
-              if (
-                resultComplete &&
-                resultComplete.payload.method === 'onchain'
-              ) {
-                setTimeout(() => {
-                  Alert.alert(
-                    i18n.t('wire.weHaveReceivedYourTransaction'),
-                    i18n.t('wire.pleaseTryUnlockingMessage'),
-                  );
-                }, 400);
-              } else {
-                entity.unlock();
-              }
-            },
-          });
-          break;
-        case 'members':
-        case 'paywall':
-          navigation.push('JoinMembershipScreen', {
-            support_tier,
-            entity,
-            onComplete: (resultComplete: any) => {
-              if (
-                resultComplete &&
-                resultComplete.payload.method === 'onchain'
-              ) {
-                setTimeout(() => {
-                  Alert.alert(
-                    i18n.t('wire.weHaveReceivedYourTransaction'),
-                    i18n.t('wire.pleaseTryUnlockingMessage'),
-                  );
-                }, 400);
-              } else {
-                entity.unlock();
-              }
-            },
-          });
-      }
-    });
-  }, [navigation, lockType, entity, support_tier]);
-
-  const unlockBlock = (
-    <>
-      <Text
-        style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
-        {message}
-      </Text>
-      <Button
-        onPress={unlock}
-        text={i18n.t('unlockPost')}
-        containerStyle={theme.paddingVertical2x}
-      />
-    </>
+  const button = entity.hasVideo() ? null : (
+    <Button
+      onPress={unlock}
+      text={i18n.t('unlockPost')}
+      containerStyle={theme.paddingVertical2x}
+    />
   );
 
   if (!entity.hasThumbnails() && !entity.hasMedia()) {
@@ -148,40 +89,25 @@ const Lock = observer(({ entity, navigation }: PropsType) => {
           theme.centered,
           theme.padding2x,
         ]}>
-        {unlockBlock}
+        <Text
+          style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
+          {message}
+        </Text>
+        {button}
         <LockTag type={lockType} />
       </View>
     );
   }
 
-  const playButton = entity.hasVideo() ? (
-    <Icon
-      style={styles.videoIcon}
-      name="play-circle-outline"
-      size={86}
-      color={Colors.light}
-    />
-  ) : null;
-
   return (
-    <ImageBackground
-      style={[styles.backgroundImage, styles.mask]}
-      source={entity.getThumbSource('large')}
-      resizeMode="cover">
-      {!playButton && (
-        <Text
-          style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
-          {message}
-        </Text>
-      )}
-      <Button
-        onPress={unlock}
-        text={i18n.t('unlockPost')}
-        containerStyle={theme.paddingVertical2x}
-      />
+    <View style={[styles.backgroundImage, styles.mask]}>
+      <Text
+        style={[theme.colorWhite, styles.lockMessage, theme.marginBottom2x]}>
+        {message}
+      </Text>
+      {button}
       <LockTag type={lockType} />
-      {playButton}
-    </ImageBackground>
+    </View>
   );
 });
 
