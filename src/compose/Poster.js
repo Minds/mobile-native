@@ -62,6 +62,7 @@ export default observer(function (props) {
       props.store.attachment.hasAttachment ||
       props.store.embed.hasRichEmbed
     ) {
+      Keyboard.dismiss();
       discardMessage(discard);
     } else {
       discard();

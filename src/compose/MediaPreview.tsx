@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/Foundation';
 import ThemedStyles from '../styles/ThemedStyles';
 import ImagePreview from './ImagePreview';
@@ -36,9 +36,7 @@ export default function MediaPreview(props: PropsType) {
     videoHeight = 300;
 
   if (!isImage && (props.store.mediaToConfirm.width || videoSize)) {
-    const vs = props.store.mediaToConfirm.width
-      ? props.store.mediaToConfirm
-      : videoSize;
+    const vs = videoSize || props.store.mediaToConfirm;
 
     aspectRatio = vs.width / vs.height;
     videoHeight = Math.round(width / aspectRatio);
@@ -81,8 +79,17 @@ export default function MediaPreview(props: PropsType) {
           </TouchableOpacity>
           <MindsVideo
             video={props.store.mediaToConfirm}
+            containerStyle={previewStyle}
             resizeMode="contain"
             onLoad={(e) => {
+              if (
+                e.naturalSize.orientation === 'portrait' &&
+                Platform.OS === 'ios'
+              ) {
+                const w = e.naturalSize.width;
+                e.naturalSize.width = e.naturalSize.height;
+                e.naturalSize.height = w;
+              }
               setVideoSize(e.naturalSize);
             }}
           />
