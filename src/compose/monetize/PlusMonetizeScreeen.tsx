@@ -56,7 +56,7 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
   }, [store, localStore]);
 
   const onComplete = useCallback(
-    (success: boolean) => {
+    (success: any) => {
       if (success) {
         user.me.togglePro();
       }
