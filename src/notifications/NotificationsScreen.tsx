@@ -29,11 +29,11 @@ class NotificationsScreen extends Component {
   /**
    * On screen focus
    */
-  onFocus = (notifications) => {
+  onFocus = () => {
     // when return to the screen reload only if there are new notifications
-    if (notifications.unread > 0) {
-      notifications.refresh();
-      notifications.setUnread(0);
+    if (this.props.notifications.unread > 0) {
+      this.props.notifications.refresh();
+      this.props.notifications.setUnread(0);
     }
   };
 
@@ -115,10 +115,7 @@ class NotificationsScreen extends Component {
 
     return (
       <View style={CS.flexContainer}>
-        <OnFocus
-          onFocus={this.onFocus}
-          notifications={this.props.notifications}
-        />
+        <OnFocus onFocus={this.onFocus} />
         <Topbar
           title={i18n.t('tabTitleNotifications')}
           navigation={this.props.navigation}

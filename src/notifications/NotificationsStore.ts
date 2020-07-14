@@ -234,6 +234,11 @@ class NotificationsStore {
   }
 
   @action
+  refresh() {
+    this.loadList(true);
+  }
+
+  @action
   reset() {
     this.list = new OffsetListStore('shallow');
     this.unread = 0;

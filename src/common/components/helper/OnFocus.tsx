@@ -3,7 +3,6 @@ import { useFocusEffect } from '@react-navigation/native';
 
 type PropsType = {
   onFocus: Function;
-  notifications: any;
 };
 
 /**
@@ -11,16 +10,16 @@ type PropsType = {
  *
  * @param {Object} props
  */
-export default function OnFocus({ onFocus, notifications }: PropsType) {
+export default function OnFocus({ onFocus }: PropsType) {
   useFocusEffect(
     React.useCallback(() => {
-      const unsubscribe = onFocus(notifications);
+      const unsubscribe = onFocus();
 
       // return a unsubscribe function when the component is destroyed?
       if (unsubscribe instanceof Function) {
         return () => unsubscribe();
       }
-    }, [onFocus, notifications]),
+    }, [onFocus]),
   );
 
   return null;
