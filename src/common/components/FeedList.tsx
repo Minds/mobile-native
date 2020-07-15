@@ -30,7 +30,8 @@ type PropsType = {
   listComponent?: React.ComponentType;
   navigation: any;
   style?: StyleProp<ViewStyle>;
-  tab?: ChannelTabType;
+  hideItems?: boolean;
+  ListEmptyComponent?: React.ReactNode;
 };
 
 /**
@@ -111,7 +112,7 @@ export default class FeedList<T> extends Component<PropsType> {
     }
 
     // empty view
-    if (feedStore.loaded && !feedStore.refreshing) {
+    if ((feedStore.loaded && !feedStore.refreshing)) {
       if (emptyMessage) {
         empty = emptyMessage;
       } else {
@@ -129,8 +130,6 @@ export default class FeedList<T> extends Component<PropsType> {
 
     const footer = this.getFooter();
 
-    const renderList = !this.props.tab || this.props.tab === 'feed';
-
     return (
       <ListComponent
         ref={this.setListRef}
@@ -138,7 +137,7 @@ export default class FeedList<T> extends Component<PropsType> {
         onLayout={this.onLayout}
         ListHeaderComponent={header}
         ListFooterComponent={footer}
-        data={renderList ? feedStore.entities.slice() : []}
+        data={!this.props.hideItems ? feedStore.entities.slice() : []}
         renderItem={renderRow}
         keyExtractor={this.keyExtractor}
         onRefresh={this.refresh}
@@ -153,7 +152,7 @@ export default class FeedList<T> extends Component<PropsType> {
         initialNumToRender={6}
         windowSize={11}
         // removeClippedSubviews={true}
-        ListEmptyComponent={renderList ? empty : null}
+        ListEmptyComponent={!this.props.hideItems ? empty : null}
         viewabilityConfig={this.viewOpts}
         onViewableItemsChanged={this.onViewableItemsChanged}
         onScroll={this.onScroll}
