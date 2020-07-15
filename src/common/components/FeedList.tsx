@@ -112,7 +112,7 @@ export default class FeedList<T> extends Component<PropsType> {
     }
 
     // empty view
-    if ((feedStore.loaded && !feedStore.refreshing)) {
+    if (feedStore.loaded && !feedStore.refreshing) {
       if (emptyMessage) {
         empty = emptyMessage;
       } else {

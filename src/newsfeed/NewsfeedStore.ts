@@ -34,7 +34,7 @@ class NewsfeedStore<T> {
     // animate the layout change on the first load and then dispose the runner
     when(
       () => this.feedStore.loaded,
-      () => LayoutAnimation.configureNext(LayoutAnimation.Presets.spring)
+      () => LayoutAnimation.configureNext(LayoutAnimation.Presets.spring),
     );
   }
 

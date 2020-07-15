@@ -118,14 +118,16 @@ class NewsfeedScreen extends Component<PropsType> {
     );
 
     // Show placeholder before the loading as an empty component.
-    const additionalProps = newsfeed.feedStore.loaded ? {} : {
-      ListEmptyComponent: (
-        <View>
-          <ActivityPlaceHolder />
-          <ActivityPlaceHolder />
-        </View>
-      )
-    };
+    const additionalProps = newsfeed.feedStore.loaded
+      ? {}
+      : {
+          ListEmptyComponent: (
+            <View>
+              <ActivityPlaceHolder />
+              <ActivityPlaceHolder />
+            </View>
+          ),
+        };
 
     return (
       <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">

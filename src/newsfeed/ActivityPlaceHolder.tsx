@@ -15,10 +15,18 @@ export default function ActivityPlaceHolder() {
   const color = ThemedStyles.getColor('tertiary_background');
   const { width } = useDimensions().screen;
 
-  const animation = props => <Fade {...props} style={theme.backgroundPrimary} />
+  const animation = (props) => (
+    <Fade {...props} style={theme.backgroundPrimary} />
+  );
 
   return (
-    <View style={[theme.borderBottom8x, theme.borderBackgroundPrimary, theme.paddingBottom4x, theme.paddingTop2x]}>
+    <View
+      style={[
+        theme.borderBottom8x,
+        theme.borderBackgroundPrimary,
+        theme.paddingBottom4x,
+        theme.paddingTop2x,
+      ]}>
       <Placeholder
         Left={() => (
           <PlaceholderMedia isRound color={color} style={theme.marginRight2x} />
