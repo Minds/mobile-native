@@ -137,12 +137,13 @@ export default class Router {
           params: {
             guid: data.json.parent_guid,
             tab: 'conversation',
+            focusedUrn: data.json.focusedCommentUrn,
           },
         });
       } else {
         navigation.navigate('App', {
           screen: 'Activity',
-          params: { entity: entity },
+          params: { entity: entity, focusedUrn: data.json.focusedCommentUrn },
         });
       }
     } catch (err) {
