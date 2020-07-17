@@ -56,7 +56,7 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
   }, [store, localStore]);
 
   const onComplete = useCallback(
-    (success: boolean) => {
+    (success: any) => {
       if (success) {
         user.me.togglePro();
       }
@@ -98,9 +98,6 @@ const PlusMonetizeScreen = observer(({ route, navigation }: PropsType) => {
       onPressRight={save}
       hideDone={!localStore.agreedTerms}>
       <View style={[theme.paddingVertical6x, theme.paddingHorizontal3x]}>
-        <Text style={[styles.title, theme.colorPrimaryText]}>
-          {i18n.t('monetize.subScreensTitle')}
-        </Text>
         <Text
           style={[
             theme.colorSecondaryText,

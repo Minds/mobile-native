@@ -29,12 +29,13 @@ import UserModel from '../../channel/UserModel';
 import WireService from '../../wire/WireService';
 
 const bannerAspectRatio = 1.7;
+type payMethod = 'tokens' | 'usd';
 
 const createPlusStore = () => {
   const store = {
     loaded: false,
     loading: false,
-    method: 'usd' as 'usd' | 'tokens',
+    method: 'usd' as payMethod,
     card: '' as any,
     settings: false as boolean | any,
     selectedOption: false as boolean | any,
@@ -58,10 +59,10 @@ const createPlusStore = () => {
       // used to pay plus by wire
       this.owner = pro
         ? await WireService.getEntityByHandler(
-            mindsService.settings.pro.handler,
+            mindsService.settings.handlers.pro,
           )
         : await WireService.getEntityByHandler(
-            mindsService.settings.plus.handler,
+            mindsService.settings.handlers.plus,
           );
 
       this.loaded = true;
@@ -83,8 +84,6 @@ const createPlusStore = () => {
 };
 
 type PlusStoreType = ReturnType<typeof createPlusStore>;
-
-type payMethod = 'tokens' | 'usd';
 
 type PlusScreenRouteProp = RouteProp<AppStackParamList, 'PlusScreen'>;
 type PlusScreenNavigationProp = StackNavigationProp<
@@ -148,69 +147,46 @@ const PlusScreen = observer(({ navigation, route }: PropsType) => {
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
 
   const complete = useCallback(
-    (success: boolean) => {
+    (done: any) => {
       localStore.setLoading(false);
-      onComplete(success);
+      onComplete(done);
       navigation.goBack();
     },
     [navigation, onComplete, localStore],
   );
 
-  const payWithUsd = useCallback(async () => {
-    try {
-      if (localStore.selectedOption === '0') {
-        complete(false);
-      }
-      wire.setAmount(parseFloat(localStore.selectedOption));
-      wire.setCurrency('usd');
-      wire.setOwner(localStore.owner);
-      wire.setRecurring(localStore.monthly);
-      wire.setPaymentMethodId(localStore.card.id);
-      const done = await wire.send();
+  const payWith = useCallback(
+    async (currency: payMethod) => {
+      try {
+        if (localStore.selectedOption === '0') {
+          complete(false);
+        }
+        wire.setAmount(parseFloat(localStore.selectedOption));
+        wire.setCurrency(currency);
+        wire.setOwner(localStore.owner);
+        wire.setRecurring(localStore.monthly);
+        if (currency === 'usd') {
+          wire.setPaymentMethodId(localStore.card.id);
+        }
+        const done = await wire.send();
+        if (!done) {
+          throw new UserError(i18n.t('boosts.errorPayment'));
+        }
 
-      if (!done) {
-        throw new UserError(i18n.t('boosts.errorPayment'));
+        complete(done);
+      } catch (err) {
+        throw new UserError(err.message);
+      } finally {
+        localStore.setLoading(false);
       }
-
-      complete(true);
-    } catch (err) {
-      console.log('payWithUsd err', err);
-    } finally {
-      localStore.setLoading(false);
-    }
-  }, [localStore, complete, wire]);
-
-  const payWithTokens = useCallback(async () => {
-    try {
-      if (localStore.selectedOption === '0') {
-        complete(false);
-      }
-      wire.setAmount(parseFloat(localStore.selectedOption));
-      wire.setCurrency('tokens');
-      wire.setOwner(localStore.owner);
-      wire.setRecurring(localStore.monthly);
-      const done = await wire.send();
-      if (!done) {
-        throw new UserError(i18n.t('boosts.errorPayment'));
-      }
-
-      complete(true);
-    } catch (err) {
-      throw new UserError(err.message);
-    } finally {
-      localStore.setLoading(false);
-    }
-  }, [complete, wire, localStore]);
+    },
+    [complete, wire, localStore],
+  );
 
   const confirmSend = useCallback(async () => {
     localStore.setLoading(true);
-    if (localStore.method === 'usd') {
-      payWithUsd();
-    }
-    if (localStore.method === 'tokens') {
-      payWithTokens();
-    }
-  }, [localStore, payWithTokens, payWithUsd]);
+    payWith(localStore.method);
+  }, [localStore, payWith]);
 
   useEffect(() => {
     if (!localStore.loaded) {
