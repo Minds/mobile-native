@@ -36,9 +36,7 @@ const ChannelButtons = observer((props: PropsType) => {
   const navigation = useNavigation<
     NativeStackNavigationProp<AppStackParamList, 'Channel'>
   >();
-  const subscriptionText = props.channel.subscribed
-    ? i18n.t('channel.unsubscribe')
-    : '+ ' + i18n.t('channel.subscribe');
+  const subscriptionText = '+ ' + i18n.t('channel.subscribe');
 
   const openMessenger = useCallback(() => {
     navigation.push('Conversation', {
@@ -67,7 +65,9 @@ const ChannelButtons = observer((props: PropsType) => {
     props.channel.can(FLAG_WIRE);
 
   const showSubscribe =
-    !props.channel.isOwner() && props.channel.can(FLAG_SUBSCRIBE);
+    !props.channel.isOwner() &&
+    props.channel.can(FLAG_SUBSCRIBE) &&
+    !props.channel.subscribed;
 
   const showMessage =
     !props.channel.isOwner() &&
