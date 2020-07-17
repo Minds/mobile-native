@@ -98,8 +98,18 @@ export default class MediaView extends Component<PropsType> {
   }
 
   getVideo() {
+    const custom_data = this.props.entity.custom_data;
+    let aspectRatio = 1;
+
+    if (custom_data && custom_data.height && custom_data.height !== '0') {
+      aspectRatio =
+        parseInt(custom_data.width, 10) / parseInt(custom_data.height, 10);
+    } else if (this.state.height > 0) {
+      aspectRatio = this.state.width / this.state.height;
+    }
+
     return (
-      <View style={styles.videoContainer}>
+      <View style={[styles.videoContainer, { aspectRatio }]}>
         <MindsVideo
           entity={this.props.entity}
           ref={(o) => {
@@ -356,8 +366,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   videoContainer: {
-    flex: 1,
-    alignItems: 'stretch',
+    width: '100%',
     minHeight: 250,
   },
   title: {
