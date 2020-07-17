@@ -329,6 +329,28 @@ export default function (props) {
         return;
       }
 
+      // Plus Monetize?
+      if (
+        'support_tier' in this.wire_threshold &&
+        this.wire_threshold.support_tier.urn ===
+          mindsService.settings.plus.support_tier_urn
+      ) {
+        // Must have tags
+        if (this.tags.length === 0) {
+          showError(i18n.t('capture.noHashtags'));
+          return false;
+        }
+
+        // Mustn't have external links
+        if (
+          this.embed.hasRichEmbed &&
+          !this.embed.meta.url.toLowerCase().includes('minds.com')
+        ) {
+          showError(i18n.t('capture.noExternalLinks'));
+          return false;
+        }
+      }
+
       // is uploading?
       if (this.attachment.hasAttachment && this.attachment.uploading) {
         showError(i18n.t('capture.pleaseTryAgain'));
