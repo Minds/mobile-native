@@ -16,6 +16,7 @@ import type UserStore from '../auth/UserStore';
 import type NewsfeedStore from './NewsfeedStore';
 import type NotificationsStore from '../notifications/NotificationsStore';
 import CheckLanguage from '../common/components/CheckLanguage';
+import ActivityPlaceHolder from './ActivityPlaceHolder';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -104,6 +105,9 @@ class NewsfeedScreen extends Component<PropsType> {
 
   setGroupsBarRef = (r) => (this.groupsBar = r);
 
+  /**
+   * Render
+   */
   render() {
     const newsfeed = this.props.newsfeed;
 
@@ -112,6 +116,18 @@ class NewsfeedScreen extends Component<PropsType> {
         <CheckLanguage />
       </View>
     );
+
+    // Show placeholder before the loading as an empty component.
+    const additionalProps = newsfeed.feedStore.loaded
+      ? {}
+      : {
+          ListEmptyComponent: (
+            <View>
+              <ActivityPlaceHolder />
+              <ActivityPlaceHolder />
+            </View>
+          ),
+        };
 
     return (
       <View style={CommonStyle.flexContainer} testID="NewsfeedScreen">
@@ -125,6 +141,7 @@ class NewsfeedScreen extends Component<PropsType> {
           header={header}
           feedStore={newsfeed.feedStore}
           navigation={this.props.navigation}
+          {...additionalProps}
         />
         {/* <CaptureFab navigation={this.props.navigation} route={this.props.route} testID="captureFab"/> */}
       </View>

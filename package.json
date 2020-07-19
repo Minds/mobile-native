@@ -34,6 +34,7 @@
     "@react-navigation/stack": "^5.1.0",
     "@sentry/react-native": "^1.2.2",
     "@types/react-native-vector-icons": "^6.4.5",
+    "add": "^2.0.6",
     "bn.js": "^5.1.1",
     "crypto-js": "^3.1.9-1",
     "detox": "^16.7.2",
@@ -109,11 +110,13 @@
     "react-navigation-shared-element": "^5.0.0-alpha1",
     "reanimated-bottom-sheet": "^1.0.0-alpha.19",
     "rn-apk": "^0.2.9",
+    "rn-placeholder": "^3.0.1",
     "rne-modal-tooltip": "gist:b28c003d87c619674def0878473338a0",
     "rxjs": "^6.5.5",
     "socket.io-client": "^2.3.0",
     "tipsi-stripe": "8.0.0-beta.8",
-    "web3": "^1.2.2"
+    "web3": "^1.2.2",
+    "yarn": "^1.22.4"
   },
   "devDependencies": {
     "@babel/core": "^7.6.3",
