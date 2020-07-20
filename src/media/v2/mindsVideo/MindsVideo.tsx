@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 
 // workaround to fix tooltips on android
@@ -6,38 +6,24 @@ import Tooltip from 'rne-modal-tooltip';
 
 import {
   PanResponder,
-  StyleSheet,
-  ActivityIndicator,
-  Text,
   TouchableWithoutFeedback,
-  Platform,
   View,
   StyleProp,
   ViewStyle,
 } from 'react-native';
 
-import { Video } from 'expo-av';
-
-import _ from 'lodash';
-
-import ProgressBar from '../../ProgressBar';
-
-import Icon from 'react-native-vector-icons/Ionicons';
-
-import ExplicitImage from '../../../common/components/explicit/ExplicitImage';
-import logService from '../../../common/services/log.service';
-import i18n from '../../../common/services/i18n.service';
-import attachmentService from '../../../common/services/attachment.service';
+import { ResizeMode } from 'expo-av';
 import videoPlayerService from '../../../common/services/video-player.service';
-import apiService from '../../../common/services/api.service';
 import NavigationService from '../../../navigation/NavigationService';
 import type CommentModel from '../../../comments/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import featuresService from '../../../common/services/features.service';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import createMindsVideoStore from './createMindsVideoStore';
-
-const isIOS = Platform.OS === 'ios';
+import ExpoVideo from './Video';
+import Error from './overlays/Error';
+import Transcoding from './overlays/Transcoding';
+import InProgress from './overlays/InProgress';
+import Controls from './overlays/Controls';
 
 type Source = {
   src: string;
@@ -48,7 +34,7 @@ type PropsType = {
   entity?: ActivityModel | CommentModel;
   pause?: boolean;
   repeat?: boolean;
-  resizeMode?: 'contain' | 'cover' | 'stretch' | 'none';
+  resizeMode?: ResizeMode;
   video?: { uri: string };
   containerStyle?: StyleProp<ViewStyle>;
 };
@@ -56,7 +42,6 @@ type PropsType = {
 const MindsVideo = observer((props: PropsType) => {
   const theme = ThemedStyles.style;
   const localStore = useLocalStore(createMindsVideoStore);
-  const videoRef = useRef<Video>();
 
   useEffect(() => {
     let onScreenBlur: any;
@@ -79,8 +64,24 @@ const MindsVideo = observer((props: PropsType) => {
       if (videoPlayerService.current === MindsVideo) {
         videoPlayerService.clear();
       }
-    }
+    };
   }, [localStore]);
+
+  // Show inProgress overlay if load has started
+  const inProgressOverlay = localStore.inProgress && <InProgress />;
+
+  // Show Error overlay if not in progress and error
+  const errorOverlay = !localStore.inProgress && localStore.error && <Error />;
+
+  // Show Transcoding overlay if onError and isTranscoding Service -> true
+  const transCodingOverlay = localStore.transcoding && <Transcoding />;
+
+  // ^...else, show controls
+  const controlsOverlay = !localStore.inProgress &&
+    !localStore.error &&
+    !localStore.transcoding && (
+      <Controls localStore={localStore} entity={props.entity} />
+    );
 
   return (
     <View
@@ -90,14 +91,19 @@ const MindsVideo = observer((props: PropsType) => {
         props.containerStyle,
       ]}>
       <TouchableWithoutFeedback
-        style={CS.flexContainer}
-        onPress={this.openControlOverlay}>
-        {video}
+        style={theme.flexContainer}
+        onPress={localStore.openControlOverlay}>
+        <ExpoVideo
+          entity={props.entity}
+          localStore={localStore}
+          repeat={props.repeat}
+          resizeMode={props.resizeMode}
+        />
       </TouchableWithoutFeedback>
-      {inProgress && this.renderInProgressOverlay()}
-      {!inProgress && error && this.renderErrorOverlay()}
-      {transcoding && this.renderTranscodingOverlay()}
-      {!inProgress && !error && !transcoding && overlay}
+      {inProgressOverlay}
+      {errorOverlay}
+      {transCodingOverlay}
+      {controlsOverlay}
     </View>
   );
 });

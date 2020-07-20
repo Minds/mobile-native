@@ -1,70 +1,82 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react';
 import { MindsVideoStoreType } from './createMindsVideoStore';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import type CommentModel from '../../../comments/CommentModel';
 import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
+import ThemedStyles from '../../../styles/ThemedStyles';
+import ExplicitImage from '../../../common/components/explicit/ExplicitImage';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
   localStore: MindsVideoStoreType;
+  repeat?: boolean;
+  resizeMode?: ResizeMode;
 };
 
-const Video = observer(({ entity, localStore }: PropsType) => {
-  const thumb_uri = entity
-    ? entity.get('custom_data.thumbnail_src') || entity.thumbnail_src
-    : null;
+const ExpoVideo = observer(
+  ({ entity, localStore, repeat, resizeMode }: PropsType) => {
+    const theme = ThemedStyles.style;
 
-  const updatePlaybackCallback = (status: AVPlaybackStatus) => {
-    if (!status.isLoaded && status.error) {
-      localStore.onError(status.error);
-    } else {
-      if ('shouldPlay' in status) {
-        localStore.onProgress(status.positionMillis || 0);
-        localStore.setDuration(status.durationMillis || 0);
+    const thumb_uri = entity
+      ? entity.get('custom_data.thumbnail_src') || entity.thumbnail_src
+      : null;
 
-        if (status.shouldPlay && !localStore.shouldPlay) {
-          localStore.setShouldPlay(true);
-        }
+    const updatePlaybackCallback = (status: AVPlaybackStatus) => {
+      if (!status.isLoaded && status.error) {
+        localStore.onError(status.error);
+      } else {
+        if ('shouldPlay' in status) {
+          localStore.onProgress(status.positionMillis || 0);
+          localStore.setDuration(status.durationMillis || 0);
 
-        if (!status.shouldPlay && localStore.shouldPlay) {
-          localStore.setShouldPlay(false);
-        }
+          if (status.shouldPlay && !localStore.shouldPlay) {
+            localStore.setShouldPlay(true);
+          }
 
-        if (status.didJustFinish && !status.isLooping) {
-          localStore.onVideoEnd();
+          if (!status.shouldPlay && localStore.shouldPlay) {
+            localStore.setShouldPlay(false);
+          }
+
+          if (status.didJustFinish && !status.isLooping) {
+            localStore.onVideoEnd();
+          }
         }
       }
-    }
-  };
-  if (localStore.active || !thumb_uri) {
-    return (
-      <Video
-        key={`video${localStore.source}`}
-        volume={localStore.volume}
-        onPlaybackStatusUpdate={updatePlaybackCallback}
-        onLoadStart={localStore.onLoadStart}
-        onLoad={this.onVideoLoad}
-        onError={this.onError}
-        source={this.state.video}
-        shouldPlay={!paused}
-        isLooping={this.props.repeat || false}
-        resizeMode={this.props.resizeMode || 'contain'}
-        useNativeControls={false}
-        style={CS.flexContainer}
-      />
-    );
-  } else {
-    const image = { uri: thumb_uri };
-    return (
-      <ExplicitImage
-        onLoadEnd={this.onLoadEnd}
-        onError={this.onError}
-        source={image}
-        entity={entity}
-      />
-    );
-  }
-})
+    };
 
-export default Video;
+    if (localStore.active || !thumb_uri) {
+      return (
+        <Video
+          key={`video${localStore.source}`}
+          volume={localStore.volume}
+          onPlaybackStatusUpdate={updatePlaybackCallback}
+          onLoadStart={localStore.onLoadStart}
+          onLoad={localStore.onVideoLoad}
+          onError={localStore.onError}
+          source={localStore.video}
+          shouldPlay={localStore.shouldPlay}
+          isLooping={repeat || false}
+          resizeMode={resizeMode || 'contain'}
+          useNativeControls={false}
+          style={theme.flexContainer}
+          ref={(component) => {
+            localStore.setPlayer(component);
+          }}
+        />
+      );
+    } else {
+      const image = { uri: thumb_uri };
+      return (
+        <ExplicitImage
+          onLoadEnd={localStore.onLoadEnd}
+          onError={localStore.onError}
+          source={image}
+          entity={entity}
+        />
+      );
+    }
+  },
+);
+
+export default ExpoVideo;

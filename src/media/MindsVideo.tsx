@@ -15,7 +15,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import { Video, ResizeMode, AVPlaybackStatus } from 'expo-av';
+import Video from 'react-native-video';
 import _ from 'lodash';
 
 import ProgressBar from './ProgressBar';
@@ -65,7 +65,7 @@ type PropsType = {
   entity?: ActivityModel | CommentModel;
   pause?: boolean;
   repeat?: boolean;
-  resizeMode?: ResizeMode;
+  resizeMode?: 'contain' | 'cover' | 'stretch' | 'none';
   video?: { uri: string };
   containerStyle?: StyleProp<ViewStyle>;
 };
@@ -146,16 +146,23 @@ class MindsVideo extends Component<PropsType, StateType> {
    * On video end
    */
   onVideoEnd = () => {
-    this.setState({ currentTime: 0, paused: true });
+    this.setState({ currentTime: 0, paused: true }, () => {
+      this.player.seek(0);
+    });
   };
 
   /**
    * On video load
    */
-  onVideoLoad = () => {
+  onVideoLoad = (e) => {
+    const current = e.currentTime;
+
     this.setState({
       loaded: false,
+      currentTime: current,
+      duration: e.duration,
     });
+    this.player.seek(current);
 
     this.onLoadEnd();
   };
@@ -218,12 +225,8 @@ class MindsVideo extends Component<PropsType, StateType> {
   /**
    * On progress
    */
-  onProgress = (currentTime) => {
-    this.setState({ currentTime });
-  };
-
-  setDuration = (duration) => {
-    this.setState({ duration: duration / 1000 });
+  onProgress = (e) => {
+    this.setState({ currentTime: e.currentTime });
   };
 
   /**
@@ -232,6 +235,7 @@ class MindsVideo extends Component<PropsType, StateType> {
    */
   onBackward(currentTime) {
     let newTime = Math.max(currentTime - FORWARD_DURATION, 0);
+    this.player.seek(newTime);
     this.setState({ currentTime: newTime });
   }
 
@@ -245,6 +249,7 @@ class MindsVideo extends Component<PropsType, StateType> {
       this.onVideoEnd();
     } else {
       let newTime = currentTime + FORWARD_DURATION;
+      this.player.seek(newTime);
       this.setState({ currentTime: newTime });
     }
   }
@@ -268,10 +273,10 @@ class MindsVideo extends Component<PropsType, StateType> {
    * @param {boolean} paused
    */
   onProgressChanged = (newPercent, paused) => {
-    console.log('onProgressChanged', newPercent, paused);
     let { duration } = this.state;
     let newTime = (newPercent * duration) / 100;
     this.setState({ currentTime: newTime, paused: paused });
+    this.player.seek(newTime);
   };
 
   /**
@@ -499,30 +504,6 @@ class MindsVideo extends Component<PropsType, StateType> {
     this.setState({ fullScreen: false, paused: true });
   };
 
-  updatePlaybackCallback = (status: AVPlaybackStatus) => {
-    if (!status.isLoaded && status.error) {
-      this.onError(status.error);
-    } else {
-      if ('shouldPlay' in status) {
-        console.log('updatePlaybackCallback', status.positionMillis / 1000);
-        this.onProgress(status.positionMillis / 1000 || 0);
-        this.setDuration(status.durationMillis || 0);
-
-        if (status.shouldPlay && this.state.paused) {
-          this.setState({ paused: false });
-        }
-
-        if (!status.shouldPlay && !this.state.paused) {
-          this.setState({ paused: true });
-        }
-
-        if (status.didJustFinish && !status.isLooping) {
-          this.onVideoEnd();
-        }
-      }
-    }
-  };
-
   /**
    * Get video component or thumb
    */
@@ -538,15 +519,19 @@ class MindsVideo extends Component<PropsType, StateType> {
           key={`video${this.state.source}`}
           ref={this.setRef}
           volume={this.state.volume}
-          onPlaybackStatusUpdate={this.updatePlaybackCallback}
+          onEnd={this.onVideoEnd}
           onLoadStart={this.onLoadStart}
           onLoad={this.onVideoLoad}
+          onProgress={this.onProgress}
           onError={this.onError}
+          ignoreSilentSwitch={'obey'}
           source={this.state.video}
-          shouldPlay={!paused}
-          isLooping={this.props.repeat || false}
+          paused={paused}
+          repeat={this.props.repeat || false}
+          fullscreen={this.state.fullScreen}
+          onFullscreenPlayerDidDismiss={this.onFullscreenPlayerDidDismiss}
           resizeMode={this.props.resizeMode || 'contain'}
-          useNativeControls={false}
+          controls={false}
           style={CS.flexContainer}
         />
       );
@@ -574,8 +559,6 @@ class MindsVideo extends Component<PropsType, StateType> {
 
     const entity = this.props.entity;
     let { currentTime, duration } = this.state;
-
-    console.log('renderOverlay', currentTime, duration);
 
     const mustShow = this.state.showOverlay || (this.state.paused && entity);
 
