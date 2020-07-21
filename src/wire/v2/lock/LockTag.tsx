@@ -15,12 +15,7 @@ const LockTag = ({ type }: PropsType) => {
   const text = type !== 'paywall' ? i18n.t(`wire.lock.${type}`) : false;
 
   return (
-    <View
-      style={[
-        styles.wraper,
-        theme.alignCenter,
-        type === 'plus' ? styles.bgRed : styles.bgGray,
-      ]}>
+    <View style={[styles.wraper, theme.alignCenter, styles.bgGray]}>
       {type !== 'plus' && lockIcon}
       {text && (
         <Text style={[styles.text, type === 'members' ? styles.spacing : null]}>
