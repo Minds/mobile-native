@@ -310,7 +310,9 @@ const AppStack = function () {
       <AppStackNav.Screen
         name="PlusScreen"
         component={PlusScreen}
-        options={{ title: 'Upgrade to Plus' }}
+        options={({ route }) => ({
+          title: i18n.t(`monetize.${route.params.pro ? 'pro' : 'plus'}Header`),
+        })}
       />
       <AppStackNav.Screen
         name="JoinMembershipScreen"
